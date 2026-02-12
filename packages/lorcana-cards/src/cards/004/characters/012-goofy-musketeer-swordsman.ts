@@ -6,15 +6,15 @@ export const goofyMusketeerSwordsman: CharacterCard = {
       effect: {
         steps: [
           {
-            cardType: "character",
-            from: "hand",
             type: "play-card",
+            from: "hand",
+            cardType: "character",
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "this-turn",
           },
         ],
         type: "sequence",
@@ -25,8 +25,8 @@ export const goofyMusketeerSwordsman: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "you",
+          cardType: "character",
         },
         timing: "whenever",
       },

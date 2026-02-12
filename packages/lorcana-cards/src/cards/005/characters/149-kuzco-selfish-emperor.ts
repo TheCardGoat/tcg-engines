@@ -5,9 +5,9 @@ export const kuzcoSelfishEmperor: CharacterCard = {
     {
       effect: {
         effect: {
-          exerted: true,
-          source: "chosen-card-in-play",
           type: "put-into-inkwell",
+          source: "chosen-card-in-play",
+          exerted: true,
         },
         type: "optional",
       },

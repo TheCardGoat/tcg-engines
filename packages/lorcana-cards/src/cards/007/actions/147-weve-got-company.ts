@@ -6,14 +6,14 @@ export const weveGotCompany: ActionCard = {
       effect: {
         steps: [
           {
-            target: "YOUR_CHARACTERS",
             type: "ready",
+            target: "YOUR_CHARACTERS",
           },
           {
-            duration: "this-turn",
+            type: "gain-keyword",
             keyword: "Reckless",
             target: "CHOSEN_CHARACTER",
-            type: "gain-keyword",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

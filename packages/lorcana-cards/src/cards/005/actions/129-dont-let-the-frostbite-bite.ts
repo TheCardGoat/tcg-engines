@@ -6,22 +6,22 @@ export const dontLetTheFrostbiteBite: ActionCard = {
       effect: {
         steps: [
           {
-            target: {
-              count: "all",
-              filter: [{ owner: "you", type: "owner" }],
-              selector: "all",
-            },
             type: "ready",
+            target: {
+              selector: "all",
+              count: "all",
+              filter: [{ type: "owner", owner: "you" }],
+            },
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: {
-              count: "all",
-              filter: [{ owner: "you", type: "owner" }],
               selector: "all",
+              count: "all",
+              filter: [{ type: "owner", owner: "you" }],
             },
-            type: "restriction",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

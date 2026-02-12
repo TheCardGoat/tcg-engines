@@ -15,7 +15,7 @@
 import type { GameMoveDefinition, MoveContext } from "@tcg/core";
 import type { Draft } from "immer";
 import { enqueueBatchEffects } from "../../../effects/effect-stack";
-import { detectEndOfTurnTriggers, orderTriggeredEffects } from "../../../effects/trigger-detection";
+import { detectAndEnqueueEndOfTurnTriggers } from "../../../effects/trigger-integration";
 import type { GundamGameState } from "../../../types";
 
 /**
@@ -46,21 +46,8 @@ export const handleTurnEndMove: GameMoveDefinition<GundamGameState> = {
   reducer: (draft: Draft<GundamGameState>, context: MoveContext): void => {
     const { playerId } = context;
 
-    // Detect end of turn triggered effects
-    // Note: detectEndOfTurnTriggers scans all players' cards
-    const triggerResult = detectEndOfTurnTriggers(draft, playerId);
-
-    if (triggerResult.hasTriggers) {
-      // Order effects: active player's effects first
-      const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
-
-      // Enqueue effects in the determined order
-      enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
-
-      console.log(
-        `[TURN_END] Detected ${triggerResult.effects.length} end of turn triggers, enqueued in order: ${orderResult.order.join(", ")}`,
-      );
-    }
+    // Detect and enqueue end of turn triggered effects
+    detectAndEnqueueEndOfTurnTriggers(draft, playerId);
   },
 
   metadata: {

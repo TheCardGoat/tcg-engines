@@ -6,10 +6,10 @@ export const svenReindeerSteed: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          duration: "this-turn",
+          type: "restriction",
           restriction: "cant-quest",
           target: "SELF",
-          type: "restriction",
+          duration: "this-turn",
         },
         type: "optional",
       },

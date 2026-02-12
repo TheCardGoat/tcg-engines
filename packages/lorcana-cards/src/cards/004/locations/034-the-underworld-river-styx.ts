@@ -6,9 +6,9 @@ export const theUnderworldRiverStyx: LocationCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          cardType: "character",
-          target: "CONTROLLER",
           type: "return-from-discard",
+          target: "CONTROLLER",
+          cardType: "character",
         },
         type: "optional",
       },

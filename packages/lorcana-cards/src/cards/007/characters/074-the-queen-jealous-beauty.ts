@@ -6,12 +6,12 @@ export const theQueenJealousBeauty: CharacterCard = {
       cost: { exert: true },
       effect: {
         condition: {
-          expression: "any Princess cards were moved this way",
           type: "if",
+          expression: "any Princess cards were moved this way",
         },
         then: {
-          amount: 4,
           type: "gain-lore",
+          amount: 4,
         },
         type: "conditional",
       },

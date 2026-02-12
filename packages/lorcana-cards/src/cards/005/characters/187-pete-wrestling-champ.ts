@@ -5,13 +5,13 @@ export const peteWrestlingChamp: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "it's a character card named Pete",
           type: "if",
+          expression: "it's a character card named Pete",
         },
         then: {
-          cost: "free",
-          from: "hand",
           type: "play-card",
+          from: "hand",
+          cost: "free",
         },
         type: "conditional",
       },

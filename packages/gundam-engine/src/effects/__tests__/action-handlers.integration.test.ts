@@ -7,8 +7,6 @@
 import { beforeEach, describe, expect, it } from "bun:test";
 import type { CardId, PlayerId, Zone } from "@tcg/core";
 import { createZone, createZoneId } from "@tcg/core";
-import { produce } from "immer";
-import type { GundamGameState } from "../../types";
 import type {
   DamageAction,
   DestroyAction,
@@ -16,7 +14,9 @@ import type {
   EffectAction,
   ModifyStatsAction,
   RestAction,
-} from "../../types/effects";
+} from "@tcg/gundam-types/effects";
+import { produce } from "immer";
+import type { GundamGameState } from "../../types";
 import {
   type ActionContext,
   executeActions,

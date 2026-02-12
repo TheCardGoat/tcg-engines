@@ -5,12 +5,12 @@ export const honeymarenNorthuldraGuide: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "an opponent has an exerted character in play",
           type: "if",
+          expression: "an opponent has an exerted character in play",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

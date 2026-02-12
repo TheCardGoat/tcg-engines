@@ -5,13 +5,13 @@ export const jafarHighSultanOfLorcana: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "an Illusion character card is discarded this way",
           type: "if",
+          expression: "an Illusion character card is discarded this way",
         },
         then: {
-          cost: "free",
-          from: "hand",
           type: "play-card",
+          from: "hand",
+          cost: "free",
         },
         type: "conditional",
       },

@@ -6,13 +6,13 @@ export const fantasticalAndMagical: ActionCard = {
       effect: {
         steps: [
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
           {
-            amount: 1,
             type: "gain-lore",
+            amount: 1,
           },
         ],
         type: "sequence",

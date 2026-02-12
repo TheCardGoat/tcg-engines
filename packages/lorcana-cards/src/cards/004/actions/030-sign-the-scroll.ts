@@ -6,14 +6,14 @@ export const signTheScroll: ActionCard = {
       effect: {
         steps: [
           {
-            amount: 1,
-            chosen: true,
-            target: "EACH_OPPONENT",
             type: "discard",
+            amount: 1,
+            target: "EACH_OPPONENT",
+            chosen: true,
           },
           {
-            amount: 2,
             type: "gain-lore",
+            amount: 2,
           },
         ],
         type: "sequence",

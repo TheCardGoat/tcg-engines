@@ -6,21 +6,21 @@ export const healingTouch: ActionCard = {
       effect: {
         steps: [
           {
+            type: "remove-damage",
             amount: 4,
+            upTo: true,
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "remove-damage",
-            upTo: true,
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

@@ -5,15 +5,15 @@ export const rescueRangersSubmarineMobileHeadquarters: LocationCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character here",
           type: "if",
+          expression: "you have a character here",
         },
         then: {
-          exerted: true,
-          facedown: true,
+          type: "put-into-inkwell",
           source: "top-of-deck",
           target: "CONTROLLER",
-          type: "put-into-inkwell",
+          exerted: true,
+          facedown: true,
         },
         type: "conditional",
       },

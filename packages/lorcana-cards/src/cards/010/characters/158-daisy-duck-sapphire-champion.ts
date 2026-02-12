@@ -18,8 +18,8 @@ export const daisyDuckSapphireChampion: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          target: "CHOSEN_CHARACTER",
           type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
         },
         type: "optional",
       },

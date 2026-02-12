@@ -7,9 +7,9 @@ export const pascalInquisitivePet: CharacterCard = {
         amount: 3,
         destinations: [
           {
-            ordering: "player-choice",
-            remainder: true,
             zone: "deck-top",
+            remainder: true,
+            ordering: "player-choice",
           },
         ],
         target: "CONTROLLER",

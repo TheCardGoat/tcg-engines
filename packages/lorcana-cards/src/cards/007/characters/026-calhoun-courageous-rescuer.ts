@@ -15,8 +15,8 @@ export const calhounCourageousRescuer: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          target: "CONTROLLER",
           type: "return-from-discard",
+          target: "CONTROLLER",
         },
         type: "optional",
       },

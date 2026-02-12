@@ -6,24 +6,24 @@ export const mufasaRulerOfPrideRock: CharacterCard = {
       effect: {
         steps: [
           {
+            type: "exert",
             target: {
-              cardTypes: ["card"],
+              selector: "all",
               count: "all",
               owner: "any",
-              selector: "all",
               zones: ["play"],
+              cardTypes: ["card"],
             },
-            type: "exert",
           },
           {
+            type: "return-to-hand",
             target: {
-              cardTypes: ["card"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["card"],
             },
-            type: "return-to-hand",
           },
         ],
         type: "sequence",
@@ -41,11 +41,11 @@ export const mufasaRulerOfPrideRock: CharacterCard = {
     {
       effect: {
         target: {
-          cardTypes: ["card"],
+          selector: "all",
           count: "all",
           owner: "any",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["card"],
         },
         type: "ready",
       },

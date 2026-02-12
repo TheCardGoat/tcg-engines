@@ -5,12 +5,12 @@ export const seekingTheHalfCrown: ActionCard = {
     {
       effect: {
         counter: {
-          controller: "you",
           type: "characters",
+          controller: "you",
         },
         effect: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "for-each",
       },

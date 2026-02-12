@@ -6,22 +6,22 @@ export const distract: ActionCard = {
       effect: {
         steps: [
           {
-            duration: "this-turn",
-            modifier: -2,
+            type: "modify-stat",
             stat: "strength",
+            modifier: -2,
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "modify-stat",
+            duration: "this-turn",
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

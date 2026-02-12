@@ -5,12 +5,12 @@ export const sisuUnitingDragon: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "it’s a Dragon character card",
           type: "if",
+          expression: "it’s a Dragon character card",
         },
         then: {
-          target: "CHOSEN_CHARACTER",
           type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
         },
         type: "conditional",
       },

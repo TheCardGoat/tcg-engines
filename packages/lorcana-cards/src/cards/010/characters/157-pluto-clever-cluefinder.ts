@@ -6,13 +6,13 @@ export const plutoCleverCluefinder: CharacterCard = {
       cost: { exert: true },
       effect: {
         condition: {
-          expression: "you have a Detective character in play",
           type: "if",
+          expression: "you have a Detective character in play",
         },
         then: {
-          cardType: "item",
-          target: "CONTROLLER",
           type: "return-from-discard",
+          target: "CONTROLLER",
+          cardType: "item",
         },
         type: "conditional",
       },

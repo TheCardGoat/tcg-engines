@@ -6,11 +6,11 @@ export const twitterpated: ActionCard = {
       effect: {
         keyword: "Evasive",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "gain-keyword",
       },

@@ -130,6 +130,7 @@ describe("RuleEngine - Operations Integration", () => {
         },
       },
       name: "Test Card Game",
+      name: "Test Card Game",
       setup: (players: Player[]) => ({
         currentPlayer: 0,
         players,
@@ -138,9 +139,22 @@ describe("RuleEngine - Operations Integration", () => {
           [players[1].id]: 10,
         },
       }),
+      setup: (players: Player[]) => ({
+        players,
+        currentPlayer: 0,
+        resources: {
+          [players[0].id]: 10,
+          [players[1].id]: 10,
+        },
+      }),
       zones: {
         deck: deckZone,
         hand: handZone,
+        play: playZone,
+      },
+      zones: {
+        hand: handZone,
+        deck: deckZone,
         play: playZone,
       },
     };

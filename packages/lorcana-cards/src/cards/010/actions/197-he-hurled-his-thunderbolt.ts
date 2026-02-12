@@ -6,22 +6,22 @@ export const heHurledHisThunderbolt: ActionCard = {
       effect: {
         steps: [
           {
+            type: "deal-damage",
             amount: 4,
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "deal-damage",
           },
           {
-            duration: "this-turn",
+            type: "gain-keyword",
             keyword: "Challenger",
             target: "YOUR_CHARACTERS",
-            type: "gain-keyword",
             value: 2,
+            duration: "this-turn",
           },
         ],
         type: "sequence",

@@ -12,9 +12,9 @@ export const mauiHalfshark: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          cardType: "action",
-          target: "CONTROLLER",
           type: "return-from-discard",
+          target: "CONTROLLER",
+          cardType: "action",
         },
         type: "optional",
       },

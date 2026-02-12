@@ -16,10 +16,10 @@ export const scroogeMcduckRichestDuckInTheWorld: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "play-card",
+          from: "hand",
           cardType: "item",
           cost: "free",
-          from: "hand",
-          type: "play-card",
         },
         type: "optional",
       },

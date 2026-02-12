@@ -388,7 +388,7 @@ describe("Set 004 Card Text Parser Tests - Characters A M", () => {
     const itWasYourVision = {
       effect: {
         ability: {
-          effect: { target: "SELF", type: "return-to-hand" },
+          effect: { type: "return-to-hand", target: "SELF" },
           trigger: { event: "banish" },
           type: "triggered",
         },
@@ -513,8 +513,8 @@ describe("Set 004 Card Text Parser Tests - Characters A M", () => {
       effect: {
         effect: {
           effects: [
-            { target: "SELF", type: "banish" },
-            { amount: 1, target: "CONTROLLER", type: "draw" },
+            { type: "banish", target: "SELF" },
+            { type: "draw", amount: 1, target: "CONTROLLER" },
           ],
           type: "sequence",
         },

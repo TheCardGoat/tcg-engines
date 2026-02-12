@@ -6,23 +6,23 @@ export const judyHoppsOptimisticOfficer: CharacterCard = {
       effect: {
         steps: [
           {
-            chooser: "CONTROLLER",
+            type: "optional",
             effect: {
+              type: "banish",
               target: {
-                cardTypes: ["item"],
+                selector: "chosen",
                 count: 1,
                 owner: "any",
-                selector: "chosen",
                 zones: ["play"],
+                cardTypes: ["item"],
               },
-              type: "banish",
             },
-            type: "optional",
+            chooser: "CONTROLLER",
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

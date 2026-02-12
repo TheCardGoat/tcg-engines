@@ -5,13 +5,13 @@ export const flotillaCoconutArmada: LocationCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character here",
           type: "if",
+          expression: "you have a character here",
         },
         then: {
+          type: "lose-lore",
           amount: 1,
           target: "EACH_OPPONENT",
-          type: "lose-lore",
         },
         type: "conditional",
       },

@@ -6,18 +6,18 @@ export const weCouldBeImmortals: ActionCard = {
       effect: {
         steps: [
           {
-            duration: "this-turn",
+            type: "gain-keyword",
             keyword: "Resist",
             target: "YOUR_CHARACTERS",
-            type: "gain-keyword",
             value: 6,
+            duration: "this-turn",
           },
           {
-            exerted: true,
-            facedown: true,
+            type: "put-into-inkwell",
             source: "this-card",
             target: "CONTROLLER",
-            type: "put-into-inkwell",
+            exerted: true,
+            facedown: true,
           },
         ],
         type: "sequence",

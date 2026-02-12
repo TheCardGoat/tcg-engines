@@ -6,13 +6,13 @@ export const theMagicFeather: ItemCard = {
       effect: {
         steps: [
           {
-            from: "hand",
             type: "play-card",
+            from: "hand",
           },
           {
+            type: "gain-keyword",
             keyword: "Evasive",
             target: "CHOSEN_CHARACTER",
-            type: "gain-keyword",
           },
         ],
         type: "sequence",
@@ -31,11 +31,11 @@ export const theMagicFeather: ItemCard = {
       cost: { exert: true },
       effect: {
         target: {
-          cardTypes: ["item"],
+          selector: "self",
           count: 1,
           owner: "any",
-          selector: "self",
           zones: ["play"],
+          cardTypes: ["item"],
         },
         type: "return-to-hand",
       },

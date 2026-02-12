@@ -5,11 +5,11 @@ export const glean: ActionCard = {
     {
       effect: {
         target: {
-          cardTypes: ["item"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["item"],
         },
         type: "banish",
       },

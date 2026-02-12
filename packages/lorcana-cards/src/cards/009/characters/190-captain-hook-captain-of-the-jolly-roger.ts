@@ -5,10 +5,10 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
     {
       effect: {
         effect: {
-          cardName: "Fire the Cannons!",
-          cardType: "action",
-          target: "CONTROLLER",
           type: "return-from-discard",
+          cardType: "action",
+          cardName: "Fire the Cannons!",
+          target: "CONTROLLER",
         },
         type: "optional",
       },

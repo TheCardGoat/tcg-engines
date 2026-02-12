@@ -5,12 +5,12 @@ export const maxLoyalSheepdog: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character named Prince Eric in play",
           type: "if",
+          expression: "you have a character named Prince Eric in play",
         },
         then: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "conditional",
       },

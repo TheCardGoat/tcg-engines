@@ -4,7 +4,7 @@ import { enqueueBatchEffects } from "../../effects/effect-stack";
 import {
   detectEndOfTurnTriggers,
   detectStartOfTurnTriggers,
-  orderTriggeredEffects,
+  detectTriggeredEffects,
 } from "../../effects/trigger-detection";
 import type { GundamCardMeta, GundamGameState } from "../../types";
 

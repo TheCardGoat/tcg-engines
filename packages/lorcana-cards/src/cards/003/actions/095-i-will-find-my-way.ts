@@ -8,11 +8,11 @@ export const iWillFindMyWay: ActionCard = {
         modifier: 2,
         stat: "strength",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "modify-stat",
       },

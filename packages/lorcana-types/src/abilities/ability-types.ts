@@ -573,12 +573,9 @@ export function isShiftKeywordAbility(ability: KeywordAbility): ability is Shift
 /**
  * Check if ability has a name (named ability)
  */
-export function isNamedAbility(ability: Ability): ability is (
-  | TriggeredAbility
-  | ActivatedAbility
-  | StaticAbility
-  | ReplacementAbility
-) & {
+export function isNamedAbility(
+  ability: Ability,
+): ability is (TriggeredAbility | ActivatedAbility | StaticAbility | ReplacementAbility) & {
   name: string;
 } {
   return (

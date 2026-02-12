@@ -320,9 +320,9 @@ describe("Set 006 Card Text Parser Tests - Characters N Z", () => {
       effect: {
         effect: {
           effects: [
-            { target: "SELF", type: "banish" },
-            { amount: 3, type: "gain-lore" },
-            { amount: 3, target: "CONTROLLER", type: "draw" },
+            { type: "banish", target: "SELF" },
+            { type: "gain-lore", amount: 3 },
+            { type: "draw", amount: 3, target: "CONTROLLER" },
           ],
           type: "sequence",
         },
@@ -696,7 +696,6 @@ describe("Set 006 Card Text Parser Tests - Characters N Z", () => {
         condition: {
           classification: "Pirate",
           target: "CHOSEN_CHARACTER",
-          type: "classification",
         },
         ifFalse: {
           duration: "this-turn",

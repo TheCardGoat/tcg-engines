@@ -5,12 +5,12 @@ export const yzmaTransformedKitten: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have more cards in your hand than each opponent",
           type: "if",
+          expression: "you have more cards in your hand than each opponent",
         },
         then: {
-          target: "SELF",
           type: "return-to-hand",
+          target: "SELF",
         },
         type: "conditional",
       },

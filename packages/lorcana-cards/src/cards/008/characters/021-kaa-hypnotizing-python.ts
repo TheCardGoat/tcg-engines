@@ -6,15 +6,15 @@ export const kaaHypnotizingPython: CharacterCard = {
       effect: {
         steps: [
           {
-            modifier: -2,
-            stat: "strength",
-            target: "CHOSEN_CHARACTER",
             type: "modify-stat",
+            stat: "strength",
+            modifier: -2,
+            target: "CHOSEN_CHARACTER",
           },
           {
+            type: "gain-keyword",
             keyword: "Reckless",
             target: "SELF",
-            type: "gain-keyword",
           },
         ],
         type: "sequence",

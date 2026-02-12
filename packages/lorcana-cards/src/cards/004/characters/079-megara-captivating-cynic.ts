@@ -7,20 +7,20 @@ export const megaraCaptivatingCynic: CharacterCard = {
         optionLabels: ["choose and discard a card", "banish this character."],
         options: [
           {
-            amount: 1,
-            chosen: true,
-            target: "CONTROLLER",
             type: "discard",
+            amount: 1,
+            target: "CONTROLLER",
+            chosen: true,
           },
           {
+            type: "banish",
             target: {
-              cardTypes: ["character"],
+              selector: "self",
               count: 1,
               owner: "any",
-              selector: "self",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "banish",
           },
         ],
         type: "choice",

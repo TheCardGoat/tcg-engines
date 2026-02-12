@@ -6,9 +6,9 @@ export const mauricesWorkshop: ItemCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "optional",
       },

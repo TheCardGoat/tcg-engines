@@ -5,14 +5,14 @@ export const cinderellaDreamComeTrue: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you played a Princess character this turn",
           type: "if",
+          expression: "you played a Princess character this turn",
         },
         then: {
-          facedown: true,
+          type: "put-into-inkwell",
           source: "hand",
           target: "CONTROLLER",
-          type: "put-into-inkwell",
+          facedown: true,
         },
         type: "conditional",
       },

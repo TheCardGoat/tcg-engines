@@ -147,7 +147,6 @@ describe("FlowDefinition Type", () => {
             onEnd: (context) => {
               context.state.phase = "draw";
             },
-            order: 0,
           },
         },
       };
@@ -212,7 +211,6 @@ describe("FlowDefinition Type", () => {
           },
           target: {
             next: "damage",
-            order: 1,
           },
         },
       };
@@ -275,7 +273,6 @@ describe("FlowDefinition Type", () => {
               phases: {
                 draw: {
                   next: "main",
-                  order: 1,
                 },
                 end: {
                   next: undefined,

@@ -6,11 +6,11 @@ export const firstAid: ActionCard = {
       effect: {
         amount: 1,
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "you",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "remove-damage",
         upTo: true,

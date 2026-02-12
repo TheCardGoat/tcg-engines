@@ -665,8 +665,8 @@ describe("Set 001 Card Text Parser Tests - Characters N Z", () => {
       effect: {
         effect: {
           effects: [
-            { amount: 1, target: "CONTROLLER", type: "draw" },
-            { amount: 1, target: "CONTROLLER", type: "discard" },
+            { type: "draw", amount: 1, target: "CONTROLLER" },
+            { type: "discard", amount: 1, target: "CONTROLLER" },
           ],
           type: "sequence",
         },

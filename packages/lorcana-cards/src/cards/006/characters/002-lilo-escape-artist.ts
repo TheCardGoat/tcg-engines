@@ -5,13 +5,13 @@ export const liloEscapeArtist: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "this card is in your discard",
           type: "if",
+          expression: "this card is in your discard",
         },
         then: {
+          type: "restriction",
           restriction: "enters-play-exerted",
           target: "SELF",
-          type: "restriction",
         },
         type: "conditional",
       },

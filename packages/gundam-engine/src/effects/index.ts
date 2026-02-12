@@ -27,7 +27,122 @@
  * ```
  */
 
-export type { EffectInstance, EffectStackState } from "../types/effects";
+// ============================================================================
+// SHARED TYPES FROM @tcg/gundam-types/effects
+// ============================================================================
+
+import type {
+  ActionTiming,
+  ActivateAction,
+  ActivateActionTiming,
+  ActivateMainTiming,
+  AttackTiming,
+  BaseEffectCardDefinition,
+  BurstTiming,
+  CardFilter,
+  // Card Types
+  CardType,
+  Color,
+  DamageAction,
+  DeployTiming,
+  DestroyAction,
+  DestroyedTiming,
+  DiscardAction,
+  DrawAction,
+  // Effect Definition (renamed to Effect for consistency)
+  Effect,
+  // Effect Actions
+  EffectAction,
+  // Effect Categories
+  EffectCategory,
+  // Effect Timing
+  EffectTiming,
+  EndOfTurnTiming,
+  GrantKeywordAction,
+  // Keywords
+  KeywordEffect,
+  // Filters
+  LevelFilter,
+  // Timing types
+  MainTiming,
+  ModifyStatsAction,
+  MoveCardAction,
+  PropertyCostFilter,
+  RestAction,
+  SearchAction,
+  StartOfTurnTiming,
+  TargetCountRange,
+  TargetFilter,
+  // Targeting
+  TargetingSpec,
+  TargetPropertyFilter,
+  TargetStateFilter,
+  // Zones
+  ZoneType,
+} from "@tcg/gundam-types/effects";
+import type { CostFilter } from "@tcg/gundam-types/targeting";
+
+// ============================================================================
+// RUNTIME TYPES FROM LOCAL MODULE
+// ============================================================================
+
+import type {
+  // Effect Stack
+  EffectInstance,
+  EffectStackState,
+  EndOfCombatModifier,
+  EndOfTurnModifier,
+  ModifierId,
+  PermanentModifier,
+  // Modifiers
+  TemporaryModifier,
+  WhileConditionModifier,
+} from "./effect-runtime";
+
+export type {
+  // Re-export shared types from @tcg/gundam-types/effects
+  EffectCategory,
+  EffectTiming,
+  Effect,
+  // @deprecated Use `Effect` instead. This alias is kept for backward compatibility.
+  Effect as EffectDefinition,
+  EffectAction,
+  DrawAction,
+  DamageAction,
+  RestAction,
+  ActivateAction,
+  MoveCardAction,
+  SearchAction,
+  ModifyStatsAction,
+  GrantKeywordAction,
+  DestroyAction,
+  DiscardAction,
+  TargetingSpec,
+  TargetFilter,
+  TargetCountRange,
+  TargetStateFilter,
+  TargetPropertyFilter,
+  CardFilter,
+  KeywordEffect,
+  ZoneType,
+  CardType,
+  Color,
+  BaseEffectCardDefinition,
+  LevelFilter,
+  PropertyCostFilter,
+  // Re-export from targeting
+  CostFilter,
+  // Re-export runtime types from effect-runtime
+  TemporaryModifier,
+  EndOfTurnModifier,
+  EndOfCombatModifier,
+  PermanentModifier,
+  WhileConditionModifier,
+  ModifierId,
+  EffectInstance,
+  EffectStackState,
+};
+
 // Ability system
 export {
   type ActivatedAbility,
@@ -51,6 +166,7 @@ export {
   type TriggeredAbility,
   type TriggerType,
 } from "./ability-system";
+
 // Action handlers
 export {
   type ActionContext,
@@ -86,7 +202,6 @@ export {
 // Effect execution
 export {
   createEffectContext,
-  type EffectContext,
   type EffectEvent,
   type EffectResult,
   type EventType,
@@ -94,27 +209,27 @@ export {
   type PendingChoice,
   type ResolvedTarget,
 } from "./effect-executor";
+
 // Effect stack management
 export {
-  clearEffectDefinitions,
+  clearEffects,
   createEffectStack,
   dequeueEffect,
   enqueueBatchEffects,
   enqueueEffect,
   findEffectInstance,
-  getEffectDefinition,
+  getEffect,
   getEffectStackCount,
   isEffectStackEmpty,
   markEffectFizzled,
   markEffectResolved,
   markEffectResolving,
   peekNextEffect,
-  registerEffectDefinition,
+  registerEffect,
   updateEffectInstance,
 } from "./effect-stack";
-// Type definitions
-export type * from "./effect-types";
-// All builder functions are re-exported from effect-types
+
+// Builder functions from effect-types (engine-specific implementations)
 // Type guards
 export {
   addResources,
@@ -174,35 +289,7 @@ export {
   unpairPilot,
   untilEndOfTurn,
 } from "./effect-types";
-// Targeting system (legacy - for backward compatibility)
-export {
-  chosenCardTarget,
-  chosenUnitTarget,
-  eachFriendlyUnitTarget,
-  eachOpponentUnitTarget,
-  eachUnitTarget,
-  filterTargets,
-  filterTargetsByController,
-  filterTargetsByPosition,
-  getAllUnits,
-  getBase,
-  getCardsInDeck,
-  getCardsInHand,
-  getCardsInTrash,
-  getCardsInZone,
-  getRandomTargets,
-  getResources,
-  getShields,
-  getUnitsInBattleArea,
-  isValidTarget,
-  isValidTargetId,
-  limitTargets,
-  opponentTarget,
-  resolveTarget,
-  selfTarget,
-  target,
-  thisTarget,
-} from "./targeting";
+
 // New targeting system (for TargetingSpec/TargetFilter)
 export {
   enumerateValidTargets,
@@ -246,9 +333,7 @@ export {
   detectTriggeredEffects,
   type EndOfTurnTriggerEvent,
   orderTriggeredEffects,
-  orderTriggeredEffectsCustom,
   type StartOfTurnTriggerEvent,
-  type TriggerDetectionContext,
   type TriggerDetectionResult,
   type TriggerEvent,
   type TriggeredEffectRef,

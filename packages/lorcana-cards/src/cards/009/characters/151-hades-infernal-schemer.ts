@@ -6,10 +6,10 @@ export const hadesInfernalSchemer: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          facedown: true,
+          type: "put-into-inkwell",
           source: "chosen-character",
           target: "OPPONENT",
-          type: "put-into-inkwell",
+          facedown: true,
         },
         type: "optional",
       },

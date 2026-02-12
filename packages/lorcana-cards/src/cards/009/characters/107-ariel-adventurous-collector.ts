@@ -6,11 +6,11 @@ export const arielAdventurousCollector: CharacterCard = {
       effect: {
         keyword: "Evasive",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "gain-keyword",
       },
@@ -20,8 +20,8 @@ export const arielAdventurousCollector: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "action",
           controller: "you",
+          cardType: "action",
         },
         timing: "whenever",
       },

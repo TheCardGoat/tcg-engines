@@ -6,10 +6,10 @@ export const arielDeterminedMermaid: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 1,
-          chosen: true,
-          target: "CONTROLLER",
           type: "discard",
+          amount: 1,
+          target: "CONTROLLER",
+          chosen: true,
         },
         type: "optional",
       },
@@ -19,8 +19,8 @@ export const arielDeterminedMermaid: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "action",
           controller: "you",
+          cardType: "action",
         },
         timing: "whenever",
       },

@@ -6,10 +6,10 @@ export const belleStrangeButSpecial: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          modifier: 4,
-          stat: "lore",
-          target: "SELF",
           type: "modify-stat",
+          stat: "lore",
+          modifier: 4,
+          target: "SELF",
         },
         type: "optional",
       },

@@ -6,20 +6,20 @@ export const quickShot: ActionCard = {
       effect: {
         steps: [
           {
+            type: "deal-damage",
             amount: 1,
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "deal-damage",
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

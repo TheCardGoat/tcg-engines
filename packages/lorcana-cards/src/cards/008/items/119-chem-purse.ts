@@ -5,15 +5,15 @@ export const chemPurse: ItemCard = {
     {
       effect: {
         condition: {
-          expression: "you used Shift to play them",
           type: "if",
+          expression: "you used Shift to play them",
         },
         then: {
-          duration: "this-turn",
-          modifier: 4,
-          stat: "strength",
-          target: "CHOSEN_CHARACTER",
           type: "modify-stat",
+          stat: "strength",
+          modifier: 4,
+          target: "CHOSEN_CHARACTER",
+          duration: "this-turn",
         },
         type: "conditional",
       },
@@ -23,8 +23,8 @@ export const chemPurse: ItemCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "you",
+          cardType: "character",
         },
         timing: "whenever",
       },

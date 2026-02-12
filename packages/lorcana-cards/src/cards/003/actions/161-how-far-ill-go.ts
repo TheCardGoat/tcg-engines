@@ -6,23 +6,23 @@ export const howFarIllGo: ActionCard = {
       effect: {
         steps: [
           {
+            type: "scry",
             amount: 2,
+            target: "CONTROLLER",
             destinations: [
               {
-                ordering: "player-choice",
-                remainder: true,
                 zone: "deck-bottom",
+                remainder: true,
+                ordering: "player-choice",
               },
             ],
-            target: "CONTROLLER",
-            type: "scry",
           },
           {
-            exerted: true,
-            facedown: true,
+            type: "put-into-inkwell",
             source: "hand",
             target: "CONTROLLER",
-            type: "put-into-inkwell",
+            exerted: true,
+            facedown: true,
           },
         ],
         type: "sequence",

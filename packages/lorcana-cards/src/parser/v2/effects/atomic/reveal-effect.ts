@@ -94,7 +94,9 @@ function parseFromText(text: string): RevealHandEffect | RevealTopCardEffect | E
 export const revealEffectParser: EffectParser = {
   description:
     "Parses reveal and look-at effects (e.g., 'reveal your hand', 'look at opponent's hand', 'look at the top 3 cards of your deck')",
-  parse: (input: CstNode | string): RevealHandEffect | RevealTopCardEffect | Effect | null => {
+  parse: (
+    input: CstNode | string,
+  ): RevealHandEffect | RevealTopCardEffect | Effect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
     }
@@ -103,5 +105,6 @@ export const revealEffectParser: EffectParser = {
     return null;
   },
 
-  pattern: /(?:reveal|look at)\s+(?:your\s+)?(?:hand|top|the|cards?|opponent'?s?)/i,
+  pattern:
+    /(?:reveal|look at)\s+(?:your\s+)?(?:hand|top|the|cards?|opponent'?s?)/i,
 };

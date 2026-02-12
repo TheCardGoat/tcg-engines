@@ -6,14 +6,14 @@ export const chernabogsFollowersCreaturesOfEvil: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "banish",
           target: {
-            cardTypes: ["card"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["card"],
           },
-          type: "banish",
         },
         type: "optional",
       },

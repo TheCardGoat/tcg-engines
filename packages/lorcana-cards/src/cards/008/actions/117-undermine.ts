@@ -6,23 +6,23 @@ export const undermine: ActionCard = {
       effect: {
         steps: [
           {
-            amount: 1,
-            chosen: true,
-            target: "CONTROLLER",
             type: "discard",
+            amount: 1,
+            target: "CONTROLLER",
+            chosen: true,
           },
           {
-            duration: "this-turn",
-            modifier: 2,
+            type: "modify-stat",
             stat: "strength",
+            modifier: 2,
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "modify-stat",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

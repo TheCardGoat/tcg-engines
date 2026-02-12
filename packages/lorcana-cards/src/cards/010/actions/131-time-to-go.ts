@@ -5,13 +5,13 @@ export const timeToGo: ActionCard = {
     {
       effect: {
         condition: {
-          expression: "that character had a card under them",
           type: "if",
+          expression: "that character had a card under them",
         },
         then: {
+          type: "draw",
           amount: 3,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },

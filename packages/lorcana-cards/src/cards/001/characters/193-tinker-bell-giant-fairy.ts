@@ -6,15 +6,15 @@ export const tinkerBellGiantFairy: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "deal-damage",
           amount: 1,
           target: {
-            cardTypes: ["character"],
+            selector: "all",
             count: "all",
             owner: "opponent",
-            selector: "all",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "deal-damage",
         },
         type: "optional",
       },

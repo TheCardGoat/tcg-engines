@@ -5,13 +5,13 @@ export const mufasaBetrayedLeader: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "it's a character card",
           type: "if",
+          expression: "it's a character card",
         },
         then: {
+          type: "restriction",
           restriction: "enters-play-exerted",
           target: "SELF",
-          type: "restriction",
         },
         type: "conditional",
       },

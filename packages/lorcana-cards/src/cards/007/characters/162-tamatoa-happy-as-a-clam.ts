@@ -5,11 +5,11 @@ export const tamatoaHappyAsAClam: CharacterCard = {
     {
       effect: {
         target: {
-          cardTypes: ["item"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["item"],
         },
         type: "return-to-hand",
       },
@@ -27,10 +27,10 @@ export const tamatoaHappyAsAClam: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "play-card",
+          from: "hand",
           cardType: "item",
           cost: "free",
-          from: "hand",
-          type: "play-card",
         },
         type: "optional",
       },

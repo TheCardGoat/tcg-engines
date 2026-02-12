@@ -6,22 +6,22 @@ export const promisingLead: ActionCard = {
       effect: {
         steps: [
           {
-            modifier: 1,
+            type: "modify-stat",
             stat: "lore",
+            modifier: 1,
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "modify-stat",
           },
           {
-            duration: "this-turn",
+            type: "gain-keyword",
             keyword: "Support",
             target: "SELF",
-            type: "gain-keyword",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

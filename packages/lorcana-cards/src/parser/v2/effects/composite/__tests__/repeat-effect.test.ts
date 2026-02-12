@@ -14,8 +14,8 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
-      const { effect } = result as Effect & { effect: Effect };
+      const {times} = (result as Effect & { times: number });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(times).toBe(3);
       expect(effect.type).toBe("draw");
     });
@@ -25,8 +25,8 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
-      const { effect } = result as Effect & { effect: Effect };
+      const {times} = (result as Effect & { times: number });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(times).toBe(2);
       expect(effect.type).toBe("deal-damage");
     });
@@ -36,8 +36,8 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
-      const { effect } = result as Effect & { effect: Effect };
+      const {times} = (result as Effect & { times: number });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(times).toBe(5);
       expect(effect.type).toBe("gain-lore");
     });
@@ -47,7 +47,7 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
+      const {times} = (result as Effect & { times: number });
       expect(times).toBe(1);
     });
 
@@ -56,7 +56,7 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
+      const {times} = (result as Effect & { times: number });
       expect(times).toBe(10);
     });
   });
@@ -67,8 +67,8 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
-      const { effect } = result as Effect & { effect: Effect };
+      const {times} = (result as Effect & { times: number });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(times).toBe(3);
       expect(effect.type).toBe("draw");
     });
@@ -78,8 +78,8 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
-      const { effect } = result as Effect & { effect: Effect };
+      const {times} = (result as Effect & { times: number });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(times).toBe(2);
       expect(effect.type).toBe("deal-damage");
     });
@@ -89,8 +89,8 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
-      const { effect } = result as Effect & { effect: Effect };
+      const {times} = (result as Effect & { times: number });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(times).toBe(4);
       expect(effect.type).toBe("gain-lore");
     });
@@ -100,7 +100,7 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
+      const {times} = (result as Effect & { times: number });
       expect(times).toBe(1);
     });
   });
@@ -111,7 +111,7 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
+      const {times} = (result as Effect & { times: number });
       expect(times).toBe(3);
     });
 
@@ -120,7 +120,7 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
+      const {times} = (result as Effect & { times: number });
       expect(times).toBe(3);
     });
 
@@ -191,7 +191,7 @@ describe("repeatEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("repeat");
-      const { times } = result as Effect & { times: number };
+      const {times} = (result as Effect & { times: number });
       expect(times).toBe(3);
     });
 
@@ -221,14 +221,14 @@ describe("repeatEffectParser", () => {
     it("parses single digit repeat count", () => {
       const result = repeatEffectParser.parse("draw 1 card, 1 time");
 
-      const { times } = result as Effect & { times: number };
+      const {times} = (result as Effect & { times: number });
       expect(times).toBe(1);
     });
 
     it("parses double digit repeat count", () => {
       const result = repeatEffectParser.parse("draw 1 card, 15 times");
 
-      const { times } = result as Effect & { times: number };
+      const {times} = (result as Effect & { times: number });
       expect(times).toBe(15);
     });
 
@@ -244,7 +244,7 @@ describe("repeatEffectParser", () => {
       const result = repeatEffectParser.parse("discard 1 card, 2 times");
 
       expect(result).not.toBeNull();
-      const { effect } = result as Effect & { effect: Effect };
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("discard");
     });
 
@@ -252,7 +252,7 @@ describe("repeatEffectParser", () => {
       const result = repeatEffectParser.parse("exert chosen character, 2 times");
 
       expect(result).not.toBeNull();
-      const { effect } = result as Effect & { effect: Effect };
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("exert");
     });
 
@@ -260,7 +260,7 @@ describe("repeatEffectParser", () => {
       const result = repeatEffectParser.parse("banish chosen character, 3 times");
 
       expect(result).not.toBeNull();
-      const { effect } = result as Effect & { effect: Effect };
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("banish");
     });
   });

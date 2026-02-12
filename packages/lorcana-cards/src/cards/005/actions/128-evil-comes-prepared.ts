@@ -5,12 +5,12 @@ export const evilComesPrepared: ActionCard = {
     {
       effect: {
         condition: {
-          expression: "a Villain character is chosen",
           type: "if",
+          expression: "a Villain character is chosen",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

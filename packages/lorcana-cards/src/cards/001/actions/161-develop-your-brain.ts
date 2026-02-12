@@ -6,8 +6,8 @@ export const developYourBrain: ActionCard = {
       effect: {
         amount: 2,
         destinations: [
-          { max: 1, min: 1, zone: "hand" },
-          { remainder: true, zone: "deck-bottom" },
+          { zone: "hand", min: 1, max: 1 },
+          { zone: "deck-bottom", remainder: true },
         ],
         type: "scry",
       },

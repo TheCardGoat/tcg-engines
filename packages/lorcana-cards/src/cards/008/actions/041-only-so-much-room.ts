@@ -6,19 +6,19 @@ export const onlySoMuchRoom: ActionCard = {
       effect: {
         steps: [
           {
+            type: "return-to-hand",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "return-to-hand",
           },
           {
-            cardType: "character",
-            target: "CONTROLLER",
             type: "return-from-discard",
+            target: "CONTROLLER",
+            cardType: "character",
           },
         ],
         type: "sequence",

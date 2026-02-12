@@ -23,11 +23,11 @@ export const inkrunner: ItemCard = {
         duration: "this-turn",
         keyword: "Alert",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "gain-keyword",
       },

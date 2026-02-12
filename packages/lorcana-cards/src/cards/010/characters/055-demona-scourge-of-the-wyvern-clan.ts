@@ -6,16 +6,16 @@ export const demonaScourgeOfTheWyvernClan: CharacterCard = {
       effect: {
         steps: [
           {
-            target: {
-              count: "all",
-              filter: [{ owner: "opponent", type: "owner" }],
-              selector: "all",
-            },
             type: "exert",
+            target: {
+              selector: "all",
+              count: "all",
+              filter: [{ type: "owner", owner: "opponent" }],
+            },
           },
           {
-            size: 3,
             type: "draw-until-hand-size",
+            size: 3,
           },
         ],
         type: "sequence",

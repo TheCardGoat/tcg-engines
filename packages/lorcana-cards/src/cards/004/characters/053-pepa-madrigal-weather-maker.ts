@@ -6,10 +6,10 @@ export const pepaMadrigalWeatherMaker: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          duration: "until-start-of-next-turn",
+          type: "restriction",
           restriction: "cant-ready",
           target: "SELF",
-          type: "restriction",
+          duration: "until-start-of-next-turn",
         },
         type: "optional",
       },

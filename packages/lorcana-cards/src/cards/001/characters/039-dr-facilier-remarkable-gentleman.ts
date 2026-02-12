@@ -6,12 +6,12 @@ export const drFacilierRemarkableGentleman: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "scry",
           amount: 2,
           destinations: [
-            { max: 1, min: 1, zone: "deck-top" },
-            { remainder: true, zone: "deck-bottom" },
+            { zone: "deck-top", min: 1, max: 1 },
+            { zone: "deck-bottom", remainder: true },
           ],
-          type: "scry",
         },
         type: "optional",
       },
@@ -21,8 +21,8 @@ export const drFacilierRemarkableGentleman: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "song",
           controller: "you",
+          cardType: "song",
         },
         timing: "whenever",
       },

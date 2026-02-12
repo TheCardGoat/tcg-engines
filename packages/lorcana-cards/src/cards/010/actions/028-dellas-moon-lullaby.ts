@@ -6,15 +6,15 @@ export const dellasMoonLullaby: ActionCard = {
       effect: {
         steps: [
           {
-            modifier: -2,
-            stat: "strength",
-            target: "CHOSEN_CHARACTER",
             type: "modify-stat",
+            stat: "strength",
+            modifier: -2,
+            target: "CHOSEN_CHARACTER",
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

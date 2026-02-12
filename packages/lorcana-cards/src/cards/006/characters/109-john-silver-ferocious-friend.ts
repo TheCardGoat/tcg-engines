@@ -6,25 +6,25 @@ export const johnSilverFerociousFriend: CharacterCard = {
       effect: {
         steps: [
           {
-            chooser: "CONTROLLER",
+            type: "optional",
             effect: {
+              type: "deal-damage",
               amount: 1,
               target: {
-                cardTypes: ["character"],
+                selector: "all",
                 count: "all",
                 owner: "any",
-                selector: "all",
                 zones: ["play"],
+                cardTypes: ["character"],
               },
-              type: "deal-damage",
             },
-            type: "optional",
+            chooser: "CONTROLLER",
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

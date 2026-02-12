@@ -5,12 +5,13 @@ export const coldstoneReincarnatedCyborg: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have 2 or more Gargoyle character cards in your discard",
           type: "if",
+          expression:
+            "you have 2 or more Gargoyle character cards in your discard",
         },
         then: {
-          amount: 2,
           type: "gain-lore",
+          amount: 2,
         },
         type: "conditional",
       },

@@ -5,19 +5,19 @@ export const dopeyKnightApprentice: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have another Knight character in play",
           type: "if",
+          expression: "you have another Knight character in play",
         },
         then: {
+          type: "deal-damage",
           amount: 1,
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "deal-damage",
         },
         type: "conditional",
       },

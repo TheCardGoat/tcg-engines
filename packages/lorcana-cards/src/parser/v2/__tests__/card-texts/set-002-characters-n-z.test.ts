@@ -517,7 +517,6 @@ describe("Set 002 Card Text Parser Tests - Characters N Z", () => {
         condition: {
           name: "Pain",
           target: "CHOSEN_CHARACTER",
-          type: "name",
         },
         ifFalse: {
           duration: "this-turn",

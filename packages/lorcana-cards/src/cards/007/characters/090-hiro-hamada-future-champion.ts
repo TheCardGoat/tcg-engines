@@ -14,9 +14,9 @@ export const hiroHamadaFutureChampion: CharacterCard = {
       trigger: {
         event: "play",
         on: {
+          controller: "you",
           cardType: "character",
           classification: "Floodborn",
-          controller: "you",
         },
         timing: "when",
       },

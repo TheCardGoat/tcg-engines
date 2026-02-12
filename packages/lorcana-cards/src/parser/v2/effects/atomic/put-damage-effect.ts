@@ -37,7 +37,10 @@ function convertToCharacterTarget(simpleTarget: {
   const cardType = cardTypeMap[type.toLowerCase()] || type;
 
   // Map modifier to selector and owner
-  const modifierMap: Record<string, { selector: string; owner: string; count: number | "all" }> = {
+  const modifierMap: Record<
+    string,
+    { selector: string; owner: string; count: number | "all" }
+  > = {
     all: { count: "all", owner: "any", selector: "all" },
     an: { count: 1, owner: "any", selector: "chosen" },
     another: { count: 1, owner: "any", selector: "chosen" },

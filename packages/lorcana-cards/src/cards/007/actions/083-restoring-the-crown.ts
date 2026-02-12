@@ -6,18 +6,18 @@ export const restoringTheCrown: ActionCard = {
       effect: {
         steps: [
           {
+            type: "exert",
             target: {
-              cardTypes: ["character"],
+              selector: "all",
               count: "all",
               owner: "opponent",
-              selector: "all",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "exert",
           },
           {
-            amount: 2,
             type: "gain-lore",
+            amount: 2,
           },
         ],
         type: "sequence",

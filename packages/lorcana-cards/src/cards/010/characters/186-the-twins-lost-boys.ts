@@ -5,19 +5,19 @@ export const theTwinsLostBoys: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a location in play",
           type: "if",
+          expression: "you have a location in play",
         },
         then: {
+          type: "deal-damage",
           amount: 2,
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "deal-damage",
         },
         type: "conditional",
       },

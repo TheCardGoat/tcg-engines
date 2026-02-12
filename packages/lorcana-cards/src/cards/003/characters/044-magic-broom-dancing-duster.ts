@@ -5,14 +5,14 @@ export const magicBroomDancingDuster: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a Sorcerer character in play",
           type: "if",
+          expression: "you have a Sorcerer character in play",
         },
         then: {
-          duration: "until-start-of-next-turn",
+          type: "restriction",
           restriction: "cant-ready",
           target: "SELF",
-          type: "restriction",
+          duration: "until-start-of-next-turn",
         },
         type: "conditional",
       },

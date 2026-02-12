@@ -98,5 +98,6 @@ export const inkwellEffectParser: EffectParser = {
     return null;
   },
 
-  pattern: /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+|their\s+player's\s+)?inkwell/i,
+  pattern:
+    /(?:put|add)(?:.*?)into\s+(?:your\s+|their\s+|their\s+player's\s+)?inkwell/i,
 };

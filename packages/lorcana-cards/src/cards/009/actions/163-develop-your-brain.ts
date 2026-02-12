@@ -6,20 +6,20 @@ export const developYourBrain: ActionCard = {
       effect: {
         steps: [
           {
+            type: "scry",
             amount: 2,
+            target: "CONTROLLER",
             destinations: [
               {
-                ordering: "player-choice",
-                remainder: true,
                 zone: "deck-bottom",
+                remainder: true,
+                ordering: "player-choice",
               },
             ],
-            target: "CONTROLLER",
-            type: "scry",
           },
           {
-            target: "CHOSEN_CHARACTER",
             type: "put-on-bottom",
+            target: "CHOSEN_CHARACTER",
           },
         ],
         type: "sequence",

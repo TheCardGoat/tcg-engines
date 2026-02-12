@@ -5,12 +5,12 @@ export const madDogKarnagesFirstMate: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character named Don Karnage in play",
           type: "if",
+          expression: "you have a character named Don Karnage in play",
         },
         then: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "conditional",
       },

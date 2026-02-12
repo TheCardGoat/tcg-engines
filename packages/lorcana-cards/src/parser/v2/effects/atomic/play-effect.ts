@@ -94,7 +94,8 @@ function parseFromText(text: string): PlayCardEffect | null {
  * Play effect parser implementation
  */
 export const playEffectParser: EffectParser = {
-  description: "Parses play card effects (e.g., 'play a character for free', 'play from discard')",
+  description:
+    "Parses play card effects (e.g., 'play a character for free', 'play from discard')",
   parse: (input: CstNode | string): PlayCardEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);
@@ -104,5 +105,6 @@ export const playEffectParser: EffectParser = {
     return null;
   },
 
-  pattern: /play\s+(?:a\s+)?(?:character|action|item|card)|play\s+.*?from\s+discard/i,
+  pattern:
+    /play\s+(?:a\s+)?(?:character|action|item|card)|play\s+.*?from\s+discard/i,
 };

@@ -6,18 +6,18 @@ export const theLamp: ItemCard = {
       cost: { exert: true },
       effect: {
         condition: {
-          expression: "you have a character named Jafar in play",
           type: "if",
+          expression: "you have a character named Jafar in play",
         },
         then: {
+          type: "return-to-hand",
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "return-to-hand",
         },
         type: "conditional",
       },

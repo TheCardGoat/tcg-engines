@@ -5,13 +5,13 @@ export const chiefBogoCommandingOfficer: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "it's a character card with cost 5 or less",
           type: "if",
+          expression: "it's a character card with cost 5 or less",
         },
         then: {
-          cost: "free",
-          from: "hand",
           type: "play-card",
+          from: "hand",
+          cost: "free",
         },
         type: "conditional",
       },

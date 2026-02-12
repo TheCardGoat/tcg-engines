@@ -6,20 +6,20 @@ export const soMuchToGive: ActionCard = {
       effect: {
         steps: [
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
           {
+            type: "gain-keyword",
             keyword: "Bodyguard",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "gain-keyword",
           },
         ],
         type: "sequence",

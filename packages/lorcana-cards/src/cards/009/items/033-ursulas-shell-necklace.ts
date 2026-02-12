@@ -6,9 +6,9 @@ export const ursulasShellNecklace: ItemCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "optional",
       },
@@ -18,8 +18,8 @@ export const ursulasShellNecklace: ItemCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "song",
           controller: "you",
+          cardType: "song",
         },
         timing: "whenever",
       },

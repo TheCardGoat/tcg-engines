@@ -24,9 +24,9 @@ export const blueFairyRewardingGoodDeeds: CharacterCard = {
       trigger: {
         event: "play",
         on: {
+          controller: "you",
           cardType: "character",
           classification: "Floodborn",
-          controller: "you",
         },
         timing: "whenever",
       },

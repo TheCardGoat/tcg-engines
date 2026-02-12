@@ -5,18 +5,18 @@ export const honeyLemonCostumedCatalyst: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you used Shift to play them",
           type: "if",
+          expression: "you used Shift to play them",
         },
         then: {
+          type: "return-to-hand",
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "return-to-hand",
         },
         type: "conditional",
       },
@@ -26,9 +26,9 @@ export const honeyLemonCostumedCatalyst: CharacterCard = {
       trigger: {
         event: "play",
         on: {
+          controller: "you",
           cardType: "character",
           classification: "Floodborn",
-          controller: "you",
         },
         timing: "whenever",
       },

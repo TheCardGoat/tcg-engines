@@ -5,13 +5,13 @@ export const liloCausingAnUproar: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you've played 3 or more actions this turn",
           type: "if",
+          expression: "you've played 3 or more actions this turn",
         },
         then: {
-          cost: "free",
-          from: "hand",
           type: "play-card",
+          from: "hand",
+          cost: "free",
         },
         type: "conditional",
       },
@@ -23,14 +23,14 @@ export const liloCausingAnUproar: CharacterCard = {
       effect: {
         steps: [
           {
-            from: "hand",
             type: "play-card",
+            from: "hand",
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

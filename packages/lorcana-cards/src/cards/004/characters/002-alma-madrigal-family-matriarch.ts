@@ -6,9 +6,9 @@ export const almaMadrigalFamilyMatriarch: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "search-deck",
           putInto: "hand",
           shuffle: true,
-          type: "search-deck",
         },
         type: "optional",
       },

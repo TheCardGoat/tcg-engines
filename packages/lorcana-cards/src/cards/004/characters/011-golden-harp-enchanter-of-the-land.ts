@@ -5,18 +5,18 @@ export const goldenHarpEnchanterOfTheLand: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you didn't play a song this turn",
           type: "if",
+          expression: "you didn't play a song this turn",
         },
         then: {
+          type: "banish",
           target: {
-            cardTypes: ["character"],
+            selector: "self",
             count: 1,
             owner: "any",
-            selector: "self",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "banish",
         },
         type: "conditional",
       },

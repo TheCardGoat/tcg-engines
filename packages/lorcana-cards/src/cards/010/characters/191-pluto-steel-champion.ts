@@ -21,14 +21,14 @@ export const plutoSteelChampion: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "banish",
           target: {
-            cardTypes: ["item"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["item"],
           },
-          type: "banish",
         },
         type: "optional",
       },

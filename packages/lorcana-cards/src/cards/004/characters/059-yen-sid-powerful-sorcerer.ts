@@ -5,14 +5,14 @@ export const yenSidPowerfulSorcerer: CharacterCard = {
     {
       effect: {
         condition: {
-          controller: "you",
-          name: "Magic Broom in play",
           type: "has-named-character",
+          name: "Magic Broom in play",
+          controller: "you",
         },
         then: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },

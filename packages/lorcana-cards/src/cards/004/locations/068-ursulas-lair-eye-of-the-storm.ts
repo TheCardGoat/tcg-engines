@@ -6,8 +6,8 @@ export const ursulasLairEyeOfTheStorm: LocationCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          target: "CHOSEN_CHARACTER",
           type: "return-to-hand",
+          target: "CHOSEN_CHARACTER",
         },
         type: "optional",
       },

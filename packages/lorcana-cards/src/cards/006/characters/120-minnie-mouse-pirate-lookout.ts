@@ -6,9 +6,9 @@ export const minnieMousePirateLookout: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          cardType: "location",
-          target: "CONTROLLER",
           type: "return-from-discard",
+          target: "CONTROLLER",
+          cardType: "location",
         },
         type: "optional",
       },

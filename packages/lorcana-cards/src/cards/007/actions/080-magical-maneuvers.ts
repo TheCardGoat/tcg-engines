@@ -6,24 +6,24 @@ export const magicalManeuvers: ActionCard = {
       effect: {
         steps: [
           {
+            type: "return-to-hand",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "return-to-hand",
           },
           {
+            type: "exert",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "exert",
           },
         ],
         type: "sequence",

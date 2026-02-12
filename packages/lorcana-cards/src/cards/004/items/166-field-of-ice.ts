@@ -15,8 +15,8 @@ export const fieldOfIce: ItemCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "you",
+          cardType: "character",
         },
         timing: "whenever",
       },

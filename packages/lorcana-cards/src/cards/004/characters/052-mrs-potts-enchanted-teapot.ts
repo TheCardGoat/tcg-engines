@@ -5,14 +5,14 @@ export const mrsPottsEnchantedTeapot: CharacterCard = {
     {
       effect: {
         condition: {
-          controller: "you",
-          name: "Lumiere or Cogsworth in play",
           type: "has-named-character",
+          name: "Lumiere or Cogsworth in play",
+          controller: "you",
         },
         then: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },

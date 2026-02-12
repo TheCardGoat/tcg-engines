@@ -6,14 +6,14 @@ export const hiramFlavershamToymaker: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "banish",
           target: {
-            cardTypes: ["item"],
+            selector: "all",
             count: "all",
             owner: "you",
-            selector: "all",
             zones: ["play"],
+            cardTypes: ["item"],
           },
-          type: "banish",
         },
         type: "optional",
       },

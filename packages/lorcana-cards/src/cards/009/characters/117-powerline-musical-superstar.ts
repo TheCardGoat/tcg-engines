@@ -5,14 +5,14 @@ export const powerlineMusicalSuperstar: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you've played a song this turn",
           type: "if",
+          expression: "you've played a song this turn",
         },
         then: {
-          duration: "this-turn",
+          type: "gain-keyword",
           keyword: "Rush",
           target: "SELF",
-          type: "gain-keyword",
+          duration: "this-turn",
         },
         type: "conditional",
       },

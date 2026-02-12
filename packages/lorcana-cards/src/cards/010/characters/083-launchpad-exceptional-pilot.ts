@@ -6,14 +6,14 @@ export const launchpadExceptionalPilot: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "banish",
           target: {
-            cardTypes: ["location"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["location"],
           },
-          type: "banish",
         },
         type: "optional",
       },

@@ -6,11 +6,11 @@ export const mauisFishHook: ItemCard = {
       effect: {
         keyword: "Evasive",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "gain-keyword",
       },
@@ -24,11 +24,11 @@ export const mauisFishHook: ItemCard = {
         modifier: 3,
         stat: "strength",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "modify-stat",
       },

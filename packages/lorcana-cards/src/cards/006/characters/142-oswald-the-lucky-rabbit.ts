@@ -5,13 +5,13 @@ export const oswaldTheLuckyRabbit: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "it’s an item card",
           type: "if",
+          expression: "it’s an item card",
         },
         then: {
+          type: "restriction",
           restriction: "enters-play-exerted",
           target: "SELF",
-          type: "restriction",
         },
         type: "conditional",
       },

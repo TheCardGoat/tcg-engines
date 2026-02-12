@@ -7,14 +7,14 @@ export const luckyThe15thPuppy: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "put-on-bottom",
           target: {
-            cardTypes: ["character"],
+            selector: "all",
             count: "all",
             owner: "any",
-            selector: "all",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "put-on-bottom",
         },
         type: "optional",
       },
@@ -25,15 +25,15 @@ export const luckyThe15thPuppy: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have 4 or more other characters in play",
           type: "if",
+          expression: "you have 4 or more other characters in play",
         },
         then: {
-          duration: "this-turn",
-          modifier: 1,
-          stat: "lore",
-          target: "YOUR_CHARACTERS",
           type: "modify-stat",
+          stat: "lore",
+          modifier: 1,
+          target: "YOUR_CHARACTERS",
+          duration: "this-turn",
         },
         type: "conditional",
       },

@@ -6,27 +6,27 @@ export const lastditchEffort: ActionCard = {
       effect: {
         steps: [
           {
+            type: "exert",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "opponent",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "exert",
           },
           {
-            duration: "this-turn",
+            type: "gain-keyword",
             keyword: "Challenger",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "gain-keyword",
             value: 2,
+            duration: "this-turn",
           },
         ],
         type: "sequence",

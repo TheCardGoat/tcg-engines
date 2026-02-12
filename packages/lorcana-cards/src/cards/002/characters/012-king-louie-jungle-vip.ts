@@ -6,16 +6,16 @@ export const kingLouieJungleVip: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "remove-damage",
           amount: 2,
+          upTo: true,
           target: {
-            cardTypes: ["character"],
+            selector: "self",
             count: 1,
             owner: "any",
-            selector: "self",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "remove-damage",
-          upTo: true,
         },
         type: "optional",
       },

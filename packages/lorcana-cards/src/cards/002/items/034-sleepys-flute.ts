@@ -6,12 +6,12 @@ export const sleepysFlute: ItemCard = {
       cost: { exert: true },
       effect: {
         condition: {
-          expression: "you played a song this turn",
           type: "if",
+          expression: "you played a song this turn",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

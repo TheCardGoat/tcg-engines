@@ -12,8 +12,8 @@ export const giantCobraGhostlySerpent: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 2,
           type: "gain-lore",
+          amount: 2,
         },
         type: "optional",
       },

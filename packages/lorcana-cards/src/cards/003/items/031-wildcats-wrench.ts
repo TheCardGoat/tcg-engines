@@ -7,11 +7,11 @@ export const wildcatsWrench: ItemCard = {
       effect: {
         amount: 2,
         target: {
-          cardTypes: ["location"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["location"],
         },
         type: "remove-damage",
         upTo: true,

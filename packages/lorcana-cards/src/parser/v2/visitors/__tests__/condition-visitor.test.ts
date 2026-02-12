@@ -395,7 +395,9 @@ describe("VisitorCondition Visitor", () => {
     it("returns null for non-matching text", () => {
       // Note: Text must not contain "if", "during", "at", "with", "without"
       // As these are condition keywords that trigger pattern matching
-      const condition = parseConditionFromText("invalid text for testing purposes");
+      const condition = parseConditionFromText(
+        "invalid text for testing purposes",
+      );
 
       expect(condition).toBeNull();
     });

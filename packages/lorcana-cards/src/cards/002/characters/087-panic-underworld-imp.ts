@@ -5,14 +5,14 @@ export const panicUnderworldImp: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "the chosen character is named Pain",
           type: "if",
+          expression: "the chosen character is named Pain",
         },
         then: {
-          modifier: 4,
-          stat: "strength",
-          target: "CHOSEN_CHARACTER",
           type: "modify-stat",
+          stat: "strength",
+          modifier: 4,
+          target: "CHOSEN_CHARACTER",
         },
         type: "conditional",
       },

@@ -6,31 +6,31 @@ export const tryEverything: ActionCard = {
       effect: {
         steps: [
           {
+            type: "sequence",
             steps: [
               {
+                type: "remove-damage",
                 amount: 3,
+                upTo: true,
                 target: {
-                  cardTypes: ["character"],
+                  selector: "chosen",
                   count: 1,
                   owner: "any",
-                  selector: "chosen",
                   zones: ["play"],
+                  cardTypes: ["character"],
                 },
-                type: "remove-damage",
-                upTo: true,
               },
               {
-                target: "CHOSEN_CHARACTER",
                 type: "ready",
+                target: "CHOSEN_CHARACTER",
               },
             ],
-            type: "sequence",
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

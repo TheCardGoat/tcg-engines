@@ -602,8 +602,8 @@ describe("Set 007 Card Text Parser Tests - Characters N Z", () => {
       effect: {
         condition: {
           comparison: "greater",
-          left: { controller: "you", type: "cards-in-hand" },
-          right: { controller: "opponent", type: "cards-in-hand" },
+          left: { type: "cards-in-hand", controller: "you" },
+          right: { type: "cards-in-hand", controller: "opponent" },
           type: "comparison",
         },
         then: {

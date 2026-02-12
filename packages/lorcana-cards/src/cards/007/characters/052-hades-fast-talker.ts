@@ -6,15 +6,15 @@ export const hadesFastTalker: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "deal-damage",
           amount: 2,
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "deal-damage",
         },
         type: "optional",
       },

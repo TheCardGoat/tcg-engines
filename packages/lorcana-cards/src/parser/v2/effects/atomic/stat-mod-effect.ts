@@ -103,7 +103,12 @@ function parseFromText(text: string): ModifyStatEffect | null {
     const modifier = value === D_PLACEHOLDER ? D_PLACEHOLDER : sign * value;
 
     const statSymbol = match[3];
-    const stat = statSymbol === "S" ? "strength" : (statSymbol === "W" ? "willpower" : "lore");
+    const stat =
+      statSymbol === "S"
+        ? "strength"
+        : (statSymbol === "W"
+          ? "willpower"
+          : "lore");
 
     // Try to determine target from text
     // Order matters: check more specific patterns first
@@ -222,5 +227,6 @@ export const statModEffectParser: EffectParser = {
     );
   },
 
-  pattern: /gets?\s+([+-]?\d+|[+-]?\{d\})\s+(?:\{([SLW])\}|(strength|willpower|lore))/i,
+  pattern:
+    /gets?\s+([+-]?\d+|[+-]?\{d\})\s+(?:\{([SLW])\}|(strength|willpower|lore))/i,
 };

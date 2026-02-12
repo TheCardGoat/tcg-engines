@@ -6,14 +6,14 @@ export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
       effect: {
         steps: [
           {
+            type: "restriction",
             restriction: "enters-play-exerted",
             target: "SELF",
-            type: "restriction",
           },
           {
+            type: "restriction",
             restriction: "cant-ready",
             target: "SELF",
-            type: "restriction",
           },
         ],
         type: "sequence",
@@ -27,14 +27,14 @@ export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "ready",
           target: {
-            cardTypes: ["character"],
+            selector: "self",
             count: 1,
             owner: "any",
-            selector: "self",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "ready",
         },
         type: "optional",
       },

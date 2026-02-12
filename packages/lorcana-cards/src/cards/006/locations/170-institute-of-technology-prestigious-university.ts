@@ -17,12 +17,12 @@ export const instituteOfTechnologyPrestigiousUniversity: LocationCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character here",
           type: "if",
+          expression: "you have a character here",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

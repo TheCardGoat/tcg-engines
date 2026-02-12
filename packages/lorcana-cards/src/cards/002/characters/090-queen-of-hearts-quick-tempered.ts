@@ -6,11 +6,11 @@ export const queenOfHeartsQuicktempered: CharacterCard = {
       effect: {
         amount: 1,
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "opponent",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "deal-damage",
       },

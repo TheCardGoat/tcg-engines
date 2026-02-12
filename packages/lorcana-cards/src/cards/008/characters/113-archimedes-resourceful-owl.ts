@@ -6,14 +6,14 @@ export const archimedesResourcefulOwl: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "banish",
           target: {
-            cardTypes: ["item"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["item"],
           },
-          type: "banish",
         },
         type: "optional",
       },
@@ -31,10 +31,10 @@ export const archimedesResourcefulOwl: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 1,
-          chosen: true,
-          target: "CONTROLLER",
           type: "discard",
+          amount: 1,
+          target: "CONTROLLER",
+          chosen: true,
         },
         type: "optional",
       },

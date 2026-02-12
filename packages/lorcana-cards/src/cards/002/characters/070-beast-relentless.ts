@@ -6,14 +6,14 @@ export const beastRelentless: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "ready",
           target: {
-            cardTypes: ["character"],
+            selector: "self",
             count: 1,
             owner: "any",
-            selector: "self",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "ready",
         },
         type: "optional",
       },

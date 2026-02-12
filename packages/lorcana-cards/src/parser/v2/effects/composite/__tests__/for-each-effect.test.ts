@@ -14,8 +14,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const { counter } = result as Effect & { counter: { type: string } };
-      const { effect } = result as Effect & { effect: Effect };
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("characters");
       expect(effect.type).toBe("gain-lore");
     });
@@ -25,8 +25,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const { counter } = result as Effect & { counter: { type: string } };
-      const { effect } = result as Effect & { effect: Effect };
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("characters");
       expect(effect.type).toBe("draw");
     });
@@ -36,8 +36,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const { counter } = result as Effect & { counter: { type: string } };
-      const { effect } = result as Effect & { effect: Effect };
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("cards-in-hand");
       expect(effect.type).toBe("gain-lore");
     });
@@ -47,8 +47,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const { counter } = result as Effect & { counter: { type: string } };
-      const { effect } = result as Effect & { effect: Effect };
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("damage-on-target");
       expect(effect.type).toBe("draw");
     });
@@ -58,8 +58,8 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const { counter } = result as Effect & { counter: { type: string } };
-      const { effect } = result as Effect & { effect: Effect };
+      const {counter} = (result as Effect & { counter: { type: string } });
+      const {effect} = (result as Effect & { effect: Effect });
       expect(counter.type).toBe("items");
       expect(effect.type).toBe("gain-lore");
     });
@@ -71,7 +71,7 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const { effect } = result as Effect & { effect: Effect };
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("gain-lore");
     });
 
@@ -142,7 +142,7 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const { effect } = result as Effect & { effect: Effect };
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("gain-lore");
     });
 
@@ -158,7 +158,7 @@ describe("forEachEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("for-each");
-      const { counter } = result as Effect & { counter: { type: string } };
+      const {counter} = (result as Effect & { counter: { type: string } });
       expect(counter.type).toBe("characters");
     });
   });
@@ -168,7 +168,7 @@ describe("forEachEffectParser", () => {
       const result = forEachEffectParser.parse("for each character you control, draw 1 card");
 
       expect(result).not.toBeNull();
-      const { effect } = result as Effect & { effect: Effect };
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("draw");
     });
 
@@ -176,7 +176,7 @@ describe("forEachEffectParser", () => {
       const result = forEachEffectParser.parse("for each character, discard 1 card");
 
       expect(result).not.toBeNull();
-      const { effect } = result as Effect & { effect: Effect };
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("discard");
     });
 
@@ -186,7 +186,7 @@ describe("forEachEffectParser", () => {
       );
 
       expect(result).not.toBeNull();
-      const { effect } = result as Effect & { effect: Effect };
+      const {effect} = (result as Effect & { effect: Effect });
       expect(effect.type).toBe("deal-damage");
     });
   });
@@ -195,7 +195,9 @@ describe("forEachEffectParser", () => {
     it("parses simple character counter", () => {
       const result = forEachEffectParser.parse("for each character, gain 1 lore");
 
-      const { counter } = result as Effect & { counter: { type: string; controller?: string } };
+      const {counter} = (
+        result as Effect & { counter: { type: string; controller?: string } }
+      );
       expect(counter.type).toBe("characters");
       expect(counter.controller).toBe("you"); // Defaults to "you" when no controller specified
     });
@@ -203,7 +205,9 @@ describe("forEachEffectParser", () => {
     it("parses character counter with controller", () => {
       const result = forEachEffectParser.parse("for each other character you control, gain 1 lore");
 
-      const { counter } = result as Effect & { counter: { type: string; controller?: string } };
+      const {counter} = (
+        result as Effect & { counter: { type: string; controller?: string } }
+      );
       expect(counter.type).toBe("characters");
       expect(counter.controller).toBe("you");
     });
@@ -211,7 +215,9 @@ describe("forEachEffectParser", () => {
     it("parses cards in discard counter", () => {
       const result = forEachEffectParser.parse("for each card in your discard, gain 1 lore");
 
-      const { counter } = result as Effect & { counter: { type: string; controller?: string } };
+      const {counter} = (
+        result as Effect & { counter: { type: string; controller?: string } }
+      );
       expect(counter.type).toBe("cards-in-discard");
       expect(counter.controller).toBe("you");
     });

@@ -6,11 +6,11 @@ export const princeJohnFraidycat: CharacterCard = {
       effect: {
         amount: 1,
         target: {
-          cardTypes: ["character"],
+          selector: "self",
           count: 1,
           owner: "any",
-          selector: "self",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "deal-damage",
       },
@@ -20,8 +20,8 @@ export const princeJohnFraidycat: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "opponent",
+          cardType: "character",
         },
         timing: "whenever",
       },

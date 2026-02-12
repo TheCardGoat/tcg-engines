@@ -6,14 +6,14 @@ export const potionOfMight: ItemCard = {
       cost: { exert: true },
       effect: {
         condition: {
-          expression: "a Villain character is chosen",
           type: "if",
+          expression: "a Villain character is chosen",
         },
         then: {
-          modifier: 4,
-          stat: "strength",
-          target: "CHOSEN_CHARACTER",
           type: "modify-stat",
+          stat: "strength",
+          modifier: 4,
+          target: "CHOSEN_CHARACTER",
         },
         type: "conditional",
       },

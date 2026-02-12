@@ -7,9 +7,7 @@ let allCardsByIdCache: Record<string, CharacterCard | ActionCard | ItemCard | Lo
 export async function getAllCards(): Promise<
   (CharacterCard | ActionCard | ItemCard | LocationCard)[]
 > {
-  if (allCardsCache) {
-    return allCardsCache;
-  }
+  if (allCardsCache) {return allCardsCache;}
   const { allCards } = await import("./cards");
   allCardsCache = allCards;
   return allCardsCache;
@@ -18,9 +16,7 @@ export async function getAllCards(): Promise<
 export async function getAllCardsById(): Promise<
   Record<string, CharacterCard | ActionCard | ItemCard | LocationCard>
 > {
-  if (allCardsByIdCache) {
-    return allCardsByIdCache;
-  }
+  if (allCardsByIdCache) {return allCardsByIdCache;}
   const { allCardsById } = await import("./cards");
   allCardsByIdCache = allCardsById;
   return allCardsByIdCache;

@@ -12,6 +12,18 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./effects": {
+      "types": "./src/effects/index.ts",
+      "default": "./src/effects/index.ts"
+    },
+    "./cards": {
+      "types": "./src/cards/card-types.ts",
+      "default": "./src/cards/card-types.ts"
+    },
+    "./targeting": {
+      "types": "./src/targeting/index.ts",
+      "default": "./src/targeting/index.ts"
     }
   },
   "scripts": {

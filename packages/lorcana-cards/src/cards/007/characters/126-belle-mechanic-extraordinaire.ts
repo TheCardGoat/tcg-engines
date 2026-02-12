@@ -24,8 +24,8 @@ export const belleMechanicExtraordinaire: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "optional",
       },

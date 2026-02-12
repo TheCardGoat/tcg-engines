@@ -5,14 +5,14 @@ export const theHornedKingTriumphantGhoul: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "1 or more cards have left a player's discard this turn",
           type: "if",
+          expression: "1 or more cards have left a player's discard this turn",
         },
         then: {
-          modifier: 2,
-          stat: "lore",
-          target: "SELF",
           type: "modify-stat",
+          stat: "lore",
+          modifier: 2,
+          target: "SELF",
         },
         type: "conditional",
       },

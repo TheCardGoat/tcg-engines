@@ -6,10 +6,10 @@ export const calhounBattletested: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 1,
-          chosen: true,
-          target: "CONTROLLER",
           type: "discard",
+          amount: 1,
+          target: "CONTROLLER",
+          chosen: true,
         },
         type: "optional",
       },

@@ -6,15 +6,15 @@ export const sunglasses: ItemCard = {
       effect: {
         steps: [
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
           {
-            amount: 1,
-            chosen: true,
-            target: "CONTROLLER",
             type: "discard",
+            amount: 1,
+            target: "CONTROLLER",
+            chosen: true,
           },
         ],
         type: "sequence",

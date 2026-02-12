@@ -6,7 +6,11 @@
 import { describe, expect, it } from "bun:test";
 import type { CstNode } from "chevrotain";
 import type { Effect } from "../../../types";
-import { type EffectParser, atomicEffectParsers, parseAtomicEffect } from "../index";
+import {
+  type EffectParser,
+  atomicEffectParsers,
+  parseAtomicEffect,
+} from "../index";
 
 describe("Effect Parser Registry", () => {
   describe("atomicEffectParsers array", () => {

@@ -5,13 +5,13 @@ export const bernardOverprepared: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have an Ally character in play",
           type: "if",
+          expression: "you have an Ally character in play",
         },
         then: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },

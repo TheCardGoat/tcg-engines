@@ -6,14 +6,14 @@ export const mrSmeeEfficientCaptain: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "ready",
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "ready",
         },
         type: "optional",
       },
@@ -23,8 +23,8 @@ export const mrSmeeEfficientCaptain: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "action",
           controller: "you",
+          cardType: "action",
         },
         timing: "whenever",
       },

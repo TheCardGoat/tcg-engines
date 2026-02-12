@@ -16,8 +16,8 @@ export const gadgetHackwrenchCreativeThinker: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "item",
           controller: "you",
+          cardType: "item",
         },
         timing: "whenever",
       },

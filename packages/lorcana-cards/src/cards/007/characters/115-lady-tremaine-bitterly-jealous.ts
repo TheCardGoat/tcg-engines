@@ -6,11 +6,11 @@ export const ladyTremaineBitterlyJealous: CharacterCard = {
       cost: { exert: true },
       effect: {
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "return-to-hand",
       },

@@ -5,13 +5,13 @@ export const goliathClanLeader: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have 3 or more cards in your hand",
           type: "if",
+          expression: "you have 3 or more cards in your hand",
         },
         then: {
+          type: "restriction",
           restriction: "cant-ready",
           target: "SELF",
-          type: "restriction",
         },
         type: "conditional",
       },

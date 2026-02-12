@@ -5,12 +5,12 @@ export const pongoDeterminedFather: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "it's a character card",
           type: "if",
+          expression: "it's a character card",
         },
         then: {
-          target: "CHOSEN_CHARACTER",
           type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
         },
         type: "conditional",
       },

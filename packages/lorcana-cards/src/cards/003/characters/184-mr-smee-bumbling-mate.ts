@@ -5,19 +5,20 @@ export const mrSmeeBumblingMate: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "this character is exerted and you don't have a Captain character in play",
           type: "if",
+          expression:
+            "this character is exerted and you don't have a Captain character in play",
         },
         then: {
+          type: "deal-damage",
           amount: 1,
           target: {
-            cardTypes: ["character"],
+            selector: "self",
             count: 1,
             owner: "any",
-            selector: "self",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "deal-damage",
         },
         type: "conditional",
       },

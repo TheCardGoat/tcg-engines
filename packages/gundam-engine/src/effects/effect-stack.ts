@@ -15,8 +15,9 @@
  */
 
 import type { CardId, PlayerId } from "@tcg/core";
+import type { Effect } from "@tcg/gundam-types/effects";
 import type { GundamGameState } from "../types";
-import type { EffectDefinition, EffectInstance, EffectStackState } from "../types/effects";
+import type { EffectInstance, EffectStackState } from "./effect-runtime";
 
 // ============================================================================
 // STACK INITIALIZATION
@@ -366,7 +367,7 @@ export function updateEffectInstance(
  * For now, we store effect definitions here for testing and development.
  * The key format is "cardId:effectId".
  */
-const EFFECT_DEFINITIONS: Record<string, EffectDefinition> = {};
+const EFFECT_DEFINITIONS: Record<string, Effect> = {};
 
 /**
  * Registers an effect definition for a card
@@ -377,7 +378,7 @@ const EFFECT_DEFINITIONS: Record<string, EffectDefinition> = {};
  * @param cardId - Card ID that owns this effect
  * @param effect - Effect definition to register
  */
-export function registerEffectDefinition(cardId: CardId, effect: EffectDefinition): void {
+export function registerEffect(cardId: CardId, effect: Effect): void {
   EFFECT_DEFINITIONS[`${cardId}:${effect.id}`] = effect;
 }
 
@@ -394,17 +395,17 @@ export function registerEffectDefinition(cardId: CardId, effect: EffectDefinitio
  *
  * @example
  * ```typescript
- * const effect = getEffectDefinition(state, "card-1", "deploy-effect");
+ * const effect = getEffect(state, "card-1", "deploy-effect");
  * if (effect) {
  *   console.log(effect.actions);
  * }
  * ```
  */
-export function getEffectDefinition(
+export function getEffect(
   state: GundamGameState,
   cardId: CardId,
   effectId: string,
-): EffectDefinition | undefined {
+): Effect | undefined {
   return EFFECT_DEFINITIONS[`${cardId}:${effectId}`];
 }
 
@@ -413,7 +414,7 @@ export function getEffectDefinition(
  *
  * Used primarily for testing to reset state between tests.
  */
-export function clearEffectDefinitions(): void {
+export function clearEffects(): void {
   for (const key of Object.keys(EFFECT_DEFINITIONS)) {
     delete EFFECT_DEFINITIONS[key];
   }

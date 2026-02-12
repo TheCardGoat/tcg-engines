@@ -5,14 +5,14 @@ export const boltHeadstrongDog: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "he has no damage",
           type: "if",
+          expression: "he has no damage",
         },
         then: {
-          amount: 1,
-          chosen: true,
-          target: "CONTROLLER",
           type: "discard",
+          amount: 1,
+          target: "CONTROLLER",
+          chosen: true,
         },
         type: "conditional",
       },

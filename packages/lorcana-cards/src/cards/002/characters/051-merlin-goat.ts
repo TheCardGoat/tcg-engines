@@ -6,12 +6,12 @@ export const merlinGoat: CharacterCard = {
       effect: {
         steps: [
           {
-            from: "hand",
             type: "play-card",
+            from: "hand",
           },
           {
-            amount: 1,
             type: "gain-lore",
+            amount: 1,
           },
         ],
         type: "sequence",

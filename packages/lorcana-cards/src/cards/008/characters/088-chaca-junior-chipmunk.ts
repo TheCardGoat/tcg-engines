@@ -5,13 +5,13 @@ export const chacaJuniorChipmunk: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character named Tipo in play",
           type: "if",
+          expression: "you have a character named Tipo in play",
         },
         then: {
+          type: "gain-keyword",
           keyword: "Reckless",
           target: "CHOSEN_CHARACTER",
-          type: "gain-keyword",
         },
         type: "conditional",
       },

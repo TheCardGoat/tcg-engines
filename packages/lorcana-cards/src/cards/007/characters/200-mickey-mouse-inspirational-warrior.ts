@@ -6,10 +6,10 @@ export const mickeyMouseInspirationalWarrior: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "play-card",
+          from: "hand",
           cardType: "character",
           cost: "free",
-          from: "hand",
-          type: "play-card",
         },
         type: "optional",
       },

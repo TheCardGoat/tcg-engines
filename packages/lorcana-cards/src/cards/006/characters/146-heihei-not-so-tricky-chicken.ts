@@ -6,20 +6,20 @@ export const heiheiNotsotrickyChicken: CharacterCard = {
       effect: {
         steps: [
           {
+            type: "exert",
             target: {
-              cardTypes: ["item"],
+              selector: "chosen",
               count: 1,
               owner: "opponent",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["item"],
             },
-            type: "exert",
           },
           {
-            duration: "next-turn",
+            type: "restriction",
             restriction: "cant-ready",
             target: "SELF",
-            type: "restriction",
+            duration: "next-turn",
           },
         ],
         type: "sequence",

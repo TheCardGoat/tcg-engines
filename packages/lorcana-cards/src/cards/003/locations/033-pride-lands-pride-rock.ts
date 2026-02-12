@@ -17,12 +17,12 @@ export const prideLandsPrideRock: LocationCard = {
     {
       effect: {
         condition: {
-          expression: "you have a Prince or King character here",
           type: "if",
+          expression: "you have a Prince or King character here",
         },
         then: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "conditional",
       },

@@ -6,20 +6,20 @@ export const miracleCandle: ItemCard = {
       cost: { exert: true },
       effect: {
         condition: {
-          expression: "you have 3 or more characters in play",
           type: "if",
+          expression: "you have 3 or more characters in play",
         },
         then: {
+          type: "remove-damage",
           amount: 2,
+          upTo: true,
           target: {
-            cardTypes: ["location"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["location"],
           },
-          type: "remove-damage",
-          upTo: true,
         },
         type: "conditional",
       },

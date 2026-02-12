@@ -6,20 +6,20 @@ export const waterHasMemory: ActionCard = {
       effect: {
         steps: [
           {
+            type: "scry",
             amount: 4,
+            target: "CHOSEN_PLAYER",
             destinations: [
               {
-                ordering: "player-choice",
-                remainder: true,
                 zone: "deck-bottom",
+                remainder: true,
+                ordering: "player-choice",
               },
             ],
-            target: "CHOSEN_PLAYER",
-            type: "scry",
           },
           {
-            target: "CHOSEN_CHARACTER",
             type: "put-on-bottom",
+            target: "CHOSEN_CHARACTER",
           },
         ],
         type: "sequence",

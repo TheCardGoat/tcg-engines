@@ -5,11 +5,11 @@ export const wrongLever: ActionCard = {
     {
       effect: {
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "return-to-hand",
       },
@@ -20,11 +20,11 @@ export const wrongLever: ActionCard = {
     {
       effect: {
         target: {
-          cardTypes: ["card"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["card"],
         },
         type: "put-on-bottom",
       },

@@ -5,12 +5,13 @@ export const flynnRiderFrenemy: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character in play with more {S} than each opposing character",
           type: "if",
+          expression:
+            "you have a character in play with more {S} than each opposing character",
         },
         then: {
-          amount: 3,
           type: "gain-lore",
+          amount: 3,
         },
         type: "conditional",
       },

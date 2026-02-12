@@ -14,8 +14,8 @@ export const miloThatchUndauntedScholar: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "action",
           controller: "you",
+          cardType: "action",
         },
         timing: "whenever",
       },

@@ -5,13 +5,13 @@ export const baymaxsChargingStation: ItemCard = {
     {
       effect: {
         condition: {
-          expression: "you used Shift to play them",
           type: "if",
+          expression: "you used Shift to play them",
         },
         then: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },
@@ -21,9 +21,9 @@ export const baymaxsChargingStation: ItemCard = {
       trigger: {
         event: "play",
         on: {
+          controller: "you",
           cardType: "character",
           classification: "Floodborn",
-          controller: "you",
         },
         timing: "whenever",
       },

@@ -5,13 +5,13 @@ export const taffytaMuttonfudgeCrowdFavorite: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a location in play",
           type: "if",
+          expression: "you have a location in play",
         },
         then: {
+          type: "lose-lore",
           amount: 1,
           target: "EACH_OPPONENT",
-          type: "lose-lore",
         },
         type: "conditional",
       },

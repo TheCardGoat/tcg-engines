@@ -267,15 +267,9 @@ export function parseStaticAbility(text: string): StaticAbilityParseResult | und
     const keywords: string[] = [];
 
     // Collect all keywords from the match groups
-    if (grantMatch[2]) {
-      keywords.push(grantMatch[2]);
-    }
-    if (grantMatch[3]) {
-      keywords.push(grantMatch[3]);
-    }
-    if (grantMatch[4]) {
-      keywords.push(grantMatch[4]);
-    }
+    if (grantMatch[2]) {keywords.push(grantMatch[2]);}
+    if (grantMatch[3]) {keywords.push(grantMatch[3]);}
+    if (grantMatch[4]) {keywords.push(grantMatch[4]);}
 
     const target = parseGrantTarget(targetText);
 

@@ -6,24 +6,24 @@ export const onYourFeetNow: ActionCard = {
       effect: {
         steps: [
           {
+            type: "sequence",
             steps: [
               {
-                target: "YOUR_CHARACTERS",
                 type: "ready",
+                target: "YOUR_CHARACTERS",
               },
               {
+                type: "deal-damage",
                 amount: 1,
                 target: "CHOSEN_CHARACTER",
-                type: "deal-damage",
               },
             ],
-            type: "sequence",
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

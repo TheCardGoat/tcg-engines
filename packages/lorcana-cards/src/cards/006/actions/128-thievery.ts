@@ -6,13 +6,13 @@ export const thievery: ActionCard = {
       effect: {
         steps: [
           {
+            type: "lose-lore",
             amount: 1,
             target: "OPPONENT",
-            type: "lose-lore",
           },
           {
-            amount: 1,
             type: "gain-lore",
+            amount: 1,
           },
         ],
         type: "sequence",

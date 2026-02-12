@@ -6,8 +6,8 @@ export const beastHardheaded: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          target: "CHOSEN_CHARACTER",
           type: "banish",
+          target: "CHOSEN_CHARACTER",
         },
         type: "optional",
       },

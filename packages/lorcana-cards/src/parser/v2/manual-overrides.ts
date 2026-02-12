@@ -34,11 +34,7 @@ export type ManualEntry = AbilityWithText | AbilityWithText[];
 // Documented here are not yet implemented in the engine type system.
 // This allows us to specify the intended structure as documentation.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface UntypedAbilityWithText {
-  text: string;
-  name?: string;
-  ability: any;
-}
+interface UntypedAbilityWithText { text: string; name?: string; ability: any }
 
 /**
  * Create a manual entry (bypasses type checking for unimplemented effect types)
@@ -272,7 +268,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         ability: {
           condition: { type: "has-character-here" },
           effect: {
-            modifier: { controller: "you", type: "locations-in-play" },
+            modifier: { type: "locations-in-play", controller: "you" },
             stat: "lore",
             target: "SELF",
             type: "modify-stat",
@@ -973,7 +969,6 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
               target: "CONTROLLER",
               type: "look-at-cards",
             },
-            type: "optional",
           },
           trigger: { event: "play", on: "SELF", timing: "when" },
           type: "triggered", // {d}
@@ -1198,7 +1193,6 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           affects: {
             controller: "you",
             costRestriction: { comparison: "less-or-equal", value: 0 },
-            excludeSelf: true,
           },
           effect: { keyword: "Bodyguard", type: "gain-keyword" },
           type: "static", // {d}
@@ -1210,17 +1204,17 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         ability: {
           effect: {
             effect: {
-              steps: [
-                { target: "triggering-card", type: "exert" },
-                { amount: 1, target: "CONTROLLER", type: "draw" },
-              ],
               type: "sequence",
+              steps: [
+                { type: "exert", target: "triggering-card" },
+                { type: "draw", amount: 1, target: "CONTROLLER" },
+              ],
             },
             type: "optional",
           },
           trigger: {
             event: "play",
-            on: { cardType: "character", controller: "you", excludeSelf: true },
+            on: { controller: "you", cardType: "character", excludeSelf: true },
             timing: "whenever",
           },
           type: "triggered",
@@ -1262,7 +1256,6 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
           effect: {
             amount: 0,
             target: { controller: "opponent", selector: "all" },
-            type: "deal-damage",
           },
           trigger: { event: "challenge", on: "SELF", timing: "whenever" },
           type: "triggered", // {d}
@@ -1359,7 +1352,6 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             controller: "you",
             type: "resource-count",
             value: 0,
-            what: "cards-in-hand",
           },
           effect: { keyword: "Evasive", target: "SELF", type: "gain-keyword" },
           type: "static", // {d}
@@ -1538,19 +1530,20 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
       text: "Each player chooses and discards a card. If they discarded a character, they draw a card.",
     }),
 
-  "Put chosen exerted character into their player's inkwell facedown and exerted.": manualEntry({
-    ability: {
-      effect: {
-        exerted: true,
-        source: "chosen-character",
-        target: "CARD_OWNER",
-        targetFilters: [{ type: "is-exerted" }],
-        type: "put-into-inkwell",
+  "Put chosen exerted character into their player's inkwell facedown and exerted.":
+    manualEntry({
+      ability: {
+        effect: {
+          exerted: true,
+          source: "chosen-character",
+          target: "CARD_OWNER",
+          targetFilters: [{ type: "is-exerted" }],
+          type: "put-into-inkwell",
+        },
+        type: "action",
       },
-      type: "action",
-    },
-    text: "Put chosen exerted character into their player's inkwell facedown and exerted.",
-  }),
+      text: "Put chosen exerted character into their player's inkwell facedown and exerted.",
+    }),
 
   'Your characters gain "Whenever this character quests, you may draw a card, then choose and discard a card" this turn.':
     manualEntry({
@@ -1660,12 +1653,12 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     ability: {
       effect: {
         steps: [
-          { target: { selector: "all" }, type: "exert" },
+          { type: "exert", target: { selector: "all" } },
           {
-            duration: "next-turn",
+            type: "restriction",
             restriction: "cant-ready",
             target: { selector: "all" },
-            type: "restriction",
+            duration: "next-turn",
           },
         ],
         type: "sequence",
@@ -1756,12 +1749,13 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
       {
         ability: {
           effect: {
-            effect: { amount: 1, target: "CONTROLLER", type: "draw" },
+            effect: { type: "draw", amount: 1, target: "CONTROLLER" },
             type: "optional",
           },
           trigger: {
             event: "play",
             on: { cardType: "song", controller: "you" },
+            on: { controller: "you", cardType: "song" },
             timing: "whenever",
           },
           type: "triggered",
@@ -1797,24 +1791,25 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #58 - Mass ready with restriction
-  "Ready all your characters. They can't quest for the rest of this turn.": manualEntry({
-    ability: {
-      effect: {
-        steps: [
-          { target: { controller: "you", selector: "all" }, type: "ready" },
-          {
-            duration: "this-turn",
-            restriction: "cant-quest",
-            target: { controller: "you", selector: "all" },
-            type: "restriction",
-          },
-        ],
-        type: "sequence",
+  "Ready all your characters. They can't quest for the rest of this turn.":
+    manualEntry({
+      ability: {
+        effect: {
+          steps: [
+            { type: "ready", target: { selector: "all", controller: "you" } },
+            {
+              type: "restriction",
+              restriction: "cant-quest",
+              target: { selector: "all", controller: "you" },
+              duration: "this-turn",
+            },
+          ],
+          type: "sequence",
+        },
+        type: "action",
       },
-      type: "action",
-    },
-    text: "Ready all your characters. They can't quest for the rest of this turn.",
-  }),
+      text: "Ready all your characters. They can't quest for the rest of this turn.",
+    }),
 
   // #59 - Damage-based banish
   "Deal {d} damage to chosen character. If that character is banished this way, draw {d} cards.":
@@ -1846,9 +1841,9 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
             modifier: 0,
             stat: "lore",
             target: {
-              cardType: "location",
-              controller: "you",
               selector: "all",
+              controller: "you",
+              cardType: "location",
             },
             type: "modify-stat",
           },
@@ -1972,40 +1967,42 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     ]),
 
   // #65 - Sacrifice for effect
-  "Banish chosen character of yours to banish chosen opposing character.": manualEntry({
-    ability: {
-      effect: {
-        steps: [
-          {
-            target: { controller: "you", selector: "chosen" },
-            type: "banish",
-          },
-          {
-            target: { controller: "opponent", selector: "chosen" },
-            type: "banish",
-          },
-        ],
-        type: "sequence",
+  "Banish chosen character of yours to banish chosen opposing character.":
+    manualEntry({
+      ability: {
+        effect: {
+          steps: [
+            {
+              type: "banish",
+              target: { selector: "chosen", controller: "you" },
+            },
+            {
+              type: "banish",
+              target: { selector: "chosen", controller: "opponent" },
+            },
+          ],
+          type: "sequence",
+        },
+        type: "action",
       },
-      type: "action",
-    },
-    text: "Banish chosen character of yours to banish chosen opposing character.",
-  }),
+      text: "Banish chosen character of yours to banish chosen opposing character.",
+    }),
 
   // #66 - Willpower-based bounce
-  "Return chosen character with {d} {W} or less to their player's hand.": manualEntry({
-    ability: {
-      effect: {
-        target: {
-          selector: "chosen",
-          willpowerComparison: { comparison: "less-or-equal", value: 0 },
+  "Return chosen character with {d} {W} or less to their player's hand.":
+    manualEntry({
+      ability: {
+        effect: {
+          target: {
+            selector: "chosen",
+            willpowerComparison: { comparison: "less-or-equal", value: 0 },
+          },
+          type: "return-to-hand",
         },
-        type: "return-to-hand",
+        type: "action",
       },
-      type: "action",
-    },
-    text: "Return chosen character with {d} {W} or less to their player's hand.",
-  }),
+      text: "Return chosen character with {d} {W} or less to their player's hand.",
+    }),
 
   // #67 - Item sacrifice for cards
   "Banish chosen item to draw {d} cards.": manualEntry({
@@ -2089,34 +2086,36 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     ]),
 
   // #71 - Triggered on banish
-  "LAST WORDS When this character is banished, each opponent discards a card.": manualEntry({
-    ability: {
-      effect: {
-        amount: 1,
-        chosen: true,
-        target: "EACH_OPPONENT",
-        type: "discard",
+  "LAST WORDS When this character is banished, each opponent discards a card.":
+    manualEntry({
+      ability: {
+        effect: {
+          amount: 1,
+          chosen: true,
+          target: "EACH_OPPONENT",
+          type: "discard",
+        },
+        trigger: { event: "banish", on: "SELF", timing: "when" },
+        type: "triggered",
       },
-      trigger: { event: "banish", on: "SELF", timing: "when" },
-      type: "triggered",
-    },
-    name: "LAST WORDS",
-    text: "LAST WORDS When this character is banished, each opponent discards a card.",
-  }),
+      name: "LAST WORDS",
+      text: "LAST WORDS When this character is banished, each opponent discards a card.",
+    }),
 
   // #72 - Copy effect
-  "Chosen character gains all abilities of another chosen character this turn.": manualEntry({
-    ability: {
-      effect: {
-        duration: "this-turn",
-        from: { selector: "another-chosen" },
-        to: { selector: "chosen" },
-        type: "copy-abilities",
+  "Chosen character gains all abilities of another chosen character this turn.":
+    manualEntry({
+      ability: {
+        effect: {
+          duration: "this-turn",
+          from: { selector: "another-chosen" },
+          to: { selector: "chosen" },
+          type: "copy-abilities",
+        },
+        type: "action",
       },
-      type: "action",
-    },
-    text: "Chosen character gains all abilities of another chosen character this turn.",
-  }),
+      text: "Chosen character gains all abilities of another chosen character this turn.",
+    }),
 
   // #73 - Search and play
   "Search your deck for a character card with cost {d} or less, reveal it, and put it into your hand. Shuffle your deck.":
@@ -2238,28 +2237,30 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #79 - Replacement-style effect
-  "If this character would be banished, you may return it to your hand instead.": manualEntry({
-    ability: {
-      replacement: {
-        effect: { target: "SELF", type: "return-to-hand" },
-        type: "optional",
+  "If this character would be banished, you may return it to your hand instead.":
+    manualEntry({
+      ability: {
+        replacement: {
+          effect: { type: "return-to-hand", target: "SELF" },
+          type: "optional",
+        },
+        trigger: { event: "banish", on: "SELF", timing: "would" },
+        type: "replacement",
       },
-      trigger: { event: "banish", on: "SELF", timing: "would" },
-      type: "replacement",
-    },
-    text: "If this character would be banished, you may return it to your hand instead.",
-  }),
+      text: "If this character would be banished, you may return it to your hand instead.",
+    }),
 
   // #80 - Triggered on damage
-  "RESILIENT Whenever this character takes damage, you may ready it.": manualEntry({
-    ability: {
-      effect: { effect: { target: "SELF", type: "ready" }, type: "optional" },
-      trigger: { event: "damage", on: "SELF", timing: "whenever" },
-      type: "triggered",
-    },
-    name: "RESILIENT",
-    text: "RESILIENT Whenever this character takes damage, you may ready it.",
-  }),
+  "RESILIENT Whenever this character takes damage, you may ready it.":
+    manualEntry({
+      ability: {
+        effect: { effect: { type: "ready", target: "SELF" }, type: "optional" },
+        trigger: { event: "damage", on: "SELF", timing: "whenever" },
+        type: "triggered",
+      },
+      name: "RESILIENT",
+      text: "RESILIENT Whenever this character takes damage, you may ready it.",
+    }),
 
   // #81 - Location granting keywords
   "TRAINING GROUNDS Characters gain Challenger +{d} while here. BATTLE ARENA Characters can challenge ready characters while here.":
@@ -2342,7 +2343,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     manualEntry({
       ability: {
         effect: {
-          effect: { target: "SELF", type: "banish-instead" },
+          effect: { type: "banish-instead", target: "SELF" },
           type: "optional",
         },
         trigger: {
@@ -2359,7 +2360,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   // #86 - Board wipe with exception
   "Banish all characters except chosen character.": manualEntry({
     ability: {
-      effect: { target: { except: "chosen", selector: "all" }, type: "banish" },
+      effect: { target: { selector: "all", except: "chosen" }, type: "banish" },
       type: "action",
     },
     text: "Banish all characters except chosen character.",
@@ -2403,25 +2404,26 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #89 - Mass exert with lore
-  "Exert all opposing characters. Gain {d} lore for each character exerted this way.": manualEntry({
-    ability: {
-      effect: {
-        steps: [
-          {
-            target: { controller: "opponent", selector: "all" },
-            type: "exert",
-          },
-          {
-            amount: { type: "characters-exerted-this-way" },
-            type: "gain-lore",
-          },
-        ],
-        type: "sequence",
+  "Exert all opposing characters. Gain {d} lore for each character exerted this way.":
+    manualEntry({
+      ability: {
+        effect: {
+          steps: [
+            {
+              type: "exert",
+              target: { selector: "all", controller: "opponent" },
+            },
+            {
+              type: "gain-lore",
+              amount: { type: "characters-exerted-this-way" },
+            },
+          ],
+          type: "sequence",
+        },
+        type: "action",
       },
-      type: "action",
-    },
-    text: "Exert all opposing characters. Gain {d} lore for each character exerted this way.",
-  }),
+      text: "Exert all opposing characters. Gain {d} lore for each character exerted this way.",
+    }),
 
   // #90 - Double keyword location
   "SAFE HAVEN Characters gain Ward while here. SANCTUARY Characters can't be challenged while here.":
@@ -2450,7 +2452,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
   "Draw cards equal to the number of cards in an opponent's hand.": manualEntry({
     ability: {
       effect: {
-        amount: { controller: "opponent", type: "cards-in-hand" },
+        amount: { type: "cards-in-hand", controller: "opponent" },
         target: "CONTROLLER",
         type: "draw",
       },
@@ -2522,7 +2524,7 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
         condition: { type: "used-shift" },
         effect: {
           amount: 0,
-          target: { controller: "opponent", selector: "all" },
+          target: { selector: "all", controller: "opponent" },
           type: "deal-damage",
         },
         trigger: { event: "play", on: "SELF", timing: "when" },
@@ -2559,19 +2561,20 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     }),
 
   // #96 - Static willpower based on damage
-  "BATTLE HARDENED This character gets +{d} {W} for each damage counter on it.": manualEntry({
-    ability: {
-      effect: {
-        modifier: { type: "damage-on-self" },
-        stat: "willpower",
-        target: "SELF",
-        type: "modify-stat",
+  "BATTLE HARDENED This character gets +{d} {W} for each damage counter on it.":
+    manualEntry({
+      ability: {
+        effect: {
+          modifier: { type: "damage-on-self" },
+          stat: "willpower",
+          target: "SELF",
+          type: "modify-stat",
+        },
+        type: "static",
       },
-      type: "static",
-    },
-    name: "BATTLE HARDENED",
-    text: "BATTLE HARDENED This character gets +{d} {W} for each damage counter on it.",
-  }),
+      name: "BATTLE HARDENED",
+      text: "BATTLE HARDENED This character gets +{d} {W} for each damage counter on it.",
+    }),
 
   // #97 - Triggered card under manipulation
   "GATHER POWER Whenever you play a character, you may put the top card of your deck under this character. UNLEASH At the end of your turn, draw a card for each card under this character.":
@@ -2579,12 +2582,13 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
       {
         ability: {
           effect: {
-            effect: { source: "top-of-deck", type: "put-under", under: "self" },
+            effect: { type: "put-under", source: "top-of-deck", under: "self" },
             type: "optional",
           },
           trigger: {
             event: "play",
             on: { cardType: "character", controller: "you" },
+            on: { controller: "you", cardType: "character" },
             timing: "whenever",
           },
           type: "triggered",
@@ -2636,31 +2640,32 @@ export const MANUAL_ENTRIES: Record<string, ManualEntry> = {
     ]),
 
   // #99 - Cost manipulation
-  "Chosen character costs {d} less to play this turn. You may play that character.": manualEntry({
-    ability: {
-      effect: {
-        steps: [
-          {
-            amount: 0,
-            duration: "this-turn",
-            target: { selector: "chosen-from-hand" },
-            type: "cost-reduction",
-          },
-          {
-            effect: {
-              from: "hand",
-              target: "chosen-for-effect",
-              type: "play-card",
+  "Chosen character costs {d} less to play this turn. You may play that character.":
+    manualEntry({
+      ability: {
+        effect: {
+          steps: [
+            {
+              type: "cost-reduction",
+              target: { selector: "chosen-from-hand" },
+              amount: 0,
+              duration: "this-turn",
             },
-            type: "optional",
-          },
-        ],
-        type: "sequence",
+            {
+              type: "optional",
+              effect: {
+                type: "play-card",
+                from: "hand",
+                target: "chosen-for-effect",
+              },
+            },
+          ],
+          type: "sequence",
+        },
+        type: "action",
       },
-      type: "action",
-    },
-    text: "Chosen character costs {d} less to play this turn. You may play that character.",
-  }),
+      text: "Chosen character costs {d} less to play this turn. You may play that character.",
+    }),
 
   // #100 - Complex lore race
   "If you have less lore than each opponent, draw {d} cards. Otherwise, each opponent draws a card.":
@@ -2730,9 +2735,7 @@ export function getManualEntry(text: string, cardName?: string): ManualEntry | u
  */
 export function getManualEntries(text: string, cardName?: string): AbilityWithText[] | undefined {
   const entry = getManualEntry(text, cardName);
-  if (!entry) {
-    return undefined;
-  }
+  if (!entry) {return undefined;}
   return Array.isArray(entry) ? entry : [entry];
 }
 
@@ -2800,9 +2803,7 @@ export function resolveManualOverrideValues(
     for (const key in obj) {
       if (key !== "text" && !numericFields.includes(key)) {
         if (Array.isArray(obj[key])) {
-          for (const item of obj[key]) {
-            replacePlaceholders(item, depth + 1);
-          }
+          for (const item of obj[key]) {replacePlaceholders(item, depth + 1);}
         } else if (typeof obj[key] === "object") {
           replacePlaceholders(obj[key], depth + 1);
         }
@@ -2811,9 +2812,7 @@ export function resolveManualOverrideValues(
   }
 
   if (Array.isArray(resolved)) {
-    for (const item of resolved) {
-      replacePlaceholders(item);
-    }
+    for (const item of resolved) {replacePlaceholders(item);}
   } else {
     replacePlaceholders(resolved);
   }

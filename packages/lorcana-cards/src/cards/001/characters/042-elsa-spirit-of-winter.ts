@@ -6,8 +6,8 @@ export const elsaSpiritOfWinter: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "optional",
       },

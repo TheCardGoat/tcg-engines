@@ -6,19 +6,19 @@ export const heWhoStealsAndRunsAway: ActionCard = {
       effect: {
         steps: [
           {
+            type: "banish",
             target: {
-              cardTypes: ["item"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["item"],
             },
-            type: "banish",
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

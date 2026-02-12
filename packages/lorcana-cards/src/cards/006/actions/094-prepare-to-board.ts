@@ -5,14 +5,14 @@ export const prepareToBoard: ActionCard = {
     {
       effect: {
         condition: {
-          expression: "a Pirate character is chosen",
           type: "if",
+          expression: "a Pirate character is chosen",
         },
         then: {
-          modifier: 3,
-          stat: "strength",
-          target: "CHOSEN_CHARACTER",
           type: "modify-stat",
+          stat: "strength",
+          modifier: 3,
+          target: "CHOSEN_CHARACTER",
         },
         type: "conditional",
       },

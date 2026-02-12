@@ -5,12 +5,12 @@ export const faZhouWarHero: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "it's the second challenge this turn",
           type: "if",
+          expression: "it's the second challenge this turn",
         },
         then: {
-          amount: 3,
           type: "gain-lore",
+          amount: 3,
         },
         type: "conditional",
       },

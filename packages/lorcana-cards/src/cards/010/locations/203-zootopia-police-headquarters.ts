@@ -6,9 +6,9 @@ export const zootopiaPoliceHeadquarters: LocationCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "optional",
       },
@@ -18,8 +18,8 @@ export const zootopiaPoliceHeadquarters: LocationCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "you",
+          cardType: "character",
         },
         timing: "when",
       },

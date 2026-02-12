@@ -5,12 +5,12 @@ export const mysticalTreeMamaOdiesHome: LocationCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character named Mama Odie here",
           type: "if",
+          expression: "you have a character named Mama Odie here",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

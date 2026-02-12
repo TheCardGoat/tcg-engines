@@ -13,7 +13,11 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaAbilityParser } from "../../grammar";
 import { LorcanaLexer } from "../../lexer";
-import { type Target, parseTargetFromCst, parseTargetFromText } from "../target-visitor";
+import {
+  type Target,
+  parseTargetFromCst,
+  parseTargetFromText,
+} from "../target-visitor";
 
 describe("Target Visitor", () => {
   const parser = new LorcanaAbilityParser();
@@ -358,7 +362,9 @@ describe("Target Visitor", () => {
       // The first match found by regex, which may not be the textually first target.
       // In "move chosen character to another location", the "another" pattern
       // Matches before the "chosen" pattern because of how patterns are ordered.
-      const target = parseTargetFromText("move chosen character to another location");
+      const target = parseTargetFromText(
+        "move chosen character to another location",
+      );
 
       expect(target).toBeDefined();
       // Implementation matches "another location" due to pattern ordering

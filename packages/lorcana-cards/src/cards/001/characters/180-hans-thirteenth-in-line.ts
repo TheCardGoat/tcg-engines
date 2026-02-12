@@ -6,9 +6,9 @@ export const hansThirteenthInLine: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "deal-damage",
           amount: 1,
           target: "CHOSEN_CHARACTER",
-          type: "deal-damage",
         },
         type: "optional",
       },

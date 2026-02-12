@@ -23,8 +23,8 @@ export const genieWonderfulTrickster: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "card",
           controller: "you",
+          cardType: "card",
         },
         timing: "whenever",
       },

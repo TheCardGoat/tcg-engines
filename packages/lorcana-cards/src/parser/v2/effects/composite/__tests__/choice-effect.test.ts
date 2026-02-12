@@ -16,7 +16,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("gain-lore");
@@ -29,7 +29,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -40,7 +40,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(3);
       expect(options[0].type).toBe("draw");
       expect(options[1].type).toBe("discard");
@@ -54,7 +54,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -65,7 +65,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("deal-damage");
       expect(options[1].type).toBe("draw");
@@ -78,7 +78,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -94,7 +94,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
   });
@@ -142,7 +142,7 @@ describe("choiceEffectParser", () => {
 
       // 2 out of 3 parsed successfully
       expect(result).not.toBeNull();
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
       expect(options[0].type).toBe("draw");
       expect(options[1].type).toBe("gain-lore");
@@ -165,7 +165,7 @@ describe("choiceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("choice");
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -182,7 +182,7 @@ describe("choiceEffectParser", () => {
       const result = choiceEffectParser.parse("Choose one: deal 3 damage ; or gain 2 lore");
 
       expect(result).not.toBeNull();
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -190,7 +190,7 @@ describe("choiceEffectParser", () => {
       const result = choiceEffectParser.parse("Choose one: deal 3 damage;or gain 2 lore");
 
       expect(result).not.toBeNull();
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
 
@@ -198,7 +198,7 @@ describe("choiceEffectParser", () => {
       const result = choiceEffectParser.parse("Choose one: deal 3 damage; Or gain 2 lore");
 
       expect(result).not.toBeNull();
-      const { options } = result as Effect & { options: Effect[] };
+      const {options} = (result as Effect & { options: Effect[] });
       expect(options).toHaveLength(2);
     });
   });

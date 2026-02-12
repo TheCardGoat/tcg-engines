@@ -17,12 +17,12 @@ export const skullRockIsolatedFortress: LocationCard = {
     {
       effect: {
         condition: {
-          expression: "you have a Pirate character here",
           type: "if",
+          expression: "you have a Pirate character here",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

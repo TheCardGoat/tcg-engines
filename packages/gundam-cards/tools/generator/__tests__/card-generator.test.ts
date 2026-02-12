@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { TriggeredEffect } from "@tcg/gundam-types";
+import type { BaseEffect } from "@tcg/gundam-types";
 import type { ParseResult } from "../../parser/text-parser";
 import type { ScrapedCardData } from "../../scraper/card-scraper";
 import {
@@ -14,39 +14,40 @@ import {
 
 describe("Card Generator", () => {
   const mockScrapedUnit: ScrapedCardData = {
-    cardNumber: "ST01-001",
-    name: "RX-78-2 Gundam",
-    cardType: "UNIT",
-    rarity: "LR",
-    level: "3",
-    cost: "2",
-    color: "Blue",
     ap: "5",
-    hp: "6",
-    zone: "Space Earth",
-    trait: "(Earth Federation) (White Base)",
-    link: "[Amuro Ray]",
+    cardNumber: "ST01-001",
+    cardType: "UNIT",
+    color: "Blue",
+    cost: "2",
     effectText: "<First Strike> 【Deploy】Search your deck for a Pilot.",
-    sourceTitle: "Mobile Suit Gundam",
+    hp: "6",
     imageUrl: "https://example.com/card.jpg",
+    level: "3",
+    link: "[Amuro Ray]",
+    name: "RX-78-2 Gundam",
+    rarity: "LR",
+    sourceTitle: "Mobile Suit Gundam",
+    trait: "(Earth Federation) (White Base)",
+    zone: "Space Earth",
   };
 
   const mockParsed: ParseResult = {
-    keywords: [{ keyword: "First-Strike" }],
     effects: [
       {
         id: "mock-effect",
         type: "TRIGGERED",
         timing: "DEPLOY",
         description: "【Deploy】Search your deck for a Pilot.",
+        restrictions: [],
         action: {
           type: "SEARCH",
           destination: "hand",
           count: 1,
           filter: { cardType: "PILOT" },
         },
-      } as TriggeredEffect,
+      } as BaseEffect,
     ],
+    keywords: [{ keyword: "First-Strike" }],
     warnings: [],
   };
 
@@ -75,16 +76,16 @@ describe("Card Generator", () => {
     it("should create pilot card definition", () => {
       const mockPilot: ScrapedCardData = {
         ...mockScrapedUnit,
-        cardType: "PILOT",
         ap: "+2",
+        cardType: "PILOT",
         hp: "+1",
-        zone: "",
         link: "",
+        zone: "",
       };
 
       const card = createCardDefinition(mockPilot, {
-        keywords: [],
         effects: [],
+        keywords: [],
         warnings: [],
       });
 
@@ -100,15 +101,15 @@ describe("Card Generator", () => {
     it("should create resource card definition", () => {
       const mockResource: ScrapedCardData = {
         cardNumber: "ST01-100",
-        name: "Resource",
         cardType: "RESOURCE",
-        rarity: "C",
         effectText: "",
+        name: "Resource",
+        rarity: "C",
       };
 
       const card = createCardDefinition(mockResource, {
-        keywords: [],
         effects: [],
+        keywords: [],
         warnings: [],
       });
 
@@ -120,7 +121,7 @@ describe("Card Generator", () => {
   describe("generateCardFile", () => {
     it("should generate valid TypeScript code", () => {
       const card = createCardDefinition(mockScrapedUnit, mockParsed);
-      if (!card) throw new Error("Card creation failed");
+      if (!card) {throw new Error("Card creation failed");}
 
       const code = generateCardFile(card);
 
@@ -136,7 +137,7 @@ describe("Card Generator", () => {
   describe("generateFilename", () => {
     it("should generate kebab-case filename with card number", () => {
       const card = createCardDefinition(mockScrapedUnit, mockParsed);
-      if (!card) throw new Error("Card creation failed");
+      if (!card) {throw new Error("Card creation failed");}
 
       const filename = generateFilename(card);
 
@@ -152,7 +153,7 @@ describe("Card Generator", () => {
         },
         mockParsed,
       );
-      if (!specialCard) throw new Error("Card creation failed");
+      if (!specialCard) {throw new Error("Card creation failed");}
 
       const filename = generateFilename(specialCard);
 

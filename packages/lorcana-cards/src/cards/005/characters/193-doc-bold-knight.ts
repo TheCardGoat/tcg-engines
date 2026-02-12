@@ -6,9 +6,9 @@ export const docBoldKnight: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "discard",
           amount: -1,
           target: "CONTROLLER",
-          type: "discard",
         },
         type: "optional",
       },

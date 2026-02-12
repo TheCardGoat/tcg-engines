@@ -6,9 +6,9 @@ export const perditaDevotedMother: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          cost: "free",
-          from: "discard",
           type: "play-card",
+          from: "discard",
+          cost: "free",
         },
         type: "optional",
       },

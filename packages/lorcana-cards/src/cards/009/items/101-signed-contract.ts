@@ -6,9 +6,9 @@ export const signedContract: ItemCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "optional",
       },
@@ -18,8 +18,8 @@ export const signedContract: ItemCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "action",
           controller: "opponent",
+          cardType: "action",
         },
         timing: "whenever",
       },

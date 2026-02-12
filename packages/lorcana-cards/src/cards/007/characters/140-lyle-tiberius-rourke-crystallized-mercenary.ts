@@ -6,11 +6,11 @@ export const lyleTiberiusRourkeCrystallizedMercenary: CharacterCard = {
       effect: {
         amount: 2,
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "any",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "deal-damage",
       },

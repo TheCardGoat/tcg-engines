@@ -6,13 +6,13 @@ export const gloydOrangeboarFierceCompetitor: CharacterCard = {
       effect: {
         steps: [
           {
+            type: "lose-lore",
             amount: 1,
             target: "EACH_OPPONENT",
-            type: "lose-lore",
           },
           {
-            amount: 1,
             type: "gain-lore",
+            amount: 1,
           },
         ],
         type: "sequence",

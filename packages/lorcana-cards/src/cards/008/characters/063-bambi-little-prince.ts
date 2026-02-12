@@ -28,8 +28,8 @@ export const bambiLittlePrince: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "opponent",
+          cardType: "character",
         },
         timing: "when",
       },

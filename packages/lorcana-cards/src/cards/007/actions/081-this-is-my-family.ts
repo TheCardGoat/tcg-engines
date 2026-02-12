@@ -6,13 +6,13 @@ export const thisIsMyFamily: ActionCard = {
       effect: {
         steps: [
           {
-            amount: 1,
             type: "gain-lore",
+            amount: 1,
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

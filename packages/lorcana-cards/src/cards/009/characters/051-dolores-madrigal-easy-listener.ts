@@ -5,13 +5,13 @@ export const doloresMadrigalEasyListener: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "an opponent has an exerted character in play",
           type: "if",
+          expression: "an opponent has an exerted character in play",
         },
         then: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },

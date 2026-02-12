@@ -6,14 +6,14 @@ export const petePirateScoundrel: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "banish",
           target: {
-            cardTypes: ["item"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["item"],
           },
-          type: "banish",
         },
         type: "optional",
       },
@@ -23,8 +23,8 @@ export const petePirateScoundrel: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "action",
           controller: "you",
+          cardType: "action",
         },
         timing: "whenever",
       },

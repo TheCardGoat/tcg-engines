@@ -6,11 +6,11 @@ export const goGoTomagoMechanicalEngineer: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          exerted: true,
-          facedown: true,
+          type: "put-into-inkwell",
           source: "top-of-deck",
           target: "CONTROLLER",
-          type: "put-into-inkwell",
+          exerted: true,
+          facedown: true,
         },
         type: "optional",
       },
@@ -20,9 +20,9 @@ export const goGoTomagoMechanicalEngineer: CharacterCard = {
       trigger: {
         event: "play",
         on: {
+          controller: "you",
           cardType: "character",
           classification: "Floodborn",
-          controller: "you",
         },
         timing: "when",
       },

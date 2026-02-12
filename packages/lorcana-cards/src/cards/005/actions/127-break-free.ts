@@ -6,32 +6,32 @@ export const breakFree: ActionCard = {
       effect: {
         steps: [
           {
+            type: "deal-damage",
             amount: 1,
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "deal-damage",
           },
           {
+            type: "sequence",
             steps: [
               {
+                type: "gain-keyword",
                 keyword: "Rush",
                 target: "CHOSEN_CHARACTER",
-                type: "gain-keyword",
               },
               {
-                duration: "this-turn",
-                modifier: 1,
-                stat: "strength",
-                target: "CHOSEN_CHARACTER",
                 type: "modify-stat",
+                stat: "strength",
+                modifier: 1,
+                target: "CHOSEN_CHARACTER",
+                duration: "this-turn",
               },
             ],
-            type: "sequence",
           },
         ],
         type: "sequence",

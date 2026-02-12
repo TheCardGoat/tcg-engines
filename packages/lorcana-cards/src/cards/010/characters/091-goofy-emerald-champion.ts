@@ -14,12 +14,14 @@ export const goofyEmeraldChampion: CharacterCard = {
         challengeContext: {
           role: "defender",
         },
+        challengeContext: {
+          role: "defender",
+        },
         event: "banish-in-challenge",
         on: {
           controller: "you",
           excludeSelf: true,
         },
-        timing: "whenever",
       },
       type: "triggered",
     },

@@ -6,14 +6,14 @@ export const prideLandsJungleOasis: LocationCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "banish",
           target: {
-            cardTypes: ["location"],
+            selector: "self",
             count: 1,
             owner: "any",
-            selector: "self",
             zones: ["play"],
+            cardTypes: ["location"],
           },
-          type: "banish",
         },
         type: "optional",
       },

@@ -5,12 +5,12 @@ export const theNephewsPiggyBank: ItemCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character named Donald Duck in play",
           type: "if",
+          expression: "you have a character named Donald Duck in play",
         },
         then: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "conditional",
       },
@@ -23,11 +23,11 @@ export const theNephewsPiggyBank: ItemCard = {
         modifier: -1,
         stat: "strength",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "modify-stat",
       },

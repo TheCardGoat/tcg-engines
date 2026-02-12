@@ -7,11 +7,11 @@ export const bosssOrders: ActionCard = {
         duration: "this-turn",
         keyword: "Support",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "gain-keyword",
       },

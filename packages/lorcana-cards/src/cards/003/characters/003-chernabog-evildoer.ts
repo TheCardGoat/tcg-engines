@@ -15,11 +15,11 @@ export const chernabogEvildoer: CharacterCard = {
       effect: {
         intoDeck: "owner",
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "any",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "shuffle-into-deck",
       },

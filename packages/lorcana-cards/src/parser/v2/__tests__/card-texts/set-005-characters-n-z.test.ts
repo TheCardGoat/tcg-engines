@@ -125,7 +125,7 @@ describe("Set 005 Card Text Parser Tests - Characters N Z", () => {
           { target: "CHARACTER_FROM_DISCARD", type: "return-to-hand" },
           {
             condition: { type: "is-princess" },
-            then: { amount: 2, type: "gain-lore" },
+            then: { type: "gain-lore", amount: 2 },
             type: "conditional",
           },
         ],
@@ -153,11 +153,11 @@ describe("Set 005 Card Text Parser Tests - Characters N Z", () => {
       effect: {
         effect: {
           effects: [
-            { target: "CHOSEN_CHARACTER", type: "ready" },
+            { type: "ready", target: "CHOSEN_CHARACTER" },
             {
+              type: "restriction",
               restriction: "cant-quest-or-challenge",
               target: "CHOSEN_CHARACTER",
-              type: "restriction",
             },
           ],
           type: "sequence",
@@ -605,8 +605,8 @@ describe("Set 005 Card Text Parser Tests - Characters N Z", () => {
         effect: {
           cost: { ink: 3 },
           effect: {
-            target: "CHOSEN_DAMAGED_CHARACTER",
             type: "banish",
+            target: "CHOSEN_DAMAGED_CHARACTER",
           },
           type: "pay-cost",
         },
@@ -867,7 +867,7 @@ describe("Set 005 Card Text Parser Tests - Characters N Z", () => {
         then: {
           target: "OPPONENT",
           type: "discard-until",
-          until: { count: 3, type: "cards-in-hand" },
+          until: { type: "cards-in-hand", count: 3 },
         },
         type: "conditional",
       },
@@ -1013,8 +1013,8 @@ describe("Set 005 Card Text Parser Tests - Characters N Z", () => {
       effect: {
         effect: {
           target: {
-            query: { name: "Mufasa" },
             type: "query",
+            query: { name: "Mufasa" },
           },
           type: "banish",
         },
@@ -1111,8 +1111,8 @@ describe("Set 005 Card Text Parser Tests - Characters N Z", () => {
         },
         then: {
           effect: {
-            target: "CHOSEN_OPPOSING_CHARACTER",
             type: "banish",
+            target: "CHOSEN_OPPOSING_CHARACTER",
           },
           type: "optional",
         },
@@ -1365,8 +1365,8 @@ describe("Set 005 Card Text Parser Tests - Characters N Z", () => {
         },
         then: {
           effects: [
-            { amount: 1, target: "EACH_OPPONENT", type: "lose-lore" },
-            { amount: { type: "lore-lost" }, type: "gain-lore" },
+            { type: "lose-lore", amount: 1, target: "EACH_OPPONENT" },
+            { type: "gain-lore", amount: { type: "lore-lost" } },
           ],
           type: "sequence",
         },
@@ -2202,14 +2202,14 @@ describe("Set 005 Card Text Parser Tests - Characters N Z", () => {
             type: "moved-character-is-knight",
           },
           else: {
+            type: "deal-damage",
             amount: 1,
             target: "CHOSEN_CHARACTER",
-            type: "deal-damage",
           },
           then: {
+            type: "deal-damage",
             amount: 2,
             target: "CHOSEN_CHARACTER",
-            type: "deal-damage",
           },
           type: "conditional",
         },

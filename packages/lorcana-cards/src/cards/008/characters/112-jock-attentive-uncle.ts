@@ -5,12 +5,12 @@ export const jockAttentiveUncle: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have 3 or more other characters in play",
           type: "if",
+          expression: "you have 3 or more other characters in play",
         },
         then: {
-          amount: 2,
           type: "gain-lore",
+          amount: 2,
         },
         type: "conditional",
       },

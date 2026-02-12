@@ -6,25 +6,25 @@ export const fragileAsAFlower: ActionCard = {
       effect: {
         steps: [
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
           {
+            type: "exert",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "exert",
           },
           {
-            duration: "until-start-of-next-turn",
+            type: "restriction",
             restriction: "cant-ready",
             target: "SELF",
-            type: "restriction",
+            duration: "until-start-of-next-turn",
           },
         ],
         type: "sequence",

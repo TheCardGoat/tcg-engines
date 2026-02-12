@@ -5,11 +5,11 @@ export const iFindEmIFlattenEm: ActionCard = {
     {
       effect: {
         target: {
-          cardTypes: ["item"],
+          selector: "all",
           count: "all",
           owner: "any",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["item"],
         },
         type: "banish",
       },

@@ -6,11 +6,11 @@ export const shesYourPerson: ActionCard = {
       effect: {
         amount: 3,
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "remove-damage",
         upTo: true,
@@ -23,11 +23,11 @@ export const shesYourPerson: ActionCard = {
       effect: {
         amount: 3,
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "you",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "remove-damage",
         upTo: true,

@@ -5,12 +5,12 @@ export const elsaTrustedSister: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character named Anna in play",
           type: "if",
+          expression: "you have a character named Anna in play",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

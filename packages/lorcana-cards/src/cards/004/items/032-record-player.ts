@@ -7,11 +7,11 @@ export const recordPlayer: ItemCard = {
         modifier: -2,
         stat: "strength",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "modify-stat",
       },
@@ -21,8 +21,8 @@ export const recordPlayer: ItemCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "action",
           controller: "you",
+          cardType: "action",
         },
         timing: "whenever",
       },

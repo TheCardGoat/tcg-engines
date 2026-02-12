@@ -31,7 +31,7 @@ export function normalizeToPattern(text: string): string {
   // Then, replace standalone numbers (including those with +/- prefix) with {d}
   // Handle cases like "+3", "-2", "3", etc.
   // But avoid matching numbers that are already inside braces (we already handled those)
-  result = result.replace(/([+-]?)(\d+)/g, (match, sign) => (sign ? `${sign}{d}` : "{d}"));
+  result = result.replace(/([+-]?)(\d+)/g, (match, sign) => sign ? `${sign}{d}` : "{d}");
 
   return result;
 }

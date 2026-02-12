@@ -6,11 +6,11 @@ export const tinkerBellVeryCleverFairy: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          exerted: true,
-          facedown: true,
+          type: "put-into-inkwell",
           source: "hand",
           target: "CONTROLLER",
-          type: "put-into-inkwell",
+          exerted: true,
+          facedown: true,
         },
         type: "optional",
       },

@@ -65,10 +65,13 @@ function parseFromText(text: string): DiscardEffect | null {
       target = "EACH_OPPONENT";
     }
 
-    logger.info("Parsed discard effect from text (choose and discard pattern)", {
-      amount: 1,
-      target,
-    });
+    logger.info(
+      "Parsed discard effect from text (choose and discard pattern)",
+      {
+        amount: 1,
+        target,
+      },
+    );
     return {
       amount: 1,
       chosen: true,

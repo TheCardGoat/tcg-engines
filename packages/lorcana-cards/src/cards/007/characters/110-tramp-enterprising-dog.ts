@@ -5,12 +5,12 @@ export const trampEnterprisingDog: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character named Lady in play",
           type: "if",
+          expression: "you have a character named Lady in play",
         },
         then: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "conditional",
       },
@@ -24,11 +24,11 @@ export const trampEnterprisingDog: CharacterCard = {
         modifier: 1,
         stat: "strength",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "modify-stat",
       },

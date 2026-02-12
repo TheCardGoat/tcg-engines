@@ -6,11 +6,11 @@ export const maidMarianBadmintonAce: CharacterCard = {
       effect: {
         amount: 1,
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "opponent",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "deal-damage",
       },

@@ -6,9 +6,9 @@ export const pawpsicle: ItemCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "optional",
       },
@@ -27,11 +27,11 @@ export const pawpsicle: ItemCard = {
       effect: {
         amount: 2,
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "remove-damage",
         upTo: true,

@@ -14,7 +14,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const { steps } = result as Effect & { steps: Effect[] };
+      const {steps} = (result as Effect & { steps: Effect[] });
       expect(steps).toHaveLength(2);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
@@ -27,7 +27,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const { steps } = result as Effect & { steps: Effect[] };
+      const {steps} = (result as Effect & { steps: Effect[] });
       expect(steps).toHaveLength(3);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
@@ -39,7 +39,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const { steps } = result as Effect & { steps: Effect[] };
+      const {steps} = (result as Effect & { steps: Effect[] });
       expect(steps).toHaveLength(2);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
@@ -50,7 +50,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const { steps } = result as Effect & { steps: Effect[] };
+      const {steps} = (result as Effect & { steps: Effect[] });
       expect(steps).toHaveLength(2);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");
@@ -63,7 +63,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const { steps } = result as Effect & { steps: Effect[] };
+      const {steps} = (result as Effect & { steps: Effect[] });
       expect(steps).toHaveLength(3);
       expect(steps[0].type).toBe("deal-damage");
       expect(steps[1].type).toBe("draw");
@@ -77,7 +77,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const { steps } = result as Effect & { steps: Effect[] };
+      const {steps} = (result as Effect & { steps: Effect[] });
       expect(steps).toHaveLength(2);
     });
 
@@ -93,7 +93,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const { steps } = result as Effect & { steps: Effect[] };
+      const {steps} = (result as Effect & { steps: Effect[] });
       expect(steps).toHaveLength(2);
     });
   });
@@ -147,7 +147,7 @@ describe("sequenceEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("sequence");
-      const { steps } = result as Effect & { steps: Effect[] };
+      const {steps} = (result as Effect & { steps: Effect[] });
       expect(steps).toHaveLength(2);
       expect(steps[0].type).toBe("draw");
       expect(steps[1].type).toBe("discard");

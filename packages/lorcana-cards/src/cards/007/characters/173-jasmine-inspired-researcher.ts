@@ -5,13 +5,13 @@ export const jasmineInspiredResearcher: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have no cards in your hand",
           type: "if",
+          expression: "you have no cards in your hand",
         },
         then: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },

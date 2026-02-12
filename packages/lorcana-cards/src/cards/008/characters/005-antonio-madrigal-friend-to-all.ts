@@ -6,10 +6,10 @@ export const antonioMadrigalFriendToAll: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          cardType: "character",
+          type: "search-deck",
           putInto: "hand",
           shuffle: true,
-          type: "search-deck",
+          cardType: "character",
         },
         type: "optional",
       },

@@ -6,14 +6,14 @@ export const yokaiEnigmaticInventor: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "return-to-hand",
           target: {
-            cardTypes: ["item"],
+            selector: "all",
             count: "all",
             owner: "you",
-            selector: "all",
             zones: ["play"],
+            cardTypes: ["item"],
           },
-          type: "return-to-hand",
         },
         type: "optional",
       },

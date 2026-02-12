@@ -6,15 +6,15 @@ export const ransack: ActionCard = {
       effect: {
         steps: [
           {
+            type: "draw",
             amount: 2,
             target: "CONTROLLER",
-            type: "draw",
           },
           {
-            amount: 2,
-            chosen: true,
-            target: "CONTROLLER",
             type: "discard",
+            amount: 2,
+            target: "CONTROLLER",
+            chosen: true,
           },
         ],
         type: "sequence",

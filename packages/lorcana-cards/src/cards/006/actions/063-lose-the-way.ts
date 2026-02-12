@@ -6,20 +6,20 @@ export const loseTheWay: ActionCard = {
       effect: {
         steps: [
           {
-            chooser: "CONTROLLER",
-            effect: {
-              amount: 1,
-              chosen: true,
-              target: "CONTROLLER",
-              type: "discard",
-            },
             type: "optional",
+            effect: {
+              type: "discard",
+              amount: 1,
+              target: "CONTROLLER",
+              chosen: true,
+            },
+            chooser: "CONTROLLER",
           },
           {
-            duration: "until-start-of-next-turn",
+            type: "restriction",
             restriction: "cant-ready",
             target: "SELF",
-            type: "restriction",
+            duration: "until-start-of-next-turn",
           },
         ],
         type: "sequence",

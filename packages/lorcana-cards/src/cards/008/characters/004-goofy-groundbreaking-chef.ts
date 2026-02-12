@@ -6,16 +6,16 @@ export const goofyGroundbreakingChef: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "remove-damage",
           amount: 1,
+          upTo: true,
           target: {
-            cardTypes: ["character"],
+            selector: "all",
             count: "all",
             owner: "any",
-            selector: "all",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "remove-damage",
-          upTo: true,
         },
         type: "optional",
       },

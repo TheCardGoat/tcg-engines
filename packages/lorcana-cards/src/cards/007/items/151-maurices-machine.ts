@@ -6,14 +6,14 @@ export const mauricesMachine: ItemCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "return-to-hand",
           target: {
-            cardTypes: ["item"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["item"],
           },
-          type: "return-to-hand",
         },
         type: "optional",
       },

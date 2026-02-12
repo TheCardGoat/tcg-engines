@@ -5,14 +5,14 @@ export const buckySquirrelSqueakTutor: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you used Shift to play them",
           type: "if",
+          expression: "you used Shift to play them",
         },
         then: {
-          amount: 1,
-          chosen: true,
-          target: "EACH_OPPONENT",
           type: "discard",
+          amount: 1,
+          target: "EACH_OPPONENT",
+          chosen: true,
         },
         type: "conditional",
       },
@@ -22,9 +22,9 @@ export const buckySquirrelSqueakTutor: CharacterCard = {
       trigger: {
         event: "play",
         on: {
+          controller: "you",
           cardType: "character",
           classification: "Floodborn",
-          controller: "you",
         },
         timing: "whenever",
       },

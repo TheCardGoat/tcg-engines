@@ -6,11 +6,11 @@ export const chiefBogoRespectedOfficer: CharacterCard = {
       effect: {
         amount: 1,
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "opponent",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "deal-damage",
       },
@@ -20,9 +20,9 @@ export const chiefBogoRespectedOfficer: CharacterCard = {
       trigger: {
         event: "play",
         on: {
+          controller: "you",
           cardType: "character",
           classification: "Floodborn",
-          controller: "you",
         },
         timing: "whenever",
       },

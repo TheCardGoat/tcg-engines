@@ -6,26 +6,26 @@ export const royalTantrum: ActionCard = {
       effect: {
         steps: [
           {
+            type: "banish",
             target: {
-              cardTypes: ["item"],
+              selector: "all",
               count: "all",
               owner: "you",
-              selector: "all",
               zones: ["play"],
+              cardTypes: ["item"],
             },
-            type: "banish",
           },
           {
+            type: "for-each",
             counter: {
-              controller: "you",
               type: "items",
+              controller: "you",
             },
             effect: {
+              type: "draw",
               amount: 1,
               target: "CONTROLLER",
-              type: "draw",
             },
-            type: "for-each",
           },
         ],
         type: "sequence",

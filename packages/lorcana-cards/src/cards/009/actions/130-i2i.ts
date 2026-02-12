@@ -5,12 +5,12 @@ export const i2i: ActionCard = {
     {
       effect: {
         condition: {
-          expression: "2 or more characters sang this song",
           type: "if",
+          expression: "2 or more characters sang this song",
         },
         then: {
-          target: "CHOSEN_CHARACTER",
           type: "ready",
+          target: "CHOSEN_CHARACTER",
         },
         type: "conditional",
       },

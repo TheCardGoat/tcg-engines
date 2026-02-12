@@ -6,8 +6,8 @@ export const brunoMadrigalOutOfTheShadows: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          target: "SELF",
           type: "return-to-hand",
+          target: "SELF",
         },
         type: "optional",
       },

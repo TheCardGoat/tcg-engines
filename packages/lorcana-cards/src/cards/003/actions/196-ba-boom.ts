@@ -6,11 +6,11 @@ export const baboom: ActionCard = {
       effect: {
         amount: 2,
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "deal-damage",
       },

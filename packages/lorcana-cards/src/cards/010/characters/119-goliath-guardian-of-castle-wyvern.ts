@@ -13,8 +13,8 @@ export const goliathGuardianOfCastleWyvern: CharacterCard = {
       trigger: {
         event: "challenge",
         on: {
-          classification: "Gargoyle",
           controller: "you",
+          classification: "Gargoyle",
         },
         timing: "whenever",
       },

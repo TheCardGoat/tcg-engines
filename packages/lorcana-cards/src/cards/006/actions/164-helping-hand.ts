@@ -6,21 +6,21 @@ export const helpingHand: ActionCard = {
       effect: {
         steps: [
           {
-            duration: "this-turn",
+            type: "gain-keyword",
             keyword: "Support",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "gain-keyword",
+            duration: "this-turn",
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

@@ -6,19 +6,19 @@ export const getOut: ActionCard = {
       effect: {
         steps: [
           {
+            type: "banish",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "banish",
           },
           {
-            cardType: "item",
-            target: "CONTROLLER",
             type: "return-from-discard",
+            target: "CONTROLLER",
+            cardType: "item",
           },
         ],
         type: "sequence",

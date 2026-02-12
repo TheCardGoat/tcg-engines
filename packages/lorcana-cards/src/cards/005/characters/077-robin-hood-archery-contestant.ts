@@ -5,12 +5,12 @@ export const robinHoodArcheryContestant: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "an opponent has a damaged character in play",
           type: "if",
+          expression: "an opponent has a damaged character in play",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

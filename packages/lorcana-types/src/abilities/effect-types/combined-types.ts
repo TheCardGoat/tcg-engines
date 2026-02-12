@@ -533,7 +533,7 @@ export function targetsCharacters(effect: Effect): boolean {
     return false;
   }
 
-  const { target } = effect;
+  const {target} = effect;
 
   // String character targets
   if (typeof target === "string") {

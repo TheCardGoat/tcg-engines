@@ -5,12 +5,12 @@ export const flynnRiderBreakingAndEntering: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "they don't",
           type: "if",
+          expression: "they don't",
         },
         then: {
-          amount: 2,
           type: "gain-lore",
+          amount: 2,
         },
         type: "conditional",
       },

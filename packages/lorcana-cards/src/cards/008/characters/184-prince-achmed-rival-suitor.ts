@@ -6,14 +6,14 @@ export const princeAchmedRivalSuitor: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "exert",
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "exert",
         },
         type: "optional",
       },

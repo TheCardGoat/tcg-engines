@@ -6,9 +6,16 @@
 import { describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
 import { createCardId, createPlayerId } from "@tcg/core";
+import type {
+  BaseEffectCardDefinition,
+  TargetingSpec,
+} from "@tcg/gundam-types";
 import type { GundamGameState } from "../../types";
-import type { BaseEffectCardDefinition, TargetingSpec } from "../../types/effects";
-import { type TargetingContext, enumerateValidTargets, validateTargets } from "../targeting-system";
+import {
+  type TargetingContext,
+  enumerateValidTargets,
+  validateTargets,
+} from "../targeting-system";
 
 // Helper to create a complete game state
 function createGameState(

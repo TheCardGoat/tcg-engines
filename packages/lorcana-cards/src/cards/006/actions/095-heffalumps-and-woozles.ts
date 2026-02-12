@@ -6,15 +6,15 @@ export const heffalumpsAndWoozles: ActionCard = {
       effect: {
         steps: [
           {
-            duration: "until-start-of-next-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "until-start-of-next-turn",
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

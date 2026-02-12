@@ -6,15 +6,15 @@ export const sheriffOfNottinghamCorruptOfficial: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "deal-damage",
           amount: 1,
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "opponent",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "deal-damage",
         },
         type: "optional",
       },

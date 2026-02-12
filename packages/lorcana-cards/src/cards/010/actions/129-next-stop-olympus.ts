@@ -5,12 +5,12 @@ export const nextStopOlympus: ActionCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character with 5 {S} or more in play",
           type: "if",
+          expression: "you have a character with 5 {S} or more in play",
         },
         then: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "conditional",
       },
@@ -22,24 +22,24 @@ export const nextStopOlympus: ActionCard = {
       effect: {
         steps: [
           {
+            type: "ready",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "ready",
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "this-turn",
           },
           {
-            amount: 1,
             type: "gain-lore",
+            amount: 1,
           },
         ],
         type: "sequence",

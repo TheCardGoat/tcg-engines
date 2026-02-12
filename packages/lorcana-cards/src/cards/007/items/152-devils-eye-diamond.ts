@@ -6,12 +6,12 @@ export const devilsEyeDiamond: ItemCard = {
       cost: { exert: true },
       effect: {
         condition: {
-          expression: "one of your characters was damaged this turn",
           type: "if",
+          expression: "one of your characters was damaged this turn",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

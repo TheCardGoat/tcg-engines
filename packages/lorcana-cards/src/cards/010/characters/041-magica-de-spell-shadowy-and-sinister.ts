@@ -6,15 +6,15 @@ export const magicaDeSpellShadowyAndSinister: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          intoDeck: "owner",
+          type: "shuffle-into-deck",
           target: {
-            cardTypes: ["card"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["card"],
           },
-          type: "shuffle-into-deck",
+          intoDeck: "owner",
         },
         type: "optional",
       },

@@ -178,10 +178,10 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
         condition: { type: "used-shift" },
         then: {
           effect: {
-            cardType: "character",
-            putOnTop: true,
-            reveal: true,
             type: "search-deck",
+            cardType: "character",
+            reveal: true,
+            putOnTop: true,
           },
           type: "optional",
         },
@@ -778,11 +778,11 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
       effect: {
         effect: {
           effects: [
-            { amount: 1, target: "CONTROLLER", type: "discard" },
+            { type: "discard", amount: 1, target: "CONTROLLER" },
             {
-              filter: { maxCost: 3 },
-              target: "CHOSEN_CHARACTER",
               type: "return-to-hand",
+              target: "CHOSEN_CHARACTER",
+              filter: { maxCost: 3 },
             },
           ],
           type: "sequence",
@@ -881,11 +881,11 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
         effect: {
           effects: [
             {
+              type: "gain-lore",
               amount: 1,
               target: "CONTROLLER",
-              type: "gain-lore",
             },
-            { target: "CHOSEN_OTHER_CHARACTER", type: "return-to-hand" },
+            { type: "return-to-hand", target: "CHOSEN_OTHER_CHARACTER" },
           ],
           type: "sequence",
         },
@@ -1135,11 +1135,11 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
         effect: {
           cost: { ink: 1 },
           effect: {
-            duration: "this-turn",
-            modifier: 2,
-            stat: "strength",
-            target: "CHOSEN_CHARACTER",
             type: "modify-stat",
+            stat: "strength",
+            modifier: 2,
+            target: "CHOSEN_CHARACTER",
+            duration: "this-turn",
           },
           type: "pay-cost",
         },
@@ -1258,18 +1258,18 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
         effect: {
           cost: { ink: 2 },
           effect: {
-            options: [
-              { amount: 1, target: "EACH_OPPONENT", type: "discard" },
-              {
-                duration: "this-turn",
-                modifier: 2,
-                stat: "strength",
-                target: "CHOSEN_CHARACTER",
-                type: "modify-stat",
-              },
-              { target: "CHOSEN_DAMAGED_CHARACTER", type: "banish" },
-            ],
             type: "modal",
+            options: [
+              { type: "discard", amount: 1, target: "EACH_OPPONENT" },
+              {
+                type: "modify-stat",
+                stat: "strength",
+                modifier: 2,
+                target: "CHOSEN_CHARACTER",
+                duration: "this-turn",
+              },
+              { type: "banish", target: "CHOSEN_DAMAGED_CHARACTER" },
+            ],
           },
           type: "pay-cost",
         },
@@ -1299,8 +1299,8 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
         effect: {
           cost: { ink: 2 },
           effect: {
-            target: "CHOSEN_ITEM",
             type: "banish",
+            target: "CHOSEN_ITEM",
           },
           type: "pay-cost",
         },
@@ -1357,8 +1357,8 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
         effect: {
           cost: { ink: 3 },
           effect: {
-            target: "CHOSEN_CHARACTER",
             type: "return-to-hand",
+            target: "CHOSEN_CHARACTER",
           },
           type: "pay-cost",
         },
@@ -1508,12 +1508,12 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
         },
         else: {
           condition: {
-            strength: { min: 5 },
             type: "has-character-with-strength",
+            strength: { min: 5 },
           },
           then: {
-            amount: 2,
             type: "gain-lore",
+            amount: 2,
           },
           type: "conditional",
         },
@@ -1851,9 +1851,9 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
         condition: { type: "second-inkwell-this-turn" },
         then: {
           effect: {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
           type: "optional",
         },
@@ -2020,11 +2020,11 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
       effect: {
         effect: {
           effects: [
-            { amount: 1, target: "CONTROLLER", type: "draw" },
+            { type: "draw", amount: 1, target: "CONTROLLER" },
             {
-              position: "bottom",
-              target: "CHOSEN_CARD_IN_HAND",
               type: "put-on-deck",
+              target: "CHOSEN_CARD_IN_HAND",
+              position: "bottom",
             },
           ],
           type: "sequence",
@@ -2365,9 +2365,9 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
         },
         then: {
           effect: {
+            type: "deal-damage",
             amount: 1,
             target: "CHOSEN_CHARACTER_OR_LOCATION",
-            type: "deal-damage",
           },
           type: "optional",
         },
@@ -2507,8 +2507,8 @@ describe("Set 005 Card Text Parser Tests - Characters A M", () => {
       effect: {
         effect: {
           effects: [
-            { amount: "all", target: "CONTROLLER", type: "discard" },
-            { amount: 2, target: "CONTROLLER", type: "draw" },
+            { type: "discard", amount: "all", target: "CONTROLLER" },
+            { type: "draw", amount: 2, target: "CONTROLLER" },
           ],
           type: "sequence",
         },

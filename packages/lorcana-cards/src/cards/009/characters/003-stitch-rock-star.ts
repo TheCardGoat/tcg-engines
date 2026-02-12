@@ -27,8 +27,8 @@ export const stitchRockStar: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "you",
+          cardType: "character",
         },
         timing: "whenever",
       },

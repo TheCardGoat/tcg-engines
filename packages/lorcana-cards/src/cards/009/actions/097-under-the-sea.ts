@@ -5,11 +5,11 @@ export const underTheSea: ActionCard = {
     {
       effect: {
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "opponent",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "put-on-bottom",
       },

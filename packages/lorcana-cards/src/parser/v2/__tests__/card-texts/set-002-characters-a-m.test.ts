@@ -15,8 +15,8 @@ describe("Set 002 Card Text Parser Tests - Characters A M", () => {
       effect: {
         condition: {
           condition: {
-            classification: "Seven Dwarfs",
             type: "have-character",
+            classification: "Seven Dwarfs",
           },
           type: "unless",
         },
@@ -1878,13 +1878,13 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         effect: {
           cost: {
-            target: "YOUR_ITEM",
             type: "banish",
+            target: "YOUR_ITEM",
           },
           effect: {
+            type: "draw",
             amount: 2,
             target: "CONTROLLER",
-            type: "draw",
           },
           type: "cost-effect",
         },
@@ -2183,7 +2183,6 @@ FORGET THE COACH, HERE'S A SWORD Whenever this character quests, your characters
       effect: {
         condition: {
           target: "SELF",
-          type: "no-damage",
         },
         ifFalse: {
           duration: "this-turn",

@@ -6,13 +6,13 @@ export const hadesLookingForADeal: CharacterCard = {
       effect: {
         steps: [
           {
-            from: "hand",
             type: "play-card",
+            from: "hand",
           },
           {
+            type: "draw",
             amount: 2,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

@@ -106,7 +106,9 @@ function main() {
     const outputPath = path.join(outputDir, `set-${setNumber}.test.ts`);
 
     fs.writeFileSync(outputPath, content, "utf8");
-    console.log(`Generated ${outputPath} with ${cardsWithText.length} test cases`);
+    console.log(
+      `Generated ${outputPath} with ${cardsWithText.length} test cases`,
+    );
   }
 
   console.log("\n--- Summary ---");

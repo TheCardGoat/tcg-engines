@@ -6,10 +6,10 @@ export const honeyLemonChemicalGenius: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 1,
-          chosen: true,
-          target: "EACH_OPPONENT",
           type: "discard",
+          amount: 1,
+          target: "EACH_OPPONENT",
+          chosen: true,
         },
         type: "optional",
       },

@@ -5,12 +5,12 @@ export const queensSensorCore: ItemCard = {
     {
       effect: {
         condition: {
-          expression: "you have a Princess or Queen character in play",
           type: "if",
+          expression: "you have a Princess or Queen character in play",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

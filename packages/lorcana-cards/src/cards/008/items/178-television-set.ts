@@ -6,12 +6,12 @@ export const televisionSet: ItemCard = {
       cost: { exert: true },
       effect: {
         condition: {
-          expression: "it's a Puppy character card",
           type: "if",
+          expression: "it's a Puppy character card",
         },
         then: {
-          target: "CHOSEN_CHARACTER",
           type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
         },
         type: "conditional",
       },

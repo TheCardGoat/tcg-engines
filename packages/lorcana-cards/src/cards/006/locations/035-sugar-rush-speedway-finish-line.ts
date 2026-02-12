@@ -6,8 +6,8 @@ export const sugarRushSpeedwayFinishLine: LocationCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 3,
           type: "gain-lore",
+          amount: 3,
         },
         type: "optional",
       },

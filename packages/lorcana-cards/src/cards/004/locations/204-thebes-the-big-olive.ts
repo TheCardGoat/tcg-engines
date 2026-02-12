@@ -5,12 +5,12 @@ export const thebesTheBigOlive: LocationCard = {
     {
       effect: {
         condition: {
-          expression: "YOU CAN MAKE IT HERE... During your turn",
           type: "if",
+          expression: "YOU CAN MAKE IT HERE... During your turn",
         },
         then: {
-          amount: 2,
           type: "gain-lore",
+          amount: 2,
         },
         type: "conditional",
       },

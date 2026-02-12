@@ -5,11 +5,11 @@ export const ghostlyTale: ActionCard = {
     {
       effect: {
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "opponent",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "exert",
       },

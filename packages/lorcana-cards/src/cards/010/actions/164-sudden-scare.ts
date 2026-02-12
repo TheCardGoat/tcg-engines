@@ -6,16 +6,16 @@ export const suddenScare: ActionCard = {
       effect: {
         steps: [
           {
-            facedown: true,
+            type: "put-into-inkwell",
             source: "chosen-character",
             target: "OPPONENT",
-            type: "put-into-inkwell",
+            facedown: true,
           },
           {
-            facedown: true,
+            type: "put-into-inkwell",
             source: "hand",
             target: "OPPONENT",
-            type: "put-into-inkwell",
+            facedown: true,
           },
         ],
         type: "sequence",

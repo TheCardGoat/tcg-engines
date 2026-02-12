@@ -226,7 +226,8 @@ function parseFromText(text: string): GainKeywordEffect | null {
  * Keyword effect parser implementation
  */
 export const keywordEffectParser: EffectParser = {
-  description: "Parses keyword grant effects (e.g., 'gains Evasive', 'Your characters gain Ward')",
+  description:
+    "Parses keyword grant effects (e.g., 'gains Evasive', 'Your characters gain Ward')",
   parse: (input: CstNode | string): GainKeywordEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);

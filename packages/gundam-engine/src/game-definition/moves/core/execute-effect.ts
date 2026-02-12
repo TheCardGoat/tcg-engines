@@ -15,15 +15,15 @@
  */
 
 import type { CardId, GameMoveDefinition, MoveContext } from "@tcg/core";
+import type { EffectAction } from "@tcg/gundam-types/effects";
 import type { Draft } from "immer";
 import { executeAction } from "../../../effects/action-handlers";
 import {
   findEffectInstance,
-  getEffectDefinition,
+  getEffect,
   markEffectResolving,
 } from "../../../effects/effect-stack";
 import type { GundamGameState } from "../../../types";
-import type { EffectAction } from "../../../types/effects";
 
 /**
  * Extracts and validates effect instance ID from move context
@@ -122,7 +122,7 @@ export const executeEffectMove: GameMoveDefinition<GundamGameState> = {
     markEffectResolving(draft, effectInstanceId);
 
     // Load effect definition from source card
-    const effectDefinition = getEffectDefinition(draft, sourceCardId, effectRef.effectId);
+    const effectDefinition = getEffect(draft, sourceCardId, effectRef.effectId);
 
     if (!effectDefinition) {
       // Effect definition not found - this could happen if:

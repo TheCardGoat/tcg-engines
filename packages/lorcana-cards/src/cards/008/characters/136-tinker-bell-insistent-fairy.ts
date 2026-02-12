@@ -12,8 +12,8 @@ export const tinkerBellInsistentFairy: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 2,
           type: "gain-lore",
+          amount: 2,
         },
         type: "optional",
       },
@@ -23,8 +23,8 @@ export const tinkerBellInsistentFairy: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "you",
+          cardType: "character",
         },
         timing: "whenever",
       },

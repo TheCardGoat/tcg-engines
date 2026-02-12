@@ -123,7 +123,8 @@ function parseFromCst(_ctx: CstNode): RepeatEffect | null {
  * Repeat effect parser implementation
  */
 export const repeatEffectParser: EffectParser = {
-  description: "Parses repeat effects that execute multiple times (e.g., 'draw 1 card, 3 times')",
+  description:
+    "Parses repeat effects that execute multiple times (e.g., 'draw 1 card, 3 times')",
   parse: (input: CstNode | string): RepeatEffect | null => {
     if (typeof input === "string") {
       return parseFromText(input);

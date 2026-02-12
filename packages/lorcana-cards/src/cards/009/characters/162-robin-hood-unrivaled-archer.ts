@@ -5,13 +5,13 @@ export const robinHoodUnrivaledArcher: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "an opponent has more cards in their hand than you",
           type: "if",
+          expression: "an opponent has more cards in their hand than you",
         },
         then: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },

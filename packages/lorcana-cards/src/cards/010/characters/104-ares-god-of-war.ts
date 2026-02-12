@@ -6,24 +6,24 @@ export const aresGodOfWar: CharacterCard = {
       effect: {
         steps: [
           {
-            chooser: "CONTROLLER",
+            type: "optional",
             effect: {
+              type: "ready",
               target: {
-                cardTypes: ["character"],
+                selector: "chosen",
                 count: 1,
                 owner: "any",
-                selector: "chosen",
                 zones: ["play"],
+                cardTypes: ["character"],
               },
-              type: "ready",
             },
-            type: "optional",
+            chooser: "CONTROLLER",
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

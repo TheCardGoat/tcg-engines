@@ -6,8 +6,8 @@ export const diabloFaithfulPet: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          target: "CHOSEN_CHARACTER",
           type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
         },
         type: "optional",
       },
@@ -17,8 +17,8 @@ export const diabloFaithfulPet: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "you",
+          cardType: "character",
         },
         timing: "whenever",
       },

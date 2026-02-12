@@ -6,9 +6,9 @@ export const pongoDearOldDad: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          cost: "free",
-          from: "hand",
           type: "play-card",
+          from: "hand",
+          cost: "free",
         },
         type: "optional",
       },

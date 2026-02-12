@@ -5,7 +5,9 @@ export const reflection: ActionCard = {
     {
       effect: {
         amount: 3,
-        destinations: [{ ordering: "player-choice", remainder: true, zone: "deck-top" }],
+        destinations: [
+          { zone: "deck-top", remainder: true, ordering: "player-choice" },
+        ],
         type: "scry",
       },
       id: "brz-1",

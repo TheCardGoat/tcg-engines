@@ -75,23 +75,13 @@ conditionRegistry.register<HasNamedLocationCondition>("has-named-location", {
   complexity: 40,
   evaluate: (condition, sourceCard, { state, registry }) =>
     Object.values(state.internal.cards).some((c) => {
-      if (c.zone !== "play") {
-        return false;
-      }
+      if (c.zone !== "play") {return false;}
       const def = registry.getCard(c.definitionId);
-      if (def?.cardType !== "location") {
-        return false;
-      }
-      if (condition.name && def.name !== condition.name) {
-        return false;
-      }
+      if (def?.cardType !== "location") {return false;}
+      if (condition.name && def.name !== condition.name) {return false;}
 
-      if (condition.controller === "you") {
-        return c.controller === sourceCard.controller;
-      }
-      if (condition.controller === "opponent") {
-        return c.controller !== sourceCard.controller;
-      }
+      if (condition.controller === "you") {return c.controller === sourceCard.controller;}
+      if (condition.controller === "opponent") {return c.controller !== sourceCard.controller;}
       return true;
     }),
 });

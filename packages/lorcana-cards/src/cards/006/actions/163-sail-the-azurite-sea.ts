@@ -6,10 +6,10 @@ export const sailTheAzuriteSea: ActionCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          facedown: true,
+          type: "put-into-inkwell",
           source: "hand",
           target: "CONTROLLER",
-          type: "put-into-inkwell",
+          facedown: true,
         },
         type: "optional",
       },

@@ -6,9 +6,9 @@ export const tamatoaSoShiny: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "return-from-discard",
           cardType: "item",
           target: "CONTROLLER",
-          type: "return-from-discard",
         },
         type: "optional",
       },
@@ -24,7 +24,7 @@ export const tamatoaSoShiny: CharacterCard = {
     },
     {
       effect: {
-        modifier: { controller: "you", type: "items-in-play" },
+        modifier: { type: "items-in-play", controller: "you" },
         stat: "lore",
         target: "SELF",
         type: "modify-stat",

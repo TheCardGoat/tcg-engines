@@ -86,12 +86,8 @@ function parseCostFilter(text: string): ScryCardFilter | null {
  */
 function combineFilters(filters: ScryCardFilter[]): ScryCardFilter | undefined {
   const validFilters = filters.filter(Boolean);
-  if (validFilters.length === 0) {
-    return undefined;
-  }
-  if (validFilters.length === 1) {
-    return validFilters[0];
-  }
+  if (validFilters.length === 0) {return undefined;}
+  if (validFilters.length === 1) {return validFilters[0];}
   return { filters: validFilters, type: "and" };
 }
 
@@ -140,21 +136,15 @@ function parseMayRevealPattern(
 
     // Parse card type
     const typeFilter = parseCardTypeFilter(typeText);
-    if (typeFilter) {
-      filters.push(typeFilter);
-    }
+    if (typeFilter) {filters.push(typeFilter);}
 
     // Parse classification
     const classFilter = parseClassificationFilter(typeText);
-    if (classFilter) {
-      filters.push(classFilter);
-    }
+    if (classFilter) {filters.push(classFilter);}
 
     // Parse cost
     const costFilter = parseCostFilter(text);
-    if (costFilter) {
-      filters.push(costFilter);
-    }
+    if (costFilter) {filters.push(costFilter);}
 
     return {
       filter: combineFilters(filters),
@@ -170,19 +160,13 @@ function parseMayRevealPattern(
     const filters: ScryCardFilter[] = [];
 
     const typeFilter = parseCardTypeFilter(typeText);
-    if (typeFilter) {
-      filters.push(typeFilter);
-    }
+    if (typeFilter) {filters.push(typeFilter);}
 
     const classFilter = parseClassificationFilter(typeText);
-    if (classFilter) {
-      filters.push(classFilter);
-    }
+    if (classFilter) {filters.push(classFilter);}
 
     const costFilter = parseCostFilter(text);
-    if (costFilter) {
-      filters.push(costFilter);
-    }
+    if (costFilter) {filters.push(costFilter);}
 
     return {
       filter: combineFilters(filters),
@@ -226,9 +210,7 @@ function parseScryEffect(text: string): ScryEffect | null {
   // Extract amount of cards to look at
   const amountPattern = /look\s+at\s+the\s+top\s+(\d+)\s+cards?/i;
   const amountMatch = text.match(amountPattern);
-  if (!amountMatch) {
-    return null;
-  }
+  if (!amountMatch) {return null;}
 
   const amount = Number.parseInt(amountMatch[1], 10);
   const destinations: ScryDestination[] = [];
@@ -307,13 +289,9 @@ function parseScryEffect(text: string): ScryEffect | null {
       const type1 = multiMatch[2].trim();
       const filter1Filters: ScryCardFilter[] = [];
       const typeFilter1 = parseCardTypeFilter(type1);
-      if (typeFilter1) {
-        filter1Filters.push(typeFilter1);
-      }
+      if (typeFilter1) {filter1Filters.push(typeFilter1);}
       const classFilter1 = parseClassificationFilter(type1);
-      if (classFilter1) {
-        filter1Filters.push(classFilter1);
-      }
+      if (classFilter1) {filter1Filters.push(classFilter1);}
 
       destinations.push({
         filter: combineFilters(filter1Filters),
@@ -328,13 +306,9 @@ function parseScryEffect(text: string): ScryEffect | null {
       const type2 = multiMatch[4].trim();
       const filter2Filters: ScryCardFilter[] = [];
       const typeFilter2 = parseCardTypeFilter(type2);
-      if (typeFilter2) {
-        filter2Filters.push(typeFilter2);
-      }
+      if (typeFilter2) {filter2Filters.push(typeFilter2);}
       const classFilter2 = parseClassificationFilter(type2);
-      if (classFilter2) {
-        filter2Filters.push(classFilter2);
-      }
+      if (classFilter2) {filter2Filters.push(classFilter2);}
 
       destinations.push({
         filter: combineFilters(filter2Filters),
@@ -522,17 +496,13 @@ function parseFromText(text: string): SearchDeckEffect | ScryEffect | null {
   // Try scry effect first (look at top X cards)
   if (/look\s+at\s+the\s+top/i.test(text)) {
     const scryEffect = parseScryEffect(text);
-    if (scryEffect) {
-      return scryEffect;
-    }
+    if (scryEffect) {return scryEffect;}
   }
 
   // Try search deck effect
   if (/search\s+your\s+deck/i.test(text)) {
     const searchEffect = parseSearchDeckEffect(text);
-    if (searchEffect) {
-      return searchEffect;
-    }
+    if (searchEffect) {return searchEffect;}
   }
 
   logger.debug("Search/scry effect pattern did not match");

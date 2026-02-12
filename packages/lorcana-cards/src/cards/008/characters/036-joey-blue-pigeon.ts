@@ -6,16 +6,16 @@ export const joeyBluePigeon: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "remove-damage",
           amount: 1,
+          upTo: true,
           target: {
-            cardTypes: ["character"],
+            selector: "all",
             count: "all",
             owner: "you",
-            selector: "all",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "remove-damage",
-          upTo: true,
         },
         type: "optional",
       },

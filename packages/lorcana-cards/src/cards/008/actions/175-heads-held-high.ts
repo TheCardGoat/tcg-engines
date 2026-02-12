@@ -6,23 +6,23 @@ export const headsHeldHigh: ActionCard = {
       effect: {
         steps: [
           {
+            type: "remove-damage",
             amount: 3,
+            upTo: true,
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "remove-damage",
-            upTo: true,
           },
           {
-            duration: "this-turn",
-            modifier: -3,
-            stat: "strength",
-            target: "CHOSEN_CHARACTER",
             type: "modify-stat",
+            stat: "strength",
+            modifier: -3,
+            target: "CHOSEN_CHARACTER",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

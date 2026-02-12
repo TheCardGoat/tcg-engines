@@ -7,22 +7,22 @@ export const vitalisphere: ItemCard = {
       effect: {
         steps: [
           {
+            type: "gain-keyword",
             keyword: "Rush",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "gain-keyword",
           },
           {
-            duration: "this-turn",
-            modifier: 2,
-            stat: "strength",
-            target: "CHOSEN_CHARACTER",
             type: "modify-stat",
+            stat: "strength",
+            modifier: 2,
+            target: "CHOSEN_CHARACTER",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

@@ -15,10 +15,7 @@
 import type { GameMoveDefinition, MoveContext } from "@tcg/core";
 import type { Draft } from "immer";
 import { enqueueBatchEffects } from "../../../effects/effect-stack";
-import {
-  detectStartOfTurnTriggers,
-  orderTriggeredEffects,
-} from "../../../effects/trigger-detection";
+import { detectAndEnqueueStartOfTurnTriggers } from "../../../effects/trigger-integration";
 import type { GundamGameState } from "../../../types";
 
 /**
@@ -48,20 +45,8 @@ export const handleTurnStartMove: GameMoveDefinition<GundamGameState> = {
   reducer: (draft: Draft<GundamGameState>, context: MoveContext): void => {
     const { playerId } = context;
 
-    // Detect start of turn triggered effects
-    const triggerResult = detectStartOfTurnTriggers(draft, playerId);
-
-    if (triggerResult.hasTriggers) {
-      // Order effects: active player's effects first
-      const orderResult = orderTriggeredEffects(triggerResult.effects, draft.currentPlayer);
-
-      // Enqueue effects in the determined order
-      enqueueBatchEffects(draft, [...triggerResult.effects], [...orderResult.order]);
-
-      console.log(
-        `[TURN_START] Detected ${triggerResult.effects.length} start of turn triggers for ${playerId}, enqueued in order: ${orderResult.order.join(", ")}`,
-      );
-    }
+    // Detect and enqueue start of turn triggered effects
+    detectAndEnqueueStartOfTurnTriggers(draft, playerId);
   },
 
   metadata: {

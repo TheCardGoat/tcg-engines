@@ -5,15 +5,15 @@ export const heiheiBumblingRooster: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "an opponent has more cards in their inkwell than you",
           type: "if",
+          expression: "an opponent has more cards in their inkwell than you",
         },
         then: {
-          exerted: true,
-          facedown: true,
+          type: "put-into-inkwell",
           source: "top-of-deck",
           target: "CONTROLLER",
-          type: "put-into-inkwell",
+          exerted: true,
+          facedown: true,
         },
         type: "conditional",
       },

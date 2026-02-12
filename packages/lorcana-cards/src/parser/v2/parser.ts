@@ -4,7 +4,11 @@
  */
 
 import { parserV2 } from "./index";
-import { MANUAL_ENTRIES_BY_NAME, getManualEntries, tooComplexText } from "./manual-overrides";
+import {
+  MANUAL_ENTRIES_BY_NAME,
+  getManualEntries,
+  tooComplexText,
+} from "./manual-overrides";
 import { normalizeText } from "./preprocessor";
 import type { AbilityWithText, ParseResult } from "./types";
 
@@ -111,7 +115,7 @@ export function parseAbilityText(text: string, options?: ParseOptions): ParseRes
   const ability = parserV2.parseAbility(text);
   if (ability) {
     // Extract name from ability if present (for named abilities)
-    const { name } = ability as { name?: string };
+    const {name} = (ability as { name?: string });
     const abilityWithText: AbilityWithText = {
       ability: ability as AbilityWithText["ability"],
       // TODO: Type assertion needed because @tcg/lorcana-engine and @tcg/lorcana-types

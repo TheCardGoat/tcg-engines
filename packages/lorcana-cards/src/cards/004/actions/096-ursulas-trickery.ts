@@ -6,15 +6,15 @@ export const ursulasTrickery: ActionCard = {
       effect: {
         steps: [
           {
-            amount: 1,
-            chosen: true,
-            target: "EACH_OPPONENT",
             type: "discard",
+            amount: 1,
+            target: "EACH_OPPONENT",
+            chosen: true,
           },
           {
+            type: "draw",
             amount: 1,
             target: "EACH_OPPONENT",
-            type: "draw",
           },
         ],
         type: "sequence",

@@ -6,10 +6,10 @@ export const hudsonDeterminedReader: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 1,
-          chosen: true,
-          target: "CONTROLLER",
           type: "discard",
+          amount: 1,
+          target: "CONTROLLER",
+          chosen: true,
         },
         type: "optional",
       },
@@ -26,13 +26,13 @@ export const hudsonDeterminedReader: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have 3 or more cards in your hand",
           type: "if",
+          expression: "you have 3 or more cards in your hand",
         },
         then: {
+          type: "restriction",
           restriction: "cant-ready",
           target: "SELF",
-          type: "restriction",
         },
         type: "conditional",
       },

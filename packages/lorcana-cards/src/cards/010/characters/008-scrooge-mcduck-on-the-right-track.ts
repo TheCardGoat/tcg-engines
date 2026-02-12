@@ -8,11 +8,11 @@ export const scroogeMcduckOnTheRightTrack: CharacterCard = {
         modifier: 1,
         stat: "lore",
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "modify-stat",
       },

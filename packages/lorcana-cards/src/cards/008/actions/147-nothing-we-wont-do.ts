@@ -6,14 +6,14 @@ export const nothingWeWontDo: ActionCard = {
       effect: {
         steps: [
           {
-            target: "YOUR_CHARACTERS",
             type: "ready",
+            target: "YOUR_CHARACTERS",
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

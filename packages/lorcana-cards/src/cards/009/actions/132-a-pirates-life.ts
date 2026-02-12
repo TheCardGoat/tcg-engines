@@ -6,13 +6,13 @@ export const aPiratesLife: ActionCard = {
       effect: {
         steps: [
           {
+            type: "lose-lore",
             amount: 2,
             target: "EACH_OPPONENT",
-            type: "lose-lore",
           },
           {
-            amount: 2,
             type: "gain-lore",
+            amount: 2,
           },
         ],
         type: "sequence",

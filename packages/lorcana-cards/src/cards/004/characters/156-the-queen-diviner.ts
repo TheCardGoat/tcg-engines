@@ -6,13 +6,13 @@ export const theQueenDiviner: CharacterCard = {
       cost: { exert: true },
       effect: {
         condition: {
-          expression: "that item costs 3 or less",
           type: "if",
+          expression: "that item costs 3 or less",
         },
         then: {
+          type: "restriction",
           restriction: "enters-play-exerted",
           target: "SELF",
-          type: "restriction",
         },
         type: "conditional",
       },

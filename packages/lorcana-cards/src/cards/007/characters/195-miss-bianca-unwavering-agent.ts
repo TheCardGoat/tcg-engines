@@ -5,12 +5,12 @@ export const missBiancaUnwaveringAgent: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have an Ally character in play",
           type: "if",
+          expression: "you have an Ally character in play",
         },
         then: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "conditional",
       },

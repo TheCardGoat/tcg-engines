@@ -13,24 +13,25 @@
 
 import { beforeEach, describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
+import type { Effect, EffectAction } from "@tcg/gundam-types/effects";
 import { produce } from "immer";
 import type { GundamGameState } from "../../types";
-import type { EffectAction } from "../../types/effects";
+import type { EffectInstance, EffectStackState } from "../effect-runtime";
 import {
-  clearEffectDefinitions,
+  clearEffects,
   createEffectStack,
   dequeueEffect,
   enqueueBatchEffects,
   enqueueEffect,
   findEffectInstance,
-  getEffectDefinition,
+  getEffect,
   getEffectStackCount,
   isEffectStackEmpty,
   markEffectFizzled,
   markEffectResolved,
   markEffectResolving,
   peekNextEffect,
-  registerEffectDefinition,
+  registerEffect,
   updateEffectInstance,
 } from "../effect-stack";
 
@@ -843,7 +844,7 @@ describe("Effect Stack - Integration Tests", () => {
 describe("Effect Stack - Effect Definition Lookup", () => {
   beforeEach(() => {
     // Clear all effect definitions before each test
-    clearEffectDefinitions();
+    clearEffects();
   });
 
   it("should register and retrieve effect definition", () => {
@@ -856,10 +857,10 @@ describe("Effect Stack - Effect Definition Lookup", () => {
       timing: { type: "MAIN" as const },
     };
 
-    registerEffectDefinition(cardId, effectDefinition);
+    registerEffect(cardId, effectDefinition);
 
     const state = createTestGameState();
-    const retrieved = getEffectDefinition(state, cardId, "draw-2");
+    const retrieved = getEffect(state, cardId, "draw-2");
 
     expect(retrieved).toEqual(effectDefinition);
     expect(retrieved?.actions).toHaveLength(1);
@@ -872,7 +873,7 @@ describe("Effect Stack - Effect Definition Lookup", () => {
 
   it("should return undefined for non-existent effect", () => {
     const state = createTestGameState();
-    const result = getEffectDefinition(state, createTestCardId(1), "non-existent");
+    const result = getEffect(state, createTestCardId(1), "non-existent");
 
     expect(result).toBeUndefined();
   });
@@ -880,15 +881,15 @@ describe("Effect Stack - Effect Definition Lookup", () => {
   it("should register multiple effect definitions for same card", () => {
     const cardId: CardId = createTestCardId(1);
 
-    registerEffectDefinition(cardId, {
-      actions: [{ count: 1, player: "self" as const, type: "DRAW" }] as EffectAction[],
+    registerEffect(cardId, {
       category: "triggered" as const,
+      id: "effect-1",
       id: "effect-1",
       text: "Draw 1 card.",
       timing: { type: "DEPLOY" as const },
     });
 
-    registerEffectDefinition(cardId, {
+    registerEffect(cardId, {
       actions: [
         {
           amount: 2,
@@ -898,14 +899,17 @@ describe("Effect Stack - Effect Definition Lookup", () => {
         },
       ] as EffectAction[],
       category: "triggered" as const,
+      category: "triggered" as const,
+      id: "effect-2",
       id: "effect-2",
       text: "Deal 2 damage.",
+      timing: { type: "DESTROYED" as const },
       timing: { type: "DESTROYED" as const },
     });
 
     const state = createTestGameState();
-    const effect1 = getEffectDefinition(state, cardId, "effect-1");
-    const effect2 = getEffectDefinition(state, cardId, "effect-2");
+    const effect1 = getEffect(state, cardId, "effect-1");
+    const effect2 = getEffect(state, cardId, "effect-2");
 
     expect(effect1?.id).toBe("effect-1");
     expect(effect2?.id).toBe("effect-2");
@@ -916,19 +920,22 @@ describe("Effect Stack - Effect Definition Lookup", () => {
   it("should clear all effect definitions", () => {
     const cardId: CardId = createTestCardId(1);
 
-    registerEffectDefinition(cardId, {
+    registerEffect(cardId, {
       actions: [],
       category: "command" as const,
+      category: "command" as const,
+      id: "test-effect",
       id: "test-effect",
       text: "Test",
+      timing: { type: "MAIN" as const },
       timing: { type: "MAIN" as const },
     });
 
     const state = createTestGameState();
-    expect(getEffectDefinition(state, cardId, "test-effect")).toBeDefined();
+    expect(getEffect(state, cardId, "test-effect")).toBeDefined();
 
-    clearEffectDefinitions();
-    expect(getEffectDefinition(state, cardId, "test-effect")).toBeUndefined();
+    clearEffects();
+    expect(getEffect(state, cardId, "test-effect")).toBeUndefined();
   });
 
   it("should store effect definitions independently from game state", () => {
@@ -941,14 +948,14 @@ describe("Effect Stack - Effect Definition Lookup", () => {
       timing: { type: "MAIN" as const },
     };
 
-    registerEffectDefinition(cardId, effectDefinition);
+    registerEffect(cardId, effectDefinition);
 
     // Create two different game states
     const state1 = createTestGameState();
     const state2 = createTestGameState();
 
     // Both should be able to retrieve the same effect definition
-    expect(getEffectDefinition(state1, cardId, "test")).toEqual(effectDefinition);
-    expect(getEffectDefinition(state2, cardId, "test")).toEqual(effectDefinition);
+    expect(getEffect(state1, cardId, "test")).toEqual(effectDefinition);
+    expect(getEffect(state2, cardId, "test")).toEqual(effectDefinition);
   });
 });

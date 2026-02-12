@@ -6,18 +6,18 @@ export const itMeansNoWorries: ActionCard = {
       effect: {
         steps: [
           {
+            type: "return-to-hand",
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "return-to-hand",
           },
           {
-            from: "hand",
             type: "play-card",
+            from: "hand",
           },
         ],
         type: "sequence",

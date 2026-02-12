@@ -6,11 +6,11 @@ export const baymaxsHealthcareChip: ItemCard = {
       effect: {
         amount: 1,
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "remove-damage",
         upTo: true,
@@ -22,20 +22,20 @@ export const baymaxsHealthcareChip: ItemCard = {
     {
       effect: {
         condition: {
-          expression: "you have a Robot character in play",
           type: "if",
+          expression: "you have a Robot character in play",
         },
         then: {
+          type: "remove-damage",
           amount: 3,
+          upTo: true,
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "remove-damage",
-          upTo: true,
         },
         type: "conditional",
       },

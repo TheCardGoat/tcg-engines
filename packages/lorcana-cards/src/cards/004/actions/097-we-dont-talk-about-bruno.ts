@@ -6,17 +6,17 @@ export const weDontTalkAboutBruno: ActionCard = {
       effect: {
         steps: [
           {
-            target: {
-              count: 1,
-              selector: "chosen",
-            },
             type: "return-to-hand",
+            target: {
+              selector: "chosen",
+              count: 1,
+            },
           },
           {
-            amount: 1,
-            chosen: true,
-            target: "CARD_OWNER",
             type: "discard",
+            amount: 1,
+            target: "CARD_OWNER",
+            chosen: true,
           },
         ],
         type: "sequence",

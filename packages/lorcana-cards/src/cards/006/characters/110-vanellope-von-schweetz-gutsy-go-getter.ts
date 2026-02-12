@@ -5,12 +5,12 @@ export const vanellopeVonSchweetzGutsyGogetter: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "this character is at a location",
           type: "if",
+          expression: "this character is at a location",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

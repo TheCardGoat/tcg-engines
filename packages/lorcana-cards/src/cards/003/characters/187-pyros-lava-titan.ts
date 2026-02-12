@@ -6,14 +6,14 @@ export const pyrosLavaTitan: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "ready",
           target: {
-            cardTypes: ["character"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "ready",
         },
         type: "optional",
       },

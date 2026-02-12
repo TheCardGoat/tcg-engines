@@ -6,9 +6,9 @@ export const ladyTremaineWickedStepmother: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "return-from-discard",
           cardType: "action",
           target: "CONTROLLER",
-          type: "return-from-discard",
         },
         type: "optional",
       },

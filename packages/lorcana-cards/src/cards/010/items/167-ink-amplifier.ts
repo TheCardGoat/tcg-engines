@@ -5,15 +5,15 @@ export const inkAmplifier: ItemCard = {
     {
       effect: {
         condition: {
-          expression: "it's the second card they've drawn this turn",
           type: "if",
+          expression: "it's the second card they've drawn this turn",
         },
         then: {
-          exerted: true,
-          facedown: true,
+          type: "put-into-inkwell",
           source: "top-of-deck",
           target: "CONTROLLER",
-          type: "put-into-inkwell",
+          exerted: true,
+          facedown: true,
         },
         type: "conditional",
       },

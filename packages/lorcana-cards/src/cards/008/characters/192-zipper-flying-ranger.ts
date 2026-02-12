@@ -5,12 +5,12 @@ export const zipperFlyingRanger: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character named Monterey Jack in play",
           type: "if",
+          expression: "you have a character named Monterey Jack in play",
         },
         then: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "conditional",
       },

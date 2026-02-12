@@ -25,9 +25,9 @@ export const philoctetesNononsenseInstructor: CharacterCard = {
       trigger: {
         event: "play",
         on: {
+          controller: "you",
           cardType: "character",
           classification: "Hero",
-          controller: "you",
         },
         timing: "whenever",
       },

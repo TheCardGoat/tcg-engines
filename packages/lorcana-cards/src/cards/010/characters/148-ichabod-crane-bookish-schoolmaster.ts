@@ -5,15 +5,15 @@ export const ichabodCraneBookishSchoolmaster: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you've played a character with cost 5 or more this turn",
           type: "if",
+          expression: "you've played a character with cost 5 or more this turn",
         },
         then: {
-          exerted: true,
-          facedown: true,
+          type: "put-into-inkwell",
           source: "top-of-deck",
           target: "CONTROLLER",
-          type: "put-into-inkwell",
+          exerted: true,
+          facedown: true,
         },
         type: "conditional",
       },

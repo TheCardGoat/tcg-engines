@@ -734,7 +734,7 @@ describe("Set 001 Card Text Parser Tests - Characters A M", () => {
     const phenomenalCosmicPower = {
       effect: {
         effect: {
-          filter: { cardType: "action", maxCost: 5 },
+          filter: { maxCost: 5, cardType: "action" },
           free: true,
           from: "hand",
           type: "play-card",

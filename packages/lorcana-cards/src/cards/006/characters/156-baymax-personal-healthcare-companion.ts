@@ -5,12 +5,12 @@ export const baymaxPersonalHealthcareCompanion: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have an Inventor character in play",
           type: "if",
+          expression: "you have an Inventor character in play",
         },
         then: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "conditional",
       },
@@ -22,11 +22,11 @@ export const baymaxPersonalHealthcareCompanion: CharacterCard = {
       effect: {
         amount: 1,
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "remove-damage",
         upTo: true,

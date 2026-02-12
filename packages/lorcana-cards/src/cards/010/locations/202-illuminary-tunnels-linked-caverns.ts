@@ -8,8 +8,8 @@ export const illuminaryTunnelsLinkedCaverns: LocationCard = {
       },
       effect: {
         modifier: {
-          controller: "you",
           type: "locations-in-play",
+          controller: "you",
         },
         stat: "lore",
         target: "SELF",

@@ -6,9 +6,9 @@ export const genieSupportiveFriend: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          intoDeck: "owner",
-          target: "SELF",
           type: "shuffle-into-deck",
+          target: "SELF",
+          intoDeck: "owner",
         },
         type: "optional",
       },

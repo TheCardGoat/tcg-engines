@@ -6,14 +6,14 @@ export const itCallsMe: ActionCard = {
       effect: {
         steps: [
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
           {
-            intoDeck: "owner",
-            target: "CHOSEN_CHARACTER",
             type: "shuffle-into-deck",
+            target: "CHOSEN_CHARACTER",
+            intoDeck: "owner",
           },
         ],
         type: "sequence",

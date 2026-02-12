@@ -6,10 +6,10 @@ export const ursulaVoiceStealer: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "play-card",
+          from: "hand",
           cardType: "action",
           cost: "free",
-          from: "hand",
-          type: "play-card",
         },
         type: "optional",
       },

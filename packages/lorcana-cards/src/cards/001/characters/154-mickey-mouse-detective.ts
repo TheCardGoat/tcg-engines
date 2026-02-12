@@ -6,11 +6,11 @@ export const mickeyMouseDetective: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          exerted: true,
-          facedown: true,
+          type: "put-into-inkwell",
           source: "top-of-deck",
           target: "CONTROLLER",
-          type: "put-into-inkwell",
+          exerted: true,
+          facedown: true,
         },
         type: "optional",
       },

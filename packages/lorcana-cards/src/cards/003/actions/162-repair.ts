@@ -6,11 +6,11 @@ export const repair: ActionCard = {
       effect: {
         amount: 3,
         target: {
-          cardTypes: ["location"],
+          selector: "all",
           count: "all",
           owner: "you",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["location"],
         },
         type: "remove-damage",
         upTo: true,

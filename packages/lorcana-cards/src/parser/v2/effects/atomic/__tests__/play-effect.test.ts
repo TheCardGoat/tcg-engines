@@ -17,7 +17,9 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
+      expect((result as Effect & { cardType?: string }).cardType).toBe(
+        "character",
+      );
       // Cost is only set when it's "free"
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
@@ -67,7 +69,9 @@ describe("playEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       expect((result as Effect & { from: string }).from).toBe("discard");
-      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
+      expect((result as Effect & { cardType?: string }).cardType).toBe(
+        "character",
+      );
       // Cost is only set when it's "free"
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
@@ -99,9 +103,11 @@ describe("playEffectParser", () => {
       expect(result?.type).toBe("play-card");
       expect((result as Effect & { cost?: string }).cost).toBe("free");
       // Implementation uses costRestriction instead of filter
-      const { costRestriction } = result as Effect & {
-        costRestriction?: { comparison: string; value: number };
-      };
+      const {costRestriction} = (
+        result as Effect & {
+          costRestriction?: { comparison: string; value: number };
+        }
+      );
       expect(costRestriction?.value).toBe(3);
       expect(costRestriction?.comparison).toBe("less-or-equal");
     });
@@ -111,9 +117,11 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      const { costRestriction } = result as Effect & {
-        costRestriction?: { comparison: string; value: number };
-      };
+      const {costRestriction} = (
+        result as Effect & {
+          costRestriction?: { comparison: string; value: number };
+        }
+      );
       expect(costRestriction?.value).toBe(5);
     });
 
@@ -122,9 +130,11 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      const { costRestriction } = result as Effect & {
-        costRestriction?: { comparison: string; value: number };
-      };
+      const {costRestriction} = (
+        result as Effect & {
+          costRestriction?: { comparison: string; value: number };
+        }
+      );
       expect(costRestriction?.value).toBe(2);
     });
   });
@@ -144,7 +154,9 @@ describe("playEffectParser", () => {
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
       // Parser now correctly skips the article "A" and captures "character"
-      expect((result as Effect & { cardType?: string }).cardType).toBe("character");
+      expect((result as Effect & { cardType?: string }).cardType).toBe(
+        "character",
+      );
       // Text.includes("for free") is case-sensitive, so "For Free" doesn't match
       expect((result as Effect & { cost?: string }).cost).toBeUndefined();
     });
@@ -237,9 +249,11 @@ describe("playEffectParser", () => {
 
       expect(result).not.toBeNull();
       expect(result?.type).toBe("play-card");
-      const { costRestriction } = result as Effect & {
-        costRestriction?: { comparison: string; value: number };
-      };
+      const {costRestriction} = (
+        result as Effect & {
+          costRestriction?: { comparison: string; value: number };
+        }
+      );
       expect(costRestriction?.value).toBe(0);
     });
 
@@ -247,9 +261,11 @@ describe("playEffectParser", () => {
       const result = playEffectParser.parse("play that costs 10 or less for free");
 
       expect(result).not.toBeNull();
-      const { costRestriction } = result as Effect & {
-        costRestriction?: { comparison: string; value: number };
-      };
+      const {costRestriction} = (
+        result as Effect & {
+          costRestriction?: { comparison: string; value: number };
+        }
+      );
       expect(costRestriction?.value).toBe(10);
     });
   });
@@ -266,9 +282,11 @@ describe("playEffectParser", () => {
       const result = playEffectParser.parse("play that costs 3 for free");
 
       expect(result).not.toBeNull();
-      const { costRestriction } = result as Effect & {
-        costRestriction?: { comparison: string; value: number };
-      };
+      const {costRestriction} = (
+        result as Effect & {
+          costRestriction?: { comparison: string; value: number };
+        }
+      );
       expect(costRestriction?.value).toBe(3);
     });
   });

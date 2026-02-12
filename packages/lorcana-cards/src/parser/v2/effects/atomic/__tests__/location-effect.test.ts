@@ -205,7 +205,9 @@ describe("locationEffectParser", () => {
     it("documents that 'this character' is not detected due to pattern requirement", () => {
       // NOTE: The parser logic checks for "this character" but the regex pattern
       // Requires "chosen" before character, so "this character" never matches
-      const result = locationEffectParser.parse("move this character to a location for free");
+      const result = locationEffectParser.parse(
+        "move this character to a location for free",
+      );
 
       expect(result).toBeNull();
     });

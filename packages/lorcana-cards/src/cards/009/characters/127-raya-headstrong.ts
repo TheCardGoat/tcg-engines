@@ -6,24 +6,24 @@ export const rayaHeadstrong: CharacterCard = {
       effect: {
         steps: [
           {
-            chooser: "CONTROLLER",
+            type: "optional",
             effect: {
+              type: "ready",
               target: {
-                cardTypes: ["character"],
+                selector: "self",
                 count: 1,
                 owner: "any",
-                selector: "self",
                 zones: ["play"],
+                cardTypes: ["character"],
               },
-              type: "ready",
             },
-            type: "optional",
+            chooser: "CONTROLLER",
           },
           {
-            duration: "this-turn",
+            type: "restriction",
             restriction: "cant-quest",
             target: "SELF",
-            type: "restriction",
+            duration: "this-turn",
           },
         ],
         type: "sequence",

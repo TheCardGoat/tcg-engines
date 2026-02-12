@@ -17,9 +17,7 @@ class ParserLogger {
    * Called automatically on first log operation.
    */
   private ensureInitialized(): void {
-    if (this.initialized) {
-      return;
-    }
+    if (this.initialized) {return;}
     this.initialized = true;
 
     if (process.env.PARSER_DEBUG === "true") {
@@ -58,12 +56,8 @@ class ParserLogger {
 
   private log(level: LogLevel, message: string, context?: LogContext): void {
     this.ensureInitialized();
-    if (!this.enabled) {
-      return;
-    }
-    if (!this.shouldLog(level)) {
-      return;
-    }
+    if (!this.enabled) {return;}
+    if (!this.shouldLog(level)) {return;}
 
     const logEntry = {
       level,
@@ -73,7 +67,12 @@ class ParserLogger {
     };
 
     // Use console for now, can be replaced with pino/winston later
-    const logFn = level === "error" ? console.error : (level === "warn" ? console.warn : console.log);
+    const logFn =
+      level === "error"
+        ? console.error
+        : (level === "warn"
+          ? console.warn
+          : console.log);
     logFn(JSON.stringify(logEntry));
   }
 

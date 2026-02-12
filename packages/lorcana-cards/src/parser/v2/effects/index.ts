@@ -35,7 +35,7 @@ export function parseEffect(input: CstNode | string): Effect | null {
   // If it does, we should NOT fall back to atomic parsing
   if (typeof input === "string") {
     for (const parser of compositeEffectParsers) {
-      const { pattern } = parser;
+      const {pattern} = parser;
       if (pattern instanceof RegExp && pattern.test(input)) {
         logger.info(
           "Input matches composite parser pattern but failed to parse - blocking atomic parse",

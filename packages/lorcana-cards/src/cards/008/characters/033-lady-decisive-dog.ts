@@ -16,8 +16,8 @@ export const ladyDecisiveDog: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "you",
+          cardType: "character",
         },
         timing: "whenever",
       },

@@ -6,16 +6,16 @@ export const theQueenMirrorSeeker: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "scry",
           amount: 3,
+          target: "CONTROLLER",
           destinations: [
             {
-              ordering: "player-choice",
-              remainder: true,
               zone: "deck-top",
+              remainder: true,
+              ordering: "player-choice",
             },
           ],
-          target: "CONTROLLER",
-          type: "scry",
         },
         type: "optional",
       },

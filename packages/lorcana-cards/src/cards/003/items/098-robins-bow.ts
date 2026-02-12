@@ -7,11 +7,11 @@ export const robinsBow: ItemCard = {
       effect: {
         amount: 1,
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "deal-damage",
       },
@@ -23,14 +23,14 @@ export const robinsBow: ItemCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "ready",
           target: {
-            cardTypes: ["item"],
+            selector: "self",
             count: 1,
             owner: "any",
-            selector: "self",
             zones: ["play"],
+            cardTypes: ["item"],
           },
-          type: "ready",
         },
         type: "optional",
       },

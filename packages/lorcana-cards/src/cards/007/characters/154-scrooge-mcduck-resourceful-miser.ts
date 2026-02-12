@@ -6,14 +6,14 @@ export const scroogeMcduckResourcefulMiser: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "exert",
           target: {
-            cardTypes: ["character"],
+            selector: "self",
             count: 1,
             owner: "any",
-            selector: "self",
             zones: ["play"],
+            cardTypes: ["character"],
           },
-          type: "exert",
         },
         type: "optional",
       },
@@ -25,8 +25,8 @@ export const scroogeMcduckResourcefulMiser: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          target: "CHOSEN_CHARACTER",
           type: "put-on-bottom",
+          target: "CHOSEN_CHARACTER",
         },
         type: "optional",
       },

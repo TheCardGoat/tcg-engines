@@ -32,8 +32,8 @@ export const minnieMouseMusicalArtist: CharacterCard = {
       trigger: {
         event: "play",
         on: {
-          cardType: "character",
           controller: "you",
+          cardType: "character",
         },
         timing: "whenever",
       },

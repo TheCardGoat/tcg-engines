@@ -6,21 +6,21 @@ export const standOut: ActionCard = {
       effect: {
         steps: [
           {
-            modifier: 3,
+            type: "modify-stat",
             stat: "strength",
+            modifier: 3,
             target: {
-              cardTypes: ["character"],
+              selector: "chosen",
               count: 1,
               owner: "any",
-              selector: "chosen",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "modify-stat",
           },
           {
+            type: "gain-keyword",
             keyword: "Evasive",
             target: "SELF",
-            type: "gain-keyword",
           },
         ],
         type: "sequence",

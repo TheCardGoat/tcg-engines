@@ -6,11 +6,11 @@ export const tugofwar: ActionCard = {
       effect: {
         amount: 1,
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "opponent",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "deal-damage",
       },
@@ -22,11 +22,11 @@ export const tugofwar: ActionCard = {
       effect: {
         amount: 3,
         target: {
-          cardTypes: ["character"],
+          selector: "all",
           count: "all",
           owner: "opponent",
-          selector: "all",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "deal-damage",
       },

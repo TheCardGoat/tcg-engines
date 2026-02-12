@@ -5,12 +5,12 @@ export const brutusFearsomeCrocodile: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "one of your characters was damaged this turn",
           type: "if",
+          expression: "one of your characters was damaged this turn",
         },
         then: {
-          amount: 2,
           type: "gain-lore",
+          amount: 2,
         },
         type: "conditional",
       },

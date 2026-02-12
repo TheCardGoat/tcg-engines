@@ -5,14 +5,14 @@ export const theSwordReleased: ItemCard = {
     {
       effect: {
         condition: {
+          type: "if",
           expression:
             "you have a character in play with more {S} than each opposing character in play",
-          type: "if",
         },
         then: {
+          type: "lose-lore",
           amount: 1,
           target: "EACH_OPPONENT",
-          type: "lose-lore",
         },
         type: "conditional",
       },

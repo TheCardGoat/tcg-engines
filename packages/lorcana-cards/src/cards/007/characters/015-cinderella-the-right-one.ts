@@ -6,8 +6,8 @@ export const cinderellaTheRightOne: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: 3,
           type: "gain-lore",
+          amount: 3,
         },
         type: "optional",
       },

@@ -10,21 +10,24 @@
  */
 
 import type { CardId, PlayerId } from "@tcg/core";
-import type { GundamGameState } from "../types";
 import type {
   BaseEffectCardDefinition,
   CardFilter,
   CardType,
   Color,
-  CostFilter,
   LevelFilter,
+  PropertyCostFilter,
   TargetCountRange,
   TargetFilter,
   TargetPropertyFilter,
   TargetStateFilter,
   TargetingSpec,
   ZoneType,
-} from "../types/effects";
+} from "@tcg/gundam-types/effects";
+import type { GundamGameState } from "../types";
+
+// Type alias for clarity - CostFilter in this context is PropertyCostFilter
+type CostFilter = PropertyCostFilter;
 
 // ============================================================================
 // CONTEXT TYPES

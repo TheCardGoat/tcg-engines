@@ -5,13 +5,13 @@ export const panicImmortalSidekick: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a character named Pain in play",
           type: "if",
+          expression: "you have a character named Pain in play",
         },
         then: {
+          type: "restriction",
           restriction: "cant-be-challenged",
           target: "SELF",
-          type: "restriction",
         },
         type: "conditional",
       },

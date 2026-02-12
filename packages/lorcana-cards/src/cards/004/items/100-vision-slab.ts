@@ -5,12 +5,12 @@ export const visionSlab: ItemCard = {
     {
       effect: {
         condition: {
-          expression: "an opposing character has damage",
           type: "if",
+          expression: "an opposing character has damage",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

@@ -6,21 +6,21 @@ export const jumboPop: ItemCard = {
       effect: {
         steps: [
           {
+            type: "remove-damage",
             amount: 2,
+            upTo: true,
             target: {
-              cardTypes: ["character"],
+              selector: "all",
               count: "all",
               owner: "you",
-              selector: "all",
               zones: ["play"],
+              cardTypes: ["character"],
             },
-            type: "remove-damage",
-            upTo: true,
           },
           {
+            type: "draw",
             amount: 1,
             target: "CONTROLLER",
-            type: "draw",
           },
         ],
         type: "sequence",

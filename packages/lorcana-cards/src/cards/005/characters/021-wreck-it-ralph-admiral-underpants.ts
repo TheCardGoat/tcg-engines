@@ -5,12 +5,12 @@ export const wreckitRalphAdmiralUnderpants: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "that card is a Princess character card",
           type: "if",
+          expression: "that card is a Princess character card",
         },
         then: {
-          amount: 2,
           type: "gain-lore",
+          amount: 2,
         },
         type: "conditional",
       },

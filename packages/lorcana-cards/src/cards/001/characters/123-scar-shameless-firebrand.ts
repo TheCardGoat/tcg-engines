@@ -6,8 +6,8 @@ export const scarShamelessFirebrand: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          from: "hand",
           type: "play-card",
+          from: "hand",
         },
         type: "optional",
       },

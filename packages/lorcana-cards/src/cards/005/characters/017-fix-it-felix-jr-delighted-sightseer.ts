@@ -5,13 +5,13 @@ export const fixitFelixJrDelightedSightseer: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you have a location in play",
           type: "if",
+          expression: "you have a location in play",
         },
         then: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },

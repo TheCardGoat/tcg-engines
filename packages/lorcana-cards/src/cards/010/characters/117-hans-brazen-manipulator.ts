@@ -15,12 +15,12 @@ export const hansBrazenManipulator: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "an opponent has 2 or more ready characters in play",
           type: "if",
+          expression: "an opponent has 2 or more ready characters in play",
         },
         then: {
-          amount: 2,
           type: "gain-lore",
+          amount: 2,
         },
         type: "conditional",
       },

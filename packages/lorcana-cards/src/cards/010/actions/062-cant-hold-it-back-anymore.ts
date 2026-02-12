@@ -5,11 +5,11 @@ export const cantHoldItBackAnymore: ActionCard = {
     {
       effect: {
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "opponent",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "exert",
       },

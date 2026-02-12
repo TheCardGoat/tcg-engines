@@ -5,11 +5,11 @@ export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
     {
       effect: {
         target: {
-          cardTypes: ["character"],
+          selector: "chosen",
           count: 1,
           owner: "any",
-          selector: "chosen",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "banish",
       },
@@ -26,11 +26,11 @@ export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
     {
       effect: {
         target: {
-          cardTypes: ["character"],
+          selector: "self",
           count: 1,
           owner: "any",
-          selector: "self",
           zones: ["play"],
+          cardTypes: ["character"],
         },
         type: "ready",
       },

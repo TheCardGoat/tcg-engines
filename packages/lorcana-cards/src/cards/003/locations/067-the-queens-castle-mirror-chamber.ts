@@ -5,13 +5,13 @@ export const theQueensCastleMirrorChamber: LocationCard = {
     {
       effect: {
         counter: {
-          controller: "you",
           type: "characters",
+          controller: "you",
         },
         effect: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "for-each",
       },

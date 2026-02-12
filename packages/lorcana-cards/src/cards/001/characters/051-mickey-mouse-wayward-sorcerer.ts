@@ -6,14 +6,14 @@ export const mickeyMouseWaywardSorcerer: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
+          type: "return-to-hand",
           target: {
-            cardTypes: ["card"],
+            selector: "chosen",
             count: 1,
             owner: "any",
-            selector: "chosen",
             zones: ["play"],
+            cardTypes: ["card"],
           },
-          type: "return-to-hand",
         },
         type: "optional",
       },

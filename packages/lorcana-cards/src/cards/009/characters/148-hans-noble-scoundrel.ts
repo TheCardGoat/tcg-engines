@@ -5,12 +5,12 @@ export const hansNobleScoundrel: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "a Princess or Queen character is in play",
           type: "if",
+          expression: "a Princess or Queen character is in play",
         },
         then: {
-          amount: 1,
           type: "gain-lore",
+          amount: 1,
         },
         type: "conditional",
       },

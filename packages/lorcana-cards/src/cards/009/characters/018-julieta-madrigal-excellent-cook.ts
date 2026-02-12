@@ -5,13 +5,13 @@ export const julietaMadrigalExcellentCook: CharacterCard = {
     {
       effect: {
         condition: {
-          expression: "you removed damage this way",
           type: "if",
+          expression: "you removed damage this way",
         },
         then: {
+          type: "draw",
           amount: 1,
           target: "CONTROLLER",
-          type: "draw",
         },
         type: "conditional",
       },

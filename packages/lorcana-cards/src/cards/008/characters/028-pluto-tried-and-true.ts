@@ -6,15 +6,15 @@ export const plutoTriedAndTrue: CharacterCard = {
       effect: {
         steps: [
           {
-            modifier: 2,
-            stat: "strength",
-            target: "SELF",
             type: "modify-stat",
+            stat: "strength",
+            modifier: 2,
+            target: "SELF",
           },
           {
+            type: "gain-keyword",
             keyword: "Support",
             target: "SELF",
-            type: "gain-keyword",
           },
         ],
         type: "sequence",
