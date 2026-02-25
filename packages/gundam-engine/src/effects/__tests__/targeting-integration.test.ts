@@ -10,6 +10,7 @@ import type {
   BaseEffectCardDefinition,
   TargetingSpec,
 } from "@tcg/gundam-types";
+import { createTestState } from "../../testing/test-helpers";
 import type { GundamGameState } from "../../types";
 import {
   enumerateValidTargets,
@@ -17,7 +18,7 @@ import {
   validateTargets,
 } from "../targeting-system";
 
-// Helper to create a complete game state
+// Helper to create a complete game state using new IState pattern
 function createGameState(
   config: {
     player1Cards?: { battleArea?: string[]; hand?: string[]; deck?: string[] };
@@ -29,284 +30,25 @@ function createGameState(
   const player1 = "player-1" as PlayerId;
   const player2 = "player-2" as PlayerId;
 
-  return {
+  return createTestState({
     players: [player1, player2],
-    currentPlayer: player1,
-    turn: 2,
-    phase: "main",
-    zones: {
-      deck: {
-        [player1]: {
-          config: {
-            id: "deck-p1",
-            name: "Deck",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player1,
-            faceDown: true,
-            maxSize: 50,
-          },
-          cards: (config.player1Cards?.deck ?? []) as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "deck-p2",
-            name: "Deck",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player2,
-            faceDown: true,
-            maxSize: 50,
-          },
-          cards: (config.player2Cards?.deck ?? []) as CardId[],
-        },
-      } as any,
-      resourceDeck: {
-        [player1]: {
-          config: {
-            id: "res-deck-p1",
-            name: "Resource Deck",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player1,
-            faceDown: true,
-            maxSize: 10,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "res-deck-p2",
-            name: "Resource Deck",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player2,
-            faceDown: true,
-            maxSize: 10,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      hand: {
-        [player1]: {
-          config: {
-            id: "hand-p1",
-            name: "Hand",
-            visibility: "private" as const,
-            ordered: false,
-            owner: player1,
-            maxSize: 10,
-          },
-          cards: (config.player1Cards?.hand ?? []) as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "hand-p2",
-            name: "Hand",
-            visibility: "private" as const,
-            ordered: false,
-            owner: player2,
-            maxSize: 10,
-          },
-          cards: (config.player2Cards?.hand ?? []) as CardId[],
-        },
-      } as any,
-      battleArea: {
-        [player1]: {
-          config: {
-            id: "ba-p1",
-            name: "Battle Area",
-            visibility: "public" as const,
-            ordered: true,
-            owner: player1,
-            maxSize: 6,
-          },
-          cards: (config.player1Cards?.battleArea ?? []) as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "ba-p2",
-            name: "Battle Area",
-            visibility: "public" as const,
-            ordered: true,
-            owner: player2,
-            maxSize: 6,
-          },
-          cards: (config.player2Cards?.battleArea ?? []) as CardId[],
-        },
-      } as any,
-      shieldSection: {
-        [player1]: {
-          config: {
-            id: "shield-p1",
-            name: "Shield Section",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player1,
-            faceDown: true,
-            maxSize: 6,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "shield-p2",
-            name: "Shield Section",
-            visibility: "secret" as const,
-            ordered: true,
-            owner: player2,
-            faceDown: true,
-            maxSize: 6,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      baseSection: {
-        [player1]: {
-          config: {
-            id: "base-p1",
-            name: "Base Section",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player1,
-            maxSize: 1,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "base-p2",
-            name: "Base Section",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player2,
-            maxSize: 1,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      resourceArea: {
-        [player1]: {
-          config: {
-            id: "res-area-p1",
-            name: "Resource Area",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player1,
-            maxSize: 15,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "res-area-p2",
-            name: "Resource Area",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player2,
-            maxSize: 15,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      trash: {
-        [player1]: {
-          config: {
-            id: "trash-p1",
-            name: "Trash",
-            visibility: "public" as const,
-            ordered: true,
-            owner: player1,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "trash-p2",
-            name: "Trash",
-            visibility: "public" as const,
-            ordered: true,
-            owner: player2,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      removal: {
-        [player1]: {
-          config: {
-            id: "removal-p1",
-            name: "Removal",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player1 as PlayerId,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "removal-p2",
-            name: "Removal",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player2 as PlayerId,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
-      limbo: {
-        [player1]: {
-          config: {
-            id: "limbo-p1",
-            name: "Limbo",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player1 as PlayerId,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-        [player2]: {
-          config: {
-            id: "limbo-p2",
-            name: "Limbo",
-            visibility: "public" as const,
-            ordered: false,
-            owner: player2 as PlayerId,
-            maxSize: 0,
-          },
-          cards: [] as CardId[],
-        },
-      } as any,
+    activePlayerId: player1,
+    turnNumber: 2,
+    currentPhase: "main",
+    battleAreaCards: {
+      [player1]: (config.player1Cards?.battleArea ?? []) as CardId[],
+      [player2]: (config.player2Cards?.battleArea ?? []) as CardId[],
     },
-    gundam: {
-      activeResources: {
-        [player1]: 3,
-        [player2]: 2,
-      } as Record<PlayerId, number>,
-      cardPositions: (config.cardPositions ?? {}) as Record<
-        CardId,
-        "active" | "rested"
-      >,
-      attackedThisTurn: [] as CardId[],
-      hasPlayedResourceThisTurn: {
-        [player1]: true,
-        [player2]: false,
-      } as Record<PlayerId, boolean>,
-      effectStack: {
-        stack: [],
-        nextInstanceId: 0,
-      },
-      temporaryModifiers:
-        (config.temporaryModifiers as any) ??
-        ({} as GundamGameState["gundam"]["temporaryModifiers"]),
-      cardDamage: {} as Record<CardId, number>,
-      revealedCards: [] as CardId[],
+    handCards: {
+      [player1]: (config.player1Cards?.hand ?? []) as CardId[],
+      [player2]: (config.player2Cards?.hand ?? []) as CardId[],
     },
-  };
+    cardPositions: (config.cardPositions ?? {}) as Record<
+      CardId,
+      "active" | "rested"
+    >,
+    activeResources: { [player1]: 3, [player2]: 2 },
+  });
 }
 
 // Helper to create card definitions

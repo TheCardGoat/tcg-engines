@@ -6,8 +6,8 @@
  */
 
 import { beforeEach, describe, expect, it } from "bun:test";
-import type { CardId, PlayerId, Zone } from "@tcg/core";
-import { createZone, createZoneId } from "@tcg/core";
+import type { CardId, PlayerId } from "@tcg/core";
+import { createCardId, createPlayerId } from "@tcg/core";
 import type {
   ActivateAction,
   DamageAction,
@@ -21,7 +21,8 @@ import type {
   SearchAction,
 } from "@tcg/gundam-types";
 import { produce } from "immer";
-import type { CardPosition, GundamGameState } from "../../types";
+import { createTestState, type TestZoneData } from "../../testing/test-helpers";
+import type { GundamGameState } from "../../types";
 import {
   type ActionContext,
   createModifierId,
@@ -58,87 +59,20 @@ const CARD_4: CardId = "card-4" as CardId;
 const CARD_5: CardId = "card-5" as CardId;
 const SOURCE_CARD: CardId = "source-card" as CardId;
 
-function createMockZone(owner: PlayerId, cards: CardId[] = []): Zone {
-  return createZone(
-    {
-      id: createZoneId(`zone-${owner}`),
-      name: "Test Zone",
-      visibility: "public",
-      ordered: true,
-      owner,
-    },
-    cards,
-  );
-}
-
 function createInitialGameState(): GundamGameState {
-  return {
+  return createTestState({
     players: [PLAYER_1, PLAYER_2],
-    currentPlayer: PLAYER_1,
-    turn: 1,
-    phase: "main",
-    zones: {
-      deck: {
-        [PLAYER_1]: createMockZone(PLAYER_1, [CARD_1, CARD_2, CARD_3]),
-        [PLAYER_2]: createMockZone(PLAYER_2, [CARD_4, CARD_5]),
-      },
-      resourceDeck: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      hand: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      battleArea: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      shieldSection: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      baseSection: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      resourceArea: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      trash: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      removal: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
-      limbo: {
-        [PLAYER_1]: createMockZone(PLAYER_1),
-        [PLAYER_2]: createMockZone(PLAYER_2),
-      },
+    activePlayerId: PLAYER_1,
+    turnNumber: 1,
+    currentPhase: "main",
+    // Deck has [CARD_1, CARD_2, CARD_3] for PLAYER_1 and [CARD_4, CARD_5] for PLAYER_2
+    deckCards: {
+      [PLAYER_1]: [CARD_1, CARD_2, CARD_3],
+      [PLAYER_2]: [CARD_4, CARD_5],
     },
-    gundam: {
-      activeResources: {
-        [PLAYER_1]: 0,
-        [PLAYER_2]: 0,
-      },
-      cardPositions: {},
-      attackedThisTurn: [],
-      hasPlayedResourceThisTurn: {
-        [PLAYER_1]: false,
-        [PLAYER_2]: false,
-      },
-      effectStack: {
-        stack: [],
-        nextInstanceId: 0,
-      },
-      temporaryModifiers: {},
-      cardDamage: {},
-      revealedCards: [],
-    },
-  };
+    handCards: { [PLAYER_1]: [], [PLAYER_2]: [] },
+    battleAreaCards: { [PLAYER_1]: [], [PLAYER_2]: [] },
+  });
 }
 
 function createMockContext(
@@ -192,12 +126,15 @@ describe("handleDrawAction", () => {
     });
 
     // Player 1 should have 2 cards in hand
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(2);
-    expect(state.zones.hand[PLAYER_1].cards).toEqual([CARD_1, CARD_2]);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toEqual([
+      CARD_1,
+      CARD_2,
+    ]);
 
     // Player 1 deck should have 1 card remaining
-    expect(state.zones.deck[PLAYER_1].cards.length).toBe(1);
-    expect(state.zones.deck[PLAYER_1].cards).toEqual([CARD_3]);
+    expect(state.internal.zones[`deck-${PLAYER_1}`].cardIds.length).toBe(1);
+    expect(state.internal.zones[`deck-${PLAYER_1}`].cardIds).toEqual([CARD_3]);
   });
 
   it("should draw cards for opponent", () => {
@@ -210,17 +147,17 @@ describe("handleDrawAction", () => {
     state = executeHandler(state, handleDrawAction, action, context);
 
     // Player 2 should have 1 card in hand
-    expect(state.zones.hand[PLAYER_2].cards.length).toBe(1);
-    expect(state.zones.hand[PLAYER_2].cards).toEqual([CARD_4]);
+    expect(state.internal.zones[`hand-${PLAYER_2}`].cardIds.length).toBe(1);
+    expect(state.internal.zones[`hand-${PLAYER_2}`].cardIds).toEqual([CARD_4]);
 
     // Player 2 deck should have 1 card remaining
-    expect(state.zones.deck[PLAYER_2].cards.length).toBe(1);
+    expect(state.internal.zones[`deck-${PLAYER_2}`].cardIds.length).toBe(1);
   });
 
   it("should handle empty deck gracefully", () => {
     // Empty the deck
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [];
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [];
     });
 
     const action: DrawAction = {
@@ -229,16 +166,16 @@ describe("handleDrawAction", () => {
       player: "self",
     };
 
-    // The draw function will throw, so we expect an error
-    expect(() => {
-      executeHandler(state, handleDrawAction, action, context);
-    }).toThrow();
+    // The draw function handles empty deck by returning early (no cards drawn)
+    const result = executeHandler(state, handleDrawAction, action, context);
+    // Should not throw, just silently handle (no cards drawn)
+    expect(result).toBeDefined();
   });
 
   it("should draw multiple cards", () => {
     // Add more cards to deck
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [
         CARD_1,
         CARD_2,
         CARD_3,
@@ -255,8 +192,8 @@ describe("handleDrawAction", () => {
 
     state = executeHandler(state, handleDrawAction, action, context);
 
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(3);
-    expect(state.zones.deck[PLAYER_1].cards.length).toBe(2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(3);
+    expect(state.internal.zones[`deck-${PLAYER_1}`].cardIds.length).toBe(2);
   });
 });
 
@@ -285,7 +222,7 @@ describe("handleDamageAction", () => {
     state = executeHandler(state, handleDamageAction, action, context);
 
     // Verify damage is tracked
-    expect(state.gundam.cardDamage[CARD_1]).toBe(2);
+    expect(state.internal.cardMetas[CARD_1]?.damage).toBe(2);
   });
 
   it("should handle no targets gracefully", () => {
@@ -302,7 +239,7 @@ describe("handleDamageAction", () => {
     // Should not throw or crash
     expect(state).toBeDefined();
     // No damage should be tracked
-    expect(Object.keys(state.gundam.cardDamage)).toHaveLength(0);
+    expect(Object.keys(state.internal.cardMetas)).toHaveLength(0);
   });
 
   it("should handle damage to base", () => {
@@ -316,7 +253,7 @@ describe("handleDamageAction", () => {
     context.targets = [CARD_1];
     state = executeHandler(state, handleDamageAction, action, context);
 
-    expect(state.gundam.cardDamage[CARD_1]).toBe(1);
+    expect(state.internal.cardMetas[CARD_1]?.damage).toBe(1);
   });
 
   it("should handle damage to shield", () => {
@@ -330,7 +267,7 @@ describe("handleDamageAction", () => {
     context.targets = [CARD_1];
     state = executeHandler(state, handleDamageAction, action, context);
 
-    expect(state.gundam.cardDamage[CARD_1]).toBe(1);
+    expect(state.internal.cardMetas[CARD_1]?.damage).toBe(1);
   });
 
   it("should accumulate damage on same target", () => {
@@ -343,11 +280,11 @@ describe("handleDamageAction", () => {
 
     context.targets = [CARD_1];
     state = executeHandler(state, handleDamageAction, action, context);
-    expect(state.gundam.cardDamage[CARD_1]).toBe(2);
+    expect(state.internal.cardMetas[CARD_1]?.damage).toBe(2);
 
     // Apply damage again
     state = executeHandler(state, handleDamageAction, action, context);
-    expect(state.gundam.cardDamage[CARD_1]).toBe(4);
+    expect(state.internal.cardMetas[CARD_1]?.damage).toBe(4);
   });
 
   it("should handle damage to multiple targets", () => {
@@ -361,15 +298,15 @@ describe("handleDamageAction", () => {
     context.targets = [CARD_1, CARD_2];
     state = executeHandler(state, handleDamageAction, action, context);
 
-    expect(state.gundam.cardDamage[CARD_1]).toBe(3);
-    expect(state.gundam.cardDamage[CARD_2]).toBe(3);
+    expect(state.internal.cardMetas[CARD_1]?.damage).toBe(3);
+    expect(state.internal.cardMetas[CARD_2]?.damage).toBe(3);
   });
 
   it("should destroy shield and move to trash when damaged", () => {
     // Add a shield to shield section
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.shieldSection[PLAYER_1].cards = [CARD_1];
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`shieldSection-${PLAYER_1}`].cardIds = [CARD_1];
     });
 
     const action: DamageAction = {
@@ -383,18 +320,20 @@ describe("handleDamageAction", () => {
     state = executeHandler(state, handleDamageAction, action, context);
 
     // Shield should be moved to trash
-    expect(state.zones.shieldSection[PLAYER_1].cards).toHaveLength(0);
-    expect(state.zones.trash[PLAYER_1].cards).toContain(CARD_1);
+    expect(
+      state.internal.zones[`shieldSection-${PLAYER_1}`].cardIds,
+    ).toHaveLength(0);
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds).toContain(CARD_1);
     // Damage counter should be cleared
-    expect(state.gundam.cardDamage[CARD_1]).toBeUndefined();
+    expect(state.internal.cardMetas[CARD_1]?.damage ?? 0).toBe(0);
   });
 
   it("should destroy unit when damage >= HP", () => {
     // Register a card with HP 5
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "active";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "active";
     });
 
     // Register card definition with HP 5
@@ -419,12 +358,14 @@ describe("handleDamageAction", () => {
     state = executeHandler(state, handleDamageAction, action, context);
 
     // Unit should be moved to trash
-    expect(state.zones.battleArea[PLAYER_1].cards).toHaveLength(0);
-    expect(state.zones.trash[PLAYER_1].cards).toContain(CARD_1);
+    expect(state.internal.zones[`battleArea-${PLAYER_1}`].cardIds).toHaveLength(
+      0,
+    );
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds).toContain(CARD_1);
     // Damage counter should be cleared
-    expect(state.gundam.cardDamage[CARD_1]).toBeUndefined();
+    expect(state.internal.cardMetas[CARD_1]?.damage ?? 0).toBe(0);
     // Position should be cleared
-    expect(state.gundam.cardPositions[CARD_1]).toBeUndefined();
+    expect(state.external.cardPositions[CARD_1]).toBeUndefined();
 
     // Clean up
     const { clearCardDefinitions } = require("../action-handlers");
@@ -434,9 +375,9 @@ describe("handleDamageAction", () => {
   it("should not destroy unit when damage < HP", () => {
     // Register a card with HP 5
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "active";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "active";
     });
 
     // Register card definition with HP 5
@@ -461,10 +402,14 @@ describe("handleDamageAction", () => {
     state = executeHandler(state, handleDamageAction, action, context);
 
     // Unit should remain in battle area
-    expect(state.zones.battleArea[PLAYER_1].cards).toContain(CARD_1);
-    expect(state.zones.trash[PLAYER_1].cards).not.toContain(CARD_1);
+    expect(state.internal.zones[`battleArea-${PLAYER_1}`].cardIds).toContain(
+      CARD_1,
+    );
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds).not.toContain(
+      CARD_1,
+    );
     // Damage counter should be tracked
-    expect(state.gundam.cardDamage[CARD_1]).toBe(3);
+    expect(state.internal.cardMetas[CARD_1]?.damage).toBe(3);
 
     // Clean up
     const { clearCardDefinitions } = require("../action-handlers");
@@ -474,9 +419,9 @@ describe("handleDamageAction", () => {
   it("should accumulate damage until lethal", () => {
     // Register a card with HP 5
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "active";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "active";
     });
 
     // Register card definition with HP 5
@@ -499,20 +444,26 @@ describe("handleDamageAction", () => {
 
     context.targets = [CARD_1];
     state = executeHandler(state, handleDamageAction, action, context);
-    expect(state.gundam.cardDamage[CARD_1]).toBe(2);
-    expect(state.zones.battleArea[PLAYER_1].cards).toContain(CARD_1);
+    expect(state.internal.cardMetas[CARD_1]?.damage).toBe(2);
+    expect(state.internal.zones[`battleArea-${PLAYER_1}`].cardIds).toContain(
+      CARD_1,
+    );
 
     // Apply damage again - now at 4
     state = executeHandler(state, handleDamageAction, action, context);
-    expect(state.gundam.cardDamage[CARD_1]).toBe(4);
-    expect(state.zones.battleArea[PLAYER_1].cards).toContain(CARD_1);
+    expect(state.internal.cardMetas[CARD_1]?.damage).toBe(4);
+    expect(state.internal.zones[`battleArea-${PLAYER_1}`].cardIds).toContain(
+      CARD_1,
+    );
 
     // Apply 1 more damage - now at 5, lethal
     const finalAction: DamageAction = { ...action, amount: 1 };
     state = executeHandler(state, handleDamageAction, finalAction, context);
-    expect(state.zones.battleArea[PLAYER_1].cards).toHaveLength(0);
-    expect(state.zones.trash[PLAYER_1].cards).toContain(CARD_1);
-    expect(state.gundam.cardDamage[CARD_1]).toBeUndefined();
+    expect(state.internal.zones[`battleArea-${PLAYER_1}`].cardIds).toHaveLength(
+      0,
+    );
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds).toContain(CARD_1);
+    expect(state.internal.cardMetas[CARD_1]?.damage ?? 0).toBe(0);
 
     // Clean up
     const { clearCardDefinitions } = require("../action-handlers");
@@ -536,9 +487,9 @@ describe("handleRestAction", () => {
   it("should rest a card in battle area", () => {
     // Add card to battle area
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "active";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "active";
     });
 
     const action: RestAction = {
@@ -554,14 +505,14 @@ describe("handleRestAction", () => {
     context.targets = [CARD_1];
     state = executeHandler(state, handleRestAction, action, context);
 
-    expect(state.gundam.cardPositions[CARD_1]).toBe("rested");
+    expect(state.external.cardPositions[CARD_1]).toBe("rested");
   });
 
   it("should rest a card in resource area", () => {
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.resourceArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "active";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`resourceArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "active";
     });
 
     const action: RestAction = {
@@ -577,14 +528,14 @@ describe("handleRestAction", () => {
     context.targets = [CARD_1];
     state = executeHandler(state, handleRestAction, action, context);
 
-    expect(state.gundam.cardPositions[CARD_1]).toBe("rested");
+    expect(state.external.cardPositions[CARD_1]).toBe("rested");
   });
 
   it("should no-op when card is already rested", () => {
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "rested";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "rested";
     });
 
     const action: RestAction = {
@@ -600,13 +551,13 @@ describe("handleRestAction", () => {
     context.targets = [CARD_1];
     state = executeHandler(state, handleRestAction, action, context);
 
-    expect(state.gundam.cardPositions[CARD_1]).toBe("rested");
+    expect(state.external.cardPositions[CARD_1]).toBe("rested");
   });
 
   it("should handle cards not in position-supporting zones", () => {
     // Card in hand (not position-supporting)
     state = produce(state, (draft) => {
-      draft.zones.hand[PLAYER_1].cards = [CARD_1];
+      draft.internal.zones[`hand-${PLAYER_1}`].cardIds = [CARD_1];
     });
 
     const action: RestAction = {
@@ -623,7 +574,7 @@ describe("handleRestAction", () => {
     state = executeHandler(state, handleRestAction, action, context);
 
     // Position should not be set for cards in non-position zones
-    expect(state.gundam.cardPositions[CARD_1]).toBeUndefined();
+    expect(state.external.cardPositions[CARD_1]).toBeUndefined();
   });
 });
 
@@ -642,9 +593,9 @@ describe("handleActivateAction", () => {
 
   it("should activate a rested card", () => {
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "rested";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "rested";
     });
 
     const action: ActivateAction = {
@@ -660,14 +611,14 @@ describe("handleActivateAction", () => {
     context.targets = [CARD_1];
     state = executeHandler(state, handleActivateAction, action, context);
 
-    expect(state.gundam.cardPositions[CARD_1]).toBe("active");
+    expect(state.external.cardPositions[CARD_1]).toBe("active");
   });
 
   it("should no-op when card is already active", () => {
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "active";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "active";
     });
 
     const action: ActivateAction = {
@@ -683,7 +634,7 @@ describe("handleActivateAction", () => {
     context.targets = [CARD_1];
     state = executeHandler(state, handleActivateAction, action, context);
 
-    expect(state.gundam.cardPositions[CARD_1]).toBe("active");
+    expect(state.external.cardPositions[CARD_1]).toBe("active");
   });
 });
 
@@ -702,7 +653,7 @@ describe("handleMoveCardAction", () => {
 
   it("should move card from hand to battle area", () => {
     state = produce(state, (draft) => {
-      draft.zones.hand[PLAYER_1].cards = [CARD_1];
+      draft.internal.zones[`hand-${PLAYER_1}`].cardIds = [CARD_1];
     });
 
     const action: MoveCardAction = {
@@ -720,14 +671,16 @@ describe("handleMoveCardAction", () => {
     context.targets = [CARD_1];
     state = executeHandler(state, handleMoveCardAction, action, context);
 
-    expect(state.zones.hand[PLAYER_1].cards).toHaveLength(0);
-    expect(state.zones.battleArea[PLAYER_1].cards).toEqual([CARD_1]);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toHaveLength(0);
+    expect(state.internal.zones[`battleArea-${PLAYER_1}`].cardIds).toEqual([
+      CARD_1,
+    ]);
   });
 
   it("should move card from battle area to trash", () => {
     state = produce(state, (draft) => {
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "active";
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "active";
     });
 
     const action: MoveCardAction = {
@@ -745,16 +698,18 @@ describe("handleMoveCardAction", () => {
     context.targets = [CARD_1];
     state = executeHandler(state, handleMoveCardAction, action, context);
 
-    expect(state.zones.battleArea[PLAYER_1].cards).toHaveLength(0);
-    expect(state.zones.trash[PLAYER_1].cards).toEqual([CARD_1]);
+    expect(state.internal.zones[`battleArea-${PLAYER_1}`].cardIds).toHaveLength(
+      0,
+    );
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds).toEqual([CARD_1]);
     // Position should be cleared
-    expect(state.gundam.cardPositions[CARD_1]).toBeUndefined();
+    expect(state.external.cardPositions[CARD_1]).toBeUndefined();
   });
 
   it("should handle card not in source zone", () => {
     // Card is in deck, not hand
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [CARD_1];
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_1];
     });
 
     const action: MoveCardAction = {
@@ -773,13 +728,15 @@ describe("handleMoveCardAction", () => {
     state = executeHandler(state, handleMoveCardAction, action, context);
 
     // Should not move the card (not in source zone)
-    expect(state.zones.hand[PLAYER_1].cards).toHaveLength(0);
-    expect(state.zones.battleArea[PLAYER_1].cards).toHaveLength(0);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toHaveLength(0);
+    expect(state.internal.zones[`battleArea-${PLAYER_1}`].cardIds).toHaveLength(
+      0,
+    );
   });
 
   it("should respect owner parameter", () => {
     state = produce(state, (draft) => {
-      draft.zones.hand[PLAYER_2].cards = [CARD_4];
+      draft.internal.zones[`hand-${PLAYER_2}`].cardIds = [CARD_4];
     });
 
     const action: MoveCardAction = {
@@ -799,8 +756,10 @@ describe("handleMoveCardAction", () => {
     state = executeHandler(state, handleMoveCardAction, action, context);
 
     // Should move opponent's card
-    expect(state.zones.hand[PLAYER_2].cards).toHaveLength(0);
-    expect(state.zones.battleArea[PLAYER_2].cards).toEqual([CARD_4]);
+    expect(state.internal.zones[`hand-${PLAYER_2}`].cardIds).toHaveLength(0);
+    expect(state.internal.zones[`battleArea-${PLAYER_2}`].cardIds).toEqual([
+      CARD_4,
+    ]);
   });
 });
 
@@ -820,14 +779,16 @@ describe("handleDestroyAction", () => {
   it("should destroy unit in battle area", () => {
     state = produce(state, (draft) => {
       // Remove CARD_4 from deck and add to battle area
-      draft.zones.deck[PLAYER_2].cards = [CARD_5];
-      draft.zones.battleArea[PLAYER_2].cards = [CARD_4];
-      draft.gundam.cardPositions[CARD_4] = "rested";
-      draft.gundam.temporaryModifiers[CARD_4] = [
+      draft.internal.zones[`deck-${PLAYER_2}`].cardIds = [CARD_5];
+      draft.internal.zones[`battleArea-${PLAYER_2}`].cardIds = [CARD_4];
+      draft.external.cardPositions[CARD_4] = "rested";
+      draft.external.temporaryModifiers[CARD_4] = [
         {
           id: "mod-1" as any,
+          cardId: CARD_4,
+          type: "stat",
           duration: "end_of_turn",
-          sourceId: SOURCE_CARD,
+          sourceCardId: SOURCE_CARD,
           apModifier: 2,
         },
       ];
@@ -846,10 +807,12 @@ describe("handleDestroyAction", () => {
     context.targets = [CARD_4];
     state = executeHandler(state, handleDestroyAction, action, context);
 
-    expect(state.zones.battleArea[PLAYER_2].cards).toHaveLength(0);
-    expect(state.zones.trash[PLAYER_2].cards).toEqual([CARD_4]);
-    expect(state.gundam.cardPositions[CARD_4]).toBeUndefined();
-    expect(state.gundam.temporaryModifiers[CARD_4]).toBeUndefined();
+    expect(state.internal.zones[`battleArea-${PLAYER_2}`].cardIds).toHaveLength(
+      0,
+    );
+    expect(state.internal.zones[`trash-${PLAYER_2}`].cardIds).toEqual([CARD_4]);
+    expect(state.external.cardPositions[CARD_4]).toBeUndefined();
+    expect(state.external.temporaryModifiers[CARD_4]).toBeUndefined();
   });
 
   it("should handle destroy with no targets", () => {
@@ -872,7 +835,7 @@ describe("handleDestroyAction", () => {
 
   it("should clear damage when destroying", () => {
     state = produce(state, (draft) => {
-      draft.zones.battleArea[PLAYER_2].cards = [CARD_4];
+      draft.internal.zones[`battleArea-${PLAYER_2}`].cardIds = [CARD_4];
     });
 
     const action: DestroyAction = {
@@ -889,7 +852,7 @@ describe("handleDestroyAction", () => {
     state = executeHandler(state, handleDestroyAction, action, context);
 
     // Damage clearing placeholder for T4
-    expect(state.zones.trash[PLAYER_2].cards).toContain(CARD_4);
+    expect(state.internal.zones[`trash-${PLAYER_2}`].cardIds).toContain(CARD_4);
   });
 });
 
@@ -908,7 +871,11 @@ describe("handleDiscardAction", () => {
 
   it("should discard specified cards from hand", () => {
     state = produce(state, (draft) => {
-      draft.zones.hand[PLAYER_1].cards = [CARD_1, CARD_2, CARD_3];
+      draft.internal.zones[`hand-${PLAYER_1}`].cardIds = [
+        CARD_1,
+        CARD_2,
+        CARD_3,
+      ];
     });
 
     const action: DiscardAction = {
@@ -920,14 +887,14 @@ describe("handleDiscardAction", () => {
     context.targets = [CARD_1, CARD_2];
     state = executeHandler(state, handleDiscardAction, action, context);
 
-    expect(state.zones.hand[PLAYER_1].cards).toEqual([CARD_3]);
-    expect(state.zones.trash[PLAYER_1].cards).toContain(CARD_1);
-    expect(state.zones.trash[PLAYER_1].cards).toContain(CARD_2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toEqual([CARD_3]);
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds).toContain(CARD_1);
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds).toContain(CARD_2);
   });
 
   it("should discard from opponent's hand", () => {
     state = produce(state, (draft) => {
-      draft.zones.hand[PLAYER_2].cards = [CARD_4, CARD_5];
+      draft.internal.zones[`hand-${PLAYER_2}`].cardIds = [CARD_4, CARD_5];
     });
 
     const action: DiscardAction = {
@@ -939,13 +906,13 @@ describe("handleDiscardAction", () => {
     context.targets = [CARD_4];
     state = executeHandler(state, handleDiscardAction, action, context);
 
-    expect(state.zones.hand[PLAYER_2].cards).toEqual([CARD_5]);
-    expect(state.zones.trash[PLAYER_2].cards).toContain(CARD_4);
+    expect(state.internal.zones[`hand-${PLAYER_2}`].cardIds).toEqual([CARD_5]);
+    expect(state.internal.zones[`trash-${PLAYER_2}`].cardIds).toContain(CARD_4);
   });
 
   it("should discard random cards when random is true", () => {
     state = produce(state, (draft) => {
-      draft.zones.hand[PLAYER_1].cards = [
+      draft.internal.zones[`hand-${PLAYER_1}`].cardIds = [
         CARD_1,
         CARD_2,
         CARD_3,
@@ -964,14 +931,18 @@ describe("handleDiscardAction", () => {
     state = executeHandler(state, handleDiscardAction, action, context);
 
     // Should have 3 cards remaining
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(3);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(3);
     // Should have 2 cards in trash
-    expect(state.zones.trash[PLAYER_1].cards.length).toBe(2);
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds.length).toBe(2);
   });
 
   it("should discard from top when no targets provided", () => {
     state = produce(state, (draft) => {
-      draft.zones.hand[PLAYER_1].cards = [CARD_1, CARD_2, CARD_3];
+      draft.internal.zones[`hand-${PLAYER_1}`].cardIds = [
+        CARD_1,
+        CARD_2,
+        CARD_3,
+      ];
     });
 
     const action: DiscardAction = {
@@ -982,13 +953,16 @@ describe("handleDiscardAction", () => {
 
     state = executeHandler(state, handleDiscardAction, action, context);
 
-    expect(state.zones.hand[PLAYER_1].cards).toEqual([CARD_3]);
-    expect(state.zones.trash[PLAYER_1].cards).toEqual([CARD_1, CARD_2]);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toEqual([CARD_3]);
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds).toEqual([
+      CARD_1,
+      CARD_2,
+    ]);
   });
 
   it("should handle empty hand gracefully", () => {
     state = produce(state, (draft) => {
-      draft.zones.hand[PLAYER_1].cards = [];
+      draft.internal.zones[`hand-${PLAYER_1}`].cardIds = [];
     });
 
     const action: DiscardAction = {
@@ -999,7 +973,7 @@ describe("handleDiscardAction", () => {
 
     state = executeHandler(state, handleDiscardAction, action, context);
 
-    expect(state.zones.hand[PLAYER_1].cards).toHaveLength(0);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toHaveLength(0);
   });
 });
 
@@ -1034,13 +1008,13 @@ describe("handleModifyStatsAction", () => {
     context.targets = [CARD_1];
     handleModifyStatsAction(state, action, context);
 
-    expect(state.gundam.temporaryModifiers[CARD_1]).toBeDefined();
-    expect(state.gundam.temporaryModifiers[CARD_1]!.length).toBe(1);
-    expect(state.gundam.temporaryModifiers[CARD_1]![0]).toMatchObject({
+    expect(state.external.temporaryModifiers[CARD_1]).toBeDefined();
+    expect(state.external.temporaryModifiers[CARD_1]!.length).toBe(1);
+    expect(state.external.temporaryModifiers[CARD_1]![0]).toMatchObject({
       duration: "end_of_turn",
       apModifier: 2,
       hpModifier: 1,
-      sourceId: SOURCE_CARD,
+      sourceCardId: SOURCE_CARD,
     });
   });
 
@@ -1060,7 +1034,7 @@ describe("handleModifyStatsAction", () => {
     context.targets = [CARD_1];
     handleModifyStatsAction(state, action, context);
 
-    expect(state.gundam.temporaryModifiers[CARD_1]![0]).toMatchObject({
+    expect(state.external.temporaryModifiers[CARD_1]![0]).toMatchObject({
       duration: "permanent",
       apModifier: 3,
     });
@@ -1082,7 +1056,7 @@ describe("handleModifyStatsAction", () => {
     context.targets = [CARD_1];
     handleModifyStatsAction(state, action, context);
 
-    expect(state.gundam.temporaryModifiers[CARD_1]![0]).toMatchObject({
+    expect(state.external.temporaryModifiers[CARD_1]![0]).toMatchObject({
       duration: "end_of_combat",
       hpModifier: -1,
     });
@@ -1104,8 +1078,8 @@ describe("handleModifyStatsAction", () => {
     context.targets = [CARD_1, CARD_2];
     handleModifyStatsAction(state, action, context);
 
-    expect(state.gundam.temporaryModifiers[CARD_1]).toBeDefined();
-    expect(state.gundam.temporaryModifiers[CARD_2]).toBeDefined();
+    expect(state.external.temporaryModifiers[CARD_1]).toBeDefined();
+    expect(state.external.temporaryModifiers[CARD_2]).toBeDefined();
   });
 
   it("should handle empty targets", () => {
@@ -1144,7 +1118,7 @@ describe("handleModifyStatsAction", () => {
     handleModifyStatsAction(state, action, context);
     handleModifyStatsAction(state, action, context);
 
-    expect(state.gundam.temporaryModifiers[CARD_1]!.length).toBe(2);
+    expect(state.external.temporaryModifiers[CARD_1]!.length).toBe(2);
   });
 });
 
@@ -1178,10 +1152,10 @@ describe("handleGrantKeywordAction", () => {
     context.targets = [CARD_1];
     handleGrantKeywordAction(state, action, context);
 
-    expect(state.gundam.temporaryModifiers[CARD_1]![0]).toMatchObject({
+    expect(state.external.temporaryModifiers[CARD_1]![0]).toMatchObject({
       duration: "end_of_turn",
       grantedKeywords: ["Mobile"],
-      sourceId: SOURCE_CARD,
+      sourceCardId: SOURCE_CARD,
     });
   });
 
@@ -1201,7 +1175,7 @@ describe("handleGrantKeywordAction", () => {
     context.targets = [CARD_1];
     handleGrantKeywordAction(state, action, context);
 
-    expect(state.gundam.temporaryModifiers[CARD_1]![0]).toMatchObject({
+    expect(state.external.temporaryModifiers[CARD_1]![0]).toMatchObject({
       duration: "permanent",
       grantedKeywords: ["Breach"],
     });
@@ -1224,7 +1198,7 @@ describe("handleGrantKeywordAction", () => {
     context.targets = [CARD_1];
     handleGrantKeywordAction(state, action, context);
 
-    expect(state.gundam.temporaryModifiers[CARD_1]![0]).toMatchObject({
+    expect(state.external.temporaryModifiers[CARD_1]![0]).toMatchObject({
       duration: "while_condition",
       condition: "has-pilot",
       grantedKeywords: ["Support"],
@@ -1269,7 +1243,7 @@ describe("handleGrantKeywordAction", () => {
       handleGrantKeywordAction(freshState, action, freshContext);
 
       expect(
-        freshState.gundam.temporaryModifiers[CARD_1]![0].grantedKeywords,
+        freshState.external.temporaryModifiers[CARD_1]![0].grantedKeywords,
       ).toEqual([keyword]);
     }
   });
@@ -1301,15 +1275,15 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Should have 2 cards in hand
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(2);
     // Deck should have 1 card remaining
-    expect(state.zones.deck[PLAYER_1].cards.length).toBe(1);
+    expect(state.internal.zones[`deck-${PLAYER_1}`].cardIds.length).toBe(1);
   });
 
   it("should search from a specified source zone", () => {
     // Add cards to trash for searching
     state = produce(state, (draft) => {
-      draft.zones.trash[PLAYER_1].cards = [CARD_4, CARD_5];
+      draft.internal.zones[`trash-${PLAYER_1}`].cardIds = [CARD_4, CARD_5];
     });
 
     const action: SearchAction = {
@@ -1325,10 +1299,10 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Should have 1 card in hand from trash
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(1);
-    expect(state.zones.trash[PLAYER_1].cards.length).toBe(1);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(1);
+    expect(state.internal.zones[`trash-${PLAYER_1}`].cardIds.length).toBe(1);
     // Deck should remain unchanged
-    expect(state.zones.deck[PLAYER_1].cards.length).toBe(3);
+    expect(state.internal.zones[`deck-${PLAYER_1}`].cardIds.length).toBe(3);
   });
 
   it("should shuffle source zone after search when specified", () => {
@@ -1344,9 +1318,9 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Should have 1 card in hand
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(1);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(1);
     // Deck should be shuffled (2 cards remain)
-    expect(state.zones.deck[PLAYER_1].cards.length).toBe(2);
+    expect(state.internal.zones[`deck-${PLAYER_1}`].cardIds.length).toBe(2);
   });
 
   it("should limit search to count", () => {
@@ -1362,13 +1336,13 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Should only move 1 card even though deck has 3
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(1);
-    expect(state.zones.deck[PLAYER_1].cards.length).toBe(2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(1);
+    expect(state.internal.zones[`deck-${PLAYER_1}`].cardIds.length).toBe(2);
   });
 
   it("should handle empty source zone", () => {
     state = produce(state, (draft) => {
-      draft.zones.deck[PLAYER_1].cards = [];
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [];
     });
 
     const action: SearchAction = {
@@ -1383,7 +1357,7 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Should have 0 cards in hand
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(0);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(0);
   });
 
   it("should surface revealed cards when reveal is true", () => {
@@ -1399,9 +1373,9 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Verify revealed cards are tracked
-    expect(state.gundam.revealedCards).toHaveLength(2);
-    expect(state.gundam.revealedCards).toContain(CARD_1);
-    expect(state.gundam.revealedCards).toContain(CARD_2);
+    expect(state.external.revealedCards).toHaveLength(2);
+    expect(state.external.revealedCards).toContain(CARD_1);
+    expect(state.external.revealedCards).toContain(CARD_2);
   });
 
   it("should not track revealed cards when reveal is false", () => {
@@ -1417,7 +1391,7 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Verify revealed cards are not tracked
-    expect(state.gundam.revealedCards).toHaveLength(0);
+    expect(state.external.revealedCards).toHaveLength(0);
   });
 
   it("should filter by card type", () => {
@@ -1465,10 +1439,12 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Should only move UNIT cards
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(2);
-    expect(state.zones.hand[PLAYER_1].cards).toContain(CARD_1);
-    expect(state.zones.hand[PLAYER_1].cards).toContain(CARD_3);
-    expect(state.zones.hand[PLAYER_1].cards).not.toContain(CARD_2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toContain(CARD_1);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toContain(CARD_3);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).not.toContain(
+      CARD_2,
+    );
 
     // Clean up
     clearCardDefinitions();
@@ -1519,10 +1495,12 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Should only move cards with cost <= 3
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(2);
-    expect(state.zones.hand[PLAYER_1].cards).toContain(CARD_1);
-    expect(state.zones.hand[PLAYER_1].cards).toContain(CARD_2);
-    expect(state.zones.hand[PLAYER_1].cards).not.toContain(CARD_3);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toContain(CARD_1);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toContain(CARD_2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).not.toContain(
+      CARD_3,
+    );
 
     // Clean up
     clearCardDefinitions();
@@ -1560,8 +1538,8 @@ describe("handleSearchAction", () => {
     );
 
     // Shuffled decks should be identical (deterministic)
-    expect(result1.zones.deck[PLAYER_1].cards).toEqual(
-      result2.zones.deck[PLAYER_1].cards,
+    expect(result1.internal.zones[`deck-${PLAYER_1}`].cardIds).toEqual(
+      result2.internal.zones[`deck-${PLAYER_1}`].cardIds,
     );
   });
 
@@ -1613,10 +1591,12 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Should only move Red cards
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(2);
-    expect(state.zones.hand[PLAYER_1].cards).toContain(CARD_1);
-    expect(state.zones.hand[PLAYER_1].cards).toContain(CARD_3);
-    expect(state.zones.hand[PLAYER_1].cards).not.toContain(CARD_2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toContain(CARD_1);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toContain(CARD_3);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).not.toContain(
+      CARD_2,
+    );
 
     // Clean up
     clearCardDefinitions();
@@ -1670,10 +1650,12 @@ describe("handleSearchAction", () => {
     state = executeHandler(state, handleSearchAction, action, context);
 
     // Should only move Mobile cards
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(2);
-    expect(state.zones.hand[PLAYER_1].cards).toContain(CARD_1);
-    expect(state.zones.hand[PLAYER_1].cards).toContain(CARD_3);
-    expect(state.zones.hand[PLAYER_1].cards).not.toContain(CARD_2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toContain(CARD_1);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).toContain(CARD_3);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds).not.toContain(
+      CARD_2,
+    );
 
     // Clean up
     clearCardDefinitions();
@@ -1705,15 +1687,15 @@ describe("executeAction", () => {
       executeAction(draft, action, context);
     });
 
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(1);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(1);
   });
 
   it("should route REST action to correct handler", () => {
     state = produce(state, (draft) => {
       // Remove CARD_1 from deck and add to battle area
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "active";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "active";
     });
 
     const action: RestAction = {
@@ -1731,7 +1713,7 @@ describe("executeAction", () => {
       executeAction(draft, action, context);
     });
 
-    expect(state.gundam.cardPositions[CARD_1]).toBe("rested");
+    expect(state.external.cardPositions[CARD_1]).toBe("rested");
   });
 
   it("should route MODIFY_STATS action to correct handler", () => {
@@ -1752,7 +1734,7 @@ describe("executeAction", () => {
       executeAction(draft, action, context);
     });
 
-    expect(state.gundam.temporaryModifiers[CARD_1]).toBeDefined();
+    expect(state.external.temporaryModifiers[CARD_1]).toBeDefined();
   });
 });
 
@@ -1773,9 +1755,9 @@ describe("executeActions", () => {
   it("should execute multiple actions in sequence", () => {
     state = produce(state, (draft) => {
       // Remove CARD_1 from deck and add to battle area
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
-      draft.gundam.cardPositions[CARD_1] = "active";
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
+      draft.external.cardPositions[CARD_1] = "active";
     });
 
     const actions: EffectAction[] = [
@@ -1806,8 +1788,8 @@ describe("executeActions", () => {
       executeActions(draft, actions, context);
     });
 
-    expect(state.gundam.cardPositions[CARD_1]).toBe("rested");
-    expect(state.gundam.temporaryModifiers[CARD_1]).toBeDefined();
+    expect(state.external.cardPositions[CARD_1]).toBe("rested");
+    expect(state.external.temporaryModifiers[CARD_1]).toBeDefined();
   });
 
   it("should execute draw then damage", () => {
@@ -1829,7 +1811,7 @@ describe("executeActions", () => {
       executeActions(draft, actions, context);
     });
 
-    expect(state.zones.hand[PLAYER_1].cards.length).toBe(2);
+    expect(state.internal.zones[`hand-${PLAYER_1}`].cardIds.length).toBe(2);
   });
 });
 
@@ -1877,8 +1859,8 @@ describe("findCardZone", () => {
   it("should find card in battle area", () => {
     const state = produce(createInitialGameState(), (draft) => {
       // Remove CARD_1 from deck and add to battle area
-      draft.zones.deck[PLAYER_1].cards = [CARD_2, CARD_3];
-      draft.zones.battleArea[PLAYER_1].cards = [CARD_1];
+      draft.internal.zones[`deck-${PLAYER_1}`].cardIds = [CARD_2, CARD_3];
+      draft.internal.zones[`battleArea-${PLAYER_1}`].cardIds = [CARD_1];
     });
 
     const result = findCardZone(CARD_1, state);

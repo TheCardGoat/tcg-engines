@@ -5,7 +5,7 @@
  * Provides a DSL for defining which cards, players, or zones are affected by effects.
  */
 
-import type { CardId, PlayerId, Zone } from "@tcg/core";
+import type { CardId, PlayerId } from "@tcg/core";
 import type { GundamGameState } from "../types";
 import type { EffectTarget, UnitSelector, ZoneSpec } from "./effect-types";
 
@@ -29,7 +29,7 @@ export function resolveTarget(
   sourcePlayer: PlayerId,
   sourceCard?: CardId,
 ): ResolvedTarget {
-  const opponent = state.players.find((p) => p !== sourcePlayer);
+  const opponent = state.external.playerIds.find((p) => p !== sourcePlayer);
 
   // Handle simple string targets
   if (typeof target === "string") {
@@ -84,7 +84,7 @@ function resolveStringTarget(
         : { cardIds: [], players: [], zones: [] };
 
     case "each-player":
-      return { cardIds: [], players: state.players, zones: [] };
+      return { cardIds: [], players: state.external.playerIds, zones: [] };
 
     case "each-unit":
       return getAllUnits(state);
@@ -122,16 +122,16 @@ function resolveSelectorTarget(
       ? [sourcePlayer]
       : selector.controller === "opponent" && opponent
         ? [opponent]
-        : state.players;
+        : state.external.playerIds;
 
   const results: CardId[] = [];
 
   // Search each player's battle area
   for (const player of playersToSearch) {
-    const battleArea = state.zones.battleArea[player] as Zone | undefined;
-    if (!battleArea?.cards) continue;
+    const battleArea = state.internal.zones[`battleArea-${player}`];
+    if (!battleArea?.cardIds) continue;
 
-    for (const cardId of battleArea.cards) {
+    for (const cardId of battleArea.cardIds) {
       if (matchesSelector(cardId, selector, state, player)) {
         results.push(cardId);
       }
@@ -152,7 +152,7 @@ function matchesSelector(
 ): boolean {
   // Check position
   if (selector.position !== undefined) {
-    const position = state.gundam.cardPositions[cardId];
+    const position = state.external.cardPositions[cardId];
     const isRested = position === "rested";
     if (selector.position === "active" && isRested) return false;
     if (selector.position === "rested" && !isRested) return false;
@@ -205,7 +205,7 @@ function matchesSelector(
  */
 export function getAllUnits(state: GundamGameState): ResolvedTarget {
   const allUnits: CardId[] = [];
-  for (const player of state.players) {
+  for (const player of state.external.playerIds) {
     const units = getUnitsInBattleArea(state, player);
     allUnits.push(...units.cardIds);
   }
@@ -219,9 +219,9 @@ export function getUnitsInBattleArea(
   state: GundamGameState,
   player: PlayerId,
 ): ResolvedTarget {
-  const battleArea = state.zones.battleArea[player] as Zone | undefined;
+  const battleArea = state.internal.zones[`battleArea-${player}`];
   return {
-    cardIds: battleArea?.cards ?? [],
+    cardIds: battleArea?.cardIds ?? [],
     players: [],
     zones: [],
   };
@@ -234,9 +234,9 @@ export function getCardsInHand(
   state: GundamGameState,
   player: PlayerId,
 ): ResolvedTarget {
-  const hand = state.zones.hand[player] as Zone | undefined;
+  const hand = state.internal.zones[`hand-${player}`];
   return {
-    cardIds: hand?.cards ?? [],
+    cardIds: hand?.cardIds ?? [],
     players: [],
     zones: [],
   };
@@ -249,9 +249,9 @@ export function getCardsInDeck(
   state: GundamGameState,
   player: PlayerId,
 ): ResolvedTarget {
-  const deck = state.zones.deck[player] as Zone | undefined;
+  const deck = state.internal.zones[`deck-${player}`];
   return {
-    cardIds: deck?.cards ?? [],
+    cardIds: deck?.cardIds ?? [],
     players: [],
     zones: [],
   };
@@ -264,9 +264,9 @@ export function getCardsInTrash(
   state: GundamGameState,
   player: PlayerId,
 ): ResolvedTarget {
-  const trash = state.zones.trash[player] as Zone | undefined;
+  const trash = state.internal.zones[`trash-${player}`];
   return {
-    cardIds: trash?.cards ?? [],
+    cardIds: trash?.cardIds ?? [],
     players: [],
     zones: [],
   };
@@ -280,9 +280,9 @@ export function getCardsInZone(
   player: PlayerId,
   zone: ZoneSpec,
 ): ResolvedTarget {
-  const zoneData = state.zones[zone]?.[player] as Zone | undefined;
+  const zoneData = state.internal.zones[`${zone}-${player}`];
   return {
-    cardIds: zoneData?.cards ?? [],
+    cardIds: zoneData?.cardIds ?? [],
     players: [],
     zones: [],
   };
@@ -295,9 +295,9 @@ export function getShields(
   state: GundamGameState,
   player: PlayerId,
 ): ResolvedTarget {
-  const shieldSection = state.zones.shieldSection[player] as Zone | undefined;
+  const shieldSection = state.internal.zones[`shieldSection-${player}`];
   return {
-    cardIds: shieldSection?.cards ?? [],
+    cardIds: shieldSection?.cardIds ?? [],
     players: [],
     zones: [],
   };
@@ -310,9 +310,9 @@ export function getResources(
   state: GundamGameState,
   player: PlayerId,
 ): ResolvedTarget {
-  const resourceArea = state.zones.resourceArea[player] as Zone | undefined;
+  const resourceArea = state.internal.zones[`resourceArea-${player}`];
   return {
-    cardIds: resourceArea?.cards ?? [],
+    cardIds: resourceArea?.cardIds ?? [],
     players: [],
     zones: [],
   };
@@ -325,9 +325,9 @@ export function getBase(
   state: GundamGameState,
   player: PlayerId,
 ): ResolvedTarget {
-  const baseSection = state.zones.baseSection[player] as Zone | undefined;
+  const baseSection = state.internal.zones[`baseSection-${player}`];
   return {
-    cardIds: baseSection?.cards ?? [],
+    cardIds: baseSection?.cardIds ?? [],
     players: [],
     zones: [],
   };
@@ -394,7 +394,7 @@ export function filterTargetsByPosition(
   position: "active" | "rested",
 ): ResolvedTarget {
   return filterTargets(targets, (cardId) => {
-    const cardPosition = state.gundam.cardPositions[cardId];
+    const cardPosition = state.external.cardPositions[cardId];
     return cardPosition === position;
   });
 }

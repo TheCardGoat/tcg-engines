@@ -10,8 +10,9 @@
  * @module effects/action-handlers
  */
 
-import type { CardId, PlayerId, Zone } from "@tcg/core";
+import type { CardId, PlayerId } from "@tcg/core";
 import { draw, getZoneSize, isCardInZone, moveCard, shuffle } from "@tcg/core";
+import type { TemporaryModifier } from "@tcg/gundam-types";
 import type {
   ActivateAction,
   CardFilter,
@@ -32,8 +33,47 @@ import type {
   TargetingSpec,
   ZoneType,
 } from "@tcg/gundam-types/effects";
+import type { Draft } from "immer";
 import type { CardPosition, GundamGameState } from "../types";
-import type { ModifierId, TemporaryModifier } from "./effect-runtime";
+import type { ModifierId } from "./effect-runtime";
+
+// ============================================================================
+// STATE ACCESS HELPERS
+// ============================================================================
+
+/**
+ * Helper to get a zone by type and player
+ */
+function getZone(
+  state: GundamGameState | Draft<GundamGameState>,
+  zoneType: string,
+  player: PlayerId,
+) {
+  const zoneId = `${zoneType}-${player}`;
+  return state.internal.zones[zoneId];
+}
+
+/**
+ * Helper to get cardIds from a zone
+ */
+function getZoneCardIds(
+  state: GundamGameState | Draft<GundamGameState>,
+  zoneType: string,
+  player: PlayerId,
+): CardId[] {
+  const zone = getZone(state, zoneType, player);
+  return zone?.cardIds ?? [];
+}
+
+/**
+ * Helper to get card meta (with damage, rested status, etc.)
+ */
+function getCardMeta(
+  state: GundamGameState | Draft<GundamGameState>,
+  cardId: CardId,
+) {
+  return state.internal.cardMetas[cardId];
+}
 
 // ============================================================================
 // CARD DEFINITION REGISTRY
@@ -202,7 +242,7 @@ export function getOpponentPlayer(
   playerId: PlayerId,
   state: GundamGameState,
 ): PlayerId | null {
-  const opponent = state.players.find((p) => p !== playerId);
+  const opponent = state.external.playerIds.find((p) => p !== playerId);
   return opponent ?? null;
 }
 
@@ -233,10 +273,11 @@ export function findCardZone(
     "limbo",
   ];
 
-  for (const player of state.players) {
+  for (const player of state.external.playerIds) {
     for (const zoneType of zoneTypes) {
-      const zone = state.zones[zoneType][player];
-      if (isCardInZone(zone, cardId)) {
+      const zoneId = `${zoneType}-${player}`;
+      const zone = state.internal.zones[zoneId];
+      if (zone?.cardIds?.includes(cardId)) {
         return { zone: zoneType, owner: player };
       }
     }
@@ -307,7 +348,7 @@ export function resolvePlayerRef(
  * @returns Current damage count
  */
 export function getCardDamage(cardId: CardId, state: GundamGameState): number {
-  return state.gundam.cardDamage?.[cardId] ?? 0;
+  return state.internal.cardMetas[cardId]?.damage ?? 0;
 }
 
 /**
@@ -318,21 +359,20 @@ export function getCardDamage(cardId: CardId, state: GundamGameState): number {
  * @param amount - Damage amount to set
  */
 export function setCardDamage(
-  draft: GundamGameState,
+  draft: Draft<GundamGameState>,
   cardId: CardId,
   amount: number,
 ): void {
-  // Ensure cardDamage object exists
-  if (!draft.gundam.cardDamage) {
-    draft.gundam.cardDamage = {};
+  // Ensure cardMeta exists for this card
+  if (!draft.internal.cardMetas[cardId]) {
+    draft.internal.cardMetas[cardId] = {
+      isRested: false,
+      damage: 0,
+      playedThisTurn: false,
+    };
   }
 
-  if (amount <= 0) {
-    // Remove damage tracking if damage is 0 or less
-    delete draft.gundam.cardDamage[cardId];
-  } else {
-    draft.gundam.cardDamage[cardId] = amount;
-  }
+  draft.internal.cardMetas[cardId].damage = amount;
 }
 
 /**
@@ -385,7 +425,7 @@ export function hasLethalDamage(
  * ```
  */
 export function handleDrawAction(
-  draft: GundamGameState,
+  draft: Draft<GundamGameState>,
   action: DrawAction,
   context: ActionContext,
 ): void {
@@ -394,13 +434,20 @@ export function handleDrawAction(
     return; // Invalid player reference
   }
 
-  const deck = draft.zones.deck[targetPlayer];
-  const hand = draft.zones.hand[targetPlayer];
+  const deckZoneId = `deck-${targetPlayer}`;
+  const handZoneId = `hand-${targetPlayer}`;
 
-  const { fromZone: newDeck, toZone: newHand } = draw(deck, hand, action.count);
+  const deckZone = draft.internal.zones[deckZoneId];
+  const handZone = draft.internal.zones[handZoneId];
 
-  draft.zones.deck[targetPlayer] = newDeck;
-  draft.zones.hand[targetPlayer] = newHand;
+  if (!(deckZone && handZone)) {
+    return; // Zones don't exist
+  }
+
+  // Draw cards from deck to hand
+  const cardsToDraw = Math.min(action.count, deckZone.cardIds.length);
+  const drawnCards = deckZone.cardIds.splice(0, cardsToDraw);
+  handZone.cardIds.push(...drawnCards);
 
   // Note: Empty deck handling (game loss condition) will be added in T5
   // when we implement the full game loop
@@ -469,47 +516,47 @@ export function handleDamageAction(
 
     // Shields are destroyed by any damage and moved to trash
     if (zone === "shieldSection") {
-      const sourceZone = draft.zones.shieldSection[owner];
-      const trashZone = draft.zones.trash[owner];
+      const sourceZoneId = `shieldSection-${owner}`;
+      const trashZoneId = `trash-${owner}`;
+      const sourceZone = draft.internal.zones[sourceZoneId];
+      const trashZone = draft.internal.zones[trashZoneId];
 
-      // Move card to trash
-      const { fromZone: newSource, toZone: newTrash } = moveCard(
-        sourceZone,
-        trashZone,
-        targetId,
-      );
+      if (sourceZone && trashZone) {
+        // Move card to trash
+        const cardIndex = sourceZone.cardIds.indexOf(targetId);
+        if (cardIndex !== -1) {
+          sourceZone.cardIds.splice(cardIndex, 1);
+          trashZone.cardIds.push(targetId);
+        }
 
-      draft.zones.shieldSection[owner] = newSource;
-      draft.zones.trash[owner] = newTrash;
-
-      // Clear damage counter
-      setCardDamage(draft, targetId, 0);
+        // Clear damage counter
+        setCardDamage(draft, targetId, 0);
+      }
     }
     // Units and bases check for lethal damage
     else if (zone === "battleArea" || zone === "baseSection") {
       if (hasLethalDamage(targetId, draft)) {
         // Destroy the card by moving to trash
-        const sourceZone = draft.zones[zone][owner];
-        const trashZone = draft.zones.trash[owner];
+        const sourceZoneId = `${zone}-${owner}`;
+        const trashZoneId = `trash-${owner}`;
+        const sourceZone = draft.internal.zones[sourceZoneId];
+        const trashZone = draft.internal.zones[trashZoneId];
 
-        const { fromZone: newSource, toZone: newTrash } = moveCard(
-          sourceZone,
-          trashZone,
-          targetId,
-        );
+        if (sourceZone && trashZone) {
+          const cardIndex = sourceZone.cardIds.indexOf(targetId);
+          if (cardIndex !== -1) {
+            sourceZone.cardIds.splice(cardIndex, 1);
+            trashZone.cardIds.push(targetId);
+          }
 
-        draft.zones[zone][owner] = newSource;
-        draft.zones.trash[owner] = newTrash;
+          // Clear damage counter
+          setCardDamage(draft, targetId, 0);
 
-        // Clear damage counter
-        setCardDamage(draft, targetId, 0);
+          // Remove temporary modifiers
+          delete draft.external.temporaryModifiers[targetId];
 
-        // Remove temporary modifiers
-        delete draft.gundam.temporaryModifiers[targetId];
-
-        // Clear card position if applicable
-        if (zone === "battleArea" || zone === "baseSection") {
-          delete draft.gundam.cardPositions[targetId];
+          // Clear card position
+          delete draft.external.cardPositions[targetId];
         }
       }
     }
@@ -545,7 +592,7 @@ export function handleRestAction(
     }
 
     // Set to rested
-    draft.gundam.cardPositions[targetId] = "rested";
+    draft.external.cardPositions[targetId] = "rested";
   }
 }
 
@@ -578,7 +625,7 @@ export function handleActivateAction(
     }
 
     // Set to active
-    draft.gundam.cardPositions[targetId] = "active";
+    draft.external.cardPositions[targetId] = "active";
   }
 }
 
@@ -614,24 +661,26 @@ export function handleMoveCardAction(
   }
 
   // Get source zone
-  const sourceZone = draft.zones[action.from][owner];
-  // Get destination zone
-  const destZone = draft.zones[action.to][owner];
+  const sourceZoneId = `${action.from}-${owner}`;
+  const destZoneId = `${action.to}-${owner}`;
+  const sourceZone = draft.internal.zones[sourceZoneId];
+  const destZone = draft.internal.zones[destZoneId];
 
   // Verify card is in source zone
-  if (!isCardInZone(sourceZone, cardId)) {
-    return; // Card not in source zone
+  if (!(sourceZone && sourceZone.cardIds.includes(cardId))) {
+    return; // Card not in source zone or zone doesn't exist
+  }
+
+  if (!destZone) {
+    return; // Destination zone doesn't exist
   }
 
   // Move the card
-  const { fromZone: newSource, toZone: newDest } = moveCard(
-    sourceZone,
-    destZone,
-    cardId,
-  );
-
-  draft.zones[action.from][owner] = newSource;
-  draft.zones[action.to][owner] = newDest;
+  const cardIndex = sourceZone.cardIds.indexOf(cardId);
+  if (cardIndex !== -1) {
+    sourceZone.cardIds.splice(cardIndex, 1);
+    destZone.cardIds.push(cardId);
+  }
 
   // Clear card position if moving out of position-supporting zone
   const positionSupportingZones: ZoneType[] = [
@@ -644,7 +693,7 @@ export function handleMoveCardAction(
     positionSupportingZones.includes(action.from) &&
     !positionSupportingZones.includes(action.to)
   ) {
-    delete draft.gundam.cardPositions[cardId];
+    delete draft.external.cardPositions[cardId];
   }
 }
 
@@ -697,30 +746,33 @@ export function handleDestroyAction(
       continue; // Card not found in any zone
     }
 
-    const { zone: fromZone, owner } = zoneInfo;
+    const { zone: fromZoneType, owner } = zoneInfo;
 
-    // Get trash zone for card owner
-    const trashZone = draft.zones.trash[owner];
-    const sourceZone = draft.zones[fromZone][owner];
+    // Get source zone
+    const sourceZoneId = `${fromZoneType}-${owner}`;
+    const trashZoneId = `trash-${owner}`;
+    const sourceZone = draft.internal.zones[sourceZoneId];
+    const trashZone = draft.internal.zones[trashZoneId];
+
+    if (!(sourceZone && trashZone)) {
+      continue; // Zones don't exist
+    }
 
     // Move card to trash
-    const { fromZone: newSource, toZone: newTrash } = moveCard(
-      sourceZone,
-      trashZone,
-      cardId,
-    );
-
-    draft.zones[fromZone][owner] = newSource;
-    draft.zones.trash[owner] = newTrash;
+    const cardIndex = sourceZone.cardIds.indexOf(cardId);
+    if (cardIndex !== -1) {
+      sourceZone.cardIds.splice(cardIndex, 1);
+      trashZone.cardIds.push(cardId);
+    }
 
     // Clear damage counter
     setCardDamage(draft, cardId, 0);
 
     // Remove temporary modifiers
-    delete draft.gundam.temporaryModifiers[cardId];
+    delete draft.external.temporaryModifiers[cardId];
 
     // Clear card position
-    delete draft.gundam.cardPositions[cardId];
+    delete draft.external.cardPositions[cardId];
   }
 }
 
@@ -735,7 +787,7 @@ export function handleDestroyAction(
  * @param context - Action context
  */
 export function handleDiscardAction(
-  draft: GundamGameState,
+  draft: Draft<GundamGameState>,
   action: DiscardAction,
   context: ActionContext,
 ): void {
@@ -744,19 +796,25 @@ export function handleDiscardAction(
     return;
   }
 
-  const hand = draft.zones.hand[targetPlayer];
-  const trash = draft.zones.trash[targetPlayer];
+  const handZoneId = `hand-${targetPlayer}`;
+  const trashZoneId = `trash-${targetPlayer}`;
+  const handZone = draft.internal.zones[handZoneId];
+  const trashZone = draft.internal.zones[trashZoneId];
+
+  if (!(handZone && trashZone)) {
+    return; // Zones don't exist
+  }
 
   // Determine which cards to discard
   let cardsToDiscard: CardId[] = [];
 
   if (action.random && action.random === true) {
     // Random discard - select random cards
-    const handSize = getZoneSize(hand);
+    const handSize = handZone.cardIds.length;
     const toDiscard = Math.min(action.count, handSize);
 
     // Simple random selection for T4 (deterministic RNG for T5)
-    const handCards = [...hand.cards];
+    const handCards = [...handZone.cardIds];
     for (let i = 0; i < toDiscard; i++) {
       const randomIndex = Math.floor(Math.random() * handCards.length);
       const card = handCards.splice(randomIndex, 1)[0];
@@ -770,32 +828,23 @@ export function handleDiscardAction(
       cardsToDiscard = context.targets.slice(0, action.count);
     } else {
       // No targets provided, discard from top of hand
-      const toDiscard = Math.min(action.count, hand.cards.length);
-      cardsToDiscard = hand.cards.slice(0, toDiscard);
+      const toDiscard = Math.min(action.count, handZone.cardIds.length);
+      cardsToDiscard = handZone.cardIds.slice(0, toDiscard);
     }
   }
 
   // Move each card to trash
-  let currentHand = hand;
-  let currentTrash = trash;
-
   for (const cardId of cardsToDiscard) {
-    if (!isCardInZone(currentHand, cardId)) {
+    const cardIndex = handZone.cardIds.indexOf(cardId);
+    if (cardIndex === -1) {
       continue; // Card no longer in hand
     }
 
-    const { fromZone: newHand, toZone: newTrash } = moveCard(
-      currentHand,
-      currentTrash,
-      cardId,
-    );
-
-    currentHand = newHand;
-    currentTrash = newTrash;
+    // Remove from hand
+    handZone.cardIds.splice(cardIndex, 1);
+    // Add to trash
+    trashZone.cardIds.push(cardId);
   }
-
-  draft.zones.hand[targetPlayer] = currentHand;
-  draft.zones.trash[targetPlayer] = currentTrash;
 }
 
 /**
@@ -821,42 +870,29 @@ export function handleModifyStatsAction(
 
   for (const cardId of targets) {
     // Create modifier based on duration
-    const baseModifier = {
+    const duration =
+      action.duration === "this_turn"
+        ? "end_of_turn"
+        : action.duration === "end_of_combat"
+          ? "end_of_combat"
+          : "permanent";
+
+    const modifier: TemporaryModifier = {
       id: createModifierId("stat-mod"),
-      sourceId: context.sourceCardId,
+      cardId,
+      type: "stat",
+      sourceCardId: context.sourceCardId,
       apModifier: action.apModifier,
       hpModifier: action.hpModifier,
+      duration,
     };
 
-    let modifier: TemporaryModifier;
-
-    switch (action.duration) {
-      case "this_turn":
-        modifier = {
-          ...baseModifier,
-          duration: "end_of_turn",
-        };
-        break;
-      case "end_of_combat":
-        modifier = {
-          ...baseModifier,
-          duration: "end_of_combat",
-        };
-        break;
-      case "permanent":
-        modifier = {
-          ...baseModifier,
-          duration: "permanent",
-        };
-        break;
-    }
-
     // Initialize modifiers array if needed
-    if (!draft.gundam.temporaryModifiers[cardId]) {
-      draft.gundam.temporaryModifiers[cardId] = [];
+    if (!draft.external.temporaryModifiers[cardId]) {
+      draft.external.temporaryModifiers[cardId] = [];
     }
 
-    draft.gundam.temporaryModifiers[cardId].push(modifier);
+    draft.external.temporaryModifiers[cardId].push(modifier);
   }
 }
 
@@ -882,40 +918,33 @@ export function handleGrantKeywordAction(
   }
 
   for (const cardId of targets) {
-    // Create modifier based on duration
-    const baseModifier = {
+    // Determine duration
+    const duration =
+      action.duration === "while_condition"
+        ? "while_condition"
+        : action.duration === "this_turn"
+          ? "end_of_turn"
+          : "permanent";
+
+    const modifier: TemporaryModifier = {
       id: createModifierId("keyword-grant"),
-      sourceId: context.sourceCardId,
+      cardId,
+      type: "keyword",
+      sourceCardId: context.sourceCardId,
       grantedKeywords: [action.keyword],
+      duration,
+      condition:
+        action.duration === "while_condition"
+          ? (action.condition ?? "")
+          : undefined,
     };
 
-    let modifier: TemporaryModifier;
-
-    if (action.duration === "while_condition") {
-      modifier = {
-        ...baseModifier,
-        duration: "while_condition",
-        condition: action.condition ?? "",
-      };
-    } else if (action.duration === "this_turn") {
-      modifier = {
-        ...baseModifier,
-        duration: "end_of_turn",
-      };
-    } else {
-      // permanent
-      modifier = {
-        ...baseModifier,
-        duration: "permanent",
-      };
-    }
-
     // Initialize modifiers array if needed
-    if (!draft.gundam.temporaryModifiers[cardId]) {
-      draft.gundam.temporaryModifiers[cardId] = [];
+    if (!draft.external.temporaryModifiers[cardId]) {
+      draft.external.temporaryModifiers[cardId] = [];
     }
 
-    draft.gundam.temporaryModifiers[cardId].push(modifier);
+    draft.external.temporaryModifiers[cardId].push(modifier);
   }
 }
 
@@ -1022,18 +1051,25 @@ function cardMatchesFilter(cardId: CardId, filter: CardFilter): boolean {
  * @param context - Action context
  */
 export function handleSearchAction(
-  draft: GundamGameState,
+  draft: Draft<GundamGameState>,
   action: SearchAction,
   context: ActionContext,
 ): void {
   // Determine which zone to search (default to deck)
   const sourceZoneType = action.sourceZone ?? "deck";
-  const searchZone = draft.zones[sourceZoneType][context.controllerId];
+  const sourceZoneId = `${sourceZoneType}-${context.controllerId}`;
   const destZoneType = action.destination;
-  const destZone = draft.zones[destZoneType][context.controllerId];
+  const destZoneId = `${destZoneType}-${context.controllerId}`;
+
+  const searchZone = draft.internal.zones[sourceZoneId];
+  const destZone = draft.internal.zones[destZoneId];
+
+  if (!(searchZone && destZone)) {
+    return; // Zones don't exist
+  }
 
   // Apply filter to find matching cards using card definitions
-  const matchingCards = searchZone.cards.filter((cardId) =>
+  const matchingCards = searchZone.cardIds.filter((cardId: CardId) =>
     cardMatchesFilter(cardId, action.filter),
   );
 
@@ -1042,42 +1078,47 @@ export function handleSearchAction(
 
   // Track revealed cards if reveal is true
   if (action.reveal && toMove.length > 0) {
-    // Ensure revealedCards array exists
-    if (!draft.gundam.revealedCards) {
-      draft.gundam.revealedCards = [];
-    }
     // Add revealed cards to tracking
-    draft.gundam.revealedCards.push(...toMove);
+    draft.external.revealedCards.push(...toMove);
   }
 
   // Move found cards to destination
-  let currentSource = searchZone;
-  let currentDest = destZone;
-
   for (const cardId of toMove) {
-    const { fromZone: newSource, toZone: newDest } = moveCard(
-      currentSource,
-      currentDest,
-      cardId,
-    );
-
-    currentSource = newSource;
-    currentDest = newDest;
+    const cardIndex = searchZone.cardIds.indexOf(cardId);
+    if (cardIndex !== -1) {
+      searchZone.cardIds.splice(cardIndex, 1);
+      destZone.cardIds.push(cardId);
+    }
   }
-
-  draft.zones[sourceZoneType][context.controllerId] = currentSource;
-  draft.zones[destZoneType][context.controllerId] = currentDest;
 
   // Shuffle after search if specified
   if (action.shuffleAfter) {
     // Use deterministic seed based on source card ID and effect instance
     // This ensures consistent shuffling for replays
-    const seed = `search-${context.sourceCardId}-${draft.gundam.effectStack.nextInstanceId}`;
-    draft.zones[sourceZoneType][context.controllerId] = shuffle(
-      currentSource,
-      seed,
-    );
+    const seed = `search-${context.sourceCardId}-${draft.external.effectStack.nextInstanceId}`;
+    // Shuffle the zone cardIds in place
+    if (searchZone) {
+      // Fisher-Yates shuffle with seeded random
+      for (let i = searchZone.cardIds.length - 1; i > 0; i--) {
+        const j = Math.floor((hashCode(seed) + i) % (i + 1));
+        [searchZone.cardIds[i], searchZone.cardIds[j]] = [
+          searchZone.cardIds[j],
+          searchZone.cardIds[i],
+        ];
+      }
+    }
   }
+}
+
+// Helper function to generate a hash code from a string
+function hashCode(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
 }
 
 // ============================================================================

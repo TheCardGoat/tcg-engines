@@ -69,33 +69,35 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return [];
+    if (state.external.currentPhase !== "main") return [];
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return [];
+    if (state.external.activePlayerId !== playerId) return [];
 
     const options = [];
-    const battleArea = state.zones.battleArea[playerId];
+    const battleZoneId = `battleArea-${playerId}`;
+    const battleZone = state.internal.zones[battleZoneId];
 
-    if (!battleArea) return [];
+    if (!battleZone?.cardIds) return [];
 
     // Get opponent
-    const opponentId = state.players.find((p) => p !== playerId);
+    const opponentId = state.external.playerIds.find((p) => p !== playerId);
     if (!opponentId) return [];
 
-    const opponentBattleArea = state.zones.battleArea[opponentId];
-    if (!opponentBattleArea) return [];
+    const opponentZoneId = `battleArea-${opponentId}`;
+    const opponentBattleZone = state.internal.zones[opponentZoneId];
+    if (!opponentBattleZone?.cardIds) return [];
 
     // For each active unit in player's battle area
-    for (const attackerId of battleArea.cards) {
-      const position = state.gundam.cardPositions[attackerId];
-      const hasAttacked = state.gundam.attackedThisTurn.includes(attackerId);
+    for (const attackerId of battleZone.cardIds) {
+      const position = state.external.cardPositions[attackerId];
+      const hasAttacked = state.external.attackedThisTurn.includes(attackerId);
 
       // Skip if unit is rested or has already attacked
       if (position !== "active" || hasAttacked) continue;
 
       // Can attack each opponent unit
-      for (const targetId of opponentBattleArea.cards) {
+      for (const targetId of opponentBattleZone.cardIds) {
         options.push({ attackerId, targetId });
       }
 
@@ -118,10 +120,10 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return false;
+    if (state.external.currentPhase !== "main") return false;
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return false;
+    if (state.external.activePlayerId !== playerId) return false;
 
     // Get and validate attacker ID
     let attackerId: CardId;
@@ -132,27 +134,29 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     }
 
     // Attacker must be in player's battle area
-    const battleArea = state.zones.battleArea[playerId];
-    if (!(battleArea && isCardInZone(battleArea, attackerId))) return false;
+    const battleZoneId = `battleArea-${playerId}`;
+    const battleZone = state.internal.zones[battleZoneId];
+    if (!battleZone?.cardIds.includes(attackerId)) return false;
 
     // Attacker must be active (not rested)
-    const position = state.gundam.cardPositions[attackerId];
+    const position = state.external.cardPositions[attackerId];
     if (position !== "active") return false;
 
     // Check if unit has already attacked this turn
     const hasAttackedThisTurn =
-      state.gundam.attackedThisTurn.includes(attackerId);
+      state.external.attackedThisTurn.includes(attackerId);
     if (hasAttackedThisTurn) return false;
 
     // Validate target if specified
     const targetId = getTargetId(context);
     if (targetId !== undefined) {
       // Target must be in opponent's battle area
-      const opponentId = state.players.find((p) => p !== playerId);
+      const opponentId = state.external.playerIds.find((p) => p !== playerId);
       if (!opponentId) return false;
 
-      const opponentBattleArea = state.zones.battleArea[opponentId];
-      if (!(opponentBattleArea && isCardInZone(opponentBattleArea, targetId))) {
+      const opponentZoneId = `battleArea-${opponentId}`;
+      const opponentBattleZone = state.internal.zones[opponentZoneId];
+      if (!opponentBattleZone?.cardIds.includes(targetId)) {
         return false;
       }
     }
@@ -173,13 +177,14 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     const targetId = getTargetId(context);
 
     // Validate attacker is in battle area
-    const battleArea = draft.zones.battleArea[playerId];
-    if (!(battleArea && isCardInZone(battleArea, attackerId))) {
+    const battleZoneId = `battleArea-${playerId}`;
+    const battleZone = draft.internal.zones[battleZoneId];
+    if (!battleZone?.cardIds.includes(attackerId)) {
       throw new Error(`Attacker ${attackerId} is not in player's battle area`);
     }
 
     // Validate attacker is active
-    const position = draft.gundam.cardPositions[attackerId];
+    const position = draft.external.cardPositions[attackerId];
     if (position !== "active") {
       throw new Error(
         `Attacker ${attackerId} is not active (currently ${position})`,
@@ -187,11 +192,11 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
     }
 
     // Rest (exhaust) the attacking unit
-    draft.gundam.cardPositions[attackerId] = "rested";
+    draft.external.cardPositions[attackerId] = "rested";
 
     // Track that this unit has attacked this turn
-    if (!draft.gundam.attackedThisTurn.includes(attackerId)) {
-      draft.gundam.attackedThisTurn.push(attackerId);
+    if (!draft.external.attackedThisTurn.includes(attackerId)) {
+      draft.external.attackedThisTurn.push(attackerId);
     }
 
     // Detect and enqueue 【Attack】 triggered effects
@@ -206,13 +211,14 @@ export const attackMove: GameMoveDefinition<GundamGameState> = {
 
     // If there's a target, validate it exists
     if (targetId !== undefined) {
-      const opponentId = draft.players.find((p) => p !== playerId);
+      const opponentId = draft.external.playerIds.find((p) => p !== playerId);
       if (!opponentId) {
         throw new Error("No opponent found");
       }
 
-      const opponentBattleArea = draft.zones.battleArea[opponentId];
-      if (!(opponentBattleArea && isCardInZone(opponentBattleArea, targetId))) {
+      const opponentZoneId = `battleArea-${opponentId}`;
+      const opponentBattleZone = draft.internal.zones[opponentZoneId];
+      if (!opponentBattleZone?.cardIds.includes(targetId)) {
         throw new Error(`Target ${targetId} is not in opponent's battle area`);
       }
 

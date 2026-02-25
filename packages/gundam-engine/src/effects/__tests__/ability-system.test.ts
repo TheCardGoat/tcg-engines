@@ -5,9 +5,16 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
-import type { CardId, PlayerId, ZoneId } from "@tcg/core";
+import type { CardId, CardZoneConfig, PlayerId } from "@tcg/core";
 import { createZoneId } from "@tcg/core";
 import type { GundamGameState } from "../../types";
+
+// Zone data type for test helpers
+type ZoneData = {
+  config: CardZoneConfig;
+  cardIds: CardId[];
+};
+
 import {
   type ActivatedAbility,
   type CardAbility,
@@ -67,14 +74,14 @@ describe("Ability Registry", () => {
   });
 });
 
-// Helper to create a Zone with proper structure
+// Helper to create a Zone with proper structure for new IState pattern
 function createZone(
   owner: PlayerId,
   zoneName: string,
   cards: CardId[],
   visibility: "public" | "private" | "secret" = "public",
   ordered = false,
-): GundamGameState["zones"][keyof GundamGameState["zones"]][PlayerId] {
+): ZoneData {
   return {
     config: {
       id: createZoneId(`${zoneName}-${owner}`),
@@ -85,7 +92,114 @@ function createZone(
       maxSize: undefined,
       faceDown: visibility === "secret",
     },
-    cards,
+    cardIds: cards,
+  };
+}
+
+// Helper to create a full test state
+function createTestState(
+  player1: PlayerId,
+  player2: PlayerId,
+  battleAreaCards1: CardId[] = [],
+  battleAreaCards2: CardId[] = [],
+  cardPositions1: Record<CardId, "active" | "rested"> = {},
+): GundamGameState {
+  return {
+    internal: {
+      zones: {
+        [`deck-${player1}`]: createZone(player1, "deck", [], "secret", true),
+        [`deck-${player2}`]: createZone(player2, "deck", [], "secret", true),
+        [`resourceDeck-${player1}`]: createZone(
+          player1,
+          "resourceDeck",
+          [],
+          "secret",
+          true,
+        ),
+        [`resourceDeck-${player2}`]: createZone(
+          player2,
+          "resourceDeck",
+          [],
+          "secret",
+          true,
+        ),
+        [`hand-${player1}`]: createZone(player1, "hand", [], "private"),
+        [`hand-${player2}`]: createZone(player2, "hand", [], "private"),
+        [`battleArea-${player1}`]: createZone(
+          player1,
+          "battleArea",
+          battleAreaCards1,
+          "public",
+          true,
+        ),
+        [`battleArea-${player2}`]: createZone(
+          player2,
+          "battleArea",
+          battleAreaCards2,
+          "public",
+          true,
+        ),
+        [`shieldSection-${player1}`]: createZone(
+          player1,
+          "shieldSection",
+          [],
+          "secret",
+          true,
+        ),
+        [`shieldSection-${player2}`]: createZone(
+          player2,
+          "shieldSection",
+          [],
+          "secret",
+          true,
+        ),
+        [`baseSection-${player1}`]: createZone(
+          player1,
+          "baseSection",
+          [],
+          "public",
+        ),
+        [`baseSection-${player2}`]: createZone(
+          player2,
+          "baseSection",
+          [],
+          "public",
+        ),
+        [`resourceArea-${player1}`]: createZone(
+          player1,
+          "resourceArea",
+          [],
+          "public",
+        ),
+        [`resourceArea-${player2}`]: createZone(
+          player2,
+          "resourceArea",
+          [],
+          "public",
+        ),
+        [`trash-${player1}`]: createZone(player1, "trash", [], "public", true),
+        [`trash-${player2}`]: createZone(player2, "trash", [], "public", true),
+        [`removal-${player1}`]: createZone(player1, "removal", [], "public"),
+        [`removal-${player2}`]: createZone(player2, "removal", [], "public"),
+        [`limbo-${player1}`]: createZone(player1, "limbo", [], "public"),
+        [`limbo-${player2}`]: createZone(player2, "limbo", [], "public"),
+      },
+      cards: {},
+      cardMetas: {},
+    },
+    external: {
+      playerIds: [player1, player2],
+      activePlayerId: player1,
+      turnNumber: 1,
+      currentPhase: "main",
+      activeResources: { [player1]: 3, [player2]: 2 },
+      cardPositions: cardPositions1,
+      attackedThisTurn: [],
+      hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
+      effectStack: { stack: [], nextInstanceId: 0 },
+      temporaryModifiers: {},
+      revealedCards: [],
+    },
   };
 }
 
@@ -101,70 +215,10 @@ describe("Triggered Abilities", () => {
     card1 = "card1" as CardId;
     card2 = "card2" as CardId;
 
-    mockState = {
-      players: [player1, player2],
-      currentPlayer: player1,
-      turn: 1,
-      phase: "main",
-      zones: {
-        deck: {
-          [player1]: createZone(player1, "deck", [], "secret", true),
-          [player2]: createZone(player2, "deck", [], "secret", true),
-        },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
-        },
-        hand: {
-          [player1]: createZone(player1, "hand", [], "private"),
-          [player2]: createZone(player2, "hand", [], "private"),
-        },
-        battleArea: {
-          [player1]: createZone(
-            player1,
-            "battleArea",
-            [card1, card2],
-            "public",
-            true,
-          ),
-          [player2]: createZone(player2, "battleArea", [], "public", true),
-        },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-          [player2]: createZone(player2, "shieldSection", [], "secret", true),
-        },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-          [player2]: createZone(player2, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-          [player2]: createZone(player2, "resourceArea", [], "public"),
-        },
-        trash: {
-          [player1]: createZone(player1, "trash", [], "public", true),
-          [player2]: createZone(player2, "trash", [], "public", true),
-        },
-        removal: {
-          [player1]: createZone(player1, "removal", [], "public"),
-          [player2]: createZone(player2, "removal", [], "public"),
-        },
-        limbo: {
-          [player1]: createZone(player1, "limbo", [], "public"),
-          [player2]: createZone(player2, "limbo", [], "public"),
-        },
-      },
-      gundam: {
-        activeResources: { [player1]: 3, [player2]: 2 },
-        cardPositions: { [card1]: "active", [card2]: "active" },
-        attackedThisTurn: [],
-        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
-        revealedCards: [],
-      },
-    };
+    mockState = createTestState(player1, player2, [card1, card2], [], {
+      [card1]: "active",
+      [card2]: "active",
+    });
 
     // Register abilities
     registerAbilities(card1, [
@@ -251,64 +305,9 @@ describe("Activated Abilities", () => {
     const player2 = "player2" as PlayerId;
     card1 = "card1" as CardId;
 
-    mockState = {
-      players: [player1, player2],
-      currentPlayer: player1,
-      turn: 1,
-      phase: "main",
-      zones: {
-        deck: {
-          [player1]: createZone(player1, "deck", [], "secret", true),
-          [player2]: createZone(player2, "deck", [], "secret", true),
-        },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
-        },
-        hand: {
-          [player1]: createZone(player1, "hand", [], "private"),
-          [player2]: createZone(player2, "hand", [], "private"),
-        },
-        battleArea: {
-          [player1]: createZone(player1, "battleArea", [card1], "public", true),
-          [player2]: createZone(player2, "battleArea", [], "public", true),
-        },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-          [player2]: createZone(player2, "shieldSection", [], "secret", true),
-        },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-          [player2]: createZone(player2, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-          [player2]: createZone(player2, "resourceArea", [], "public"),
-        },
-        trash: {
-          [player1]: createZone(player1, "trash", [], "public", true),
-          [player2]: createZone(player2, "trash", [], "public", true),
-        },
-        removal: {
-          [player1]: createZone(player1, "removal", [], "public"),
-          [player2]: createZone(player2, "removal", [], "public"),
-        },
-        limbo: {
-          [player1]: createZone(player1, "limbo", [], "public"),
-          [player2]: createZone(player2, "limbo", [], "public"),
-        },
-      },
-      gundam: {
-        activeResources: { [player1]: 3, [player2]: 2 },
-        cardPositions: { [card1]: "active" },
-        attackedThisTurn: [],
-        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
-        revealedCards: [],
-      },
-    };
+    mockState = createTestState(player1, player2, [card1], [], {
+      [card1]: "active",
+    });
 
     // Register abilities
     registerAbilities(card1, [
@@ -332,13 +331,13 @@ describe("Activated Abilities", () => {
   });
 
   it("should not activate if card is rested", () => {
-    const restedState = {
+    const restedState: GundamGameState = {
       ...mockState,
-      gundam: {
-        ...mockState.gundam,
+      external: {
+        ...mockState.external,
         cardPositions: { [card1]: "rested" },
       },
-    } as unknown as GundamGameState;
+    };
 
     const abilities = getAbilities(card1);
     const ability = abilities[0] as ActivatedAbility;
@@ -349,10 +348,10 @@ describe("Activated Abilities", () => {
   });
 
   it("should not activate if not enough resources", () => {
-    const poorState = {
+    const poorState: GundamGameState = {
       ...mockState,
-      gundam: {
-        ...mockState.gundam,
+      external: {
+        ...mockState.external,
         activeResources: { [player1]: 1 },
       },
     };
@@ -384,70 +383,10 @@ describe("Static Abilities", () => {
     card1 = "card1" as CardId;
     card2 = "card2" as CardId;
 
-    mockState = {
-      players: [player1, player2],
-      currentPlayer: player1,
-      turn: 1,
-      phase: "main",
-      zones: {
-        deck: {
-          [player1]: createZone(player1, "deck", [], "secret", true),
-          [player2]: createZone(player2, "deck", [], "secret", true),
-        },
-        resourceDeck: {
-          [player1]: createZone(player1, "resourceDeck", [], "secret", true),
-          [player2]: createZone(player2, "resourceDeck", [], "secret", true),
-        },
-        hand: {
-          [player1]: createZone(player1, "hand", [], "private"),
-          [player2]: createZone(player2, "hand", [], "private"),
-        },
-        battleArea: {
-          [player1]: createZone(
-            player1,
-            "battleArea",
-            [card1, card2],
-            "public",
-            true,
-          ),
-          [player2]: createZone(player2, "battleArea", [], "public", true),
-        },
-        shieldSection: {
-          [player1]: createZone(player1, "shieldSection", [], "secret", true),
-          [player2]: createZone(player2, "shieldSection", [], "secret", true),
-        },
-        baseSection: {
-          [player1]: createZone(player1, "baseSection", [], "public"),
-          [player2]: createZone(player2, "baseSection", [], "public"),
-        },
-        resourceArea: {
-          [player1]: createZone(player1, "resourceArea", [], "public"),
-          [player2]: createZone(player2, "resourceArea", [], "public"),
-        },
-        trash: {
-          [player1]: createZone(player1, "trash", [], "public", true),
-          [player2]: createZone(player2, "trash", [], "public", true),
-        },
-        removal: {
-          [player1]: createZone(player1, "removal", [], "public"),
-          [player2]: createZone(player2, "removal", [], "public"),
-        },
-        limbo: {
-          [player1]: createZone(player1, "limbo", [], "public"),
-          [player2]: createZone(player2, "limbo", [], "public"),
-        },
-      },
-      gundam: {
-        activeResources: { [player1]: 3, [player2]: 2 },
-        cardPositions: { [card1]: "active", [card2]: "active" },
-        attackedThisTurn: [],
-        hasPlayedResourceThisTurn: { [player1]: false, [player2]: false },
-        effectStack: { stack: [], nextInstanceId: 0 },
-        temporaryModifiers: {},
-        cardDamage: {},
-        revealedCards: [],
-      },
-    };
+    mockState = createTestState(player1, player2, [card1, card2], [], {
+      [card1]: "active",
+      [card2]: "active",
+    });
 
     // Register static abilities
     registerAbilities(card1, [
@@ -496,7 +435,7 @@ describe("Ability Builders", () => {
 
   it("should create triggered ability with trigger condition", () => {
     const condition = (state: GundamGameState, cardId: string) =>
-      state.turn >= 3;
+      state.external.turnNumber >= 3;
     const ability = createTriggeredAbility("ON_DEPLOY", draw(2), {
       name: "Draw 2 on Deploy after turn 3",
       triggerCondition: condition,
@@ -530,7 +469,7 @@ describe("Ability Builders", () => {
 
   it("should create activated ability with activation condition", () => {
     const condition = (state: GundamGameState, cardId: string) =>
-      state.gundam.activeResources[state.currentPlayer] >= 5;
+      state.external.activeResources[state.external.activePlayerId] >= 5;
     const ability = createActivatedAbility(
       { payResources: 3 },
       damage(5, "chosen-unit"),
@@ -562,7 +501,7 @@ describe("Ability Builders", () => {
 
   it("should create static ability with condition", () => {
     const condition = (state: GundamGameState, cardId: string) =>
-      state.turn >= 5;
+      state.external.turnNumber >= 5;
     const ability = createStaticAbility(modifyAP(3, "this"), {
       name: "Late Game Boost",
       condition,

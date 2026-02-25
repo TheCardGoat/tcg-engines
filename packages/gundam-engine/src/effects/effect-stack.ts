@@ -73,7 +73,7 @@ export function enqueueEffect(
   effectRef: { effectId: string },
   controllerId: PlayerId,
 ): string {
-  const instanceId = `effect-${draft.gundam.effectStack.nextInstanceId++}`;
+  const instanceId = `effect-${draft.external.effectStack.nextInstanceId++}`;
 
   const instance: EffectInstance = {
     instanceId,
@@ -84,7 +84,7 @@ export function enqueueEffect(
     state: "pending",
   };
 
-  draft.gundam.effectStack.stack.push(instance);
+  draft.external.effectStack.stack.push(instance);
 
   return instanceId;
 }
@@ -170,7 +170,7 @@ export function enqueueBatchEffects(
  * ```
  */
 export function dequeueEffect(draft: GundamGameState): EffectInstance | null {
-  const effect = draft.gundam.effectStack.stack.shift();
+  const effect = draft.external.effectStack.stack.shift();
   return effect ?? null;
 }
 
@@ -194,7 +194,7 @@ export function dequeueEffect(draft: GundamGameState): EffectInstance | null {
  * ```
  */
 export function isEffectStackEmpty(state: GundamGameState): boolean {
-  return state.gundam.effectStack.stack.length === 0;
+  return state.external.effectStack.stack.length === 0;
 }
 
 /**
@@ -215,7 +215,7 @@ export function isEffectStackEmpty(state: GundamGameState): boolean {
  * ```
  */
 export function peekNextEffect(state: GundamGameState): EffectInstance | null {
-  return state.gundam.effectStack.stack[0] ?? null;
+  return state.external.effectStack.stack[0] ?? null;
 }
 
 /**
@@ -233,7 +233,7 @@ export function peekNextEffect(state: GundamGameState): EffectInstance | null {
  * ```
  */
 export function getEffectStackCount(state: GundamGameState): number {
-  return state.gundam.effectStack.stack.length;
+  return state.external.effectStack.stack.length;
 }
 
 // ============================================================================
@@ -336,7 +336,7 @@ export function findEffectInstance(
   state: GundamGameState,
   instanceId: string,
 ): EffectInstance | undefined {
-  return state.gundam.effectStack.stack.find(
+  return state.external.effectStack.stack.find(
     (effect) => effect.instanceId === instanceId,
   );
 }

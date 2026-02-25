@@ -39,8 +39,9 @@ import type { GundamGameState } from "../../../types";
  * @returns Total resource count
  */
 function getTotalResources(state: GundamGameState, playerId: PlayerId): number {
-  const resourceArea = state.zones.resourceArea[playerId];
-  return resourceArea?.cards.length ?? 0;
+  const resourceZoneId = `resourceArea-${playerId}`;
+  const resourceZone = state.internal.zones[resourceZoneId];
+  return resourceZone?.cardIds.length ?? 0;
 }
 
 /**
@@ -53,32 +54,33 @@ function getTotalResources(state: GundamGameState, playerId: PlayerId): number {
  * @param count - Number of resources to rest
  */
 function restResources(
-  draft: GundamGameState,
+  draft: Draft<GundamGameState>,
   playerId: PlayerId,
   count: number,
 ): void {
   if (count <= 0) return;
 
-  const resourceArea = draft.zones.resourceArea[playerId];
-  if (!resourceArea) return;
+  const resourceZoneId = `resourceArea-${playerId}`;
+  const resourceZone = draft.internal.zones[resourceZoneId];
+  if (!resourceZone?.cardIds) return;
 
   // Rest the first 'count' active resources
   let rested = 0;
-  for (const cardId of resourceArea.cards) {
+  for (const cardId of resourceZone.cardIds) {
     if (rested >= count) break;
 
-    const currentPosition = draft.gundam.cardPositions[cardId];
+    const currentPosition = draft.external.cardPositions[cardId];
     if (currentPosition === "active") {
-      draft.gundam.cardPositions[cardId] = "rested";
+      draft.external.cardPositions[cardId] = "rested";
       rested++;
     }
   }
 
   // Update active resources count
-  const activeCount = resourceArea.cards.filter(
-    (cardId: CardId) => draft.gundam.cardPositions[cardId] === "active",
+  const activeCount = resourceZone.cardIds.filter(
+    (cardId: CardId) => draft.external.cardPositions[cardId] === "active",
   ).length;
-  draft.gundam.activeResources[playerId] = activeCount;
+  draft.external.activeResources[playerId] = activeCount;
 }
 
 /**
@@ -110,28 +112,29 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return [];
+    if (state.external.currentPhase !== "main") return [];
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return [];
+    if (state.external.activePlayerId !== playerId) return [];
 
     // Effect stack must be empty (per Rule 6-1-3)
-    if (state.gundam.effectStack.stack.length > 0) return [];
+    if (state.external.effectStack.stack.length > 0) return [];
 
     const options = [];
-    const hand = state.zones.hand[playerId];
+    const handZoneId = `hand-${playerId}`;
+    const handZone = state.internal.zones[handZoneId];
 
-    if (!hand) return [];
+    if (!handZone?.cardIds) return [];
 
     // Check each card in hand - only COMMAND cards can be played
-    for (const cardId of hand.cards) {
+    for (const cardId of handZone.cardIds) {
       // Load card definition and validate card type, cost, and level
       const def = getCardDefinition(cardId);
       if (def?.cardType !== "COMMAND") continue;
 
       // Check cost requirements - player must have sufficient active resources
       const cost = def.cost ?? 0;
-      const activeResources = state.gundam.activeResources[playerId] ?? 0;
+      const activeResources = state.external.activeResources[playerId] ?? 0;
       if (activeResources < cost) continue;
 
       // Check level requirements - player must have enough total resources
@@ -159,10 +162,10 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be in main phase
-    if (state.phase !== "main") return false;
+    if (state.external.currentPhase !== "main") return false;
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return false;
+    if (state.external.activePlayerId !== playerId) return false;
 
     // Get and validate card ID
     let cardId: CardId;
@@ -173,11 +176,12 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
     }
 
     // Card must be in player's hand
-    const hand = state.zones.hand[playerId];
-    if (!(hand && isCardInZone(hand, cardId))) return false;
+    const handZoneId = `hand-${playerId}`;
+    const handZone = state.internal.zones[handZoneId];
+    if (!handZone?.cardIds.includes(cardId)) return false;
 
     // Effect stack must be empty (per Rule 6-1-3)
-    if (state.gundam.effectStack.stack.length > 0) return false;
+    if (state.external.effectStack.stack.length > 0) return false;
 
     // Load card definition and validate card type is COMMAND
     const cardDef = getCardDefinition(cardId);
@@ -185,7 +189,7 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
 
     // Validate cost requirements - player must have sufficient active resources
     const cost = cardDef.cost ?? 0;
-    const activeResources = state.gundam.activeResources[playerId] ?? 0;
+    const activeResources = state.external.activeResources[playerId] ?? 0;
     if (activeResources < cost) return false;
 
     // Validate level requirements - player must have enough total resources
@@ -206,8 +210,9 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
     const cardId = getCardId(context);
 
     // Validate card is in hand
-    const hand = draft.zones.hand[playerId];
-    if (!(hand && isCardInZone(hand, cardId))) {
+    const handZoneId = `hand-${playerId}`;
+    const handZone = draft.internal.zones[handZoneId];
+    if (!handZone?.cardIds.includes(cardId)) {
       throw new Error(`Card ${cardId} is not in player's hand`);
     }
 
@@ -217,18 +222,19 @@ export const playCommandMove: GameMoveDefinition<GundamGameState> = {
     restResources(draft, playerId, cost);
 
     // Move card from hand to limbo zone
-    const limbo = draft.zones.limbo[playerId];
-    if (!limbo) {
+    const limboZoneId = `limbo-${playerId}`;
+    const limboZone = draft.internal.zones[limboZoneId];
+    if (!limboZone) {
       throw new Error(`Limbo zone not found for player ${playerId}`);
     }
 
     // Remove from hand and add to limbo
-    const cardIndex = hand.cards.indexOf(cardId);
+    const cardIndex = handZone.cardIds.indexOf(cardId);
     if (cardIndex === -1) {
       throw new Error(`Card ${cardId} not found in hand`);
     }
-    hand.cards.splice(cardIndex, 1);
-    limbo.cards.push(cardId);
+    handZone.cardIds.splice(cardIndex, 1);
+    limboZone.cardIds.push(cardId);
 
     // Load effect definition from card
     // For T4, use a placeholder effect ID

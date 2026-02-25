@@ -17,15 +17,13 @@
 import type { GameMoveDefinition, MoveContext, PlayerId } from "@tcg/core";
 import { getZoneSize } from "@tcg/core";
 import type { Draft } from "immer";
-import type { GundamGameState } from "../../../types";
+import type { GundamGameState, GundamPhase } from "../../../types";
 
 /**
  * Get the next phase in the game flow
  */
-function getNextPhase(
-  currentPhase: GundamGameState["phase"],
-): GundamGameState["phase"] {
-  const phaseOrder: Array<GundamGameState["phase"]> = [
+function getNextPhase(currentPhase: GundamPhase): GundamPhase {
+  const phaseOrder: GundamPhase[] = [
     "setup",
     "start",
     "draw",
@@ -53,26 +51,29 @@ function readyAllCards(
   playerId: PlayerId,
 ): void {
   // Ready all units in battle area
-  const battleArea = draft.zones.battleArea[playerId];
-  if (battleArea) {
-    for (const cardId of battleArea.cards) {
-      draft.gundam.cardPositions[cardId] = "active";
+  const battleZoneId = `battleArea-${playerId}`;
+  const battleZone = draft.internal.zones[battleZoneId];
+  if (battleZone?.cardIds) {
+    for (const cardId of battleZone.cardIds) {
+      draft.external.cardPositions[cardId] = "active";
     }
   }
 
   // Ready base in base section
-  const baseSection = draft.zones.baseSection[playerId];
-  if (baseSection) {
-    for (const cardId of baseSection.cards) {
-      draft.gundam.cardPositions[cardId] = "active";
+  const baseZoneId = `baseSection-${playerId}`;
+  const baseZone = draft.internal.zones[baseZoneId];
+  if (baseZone?.cardIds) {
+    for (const cardId of baseZone.cardIds) {
+      draft.external.cardPositions[cardId] = "active";
     }
   }
 
   // Ready all resources in resource area
-  const resourceArea = draft.zones.resourceArea[playerId];
-  if (resourceArea) {
-    for (const cardId of resourceArea.cards) {
-      draft.gundam.cardPositions[cardId] = "active";
+  const resourceZoneId = `resourceArea-${playerId}`;
+  const resourceZone = draft.internal.zones[resourceZoneId];
+  if (resourceZone?.cardIds) {
+    for (const cardId of resourceZone.cardIds) {
+      draft.external.cardPositions[cardId] = "active";
     }
   }
 }
@@ -84,11 +85,12 @@ function refreshResources(
   draft: Draft<GundamGameState>,
   playerId: PlayerId,
 ): void {
-  const resourceArea = draft.zones.resourceArea[playerId];
-  if (!resourceArea) return;
+  const resourceZoneId = `resourceArea-${playerId}`;
+  const resourceZone = draft.internal.zones[resourceZoneId];
+  if (!resourceZone?.cardIds) return;
 
-  const resourceCount = getZoneSize(resourceArea);
-  draft.gundam.activeResources[playerId] = resourceCount;
+  const resourceCount = resourceZone.cardIds.length;
+  draft.external.activeResources[playerId] = resourceCount;
 }
 
 /**
@@ -106,10 +108,10 @@ export const passMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return [];
+    if (state.external.activePlayerId !== playerId) return [];
 
     // Cannot pass if game is over
-    if (state.phase === "gameOver") return [];
+    if (state.external.currentPhase === "gameOver") return [];
 
     // Return single empty parameter set
     return [{}];
@@ -122,10 +124,10 @@ export const passMove: GameMoveDefinition<GundamGameState> = {
     const { playerId } = context;
 
     // Must be current player
-    if (state.currentPlayer !== playerId) return false;
+    if (state.external.activePlayerId !== playerId) return false;
 
     // Cannot pass if game is over
-    if (state.phase === "gameOver") return false;
+    if (state.external.currentPhase === "gameOver") return false;
 
     return true;
   },
@@ -136,41 +138,44 @@ export const passMove: GameMoveDefinition<GundamGameState> = {
    * Transitions to next phase. If ending turn, switches players and resets state.
    */
   reducer: (draft: Draft<GundamGameState>, context: MoveContext): void => {
-    const currentPhase = draft.phase;
+    const currentPhase = draft.external.currentPhase;
     const isEndingTurn = currentPhase === "end";
 
     // Advance to next phase
-    draft.phase = getNextPhase(currentPhase);
+    draft.external.currentPhase = getNextPhase(currentPhase);
 
     // If ending turn, handle turn handoff
     if (isEndingTurn) {
       // Switch active player
-      const currentPlayerIndex = draft.players.indexOf(draft.currentPlayer);
+      const currentPlayerIndex = draft.external.playerIds.indexOf(
+        draft.external.activePlayerId,
+      );
       if (currentPlayerIndex === -1) {
         throw new Error(
-          `Current player ${draft.currentPlayer} not found in players array`,
+          `Current player ${draft.external.activePlayerId} not found in players array`,
         );
       }
-      const nextPlayerIndex = (currentPlayerIndex + 1) % draft.players.length;
-      const nextPlayer = draft.players[nextPlayerIndex];
+      const nextPlayerIndex =
+        (currentPlayerIndex + 1) % draft.external.playerIds.length;
+      const nextPlayer = draft.external.playerIds[nextPlayerIndex];
       if (!nextPlayer) {
         throw new Error(`No player found at index ${nextPlayerIndex}`);
       }
-      draft.currentPlayer = nextPlayer;
+      draft.external.activePlayerId = nextPlayer;
 
       // Increment turn counter
-      draft.turn += 1;
+      draft.external.turnNumber += 1;
 
       // Reset per-turn state
-      draft.gundam.attackedThisTurn = [];
-      draft.gundam.hasPlayedResourceThisTurn = {
-        [draft.players[0]]: false,
-        [draft.players[1]]: false,
+      draft.external.attackedThisTurn = [];
+      draft.external.hasPlayedResourceThisTurn = {
+        [draft.external.playerIds[0]]: false,
+        [draft.external.playerIds[1]]: false,
       };
 
       // Ready all cards and refresh resources for new active player
-      readyAllCards(draft, draft.currentPlayer);
-      refreshResources(draft, draft.currentPlayer);
+      readyAllCards(draft, draft.external.activePlayerId);
+      refreshResources(draft, draft.external.activePlayerId);
     }
   },
 

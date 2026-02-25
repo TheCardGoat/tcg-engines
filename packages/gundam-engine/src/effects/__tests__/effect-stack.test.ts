@@ -15,6 +15,7 @@ import { beforeEach, describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
 import type { Effect, EffectAction } from "@tcg/gundam-types/effects";
 import { produce } from "immer";
+import { createTestState } from "../../testing/test-helpers";
 import type { GundamGameState } from "../../types";
 import type { EffectInstance, EffectStackState } from "../effect-runtime";
 import {
@@ -39,41 +40,19 @@ import {
 // TEST UTILITIES
 // ============================================================================
 
+const PLAYER_1 = "player-1" as PlayerId;
+const PLAYER_2 = "player-2" as PlayerId;
+
 /**
- * Creates a minimal game state for testing
+ * Creates a minimal game state for testing using new IState pattern
  */
 function createTestGameState(): GundamGameState {
-  const player1 = "player-1" as PlayerId;
-  const player2 = "player-2" as PlayerId;
-
-  return {
-    players: [player1, player2],
-    currentPlayer: player1,
-    turn: 1,
-    phase: "main",
-    zones: {
-      deck: {},
-      resourceDeck: {},
-      hand: {},
-      battleArea: {},
-      shieldSection: {},
-      baseSection: {},
-      resourceArea: {},
-      trash: {},
-      removal: {},
-      limbo: {},
-    },
-    gundam: {
-      activeResources: {},
-      cardPositions: {},
-      attackedThisTurn: [],
-      hasPlayedResourceThisTurn: {},
-      effectStack: createEffectStack(),
-      temporaryModifiers: {},
-      cardDamage: {},
-      revealedCards: [],
-    },
-  };
+  return createTestState({
+    players: [PLAYER_1, PLAYER_2],
+    activePlayerId: PLAYER_1,
+    turnNumber: 1,
+    currentPhase: "main",
+  });
 }
 
 /**
@@ -103,8 +82,8 @@ describe("Effect Stack - Initialization", () => {
 
   it("should initialize game state with empty effect stack", () => {
     const state = createTestGameState();
-    expect(state.gundam.effectStack.stack).toEqual([]);
-    expect(state.gundam.effectStack.nextInstanceId).toBe(0);
+    expect(state.external.effectStack.stack).toEqual([]);
+    expect(state.external.effectStack.nextInstanceId).toBe(0);
   });
 });
 
@@ -127,12 +106,12 @@ describe("Effect Stack - Enqueue", () => {
       );
 
       expect(instanceId).toBe("effect-0");
-      expect(draft.gundam.effectStack.stack).toHaveLength(1);
-      expect(draft.gundam.effectStack.nextInstanceId).toBe(1);
+      expect(draft.external.effectStack.stack).toHaveLength(1);
+      expect(draft.external.effectStack.nextInstanceId).toBe(1);
     });
 
     // Verify the effect was created correctly
-    const effect = state.gundam.effectStack.stack[0];
+    const effect = state.external.effectStack.stack[0];
     expect(effect?.instanceId).toBe("effect-0");
     expect(effect?.sourceCardId).toBe("card-1" as any);
     expect(effect?.effectRef.effectId).toBe("draw-2");
@@ -152,11 +131,11 @@ describe("Effect Stack - Enqueue", () => {
       }
     });
 
-    expect(state.gundam.effectStack.stack[0]?.instanceId).toBe("effect-0");
-    expect(state.gundam.effectStack.stack[1]?.instanceId).toBe("effect-1");
-    expect(state.gundam.effectStack.stack[2]?.instanceId).toBe("effect-2");
-    expect(state.gundam.effectStack.stack).toHaveLength(3);
-    expect(state.gundam.effectStack.nextInstanceId).toBe(3);
+    expect(state.external.effectStack.stack[0]?.instanceId).toBe("effect-0");
+    expect(state.external.effectStack.stack[1]?.instanceId).toBe("effect-1");
+    expect(state.external.effectStack.stack[2]?.instanceId).toBe("effect-2");
+    expect(state.external.effectStack.stack).toHaveLength(3);
+    expect(state.external.effectStack.nextInstanceId).toBe(3);
   });
 
   it("should add effects to the end of the stack (FIFO)", () => {
@@ -184,11 +163,15 @@ describe("Effect Stack - Enqueue", () => {
       );
     });
 
-    expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe("first");
-    expect(state.gundam.effectStack.stack[1]?.effectRef.effectId).toBe(
+    expect(state.external.effectStack.stack[0]?.effectRef.effectId).toBe(
+      "first",
+    );
+    expect(state.external.effectStack.stack[1]?.effectRef.effectId).toBe(
       "second",
     );
-    expect(state.gundam.effectStack.stack[2]?.effectRef.effectId).toBe("third");
+    expect(state.external.effectStack.stack[2]?.effectRef.effectId).toBe(
+      "third",
+    );
   });
 
   it("should initialize effect with pending state", () => {
@@ -203,7 +186,7 @@ describe("Effect Stack - Enqueue", () => {
       );
     });
 
-    const effect = state.gundam.effectStack.stack[0];
+    const effect = state.external.effectStack.stack[0];
     expect(effect?.state).toBe("pending");
   });
 });
@@ -241,9 +224,13 @@ describe("Effect Stack - Batch Enqueue", () => {
     });
 
     // Verify order: third (index 2), first (index 0), second (index 1)
-    expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe("third");
-    expect(state.gundam.effectStack.stack[1]?.effectRef.effectId).toBe("first");
-    expect(state.gundam.effectStack.stack[2]?.effectRef.effectId).toBe(
+    expect(state.external.effectStack.stack[0]?.effectRef.effectId).toBe(
+      "third",
+    );
+    expect(state.external.effectStack.stack[1]?.effectRef.effectId).toBe(
+      "first",
+    );
+    expect(state.external.effectStack.stack[2]?.effectRef.effectId).toBe(
       "second",
     );
   });
@@ -275,9 +262,9 @@ describe("Effect Stack - Batch Enqueue", () => {
       enqueueBatchEffects(draft, effects, [1, 2, 0]);
     });
 
-    expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe("B");
-    expect(state.gundam.effectStack.stack[1]?.effectRef.effectId).toBe("C");
-    expect(state.gundam.effectStack.stack[2]?.effectRef.effectId).toBe("A");
+    expect(state.external.effectStack.stack[0]?.effectRef.effectId).toBe("B");
+    expect(state.external.effectStack.stack[1]?.effectRef.effectId).toBe("C");
+    expect(state.external.effectStack.stack[2]?.effectRef.effectId).toBe("A");
   });
 
   it("should assign unique instance IDs in batch enqueue", () => {
@@ -302,8 +289,8 @@ describe("Effect Stack - Batch Enqueue", () => {
       expect(instanceIds).toEqual(["effect-0", "effect-1"]);
     });
 
-    expect(state.gundam.effectStack.stack[0]?.instanceId).toBe("effect-0");
-    expect(state.gundam.effectStack.stack[1]?.instanceId).toBe("effect-1");
+    expect(state.external.effectStack.stack[0]?.instanceId).toBe("effect-0");
+    expect(state.external.effectStack.stack[1]?.instanceId).toBe("effect-1");
   });
 
   it("should handle empty batch", () => {
@@ -314,7 +301,7 @@ describe("Effect Stack - Batch Enqueue", () => {
       expect(instanceIds).toEqual([]);
     });
 
-    expect(state.gundam.effectStack.stack).toHaveLength(0);
+    expect(state.external.effectStack.stack).toHaveLength(0);
   });
 
   it("should throw error for invalid order indices", () => {
@@ -392,10 +379,10 @@ describe("Effect Stack - Dequeue", () => {
       );
     });
 
-    expect(state.gundam.effectStack.stack).toHaveLength(3);
+    expect(state.external.effectStack.stack).toHaveLength(3);
 
     // Get first effect before dequeue
-    const firstEffect = state.gundam.effectStack.stack[0];
+    const firstEffect = state.external.effectStack.stack[0];
 
     // Dequeue should remove from front
     state = produce(state, (draft) => {
@@ -403,8 +390,8 @@ describe("Effect Stack - Dequeue", () => {
     });
 
     expect(firstEffect?.effectRef.effectId).toBe("first");
-    expect(state.gundam.effectStack.stack).toHaveLength(2);
-    expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe(
+    expect(state.external.effectStack.stack).toHaveLength(2);
+    expect(state.external.effectStack.stack[0]?.effectRef.effectId).toBe(
       "second",
     );
   });
@@ -417,7 +404,7 @@ describe("Effect Stack - Dequeue", () => {
       expect(result).toBeNull();
     });
 
-    expect(state.gundam.effectStack.stack).toHaveLength(0);
+    expect(state.external.effectStack.stack).toHaveLength(0);
   });
 
   it("should return correct effect instance", () => {
@@ -430,7 +417,7 @@ describe("Effect Stack - Dequeue", () => {
     });
 
     // Get the effect before dequeue
-    const effectBefore = state.gundam.effectStack.stack[0];
+    const effectBefore = state.external.effectStack.stack[0];
 
     state = produce(state, (draft) => {
       const dequeued = dequeueEffect(draft);
@@ -444,7 +431,7 @@ describe("Effect Stack - Dequeue", () => {
     });
 
     // Verify it was dequeued
-    expect(state.gundam.effectStack.stack).toHaveLength(0);
+    expect(state.external.effectStack.stack).toHaveLength(0);
     expect(effectBefore?.instanceId).toBe("effect-0");
   });
 
@@ -463,20 +450,20 @@ describe("Effect Stack - Dequeue", () => {
       }
     });
 
-    expect(state.gundam.effectStack.stack).toHaveLength(5);
+    expect(state.external.effectStack.stack).toHaveLength(5);
 
     state = produce(state, (draft) => {
       dequeueEffect(draft);
     });
 
-    expect(state.gundam.effectStack.stack).toHaveLength(4);
+    expect(state.external.effectStack.stack).toHaveLength(4);
 
     state = produce(state, (draft) => {
       dequeueEffect(draft);
       dequeueEffect(draft);
     });
 
-    expect(state.gundam.effectStack.stack).toHaveLength(2);
+    expect(state.external.effectStack.stack).toHaveLength(2);
   });
 });
 
@@ -497,9 +484,9 @@ describe("Effect Stack - FIFO Behavior", () => {
     });
 
     // Collect effects before dequeuing
-    const effectA = state.gundam.effectStack.stack[0];
-    const effectB = state.gundam.effectStack.stack[1];
-    const effectC = state.gundam.effectStack.stack[2];
+    const effectA = state.external.effectStack.stack[0];
+    const effectB = state.external.effectStack.stack[1];
+    const effectC = state.external.effectStack.stack[2];
 
     // Dequeue all three
     state = produce(state, (draft) => {
@@ -511,7 +498,7 @@ describe("Effect Stack - FIFO Behavior", () => {
     expect(effectA?.effectRef.effectId).toBe("A");
     expect(effectB?.effectRef.effectId).toBe("B");
     expect(effectC?.effectRef.effectId).toBe("C");
-    expect(state.gundam.effectStack.stack).toHaveLength(0);
+    expect(state.external.effectStack.stack).toHaveLength(0);
   });
 
   it("should maintain order through multiple enqueue/dequeue cycles", () => {
@@ -525,7 +512,7 @@ describe("Effect Stack - FIFO Behavior", () => {
     });
 
     // Get effect A before dequeue
-    const effectA = state.gundam.effectStack.stack[0];
+    const effectA = state.external.effectStack.stack[0];
 
     // Dequeue A
     state = produce(state, (draft) => {
@@ -541,12 +528,12 @@ describe("Effect Stack - FIFO Behavior", () => {
     });
 
     // Stack should now have B, C (in that order)
-    expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe("B");
-    expect(state.gundam.effectStack.stack[1]?.effectRef.effectId).toBe("C");
+    expect(state.external.effectStack.stack[0]?.effectRef.effectId).toBe("B");
+    expect(state.external.effectStack.stack[1]?.effectRef.effectId).toBe("C");
 
     // Get B and C before dequeuing
-    const effectB = state.gundam.effectStack.stack[0];
-    const effectC = state.gundam.effectStack.stack[1];
+    const effectB = state.external.effectStack.stack[0];
+    const effectC = state.external.effectStack.stack[1];
 
     // Dequeue B, then C
     state = produce(state, (draft) => {
@@ -556,7 +543,7 @@ describe("Effect Stack - FIFO Behavior", () => {
 
     expect(effectB?.effectRef.effectId).toBe("B");
     expect(effectC?.effectRef.effectId).toBe("C");
-    expect(state.gundam.effectStack.stack).toHaveLength(0);
+    expect(state.external.effectStack.stack).toHaveLength(0);
   });
 });
 
@@ -604,8 +591,10 @@ describe("Effect Stack - Query Helpers", () => {
     expect(peeked?.effectRef.effectId).toBe("first");
 
     // Stack should still have both effects
-    expect(state.gundam.effectStack.stack).toHaveLength(2);
-    expect(state.gundam.effectStack.stack[0]?.effectRef.effectId).toBe("first");
+    expect(state.external.effectStack.stack).toHaveLength(2);
+    expect(state.external.effectStack.stack[0]?.effectRef.effectId).toBe(
+      "first",
+    );
   });
 
   it("should return null when peeking empty stack", () => {
@@ -641,8 +630,8 @@ describe("Effect Stack - Query Helpers", () => {
       enqueueEffect(draft, createTestCardId(1), { effectId: "test" }, playerId);
     });
 
-    const originalStack = state.gundam.effectStack.stack;
-    const originalCount = state.gundam.effectStack.nextInstanceId;
+    const originalStack = state.external.effectStack.stack;
+    const originalCount = state.external.effectStack.nextInstanceId;
 
     // Call query helpers
     isEffectStackEmpty(state);
@@ -650,8 +639,8 @@ describe("Effect Stack - Query Helpers", () => {
     getEffectStackCount(state);
 
     // State should be unchanged
-    expect(state.gundam.effectStack.stack).toBe(originalStack);
-    expect(state.gundam.effectStack.nextInstanceId).toBe(originalCount);
+    expect(state.external.effectStack.stack).toBe(originalStack);
+    expect(state.external.effectStack.nextInstanceId).toBe(originalCount);
   });
 });
 
@@ -744,7 +733,7 @@ describe("Effect Stack - Lifecycle Helpers", () => {
     });
 
     // State should be unchanged
-    expect(state.gundam.effectStack.stack).toHaveLength(0);
+    expect(state.external.effectStack.stack).toHaveLength(0);
   });
 });
 
@@ -764,17 +753,17 @@ describe("Effect Stack - Integration Tests", () => {
       enqueueEffect(draft, createTestCardId(3), { effectId: "C" }, playerId);
     });
 
-    expect(state.gundam.effectStack.stack).toHaveLength(3);
+    expect(state.external.effectStack.stack).toHaveLength(3);
 
     // Mark first effect as resolving
     state = produce(state, (draft) => {
       markEffectResolving(draft, "effect-0");
     });
 
-    expect(state.gundam.effectStack.stack[0]?.state).toBe("resolving");
+    expect(state.external.effectStack.stack[0]?.state).toBe("resolving");
 
     // Get first effect before dequeue
-    const firstEffect = state.gundam.effectStack.stack[0];
+    const firstEffect = state.external.effectStack.stack[0];
 
     // Dequeue first effect
     state = produce(state, (draft) => {
@@ -782,17 +771,17 @@ describe("Effect Stack - Integration Tests", () => {
     });
 
     expect(firstEffect?.state).toBe("resolving");
-    expect(state.gundam.effectStack.stack).toHaveLength(2);
+    expect(state.external.effectStack.stack).toHaveLength(2);
 
     // Mark second as fizzled
     state = produce(state, (draft) => {
       markEffectFizzled(draft, "effect-1");
     });
 
-    expect(state.gundam.effectStack.stack[0]?.state).toBe("fizzled");
+    expect(state.external.effectStack.stack[0]?.state).toBe("fizzled");
 
     // Get second effect before dequeue
-    const secondEffect = state.gundam.effectStack.stack[0];
+    const secondEffect = state.external.effectStack.stack[0];
 
     // Dequeue it
     state = produce(state, (draft) => {
@@ -800,7 +789,7 @@ describe("Effect Stack - Integration Tests", () => {
     });
 
     expect(secondEffect?.state).toBe("fizzled");
-    expect(state.gundam.effectStack.stack).toHaveLength(1);
+    expect(state.external.effectStack.stack).toHaveLength(1);
   });
 
   it("should handle batch ordering with active player choice", () => {
@@ -832,9 +821,9 @@ describe("Effect Stack - Integration Tests", () => {
     });
 
     // Collect effects before dequeue
-    const effect1 = state.gundam.effectStack.stack[0];
-    const effect2 = state.gundam.effectStack.stack[1];
-    const effect3 = state.gundam.effectStack.stack[2];
+    const effect1 = state.external.effectStack.stack[0];
+    const effect2 = state.external.effectStack.stack[1];
+    const effect3 = state.external.effectStack.stack[2];
 
     // Dequeue all
     state = produce(state, (draft) => {
@@ -859,7 +848,7 @@ describe("Effect Stack - Integration Tests", () => {
       enqueueEffect(draft, createTestCardId(2), { effectId: "B" }, playerId);
     });
 
-    expect(state.gundam.effectStack.nextInstanceId).toBe(2);
+    expect(state.external.effectStack.nextInstanceId).toBe(2);
 
     // Dequeue one
     state = produce(state, (draft) => {
@@ -873,10 +862,10 @@ describe("Effect Stack - Integration Tests", () => {
     });
 
     // IDs should continue from where they left off
-    expect(state.gundam.effectStack.stack[0]?.instanceId).toBe("effect-1");
-    expect(state.gundam.effectStack.stack[1]?.instanceId).toBe("effect-2");
-    expect(state.gundam.effectStack.stack[2]?.instanceId).toBe("effect-3");
-    expect(state.gundam.effectStack.nextInstanceId).toBe(4);
+    expect(state.external.effectStack.stack[0]?.instanceId).toBe("effect-1");
+    expect(state.external.effectStack.stack[1]?.instanceId).toBe("effect-2");
+    expect(state.external.effectStack.stack[2]?.instanceId).toBe("effect-3");
+    expect(state.external.effectStack.nextInstanceId).toBe(4);
   });
 
   it("should handle empty stack after dequeuing all effects", () => {

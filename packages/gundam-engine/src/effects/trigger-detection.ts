@@ -236,12 +236,13 @@ export function detectDeployTriggers(
   const effects: TriggeredEffectRef[] = [];
 
   // Scan all players' battle areas for cards with deploy triggers
-  for (const player of state.players) {
-    const battleArea = state.zones.battleArea[player];
+  for (const player of state.external.playerIds) {
+    const battleZoneId = `battleArea-${player}`;
+    const battleZone = state.internal.zones[battleZoneId];
 
-    if (!battleArea?.cards) continue;
+    if (!battleZone?.cardIds) continue;
 
-    for (const cardId of battleArea.cards) {
+    for (const cardId of battleZone.cardIds) {
       const cardDef = getCardDefinition(cardId);
 
       if (!cardDef) continue;
@@ -281,12 +282,13 @@ export function detectAttackTriggers(
   const effects: TriggeredEffectRef[] = [];
 
   // Scan all players' battle areas for cards with attack triggers
-  for (const player of state.players) {
-    const battleArea = state.zones.battleArea[player];
+  for (const player of state.external.playerIds) {
+    const battleZoneId = `battleArea-${player}`;
+    const battleZone = state.internal.zones[battleZoneId];
 
-    if (!battleArea?.cards) continue;
+    if (!battleZone?.cardIds) continue;
 
-    for (const cardId of battleArea.cards) {
+    for (const cardId of battleZone.cardIds) {
       const cardDef = getCardDefinition(cardId);
 
       if (!cardDef) continue;
@@ -326,12 +328,13 @@ export function detectDestroyedTriggers(
   const effects: TriggeredEffectRef[] = [];
 
   // Scan all players' battle areas for cards with destroyed triggers
-  for (const player of state.players) {
-    const battleArea = state.zones.battleArea[player];
+  for (const player of state.external.playerIds) {
+    const battleZoneId = `battleArea-${player}`;
+    const battleZone = state.internal.zones[battleZoneId];
 
-    if (!battleArea?.cards) continue;
+    if (!battleZone?.cardIds) continue;
 
-    for (const cardId of battleArea.cards) {
+    for (const cardId of battleZone.cardIds) {
       const cardDef = getCardDefinition(cardId);
 
       if (!cardDef) continue;
@@ -373,16 +376,17 @@ export function detectStartOfTurnTriggers(
   const effects: TriggeredEffectRef[] = [];
 
   // Only scan the current player's battle area for start of turn triggers
-  const battleArea = state.zones.battleArea[event.playerId];
+  const battleZoneId = `battleArea-${event.playerId}`;
+  const battleZone = state.internal.zones[battleZoneId];
 
-  if (!battleArea?.cards) {
+  if (!battleZone?.cardIds) {
     return {
       effects,
       hasTriggers: false,
     };
   }
 
-  for (const cardId of battleArea.cards) {
+  for (const cardId of battleZone.cardIds) {
     const cardDef = getCardDefinition(cardId);
     if (!cardDef) continue;
 
@@ -421,12 +425,13 @@ export function detectEndOfTurnTriggers(
   const effects: TriggeredEffectRef[] = [];
 
   // Scan all players' battle areas for cards with end of turn triggers
-  for (const player of state.players) {
-    const battleArea = state.zones.battleArea[player];
+  for (const player of state.external.playerIds) {
+    const battleZoneId = `battleArea-${player}`;
+    const battleZone = state.internal.zones[battleZoneId];
 
-    if (!battleArea?.cards) continue;
+    if (!battleZone?.cardIds) continue;
 
-    for (const cardId of battleArea.cards) {
+    for (const cardId of battleZone.cardIds) {
       const cardDef = getCardDefinition(cardId);
       if (!cardDef) continue;
 

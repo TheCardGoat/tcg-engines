@@ -199,10 +199,10 @@ export const resolveEffectStackMove: GameMoveDefinition<GundamGameState> = {
     // Validate effect source card still exists
     // Check all zones for the source card
     let sourceCardExists = false;
-    let sourceCardZone: keyof typeof draft.zones | null = null;
+    let sourceCardZone: string | null = null;
     let sourceCardOwner: typeof playerId | null = null;
 
-    for (const player of draft.players) {
+    for (const player of draft.external.playerIds) {
       for (const zoneType of [
         "hand",
         "battleArea",
@@ -213,8 +213,9 @@ export const resolveEffectStackMove: GameMoveDefinition<GundamGameState> = {
         "baseSection",
         "resourceArea",
       ] as const) {
-        const zone = draft.zones[zoneType][player];
-        if (zone && isCardInZone(zone, sourceCardId)) {
+        const zoneId = `${zoneType}-${player}`;
+        const zone = draft.internal.zones[zoneId];
+        if (zone && zone.cardIds.includes(sourceCardId)) {
           sourceCardExists = true;
           sourceCardZone = zoneType;
           sourceCardOwner = player;
@@ -303,18 +304,20 @@ export const resolveEffectStackMove: GameMoveDefinition<GundamGameState> = {
 
     // If COMMAND card in limbo, move to trash after resolution
     if (sourceCardZone === "limbo" && sourceCardOwner) {
-      const limbo = draft.zones.limbo[sourceCardOwner];
-      const trash = draft.zones.trash[sourceCardOwner];
+      const limboZoneId = `limbo-${sourceCardOwner}`;
+      const trashZoneId = `trash-${sourceCardOwner}`;
+      const limbo = draft.internal.zones[limboZoneId];
+      const trash = draft.internal.zones[trashZoneId];
 
-      if (limbo && trash && isCardInZone(limbo, sourceCardId)) {
+      if (limbo && trash && limbo.cardIds.includes(sourceCardId)) {
         // Remove from limbo
-        const cardIndex = limbo.cards.indexOf(sourceCardId);
+        const cardIndex = limbo.cardIds.indexOf(sourceCardId);
         if (cardIndex !== -1) {
-          limbo.cards.splice(cardIndex, 1);
+          limbo.cardIds.splice(cardIndex, 1);
         }
 
         // Add to trash
-        trash.cards.push(sourceCardId);
+        trash.cardIds.push(sourceCardId);
       }
     }
   },

@@ -400,7 +400,7 @@ export class GundamEngine extends RuleEngine<
   ): MoveParameterOptions | null {
     // Get all valid player IDs from game state
     const state = this.getState();
-    const validPlayers = state.players;
+    const validPlayers = state.external.playerIds;
 
     // For each valid player choice, check if the move can be executed
     const validCombinations: Array<{ playerId: PlayerId }> = [];

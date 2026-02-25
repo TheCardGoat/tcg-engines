@@ -22,7 +22,7 @@ export const concede = createMove<
   },
   reducer: (draft, context) => {
     // Get all players from the game state
-    const allPlayers = draft.players;
+    const allPlayers = draft.external.playerIds;
 
     // Determine winner: the opponent who is NOT conceding
     // Try to find active players by checking zones

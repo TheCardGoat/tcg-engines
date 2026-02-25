@@ -8,6 +8,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
 import type { Effect, EffectTiming } from "@tcg/gundam-types/effects";
+import { createTestState, type TestZoneData } from "../../testing/test-helpers";
 import type { GundamGameState } from "../../types";
 import {
   clearCardDefinitions,
@@ -42,39 +43,14 @@ function createMockCardDefinition(cardId: CardId, effects: Effect[]): Effect {
   return def;
 }
 
-// Helper to create a minimal game state
+// Helper to create a minimal game state using new IState pattern
 function createMockGameState(players: PlayerId[]): GundamGameState {
-  return {
+  return createTestState({
     players,
-    currentPlayer: players[0]!,
-    phase: "main",
-    turn: 1,
-    zones: {
-      deck: {},
-      resourceDeck: {},
-      hand: {},
-      battleArea: {},
-      shieldSection: {},
-      baseSection: {},
-      resourceArea: {},
-      trash: {},
-      removal: {},
-      limbo: {},
-    },
-    gundam: {
-      cardPositions: {},
-      cardDamage: {},
-      activeResources: {},
-      attackedThisTurn: [],
-      effectStack: {
-        stack: [],
-        nextInstanceId: 0,
-      },
-      temporaryModifiers: {},
-      revealedCards: [],
-      hasPlayedResourceThisTurn: {},
-    },
-  } as GundamGameState;
+    activePlayerId: players[0]!,
+    turnNumber: 1,
+    currentPhase: "main",
+  });
 }
 
 // Helper to setup zones for a player
@@ -83,14 +59,15 @@ function setupPlayerZones(
   playerId: PlayerId,
   cardIds: CardId[],
 ): void {
-  state.zones.battleArea[playerId] = {
-    cards: [...cardIds],
-    config: { owner: playerId } as any,
-  };
+  const zoneKey = `battleArea-${playerId}`;
+  const zone = state.internal.zones[zoneKey] as TestZoneData | undefined;
+  if (zone) {
+    zone.cardIds = [...cardIds];
+  }
 
   // Set all cards to active position
   for (const cardId of cardIds) {
-    state.gundam.cardPositions[cardId] = "active";
+    state.external.cardPositions[cardId] = "active";
   }
 }
 

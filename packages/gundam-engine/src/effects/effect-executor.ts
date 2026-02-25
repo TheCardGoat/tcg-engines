@@ -145,7 +145,7 @@ function resolveTarget(
 ): ResolvedTarget {
   const state = context.state;
   const sourcePlayer = context.sourcePlayer;
-  const opponent = state.players.find((p) => p !== sourcePlayer);
+  const opponent = state.external.playerIds.find((p) => p !== sourcePlayer);
 
   // Handle simple string targets
   if (typeof target === "string") {
@@ -168,15 +168,16 @@ function resolveTarget(
           : { cardIds: [], players: [], zones: [] };
 
       case "each-player":
-        return { cardIds: [], players: state.players, zones: [] };
+        return { cardIds: [], players: state.external.playerIds, zones: [] };
 
       case "each-unit": {
         // Return all units in battle areas
         const allUnits: CardId[] = [];
-        for (const player of state.players) {
-          const battleArea = state.zones.battleArea[player];
-          if (battleArea?.cards) {
-            allUnits.push(...battleArea.cards);
+        for (const player of state.external.playerIds) {
+          const battleZoneId = `battleArea-${player}`;
+          const battleZone = state.internal.zones[battleZoneId];
+          if (battleZone?.cardIds) {
+            allUnits.push(...battleZone.cardIds);
           }
         }
         return { cardIds: allUnits, players: [], zones: [] };
@@ -184,12 +185,16 @@ function resolveTarget(
 
       case "each-opponent-unit": {
         if (!opponent) return { cardIds: [], players: [], zones: [] };
-        const opponentUnits = state.zones.battleArea[opponent]?.cards ?? [];
+        const opponentZoneId = `battleArea-${opponent}`;
+        const opponentZone = state.internal.zones[opponentZoneId];
+        const opponentUnits = opponentZone?.cardIds ?? [];
         return { cardIds: opponentUnits, players: [], zones: [] };
       }
 
       case "each-friendly-unit": {
-        const friendlyUnits = state.zones.battleArea[sourcePlayer]?.cards ?? [];
+        const friendlyZoneId = `battleArea-${sourcePlayer}`;
+        const friendlyZone = state.internal.zones[friendlyZoneId];
+        const friendlyUnits = friendlyZone?.cardIds ?? [];
         return { cardIds: friendlyUnits, players: [], zones: [] };
       }
 
@@ -209,17 +214,18 @@ function resolveTarget(
         ? [sourcePlayer]
         : selector.controller === "opponent" && opponent
           ? [opponent]
-          : state.players;
+          : state.external.playerIds;
 
     // Search each player's battle area
     for (const player of playersToSearch) {
-      const battleArea = state.zones.battleArea[player];
-      if (!battleArea?.cards) continue;
+      const battleZoneId = `battleArea-${player}`;
+      const battleZone = state.internal.zones[battleZoneId];
+      if (!battleZone?.cardIds) continue;
 
-      for (const cardId of battleArea.cards) {
+      for (const cardId of battleZone.cardIds) {
         // Check each selector condition
         if (selector.damaged !== undefined) {
-          const meta = state.gundam.cardPositions[cardId];
+          const meta = state.external.cardPositions[cardId];
           // Skip if damage condition doesn't match
           // (This would need actual damage tracking in card metadata)
         }
@@ -306,7 +312,7 @@ function resolveAmount(
       amount.resources === "self"
         ? context.sourcePlayer
         : getOpponent(context.state, context.sourcePlayer);
-    return player ? (context.state.gundam.activeResources[player] ?? 0) : 0;
+    return player ? (context.state.external.activeResources[player] ?? 0) : 0;
   }
 
   if ("cardsInHand" in amount) {
@@ -314,7 +320,10 @@ function resolveAmount(
       amount.cardsInHand === "self"
         ? context.sourcePlayer
         : getOpponent(context.state, context.sourcePlayer);
-    return player ? (context.state.zones.hand[player]?.cards.length ?? 0) : 0;
+    if (!player) return 0;
+    const handZoneId = `hand-${player}`;
+    const handZone = context.state.internal.zones[handZoneId];
+    return handZone?.cardIds.length ?? 0;
   }
 
   if ("cardsInTrash" in amount) {
@@ -322,7 +331,10 @@ function resolveAmount(
       amount.cardsInTrash === "self"
         ? context.sourcePlayer
         : getOpponent(context.state, context.sourcePlayer);
-    return player ? (context.state.zones.trash[player]?.cards.length ?? 0) : 0;
+    if (!player) return 0;
+    const trashZoneId = `trash-${player}`;
+    const trashZone = context.state.internal.zones[trashZoneId];
+    return trashZone?.cardIds.length ?? 0;
   }
 
   if ("shields" in amount) {
@@ -330,9 +342,10 @@ function resolveAmount(
       amount.shields === "self"
         ? context.sourcePlayer
         : getOpponent(context.state, context.sourcePlayer);
-    return player
-      ? (context.state.zones.shieldSection[player]?.cards.length ?? 0)
-      : 0;
+    if (!player) return 0;
+    const shieldZoneId = `shieldSection-${player}`;
+    const shieldZone = context.state.internal.zones[shieldZoneId];
+    return shieldZone?.cardIds.length ?? 0;
   }
 
   if ("variable" in amount) {
@@ -357,12 +370,13 @@ function evaluateCondition(
     const playerHas = condition.playerHas;
     if (playerHas?.resources !== undefined) {
       const resources =
-        context.state.gundam.activeResources[context.sourcePlayer] ?? 0;
+        context.state.external.activeResources[context.sourcePlayer] ?? 0;
       return resources >= playerHas.resources;
     }
     if (playerHas?.cardsInHand !== undefined) {
-      const handSize =
-        context.state.zones.hand[context.sourcePlayer]?.cards.length ?? 0;
+      const handZoneId = `hand-${context.sourcePlayer}`;
+      const handZone = context.state.internal.zones[handZoneId];
+      const handSize = handZone?.cardIds.length ?? 0;
       return handSize >= playerHas.cardsInHand;
     }
   }
@@ -375,8 +389,9 @@ function evaluateCondition(
   if ("cardCount" in condition) {
     const cardCount = condition.cardCount;
     if (cardCount) {
-      const zone = context.state.zones[cardCount.zone]?.[context.sourcePlayer];
-      const count = zone?.cards.length ?? 0;
+      const zoneId = `${cardCount.zone}-${context.sourcePlayer}`;
+      const zone = context.state.internal.zones[zoneId];
+      const count = zone?.cardIds.length ?? 0;
       if (cardCount.amount !== undefined) {
         return count === cardCount.amount;
       }
@@ -392,13 +407,19 @@ function evaluateCondition(
   if ("turn" in condition) {
     const turn = condition.turn;
     if (typeof turn === "number") {
-      return context.state.turn === turn;
+      return context.state.external.turnNumber === turn;
     }
     if (typeof turn === "object") {
-      if (turn.atLeast !== undefined && context.state.turn < turn.atLeast) {
+      if (
+        turn.atLeast !== undefined &&
+        context.state.external.turnNumber < turn.atLeast
+      ) {
         return false;
       }
-      if (turn.atMost !== undefined && context.state.turn > turn.atMost) {
+      if (
+        turn.atMost !== undefined &&
+        context.state.external.turnNumber > turn.atMost
+      ) {
         return false;
       }
       return true;
@@ -562,7 +583,7 @@ function executeDrawEffect(
           ? [opponent]
           : []
         : drawEffect.player === "each"
-          ? context.state.players
+          ? context.state.external.playerIds
           : [context.sourcePlayer];
 
   // Import and use drawCards operation
@@ -1354,7 +1375,7 @@ function getOpponent(
   state: GundamGameState,
   player: PlayerId,
 ): PlayerId | undefined {
-  return state.players.find((p) => p !== player);
+  return state.external.playerIds.find((p) => p !== player);
 }
 
 /**

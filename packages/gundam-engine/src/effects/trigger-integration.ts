@@ -62,7 +62,7 @@ export function detectAndEnqueueDeployTriggers(
     // Order effects: active player's effects first
     const orderResult = orderTriggeredEffects(
       triggerResult.effects,
-      draft.currentPlayer,
+      draft.external.activePlayerId,
     );
 
     // Enqueue effects in determined order
@@ -118,7 +118,7 @@ export function detectAndEnqueueAttackTriggers(
     // Order effects: active player's effects first
     const orderResult = orderTriggeredEffects(
       triggerResult.effects,
-      draft.currentPlayer,
+      draft.external.activePlayerId,
     );
 
     // Enqueue effects in determined order
@@ -171,7 +171,7 @@ export function detectAndEnqueueDestroyedTriggers(
     // Order effects: active player's effects first
     const orderResult = orderTriggeredEffects(
       triggerResult.effects,
-      draft.currentPlayer,
+      draft.external.activePlayerId,
     );
 
     // Enqueue effects in determined order
@@ -221,7 +221,7 @@ export function detectAndEnqueueStartOfTurnTriggers(
     // Order effects: active player's effects first
     const orderResult = orderTriggeredEffects(
       triggerResult.effects,
-      draft.currentPlayer,
+      draft.external.activePlayerId,
     );
 
     // Enqueue effects in determined order
@@ -267,7 +267,7 @@ export function detectAndEnqueueEndOfTurnTriggers(
     // Order effects: active player's effects first
     const orderResult = orderTriggeredEffects(
       triggerResult.effects,
-      draft.currentPlayer,
+      draft.external.activePlayerId,
     );
 
     // Enqueue effects in determined order

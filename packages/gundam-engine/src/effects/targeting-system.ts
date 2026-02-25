@@ -63,23 +63,23 @@ export function getCardsInZone(
   zone: ZoneType,
   playerId?: PlayerId,
 ): CardId[] {
-  const zoneData = state.zones[zone];
-
   if (playerId) {
     // Get cards for specific player's zone
-    const playerZone = zoneData[playerId];
-    if (!playerZone) {
+    const zoneId = `${zone}-${playerId}`;
+    const zoneData = state.internal.zones[zoneId];
+    if (!zoneData) {
       return [];
     }
-    return [...playerZone.cards];
+    return [...zoneData.cardIds];
   }
 
   // Get cards from all players' zones
   const allCards: CardId[] = [];
-  for (const pid of state.players) {
-    const playerZone = zoneData[pid];
-    if (playerZone) {
-      allCards.push(...playerZone.cards);
+  for (const pid of state.external.playerIds) {
+    const zoneId = `${zone}-${pid}`;
+    const zoneData = state.internal.zones[zoneId];
+    if (zoneData) {
+      allCards.push(...zoneData.cardIds);
     }
   }
   return allCards;
@@ -118,16 +118,16 @@ export function isCardInZone(
   zone: ZoneType,
   playerId?: PlayerId,
 ): boolean {
-  const zoneData = state.zones[zone];
-
   if (playerId) {
-    const playerZone = zoneData[playerId];
-    return playerZone?.cards.includes(cardId) ?? false;
+    const zoneId = `${zone}-${playerId}`;
+    const zoneData = state.internal.zones[zoneId];
+    return zoneData?.cardIds.includes(cardId) ?? false;
   }
 
-  for (const pid of state.players) {
-    const playerZone = zoneData[pid];
-    if (playerZone?.cards.includes(cardId)) {
+  for (const pid of state.external.playerIds) {
+    const zoneId = `${zone}-${pid}`;
+    const zoneData = state.internal.zones[zoneId];
+    if (zoneData?.cardIds.includes(cardId)) {
       return true;
     }
   }
@@ -145,7 +145,7 @@ export function isCardInZone(
  * @returns True if card is rested
  */
 export function isCardRested(state: GundamGameState, cardId: CardId): boolean {
-  const position = state.gundam.cardPositions[cardId];
+  const position = state.external.cardPositions[cardId];
   return position === "rested";
 }
 
@@ -156,7 +156,8 @@ export function isCardRested(state: GundamGameState, cardId: CardId): boolean {
  * @returns True if card has damage
  */
 export function isCardDamaged(state: GundamGameState, cardId: CardId): boolean {
-  const damage = state.gundam.cardDamage[cardId] ?? 0;
+  const cardMeta = state.internal.cardMetas[cardId];
+  const damage = cardMeta?.damage ?? 0;
   return damage > 0;
 }
 
@@ -167,7 +168,8 @@ export function isCardDamaged(state: GundamGameState, cardId: CardId): boolean {
  * @returns Damage amount (0 if no damage)
  */
 export function getCardDamage(state: GundamGameState, cardId: CardId): number {
-  return state.gundam.cardDamage[cardId] ?? 0;
+  const cardMeta = state.internal.cardMetas[cardId];
+  return cardMeta?.damage ?? 0;
 }
 
 /**
@@ -181,13 +183,23 @@ export function getCardOwner(
   cardId: CardId,
 ): PlayerId | undefined {
   // Iterate through all zones to find the card
-  for (const zoneType of Object.keys(state.zones) as ZoneType[]) {
-    const zoneData = state.zones[zoneType];
-    for (const playerId of state.players) {
-      const playerZone = zoneData[playerId];
-      if (playerZone?.cards.includes(cardId)) {
+  for (const playerId of state.external.playerIds) {
+    for (const zoneType of [
+      "deck",
+      "hand",
+      "battleArea",
+      "shieldSection",
+      "baseSection",
+      "resourceArea",
+      "trash",
+      "limbo",
+      "removal",
+    ] as ZoneType[]) {
+      const zoneId = `${zoneType}-${playerId}`;
+      const zoneData = state.internal.zones[zoneId];
+      if (zoneData?.cardIds.includes(cardId)) {
         // The zone config owner is the card owner
-        return playerZone.config.owner;
+        return zoneData.config.owner;
       }
     }
   }
@@ -389,12 +401,22 @@ export function matchesPropertyFilter(
 export function getAllCardsInGame(state: GundamGameState): CardId[] {
   const allCards: CardId[] = [];
 
-  for (const zoneType of Object.keys(state.zones) as ZoneType[]) {
-    const zoneData = state.zones[zoneType];
-    for (const playerId of state.players) {
-      const playerZone = zoneData[playerId];
-      if (playerZone) {
-        allCards.push(...playerZone.cards);
+  for (const playerId of state.external.playerIds) {
+    for (const zoneType of [
+      "deck",
+      "hand",
+      "battleArea",
+      "shieldSection",
+      "baseSection",
+      "resourceArea",
+      "trash",
+      "limbo",
+      "removal",
+    ] as ZoneType[]) {
+      const zoneId = `${zoneType}-${playerId}`;
+      const zoneData = state.internal.zones[zoneId];
+      if (zoneData) {
+        allCards.push(...zoneData.cardIds);
       }
     }
   }
@@ -414,11 +436,21 @@ export function getCardsOwnedByPlayer(
 ): CardId[] {
   const allCards: CardId[] = [];
 
-  for (const zoneType of Object.keys(state.zones) as ZoneType[]) {
-    const zoneData = state.zones[zoneType];
-    const playerZone = zoneData[playerId];
-    if (playerZone) {
-      allCards.push(...playerZone.cards);
+  for (const zoneType of [
+    "deck",
+    "hand",
+    "battleArea",
+    "shieldSection",
+    "baseSection",
+    "resourceArea",
+    "trash",
+    "limbo",
+    "removal",
+  ] as ZoneType[]) {
+    const zoneId = `${zoneType}-${playerId}`;
+    const zoneData = state.internal.zones[zoneId];
+    if (zoneData) {
+      allCards.push(...zoneData.cardIds);
     }
   }
 
@@ -435,7 +467,7 @@ export function getOpponentId(
   state: GundamGameState,
   playerId: PlayerId,
 ): PlayerId | undefined {
-  return state.players.find((p) => p !== playerId);
+  return state.external.playerIds.find((p) => p !== playerId);
 }
 
 // ============================================================================

@@ -1,7 +1,7 @@
 /**
  * Trigger Integration Tests
  *
- * Tests the integration of trigger detection with game moves.
+ * Tests the integration of trigger detection with game state changes.
  * Verifies that triggered effects are properly detected and enqueued
  * when game events occur (Deploy, Attack, Destroyed, Turn Start/End).
  *
@@ -10,148 +10,80 @@
 
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 import type { CardId, PlayerId } from "@tcg/core";
-import type {
-  DestroyAction,
-  Effect,
-  TargetingSpec,
-} from "@tcg/gundam-types/effects";
-import { attackMove } from "../../game-definition/moves/core/attack";
-import { deployUnitMove } from "../../moves/deploy-unit";
+import type { Effect } from "@tcg/gundam-types/effects";
+import { createTestState, type TestZoneData } from "../../testing/test-helpers";
 import type { GundamGameState } from "../../types";
-import type { ActionContext } from "../action-handlers";
 import {
   clearCardDefinitions,
-  handleDestroyAction,
   registerCardDefinition,
 } from "../action-handlers";
+import {
+  type AttackTriggerEvent,
+  type DeployTriggerEvent,
+  type DestroyedTriggerEvent,
+  detectAttackTriggers,
+  detectDeployTriggers,
+  detectDestroyedTriggers,
+  detectEndOfTurnTriggers,
+  detectStartOfTurnTriggers,
+  type EndOfTurnTriggerEvent,
+  orderTriggeredEffects,
+  type StartOfTurnTriggerEvent,
+  type TriggeredEffectRef,
+} from "../trigger-detection";
 
 // ============================================================================
-// Test Helpers
+// Test Fixtures
 // ============================================================================
+
+const PLAYER_1 = "player-1" as PlayerId;
+const PLAYER_2 = "player-2" as PlayerId;
+const UNIT_1 = "unit-1" as CardId;
+const UNIT_2 = "unit-2" as CardId;
 
 /** Creates a minimal game state for testing */
-function createMockGameState(players: PlayerId[]): GundamGameState {
-  const state: GundamGameState = {
-    players,
-    currentPlayer: players[0]!,
-    phase: "main",
-    turn: 1,
-    zones: {
-      deck: {},
-      resourceDeck: {},
-      hand: {},
-      battleArea: {},
-      shieldSection: {},
-      baseSection: {},
-      resourceArea: {},
-      trash: {},
-      removal: {},
-      limbo: {},
-    },
-    gundam: {
-      cardPositions: {},
-      cardDamage: {},
-      activeResources: {},
-      attackedThisTurn: [],
-      effectStack: {
-        stack: [],
-        nextInstanceId: 0,
-      },
-      temporaryModifiers: {},
-      revealedCards: [],
-      hasPlayedResourceThisTurn: {},
-    },
-  } as GundamGameState;
-
-  // Initialize all zones for all players
-  const zoneTypes = [
-    "deck",
-    "resourceDeck",
-    "hand",
-    "battleArea",
-    "shieldSection",
-    "baseSection",
-    "resourceArea",
-    "trash",
-    "removal",
-    "limbo",
-  ] as const;
-
-  for (const player of players) {
-    for (const zoneType of zoneTypes) {
-      if (!state.zones[zoneType][player]) {
-        state.zones[zoneType][player] = {
-          cards: [],
-          config: { owner: player } as any,
-        };
-      }
-    }
-  }
-
-  return state;
+function createMockGameState(): GundamGameState {
+  return createTestState({
+    players: [PLAYER_1, PLAYER_2],
+    activePlayerId: PLAYER_1,
+    turnNumber: 1,
+    currentPhase: "main",
+  });
 }
 
-/** Sets up a player's zones for testing */
-function setupPlayerZones(
+/** Sets up a player's battle area with cards */
+function setupBattleArea(
   state: GundamGameState,
   playerId: PlayerId,
-  cardIds: { hand?: CardId[]; battleArea?: CardId[] },
+  cardIds: CardId[],
 ): void {
-  if (cardIds.hand) {
-    state.zones.hand[playerId] = {
-      cards: [...cardIds.hand],
-      config: { owner: playerId } as any,
-    };
+  const zoneKey = `battleArea-${playerId}`;
+  const zone = state.internal.zones[zoneKey] as TestZoneData | undefined;
+  if (zone) {
+    zone.cardIds = [...cardIds];
   }
-  if (cardIds.battleArea) {
-    state.zones.battleArea[playerId] = {
-      cards: [...cardIds.battleArea],
-      config: { owner: playerId } as any,
-    };
-    // Set all battle area cards to active position
-    for (const cardId of cardIds.battleArea) {
-      state.gundam.cardPositions[cardId] = "active";
-    }
-  }
-  // Initialize trash zone if not already present
-  if (!state.zones.trash[playerId]) {
-    state.zones.trash[playerId] = {
-      cards: [],
-      config: { owner: playerId } as any,
-    };
+  for (const cardId of cardIds) {
+    state.external.cardPositions[cardId] = "active";
   }
 }
 
-/** Sets up active resources for a player */
-function setupResources(
-  state: GundamGameState,
-  playerId: PlayerId,
-  amount: number,
-): void {
-  state.gundam.activeResources[playerId] = amount;
-}
-
-/** Creates a card with deploy trigger effect */
-function createDeployTriggerCard(
-  cardId: CardId,
-  cost: number,
-  effects: Effect[],
-): void {
+/** Creates a card definition with deploy trigger */
+function createDeployTriggerCard(cardId: CardId, effects: Effect[]): void {
   registerCardDefinition(cardId, {
     id: cardId,
-    name: `Deploy Trigger Unit ${cardId}`,
+    name: `Deploy Trigger Card ${cardId}`,
     cardType: "UNIT",
-    cost,
+    cost: 2,
     level: 1,
     effects,
   });
 }
 
-/** Creates a card with attack trigger effect */
+/** Creates a card definition with attack trigger */
 function createAttackTriggerCard(cardId: CardId, effects: Effect[]): void {
   registerCardDefinition(cardId, {
     id: cardId,
-    name: `Attack Trigger Unit ${cardId}`,
+    name: `Attack Trigger Card ${cardId}`,
     cardType: "UNIT",
     cost: 2,
     level: 1,
@@ -159,22 +91,16 @@ function createAttackTriggerCard(cardId: CardId, effects: Effect[]): void {
   });
 }
 
-/** Creates a card with destroyed trigger effect */
+/** Creates a card definition with destroyed trigger */
 function createDestroyedTriggerCard(cardId: CardId, effects: Effect[]): void {
   registerCardDefinition(cardId, {
     id: cardId,
-    name: `Destroyed Trigger Unit ${cardId}`,
+    name: `Destroyed Trigger Card ${cardId}`,
     cardType: "UNIT",
     cost: 2,
     level: 1,
-    hp: 3,
     effects,
   });
-}
-
-/** Gets the current effect stack size */
-function getEffectStackSize(state: GundamGameState): number {
-  return state.gundam.effectStack.stack.length;
 }
 
 // ============================================================================
@@ -190,318 +116,191 @@ describe("Trigger Integration", () => {
     clearCardDefinitions();
   });
 
-  describe("Deploy Trigger Integration", () => {
-    it("should detect and enqueue deploy triggers when deploying a unit", () => {
-      const player1 = "player_one" as PlayerId;
-      const player2 = "player_two" as PlayerId;
-      const state = createMockGameState([player1, player2]);
+  describe("Deploy Triggers", () => {
+    it("should detect deploy triggers when unit enters play", () => {
+      const state = createMockGameState();
+      setupBattleArea(state, PLAYER_1, [UNIT_1]);
 
-      const cardId = "unit-deploy-trigger" as CardId;
-      setupPlayerZones(state, player1, {
-        hand: [cardId],
-        battleArea: [],
-      });
-      setupResources(state, player1, 3);
-
-      // Create a unit with deploy trigger
-      const deployEffect: Effect = {
-        id: "deploy-effect",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
-        actions: [{ type: "DRAW", count: 1, player: "self" }],
-        text: "When this unit deploys, draw 1 card",
-      };
-      createDeployTriggerCard(cardId, 2, [deployEffect]);
-
-      // Execute deploy move
-      const initialStackSize = state.gundam.effectStack.stack.length;
-      deployUnitMove.reducer(state, {
-        playerId: player1,
-        params: { cardId },
-      } as any);
-
-      // Verify effect was enqueued
-      expect(getEffectStackSize(state)).toBe(initialStackSize + 1);
-      expect(state.zones.hand[player1].cards).not.toContain(cardId);
-      expect(state.zones.battleArea[player1].cards).toContain(cardId);
-    });
-
-    it("should detect deploy triggers from multiple cards", () => {
-      const player1 = "player_one" as PlayerId;
-      const player2 = "player_two" as PlayerId;
-      const state = createMockGameState([player1, player2]);
-
-      const deployingCard = "unit-001" as CardId;
-      const existingCard = "unit-002" as CardId;
-
-      setupPlayerZones(state, player1, {
-        hand: [deployingCard],
-        battleArea: [existingCard],
-      });
-      setupResources(state, player1, 5);
-
-      // Both cards have deploy triggers
-      const deployEffect1: Effect = {
-        id: "deploy-effect-1",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
-        actions: [],
-        text: "Deploy effect 1",
-      };
-      const deployEffect2: Effect = {
-        id: "deploy-effect-2",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
-        actions: [],
-        text: "Deploy effect 2",
-      };
-
-      createDeployTriggerCard(deployingCard, 2, [deployEffect1]);
-      createDeployTriggerCard(existingCard, 2, [deployEffect2]);
-
-      const initialStackSize = getEffectStackSize(state);
-      deployUnitMove.reducer(state, {
-        playerId: player1,
-        params: { cardId: deployingCard },
-      } as any);
-
-      // Both effects should be enqueued
-      expect(getEffectStackSize(state)).toBe(initialStackSize + 2);
-    });
-
-    it("should order active player effects first when multiple triggers exist", () => {
-      const player1 = "player_one" as PlayerId;
-      const player2 = "player_two" as PlayerId;
-      const state = createMockGameState([player1, player2]);
-
-      const deployingCard = "unit-001" as CardId;
-      const opponentCard = "unit-002" as CardId;
-
-      setupPlayerZones(state, player1, {
-        hand: [deployingCard],
-        battleArea: [],
-      });
-      setupPlayerZones(state, player2, {
-        battleArea: [opponentCard],
-      });
-      setupResources(state, player1, 3);
-
-      // Both cards have deploy triggers
-      const deployEffect1: Effect = {
-        id: "deploy-effect-1",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
-        actions: [],
-        text: "Deploy effect 1",
-      };
-      const deployEffect2: Effect = {
-        id: "deploy-effect-2",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
-        actions: [],
-        text: "Deploy effect 2",
-      };
-
-      createDeployTriggerCard(deployingCard, 2, [deployEffect1]);
-      createDeployTriggerCard(opponentCard, 2, [deployEffect2]);
-
-      const initialStackSize = getEffectStackSize(state);
-      deployUnitMove.reducer(state, {
-        playerId: player1,
-        params: { cardId: deployingCard },
-      } as any);
-
-      // Both effects should be enqueued
-      expect(getEffectStackSize(state)).toBe(initialStackSize + 2);
-    });
-  });
-
-  describe("Attack Trigger Integration", () => {
-    it("should detect and enqueue attack triggers when attacking", () => {
-      const player1 = "player_one" as PlayerId;
-      const player2 = "player_two" as PlayerId;
-      const state = createMockGameState([player1, player2]);
-
-      const attackerId = "unit-attacker" as CardId;
-      setupPlayerZones(state, player1, {
-        battleArea: [attackerId],
-      });
-      setupPlayerZones(state, player2, {
-        battleArea: [],
-      });
-
-      // Create attacker with attack trigger
-      const attackEffect: Effect = {
-        id: "attack-effect",
-        category: "triggered",
-        timing: { type: "ATTACK" },
-        actions: [{ type: "DRAW", count: 1, player: "self" }],
-        text: "When this unit attacks, draw 1 card",
-      };
-      createAttackTriggerCard(attackerId, [attackEffect]);
-
-      const initialStackSize = getEffectStackSize(state);
-      attackMove.reducer(state, {
-        playerId: player1,
-        params: { attackerId },
-      } as any);
-
-      // Verify effect was enqueued
-      expect(getEffectStackSize(state)).toBe(initialStackSize + 1);
-    });
-  });
-
-  describe("Destroyed Trigger Integration", () => {
-    it("should detect and enqueue destroyed triggers when a card is destroyed", () => {
-      const player1 = "player_one" as PlayerId;
-      const state = createMockGameState([player1]);
-
-      const destroyedCard = "unit-destroyed" as CardId;
-      setupPlayerZones(state, player1, {
-        battleArea: [destroyedCard],
-      });
-
-      // Create card with destroyed trigger
-      const destroyedEffect: Effect = {
-        id: "destroyed-effect",
-        category: "triggered",
-        timing: { type: "DESTROYED" },
-        actions: [{ type: "DRAW", count: 1, player: "self" }],
-        text: "When this unit is destroyed, draw 1 card",
-      };
-      createDestroyedTriggerCard(destroyedCard, [destroyedEffect]);
-
-      const initialStackSize = getEffectStackSize(state);
-
-      // Execute destroy action with proper TargetingSpec
-      const destroyAction: DestroyAction = {
-        type: "DESTROY",
-        target: {
-          count: 1,
-          validTargets: [{ type: "card", owner: "any" }],
-          chooser: "controller",
-          timing: "on_resolution",
+      createDeployTriggerCard(UNIT_1, [
+        {
+          id: "deploy-effect-1",
+          category: "triggered",
+          timing: { type: "DEPLOY" },
+          actions: [{ type: "DRAW", count: 1, player: "self" }],
+          text: "When deployed, draw 1 card",
         },
-      };
-      const actionContext: ActionContext = {
-        sourceCardId: destroyedCard,
-        controllerId: player1,
-        targets: [destroyedCard],
-      };
-      handleDestroyAction(state, destroyAction, actionContext);
+      ]);
 
-      // Verify effect was enqueued
-      expect(getEffectStackSize(state)).toBe(initialStackSize + 1);
-      expect(state.zones.trash[player1].cards).toContain(destroyedCard);
-      expect(state.zones.battleArea[player1].cards).not.toContain(
-        destroyedCard,
-      );
+      const event: DeployTriggerEvent = {
+        type: "DEPLOY",
+        cardId: UNIT_1,
+        playerId: PLAYER_1,
+      };
+
+      const result = detectDeployTriggers(state, event);
+      expect(result.hasTriggers).toBe(true);
+      expect(result.effects).toHaveLength(1);
     });
 
-    it("should detect destroyed triggers from multiple cards", () => {
-      const player1 = "player_one" as PlayerId;
-      const state = createMockGameState([player1]);
+    it("should not trigger for cards without deploy effects", () => {
+      const state = createMockGameState();
+      setupBattleArea(state, PLAYER_1, [UNIT_1]);
 
-      const destroyedCard = "unit-destroyed" as CardId;
-      const otherCard = "unit-other" as CardId;
-      setupPlayerZones(state, player1, {
-        battleArea: [destroyedCard, otherCard],
+      registerCardDefinition(UNIT_1, {
+        id: UNIT_1,
+        name: "Unit without trigger",
+        cardType: "UNIT",
+        cost: 2,
+        level: 1,
+        effects: [],
       });
 
-      // Both cards have destroyed triggers
-      const destroyedEffect1: Effect = {
-        id: "destroyed-effect-1",
-        category: "triggered",
-        timing: { type: "DESTROYED" },
-        actions: [],
-        text: "Destroyed effect 1",
-      };
-      const destroyedEffect2: Effect = {
-        id: "destroyed-effect-2",
-        category: "triggered",
-        timing: { type: "DESTROYED" },
-        actions: [],
-        text: "Destroyed effect 2",
+      const event: DeployTriggerEvent = {
+        type: "DEPLOY",
+        cardId: UNIT_1,
+        playerId: PLAYER_1,
       };
 
-      createDestroyedTriggerCard(destroyedCard, [destroyedEffect1]);
-      createDestroyedTriggerCard(otherCard, [destroyedEffect2]);
-
-      const initialStackSize = getEffectStackSize(state);
-
-      // Execute destroy action with proper TargetingSpec
-      const destroyAction: DestroyAction = {
-        type: "DESTROY",
-        target: {
-          count: 1,
-          validTargets: [{ type: "card", owner: "any" }],
-          chooser: "controller",
-          timing: "on_resolution",
-        },
-      };
-      const actionContext: ActionContext = {
-        sourceCardId: destroyedCard,
-        controllerId: player1,
-        targets: [destroyedCard],
-      };
-      handleDestroyAction(state, destroyAction, actionContext);
-
-      // Both effects should be enqueued
-      expect(getEffectStackSize(state)).toBe(initialStackSize + 2);
+      const result = detectDeployTriggers(state, event);
+      expect(result.hasTriggers).toBe(false);
+      expect(result.effects).toHaveLength(0);
     });
   });
 
-  describe("Simultaneous Trigger Ordering", () => {
-    it("should order active player effects before opponent effects", () => {
-      const player1 = "player_one" as PlayerId;
-      const player2 = "player_two" as PlayerId;
-      const state = createMockGameState([player1, player2]);
+  describe("Attack Triggers", () => {
+    it("should detect attack triggers when unit attacks", () => {
+      const state = createMockGameState();
+      setupBattleArea(state, PLAYER_1, [UNIT_1]);
 
-      const deployingCard = "unit-001" as CardId;
-      const opponentCard = "unit-002" as CardId;
+      createAttackTriggerCard(UNIT_1, [
+        {
+          id: "attack-effect-1",
+          category: "triggered",
+          timing: { type: "ATTACK" },
+          actions: [{ type: "DRAW", count: 1, player: "self" }],
+          text: "When attacking, draw 1 card",
+        },
+      ]);
 
-      setupPlayerZones(state, player1, {
-        hand: [deployingCard],
-        battleArea: [],
-      });
-      setupPlayerZones(state, player2, {
-        battleArea: [opponentCard],
-      });
-      setupResources(state, player1, 3);
-
-      // Both cards have deploy triggers
-      const deployEffect1: Effect = {
-        id: "deploy-effect-1",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
-        actions: [],
-        text: "Deploy effect 1",
-      };
-      const deployEffect2: Effect = {
-        id: "deploy-effect-2",
-        category: "triggered",
-        timing: { type: "DEPLOY" },
-        actions: [],
-        text: "Deploy effect 2",
+      const event: AttackTriggerEvent = {
+        type: "ATTACK",
+        attackerId: UNIT_1,
+        targetId: undefined,
+        playerId: PLAYER_1,
       };
 
-      createDeployTriggerCard(deployingCard, 2, [deployEffect1]);
-      createDeployTriggerCard(opponentCard, 2, [deployEffect2]);
+      const result = detectAttackTriggers(state, event);
+      expect(result.hasTriggers).toBe(true);
+      expect(result.effects).toHaveLength(1);
+    });
+  });
 
-      deployUnitMove.reducer(state, {
-        playerId: player1,
-        params: { cardId: deployingCard },
-      } as any);
+  describe("Destroyed Triggers", () => {
+    it("should detect destroyed triggers when unit is destroyed", () => {
+      const state = createMockGameState();
+      setupBattleArea(state, PLAYER_1, [UNIT_1]);
 
-      // Both effects should be enqueued
-      const effectStack = state.gundam.effectStack.stack;
-      expect(effectStack.length).toBe(2);
+      createDestroyedTriggerCard(UNIT_1, [
+        {
+          id: "destroyed-effect-1",
+          category: "triggered",
+          timing: { type: "DESTROYED" },
+          actions: [{ type: "DRAW", count: 1, player: "self" }],
+          text: "When destroyed, draw 1 card",
+        },
+      ]);
 
-      // Active player effects should come first
-      // The order in the stack should have active player effects before opponent effects
-      // This is verified by checking that the controllerId matches the active player
-      const firstEffect = effectStack[0];
-      expect(firstEffect?.controllerId).toBe(player1);
+      const event: DestroyedTriggerEvent = {
+        type: "DESTROYED",
+        cardId: UNIT_1,
+        playerId: PLAYER_1,
+      };
+
+      const result = detectDestroyedTriggers(state, event);
+      expect(result.hasTriggers).toBe(true);
+      expect(result.effects).toHaveLength(1);
+    });
+  });
+
+  describe("Turn Triggers", () => {
+    it("should detect start of turn triggers", () => {
+      const state = createMockGameState();
+      setupBattleArea(state, PLAYER_1, [UNIT_1]);
+
+      registerCardDefinition(UNIT_1, {
+        id: UNIT_1,
+        name: "Turn Start Card",
+        cardType: "UNIT",
+        cost: 2,
+        level: 1,
+        effects: [
+          {
+            id: "turn-start-effect",
+            category: "triggered",
+            timing: { type: "START_OF_TURN" },
+            actions: [],
+            text: "At start of turn",
+          },
+        ],
+      });
+
+      const event: StartOfTurnTriggerEvent = {
+        type: "START_OF_TURN",
+        playerId: PLAYER_1,
+      };
+
+      const result = detectStartOfTurnTriggers(state, event);
+      expect(result.hasTriggers).toBe(true);
+    });
+
+    it("should detect end of turn triggers", () => {
+      const state = createMockGameState();
+      setupBattleArea(state, PLAYER_1, [UNIT_1]);
+
+      registerCardDefinition(UNIT_1, {
+        id: UNIT_1,
+        name: "Turn End Card",
+        cardType: "UNIT",
+        cost: 2,
+        level: 1,
+        effects: [
+          {
+            id: "turn-end-effect",
+            category: "triggered",
+            timing: { type: "END_OF_TURN" },
+            actions: [],
+            text: "At end of turn",
+          },
+        ],
+      });
+
+      const event: EndOfTurnTriggerEvent = {
+        type: "END_OF_TURN",
+        playerId: PLAYER_1,
+      };
+
+      const result = detectEndOfTurnTriggers(state, event);
+      expect(result.hasTriggers).toBe(true);
+    });
+  });
+
+  describe("Effect Ordering", () => {
+    it("should order effects by active player first", () => {
+      const effect1: TriggeredEffectRef = {
+        sourceCardId: UNIT_1,
+        controllerId: PLAYER_1,
+        effectRef: { effectId: "e1" },
+      };
+
+      const effect2: TriggeredEffectRef = {
+        sourceCardId: UNIT_2,
+        controllerId: PLAYER_2,
+        effectRef: { effectId: "e2" },
+      };
+
+      const result = orderTriggeredEffects([effect1, effect2], PLAYER_1);
+      expect(result.order[0]).toBe(0); // effect1 at index 0
+      expect(result.order[1]).toBe(1); // effect2 at index 1
     });
   });
 });

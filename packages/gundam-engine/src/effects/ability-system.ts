@@ -163,12 +163,13 @@ export function findMatchingAbilities(
 ): Array<{ cardId: CardId; ability: CardAbility }> {
   const matches: Array<{ cardId: CardId; ability: CardAbility }> = [];
 
-  // Check all cards in play
-  for (const player of state.players) {
-    const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cards) continue;
+  // Check all cards in play for each player
+  for (const player of state.external.playerIds) {
+    const battleZoneId = `battleArea-${player}`;
+    const battleZone = state.internal.zones[battleZoneId];
+    if (!battleZone?.cardIds) continue;
 
-    for (const cardId of battleArea.cards) {
+    for (const cardId of battleZone.cardIds) {
       const abilities = getAbilities(cardId);
 
       for (const ability of abilities) {
@@ -227,7 +228,7 @@ export function canActivateAbility(
   }
 
   // Check if card is rested (can't activate abilities of rested cards)
-  const position = state.gundam.cardPositions[cardId];
+  const position = state.external.cardPositions[cardId];
   if (position === "rested") {
     return false;
   }
@@ -262,12 +263,13 @@ function canPayCost(
   player: PlayerId,
 ): boolean {
   if (cost.payResources !== undefined) {
-    const activeResources = state.gundam.activeResources[player] ?? 0;
+    const activeResources = state.external.activeResources[player] ?? 0;
     if (activeResources < cost.payResources) return false;
   }
 
   if (cost.discard !== undefined) {
-    const handSize = state.zones.hand[player]?.cards.length ?? 0;
+    const handZone = state.internal.zones[`hand-${player}`];
+    const handSize = handZone?.cardIds.length ?? 0;
     if (handSize < cost.discard) return false;
   }
 
@@ -305,11 +307,12 @@ export function getStaticAbilities(
 ): Array<{ cardId: CardId; ability: StaticAbility }> {
   const staticAbilities: Array<{ cardId: CardId; ability: StaticAbility }> = [];
 
-  for (const player of state.players) {
-    const battleArea = state.zones.battleArea[player];
-    if (!battleArea?.cards) continue;
+  for (const player of state.external.playerIds) {
+    const battleZoneId = `battleArea-${player}`;
+    const battleZone = state.internal.zones[battleZoneId];
+    if (!battleZone?.cardIds) continue;
 
-    for (const cardId of battleArea.cards) {
+    for (const cardId of battleZone.cardIds) {
       const abilities = getAbilities(cardId);
 
       for (const ability of abilities) {
@@ -362,12 +365,14 @@ function isCardInPlay(
   cardId: CardId,
   player: PlayerId,
 ): boolean {
-  const battleArea = state.zones.battleArea[player];
-  const baseSection = state.zones.baseSection[player];
+  const battleZoneId = `battleArea-${player}`;
+  const baseZoneId = `baseSection-${player}`;
+  const battleZone = state.internal.zones[battleZoneId];
+  const baseZone = state.internal.zones[baseZoneId];
 
   return (
-    (battleArea?.cards?.includes(cardId) ?? false) ||
-    (baseSection?.cards?.includes(cardId) ?? false)
+    (battleZone?.cardIds?.includes(cardId) ?? false) ||
+    (baseZone?.cardIds?.includes(cardId) ?? false)
   );
 }
 
@@ -478,10 +483,11 @@ export function getActivatableAbilities(
 }> {
   const activatable: Array<{ cardId: CardId; ability: ActivatedAbility }> = [];
 
-  const battleArea = state.zones.battleArea[player];
-  if (!battleArea?.cards) return activatable;
+  const battleZoneId = `battleArea-${player}`;
+  const battleZone = state.internal.zones[battleZoneId];
+  if (!battleZone?.cardIds) return activatable;
 
-  for (const cardId of battleArea.cards) {
+  for (const cardId of battleZone.cardIds) {
     const abilities = getAbilities(cardId);
 
     for (const ability of abilities) {

@@ -1,3 +1,34 @@
+// ============================================================================
+// Branded Types (re-export from @tcg/core)
+// ============================================================================
+
+export type { CardId, GameId, PlayerId, ZoneId } from "./branded-types";
+export {
+  createCardId,
+  createGameId,
+  createPlayerId,
+  createZoneId,
+} from "./branded-types";
+
+// ============================================================================
+// Game State Types (IState pattern)
+// ============================================================================
+
+export type {
+  GundamCardMeta,
+  GundamExternalState,
+  GundamGameState,
+  GundamPhase,
+} from "./game-state";
+export {
+  createDefaultCardMeta,
+  createInitialGundamState,
+} from "./game-state";
+
+// ============================================================================
+// Move Enumeration Types
+// ============================================================================
+
 export type {
   AvailableMoveInfo,
   MoveParameterOptions,
