@@ -103,6 +103,7 @@ export class LorcanaEngine extends RuleEngine<
     const requiresParams = new Set([
       "chooseWhoGoesFirstMove",
       "alterHand", // Has enumerator and requires cardsToMulligan parameter
+      "moveCharacterToLocation", // Requires characterId and locationId parameters
       // Note: Other moves like playCard, quest, challenge, putACardIntoTheInkwell
       // Are NOT in this list because their enumeration returns null (not yet implemented).
       // They will be checked with empty params and conditions will handle validation.
@@ -197,6 +198,10 @@ export class LorcanaEngine extends RuleEngine<
 
       case "putACardIntoTheInkwell": {
         return this.enumerateInkwellParams(playerId);
+      }
+
+      case "moveCharacterToLocation": {
+        return this.enumerateMoveToLocationParams(playerId);
       }
 
       default: {
@@ -601,5 +606,95 @@ export class LorcanaEngine extends RuleEngine<
     // Temporary workaround: Return null to indicate no enumeration available
     // This moves parameter validation to execution time via whyCannotExecuteMove()
     return null;
+  }
+
+  /**
+   * Enumerate parameters for moveCharacterToLocation
+   *
+   * Generates all valid (characterId, locationId) combinations by:
+   * 1. Finding all characters in play owned by the current player
+   * 2. Finding all locations in play (either player's)
+   * 3. Validating each (character, location) pair against the move condition
+   *
+   * @param playerId - Player attempting the move
+   * @returns Valid parameter combinations or null if no valid combinations exist
+   * @private
+   */
+  private enumerateMoveToLocationParams(playerId: PlayerId): MoveParameterOptions | null {
+    // Access internal state to get zone card lists (same pattern as enumerateAlterHandParams)
+    const { internalState } = this as any;
+    if (!internalState) {
+      return null;
+    }
+
+    // Get the registry for card type lookups (private field on RuleEngine)
+    const registry = (this as any).cardRegistry;
+
+    // Get all cards in the play zone
+    const playZoneCardIds: string[] = internalState.zones?.play?.cardIds ?? [];
+
+    // Separate into characters (owned by current player) and locations
+    const characterIds: string[] = [];
+    const locationIds: string[] = [];
+
+    for (const cardId of playZoneCardIds) {
+      const card = internalState.cards?.[cardId];
+      if (!card) {
+        continue;
+      }
+
+      // Look up the card definition to determine card type
+      const definition = registry?.getCard(card.definitionId);
+      const cardType = definition?.cardType;
+
+      if (cardType === "location") {
+        // Locations are valid targets regardless of who owns them
+        locationIds.push(cardId);
+      } else if (String(card.owner) === String(playerId)) {
+        // Only the current player's non-location cards can be moved
+        characterIds.push(cardId);
+      }
+    }
+
+    // No characters or no locations — move is unavailable
+    if (characterIds.length === 0 || locationIds.length === 0) {
+      return null;
+    }
+
+    // Generate all (characterId, locationId) pairs and validate each against the move condition
+    const validCombinations: { characterId: string; locationId: string }[] = [];
+
+    for (const characterId of characterIds) {
+      for (const locationId of locationIds) {
+        const canExecute = this.canExecuteMove("moveCharacterToLocation", {
+          params: { characterId, locationId },
+          playerId,
+        });
+
+        if (canExecute) {
+          validCombinations.push({ characterId, locationId });
+        }
+      }
+    }
+
+    if (validCombinations.length === 0) {
+      return null;
+    }
+
+    return {
+      parameterInfo: {
+        characterId: {
+          description: "Character to move to a location",
+          type: "cardId",
+          validValues: characterIds,
+        },
+        locationId: {
+          description: "Location to move the character to",
+          type: "cardId",
+          validValues: locationIds,
+        },
+      },
+      validCombinations,
+    };
   }
 }

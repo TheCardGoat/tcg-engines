@@ -1,7 +1,7 @@
 import { createMove } from "@tcg/core";
 import { useLorcanaOps } from "../../../operations";
 import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../../types";
-import { and, cardInPlay, isMainPhase } from "../../../validators";
+import { and, cardInPlay, cardOwnedByPlayer, isMainPhase } from "../../../validators";
 
 /**
  * Move Character to Location
@@ -9,10 +9,10 @@ import { and, cardInPlay, isMainPhase } from "../../../validators";
  * Rule 6.5: Characters can move to locations
  *
  * Requirements:
+ * - Must be the main phase
  * - Character must be in play
+ * - Character must be owned by the current player
  * - Location must be in play
- * - Location must have available slots
- * - Character must meet location requirements
  *
  * Effects:
  * - Character gains location bonuses
@@ -27,6 +27,7 @@ export const moveCharacterToLocation = createMove<
   condition: and(
     isMainPhase(),
     (state, context) => cardInPlay(context.params.characterId)(state, context),
+    (state, context) => cardOwnedByPlayer(context.params.characterId)(state, context),
     (state, context) => cardInPlay(context.params.locationId)(state, context),
   ),
   reducer: (_draft, context) => {
