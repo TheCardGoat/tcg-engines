@@ -2,6 +2,7 @@ import type { GameMoveDefinitions } from "@tcg/core";
 import type { LorcanaCardMeta, LorcanaGameState, LorcanaMoveParams } from "../../types";
 // Ability moves
 import { activateAbility } from "./abilities/activate-ability";
+import { boostMove } from "./core/boost";
 import { challenge } from "./core/challenge";
 // Core moves
 import { playCard } from "./core/play-card";
@@ -57,6 +58,7 @@ export const lorcanaMoves: GameMoveDefinitions<
   playCard,
   quest,
   challenge,
+  boost: boostMove,
 
   // ===== Song Moves =====
   sing,

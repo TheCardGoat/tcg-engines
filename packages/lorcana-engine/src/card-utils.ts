@@ -187,6 +187,27 @@ export function getSingTogetherValue(card: LorcanaCardDefinition): number | null
 }
 
 /**
+ * Get the Boost ink cost value if present
+ * Returns null if the card does not have Boost
+ */
+export function getBoostValue(card: LorcanaCardDefinition): number | null {
+  const boost = getKeywordAbilities(card).find(
+    (k) => k.keyword === "Boost" && isValueKeywordAbility(k),
+  );
+  if (!(boost && isValueKeywordAbility(boost))) {
+    return null;
+  }
+  return boost.value;
+}
+
+/**
+ * Check if a character has Boost keyword
+ */
+export function hasBoostKeyword(card: LorcanaCardDefinition): boolean {
+  return hasKeyword(card, "Boost");
+}
+
+/**
  * Check if a character has Bodyguard
  */
 export function hasBodyguard(card: LorcanaCardDefinition): boolean {

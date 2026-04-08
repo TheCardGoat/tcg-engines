@@ -47,6 +47,15 @@ export const lorcanaZones: Record<string, CardZoneConfig> = {
     owner: undefined,
     visibility: "public",
   },
+  limbo: {
+    faceDown: true,
+    id: "limbo" as ZoneId,
+    maxSize: undefined,
+    name: "zones.limbo",
+    ordered: false,
+    owner: undefined,
+    visibility: "secret",
+  },
   play: {
     faceDown: false,
     id: "play" as ZoneId,

@@ -144,6 +144,17 @@ export interface LorcanaMoveParams {
   };
 
   /**
+   * Boost a character
+   *
+   * Rule 10.2 (Boost): Once per turn, pay X {I} to put the top card of your deck
+   * facedown under a character with Boost X. Usable the same turn the character is played.
+   */
+  boost: {
+    /** Character with Boost keyword to put a card under */
+    characterId: CardId;
+  };
+
+  /**
    * Move a character to a location
    *
    * Rule 6.5: Characters can move to locations
