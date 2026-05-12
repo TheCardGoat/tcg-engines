@@ -1,0 +1,34 @@
+{
+  "name": "@tcg/protocol",
+  "version": "0.1.0",
+  "description": "Shared WebSocket protocol types for ws-gateway / game-server / web client.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./events": "./src/events.ts",
+    "./inbox": "./src/inbox.ts",
+    "./envelope": "./src/envelope.ts",
+    "./gateway": "./src/gateway.ts",
+    "./schemas": "./src/schemas.ts",
+    "./payloads": "./src/payloads.ts",
+    "./handler-context": "./src/handler-context.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit && mkdir -p dist",
+    "check-types": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "zod": "^4.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4"
+  }
+}
