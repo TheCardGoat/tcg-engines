@@ -1,0 +1,40 @@
+name: Sync Private Repository
+
+on:
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - closed
+
+permissions:
+  contents: read
+
+jobs:
+  import-into-private:
+    name: import-from-public
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate private sync token
+        env:
+          SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: |
+          if [[ -z "$SYNC_TOKEN" ]]; then
+            echo "Missing required SYNC_TOKEN secret." >&2
+            echo "Create a token with actions:write access to TheCardGoat/the-card-goat-online." >&2
+            exit 1
+          fi
+
+      - name: Dispatch private import workflow
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+          PRIVATE_REPO: TheCardGoat/the-card-goat-online
+          PUBLIC_PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh workflow run sync-public-repo.yml \
+            --repo "$PRIVATE_REPO" \
+            --ref main \
+            -f mode=import-from-public \
+            -f branch="import-public/pr-${PUBLIC_PR_NUMBER}" \
+            -f checks=false
