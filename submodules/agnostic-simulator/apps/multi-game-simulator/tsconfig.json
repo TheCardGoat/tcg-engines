@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "es2023",
+    "module": "esnext",
+    "lib": ["ES2023", "DOM"],
+    "types": ["vite-plus/client", "vitest/globals"],
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@cyberpunk-engine/*": ["../../../cyberpunk/packages/engine/src/*"],
+      "@cyberpunk-simulator/*": ["./src/games/cyberpunk/*"],
+      "@gundam-simulator/*": ["./src/games/gundam/*"],
+      "@tcg/simulator-testing": ["../../packages/simulator-testing/src/index.ts"],
+      "@tcg/simulator-testing/testing-library": [
+        "../../packages/simulator-testing/src/testing-library.ts"
+      ]
+    }
+  },
+  "include": ["src", "card-tests", "../../../cyberpunk/packages/engine/src/testing/matchers.d.ts"]
+}

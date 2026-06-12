@@ -1,0 +1,455 @@
+@layer dnd-kit, base, components, utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "daisyui";
+
+@custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family: "The Bystander Collection Sans Medium";
+  src: url("./assets/fonts/lorcana/the-bystander-collection-sans-medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brandon Text Condensed Bold";
+  src: url("./assets/fonts/lorcana/brandon-text-condensed-bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brandon Text Condensed Black";
+  src: url("./assets/fonts/lorcana/brandon-text-condensed-black.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brandon Text Condensed Black Italic";
+  src: url("./assets/fonts/lorcana/brandon-text-condensed-black-italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Brandon Text Condensed Medium Italic";
+  src: url("./assets/fonts/lorcana/brandon-text-condensed-medium-italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bogle";
+  src:
+    url("./assets/fonts/lorcana/bogle.woff2") format("woff2"),
+    url("./assets/fonts/lorcana/bbh-sans-bogle.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BBH Sans Bogle";
+  src: url("./assets/fonts/lorcana/bbh-sans-bogle.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --lorcana-font-fallback-bogle: "Bogle", "Trebuchet MS", "Segoe UI", sans-serif;
+  --lorcana-font-card-name:
+    "The Bystander Collection Sans Medium", var(--lorcana-font-fallback-bogle);
+  --lorcana-font-card-version: "Brandon Text Condensed Bold", var(--lorcana-font-fallback-bogle);
+  --lorcana-font-card-types:
+    "Brandon Text Condensed Black Italic", var(--lorcana-font-fallback-bogle);
+  --lorcana-font-keyword-title: "Brandon Text Condensed Black", var(--lorcana-font-fallback-bogle);
+  --lorcana-font-keyword-reminder:
+    "Brandon Text Condensed Medium Italic", var(--lorcana-font-fallback-bogle);
+
+  /* Lorcana brand colors */
+  --lorcana-indigo: #373b70;
+  --lorcana-indigo-rgb: 55, 59, 112;
+  --lorcana-illuminary-gold: #d3ba84;
+  --lorcana-illuminary-gold-rgb: 211, 186, 132;
+  --lorcana-parchment: #e3caa8;
+  --lorcana-parchment-rgb: 227, 202, 168;
+  --lorcana-kelp: #1c1c1a;
+  --lorcana-kelp-rgb: 28, 28, 26;
+
+  --lorcana-card-ability-title-bg: #594429;
+  --lorcana-card-ability-title-bg-rgb: 89, 68, 41;
+
+  /* Lorcana ink colors (official) */
+  --lorcana-ink-amber: #f4b322;
+  --lorcana-ink-amber-rgb: 244, 179, 34;
+  --lorcana-ink-amethyst: #7b4182;
+  --lorcana-ink-amethyst-rgb: 123, 65, 130;
+  --lorcana-ink-emerald: #329045;
+  --lorcana-ink-emerald-rgb: 50, 144, 69;
+  --lorcana-ink-ruby: #d60038;
+  --lorcana-ink-ruby-rgb: 214, 0, 56;
+  --lorcana-ink-sapphire: #0094c8;
+  --lorcana-ink-sapphire-rgb: 0, 148, 200;
+  --lorcana-ink-steel: #97a3af;
+  --lorcana-ink-steel-rgb: 151, 163, 175;
+
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+html {
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 100%;
+  min-height: 100dvh;
+  background: #020617;
+}
+
+body {
+  overscroll-behavior-y: auto;
+}
+
+html[data-immersive-app="active"],
+body[data-immersive-app="active"] {
+  height: 100dvh;
+  min-height: 100dvh;
+  overscroll-behavior: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top, rgba(59, 130, 246, 0.18), transparent 28%),
+    linear-gradient(180deg, #020617 0%, #020617 46%, #030712 100%);
+}
+
+body[data-immersive-app="active"] {
+  -webkit-touch-callout: none;
+}
+
+body[data-immersive-app="active"] button,
+body[data-immersive-app="active"] [role="button"],
+body[data-immersive-app="active"] a,
+body[data-immersive-app="active"] input,
+body[data-immersive-app="active"] select,
+body[data-immersive-app="active"] textarea {
+  touch-action: manipulation;
+}
+
+body[data-immersive-app="active"] main {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+}
+
+.immersive-app-shell {
+  box-sizing: border-box;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  overflow: hidden;
+}
+
+.immersive-app-shell button,
+.immersive-app-shell [role="button"],
+.immersive-app-shell nav,
+.immersive-app-shell [data-board-anchor-id] {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.dark,
+.simulator-dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  /* Custom dark sidebar for Lorcana simulator theme */
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Zone colors for Lorcana simulator */
+  --color-zone-bg: rgba(15, 30, 50, 0.4);
+  --color-zone-border: rgba(100, 150, 200, 0.15);
+  --color-zone-opponent-bg: rgba(50, 20, 20, 0.25);
+  --color-zone-opponent-border: rgba(200, 100, 100, 0.15);
+
+  /* Inkwell colors */
+  --color-ink-bg: rgba(25, 20, 40, 0.7);
+  --color-ink-border: rgba(130, 100, 180, 0.25);
+  --color-ink-accent: rgba(180, 160, 220, 0.9);
+
+  /* Board colors */
+  --color-board-bg: #1e3a5f;
+  --color-board-gradient-start: #264a73;
+  --color-board-gradient-mid: #1e3a5f;
+  --color-board-gradient-end: #1a3252;
+
+  /* Custom animations for Lorcana simulator */
+  --animate-playable-pulse: playable-pulse 1s ease-in-out infinite;
+  --animate-damage-pulse: damage-pulse 0.5s ease-in-out infinite;
+  --animate-selection-pulse: selection-pulse 0.75s ease-in-out infinite;
+  --animate-drop-pulse: drop-pulse 0.5s ease-in-out infinite;
+  --animate-bounce-subtle: bounce-subtle 0.25s ease-in-out infinite alternate;
+  --animate-quest-icon-spin: quest-icon-spin 1.5s linear infinite;
+  --animate-fade-in: fade-in 75ms ease;
+}
+
+/* Custom keyframes for Lorcana simulator animations */
+@keyframes playable-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes damage-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+@keyframes selection-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.8);
+  }
+}
+
+@keyframes drop-pulse {
+  0%,
+  100% {
+    border-color: rgba(180, 140, 230, 0.4);
+  }
+  50% {
+    border-color: rgba(180, 140, 230, 0.8);
+  }
+}
+
+@keyframes bounce-subtle {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes quest-icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@custom-variant data-open {
+  &:where([data-state="open"]),
+  &:where([data-open]:not([data-open="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-closed {
+  &:where([data-state="closed"]),
+  &:where([data-closed]:not([data-closed="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-checked {
+  &:where([data-state="checked"]),
+  &:where([data-checked]:not([data-checked="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-unchecked {
+  &:where([data-state="unchecked"]),
+  &:where([data-unchecked]:not([data-unchecked="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-selected {
+  &:where([data-selected]) {
+    @slot;
+  }
+}
+
+@custom-variant data-disabled {
+  &:where([data-disabled="true"]),
+  &:where([data-disabled]:not([data-disabled="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-active {
+  &:where([data-state="active"]),
+  &:where([data-active]:not([data-active="false"])) {
+    @slot;
+  }
+}
+
+@custom-variant data-horizontal {
+  &:where([data-orientation="horizontal"]) {
+    @slot;
+  }
+}
+
+@custom-variant data-vertical {
+  &:where([data-orientation="vertical"]) {
+    @slot;
+  }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -1,0 +1,279 @@
+/* ── trigger button ──────────────────────────────────────────────────────── */
+
+.triggerBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: transparent;
+  border: 1px solid rgb(245 230 66 / 30%);
+  color: rgb(245 230 66 / 80%);
+  font-family: Rajdhani, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+
+.triggerBtn:hover {
+  border-color: rgb(245 230 66 / 70%);
+  color: #f5e642;
+  background: rgb(245 230 66 / 6%);
+}
+
+/* ── overlay ─────────────────────────────────────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+  background: rgb(0 0 0 / 65%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── dialog panel ────────────────────────────────────────────────────────── */
+
+.dialog {
+  width: min(420px, 90vw);
+  background: #0c0f14;
+  border: 1px solid rgb(245 230 66 / 40%);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 80%),
+    0 12px 48px rgb(0 0 0 / 60%);
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgb(245 230 66 / 20%);
+}
+
+.title {
+  font-family: Rajdhani, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f5e642;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: rgb(245 230 66 / 60%);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.12s;
+}
+
+.closeBtn:hover {
+  color: #f5e642;
+}
+
+.body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── fieldsets ───────────────────────────────────────────────────────────── */
+
+.fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend {
+  font-family: Rajdhani, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(245 230 66 / 55%);
+  padding: 0;
+  margin-bottom: 2px;
+}
+
+/* ── radio group (display mode) ──────────────────────────────────────────── */
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.radioRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid rgb(245 230 66 / 20%);
+  cursor: pointer;
+  transition:
+    border-color 0.12s,
+    background 0.12s;
+}
+
+.radioRow:hover {
+  border-color: rgb(245 230 66 / 45%);
+  background: rgb(245 230 66 / 4%);
+}
+
+.radioRowActive {
+  border-color: rgb(245 230 66 / 65%);
+  background: rgb(245 230 66 / 8%);
+}
+
+.radioInput {
+  margin-top: 2px;
+  accent-color: #f5e642;
+  flex-shrink: 0;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 1px solid rgb(74 217 255 / 24%);
+  cursor: pointer;
+  transition:
+    border-color 0.12s,
+    background 0.12s;
+}
+
+.toggleRow:hover {
+  border-color: rgb(74 217 255 / 52%);
+  background: rgb(74 217 255 / 5%);
+}
+
+.toggleRowActive {
+  border-color: rgb(74 217 255 / 66%);
+  background: rgb(74 217 255 / 9%);
+}
+
+.toggleInput {
+  margin-top: 2px;
+  accent-color: #4ad9ff;
+  flex-shrink: 0;
+}
+
+.radioLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.radioTitle {
+  font-family: Rajdhani, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f5e642;
+}
+
+.radioDesc {
+  font-family: Rajdhani, sans-serif;
+  font-size: 10px;
+  color: rgb(255 255 255 / 45%);
+  letter-spacing: 0.04em;
+}
+
+/* ── color grid ──────────────────────────────────────────────────────────── */
+
+.colorGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.colorChip {
+  padding: 4px 10px;
+  font-family: Rajdhani, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid rgb(255 255 255 / 25%);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.12s;
+  background: transparent;
+  color: rgb(255 255 255 / 70%);
+}
+
+.colorChip:hover {
+  border-color: rgb(255 255 255 / 60%);
+  color: #fff;
+}
+
+.colorChipActive {
+  border-color: #f5e642;
+  color: #f5e642;
+  box-shadow: 0 0 6px rgb(245 230 66 / 35%);
+}
+
+/* ── select (font style) ─────────────────────────────────────────────────── */
+
+.select {
+  width: 100%;
+  padding: 7px 10px;
+  background: rgb(245 230 66 / 5%);
+  border: 1px solid rgb(245 230 66 / 35%);
+  color: #f5e642;
+  font-family: Rajdhani, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23f5e642'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+.select option {
+  background: #0c0f14;
+  color: #f5e642;
+}
+
+/* ── sound volume ───────────────────────────────────────────────────────── */
+
+.sliderRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 10px;
+}
+
+.slider {
+  width: 100%;
+  accent-color: #4ad9ff;
+}
+
+.sliderValue {
+  font-family: Rajdhani, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgb(74 217 255 / 85%);
+  text-align: right;
+}

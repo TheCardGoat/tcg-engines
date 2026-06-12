@@ -1,0 +1,128 @@
+.page {
+  min-height: 100vh;
+  background: #07090c;
+  color: #e6f4fb;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 48px 24px 96px;
+}
+
+.header {
+  max-width: 760px;
+  margin: 0 auto 32px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(74 217 255 / 70%);
+  margin: 0 0 6px;
+}
+
+.title {
+  font-size: 22px;
+  margin: 0 0 8px;
+  color: #f5e642;
+  letter-spacing: 0.04em;
+}
+
+.lead {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgb(207 232 246 / 70%);
+}
+
+.group {
+  max-width: 760px;
+  margin: 0 auto 24px;
+}
+
+.groupTitle {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgb(74 217 255 / 55%);
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgb(74 217 255 / 12%);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.item {
+  margin: 0;
+}
+
+.link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "label path"
+    "description description";
+  gap: 4px 16px;
+  padding: 14px 16px;
+  background: rgb(12 15 20 / 85%);
+  border: 1px solid rgb(74 217 255 / 25%);
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 120ms,
+    background-color 120ms,
+    transform 120ms;
+}
+
+.link:hover {
+  border-color: rgb(245 230 66 / 70%);
+  background: rgb(245 230 66 / 6%);
+  transform: translateY(-1px);
+}
+
+.label {
+  grid-area: label;
+  font-weight: 600;
+  font-size: 13px;
+  color: #f5e642;
+}
+
+.path {
+  grid-area: path;
+  font-size: 11px;
+  color: rgb(74 217 255 / 70%);
+  letter-spacing: 0.04em;
+}
+
+.description {
+  grid-area: description;
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgb(207 232 246 / 60%);
+}
+
+.backLink {
+  display: inline-block;
+  margin-top: 12px;
+  color: rgb(74 217 255 / 85%);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #4ad9ff;
+  text-decoration: underline;
+}
+
+.footer {
+  max-width: 760px;
+  margin: 24px auto 0;
+  display: flex;
+  gap: 18px;
+  justify-content: flex-end;
+}

@@ -1,0 +1,50 @@
+.zone {
+  grid-area: trash;
+  position: relative;
+  margin: var(--zone-gutter);
+  border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 24%);
+  background: var(--board-zone, #090b0f);
+  transition: background 0.15s;
+}
+
+.zone.dropOver {
+  background: rgb(245 230 66 / 12%);
+  animation: zone-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes zone-pulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 1px rgb(245 230 66 / 35%);
+  }
+
+  50% {
+    box-shadow: inset 0 0 22px rgb(245 230 66 / 40%);
+  }
+}
+
+.inner {
+  position: absolute;
+  inset: var(--zone-pad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardWrap {
+  height: 100%;
+  aspect-ratio: 5 / 7;
+  max-width: 100%;
+}
+
+.cardWrap[data-resolving-program="true"] {
+  visibility: hidden;
+}
+
+.empty {
+  height: 100%;
+  aspect-ratio: 5 / 7;
+  border: 1px dashed rgb(245 230 66 / 22%);
+  background: rgb(245 230 66 / 2%);
+  border-radius: 3px;
+}

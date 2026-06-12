@@ -1,0 +1,42 @@
+import type { BaseCard } from "@tcg/gundam-types";
+
+export const exbpExBase003: BaseCard = {
+  cardNumber: "EXBP-003",
+  name: "EX Base",
+  type: "base",
+  traits: [],
+  id: "EXBP-003",
+  externalId: "gundam:exbp-003",
+  slug: "ex-base-exbp-003",
+  displayName: "EX Base",
+  set: { code: "EXBP", name: "THE GUNDAM BASE POP-UP WORLD TOUR", packageId: "616901" },
+  printNumber: "EXBP-003",
+  printings: [
+    {
+      id: "EXBP-003",
+      collectorNumber: "EXBP-003",
+      cardNumber: "EXBP-003",
+      set: {
+        code: "EXBP",
+        name: "THE GUNDAM BASE POP-UP WORLD TOUR",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-003.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-003.webp?260424",
+      productName: "THE GUNDAM BASE POP-UP WORLD TOUR",
+    },
+  ],
+  selectedPrintingId: "EXBP-003",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-003.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-003.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  hp: 3,
+  effect: "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

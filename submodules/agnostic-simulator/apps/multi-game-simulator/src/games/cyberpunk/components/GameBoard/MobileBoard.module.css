@@ -1,0 +1,1689 @@
+.root {
+  --unit-card-h: clamp(104px, 16dvh, 142px);
+  --mobile-command-bar-h: clamp(36px, 5.8dvh, 46px);
+
+  position: fixed;
+  inset: 0;
+  background: #07090c;
+  color: #f5e642;
+  font-family: "Share Tech Mono", monospace;
+  display: grid;
+
+  /* Three sticky bars (rival / center / player) at the same dvh height frame
+     the play area. The remaining 67dvh is distributed across the six middle
+     rows via fr units, so cards (fields) get the biggest share, hands the
+     next, and legends the smallest peek strip. Everything scales with dvh,
+     no pixel hard-codes. */
+  grid-template-rows:
+    minmax(96px, 16dvh) /* rival top info dock */
+    2.8fr /* opp field */
+    7dvh /* center band - sticky middle */
+    2.8fr /* player field */
+    minmax(96px, 16dvh); /* player bottom command dock */
+
+  border: 2px solid #f5e642;
+  overflow: hidden;
+}
+
+.root[data-prompt-active="false"] {
+  grid-template-rows:
+    minmax(96px, 16dvh) /* rival top info dock */
+    2.8fr /* opp field */
+    7dvh /* center band - sticky middle */
+    2.8fr /* player field */
+    minmax(96px, 16dvh); /* player bottom command dock */
+}
+
+.root:has(.promptBand > *) {
+  grid-template-rows:
+    minmax(86px, 14dvh)
+    minmax(112px, 2.45fr)
+    7dvh
+    minmax(112px, 2.4fr)
+    minmax(146px, 22dvh);
+}
+
+.root[data-prompt-mode="select-target"] {
+  grid-template-rows:
+    minmax(84px, 13dvh)
+    minmax(116px, 1.95fr)
+    7dvh
+    minmax(116px, 1.9fr)
+    minmax(156px, 24dvh);
+}
+
+/* Field/legends bands - horizontal scroll for overflow, compact padding. */
+.fieldBand,
+.legendsBand {
+  position: relative;
+  min-height: 0;
+  overflow: auto hidden;
+  border-bottom: 1px solid rgb(245 230 66 / 15%);
+  padding: 2px 4px;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.playerFieldBand,
+.opponentFieldBand {
+  --field-helper-pocket: 48px;
+  --priority-color: 74 217 255;
+}
+
+.opponentFieldBand {
+  --priority-color: 255 61 138;
+}
+
+.fieldBand[data-priority="true"] {
+  background:
+    linear-gradient(
+      90deg,
+      rgb(var(--priority-color) / 12%),
+      rgb(var(--priority-color) / 4%) 44%,
+      transparent 78%
+    ),
+    #07090c;
+  border-color: rgb(var(--priority-color) / 54%);
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--priority-color) / 20%),
+    inset 3px 0 0 rgb(var(--priority-color) / 88%),
+    inset 0 0 30px rgb(var(--priority-color) / 13%);
+}
+
+.opponentFieldBand[data-priority="true"] {
+  background:
+    linear-gradient(
+      270deg,
+      rgb(var(--priority-color) / 15%),
+      rgb(var(--priority-color) / 5%) 46%,
+      transparent 78%
+    ),
+    #07090c;
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--priority-color) / 20%),
+    inset 0 3px 0 rgb(var(--priority-color) / 88%),
+    inset 0 0 42px rgb(var(--priority-color) / 20%);
+}
+
+.fieldBand[data-priority="true"] > [class*="zone"] {
+  border-color: rgb(var(--priority-color) / 68%);
+  background:
+    radial-gradient(ellipse at 18% 82%, rgb(var(--priority-color) / 12%), transparent 46%),
+    linear-gradient(90deg, rgb(var(--priority-color) / 9%), rgb(9 11 15 / 96%) 42%), #090b0f;
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--priority-color) / 16%),
+    inset 0 0 38px rgb(var(--priority-color) / 12%),
+    0 0 16px rgb(var(--priority-color) / 16%);
+}
+
+.opponentFieldBand[data-priority="true"] > [class*="zone"] {
+  background:
+    radial-gradient(ellipse at 82% 18%, rgb(var(--priority-color) / 15%), transparent 46%),
+    linear-gradient(270deg, rgb(var(--priority-color) / 12%), rgb(9 11 15 / 96%) 46%), #090b0f;
+  box-shadow:
+    inset 0 3px 0 rgb(var(--priority-color) / 88%),
+    inset 0 0 0 1px rgb(var(--priority-color) / 18%),
+    inset 0 0 46px rgb(var(--priority-color) / 16%),
+    0 0 18px rgb(var(--priority-color) / 18%);
+}
+
+.fieldScrollCues {
+  --field-cue-rgb: 74 217 255;
+
+  position: absolute;
+  inset: 0;
+  z-index: 28;
+  pointer-events: none;
+}
+
+.fieldScrollCues[data-side="rival"] {
+  --field-cue-rgb: 255 61 138;
+}
+
+.fieldScrollCue {
+  appearance: none;
+  position: absolute;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  min-width: 52px;
+  min-height: 22px;
+  padding: 1px 8px;
+  border: 1px solid rgb(var(--field-cue-rgb) / 76%);
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg, rgb(var(--field-cue-rgb) / 18%), rgb(7 9 12 / 90%) 36%),
+    repeating-linear-gradient(
+      90deg,
+      rgb(245 230 66 / 10%) 0,
+      rgb(245 230 66 / 10%) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+    #07090c;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 84%),
+    0 0 14px rgb(var(--field-cue-rgb) / 24%);
+  color: #fff7c2;
+  font: inherit;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  pointer-events: auto;
+  transform: translateX(-50%);
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease,
+    color 0.16s ease;
+  animation: field-scroll-cue-pulse 1.8s ease-in-out infinite;
+}
+
+.fieldScrollCue:hover,
+.fieldScrollCue:focus-visible {
+  border-color: rgb(245 230 66 / 90%);
+  background:
+    linear-gradient(90deg, rgb(245 230 66 / 16%), rgb(var(--field-cue-rgb) / 15%)), #07090c;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 84%),
+    0 0 18px rgb(245 230 66 / 30%);
+  color: #f5e642;
+  outline: none;
+}
+
+.fieldScrollCueTop {
+  top: 4px;
+}
+
+.fieldScrollCueBottom {
+  bottom: 4px;
+}
+
+@keyframes field-scroll-cue-pulse {
+  0%,
+  100% {
+    opacity: 0.78;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(var(--field-cue-drift, 1px));
+  }
+}
+
+.fieldScrollCueTop {
+  --field-cue-drift: -1px;
+}
+
+.fieldScrollCueBottom {
+  --field-cue-drift: 1px;
+}
+
+/* Legends band is a row: LegendsZone on the left, EddiesZone hugging the
+   right. Gap separates them; legends takes the natural width of its three
+   slots and eddies fills whatever's left. */
+.legendsBand {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  border-bottom-color: rgb(245 230 66 / 8%);
+}
+
+.legendsBand > *:first-child {
+  flex: 0 0 auto;
+}
+
+.legendsBand > *:last-child {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.opp {
+  background: rgb(255 255 255 / 1.5%);
+}
+
+/* Override desktop zone sizing inside mobile bands. LegendsZone hard-codes
+   slot height to 17vh on desktop — we walk down the structure (zone → slots
+   → slot) and force everything to fill the band so cards size to the row
+   height instead of overflowing. The CSS module class names are hashed,
+   so we target by descendant position rather than class. */
+.fieldBand > *,
+.legendsBand > * {
+  height: 100%;
+  min-height: 0;
+  border: none;
+  margin: 0;
+}
+
+.legendsBand > * > * {
+  height: 100%;
+  min-height: 0;
+  padding: 2px;
+  gap: 2px;
+}
+
+.fieldBand > * > * {
+  height: 100%;
+  min-height: 0;
+  padding: 2px;
+  gap: clamp(10px, 2.4dvw, 16px);
+}
+
+.fieldBand > .fieldScrollCues > .fieldScrollCue {
+  height: auto;
+  min-height: 22px;
+  padding: 1px 8px;
+  gap: 1px;
+}
+
+.legendsBand > * > * > * {
+  height: 100%;
+  aspect-ratio: 5 / 7;
+}
+
+/* Hide the zone "FIELD"/"LEGENDS" badges on mobile — they're absolutely
+   positioned and hang -8px outside their parent on desktop, which collides
+   with neighbouring rows on portrait. The center band's gig badges are kept
+   visible (they reposition themselves to sit inside the cell via gigsOnly
+   overrides in CenterRow.module.css). The class name is hashed by CSS
+   Modules but always contains "badge". */
+.fieldBand [class*="badge"],
+.legendsBand [class*="badge"] {
+  display: none;
+}
+
+.playerFieldBand > [class*="zone"] > [class*="cards"] {
+  inset: 0 0 var(--field-helper-pocket);
+  padding-inline: clamp(8px, 2dvw, 14px);
+  padding-bottom: 8px;
+}
+
+.opponentFieldBand > [class*="zone"] > [class*="cards"] {
+  inset: var(--field-helper-pocket) 0 0;
+  padding-inline: clamp(8px, 2dvw, 14px);
+  padding-top: 8px;
+}
+
+.playerFieldBand > [class*="zone"] > [class*="cards"],
+.opponentFieldBand > [class*="zone"] > [class*="cards"] {
+  height: auto;
+}
+
+/* Center band: sticky middle. Solid background masks any visual leak from
+   bands above/below; stretch lets CenterRow fill the row height. Overflow
+   stays visible so the gig ZoneBadges can protrude -8px across the band's
+   borders just like desktop. z-index: 5 keeps the protruding badges above
+   the adjacent field rows. */
+.center {
+  position: relative;
+  z-index: 5;
+  border-block: 1px solid rgb(245 230 66 / 55%);
+  background: #07090c;
+  overflow: visible;
+  display: flex;
+  align-items: stretch;
+}
+
+.center > * {
+  flex: 1 0 auto;
+  min-width: 100%;
+}
+
+.center > .mobileClockRail,
+.center > .directAttackDropTarget {
+  flex: none;
+  min-width: 0;
+}
+
+/* Hand bands fill the grid row they occupy (sized in dvh on .root). */
+.handBand {
+  position: relative;
+  height: 100%;
+  border-top: 1px solid rgb(245 230 66 / 45%);
+  border-bottom: 1px solid rgb(245 230 66 / 45%);
+}
+
+.handBand.opp {
+  border-top-color: rgb(245 230 66 / 25%);
+  border-bottom-color: rgb(245 230 66 / 25%);
+}
+
+.topSection,
+.bottomSection {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  min-height: 0;
+  background:
+    linear-gradient(90deg, rgb(74 217 255 / 8%), transparent 34%),
+    linear-gradient(180deg, rgb(245 230 66 / 5%), transparent 42%), #07090c;
+  overflow: hidden;
+}
+
+.topSection {
+  grid-template:
+    "controls legends" var(--mobile-command-bar-h)
+    "hand legends" minmax(0, 1fr) / minmax(0, 1fr) minmax(210px, 30dvw);
+  border-bottom: 1px solid rgb(245 230 66 / 40%);
+}
+
+.topSection[data-legend-count="0"] {
+  grid-template-columns: minmax(0, 1fr) 0;
+}
+
+.topSection[data-legend-count="1"] {
+  grid-template-columns: minmax(0, 1fr) minmax(96px, 18dvw);
+}
+
+.topSection[data-legend-count="2"] {
+  grid-template-columns: minmax(0, 1fr) minmax(188px, 34dvw);
+}
+
+.bottomSection {
+  grid-template:
+    "legends hand" minmax(0, 1fr)
+    "legends controls" var(--mobile-command-bar-h) / minmax(210px, 30dvw) minmax(0, 1fr);
+  border-top: 1px solid rgb(245 230 66 / 48%);
+}
+
+.bottomSection:has(.promptBand > *) {
+  grid-template:
+    "prompt prompt" minmax(48px, 0.58fr)
+    "legends hand" minmax(52px, 0.72fr)
+    "legends controls" var(--mobile-command-bar-h) / minmax(176px, 30dvw) minmax(0, 1fr);
+}
+
+.root[data-prompt-mode="select-target"] .bottomSection {
+  grid-template:
+    "prompt prompt" minmax(104px, 1fr)
+    "legends hand" minmax(46px, 0.6fr)
+    "legends controls" var(--mobile-command-bar-h) / minmax(160px, 28dvw) minmax(0, 1fr);
+}
+
+.bottomSection[data-legend-count="0"] {
+  grid-template-columns: 0 minmax(0, 1fr);
+}
+
+.bottomSection[data-legend-count="1"] {
+  grid-template-columns: minmax(96px, 18dvw) minmax(0, 1fr);
+}
+
+.bottomSection[data-legend-count="2"] {
+  grid-template-columns: minmax(188px, 34dvw) minmax(0, 1fr);
+}
+
+.legendsPanel {
+  grid-area: legends;
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  padding: 4px;
+  border-right: 1px solid rgb(74 217 255 / 34%);
+  background: rgb(7 9 12 / 78%);
+}
+
+.opponentLegendsPanel {
+  border-right: 0;
+  border-left: 1px solid rgb(255 61 138 / 34%);
+}
+
+.legendsPanel > :not(.eddiesBadge) {
+  height: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  margin: 0;
+  border-color: rgb(74 217 255 / 28%);
+}
+
+.opponentLegendsPanel > :not(.eddiesBadge) {
+  border-color: rgb(255 61 138 / 28%);
+}
+
+.legendsPanel > :not(.eddiesBadge) > * {
+  height: 100%;
+  min-height: 0;
+  padding: 2px;
+  gap: 2px;
+}
+
+.legendsPanel [class*="slot"] {
+  height: 100% !important;
+  aspect-ratio: 5 / 7;
+}
+
+.legendsPanel [class*="slots"] {
+  align-items: center;
+  justify-content: center;
+}
+
+.legendsPanel [class*="badge"] {
+  display: none;
+}
+
+.legendsPanel [data-occupied="false"] {
+  display: none;
+}
+
+.topSection[data-legend-count="0"] .opponentLegendsPanel,
+.bottomSection[data-legend-count="0"] .playerLegendsPanel {
+  display: none;
+}
+
+.eddiesBadge {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+  bottom: auto;
+  z-index: 20;
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 5px;
+  min-width: 64px;
+  min-height: 22px;
+  padding: 2px 7px;
+  border: 1px solid rgb(245 230 66 / 72%);
+  border-radius: 2px;
+  background: #07090c;
+  color: #f5e642;
+  font: inherit;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.eddiesBadge strong {
+  color: #fff7c2;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.opponentEddiesBadge {
+  inset: auto auto 6px 7px;
+  border-color: rgb(255 61 138 / 72%);
+}
+
+.topControls {
+  grid-area: controls;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border-bottom: 1px solid rgb(245 230 66 / 18%);
+  background:
+    linear-gradient(90deg, rgb(255 61 138 / 7%), transparent 26%),
+    linear-gradient(180deg, rgb(74 217 255 / 8%), rgb(7 9 12 / 72%)), #07090c;
+  overflow: hidden;
+}
+
+.topControls > * {
+  min-height: 0;
+}
+
+.opponentIdentity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 clamp(128px, 25dvw, 164px);
+  min-width: 0;
+  align-self: stretch;
+  padding: 0 8px 0 10px;
+  border: 0;
+  border-right: 1px solid rgb(255 61 138 / 36%);
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 18px 50%, rgb(52 245 138 / 15%), transparent 24px),
+    linear-gradient(90deg, rgb(255 61 138 / 12%), transparent 88%), rgb(7 9 12 / 34%);
+  color: rgb(207 232 246 / 78%);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.opponentIdentity strong {
+  overflow: hidden;
+  color: rgb(255 143 187 / 92%);
+  font-size: 10px;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.opponentIdentity strong[data-subscriber="true"] {
+  color: rgb(245 230 66 / 96%);
+  text-shadow: 0 0 10px rgb(245 230 66 / 30%);
+}
+
+.opponentIdentityText {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.opponentIdentityText span {
+  overflow: hidden;
+  color: rgb(245 230 66 / 74%);
+  font-size: 7px;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.playerIdentity {
+  border-right-color: rgb(74 217 255 / 52%);
+  background:
+    radial-gradient(circle at 18px 50%, rgb(52 245 138 / 18%), transparent 24px),
+    linear-gradient(90deg, rgb(74 217 255 / 18%), transparent 88%), rgb(7 9 12 / 68%);
+}
+
+.playerIdentity strong {
+  color: rgb(159 236 255 / 100%);
+}
+
+.playerIdentity .opponentIdentityText span {
+  color: rgb(245 230 66 / 88%);
+}
+
+.connectionDot {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: #34f58a;
+  box-shadow: 0 0 8px rgb(52 245 138 / 76%);
+}
+
+.connectionDot[data-status="checking"] {
+  background: rgb(180 191 200 / 72%);
+  box-shadow: 0 0 6px rgb(180 191 200 / 36%);
+}
+
+.connectionDot[data-status="reconnecting"] {
+  background: #f5e642;
+  box-shadow:
+    0 0 0 4px rgb(245 230 66 / 14%),
+    0 0 10px rgb(245 230 66 / 82%);
+  animation: connectionPulse 1.15s ease-out infinite;
+}
+
+.connectionDot[data-status="disconnected"] {
+  background: #ff3d5e;
+  box-shadow: 0 0 8px rgb(255 61 94 / 76%);
+}
+
+.connectionTrigger {
+  display: inline-block;
+  padding: 0;
+  cursor: pointer;
+}
+
+.connectionTrigger:focus-visible {
+  outline: 2px solid rgb(245 230 66 / 86%);
+  outline-offset: 3px;
+}
+
+.connectionPopover {
+  border: 1px solid rgb(74 217 255 / 24%);
+  background: rgb(5 8 13 / 96%);
+  color: rgb(220 240 250 / 88%);
+  font-family: "Share Tech Mono", monospace;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 46%);
+}
+
+.connectionPopoverBody {
+  display: grid;
+  gap: 7px;
+  min-width: 178px;
+  padding: 10px;
+}
+
+.connectionPopoverHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.connectionPopoverTitle {
+  color: rgb(255 255 255 / 92%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.connectionStatusBadge {
+  border: 1px solid rgb(180 191 200 / 28%);
+  border-radius: 999px;
+  background: rgb(180 191 200 / 10%);
+  color: rgb(220 240 250 / 88%);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 4px 6px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.connectionStatusBadge[data-status="connected"] {
+  border-color: rgb(52 245 138 / 32%);
+  background: rgb(52 245 138 / 10%);
+  color: rgb(126 255 180 / 92%);
+}
+
+.connectionStatusBadge[data-status="reconnecting"] {
+  border-color: rgb(245 230 66 / 42%);
+  background: rgb(245 230 66 / 13%);
+  color: rgb(255 246 132 / 96%);
+}
+
+.connectionStatusBadge[data-status="disconnected"] {
+  border-color: rgb(255 61 94 / 42%);
+  background: rgb(255 61 94 / 14%);
+  color: rgb(255 140 160 / 96%);
+}
+
+.connectionStatusMessage {
+  margin: 0;
+  color: rgb(220 240 250 / 72%);
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+.connectionPopoverRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  color: rgb(255 255 255 / 58%);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.connectionPopoverRow strong {
+  color: rgb(245 230 66 / 82%);
+  font-weight: 700;
+  text-align: right;
+}
+
+.connectionAction {
+  margin-top: 4px;
+  border: 1px solid rgb(245 230 66 / 38%);
+  border-radius: 6px;
+  background: rgb(245 230 66 / 12%);
+  color: rgb(255 246 132 / 94%);
+  cursor: pointer;
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 8px 10px;
+  text-transform: uppercase;
+}
+
+.connectionAction:hover {
+  background: rgb(245 230 66 / 18%);
+}
+
+.reconnectCue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: fit-content;
+  max-width: calc(100vw - 24px);
+  margin: 0 auto 6px;
+  border: 1px solid rgb(245 230 66 / 42%);
+  border-radius: 8px;
+  background: rgb(20 18 5 / 88%);
+  color: rgb(255 246 132 / 96%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 10px;
+  line-height: 1.15;
+  padding: 6px 8px;
+  box-shadow: 0 0 16px rgb(245 230 66 / 14%);
+}
+
+.reconnectCue strong {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reconnectCue span {
+  min-width: 0;
+  overflow: hidden;
+  color: rgb(255 255 255 / 78%);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes connectionPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  70% {
+    transform: scale(1.24);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connectionDot[data-status="reconnecting"] {
+    animation: none;
+  }
+}
+
+.reportPlayerButton {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgb(255 61 138 / 42%);
+  border-radius: 2px;
+  background: rgb(7 9 12 / 48%);
+  color: rgb(207 232 246 / 82%);
+  text-decoration: none;
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.reportPlayerButton:hover,
+.reportPlayerButton:focus-visible {
+  border-color: rgb(255 61 138 / 88%);
+  background: rgb(255 61 138 / 12%);
+  color: #ff8fbb;
+  box-shadow: 0 0 12px rgb(255 61 138 / 18%);
+  outline: none;
+}
+
+.gameControls {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 0;
+  flex: 0 0 auto;
+  min-width: 0;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.gameControls::-webkit-scrollbar {
+  display: none;
+}
+
+.gameControlButton,
+.settingsControl > :global(button) {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 50px;
+  min-height: 100%;
+  padding: 0 10px;
+  border: 0;
+  border-left: 1px solid rgb(74 217 255 / 28%);
+  border-radius: 0;
+  background: rgb(7 9 12 / 22%);
+  color: rgb(207 232 246 / 92%);
+  font-family: inherit;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.settingsControl {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: stretch;
+}
+
+.settingsControl > :global(button) {
+  gap: 5px;
+  height: 100%;
+  color: rgb(207 232 246 / 92%);
+  border-color: rgb(74 217 255 / 28%);
+}
+
+.gameControlButton:hover,
+.settingsControl > :global(button):hover {
+  background: rgb(74 217 255 / 10%);
+  color: #f5e642;
+}
+
+.topHandBand,
+.bottomHandBand {
+  grid-area: hand;
+  min-height: 0;
+  border-bottom-color: rgb(245 230 66 / 22%);
+}
+
+.topHandBand {
+  border-top-color: rgb(245 230 66 / 22%);
+}
+
+.bottomHandBand {
+  border-top: 0;
+}
+
+.bottomCommandBar {
+  grid-area: controls;
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border-top: 1px solid rgb(245 230 66 / 30%);
+  border-bottom: 1px solid rgb(74 217 255 / 38%);
+  background:
+    linear-gradient(90deg, rgb(74 217 255 / 13%), transparent 30%),
+    linear-gradient(180deg, rgb(74 217 255 / 11%), rgb(7 9 12 / 82%)), #07090c;
+  box-shadow:
+    0 -1px 0 rgb(245 230 66 / 20%) inset,
+    0 1px 0 rgb(74 217 255 / 18%) inset;
+  overflow: hidden;
+}
+
+.bottomCommandBar:has([data-attack-in-progress="true"]) {
+  grid-column: 1 / -1;
+}
+
+.bottomCommandBar > * {
+  min-height: 0;
+}
+
+.mobilePhaseControls {
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline: 6px;
+}
+
+.mobilePhaseControls > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.gameControlButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.promptBand {
+  grid-area: prompt;
+  position: relative;
+  z-index: 12;
+  display: none;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 0;
+  padding: 3px 4px;
+  background: rgb(7 9 12 / 74%);
+  overflow: hidden;
+}
+
+.promptBand:not(:empty) {
+  display: flex;
+  border-bottom: 1px solid rgb(74 217 255 / 36%);
+  background:
+    linear-gradient(90deg, rgb(74 217 255 / 9%), transparent 36%),
+    linear-gradient(180deg, rgb(7 9 12 / 94%), rgb(4 6 9 / 98%));
+}
+
+.root[data-prompt-mode="select-target"] .promptBand {
+  grid-area: prompt;
+  display: flex;
+  padding: 5px;
+  border-bottom: 1px solid rgb(245 230 66 / 42%);
+  background:
+    linear-gradient(90deg, rgb(245 230 66 / 9%), transparent 36%),
+    linear-gradient(180deg, rgb(7 9 12 / 94%), rgb(4 6 9 / 98%));
+}
+
+.promptBand > * {
+  flex: 1 1 auto;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.fieldHelpers {
+  position: absolute;
+  z-index: 25;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  width: clamp(88px, 21dvw, 104px);
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 2px;
+  border: 1px solid rgb(245 230 66 / 42%);
+  background:
+    linear-gradient(135deg, rgb(245 230 66 / 10%), transparent 38%),
+    linear-gradient(90deg, rgb(74 217 255 / 11%), rgb(7 9 12 / 92%) 48%), #07090c;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 82%),
+    0 8px 22px rgb(0 0 0 / 50%),
+    inset 0 0 18px rgb(74 217 255 / 8%);
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+  pointer-events: auto;
+}
+
+.root[data-prompt-mode="select-target"] .fieldHelpers {
+  display: none;
+}
+
+.fieldHelpers::before {
+  content: "";
+  position: absolute;
+  inset: 50% 2px auto;
+  height: 1px;
+  background: rgb(245 230 66 / 24%);
+  pointer-events: none;
+}
+
+.fieldHelpers::after {
+  content: "";
+  position: absolute;
+  inset: 2px 50% 2px auto;
+  width: 1px;
+  background: rgb(245 230 66 / 24%);
+  pointer-events: none;
+}
+
+.playerFieldHelpers {
+  bottom: 6px;
+  left: 6px;
+  border-color: rgb(74 217 255 / 48%);
+  background:
+    linear-gradient(135deg, rgb(74 217 255 / 13%), transparent 42%),
+    linear-gradient(90deg, rgb(7 9 12 / 92%), rgb(74 217 255 / 8%)), #07090c;
+}
+
+.opponentFieldHelpers {
+  top: 6px;
+  right: 6px;
+  align-items: flex-start;
+  border-color: rgb(255 61 138 / 48%);
+  background:
+    linear-gradient(315deg, rgb(255 61 138 / 13%), transparent 42%),
+    linear-gradient(270deg, rgb(7 9 12 / 92%), rgb(255 61 138 / 8%)), #07090c;
+}
+
+.fieldHelpers > *,
+.fieldHelpers > * > * {
+  position: relative;
+  height: auto !important;
+  min-width: 0 !important;
+  align-self: flex-end;
+}
+
+.opponentFieldHelpers > *,
+.opponentFieldHelpers > * > * {
+  align-self: flex-start;
+}
+
+.fieldHelperButton {
+  appearance: none;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  place-items: center end;
+  column-gap: 3px;
+  width: 100%;
+  min-width: 0;
+  min-height: 20px;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: 0;
+  background:
+    radial-gradient(circle at 0 0, rgb(245 230 66 / 12%), transparent 18px), rgb(7 9 12 / 56%);
+  color: #f5e642;
+  font: inherit;
+  line-height: 1;
+  text-transform: uppercase;
+  box-shadow: none;
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease,
+    transform 0.16s ease;
+}
+
+.fieldHelperButton span {
+  justify-self: start;
+  color: rgb(245 230 66 / 70%);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.fieldHelperButton strong {
+  color: #fff7c2;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.fieldHelperButton em {
+  grid-column: 1 / -1;
+  max-width: 100%;
+  justify-self: stretch;
+  overflow: hidden;
+  color: rgb(207 232 246 / 68%);
+  font-size: 5px;
+  font-style: normal;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fieldHelperButton[data-helper="eddies"] strong {
+  font-size: 9px;
+}
+
+.fieldHelperButton[data-helper="eddies"] em {
+  color: rgb(255 247 194 / 82%);
+  font-size: 6px;
+}
+
+.fieldHelperRewardPulse {
+  position: absolute;
+  right: -3px;
+  top: -9px;
+  z-index: 4;
+  min-width: 23px;
+  padding: 2px 4px;
+  border: 1px solid rgb(52 245 138 / 78%);
+  background: rgb(7 9 12 / 94%);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 78%),
+    0 0 14px rgb(52 245 138 / 28%);
+  color: rgb(196 255 213);
+  font-size: 9px !important;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(5px) scale(0.78);
+  animation: eddies-arrival-plus 900ms cubic-bezier(0.16, 1, 0.3, 1) 900ms both;
+}
+
+.opponentFieldHelpers .fieldHelperRewardPulse {
+  right: -3px;
+  top: auto;
+  bottom: -9px;
+  animation-name: eddies-arrival-plus-opponent;
+}
+
+@keyframes eddies-arrival-plus {
+  0% {
+    opacity: 0;
+    transform: translateY(5px) scale(0.78);
+  }
+
+  28%,
+  70% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-9px) scale(0.9);
+  }
+}
+
+@keyframes eddies-arrival-plus-opponent {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.78);
+  }
+
+  28%,
+  70% {
+    opacity: 1;
+    transform: translateY(2px) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(9px) scale(0.9);
+  }
+}
+
+.fieldHelperButton[data-helper="fixer"] {
+  min-height: 31px;
+}
+
+.fieldHelperButtonAccent {
+  border-color: rgb(74 217 255 / 72%);
+}
+
+.fieldHelperButtonAccent span,
+.fieldHelperButtonAccent strong {
+  color: #4ad9ff;
+}
+
+.fieldHelperButtonDropOver {
+  background: linear-gradient(180deg, rgb(245 230 66 / 8%), rgb(7 9 12 / 94%)), #07090c;
+  box-shadow:
+    0 0 12px rgb(245 230 66 / 14%),
+    inset 0 0 12px rgb(245 230 66 / 7%);
+}
+
+.fieldHelperButtonSellReady {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  min-width: 0;
+  min-height: 31px;
+  padding: 4px;
+  border: 1px dashed rgb(245 230 66 / 48%);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgb(245 230 66 / 5%) 0,
+      rgb(245 230 66 / 5%) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+    linear-gradient(135deg, rgb(245 230 66 / 7%), transparent 50%),
+    linear-gradient(180deg, rgb(7 9 12 / 92%), rgb(7 9 12 / 98%));
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 86%),
+    0 0 0 2px rgb(245 230 66 / 7%),
+    0 0 14px rgb(245 230 66 / 12%),
+    inset 0 0 12px rgb(245 230 66 / 6%);
+  transform: translateY(-1px);
+  transform-origin: bottom left;
+}
+
+.opponentFieldHelpers .fieldHelperButtonSellReady {
+  transform-origin: top right;
+}
+
+.mobileClockRail {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 12;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  align-items: center;
+  gap: 1px;
+  width: clamp(64px, 12dvw, 84px);
+  min-height: 42px;
+  height: 90%;
+  padding: 2px;
+  border: 1px solid rgb(245 230 66 / 50%);
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg, rgb(255 61 138 / 10%), transparent 28%),
+    linear-gradient(270deg, rgb(74 217 255 / 12%), transparent 30%), rgb(7 9 12 / 94%);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 78%),
+    0 8px 20px rgb(0 0 0 / 42%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.clockPill {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 10px;
+  padding: 1px 3px;
+  border: 1px solid transparent;
+  color: rgb(207 232 246 / 56%);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.clockPill strong {
+  color: rgb(255 247 194 / 72%);
+  font-size: 8px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.clockPill[data-active="true"] {
+  background: rgb(245 230 66 / 10%);
+  border-color: rgb(245 230 66 / 62%);
+  color: #f5e642;
+  box-shadow: inset 0 0 12px rgb(245 230 66 / 10%);
+  min-height: 18px;
+}
+
+.clockPill[data-active="true"] strong {
+  color: #fff7c2;
+  font-size: 11px;
+  text-shadow: 0 0 8px rgb(245 230 66 / 42%);
+}
+
+.clockPill[data-tone="rival"][data-active="true"] {
+  border-color: rgb(255 61 138 / 76%);
+  color: #ff8fbb;
+  box-shadow: inset 0 0 12px rgb(255 61 138 / 12%);
+}
+
+.clockPill[data-tone="friendly"][data-active="true"] {
+  border-color: rgb(74 217 255 / 76%);
+  color: #4ad9ff;
+  box-shadow: inset 0 0 12px rgb(74 217 255 / 12%);
+}
+
+.clockCore {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  padding-block: 1px;
+  padding-inline: 2px;
+  color: rgb(245 230 66 / 72%);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.clockCore span {
+  font-size: 6px;
+  letter-spacing: 0.06em;
+}
+
+.clockCore strong {
+  max-width: 100%;
+  overflow: hidden;
+  color: rgb(207 232 246 / 72%);
+  font-size: 6px;
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobileClockRailUrgent {
+  border-color: rgb(255 177 58 / 76%);
+}
+
+.mobileClockRailCritical {
+  border-color: rgb(255 58 58 / 82%);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 78%),
+    0 0 18px rgb(255 58 58 / 22%);
+}
+
+.fieldHelperButtonSellReady::after {
+  content: "SELL";
+  position: absolute;
+  top: -7px;
+  right: 5px;
+  padding: 1px 4px;
+  border: 1px solid rgb(245 230 66 / 52%);
+  background: #07090c;
+  color: rgb(245 230 66 / 78%);
+  font-size: 6px;
+  letter-spacing: 0.14em;
+  line-height: 1;
+}
+
+.fieldHelperButtonSellReady span {
+  color: #f5e642;
+  font-size: 8px;
+}
+
+.fieldHelperButtonSellReady strong {
+  color: #fff7c2;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.fieldHelperButtonSellReady em {
+  max-width: 72px;
+  color: rgb(207 232 246 / 76%);
+}
+
+.directAttackDropTarget {
+  /* Keep the hit target as the full center row. The visual cue stays narrower
+     below, but drops on top of Gig dice must still resolve to attackRival on
+     cramped mobile layouts. */
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  min-width: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease;
+}
+
+.directAttackDropCue {
+  position: absolute;
+  inset: 4px 50% 4px 4px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1px;
+  border: 1px dashed rgb(74 217 255 / 72%);
+  background:
+    linear-gradient(90deg, rgb(74 217 255 / 16%), rgb(7 9 12 / 72%)),
+    repeating-linear-gradient(
+      90deg,
+      rgb(245 230 66 / 10%) 0,
+      rgb(245 230 66 / 10%) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+  color: #f5e642;
+  font-family: Rajdhani, sans-serif;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 0 18px rgb(74 217 255 / 16%),
+    0 0 14px rgb(74 217 255 / 18%);
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.directAttackDropTarget[data-active="true"] {
+  opacity: 1;
+}
+
+.directAttackDropCue span {
+  color: #4ad9ff;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.directAttackDropCue strong {
+  color: #fff7c2;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.directAttackDropTarget[data-over="true"] .directAttackDropCue {
+  border-color: #f5e642;
+  background: linear-gradient(90deg, rgb(245 230 66 / 24%), rgb(74 217 255 / 13%)), #07090c;
+  box-shadow:
+    inset 0 0 22px rgb(245 230 66 / 20%),
+    0 0 22px rgb(245 230 66 / 30%);
+}
+
+.helperPopover {
+  --zone-gutter: 0;
+  --zone-pad: 6px;
+
+  z-index: 1000;
+  width: min(260px, calc(100vw - 24px));
+  padding: 8px;
+  border: 1px solid rgb(74 217 255 / 50%);
+  border-radius: 4px;
+  background: #0a0d12;
+  color: #f5e642;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 85%),
+    0 14px 34px rgb(0 0 0 / 68%);
+}
+
+.helperPopoverArrow {
+  background: #0a0d12;
+  border-color: rgb(74 217 255 / 50%);
+}
+
+.helperPopover [class*="badge"] {
+  display: none;
+}
+
+.popoverZone {
+  display: flex;
+  justify-content: center;
+  width: 128px;
+  max-width: calc(100vw - 40px);
+  height: 154px;
+  min-height: 128px;
+}
+
+.popoverZone > * {
+  width: 100%;
+  height: 100%;
+  min-height: 128px;
+}
+
+.popoverZoneEddies {
+  width: min(224px, calc(100vw - 40px));
+  height: 144px;
+}
+
+.sellRevealTrack {
+  --sell-start-x: -44dvw;
+  --sell-end-x: 36dvw;
+  --sell-start-y: -7dvh;
+  --sell-end-y: -15dvh;
+  --sell-tone: 255 61 138;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 30;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  width: min(116px, 26dvw);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: sell-flight 1320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.sellRevealTrack[data-side="player"] {
+  --sell-start-x: 30dvw;
+  --sell-end-x: -36dvw;
+  --sell-start-y: 7dvh;
+  --sell-end-y: 15dvh;
+  --sell-tone: 74 217 255;
+}
+
+.sellRevealCard {
+  width: clamp(40px, 10dvw, 56px);
+  aspect-ratio: 5 / 7;
+  border: 1px solid rgb(var(--sell-tone) / 86%);
+  background: rgb(7 9 12 / 88%);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 76%),
+    0 0 18px rgb(var(--sell-tone) / 34%);
+  overflow: hidden;
+}
+
+.sellRevealCard > * {
+  width: 100%;
+  height: 100%;
+}
+
+.sellRevealLabel {
+  display: grid;
+  justify-items: center;
+  max-width: min(150px, 38dvw);
+  padding: 3px 6px;
+  border: 1px solid rgb(var(--sell-tone) / 52%);
+  background: rgb(7 9 12 / 92%);
+  box-shadow: 0 0 14px rgb(var(--sell-tone) / 18%);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sellRevealLabel span {
+  color: rgb(245 230 66 / 78%);
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.sellRevealLabel strong {
+  max-width: 100%;
+  overflow: hidden;
+  color: #fff7c2;
+  font-size: 8px;
+  letter-spacing: 0;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes sell-flight {
+  0% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--sell-start-x)), calc(-50% + var(--sell-start-y)))
+      scale(0.72);
+  }
+
+  16% {
+    opacity: 1;
+  }
+
+  46% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  76% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--sell-end-x)), calc(-50% + var(--sell-end-y))) scale(0.64);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sellRevealTrack {
+    animation: sell-hold 1200ms ease-out both;
+  }
+
+  @keyframes sell-hold {
+    0%,
+    100% {
+      opacity: 0;
+    }
+
+    15%,
+    85% {
+      opacity: 1;
+    }
+  }
+}
+
+.clockPopover {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  min-width: 128px;
+  padding: 10px 8px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.clockPopover span {
+  color: rgb(245 230 66 / 72%);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+.clockPopover strong {
+  color: #f5e642;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}
+
+.clockPopover em {
+  color: #fff7c2;
+  font-size: 22px;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.drawer {
+  background: #0a0d12;
+  color: #f5e642;
+  border-top: 2px solid #f5e642;
+  padding: 8px;
+}
+
+.drawerHeader {
+  min-height: 44px;
+  border-bottom: 1px solid rgb(245 230 66 / 26%);
+  background: #0a0d12;
+  color: #f5e642;
+}
+
+.drawerTitle {
+  color: #f5e642;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.drawerClose {
+  color: #f5e642;
+  border: 1px solid rgb(74 217 255 / 45%);
+  border-radius: 3px;
+  background: rgb(7 9 12 / 82%);
+}
+
+.drawerClose:hover {
+  background: rgb(74 217 255 / 12%);
+}
+
+.drawerBody {
+  background: #0a0d12;
+  color: #f5e642;
+}
+
+.drawerCenter {
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.drawerCol {
+  display: grid;
+  gap: 12px;
+  padding: 8px 0 24px;
+}

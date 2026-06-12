@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main, production]
+  pull_request:
+    branches: [main, production]
+
+env:
+  NODE_OPTIONS: --max-old-space-size=4096
+  NX_NO_CLOUD: "true"
+
+jobs:
+  build:
+    name: Build, Type Check, Format, Lint, and Test
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.5
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+          run_install: false
+
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: 22
+          cache: true
+
+      - name: Debug Environment
+        run: |
+          vp env doctor || echo "vp env doctor not available"
+          echo "Runner OS: ${{ runner.os }}"
+          echo "Runner Arch: ${{ runner.arch }}"
+          echo "Bun version: $(bun --version)"
+          echo "Node version: $(node --version)"
+          echo "pnpm version: $(pnpm --version)"
+
+      - name: Install dependencies
+        run: vp install
+
+      - name: Project Graph
+        run: pnpm exec nx graph --file=nx-graph.json
+
+      - name: Run Continuous integration
+        run: pnpm run ci-check-full:verbose
+
+      - name: Enforce module boundaries
+        run: pnpm run boundaries
+
+      - name: Upload Nx project graph
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nx-project-graph
+          path: nx-graph.json

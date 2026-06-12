@@ -1,0 +1,125 @@
+.zone {
+  grid-area: fixer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: var(--zone-gutter);
+  padding: 10px var(--zone-pad);
+  border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 26%);
+  background:
+    linear-gradient(180deg, rgb(var(--side-accent-rgb, 245 230 66) / 5%), transparent 40%),
+    var(--board-surface, #0c0f14);
+}
+
+.collapsed {
+  padding: 4px 2px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgb(var(--side-accent-rgb, 245 230 66) / 10%), transparent 46%),
+    rgb(6 8 12 / 96%);
+}
+
+.collapseToggle,
+.collapsedToggle {
+  color: rgb(var(--side-accent-rgb, 245 230 66) / 88%);
+  border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 34%);
+  background: rgb(2 4 8 / 78%);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.collapseToggle {
+  position: absolute;
+  z-index: 4;
+  top: 6px;
+  right: 6px;
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  padding: 0;
+}
+
+.top .collapseToggle {
+  top: auto;
+  bottom: 6px;
+}
+
+.collapseToggle:hover,
+.collapsedToggle:hover {
+  color: #020408;
+  border-color: var(--neon-yellow, #f5e642);
+  background: var(--neon-yellow, #f5e642);
+  box-shadow: 0 0 10px rgb(245 230 66 / 28%);
+}
+
+.collapsedToggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 2.4cqh, 16px);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 5px 0;
+  text-transform: uppercase;
+}
+
+.collapsedToggle span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: inherit;
+  font-size: clamp(0.54rem, 1.1cqh, 0.66rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.diceStack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+}
+
+/* Transparent button wrapper for each die slot. DieDisplay controls the visual;
+   this class just resets button defaults and carries picker-state classes. */
+.slotBtn {
+  padding: 0;
+  background: transparent;
+  border: none;
+  display: block;
+  cursor: default;
+}
+
+/* Active player has a gainGig choice open — light up the candidates so
+   the player can see what's pickable. d20 (or other ineligible dice) dims
+   to communicate "not yet". */
+.candidate {
+  cursor: pointer;
+  animation: fixer-pulse 1.4s ease-in-out infinite;
+}
+
+.candidate:hover {
+  animation-play-state: paused;
+}
+
+.ineligible {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+@keyframes fixer-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(245 230 66 / 0%);
+  }
+
+  50% {
+    box-shadow: 0 0 0 3px rgb(245 230 66 / 35%);
+  }
+}

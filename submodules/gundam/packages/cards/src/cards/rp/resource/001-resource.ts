@@ -1,0 +1,41 @@
+import type { ResourceCard } from "@tcg/gundam-types";
+
+export const rpResource001: ResourceCard = {
+  cardNumber: "RP-001",
+  name: "Resource",
+  type: "resource",
+  traits: [],
+  id: "RP-001",
+  externalId: "gundam:rp-001",
+  slug: "resource-rp-001",
+  displayName: "Resource",
+  set: { code: "RP", name: "Edition Beta BANDAI TCG+ Store Trial Event", packageId: "616901" },
+  printNumber: "RP-001",
+  printings: [
+    {
+      id: "RP-001",
+      collectorNumber: "RP-001",
+      cardNumber: "RP-001",
+      set: {
+        code: "RP",
+        name: "Edition Beta BANDAI TCG+ Store Trial Event",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-001.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-001.webp?260424",
+      productName: "Edition Beta BANDAI TCG+ Store Trial Event",
+    },
+  ],
+  selectedPrintingId: "RP-001",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-001.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-001.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  effect: "(Rest a Resource when paying a cost.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

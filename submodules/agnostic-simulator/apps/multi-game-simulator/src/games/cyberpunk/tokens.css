@@ -1,0 +1,68 @@
+/*
+ * Cyberpunk design tokens.
+ *
+ * Single source of truth for the simulator's color palette. Any component
+ * (CSS module, inline style, Mantine override) can reference these via
+ * `var(--cp-...)`. New colors should land here, not in component-local
+ * files, so the system stays consistent.
+ *
+ * Naming conventions:
+ *   --cp-card-*    : card frame / faction colors (red/yellow/green/blue)
+ *   --cp-rarity-*  : rarity tiers (common → iconic)
+ *   --cp-fg / -bg  : foreground / background neutrals
+ *   --cp-{accent}  : standalone accents (gold, turquoise, cyan-active, …)
+ */
+
+:root {
+  /* ── Brand neutrals ────────────────────────────────────────────────── */
+  --cp-black: #00000f;
+  --cp-white: #fff;
+  --cp-fg: #fff;
+  --cp-fg-secondary: rgb(255 255 255 / 80%);
+  --cp-fg-dim: rgb(255 255 255 / 50%);
+  --cp-fg-faint: rgb(255 255 255 / 30%);
+
+  /* ── Surfaces / chrome ─────────────────────────────────────────────── */
+  --cp-panel: rgb(10 12 22 / 78%);
+  --cp-overlay: rgb(0 0 15 / 40%);
+  --cp-border-subtle: rgb(255 255 255 / 5%);
+
+  /* ── Accents ───────────────────────────────────────────────────────── */
+  --cp-gold: #f0b537;
+  --cp-yellow: #fcee0a;
+  --cp-red: #f75049;
+  --cp-turquoise: #00f0ff;
+  --cp-cyan-active: #5ef5d7;
+
+  /* ── Simulator sidebar roles ───────────────────────────────────────── */
+  --cp-sidebar-bg: rgb(6 9 13 / 96%);
+  --cp-sidebar-panel: rgb(3 7 12 / 36%);
+  --cp-sidebar-surface: rgb(4 8 12 / 42%);
+  --cp-sidebar-surface-strong: rgb(7 9 12 / 54%);
+  --cp-sidebar-text: rgb(247 252 255 / 88%);
+  --cp-sidebar-muted: rgb(210 232 238 / 56%);
+  --cp-sidebar-faint: rgb(210 232 238 / 38%);
+  --cp-sidebar-rule: rgb(210 232 238 / 8%);
+  --cp-signal-yellow-rgb: 245 230 66;
+  --cp-signal-cyan-rgb: 74 217 255;
+  --cp-signal-magenta-rgb: 255 61 138;
+  --cp-signal-rose-rgb: 255 61 94;
+  --cp-signal-orange-rgb: 255 159 61;
+  --cp-signal-green-rgb: 52 245 138;
+  --cp-signal-frost-rgb: 213 245 255;
+  --cp-signal-neutral-rgb: 180 191 200;
+
+  /* ── Card faction colors ───────────────────────────────────────────── */
+  --cp-card-red: #ef4444;
+  --cp-card-yellow: #fcee0a;
+  --cp-card-green: #10b981;
+  --cp-card-blue: #3b82f6;
+
+  /* ── Rarity tiers ──────────────────────────────────────────────────── */
+  --cp-rarity-common: #8b8b8b;
+  --cp-rarity-uncommon: #3da4e8;
+  --cp-rarity-rare: #235ba4;
+  --cp-rarity-epic: #5a3df5;
+  --cp-rarity-legendary: #f69226;
+  --cp-rarity-iconic: #e8c21f;
+}

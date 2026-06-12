@@ -1,0 +1,210 @@
+.page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 18% 12%, rgb(74 217 255 / 12%), transparent 30%),
+    linear-gradient(135deg, #05070b 0%, #101014 52%, #07090c 100%);
+  color: #e6f4fb;
+  font-family: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  padding: 48px 20px 96px;
+}
+
+.shell {
+  width: min(980px, 100%);
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: rgb(74 217 255 / 78%);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0 0 10px;
+  color: #f5e642;
+  font-size: clamp(24px, 4vw, 38px);
+  line-height: 1.05;
+}
+
+.lead {
+  max-width: 720px;
+  margin: 0;
+  color: rgb(230 244 251 / 72%);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.deckGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.deckCard,
+.panel,
+.summary {
+  border: 1px solid rgb(74 217 255 / 28%);
+  border-radius: 8px;
+  background: rgb(8 12 18 / 86%);
+  box-shadow: 0 24px 80px rgb(0 0 0 / 28%);
+}
+
+.deckCard {
+  display: grid;
+  gap: 10px;
+  min-height: 180px;
+  color: inherit;
+  padding: 18px;
+  text-decoration: none;
+}
+
+.deckCard:hover {
+  border-color: rgb(245 230 66 / 58%);
+}
+
+.deckLabel {
+  color: #f5e642;
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.deckDescription,
+.deckMeta {
+  color: rgb(230 244 251 / 68%);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.deckMeta {
+  align-self: end;
+  color: rgb(74 217 255 / 76%);
+}
+
+.tags,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.tag {
+  border: 1px solid rgb(74 217 255 / 32%);
+  border-radius: 999px;
+  color: rgb(230 244 251 / 76%);
+  font-size: 11px;
+  padding: 6px 10px;
+  text-transform: uppercase;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-bottom: 18px;
+  padding: 18px;
+}
+
+.summary > div {
+  display: grid;
+  gap: 4px;
+}
+
+.statValue {
+  color: #f5e642;
+  font-size: 22px;
+}
+
+.statLabel {
+  color: rgb(230 244 251 / 58%);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.4fr);
+  gap: 18px;
+}
+
+.panel {
+  padding: 18px;
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  color: #4ad9ff;
+  font-size: 16px;
+}
+
+.cardList {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cardRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: baseline;
+  border-bottom: 1px solid rgb(230 244 251 / 9%);
+  color: rgb(230 244 251 / 82%);
+  font-size: 13px;
+  line-height: 1.4;
+  padding-bottom: 8px;
+}
+
+.cardRow span:first-child {
+  overflow-wrap: anywhere;
+}
+
+.cardRow span:last-child {
+  color: rgb(230 244 251 / 54%);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.button {
+  min-height: 40px;
+  border: 1px solid rgb(245 230 66 / 78%);
+  border-radius: 6px;
+  background: #f5e642;
+  color: #07090c;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 40px;
+  padding: 0 14px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.backLink {
+  color: rgb(74 217 255 / 86%);
+  font-size: 12px;
+  line-height: 40px;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #4ad9ff;
+  text-decoration: underline;
+}
+
+@media (width <= 760px) {
+  .deckGrid,
+  .summary,
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}

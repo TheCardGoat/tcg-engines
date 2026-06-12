@@ -1,0 +1,777 @@
+# [Source](https://www.disneylorcana.com/en-US/news/2026/04/wilds-unknown-set-release-notes)
+
+## Rules Clarifications
+
+With our previous set, Winterspell, we released the “2.0” version of the _Disney Lorcana Comprehensive Rules_. This technical document covers the intricate details and nuances of playing the game.
+
+The 2.0 version was the culmination of a year-long, top-to-bottom review to help make the rules more streamlined and straightforward for players and judges alike. It was a massive undertaking, and we’ve been thrilled by the community’s level of engagement and positive response.
+
+We’ll continue to make edits and clarifications as the game grows and evolves, and here are the tune-ups we made with the release of _Wilds Unknown_.
+
+## Damage Language
+
+While reviewing our rules regarding damage, we decided to change the older card wordings, making the previous 1.9.2 rule no longer necessary, so we removed it. We also clarified:
+
+• The methods of placing and taking off damage.
+
+• That moving damage is a combination of removing and putting damage.
+
+• That damage can’t be moved onto the same character or location as it’s being moved from.
+
+• When something takes damage.
+
+## Moving a Character
+
+While updating the turn actions section, we decided to make the instructions on the cost of moving a character more robust.
+
+## Requirement Versus Limiter
+
+As part of this update, we added rules in 6.1.3 defining a requirement versus a limiter when making choices for an effect. This new rule pairs with the section on checking choice legality in 6.7.3. We provided an example effect to show how the choose instruction is the requirement but anything that would restrict that choice is a limiter.
+
+## Resolving Effects
+
+With 2.0, we detailed the process of resolving cards and effects, strengthening rulings that until then didn’t have specific language in the Comprehensive Rules. With this update, we detailed how replacement effects interact with damage modifiers, both to provide additional clarity and to make it more intuitive. Now, it’s clearer that modifiers apply before any replacement effects.
+
+## Choices and Legality
+
+To help avoid confusion, we added some rules about making choices and checking if they’re legal. Previously, making choices during resolution didn’t have formal rules for checking whether that choice could be made, outside of a reference in section 1.7 on if a choice is illegal. However, cards like John Smith – Undaunted Protector showcased the need for a more robust system that governs choices. It’s important to note that nothing about making choices has fundamentally changed; we’ve only formalized the process and laid out the steps more explicitly.
+
+We also adjusted language in 6.7.2 stating that choices for damage effects are made during the damage calculation step.
+
+## Minor Rules Updates
+
+With this new set we’ve made the following general updates to the _Disney Lorcana_ TCG Comprehensive Rules:
+
+• 1.5.1. Added a clarification defining what is known as a card’s ink cost.
+
+• 1.8.1. Updated the specific timing on when a game state check occurs to better reflect gameplay.
+
+• 1.8.5. Added language clarifying that conditions for game state checks are met only when the game state
+
+check occurs.
+
+• 4.5.1.2./4.6.4.3. Added language specifying when payments are made to quest as well as when choices
+
+are checked and payments are made to challenge.
+
+• 5.1.1.11./5.1.1.12. Removed the paid cost language from the rule on drying to more clearly state
+
+that drying characters can’t {E} for any reason, to pay costs or otherwise.
+
+• 5.3.3.2. Added two new classifications: Monster and Toy.
+
+• 5.6.5.1./5.6.6. Added a section about versions to the locations section and clarified what happens to characters at a location when it leaves play.
+
+• 6.1.5. Added language to clarify when \[A\] is and isn’t considered a cost in a sequential effect.
+
+• 6.7.1.2. Added language to clarify that playing an action puts that action into the Play zone until the
+
+effect it generated resolves.
+
+• 6.7.5. Updated the specific timing on when a game state check occurs to better reflect gameplay.
+
+• 8.11. Added language clarifying how effects that say a card “counts as having +N cost to sing songs” interact with Singer.
+
+## Quality-of-Life Updates
+
+These updates are adjustments to language and word usage within the rules and on the cards to be clear, concise, and consistent.
+
+• Added a reference number to a specific section about resolving a card in 4.3.3.2.
+
+• Updated the definition of Challenger in 8.5 to match the wording on the cards.
+
+• Changed instances of the term “Beginning Phase” to “Start-of-Turn Phase.”
+
+• Changed instances of the word “restriction” to “limiter” to help differentiate it from “requirement.”
+
+• Made various minor typo and grammatical updates.
+
+• Updated the wording to the following cards to more precisely convey “takes damage” in accordance with the rules:
+
+o Beast – Relentless
+
+o Hydra – Deadly Serpent
+
+o John Silver – Vengeful Pirate
+
+o Devil’s Eye Diamond
+
+o Maid Marian – Badminton Ace
+
+o Captain Hook – The Pirate King
+
+o Brutus – Fearsome Crocodile
+
+o Nathaniel Flint – Notorious Pirate
+
+## Rules Glossary Updates
+
+Sometimes glossary updates clarify past entries, and sometimes they include newly introduced terms. With the release of the latest set, we clarified and added the following:
+
+• **requirement**: A choice or selection that must be made in the card’s instructions. For example, “Banish
+
+up to 2 chosen characters” includes the requirement of “up to 2 chosen characters,” while “play a character” include the requirement of “a character.” Some requirements have limiters that restrict the
+
+pool of options for the choice or selection.
+
+• **limiter**: Something that restricts the pool of options for an effect. For example, “Banish chosen character with 5 {S} or less” includes a limiter of “5 {S} or less” for the “chosen character” requirement.
+
+## Card-Specific Notes
+
+The following are answers to a few questions that might come up when playing specific cards from the new set. This isn’t meant to be an exhaustive list, but we hope it’s a helpful guide for some of the more complex cards.
+
+## Pedro Madrigal – Family Patriarch
+
+![Pedro Madrigal – Family Patriarch](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_jfg5tyqkjf.png)
+
+Pedro Madrigal – Family Patriarch
+
+Amber character
+
+Storyborn • Ally • Madrigal
+
+2 cost, inkable
+
+3/3/1
+
+\\Difficult Journey\ This character enters play with 1 damage.
+
+\\Devoted Family\ When you play this character, if you have another Madrigal character
+
+in play, you may remove up to 1 damage from him.
+
+Q: When I play this character, if I have another copy of Pedro Madrigal in play, can I remove the damage from
+
+that copy?
+
+A: No. The “him” in the Devoted Family ability refers to this character only, not another character in play with
+
+the same name.
+
+## Chip – Retrieval Expert / Dale – Bumbler
+
+![Chip – Retrieval Expert](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_h3yhqquvhf.png)
+
+![Dale – Bumbler](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/rw4e0llpnh_en.png)
+
+Chip – Retrieval Expert
+
+Amber character
+
+Storyborn • Hero
+
+4 cost, uninkable
+
+2/4/1
+
+\\There You Are!\ When you play this character, you may return a character card with
+
+4 {W} or more from your discard to your hand.
+
+\\Friendly Assist\ Your characters named Dale get +1 {W}.
+
+Dale – Bumbler
+
+Emerald character
+
+Storyborn • Hero
+
+1 cost, inkable
+
+1/3/1
+
+Q: If I have Dale – Bumbler in my discard, who has 3 {W}, and I play Chip – Retrieval Expert, can I return Dale
+
+to my hand?
+
+A: No. Chip’s Friendly Assist ability works only on characters named Dale that are in play. It doesn’t work on
+
+characters named Dale in any other zone.
+
+## Isabela Madrigal – Such a Lovely Voice
+
+![Isabela Madrigal – Such a Lovely Voice](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_tjwkya6saw.png)
+
+Isabela Madrigal – Such a Lovely Voice
+
+Amber character
+
+Storyborn • Ally • Madrigal
+
+3 cost, inkable
+
+3/3/1
+
+Singer 5 (This character counts as cost 5 to sing songs.)
+
+\\New Motif\ When you play this character, if you removed 1 or more damage from one of
+
+your characters this turn, gain 1 lore.
+
+Q: If I moved damage from one of my characters this turn, would that cause Isabela’s New Motif ability
+
+to trigger?
+
+A: Yes. Moving damage counts as removing damage. You first remove the damage from one card in order to put
+
+it on another.
+
+## Isabela Madrigal – Caring Cultivator
+
+![Isabela Madrigal – Caring Cultivator](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_p5l3xxdir8.png)
+
+Isabela Madrigal – Caring Cultivator
+
+Amber character
+
+Floodborn • Ally • Madrigal
+
+6 cost, inkable
+
+4/5/2
+
+Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named
+
+Isabela Madrigal.)
+
+\\Do No Wrong\ Whenever you remove damage from one of your characters, gain 1 lore for
+
+each 1 damage removed.
+
+Q: If I move damage from one of my characters this turn, does that cause Isabela’s Do No Wrong ability to trigger?
+
+A: Yes. Moving damage counts as removing damage. You first remove the damage from one card in order to put it on another.
+
+Q: If I remove 2 damage from one of my characters, will I resolve Isabela’s Do No Wrong ability twice?
+
+A: No. The ability triggers only once, no matter how much damage was removed. You’ll gain lore equal to the damage removed.
+
+## Jessie – Lively Cowgirl
+
+![Jessie – Lively Cowgirl](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_kzdgpwsyys-1.png)
+
+Jessie – Lively Cowgirl
+
+Amber character
+
+Storyborn • Ally • Toy
+
+3 cost, inkable
+
+3/3/1
+
+\\Part of a Family\ Whenever this character quests, if you have 2 or more other Toy
+
+characters in play, you may draw a card.
+
+\\Yodel-ay-hee-hoo!\ Whenever you pay 2 {I} or less to play a card, chosen opposing
+
+character gets -1 {S} until the start of your next turn.
+
+Q: Does Jessie’s Yodel-ay-hee-hoo! ability trigger if I use a payment modifier to play a higher-cost card for 2 {I}
+
+or less?
+
+A: Yes. That ability only cares about the total ink cost paid to play a card, which is determined after all payment modifiers are applied. As long as you paid no more than 2 {I} to play a card, the Yodel-ay-hee-hoo! ability triggers. For example, if you played a cost 3 card and modified the payment to pay 1 {I} less, you paid a total ink
+
+cost of 2 {I} and the ability triggers.
+
+## Dale – Ready for His Shot
+
+![Dale – Ready for His Shot](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_nkfulja4mt.png)
+
+Dale – Ready for His Shot
+
+Amber character
+
+Dreamborn • Hero
+
+4 cost, inkable
+
+0/4/2
+
+\\Spike Suit\ During challenges, your characters deal damage with their {W} instead of their {S}.
+
+Q: If I have Dale – Ready for His Shot in play, would an effect that modifies the {S} of a character affect how
+
+much damage a character deals in a challenge?
+
+A: No. Dale’s Spike Suit ability replaces the characteristic that’s used to calculate the total amount of damage
+
+dealt in a challenge. Instead of using the {S} value, you’d use the {W} value, so anything that modifies the {S} of
+
+the character doesn’t affect the damage calculation. However, anything that modifies the {W} of a character does
+
+affect the damage calculation.
+
+## Ranger Team-Up
+
+![Ranger Team-Up](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_oelpm9ifxf.png)
+
+Ranger Team-Up
+
+Amber action
+
+2 cost, inkable
+
+Chosen character gets +{S} equal to their {W} this turn.
+
+Q: How does Ranger Team-Up work? Normally, {S} modifiers are written as “+N {S},” such as “+1 {S}.”
+
+A: You take the value of the chosen character’s {W} and make it the N value of the modifier. For example, if I chose a character with 2 {W}, that character would get +2 {S}.
+
+Q: If an effect is modifying a character’s {W}, does Ranger Team-Up take the modified {W} or the printed {W}?
+
+A: It uses the modified {W}. For example, if the chosen character has 2 {W} and an effect gives that character +1 {W},
+
+then the chosen character would get +3 {S}.
+
+## Metamorphosis
+
+![Metamorphosis](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_wjaeh13n1g.png)
+
+Metamorphosis
+
+Amber action
+
+3 cost, uninkable
+
+Shift a character from your discard for free.
+
+Q: Does a character need to have the Shift keyword in order to be played by Metamorphosis?
+
+A: Yes. This also means that you need to have a character in play that you can shift the character on top of.
+
+## Pepa Madrigal – Calm Before the Storm
+
+![Pepa Madrigal – Calm Before the Storm](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_vqdi6hxszm.png)
+
+Pepa Madrigal – Calm Before the Storm
+
+Amethyst character
+
+Dreamborn • Ally • Madrigal
+
+3 cost, uninkable
+
+3/4/1
+
+\\Stormy Weather\ When you play this character, deal 1 damage to each of your
+
+other characters.
+
+\\Silver Lining\ Once during your turn, whenever you remove 1 or more damage from one of your characters, draw a card.
+
+Q: If I move damage from one of my characters this turn, would that cause Pepa’s Silver Lining ability
+
+to trigger?
+
+A: Yes. Moving damage counts as removing damage. You first remove the damage from one card in order to put it on another.
+
+## DunBroch Family Tapestry
+
+![DunBroch Family Tapestry](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_ycqkl62ryu-1.png)
+
+DunBroch Family Tapestry
+
+Amethyst item
+
+2 cost, inkable
+
+\\Torn Apart\ This item enters play exerted.
+
+\\Mend the Bond\ {E}, Banish this item — Each player shuffles all character cards from their discard into their deck.
+
+Q: If a player doesn’t have any character cards in their discard, do they still shuffle their deck?
+
+A: No. Since there are no cards for that player to shuffle into the deck, the shuffle doesn’t happen for them.
+
+## RC – Ferngesteuertes Auto
+
+![RC – Remote-Controlled Car](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/de_stsr0ictgm.png)
+
+RC – Remote-Controlled Car
+
+Emerald character
+
+Storyborn • Ally • Toy • Racer
+
+1 cost, inkable
+
+3/2/2
+
+\\Low Batteries\ This character can't quest or challenge unless you pay 1 {I}. (You pay this cost each time.)
+
+Q: With RC’s Low Batteries ability, when is the cost paid to quest or challenge?
+
+A: It’s paid during the process of questing or challenging, specifically at the part where the quest or challenge is checked for any limiters or requirements, like Evasive or Bodyguard.
+
+Q: If RC gains the Reckless ability, am I forced to pay 1 {I} to quest or challenge with him?
+
+A: No. RC’s ability says he can’t challenge or quest unless 1 {I} is paid, and Reckless only requires that RC be declared a challenger if he’s able to challenge. Since RC can’t challenge normally due to his static ability, he can’t challenge unless you choose to pay the cost. If you do pay 1 {I}, then RC can challenge only because of Reckless.
+
+## Alien – True Believer / Stitch – Carefree Snowboarder
+
+![Alien – True Believer](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_wwtqai0h59.png)
+
+![Stitch – Carefree Snowboarder](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_c9qybqutiq-2.png)
+
+Alien – True Believer
+
+Emerald character
+
+Storyborn • Ally • Alien • Toy
+
+1 cost, inkable
+
+1/1/1
+
+\\We Are One\ This character gets +1 {S} for each other Toy character you have in
+
+play.
+
+\\He Has Been Chosen\ During your turn, when this character is banished, return
+
+another character card named Alien from your discard to your hand.
+
+Stitch – Carefree Snowboarder
+
+Amber character
+
+Storyborn • Hero • Alien
+
+5 cost, inkable
+
+4/5/2
+
+\\Bring Your Friends\ Whenever this character quests, if you have 2 or more other characters in play, you may draw a card.
+
+Q: Can I return Stitch – Carefree Snowboarder with Alien’s He Has Been Chosen ability?
+
+A: No. The ability applies only to cards named Alien, not cards that just have the Alien classification.
+
+## Buzz Lightyear – On the Way
+
+![Buzz Lightyear – On the Way](https://ravensburger.cloud/cms/gallery/lorcana-web/products/s12-wild-unknown/en/en_themkbayra.png)
+
+Buzz Lightyear – On the Way
+
+Emerald character
+
+Storyborn • Hero • Toy • Captain
+
+3 cost, inkable
+
+4/2/1
+
+\\Secret Mission\ Whenever you pay 2 {I} or less to play a non-character, draw a card,
+
+then choose and discard a card.
+
+\\World's Greatest Toy\ Whenever you pay 2 {I} or less to play a character card, deal
+
+1 damage to chosen opposing damaged character.
+
+Q: What does “non-character” mean in Buzz’s Secret Mission ability?
+
+A: It means any card that isn’t a character card type, so the effect will trigger only if you pay 2 {I} or less to play
+
+an action, item, or location.
+
+Q: Does Buzz’s World’s Greatest Toy ability trigger if I use a payment modifier to play a higher-cost card for
+
+2 {I} or less?
+
+A: Yes. That ability only cares about the total ink cost paid to play a card, which is determined after all payment
+
+modifiers are applied. As long as you paid no more than 2 {I} to play a card, the World’s Greatest Toy ability
+
+triggers. The same holds true for his Secret Mission ability. For example, if you played a cost 3 card and
+
+modified the payment to pay 1 {I} less, you paid a total ink cost of 2 {I} and the ability triggers.
+
+## The Family Scattered
+
+![The Family Scattered](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_4amjjzd1dw-1.png)
+
+The Family Scattered
+
+Emerald action
+
+8 cost, uninkable
+
+Chosen opponent chooses 3 of their characters and returns one of those cards to their
+
+hand, puts one on the bottom of their deck, and puts one on the top of their deck.
+
+Q: Can I choose an opponent with fewer than 3 characters in play for The Family Scattered’s effect?
+
+A: Yes. In that case, the opponent will do as much as they can and resolve the effect in the order written. If the
+
+opponent has only 1 character in play, they’ll return that card to their hand. If the opponent has 2 characters
+
+in play, they’ll first return one to their hand and then put the other on the bottom of their deck.
+
+## Buzz’s Arm
+
+![Buzz's Arm](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_7r50jmunc0-1.png)
+
+Buzz’s Arm
+
+Emerald item
+
+2 cost, inkable
+
+\\Missing Piece\ If a character named Buzz Lightyear was banished this turn, you may play this item for free.
+
+\\Some Assembly Required\ {E} — You pay 1 {I} less for the next action or item you play this turn.
+
+Q: My opponent challenged and banished my Buzz Lightyear – Space Ranger on their turn. Can I now play
+
+Buzz’s Arm?
+
+A: No. The Buzz’s Arm ability Missing Piece doesn’t affect when the item can be played, only that it can be
+
+played for free. You still need to adhere to the normal timing restriction of playing cards only on your turn.
+
+## Babyhead – Leader of Sid’s Toys
+
+![Babyhead – Leader of Sid’s Toys](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_qf0vgt2evm.png)
+
+Babyhead – Leader of Sid’s Toys
+
+Ruby character
+
+Storyborn • Ally • Toy
+
+4 cost, uninkable
+
+3/3/1
+
+\\Tighten the Bolts\ Whenever you pay 2 {I} or less to play a card, chosen character gets +2 {S} this turn.
+
+\\Replacement Parts\ During your turn, whenever one of your other characters is banished, draw a card.
+
+Q: Does Babyhead’s Tighten the Bolts ability trigger if I use a payment modifier to play a higher-cost card for
+
+2 {I} or less?
+
+A: Yes. That ability only cares about the total ink cost paid to play a card, which is determined after all payment modifiers are applied. As long as you paid no more than 2 {I} to play a card, the Tighten the Bolts ability triggers. For example, if you played a cost 3 card and modified the payment to pay 1 {I} less, you paid a total ink
+
+cost of 2 {I} and the ability triggers.
+
+## Hercules – Young Rescuer
+
+![Hercules – Young Rescuer](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_b8z7hyyxkq.png)
+
+Hercules – Young Rescuer
+
+Ruby character
+
+Storyborn • Hero • Prince
+
+2 cost, uninkable
+
+2/1/1
+
+\\Heroic Sacrifice\ When you play this character, you may discard your hand. If you do,
+
+return a card from your discard to your hand.
+
+Q: If I have only Hercules – Young Rescuer in my hand and play him, can I still resolve his Heroic
+
+Sacrifice ability?
+
+A: Yes. Discarding your hand doesn’t require that you have any cards in your hand.
+
+## The Leviathan – Guardian of Atlantis
+
+![The Leviathan – Guardian of Atlantis](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_tlwvwkmf7f.png)
+
+The Leviathan – Guardian of Atlantis
+
+Ruby character
+
+Dreamborn • Monster • Robot
+
+10 cost, uninkable
+
+10/10/3
+
+\\It's A Machine!\ When you play this character, if 2 or more cards were put into your discard this turn, you may banish any number of chosen opposing characters with total
+
+{S} 10 or less.
+
+Q: When I’m adding opposing characters’ {S} values together to get the total {S}, do I take into account any
+
+effects that modify {S}?
+
+A: Yes. You’ll use the current {S} values of the characters. For example, if your opponent has a 2 {S} character
+
+that gets +1 {S} from an effect, that character’s current {S} value would be 3. It’s important to note that if a
+
+character’s current {S} would be less than 0, it’s considered to be 0 for this calculation.
+
+## Mr. Incredible – Super Strong
+
+![Mr. Incredible – Super Strong](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_hedk46qt7r.png)
+
+Mr. Incredible – Super Strong
+
+Ruby character
+
+Storyborn • Super • Hero
+
+5 cost, inkable
+
+6/4/1
+
+Shift 3 {I} (You may pay 3 {I} to play this on top of one of your characters named
+
+Mr. Incredible.)
+
+\\Always United\ This character gets +2 {S} for each other character you have in play.
+
+\\Let's Do This!\ Whenever one of your Super characters challenges another character,
+
+draw a card.
+
+Q: Would I draw a card due to Mr. Incredible’s Let’s Do This! ability if he’s the one challenging
+
+another character?
+
+A: Yes, the ability still triggers. He has the Super classification, and the ability doesn’t restrict the condition to
+
+“other” Super characters.
+
+## Bruno Madrigal – Oasis Oracle
+
+![Bruno Madrigal – Oasis Oracle](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_1timmbr5ca.png)
+
+Bruno Madrigal – Oasis Oracle
+
+Sapphire character
+
+Dreamborn • Ally • Madrigal
+
+5 cost, inkable
+
+4/5/1
+
+\\Find That Vision\ Once during your turn, whenever you remove damage from one of your
+
+characters, you may look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of your deck.
+
+\\You'll Be Okay\ Whenever this character quests, you may remove all damage from
+
+chosen character.
+
+Q: If I move damage from one of my characters this turn, would that cause Bruno’s Find That Vision ability
+
+to trigger?
+
+A: Yes. Moving damage counts as removing damage. You first remove the damage from one card in order to put
+
+it on another.
+
+## Julieta’s Arepas
+
+![Julieta’s Arepas](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_2es6iktc2b.png)
+
+Julieta's Arepas
+
+Sapphire item
+
+1 cost, uninkable
+
+\\Flavorful Cure\ At the start of your turn, if you have a Madrigal character in play, remove up to 2 damage from chosen character.
+
+\\That Did the Trick\ {E} — If you removed damage from a character this turn, gain 1 lore.
+
+Q: If I move damage from one of my characters, can I activate the ability That Did the Trick to gain 1 lore?
+
+A: Yes. Moving damage counts as removing damage. You first remove the damage from one card in order to put
+
+it on another.
+
+## Shepherd’s Journal
+
+![Shepherd’s Journal](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_dc8yvvxu40.png)
+
+Shepherd’s Journal
+
+Sapphire item
+
+2 cost, uninkable
+
+\\Margin Notes\ When you play this item, you may look at the top card of your deck. Put it on either the top of your deck or into your discard.
+
+\\Key to the Puzzle\ 1 {I}, Banish this item — Return another item card from your discard to your hand.
+
+Q: When I play Shepherd’s Journal, if I choose not to look at the top card of my deck, do I still have to put it on either the top of my deck or into my discard?
+
+A: No. The word “may” allows you to choose whether that part of the effect happens. If you choose not to do what’s described, that part doesn’t happen. Since there’s no card to reference for the “it” in the second part of the effect, there’s nothing to move.
+
+## Syndrome – Out for Revenge
+
+![Syndrome – Out for Revenge](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_gwdhnyuzps-1.png)
+
+Syndrome – Out for Revenge
+
+Steel character
+
+Dreamborn • Super • Villain • Inventor
+
+6 cost, inkable
+
+4/6/2
+
+Shift 4 {I} (You may pay 4 {I} to play this on top of one of your characters named
+
+Syndrome.)
+
+\\Got Me Monologuing!\ Whenever this character quests, return a Robot character card from your discard to your hand. Then, you may play or shift a Robot character with cost 8 or less for free.
+
+Q: Does a Robot character need to have the Shift ability in order to be shifted into play with Syndrome’s Got Me Monologuing! ability?
+
+A: Yes. This also means that you need to have a character in play that you can shift the Robot character on top of.
+
+## Merida – Formidable Archer / Can’t Hold It Back Anymore
+
+![Merida – Formidable Archer](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_ucbnpmv0e9-1.png)
+
+![Can’t Hold It Back Anymore](https://ravensburger.cloud/cms/gallery/lorcana-web/news/2026/04/set-release-notes/en_vgql326xas.png)
+
+Merida – Formidable Archer
+
+Steel character
+
+Storyborn • Hero • Princess
+
+5 cost, uninkable
+
+3/5/2
+
+\\Full Quiver\ When you play this character, you may return an action card named Three Arrows from your discard to your hand.
+
+\\Steady Aim\ Whenever one of your actions deals damage to an opposing character, deal 2 damage to that character.
+
+Can’t Hold It Back Anymore
+
+Amethyst action
+
+Song
+
+4 cost, uninkable
+
+(A character with cost 4 or more can {E} to sing this song for free.)
+
+Exert chosen opposing character. Move all damage counters from all other characters to that character.
+
+Q: If I play Can’t Hold It Back Anymore and move damage to chosen opposing character, will Merida’s Steady
+
+Aim ability deal another 2 damage?
+
+A: No. Moving damage isn’t the same as dealing damage. An action has to “deal” damage for Steady Aim to trigger.
+
+Have further questions about any cards? Join the community at [discord.gg/disneylorcana](https://www.disneylorcana.com/en-US/resources) and ask away! We’re a friendly bunch.

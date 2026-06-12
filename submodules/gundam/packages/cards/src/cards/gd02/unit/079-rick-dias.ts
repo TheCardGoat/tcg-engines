@@ -1,0 +1,43 @@
+import type { UnitCard } from "@tcg/gundam-types";
+
+export const gd02RickDias079: UnitCard = {
+  cardNumber: "GD02-079",
+  name: "Rick Dias",
+  type: "unit",
+  color: "white",
+  traits: ["aeug"],
+  id: "GD02-079",
+  externalId: "gundam:gd02-079",
+  slug: "rick-dias-gd02-079",
+  displayName: "Rick Dias",
+  set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
+  printNumber: "GD02-079",
+  printings: [
+    {
+      id: "GD02-079",
+      collectorNumber: "GD02-079",
+      cardNumber: "GD02-079",
+      set: {
+        code: "GD02",
+        name: "Dual Impact [GD02]",
+        packageId: "616102",
+      },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-079.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-079.webp?260424",
+      productName: "Dual Impact [GD02]",
+    },
+  ],
+  selectedPrintingId: "GD02-079",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-079.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-079.webp?260424",
+  legality: "legal",
+  level: 3,
+  cost: 2,
+  ap: 3,
+  hp: 3,
+  effect: "&lt;Blocker&gt; (Rest this Unit to change the attack target to it.)<br>",
+  keywordEffects: [{ keyword: "Blocker" }],
+  rarity: "common",
+};

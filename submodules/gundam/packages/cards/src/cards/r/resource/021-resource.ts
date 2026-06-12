@@ -1,0 +1,57 @@
+import type { ResourceCard } from "@tcg/gundam-types";
+
+export const rResource021: ResourceCard = {
+  cardNumber: "R-021",
+  name: "Resource",
+  type: "resource",
+  traits: [],
+  id: "R-021",
+  externalId: "gundam:r-021",
+  slug: "resource-r-021",
+  displayName: "Resource",
+  set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
+  printNumber: "R-021",
+  printings: [
+    {
+      id: "R-021",
+      collectorNumber: "R-021",
+      cardNumber: "R-021",
+      set: {
+        code: "GD03",
+        name: "Steel Requiem[GD03]",
+        packageId: "616103",
+      },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-021.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-021.webp?260424",
+      productName: "Steel Requiem[GD03]",
+    },
+    {
+      id: "R-021_p1",
+      collectorNumber: "R-021_p1",
+      cardNumber: "R-021",
+      set: {
+        code: "GD03",
+        name: "Steel Requiem[GD03]",
+        packageId: "616103",
+      },
+      rarity: "common",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-021_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-021_p1.webp?260424",
+      productName: "Steel Requiem[GD03]",
+    },
+  ],
+  selectedPrintingId: "R-021",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-021.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-021.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  effect: "(Rest a Resource when paying a cost.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "common",
+};
+export const gd03Resource021 = rResource021;

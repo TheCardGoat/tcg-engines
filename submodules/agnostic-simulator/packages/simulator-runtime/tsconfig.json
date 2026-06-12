@@ -1,0 +1,8 @@
+{
+  "extends": "@tcg/typescript-config/react.json",
+  "compilerOptions": {
+    "lib": ["esnext", "DOM", "DOM.Iterable"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

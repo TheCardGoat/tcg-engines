@@ -1,0 +1,17 @@
+# Cards exempt from check-card-fixtures.mjs.
+#
+# This file shrinks over time. Each line is a path (relative to repo root)
+# that the sensor would otherwise flag. Entries are temporary tech debt —
+# adding to this list requires a one-line justification in the comment above
+# the entry.
+#
+# Format: one path per line. Blank lines and lines starting with `#` ignored.
+# To remove an entry: add a sibling *.test.ts with at least one it() block
+# exercising the card's effects[] or keywordEffects[].
+
+# Token-only Strike Gundam variants — simple Blocker keyword, behavior
+# covered indirectly by other Blocker tests. Add direct fixtures when bandwidth permits.
+packages/cards/src/cards/t/unit/008-aile-strike-gundam.ts
+packages/cards/src/cards/t/unit/009-launcher-strike-gundam.ts
+packages/cards/src/cards/t/unit/010-sword-strike-gundam.ts
+packages/cards/src/cards/t/unit/011-fatum-00.ts

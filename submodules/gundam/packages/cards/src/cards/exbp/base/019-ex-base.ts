@@ -1,0 +1,42 @@
+import type { BaseCard } from "@tcg/gundam-types";
+
+export const exbpExBase019: BaseCard = {
+  cardNumber: "EXBP-019",
+  name: "EX Base",
+  type: "base",
+  traits: [],
+  id: "EXBP-019",
+  externalId: "gundam:exbp-019",
+  slug: "ex-base-exbp-019",
+  displayName: "EX Base",
+  set: { code: "EXBP", name: "Events", packageId: "616901" },
+  printNumber: "EXBP-019",
+  printings: [
+    {
+      id: "EXBP-019",
+      collectorNumber: "EXBP-019",
+      cardNumber: "EXBP-019",
+      set: {
+        code: "EXBP",
+        name: "Events",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-019.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-019.webp?260424",
+      productName: "Events",
+    },
+  ],
+  selectedPrintingId: "EXBP-019",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-019.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-019.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  hp: 3,
+  effect: "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

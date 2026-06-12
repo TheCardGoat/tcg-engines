@@ -1,0 +1,41 @@
+import type { ResourceCard } from "@tcg/gundam-types";
+
+export const rpResource009: ResourceCard = {
+  cardNumber: "RP-009",
+  name: "Resource",
+  type: "resource",
+  traits: [],
+  id: "RP-009",
+  externalId: "gundam:rp-009",
+  slug: "resource-rp-009",
+  displayName: "Resource",
+  set: { code: "RP", name: "Gen Con 2025", packageId: "616901" },
+  printNumber: "RP-009",
+  printings: [
+    {
+      id: "RP-009",
+      collectorNumber: "RP-009",
+      cardNumber: "RP-009",
+      set: {
+        code: "RP",
+        name: "Gen Con 2025",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-009.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-009.webp?260424",
+      productName: "Gen Con 2025",
+    },
+  ],
+  selectedPrintingId: "RP-009",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-009.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-009.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  effect: "(Rest a Resource when paying a cost.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

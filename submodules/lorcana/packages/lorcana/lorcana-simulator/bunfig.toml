@@ -1,0 +1,8 @@
+[test]
+preload = [
+  "./src/testing/public-env.ts",
+  "./src/testing/register-svelte-bun.ts",
+  "./src/testing/mock-third-party.ts",
+  "../lorcana-engine/src/testing/register-matchers.ts",
+  "../lorcana-engine/src/testing/configure-logger.ts",
+]

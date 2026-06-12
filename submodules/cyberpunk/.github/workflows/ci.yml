@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main, production]
+  pull_request:
+    branches: [main, production]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NODE_OPTIONS: --max-old-space-size=4096
+
+jobs:
+  build:
+    name: Check, Test, and Build
+    timeout-minutes: 15
+    runs-on: ubicloud-standard-4-arm
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+          run_install: false
+
+      - name: Set up Vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: 24
+          cache: true
+
+      - name: Debug CI environment
+        run: |
+          vp env doctor || echo "vp env doctor not available"
+          echo "Runner OS: ${{ runner.os }}"
+          echo "Runner Arch: ${{ runner.arch }}"
+          echo "Bun version: $(bun --version)"
+          echo "Node version: $(node --version)"
+          echo "pnpm version: $(pnpm --version)"
+          echo "vp version: $(vp --version)"
+
+      - name: Install dependencies
+        run: vp install
+
+      - name: Build workspace libraries
+        run: vp run -v build:libs
+
+      - name: Check formatting, lint, and types
+        run: vp check
+
+      - name: Run tests
+        run: vp run -v -r test
+
+      - name: Build workspace
+        run: vp run -v build

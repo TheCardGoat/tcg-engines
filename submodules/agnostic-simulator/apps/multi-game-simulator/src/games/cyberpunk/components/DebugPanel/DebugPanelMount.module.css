@@ -1,0 +1,93 @@
+.toggle {
+  appearance: none;
+  width: 100%;
+  background: rgb(8 16 28 / 90%);
+  border: 1px solid rgb(120 200 255 / 50%);
+  color: #8fd5ff;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.toggle:hover {
+  background: rgb(20 38 60 / 95%);
+  border-color: #8fd5ff;
+  color: #c8e6ff;
+}
+
+.toggleOpen {
+  border-color: #ff4d8b;
+  color: #ff8fb0;
+}
+
+.toggleOpen:hover {
+  border-color: #ff4d8b;
+  color: #ffb3cd;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(420px, 92vw);
+  z-index: 999;
+  background: rgb(4 9 17 / 96%);
+  border-left: 1px solid rgb(120 200 255 / 35%);
+  box-shadow: -8px 0 24px rgb(0 0 0 / 50%);
+  overflow: hidden auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawerHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgb(4 9 17 / 98%);
+  border-bottom: 1px solid rgb(120 200 255 / 25%);
+  font-family: "Share Tech Mono", monospace;
+}
+
+.drawerTitle {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8fd5ff;
+}
+
+.drawerClose {
+  appearance: none;
+  background: transparent;
+  border: 1px solid rgb(255 77 139 / 50%);
+  color: #ff8fb0;
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1;
+  padding: 4px 9px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.drawerClose:hover {
+  background: rgb(255 77 139 / 12%);
+  color: #ffb3cd;
+  border-color: #ff4d8b;
+}

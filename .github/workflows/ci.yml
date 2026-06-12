@@ -1,0 +1,101 @@
+name: Public CI
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: public-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_OPTIONS: --max-old-space-size=8192
+  VP_RUN_CONCURRENCY_LIMIT: 4
+  TURBO_RUN_SUMMARY: false
+
+jobs:
+  workspace-checks:
+    name: Workspace checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - submodules/cyberpunk
+          - submodules/gundam
+          - submodules/lorcana
+          - submodules/one-piece-simulator
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: ".bun-version"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+          run_install: false
+
+      - name: Set up Vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: 24
+          cache: true
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.workspace }}
+        run: vp install --no-frozen-lockfile
+
+      - name: Run focused CI
+        working-directory: ${{ matrix.workspace }}
+        run: pnpm run ci-check
+
+  agnostic-simulator:
+    name: Agnostic simulator
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: workspace-checks
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: ".bun-version"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+          run_install: false
+
+      - name: Set up Vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: 24
+          cache: true
+
+      - name: Install linked game dependencies
+        run: |
+          pnpm --dir submodules/cyberpunk install --frozen-lockfile
+          pnpm --dir submodules/gundam install --frozen-lockfile
+          pnpm --dir submodules/one-piece-simulator install --frozen-lockfile
+
+      - name: Install agnostic simulator dependencies
+        working-directory: submodules/agnostic-simulator
+        run: vp install --no-frozen-lockfile
+
+      - name: Build linked game packages
+        run: |
+          pnpm --dir submodules/cyberpunk run build
+          pnpm --dir submodules/gundam run build
+          pnpm --dir submodules/one-piece-simulator run build
+
+      - name: Run agnostic simulator CI
+        working-directory: submodules/agnostic-simulator
+        run: pnpm run ci-check

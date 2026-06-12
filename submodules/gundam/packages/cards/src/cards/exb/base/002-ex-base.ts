@@ -1,0 +1,58 @@
+import type { BaseCard } from "@tcg/gundam-types";
+
+export const exbExBase002: BaseCard = {
+  cardNumber: "EXB-002",
+  name: "EX Base",
+  type: "base",
+  traits: [],
+  id: "EXB-002",
+  externalId: "gundam:exb-002",
+  slug: "ex-base-exb-002",
+  displayName: "EX Base",
+  set: { code: "ST09", name: "Destiny Ignition [ST09]", packageId: "616009" },
+  printNumber: "EXB-002",
+  printings: [
+    {
+      id: "EXB-002",
+      collectorNumber: "EXB-002",
+      cardNumber: "EXB-002",
+      set: {
+        code: "ST09",
+        name: "Destiny Ignition [ST09]",
+        packageId: "616009",
+      },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/exb/EXB-002.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXB-002.webp?260424",
+      productName: "Destiny Ignition [ST09]",
+    },
+    {
+      id: "EXB-002_p1",
+      collectorNumber: "EXB-002_p1",
+      cardNumber: "EXB-002",
+      set: {
+        code: "ST09",
+        name: "Destiny Ignition [ST09]",
+        packageId: "616009",
+      },
+      rarity: "common",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/exb/EXB-002_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXB-002_p1.webp?260424",
+      productName: "Destiny Ignition [ST09]",
+    },
+  ],
+  selectedPrintingId: "EXB-002",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/exb/EXB-002.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXB-002.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  hp: 3,
+  effect: "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "common",
+};
+export const st09ExBase002 = exbExBase002;

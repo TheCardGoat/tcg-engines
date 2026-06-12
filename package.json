@@ -1,0 +1,24 @@
+{
+  "name": "tcg-engines",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ci:agnostic:check": "pnpm --dir submodules/agnostic-simulator run ci-check",
+    "ci:agnostic": "pnpm --dir submodules/agnostic-simulator run ci-check-full",
+    "ci:cyberpunk:check": "pnpm --dir submodules/cyberpunk run ci-check",
+    "ci:cyberpunk": "pnpm --dir submodules/cyberpunk run ci-check-full",
+    "ci:gundam:check": "pnpm --dir submodules/gundam run ci-check",
+    "ci:gundam": "pnpm --dir submodules/gundam run ci-check-full",
+    "ci:lorcana:check": "pnpm --dir submodules/lorcana run ci-check",
+    "ci:lorcana": "pnpm --dir submodules/lorcana run ci-check-full",
+    "ci:one-piece:check": "pnpm --dir submodules/one-piece-simulator run ci-check",
+    "ci:one-piece": "pnpm --dir submodules/one-piece-simulator run ci-check-full",
+    "ci:public": "pnpm run ci:cyberpunk:check && pnpm run ci:gundam:check && pnpm run ci:lorcana:check && pnpm run ci:one-piece:check && pnpm run ci:agnostic:check"
+  },
+  "volta": {
+    "node": "24.12.0",
+    "pnpm": "10.33.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

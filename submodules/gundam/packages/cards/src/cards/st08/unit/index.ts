@@ -1,0 +1,9 @@
+export { st08Gundam001 } from "./001-gundam.ts";
+export { st08Gundam002 } from "./002-gundam.ts";
+export { st08MesserTypeFNakedCommanderType003 } from "./003-messer-type-f-naked-commander-type.ts";
+export { st08MesserTypeF01004 } from "./004-messer-type-f01.ts";
+export { st08MesserTypeF02Minelayer005 } from "./005-messer-type-f02-minelayer.ts";
+export { st08Penelope006 } from "./006-penelope.ts";
+export { st08Penelope007 } from "./007-penelope.ts";
+export { st08GustavKarlType00008 } from "./008-gustav-karl-type-00.ts";
+export { st08JeganGroundTypeAManHunter009 } from "./009-jegan-ground-type-a-man-hunter.ts";

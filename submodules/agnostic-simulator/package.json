@@ -1,0 +1,25 @@
+{
+  "name": "agnostic-simulator",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ready": "pnpm run check && vp run -r test && vp run -r build",
+    "dev": "vp run website#dev",
+    "prepare": "vp config",
+    "build": "vp run -r build",
+    "check": "vp fmt --check apps/*/src packages/*/src packages/*/*/src && vp lint apps/*/src packages/*/src packages/*/*/src --ignore-pattern '**/*.test.ts' --ignore-pattern '**/*.svelte' --no-error-on-unmatched-pattern && vp run -r check-types",
+    "test": "vp run -r test",
+    "ci-check": "pnpm run check && vp run -r test",
+    "ci-check-full": "pnpm run check && vp run -r test && vp run -r build",
+    "check:fix": "vp fmt apps/*/src packages/*/src packages/*/*/src && vp lint --fix apps/*/src packages/*/src packages/*/*/src"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

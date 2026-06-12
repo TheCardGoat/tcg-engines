@@ -1,0 +1,31 @@
+name: Doc drift
+
+# Continuous drift sensor for the docs/ knowledge base.
+#
+# Inspired by OpenAI's recurring doc-gardening agent. Off by default
+# (workflow_dispatch only) so it doesn't add noise during early harness work.
+# Flip to a schedule trigger once the team is ready for weekly automated
+# nudges — uncomment the `schedule` block below.
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 13 * * 1"  # Mondays 13:00 UTC
+
+jobs:
+  drift:
+    name: Detect doc drift
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run harness drift checks
+        run: |
+          node tools/harness/check-doc-drift.mjs
+          node tools/harness/check-card-fixtures.mjs

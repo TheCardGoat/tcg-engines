@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "allow": ["*"]
+  },
+  "worktree": {
+    "symlinkDirectories": [
+      "node_modules",
+      "packages/shared/node_modules",
+      "packages/typescript-config/node_modules",
+      "packages/lorcana/lorcana-cards/node_modules",
+      "packages/lorcana/lorcana-engine/node_modules",
+      "packages/lorcana/lorcana-interaction/node_modules",
+      "packages/lorcana/lorcana-server-adapter/node_modules",
+      "packages/lorcana/lorcana-simulator/node_modules",
+      "packages/lorcana/lorcana-types/node_modules"
+    ]
+  }
+}

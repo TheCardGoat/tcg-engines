@@ -1,0 +1,14 @@
+{
+  "extends": "./base.json",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "esnext", "ES2023"],
+    "jsx": "preserve",
+    "incremental": true,
+    "noEmit": true,
+    "module": "esnext",
+    "strict": false,
+    "allowSyntheticDefaultImports": true
+  }
+}

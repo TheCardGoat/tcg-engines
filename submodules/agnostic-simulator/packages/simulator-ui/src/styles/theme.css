@@ -1,0 +1,138 @@
+/* Base theme tokens */
+:root {
+  --game-accent: #6d4cc2;
+  --game-accent-soft: #f0ecff;
+  --board-layout-bg: #07111f;
+  --board-mat-bg: #0d1d34;
+  --board-surface: rgba(13, 27, 46, 0.82);
+  --board-surface-soft: rgba(13, 27, 46, 0.82);
+  --board-text: #f8fbff;
+  --board-muted: rgba(216, 229, 247, 0.72);
+  --board-border: rgba(111, 154, 211, 0.28);
+  --board-border-strong: rgba(216, 229, 247, 0.28);
+  --board-label-bg: #1e4367;
+  --board-player-label-bg: #2563eb;
+  --board-opponent-label-bg: #1e4367;
+  --board-shared-label-bg: #1e4367;
+  --board-label-text: #f8fbff;
+  --card-bg: #111827;
+  --card-border: #030910;
+  --card-frame-color: var(--game-accent);
+  --card-art-a: #6d4cc2;
+  --card-art-b: #2dd4bf;
+  --card-art-c: #f59e0b;
+  --pill-bg: rgba(216, 229, 247, 0.12);
+  --pill-text: #f8fbff;
+  --pill-border: rgba(216, 229, 247, 0.28);
+  --surface: #0f172a;
+  --surface-soft: #1e293b;
+  --text: #f8fbff;
+  --muted: #94a3b8;
+  --quiet: #64748b;
+  --border: rgba(111, 154, 211, 0.28);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Light mode overrides */
+[data-theme="light"] {
+  --board-layout-bg: #f8fafc;
+  --board-mat-bg: #f1f5f9;
+  --board-surface: #ffffff;
+  --board-surface-soft: #f8fafc;
+  --board-text: #0f172a;
+  --board-muted: #64748b;
+  --board-border: rgba(148, 163, 184, 0.3);
+  --board-border-strong: rgba(100, 116, 139, 0.4);
+  --board-label-bg: #e2e8f0;
+  --board-label-text: #0f172a;
+  --card-bg: #ffffff;
+  --card-border: rgba(148, 163, 184, 0.4);
+  --pill-bg: rgba(148, 163, 184, 0.15);
+  --pill-text: #334155;
+  --pill-border: rgba(148, 163, 184, 0.3);
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+  --text: #0f172a;
+  --muted: #64748b;
+  --quiet: #94a3b8;
+  --border: rgba(148, 163, 184, 0.3);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Per-game accent overrides */
+[data-game="one-piece"] {
+  --game-accent: #b4232f;
+  --game-accent-soft: #fdebed;
+  --card-art-a: #b4232f;
+  --card-art-b: #f3c260;
+  --card-art-c: #0f2147;
+}
+
+[data-game="gundam"] {
+  --game-accent: #1f5faa;
+  --game-accent-soft: #e8f1fb;
+  --card-art-a: #1f5faa;
+  --card-art-b: #b8d7ff;
+  --card-art-c: #18223a;
+}
+
+[data-game="cyberpunk"] {
+  --game-accent: #b47919;
+  --game-accent-soft: #fff5df;
+  --board-layout-bg: #07090c;
+  --board-mat-bg: #07090c;
+  --board-surface: rgba(12, 15, 20, 0.86);
+  --board-surface-soft: rgba(12, 15, 20, 0.86);
+  --board-text: #f7fbff;
+  --board-muted: rgba(247, 251, 255, 0.62);
+  --board-border: rgba(245, 230, 66, 0.22);
+  --board-border-strong: rgba(245, 230, 66, 0.34);
+  --board-player-label-bg: #4ad9ff;
+  --board-opponent-label-bg: #ff3d8a;
+  --board-shared-label-bg: #f5e642;
+  --board-label-text: #07090c;
+  --card-bg: #090b0f;
+  --card-border: rgba(245, 230, 66, 0.34);
+  --card-art-a: #10131b;
+  --card-art-b: #f5e642;
+  --card-art-c: #4ad9ff;
+  --pill-bg: rgba(245, 230, 66, 0.1);
+  --pill-text: #f5e642;
+  --pill-border: rgba(245, 230, 66, 0.22);
+}
+
+[data-game="lorcana"] {
+  --game-accent: #6d4cc2;
+  --game-accent-soft: #f0ecff;
+  --board-layout-bg: #07111f;
+  --board-mat-bg: #0d1d34;
+  --board-surface: rgba(13, 27, 46, 0.82);
+  --board-surface-soft: rgba(13, 27, 46, 0.82);
+  --board-text: #f8fbff;
+  --board-muted: rgba(216, 229, 247, 0.72);
+  --board-border: rgba(111, 154, 211, 0.28);
+  --board-border-strong: rgba(216, 229, 247, 0.28);
+  --board-label-bg: #1e4367;
+  --board-player-label-bg: #2563eb;
+  --board-opponent-label-bg: #1e4367;
+  --board-shared-label-bg: #1e4367;
+  --card-bg: #111827;
+  --card-border: #030910;
+  --card-art-a: #6d4cc2;
+  --card-art-b: #2dd4bf;
+  --card-art-c: #f59e0b;
+  --pill-bg: rgba(216, 229, 247, 0.12);
+  --pill-text: #f8fbff;
+  --pill-border: rgba(216, 229, 247, 0.28);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

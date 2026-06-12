@@ -1,0 +1,362 @@
+.zone {
+  grid-area: pinfo;
+  position: relative;
+  margin: var(--zone-gutter);
+  padding: 10px var(--zone-pad);
+  border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 18%);
+  border-block-color: rgb(var(--side-accent-rgb, 245 230 66) / 28%);
+  background:
+    linear-gradient(180deg, rgb(var(--side-accent-rgb, 245 230 66) / 7%), transparent 42%),
+    var(--board-zone, #090b0f);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+
+.zone.withDock {
+  padding: 0;
+  overflow: clip;
+  border-color: rgb(245 230 66 / 42%);
+  background:
+    linear-gradient(180deg, rgb(245 230 66 / 7%), rgb(245 230 66 / 2%) 40%, transparent), #090b0f;
+  box-shadow: inset 0 0 14px rgb(245 230 66 / 4%);
+}
+
+.dockTarget {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  min-width: 0;
+  min-height: 0;
+}
+
+.zone.withDock::before,
+.zone.withDock::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  background: rgb(245 230 66 / 78%);
+}
+
+.zone.withDock::before {
+  inset: 0 auto auto 0;
+  width: 34px;
+  height: 1px;
+}
+
+.zone.withDock::after {
+  inset: 0 auto auto 0;
+  width: 1px;
+  height: 34px;
+}
+
+.zone.withDock:not(.opp)::before {
+  inset: auto 0 0 auto;
+}
+
+.zone.withDock:not(.opp)::after {
+  inset: auto 0 0 auto;
+}
+
+.directStealTarget {
+  isolation: isolate;
+  border-color: rgb(74 217 255 / 86%);
+  background:
+    linear-gradient(135deg, rgb(74 217 255 / 20%), transparent 38%),
+    linear-gradient(180deg, rgb(245 230 66 / 10%), rgb(74 217 255 / 8%) 58%, transparent), #090b0f;
+  box-shadow:
+    inset 0 0 0 1px rgb(74 217 255 / 26%),
+    inset 0 0 24px rgb(74 217 255 / 22%),
+    0 0 20px rgb(74 217 255 / 22%);
+  cursor: pointer;
+}
+
+.directStealTarget:focus-visible {
+  outline: 2px solid #f5e642;
+  outline-offset: -3px;
+}
+
+.directStealTarget .dockTarget {
+  opacity: 0;
+}
+
+.directStealTarget .dockTarget::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  z-index: 3;
+  border: 1px dashed rgb(74 217 255 / 86%);
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 18px rgb(74 217 255 / 16%),
+    0 0 16px rgb(74 217 255 / 18%);
+  animation: rival-target-scan 1.15s ease-in-out infinite;
+}
+
+.attackDropCue {
+  position: absolute;
+  inset: 7px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid rgb(245 230 66 / 72%);
+  background:
+    linear-gradient(180deg, rgb(7 9 12 / 84%), rgb(7 9 12 / 94%)),
+    repeating-linear-gradient(
+      90deg,
+      rgb(74 217 255 / 12%) 0,
+      rgb(74 217 255 / 12%) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+  color: #f5e642;
+  font-family: Rajdhani, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 20px rgb(245 230 66 / 10%),
+    0 0 18px rgb(74 217 255 / 20%);
+}
+
+.attackDropCue::before,
+.attackDropCue::after {
+  content: "";
+  position: absolute;
+  inset: 7px auto auto 50%;
+  width: 18px;
+  height: 1px;
+  transform: translateX(-50%);
+  background: #4ad9ff;
+  box-shadow: 0 0 10px rgb(74 217 255 / 78%);
+}
+
+.attackDropCue::after {
+  inset: auto auto 7px 50%;
+}
+
+.dropKicker {
+  color: #4ad9ff;
+  font-size: clamp(8px, 0.78vw, 11px);
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-shadow: 0 0 10px rgb(74 217 255 / 72%);
+}
+
+.dropAction {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #f5e642;
+  font-size: clamp(10px, 0.92vw, 14px);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 0.94;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  text-shadow: 0 0 12px rgb(245 230 66 / 68%);
+}
+
+.rivalTargetSelected {
+  border-color: #f5e642;
+  background:
+    linear-gradient(135deg, rgb(245 230 66 / 22%), transparent 42%),
+    linear-gradient(180deg, rgb(74 217 255 / 16%), rgb(245 230 66 / 10%) 64%, transparent), #090b0f;
+  box-shadow:
+    inset 0 0 0 1px rgb(245 230 66 / 42%),
+    inset 0 0 28px rgb(245 230 66 / 22%),
+    0 0 30px rgb(245 230 66 / 28%);
+}
+
+.rivalTargetSelected .attackDropCue {
+  border-color: #f5e642;
+  background:
+    linear-gradient(180deg, rgb(245 230 66 / 24%), rgb(7 9 12 / 92%)),
+    repeating-linear-gradient(
+      90deg,
+      rgb(245 230 66 / 18%) 0,
+      rgb(245 230 66 / 18%) 1px,
+      transparent 1px,
+      transparent 7px
+    );
+  box-shadow:
+    inset 0 0 24px rgb(245 230 66 / 18%),
+    0 0 24px rgb(245 230 66 / 26%);
+}
+
+.rivalTargetSelected .dropKicker {
+  color: #f5e642;
+  text-shadow: 0 0 10px rgb(245 230 66 / 78%);
+}
+
+.rivalTargetSelected .dropAction {
+  color: #fff8a8;
+}
+
+.directStealTarget.dropOver {
+  border-color: #f5e642;
+  box-shadow:
+    inset 0 0 0 1px rgb(245 230 66 / 34%),
+    inset 0 0 28px rgb(245 230 66 / 22%),
+    0 0 30px rgb(245 230 66 / 30%);
+}
+
+.directStealTarget.dropOver .attackDropCue {
+  border-color: #f5e642;
+  background:
+    linear-gradient(180deg, rgb(245 230 66 / 22%), rgb(7 9 12 / 94%)),
+    repeating-linear-gradient(
+      90deg,
+      rgb(245 230 66 / 16%) 0,
+      rgb(245 230 66 / 16%) 1px,
+      transparent 1px,
+      transparent 7px
+    );
+}
+
+@keyframes rival-target-scan {
+  0%,
+  100% {
+    opacity: 0.56;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(0.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .directStealTarget .dockTarget::before {
+    animation: none;
+  }
+}
+
+.hpRow {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.hpLabel {
+  font-family: Rajdhani, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: rgb(255 255 255 / 50%);
+  text-transform: uppercase;
+}
+
+.hpVal {
+  font-family: Rajdhani, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--side-accent, #f5e642);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  margin-left: auto;
+  text-shadow: 0 0 12px rgb(var(--side-accent-rgb, 245 230 66) / 45%);
+  transition: color 0.2s;
+}
+
+.hpVal.hpLow {
+  color: #ff5252;
+  text-shadow: 0 0 12px rgb(255 82 82 / 60%);
+  animation: hp-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes hp-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.hpMax {
+  font-family: Rajdhani, sans-serif;
+  font-size: 11px;
+  color: rgb(255 255 255 / 35%);
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  height: 6px;
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 30%);
+  position: relative;
+  overflow: hidden;
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--side-accent, #f5e642);
+  box-shadow: 0 0 8px rgb(var(--side-accent-rgb, 245 230 66) / 60%);
+  transform-origin: left;
+  transition:
+    width 0.3s,
+    background 0.2s;
+}
+
+.fillLow {
+  background: #ff5252;
+  box-shadow: 0 0 8px rgb(255 82 82 / 60%);
+}
+
+.cdRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cdLabel {
+  font-family: Rajdhani, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: rgb(255 255 255 / 50%);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.cdBar {
+  flex: 1;
+  height: 4px;
+  background: rgb(255 255 255 / 6%);
+  border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 22%);
+  position: relative;
+  overflow: hidden;
+}
+
+.cdFill {
+  position: absolute;
+  inset: 0;
+  background: rgb(var(--side-accent-rgb, 245 230 66) / 60%);
+  transition: width 0.3s;
+}
+
+.cdVal {
+  font-family: Rajdhani, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--side-accent, #f5e642);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  width: 22px;
+  text-align: right;
+}

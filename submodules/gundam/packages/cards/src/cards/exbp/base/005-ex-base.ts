@@ -1,0 +1,42 @@
+import type { BaseCard } from "@tcg/gundam-types";
+
+export const exbpExBase005: BaseCard = {
+  cardNumber: "EXBP-005",
+  name: "EX Base",
+  type: "base",
+  traits: [],
+  id: "EXBP-005",
+  externalId: "gundam:exbp-005",
+  slug: "ex-base-exbp-005",
+  displayName: "EX Base",
+  set: { code: "EXBP", name: "BANDAI CARD GAMES Fest 25-26", packageId: "616901" },
+  printNumber: "EXBP-005",
+  printings: [
+    {
+      id: "EXBP-005",
+      collectorNumber: "EXBP-005",
+      cardNumber: "EXBP-005",
+      set: {
+        code: "EXBP",
+        name: "BANDAI CARD GAMES Fest 25-26",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-005.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-005.webp?260424",
+      productName: "BANDAI CARD GAMES Fest 25-26",
+    },
+  ],
+  selectedPrintingId: "EXBP-005",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-005.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-005.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  hp: 3,
+  effect: "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

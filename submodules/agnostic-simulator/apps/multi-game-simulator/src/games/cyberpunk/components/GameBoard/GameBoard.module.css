@@ -1,0 +1,271 @@
+.board {
+  --board-bg: #07090c;
+  --board-zone: #090b0f;
+  --board-surface: #0c0f14;
+  --neon-yellow: #f5e642;
+  --neon-yellow-dim: rgb(245 230 66 / 30%);
+  --neon-yellow-glow: 0 0 8px rgb(245 230 66 / 40%);
+  --neon-cyan: #4ad9ff;
+  --neon-cyan-dim: rgb(74 217 255 / 35%);
+  --neon-magenta: #ff3d8a;
+  --neon-magenta-dim: rgb(255 61 138 / 35%);
+
+  /* Per-side accent — overridden on .opponent. Used by zone borders to
+     visually differentiate the two halves. */
+  --side-accent: var(--neon-cyan);
+  --side-accent-dim: var(--neon-cyan-dim);
+  --side-accent-rgb: 74 217 255;
+
+  --fixer-col-w: var(--side-col-w);
+
+  display: grid;
+  grid-template: "fixer mid stack" 100% / var(--fixer-col-w) 1fr var(--side-col-w);
+  width: 100%;
+  height: 100%;
+  background: var(--board-bg);
+  transition: box-shadow 0.25s;
+}
+
+.board::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 7px;
+  bottom: 10px;
+  z-index: 6;
+  width: 2px;
+  pointer-events: none;
+  background: transparent;
+  box-shadow: none;
+  opacity: 0;
+  transition:
+    background 0.18s,
+    box-shadow 0.18s,
+    opacity 0.18s;
+}
+
+.board.opponent {
+  --eddies-justify: flex-end;
+  --side-accent: var(--neon-magenta);
+  --side-accent-dim: var(--neon-magenta-dim);
+  --side-accent-rgb: 255 61 138;
+
+  grid-template: "stack mid fixer" 100% / var(--side-col-w) 1fr var(--fixer-col-w);
+}
+
+.board.opponent::before {
+  right: auto;
+  left: 7px;
+}
+
+.board.fixerCollapsed {
+  --fixer-col-w: clamp(28px, 3.1cqh, 38px);
+}
+
+/* Inactive half stays visually readable; action focus is handled by highlights. */
+.board.inactive {
+  box-shadow: none;
+}
+
+/* Active half is marked by surface energy instead of a fragile full outline. */
+.board.active {
+  box-shadow: none;
+}
+
+.board.active::before {
+  opacity: 1;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgb(var(--side-accent-rgb) / 70%) 18%,
+    rgb(var(--side-accent-rgb) / 70%) 82%,
+    transparent
+  );
+  box-shadow:
+    0 0 10px rgb(var(--side-accent-rgb) / 44%),
+    0 0 22px rgb(var(--side-accent-rgb) / 18%);
+}
+
+.board.active .midCol {
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgb(var(--side-accent-rgb) / 5%),
+    transparent 56%
+  );
+}
+
+.board.active .stackCol,
+.board.active .midCol {
+  filter: drop-shadow(0 0 8px rgb(var(--side-accent-rgb) / 12%));
+}
+
+/* ── Board UI modes ──────────────────────────────────────────────────────
+   Three discrete states map 1:1 to engine PlayerPromptStatus:
+
+   - .modeView          — `waiting`/`idle`. Read-only; cards are inert.
+   - .modeSelectAction  — `action`. Engine wants the player to pick a move.
+                          Frame highlights, ambient pulse.
+   - .modeSelectTarget  — `choice`. An action is mid-resolution; valid
+                          targets pulse while cards remain readable.
+
+   These layer on top of .active/.inactive so side-ownership is preserved
+   in every mode.
+*/
+
+.board.modeView {
+  box-shadow: none;
+}
+
+.board.modeSelectAction {
+  box-shadow: 0 0 18px rgb(var(--side-accent-rgb) / 14%);
+  animation: board-action-pulse 1.6s ease-in-out infinite;
+}
+
+.board.modeSelectTarget {
+  box-shadow: 0 0 18px rgb(245 230 66 / 14%);
+}
+
+@keyframes board-action-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgb(var(--side-accent-rgb) / 10%);
+  }
+
+  50% {
+    box-shadow: 0 0 26px rgb(var(--side-accent-rgb) / 22%);
+  }
+}
+
+.boardWithBanner {
+  position: relative;
+}
+
+/* Middle column: FIELD spans both inner columns; LEGENDS / EDDIES split the bottom row. */
+.midCol {
+  grid-area: mid;
+  display: grid;
+  grid-template: "field field" 60% "legends eddies" 40% / auto 1fr;
+  min-width: 0;
+  min-height: 0;
+}
+
+.board.opponent .midCol {
+  grid-template: "eddies legends" 40% "field field" 60% / 1fr auto;
+}
+
+.stackCol {
+  grid-area: stack;
+  display: grid;
+  grid-template-rows: 50% 25% 25%;
+  grid-template-areas:
+    "pinfo"
+    "deck"
+    "trash";
+  min-width: 0;
+  min-height: 0;
+  background: linear-gradient(rgb(245 230 66 / 6%), rgb(245 230 66 / 0%) 34%), var(--board-bg);
+}
+
+.board.opponent .stackCol {
+  grid-template-rows: 25% 25% 50%;
+  grid-template-areas:
+    "trash"
+    "deck"
+    "pinfo";
+}
+
+.statusDock,
+.actionDock {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+.statusDock {
+  align-items: flex-end;
+  justify-content: stretch;
+}
+
+.actionDock {
+  align-items: flex-start;
+  justify-content: stretch;
+}
+
+.confirmDialogContent {
+  border: 1px solid rgb(245 230 66 / 62%);
+  border-radius: 8px;
+  background: rgb(12 15 20 / 96%);
+  color: #e6f4fb;
+  box-shadow:
+    0 12px 44px rgb(0 0 0 / 72%),
+    0 0 24px rgb(245 230 66 / 18%);
+}
+
+.confirmDialogBody {
+  padding: 6px 20px 18px;
+}
+
+.confirmDialogHeader {
+  min-height: 0;
+  padding: 18px 20px 0;
+  background: transparent;
+}
+
+.confirmDialogTitle {
+  margin: 0 0 6px;
+  color: rgb(245 230 66 / 90%);
+  font-family: Rajdhani, sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.confirmDialogText {
+  margin: 0;
+  color: rgb(207 232 246 / 84%);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.confirmDialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.confirmDialogPrimary,
+.confirmDialogSecondary {
+  appearance: none;
+  min-height: 34px;
+  border-radius: 4px;
+  padding: 7px 12px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.confirmDialogPrimary {
+  border: 1px solid #f5e642;
+  background: #f5e642;
+  color: #07090c;
+  box-shadow: 0 0 12px rgb(245 230 66 / 28%);
+}
+
+.confirmDialogSecondary {
+  border: 1px solid rgb(255 255 255 / 22%);
+  background: transparent;
+  color: rgb(207 232 246 / 76%);
+}
+
+.confirmDialogSecondary:hover {
+  border-color: rgb(255 255 255 / 48%);
+  color: #fff;
+}

@@ -1,0 +1,41 @@
+import type { ResourceCard } from "@tcg/gundam-types";
+
+export const rpResource007: ResourceCard = {
+  cardNumber: "RP-007",
+  name: "Resource",
+  type: "resource",
+  traits: [],
+  id: "RP-007",
+  externalId: "gundam:rp-007",
+  slug: "resource-rp-007",
+  displayName: "Resource",
+  set: { code: "RP", name: "Resource pack", packageId: "616901" },
+  printNumber: "RP-007",
+  printings: [
+    {
+      id: "RP-007",
+      collectorNumber: "RP-007",
+      cardNumber: "RP-007",
+      set: {
+        code: "RP",
+        name: "Resource pack",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-007.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-007.webp?260424",
+      productName: "Resource pack",
+    },
+  ],
+  selectedPrintingId: "RP-007",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-007.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-007.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  effect: "(Rest a Resource when paying a cost.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

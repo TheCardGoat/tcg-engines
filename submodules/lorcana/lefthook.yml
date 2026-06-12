@@ -1,0 +1,19 @@
+pre-commit:
+  parallel: false
+  commands:
+    oxfmt:
+      # `vp fmt` rejects yaml/yml, so a yaml-only commit (e.g. pnpm-lock.yaml)
+      # would be filtered down to zero files and crash with "Expected at least
+      # one target file". Restrict the glob to formats vp fmt actually handles.
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json}"
+      run: vp fmt {staged_files}
+      stage_fixed: true
+    oxlint:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,svelte}"
+      run: vp lint --fix {staged_files}
+      stage_fixed: true
+
+# pre-push:
+#   commands:
+#     format:
+#       run: pnpm run quality

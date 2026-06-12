@@ -1,0 +1,25 @@
+{
+  "name": "@tcg/cyberpunk-replay-cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CLI to download a Cyberpunk replay from production and print the per-turn trace for debugging.",
+  "bin": {
+    "cyberpunk-replay": "./src/cli.ts"
+  },
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "start": "bun ./src/cli.ts",
+    "test": "bun test tests"
+  },
+  "dependencies": {
+    "@tcg/cyberpunk-cards": "workspace:*",
+    "@tcg/cyberpunk-types": "workspace:*",
+    "mutative": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "bun-types": "catalog:",
+    "typescript": "^6.0.2"
+  }
+}

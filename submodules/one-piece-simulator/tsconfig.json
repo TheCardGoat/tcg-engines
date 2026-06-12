@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "paths": {
+      "@tcg/op-cards": ["./packages/cards/src/index.ts"],
+      "@tcg/op-engine": ["./packages/engine/src/index.ts"],
+      "@tcg/op-types": ["./packages/types/src/index.ts"]
+    },
+    "allowImportingTsExtensions": true,
+    "esModuleInterop": true
+  }
+}

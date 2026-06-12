@@ -1,0 +1,43 @@
+import type { UnitCard } from "@tcg/gundam-types";
+
+export const gd03AeuHellion083: UnitCard = {
+  cardNumber: "GD03-083",
+  name: "AEU Hellion",
+  type: "unit",
+  color: "white",
+  traits: ["superpower bloc"],
+  id: "GD03-083",
+  externalId: "gundam:gd03-083",
+  slug: "aeu-hellion-gd03-083",
+  displayName: "AEU Hellion",
+  set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
+  printNumber: "GD03-083",
+  printings: [
+    {
+      id: "GD03-083",
+      collectorNumber: "GD03-083",
+      cardNumber: "GD03-083",
+      set: {
+        code: "GD03",
+        name: "Steel Requiem[GD03]",
+        packageId: "616103",
+      },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-083.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-083.webp?260424",
+      productName: "Steel Requiem[GD03]",
+    },
+  ],
+  selectedPrintingId: "GD03-083",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-083.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-083.webp?260424",
+  legality: "legal",
+  level: 1,
+  cost: 1,
+  ap: 1,
+  hp: 1,
+  effect: "<Blocker> (Rest this Unit to change the attack target to it.)",
+  keywordEffects: [{ keyword: "Blocker" }],
+  rarity: "common",
+};

@@ -1,0 +1,55 @@
+import type { CardEffect, UnitCard } from "@tcg/gundam-types";
+
+export const gd04GundamVirtueTransAm054: UnitCard = {
+  cardNumber: "GD04-054",
+  name: "Gundam Virtue (Trans-Am)",
+  type: "unit",
+  color: "purple",
+  traits: ["cb", "gn drive"],
+  id: "GD04-054",
+  externalId: "gundam:gd04-054",
+  slug: "gundam-virtue-trans-am-gd04-054",
+  displayName: "Gundam Virtue (Trans-Am)",
+  set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
+  printNumber: "GD04-054",
+  printings: [
+    {
+      id: "GD04-054",
+      collectorNumber: "GD04-054",
+      cardNumber: "GD04-054",
+      set: {
+        code: "GD04",
+        name: "Phantom Aria [GD04]",
+        packageId: "616104",
+      },
+      rarity: "rare",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-054.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-054.webp?260424",
+      productName: "Phantom Aria [GD04]",
+    },
+  ],
+  selectedPrintingId: "GD04-054",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-054.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-054.webp?260424",
+  legality: "legal",
+  level: 7,
+  cost: 5,
+  ap: 2,
+  hp: 6,
+  linkCondition: "[Tieria Erde]",
+  effect: "When this Unit deals battle damage to an enemy Unit, destroy that enemy Unit.",
+  effects: [
+    {
+      type: "triggered",
+      activation: {
+        timing: ["onBattleDamageReceived"],
+        conditions: [{ type: "eventSourceIsSelf" }],
+      },
+      directives: [{ action: { action: "destroyEventCard" } }],
+      sourceText: "When this Unit deals battle damage to an enemy Unit, destroy that enemy Unit.",
+    },
+  ] as CardEffect[],
+  keywordEffects: [],
+  rarity: "rare",
+};

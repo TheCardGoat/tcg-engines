@@ -1,0 +1,5456 @@
+[
+  {
+    "id": "GD01-100_p5",
+    "code": "GD01-100",
+    "name": "A Show of Resolve",
+    "rarity": "U +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 2.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-100_p5.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-100_p5.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd01",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD01-107_p3",
+    "code": "GD01-107",
+    "name": "First Contact",
+    "rarity": "U +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 3,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Place 1 EX Resource.\n【Main】Place 1 rested Resource.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-107_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-107_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd01",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD01-111_p2",
+    "code": "GD01-111",
+    "name": "Battle of Aces",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 2 damage to it.\n【Main】/【Action】Choose 1 damaged enemy Unit. Deal 3 damage to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-111_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-111_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd01",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD01-118_p5",
+    "code": "GD01-118",
+    "name": "Overflowing Affection",
+    "rarity": "U +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 2. Then, discard 1.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p5.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p5.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd01",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-001",
+    "code": "GD03-001",
+    "name": "Gundam NT-1",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【When Paired】Choose 1 rested enemy Unit. Deal 1 damage to it. When this effect destroys an enemy Unit, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Christina Mackenzie] / [Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-001_p1",
+    "code": "GD03-001",
+    "name": "Gundam NT-1",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【When Paired】Choose 1 rested enemy Unit. Deal 1 damage to it. When this effect destroys an enemy Unit, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Christina Mackenzie] / [Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-002",
+    "code": "GD03-002",
+    "name": "The-O",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 5,
+    "effect": "<Repair 3> (At the end of your turn, this Unit recovers the specified number of HP.)\n【During Pair】When one of your other Units with <Repair> attacks, choose 1 enemy Unit whose Lv. is equal to or lower than that Unit. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Titans) (Jupitris)",
+    "link": "[Paptimus Scirocco]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-002_p1",
+    "code": "GD03-002",
+    "name": "The-O",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 5,
+    "effect": "<Repair 3> (At the end of your turn, this Unit recovers the specified number of HP.)\n【During Pair】When one of your other Units with <Repair> attacks, choose 1 enemy Unit whose Lv. is equal to or lower than that Unit. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Titans) (Jupitris)",
+    "link": "[Paptimus Scirocco]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-003",
+    "code": "GD03-003",
+    "name": "Messala",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Titans) (Jupitris)",
+    "link": "(Jupitris) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-003_p1",
+    "code": "GD03-003",
+    "name": "Messala",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Titans) (Jupitris)",
+    "link": "(Jupitris) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-004",
+    "code": "GD03-004",
+    "name": "Hambrabi",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【Attack】If you have 2 or more other (Titans) Units in play, choose 1 enemy Unit with 5 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "[Yazan Gable]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-005",
+    "code": "GD03-005",
+    "name": "Kshatriya Besserung",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)\n【Deploy】Draw 1.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Marida Cruz]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-006",
+    "code": "GD03-006",
+    "name": "Penelope (Middle Form)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Lane Aim]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-007",
+    "code": "GD03-007",
+    "name": "Gundam NT-1 Full Armor",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Destroyed】Choose 1 enemy Unit with 3 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "[Christina Mackenzie]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-008",
+    "code": "GD03-008",
+    "name": "Bolinoak Sammahn",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【During Pair】This Unit gains <Repair 2>.\n\r\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Titans) (Jupitris)",
+    "link": "(Jupitris) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-009",
+    "code": "GD03-009",
+    "name": "Palace Athene",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【Deploy】You may choose 2 (Titans) cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit that is Lv.4 or lower. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Titans) (Jupitris)",
+    "link": "[Reccoa Londe]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-010",
+    "code": "GD03-010",
+    "name": "Full Armor Unicorn Gundam (Destroy Mode)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 6,
+    "color": "Blue",
+    "ap": 6,
+    "hp": 6,
+    "effect": "<Repair 3> (At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Banagher Links]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-010_p1",
+    "code": "GD03-010",
+    "name": "Full Armor Unicorn Gundam (Destroy Mode)",
+    "rarity": "U +",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 6,
+    "color": "Blue",
+    "ap": 6,
+    "hp": 6,
+    "effect": "<Repair 3> (At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Banagher Links]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-010_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-010_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-011",
+    "code": "GD03-011",
+    "name": "GM Sniper II",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-012",
+    "code": "GD03-012",
+    "name": "Messala (MA Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 2,
+    "effect": "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Titans) (Jupitris)",
+    "link": "(Jupitris) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-013",
+    "code": "GD03-013",
+    "name": "Hizack",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "While you have another (Jupitris) Unit in play, this Unit gets AP+1 and <Repair 1>.\n\r\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Titans) (Jupitris)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-014",
+    "code": "GD03-014",
+    "name": "Hizack Custom",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 2,
+    "effect": "While you have 2 or more (Titans) Units in play, this card in your hand gets cost -1.",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-015",
+    "code": "GD03-015",
+    "name": "Baund Doc",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 5,
+    "effect": "【Activate･Main】【Once per Turn】Exile 3 (Titans) cards from your trash: This Unit gains <Breach 4> during this turn.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(Titans)",
+    "link": "[Jerid Messa]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-016",
+    "code": "GD03-016",
+    "name": "Full Armor Unicorn Gundam (Unicorn Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Banagher Links]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-016.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-016.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-017",
+    "code": "GD03-017",
+    "name": "Kämpfer",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Burst】Choose 1 (Cyclops Team) Pilot card from your trash. Add it to your hand.\n【When Paired･(Cyclops Team) Pilot】All your (Cyclops Team) Units may choose an active enemy Unit with 5 or less AP as their attack target during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "[Mikhail Kaminsky]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-017.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-017.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-017_p1",
+    "code": "GD03-017",
+    "name": "Kämpfer",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Burst】Choose 1 (Cyclops Team) Pilot card from your trash. Add it to your hand.\n【When Paired･(Cyclops Team) Pilot】All your (Cyclops Team) Units may choose an active enemy Unit with 5 or less AP as their attack target during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "[Mikhail Kaminsky]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-017_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-017_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-017_p2",
+    "code": "GD03-017",
+    "name": "Kämpfer",
+    "rarity": "LR ++",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Burst】Choose 1 (Cyclops Team) Pilot card from your trash. Add it to your hand.\n【When Paired･(Cyclops Team) Pilot】All your (Cyclops Team) Units may choose an active enemy Unit with 5 or less AP as their attack target during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "[Mikhail Kaminsky]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-017_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-017_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-018",
+    "code": "GD03-018",
+    "name": "Altron Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 6,
+    "color": "Green",
+    "ap": 5,
+    "hp": 6,
+    "effect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Attack】Choose 1 enemy Unit with <Blocker>. Deal 5 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(G Team)",
+    "link": "[Chang Wufei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-018.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-018.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-018_p1",
+    "code": "GD03-018",
+    "name": "Altron Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 6,
+    "color": "Green",
+    "ap": 5,
+    "hp": 6,
+    "effect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Attack】Choose 1 enemy Unit with <Blocker>. Deal 5 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(G Team)",
+    "link": "[Chang Wufei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-018_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-018_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-019",
+    "code": "GD03-019",
+    "name": "Gundam AGE-2 Normal",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Pair】Enemy Units choose this rested Unit as their attack target if possible when attacking.\n【When Linked】Place 1 EX Resource.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "[Asemu Asuno]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-019.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-019.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-019_p1",
+    "code": "GD03-019",
+    "name": "Gundam AGE-2 Normal",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Pair】Enemy Units choose this rested Unit as their attack target if possible when attacking.\n【When Linked】Place 1 EX Resource.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "[Asemu Asuno]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-019_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-019_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-020",
+    "code": "GD03-020",
+    "name": "Zaku Ⅱ FZ",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【When Paired】If there are 4 or more (Cyclops Team) cards in your trash, deploy 2 rested [Ad Balloon]((Civilian)･AP0･HP1･This Unit can't be set as active or paired with a Pilot) Unit tokens.\nWhile you have a Unit with \"Ad Balloon\" in its card name in play, this Unit can't receive enemy battle damage.",
+    "zone": "Space Earth",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "[Bernard Wiseman]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-020.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-020.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-020_p1",
+    "code": "GD03-020",
+    "name": "Zaku Ⅱ FZ",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【When Paired】If there are 4 or more (Cyclops Team) cards in your trash, deploy 2 rested [Ad Balloon]((Civilian)･AP0･HP1･This Unit can't be set as active or paired with a Pilot) Unit tokens.\nWhile you have a Unit with \"Ad Balloon\" in its card name in play, this Unit can't receive enemy battle damage.",
+    "zone": "Space Earth",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "[Bernard Wiseman]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-020_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-020_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-021",
+    "code": "GD03-021",
+    "name": "Gundam Deathscythe Hell",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Green",
+    "ap": 6,
+    "hp": 5,
+    "effect": "【Deploy】Choose 1 of your (Operation Meteor)/(G Team) Units. During this turn, it may choose an active enemy Unit as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(G Team)",
+    "link": "[Duo Maxwell]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-021.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-021.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-022",
+    "code": "GD03-022",
+    "name": "Gundam Kyrios",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, deal 1 damage to all enemy Units that are Lv.3 or lower.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-022.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-022.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-022_p1",
+    "code": "GD03-022",
+    "name": "Gundam Kyrios",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【During Link】During your turn, when this Unit destroys an enemy Unit with battle damage, deal 1 damage to all enemy Units that are Lv.3 or lower.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-022_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-022_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-023",
+    "code": "GD03-023",
+    "name": "G-Bouncer",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "When you place an EX Resource, choose 1 of your (AGE System) Units. It gains <High-Maneuver> during this turn.\n\r\n(This Unit can't be blocked.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "(Earth Federation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-023.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-023.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-024",
+    "code": "GD03-024",
+    "name": "Hy-Gogg",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【When Linked】If you have another (Cyclops Team) Unit in play, deploy 1 rested [Hy-Gogg]((Cyclops Team)･AP2･HP1) Unit token.",
+    "zone": "Earth",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "(Cyclops Team) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-024.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-024.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-025",
+    "code": "GD03-025",
+    "name": "Gundam Sandrock Custom",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 5,
+    "hp": 4,
+    "effect": "Enemy Units choose one of your rested (Maganac Corps) Units as their attack target if possible when attacking.",
+    "zone": "Space Earth",
+    "trait": "(G Team)",
+    "link": "[Quatre Raberba Winner]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-025.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-025.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-026",
+    "code": "GD03-026",
+    "name": "Gundam Dynames",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Lockon Stratos]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-026.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-026.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-027",
+    "code": "GD03-027",
+    "name": "Z’Gok E",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Earth",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "(Cyclops Team) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-027.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-027.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-028",
+    "code": "GD03-028",
+    "name": "Auda's Maganac",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Attack】If you are attacking an enemy Unit, this Unit gets AP+2 during this battle.",
+    "zone": "Space Earth",
+    "trait": "(Maganac Corps)",
+    "link": "(Maganac Corps) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-028.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-028.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-029",
+    "code": "GD03-029",
+    "name": "Gundam Heavyarms Custom",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 4,
+    "hp": 5,
+    "effect": "During your turn, when this Unit destroys an enemy Unit with battle damage, deal 2 damage to all enemy Units with <Blocker>.",
+    "zone": "Space Earth",
+    "trait": "(G Team)",
+    "link": "[Trowa Barton]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-029.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-029.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-030",
+    "code": "GD03-030",
+    "name": "Gundam Kyrios (Tail Unit Flight Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 3,
+    "color": "Green",
+    "ap": 3,
+    "hp": 4,
+    "effect": "While you have a (CB) Link Unit in play, this card in your hand gets cost -1.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-030.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-030.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-031",
+    "code": "GD03-031",
+    "name": "Gundam AGE-1 Flat",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (AGE System)",
+    "link": "(Asuno Family) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-031.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-031.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-032",
+    "code": "GD03-032",
+    "name": "Zaku (Four Snake Eyes') [YETI] (GQ)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-032.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-032.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-033",
+    "code": "GD03-033",
+    "name": "Providence Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【During Pair･(ZAFT) Pilot】During your turn, all your (ZAFT) Units get AP+2.\n【Attack】Choose 1 enemy Unit. Deal 1 damage to it for each 4 AP this Unit has.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Rau Le Creuset]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-033.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-033.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-033_p1",
+    "code": "GD03-033",
+    "name": "Providence Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【During Pair･(ZAFT) Pilot】During your turn, all your (ZAFT) Units get AP+2.\n【Attack】Choose 1 enemy Unit. Deal 1 damage to it for each 4 AP this Unit has.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Rau Le Creuset]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-033_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-033_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-034",
+    "code": "GD03-034",
+    "name": "GQuuuuuuX (Omega Psycommu)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Red",
+    "ap": 6,
+    "hp": 5,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【Deploy】Choose 1 enemy Unit. Deal 3 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "[Amate Yuzuriha (Machu)] / [Nyaan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-034.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-034.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-034_p1",
+    "code": "GD03-034",
+    "name": "GQuuuuuuX (Omega Psycommu)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Red",
+    "ap": 6,
+    "hp": 5,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【Deploy】Choose 1 enemy Unit. Deal 3 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "[Amate Yuzuriha (Machu)] / [Nyaan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-034_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-034_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-035",
+    "code": "GD03-035",
+    "name": "GFreD",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 5,
+    "effect": "【Activate･Main】【Once per Turn】①, exile 1 Pilot card from your trash: Deal 1 damage to all enemy Units.\n【When Linked】During this turn, this Unit may choose an active enemy Unit with AP equal to or less than this Unit as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Nyaan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-035.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-035.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-035_p1",
+    "code": "GD03-035",
+    "name": "GFreD",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 5,
+    "effect": "【Activate･Main】【Once per Turn】①, exile 1 Pilot card from your trash: Deal 1 damage to all enemy Units.\n【When Linked】During this turn, this Unit may choose an active enemy Unit with AP equal to or less than this Unit as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Nyaan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-035_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-035_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-035_p2",
+    "code": "GD03-035",
+    "name": "GFreD",
+    "rarity": "LR ++",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 5,
+    "effect": "【Activate･Main】【Once per Turn】①, exile 1 Pilot card from your trash: Deal 1 damage to all enemy Units.\n【When Linked】During this turn, this Unit may choose an active enemy Unit with AP equal to or less than this Unit as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Nyaan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-035_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-035_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-036",
+    "code": "GD03-036",
+    "name": "Ξ Gundam (Flight Form)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【When Linked】Deal 1 damage to all enemy Units.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "[Hathaway Noa]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-036.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-036.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-036_p1",
+    "code": "GD03-036",
+    "name": "Ξ Gundam (Flight Form)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【When Linked】Deal 1 damage to all enemy Units.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "[Hathaway Noa]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-036_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-036_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-037",
+    "code": "GD03-037",
+    "name": "Bertigo",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Link】During your turn, while this Unit is battling an enemy Unit with a 【Destroyed】 effect, it gains <First Strike>.\n\r\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
+    "zone": "Space Earth",
+    "trait": "(SRA)",
+    "link": "(Newtype) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-037.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-037.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-037_p1",
+    "code": "GD03-037",
+    "name": "Bertigo",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Link】During your turn, while this Unit is battling an enemy Unit with a 【Destroyed】 effect, it gains <First Strike>.\n\r\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
+    "zone": "Space Earth",
+    "trait": "(SRA)",
+    "link": "(Newtype) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-037_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-037_p1.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-038",
+    "code": "GD03-038",
+    "name": "GuAIZ (Commander Type)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Activate･Main】<Support 1> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)\nDuring your turn, when this Unit is rested by an effect, choose 1 of your (ZAFT) Units. It gets AP+2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Rau Le Creuset]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-038.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-038.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-039",
+    "code": "GD03-039",
+    "name": "Red Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 other active friendly (Clan) Unit. Rest it. If you do, choose 1 enemy Unit with 2 or less AP. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Clan)",
+    "link": "(Clan) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-039.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-039.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-040",
+    "code": "GD03-040",
+    "name": "Gundam Virsago & Gundam Ashtaron",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 5,
+    "effect": "【During Link】This Unit gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "[Shagia Frost] / [Olba Frost]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-040.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-040.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-041",
+    "code": "GD03-041",
+    "name": "Patulia",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Red",
+    "ap": 5,
+    "hp": 6,
+    "effect": "【Deploy】Deal 3 damage to all Bases.",
+    "zone": "Space Earth",
+    "trait": "(SRA)",
+    "link": "[Carris Nautilus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-041.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-041.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-042",
+    "code": "GD03-042",
+    "name": "Duel Gundam (Assault Shroud)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 4,
+    "effect": "While this Unit has 5 or more AP, it may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Yzak Jule]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-042.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-042.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-043",
+    "code": "GD03-043",
+    "name": "Messer Type-F02",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【When Paired】Choose 1 enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Mafty)",
+    "link": "(Mafty) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-043.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-043.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-044",
+    "code": "GD03-044",
+    "name": "Daughtress Flyer",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Deploy】Deploy 1 rested [Daughtress]((New UNE)･AP0･HP1) Unit token.",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-044.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-044.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-045",
+    "code": "GD03-045",
+    "name": "Balient",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 4,
+    "effect": "While you have a Unit token in play, this Unit gets AP+1.",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-045.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-045.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-046",
+    "code": "GD03-046",
+    "name": "CGUE",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": 2,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-046.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-046.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-047",
+    "code": "GD03-047",
+    "name": "DINN (Commander Type)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Rau Le Creuset]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-047.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-047.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-048",
+    "code": "GD03-048",
+    "name": "GFreD",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": 4,
+    "hp": 2,
+    "effect": "【Burst】If there are 3 or less enemy Shields, deploy 1 rested [GFreD]((Zeon)･AP4･HP3) Unit token.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Nyaan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-048.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-048.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-049",
+    "code": "GD03-049",
+    "name": "Gundam Exia (Trans-Am)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Purple",
+    "ap": 6,
+    "hp": 4,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\nWhen this Unit destroys an enemy shield area card with battle damage, if there are 10 or more (CB) cards in your trash, choose 1 enemy Unit with the lowest HP. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Setsuna F. Seiei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-049.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-049.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-049_p1",
+    "code": "GD03-049",
+    "name": "Gundam Exia (Trans-Am)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Purple",
+    "ap": 6,
+    "hp": 4,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\nWhen this Unit destroys an enemy shield area card with battle damage, if there are 10 or more (CB) cards in your trash, choose 1 enemy Unit with the lowest HP. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Setsuna F. Seiei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-049_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-049_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-050",
+    "code": "GD03-050",
+    "name": "Gundam Barbatos Lupus",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【Activate･Main】Choose 3 (Tekkadan)/(Teiwaz) Unit cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-050.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-050.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-050_p1",
+    "code": "GD03-050",
+    "name": "Gundam Barbatos Lupus",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【Activate･Main】Choose 3 (Tekkadan)/(Teiwaz) Unit cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-050_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-050_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-051",
+    "code": "GD03-051",
+    "name": "Gundam X Divider",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【When Linked】You may choose 1 Unit card that is Lv.4 or lower from your trash. Pay its cost to deploy it.",
+    "zone": "Space Earth",
+    "trait": "(Vulture)",
+    "link": "[Garrod Ran] / [Jamil Neate]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-051.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-051.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-052",
+    "code": "GD03-052",
+    "name": "Gundam Virtue",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)\nWhen this Unit deals battle damage to an enemy Unit that is Lv.5 or lower, if you have a (CB) Pilot in play, destroy that enemy Unit.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Tieria Erde]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-052.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-052.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-052_p1",
+    "code": "GD03-052",
+    "name": "Gundam Virtue",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)\nWhen this Unit deals battle damage to an enemy Unit that is Lv.5 or lower, if you have a (CB) Pilot in play, destroy that enemy Unit.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Tieria Erde]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-052_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-052_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-053",
+    "code": "GD03-053",
+    "name": "Gundam Gusion Rebake Full City",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【During Pair】【Once per Turn】During your turn, when one of your (Tekkadan)/(Teiwaz) Units receives effect damage, choose 1 enemy Unit that is Lv.4 or lower. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Akihiro Altland]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-053.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-053.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-053_p1",
+    "code": "GD03-053",
+    "name": "Gundam Gusion Rebake Full City",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【During Pair】【Once per Turn】During your turn, when one of your (Tekkadan)/(Teiwaz) Units receives effect damage, choose 1 enemy Unit that is Lv.4 or lower. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Akihiro Altland]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-053_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-053_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-054",
+    "code": "GD03-054",
+    "name": "Zeydra",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<High-Maneuver> (This Unit can't be blocked.)\n【When Paired･(X-Rounder) Pilot】You may choose 4 (Vagan) cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit that is Lv.4 or lower. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(Vagan)",
+    "link": "[Zeheart Galette]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-054.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-054.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-055",
+    "code": "GD03-055",
+    "name": "Gundam Hajiroboshi (2nd Form)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Paired･Purple Pilot】Choose 1 enemy Unit that is Lv.2 or lower. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(Civilian) (Gundam Frame)",
+    "link": "[Wistario Afam]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-055.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-055.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-056",
+    "code": "GD03-056",
+    "name": "Gundam Barbatos Adapt",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-056.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-056.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-057",
+    "code": "GD03-057",
+    "name": "GN Armor (Type-E)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "(CB) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-057.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-057.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-058",
+    "code": "GD03-058",
+    "name": "Farsia",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "This card in your trash gets cost -1.",
+    "zone": "Space Earth",
+    "trait": "(UE) (Vagan)",
+    "link": "[Yurin L'Ciel]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-058.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-058.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-059",
+    "code": "GD03-059",
+    "name": "Zedas R",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Attack】You may choose 1 (Vagan) card from your trash. Exile it from the game. If you do, choose 1 of your (Vagan) Units. It gets AP+2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Vagan)",
+    "link": "(X-Rounder) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-059.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-059.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-060",
+    "code": "GD03-060",
+    "name": "CGS Mobile Worker (Commander Type)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": 2,
+    "effect": "【Once per Turn】During your turn, when this Unit receives effect damage, deploy 1 rested [CGS Mobile Worker]((Tekkadan)･AP1･HP1) Unit token.",
+    "zone": "Earth",
+    "trait": "(Tekkadan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-060.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-060.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-061",
+    "code": "GD03-061",
+    "name": "Gundam Barbatos 6th Form",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "While this Unit has 1 HP, it gains <Repair 3>.\n\r\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-061.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-061.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-062",
+    "code": "GD03-062",
+    "name": "GX-Bit",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】If you deploy this Unit from your trash, choose 1 enemy Unit with 4 or less AP. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Old UNE) (Vulture)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-062.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-062.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-063",
+    "code": "GD03-063",
+    "name": "0 Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-063.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-063.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-064",
+    "code": "GD03-064",
+    "name": "Defurse",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 5,
+    "effect": "【Deploy】You may choose 1 (X-Rounder) card from your trash and add it to your hand. If you do, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(UE) (Vagan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-064.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-064.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-065",
+    "code": "GD03-065",
+    "name": "Zedas M",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Vagan)",
+    "link": "(X-Rounder) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-065.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-065.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-066",
+    "code": "GD03-066",
+    "name": "Gundam Barbatos 5th Form (Ground Type)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-066.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-066.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-067",
+    "code": "GD03-067",
+    "name": "Rouei",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【Deploy】You may choose 1 of your Units. Deal 1 damage to it. It gets AP+1 during this turn.",
+    "zone": "Earth",
+    "trait": "(Teiwaz) (Tekkadan)",
+    "link": "(Teiwaz) / (Tekkadan) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-067.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-067.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-068",
+    "code": "GD03-068",
+    "name": "Gundam Hajiroboshi",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "While a friendly Base is in play, this Unit gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Civilian) (Gundam Frame)",
+    "link": "[Wistario Afam]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-068.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-068.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-069",
+    "code": "GD03-069",
+    "name": "Graham's Union Flag Custom",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 2,
+    "effect": "<High-Maneuver> (This Unit can't be blocked.)\n【During Link】At the end of the turn when this Unit is paired with a Pilot, set it as active.",
+    "zone": "Space Earth",
+    "trait": "(Superpower Bloc)",
+    "link": "[Graham Aker]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-069.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-069.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-069_p1",
+    "code": "GD03-069",
+    "name": "Graham's Union Flag Custom",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 2,
+    "effect": "<High-Maneuver> (This Unit can't be blocked.)\n【During Link】At the end of the turn when this Unit is paired with a Pilot, set it as active.",
+    "zone": "Space Earth",
+    "trait": "(Superpower Bloc)",
+    "link": "[Graham Aker]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-069_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-069_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-070",
+    "code": "GD03-070",
+    "name": "Freedom Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "White",
+    "ap": 4,
+    "hp": 5,
+    "effect": "While this Unit is rested, friendly Shields can't receive battle damage from enemy Units.",
+    "zone": "Space Earth",
+    "trait": "(Triple Ship Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-070.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-070.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-070_p1",
+    "code": "GD03-070",
+    "name": "Freedom Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "White",
+    "ap": 4,
+    "hp": 5,
+    "effect": "While this Unit is rested, friendly Shields can't receive battle damage from enemy Units.",
+    "zone": "Space Earth",
+    "trait": "(Triple Ship Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-070_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-070_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-071",
+    "code": "GD03-071",
+    "name": "Z Gundam (Biosensor)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【Deploy】Choose 1 enemy Unit. For each (AEUG) Unit card in your trash, it gets AP-1 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "[Kamille Bidan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-071.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-071.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-071_p1",
+    "code": "GD03-071",
+    "name": "Z Gundam (Biosensor)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 5,
+    "hp": 5,
+    "effect": "【Deploy】Choose 1 enemy Unit. For each (AEUG) Unit card in your trash, it gets AP-1 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "[Kamille Bidan]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-071_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-071_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-072",
+    "code": "GD03-072",
+    "name": "Aile Strike Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【Deploy】If you have another (Triple Ship Alliance) Unit in play, draw 1. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Triple Ship Alliance)",
+    "link": "[Mu La Flaga]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-072.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-072.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-073",
+    "code": "GD03-073",
+    "name": "Graze Ein",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 6,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【During Link】【Activate･Action】【Once per Turn】If there are 6 or more (Gjallarhorn) cards in your trash, choose 1 enemy Unit battling this Unit. It gets AP-3 during this battle.",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "[Ein Dalton]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-073.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-073.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-073_p1",
+    "code": "GD03-073",
+    "name": "Graze Ein",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 6,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【During Link】【Activate･Action】【Once per Turn】If there are 6 or more (Gjallarhorn) cards in your trash, choose 1 enemy Unit battling this Unit. It gets AP-3 during this battle.",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn)",
+    "link": "[Ein Dalton]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-073_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-073_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-074",
+    "code": "GD03-074",
+    "name": "Tieren Taozi",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 1,
+    "effect": "【During Pair】While you have another (Superpower Bloc) Unit in play, enemy Units choose this rested Unit as their attack target if possible when attacking.",
+    "zone": "Space Earth",
+    "trait": "(Superpower Bloc)",
+    "link": "(Super Soldier) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-074.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-074.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-075",
+    "code": "GD03-075",
+    "name": "Super Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Link】【Attack】Choose 1 enemy Unit with no paired Pilot. It gets AP-2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "(AEUG) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-075.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-075.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-076",
+    "code": "GD03-076",
+    "name": "Freedom Gundam (METEOR)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 6,
+    "color": "White",
+    "ap": 6,
+    "hp": 6,
+    "effect": "【Once per Turn】During your turn, when your (Triple Ship Alliance) Unit deals battle damage to an enemy Unit, you may return the enemy Unit to its owner's hand.",
+    "zone": "Space",
+    "trait": "(Triple Ship Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-076.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-076.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-077",
+    "code": "GD03-077",
+    "name": "Justice Gundam (METEOR)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "White",
+    "ap": 6,
+    "hp": 6,
+    "effect": "【When Linked】Choose 1 to 3 enemy Units with 3 or less HP. Return them to their owners' hands.",
+    "zone": "Space",
+    "trait": "(Triple Ship Alliance)",
+    "link": "[Athrun Zala]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-077.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-077.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-078",
+    "code": "GD03-078",
+    "name": "Tieren High Mobility Type",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 1,
+    "effect": "【During Link】【Destroyed】Return the card paired with this Unit to your hand.",
+    "zone": "Space Earth",
+    "trait": "(Superpower Bloc)",
+    "link": "[Sergei Smirnov]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-078.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-078.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-079",
+    "code": "GD03-079",
+    "name": "G-Defenser",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "When you rest your Base with one of your Units' effects, you may rest this Unit instead.",
+    "zone": "Space Earth",
+    "trait": "(AEUG)",
+    "link": "(AEUG) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-079.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-079.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-080",
+    "code": "GD03-080",
+    "name": "Gundam Kimaris Trooper (Trooper Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【When Linked】Choose 1 (Gjallarhorn) Command card from your trash. Add it to your hand.",
+    "zone": "Space Earth",
+    "trait": "(Gjallarhorn) (Gundam Frame)",
+    "link": "[Gaelio Bauduin]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-080.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-080.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-081",
+    "code": "GD03-081",
+    "name": "AEU Enact Demonstration Color",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "This Unit can only attack during a turn when one of your (Superpower Bloc)/(UN) Units is deployed.",
+    "zone": "Space Earth",
+    "trait": "(Superpower Bloc)",
+    "link": "(Superpower Bloc) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-081.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-081.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-082",
+    "code": "GD03-082",
+    "name": "Union Flag",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 4,
+    "hp": 1,
+    "effect": "While you have 2 or more (Superpower Bloc)/(UN) Units in play, this card in your hand gets cost -1.",
+    "zone": "Space Earth",
+    "trait": "(Superpower Bloc)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-082.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-082.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-083",
+    "code": "GD03-083",
+    "name": "AEU Hellion",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Superpower Bloc)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-083.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-083.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-084",
+    "code": "GD03-084",
+    "name": "Paptimus Scirocco",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 of your other Units. It gains <Repair 2> during this turn. Then, if it is a (Jupitris) Unit, draw 1.\n\r\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "-",
+    "trait": "(Titans) (Jupitris) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-084.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-084.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-084_p1",
+    "code": "GD03-084",
+    "name": "Paptimus Scirocco",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 of your other Units. It gains <Repair 2> during this turn. Then, if it is a (Jupitris) Unit, draw 1.\n\r\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "-",
+    "trait": "(Titans) (Jupitris) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-084_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-084_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-085",
+    "code": "GD03-085",
+    "name": "Christina Mackenzie",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nWhen playing this card from your hand and pairing it with a Unit with \"Gundam NT-1\" in its card name, play this card as if it has 0 cost.",
+    "zone": "-",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-085.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-085.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-086",
+    "code": "GD03-086",
+    "name": "Yazan Gable",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】Choose 1 of your (Titans) Units whose Lv. is equal to or lower than this Unit. It gets AP+1 during this turn.",
+    "zone": "-",
+    "trait": "(Titans)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-086.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-086.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-087",
+    "code": "GD03-087",
+    "name": "Sarah Zabiarov",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 enemy Unit that is Lv.3 or lower. Rest it.",
+    "zone": "-",
+    "trait": "(Titans) (Jupitris) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-087.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-087.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-088",
+    "code": "GD03-088",
+    "name": "Asemu Asuno",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】If this is an (AGE System) Unit, it gets AP+1 and <Breach 1>.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "-",
+    "trait": "(Earth Federation) (Asuno Family)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-088.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-088.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-088_p1",
+    "code": "GD03-088",
+    "name": "Asemu Asuno",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】If this is an (AGE System) Unit, it gets AP+1 and <Breach 1>.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "-",
+    "trait": "(Earth Federation) (Asuno Family)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-088_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-088_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-089",
+    "code": "GD03-089",
+    "name": "Bernard Wiseman",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nIncrease this Unit's AP by an amount equal to the number of (Cyclops Team) Pilot cards/Command cards with unique names in your trash.",
+    "zone": "-",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-089.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-089.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-090",
+    "code": "GD03-090",
+    "name": "Mikhail Kaminsky",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】Choose 1 of your (Cyclops Team) Units. It gains <Breach 1> during this turn.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "-",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-090.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-090.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-091",
+    "code": "GD03-091",
+    "name": "Rau Le Creuset",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 (ZAFT) Base card from your trash. Add it to your hand.",
+    "zone": "-",
+    "trait": "(ZAFT)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-091.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-091.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-091_p1",
+    "code": "GD03-091",
+    "name": "Rau Le Creuset",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 (ZAFT) Base card from your trash. Add it to your hand.",
+    "zone": "-",
+    "trait": "(ZAFT)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-091_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-091_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-092",
+    "code": "GD03-092",
+    "name": "Nyaan",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Place the top card of your deck into your trash. If you placed a (Zeon)/(Clan) card with this effect, choose 1 enemy Unit. Deal 1 damage to it.",
+    "zone": "-",
+    "trait": "(Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-092.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-092.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-093",
+    "code": "GD03-093",
+    "name": "Carris Nautilus",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nWhile no enemy Base is in play, this Unit gets AP+1.",
+    "zone": "-",
+    "trait": "(SRA) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-093.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-093.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-094",
+    "code": "GD03-094",
+    "name": "Zeheart Galette",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Place the top 2 cards of your deck into your trash. If you placed a (Vagan) card with this effect, choose 1 enemy Unit. It gets AP-2 during this turn.",
+    "zone": "-",
+    "trait": "(Vagan) (X-Rounder)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-094.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-094.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-094_p1",
+    "code": "GD03-094",
+    "name": "Zeheart Galette",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Place the top 2 cards of your deck into your trash. If you placed a (Vagan) card with this effect, choose 1 enemy Unit. It gets AP-2 during this turn.",
+    "zone": "-",
+    "trait": "(Vagan) (X-Rounder)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-094_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-094_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-095",
+    "code": "GD03-095",
+    "name": "Azee Gurumin",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【Once per Turn】When this Unit receives effect damage, choose 1 enemy Unit. It gets AP-1 during this turn.",
+    "zone": "-",
+    "trait": "(Teiwaz)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-095.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-095.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-096",
+    "code": "GD03-096",
+    "name": "Jamil Neate",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Attack】You may discard 1. If you do, draw 1.",
+    "zone": "-",
+    "trait": "(Vulture) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-096.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-096.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-097",
+    "code": "GD03-097",
+    "name": "Wistario Afam",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Once per Turn】During your turn, when this Unit destroys an enemy Unit with battle damage, look at the top 2 cards of your deck and return 1 to the top. Place the remaining card into your trash.",
+    "zone": "-",
+    "trait": "(Civilian)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-097.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-097.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-098",
+    "code": "GD03-098",
+    "name": "Graham Aker",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】When this rested Unit is set as active by an effect, choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.",
+    "zone": "-",
+    "trait": "(Superpower Bloc) (UN)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-098.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-098.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-098_p1",
+    "code": "GD03-098",
+    "name": "Graham Aker",
+    "rarity": "R +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】When this rested Unit is set as active by an effect, choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.",
+    "zone": "-",
+    "trait": "(Superpower Bloc) (UN)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-098_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-098_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-099",
+    "code": "GD03-099",
+    "name": "Emma Sheen",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Destroyed】If a friendly white Base is in play, choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Return it to its owner's hand.",
+    "zone": "-",
+    "trait": "(AEUG)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-099.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-099.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-100",
+    "code": "GD03-100",
+    "name": "Soma Peries",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Destroyed】Choose 1 enemy Unit. It gets AP-3 during this turn.",
+    "zone": "-",
+    "trait": "(Superpower Bloc) (UN) (Super Soldier)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-100.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-100.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-101",
+    "code": "GD03-101",
+    "name": "A Healthy Curiosity",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 1. Then, if there are 2 or more cards with \"A Healthy Curiosity\" in their card name in your trash, choose 1 enemy Unit with 4 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-101.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-101.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-101_p1",
+    "code": "GD03-101",
+    "name": "A Healthy Curiosity",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 1. Then, if there are 2 or more cards with \"A Healthy Curiosity\" in their card name in your trash, choose 1 enemy Unit with 4 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-101_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-101_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-102",
+    "code": "GD03-102",
+    "name": "Privileged Position",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "6",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Action】Choose 1 of your (Titans) Link Units battling an enemy Unit. Set it as active.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-102.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-102.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-103",
+    "code": "GD03-103",
+    "name": "Field Directive",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit with 2 or less HP. Rest it.\n【Main】If 3 or more enemy Units are in play, choose 1 rested enemy Unit. Deal 2 damage to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-103.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-103.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-104",
+    "code": "GD03-104",
+    "name": "Reccoa's Shadow",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】Choose 1 enemy Unit with 3 or less HP. Rest it. If a friendly (Jupitris) Link Unit is in play, choose 1 to 2 enemy Units with 3 or less HP instead.\n【Pilot】[Reccoa Londe]",
+    "zone": "-",
+    "trait": "(Titans) (Jupitris)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-104.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-104.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-105",
+    "code": "GD03-105",
+    "name": "Bridge Crew",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Add this card to your hand.\n【Main】Choose 1 friendly Unit. During this turn, it may choose an active enemy Unit that has no Pilot paired with it as its attack target.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-105.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-105.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-105_p1",
+    "code": "GD03-105",
+    "name": "Bridge Crew",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Add this card to your hand.\n【Main】Choose 1 friendly Unit. During this turn, it may choose an active enemy Unit that has no Pilot paired with it as its attack target.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-105_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-105_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-106",
+    "code": "GD03-106",
+    "name": "M.A.V. Tactics",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "6",
+    "cost": 4,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Deploy 1 rested [GQuuuuuuX (Omega Psycommu)]((Clan)･AP3･HP2) Unit token and 1 rested [Red Gundam]((Clan)･AP2･HP3) Unit token.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-106.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-106.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-107",
+    "code": "GD03-107",
+    "name": "Over the River and Through the Woods",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】Choose 1 enemy Unit that is Lv.5 or lower. Deal damage to it equal to the number of friendly Unit tokens in play.\n【Pilot】[Hardie Steiner]",
+    "zone": "-",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-107.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-107.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-108",
+    "code": "GD03-108",
+    "name": "How Many Miles to the Battlefield?",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】Deploy 1 [Hy-Gogg]((Cyclops Team)･AP2･HP1) Unit token.\n【Pilot】[Gabriel Ramirez Garcia]",
+    "zone": "-",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-108.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-108.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-109",
+    "code": "GD03-109",
+    "name": "Improved Technique",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 3,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit that is Lv.4 or lower. Deal 3 damage to it. If there are 2 or more cards with \"Improved Technique\" in their card name in your trash, choose 1 enemy Unit instead.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-109.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-109.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-109_p1",
+    "code": "GD03-109",
+    "name": "Improved Technique",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 3,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit that is Lv.4 or lower. Deal 3 damage to it. If there are 2 or more cards with \"Improved Technique\" in their card name in your trash, choose 1 enemy Unit instead.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-109_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-109_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-110",
+    "code": "GD03-110",
+    "name": "Eliminate Target",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "6",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 Pilot paired with an enemy Unit that is Lv.5 or lower. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-110.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-110.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-111",
+    "code": "GD03-111",
+    "name": "Infiltrator Present",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 friendly (Mafty) Unit. It gets AP+3 during this turn.\n【Pilot】[Emeralda Zubin]",
+    "zone": "-",
+    "trait": "(Mafty)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-111.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-111.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-112",
+    "code": "GD03-112",
+    "name": "Warped Intent",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Add this card to your hand.\n【Main】/【Action】During this turn, all Units paired with a Pilot get AP+2.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-112.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-112.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-113",
+    "code": "GD03-113",
+    "name": "Human Karma",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 active friendly Unit. Rest it. If you do, choose 1 enemy Unit whose Lv. is equal to or lower than the Unit rested with this ability. Deal 3 damage to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-113.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-113.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-114",
+    "code": "GD03-114",
+    "name": "Look of Determination",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Action】.\n【Action】Choose 1 active enemy Unit that is Lv.2 or lower. Destroy it. If there are 10 or more cards in your trash, choose 1 active enemy Unit that is Lv.4 or lower instead.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-114.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-114.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-114_p1",
+    "code": "GD03-114",
+    "name": "Look of Determination",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Action】.\n【Action】Choose 1 active enemy Unit that is Lv.2 or lower. Destroy it. If there are 10 or more cards in your trash, choose 1 active enemy Unit that is Lv.4 or lower instead.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-114_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-114_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-115",
+    "code": "GD03-115",
+    "name": "Distant Reunion",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Action】Choose 1 friendly Unit paired with an (X-Rounder) Pilot. It can't receive battle damage from enemy Units with 2 or less AP during this battle. If you are Lv.7 or higher, it can't receive battle damage from enemy Units with 5 or less AP instead.\n【Pilot】[Yurin L'Ciel]",
+    "zone": "-",
+    "trait": "(Civilian) (Vagan) (X-Rounder)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-115.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-115.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-116",
+    "code": "GD03-116",
+    "name": "Towards Destiny",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 friendly (Vagan) Unit and 1 enemy Unit. Deal 2 damage to them.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-116.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-116.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-117",
+    "code": "GD03-117",
+    "name": "Orga's Order",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】If 1 to 4 enemy Units are in play, deploy 1 [Graze Custom]((Tekkadan)･AP2･HP2) Unit token. If 5 or more are in play, deploy 1 [Gundam Barbatos 4th Form]((Tekkadan)･AP4･HP4) Unit token.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-117.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-117.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-118",
+    "code": "GD03-118",
+    "name": "Awakened Potential",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Add this card to your hand.\n【Action】Choose 1 rested enemy Unit that is Lv.4 or lower. Return it to its owner's hand. Then, if there are 2 or more cards with \"Awakened Potential\" in their card name in your trash, you may choose 1 friendly Unit. It gains <Blocker> during this turn.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-118.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-118.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-118_p1",
+    "code": "GD03-118",
+    "name": "Awakened Potential",
+    "rarity": "R +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Add this card to your hand.\n【Action】Choose 1 rested enemy Unit that is Lv.4 or lower. Return it to its owner's hand. Then, if there are 2 or more cards with \"Awakened Potential\" in their card name in your trash, you may choose 1 friendly Unit. It gains <Blocker> during this turn.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-118_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-118_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-119",
+    "code": "GD03-119",
+    "name": "Awkward Approach",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Choose 1 rested friendly Base. Set it as active. If you do, all enemy Units get AP-1 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-119.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-119.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-120",
+    "code": "GD03-120",
+    "name": "Immortal Colasour",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】During this turn, if a friendly (Superpower Bloc)/(UN) Unit destroys an enemy Unit with battle damage, choose 1 rested friendly (Superpower Bloc)/(UN) Unit. Set it as active. It can't attack during this turn.\n【Pilot】[Patrick Colasour]",
+    "zone": "-",
+    "trait": "(Superpower Bloc) (UN)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-120.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-120.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-121",
+    "code": "GD03-121",
+    "name": "Unheralded Attack",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "1",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Action】Choose 1 friendly Base and 1 enemy Unit with 3 or less HP. Rest them.\n【Pilot】[Katz Kobayashi]",
+    "zone": "-",
+    "trait": "(AEUG) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-121.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-121.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-122",
+    "code": "GD03-122",
+    "name": "Veteran Tactics",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Action】Choose 1 enemy Unit that is Lv.3 or lower. Return it to its owner's hand.\n【Pilot】[Sergei Smirnov]",
+    "zone": "-",
+    "trait": "(Superpower Bloc) (UN)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-122.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-122.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-123",
+    "code": "GD03-123",
+    "name": "Jupitris",
+    "rarity": "R",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if a friendly (Jupitris) Unit is in play, choose 1 enemy Unit that is Lv.3 or lower. Rest it.",
+    "zone": "Space",
+    "trait": "(Titans) (Jupitris) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-123.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-123.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-124",
+    "code": "GD03-124",
+    "name": "Ribo Colony",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Once per Turn】When you pair a Pilot that is Lv.3 or lower with one of your Units, choose 1 enemy Unit with 3 or less HP. Rest it.",
+    "zone": "Space",
+    "trait": "(Earth Federation) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-124.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-124.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-125",
+    "code": "GD03-125",
+    "name": "Peacemillion",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "6",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": 6,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Once per Turn】During your turn, when a friendly (Operation Meteor)/(G Team) Unit that is Lv.6 or higher destroys an enemy Unit with battle damage, that friendly Unit may recover 2 HP.",
+    "zone": "Space",
+    "trait": "(G Team) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-125.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-125.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-126",
+    "code": "GD03-126",
+    "name": "Cyclops Team",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nAll friendly Unit tokens get AP+1 during your opponent's turn.",
+    "zone": "Earth",
+    "trait": "(Zeon) (Cyclops Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-126.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-126.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-127",
+    "code": "GD03-127",
+    "name": "Jachin Due",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "6",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 6,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, Choose 1 friendly (ZAFT) Unit. It gets AP+3 during this turn.",
+    "zone": "Space",
+    "trait": "(ZAFT) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-127.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-127.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-128",
+    "code": "GD03-128",
+    "name": "Doritea",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Once per Turn】During your opponent's turn, when one of your Units is rested by one of your opponent's effects, choose 1 enemy Unit. Deal 1 damage to it.",
+    "zone": "Earth",
+    "trait": "(New UNE) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-128.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-128.webp?260424"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-129",
+    "code": "GD03-129",
+    "name": "Hotarubi",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nDuring your turn, when one of your friendly (Tekkadan)/(Teiwaz) Units receives effect damage, you may rest this Base. If you do, place the top card of your deck into your trash.",
+    "zone": "Space",
+    "trait": "(Tekkadan) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-129.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-129.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-130",
+    "code": "GD03-130",
+    "name": "Downes",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "5",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, you may choose 1 (Vagan) Unit card that is Lv.4 or lower from your trash. Pay its cost to deploy it.",
+    "zone": "Space",
+    "trait": "(Vagan) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-130.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-130.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam AGE",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-131",
+    "code": "GD03-131",
+    "name": "Eternal",
+    "rarity": "R",
+    "cardType": "BASE",
+    "level": "5",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if you have 2 or more (Triple Ship Alliance) Units in play, choose 1 enemy Unit that is Lv.4 or lower. Return it to its owner's hand.",
+    "zone": "Space",
+    "trait": "(Triple Ship Alliance) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-131.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-131.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "GD03-132",
+    "code": "GD03-132",
+    "name": "Radish",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Destroyed】If you have an (AEUG) Link Unit in play, choose 1 enemy Unit with 4 or less HP. Rest it.",
+    "zone": "Space",
+    "trait": "(AEUG) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-132.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-132.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-020",
+    "code": "R-020",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-020.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-020.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-020_p1",
+    "code": "R-020",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-020_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-020_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-021",
+    "code": "R-021",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-021.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-021.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-021_p1",
+    "code": "R-021",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-021_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-021_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Z Gundam",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-022",
+    "code": "R-022",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-022.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-022.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-022_p1",
+    "code": "R-022",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-022_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-022_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-023",
+    "code": "R-023",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-023.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-023.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-023_p1",
+    "code": "R-023",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-023_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-023_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-024",
+    "code": "R-024",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-024.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-024.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-024_p1",
+    "code": "R-024",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-024_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-024_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-025",
+    "code": "R-025",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-025.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-025.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-025_p1",
+    "code": "R-025",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-025_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-025_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-025_p2",
+    "code": "R-025",
+    "name": "Resource",
+    "rarity": "C ++",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-025_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-025_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-026",
+    "code": "R-026",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-026.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-026.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-026_p1",
+    "code": "R-026",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-026_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-026_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-027",
+    "code": "R-027",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-027.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-027.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-027_p1",
+    "code": "R-027",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-027_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-027_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-028",
+    "code": "R-028",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-028.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-028.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-028_p1",
+    "code": "R-028",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-028_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-028_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-029",
+    "code": "R-029",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-029.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-029.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "R-029_p1",
+    "code": "R-029",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-029_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-029_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "r",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "ST05-010_p3",
+    "code": "ST05-010",
+    "name": "Mikazuki Augus",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "-",
+    "trait": "(Tekkadan) (Alaya-Vijnana)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-010_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-010_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "st05",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "ST05-013_p3",
+    "code": "ST05-013",
+    "name": "With Iron and Blood",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 of your Units. Deal 1 damage to it. It gets AP+3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-013_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-013_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "st05",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "ST05-014_p4",
+    "code": "ST05-014",
+    "name": "Fatal Strike",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 1 damage to it.\n【Main】Choose 1 enemy Unit that is Lv.3 or lower. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p4.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p4.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "st05",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "T-013",
+    "code": "T-013",
+    "name": "Hy-Gogg",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 2,
+    "hp": 1,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "t",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "T-014",
+    "code": "T-014",
+    "name": "Ad Balloon",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 1,
+    "effect": "This Unit can't be set as active or paired with a Pilot.",
+    "zone": "-",
+    "trait": "(Civilian)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 0080: War in the Pocket",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "t",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "T-015",
+    "code": "T-015",
+    "name": "CGS Mobile Worker",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 1,
+    "hp": 1,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Tekkadan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "t",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "T-016",
+    "code": "T-016",
+    "name": "Graze Custom",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Tekkadan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-016.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-016.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "t",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "T-017",
+    "code": "T-017",
+    "name": "Gundam Barbatos 4th Form",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 4,
+    "hp": 4,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Tekkadan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-017.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-017.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "t",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "T-018",
+    "code": "T-018",
+    "name": "Red Gundam",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 2,
+    "hp": 3,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Clan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-018.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-018.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "t",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "T-019",
+    "code": "T-019",
+    "name": "GQuuuuuuX (Omega Psycommu)",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Clan)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-019.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-019.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "t",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  },
+  {
+    "id": "T-020",
+    "code": "T-020",
+    "name": "GFreD",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-020.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-020.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam GQuuuuuuX",
+    "getIt": "Steel Requiem[GD03]",
+    "set": {
+      "id": "t",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103"
+    }
+  }
+]

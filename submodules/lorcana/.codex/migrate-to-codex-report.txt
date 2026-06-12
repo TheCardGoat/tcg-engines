@@ -1,0 +1,145 @@
+Migration inventory:
+  active: instruction files - 2 found
+    - CLAUDE.md
+    - AGENTS.md
+  active: skills - 36 found
+    - adapt
+    - animate
+    - audit
+    - better-auth-best-practices
+    - better-auth-security-best-practices
+    - bolder
+    - clarify
+    - colorize
+    - create-auth-skill
+    - critique
+    - delight
+    - distill
+    - email-and-password-best-practices
+    - extract
+    - frontend-design
+    - harden
+    - improve-card-generator
+    - link-workspace-packages
+    - lorcana-cards
+    - lorcana-rules
+    - lorcana-test-generation
+    - memory-bank
+    - monitor-ci
+    - normalize
+    - nx-generate
+    - nx-import
+    - nx-plugins
+    - nx-run-tasks
+    - nx-workspace
+    - onboard
+    - optimize
+    - playwright-cli
+    - polish
+    - quieter
+    - skill-creator
+    - teach-impeccable
+  active: command sources - 10 found
+    provider: source command (10)
+      - fix-ci
+      - fix-typescript
+      - implement-batch
+      - implement-card
+      - improve-parser
+      - plan-product
+      - regenerate-cards
+      - review-pr-comments
+      - review-pull-request
+      - triage-player-report
+  inactive: subagents - none found
+Migration surfaces:
+  active: AGENTS.md - 1 instruction file(s) found.
+  active: skills - 46 skill(s) converted.
+  inactive: MCP config - No settings or MCP config found.
+  inactive: subagents - No subagents found.
+Migration report:
+  symlinked: AGENTS.md - Linked to /Users/wazar/projects/lorcana-simulator/CLAUDE.md.
+  rewritten: .agents/skills/adapt/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/animate/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/audit/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/better-auth-best-practices/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/better-auth-security-best-practices/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/bolder/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/clarify/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/colorize/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/create-auth-skill/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/critique/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/delight/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/distill/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/email-and-password-best-practices/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/extract/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/frontend-design/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/harden/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/improve-card-generator/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/link-workspace-packages/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/lorcana-cards/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/lorcana-rules/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/lorcana-test-generation/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/memory-bank/SKILL.md - Converted Claude skill.
+  manual_fix_required: .agents/skills/monitor-ci/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`, `argument-hint`, `user-invocable`.
+  manual_fix_required: .agents/skills/normalize/SKILL.md - Manual review required for Claude skill fields: `args`, `required`, `user-invokable`.
+  manual_fix_required: .agents/skills/nx-generate/SKILL.md - Manual review required for Claude skill fields: `context`, `subagent`.
+  rewritten: .agents/skills/nx-import/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/nx-plugins/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/nx-run-tasks/SKILL.md - Converted Claude skill.
+  rewritten: .agents/skills/nx-workspace/SKILL.md - Converted Claude skill.
+  manual_fix_required: .agents/skills/onboard/SKILL.md - Manual review required for Claude skill fields: `args`, `required`, `user-invokable`.
+  manual_fix_required: .agents/skills/optimize/SKILL.md - Manual review required for Claude skill fields: `args`, `required`, `user-invokable`.
+  manual_fix_required: .agents/skills/playwright-cli/SKILL.md - Manual review required for Claude skill fields: `allowed-tools`.
+  manual_fix_required: .agents/skills/polish/SKILL.md - Manual review required for Claude skill fields: `args`, `required`, `user-invokable`.
+  manual_fix_required: .agents/skills/quieter/SKILL.md - Manual review required for Claude skill fields: `args`, `required`, `user-invokable`.
+  manual_fix_required: .agents/skills/skill-creator/SKILL.md - Manual review required for Claude skill fields: `license`.
+  manual_fix_required: .agents/skills/teach-impeccable/SKILL.md - Manual review required for Claude skill fields: `user-invokable`.
+  manual_fix_required: .agents/skills/source-command-fix-ci/SKILL.md - Converted source command `fix-ci` to a single-file Codex skill; review invocation and template placeholder semantics.
+  manual_fix_required: .agents/skills/source-command-fix-typescript/SKILL.md - Converted source command `fix-typescript` to a single-file Codex skill; review invocation and template placeholder semantics.
+  manual_fix_required: .agents/skills/source-command-implement-batch/SKILL.md - Converted source command `implement-batch` to a single-file Codex skill; review invocation and template placeholder semantics.
+  manual_fix_required: .agents/skills/source-command-implement-card/SKILL.md - Converted source command `implement-card` to a single-file Codex skill; review invocation and template placeholder semantics.
+  manual_fix_required: .agents/skills/source-command-improve-parser/SKILL.md - Converted source command `improve-parser` to a single-file Codex skill; review invocation and template placeholder semantics.
+  manual_fix_required: .agents/skills/source-command-plan-product/SKILL.md - Converted source command `plan-product` to a single-file Codex skill; review invocation and template placeholder semantics.
+  manual_fix_required: .agents/skills/source-command-regenerate-cards/SKILL.md - Converted source command `regenerate-cards` to a single-file Codex skill; review invocation and template placeholder semantics.
+  manual_fix_required: .agents/skills/source-command-review-pr-comments/SKILL.md - Converted source command `review-pr-comments` to a single-file Codex skill; review invocation and template placeholder semantics.
+  manual_fix_required: .agents/skills/source-command-review-pull-request/SKILL.md - Converted source command `review-pull-request` to a single-file Codex skill; review invocation and template placeholder semantics.
+  manual_fix_required: .agents/skills/source-command-triage-player-report/SKILL.md - Converted source command `triage-player-report` to a single-file Codex skill; review invocation and template placeholder semantics.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/clarify - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/nx-generate - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/nx-workspace - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/email-and-password-best-practices - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/skill-creator - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/lorcana-test-generation - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/harden - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/nx-import - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/adapt - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/improve-card-generator - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/better-auth-security-best-practices - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/memory-bank - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/lorcana-rules - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/optimize - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/source-command-regenerate-cards - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/extract - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/delight - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/monitor-ci - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/create-auth-skill - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/bolder - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/quieter - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/audit - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/colorize - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/better-auth-best-practices - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/onboard - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/playwright-cli - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/teach-impeccable - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/critique - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/nx-plugins - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/lorcana-cards - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/animate - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/nx-run-tasks - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/polish - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/frontend-design - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/source-command-improve-parser - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/normalize - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/link-workspace-packages - Existing Codex skill will be replaced.
+  overwritten: /Users/wazar/projects/lorcana-simulator/.agents/skills/distill - Existing Codex skill will be replaced.

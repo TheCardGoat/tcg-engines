@@ -1,0 +1,29 @@
+{
+  "name": "gundam-sumulator",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ready": "vp fmt && vp lint && pnpm exec turbo run test build",
+    "ci-check": "vp run ci:check",
+    "ci-check-full": "vp run ci:full",
+    "test": "pnpm exec turbo run test",
+    "dev": "vp run website#dev",
+    "prepare": "node -e \"process.exit(process.env.CI?0:1)\" || vp config",
+    "check:invariants": "node tools/harness/check-invariants.mjs",
+    "check:card-fixtures": "node tools/harness/check-card-fixtures.mjs",
+    "check:doc-drift": "node tools/harness/check-doc-drift.mjs",
+    "check:harness": "pnpm check:invariants && pnpm check:card-fixtures && pnpm check:doc-drift",
+    "build": "pnpm exec turbo run build"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "turbo": "2.9.12",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

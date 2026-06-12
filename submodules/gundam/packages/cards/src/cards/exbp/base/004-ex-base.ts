@@ -1,0 +1,42 @@
+import type { BaseCard } from "@tcg/gundam-types";
+
+export const exbpExBase004: BaseCard = {
+  cardNumber: "EXBP-004",
+  name: "EX Base",
+  type: "base",
+  traits: [],
+  id: "EXBP-004",
+  externalId: "gundam:exbp-004",
+  slug: "ex-base-exbp-004",
+  displayName: "EX Base",
+  set: { code: "EXBP", name: "First Combat", packageId: "616901" },
+  printNumber: "EXBP-004",
+  printings: [
+    {
+      id: "EXBP-004",
+      collectorNumber: "EXBP-004",
+      cardNumber: "EXBP-004",
+      set: {
+        code: "EXBP",
+        name: "First Combat",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-004.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-004.webp?260424",
+      productName: "First Combat",
+    },
+  ],
+  selectedPrintingId: "EXBP-004",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-004.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-004.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  hp: 3,
+  effect: "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

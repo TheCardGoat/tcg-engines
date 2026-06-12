@@ -1,0 +1,75 @@
+{
+  "name": "lorcana-engine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "vp lint packages/lorcana/*/src packages/*/src",
+    "lint:fix": "vp lint --fix packages/lorcana/*/src packages/*/src",
+    "format": "vp fmt --check packages/lorcana/*/src packages/*/src",
+    "format:fix": "vp fmt packages/lorcana/*/src packages/*/src",
+    "quality": "pnpm run lint && pnpm run format",
+    "quality:fix": "pnpm run lint:fix && pnpm run format:fix",
+    "build": "bunx turbo run build",
+    "check": "bunx turbo run check",
+    "check-types": "bunx turbo run check-types",
+    "dev": "bunx turbo run @tcg/lorcana-simulator#dev",
+    "test": "bunx turbo run test",
+    "ci-check": "bash ./scripts/ci-check.sh ci-check:verbose",
+    "ci-check:verbose": "vp run ci:check",
+    "ci-check-full": "bash ./scripts/ci-check.sh ci-check-full:verbose",
+    "ci-check-full:verbose": "vp run ci:full",
+    "preview": "bunx turbo run preview",
+    "ready": "vp fmt && vp lint && vp test && vp run build -r",
+    "prepare": "node -e \"process.exit(process.env.CI?0:1)\" || vp config",
+    "clean": "pnpm dlx rimraf '**/node_modules' '**/dist' && pnpm install"
+  },
+  "dependencies": {
+    "@logtape/logtape": "^2.0.4",
+    "@logtape/pretty": "^2.0.4",
+    "object-hash": "3.0.0",
+    "seedrandom": "^3.0.5"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
+    "@eslint/js": "^10.0.1",
+    "@evilmartians/lefthook": "1.11.2",
+    "@types/node": "catalog:",
+    "@types/seedrandom": "^3.0.8",
+    "bun-types": "^1.3.5",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^10.3.0",
+    "jsonc-eslint-parser": "^3.1.0",
+    "lefthook": "^2.1.0",
+    "turbo": "2.9.12",
+    "typescript": "catalog:",
+    "typescript-eslint": "^8.59.2",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  },
+  "overrides": {
+    "@sinclair/typebox": "^0.34.0",
+    "zod": "^4.3.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "volta": {
+    "node": "24.12.0"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@evilmartians/lefthook",
+      "esbuild",
+      "lefthook"
+    ],
+    "ignoredBuiltDependencies": [
+      "kbd"
+    ]
+  }
+}

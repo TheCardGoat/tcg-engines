@@ -1,0 +1,9 @@
+{
+  "extends": "@tcg/typescript-config/node.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "lib": ["esnext", "ES2023", "dom"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

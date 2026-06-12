@@ -1,0 +1,41 @@
+import type { ResourceCard } from "@tcg/gundam-types";
+
+export const rpResource002: ResourceCard = {
+  cardNumber: "RP-002",
+  name: "Resource",
+  type: "resource",
+  traits: [],
+  id: "RP-002",
+  externalId: "gundam:rp-002",
+  slug: "resource-rp-002",
+  displayName: "Resource",
+  set: { code: "RP", name: "San Diego Comic-Con 2025", packageId: "616901" },
+  printNumber: "RP-002",
+  printings: [
+    {
+      id: "RP-002",
+      collectorNumber: "RP-002",
+      cardNumber: "RP-002",
+      set: {
+        code: "RP",
+        name: "San Diego Comic-Con 2025",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-002.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-002.webp?260424",
+      productName: "San Diego Comic-Con 2025",
+    },
+  ],
+  selectedPrintingId: "RP-002",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-002.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-002.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  effect: "(Rest a Resource when paying a cost.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

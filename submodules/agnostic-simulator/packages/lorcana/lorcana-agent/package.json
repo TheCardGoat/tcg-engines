@@ -1,0 +1,40 @@
+{
+  "name": "@tcg/lorcana-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LLM agent for Disney Lorcana — registers a GameAgent into @tcg/agent-core with a Lorcana state serializer, Zod move schemas, and per-tool implementations.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
+    "check-types": "tsc --noEmit",
+    "test": "bun test --pass-with-no-tests"
+  },
+  "dependencies": {
+    "@tcg/agent-core": "link:../../agent-core",
+    "@tcg/shared": "link:../../shared",
+    "zod": "^4.4.2"
+  },
+  "devDependencies": {
+    "@tcg/lorcana-engine": "link:../../../../lorcana/packages/lorcana/lorcana-engine",
+    "@tcg/lorcana-types": "link:../../../../lorcana/packages/lorcana/lorcana-types",
+    "@tcg/typescript-config": "link:../../typescript-config",
+    "@types/node": "^22.13.4"
+  },
+  "peerDependencies": {
+    "@tcg/lorcana-engine": "*",
+    "@tcg/lorcana-types": "*"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@tcg/op-simulator",
+  "version": "0.0.0",
+  "private": true,
+  "description": "One Piece simulator built with Phaser and Vite+.",
+  "type": "module",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "tsc && vp build",
+    "preview": "vp preview",
+    "test": "vp test run",
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@tcg/game-page-contract": "link:../../../agnostic-simulator/packages/game-page-contract",
+    "@tcg/op-engine": "workspace:*",
+    "phaser": "catalog:"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}

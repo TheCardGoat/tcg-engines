@@ -1,0 +1,20 @@
+{
+  "name": "@tcg/cyberpunk-ai-runner",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Bot-vs-bot harness CLI for the Cyberpunk TCG engine.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "cli": "node --experimental-transform-types ./src/cli.ts"
+  },
+  "dependencies": {
+    "@tcg/cyberpunk-cards": "workspace:*",
+    "@tcg/cyberpunk-engine": "workspace:*",
+    "@tcg/cyberpunk-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "vite-plus": "catalog:"
+  }
+}

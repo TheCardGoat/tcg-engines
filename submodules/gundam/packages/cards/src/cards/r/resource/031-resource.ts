@@ -1,0 +1,57 @@
+import type { ResourceCard } from "@tcg/gundam-types";
+
+export const rResource031: ResourceCard = {
+  cardNumber: "R-031",
+  name: "Resource",
+  type: "resource",
+  traits: [],
+  id: "R-031",
+  externalId: "gundam:r-031",
+  slug: "resource-r-031",
+  displayName: "Resource",
+  set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
+  printNumber: "R-031",
+  printings: [
+    {
+      id: "R-031",
+      collectorNumber: "R-031",
+      cardNumber: "R-031",
+      set: {
+        code: "GD04",
+        name: "Phantom Aria [GD04]",
+        packageId: "616104",
+      },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-031.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-031.webp?260424",
+      productName: "Phantom Aria [GD04]",
+    },
+    {
+      id: "R-031_p1",
+      collectorNumber: "R-031_p1",
+      cardNumber: "R-031",
+      set: {
+        code: "GD04",
+        name: "Phantom Aria [GD04]",
+        packageId: "616104",
+      },
+      rarity: "common",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-031_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-031_p1.webp?260424",
+      productName: "Phantom Aria [GD04]",
+    },
+  ],
+  selectedPrintingId: "R-031",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-031.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-031.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  effect: "(Rest a Resource when paying a cost.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "common",
+};
+export const gd04Resource031 = rResource031;

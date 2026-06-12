@@ -1,0 +1,34 @@
+[
+  {
+    "id": "street-heat",
+    "label": "Street Heat",
+    "description": "Fast red and yellow pressure with efficient Units, Gear, and tempo Programs.",
+    "createdAt": "2026-04-29",
+    "updatedAt": "2026-04-29",
+    "tags": ["aggro", "red", "yellow", "tempo"]
+  },
+  {
+    "id": "corpo-ops",
+    "label": "Corpo Ops",
+    "description": "A balanced green, red, and yellow pile with blockers, removal, and Gig tricks.",
+    "createdAt": "2026-04-29",
+    "updatedAt": "2026-04-29",
+    "tags": ["midrange", "green", "red", "yellow"]
+  },
+  {
+    "id": "arasaka-print-n-play",
+    "label": "Arasaka (Print & Play)",
+    "description": "Official Arasaka print-and-play deck. Green/red control with blockers, gear, and removal.",
+    "createdAt": "2026-05-18",
+    "updatedAt": "2026-05-18",
+    "tags": ["control", "green", "red", "print-n-play"]
+  },
+  {
+    "id": "merc-print-n-play",
+    "label": "Merc (Print & Play)",
+    "description": "Official Merc print-and-play deck. Red/yellow aggro with gear, programs, and efficient units.",
+    "createdAt": "2026-05-18",
+    "updatedAt": "2026-05-18",
+    "tags": ["aggro", "red", "yellow", "print-n-play"]
+  }
+]

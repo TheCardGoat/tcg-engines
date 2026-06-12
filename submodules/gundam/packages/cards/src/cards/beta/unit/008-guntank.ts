@@ -1,0 +1,96 @@
+import type { CardEffect, UnitCard } from "@tcg/gundam-types";
+
+export const betaGuntank008: UnitCard = {
+  cardNumber: "GD01-008",
+  name: "Guntank",
+  type: "unit",
+  color: "blue",
+  traits: ["earth federation", "white base team"],
+  id: "GD01-008_p1",
+  externalId: "gundam:gd01-008_p1",
+  slug: "guntank-gd01-008-p1",
+  displayName: "Guntank",
+  set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
+  printNumber: "GD01-008_p1",
+  printings: [
+    {
+      id: "GD01-008",
+      collectorNumber: "GD01-008",
+      cardNumber: "GD01-008",
+      set: {
+        code: "GD01",
+        name: "Newtype Rising [GD01]",
+        packageId: "616101",
+      },
+      rarity: "uncommon",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-008.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-008.webp?260424",
+      productName: "Newtype Rising [GD01]",
+    },
+    {
+      id: "GD01-008_p1",
+      collectorNumber: "GD01-008_p1",
+      cardNumber: "GD01-008",
+      set: {
+        code: "BETA",
+        name: "Edition Beta",
+        packageId: "616000",
+      },
+      rarity: "uncommon",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-008_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-008_p1.webp?260424",
+      productName: "Edition Beta",
+    },
+    {
+      id: "GD01-008_p2",
+      collectorNumber: "GD01-008_p2",
+      cardNumber: "GD01-008",
+      set: {
+        code: "GD01",
+        name: "Championship Participation Pack 01",
+        packageId: "616901",
+      },
+      rarity: "uncommon",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-008_p2.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-008_p2.webp?260424",
+      productName: "Championship Participation Pack 01",
+    },
+  ],
+  selectedPrintingId: "GD01-008_p1",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-008_p1.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-008_p1.webp?260424",
+  legality: "legal",
+  level: 2,
+  cost: 1,
+  ap: 1,
+  hp: 2,
+  effect: "【Deploy】Choose 1 rested enemy Unit. Deal 1 damage to it.<br>",
+  effects: [
+    {
+      type: "triggered",
+      activation: {
+        timing: ["deploy"],
+      },
+      directives: [
+        {
+          action: {
+            action: "dealDamage",
+            amount: 1,
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              state: "rested",
+              count: 1,
+            },
+          },
+        },
+      ],
+      sourceText: "【Deploy】Choose 1 rested enemy Unit. Deal 1 damage to it.",
+    },
+  ] as CardEffect[],
+  keywordEffects: [],
+  rarity: "uncommon",
+};

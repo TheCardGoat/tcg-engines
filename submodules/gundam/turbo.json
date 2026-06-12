@@ -1,0 +1,65 @@
+{
+  "$schema": "https://v2-9-12.turborepo.dev/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "build/**"],
+      "outputLogs": "errors-only"
+    },
+    "check": {
+      "outputs": [],
+      "outputLogs": "errors-only"
+    },
+    "test": {
+      "outputs": [],
+      "outputLogs": "errors-only",
+      "env": ["AGENT", "CI", "NODE_ENV"]
+    },
+    "ci-check": {
+      "cache": true,
+      "outputs": [],
+      "outputLogs": "errors-only",
+      "env": ["CI", "NODE_ENV"],
+      "inputs": [
+        "package.json",
+        "pnpm-workspace.yaml",
+        "vite.config.ts",
+        "tsconfig.json",
+        "tsconfig.*.json",
+        "apps/**",
+        "packages/**",
+        "tools/**",
+        "!**/node_modules/**",
+        "!**/.turbo/**",
+        "!**/.vite/**",
+        "!**/coverage/**",
+        "!**/dist/**",
+        "!**/build/**",
+        "!**/*.tsbuildinfo"
+      ]
+    },
+    "ci-check-full": {
+      "cache": true,
+      "outputs": ["apps/**/dist/**", "packages/**/dist/**", "tools/**/dist/**"],
+      "outputLogs": "errors-only",
+      "env": ["CI", "NODE_ENV"],
+      "inputs": [
+        "package.json",
+        "pnpm-workspace.yaml",
+        "vite.config.ts",
+        "tsconfig.json",
+        "tsconfig.*.json",
+        "apps/**",
+        "packages/**",
+        "tools/**",
+        "!**/node_modules/**",
+        "!**/.turbo/**",
+        "!**/.vite/**",
+        "!**/coverage/**",
+        "!**/dist/**",
+        "!**/build/**",
+        "!**/*.tsbuildinfo"
+      ]
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "source": "https://www.gundam-gcg.com/en/cards/",
+  "scrapedAt": "2026-05-08T13:29:14.765Z",
+  "sets": [
+    {
+      "id": "gd01",
+      "name": "Newtype Rising [GD01]",
+      "packageId": "616101",
+      "count": 179
+    },
+    {
+      "id": "gd02",
+      "name": "Dual Impact [GD02]",
+      "packageId": "616102",
+      "count": 187
+    },
+    {
+      "id": "gd03",
+      "name": "Steel Requiem [GD03]",
+      "packageId": "616103",
+      "count": 202
+    },
+    {
+      "id": "gd04",
+      "name": "Phantom Aria [GD04]",
+      "packageId": "616104",
+      "count": 194
+    },
+    {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001",
+      "count": 35
+    },
+    {
+      "id": "st02",
+      "name": "Wings of Advance [ST02]",
+      "packageId": "616002",
+      "count": 34
+    },
+    {
+      "id": "st03",
+      "name": "Zeon's Rush [ST03]",
+      "packageId": "616003",
+      "count": 34
+    },
+    {
+      "id": "st04",
+      "name": "SEED Strike [ST04]",
+      "packageId": "616004",
+      "count": 35
+    },
+    {
+      "id": "st05",
+      "name": "Iron Bloom [ST05]",
+      "packageId": "616005",
+      "count": 32
+    },
+    {
+      "id": "st06",
+      "name": "Clan Unity [ST06]",
+      "packageId": "616006",
+      "count": 32
+    },
+    {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007",
+      "count": 32
+    },
+    {
+      "id": "st08",
+      "name": "Flash of Radiance [ST08]",
+      "packageId": "616008",
+      "count": 32
+    },
+    {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009",
+      "count": 39
+    },
+    {
+      "id": "other-product-card",
+      "name": "Other Product Card",
+      "packageId": "616701",
+      "count": 42
+    },
+    {
+      "id": "edition-beta",
+      "name": "Edition Beta",
+      "packageId": "616000",
+      "count": 83
+    },
+    {
+      "id": "basic-cards",
+      "name": "Basic Cards",
+      "packageId": "616801",
+      "count": 3
+    },
+    {
+      "id": "promotion-card",
+      "name": "Promotion card",
+      "packageId": "616901",
+      "count": 168
+    }
+  ]
+}

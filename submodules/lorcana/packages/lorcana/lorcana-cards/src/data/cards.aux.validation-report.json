@@ -1,0 +1,53 @@
+{
+  "canonicalIds": {
+    "counts": {
+      "cardsWithCanonicalId": 2860,
+      "uniqueCanonicalIds": 2270
+    },
+    "errors": [],
+    "status": "pass",
+    "warnings": []
+  },
+  "ids": {
+    "counts": {
+      "totalCards": 2860,
+      "uniquePrintingIds": 2860,
+      "uniqueShortIds": 2860
+    },
+    "errors": [],
+    "status": "pass",
+    "warnings": []
+  },
+  "localization": {
+    "counts": {
+      "canonicalIdsWithCultureMapping": 2270,
+      "canonicalIdsWithoutLocalizationCultureMapping": 0,
+      "mappedCultureIds": 2900,
+      "printingsWithoutLocalizationCultureMapping": 0,
+      "totalCards": 2860
+    },
+    "errors": [],
+    "status": "pass",
+    "warnings": []
+  },
+  "reprintSharedFields": {
+    "counts": {
+      "reprintGroupsChecked": 379,
+      "reprintPrintingsCompared": 404,
+      "sharedFieldComparisons": 9696
+    },
+    "errors": [],
+    "status": "pass",
+    "warnings": ["ci_zbd: skipped set3-p1-030-enchanted; no same-set base printing found"]
+  },
+  "reprints": {
+    "counts": {
+      "reprintGroups": 524,
+      "totalBaseReprints": 709,
+      "totalReprints": 1114
+    },
+    "errors": [],
+    "status": "pass",
+    "warnings": []
+  }
+}

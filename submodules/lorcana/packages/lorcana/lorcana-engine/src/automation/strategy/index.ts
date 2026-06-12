@@ -1,0 +1,7 @@
+export {
+  AGGRESSIVE_BOARD_CONTROL_LORE_RACE_HEURISTIC_PREFERENCES,
+  BOARD_CONTROL_LORE_RACE_HEURISTIC_PREFERENCES,
+  DEFAULT_LORE_RACE_HEURISTIC_PREFERENCES,
+  LEGACY_LORE_RACE_HEURISTIC_PREFERENCES,
+} from "./common";
+export { createLoreRaceAutomatedActionStrategy, summarizeLoreRaceCandidates } from "./composer";

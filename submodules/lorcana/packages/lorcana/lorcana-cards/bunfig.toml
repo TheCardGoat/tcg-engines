@@ -1,0 +1,2 @@
+[test]
+preload = ["../lorcana-engine/src/testing/register-matchers.ts"]

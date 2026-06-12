@@ -1,0 +1,17 @@
+/*
+  Drag-overlay styling that gives the card a "physical" feel:
+    - lifts off the board with a stronger drop shadow
+    - slight scale-up so it reads as foregrounded
+    - rotation driven by --drag-tilt (set imperatively from velocity)
+*/
+.overlay {
+  height: 17vh;
+  aspect-ratio: 5 / 7;
+  pointer-events: none;
+  transform: rotate(var(--drag-tilt, 0deg)) scale(1.06);
+  transition:
+    transform 0.08s linear,
+    filter 0.18s ease;
+  filter: drop-shadow(0 18px 28px rgb(0 0 0 / 70%)) drop-shadow(0 4px 10px rgb(245 230 66 / 25%));
+  will-change: transform;
+}

@@ -1,0 +1,67 @@
+# Card Migration Log
+
+## 2026-03-18 - Chunk 10 batch 1
+
+- audited_items:
+  - `006/items/168-jumbo-pop.test.ts`
+  - `006/items/200-kings-sensor-core.test.ts`
+  - `006/items/201-training-dummy.test.ts`
+  - `006/items/202-sunglasses.test.ts`
+  - `006/locations/034-hundred-acre-island-poohs-home.test.ts`
+  - `006/locations/035-sugar-rush-speedway-finish-line.test.ts`
+  - `006/locations/068-fairy-ship-royal-vessel.test.ts`
+  - `006/locations/069-mystical-tree-mama-odies-home.test.ts`
+  - `006/locations/101-perilous-maze-watery-labyrinth.test.ts`
+  - `006/locations/102-owl-island-secluded-entrance.test.ts`
+- result: All 10 targeted tests were already ported in the current repo and passed as executable Bun tests.
+- inventory_updates:
+  - Marked the 10 audited entries complete in `AUDIT_INVENTORY_CHUNK_10.md`.
+  - Normalized slug-drifted inventory paths from apostrophe variants to current repo paths for `kings-sensor-core`, `hundred-acre-island-poohs-home`, and `mystical-tree-mama-odies-home`.
+- card_updates:
+  - Added `from: "hand"` to `006/items/202-sunglasses.ts` so the discard effect matches the printed behavior without relying on runtime fallback normalization.
+- verification:
+  - `bun test --cwd packages/lorcana/lorcana-cards ./src/cards/006/items/168-jumbo-pop.test.ts ./src/cards/006/items/200-kings-sensor-core.test.ts ./src/cards/006/items/201-training-dummy.test.ts ./src/cards/006/items/202-sunglasses.test.ts ./src/cards/006/locations/034-hundred-acre-island-poohs-home.test.ts ./src/cards/006/locations/035-sugar-rush-speedway-finish-line.test.ts ./src/cards/006/locations/068-fairy-ship-royal-vessel.test.ts ./src/cards/006/locations/069-mystical-tree-mama-odies-home.test.ts ./src/cards/006/locations/101-perilous-maze-watery-labyrinth.test.ts ./src/cards/006/locations/102-owl-island-secluded-entrance.test.ts`
+  - `bun run --cwd packages/lorcana/lorcana-cards check-types`
+  - `bun run ci-check`
+## 2026-03-18 - Final unchecked batch tail
+
+- Inventory items selected:
+  - `011/characters/055-christopher-robin-joining-the-fun.test.ts`
+  - `011/characters/056-lumpy-playful-heffalump.test.ts`
+  - `011/characters/057-witches-of-morva-orddu-orwen-and-orgoch.test.ts`
+  - `011/characters/058-heihei-persistent-presence.test.ts`
+  - `011/characters/060-sven-leaping-reindeer.test.ts`
+  - `011/characters/069-mulan-resourceful-recruit.test.ts`
+  - `011/characters/070-stitch-naughty-experiment.test.ts`
+  - `011/characters/071-big-mama-clever-and-calming.test.ts`
+  - `011/characters/072-minnie-mouse-spinning-skater.test.ts`
+  - `011/characters/repro.test.ts`
+- Completed cards:
+  - `Christopher Robin - Joining the Fun`
+  - `Lumpy - Playful Heffalump`
+  - `Witches of Morva - Orddu, Orwen, and Orgoch`
+  - `Heihei - Persistent Presence`
+  - `Sven - Leaping Reindeer`
+  - `Mulan - Resourceful Recruit`
+  - `Stitch - Naughty Experiment`
+  - `Big Mama - Clever and Calming`
+  - `Minnie Mouse - Spinning Skater`
+- Tests added or updated:
+  - Added a first-player full-cost success case for Christopher Robin.
+  - Added Mulan’s exact-strength-cap parity case.
+  - Added `011/characters/repro.test.ts` coverage for `Tinker Bell - Snowflake Collector` hand-size-driven Evasive updates.
+- Card/type surfaces expanded:
+  - Fixed `048-tinker-bell-snowflake-collector.ts` to use static `resource-count` conditions with valid comparison operators.
+  - Corrected `044-taran-magically-armed.ts` to expose Rush as a keyword and align the printed `put-on-bottom` target shape.
+  - Extended `PutOnBottomEffect` typing to accept a player chooser field for future chosen-player-scoped movement work.
+- Blocked items:
+  - `011/characters/repro.test.ts` remains unchecked because `Taran - Magically Armed` still lacks working runtime support for a play trigger that should select cards from a chosen player’s discard and put them on the bottom of that player’s deck. The current engine auto-resolves the `put-on-bottom` effect without opening the required player/target selection flow.
+- Verification:
+  - `bun test --cwd packages/lorcana/lorcana-cards ./src/cards/011/characters/055-christopher-robin-joining-the-fun.test.ts ./src/cards/011/characters/056-lumpy-playful-heffalump.test.ts ./src/cards/011/characters/057-witches-of-morva-orddu-orwen-and-orgoch.test.ts ./src/cards/011/characters/058-heihei-persistent-presence.test.ts ./src/cards/011/characters/060-sven-leaping-reindeer.test.ts ./src/cards/011/characters/069-mulan-resourceful-recruit.test.ts ./src/cards/011/characters/070-stitch-naughty-experiment.test.ts ./src/cards/011/characters/071-big-mama-clever-and-calming.test.ts ./src/cards/011/characters/072-minnie-mouse-spinning-skater.test.ts ./src/cards/011/characters/repro.test.ts`
+  - `bun run --cwd packages/lorcana/lorcana-types check-types`
+  - `bun run --cwd packages/lorcana/lorcana-engine check-types`
+  - `bun run --cwd packages/lorcana/lorcana-cards check-types`
+  - `bun run ci-check` failed in `@tcg/lorcana-simulator` on timeout tests unrelated to this batch:
+    - `src/lib/features/simulator-devtools/fixtures/fixture-factory.test.ts`
+    - `src/lib/features/simulator-devtools/ai-match/fixture.test.ts`
+  - CI log: `/Users/wazar/projects/the-card-goat-online/logs/ci-check/ci-check-verbose-20260318-193935.log`

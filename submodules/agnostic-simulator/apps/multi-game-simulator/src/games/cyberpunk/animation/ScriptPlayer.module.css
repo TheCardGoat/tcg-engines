@@ -1,0 +1,300 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9000;
+  overflow: hidden;
+}
+
+.ghost {
+  position: fixed;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+}
+
+.programEffectGhost {
+  z-index: 2;
+  filter: drop-shadow(0 0 14px rgb(255 203 5 / 60%)) drop-shadow(0 10px 24px rgb(0 0 0 / 45%));
+}
+
+.gigGhost {
+  z-index: 3;
+  filter: drop-shadow(0 0 8px rgb(74 217 255 / 70%)) drop-shadow(0 8px 16px rgb(0 0 0 / 45%));
+}
+
+.gigGhostSteal {
+  filter: drop-shadow(0 0 8px rgb(255 61 138 / 68%)) drop-shadow(0 0 16px rgb(74 217 255 / 50%))
+    drop-shadow(0 8px 16px rgb(0 0 0 / 45%));
+}
+
+.float {
+  position: fixed;
+  pointer-events: none;
+  font-weight: 700;
+  font-family: var(--cp-font-display, "JetBrains Mono", monospace);
+  font-size: 1.5rem;
+  line-height: 1;
+  text-shadow:
+    0 0 8px currentcolor,
+    0 0 16px currentcolor;
+  letter-spacing: 0.05em;
+  filter: drop-shadow(0 2px 4px rgb(0 0 0 / 40%));
+}
+
+.floatGained {
+  color: var(--cp-turquoise, #6ff);
+}
+
+.floatSpent {
+  color: var(--cp-yellow, #ffcb05);
+}
+
+.hiddenForAnim {
+  visibility: hidden;
+}
+
+.hostPulse {
+  animation: host-pulse 280ms ease-out;
+}
+
+.landPulse {
+  animation: land-pulse 280ms ease-out;
+}
+
+.legendRevealGhost {
+  position: fixed;
+  z-index: 4;
+  overflow: hidden;
+  border-radius: 5px;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 0 18px rgb(255 203 5 / 56%)) drop-shadow(0 12px 26px rgb(0 0 0 / 54%));
+}
+
+.legendRevealGhost > :first-child {
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.legendRevealFlare {
+  position: absolute;
+  inset: -18% -42%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgb(255 203 5 / 0%) 0%,
+    rgb(255 203 5 / 18%) 35%,
+    rgb(255 255 255 / 76%) 50%,
+    rgb(111 255 255 / 24%) 62%,
+    rgb(111 255 255 / 0%) 100%
+  );
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+.legendRevealedPulse {
+  animation: legend-revealed-pulse 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.beam {
+  position: fixed;
+  height: 4px;
+  pointer-events: none;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    rgb(255 203 5 / 0%) 0%,
+    rgb(255 203 5 / 90%) 30%,
+    rgb(111 255 255 / 100%) 70%,
+    rgb(111 255 255 / 0%) 100%
+  );
+  box-shadow:
+    0 0 6px rgb(255 203 5 / 80%),
+    0 0 14px rgb(111 255 255 / 60%);
+  will-change: transform, opacity;
+}
+
+.beam::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 12px solid rgb(111 255 255 / 95%);
+  filter: drop-shadow(0 0 8px rgb(111 255 255 / 90%));
+  transform: translateY(-50%);
+}
+
+.programEffectArrow {
+  z-index: 1;
+  height: 5px;
+  background: linear-gradient(
+    90deg,
+    rgb(255 203 5 / 0%) 0%,
+    rgb(255 203 5 / 100%) 32%,
+    rgb(255 255 255 / 95%) 64%,
+    rgb(111 255 255 / 100%) 100%
+  );
+}
+
+@keyframes host-pulse {
+  0% {
+    filter: none;
+    transform: scale(1);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 12px rgb(111 255 255 / 80%));
+    transform: scale(1.04);
+  }
+
+  100% {
+    filter: none;
+    transform: scale(1);
+  }
+}
+
+@keyframes land-pulse {
+  0% {
+    filter: none;
+    transform: scale(1);
+  }
+
+  35% {
+    filter: drop-shadow(0 0 14px rgb(255 203 5 / 80%));
+    transform: scale(1.05);
+  }
+
+  100% {
+    filter: none;
+    transform: scale(1);
+  }
+}
+
+.combatArrow {
+  position: fixed;
+  height: 6px;
+  pointer-events: none;
+  border-radius: 3px;
+  will-change: transform, opacity, filter;
+}
+
+.combatArrowDeclare {
+  background: linear-gradient(
+    90deg,
+    rgb(255 80 80 / 0%) 0%,
+    rgb(255 80 80 / 95%) 35%,
+    rgb(255 200 80 / 100%) 100%
+  );
+  box-shadow:
+    0 0 8px rgb(255 80 80 / 80%),
+    0 0 18px rgb(255 200 80 / 50%);
+}
+
+.combatArrowResolve {
+  background: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 30%) 0%,
+    rgb(255 80 80 / 100%) 50%,
+    rgb(255 255 255 / 80%) 100%
+  );
+  box-shadow:
+    0 0 12px rgb(255 80 80 / 100%),
+    0 0 24px rgb(255 240 200 / 80%);
+}
+
+.combatImpact {
+  animation: combat-impact 280ms ease-out;
+}
+
+.phaseBanner {
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  padding: 0.6rem 1.4rem;
+  font-family: var(--cp-font-display, "JetBrains Mono", monospace);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cp-turquoise, #6ff);
+  background: rgb(15 17 26 / 86%);
+  border: 1px solid rgb(111 255 255 / 70%);
+  border-radius: 6px;
+  box-shadow:
+    0 0 18px rgb(111 255 255 / 50%),
+    0 0 36px rgb(111 255 255 / 25%);
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  white-space: nowrap;
+  will-change: transform, opacity;
+}
+
+.phaseBannerFrom {
+  color: rgb(170 170 170);
+  font-size: 0.9em;
+}
+
+.phaseBannerArrow {
+  color: var(--cp-yellow, #ffcb05);
+  font-size: 0.9em;
+}
+
+.phaseBannerTo {
+  color: var(--cp-turquoise, #6ff);
+  text-shadow: 0 0 10px rgb(111 255 255 / 80%);
+}
+
+@keyframes legend-revealed-pulse {
+  0% {
+    filter: drop-shadow(0 0 18px rgb(255 203 5 / 75%));
+    transform: scale(1.035);
+  }
+
+  100% {
+    filter: none;
+    transform: scale(1);
+  }
+}
+
+@keyframes combat-impact {
+  0% {
+    filter: none;
+    transform: scale(1);
+  }
+
+  25% {
+    filter: drop-shadow(0 0 14px rgb(255 80 80 / 80%));
+    transform: scale(1.06) translateX(2px);
+  }
+
+  55% {
+    transform: scale(0.97) translateX(-3px);
+  }
+
+  100% {
+    filter: none;
+    transform: scale(1) translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hostPulse,
+  .landPulse,
+  .legendRevealedPulse,
+  .combatImpact {
+    animation: none;
+  }
+
+  .phaseBanner,
+  .combatArrow,
+  .legendRevealGhost {
+    display: none;
+  }
+}

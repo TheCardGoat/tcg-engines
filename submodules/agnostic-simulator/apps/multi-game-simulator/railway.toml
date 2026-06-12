@@ -1,0 +1,57 @@
+# Railway Configuration for the multi-game simulator host.
+# Production traffic reaches this service through the reverse proxy:
+#   /cyberpunk/simulator -> CYBERPUNK_SIMULATOR_UPSTREAM
+#   /gundam/simulator -> CYBERPUNK_SIMULATOR_UPSTREAM
+#
+# The host serves multiple mounted simulator paths, so Vite assets are built
+# from /assets and routed through the same reverse-proxied service.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "submodules/agnostic-simulator/apps/multi-game-simulator/Dockerfile"
+
+watchPatterns = [
+  "submodules/agnostic-simulator/apps/multi-game-simulator/**",
+  "submodules/agnostic-simulator/packages/cyberpunk/**",
+  "submodules/agnostic-simulator/packages/engine-core/**",
+  "submodules/agnostic-simulator/packages/game-page-contract/**",
+  "submodules/agnostic-simulator/packages/protocol/**",
+  "submodules/agnostic-simulator/packages/shared/**",
+  "submodules/agnostic-simulator/packages/simulator-contract/**",
+  "submodules/agnostic-simulator/packages/simulator-runtime/**",
+  "submodules/agnostic-simulator/packages/simulator-testing/**",
+  "submodules/agnostic-simulator/packages/simulator-ui/**",
+  "submodules/agnostic-simulator/package.json",
+  "submodules/agnostic-simulator/pnpm-lock.yaml",
+  "submodules/agnostic-simulator/pnpm-workspace.yaml",
+  "submodules/agnostic-simulator/tsconfig.json",
+  "submodules/agnostic-simulator/turbo.json",
+  "submodules/cyberpunk/packages/cards/**",
+  "submodules/cyberpunk/packages/engine/**",
+  "submodules/cyberpunk/packages/types/**",
+  "submodules/cyberpunk/packages/utils/**",
+  "submodules/cyberpunk/package.json",
+  "submodules/cyberpunk/pnpm-lock.yaml",
+  "submodules/cyberpunk/pnpm-workspace.yaml",
+  "submodules/cyberpunk/tsconfig.json",
+  "submodules/gundam/packages/cards/**",
+  "submodules/gundam/packages/engine/**",
+  "submodules/gundam/packages/token-data/**",
+  "submodules/gundam/packages/types/**",
+  "submodules/gundam/packages/utils/**",
+  "submodules/gundam/package.json",
+  "submodules/gundam/pnpm-lock.yaml",
+  "submodules/gundam/pnpm-workspace.yaml",
+  "submodules/gundam/tsconfig.json",
+]
+
+[deploy]
+healthcheckPath = "/cyberpunk/simulator/"
+healthcheckTimeout = 60
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+sleepApplication = false
+
+[deploy.teardown]
+overlapSeconds = 30
+drainingSeconds = 30

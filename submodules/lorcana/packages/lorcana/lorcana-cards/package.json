@@ -1,0 +1,116 @@
+{
+  "name": "@tcg/lorcana-cards",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Lorcana card definitions and tooling",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./deck-list-resolver": {
+      "types": "./src/utils/deck-list-resolver.ts",
+      "default": "./src/utils/deck-list-resolver.ts"
+    },
+    "./data": {
+      "types": "./src/data/index.ts",
+      "default": "./src/data/index.ts"
+    },
+    "./cards": {
+      "types": "./src/cards/index.ts",
+      "default": "./src/cards/index.ts"
+    },
+    "./cards/sync": {
+      "types": "./src/cards/sync.ts",
+      "default": "./src/cards/sync.ts"
+    },
+    "./cards/001": {
+      "types": "./src/cards/001/index.ts",
+      "default": "./src/cards/001/index.ts"
+    },
+    "./cards/002": {
+      "types": "./src/cards/002/index.ts",
+      "default": "./src/cards/002/index.ts"
+    },
+    "./cards/003": {
+      "types": "./src/cards/003/index.ts",
+      "default": "./src/cards/003/index.ts"
+    },
+    "./cards/004": {
+      "types": "./src/cards/004/index.ts",
+      "default": "./src/cards/004/index.ts"
+    },
+    "./cards/005": {
+      "types": "./src/cards/005/index.ts",
+      "default": "./src/cards/005/index.ts"
+    },
+    "./cards/006": {
+      "types": "./src/cards/006/index.ts",
+      "default": "./src/cards/006/index.ts"
+    },
+    "./cards/007": {
+      "types": "./src/cards/007/index.ts",
+      "default": "./src/cards/007/index.ts"
+    },
+    "./cards/008": {
+      "types": "./src/cards/008/index.ts",
+      "default": "./src/cards/008/index.ts"
+    },
+    "./cards/009": {
+      "types": "./src/cards/009/index.ts",
+      "default": "./src/cards/009/index.ts"
+    },
+    "./cards/010": {
+      "types": "./src/cards/010/index.ts",
+      "default": "./src/cards/010/index.ts"
+    },
+    "./cards/011": {
+      "types": "./src/cards/011/index.ts",
+      "default": "./src/cards/011/index.ts"
+    },
+    "./cards/012": {
+      "types": "./src/cards/012/index.ts",
+      "default": "./src/cards/012/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --noEmit && mkdir -p dist",
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "vp lint ./src",
+    "test": "bun test src --bail=10 --only-failures",
+    "test:watch": "bun test --watch src",
+    "test:coverage": "bun test --coverage src",
+    "check": "bun run format && bun run lint && bun run check-types && bun run test",
+    "fetch": "bun scripts/fetch-inputs.ts",
+    "fetch:all-locales": "bun scripts/fetch-inputs.ts",
+    "generate": "bun scripts/generate-cards.ts && bun run format",
+    "generate-cards:all": "bun scripts/generate-cards-all.ts",
+    "generate-legacy-card-map": "bun scripts/generate-legacy-card-map.ts",
+    "embed-card-i18n": "bun scripts/embed-card-i18n.ts",
+    "smoke-test:abilities": "bun scripts/smoke-test-card-abilities.ts",
+    "generate:all": "bun run generate-cards:all",
+    "generate-localization": "bun scripts/generate-localization.ts",
+    "update-translations": "bun run fetch:all-locales && bun run generate-localization"
+  },
+  "dependencies": {
+    "@tcg/lorcana-engine": "workspace:*",
+    "@tcg/lorcana-types": "workspace:*",
+    "@tcg/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "1.2.14",
+    "bun-types": "^1.3.4",
+    "typescript": "5.8.3"
+  },
+  "peerDependencies": {
+    "typescript": "5.8.3"
+  }
+}

@@ -1,0 +1,79 @@
+.slot {
+  --slot-border: rgb(245 230 66 / 25%);
+  --slot-border-active: rgb(245 230 66 / 65%);
+
+  position: relative;
+  aspect-ratio: 5 / 7;
+  border: 1px solid var(--slot-border);
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgb(255 255 255 / 3%);
+  flex-shrink: 0;
+}
+
+.slot.dashed {
+  border-style: dashed;
+}
+
+.slot.occupied {
+  border-color: var(--slot-border-active);
+}
+
+.slot.sm {
+  width: 55px;
+}
+
+.slot.md {
+  width: 80px;
+}
+
+.slot.lg {
+  width: 100px;
+}
+
+.slot.fill {
+  width: 100%;
+}
+
+.slot.fillHeight {
+  height: 100%;
+  width: auto;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scaleX(var(--card-img-scale-x, 1));
+}
+
+.faceDown {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.faceDown::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgb(245 230 66 / 15%);
+  border-radius: 2px;
+}
+
+.label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(245 230 66 / 35%);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

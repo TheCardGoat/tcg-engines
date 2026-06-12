@@ -1,0 +1,947 @@
+[
+  {
+    "id": "ST01-001",
+    "code": "ST01-001",
+    "name": "Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【During Pair】During your turn, all your Units get AP+1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-001_p1",
+    "code": "ST01-001",
+    "name": "Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【During Pair】During your turn, all your Units get AP+1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-002",
+    "code": "ST01-002",
+    "name": "Gundam (MA Form)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Paired･(White Base Team) Pilot】Draw 1.",
+    "zone": "Space",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-002_p1",
+    "code": "ST01-002",
+    "name": "Gundam (MA Form)",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Paired･(White Base Team) Pilot】Draw 1.",
+    "zone": "Space",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-003",
+    "code": "ST01-003",
+    "name": "Guncannon",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Kai Shiden]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-003_p1",
+    "code": "ST01-003",
+    "name": "Guncannon",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Kai Shiden]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-004",
+    "code": "ST01-004",
+    "name": "Guntank",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 enemy Unit with 2 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Hayato Kobayashi]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-004_p1",
+    "code": "ST01-004",
+    "name": "Guntank",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 enemy Unit with 2 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Hayato Kobayashi]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-004_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-004_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-005",
+    "code": "ST01-005",
+    "name": "GM",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-005_p1",
+    "code": "ST01-005",
+    "name": "GM",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-005_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-005_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-006",
+    "code": "ST01-006",
+    "name": "Gundam Aerial (Permet Score Six)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【When Paired】Choose 1 enemy Unit that is Lv.5 or lower. It gets AP-3 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Suletta Mercury]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-006_p1",
+    "code": "ST01-006",
+    "name": "Gundam Aerial (Permet Score Six)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【When Paired】Choose 1 enemy Unit that is Lv.5 or lower. It gets AP-3 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Suletta Mercury]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-006_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-006_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-007",
+    "code": "ST01-007",
+    "name": "Gundam Aerial (Bit on Form)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Suletta Mercury]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-007_p1",
+    "code": "ST01-007",
+    "name": "Gundam Aerial (Bit on Form)",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Suletta Mercury]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-007_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-007_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-008",
+    "code": "ST01-008",
+    "name": "Demi Trainer",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-008_p1",
+    "code": "ST01-008",
+    "name": "Demi Trainer",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-008_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-008_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-009",
+    "code": "ST01-009",
+    "name": "Zowort",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nThis Unit can't choose the enemy player as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-009_p1",
+    "code": "ST01-009",
+    "name": "Zowort",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nThis Unit can't choose the enemy player as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-009_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-009_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-010",
+    "code": "ST01-010",
+    "name": "Amuro Ray",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-010_p1",
+    "code": "ST01-010",
+    "name": "Amuro Ray",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-010_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-010_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-011",
+    "code": "ST01-011",
+    "name": "Suletta Mercury",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】【Once per Turn】Choose 1 of your Resources. Set it as active.",
+    "zone": "-",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-011_p1",
+    "code": "ST01-011",
+    "name": "Suletta Mercury",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】【Once per Turn】Choose 1 of your Resources. Set it as active.",
+    "zone": "-",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-011_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-011_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-012",
+    "code": "ST01-012",
+    "name": "Thoroughly Damaged",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Main】Choose 1 rested enemy Unit. Deal 1 damage to it.\n【Pilot】[Hayato Kobayashi]",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-012_p1",
+    "code": "ST01-012",
+    "name": "Thoroughly Damaged",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Main】Choose 1 rested enemy Unit. Deal 1 damage to it.\n【Pilot】[Hayato Kobayashi]",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-012_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-012_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-013",
+    "code": "ST01-013",
+    "name": "Kai's Resolve",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】Choose 1 friendly Unit. It recovers 3 HP.\n【Pilot】[Kai Shiden]",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-013_p1",
+    "code": "ST01-013",
+    "name": "Kai's Resolve",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】Choose 1 friendly Unit. It recovers 3 HP.\n【Pilot】[Kai Shiden]",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-013_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-013_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-014",
+    "code": "ST01-014",
+    "name": "Unforeseen Incident",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit. It gets AP-3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-014_p1",
+    "code": "ST01-014",
+    "name": "Unforeseen Incident",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit. It gets AP-3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-015",
+    "code": "ST01-015",
+    "name": "White Base",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】②：Deploy 1 [Gundam]((White Base Team)･AP3･HP3) Unit token if you have no Units in play, deploy 1 [Guncannon]((White Base Team)･AP2･HP2) Unit token if you have only 1 Unit in play, or deploy 1 [Guntank]((White Base Team)･AP1･HP1) Unit token if you have 2 or more Units in play.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-015_p1",
+    "code": "ST01-015",
+    "name": "White Base",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】②：Deploy 1 [Gundam]((White Base Team)･AP3･HP3) Unit token if you have 0 Units in play, deploy 1 [Guncannon]((White Base Team)･AP2･HP2) Unit token if you have only 1 Unit in play, or deploy 1 [Guntank]((White Base Team)･AP1･HP1) Unit token if you have 2 or more Units in play.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-015_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-015_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-016",
+    "code": "ST01-016",
+    "name": "Asticassia School of Technology, Earth House",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】Rest this Base：All friendly Link Units get AP+1 during this turn.",
+    "zone": "Space",
+    "trait": "(Academy) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-016.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-016.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "ST01-016_p1",
+    "code": "ST01-016",
+    "name": "Asticassia School of Technology, Earth House",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】Rest this Base：All friendly Link Units get AP+1 during this turn.",
+    "zone": "Space",
+    "trait": "(Academy) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-016_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-016_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Heroic Beginnings [ST01] Bonus Pack",
+    "set": {
+      "id": "st01",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "T-001",
+    "code": "T-001",
+    "name": "Gundam",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "t",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "T-002",
+    "code": "T-002",
+    "name": "Guncannon",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "t",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  },
+  {
+    "id": "T-003",
+    "code": "T-003",
+    "name": "Guntank",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 1,
+    "hp": 1,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Heroic Beginnings [ST01]",
+    "set": {
+      "id": "t",
+      "name": "Heroic Beginnings [ST01]",
+      "packageId": "616001"
+    }
+  }
+]

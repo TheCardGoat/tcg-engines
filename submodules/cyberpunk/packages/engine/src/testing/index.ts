@@ -1,0 +1,58 @@
+export {
+  CyberpunkTestEngine,
+  P1,
+  P2,
+  type CardRef,
+  PlayerHandle,
+  ServerView,
+  MoveFailedError,
+} from "./test-engine.ts";
+export { createTestMatchState } from "./test-state.ts";
+export {
+  createMockUnit,
+  createMockProgram,
+  createMockGear,
+  createMockLegend,
+  type MockUnitParams,
+  type MockProgramParams,
+  type MockGearParams,
+  type MockLegendParams,
+  type MockCard,
+} from "./card-mocks.ts";
+export type {
+  PlayerFixture,
+  FixtureCardEntry,
+  FixtureCardState,
+  GigFixtureEntry,
+  TestEngineOptions,
+} from "./test-fixtures.ts";
+export { registerMatchers } from "./register-matchers.ts";
+export {
+  expectCardPlayable,
+  expectCardNotPlayable,
+  expectAttachTarget,
+  expectNotAttachTarget,
+  expectAttackCandidate,
+  expectNotAttackCandidate,
+  expectAttackPair,
+  expectNotAttackPair,
+  expectBlockerCandidate,
+  expectNotBlockerCandidate,
+  expectSellable,
+  expectNotSellable,
+  expectCallableLegend,
+  expectNotCallableLegend,
+  expectMoveAvailable,
+  expectMoveNotAvailable,
+  expectPendingChoice,
+  expectNoPendingChoice,
+  expectEligibleTargets,
+  expectEligibleTargetCount,
+  expectEligibleGigs,
+  expectCardsToMove,
+  expectCardToMoveCount,
+  expectTargetChoice,
+  expectAdjustGigChoice,
+  expectSearchDeckChoice,
+  expectCardToMoveDestination,
+} from "./ui-assertions.ts";

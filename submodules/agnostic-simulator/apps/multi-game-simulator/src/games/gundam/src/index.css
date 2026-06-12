@@ -1,0 +1,866 @@
+@import "tailwindcss";
+@import "@tcg/simulator-ui/styles/theme.css";
+
+@source "../../../../../../packages/simulator-ui/src";
+
+/* -----------------------------------------------------------------------------
+ * Fonts
+ *
+ * Chrome fonts (Orbitron / Rajdhani / Share Tech Mono) come from Google Fonts
+ * via <link> in index.html. The local fonts/ folder keeps card-face families
+ * (Bogle, Brandon Text, Bystander). Only `bbh-sans-bogle.woff2` currently has
+ * real bytes; the rest are 0-byte placeholders that will start working the
+ * moment you drop real woff2s on top of them — no code changes needed.
+ * -------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: "Bogle";
+  src:
+    url("./fonts/bogle.woff2") format("woff2"),
+    url("./fonts/bbh-sans-bogle.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "BBH Sans Bogle";
+  src: url("./fonts/bbh-sans-bogle.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "The Bystander Collection Sans Medium";
+  src: url("./fonts/the-bystander-collection-sans-medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Brandon Text Condensed Bold";
+  src: url("./fonts/brandon-text-condensed-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Brandon Text Condensed Black";
+  src: url("./fonts/brandon-text-condensed-black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Brandon Text Condensed Black Italic";
+  src: url("./fonts/brandon-text-condensed-black-italic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Brandon Text Condensed Medium Italic";
+  src: url("./fonts/brandon-text-condensed-medium-italic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* =============================================================================
+ * Tailwind v4 design tokens (`@theme`)
+ *
+ * Every key below generates a Tailwind utility at build time. Example:
+ *   --color-hud-accent      → `bg-hud-accent` / `text-hud-accent` / `border-hud-accent`
+ *   --font-display          → `font-display`
+ *   --text-hud-sm           → `text-hud-sm`
+ *   --tracking-hud-label    → `tracking-hud-label`
+ *   --spacing-hud-lg        → `p-hud-lg`, `m-hud-lg`, `gap-hud-lg`, `w-hud-lg`, …
+ *
+ * Keep raw hex/rgba values HERE only; components should never reference them.
+ * ========================================================================== */
+
+@theme {
+  /* ---- Chrome / HUD palette (semantic) ----
+   * Reskinned 2026-04-29 to match the official Gundam Card Game digital app
+   * (light/white identity with Gundam blue + magenta-pink accents). Token
+   * names are preserved so all consumer call-sites continue to work; only
+   * values shift. */
+  --color-hud-bg: #e6ecf5; /* page background — cool light grey-blue */
+  --color-hud-deep: #d8e0ec; /* deepest neutral (recessed) */
+  --color-hud-surface: #ffffff; /* panel base */
+  --color-hud-surface-raised: #fbfcfe; /* raised panel */
+
+  --color-hud-accent: #2d6bff; /* primary Gundam blue */
+  --color-hud-accent-hot: #5a8dff; /* hover / glow */
+  --color-hud-accent-deep: #1c4cd1; /* pressed / gradient stop */
+
+  --color-hud-danger: #ff2d7a; /* magenta-pink (Attack / Pass) */
+  --color-hud-danger-deep: #c8155a;
+
+  --color-hud-info: #7bb7ff; /* light blue secondary */
+  --color-hud-info-deep: #2d6bff;
+
+  --color-hud-success: #2ea65a; /* keep faction-green */
+  --color-hud-success-hot: #36c46f;
+
+  --color-hud-text: #1a2542; /* near-black ink — primary text */
+  --color-hud-text-muted: #3c4a6b;
+  --color-hud-text-dim: #5c6b8a;
+  --color-hud-text-faint: #94a3b8;
+
+  --color-hud-border: rgba(45, 107, 255, 0.32);
+  --color-hud-border-hot: rgba(45, 107, 255, 0.7);
+  --color-hud-line: rgba(95, 115, 160, 0.22);
+
+  /* ---- Card / faction palette (the 5 Gundam colors — unchanged, brand-locked) ---- */
+  --color-card-blue: #1e49c7;
+  --color-card-green: #2ea65a;
+  --color-card-red: #d7263d;
+  --color-card-white: #e8ecf1;
+  --color-card-purple: #7b4182;
+
+  /* ---- Typography — families ---- */
+  --font-display: "Orbitron", "Rajdhani", sans-serif;
+  --font-body: "Rajdhani", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ---- Typography — HUD scale (cockpit callouts, stat pips, labels) ---- */
+  --text-hud-2xs: 7px;
+  --text-hud-xs: 9px;
+  --text-hud-sm: 10px;
+  --text-hud-md: 11px;
+  --text-hud-lg: 13px;
+  --text-hud-xl: 15px;
+  --text-hud-2xl: 22px;
+  --text-hud-3xl: 30px;
+
+  /* ---- Letter-spacing (tracking) — 3 semantic roles ---- */
+  --tracking-hud-body: 0.04em; /* display headlines, body */
+  --tracking-hud-display: 0.06em; /* Orbitron display lines */
+  --tracking-hud-label: 0.22em; /* mono eyebrow labels */
+  --tracking-hud-wide: 0.3em; /* banners, terminal headings */
+
+  /* ---- Spacing — HUD rhythm (6 / 14 / 18 / 22 / 28 px) ---- */
+  --spacing-hud-2xs: 3px;
+  --spacing-hud-xs: 6px;
+  --spacing-hud-sm: 14px;
+  --spacing-hud-md: 18px;
+  --spacing-hud-lg: 22px;
+  --spacing-hud-xl: 28px;
+}
+
+/* =============================================================================
+ * Reusable utilities
+ *
+ * Each `@utility` becomes a first-class Tailwind utility with variants
+ * (`hover:glow-accent`, `md:clip-hud-xl`, etc.). Defining them here
+ * eliminates the ~40 sites that otherwise re-declare the same clip-path /
+ * glow / panel-gradient inline.
+ * ========================================================================== */
+
+/* 8 beveled-corner sizes cover every clip-path in the current UI tree.
+ * Named by pixel bevel so the intent is obvious at the call site. */
+@utility clip-hud-3 {
+  clip-path: polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px);
+}
+@utility clip-hud-4 {
+  clip-path: polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px);
+}
+@utility clip-hud-5 {
+  clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+}
+@utility clip-hud-6 {
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+}
+@utility clip-hud-8 {
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+@utility clip-hud-10 {
+  clip-path: polygon(
+    10px 0,
+    100% 0,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    0 100%,
+    0 10px
+  );
+}
+@utility clip-hud-12 {
+  clip-path: polygon(
+    12px 0,
+    100% 0,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    0 100%,
+    0 12px
+  );
+}
+@utility clip-hud-14 {
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+}
+@utility clip-hud-16 {
+  clip-path: polygon(
+    16px 0,
+    100% 0,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    0 100%,
+    0 16px
+  );
+}
+@utility clip-hud-18 {
+  clip-path: polygon(
+    18px 0,
+    100% 0,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    0 100%,
+    0 18px
+  );
+}
+/* Tag-style (left-angled) — used on callouts & badges. */
+@utility clip-hud-tag-l {
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+}
+@utility clip-hud-tag-r {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 6px 100%);
+}
+
+@utility glow-accent {
+  box-shadow: 0 0 14px rgba(45, 107, 255, 0.45);
+}
+@utility glow-accent-sm {
+  box-shadow: 0 0 8px rgba(45, 107, 255, 0.3);
+}
+@utility glow-accent-lg {
+  box-shadow: 0 0 24px rgba(45, 107, 255, 0.4);
+}
+@utility glow-danger {
+  box-shadow: 0 0 14px rgba(255, 45, 122, 0.5);
+}
+@utility glow-info {
+  box-shadow: 0 0 12px rgba(123, 183, 255, 0.45);
+}
+
+@utility surface-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 254, 0.98));
+  border: 1px solid var(--color-hud-border);
+}
+@utility surface-panel-strong {
+  background: linear-gradient(180deg, #ffffff, #fbfcfe);
+  border: 1px solid var(--color-hud-border-hot);
+}
+
+/* Scanline utility kept as a no-op for backwards compatibility — the official
+ * Gundam digital UI is clean (no CRT artifacts), so any class:scanline call
+ * sites render transparent. Remove the class outright once consumers migrate. */
+@utility scanline {
+  background: transparent;
+  pointer-events: none;
+}
+
+/* =============================================================================
+ * Body / root defaults
+ * ========================================================================== */
+
+.gundam-simulator-root {
+  /* Mobile chrome slot sizes — used by the portrait re-layout. Kept outside @theme
+     (not @theme) so they read as plain CSS vars in calc()/env() expressions. */
+  --mobile-top-hud-height: 44px;
+  --mobile-opp-hand-height: 56px;
+  --mobile-opp-resources-height: 52px;
+  --mobile-self-resources-height: 56px;
+  --mobile-hand-height: 72px;
+  --mobile-menubar-height: 52px;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+body.gundam-simulator-active {
+  margin: 0;
+  height: 100vh; /* fallback for older browsers */
+  height: 100dvh;
+  overflow: hidden;
+  font-family: var(--font-body);
+  color: var(--color-hud-text);
+  background: var(--color-hud-bg);
+}
+
+.gundam-simulator-root {
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+}
+
+/* Slim scrollbars — Gundam blue thumb on cool-grey track */
+.gundam-simulator-root *::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.gundam-simulator-root *::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-hud-accent), var(--color-hud-accent-deep));
+  border-radius: 3px;
+}
+.gundam-simulator-root *::-webkit-scrollbar-track {
+  background: #e9eef5;
+}
+
+/* =============================================================================
+ * Semantic typography presets
+ *
+ * Each preset bundles 2–3 tokens for common compound usage. Components may
+ * prefer the underlying utilities (`font-display tracking-hud-display`) for
+ * fine-grained control; the presets are kept for legacy call sites that
+ * already use `className="gd-display"` across the UI tree.
+ * ========================================================================== */
+
+.gd-display {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-hud-display);
+}
+.gd-mono {
+  font-family: var(--font-mono);
+}
+.gd-body {
+  font-family: var(--font-body);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-hud-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-hud-label);
+  color: var(--color-hud-accent);
+}
+
+/* Card-face helpers (Lorcana-licensed fonts, reserved for card anatomy). */
+.card-name {
+  font-family: "The Bystander Collection Sans Medium", "Bogle", sans-serif;
+}
+.card-version {
+  font-family: "Brandon Text Condensed Bold", "Bogle", sans-serif;
+}
+.card-types {
+  font-family: "Brandon Text Condensed Black Italic", "Bogle", sans-serif;
+  font-style: italic;
+}
+.kw-title {
+  font-family: "Brandon Text Condensed Black", "Bogle", sans-serif;
+  text-transform: uppercase;
+}
+.kw-reminder {
+  font-family: "Brandon Text Condensed Medium Italic", "Bogle", sans-serif;
+  font-style: italic;
+}
+
+/* =============================================================================
+ * `.board-bg` — cockpit viewport backdrop for the battlefield column.
+ * ========================================================================== */
+
+/* Vertical split — opponent half is faint warm/pink wash, player half is
+ * clear light-blue. Matches the official Gundam digital UI. */
+.board-bg {
+  position: relative;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 45, 122, 0.08) 0%,
+      rgba(255, 45, 122, 0.04) 35%,
+      rgba(255, 255, 255, 0.4) 48%,
+      rgba(255, 255, 255, 0.4) 52%,
+      rgba(45, 107, 255, 0.08) 65%,
+      rgba(45, 107, 255, 0.16) 100%
+    ),
+    linear-gradient(180deg, #f3eef0 0%, #ffffff 50%, #d8e3f5 100%);
+}
+.board-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(95, 115, 160, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(95, 115, 160, 0.22) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 95% 95% at 50% 50%, #000 40%, transparent 95%);
+  -webkit-mask-image: radial-gradient(ellipse 95% 95% at 50% 50%, #000 40%, transparent 95%);
+}
+.board-bg::after {
+  content: none;
+}
+
+/* =============================================================================
+ * `.centerline` — glowing DMZ divider between the two seats.
+ * ========================================================================== */
+
+.centerline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(45, 107, 255, 0.25) 15%,
+    rgba(45, 107, 255, 0.75) 40%,
+    rgba(255, 45, 122, 0.75) 50%,
+    rgba(45, 107, 255, 0.75) 60%,
+    rgba(45, 107, 255, 0.25) 85%,
+    transparent
+  );
+  box-shadow: 0 0 12px rgba(45, 107, 255, 0.25);
+  pointer-events: none;
+}
+.centerline::before,
+.centerline::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  background: var(--color-hud-accent);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px rgba(45, 107, 255, 0.55);
+}
+.centerline::before {
+  left: 0;
+}
+.centerline::after {
+  right: 0;
+}
+
+/* =============================================================================
+ * `.hud-corner` — mecha L-bracket corners on panels.
+ * ========================================================================== */
+
+/*
+ * Live inside `@layer utilities` so Tailwind's position utilities (`fixed`,
+ * `absolute`, `sticky`) resolve in source order within the same cascade
+ * layer — otherwise, unlayered CSS beats layered Tailwind utilities and
+ * `hud-corner`'s `position: relative` silently drags modals off-screen.
+ * The :where() wrapper keeps specificity at 0 so any explicit position
+ * utility wins on source order.
+ */
+@layer utilities {
+  :where(.hud-corner) {
+    position: relative;
+  }
+}
+.hud-corner::before,
+.hud-corner::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--color-hud-accent);
+  border-style: solid;
+}
+.hud-corner::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.hud-corner::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* =============================================================================
+ * Animations
+ * ========================================================================== */
+
+@keyframes gd-blink {
+  0%,
+  60% {
+    opacity: 1;
+  }
+  70%,
+  100% {
+    opacity: 0.25;
+  }
+}
+.gd-blink {
+  animation: gd-blink 1.4s infinite;
+}
+
+/*
+ * NOTE: intentionally opacity-only. Animating `transform` here would override
+ * any `translate-*` classes applied via className (e.g. modal centering via
+ * `-translate-x-1/2 -translate-y-1/2`) because the animation's final frame
+ * replaces the element's transform wholesale — the modal would drift to the
+ * top-left corner of the viewport and become invisible. Keep this keyframe
+ * constrained to `opacity` so call-sites can compose freely.
+ */
+@keyframes gd-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gd-pulse-red {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(255, 45, 122, 0.5),
+      0 0 24px rgba(255, 45, 122, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(255, 45, 122, 0),
+      0 0 30px rgba(255, 45, 122, 0.55),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+}
+.pass-btn-active {
+  animation: gd-pulse-red 1.6s ease-in-out infinite;
+}
+
+/* Hints-mode pulse for playable cards. Soft green halo every ~1.6s so
+ * the player can find their next legal move without overpowering the
+ * existing legality rim. Toggled via the seat-plate Hints button. */
+@keyframes gd-pulse-playable {
+  0%,
+  100% {
+    box-shadow:
+      0 0 8px rgba(86, 220, 120, 0.7),
+      0 0 18px rgba(86, 220, 120, 0.3);
+    border-color: rgba(120, 235, 140, 0.85);
+  }
+  50% {
+    box-shadow:
+      0 0 16px rgba(140, 245, 160, 1),
+      0 0 36px rgba(86, 220, 120, 0.75);
+    border-color: rgba(180, 255, 200, 1);
+  }
+}
+.gd-pulse-playable {
+  animation: gd-pulse-playable 1.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gd-pulse-playable {
+    animation: none;
+  }
+}
+
+/* One-shot cyan flash for the undo button right after the viewer makes
+ * an undoable move. Replaces the old ephemeral toast with a brief
+ * attention nudge on the always-visible button. Single iteration so the
+ * button settles into the calm "ready" state once the user has noticed.
+ */
+@keyframes gd-pulse-info-once {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(76, 195, 255, 0.55),
+      0 0 18px rgba(76, 195, 255, 0.45);
+    border-color: rgba(140, 220, 255, 1);
+  }
+  100% {
+    box-shadow:
+      0 0 0 8px rgba(76, 195, 255, 0),
+      0 0 0 rgba(76, 195, 255, 0);
+    border-color: rgba(76, 195, 255, 0.6);
+  }
+}
+.gd-pulse-info-once {
+  animation: gd-pulse-info-once 1.4s ease-out 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gd-pulse-info-once {
+    animation: none;
+  }
+}
+
+@keyframes gd-target-candidate-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px rgba(255, 248, 170, 1),
+      0 0 0 7px rgba(255, 190, 35, 0.78),
+      0 0 28px rgba(255, 214, 64, 1),
+      0 0 62px rgba(255, 150, 20, 0.72),
+      0 0 96px rgba(255, 105, 0, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 0 4px rgba(255, 255, 210, 1),
+      0 0 0 9px rgba(255, 200, 40, 0.9),
+      0 0 38px rgba(255, 226, 80, 1),
+      0 0 82px rgba(255, 150, 20, 0.82),
+      0 0 124px rgba(255, 105, 0, 0.5);
+  }
+}
+
+@keyframes gd-target-selected-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 1),
+      0 0 0 7px rgba(45, 107, 255, 1),
+      0 0 30px rgba(45, 107, 255, 1),
+      0 0 68px rgba(76, 195, 255, 0.9),
+      0 0 104px rgba(76, 195, 255, 0.48);
+  }
+  50% {
+    box-shadow:
+      0 0 0 4px rgba(255, 255, 255, 1),
+      0 0 0 9px rgba(45, 107, 255, 1),
+      0 0 40px rgba(45, 107, 255, 1),
+      0 0 88px rgba(76, 195, 255, 0.98),
+      0 0 132px rgba(76, 195, 255, 0.58);
+  }
+}
+
+.gd-target-candidate {
+  animation: gd-target-candidate-pulse 1.15s ease-in-out infinite;
+}
+.gd-target-selected {
+  animation: gd-target-selected-pulse 0.95s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gd-target-candidate,
+  .gd-target-selected {
+    animation: none;
+  }
+}
+
+/* Dual-mode card lifted state — cyan candidate pulse on each half of
+ * a Command-with-Pilot card while the user picks command vs pair-as-
+ * pilot (rule 3-4-6). Mirrors the candidate-target cyan used by
+ * inline targeting so the visual language stays consistent.
+ */
+@keyframes gd-dual-mode-pulse {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 0 2px rgba(41, 212, 247, 0.85),
+      inset 0 0 18px rgba(41, 212, 247, 0.25);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 0 2px rgba(140, 240, 255, 1),
+      inset 0 0 28px rgba(41, 212, 247, 0.45);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-testid="dual-mode-overlay"] button {
+    animation: none !important;
+  }
+}
+
+/* Hand strip fades slightly on hover so the player can peek at the board. */
+.hand-wrap {
+  transition: opacity 0.2s ease;
+}
+.hand-wrap:hover {
+  opacity: 0.35;
+}
+
+/* =============================================================================
+ * Mobile tweaks + bottom sheet
+ * ========================================================================== */
+
+@media (max-width: 820px), (max-height: 520px) {
+  body.gundam-simulator-active {
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hand-wrap:hover {
+    opacity: 1;
+  }
+}
+
+@keyframes gd-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.gd-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  background: rgba(26, 37, 66, 0.4);
+  backdrop-filter: blur(2px);
+  animation: gd-fade-in 0.15s ease;
+}
+.gd-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 251;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #ffffff, #fbfcfe);
+  border-top: 1px solid var(--color-hud-border-hot);
+  box-shadow:
+    0 -12px 40px rgba(26, 37, 66, 0.18),
+    inset 0 1px 0 rgba(45, 107, 255, 0.14);
+  color: var(--color-hud-text);
+  animation: gd-sheet-in 0.22s cubic-bezier(0.2, 0.7, 0.2, 1);
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%, 0 12px);
+}
+.gd-sheet-grabber {
+  width: 42px;
+  height: 4px;
+  margin: 8px auto 2px;
+  background: rgba(45, 107, 255, 0.5);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* =============================================================================
+ * Focus ring
+ * ========================================================================== */
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-hud-info);
+  border-radius: 6px;
+}
+
+/* =============================================================================
+ * Play-zone card bands — Lorcana-style overlapping top/bottom rails around
+ * each in-play card. Sizing vars are set by `PlayZone.tsx` on the zone root;
+ * bands overlap the card face by half their own height so pills sit on the
+ * card edge without occluding art.
+ * ========================================================================== */
+.play-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.play-band {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  z-index: 2;
+  pointer-events: auto;
+}
+.play-band[aria-hidden="true"] {
+  /* Reserve vertical space even when empty so slot heights stay uniform
+     — prevents the row from jitters when a status clears. */
+  visibility: hidden;
+}
+.play-band--top {
+  height: var(--play-band-height-top, 22px);
+  justify-content: flex-end;
+  margin-bottom: calc(var(--play-band-height-top, 22px) * var(--play-band-overlap, 0.5) * -1);
+  padding: 0 2px;
+  z-index: 8;
+}
+.play-band--bottom {
+  position: absolute;
+  right: 4px;
+  bottom: calc(4px + var(--play-slot-stat-bottom-offset, 0px));
+  height: var(--play-band-height-bottom, 22px);
+  justify-content: flex-end;
+  padding: 0;
+  gap: 4px;
+  z-index: 4;
+}
+/* Stat pills overlay the card art (not the page surface), so the dark
+ * fill is intentional regardless of the page theme — keeps numbers
+ * readable against any color of card art behind them. */
+.play-pill {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: var(--play-pill-size, 22px);
+  width: var(--play-pill-size, 22px);
+  min-width: var(--play-pill-size, 22px);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(7, 11, 18, 0.92);
+  color: #fff;
+  font-weight: 800;
+  line-height: 1;
+  cursor: default;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.play-pill:hover,
+.play-pill:focus-visible {
+  z-index: 5;
+}
+.play-pill__label {
+  font-size: var(--play-pill-label-size, 7px);
+  opacity: 0.7;
+  letter-spacing: 0.03em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.play-pill__value {
+  font-size: var(--play-pill-text-size, 10px);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+.play-pill--ap {
+  border-color: rgba(45, 107, 255, 0.5);
+  background: linear-gradient(180deg, rgba(20, 50, 130, 0.95), rgba(7, 11, 18, 0.95));
+}
+.play-pill--hp {
+  border-color: rgba(76, 195, 255, 0.5);
+  background: linear-gradient(180deg, rgba(10, 35, 55, 0.95), rgba(7, 11, 18, 0.95));
+}
+.play-pill--buffed {
+  border-color: rgba(54, 255, 138, 0.6);
+  background: linear-gradient(180deg, rgba(20, 80, 45, 0.95), rgba(7, 18, 11, 0.95));
+  color: #d6ffe7;
+  box-shadow:
+    0 0 8px rgba(54, 255, 138, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.55);
+}
+.play-pill--debuffed {
+  border-color: rgba(255, 77, 94, 0.6);
+  background: linear-gradient(180deg, rgba(80, 15, 25, 0.95), rgba(18, 7, 11, 0.95));
+  color: #ffd0d7;
+  box-shadow:
+    0 0 8px rgba(255, 77, 94, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.55);
+}
+.tag-strip-compact > * + * {
+  margin-left: -6px;
+}
+
+/* =============================================================================
+ * Reduced motion — disables all CSS animations and transitions for users who
+ * opt out at the OS level. JS-driven animations (the attack-arrow dashed
+ * `<animate>` in `AttackTargetingOverlay.tsx`) are gated separately via the
+ * `usePrefersReducedMotion` hook.
+ * ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

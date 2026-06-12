@@ -1,0 +1,34 @@
+{
+  "name": "@tcg/agent-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Game-agnostic LLM agent runner — drives an in-match player seat via forced tool calls with a budgeted timeout and deterministic heuristic fallback.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
+    "check-types": "tsc --noEmit",
+    "test": "vp test run --passWithNoTests"
+  },
+  "dependencies": {
+    "@tcg/protocol": "link:../protocol",
+    "@tcg/shared": "link:../shared",
+    "zod": "^4.4.2"
+  },
+  "devDependencies": {
+    "@tcg/typescript-config": "link:../typescript-config",
+    "@types/node": "^22.13.4"
+  }
+}

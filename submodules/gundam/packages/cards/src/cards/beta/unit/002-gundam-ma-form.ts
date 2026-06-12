@@ -1,0 +1,91 @@
+import type { CardEffect, UnitCard } from "@tcg/gundam-types";
+
+export const betaGundamMaForm002: UnitCard = {
+  cardNumber: "ST01-002",
+  name: "Gundam (MA Form)",
+  type: "unit",
+  color: "blue",
+  traits: ["earth federation", "white base team"],
+  id: "ST01-002_p2",
+  externalId: "gundam:st01-002_p2",
+  slug: "gundam-ma-form-st01-002-p2",
+  displayName: "Gundam (MA Form)",
+  set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
+  printNumber: "ST01-002_p2",
+  printings: [
+    {
+      id: "ST01-002",
+      collectorNumber: "ST01-002",
+      cardNumber: "ST01-002",
+      set: {
+        code: "ST01",
+        name: "Heroic Beginnings [ST01]",
+        packageId: "616001",
+      },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-002.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-002.webp?260424",
+      productName: "Heroic Beginnings [ST01]",
+    },
+    {
+      id: "ST01-002_p1",
+      collectorNumber: "ST01-002_p1",
+      cardNumber: "ST01-002",
+      set: {
+        code: "ST01",
+        name: "Heroic Beginnings [ST01] Bonus Pack",
+        packageId: "616001",
+      },
+      rarity: "common",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-002_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-002_p1.webp?260424",
+      productName: "Heroic Beginnings [ST01] Bonus Pack",
+    },
+    {
+      id: "ST01-002_p2",
+      collectorNumber: "ST01-002_p2",
+      cardNumber: "ST01-002",
+      set: {
+        code: "BETA",
+        name: "Edition Beta",
+        packageId: "616000",
+      },
+      rarity: "common",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST01-002_p2.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-002_p2.webp?260424",
+      productName: "Edition Beta",
+    },
+  ],
+  selectedPrintingId: "ST01-002_p2",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST01-002_p2.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-002_p2.webp?260424",
+  legality: "legal",
+  level: 5,
+  cost: 3,
+  ap: 4,
+  hp: 3,
+  effect: "【When Paired･(White Base Team) Pilot】Draw 1.<br>",
+  effects: [
+    {
+      type: "triggered",
+      activation: {
+        timing: ["whenPaired"],
+        qualification: { attribute: "trait", comparison: "includes", value: "white base team" },
+      },
+      directives: [
+        {
+          action: {
+            action: "draw",
+            count: 1,
+          },
+        },
+      ],
+      sourceText: "【When Paired·(White Base Team) Pilot】Draw 1.",
+    },
+  ] as CardEffect[],
+  keywordEffects: [],
+  rarity: "common",
+};

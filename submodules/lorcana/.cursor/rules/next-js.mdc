@@ -1,0 +1,11 @@
+---
+description: Use this when changing nextJS related code, or creating pages or api routes
+alwaysApply: false
+---
+
+# Next.js
+
+Next.js with TypeScript and Tailwind UI best practices
+
+Refer to the guidelines located in this file:
+@.agent-os/standards/code-style/next-js.md 

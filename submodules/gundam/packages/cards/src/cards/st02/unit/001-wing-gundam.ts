@@ -1,0 +1,113 @@
+import type { CardEffect, UnitCard } from "@tcg/gundam-types";
+
+export const st02WingGundam001: UnitCard = {
+  cardNumber: "ST02-001",
+  name: "Wing Gundam",
+  type: "unit",
+  color: "green",
+  traits: ["operation meteor"],
+  id: "ST02-001",
+  externalId: "gundam:st02-001",
+  slug: "wing-gundam-st02-001",
+  displayName: "Wing Gundam",
+  set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
+  printNumber: "ST02-001",
+  printings: [
+    {
+      id: "ST02-001",
+      collectorNumber: "ST02-001",
+      cardNumber: "ST02-001",
+      set: {
+        code: "ST02",
+        name: "Wings of Advance [ST02]",
+        packageId: "616002",
+      },
+      rarity: "legendRare",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-001.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-001.webp?260424",
+      productName: "Wings of Advance [ST02]",
+    },
+    {
+      id: "ST02-001_p1",
+      collectorNumber: "ST02-001_p1",
+      cardNumber: "ST02-001",
+      set: {
+        code: "ST02",
+        name: "Wings of Advance [ST02] Bonus Pack",
+        packageId: "616002",
+      },
+      rarity: "legendRare",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-001_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-001_p1.webp?260424",
+      productName: "Wings of Advance [ST02] Bonus Pack",
+    },
+    {
+      id: "ST02-001_p2",
+      collectorNumber: "ST02-001_p2",
+      cardNumber: "ST02-001",
+      set: {
+        code: "BETA",
+        name: "Edition Beta",
+        packageId: "616000",
+      },
+      rarity: "legendRare",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-001_p2.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-001_p2.webp?260424",
+      productName: "Edition Beta",
+    },
+    {
+      id: "ST02-001_p3",
+      collectorNumber: "ST02-001_p3",
+      cardNumber: "ST02-001",
+      set: {
+        code: "BETA",
+        name: "Edition Beta",
+        packageId: "616000",
+      },
+      rarity: "legendRare",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-001_p3.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-001_p3.webp?260424",
+      productName: "Edition Beta",
+    },
+  ],
+  selectedPrintingId: "ST02-001",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-001.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-001.webp?260424",
+  legality: "legal",
+  level: 6,
+  cost: 4,
+  ap: 4,
+  hp: 5,
+  linkCondition: "[Heero Yuy]",
+  effect:
+    "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\nThis Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+  effects: [
+    {
+      type: "constant",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "chooseAttackTarget",
+            unit: { owner: "self", cardType: "unit" },
+            attackTarget: {
+              owner: "opponent",
+              cardType: "unit",
+              state: "active",
+              attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+            },
+            duration: "permanent",
+          },
+        },
+      ],
+      sourceText:
+        "This Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+    },
+  ] as CardEffect[],
+  keywordEffects: [{ keyword: "Breach", value: 5 }],
+  rarity: "legendRare",
+};

@@ -1,0 +1,57 @@
+import type { ResourceCard } from "@tcg/gundam-types";
+
+export const rResource030: ResourceCard = {
+  cardNumber: "R-030",
+  name: "Resource",
+  type: "resource",
+  traits: [],
+  id: "R-030",
+  externalId: "gundam:r-030",
+  slug: "resource-r-030",
+  displayName: "Resource",
+  set: { code: "ST09", name: "Destiny Ignition [ST09]", packageId: "616009" },
+  printNumber: "R-030",
+  printings: [
+    {
+      id: "R-030",
+      collectorNumber: "R-030",
+      cardNumber: "R-030",
+      set: {
+        code: "ST09",
+        name: "Destiny Ignition [ST09]",
+        packageId: "616009",
+      },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-030.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-030.webp?260424",
+      productName: "Destiny Ignition [ST09]",
+    },
+    {
+      id: "R-030_p1",
+      collectorNumber: "R-030_p1",
+      cardNumber: "R-030",
+      set: {
+        code: "ST09",
+        name: "Destiny Ignition [ST09]",
+        packageId: "616009",
+      },
+      rarity: "common",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-030_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-030_p1.webp?260424",
+      productName: "Destiny Ignition [ST09]",
+    },
+  ],
+  selectedPrintingId: "R-030",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-030.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-030.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  effect: "(Rest a Resource when paying a cost.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "common",
+};
+export const st09Resource030 = rResource030;

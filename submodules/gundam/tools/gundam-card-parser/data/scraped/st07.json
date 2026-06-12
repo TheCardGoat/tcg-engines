@@ -1,0 +1,866 @@
+[
+  {
+    "id": "ST05-014_p2",
+    "code": "ST05-014",
+    "name": "Fatal Strike",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 1 damage to it.\n【Main】Choose 1 enemy Unit that is Lv.3 or lower. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st05",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST05-014_p3",
+    "code": "ST05-014",
+    "name": "Fatal Strike",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 1 damage to it.\n【Main】Choose 1 enemy Unit that is Lv.3 or lower. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st05",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-001",
+    "code": "ST07-001",
+    "name": "Gundam Exia",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 4,
+    "effect": "At the end of your turn, if there are 7 or more (CB) cards in your trash, choose 1 of your Resources. Set it as active.\n【When Paired】Place the top 2 cards of your deck into your trash. If you place a (CB) card with this effect, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Setsuna F. Seiei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-001_p1",
+    "code": "ST07-001",
+    "name": "Gundam Exia",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 4,
+    "effect": "At the end of your turn, if there are 7 or more (CB) cards in your trash, choose 1 of your Resources. Set it as active.\n【When Paired】Place the top 2 cards of your deck into your trash. If you place a (CB) card with this effect, draw 1.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Setsuna F. Seiei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-002",
+    "code": "ST07-002",
+    "name": "Gundam Exia",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Setsuna F. Seiei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-002_p1",
+    "code": "ST07-002",
+    "name": "Gundam Exia",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Setsuna F. Seiei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-003",
+    "code": "ST07-003",
+    "name": "Gundam Virtue",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Tieria Erde]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-003_p1",
+    "code": "ST07-003",
+    "name": "Gundam Virtue",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Tieria Erde]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-004",
+    "code": "ST07-004",
+    "name": "Gundam Virtue",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "While you have a (CB) Pilot in play, this Unit gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Tieria Erde]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-004_p1",
+    "code": "ST07-004",
+    "name": "Gundam Virtue",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "While you have a (CB) Pilot in play, this Unit gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Tieria Erde]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-004_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-004_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-005",
+    "code": "ST07-005",
+    "name": "Gundam Dynames",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 2,
+    "hp": 4,
+    "effect": "During your turn, when this Unit destroys an enemy Unit with battle damage, this Unit recovers 2 HP.\n【During Link】This Unit gets AP+2.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Lockon Stratos]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-005_p1",
+    "code": "ST07-005",
+    "name": "Gundam Dynames",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 2,
+    "hp": 4,
+    "effect": "During your turn, when this Unit destroys an enemy Unit with battle damage, this Unit recovers 2 HP.\n【During Link】This Unit gets AP+2.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Lockon Stratos]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-005_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-005_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-006",
+    "code": "ST07-006",
+    "name": "Gundam Dynames",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Lockon Stratos]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-006_p1",
+    "code": "ST07-006",
+    "name": "Gundam Dynames",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Lockon Stratos]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-006_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-006_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-007",
+    "code": "ST07-007",
+    "name": "Gundam Kyrios",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 3,
+    "effect": "During your turn, while you have a (CB) Pilot in play, this Unit gets AP+2.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-007_p1",
+    "code": "ST07-007",
+    "name": "Gundam Kyrios",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 3,
+    "effect": "During your turn, while you have a (CB) Pilot in play, this Unit gets AP+2.",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-007_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-007_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-008",
+    "code": "ST07-008",
+    "name": "Gundam Kyrios (Flight Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 1,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-008_p1",
+    "code": "ST07-008",
+    "name": "Gundam Kyrios (Flight Mode)",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 1,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(CB) (GN Drive)",
+    "link": "[Allelujah Haptism] / [Hallelujah Haptism]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-008_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-008_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-009",
+    "code": "ST07-009",
+    "name": "Setsuna F. Seiei",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】This Unit gets AP+1 during this turn. If there are 7 or more (CB) cards in your trash, all your (CB) Units get AP+1 instead.",
+    "zone": "-",
+    "trait": "(CB)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-009_p1",
+    "code": "ST07-009",
+    "name": "Setsuna F. Seiei",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】This Unit gets AP+1 during this turn. If there are 7 or more (CB) cards in your trash, all your (CB) Units get AP+1 instead.",
+    "zone": "-",
+    "trait": "(CB)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-009_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-009_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-010",
+    "code": "ST07-010",
+    "name": "Tieria Erde",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Destroyed】If it is your opponent's turn and this is a (CB) Unit, draw 1.",
+    "zone": "-",
+    "trait": "(CB) (Innovade)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-010_p1",
+    "code": "ST07-010",
+    "name": "Tieria Erde",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Destroyed】If it is your opponent's turn and this is a (CB) Unit, draw 1.",
+    "zone": "-",
+    "trait": "(CB) (Innovade)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-010_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-010_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-011",
+    "code": "ST07-011",
+    "name": "Lockon Stratos (Neil)",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this is a (CB) Unit, it may choose an active enemy Unit whose Lv. is equal to or lower than this Unit as its attack target during this turn.",
+    "zone": "-",
+    "trait": "(CB)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-011.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-011.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-011_p1",
+    "code": "ST07-011",
+    "name": "Lockon Stratos (Neil)",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this is a (CB) Unit, it may choose an active enemy Unit whose Lv. is equal to or lower than this Unit as its attack target during this turn.",
+    "zone": "-",
+    "trait": "(CB)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-011_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-011_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-012",
+    "code": "ST07-012",
+    "name": "Allelujah Haptism",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nDuring your turn, while you have a (CB) Link Unit in play, this Unit can't receive battle damage from enemy Units with 3 or less AP.",
+    "zone": "-",
+    "trait": "(CB) (Super Soldier)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-012.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-012.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-012_p1",
+    "code": "ST07-012",
+    "name": "Allelujah Haptism",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nDuring your turn, while you have a (CB) Link Unit in play, this Unit can't receive battle damage from enemy Units with 3 or less AP.",
+    "zone": "-",
+    "trait": "(CB) (Super Soldier)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-012_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-012_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-013",
+    "code": "ST07-013",
+    "name": "Armed Intervention",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Action】Choose 1 rested friendly (CB) Unit. Change the attack target of the battling enemy Unit to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-013.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-013.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-013_p1",
+    "code": "ST07-013",
+    "name": "Armed Intervention",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Action】Choose 1 rested friendly (CB) Unit. Change the attack target of the battling enemy Unit to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-013_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-013_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-014",
+    "code": "ST07-014",
+    "name": "Tactical Visionary",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "1",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Look at the top 3 cards of your deck. You may reveal 1 (CB) Unit card/Pilot card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-014.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-014.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-014_p1",
+    "code": "ST07-014",
+    "name": "Tactical Visionary",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "1",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Look at the top 3 cards of your deck. You may reveal 1 (CB) Unit card/Pilot card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-014_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-014_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-015",
+    "code": "ST07-015",
+    "name": "Ptolemaios",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nWhile a rested friendly (CB) Unit is in play, this Base can't receive damage from enemy Units that are Lv.3 or lower, other than Unit tokens.",
+    "zone": "Space",
+    "trait": "(CB) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-015.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-015.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07]",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  },
+  {
+    "id": "ST07-015_p1",
+    "code": "ST07-015",
+    "name": "Ptolemaios",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nWhile a rested friendly (CB) Unit is in play, this Base can't receive damage from enemy Units that are Lv.3 or lower, other than Unit tokens.",
+    "zone": "Space",
+    "trait": "(CB) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST07-015_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST07-015_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam 00",
+    "getIt": "Celestial Drive [ST07] Bonus Pack",
+    "set": {
+      "id": "st07",
+      "name": "Celestial Drive [ST07]",
+      "packageId": "616007"
+    }
+  }
+]

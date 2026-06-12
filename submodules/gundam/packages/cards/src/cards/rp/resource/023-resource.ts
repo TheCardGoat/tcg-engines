@@ -1,0 +1,41 @@
+import type { ResourceCard } from "@tcg/gundam-types";
+
+export const rpResource023: ResourceCard = {
+  cardNumber: "RP-023",
+  name: "Resource",
+  type: "resource",
+  traits: [],
+  id: "RP-023",
+  externalId: "gundam:rp-023",
+  slug: "resource-rp-023",
+  displayName: "Resource",
+  set: { code: "RP", name: "Events", packageId: "616901" },
+  printNumber: "RP-023",
+  printings: [
+    {
+      id: "RP-023",
+      collectorNumber: "RP-023",
+      cardNumber: "RP-023",
+      set: {
+        code: "RP",
+        name: "Events",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-023.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-023.webp?260424",
+      productName: "Events",
+    },
+  ],
+  selectedPrintingId: "RP-023",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-023.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-023.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  effect: "(Rest a Resource when paying a cost.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

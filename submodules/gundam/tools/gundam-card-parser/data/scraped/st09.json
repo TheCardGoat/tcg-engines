@@ -1,0 +1,1055 @@
+[
+  {
+    "id": "EXB-002",
+    "code": "EXB-002",
+    "name": "EX Base",
+    "rarity": "C",
+    "cardType": "EX BASE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 3,
+    "effect": "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXB-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXB-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "exb",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "EXB-002_p1",
+    "code": "EXB-002",
+    "name": "EX Base",
+    "rarity": "C +",
+    "cardType": "EX BASE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 3,
+    "effect": "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXB-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXB-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "exb",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "EXR-002",
+    "code": "EXR-002",
+    "name": "EX Resource",
+    "rarity": "C",
+    "cardType": "EX RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(At the start of the game, the second-turn player places 1 active EX Resource into their resource area.)\n(Rest an EX Resource then exile it from the game when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXR-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXR-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "exr",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "EXR-002_p1",
+    "code": "EXR-002",
+    "name": "EX Resource",
+    "rarity": "C +",
+    "cardType": "EX RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(At the start of the game, the second-turn player places 1 active EX Resource into their resource area.)\n(Rest an EX Resource then exile it from the game when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXR-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXR-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "exr",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "GD01-049_p1",
+    "code": "GD01-049",
+    "name": "Blitz Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 of your (ZAFT) Units with 5 or more AP. It gains <First Strike> during this turn.\n\r\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Nicol Amarfi]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-049_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-049_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "gd01",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "GD01-054_p1",
+    "code": "GD01-054",
+    "name": "Duel Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 3,
+    "effect": "While this Unit has 5 or more AP, it gains <Breach 3>.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "(ZAFT) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-054_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-054_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "gd01",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "GD01-111_p3",
+    "code": "GD01-111",
+    "name": "Battle of Aces",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 2 damage to it.\n【Main】/【Action】Choose 1 damaged enemy Unit. Deal 3 damage to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-111_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-111_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "gd01",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "GD01-118_p6",
+    "code": "GD01-118",
+    "name": "Overflowing Affection",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 2. Then, discard 1.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p6.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p6.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "gd01",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "GD02-076_p1",
+    "code": "GD02-076",
+    "name": "Buster Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 3,
+    "effect": "While this Unit has 5 or more AP, it gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Triple Ship Alliance)",
+    "link": "(Coordinator) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-076_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-076_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "gd02",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "GD02-110_p2",
+    "code": "GD02-110",
+    "name": "Awakened Power",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "6",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Choose 1 Unit card that is Lv.5 or lower from your trash. Pay its cost to deploy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-110_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-110_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "gd02",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "R-030",
+    "code": "R-030",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-030.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-030.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "r",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "R-030_p1",
+    "code": "R-030",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-030_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-030_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "r",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST01-014_p6",
+    "code": "ST01-014",
+    "name": "Unforeseen Incident",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit. It gets AP-3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p6.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p6.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st01",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST04-002_p4",
+    "code": "ST04-002",
+    "name": "Strike Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】Draw 1. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-002_p4.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-002_p4.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st04",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST04-007_p2",
+    "code": "ST04-007",
+    "name": "Aegis Gundam (MA Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(ZAFT)",
+    "link": "[Athrun Zala]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-007_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-007_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st04",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST04-010_p5",
+    "code": "ST04-010",
+    "name": "Kira Yamato",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】Choose 1 enemy Unit. It gets AP-2 during this battle.",
+    "zone": "-",
+    "trait": "(Earth Alliance) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010_p5.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010_p5.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st04",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST04-011_p4",
+    "code": "ST04-011",
+    "name": "Athrun Zala",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】During this turn, this Unit may choose an active enemy Unit that is Lv.5 or lower as its attack target.",
+    "zone": "-",
+    "trait": "(ZAFT) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-011_p4.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-011_p4.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st04",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST04-015_p3",
+    "code": "ST04-015",
+    "name": "Archangel",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st04",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST04-016_p2",
+    "code": "ST04-016",
+    "name": "Vesalius",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】Rest this Base：Choose 1 friendly Unit. It gets AP+1 during this turn.",
+    "zone": "Space",
+    "trait": "(ZAFT) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-016_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-016_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st04",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-001",
+    "code": "ST09-001",
+    "name": "Impulse Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Activate･Main】②, return this Unit to the bottom of its owner's deck：Choose 1 Unit card with \"Impulse Gundam\" in its card name that is Lv.4 or higher from your trash. Deploy it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-001.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-001.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-001_p1",
+    "code": "ST09-001",
+    "name": "Impulse Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Activate･Main】②, return this Unit to the bottom of its owner's deck：Choose 1 Unit card with \"Impulse Gundam\" in its card name that is Lv.4 or higher from your trash. Deploy it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-002",
+    "code": "ST09-002",
+    "name": "Force Impulse Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【Destroyed】Choose 1 (Minerva Squad) Unit card without \"Force Impulse Gundam\" in its card name from your trash. Add it to your hand.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-002.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-002.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-002_p1",
+    "code": "ST09-002",
+    "name": "Force Impulse Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【Destroyed】Choose 1 (Minerva Squad) Unit card without \"Force Impulse Gundam\" in its card name from your trash. Add it to your hand.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-003",
+    "code": "ST09-003",
+    "name": "Saviour Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【When Linked】If there are 5 or more purple cards in your trash, deal 2 damage to all Units with 5 or less AP.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Athrun Zala]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-003.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-003.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-003_p1",
+    "code": "ST09-003",
+    "name": "Saviour Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【When Linked】If there are 5 or more purple cards in your trash, deal 2 damage to all Units with 5 or less AP.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Athrun Zala]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-004",
+    "code": "ST09-004",
+    "name": "Freedom Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "White",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nWhile a friendly Base in play, this Unit gains <Suppression>.\n\r\n(Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
+    "zone": "Space Earth",
+    "trait": "(Orb)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-004.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-004.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-004_p1",
+    "code": "ST09-004",
+    "name": "Freedom Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "White",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\nWhile a friendly Base in play, this Unit gains <Suppression>.\n\r\n(Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
+    "zone": "Space Earth",
+    "trait": "(Orb)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-004_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-004_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-005",
+    "code": "ST09-005",
+    "name": "Zaku Warrior",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-005.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-005.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-005_p1",
+    "code": "ST09-005",
+    "name": "Zaku Warrior",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-005_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-005_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-006",
+    "code": "ST09-006",
+    "name": "Sword Impulse Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 2,
+    "effect": "【Deploy】If you deploy this Unit from your trash, choose 1 enemy Unit that is Lv.3 or lower. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "(Coordinator) Trait / (Minerva Squad) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-006.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-006.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-006_p1",
+    "code": "ST09-006",
+    "name": "Sword Impulse Gundam",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 2,
+    "effect": "【Deploy】If you deploy this Unit from your trash, choose 1 enemy Unit that is Lv.3 or lower. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "(Coordinator) Trait / (Minerva Squad) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-006_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-006_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-007",
+    "code": "ST09-007",
+    "name": "Blast Impulse Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 3,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-007.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-007.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-007_p1",
+    "code": "ST09-007",
+    "name": "Blast Impulse Gundam",
+    "rarity": "C +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Purple",
+    "ap": 5,
+    "hp": 3,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad)",
+    "link": "[Shinn Asuka]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-007_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-007_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-008",
+    "code": "ST09-008",
+    "name": "Shinn Asuka",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 0,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】If this is a (Minerva Squad) Unit, choose 1 of your Resources. Set it as active.",
+    "zone": "-",
+    "trait": "(ZAFT) (Minerva Squad) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-008.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-008.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-008_p1",
+    "code": "ST09-008",
+    "name": "Shinn Asuka",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 0,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】If this is a (Minerva Squad) Unit, choose 1 of your Resources. Set it as active.",
+    "zone": "-",
+    "trait": "(ZAFT) (Minerva Squad) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-008_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-008_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-009",
+    "code": "ST09-009",
+    "name": "Giant Killing",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 active enemy Unit with 4 or less AP. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-009.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-009.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-009_p1",
+    "code": "ST09-009",
+    "name": "Giant Killing",
+    "rarity": "C +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 3,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 active enemy Unit with 4 or less AP. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-009_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-009_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-010",
+    "code": "ST09-010",
+    "name": "Minerva",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, look at the top 2 cards of your deck and return 1 to the top. Place the remaining card into your trash.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-010.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-010.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  },
+  {
+    "id": "ST09-010_p1",
+    "code": "ST09-010",
+    "name": "Minerva",
+    "rarity": "C +",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, look at the top 2 cards of your deck and return 1 to the top. Place the remaining card into your trash.",
+    "zone": "Space Earth",
+    "trait": "(ZAFT) (Minerva Squad) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST09-010_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST09-010_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED DESTINY",
+    "getIt": "Destiny Ignition [ST09]",
+    "set": {
+      "id": "st09",
+      "name": "Destiny Ignition [ST09]",
+      "packageId": "616009"
+    }
+  }
+]

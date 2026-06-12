@@ -1,0 +1,56 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# GitHub
+.github
+
+# Dependencies (will be reinstalled)
+node_modules
+
+# Build outputs
+dist
+build
+.next
+out
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE and editor config
+.vscode
+.idea
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Development tools
+.claude
+.playwright
+.storybook
+
+# Documentation
+*.md
+docs
+
+# Tests (not needed in production)
+e2e
+**/*.spec.ts
+**/*.test.ts
+**/*.spec.tsx
+**/*.test.tsx
+
+# Tooling
+.eslintcache
+.turbo
+.pnpm-store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*

@@ -1,0 +1,12 @@
+node_modules
+.svelte-kit
+build
+dist
+.vercel
+.netlify
+.storybook
+storybook-static
+*.min.js
+*.config.js
+*.config.ts
+src/lib/paraglide/

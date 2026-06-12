@@ -1,0 +1,120 @@
+import type { CardEffect, PilotCard } from "@tcg/gundam-types";
+
+export const betaBanagherLinks088: PilotCard = {
+  cardNumber: "GD01-088",
+  name: "Banagher Links",
+  type: "pilot",
+  color: "blue",
+  traits: ["civilian", "newtype"],
+  id: "GD01-088_p1",
+  externalId: "gundam:gd01-088_p1",
+  slug: "banagher-links-gd01-088-p1",
+  displayName: "Banagher Links",
+  set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
+  printNumber: "GD01-088_p1",
+  printings: [
+    {
+      id: "GD01-088",
+      collectorNumber: "GD01-088",
+      cardNumber: "GD01-088",
+      set: {
+        code: "GD01",
+        name: "Newtype Rising [GD01]",
+        packageId: "616101",
+      },
+      rarity: "uncommon",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-088.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-088.webp?260424",
+      productName: "Newtype Rising [GD01]",
+    },
+    {
+      id: "GD01-088_p1",
+      collectorNumber: "GD01-088_p1",
+      cardNumber: "GD01-088",
+      set: {
+        code: "BETA",
+        name: "Edition Beta",
+        packageId: "616000",
+      },
+      rarity: "uncommon",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-088_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p1.webp?260424",
+      productName: "Edition Beta",
+    },
+    {
+      id: "GD01-088_p2",
+      collectorNumber: "GD01-088_p2",
+      cardNumber: "GD01-088",
+      set: {
+        code: "BETA",
+        name: "Edition Beta",
+        packageId: "616000",
+      },
+      rarity: "uncommon",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-088_p2.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p2.webp?260424",
+      productName: "Edition Beta",
+    },
+    {
+      id: "GD01-088_p3",
+      collectorNumber: "GD01-088_p3",
+      cardNumber: "GD01-088",
+      set: {
+        code: "GD01",
+        name: "GUNDAM CARD GAME Booster Pack Launch Event",
+        packageId: "616901",
+      },
+      rarity: "uncommon",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-088_p3.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p3.webp?260424",
+      productName: "GUNDAM CARD GAME Booster Pack Launch Event",
+    },
+  ],
+  selectedPrintingId: "GD01-088_p1",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-088_p1.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p1.webp?260424",
+  legality: "legal",
+  level: 5,
+  cost: 1,
+  apBonus: 2,
+  hpBonus: 2,
+  effect:
+    "【Burst】Add this card to your hand.<br>【When Paired】If this is a Link Unit, draw 1.<br>",
+  effects: [
+    {
+      type: "triggered",
+      activation: {
+        timing: ["burst"],
+      },
+      directives: [
+        {
+          action: {
+            action: "addSelfToHand",
+          },
+        },
+      ],
+      sourceText: "【Burst】Add this card to your hand.",
+    },
+    {
+      type: "triggered",
+      activation: {
+        timing: ["whenLinked"],
+      },
+      directives: [
+        {
+          action: {
+            action: "draw",
+            count: 1,
+          },
+        },
+      ],
+      sourceText: "【When Paired】If this is a Link Unit, draw 1.",
+    },
+  ] as CardEffect[],
+  keywordEffects: [],
+  rarity: "uncommon",
+};

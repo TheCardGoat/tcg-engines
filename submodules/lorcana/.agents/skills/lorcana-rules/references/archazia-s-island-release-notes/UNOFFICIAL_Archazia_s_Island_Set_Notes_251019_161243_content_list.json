@@ -1,0 +1,1522 @@
+[
+  {
+    "type": "text",
+    "text": "Archazia's Island Unofficial Set Notes",
+    "text_level": 1,
+    "bbox": [114, 90, 880, 122],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Presented by LorcanaJudges.com",
+    "bbox": [112, 186, 383, 204],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Author:",
+    "bbox": [658, 186, 723, 200],
+    "page_idx": 0
+  },
+  {
+    "type": "image",
+    "img_path": "images/8146160dd74a03efd2b495202bf050cee5b3bb35674de17bb00b664991fba157.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [730, 167, 916, 224],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "(Updated 3/17/25 to reflect CRD changes on 2/28/25 & more)",
+    "bbox": [138, 244, 854, 268],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Disclaimer: These set notes are assembled as a volunteer effort based on common questions from the community and clarifying information from the Disney Lorcana TCG rules team. They do not reflect any possible upcoming rule changes, and are not official in any sense of the word. They are meant as a general, community-driven play aid only.",
+    "bbox": [109, 284, 864, 351],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "These Unofficial Set Notes use trademarks and/or copyrights associated with Disney Lorca, TCG, used under Ravensburger's Community Code Policy (here). We are expressly prohibited from charging you to use or access this content. These Set Notes are not published, endorsed, or specifically approved by Disney or Ravensburger. For more information about Disney Lorca, visit DisneyLorca.com.",
+    "bbox": [109, 366, 870, 449],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "As always, a huge thank you to the Rules Advisors on the Lorcana Rulebook Hub Discord for helping to collate questions and proofread the Set Notes!",
+    "bbox": [109, 468, 883, 507],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Table of Contents",
+    "bbox": [375, 526, 622, 549],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "General Rules Updates/Clarifications",
+    "bbox": [272, 578, 725, 601],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "New Keywords",
+    "bbox": [411, 625, 584, 646],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "General Rules Questions",
+    "bbox": [349, 670, 647, 690],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "#",
+    "bbox": [491, 699, 504, 705],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Specific Character Questions",
+    "bbox": [318, 715, 676, 734],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "#",
+    "bbox": [491, 743, 504, 751],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Specific Item Questions",
+    "bbox": [354, 760, 643, 781],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "#",
+    "bbox": [491, 790, 504, 797],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "Specific Action/Song Questions",
+    "bbox": [305, 805, 689, 825],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "#",
+    "bbox": [491, 835, 504, 843],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "References",
+    "bbox": [429, 851, 566, 871],
+    "page_idx": 0
+  },
+  {
+    "type": "text",
+    "text": "General Rules Updates/Clarifications",
+    "text_level": 2,
+    "bbox": [112, 88, 627, 113],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Q: How do “if you do” effect clauses know if they should resolve? (Ref. 1.1.)",
+    "bbox": [111, 133, 676, 174],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "A: Effects that start with \"if you do\" look to see if the effect in the previous clause was completed exactly as described. If that first effect was not done or was replaced by something else, the \"if you do\" check fails and the following effect cannot be done. The current rules do not cover this conditional, so expect it to be added in a future update.",
+    "bbox": [169, 191, 660, 349],
+    "page_idx": 1
+  },
+  {
+    "type": "image",
+    "img_path": "images/5542e519914d2870e7dfd35f20edb9981ff91a3931a5633ba8e8214a3ca25193.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [687, 117, 923, 368],
+    "page_idx": 1
+  },
+  {
+    "type": "image",
+    "img_path": "images/0e1a9a584348524cd58198c5f1e66b7fc59ac05d3cabeb1078893dfbd00d7962.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 373, 346, 623],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Q: How do \"once during your turn\" abilities work with \"may\" effects? Do I lose the chance to resolve an effect if I don't do it the first time? (Ref. 1.2.)",
+    "bbox": [354, 368, 877, 446],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "A: \"Once during your turn\" abilities will continue to trigger and go in the bag until all the effects are resolved. For mandatory abilities this will always be the first time the ability triggers, but for \"may\" abilities you will continue to get the opportunity to resolve the effect until you actually choose to do so. The current rules do not cover this conditional, so expect it to be added in a future update.",
+    "bbox": [354, 465, 880, 621],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "Q: How do Belle/Scrooge's \"play for free\" abilities really work? (Ref. 1.3.)",
+    "bbox": [112, 638, 617, 680],
+    "page_idx": 1
+  },
+  {
+    "type": "text",
+    "text": "A: Belle and Scrooge both have activated abilities that can be used on your turn while they are still in your hand. The rules do not currently allow for activated abilities that can be used from hand, so expect this to be added in a future update.",
+    "bbox": [169, 698, 676, 816],
+    "page_idx": 1
+  },
+  {
+    "type": "image",
+    "img_path": "images/eb7e9f0b1f33151dab70689f067295f35c87b8ad6372fe75b0da474c691e6d69.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [687, 633, 921, 883],
+    "page_idx": 1
+  },
+  {
+    "type": "image",
+    "img_path": "images/821e479d1e9cb28b0212957ab0cf620e2c3859dc4212e7a3cabcaa33dd320768.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 99, 346, 349],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I arrange my inkwell to help me remember which cards I have inked, and where they are? (Ref. 1.4.)",
+    "bbox": [357, 88, 875, 147],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. You are allowed to arrange your inkwell in any manner you choose, as long as the status (ready or exerted) of all the cards is clear to all players.",
+    "bbox": [357, 165, 851, 243],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Q: What is “a stack” in Lorcana? How can cards be “under” or “on top of” other cards? (Ref. 1.5.)",
+    "bbox": [116, 359, 849, 398],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "A: The 2/28/25 update to the Comprehensive Rules Document (CRD) added new definitions for these terms, although some were previously defined in the glossary. Currently, the only mechanic that uses \"stacks\" of cards is the Shift mechanic, so these terms only apply to characters played by Shifting.",
+    "bbox": [173, 417, 867, 516],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "Q: Are characters with strength values reduced below zero counted as having zero strength? (Ref. 1.6.)",
+    "bbox": [116, 534, 838, 574],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. The 2/28/25 update to the Comprehensive Rules Document (CRD) corrected an oversight in the previous CRD. Until this revision, characters with negative strength only counted as having zero strength for the purposes of determining damage. That has now been correctly expanded to all circumstances with the exception of applying new modifiers. Negative strength values are now always counted as zero unless you're changing the strength again. Yokai now works as intended with his stolen Microbots.",
+    "bbox": [173, 593, 864, 750],
+    "page_idx": 2
+  },
+  {
+    "type": "text",
+    "text": "New Keywords",
+    "text_level": 2,
+    "bbox": [114, 89, 308, 113],
+    "page_idx": 3
+  },
+  {
+    "type": "image",
+    "img_path": "images/54899083e36bffd5f487b861fddd5cdc2048b5f49e79977551241db82d7ad9cf.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 136, 346, 386],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Q: What is \"Vanish\"? (Ref. 2.1.)",
+    "text_level": 3,
+    "bbox": [357, 133, 648, 154],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "A: \"Vanish\" is a new keyword on characters that acts to balance particularly strong character stats. When a character with \"Vanish\" is chosen by an opponent's action card effect, that character is banished. It is a triggered ability and uses the bag like any other triggered ability.",
+    "bbox": [354, 172, 880, 290],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Q: What if a character with \"Vanish\" leaves play before the trigger is resolved? (Ref. 2.2.)",
+    "bbox": [354, 308, 839, 349],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "A: If the character with \"Vanish\" leaves play after being chosen by an action card effect, such as Let",
+    "bbox": [354, 366, 877, 406],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "It Go or Mother Knows Best, then \"Vanish\" will resolve to no effect.",
+    "bbox": [171, 407, 831, 426],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Q: Do “Universal Shift” and “Puppy Shift” trigger abilities that occur when something is played using “Shift”? (Ref. 2.3.)",
+    "bbox": [109, 446, 643, 506],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "A: Yes! “Universal Shift” and “Puppy Shift” are just special kinds of Shift, so they still trigger any ability that refers to “Shift” in its text.",
+    "bbox": [169, 523, 665, 583],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "Q: If I shift Baymax - Giant Robot onto a character with a triggered ability, like Bucky - Squirrel Squeak Tutor, can that triggered ability go into the bag before it is covered up? (Ref. 2.4.)",
+    "bbox": [109, 602, 676, 681],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "A: Yes! Baymax would be considered played as soon as his cost is paid, and just before he is put into the Play Zone on top of Bucky. Bucky's ability, Squeak, would trigger right then and go into the bag to be resolved after playing Baymax is completed.",
+    "bbox": [169, 700, 676, 820],
+    "page_idx": 3
+  },
+  {
+    "type": "image",
+    "img_path": "images/44aeb484c2047093c5b3186d75cdd2646eea73f034188c890627111eef8b44b3.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [687, 441, 923, 672],
+    "page_idx": 3
+  },
+  {
+    "type": "image",
+    "img_path": "images/673be1d1b07e81cdd9c1ea1b7384c527ea5073f5324588040e714878e797c430.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [687, 678, 921, 929],
+    "page_idx": 3
+  },
+  {
+    "type": "text",
+    "text": "General Rules Questions",
+    "text_level": 2,
+    "bbox": [112, 89, 455, 112],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Q: Does paying for a song with ink mean it's not being played as a song? (Ref. 3.1.)",
+    "bbox": [111, 138, 859, 180],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "A: No. No matter how you pay to play a song card, it is still a song. The characters in this set that refer to playing an \"action that isn't a song\" only mean actions that do not also have song in their classifications.",
+    "bbox": [169, 198, 870, 276],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/065eda4562a2c1cc1f77d20833b522cfb32b05ffbf4a92d474c3e3083d682340.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [148, 297, 379, 547],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/f9ca369232f1d936dda56d01796e46c007b6bd20e925715a492700ea1b2fa737.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [383, 297, 614, 547],
+    "page_idx": 4
+  },
+  {
+    "type": "image",
+    "img_path": "images/1387d73e3adbecd3ada2e588f1b6b12df1905499a0ef8ad2a7b7897c6e7b4905.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [616, 297, 849, 547],
+    "page_idx": 4
+  },
+  {
+    "type": "text",
+    "text": "Specific Character Questions",
+    "text_level": 2,
+    "bbox": [112, 88, 522, 113],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Baymax - Giant Robot",
+    "text_level": 3,
+    "bbox": [112, 133, 377, 154],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Q: If I use Universal Shift to play Baymax on top of a character that has 5 damage, will Baymax be banished? (Ref. 4.1.)",
+    "bbox": [112, 156, 632, 215],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. There is a Game State Check (GSC) that will occur after playing Baymax and before the Bag is checked to resolve his triggered ability, Functionality Improved. This means he will be banished by that GSC before you can remove any damage counters from him.",
+    "bbox": [169, 233, 638, 369],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/77ef4e3604a0c518280c1474911a843e7414ba961105b88b9b33b6283d3c2626.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [651, 99, 883, 349],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Belle - Apprentice Inventor",
+    "text_level": 3,
+    "bbox": [112, 391, 437, 412],
+    "page_idx": 5
+  },
+  {
+    "type": "image",
+    "img_path": "images/5f58b17c542a8fa34de7990eb761286393057062c87f123ee4b4e80bb5c2fe1b.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 421, 346, 674],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Q: Does the Item banished for What a Mess need to have a banish ability? (Ref. 4.2.a.)",
+    "bbox": [356, 415, 859, 455],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "A: No. The ability on the item does not matter for What a Mess. In fact, if the banished Item did have an activated ability, that ability could not be used since the item was not banished for the purpose of paying the cost of that ability. It was only banished to pay for What a Mess.",
+    "bbox": [354, 472, 880, 592],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "A2: Note that items with abilities that trigger when they are banished, such as Unconventional Tool, would still have their triggered abilities go in the bag if banished to pay for What a Mess.",
+    "bbox": [354, 613, 870, 693],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Q: When I banish an Item to play Belle for free, can I play all the Belles that are in my hand? (Ref. 4.2.b.)",
+    "bbox": [109, 712, 880, 752],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "A: No. Because What a Mess is an activated ability, you must pay the cost for each copy of the ability you wish to activate by taking the \"Use Activated Abilities\" turn action for each one individually.",
+    "bbox": [169, 771, 874, 830],
+    "page_idx": 5
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I use Belle's ability What a Mess to banish on item while she is already in play? (Ref. 4.2.c.)",
+    "bbox": [109, 89, 823, 130],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "A: No. While using Belle's ability while she is in play is not specifically prohibited by the rules, it is not intended. We have a special ruling to clarify that What a Mess may only be activated while Belle is in your hand.",
+    "bbox": [169, 148, 874, 227],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Bolt - Superdog",
+    "text_level": 3,
+    "bbox": [112, 250, 307, 272],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I play Lilo - Escape Artist during my Set Step to gain an additional lore when Bolt readies at the start of my turn? (Ref. 4.3.)",
+    "bbox": [111, 273, 622, 332],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "A: Yes! While Bolt's ability, Mark of Power, is triggered during the Ready Step, it is not resolved until the Set Step. This is the same timing as Lilo's triggered ability, so they can be resolved in the order that allows you to have Lilo in play before counting your undamaged characters for Mark of Power.",
+    "bbox": [169, 351, 624, 491],
+    "page_idx": 6
+  },
+  {
+    "type": "image",
+    "img_path": "images/e55268918ca747623d93070c31a7ce8767b7a822f6b4c1c6f26c44351c3a6c33.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [651, 261, 883, 512],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Donald Duck - Flustered Sorcerer",
+    "text_level": 3,
+    "bbox": [112, 508, 521, 529],
+    "page_idx": 6
+  },
+  {
+    "type": "image",
+    "img_path": "images/0602a5e898939a593006967121f9bdaa9f4d1e219dd93343e0911e02aeef09ad.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 540, 346, 792],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Q: Does my opponent need exactly 25 lore to win? (Ref. 4.4.a.)",
+    "bbox": [356, 532, 870, 573],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "A: No, Obfuscate! is intended to change the opponent's win condition to 25 lore or more while Donald Duck remains in play.",
+    "bbox": [354, 592, 864, 654],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Q: What happens if Donald is banished when my opponent has between 20 and 25 lore? (Ref. 4.4.b.)",
+    "bbox": [354, 671, 867, 712],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "A: Your opponent would win during the next game state check. If multiple opponents meet the criteria, whichever is first in turn order starting from the active player would be the winner.",
+    "bbox": [354, 729, 870, 809],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Q: Do multiple Donalds stack their effect? (Ref. 4.4.c.)",
+    "bbox": [112, 827, 653, 848],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "A: No. Thank goodness.",
+    "bbox": [169, 866, 415, 886],
+    "page_idx": 6
+  },
+  {
+    "type": "text",
+    "text": "Elsa - Ice Maker",
+    "text_level": 3,
+    "bbox": [112, 88, 308, 108],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I choose an already exerted character for this Elsa's ability? (Ref. 4.5.)",
+    "bbox": [112, 109, 619, 151],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "A: Yes, you can. However, doing so means the character did not become exerted with this ability, and the second effect of making them unable to ready at the start of their next turn will not resolve even if you have a character named Anna in play. The words \"if you do\" on the second effect require the first effect to be resolved exactly as the effect describes in order for the second effect to resolve at all.",
+    "bbox": [169, 172, 638, 348],
+    "page_idx": 7
+  },
+  {
+    "type": "image",
+    "img_path": "images/58c38c72a709a156a1f8f54121217db191e2443a30f700c86942d5cd82fdd22b.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [651, 99, 883, 349],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Fa Zhou - War Hero",
+    "text_level": 3,
+    "bbox": [112, 368, 354, 388],
+    "page_idx": 7
+  },
+  {
+    "type": "image",
+    "img_path": "images/61e572e6d99fecff5c12a2b0cf1de8e4deaf1f2e687d296e74970cf47eec7b1c.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 398, 346, 654],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Q: Does Fa Zhou have to be in play during both challenges in order for Training Exercises to trigger? (Ref. 4.6.a.)",
+    "bbox": [356, 391, 849, 453],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "A: No. Training Exercises will trigger when the second challenge of your turn is declared, even if he was not in play to see the first one.",
+    "bbox": [354, 470, 864, 530],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Q: Will Fa Zhou's ability trigger if he is played after the second challenge has already occurred that turn? (Ref. 4.6.b.)",
+    "bbox": [354, 547, 880, 607],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "A: No. Fa Zhou must be in play when the second challenge occurs. If he misses that one, he misses",
+    "bbox": [354, 626, 867, 664],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "his opportunity, even if other challenges happen while he is in play.",
+    "bbox": [169, 665, 861, 686],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Q: Do the challenges both need to be from/against the same character or location? (Ref. 4.6.c.)",
+    "bbox": [109, 704, 877, 744],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "A: No. Fa Zhou does not care who challenged or what was challenged. Only that the second challenge has been declared.",
+    "bbox": [169, 762, 820, 801],
+    "page_idx": 7
+  },
+  {
+    "type": "text",
+    "text": "Gantu - Experienced Enforcer",
+    "text_level": 3,
+    "bbox": [112, 88, 475, 109],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Q: Does Gantu affect cards that I play? (Ref. 4.7.a.)",
+    "bbox": [112, 109, 619, 132],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. Both of Gantu's abilities apply their effects to all players.",
+    "bbox": [169, 148, 604, 189],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Q: If an action or item is played “for free”, is the 2 ink from Don’t Get Any Ideas included? (Ref. 4.7.b.)",
+    "bbox": [112, 207, 619, 250],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "A: Playing a card \"for free\" means that you don't pay any ink costs at all. Even ones added by other abilities or effects. Gantu does not affect how much you pay for something played \"for free\".",
+    "bbox": [169, 267, 602, 364],
+    "page_idx": 8
+  },
+  {
+    "type": "image",
+    "img_path": "images/1799a6a220095714fab24a49afecc61a966fa883c94efd88ea4c2539ec34619c.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [650, 99, 883, 351],
+    "page_idx": 8
+  },
+  {
+    "type": "image",
+    "img_path": "images/68ca0e80f955da4a5efb9326de3b65e05d52a641e9376a07d0a216a8e9f65642.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 380, 346, 631],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Heihei - Expanded Consciousness Q: Is this the greatest Lorcona card of all time? (Ref. 4.8.)",
+    "bbox": [356, 383, 844, 446],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "A: Yes.",
+    "bbox": [357, 465, 423, 483],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Kronk - Laid Back",
+    "text_level": 3,
+    "bbox": [112, 641, 330, 660],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I still pay for abilities that require me to discard cards as part of the cost while Kronk is in play? (Ref. 4.9.a.)",
+    "bbox": [112, 662, 624, 722],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "A: Yes! I'm Lovin' This only applies to the effect portion of an ability. If the ability has a cost that includes discarding, you must still discard, such as for Madam Mim - Truly Marvelous or to resolve Twin Fire's second effect. Cards such as Sudden Chill would have their effect prevented if it was attempting to make you discard.",
+    "bbox": [169, 741, 635, 898],
+    "page_idx": 8
+  },
+  {
+    "type": "image",
+    "img_path": "images/6b2cb07a77cf91d8764bb03d0fdccacbd4a973d14a34bfc6b4020e0e142d8477.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [650, 655, 883, 906],
+    "page_idx": 8
+  },
+  {
+    "type": "text",
+    "text": "Q: What about if I play Megara - Captivating Cynic while Kronk is in play? (Ref. 4.9.b.)",
+    "bbox": [111, 107, 633, 148],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "A: Megara is banished. Kronk prevents you from being able to discard a card in order to keep her in play.",
+    "bbox": [169, 166, 633, 226],
+    "page_idx": 9
+  },
+  {
+    "type": "image",
+    "img_path": "images/2509f6e5d17f0089c9a50fe1df635a855909d61453d382936ff66e40ec42807e.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [651, 99, 883, 349],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Lady Tremaine - Bitterly Jealous",
+    "text_level": 3,
+    "bbox": [112, 378, 503, 401],
+    "page_idx": 9
+  },
+  {
+    "type": "image",
+    "img_path": "images/53197631b9c8d8cc347b4a8acceaae06522ccee4c057a4578851f2a75517427c.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 412, 346, 662],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I activate That's Quite Enough if there are no damaged characters in play? What happens if I do? (Ref. 4.10.)",
+    "bbox": [354, 404, 880, 463],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "A: You can activate the ability when there are no damaged characters in play, as the only cost is to exert Lady Tremaine. If you do so, no characters will return to any player's hand, but each of your opponents will still have to discard a random card.",
+    "bbox": [354, 482, 877, 580],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "A2: Remember, though - if there is a valid choice, you must choose it. Even if it is your own character! That part of the ability is not optional.",
+    "bbox": [354, 599, 883, 659],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Maid Marian - Badminton Ace",
+    "text_level": 3,
+    "bbox": [112, 678, 478, 696],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "Q: If one of my Ally characters is dealt damage, but has Resist that reduces it to 0 damage dealt, does Good Shot still trigger? (Ref. 4.11.)",
+    "bbox": [111, 700, 614, 762],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "A: No. If Resist reduces an instance of damage to zero, then no damage is considered to have been dealt. Good Shot will not trigger if no damage is dealt.",
+    "bbox": [169, 779, 609, 859],
+    "page_idx": 9
+  },
+  {
+    "type": "image",
+    "img_path": "images/becd68affad7ecaa6bd339fc6103455a0d1b4b95f61ef44dc3dd046d12b80e3b.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [651, 672, 883, 924],
+    "page_idx": 9
+  },
+  {
+    "type": "text",
+    "text": "A2: Note that this also includes moving damage and putting damage counters - neither of those effects \"deal\" damage, and do not trigger Good Shot.",
+    "bbox": [169, 88, 880, 147],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Mickey Mouse - Inspirational Warrior",
+    "text_level": 3,
+    "bbox": [112, 167, 560, 189],
+    "page_idx": 10
+  },
+  {
+    "type": "image",
+    "img_path": "images/1419e9f4a7b39910c0a05769059ea675532e8692ebd2183afc7df604e750dcfc.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 199, 346, 450],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Q: Does Mickey need to survive the challenge in order to play a character for free? (Ref. 4.12.)",
+    "bbox": [354, 190, 849, 229],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "A: No. Even if Mickey is banished in the challenge, if he banishes the opposing character then Stirring Spirit will trigger and get to resolve. Mickey does not need to remain in play.",
+    "bbox": [354, 248, 880, 329],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Mother Gothel - Vain Sorceress",
+    "text_level": 3,
+    "bbox": [112, 460, 491, 479],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Q: Can Now You've Upset Me move a damage counter that was dealt in the challenge that triggered the ability? (Ref. 4.13.a.)",
+    "bbox": [112, 484, 578, 544],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "A: No. Mother Gothel's ability resolves after the challenge has been declared, but before the Challenge Damage Step has dealt any damage to characters.",
+    "bbox": [169, 561, 627, 642],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Q: What happens if the moved damage counter causes one of the characters in the challenge to be banished? (Ref. 4.13.b.)",
+    "bbox": [111, 660, 614, 720],
+    "page_idx": 10
+  },
+  {
+    "type": "image",
+    "img_path": "images/c881f3170105ef788e9b241daacc59ccd1f69b90ea2bdfff15d90851efe83486.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [650, 453, 883, 704],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "A: Remaining abilities are resolved from the bag, and then the challenge ends. It is an open question whether Gothel \"gets credit\" for banishing the character - stay tuned for updates!",
+    "bbox": [169, 738, 849, 797],
+    "page_idx": 10
+  },
+  {
+    "type": "text",
+    "text": "Pepa Madrigal - Sensitive Sister",
+    "text_level": 3,
+    "bbox": [112, 88, 501, 109],
+    "page_idx": 11
+  },
+  {
+    "type": "image",
+    "img_path": "images/723c7a0a7ae10cd6db2abb605ca3f6beb65aff83b999011d1ef1cc216c2fd219.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 119, 346, 369],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Q: If I sing a song with Sing Together, do I get a lore for each character that song? (Ref. 4.14.)",
+    "bbox": [354, 111, 839, 151],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "A: No. Because Clear Skies, Clear Skies specifies \"one or more\" characters, singing a song with Sing Together would only ever grant one lore.",
+    "bbox": [354, 170, 872, 229],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Pepper - Quick-Thinking Puppy  \nQ: Can Pepper's ability put herself in the inkwell when she is banished? (Ref. 4.15.)",
+    "text_level": 3,
+    "bbox": [112, 383, 606, 445],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "A: Yes! Pepper is a puppy character, and her ability would trigger when she is banished. If you wish, you can put her into the inkwell.",
+    "bbox": [169, 465, 627, 523],
+    "page_idx": 11
+  },
+  {
+    "type": "image",
+    "img_path": "images/0948777c7ace254b53e1337367228f795897121f4eba10caed6b7c27979876c6.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [650, 333, 883, 584],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Pete - Space Pirate",
+    "text_level": 3,
+    "bbox": [112, 611, 344, 633],
+    "page_idx": 11
+  },
+  {
+    "type": "image",
+    "img_path": "images/f808c792ca9f801ce2a272dc77be624543125752fd1bd17473ed479b41a17951.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 642, 346, 893],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Q: Does Pete get Resist +1 from Frightful Scheme when he challenges? (Ref. 4.16.)",
+    "bbox": [354, 635, 854, 674],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "A: Yes! Pete is exerted before the challenge occurs, so he would immediately gain Resist +1 at that point and have it for the entirety of the challenge (and beyond).",
+    "bbox": [354, 693, 874, 772],
+    "page_idx": 11
+  },
+  {
+    "type": "text",
+    "text": "Pongo - Dear Old Dad",
+    "text_level": 3,
+    "bbox": [112, 88, 380, 109],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Q: What happens if some of my ink is exerted when I resolve Pongo's ability? (Ref. 4.17.)",
+    "bbox": [112, 109, 633, 150],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "A: If you look at your inkwell and find that a Puppy was one of the cards you exerted, you can play that character for free and keep the same amount of ready ink - congratulations!",
+    "bbox": [169, 169, 635, 247],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "A2: If you are playing with ink tokens, you must select which cards from your real ink pile are the exerted ones before looking at your inkwell.",
+    "bbox": [169, 266, 609, 345],
+    "page_idx": 12
+  },
+  {
+    "type": "image",
+    "img_path": "images/539f8f15520bc6ccdae6c6e10838b749634961a18487b38b8edf85864ed30490.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [651, 99, 883, 354],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Queen of Hearts - Unpredictable Bully",
+    "text_level": 3,
+    "bbox": [112, 364, 578, 388],
+    "page_idx": 12
+  },
+  {
+    "type": "image",
+    "img_path": "images/871d40153152b72b7a74a28e20f4c53e5d31896ff203a0644fce00fe59daf051.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 397, 346, 648],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Q: If I shift a character onto Queen of Hearts, will it get a damage counter put on it? (Ref. 4.18.a.)",
+    "bbox": [356, 388, 866, 426],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "A: Yes. Playing a character onto Queen of Hearts with Shift counts as \"playing another character\". It doesn't matter that she will herself be covered up by that character when the ability resolves.",
+    "bbox": [354, 446, 870, 525],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Q: Does Resist or Ward prevent If I Lose My Temper... from putting a damage counter on a character? (Ref. 4.18.b.)",
+    "bbox": [356, 544, 831, 604],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "A: No. Resist does not reduce placed damage counters, as they are not \"dealt\", and If I Lose My",
+    "bbox": [354, 625, 857, 664],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Temper... does not \"choose\" a character so does not interact with Ward.",
+    "bbox": [171, 665, 834, 703],
+    "page_idx": 12
+  },
+  {
+    "type": "text",
+    "text": "Ratigan - Nefarious Criminal",
+    "text_level": 3,
+    "bbox": [112, 88, 460, 109],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Q: If I sing Try Everything with Ratigan and ready him, does A Marvelous Performance give me any lore? (Ref. 4.19.)",
+    "bbox": [111, 111, 614, 171],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "A: Yes! A Marvelous Performance triggers and goes in the bag whenever an action is played while Ratigan is exerted. Since you have to exert him to pay the cost of the song before it is played, this condition is met. Resolving the effect of Try Everything does ready Ratigan after that, but the ability does not care if he remains exerted until it resolves. You get the lore!",
+    "bbox": [169, 191, 632, 367],
+    "page_idx": 13
+  },
+  {
+    "type": "image",
+    "img_path": "images/0a1193437e75d26930197b5e87319080317f7f6bebc8d09e165edf78b3433663.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [650, 99, 883, 351],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Scrooge McDuck - Resourceful Miser",
+    "text_level": 3,
+    "bbox": [112, 386, 560, 407],
+    "page_idx": 13
+  },
+  {
+    "type": "image",
+    "img_path": "images/83db6c4273830febc05ce80881b28c8fde2c65e1b493bd8ec58a64babf7802d7.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 417, 346, 667],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Q: Do the items exerted for Put It To Good Use need to have an exert ability? (Ref. 4.20.a.)",
+    "bbox": [356, 410, 830, 450],
+    "page_idx": 13
+  },
+  {
+    "type": "list",
+    "sub_type": "text",
+    "list_items": [
+      "A: No. The abilities on the items do not matter for Put It To Good Use. In fact, if any of the items exerted did have an exert ability, it would not be used since they were not exerted for the purpose of paying the cost of that ability - only Scrooge's.",
+      "Q: Can I \"exert\" items that are already exerted to pay the cost of Put It To Good Use? (Ref. 4.20.a.)"
+    ],
+    "bbox": [354, 468, 862, 628],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "A: No. If you are not able to do what a cost requires you to do, then you cannot pay that cost. And you em that is already exerted.",
+    "bbox": [354, 647, 880, 705],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I use Scrooge's ability Put It To Good Use to exert items while he is already in play? (Ref. 4.20.b.)",
+    "bbox": [111, 726, 866, 767],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "A: No. While using Scrooge's ability while he is in play is not specifically prohibited by the rules, it is not intended. We have a special ruling to clarify that Put It To Good Use may only be activated while Scrooge is in your hand.",
+    "bbox": [169, 785, 880, 866],
+    "page_idx": 13
+  },
+  {
+    "type": "text",
+    "text": "Snow White - Fairest in the Land",
+    "text_level": 3,
+    "bbox": [112, 88, 503, 108],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Q: What happens if I give Snow White Bodyguard?",
+    "bbox": [112, 109, 625, 131],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "(Ref. 4.21.)",
+    "bbox": [112, 132, 210, 148],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "A: Bodyguard only affects opposing characters that are able to challenge the character with the keyword - no characters can challenge Snow White, so Bodyguard would not have any effect.",
+    "bbox": [169, 169, 614, 265],
+    "page_idx": 14
+  },
+  {
+    "type": "image",
+    "img_path": "images/788ef02168c439d40d2d9cb591ab89aa8f8d6f0f0073f47d85b342fb494540c3.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [651, 99, 883, 349],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Te Kā - Elemental Terror",
+    "text_level": 3,
+    "bbox": [112, 330, 401, 351],
+    "page_idx": 14
+  },
+  {
+    "type": "image",
+    "img_path": "images/2d660127625f61e6f0ddfac8a95399fab61bf55e1cab739896d94de87b32cbff.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 363, 346, 614],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Q: Does Ancient Rage",
+    "text_level": 3,
+    "bbox": [356, 354, 583, 375],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "banish characters that are already exerted when she is played (or when my turn begins)? (Ref. 4.22.)",
+    "bbox": [356, 376, 864, 414],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "A: No. \"Is exerted\" in the text of Ancient Rage refers to the event of going from the Ready position to the Exerted position. You also cannot \"re-exert\" an already exerted character.",
+    "bbox": [354, 433, 870, 512],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "A2: Notably, this also excludes characters that enter play exerted (if they happen to be played on your turn). Cards like Sleepy - Nodding Off do not go from Ready to Exerted, they simply enter play already sideways.",
+    "bbox": [354, 532, 870, 630],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "The Queen - Jealous Beauty",
+    "text_level": 3,
+    "bbox": [109, 648, 455, 670],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I move fewer than three cards from my opponent's discard if that's all they have? (Ref. 4.23.)",
+    "bbox": [109, 671, 591, 729],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "A: No. In order to resolve No Ordinary Apple fully, you must move exactly three cards to the bottom of the deck. If you cannot move three cards, you cannot move any (and, of course, you won't gain any lore).",
+    "bbox": [169, 750, 624, 847],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "You can still exert The Queen to use the ability if desired, but it will resolve to no effect.",
+    "bbox": [169, 848, 581, 904],
+    "page_idx": 14
+  },
+  {
+    "type": "image",
+    "img_path": "images/1dc7b97a4132e2f2f53622714161eba4c6fdaf461c51e6d350c05f126593a474.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [650, 655, 883, 906],
+    "page_idx": 14
+  },
+  {
+    "type": "text",
+    "text": "Specific Item Questions",
+    "text_level": 2,
+    "bbox": [112, 88, 441, 113],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Devil's Eye Diamond",
+    "text_level": 3,
+    "bbox": [114, 133, 356, 154],
+    "page_idx": 15
+  },
+  {
+    "type": "image",
+    "img_path": "images/f82c04152ec6003abdbc81484bf9d624d2dc12ba546b43a3cca31715d34bb355.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [120, 164, 354, 420],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Q: Does Devil's Eye Diamond need to have been in play when one of my characters was damaged? (Ref. 5.1.a.)",
+    "bbox": [361, 156, 877, 217],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "A: No. The Price of Power will resolve successfully if one of your characters was dealt damage at any time during this turn, even before Diamond was played.",
+    "bbox": [359, 234, 879, 313],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Q: Does the character that was damaged need to still be in play when Devil's Eye Diamond's ability is activated? (Ref. 5.1.b.)",
+    "bbox": [361, 332, 874, 392],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "A: No. The Price of Power will resolve successfully after that was damaged has been banished.",
+    "bbox": [361, 411, 859, 450],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Q: Does moving damage counters to or putting damage counters on one of my characters make The Price of Power able to resolve and give me lore? What about characters that enter play with damage counters? (Ref. 5.1.c.)",
+    "bbox": [109, 469, 866, 551],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "A: No. Only damage having been \"dealt\" will allow The Price of Power to resolve successfully. Moving damage counters and putting damage counters do not count as \"dealing\" damage. Characters that enter play with damage counters also do not count as having been dealt damage.",
+    "bbox": [169, 569, 880, 667],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Maurice's Machine",
+    "text_level": 3,
+    "bbox": [112, 686, 346, 705],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I banish Maurice's Machine at any time? (Ref. 5.2.)",
+    "bbox": [112, 709, 606, 750],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "A: No. Maurice's Machine must be banished by another ability, like Hiram Flaversham - Toymaker's Artificer.",
+    "bbox": [169, 768, 620, 828],
+    "page_idx": 15
+  },
+  {
+    "type": "image",
+    "img_path": "images/f1355950feb633cfbb42027ea445549de4450a788b0f29a7c2ae06e249384806.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [650, 674, 883, 930],
+    "page_idx": 15
+  },
+  {
+    "type": "text",
+    "text": "The Glass Slipper",
+    "text_level": 3,
+    "bbox": [112, 88, 330, 109],
+    "page_idx": 16
+  },
+  {
+    "type": "image",
+    "img_path": "images/2f8b47aea065757f059b8fa2b11ff045e4ea30333d3d57a444fb7868bfc62494.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 119, 346, 375],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Q: How many copies of The Glass Slipper can I play in Draft/Sealed? (Ref. 5.3.a.)",
+    "bbox": [356, 109, 836, 150],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "A: No more than two.",
+    "bbox": [356, 169, 571, 186],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I banish The Glass Slipper to use Search the Kingdom if I don't have a Prince character to exert? Or if my Prince character is drying? (Ref. 5.3.b.)",
+    "bbox": [354, 209, 859, 289],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "A: No. Banishing the slipper and exerting a Prince character is the cost to activate Search the Kingdom. You cannot only pay part of a cost - you must pay costs in their entirety.",
+    "bbox": [354, 306, 870, 388],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Remember that drying characters cannot exert to pay costs that use the exert symbol.",
+    "bbox": [169, 407, 877, 446],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Unconventional Tool",
+    "text_level": 3,
+    "bbox": [112, 492, 366, 512],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I banish Unconventional Tool at any time?",
+    "bbox": [112, 513, 622, 534],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "(Ref. 5.4.)",
+    "bbox": [112, 534, 204, 554],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "A: No. Unconventional Tool must be banished by another ability, like Hiram Flaversham - Toymaker's Artificer.",
+    "bbox": [169, 573, 637, 632],
+    "page_idx": 16
+  },
+  {
+    "type": "image",
+    "img_path": "images/44c9951367b5b2c9f82fbbc10d481443a454cb703476ea042ff0a769b6181763.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [650, 477, 883, 729],
+    "page_idx": 16
+  },
+  {
+    "type": "text",
+    "text": "Specific Action/Song Questions",
+    "text_level": 2,
+    "bbox": [112, 88, 552, 113],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "All Is Found",
+    "text_level": 3,
+    "bbox": [112, 133, 258, 152],
+    "page_idx": 17
+  },
+  {
+    "type": "image",
+    "img_path": "images/d1cea469045860c628e153fe74c5e035a7c8c774904588c44fdc6129ecc8c789.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 164, 346, 416],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "Q: Can I place the copy of All Is Found that I just played into the inkwell when I resolve its effect? (Ref. 6.1.)",
+    "bbox": [356, 156, 852, 214],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "A: No. While a played action card is resolving, it is not in any zone, and does not enter the discard pile until its effect is completely resolved. When you are choosing cards from the discard to put into the inkwell, All Is Found is not there to be chosen.",
+    "bbox": [354, 233, 880, 330],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "Ink Geyser",
+    "text_level": 3,
+    "bbox": [112, 445, 240, 465],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "Q: How do I determine which cards stay in the inkwell? Do the inkwell cards have to be shuffled? (Ref. 6.2.)",
+    "bbox": [112, 467, 620, 526],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "A: Which cards stay in the inkwell must be determined randomly, but shuffling is not necessarily required. Dice can be used to determine which cards to move to the hand without shuffling their order, for example, but any method that is acceptable to both players can be used. If players cannot agree on a method to determine the random cards, a judge can be called in tournament settings",
+    "bbox": [169, 545, 635, 722],
+    "page_idx": 17
+  },
+  {
+    "type": "image",
+    "img_path": "images/31815b2418bb36695720051c638b988fe5b09249e6728a3a769a222b538e3c5a.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [650, 440, 883, 691],
+    "page_idx": 17
+  },
+  {
+    "type": "text",
+    "text": "Restoring Atlantis",
+    "text_level": 3,
+    "bbox": [114, 89, 331, 109],
+    "page_idx": 18
+  },
+  {
+    "type": "image",
+    "img_path": "images/f4a953ef14404e9d5597d1ff5050a1896078d55fe0027efec54d5b504268191f.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 119, 346, 369],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Q: Are characters that are played after Restoring Atlantis able to be challenged? (Ref. 6.3.)",
+    "bbox": [354, 111, 866, 150],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "A: No. Restoring Atlantis essentially applies an effect to the player, which protects all characters they have in play. The characters do not need to have been in play when Restoring Atlantis resolved.",
+    "bbox": [354, 169, 880, 248],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "So Much To Give",
+    "text_level": 3,
+    "bbox": [112, 380, 316, 398],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Q: If I give a drying character Bodyguard with So Much To Give, can I exert them? (Ref. 6.4.)",
+    "bbox": [112, 402, 616, 441],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "A: No. The character gaining Bodyguard must already be in play to be chosen for the effect of So Much To Give - it is too late to use the \"enter play exerted\" effect that Bodyguard usually has.",
+    "bbox": [169, 460, 627, 559],
+    "page_idx": 18
+  },
+  {
+    "type": "image",
+    "img_path": "images/a7c8ed5797590713c95f0881ffb755acdbd4c8c3d4d3e754ee19a56ded24e97a.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [651, 327, 883, 579],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "The Return of Hercules",
+    "text_level": 3,
+    "bbox": [112, 577, 393, 597],
+    "page_idx": 18
+  },
+  {
+    "type": "image",
+    "img_path": "images/33f123e82ed7b105859cade53fb532c3b86e3e2e7498a7578b1e63c10144129f.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [114, 609, 346, 861],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Q: How do my opponent and I resolve this card in the correct order? (Ref. 6.5.)",
+    "bbox": [356, 599, 867, 640],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "A: Starting with the active player, each player chooses and reveals a character card that they wish to play (if any - it is optional). Yes, that means your opponent will see what you're choosing to play before they make their choice.",
+    "bbox": [354, 657, 870, 755],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Then all revealed characters will be played in turn order, before finally resolving any triggered abilities as is usually done - in turn order, with each player choosing the order of resolution of their own abilities.",
+    "bbox": [354, 756, 870, 852],
+    "page_idx": 18
+  },
+  {
+    "type": "text",
+    "text": "Q: What if we both play Maleficent - Dragon? (Ref. 6.5.)",
+    "bbox": [112, 88, 619, 128],
+    "page_idx": 19
+  },
+  {
+    "type": "text",
+    "text": "A: Both Dragons would enter play and trigger when they do so, adding their abilities to the bag. Then each player would get to resolve the banish effect even if the active player chose to banish the opposing Maleficent, since her ability doesn't care if she remains in play and will still resolve.",
+    "bbox": [169, 147, 637, 282],
+    "page_idx": 19
+  },
+  {
+    "type": "image",
+    "img_path": "images/addc2492d180f8f627363021ef94afaaa34e9a055944da0d22b2cae4f0b2ae42.jpg",
+    "image_caption": [],
+    "image_footnote": [],
+    "bbox": [651, 101, 883, 349],
+    "page_idx": 19
+  }
+]

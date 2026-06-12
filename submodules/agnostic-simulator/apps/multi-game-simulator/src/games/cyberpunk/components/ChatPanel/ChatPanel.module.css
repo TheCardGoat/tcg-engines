@@ -1,0 +1,232 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 10px 12px;
+  font-family: "Share Tech Mono", monospace;
+  color: #f5e642;
+  font-size: 12px;
+  min-height: 0;
+}
+
+.panelCompact {
+  gap: 6px;
+  max-height: 100%;
+  padding: 6px 8px 8px;
+  overflow: hidden;
+}
+
+.scroll {
+  flex: 1 1 auto;
+  min-height: 96px;
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 4px;
+  border: 1px solid rgb(245 230 66 / 18%);
+  background: rgb(245 230 66 / 3%);
+  border-radius: 2px;
+}
+
+.panelCompact .scroll {
+  flex: 0 1 82px;
+  min-height: 58px;
+  max-height: 82px;
+  gap: 4px;
+  padding: 5px 4px;
+}
+
+/* Grouped (continuation) bubbles read as one block: drop the border and
+ * background so only the first bubble of a run shows the framed pill. The
+ * chip column is preserved (hidden) so the body stays vertically aligned
+ * with the bubble above. */
+.scroll > .bubble + .bubbleGrouped {
+  margin-top: -6px;
+  border-color: transparent;
+  background: transparent;
+  padding-top: 0;
+  padding-bottom: 2px;
+}
+
+.bubbleGrouped .chip {
+  visibility: hidden;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: rgb(245 230 66 / 25%);
+  border-radius: 3px;
+}
+
+.empty {
+  margin: auto;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+
+.bubble {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: 1px solid rgb(245 230 66 / 14%);
+  background: rgb(245 230 66 / 5%);
+}
+
+.panelCompact .bubble {
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px;
+  padding: 4px 6px;
+}
+
+.bubblePlayer {
+  border-color: rgb(92 246 255 / 30%);
+  background: rgb(92 246 255 / 6%);
+}
+
+.bubbleOpponent {
+  border-color: rgb(255 77 210 / 30%);
+  background: rgb(255 77 210 / 6%);
+}
+
+.bubbleSystem {
+  opacity: 0.7;
+}
+
+.chip {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid currentcolor;
+  line-height: 1;
+}
+
+.chipPlayer {
+  color: #5cf6ff;
+}
+
+.chipOpponent {
+  color: #ff4dd2;
+}
+
+.chipSystem {
+  color: #f5e642;
+}
+
+.body {
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.time {
+  font-size: 10px;
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+
+.panelCompact .time {
+  display: none;
+}
+
+.presets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.panelCompact .presets {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.presetBtn {
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 6px 8px;
+  border: 1px solid rgb(245 230 66 / 25%);
+  background: rgb(245 230 66 / 4%);
+  color: inherit;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 120ms ease;
+  text-align: left;
+}
+
+.panelCompact .presetBtn {
+  min-width: 0;
+  padding: 5px 4px;
+  font-size: 9px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.presetBtn:hover {
+  background: rgb(245 230 66 / 12%);
+}
+
+.presetBtn:active {
+  background: rgb(245 230 66 / 18%);
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px;
+}
+
+.input {
+  font-family: inherit;
+  font-size: 12px;
+  padding: 6px 8px;
+  border: 1px solid rgb(245 230 66 / 25%);
+  background: rgb(0 0 0 / 30%);
+  color: inherit;
+  border-radius: 2px;
+  outline: none;
+}
+
+.panelCompact .input {
+  min-width: 0;
+  padding: 6px 7px;
+}
+
+.input:focus {
+  border-color: rgb(92 246 255 / 60%);
+}
+
+.sendBtn {
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border: 1px solid rgb(92 246 255 / 50%);
+  background: rgb(92 246 255 / 8%);
+  color: #5cf6ff;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.sendBtn:hover:not(:disabled) {
+  background: rgb(92 246 255 / 16%);
+}
+
+.sendBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

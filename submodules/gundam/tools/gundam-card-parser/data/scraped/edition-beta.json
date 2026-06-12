@@ -1,0 +1,2243 @@
+[
+  {
+    "id": "EXB-001_p5",
+    "code": "EXB-001",
+    "name": "EX Base",
+    "rarity": "C",
+    "cardType": "EX BASE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 3,
+    "effect": "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXB-001_p5.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXB-001_p5.webp?260424"
+    },
+    "sourceTitle": "-",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "exb",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "EXR-001_p5",
+    "code": "EXR-001",
+    "name": "EX Resource",
+    "rarity": "C",
+    "cardType": "EX RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(At the start of the game, the second-turn player places 1 EX Resource into their resource area.)\n(Rest an EX Resource then exile it from the game when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXR-001_p5.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXR-001_p5.webp?260424"
+    },
+    "sourceTitle": "-",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "exr",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-004_p1",
+    "code": "GD01-004",
+    "name": "Guncannon",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)\n【When Paired】Choose 1 enemy Unit with 2 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "(White Base Team) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-004_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-004_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-004_p2",
+    "code": "GD01-004",
+    "name": "Guncannon",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)\n【When Paired】Choose 1 enemy Unit with 2 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "(White Base Team) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-004_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-004_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-005_p2",
+    "code": "GD01-005",
+    "name": "Unicorn Gundam (Unicorn Mode)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【During Pair】【Destroyed】If this is a Link Unit, return its paired Pilot to its owner's hand. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Banagher Links]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-005_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-005_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-008_p1",
+    "code": "GD01-008",
+    "name": "Guntank",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Deploy】Choose 1 rested enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-008_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-008_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-009_p1",
+    "code": "GD01-009",
+    "name": "G-Fighter",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Deploy】Choose 1 of your (White Base Team) Units. It gains <High-Maneuver> during this turn.\n\r\n(This Unit can't be blocked.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "(White Base Team) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-009_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-009_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-011_p1",
+    "code": "GD01-011",
+    "name": "Loto",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "(Earth Federation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-011_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-011_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-013_p1",
+    "code": "GD01-013",
+    "name": "Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-013_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-013_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-015_p1",
+    "code": "GD01-015",
+    "name": "Ball",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Attack】Choose 1 of your Units. It recovers 1 HP.",
+    "zone": "Space",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-015_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-015_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-016_p1",
+    "code": "GD01-016",
+    "name": "Jegan",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "While you have 2 or more (Earth Federation) Units in play, this card in your hand gets cost -1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-016_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-016_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-018_p1",
+    "code": "GD01-018",
+    "name": "ReZEL",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-018_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-018_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-026_p1",
+    "code": "GD01-026",
+    "name": "Char's Zaku Ⅱ",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【During Pair】【Destroyed】Deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Char Aznable]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-026_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-026_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-026_p2",
+    "code": "GD01-026",
+    "name": "Char's Zaku Ⅱ",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【During Pair】【Destroyed】Deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "[Char Aznable]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-026_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-026_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-028_p1",
+    "code": "GD01-028",
+    "name": "Gundam Sandrock",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】You may deploy 1 (Maganac Corps) Unit card from your hand.",
+    "zone": "Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Quatre Raberba Winner]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-028_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-028_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-030_p1",
+    "code": "GD01-030",
+    "name": "Rick Dom",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "<Breach 2> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to a card in that opponent's shield area.)",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-030_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-030_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-031_p1",
+    "code": "GD01-031",
+    "name": "Gelgoog",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "(Zeon) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-031_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-031_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-034_p1",
+    "code": "GD01-034",
+    "name": "Gundam Heavyarms",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【During Pair】This Unit gains <Breach 3>.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to a card in that opponent's shield area.)",
+    "zone": "Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Trowa Barton]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-034_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-034_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-040_p1",
+    "code": "GD01-040",
+    "name": "Wing Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 2,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Heero Yuy]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-040_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-040_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-041_p1",
+    "code": "GD01-041",
+    "name": "Shenlong Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to a card in that opponent's shield area.)",
+    "zone": "Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Chang Wufei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-041_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-041_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-068_p1",
+    "code": "GD01-068",
+    "name": "Perfect Strike Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【Deploy】Choose 1 enemy Unit with 1 HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Triple Ship Alliance)",
+    "link": "(Earth Alliance) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-068_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-068_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-070_p1",
+    "code": "GD01-070",
+    "name": "Gundam Aerial",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Suletta Mercury]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-070_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-070_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-070_p2",
+    "code": "GD01-070",
+    "name": "Gundam Aerial",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "While there are 4 or more Command cards in your trash, this card in your hand gets cost -2.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Suletta Mercury]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-070_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-070_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-072_p1",
+    "code": "GD01-072",
+    "name": "Launcher Strike Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "(Earth Alliance) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-072_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-072_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-075_p1",
+    "code": "GD01-075",
+    "name": "Darilbalde",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 4,
+    "hp": 2,
+    "effect": "【Deploy】Choose 1 enemy Unit with 1 HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "(Academy) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-075_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-075_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-076_p1",
+    "code": "GD01-076",
+    "name": "Michaelis",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "While there are 4 or more Command cards in your trash, this Unit gets AP+1 and HP+1.",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "(Academy) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-076_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-076_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-077_p1",
+    "code": "GD01-077",
+    "name": "Strike Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-077_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-077_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-081_p1",
+    "code": "GD01-081",
+    "name": "M1 Astray",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 2,
+    "hp": 2,
+    "effect": "While you have another (Triple Ship Alliance) Unit in play, this Unit gets AP+1 and <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Triple Ship Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-081_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-081_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-088_p1",
+    "code": "GD01-088",
+    "name": "Banagher Links",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this is a Link Unit, draw 1.",
+    "zone": "-",
+    "trait": "(Civilian) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-088_p2",
+    "code": "GD01-088",
+    "name": "Banagher Links",
+    "rarity": "U +",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If this is a Link Unit, draw 1.",
+    "zone": "-",
+    "trait": "(Civilian) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-089_p1",
+    "code": "GD01-089",
+    "name": "Riddhe Marcenas",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nIf this Unit has <Repair>, it gets AP+1.",
+    "zone": "-",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-089_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-089_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-091_p1",
+    "code": "GD01-091",
+    "name": "Chang Wufei",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nDuring your turn, if this Unit has <Breach>, it can't receive battle damage from enemy Units with 3 or less AP.",
+    "zone": "-",
+    "trait": "(Operation Meteor)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-091_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-091_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-097_p1",
+    "code": "GD01-097",
+    "name": "Guel Jeturk",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Activate･Main】【Once per Turn】If your opponent has 8 or more cards in their hand, set this Unit as active. It can't attack during this turn.",
+    "zone": "-",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-097_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-097_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-099_p1",
+    "code": "GD01-099",
+    "name": "Intercept Orders",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit with 5 or less HP. Rest it.\n【Main】/【Action】Choose 1 to 2 enemy Units with 3 or less HP. Rest them.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-099_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-099_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-100_p2",
+    "code": "GD01-100",
+    "name": "A Show of Resolve",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 2.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-100_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-100_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-100_p3",
+    "code": "GD01-100",
+    "name": "A Show of Resolve",
+    "rarity": "U +",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 2.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-100_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-100_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-105_p2",
+    "code": "GD01-105",
+    "name": "Citizens, Take a Stand!",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Add this card to your hand.\n【Main】All your Units get AP+2 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-105_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-105_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-107_p1",
+    "code": "GD01-107",
+    "name": "First Contact",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 3,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Place 1 EX Resource.\n【Main】Place 1 rested Resource.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-107_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-107_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-107_p2",
+    "code": "GD01-107",
+    "name": "First Contact",
+    "rarity": "U +",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 3,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Place 1 EX Resource.\n【Main】Place 1 rested Resource.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-107_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-107_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-117_p2",
+    "code": "GD01-117",
+    "name": "The Witch and the Bride",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "5",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit with 5 or less HP. Return it to its owner's hand.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-117_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-117_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-118_p2",
+    "code": "GD01-118",
+    "name": "Overflowing Affection",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 2. Then, discard 1.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-118_p3",
+    "code": "GD01-118",
+    "name": "Overflowing Affection",
+    "rarity": "U +",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 2. Then, discard 1.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-120_p1",
+    "code": "GD01-120",
+    "name": "Naval Bombardment",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. It gets AP-3 during this turn.\n【Action】Choose 1 friendly Unit with <Blocker>. It gets AP+3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-120_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-120_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "GD01-124_p1",
+    "code": "GD01-124",
+    "name": "Side 7",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "1",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 4,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】Rest this Base：Choose 1 friendly Unit. It recovers 1 HP.",
+    "zone": "Space",
+    "trait": "(Earth Federation) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-124_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-124_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "gd01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "R-001_p4",
+    "code": "R-001",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 3,
+    "hp": 1,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-001_p4.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-001_p4.webp?260424"
+    },
+    "sourceTitle": "-",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "r",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "R-001_p5",
+    "code": "R-001",
+    "name": "Resource",
+    "rarity": "C +",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-001_p5.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-001_p5.webp?260424"
+    },
+    "sourceTitle": "-",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "r",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-001_p2",
+    "code": "ST01-001",
+    "name": "Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【During Pair】During your turn, all your Units get AP+1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-001_p3",
+    "code": "ST01-001",
+    "name": "Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【During Pair】During your turn, all your Units get AP+1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-002_p2",
+    "code": "ST01-002",
+    "name": "Gundam (MA Form)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Paired･(White Base Team) Pilot】Draw 1.",
+    "zone": "Space",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-002_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-002_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-005_p2",
+    "code": "ST01-005",
+    "name": "GM",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-005_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-005_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-007_p2",
+    "code": "ST01-007",
+    "name": "Gundam Aerial (Bit on Form)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "[Suletta Mercury]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-007_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-007_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-008_p2",
+    "code": "ST01-008",
+    "name": "Demi Trainer",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-008_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-008_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-010_p2",
+    "code": "ST01-010",
+    "name": "Amuro Ray",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-010_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-010_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-011_p2",
+    "code": "ST01-011",
+    "name": "Suletta Mercury",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】【Once per Turn】Choose 1 of your Resources. Set it as active.",
+    "zone": "-",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-011_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-011_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-011_p3",
+    "code": "ST01-011",
+    "name": "Suletta Mercury",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】【Once per Turn】Choose 1 of your Resources. Set it as active.",
+    "zone": "-",
+    "trait": "(Academy)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-011_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-011_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-012_p2",
+    "code": "ST01-012",
+    "name": "Thoroughly Damaged",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 0,
+    "hp": 1,
+    "effect": "【Main】Choose 1 rested enemy Unit. Deal 1 damage to it.\n【Pilot】[Hayato Kobayashi]",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-012_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-012_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-013_p2",
+    "code": "ST01-013",
+    "name": "Kai's Resolve",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】Choose 1 friendly Unit. It recovers 3 HP.\n【Pilot】[Kai Shiden]",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-013_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-013_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-015_p2",
+    "code": "ST01-015",
+    "name": "White Base",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】②：Deploy 1 [Gundam]((White Base Team)･AP3･HP3) Unit token if you have 0 Units in play, deploy 1 [Guncannon]((White Base Team)･AP2･HP2) Unit token if you have only 1 Unit in play, or deploy 1 [Guntank]((White Base Team)･AP1･HP1) Unit token if you have 2 or more Units in play.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-015_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-015_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST01-016_p2",
+    "code": "ST01-016",
+    "name": "Asticassia School of Technology, Earth House",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】Rest this Base：All friendly Link Units get AP+1 during this turn.",
+    "zone": "Space",
+    "trait": "(Academy) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-016_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-016_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st01",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST02-001_p2",
+    "code": "ST02-001",
+    "name": "Wing Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to a card in that opponent's shield area.)\nThis Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Heero Yuy]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-001_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-001_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st02",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST02-001_p3",
+    "code": "ST02-001",
+    "name": "Wing Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to a card in that opponent's shield area.)\nThis Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Heero Yuy]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-001_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-001_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st02",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST02-002_p2",
+    "code": "ST02-002",
+    "name": "Wing Gundam (Bird Mode)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 3,
+    "color": "Green",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Deploy】Place 1 EX Resource.",
+    "zone": "Space Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Heero Yuy]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-002_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-002_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st02",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST02-005_p2",
+    "code": "ST02-005",
+    "name": "Maganac",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Maganac Corps)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-005_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-005_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st02",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST02-010_p2",
+    "code": "ST02-010",
+    "name": "Heero Yuy",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nThis Unit gets AP+1 and HP+1 while linked.",
+    "zone": "-",
+    "trait": "(Operation Meteor)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-010_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-010_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st02",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST02-012_p2",
+    "code": "ST02-012",
+    "name": "Simultaneous Fire",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】Choose 1 of your Units. It gains <Breach 3> during this turn.\n\r\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to a card in that opponent's shield area.)\n【Pilot】[Trowa Barton]",
+    "zone": "-",
+    "trait": "(Operation Meteor)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-012_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-012_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st02",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST02-013_p2",
+    "code": "ST02-013",
+    "name": "Peaceful Timbre",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Action】During this battle, your shield area cards can't receive damage from enemy Units that are Lv.4 or lower.\n【Pilot】[Quatre Raberba Winner]",
+    "zone": "-",
+    "trait": "(Operation Meteor)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-013_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-013_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st02",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST02-015_p2",
+    "code": "ST02-015",
+    "name": "Saint Gabriel Institute",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 2,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, look at the top 2 cards of your deck and return 1 to the top and 1 to the bottom.",
+    "zone": "Earth",
+    "trait": "(Academy) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-015_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-015_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st02",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST03-007_p2",
+    "code": "ST03-007",
+    "name": "Zaku Ⅰ",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-007_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-007_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st03",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST03-008_p2",
+    "code": "ST03-008",
+    "name": "Zaku Ⅱ",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Attack】This Unit gets AP+2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-008_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-008_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st03",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST03-011_p2",
+    "code": "ST03-011",
+    "name": "Char Aznable",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+    "zone": "-",
+    "trait": "(Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-011_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-011_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st03",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST03-011_p3",
+    "code": "ST03-011",
+    "name": "Char Aznable",
+    "rarity": "C +",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】During this turn, this Unit gets AP+1 and, if it is a Link Unit, it gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+    "zone": "-",
+    "trait": "(Zeon) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-011_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-011_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st03",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST03-016_p2",
+    "code": "ST03-016",
+    "name": "Falmel",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, deploy 1 rested [Char's Zaku Ⅱ]((Zeon)･AP3･HP1) Unit token.",
+    "zone": "Space",
+    "trait": "(Zeon) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-016_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-016_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st03",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST04-001_p2",
+    "code": "ST04-001",
+    "name": "Aile Strike Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st04",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST04-001_p3",
+    "code": "ST04-001",
+    "name": "Aile Strike Gundam",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p3.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p3.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st04",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST04-002_p2",
+    "code": "ST04-002",
+    "name": "Strike Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】Draw 1. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-002_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-002_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st04",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST04-005_p2",
+    "code": "ST04-005",
+    "name": "Strike Dagger",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-005_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-005_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st04",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST04-010_p2",
+    "code": "ST04-010",
+    "name": "Kira Yamato",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】Choose 1 enemy Unit. It gets AP-2 during this battle.",
+    "zone": "-",
+    "trait": "(Earth Alliance) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st04",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST04-013_p2",
+    "code": "ST04-013",
+    "name": "Hawk of Endymion",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 0,
+    "effect": "【Main】/【Action】Choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.\n【Pilot】[Mu La Flaga]",
+    "zone": "-",
+    "trait": "(Earth Alliance)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-013_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-013_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st04",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "ST04-015_p2",
+    "code": "ST04-015",
+    "name": "Archangel",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015_p2.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015_p2.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "st04",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "T-001_p1",
+    "code": "T-001",
+    "name": "Gundam",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-001_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-001_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "t",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "T-002_p1",
+    "code": "T-002",
+    "name": "Guncannon",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-002_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-002_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "t",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "T-003_p1",
+    "code": "T-003",
+    "name": "Guntank",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-003_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-003_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "t",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  },
+  {
+    "id": "T-006_p1",
+    "code": "T-006",
+    "name": "Char's Zaku Ⅱ",
+    "rarity": "C",
+    "cardType": "UNIT TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 1,
+    "hp": 1,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-006_p1.webp?260424",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-006_p1.webp?260424"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Edition Beta",
+    "set": {
+      "id": "t",
+      "name": "Edition Beta",
+      "packageId": "616000"
+    }
+  }
+]

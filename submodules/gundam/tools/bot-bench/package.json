@@ -1,0 +1,33 @@
+{
+  "name": "@tcg/gundam-bot-bench",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Self-play harness, benchmark CLI, and diff tools for iterating on bot heuristics.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "bench": "node --experimental-transform-types --no-warnings scripts/bench.ts",
+    "diff": "node --experimental-transform-types --no-warnings scripts/diff.ts",
+    "replay": "node --experimental-transform-types --no-warnings scripts/replay.ts",
+    "ui-bench": "node --experimental-transform-types --no-warnings scripts/ui-bench.ts",
+    "ui-bench:docker": "bash scripts/ui-bench-docker.sh",
+    "sample-coverage": "node --expose-gc --max-old-space-size=8192 --experimental-transform-types --no-warnings scripts/sample-coverage.ts",
+    "test": "vp test --passWithNoTests",
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@tcg/gundam-cards": "workspace:*",
+    "@tcg/gundam-engine": "workspace:*",
+    "@tcg/gundam-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@playwright/test": "catalog:",
+    "@types/node": "^25.5.0",
+    "typescript": "^5.9.3",
+    "vite-plus": "^0.1.19"
+  }
+}

@@ -1,0 +1,53 @@
+import {
+  alphaArmoredMinotaur,
+  alphaCorpoSecurity,
+  spoilerRoyceDonTCallMeSimon,
+} from "@tcg/cyberpunk-cards";
+
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
+import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
+import {
+  expectExcludes,
+  expectIncludes,
+  getChoiceDefinitionIds,
+} from "./cyberpunk-unit-fixture-helpers";
+
+const POWER_THREE_MOCK_ID = "scenario-royce-power-three-mock";
+
+export const unitRoyceDonTCallMeSimonHighCredBehavior: CyberpunkFixtureBehavior = {
+  scenarioId: "unitRoyceDonTCallMeSimonHighCred",
+  label: "Royce - high Street Cred targets power three units",
+  references: [
+    "packages/engine/src/cards/spoiler/units/royce-don-t-call-me-simon.test.ts",
+    "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
+  ],
+  async run(pom) {
+    const royce = await pom.getCardInZoneByDefinitionId(
+      "hand",
+      CYBERPUNK_P1,
+      spoilerRoyceDonTCallMeSimon.id,
+    );
+
+    expectEqual("Royce high P1 Street Cred", await pom.getStreetCred(CYBERPUNK_P1), 10);
+    expectEqual("Royce high P2 Street Cred", await pom.getStreetCred(CYBERPUNK_P2), 1);
+    await pom.playCardFromHand(royce.instanceId, CYBERPUNK_P1);
+
+    await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+    const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
+    const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
+    expectIncludes("Royce high eligible targets", eligibleDefinitions, alphaCorpoSecurity.id);
+    expectIncludes("Royce high eligible targets", eligibleDefinitions, POWER_THREE_MOCK_ID);
+    expectExcludes("Royce high eligible targets", eligibleDefinitions, alphaArmoredMinotaur.id);
+
+    const mockId = eligible[eligibleDefinitions.indexOf(POWER_THREE_MOCK_ID)];
+    if (!mockId) {
+      throw new Error("Expected high-cred Royce to target the power-three mock unit.");
+    }
+    await pom.resolveEffectTarget([mockId], CYBERPUNK_P1);
+
+    await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
+    await pom.expectFieldSize(CYBERPUNK_P2, 2);
+    await pom.expectTrashSize(CYBERPUNK_P2, 1);
+    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, POWER_THREE_MOCK_ID);
+  },
+};

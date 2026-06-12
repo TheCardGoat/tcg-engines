@@ -1,0 +1,73 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { prb02VinsmokeSoraPirateFoil063I18n } from "./063-vinsmoke-sora-pirate-foil.i18n.ts";
+
+export const prb02VinsmokeSoraPirateFoil063: CharacterCard = {
+  id: "OP06-063",
+  cardType: "character",
+  color: ["purple"],
+  rarity: "UC",
+  setId: "PRB02",
+  cost: 1,
+  power: 0,
+  counter: 2000,
+  traits: ["The Vinsmoke Family Kingdom of GERMA"],
+  attribute: "wisdom",
+  artVariants: [
+    {
+      type: "other",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-063_r1.jpg",
+      imageId: "OP06-063_r1",
+    },
+  ],
+  effect:
+    "[On Play] You may trash 1 card from your hand: If the number of DON!! cards on your field is equal to or less than the number on your opponent's field, add up to 1 [The Vinsmoke Family] type Character card with 4000 power or less from your trash to your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        conditions: [
+          {
+            condition: "donFieldComparison",
+            selfComparison: "lte",
+          },
+        ],
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "returnToHand",
+            target: {
+              player: "self",
+              zones: ["trash"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "The Vinsmoke Family",
+                },
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+                {
+                  filter: "power",
+                  comparison: "lte",
+                  value: 4000,
+                },
+              ],
+            },
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: prb02VinsmokeSoraPirateFoil063I18n,
+};

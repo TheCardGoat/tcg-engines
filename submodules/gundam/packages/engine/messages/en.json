@@ -1,0 +1,63 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "gundam.setup.firstPlayerChosen": "{chooser} chose {chosen} to go first.",
+  "gundam.setup.mulligan": "{playerId} altered {count} cards.",
+  "gundam.setup.done": "Setup complete.",
+
+  "gundam.turn.started": "Turn {turnNumber} — {playerId}.",
+  "gundam.turn.ended": "{playerId} ended the turn.",
+  "gundam.phase.entered": "Entered {phase}.",
+
+  "gundam.move.deployUnit": "{playerId} deployed {cardId} (cost {cost}).",
+  "gundam.move.deployBase": "{playerId} deployed base {cardId} (cost {cost}).",
+  "gundam.move.playCommand": "{playerId} played command {cardId} (cost {cost}).",
+  "gundam.move.assignPilot": "{playerId} paired {pilotId} with {unitId}.",
+  "gundam.move.activateAbility": "{playerId} activated ability #{effectIndex} on {cardId}.",
+  "gundam.move.attackDeclared": "{attackerPlayerId}: {attackerId} attacks {targetId}.",
+  "gundam.move.blockDeclared": "{blockerPlayerId}: {blockerId} blocks {attackerId}.",
+  "gundam.move.pass": "{playerId} passed ({context}).",
+  "gundam.move.concede": "{playerId} conceded.",
+
+  "gundam.cost.resourcesSpent": "{playerId} spent {regularCount} resources, removed {exRemovedCount} EX tokens.",
+  "gundam.cost.cardsDiscarded": "{playerId} discarded {cardIds}.",
+  "gundam.cost.unitsRested": "{playerId} rested {cardIds}.",
+
+  "gundam.combat.damageDealt": "{cardId} took {amount} damage.",
+  "gundam.combat.shieldRemoved": "{cardId} shield removed from {playerId}.",
+  "gundam.combat.unitDefeated": "{cardId} (owned by {ownerId}) was defeated.",
+  "gundam.combat.resolved": "Combat resolved: {attackerId} vs {targetId}.",
+
+  "gundam.effect.cardsDrawn": "{playerId} drew {count} card(s).",
+  "gundam.effect.cardsDiscarded": "{playerId} discarded {cardIds}.",
+  "gundam.effect.returnedToHand": "{cardId} returned to {playerId}'s hand.",
+  "gundam.effect.movedToZone": "{cardId} moved from {from} to {to}.",
+  "gundam.effect.exhausted": "{cardId} was exhausted.",
+  "gundam.effect.readied": "{cardId} was readied.",
+  "gundam.effect.statModified": "{cardId} {stat} modified by {amount} ({duration}).",
+  "gundam.effect.keywordGranted": "{cardId} gained {keyword} ({duration}).",
+  "gundam.effect.hpRecovered": "{cardId} recovered {amount} HP.",
+  "gundam.effect.deckRevealed": "{playerId} revealed {cardIds} from deck.",
+  "gundam.effect.cardTutored": "{playerId} searched for {cardId}.",
+  "gundam.effect.resourcePlaced": "{playerId}: {cardId} placed as resource ({state}).",
+
+  "gundam.pending.enqueued": "Effect queued: {kind} from {sourceCardId} (controller {controllerId}, id {effectId}).",
+  "gundam.pending.resolved": "Resolved effect {effectId} from {sourceCardId}.",
+  "gundam.pending.cancelled": "Effect {effectId} from {sourceCardId} cancelled ({reason}).",
+
+  "gundam.system.deckOut": "{playerId} has no cards left in deck.",
+  "gundam.system.gameOver": "Game over — {reason}.",
+
+  "gundam.error.play.insufficientResourceLevel": "Insufficient resource level: card requires level {required}, have {have}",
+  "gundam.error.play.insufficientResources": "Insufficient resources: need {required}, have {have}",
+  "gundam.error.battle.mustAttackRequiredTarget": "Must attack the required target",
+  "gundam.error.block.cannotBlockHighManeuver": "Cannot block a HighManeuver unit",
+  "gundam.error.discard.wrongCount": "Must discard exactly {required} card(s) to reach the hand limit of {limit}",
+  "gundam.error.discard.cardNotInHand": "Card '{cardId}' is not in hand",
+  "gundam.error.ability.cardExhausted": "Card is exhausted",
+  "gundam.error.ability.wrongTargetCount": "Expected between {min} and {max} targets, got {got}",
+  "gundam.error.ability.illegalTarget": "Target {cardId} is not legal for this ability",
+  "gundam.error.passBlock.notInBattlePhase": "Not in battle phase",
+  "gundam.error.passBlock.attackerCannotPass": "Attacker cannot pass block — only the standby player can",
+  "gundam.error.setup.invalidPlayerId": "Invalid player ID: {playerId}",
+  "gundam.error.replay.invalidDataFormat": "Invalid replay data format"
+}

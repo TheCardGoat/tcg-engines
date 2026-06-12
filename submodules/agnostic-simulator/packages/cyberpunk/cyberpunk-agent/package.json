@@ -1,0 +1,35 @@
+{
+  "name": "@tcg/cyberpunk-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "LLM agent for Cyberpunk — registers a GameAgent into @tcg/agent-core with a Cyberpunk state serializer and protocol interaction tools.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src",
+    "check-types": "tsc --noEmit",
+    "test": "bun test --pass-with-no-tests"
+  },
+  "dependencies": {
+    "@tcg/agent-core": "link:../../agent-core",
+    "@tcg/protocol": "link:../../protocol",
+    "@tcg/shared": "link:../../shared",
+    "zod": "^4.4.2"
+  },
+  "devDependencies": {
+    "@tcg/typescript-config": "link:../../typescript-config",
+    "@types/node": "^22.13.4"
+  }
+}

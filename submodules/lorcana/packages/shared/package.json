@@ -1,0 +1,51 @@
+{
+  "name": "@tcg/shared",
+  "version": "0.1.0",
+  "private": true,
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./utils": "./src/utils.ts",
+    "./types": "./src/types.ts",
+    "./auth": "./src/auth/index.ts",
+    "./testing": "./src/testing/index.ts",
+    "./game-adapter": "./src/game-adapter/index.ts",
+    "./game-engine": "./src/game-engine/index.ts",
+    "./cards": "./src/cards/index.ts",
+    "./cards/images": "./src/cards/images.ts",
+    "./cards/catalog": "./src/cards/catalog.ts",
+    "./cyberpunk": "./src/cyberpunk/index.ts",
+    "./discord-rich-presence": "./src/discord-rich-presence.ts",
+    "./cyberpunk/deck-validation": "./src/cyberpunk/deck-validation.ts",
+    "./deck-list-normalize": "./src/deck-list-normalize.ts",
+    "./deck-list-parse": "./src/deck-list-parse.ts",
+    "./deck-list-errors": "./src/deck-list-errors.ts",
+    "./display-name-normalize": "./src/display-name-normalize.ts",
+    "./ads/PrivacyPage": "./src/ads/PrivacyPage.svelte",
+    "./ads/TermsPage": "./src/ads/TermsPage.svelte",
+    "./ads/RampPlaywire": "./src/ads/RampPlaywire.svelte",
+    "./ads/AntiRamp": "./src/ads/AntiRamp.svelte",
+    "./ads/ad-free-user": "./src/ads/ad-free-user.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "vp lint ./src",
+    "check-types": "tsc --noEmit",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@discord/embedded-app-sdk": "catalog:",
+    "@logtape/logtape": "^2.0.4"
+  },
+  "devDependencies": {
+    "@tcg/typescript-config": "workspace:*",
+    "@types/node": "^22.13.4",
+    "svelte": "^5.55.10"
+  }
+}

@@ -1,0 +1,61 @@
+import type { UnitCard } from "@tcg/gundam-types";
+
+export const gd03GundamDynames026: UnitCard = {
+  cardNumber: "GD03-026",
+  name: "Gundam Dynames",
+  type: "unit",
+  color: "green",
+  traits: ["cb", "gn drive"],
+  id: "GD03-026",
+  externalId: "gundam:gd03-026",
+  slug: "gundam-dynames-gd03-026",
+  displayName: "Gundam Dynames",
+  set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
+  printNumber: "GD03-026",
+  printings: [
+    {
+      id: "GD03-026",
+      collectorNumber: "GD03-026",
+      cardNumber: "GD03-026",
+      set: {
+        code: "GD03",
+        name: "Steel Requiem[GD03]",
+        packageId: "616103",
+      },
+      rarity: "uncommon",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-026.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-026.webp?260424",
+      productName: "Steel Requiem[GD03]",
+    },
+    {
+      id: "GD03-026_p1",
+      collectorNumber: "GD03-026_p1",
+      cardNumber: "GD03-026",
+      set: {
+        code: "GD04",
+        name: "Phantom Aria [GD04]",
+        packageId: "616104",
+      },
+      rarity: "uncommon",
+      finish: "parallel",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-026_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-026_p1.webp?260424",
+      productName: "Phantom Aria [GD04]",
+    },
+  ],
+  selectedPrintingId: "GD03-026",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-026.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-026.webp?260424",
+  legality: "legal",
+  level: 5,
+  cost: 3,
+  ap: 4,
+  hp: 4,
+  linkCondition: "[Lockon Stratos]",
+  effect:
+    "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+  keywordEffects: [{ keyword: "Breach", value: 3 }],
+  rarity: "uncommon",
+};
+export const gd04GundamDynames026 = gd03GundamDynames026;

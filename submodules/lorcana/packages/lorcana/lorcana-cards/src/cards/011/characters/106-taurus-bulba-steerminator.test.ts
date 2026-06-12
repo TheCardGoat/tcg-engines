@@ -1,0 +1,24 @@
+import { describe, expect, it } from "bun:test";
+import { LorcanaTestEngine } from "@tcg/lorcana-engine/testing";
+import { taurusBulbaSteerminator } from "./106-taurus-bulba-steerminator";
+
+describe("Taurus Bulba - Steerminator", () => {
+  it("should be a vanilla character with no abilities", () => {
+    const testEngine = new LorcanaTestEngine({
+      play: [taurusBulbaSteerminator],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(taurusBulbaSteerminator);
+    expect(cardUnderTest.hasAbility).toBe(false);
+  });
+
+  it("should be able to quest for 1 lore", () => {
+    const testEngine = new LorcanaTestEngine({
+      play: [taurusBulbaSteerminator],
+    });
+
+    const cardUnderTest = testEngine.getCardModel(taurusBulbaSteerminator);
+    expect(cardUnderTest.lore).toBe(1);
+    expect(cardUnderTest.canQuest()).toBe(true);
+  });
+});

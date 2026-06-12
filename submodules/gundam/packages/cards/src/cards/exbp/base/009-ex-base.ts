@@ -1,0 +1,46 @@
+import type { BaseCard } from "@tcg/gundam-types";
+
+export const exbpExBase009: BaseCard = {
+  cardNumber: "EXBP-009",
+  name: "EX Base",
+  type: "base",
+  traits: [],
+  id: "EXBP-009",
+  externalId: "gundam:exbp-009",
+  slug: "ex-base-exbp-009",
+  displayName: "EX Base",
+  set: {
+    code: "EXBP",
+    name: "SD Gundam G Generation ETERNAL Collaboration Pack",
+    packageId: "616901",
+  },
+  printNumber: "EXBP-009",
+  printings: [
+    {
+      id: "EXBP-009",
+      collectorNumber: "EXBP-009",
+      cardNumber: "EXBP-009",
+      set: {
+        code: "EXBP",
+        name: "SD Gundam G Generation ETERNAL Collaboration Pack",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-009.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-009.webp?260424",
+      productName: "SD Gundam G Generation ETERNAL Collaboration Pack",
+    },
+  ],
+  selectedPrintingId: "EXBP-009",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-009.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-009.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  hp: 3,
+  effect: "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

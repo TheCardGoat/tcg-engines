@@ -1,0 +1,12 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "dockerfile",
+    "dockerfile": "Dockerfile"
+  },
+  "deploy": {
+    "startCommand": "pnpm --filter @tcg/op-simulator exec vp preview --host 0.0.0.0 --port 8080",
+    "restartPolicyMaxRetries": 3,
+    "restartPolicyWindowSeconds": 60
+  }
+}

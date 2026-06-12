@@ -1,0 +1,269 @@
+.zone {
+  grid-area: field;
+  position: relative;
+  margin: var(--zone-gutter);
+  border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 58%);
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgb(var(--side-accent-rgb, 245 230 66) / 4%),
+      transparent 42%
+    ),
+    var(--board-zone, #090b0f);
+  box-shadow: inset 0 0 24px rgb(var(--side-accent-rgb, 245 230 66) / 3%);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.zone[data-count="0"],
+.zone[data-count="1"],
+.zone[data-count="2"] {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--side-accent-rgb, 245 230 66) / 5%) 50%,
+      transparent
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 54px,
+      rgb(255 255 255 / 3%) 54px,
+      rgb(255 255 255 / 3%) 55px
+    ),
+    var(--board-zone, #090b0f);
+}
+
+.zone.dropOver {
+  background: rgb(245 230 66 / 7%);
+  animation: zone-pulse 1.4s ease-in-out infinite;
+}
+
+.zone[data-drop-ready]::before,
+.zone[data-drop-ready]::after {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.zone[data-drop-ready]::before {
+  content: "";
+  inset: 8px;
+  z-index: 1;
+  border: 1px dashed rgb(74 217 255 / 38%);
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(135deg, rgb(74 217 255 / 5%) 0 10px, transparent 10px 22px),
+    linear-gradient(180deg, rgb(74 217 255 / 4%), rgb(7 9 12 / 6%));
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--side-accent-rgb, 245 230 66) / 10%),
+    0 0 14px rgb(74 217 255 / 8%);
+  transform: scale(0.992);
+}
+
+.zone[data-drop-ready]::after {
+  left: 50%;
+  top: 12px;
+  z-index: 5;
+  min-width: 74px;
+  padding: 4px 9px;
+  border: 1px solid rgb(74 217 255 / 78%);
+  border-radius: 4px;
+  background: rgb(7 9 12 / 92%);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 72%),
+    0 0 14px rgb(74 217 255 / 30%);
+  color: rgb(204 249 255);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translate(-50%, -4px);
+}
+
+.zone[data-drop-ready="play"]::after {
+  content: "PLAY";
+}
+
+.zone[data-drop-ready="attack"]::after {
+  content: "ATTACK";
+}
+
+.zone[data-drop-ready]::before,
+.zone[data-drop-ready]::after {
+  opacity: 1;
+}
+
+.zone[data-drop-over="true"]::before {
+  border-color: rgb(245 230 66 / 52%);
+  background:
+    repeating-linear-gradient(135deg, rgb(245 230 66 / 6%) 0 10px, transparent 10px 22px),
+    linear-gradient(180deg, rgb(245 230 66 / 5%), rgb(7 9 12 / 8%));
+  box-shadow:
+    inset 0 0 0 1px rgb(74 217 255 / 14%),
+    0 0 16px rgb(245 230 66 / 10%);
+  transform: scale(1);
+}
+
+.zone[data-drop-over="true"]::after {
+  border-color: rgb(245 230 66 / 95%);
+  color: rgb(255 249 178);
+  transform: translate(-50%, 0);
+}
+
+@keyframes zone-pulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 1px rgb(245 230 66 / 30%);
+  }
+
+  50% {
+    box-shadow: inset 0 0 24px rgb(245 230 66 / 35%);
+  }
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.12;
+  font-size: 13px;
+  letter-spacing: 0.35em;
+  pointer-events: none;
+}
+
+.fieldBadge {
+  left: 46%;
+}
+
+.zone:not(.opp) .fieldBadge {
+  left: 54%;
+}
+
+.cards {
+  --field-unit-card-h: var(--unit-card-h, clamp(104px, 16dvh, 142px));
+  --field-card-w: calc(var(--field-unit-card-h) * 0.7143);
+  --field-slot-w: var(--field-unit-card-h);
+  --field-card-gap: 12px;
+
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, var(--field-slot-w));
+  grid-auto-rows: max-content;
+  gap: var(--field-card-gap);
+  padding: 8px;
+  place-content: flex-start center;
+  align-items: flex-start;
+  overflow: hidden auto;
+  scrollbar-gutter: stable;
+  scrollbar-color: rgb(var(--side-accent-rgb, 245 230 66) / 78%)
+    rgb(var(--side-accent-rgb, 245 230 66) / 14%);
+  scrollbar-width: thin;
+}
+
+.zone[data-count="1"] .cards,
+.zone[data-count="2"] .cards {
+  --field-unit-card-h: clamp(112px, 16.8dvh, 152px);
+}
+
+.cards:has(.abilityBadge:hover),
+.cards:has(.abilityBadge:focus-visible),
+.cards:has(.powerBadge[data-modified="true"]:hover),
+.cards:has(.powerBadge[data-open="true"]),
+.cards:has(.powerBadge[data-modified="true"]:focus-within) {
+  z-index: 40;
+}
+
+.opp .cards {
+  align-content: flex-end;
+  align-items: flex-end;
+}
+
+.cards::-webkit-scrollbar {
+  width: 10px;
+}
+
+.cards::-webkit-scrollbar-track {
+  background: linear-gradient(
+    180deg,
+    rgb(var(--side-accent-rgb, 245 230 66) / 16%),
+    rgb(var(--side-accent-rgb, 245 230 66) / 5%)
+  );
+  border-left: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 28%);
+}
+
+.cards::-webkit-scrollbar-thumb {
+  background: rgb(var(--side-accent-rgb, 245 230 66) / 82%);
+  border: 2px solid #090b0f;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgb(var(--side-accent-rgb, 245 230 66) / 35%);
+}
+
+.cards::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--side-accent-rgb, 245 230 66) / 100%);
+}
+
+.card {
+  --attached-gear-space: 0px;
+
+  /* Match Legends slot size — shared via --unit-card-h on .boardShell. */
+  height: var(--field-unit-card-h);
+  width: var(--field-card-w);
+  aspect-ratio: 5 / 7;
+  border-radius: 3px;
+  margin-block-end: var(--attached-gear-space);
+  justify-self: center;
+
+  /* overflow visible so attached gear can peek out beneath the unit. */
+  position: relative;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+
+.card:hover {
+  box-shadow: 0 4px 14px rgb(245 230 66 / 50%);
+  z-index: 2000;
+}
+
+.card:focus-within {
+  z-index: 2000;
+}
+
+.card.tapped {
+  width: var(--field-unit-card-h);
+  height: var(--field-card-w);
+  aspect-ratio: 7 / 5;
+  margin-block: 8px;
+  margin-block-end: calc(8px + var(--attached-gear-space));
+}
+
+.card.tapped :global([data-testid="card"]) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--field-card-w);
+  height: var(--field-unit-card-h);
+  transform: translate(-50%, -50%);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}

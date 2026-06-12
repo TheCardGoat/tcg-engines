@@ -1,0 +1,24 @@
+{
+  "name": "@tcg/simulator-contract",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Renderer-facing contract for game-agnostic TCG simulator snapshots, boards, and interactions.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "format": "bun x oxfmt --write ./src",
+    "lint": "bun x oxlint --fix ./src"
+  },
+  "devDependencies": {
+    "@tcg/typescript-config": "link:../typescript-config"
+  }
+}

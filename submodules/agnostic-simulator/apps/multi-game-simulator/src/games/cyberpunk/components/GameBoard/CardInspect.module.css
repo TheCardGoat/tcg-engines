@@ -1,0 +1,144 @@
+/* Mantine modal overrides — make the card the hero, not the chrome. */
+.content {
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.body {
+  padding: 0;
+}
+
+/* The card itself, sized to the viewport: ~78vw on phones, capped at 420px so
+   it doesn't get gigantic on tablets / desktop. Aspect-ratio locks the 5:7
+   card shape regardless of image natural size. */
+.shell {
+  position: relative;
+  width: min(82vw, 440px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+  display: block;
+  border: 2px solid var(--accent, #f5e642);
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 80%),
+    0 0 24px color-mix(in srgb, var(--accent, #f5e642) 40%, transparent),
+    0 24px 60px rgb(0 0 0 / 90%);
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: "Share Tech Mono", monospace;
+  color: var(--accent, #f5e642);
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.zone {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(245 230 66 / 60%);
+}
+
+.gallery {
+  display: flex;
+  gap: 8px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 2px 1px 4px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.thumbnail {
+  appearance: none;
+  display: grid;
+  grid-template-columns: 28px auto;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  min-height: 38px;
+  max-width: 136px;
+  padding: 4px 7px 4px 4px;
+  border: 1px solid rgb(74 217 255 / 35%);
+  border-radius: 4px;
+  background: rgb(7 9 12 / 82%);
+  color: rgb(207 232 246 / 76%);
+  font-family: "Share Tech Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.thumbnail[data-active="true"] {
+  border-color: #f5e642;
+  color: #f5e642;
+  box-shadow: 0 0 10px rgb(245 230 66 / 24%);
+}
+
+.thumbnail img {
+  width: 28px;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.thumbnail span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Floating close button at the top-right corner of the card. Big enough for
+   thumbs but visually unobtrusive — the tap-outside dismiss is the primary
+   exit path. */
+.close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 36px;
+  height: 36px;
+  background: #07090c;
+  border: 2px solid var(--accent, #f5e642);
+  color: var(--accent, #f5e642);
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 2;
+  transition:
+    background 0.15s ease,
+    transform 0.12s ease;
+}
+
+.close:hover {
+  background: color-mix(in srgb, var(--accent, #f5e642) 18%, transparent);
+}
+
+.close:active {
+  transform: scale(0.92);
+}

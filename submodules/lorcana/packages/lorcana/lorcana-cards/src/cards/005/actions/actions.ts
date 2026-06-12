@@ -1,0 +1,30 @@
+// LEGACY IMPLEMENTATION: FOR REFERENCE ONLY. AFTER MIGRATION REMOVE THIS!
+// Export { tryEverything } from "./025-try-everything";
+// Export { healingTouch } from "./026-healing-touch";
+// Export { revive } from "./027-revive";
+// Export { blastFromYourPast } from "./028-blast-from-your-past";
+// Export { invitedToTheBallAction } from "./029-invited-to-the-ball-action";
+// Export { hypnoticStrength } from "./059-hypnotic-strength";
+// Export { findersKeepers } from "./060-finders-keepers";
+// Export { weKnowTheWay } from "./061-we-know-the-way";
+// Export { gatheringKnowledgeAndWisdom } from "./062-gathering-knowledge-and-wisdom";
+// Export { magicalAid } from "./063-magical-aid";
+// Export { hypnoticDeduction } from "./094-hypnotic-deduction";
+// Export { nightHowlerRage } from "./095-night-howler-rage";
+// Export { youreWelcome } from "./096-youre-welcome";
+// Export { rememberWhoYouAre } from "./097-remember-who-you-are";
+// Export { breakFree } from "./127-break-free";
+// Export { evilComesPrepared } from "./128-evil-comes-prepared";
+// Export { dontLetTheFrostbiteBite } from "./129-dont-let-the-frostbite-bite";
+// Export { glimmerVsGlimmer } from "./130-glimmer-vs-glimmer";
+// Export { whosWithMe } from "./131-whos-with-me";
+// Export { visionOfTheFuture } from "./160-vision-of-the-future";
+// Export { royalTantrum } from "./161-royal-tantrum";
+// Export { everAsBefore } from "./162-ever-as-before";
+// Export { hideAway } from "./163-hide-away";
+// Export { allFunnedOut } from "./164-all-funned-out";
+// Export { tugofwar } from "./196-tugofwar";
+// Export { whenWillMyLifeBegin } from "./197-when-will-my-life-begin";
+// Export { duckForCover } from "./198-duck-for-cover";
+// Export { foodFight } from "./199-food-fight";
+//

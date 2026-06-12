@@ -1,0 +1,12 @@
+{
+  "name": "@tcg/typescript-config",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript configurations for the Lorcanito monorepo",
+  "files": [
+    "*.json"
+  ],
+  "devDependencies": {
+    "@types/bun": "^1.3.9"
+  }
+}

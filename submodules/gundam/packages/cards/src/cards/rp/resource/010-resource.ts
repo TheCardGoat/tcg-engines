@@ -1,0 +1,41 @@
+import type { ResourceCard } from "@tcg/gundam-types";
+
+export const rpResource010: ResourceCard = {
+  cardNumber: "RP-010",
+  name: "Resource",
+  type: "resource",
+  traits: [],
+  id: "RP-010",
+  externalId: "gundam:rp-010",
+  slug: "resource-rp-010",
+  displayName: "Resource",
+  set: { code: "RP", name: "Anime Expo 2025", packageId: "616901" },
+  printNumber: "RP-010",
+  printings: [
+    {
+      id: "RP-010",
+      collectorNumber: "RP-010",
+      cardNumber: "RP-010",
+      set: {
+        code: "RP",
+        name: "Anime Expo 2025",
+        packageId: "616901",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-010.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-010.webp?260424",
+      productName: "Anime Expo 2025",
+    },
+  ],
+  selectedPrintingId: "RP-010",
+  imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-010.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-010.webp?260424",
+  legality: "legal",
+  level: 0,
+  cost: 0,
+  effect: "(Rest a Resource when paying a cost.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};

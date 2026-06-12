@@ -1,0 +1,15 @@
+# Doc-drift references that are known stale but tracked separately.
+#
+# Format: <doc-path>:<broken-target>
+# One per line. Blank lines and lines starting with `#` ignored.
+# Adding entries is debt; the list should shrink over time.
+
+# docs/card-delegations/resource-anomalies.md predates the consolidation of
+# per-set resource cards into packages/cards/src/cards/r/resource/.
+# Cleanup tracked in docs/exec-plans/active/2026-05-15-harness-tech-debt.md.
+docs/card-delegations/resource-anomalies.md:packages/cards/src/cards/gd01/resource/009-resource.ts
+docs/card-delegations/resource-anomalies.md:packages/cards/src/cards/beta/resource/001-resource.ts
+docs/card-delegations/resource-anomalies.md:packages/cards/src/cards/st01/resource/001-resource.ts
+docs/card-delegations/resource-anomalies.md:packages/cards/src/cards/st02/resource/001-resource.ts
+docs/card-delegations/resource-anomalies.md:packages/cards/src/cards/st03/resource/001-resource.ts
+docs/card-delegations/resource-anomalies.md:packages/cards/src/cards/st04/resource/001-resource.ts

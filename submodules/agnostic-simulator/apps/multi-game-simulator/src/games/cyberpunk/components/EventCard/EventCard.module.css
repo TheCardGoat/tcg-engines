@@ -1,0 +1,45 @@
+.card {
+  background: var(--mantine-color-dark-7);
+  border: 1px solid var(--mantine-color-dark-5);
+  border-radius: var(--mantine-radius-md);
+  padding: 14px 16px;
+  max-width: 340px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mantine-color-dimmed);
+}
+
+.timeBadge {
+  font-size: 10px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--mantine-color-white);
+  margin-bottom: 2px;
+}
+
+.description {
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+  line-height: 1.4;
+}
+
+.statLabel {
+  font-size: 11px;
+  color: var(--mantine-color-dimmed);
+}
+
+.prize {
+  font-size: 11px;
+  color: var(--mantine-color-dimmed);
+  flex: 1;
+  padding-right: 8px;
+}

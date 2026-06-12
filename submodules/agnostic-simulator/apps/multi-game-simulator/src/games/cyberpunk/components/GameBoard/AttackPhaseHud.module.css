@@ -1,0 +1,840 @@
+.hud {
+  --fight: #ff3d5e;
+  --steal: #4ad9ff;
+  --defense: #f5e642;
+  --attack-hud-accent: #f5e642;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 42;
+  width: min(760px, calc(100% - 22px));
+  min-height: 59px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: minmax(210px, 0.82fr) minmax(300px, 1.18fr);
+  align-items: stretch;
+  border: 1px solid rgb(245 230 66 / 66%);
+  background:
+    linear-gradient(90deg, rgb(245 230 66 / 14%), transparent 28%, rgb(245 230 66 / 7%)),
+    linear-gradient(180deg, rgb(7 9 12 / 98%), rgb(7 9 12 / 92%));
+  box-shadow:
+    0 0 0 1px rgb(7 9 12 / 86%) inset,
+    0 10px 28px rgb(0 0 0 / 42%),
+    0 0 26px rgb(245 230 66 / 16%);
+  color: #fff8a8;
+  font-family: Rajdhani, sans-serif;
+  pointer-events: auto;
+  text-transform: uppercase;
+}
+
+.compact {
+  width: min(560px, calc(100% - 20px));
+  min-height: 42px;
+  grid-template-columns: minmax(96px, 0.34fr) minmax(260px, 1fr);
+  border-color: color-mix(in srgb, var(--attack-hud-accent), transparent 38%);
+  background:
+    linear-gradient(90deg, rgb(7 9 12 / 94%), rgb(7 9 12 / 82%)),
+    linear-gradient(180deg, rgb(255 255 255 / 4%), transparent);
+  box-shadow:
+    0 0 0 1px rgb(7 9 12 / 82%) inset,
+    0 6px 20px rgb(0 0 0 / 34%),
+    0 0 18px color-mix(in srgb, var(--attack-hud-accent), transparent 86%);
+}
+
+.hud[data-attack-mode="fight"] {
+  --attack-hud-accent: var(--fight);
+
+  border-color: rgb(255 61 94 / 72%);
+  box-shadow:
+    0 0 0 1px rgb(7 9 12 / 86%) inset,
+    0 18px 40px rgb(0 0 0 / 48%),
+    0 0 28px rgb(255 61 94 / 20%);
+}
+
+.hud[data-attack-mode="steal"] {
+  --attack-hud-accent: var(--steal);
+
+  border-color: rgb(74 217 255 / 74%);
+  box-shadow:
+    0 0 0 1px rgb(7 9 12 / 86%) inset,
+    0 18px 40px rgb(0 0 0 / 48%),
+    0 0 28px rgb(74 217 255 / 20%);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 14px;
+  border-right: 1px solid rgb(245 230 66 / 24%);
+}
+
+.phase {
+  color: #f5e642;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.turn {
+  color: rgb(255 255 255 / 62%);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.core {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: center;
+  gap: 10px;
+  padding: 12px 14px;
+}
+
+.compact .core {
+  gap: 4px;
+  padding: 7px 9px;
+}
+
+.command {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.combatRow {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.mode {
+  flex: 0 0 auto;
+  color: var(--attack-hud-accent);
+  font-size: clamp(23px, 2.2cqw, 32px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 0.92;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--attack-hud-accent), transparent 38%);
+}
+
+.compact .mode {
+  font-size: 19px;
+}
+
+.compact .destination,
+.compact .combatRow {
+  display: none;
+}
+
+.combatLine {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.combatLine[data-combat-kind="direct"] {
+  grid-template-columns: minmax(0, 1fr) auto minmax(118px, 0.82fr);
+}
+
+.destination {
+  min-width: 0;
+  overflow: hidden;
+  color: rgb(235 248 255 / 82%);
+  font-size: clamp(12px, 1.1cqw, 15px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.combatant,
+.combatTarget {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 7px 8px 6px;
+  border: 1px solid color-mix(in srgb, var(--attack-hud-accent), transparent 72%);
+  background: rgb(255 255 255 / 4%);
+}
+
+.combatRole {
+  min-width: 0;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--attack-hud-accent), #fff 24%);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.combatTarget {
+  border-color: rgb(245 230 66 / 25%);
+}
+
+.targetName {
+  min-width: 0;
+  overflow: hidden;
+  color: #fff8a8;
+  font-size: clamp(12px, 1.05cqw, 15px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.versus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255 255 255 / 68%);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.chips {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.chip {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 4px 6px 3px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  background: rgb(255 255 255 / 4%);
+  color: rgb(255 255 255 / 68%);
+  font-variant-numeric: tabular-nums;
+}
+
+.chip[data-tone="attack"] {
+  border-color: rgb(245 230 66 / 26%);
+}
+
+.chip[data-tone="fight"] {
+  border-color: rgb(255 61 94 / 34%);
+}
+
+.chip[data-tone="steal"] {
+  border-color: rgb(74 217 255 / 34%);
+}
+
+.chip[data-tone="defense"] {
+  border-color: rgb(245 230 66 / 38%);
+}
+
+.chipLabel {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chip strong {
+  color: #fff8a8;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.actions {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 6px;
+  padding: 8px 10px 9px;
+  border-left: 1px solid rgb(245 230 66 / 20%);
+}
+
+.compact .actions {
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 4px;
+  padding: 6px 8px;
+}
+
+.stealMode {
+  min-width: 0;
+  border: 1px solid rgb(74 217 255 / 50%);
+  background: linear-gradient(180deg, rgb(74 217 255 / 16%), rgb(7 9 12 / 74%)), rgb(7 9 12 / 90%);
+  color: #bff4ff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-shadow: 0 0 10px rgb(74 217 255 / 48%);
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.stealMode:hover:not(:disabled),
+.stealMode[aria-pressed="true"] {
+  border-color: #4ad9ff;
+  background: linear-gradient(180deg, rgb(74 217 255 / 30%), rgb(7 9 12 / 72%)), rgb(7 9 12 / 90%);
+  color: #fff;
+}
+
+.stealMode:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+}
+
+.promptText {
+  color: rgb(255 255 255 / 62%);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-align: center;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cue {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: center;
+  gap: 4px 7px;
+}
+
+.cueCopy {
+  grid-column: 1 / -1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.cueLabel {
+  color: color-mix(in srgb, var(--attack-hud-accent), #fff 14%);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.08;
+}
+
+.cueText {
+  min-width: 0;
+  overflow: hidden;
+  color: rgb(235 248 255 / 76%);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.18;
+  text-overflow: ellipsis;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.compact .cueText {
+  font-size: 10px;
+  line-height: 1.1;
+}
+
+.fightOutcome {
+  grid-column: 1 / -1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 4px 8px;
+  padding: 7px 8px 6px;
+  border: 1px solid color-mix(in srgb, var(--attack-hud-accent), transparent 54%);
+  border-left: 2px solid var(--attack-hud-accent);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--attack-hud-accent), transparent 84%),
+      transparent 68%
+    ),
+    rgb(255 255 255 / 4%);
+}
+
+.outcomeMeta {
+  color: color-mix(in srgb, var(--attack-hud-accent), #fff 18%);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.outcomePower {
+  min-width: 0;
+  color: #fff8a8;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-align: right;
+}
+
+.outcomeSummary,
+.outcomeDetail {
+  grid-column: 1 / -1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.outcomeSummary {
+  color: #fff8a8;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+}
+
+.outcomeDetail {
+  color: rgb(235 248 255 / 82%);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.12;
+  text-transform: none;
+}
+
+.triggerList {
+  grid-column: 1 / -1;
+  min-width: 0;
+  max-height: 116px;
+  overflow: auto;
+  display: grid;
+  gap: 5px;
+  padding: 2px 4px 0 0;
+}
+
+.compact .triggerList {
+  display: none;
+}
+
+.compact .triggerItem {
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 6px;
+  padding: 4px 6px 4px 5px;
+}
+
+.compact .triggerText {
+  -webkit-line-clamp: 1;
+}
+
+.triggerItem {
+  appearance: none;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: stretch;
+  gap: 8px;
+  padding: 6px 7px 6px 6px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-left: 2px solid color-mix(in srgb, var(--attack-hud-accent), transparent 18%);
+  background: rgb(255 255 255 / 4%);
+  color: inherit;
+  cursor: zoom-in;
+  font: inherit;
+  text-align: left;
+  text-transform: uppercase;
+  transition:
+    background-color 120ms,
+    border-color 120ms;
+}
+
+.triggerItemPrimary {
+  border-color: color-mix(in srgb, var(--attack-hud-accent), transparent 42%);
+  border-left-color: var(--attack-hud-accent);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--attack-hud-accent), transparent 86%),
+      transparent
+    ),
+    rgb(255 255 255 / 5%);
+}
+
+.triggerItem:hover,
+.triggerItem:focus-visible {
+  border-color: color-mix(in srgb, var(--attack-hud-accent), transparent 24%);
+  border-left-color: var(--attack-hud-accent);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--attack-hud-accent), transparent 82%),
+      transparent
+    ),
+    rgb(255 255 255 / 6%);
+  outline: none;
+}
+
+.triggerIndex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  min-height: 20px;
+  border: 1px solid color-mix(in srgb, var(--attack-hud-accent), transparent 36%);
+  background: color-mix(in srgb, var(--attack-hud-accent), transparent 84%);
+  color: #fff8a8;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.triggerBody {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.triggerMeta {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.triggerSource {
+  min-width: 0;
+  overflow: hidden;
+  color: #fff8a8;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.triggerKind {
+  flex: 0 0 auto;
+  padding: 1px 4px;
+  border: 1px solid color-mix(in srgb, var(--attack-hud-accent), transparent 42%);
+  color: color-mix(in srgb, var(--attack-hud-accent), #fff 18%);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.triggerText {
+  min-width: 0;
+  overflow: hidden;
+  color: rgb(235 248 255 / 82%);
+  display: -webkit-box;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.24;
+  text-transform: none;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.confirmAttack,
+.cancelAttack {
+  min-width: 0;
+  min-height: 26px;
+  border: 1px solid color-mix(in srgb, var(--attack-hud-accent), transparent 34%);
+  background: color-mix(in srgb, var(--attack-hud-accent), transparent 82%);
+  color: #fff8a8;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.confirmAttack:hover,
+.confirmAttack:focus-visible {
+  border-color: var(--attack-hud-accent);
+  background: color-mix(in srgb, var(--attack-hud-accent), transparent 68%);
+  color: #fff;
+  outline: none;
+}
+
+.cancelAttack {
+  min-height: 20px;
+  border-color: rgb(255 255 255 / 16%);
+  background: rgb(255 255 255 / 4%);
+  color: rgb(255 255 255 / 62%);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+}
+
+.cancelAttack:hover,
+.cancelAttack:focus-visible {
+  border-color: rgb(255 255 255 / 36%);
+  color: #fff;
+  outline: none;
+}
+
+.step {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 17px;
+  padding: 0 5px;
+  border: 1px solid rgb(255 255 255 / 14%);
+  color: rgb(255 255 255 / 44%);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stepComplete {
+  color: rgb(245 230 66 / 72%);
+  border-color: rgb(245 230 66 / 34%);
+}
+
+.stepActive {
+  color: #07090c;
+  background: var(--attack-hud-accent);
+  border-color: var(--attack-hud-accent);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--attack-hud-accent), transparent 45%);
+}
+
+.cardToken {
+  appearance: none;
+  min-width: 0;
+  max-width: none;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--attack-hud-accent), transparent 34%);
+  background: transparent;
+  color: color-mix(in srgb, var(--attack-hud-accent), #fff 18%);
+  cursor: zoom-in;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  font: inherit;
+  font-size: clamp(13px, 1.25cqw, 16px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  text-align: left;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  vertical-align: -1px;
+  white-space: nowrap;
+}
+
+.cardName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.powerPip {
+  flex: 0 0 auto;
+  min-width: 22px;
+  padding: 2px 5px 1px;
+  border: 1px solid color-mix(in srgb, var(--attack-hud-accent), #fff 14%);
+  background: color-mix(in srgb, var(--attack-hud-accent), transparent 78%);
+  color: #fff8a8;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-align: center;
+  text-shadow: none;
+}
+
+.cardToken:hover,
+.cardToken:focus-visible {
+  border-bottom-color: var(--attack-hud-accent);
+  color: #fff8a8;
+  outline: none;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--attack-hud-accent), transparent 36%);
+}
+
+.cardToken:focus-visible {
+  box-shadow: 0 2px 0 var(--attack-hud-accent);
+}
+
+.compact {
+  width: min(520px, calc(100% - 10px));
+  min-height: 104px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.compact .header {
+  grid-column: 1;
+  grid-row: 1;
+  padding: 8px 10px 0;
+  border-right: 0;
+}
+
+.compact .phase {
+  font-size: 9px;
+}
+
+.compact .turn {
+  display: none;
+}
+
+.compact .core {
+  grid-column: 1;
+  grid-row: 1;
+  padding: 10px 10px 6px;
+  gap: 8px;
+}
+
+.compact .command {
+  gap: 7px;
+}
+
+.compact .mode {
+  font-size: 18px;
+}
+
+.compact .combatLine {
+  gap: 5px;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.compact .destination,
+.compact .cardToken {
+  font-size: 10px;
+}
+
+.compact .combatant,
+.compact .combatTarget {
+  padding: 5px 6px;
+}
+
+.compact .combatRole {
+  font-size: 7px;
+}
+
+.compact .chips {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.compact .chip {
+  padding: 3px 4px 2px;
+}
+
+.compact .chip:nth-child(n + 4) {
+  display: none;
+}
+
+.compact .chipLabel {
+  font-size: 7px;
+}
+
+.compact .chip strong {
+  font-size: 11px;
+}
+
+.compact .actions {
+  grid-column: 1;
+  grid-row: 2;
+  width: auto;
+  padding: 0 10px 8px;
+  border-left: 0;
+}
+
+.compact .stealMode {
+  min-height: 22px;
+  font-size: 9px;
+}
+
+.compact .step {
+  min-height: 14px;
+  padding: 0 3px;
+  font-size: 7px;
+  letter-spacing: 0;
+}
+
+.compact .cue {
+  gap: 1px 4px;
+}
+
+.compact .cueLabel {
+  font-size: 7px;
+}
+
+.compact .cueText,
+.compact .triggerSource,
+.compact .triggerText {
+  font-size: 8px;
+}
+
+.compact .triggerList {
+  max-height: 78px;
+  gap: 3px;
+}
+
+.compact .triggerItem {
+  grid-template-columns: 16px minmax(0, 1fr);
+  gap: 5px;
+  padding: 4px 5px 4px 4px;
+}
+
+.compact .triggerIndex {
+  width: 16px;
+  min-height: 16px;
+  font-size: 8px;
+}
+
+.compact .triggerMeta {
+  gap: 5px;
+}
+
+.compact .triggerKind {
+  font-size: 7px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud,
+  .stepActive {
+    box-shadow: none;
+  }
+}
