@@ -7,25 +7,19 @@ import {
   alphaSwordwiseHuscle,
   spoilerGildedMaton,
 } from "@tcg/cyberpunk-cards";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import {
   expectExcludes,
   expectIncludes,
   getChoiceDefinitionIds,
-} from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-unit-fixture-helpers";
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-unit-fixture-helpers";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { unitGildedMaton } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Gilded Maton - defeats friendly gear to defeat cheap rival unit", async ({ page }) => {
-  await page.goto("/cyberpunk/simulator/tests/unitGildedMaton?ai=off&auto-advance-attack=off");
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, unitGildedMaton);
 
   const maton = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, spoilerGildedMaton.id);
   const host = await pom.getCardInZoneByDefinitionId(

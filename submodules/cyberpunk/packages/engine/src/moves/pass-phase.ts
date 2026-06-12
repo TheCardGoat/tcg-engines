@@ -1,6 +1,6 @@
 import type { Effect } from "@tcg/cyberpunk-types";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
-import { executeAbilityEffects } from "../ability-executor.ts";
+import { executeAbilityEffects, processEventTriggers } from "../ability-executor.ts";
 import { resolveTarget, type ResolutionContext } from "../effects/target-resolver.ts";
 import type { CardInstanceId, PlayerId as PlayerIdType } from "../types/branded.ts";
 import type { MatchState } from "../types/match-state.ts";
@@ -8,6 +8,8 @@ import type { Operations } from "../operations/index.ts";
 import { enterStartPhase } from "./keep-hand.ts";
 import { allowedGainGigDice, readySpentCards } from "./gain-gig.ts";
 import { defOf } from "../state/lookups.ts";
+import { getCardsMarkedForEndTurnDefeat } from "../active-effects/index.ts";
+import { getMustAttackCardIds } from "./attack-requirements.ts";
 
 export interface PassPhaseInput extends MoveInput {
   args: Record<string, never>;
@@ -17,7 +19,9 @@ export const passPhaseMove: MoveDefinition<PassPhaseInput> = {
   available({ state, playerId }) {
     if (state.G.gamePhase === "setup") return false;
     if (state.G.turnMetadata.activePlayerId !== playerId) return false;
-    if (state.G.gamePhase === "main" && !state.G.attackState) return true;
+    if (state.G.gamePhase === "main" && !state.G.attackState) {
+      return getMustAttackCardIds(state as MatchState, playerId).length === 0;
+    }
     return false;
   },
 
@@ -30,6 +34,16 @@ export const passPhaseMove: MoveDefinition<PassPhaseInput> = {
     }
     if (state.G.gamePhase === "main" && state.G.attackState) {
       return { valid: false, error: "Attack in progress", errorCode: "ATTACK_IN_PROGRESS" };
+    }
+    if (
+      state.G.gamePhase === "main" &&
+      getMustAttackCardIds(state as MatchState, playerId).length > 0
+    ) {
+      return {
+        valid: false,
+        error: "A unit must attack if it can",
+        errorCode: "MUST_ATTACK",
+      };
     }
     return { valid: true };
   },
@@ -102,6 +116,8 @@ function endTurn(state: MatchState, playerId: PlayerIdType, operations: Operatio
     }
     operations.game.removeBagEntry(entry.id);
   }
+
+  defeatCardsMarkedForEndTurn(state, operations);
 
   operations.game.cleanupTurnEffects();
   operations.game.resetTurnFlags(playerId);
@@ -176,6 +192,23 @@ function endTurn(state: MatchState, playerId: PlayerIdType, operations: Operatio
   }
 
   operations.game.setPhase("main");
+}
+
+function defeatCardsMarkedForEndTurn(state: MatchState, operations: Operations): void {
+  for (const cardId of getCardsMarkedForEndTurnDefeat(state)) {
+    const card = state.G.cardIndex[cardId as string];
+    if (!card || card.zone !== "field") continue;
+    operations.card.moveAttachedGear(cardId, "trash");
+    operations.zone.moveCard(cardId, "trash", card.controllerId);
+    const event = {
+      type: "cardDefeated" as const,
+      cardId,
+      defeatedBy: null,
+      playerId: card.controllerId,
+    };
+    operations.event.emit(event);
+    processEventTriggers(event, state, operations);
+  }
 }
 
 function maybeEndForTurnStart(

@@ -105,9 +105,12 @@ export type KnownCardClassification =
   | "Plan"
   | "Quickhack"
   | "Ripperdoc"
+  | "Raffen Shiv"
+  | "Rocker"
   | "Rockerboy"
   | "Samurai"
   | "Tech"
+  | "Tyger Claws"
   | "Valentino"
   | "Vehicle"
   | "Voodoo Boys"
@@ -116,7 +119,21 @@ export type KnownCardClassification =
 
 export type CardClassification = KnownCardClassification;
 
-export type KnownSetCode = "alpha" | "promo" | "spoiler";
+export const KNOWN_SET_CODES = [
+  "alpha",
+  "promo",
+  "spoiler",
+  "boxtoppersretail",
+  "boxtoppersbeta",
+  "embracingpowerbetastarterdeck",
+  "embracingpowerretailstarterdeck",
+  "theheistbetastarterdeck",
+  "theheistretailstarterdeck",
+  "welcometonightcitybeta",
+  "welcometonightcityretail",
+] as const;
+
+export type KnownSetCode = (typeof KNOWN_SET_CODES)[number];
 
 export type SetCode = KnownSetCode;
 
@@ -285,6 +302,7 @@ export type RuleModifier =
   | "goSolo"
   | "cantAttack"
   | "cantBeBlocked"
+  | "mustAttack"
   | "canAttackOnPlayedTurnAgainstUnits"
   | "adrenaline"
   | "quick";
@@ -295,7 +313,12 @@ export interface PerCountValue {
   target: TargetDSL;
 }
 
-export type NumericValue = number | PerCountValue;
+export interface MaxGigValue {
+  type: "maxGigValue";
+  controller: RelativePlayer;
+}
+
+export type NumericValue = number | PerCountValue | MaxGigValue;
 
 export interface SelfTargetDSL {
   selector: "self";
@@ -348,6 +371,7 @@ export interface CardTargetDSL {
   hasAttachedCards?: boolean;
   attachedTo?: TargetDSL;
   costEqualsGigValueOf?: TargetDSL;
+  powerEqualsGigValueOf?: TargetDSL;
   /**
    * Restrict to cards whose effective power is strictly less than at least
    * one card resolved by the referenced target (e.g. "rival Unit with less
@@ -362,6 +386,7 @@ export interface GigTargetDSL {
   controller?: RelativePlayer;
   amount?: number | "all";
   sameValueAs?: TargetDSL;
+  valueNotSharedBy?: TargetDSL;
   sameSidesAs?: TargetDSL;
   minValue?: number;
   maxValue?: number;
@@ -417,7 +442,7 @@ export interface TargetValueCondition {
   target: TargetDSL;
   property: "gigValue";
   comparison: Comparison;
-  value: number | "max";
+  value: number | "min" | "max";
 }
 
 export interface AttackingCondition {
@@ -451,6 +476,12 @@ export interface HasMinGigCondition {
   controller: RelativePlayer;
 }
 
+export interface HasEquippedUnitsOrLegendsCondition {
+  condition: "hasEquippedUnitsOrLegends";
+  controller: RelativePlayer;
+  minCount: number;
+}
+
 export interface MatchingGigCondition {
   condition: "matchingGig";
   controller: RelativePlayer;
@@ -462,6 +493,7 @@ export interface FightKindCondition {
   condition: "fightKind";
   target: TargetDSL;
   kind: "fight" | "direct";
+  opponent?: CardTargetDSL;
 }
 
 export interface CostMatchesGigCondition {
@@ -483,6 +515,7 @@ export type Condition =
   | HasGigPairCondition
   | HasDistinctGigValuesCondition
   | HasMinGigCondition
+  | HasEquippedUnitsOrLegendsCondition
   | MatchingGigCondition
   | FightKindCondition
   | CostMatchesGigCondition;
@@ -496,7 +529,12 @@ export interface PayCardCost {
   cost: "payCardCost";
 }
 
-export type Cost = SpendCost | PayCardCost;
+export interface PayEddiesCost {
+  cost: "payEddies";
+  amount: number;
+}
+
+export type Cost = SpendCost | PayCardCost | PayEddiesCost;
 
 export interface EffectBase {
   conditions?: Condition[];
@@ -567,6 +605,12 @@ export interface ReadyEffect extends EffectBase {
   target: TargetDSL;
 }
 
+export interface ReadyEddiesEffect extends EffectBase {
+  effect: "readyEddies";
+  player: RelativePlayer;
+  amount: number;
+}
+
 export interface LookAtEffect extends EffectBase {
   effect: "lookAt";
   target: TargetDSL;
@@ -585,7 +629,7 @@ export interface SearchDeckEffect extends EffectBase {
   target: CardTargetDSL;
   select: SearchDeckSelect;
   reveal: boolean;
-  destination: "hand";
+  destination: "hand" | "trash";
   remainder: {
     zone: "deckBottom" | "trash";
     order?: "random";
@@ -662,6 +706,11 @@ export interface DelayedEffect extends EffectBase {
   effects: Effect[];
 }
 
+export interface DefeatAtEndOfTurnIfAttacksEffect extends EffectBase {
+  effect: "defeatAtEndOfTurnIfAttacks";
+  target: TargetDSL;
+}
+
 /**
  * Set one Gig die's face value to the face value of another Gig. The
  * destination die's value is clamped to its own [1, max-sides] range.
@@ -691,6 +740,15 @@ export interface CallLegendEffect extends EffectBase {
   free?: boolean;
 }
 
+export interface GrantCostModifierEffect extends EffectBase {
+  effect: "grantCostModifier";
+  player: RelativePlayer;
+  appliesTo: CardTargetDSL;
+  modifier: CostModifier;
+  duration: "turn" | "untilSourceNextTurn";
+  uses?: number;
+}
+
 export type Effect =
   | DefeatEffect
   | SpendEffect
@@ -701,6 +759,7 @@ export type Effect =
   | ModifyPowerEffect
   | GrantRuleEffect
   | ReadyEffect
+  | ReadyEddiesEffect
   | LookAtEffect
   | SearchDeckEffect
   | DiscardFromHandEffect
@@ -712,10 +771,12 @@ export type Effect =
   | TrashFromDeckEffect
   | IfYouDoEffect
   | DelayedEffect
+  | DefeatAtEndOfTurnIfAttacksEffect
   | MultiplyPowerEffect
   | CopyGigValueEffect
   | ForEachFriendlyGigPairEffect
-  | CallLegendEffect;
+  | CallLegendEffect
+  | GrantCostModifierEffect;
 
 export interface PlayTrigger {
   trigger: "play";
@@ -759,6 +820,23 @@ export interface CardSpentEvent {
   target: TargetDSL;
 }
 
+export interface CardDefeatedEvent {
+  event: "cardDefeated";
+  player: EventPlayer;
+  target: CardTargetDSL;
+}
+
+export interface BlockerActivatedEvent {
+  event: "blockerActivated";
+  player: EventPlayer;
+  target: CardTargetDSL;
+}
+
+export interface TurnEndedEvent {
+  event: "turnEnded";
+  player: EventPlayer;
+}
+
 export interface GigStolenEvent {
   event: "gigStolen";
   player: RelativePlayer;
@@ -771,7 +849,7 @@ export interface GigValueChangedEvent {
   event: "gigValueChanged";
   player: RelativePlayer;
   target: GigTargetDSL;
-  direction: "increase" | "decrease";
+  direction?: "increase" | "decrease";
 }
 
 /**
@@ -807,6 +885,9 @@ export interface EventTrigger {
     | CardPlayedEvent
     | CardAttacksEvent
     | CardSpentEvent
+    | CardDefeatedEvent
+    | BlockerActivatedEvent
+    | TurnEndedEvent
     | GigStolenEvent
     | GigValueChangedEvent
     | FightResolvedEvent;
@@ -889,3 +970,32 @@ export type PromoCardDefinition = StructuredCardDefinition & {
     code: "promo";
   };
 };
+
+export type BoxToppersRetailCardDefinition = StructuredCardDefinition & {
+  set: CardSet & {
+    code: "boxtoppersretail";
+  };
+};
+
+export type TheHeistRetailStarterDeckCardDefinition = StructuredCardDefinition & {
+  set: CardSet & {
+    code: "theheistretailstarterdeck";
+  };
+};
+
+export type WelcomeToNightCityRetailCardDefinition = StructuredCardDefinition & {
+  set: CardSet & {
+    code: "welcometonightcityretail";
+  };
+};
+
+export interface StructuredCardDefinitionBySetCode {
+  alpha: AlphaCardDefinition;
+  spoiler: SpoilerCardDefinition;
+  promo: PromoCardDefinition;
+  boxtoppersretail: BoxToppersRetailCardDefinition;
+  theheistretailstarterdeck: TheHeistRetailStarterDeckCardDefinition;
+  welcometonightcityretail: WelcomeToNightCityRetailCardDefinition;
+}
+
+export type StructuredSetCode = keyof StructuredCardDefinitionBySetCode;

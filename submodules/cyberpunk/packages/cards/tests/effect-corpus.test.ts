@@ -29,6 +29,7 @@ const REQUIRED_FIELDS: Record<Effect["effect"], readonly string[]> = {
   multiplyPower: ["target", "multiplier", "duration"],
   grantRule: ["target", "rule", "duration"],
   ready: ["target"],
+  readyEddies: ["player", "amount"],
   lookAt: ["target", "revealToOpponent"],
   searchDeck: ["player", "lookCount", "target", "select", "reveal", "destination", "remainder"],
   discardFromHand: ["player", "amount"],
@@ -40,9 +41,11 @@ const REQUIRED_FIELDS: Record<Effect["effect"], readonly string[]> = {
   trashFromDeck: ["player", "amount"],
   ifYouDo: ["doEffect", "ifEffects"],
   delayed: ["timing", "effects"],
+  defeatAtEndOfTurnIfAttacks: ["target"],
   copyGigValue: ["source", "target"],
   forEachFriendlyGigPair: ["effects"],
   callLegend: ["player", "target"],
+  grantCostModifier: ["player", "appliesTo", "modifier", "duration"],
 };
 
 const KNOWN_EFFECTS = new Set(Object.keys(REQUIRED_FIELDS));

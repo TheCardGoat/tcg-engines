@@ -47,8 +47,10 @@ const RAW_TRIGGER_MAP = {
 } as const satisfies Record<string, TimingTrigger>;
 
 const RAW_KEYWORD_MAP = {
+  Adrenaline: "adrenaline",
   Blocker: "blocker",
   "Go Solo": "goSolo",
+  Quick: "quick",
 } as const satisfies Record<string, CardKeyword>;
 
 const RAW_COLOR_VALUES = new Set<RawCardColor>(Object.keys(RAW_COLOR_MAP) as RawCardColor[]);
@@ -76,9 +78,12 @@ const CANONICAL_CLASSIFICATIONS = [
   "Plan",
   "Quickhack",
   "Ripperdoc",
+  "Raffen Shiv",
+  "Rocker",
   "Rockerboy",
   "Samurai",
   "Tech",
+  "Tyger Claws",
   "Vehicle",
   "Voodoo Boys",
   "Weapon",
@@ -339,7 +344,7 @@ export function normalizeCard(rawCard: RawCardRecord): CardDefinition {
 
   const setCode = rawCard.set.code.toLowerCase();
   const sourceImageUrl = rawCard.source_image_url;
-  const cdnImageUrl = buildCdnImageUrl(sourceImageUrl, setCode);
+  const cdnImageUrl = buildCdnImageUrl(rawCard.print_number, setCode);
 
   const baseCard = {
     id: rawCard.id,
@@ -514,8 +519,11 @@ export function preserveStableCardIds(
   snapshot: ScrapedCatalogSnapshot,
   existingSnapshot: ScrapedCatalogSnapshot,
 ): ScrapedCatalogSnapshot {
-  const rawIds = buildStableIdMap(existingSnapshot.rawCards, rawCardIdentityKeys);
-  const cardIds = buildStableIdMap(existingSnapshot.cards, cardIdentityKeys);
+  const rawIds = buildStableIdMap(
+    existingSnapshot.rawCards.filter(isLegacyRawCard),
+    rawCardIdentityKeys,
+  );
+  const cardIds = buildStableIdMap(existingSnapshot.cards.filter(isLegacyCard), cardIdentityKeys);
 
   return {
     rawCards: snapshot.rawCards.map((card) => {
@@ -531,6 +539,14 @@ export function preserveStableCardIds(
       };
     }),
   };
+}
+
+function isLegacyRawCard(card: RawCardRecord): boolean {
+  return card.set.code === "alpha" || card.set.code === "spoiler" || card.set.code === "promo";
+}
+
+function isLegacyCard(card: CardDefinition): boolean {
+  return card.set.code === "alpha" || card.set.code === "spoiler" || card.set.code === "promo";
 }
 
 function extractCatalogItemsFromRouter(router: unknown): unknown[] {
@@ -606,25 +622,25 @@ function readStableId(ids: ReadonlyMap<string, string>, keys: readonly string[])
 
 function rawCardIdentityKeys(card: RawCardRecord): string[] {
   return [
-    `slug:${card.slug}`,
+    `slug:${card.set.code}:${card.slug}`,
     `external:${card.external_id}`,
-    `display:${card.display_name}`,
+    `display:${card.set.code}:${card.display_name}`,
     `name:${card.set.code}:${card.card_type}:${card.name}`,
   ];
 }
 
 function cardIdentityKeys(card: CardDefinition): string[] {
   return [
-    `slug:${card.slug}`,
+    `slug:${card.set.code}:${card.slug}`,
     `external:${card.externalId}`,
-    `display:${card.displayName}`,
+    `display:${card.set.code}:${card.displayName}`,
     `name:${card.set.code}:${card.type}:${card.name}`,
   ];
 }
 
 function normalizePrinting(rawPrinting: RawCardPrinting): CardPrinting {
   const setCode = rawPrinting.set.code.toLowerCase();
-  const cdnImageUrl = buildCdnImageUrl(rawPrinting.source_image_url, setCode);
+  const cdnImageUrl = buildCdnImageUrl(rawPrinting.collector_number, setCode);
 
   return {
     id: rawPrinting.id,
@@ -784,8 +800,12 @@ function stripUrlQuery(url: string): string {
   return withoutQuery;
 }
 
-function buildCdnImageUrl(sourceImageUrl: string, setCode: string): string {
-  const filename = sourceImageUrl.split("/").pop();
+function buildCdnImageUrl(collectorNumber: string, setCode: string): string {
+  const filename = `${collectorNumber
+    .trim()
+    .replace(/^α/i, "a")
+    .replace(/^β/i, "b")
+    .toLowerCase()}.webp`;
   return `${CDN_BASE_URL}/${setCode}/${filename}`;
 }
 
@@ -853,6 +873,10 @@ function readStatValue($: CheerioAPI, scope: NodeSelection, label: string): numb
 
 function coerceRawCardRecord(value: unknown, context: string): RawCardRecord {
   const record = requireRecord(value, context);
+  const imageUrl = stripUrlQuery(requireString(record.image_url, `${context}.image_url`));
+  const sourceImageUrl = stripUrlQuery(
+    requireString(record.source_image_url, `${context}.source_image_url`),
+  );
 
   return {
     id: requireString(record.id, `${context}.id`),
@@ -868,8 +892,8 @@ function coerceRawCardRecord(value: unknown, context: string): RawCardRecord {
     source_url: readOptionalNullableString(record.source_url, `${context}.source_url`),
     set: coerceRawSet(record.set, `${context}.set`),
     rarity: requireNullableString(record.rarity, `${context}.rarity`),
-    image_url: requireString(record.image_url, `${context}.image_url`),
-    source_image_url: requireString(record.source_image_url, `${context}.source_image_url`),
+    image_url: imageUrl,
+    source_image_url: sourceImageUrl,
     color: requireRawCardColor(record.color, `${context}.color`),
     card_type: requireRawCardType(record.card_type, `${context}.card_type`),
     is_eddiable: requireBoolean(record.is_eddiable, `${context}.is_eddiable`),
@@ -912,20 +936,24 @@ function coerceRawPrintings(value: unknown, context: string): RawCardRecord["pri
         record.collector_number,
         `${context}[${index}].collector_number`,
       ),
-      image_url: requireString(record.image_url, `${context}[${index}].image_url`),
-      source_image_url: requireString(
-        record.source_image_url,
-        `${context}[${index}].source_image_url`,
+      image_url: stripUrlQuery(requireString(record.image_url, `${context}[${index}].image_url`)),
+      source_image_url: stripUrlQuery(
+        requireString(record.source_image_url, `${context}[${index}].source_image_url`),
       ),
       set: coerceRawSet(record.set, `${context}[${index}].set`),
       rarity: requireNullableString(record.rarity, `${context}[${index}].rarity`),
-      finish: requireString(
-        record.finish,
-        `${context}[${index}].finish`,
-      ) as RawCardPrinting["finish"],
-      artist: requireString(record.artist, `${context}[${index}].artist`),
+      finish: coercePrintFinish(record.finish, `${context}[${index}].finish`),
+      artist: readOptionalNullableString(record.artist, `${context}[${index}].artist`) ?? "Unknown",
     };
   });
+}
+
+function coercePrintFinish(value: unknown, context: string): RawCardPrinting["finish"] {
+  if (value === null || value === undefined) {
+    return "standard";
+  }
+
+  return requireString(value, context) as RawCardPrinting["finish"];
 }
 
 function requireRawCardColor(value: unknown, context: string): RawCardColor {

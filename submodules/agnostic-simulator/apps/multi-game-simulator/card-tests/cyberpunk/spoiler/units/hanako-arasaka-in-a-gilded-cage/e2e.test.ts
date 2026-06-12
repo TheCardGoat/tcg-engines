@@ -8,24 +8,19 @@ import {
   alphaSwordwiseHuscle,
   spoilerHanakoArasakaInAGildedCage,
 } from "@tcg/cyberpunk-cards";
-import { CYBERPUNK_P1 } from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import {
   expectExcludes,
   expectIncludes,
   getZoneDefinitionIds,
-} from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-unit-fixture-helpers";
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-unit-fixture-helpers";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { unitHanakoArasakaInAGildedCage } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Hanako Arasaka - play trigger keeps top-deck cost matches", async ({ page }) => {
-  await page.goto(
-    "/cyberpunk/simulator/tests/unitHanakoArasakaInAGildedCage?ai=off&auto-advance-attack=off",
-  );
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, unitHanakoArasakaInAGildedCage);
 
   const hanako = await pom.getCardInZoneByDefinitionId(
     "hand",

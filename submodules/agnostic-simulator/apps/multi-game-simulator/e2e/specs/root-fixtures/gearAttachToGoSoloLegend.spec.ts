@@ -1,18 +1,16 @@
 import { test } from "@playwright/test";
 
 import { alphaMantisBlades, alphaVCorporateExile } from "@tcg/cyberpunk-cards";
-import { CYBERPUNK_P1 } from "../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
+import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 
 test("Mantis Blades - attach to a GO SOLO legend on field", async ({ page }) => {
   await page.goto(
     "/cyberpunk/simulator/tests/gearAttachToGoSoloLegend?ai=off&auto-advance-attack=off",
   );
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page);
 
   const gear = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaMantisBlades.id);
   const goSoloLegend = await pom.getCardInZoneByDefinitionId(

@@ -57,6 +57,7 @@ export const SCENARIO_GROUPS: readonly { id: ScenarioGroup; label: string }[] = 
   { id: "unit-attack-trigger", label: "Unit · Attack Trigger" },
   { id: "unit-defeated", label: "Unit · Defeated" },
   { id: "unit-gig-condition", label: "Unit · Gig Condition" },
+  { id: "unit-vanilla", label: "Unit · Vanilla" },
   { id: "unit-rush", label: "Unit · Rush" },
 ];
 

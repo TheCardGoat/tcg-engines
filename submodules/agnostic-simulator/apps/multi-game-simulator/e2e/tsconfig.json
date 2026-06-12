@@ -12,6 +12,8 @@
     "noEmit": true,
     "types": ["node"],
     "paths": {
+      "@cyberpunk/*": ["../src/games/cyberpunk/*"],
+      "@e2e/*": ["./*"],
       "@tcg/simulator-testing/playwright": ["../../../packages/simulator-testing/src/playwright.ts"]
     }
   },

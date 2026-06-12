@@ -303,6 +303,13 @@ export function submitGundamSimulatorInteraction({
       }
       return;
     }
+    if (step.kind === "selectCost") {
+      if (isValidPendingCostSelection(step.candidateIds, selection.paymentIds)) {
+        const nextState = pending.provide("cost", { 0: selection.paymentIds });
+        confirmIfReady(nextState, pending, report);
+      }
+      return;
+    }
     return;
   }
 
@@ -710,20 +717,41 @@ function pendingInteractions(
     ];
   }
 
-  return [
-    {
-      id: `pending:${step.kind}`,
-      label: `${moveLabel}: ${step.kind}`,
-      prompt: "This pending step is waiting for a Gundam-specific selection.",
-      input: emptyActionInput(),
-      movePreview: {
-        engine: "gundam",
-        command: String(state.move),
-        payload: JSON.stringify(state.partialInput),
+  if (step.kind === "selectCost") {
+    const hasCandidates = step.candidateIds.length > 0;
+    return [
+      {
+        id: `pending:cost:${step.costType}`,
+        label: `${moveLabel}: pay ${step.costType}`,
+        prompt: `Choose resources to pay ${step.costType}.`,
+        input: {
+          kind: "payment",
+          min: hasCandidates ? 1 : 0,
+          max: step.candidateIds.length,
+          candidateEntityIds: [...step.candidateIds],
+          targetZoneIds: [],
+          options: [],
+        },
+        movePreview: {
+          engine: "gundam",
+          command: String(state.move),
+          payload: JSON.stringify(state.partialInput),
+        },
       },
-    },
-    cancelInteraction(state.move),
-  ];
+      cancelInteraction(state.move),
+    ];
+  }
+
+  return [cancelInteraction(state.move)];
+}
+
+function isValidPendingCostSelection(
+  candidateIds: readonly string[],
+  paymentIds: readonly string[],
+): boolean {
+  if (paymentIds.length === 0 || paymentIds.length > candidateIds.length) return false;
+  const candidates = new Set(candidateIds);
+  return paymentIds.every((id) => candidates.has(id));
 }
 
 function actionToSimulatorInteraction(action: InteractionAction): SimulatorInteraction {

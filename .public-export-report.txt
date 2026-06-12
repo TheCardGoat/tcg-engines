@@ -1,8 +1,8 @@
 Public export generated from:
-  private repository: /Users/wazar/.codex/worktrees/e3a1/the-card-goat-online
-  private commit: e247376421e5b763443a0688808249de0638ae1a
-  export branch: main
-  generated at: 2026-06-12T15:57:00Z
+  private repository: /home/runner/work/the-card-goat-online/the-card-goat-online
+  private commit: 0d0db2a40f5ee1d167b46703685c3a04457a12ee
+  export branch: public-sync/2026-W24
+  generated at: 2026-06-12T17:12:06Z
 
 Allowlisted source:
   - submodules/agnostic-simulator

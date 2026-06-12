@@ -15,7 +15,19 @@ import { cards, rawCards, structuredCards } from "../src/index.ts";
 
 const SLUG_REGEX = /^[a-z0-9-]+$/;
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const KNOWN_SET_CODES: ReadonlySet<string> = new Set(["alpha", "promo", "spoiler"]);
+const KNOWN_SET_CODE_VALUES: ReadonlySet<string> = new Set([
+  "alpha",
+  "promo",
+  "spoiler",
+  "boxtoppersretail",
+  "boxtoppersbeta",
+  "embracingpowerbetastarterdeck",
+  "embracingpowerretailstarterdeck",
+  "theheistbetastarterdeck",
+  "theheistretailstarterdeck",
+  "welcometonightcitybeta",
+  "welcometonightcityretail",
+]);
 const KNOWN_LEGALITIES: ReadonlySet<string> = new Set(["legal"]);
 const KNOWN_COLORS: ReadonlySet<string> = new Set(["blue", "green", "red", "yellow"]);
 const KNOWN_RAW_COLORS: ReadonlySet<string> = new Set(["Blue", "Green", "Red", "Yellow"]);
@@ -74,6 +86,22 @@ function assertEnum(
   }
 }
 
+function assertExternalId(
+  source: string,
+  field: string,
+  value: unknown,
+  violations: Violation[],
+): void {
+  if (typeof value !== "string" || !/^(?:cyberpunk:|cb-)[a-z0-9-]+$/.test(value)) {
+    violations.push({
+      cardSlug: source,
+      field,
+      reason: 'does not start with "cyberpunk:" or "cb-"',
+      value,
+    });
+  }
+}
+
 function assertNonNegativeIntOrNull(
   source: string,
   field: string,
@@ -118,11 +146,11 @@ describe("card record invariants", () => {
     for (const card of rawCards) {
       const slug = card.slug ?? "<missing slug>";
       assertString(slug, "id", card.id, violations, { regex: UUID_REGEX });
-      assertString(slug, "external_id", card.external_id, violations, { startsWith: "cyberpunk:" });
+      assertExternalId(slug, "external_id", card.external_id, violations);
       assertString(slug, "slug", card.slug, violations, { regex: SLUG_REGEX });
       assertString(slug, "name", card.name, violations);
       assertString(slug, "display_name", card.display_name, violations);
-      assertEnum(slug, "set.code", card.set?.code, KNOWN_SET_CODES, violations);
+      assertEnum(slug, "set.code", card.set?.code, KNOWN_SET_CODE_VALUES, violations);
       assertEnum(slug, "color", card.color, KNOWN_RAW_COLORS, violations);
       assertEnum(slug, "card_type", card.card_type, KNOWN_RAW_CARD_TYPES, violations);
       assertEnum(slug, "legality", card.legality, KNOWN_LEGALITIES, violations);
@@ -152,11 +180,11 @@ describe("card record invariants", () => {
     for (const card of cards) {
       const slug = card.slug ?? "<missing slug>";
       assertString(slug, "id", card.id, violations, { regex: UUID_REGEX });
-      assertString(slug, "externalId", card.externalId, violations, { startsWith: "cyberpunk:" });
+      assertExternalId(slug, "externalId", card.externalId, violations);
       assertString(slug, "slug", card.slug, violations, { regex: SLUG_REGEX });
       assertString(slug, "name", card.name, violations);
       assertString(slug, "displayName", card.displayName, violations);
-      assertEnum(slug, "set.code", card.set?.code, KNOWN_SET_CODES, violations);
+      assertEnum(slug, "set.code", card.set?.code, KNOWN_SET_CODE_VALUES, violations);
       assertEnum(slug, "color", card.color, KNOWN_COLORS, violations);
       assertEnum(slug, "type", card.type, KNOWN_CARD_TYPES, violations);
       assertEnum(slug, "legality", card.legality, KNOWN_LEGALITIES, violations);
@@ -204,14 +232,14 @@ describe("card record invariants", () => {
     expect(violations).toEqual([]);
   });
 
-  it("structuredCards (hand-authored alpha/spoiler/promo) all satisfy structural invariants and have an abilities array", () => {
+  it("structuredCards all satisfy structural invariants and have an abilities array", () => {
     const violations: Violation[] = [];
     for (const card of structuredCards) {
       const slug = card.slug ?? "<missing slug>";
       assertString(slug, "id", card.id, violations, { regex: UUID_REGEX });
-      assertString(slug, "externalId", card.externalId, violations, { startsWith: "cyberpunk:" });
+      assertExternalId(slug, "externalId", card.externalId, violations);
       assertString(slug, "slug", card.slug, violations, { regex: SLUG_REGEX });
-      assertEnum(slug, "set.code", card.set?.code, KNOWN_SET_CODES, violations);
+      assertEnum(slug, "set.code", card.set?.code, KNOWN_SET_CODE_VALUES, violations);
       assertEnum(slug, "color", card.color, KNOWN_COLORS, violations);
       assertEnum(slug, "type", card.type, KNOWN_CARD_TYPES, violations);
       if (!Array.isArray(card.abilities)) {
@@ -234,22 +262,26 @@ describe("card record invariants", () => {
     expect(violations).toEqual([]);
   });
 
-  it("rawCards and cards agree on primary keys (id, slug, externalId)", () => {
-    const violations: Array<{ slug: string; reason: string }> = [];
+  it("rawCards and cards agree on primary keys (set, id, slug, externalId)", () => {
+    const violations: Array<{ key?: string; slug?: string; reason: string }> = [];
     expect(rawCards.length).toBe(cards.length);
-    const rawBySlug = new Map(rawCards.map((c) => [c.slug, c]));
+    const rawBySetAndSlug = new Map(rawCards.map((c) => [`${c.set.code}:${c.slug}`, c]));
     for (const card of cards) {
-      const raw = rawBySlug.get(card.slug);
+      const key = `${card.set.code}:${card.slug}`;
+      const raw = rawBySetAndSlug.get(key);
       if (!raw) {
-        violations.push({ slug: card.slug, reason: "no matching rawCard for slug" });
+        violations.push({
+          slug: card.slug,
+          reason: `no matching rawCard for ${key}`,
+        });
         continue;
       }
       if (raw.id !== card.id) {
-        violations.push({ slug: card.slug, reason: `id mismatch (${raw.id} vs ${card.id})` });
+        violations.push({ key, reason: `id mismatch (${raw.id} vs ${card.id})` });
       }
       if (raw.external_id !== card.externalId) {
         violations.push({
-          slug: card.slug,
+          key,
           reason: `externalId mismatch (${raw.external_id} vs ${card.externalId})`,
         });
       }

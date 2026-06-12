@@ -52,6 +52,12 @@ export interface CyberpunkPomTriggerOption {
   readonly optional: boolean;
 }
 
+export type CardReference = { readonly id: string } | { readonly definitionId: string };
+
+function getDefinitionId(ref: CardReference): string {
+  return "id" in ref ? ref.id : ref.definitionId;
+}
+
 const PLAYER_ID_BY_SIDE: Record<CyberpunkSide, PlayerId> = {
   player: CYBERPUNK_P1,
   opponent: CYBERPUNK_P2,
@@ -165,6 +171,28 @@ export class CyberpunkSimulatorPom {
       throw new Error(`No ${zone} card ${instanceId} found for ${String(player)}.`);
     }
     return card;
+  }
+
+  async getCard(
+    ref: CardReference,
+    options?: { zone?: CyberpunkCardZone; player?: PlayerId },
+  ): Promise<CyberpunkPomCard & { player: PlayerId; zone: CyberpunkCardZone }> {
+    const definitionId = getDefinitionId(ref);
+    const zones: CyberpunkCardZone[] = options?.zone
+      ? [options.zone]
+      : ["field", "hand", "legendArea", "trash", "deck", "eddieArea"];
+    const players = options?.player ? [options.player] : [CYBERPUNK_P1, CYBERPUNK_P2];
+
+    for (const player of players) {
+      for (const zone of zones) {
+        const cards = await this.getCardsInZone(zone, player);
+        const card = cards.find((c) => c.definitionId === definitionId);
+        if (card) {
+          return { ...card, player, zone };
+        }
+      }
+    }
+    throw new Error(`No card with definition ${definitionId} found.`);
   }
 
   getAttackState(): Promise<CyberpunkAttackState | null> {
@@ -357,7 +385,23 @@ export class CyberpunkSimulatorPom {
     return definitionId;
   }
 
-  async getCardView(cardId: string, viewer: PlayerId): Promise<CyberpunkPomCardView> {
+  async getCardView(cardId: string, viewer: PlayerId): Promise<CyberpunkPomCardView>;
+  async getCardView(card: CardReference, viewer?: PlayerId): Promise<CyberpunkPomCardView>;
+  async getCardView(
+    cardOrId: string | CardReference,
+    viewer?: PlayerId,
+  ): Promise<CyberpunkPomCardView> {
+    let cardId: string;
+    if (typeof cardOrId === "object") {
+      const found = await this.getCard(cardOrId);
+      cardId = found.instanceId;
+      viewer ??= found.player;
+    } else {
+      cardId = cardOrId;
+      viewer ??= CYBERPUNK_P1;
+    }
+
+    const resolvedViewer = viewer;
     const card = await this.harness.evalEngine(
       (engine, input) => {
         const view = engine.getFilteredView(input.viewer);
@@ -381,7 +425,7 @@ export class CyberpunkSimulatorPom {
         }
         return null;
       },
-      { cardId, viewer },
+      { cardId, viewer: resolvedViewer },
     );
 
     if (!card) {
@@ -445,25 +489,66 @@ export class CyberpunkSimulatorPom {
     );
   }
 
-  async attackUnit(attackerId: string, defenderId: string, as: PlayerId): Promise<void> {
+  async attackUnit(attackerId: string, defenderId: string, as: PlayerId): Promise<void>;
+  async attackUnit(attacker: CardReference, defender: CardReference, as?: PlayerId): Promise<void>;
+  async attackUnit(
+    attackerOrId: string | CardReference,
+    defenderOrId: string | CardReference,
+    as?: PlayerId,
+  ): Promise<void> {
+    let attackerId: string;
+    let defenderId: string;
+    if (typeof attackerOrId === "object") {
+      const attacker = await this.getCard(attackerOrId, { zone: "field" });
+      attackerId = attacker.instanceId;
+      as ??= attacker.player;
+    } else {
+      attackerId = attackerOrId;
+    }
+    if (typeof defenderOrId === "object") {
+      const defender = await this.getCard(defenderOrId, { zone: "field" });
+      defenderId = defender.instanceId;
+    } else {
+      defenderId = defenderOrId;
+    }
     await this.harness.dispatchEngine(
       (engine, payload) =>
         engine.attackUnit(payload.attackerId, payload.defenderId, { as: payload.as }),
-      { attackerId, defenderId, as },
+      { attackerId, defenderId, as: as! },
     );
   }
 
-  async attackRival(attackerId: string, as: PlayerId): Promise<void> {
+  async attackRival(attackerId: string, as: PlayerId): Promise<void>;
+  async attackRival(attacker: CardReference, as?: PlayerId): Promise<void>;
+  async attackRival(attackerOrId: string | CardReference, as?: PlayerId): Promise<void> {
+    let attackerId: string;
+    if (typeof attackerOrId === "object") {
+      const attacker = await this.getCard(attackerOrId, { zone: "field" });
+      attackerId = attacker.instanceId;
+      as ??= attacker.player;
+    } else {
+      attackerId = attackerOrId;
+    }
     await this.harness.dispatchEngine(
       (engine, payload) => engine.attackRival(payload.attackerId, { as: payload.as }),
-      { attackerId, as },
+      { attackerId, as: as! },
     );
   }
 
-  async useBlocker(blockerId: string, as: PlayerId): Promise<void> {
+  async useBlocker(blockerId: string, as: PlayerId): Promise<void>;
+  async useBlocker(blocker: CardReference, as?: PlayerId): Promise<void>;
+  async useBlocker(blockerOrId: string | CardReference, as?: PlayerId): Promise<void> {
+    let blockerId: string;
+    if (typeof blockerOrId === "object") {
+      const blocker = await this.getCard(blockerOrId, { zone: "field" });
+      blockerId = blocker.instanceId;
+      as ??= blocker.player;
+    } else {
+      blockerId = blockerOrId;
+    }
     await this.harness.dispatchEngine(
       (engine, payload) => engine.useBlocker(payload.blockerId, { as: payload.as }),
-      { blockerId, as },
+      { blockerId, as: as! },
     );
   }
 
@@ -487,10 +572,20 @@ export class CyberpunkSimulatorPom {
     await this.boardForPlayer(as).fixerDie(dieId).click();
   }
 
-  async playCardFromHand(cardId: string, as: PlayerId): Promise<void> {
+  async playCardFromHand(cardId: string, as: PlayerId): Promise<void>;
+  async playCardFromHand(card: CardReference, as?: PlayerId): Promise<void>;
+  async playCardFromHand(cardOrId: string | CardReference, as?: PlayerId): Promise<void> {
+    let cardId: string;
+    if (typeof cardOrId === "object") {
+      const card = await this.getCard(cardOrId, { zone: "hand" });
+      cardId = card.instanceId;
+      as ??= card.player;
+    } else {
+      cardId = cardOrId;
+    }
     await this.harness.dispatchEngine(
       (engine, payload) => engine.playCard(payload.cardId, { as: payload.as }),
-      { cardId, as },
+      { cardId, as: as! },
     );
   }
 
@@ -502,27 +597,61 @@ export class CyberpunkSimulatorPom {
     );
   }
 
-  async goSolo(cardId: string, as: PlayerId): Promise<void> {
+  async goSolo(cardId: string, as: PlayerId): Promise<void>;
+  async goSolo(card: CardReference, as?: PlayerId): Promise<void>;
+  async goSolo(cardOrId: string | CardReference, as?: PlayerId): Promise<void> {
+    let cardId: string;
+    if (typeof cardOrId === "object") {
+      const card = await this.getCard(cardOrId, { zone: "legendArea" });
+      cardId = card.instanceId;
+      as ??= card.player;
+    } else {
+      cardId = cardOrId;
+    }
     await this.harness.dispatchEngine(
       (engine, payload) =>
         engine.executeMove("goSolo", { args: { cardId: payload.cardId } }, payload.as),
-      { cardId, as },
+      { cardId, as: as! },
     );
   }
 
-  async callLegend(legendId: string, as: PlayerId): Promise<void> {
+  async callLegend(legendId: string, as: PlayerId): Promise<void>;
+  async callLegend(legend: CardReference, as?: PlayerId): Promise<void>;
+  async callLegend(legendOrId: string | CardReference, as?: PlayerId): Promise<void> {
+    let legendId: string;
+    if (typeof legendOrId === "object") {
+      const legend = await this.getCard(legendOrId, { zone: "legendArea" });
+      legendId = legend.instanceId;
+      as ??= legend.player;
+    } else {
+      legendId = legendOrId;
+    }
     await this.harness.dispatchEngine(
       (engine, payload) =>
         engine.executeMove("callLegend", { args: { legendId: payload.legendId } }, payload.as),
-      { legendId, as },
+      { legendId, as: as! },
     );
   }
 
-  async activateAbility(cardId: string, abilityIndex: number, as: PlayerId): Promise<void> {
+  async activateAbility(cardId: string, abilityIndex: number, as: PlayerId): Promise<void>;
+  async activateAbility(card: CardReference, abilityIndex: number, as?: PlayerId): Promise<void>;
+  async activateAbility(
+    cardOrId: string | CardReference,
+    abilityIndex: number,
+    as?: PlayerId,
+  ): Promise<void> {
+    let cardId: string;
+    if (typeof cardOrId === "object") {
+      const card = await this.getCard(cardOrId, { zone: "field" });
+      cardId = card.instanceId;
+      as ??= card.player;
+    } else {
+      cardId = cardOrId;
+    }
     await this.harness.dispatchEngine(
       (engine, payload) =>
         engine.activateAbility(payload.cardId, payload.abilityIndex, { as: payload.as }),
-      { cardId, abilityIndex, as },
+      { cardId, abilityIndex, as: as! },
     );
   }
 
@@ -762,7 +891,24 @@ export class CyberpunkSimulatorPom {
     await expectDomAttribute(this.boardForPlayer(player).root(), "data-mode", expected);
   }
 
-  async expectFieldCardSpent(player: PlayerId, cardId: string, expected: boolean): Promise<void> {
+  async expectFieldCardSpent(player: PlayerId, cardId: string, expected: boolean): Promise<void>;
+  async expectFieldCardSpent(card: CardReference, expected: boolean): Promise<void>;
+  async expectFieldCardSpent(
+    playerOrCard: PlayerId | CardReference,
+    cardIdOrExpected: string | boolean,
+    expected?: boolean,
+  ): Promise<void> {
+    let player: PlayerId;
+    let cardId: string;
+    if (typeof playerOrCard === "object") {
+      const card = await this.getCard(playerOrCard, { zone: "field" });
+      player = card.player;
+      cardId = card.instanceId;
+      expected = cardIdOrExpected as boolean;
+    } else {
+      player = playerOrCard;
+      cardId = cardIdOrExpected as string;
+    }
     const card = await this.getCardInZoneByInstanceId("field", player, cardId);
     if (card.spent !== expected) {
       throw new Error(
@@ -793,7 +939,24 @@ export class CyberpunkSimulatorPom {
     player: PlayerId,
     cardId: string,
     expected: number,
+  ): Promise<void>;
+  async expectFieldCardEffectivePower(card: CardReference, expected: number): Promise<void>;
+  async expectFieldCardEffectivePower(
+    playerOrCard: PlayerId | CardReference,
+    cardIdOrExpected: string | number,
+    expected?: number,
   ): Promise<void> {
+    let player: PlayerId;
+    let cardId: string;
+    if (typeof playerOrCard === "object") {
+      const card = await this.getCard(playerOrCard, { zone: "field" });
+      player = card.player;
+      cardId = card.instanceId;
+      expected = cardIdOrExpected as number;
+    } else {
+      player = playerOrCard;
+      cardId = cardIdOrExpected as string;
+    }
     const card = await this.getCardView(cardId, player);
     if (card.effectivePower !== expected) {
       throw new Error(
@@ -812,7 +975,24 @@ export class CyberpunkSimulatorPom {
     player: PlayerId,
     cardId: string,
     expected: number,
+  ): Promise<void>;
+  async expectFieldCardAttachedGearCount(card: CardReference, expected: number): Promise<void>;
+  async expectFieldCardAttachedGearCount(
+    playerOrCard: PlayerId | CardReference,
+    cardIdOrExpected: string | number,
+    expected?: number,
   ): Promise<void> {
+    let player: PlayerId;
+    let cardId: string;
+    if (typeof playerOrCard === "object") {
+      const card = await this.getCard(playerOrCard, { zone: "field" });
+      player = card.player;
+      cardId = card.instanceId;
+      expected = cardIdOrExpected as number;
+    } else {
+      player = playerOrCard;
+      cardId = cardIdOrExpected as string;
+    }
     const card = await this.getCardView(cardId, player);
     if (card.attachedGearIds.length !== expected) {
       throw new Error(
@@ -832,7 +1012,32 @@ export class CyberpunkSimulatorPom {
     cardId: string,
     rule: string,
     expected: boolean,
+  ): Promise<void>;
+  async expectFieldCardGrantedRule(
+    card: CardReference,
+    rule: string,
+    expected: boolean,
+  ): Promise<void>;
+  async expectFieldCardGrantedRule(
+    playerOrCard: PlayerId | CardReference,
+    cardIdOrRule: string,
+    ruleOrExpected: string | boolean,
+    expected?: boolean,
   ): Promise<void> {
+    let player: PlayerId;
+    let cardId: string;
+    let rule: string;
+    if (typeof playerOrCard === "object") {
+      const card = await this.getCard(playerOrCard, { zone: "field" });
+      player = card.player;
+      cardId = card.instanceId;
+      rule = cardIdOrRule;
+      expected = ruleOrExpected as boolean;
+    } else {
+      player = playerOrCard;
+      cardId = cardIdOrRule;
+      rule = ruleOrExpected as string;
+    }
     const card = await this.getCardView(cardId, player);
     const hasRule = card.grantedRules.includes(rule);
     if (hasRule !== expected) {
@@ -1123,8 +1328,13 @@ export interface CyberpunkEngineHandle {
   getFilteredView(player: PlayerId): CyberpunkEngineFilteredMatchView;
   getState(): {
     G: {
-      cardIndex: Record<string, unknown>;
+      cardIndex: Record<string, { meta: { spent?: boolean } }>;
+      gamePhase: string;
       gigDice: Record<string, CyberpunkEngineGigDie>;
+      turnMetadata: {
+        activePlayerId: PlayerId;
+        pendingChoice?: unknown;
+      };
     };
   };
   playCard(cardId: string, options: { as: PlayerId }): unknown;

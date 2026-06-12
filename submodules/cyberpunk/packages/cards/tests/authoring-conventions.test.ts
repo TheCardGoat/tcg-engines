@@ -87,6 +87,24 @@ describe("card authoring conventions", () => {
     expect(violations).toEqual([]);
   });
 
+  it("non-keyword abilities have implemented effects or a card-level cost modifier", () => {
+    const violations: Violation[] = [];
+    for (const card of cards) {
+      const abilities = card.abilities as Ability[];
+      for (const [i, ability] of abilities.entries()) {
+        if (ability.kind === "keyword") continue;
+        if (ability.effects.length > 0) continue;
+        if (card.costModifier) continue;
+        violations.push({
+          cardSlug: card.slug,
+          rule: "non-keyword-ability-has-effect",
+          detail: `abilities[${i}] kind="${ability.kind}" has printed text but no effects`,
+        });
+      }
+    }
+    expect(violations).toEqual([]);
+  });
+
   it('`kind: "static"` abilities do not have a `trigger` field', () => {
     const violations: Violation[] = [];
     for (const card of cards) {

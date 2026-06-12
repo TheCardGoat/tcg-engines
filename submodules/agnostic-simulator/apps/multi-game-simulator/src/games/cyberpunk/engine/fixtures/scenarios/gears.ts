@@ -421,4 +421,85 @@ export const gearScenarios: Scenario[] = [
         { seed: scenarioSeed("gearAttachToGoSoloLegend"), autoGainGig: false },
       ),
   },
+
+  // ── Gear: Gorilla Arms (Retail) ─────────────────────────────────────────
+  {
+    id: "gearGorillaArmsRetail",
+    group: "gear-gig-steal",
+    label: "Gorilla Arms (Retail) · steal unshared-value gig on direct attack",
+    description:
+      "P1 has T-Bug (power 5) equipped with retail Gorilla Arms (cost 4, yellow, power 3, total power 8). P1 has a d4=1. P2 has d4=2 and d6=3. On a successful direct attack stealing d4=2, the ability triggers and steals the remaining rival d6=3 because its value (3) is not shared by any friendly Gig (values 1 and 2).",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [],
+          field: [
+            {
+              card: c.alphaTBugAmateurPhilosopher,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailGorillaArms],
+            },
+          ],
+          legendArea: [c.alphaVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 1 }],
+        },
+        {
+          field: [],
+          legendArea: [
+            c.alphaJackieWellesPourOneOutForMe,
+            c.alphaSaburoArasakaStubbornPatriach,
+            c.alphaViktorVektorSitDownAndRelax,
+          ],
+          eddies: 5,
+          gigArea: [
+            { dieType: "d4", faceValue: 2 },
+            { dieType: "d6", faceValue: 3 },
+          ],
+        },
+        { seed: scenarioSeed("gearGorillaArmsRetail"), autoGainGig: false, activePlayerId: P1 },
+      ),
+  },
+
+  // ── Gear: Zetatech Faceplate (Retail) ───────────────────────────────────
+  {
+    id: "gearZetatechFaceplateRetail",
+    group: "gear-spent-trigger",
+    label: "Zetatech Faceplate (Retail) · spend trigger adjusts gig and draws",
+    description:
+      "P1 has Swordwise Huscle equipped with retail Zetatech Faceplate (cost 2, yellow, power 2). Three friendly Gigs at distinct values. When the host is spent, should adjust a Gig and draw 1 card.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaRebootOptics],
+          field: [
+            {
+              card: c.alphaSwordwiseHuscle,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailZetatechFaceplate],
+            },
+          ],
+          legendArea: [
+            {
+              card: c.alphaVCorporateExile,
+              faceDown: false,
+            },
+            { card: c.spoilerRiverWardDetectiveOnTheHunt, faceDown: true },
+          ],
+          eddies: 4,
+          gigArea: [
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d6", faceValue: 2 },
+            { dieType: "d8", faceValue: 3 },
+          ],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d10", faceValue: 4 }],
+        },
+        { seed: scenarioSeed("gearZetatechFaceplateRetail"), autoGainGig: false },
+      ),
+  },
 ];

@@ -5,11 +5,17 @@ export { deckLists } from "./decks/index.ts";
 export * from "./alpha/index.ts";
 export * from "./spoiler/index.ts";
 export * from "./promo/index.ts";
+export * from "./boxtoppersretail/index.ts";
+export * from "./theheistretailstarterdeck/index.ts";
+export * from "./welcometonightcityretail/index.ts";
 
 import { cards, rawCards } from "./generated.ts";
 import { alphaCards } from "./alpha/index.ts";
+import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
 import { promoCards } from "./promo/index.ts";
 import { spoilerCards } from "./spoiler/index.ts";
+import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
+import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
 
 export function getCardBySlug(slug: string): CardDefinition | undefined {
   return cards.find((card) => card.slug === slug);
@@ -23,6 +29,9 @@ export const structuredCards = [
   ...alphaCards,
   ...spoilerCards,
   ...promoCards,
+  ...boxToppersRetailCards,
+  ...theHeistRetailStarterDeckCards,
+  ...welcomeToNightCityRetailCards,
 ] satisfies StructuredCardDefinition[];
 
 export function getStructuredCardBySlug(slug: string): StructuredCardDefinition | undefined {

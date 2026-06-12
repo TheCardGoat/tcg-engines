@@ -1,8 +1,9 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
-import { getEffectiveRules } from "../active-effects/index.ts";
+import { getEffectiveRules, markDefeatAtEndOfTurnIfAttacked } from "../active-effects/index.ts";
 import { defOf, getDefinitionFor } from "../state/lookups.ts";
+import { satisfiesMustAttackRequirement } from "./attack-requirements.ts";
 
 export interface AttackUnitInput extends MoveInput {
   args: {
@@ -62,6 +63,19 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
     if (attackerRules.includes("cantAttack")) {
       return { valid: false, error: "Attacker can't attack", errorCode: "CANT_ATTACK" };
     }
+    if (
+      !satisfiesMustAttackRequirement(
+        state as import("../types/match-state.ts").MatchState,
+        playerId,
+        attackerId as CardInstanceId,
+      )
+    ) {
+      return {
+        valid: false,
+        error: "A different unit must attack if it can",
+        errorCode: "MUST_ATTACK",
+      };
+    }
     if (attacker.meta.playedThisTurn) {
       if (
         !attackerRules.includes("canAttackOnPlayedTurnAgainstUnits") &&
@@ -106,6 +120,10 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
       kind: "fight",
       step: "offensive",
     });
+    markDefeatAtEndOfTurnIfAttacked(
+      state as import("../types/match-state.ts").MatchState,
+      attackerId as CardInstanceId,
+    );
 
     const attackerName = state.G.cardIndex[attackerId]
       ? getDefinitionFor(state.G, attackerId).displayName

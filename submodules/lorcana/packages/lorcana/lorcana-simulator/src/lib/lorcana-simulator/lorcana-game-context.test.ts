@@ -389,4 +389,39 @@ describe("lorcana game context", () => {
       },
     });
   });
+
+  it("updates own-player visual settings immediately", () => {
+    const context = new LorcanaGameContext(toEngine(createEngine()), undefined, {
+      player_one: { cardBack: "white", playmat: "elsa" },
+      player_two: { cardBack: "yellow", playmat: "mulan" },
+    });
+
+    context.setOwnPlayerVisualSettings({ cardBack: "cosmos" });
+    expect(context.getOwnPlayerVisualSettings()).toEqual({
+      cardBack: "cosmos",
+      playmat: "elsa",
+    });
+    expect(context.getPlayerVisualSettings("playerOne")).toMatchObject({
+      cardBack: {
+        id: "cosmos",
+      },
+      playmat: {
+        id: "elsa",
+      },
+    });
+
+    context.setOwnPlayerVisualSettings({ playmat: "pooh" });
+    expect(context.getOwnPlayerVisualSettings()).toEqual({
+      cardBack: "cosmos",
+      playmat: "pooh",
+    });
+    expect(context.getPlayerVisualSettings("playerOne")).toMatchObject({
+      cardBack: {
+        id: "cosmos",
+      },
+      playmat: {
+        id: "pooh",
+      },
+    });
+  });
 });

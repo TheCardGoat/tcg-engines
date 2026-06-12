@@ -3,6 +3,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
 import { getEffectiveRules } from "../active-effects/index.ts";
 import { defOf, getDefinitionFor } from "../state/lookups.ts";
+import { satisfiesMustAttackRequirement } from "./attack-requirements.ts";
 
 export interface AttackRivalInput extends MoveInput {
   args: {
@@ -70,6 +71,19 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
     );
     if (attackerRules.includes("cantAttack")) {
       return { valid: false, error: "Attacker can't attack", errorCode: "CANT_ATTACK" };
+    }
+    if (
+      !satisfiesMustAttackRequirement(
+        state as import("../types/match-state.ts").MatchState,
+        playerId,
+        attackerId as CardInstanceId,
+      )
+    ) {
+      return {
+        valid: false,
+        error: "A different unit must attack if it can",
+        errorCode: "MUST_ATTACK",
+      };
     }
 
     return { valid: true };

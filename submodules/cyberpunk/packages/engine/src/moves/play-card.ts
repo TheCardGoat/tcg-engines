@@ -2,7 +2,7 @@ import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
 import { defOf } from "../state/lookups.ts";
-import { computeEffectiveCost } from "./compute-effective-cost.ts";
+import { computeEffectiveCost, consumeCostModifierUse } from "./compute-effective-cost.ts";
 import { availableEddies } from "./eddie-resources.ts";
 import { isDefensiveStep } from "./is-defensive-step.ts";
 
@@ -91,6 +91,11 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
     );
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
     operations.game.spendEddies(playerId, cost, "playCard");
+    consumeCostModifierUse(
+      state as import("../types/match-state.ts").MatchState,
+      cardId as CardInstanceId,
+      playerId,
+    );
 
     if (def.type === "program") {
       operations.zone.moveCard(cardId as CardInstanceId, "trash", playerId);

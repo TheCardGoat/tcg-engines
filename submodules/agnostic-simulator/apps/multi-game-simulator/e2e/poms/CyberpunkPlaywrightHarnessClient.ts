@@ -6,14 +6,54 @@ import {
   type CyberpunkEngineHandle,
   type CyberpunkHarnessClient,
   type CyberpunkSide,
-} from "../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import type { EngineAction } from "../../src/games/cyberpunk/types/e2e";
+} from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import type { EngineAction } from "@cyberpunk/types/e2e";
+import type { CyberpunkE2EFixture } from "@cyberpunk/testing/e2e-fixtures";
 
-export function createPlaywrightCyberpunkSimulatorPom(page: Page): CyberpunkSimulatorPom {
-  return new CyberpunkSimulatorPom(
+export type { CyberpunkE2EFixture } from "@cyberpunk/testing/e2e-fixtures";
+
+export interface CreatePlaywrightCyberpunkSimulatorPomOptions {
+  readonly fixture?: CyberpunkE2EFixture;
+  readonly skipReady?: boolean;
+  readonly skipStructuralState?: boolean;
+}
+
+function isFixture(value: unknown): value is CyberpunkE2EFixture {
+  return Boolean(
+    value &&
+    typeof value === "object" &&
+    "scenarioId" in value &&
+    typeof value.scenarioId === "string",
+  );
+}
+
+export async function createPlaywrightCyberpunkSimulatorPom(
+  page: Page,
+  fixtureOrOptions?: CyberpunkE2EFixture | CreatePlaywrightCyberpunkSimulatorPomOptions,
+): Promise<CyberpunkSimulatorPom> {
+  const options: CreatePlaywrightCyberpunkSimulatorPomOptions = isFixture(fixtureOrOptions)
+    ? { fixture: fixtureOrOptions }
+    : (fixtureOrOptions ?? {});
+
+  if (options.fixture) {
+    await page.goto(
+      `/cyberpunk/simulator/tests/${options.fixture.scenarioId}?ai=off&auto-advance-attack=off`,
+    );
+  }
+
+  const pom = new CyberpunkSimulatorPom(
     new PlaywrightDomDriver(page),
     new PlaywrightCyberpunkHarnessClient(page),
   );
+
+  if (!options.skipReady) {
+    await pom.waitForReady();
+  }
+  if (!options.skipStructuralState) {
+    await pom.expectStructuralState();
+  }
+
+  return pom;
 }
 
 export class PlaywrightCyberpunkHarnessClient implements CyberpunkHarnessClient {

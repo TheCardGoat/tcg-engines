@@ -1,7 +1,7 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
-import { processCardSpentEventsSince } from "../ability-executor.ts";
-import { getEffectiveRules } from "../active-effects/index.ts";
+import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
+import { getEffectiveRules, markDefeatAtEndOfTurnIfAttacked } from "../active-effects/index.ts";
 import { getDefinitionFor } from "../state/lookups.ts";
 
 export interface UseBlockerInput extends MoveInput {
@@ -84,12 +84,18 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
       operations,
     );
 
-    operations.event.emit({
+    const blockerActivatedEvent = {
       type: "blockerActivated",
       blockerId: blockerId as CardInstanceId,
       originalTarget: attack.defenderId,
       playerId,
-    });
+    } as const;
+    operations.event.emit(blockerActivatedEvent);
+    processEventTriggers(
+      blockerActivatedEvent,
+      state as import("../types/match-state.ts").MatchState,
+      operations,
+    );
 
     operations.game.setAttackState({
       ...attack,
@@ -98,6 +104,14 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
       step: "defensive",
       redirectedByBlocker: true,
     });
+    markDefeatAtEndOfTurnIfAttacked(
+      state as import("../types/match-state.ts").MatchState,
+      attack.attackerId,
+    );
+    markDefeatAtEndOfTurnIfAttacked(
+      state as import("../types/match-state.ts").MatchState,
+      blockerId as CardInstanceId,
+    );
 
     operations.event.emit({
       type: "actionLog",

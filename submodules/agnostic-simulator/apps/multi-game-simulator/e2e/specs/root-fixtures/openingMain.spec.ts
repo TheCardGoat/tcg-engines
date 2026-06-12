@@ -1,20 +1,17 @@
 import { test } from "@playwright/test";
 import { alphaFloorIt, alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../poms/CyberpunkPlaywrightHarnessClient";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
 test("openingMain starts with first player in main phase and second player in view mode", async ({
   page,
 }) => {
   await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, { skipStructuralState: true });
+
   expectEqual("openingMain phase", await pom.getPhase(), "main");
   expectEqual("openingMain turn", await pom.getTurnNumber(), 1);
   expectEqual("openingMain active player", await pom.getActivePlayerId(), CYBERPUNK_P1);
@@ -28,8 +25,8 @@ test("openingMain starts with first player in main phase and second player in vi
 test("openingMain first player sells Floor It from hand for one eddie", async ({ page }) => {
   await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
   const floorIt = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaFloorIt.id);
 
   await pom.sellCard(floorIt.instanceId, CYBERPUNK_P1);
@@ -44,8 +41,8 @@ test("openingMain first player sells a card, plays Ruthless Lowlife, then passes
 }) => {
   await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
   const floorIt = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaFloorIt.id);
   await pom.sellCard(floorIt.instanceId, CYBERPUNK_P1);
 

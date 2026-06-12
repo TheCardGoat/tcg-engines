@@ -1,21 +1,16 @@
 import { test } from "@playwright/test";
 
-import { CYBERPUNK_P1 } from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
+import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
   expectEqual,
-} from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { progIndustrialAssemblyHighCred } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Industrial Assembly - 7+ Street Cred triggers draw", async ({ page }) => {
-  await page.goto(
-    "/cyberpunk/simulator/tests/progIndustrialAssemblyHighCred?ai=off&auto-advance-attack=off",
-  );
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, progIndustrialAssemblyHighCred);
 
   const targetGig = expectDefined(
     "Industrial Assembly high-credit d8",

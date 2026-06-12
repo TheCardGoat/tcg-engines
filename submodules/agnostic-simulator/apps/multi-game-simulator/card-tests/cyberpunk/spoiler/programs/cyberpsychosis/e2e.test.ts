@@ -5,20 +5,17 @@ import {
   alphaTBugAmateurPhilosopher,
   spoilerCyberpsychosis,
 } from "@tcg/cyberpunk-cards";
-import { CYBERPUNK_P1 } from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
+import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
   expectEqual,
-} from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { progCyberpsychosis } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Cyberpsychosis - equipped unit attack window", async ({ page }) => {
-  await page.goto("/cyberpunk/simulator/tests/progCyberpsychosis?ai=off&auto-advance-attack=off");
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, progCyberpsychosis);
 
   const tBug = await pom.getCardInZoneByDefinitionId(
     "field",

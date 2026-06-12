@@ -167,6 +167,17 @@ function getCardCandidates(
     );
   }
 
+  if (target.powerEqualsGigValueOf) {
+    const gigIds = resolveTarget(target.powerEqualsGigValueOf, ctx);
+    const gigValues = gigIds
+      .map((id) => ctx.state.G.gigDice[id])
+      .filter(Boolean)
+      .map((d) => d.faceValue);
+    candidates = candidates.filter((c) =>
+      gigValues.includes(getEffectivePower(ctx.state, c.instanceId as string)),
+    );
+  }
+
   return candidates;
 }
 
@@ -187,6 +198,15 @@ function resolveGigTarget(target: GigTargetDSL, ctx: ResolutionContext): string[
       .filter(Boolean)
       .map((d) => d.faceValue);
     dice = dice.filter((d) => refValues.includes(d.faceValue));
+  }
+
+  if (target.valueNotSharedBy) {
+    const refIds = resolveTarget(target.valueNotSharedBy, ctx);
+    const refValues = refIds
+      .map((id) => ctx.state.G.gigDice[id])
+      .filter(Boolean)
+      .map((d) => d.faceValue);
+    dice = dice.filter((d) => !refValues.includes(d.faceValue));
   }
 
   if (target.sameSidesAs) {
@@ -304,7 +324,12 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
       const die = ctx.state.G.gigDice[ids[0]!];
       if (!die) return false;
       const value = condition.property === "gigValue" ? die.faceValue : 0;
-      const compareVal = condition.value === "max" ? DIE_MAX_VALUES[die.dieType] : condition.value;
+      const compareVal =
+        condition.value === "max"
+          ? DIE_MAX_VALUES[die.dieType]
+          : condition.value === "min"
+            ? 1
+            : condition.value;
       return compareValues(value, condition.comparison, compareVal as number);
     }
 
@@ -357,6 +382,19 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
       return dice.some((d) => d.faceValue === 1);
     }
 
+    case "hasEquippedUnitsOrLegends": {
+      const playerId = resolveRelativePlayer(condition.controller, ctx);
+      const player = ctx.state.G.players[playerId as string];
+      if (!player) return false;
+      const equippedCount = [...player.zones.field, ...player.zones.legendArea].filter((id) => {
+        const card = ctx.state.G.cardIndex[id as string];
+        if (!card || card.meta.attachedGearIds.length === 0) return false;
+        const def = defOf(card);
+        return def.type === "unit" || def.type === "legend";
+      }).length;
+      return equippedCount >= condition.minCount;
+    }
+
     case "matchingGig": {
       const playerId = resolveRelativePlayer(condition.controller, ctx);
       const player = ctx.state.G.players[playerId as string];
@@ -380,8 +418,20 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
       if (ids.length === 0) return false;
       const attack = ctx.state.G.attackState;
       if (!attack) return false;
-      if ((attack.attackerId as string) !== ids[0]) return false;
-      return attack.kind === condition.kind;
+      const targetId = ids[0]!;
+      if (
+        (attack.attackerId as string) !== targetId &&
+        (attack.defenderId as string) !== targetId
+      ) {
+        return false;
+      }
+      if (attack.kind !== condition.kind) return false;
+      if (!condition.opponent) return true;
+      const opponentId =
+        (attack.attackerId as string) === targetId ? attack.defenderId : attack.attackerId;
+      if (!opponentId) return false;
+      const opponent = ctx.state.G.cardIndex[opponentId as string];
+      return opponent ? cardMatchesTargetFilter(opponent, condition.opponent, ctx) : false;
     }
 
     case "costMatchesGig": {
@@ -403,6 +453,32 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
     default:
       return assertNever(condition);
   }
+}
+
+function cardMatchesTargetFilter(
+  card: CardInstance,
+  target: CardTargetDSL,
+  ctx: ResolutionContext,
+): boolean {
+  const playerId = target.controller ? resolveRelativePlayer(target.controller, ctx) : undefined;
+  if (playerId && card.controllerId !== playerId) return false;
+  if (target.zones && !target.zones.includes(card.zone)) return false;
+  const def = defOf(card);
+  if (target.cardTypes && !target.cardTypes.includes(def.type)) return false;
+  if (target.colors && !target.colors.includes(def.color)) return false;
+  if (
+    target.classifications &&
+    !target.classifications.some((classification) => def.classifications.includes(classification))
+  ) {
+    return false;
+  }
+  if (target.state !== undefined && card.meta.spent !== (target.state === "spent")) return false;
+  if (target.face !== undefined && card.meta.faceDown !== (target.face === "faceDown"))
+    return false;
+  if (target.hasAttachedCards !== undefined) {
+    if (target.hasAttachedCards !== card.meta.attachedGearIds.length > 0) return false;
+  }
+  return true;
 }
 
 function compareValues(left: number, op: Comparison, right: number): boolean {
@@ -428,6 +504,17 @@ export function resolveNumericValue(value: NumericValue, ctx: ResolutionContext)
   if (value.type === "perCount") {
     const ids = resolveTarget(value.target, ctx);
     return ids.length * value.multiplier;
+  }
+
+  if (value.type === "maxGigValue") {
+    const playerId = resolveRelativePlayer(value.controller, ctx);
+    const player = ctx.state.G.players[playerId as string];
+    if (!player) return 0;
+    const values = player.gigArea
+      .map((id) => ctx.state.G.gigDice[id as string])
+      .filter(Boolean)
+      .map((die) => die.faceValue);
+    return values.length > 0 ? Math.max(...values) : 0;
   }
 
   return 0;

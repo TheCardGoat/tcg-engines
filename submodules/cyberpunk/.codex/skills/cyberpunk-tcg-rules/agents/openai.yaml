@@ -1,6 +1,0 @@
-interface:
-  display_name: "Cyberpunk TCG Rules"
-  short_description: "Ground repo work in official game rules"
-  default_prompt: "Use $cyberpunk-tcg-rules to ground this task in the official Cyberpunk TCG alpha gameplay rules."
-policy:
-  allow_implicit_invocation: true

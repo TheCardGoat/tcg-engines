@@ -10,6 +10,7 @@ import type {
   MultiplyPowerEffect,
   GrantRuleEffect,
   ReadyEffect,
+  ReadyEddiesEffect,
   LookAtEffect,
   SearchDeckEffect,
   DiscardFromHandEffect,
@@ -21,9 +22,11 @@ import type {
   TrashFromDeckEffect,
   IfYouDoEffect,
   DelayedEffect,
+  DefeatAtEndOfTurnIfAttacksEffect,
   CopyGigValueEffect,
   ForEachFriendlyGigPairEffect,
   CallLegendEffect,
+  GrantCostModifierEffect,
   TargetDSL,
 } from "@tcg/cyberpunk-types";
 import type { CardZone } from "@tcg/cyberpunk-types";
@@ -278,6 +281,49 @@ function handleGrantRule(
   return { status: "resolved" };
 }
 
+function handleGrantCostModifier(
+  effect: GrantCostModifierEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  ops.game.addActiveEffect({
+    id: `e${ctx.state.G.nextEffectId}`,
+    sourceCardId: ctx.sourceCardId,
+    targetCardId: ctx.sourceCardId,
+    kind: "costModifier",
+    costModifier: effect.modifier,
+    appliesTo: effect.appliesTo,
+    playerId,
+    remainingUses: effect.uses,
+    duration: effect.duration,
+    origin: "imperative",
+    abilityIndex: ctx.abilityIndex,
+  });
+  return { status: "resolved" };
+}
+
+function handleDefeatAtEndOfTurnIfAttacks(
+  effect: DefeatAtEndOfTurnIfAttacksEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const targets = resolveTarget(effect.target, ctx);
+  for (const id of targets) {
+    ops.game.addActiveEffect({
+      id: `e${ctx.state.G.nextEffectId}`,
+      sourceCardId: ctx.sourceCardId,
+      targetCardId: id as CardInstanceId,
+      kind: "defeatAtEndOfTurnIfAttacked",
+      duration: "turn",
+      origin: "imperative",
+      abilityIndex: ctx.abilityIndex,
+      triggered: false,
+    });
+  }
+  return targets.length > 0 ? { status: "resolved" } : { status: "noAction" };
+}
+
 function handleReady(
   effect: ReadyEffect,
   ctx: ResolutionContext,
@@ -287,6 +333,22 @@ function handleReady(
   for (const id of targets) {
     ops.card.ready(id as CardInstanceId);
   }
+  return { status: "resolved" };
+}
+
+function handleReadyEddies(
+  effect: ReadyEddiesEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  if (!player) return { status: "resolved" };
+  const amount = Math.min(effect.amount, player.spentEddies ?? 0);
+  if (amount <= 0) return { status: "resolved" };
+  player.spentEddies -= amount;
+  player.eddies += amount;
+  ops.event.emit({ type: "eddiesGained", playerId, amount });
   return { status: "resolved" };
 }
 
@@ -1012,6 +1074,7 @@ export const effectHandlers: EffectHandlerRegistry = {
   multiplyPower: handleMultiplyPower,
   grantRule: handleGrantRule,
   ready: handleReady,
+  readyEddies: handleReadyEddies,
   lookAt: handleLookAt,
   searchDeck: handleSearchDeck,
   discardFromHand: handleDiscardFromHand,
@@ -1023,9 +1086,11 @@ export const effectHandlers: EffectHandlerRegistry = {
   trashFromDeck: handleTrashFromDeck,
   ifYouDo: handleIfYouDo,
   delayed: handleDelayed,
+  defeatAtEndOfTurnIfAttacks: handleDefeatAtEndOfTurnIfAttacks,
   copyGigValue: handleCopyGigValue,
   forEachFriendlyGigPair: handleForEachFriendlyGigPair,
   callLegend: handleCallLegend,
+  grantCostModifier: handleGrantCostModifier,
 };
 
 export function resolveEffect(

@@ -8,11 +8,25 @@ const repoRoot = resolve(currentDir, "../../..");
 const generatedFilePath = resolve(repoRoot, "packages/cards/src/generated.ts");
 const outputDir = resolve(repoRoot, "packages/cards/src");
 
-const { alphaCards, spoilerCards, promoCards } = await generateStructuredCardFiles({
+const {
+  alphaCards,
+  spoilerCards,
+  promoCards,
+  boxToppersRetailCards,
+  theHeistRetailStarterDeckCards,
+  welcomeToNightCityRetailCards,
+} = await generateStructuredCardFiles({
   generatedFilePath,
   outputDir,
 });
 
-console.log(
-  `Generated ${alphaCards.length} alpha, ${spoilerCards.length} spoiler, and ${promoCards.length} promo cards in ${outputDir}`,
-);
+const generatedCounts = [
+  `${alphaCards.length} alpha`,
+  `${spoilerCards.length} spoiler`,
+  `${promoCards.length} promo`,
+  `${boxToppersRetailCards.length} box toppers retail`,
+  `${theHeistRetailStarterDeckCards.length} The Heist retail starter deck`,
+  `${welcomeToNightCityRetailCards.length} Welcome to Night City retail`,
+].join(", ");
+
+console.log(`Generated ${generatedCounts} cards in ${outputDir}`);

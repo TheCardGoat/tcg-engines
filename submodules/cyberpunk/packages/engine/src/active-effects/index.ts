@@ -111,7 +111,15 @@ export function recomputeActiveEffects(state: MatchState): void {
             // Per-target: evaluate the "attacking" and "fightKind" conditions specifically for this target.
             if (hasAttackingCond) {
               const attack = G.attackState;
-              if (!attack || (attack.attackerId as string) !== targetId) continue;
+              if (!attack) continue;
+              const isAttacker = (attack.attackerId as string) === targetId;
+              const isDefender = (attack.defenderId as string) === targetId;
+              const attackingConds = [
+                ...(ability.conditions ?? []),
+                ...(rawEffect.conditions ?? []),
+              ].filter((c) => c.condition === "attacking");
+              if (attackingConds.length > 0 && !isAttacker) continue;
+              if (!isAttacker && !isDefender) continue;
 
               const fightKindConds = [
                 ...(ability.conditions ?? []),
@@ -245,6 +253,24 @@ export function getEffectiveRules(state: MatchState, cardId: string): RuleModifi
 
 export function getEffectiveKeywords(state: MatchState, cardId: string): string[] {
   return getEffectiveRules(state, cardId).filter(isKeywordRule);
+}
+
+export function markDefeatAtEndOfTurnIfAttacked(state: MatchState, cardId: CardInstanceId): void {
+  for (const effect of state.G.activeEffects) {
+    if (
+      effect.kind === "defeatAtEndOfTurnIfAttacked" &&
+      (effect.targetCardId as string) === (cardId as string)
+    ) {
+      effect.triggered = true;
+    }
+  }
+}
+
+export function getCardsMarkedForEndTurnDefeat(state: MatchState): CardInstanceId[] {
+  const ids = state.G.activeEffects
+    .filter((effect) => effect.kind === "defeatAtEndOfTurnIfAttacked" && effect.triggered)
+    .map((effect) => effect.targetCardId);
+  return [...new Set(ids)];
 }
 
 export function getStreetCredForPlayer(state: MatchState, playerId: PlayerId): number {

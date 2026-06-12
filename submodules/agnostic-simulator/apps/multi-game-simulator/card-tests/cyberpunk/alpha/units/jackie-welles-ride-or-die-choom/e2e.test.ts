@@ -1,22 +1,14 @@
 import { test } from "@playwright/test";
 
 import { alphaArmoredMinotaur, alphaJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { unitJackieWellesRideOrDieChoom } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Jackie Welles - power scales with friendly gigs", async ({ page }) => {
-  await page.goto(
-    "/cyberpunk/simulator/tests/unitJackieWellesRideOrDieChoom?ai=off&auto-advance-attack=off",
-  );
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, unitJackieWellesRideOrDieChoom);
 
   const jackie = await pom.getCardInZoneByDefinitionId(
     "field",

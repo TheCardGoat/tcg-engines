@@ -22,6 +22,7 @@ const ALL_RULE_MODIFIERS: ReadonlySet<RuleModifier> = new Set([
   "goSolo",
   "cantAttack",
   "cantBeBlocked",
+  "mustAttack",
   "canAttackOnPlayedTurnAgainstUnits",
   "adrenaline",
   "quick",

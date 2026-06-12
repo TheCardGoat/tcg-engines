@@ -123,6 +123,8 @@ function createGameContextStub(
     getOwnerIdForSide: () => null,
     getPlayerVisualSettings: () => DEFAULT_LORCANA_PLAYER_VISUAL_SETTINGS,
     getPlayerVisualSettingsByOwnerId: () => DEFAULT_LORCANA_PLAYER_VISUAL_SETTINGS,
+    getOwnPlayerVisualSettings: () => undefined,
+    setOwnPlayerVisualSettings: () => {},
     setSelectedCardId: () => {},
     setSelectedMulliganCardIds: () => {},
     setChallengeSourceCardId: () => {},
@@ -369,6 +371,60 @@ describe("LorcanaSidebarPresenter", () => {
     presenter.initializeLocale();
 
     expect(presenter.soundVolume).toBe(50);
+  });
+
+  it("updates selected card back locally and forwards it to the board context", () => {
+    const storage = new MemoryStorage();
+    globalThis.localStorage = storage;
+    const visualUpdates: Array<{ cardBack?: string; playmat?: string }> = [];
+    let ownVisualSettings: { cardBack?: string; playmat?: string } = {
+      cardBack: "default",
+      playmat: "default",
+    };
+
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        getOwnPlayerVisualSettings: () => ownVisualSettings,
+        setOwnPlayerVisualSettings: (settings) => {
+          ownVisualSettings = { ...ownVisualSettings, ...settings };
+          visualUpdates.push(settings);
+        },
+      }),
+    );
+
+    presenter.handleCardBackChange("cosmos");
+
+    expect(presenter.selectedCardBack).toBe("cosmos");
+    expect(storage.getItem("lorcana.simulator.selectedCardBack")).toBe("cosmos");
+    expect(ownVisualSettings).toEqual({ cardBack: "cosmos", playmat: "default" });
+    expect(visualUpdates).toEqual([{ cardBack: "cosmos" }]);
+  });
+
+  it("updates selected playmat locally and forwards it to the board context", () => {
+    const storage = new MemoryStorage();
+    globalThis.localStorage = storage;
+    const visualUpdates: Array<{ cardBack?: string; playmat?: string }> = [];
+    let ownVisualSettings: { cardBack?: string; playmat?: string } = {
+      cardBack: "default",
+      playmat: "default",
+    };
+
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        getOwnPlayerVisualSettings: () => ownVisualSettings,
+        setOwnPlayerVisualSettings: (settings) => {
+          ownVisualSettings = { ...ownVisualSettings, ...settings };
+          visualUpdates.push(settings);
+        },
+      }),
+    );
+
+    presenter.handlePlaymatChange("pooh");
+
+    expect(presenter.selectedPlaymat).toBe("pooh");
+    expect(storage.getItem("lorcana.simulator.selectedPlaymat")).toBe("pooh");
+    expect(ownVisualSettings).toEqual({ cardBack: "default", playmat: "pooh" });
+    expect(visualUpdates).toEqual([{ playmat: "pooh" }]);
   });
 
   it("opens optional bag effects in the sidebar and submits the selected branch", () => {

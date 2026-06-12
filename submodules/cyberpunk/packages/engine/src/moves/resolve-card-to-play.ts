@@ -8,6 +8,7 @@ import {
   resumeCurrentTrigger,
 } from "../ability-executor.ts";
 import { defOf } from "../state/lookups.ts";
+import { computeEffectiveCost, consumeCostModifierUse } from "./compute-effective-cost.ts";
 
 export interface ResolveCardToPlayInput extends MoveInput {
   args: {
@@ -49,8 +50,12 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
     const def = defOf(card);
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
 
+    const cost = free
+      ? 0
+      : computeEffectiveCost(state as MatchState, cardId as CardInstanceId, playerId);
     if (!free) {
-      operations.game.spendEddies(playerId, def.cost ?? 0, "playCard");
+      operations.game.spendEddies(playerId, cost, "playCard");
+      consumeCostModifierUse(state as MatchState, cardId as CardInstanceId, playerId);
     }
 
     if (def.type === "gear" && resolvedAttachToId) {
@@ -61,8 +66,6 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
     } else {
       operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
     }
-
-    const cost = free ? 0 : (def.cost ?? 0);
 
     // Clear the old pending choice before emitting cardPlayed so that any new
     // pendingChoice set by downstream triggers (processEventTriggers below) is

@@ -2,26 +2,48 @@ import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type {
   AlphaCardDefinition,
+  BoxToppersRetailCardDefinition,
   CardType,
   PromoCardDefinition,
   SpoilerCardDefinition,
+  StructuredCardDefinition,
+  TheHeistRetailStarterDeckCardDefinition,
+  WelcomeToNightCityRetailCardDefinition,
 } from "@tcg/cyberpunk-types";
 import { loadGeneratedCards } from "./load-generated.ts";
-import { parseAlphaCards, parsePromoCards, parseSpoilerCards } from "./parser.ts";
+import {
+  parseAlphaCards,
+  parseBoxToppersRetailCards,
+  parsePromoCards,
+  parseSpoilerCards,
+  parseTheHeistRetailStarterDeckCards,
+  parseWelcomeToNightCityRetailCards,
+} from "./parser.ts";
 
 type StructuredSetCardDefinition =
   | AlphaCardDefinition
+  | BoxToppersRetailCardDefinition
   | SpoilerCardDefinition
-  | PromoCardDefinition;
+  | PromoCardDefinition
+  | TheHeistRetailStarterDeckCardDefinition
+  | WelcomeToNightCityRetailCardDefinition
+  | StructuredCardDefinition;
 
 type StructuredSetCode = StructuredSetCardDefinition["set"]["code"];
 
 interface SetConfig {
   code: StructuredSetCode;
-  typeName: "AlphaCardDefinition" | "SpoilerCardDefinition" | "PromoCardDefinition";
-  prefix: "alpha" | "spoiler" | "promo";
-  cardsExportName: "alphaCards" | "spoilerCards" | "promoCards";
-  getBySlugName: "getAlphaCardBySlug" | "getSpoilerCardBySlug" | "getPromoCardBySlug";
+  typeName:
+    | "AlphaCardDefinition"
+    | "BoxToppersRetailCardDefinition"
+    | "SpoilerCardDefinition"
+    | "PromoCardDefinition"
+    | "TheHeistRetailStarterDeckCardDefinition"
+    | "WelcomeToNightCityRetailCardDefinition"
+    | "StructuredCardDefinition";
+  prefix: string;
+  cardsExportName: string;
+  getBySlugName: string;
 }
 
 interface BucketMeta {
@@ -44,6 +66,10 @@ export interface GenerateStructuredCardFilesResult {
   alphaCards: AlphaCardDefinition[];
   spoilerCards: SpoilerCardDefinition[];
   promoCards: PromoCardDefinition[];
+  boxToppersRetailCards: BoxToppersRetailCardDefinition[];
+  theHeistRetailStarterDeckCards: TheHeistRetailStarterDeckCardDefinition[];
+  welcomeToNightCityRetailCards: WelcomeToNightCityRetailCardDefinition[];
+  retailCards: StructuredCardDefinition[];
 }
 
 interface ExistingCardIdentity {
@@ -81,6 +107,27 @@ const SET_CONFIGS: readonly SetConfig[] = [
     prefix: "promo",
     cardsExportName: "promoCards",
     getBySlugName: "getPromoCardBySlug",
+  },
+  {
+    code: "boxtoppersretail",
+    typeName: "BoxToppersRetailCardDefinition",
+    prefix: "boxTopperRetail",
+    cardsExportName: "boxToppersRetailCards",
+    getBySlugName: "getBoxToppersRetailCardBySlug",
+  },
+  {
+    code: "theheistretailstarterdeck",
+    typeName: "TheHeistRetailStarterDeckCardDefinition",
+    prefix: "theHeistRetailStarterDeck",
+    cardsExportName: "theHeistRetailStarterDeckCards",
+    getBySlugName: "getTheHeistRetailStarterDeckCardBySlug",
+  },
+  {
+    code: "welcometonightcityretail",
+    typeName: "WelcomeToNightCityRetailCardDefinition",
+    prefix: "welcomeToNightCityRetail",
+    cardsExportName: "welcomeToNightCityRetailCards",
+    getBySlugName: "getWelcomeToNightCityRetailCardBySlug",
   },
 ] as const;
 
@@ -149,6 +196,8 @@ function renderMergedCardFile(card: StructuredSetCardDefinition, existingSource:
     "selectedPrintingId",
     toTs(card.selectedPrintingId ?? null),
   );
+  source = replaceObjectProperty(source, "imageUrl", toTs(card.imageUrl));
+  source = replaceObjectProperty(source, "sourceImageUrl", toTs(card.sourceImageUrl));
 
   return source.endsWith("\n") ? source : `${source}\n`;
 }
@@ -452,8 +501,7 @@ function readSetCode(source: string): StructuredSetCode | null {
 
 function existingIdentityKeys(identity: ExistingCardIdentity): string[] {
   return [
-    identity.slug ? `slug:${identity.slug}` : null,
-    identity.displayName ? `display:${identity.displayName}` : null,
+    identity.setCode && identity.slug ? `slug:${identity.setCode}:${identity.slug}` : null,
     identity.setCode && identity.type && identity.name
       ? `name:${identity.setCode}:${identity.type}:${identity.name}`
       : null,
@@ -461,11 +509,7 @@ function existingIdentityKeys(identity: ExistingCardIdentity): string[] {
 }
 
 function newIdentityKeys(card: StructuredSetCardDefinition): string[] {
-  return [
-    `slug:${card.slug}`,
-    `display:${card.displayName}`,
-    `name:${card.set.code}:${card.type}:${card.name}`,
-  ];
+  return [`slug:${card.set.code}:${card.slug}`, `name:${card.set.code}:${card.type}:${card.name}`];
 }
 
 function preserveExistingIds<T extends StructuredSetCardDefinition>(
@@ -501,14 +545,48 @@ export async function generateStructuredCardFiles(
   const alphaCards = preserveExistingIds(parseAlphaCards(generatedCards), existingIds);
   const spoilerCards = preserveExistingIds(parseSpoilerCards(generatedCards), existingIds);
   const promoCards = preserveExistingIds(parsePromoCards(generatedCards), existingIds);
+  const boxToppersRetailCards = preserveExistingIds(
+    parseBoxToppersRetailCards(generatedCards),
+    existingIds,
+  );
+  const theHeistRetailStarterDeckCards = preserveExistingIds(
+    parseTheHeistRetailStarterDeckCards(generatedCards),
+    existingIds,
+  );
+  const welcomeToNightCityRetailCards = preserveExistingIds(
+    parseWelcomeToNightCityRetailCards(generatedCards),
+    existingIds,
+  );
+  const retailCards = [
+    ...boxToppersRetailCards,
+    ...theHeistRetailStarterDeckCards,
+    ...welcomeToNightCityRetailCards,
+  ] satisfies StructuredCardDefinition[];
 
   await writeSetFiles(options.outputDir, SET_CONFIGS[0], alphaCards, existingFiles);
   await writeSetFiles(options.outputDir, SET_CONFIGS[1], spoilerCards, existingFiles);
   await writeSetFiles(options.outputDir, SET_CONFIGS[2], promoCards, existingFiles);
+  await writeSetFiles(options.outputDir, SET_CONFIGS[3], boxToppersRetailCards, existingFiles);
+  await writeSetFiles(
+    options.outputDir,
+    SET_CONFIGS[4],
+    theHeistRetailStarterDeckCards,
+    existingFiles,
+  );
+  await writeSetFiles(
+    options.outputDir,
+    SET_CONFIGS[5],
+    welcomeToNightCityRetailCards,
+    existingFiles,
+  );
 
   return {
     alphaCards,
     spoilerCards,
     promoCards,
+    boxToppersRetailCards,
+    theHeistRetailStarterDeckCards,
+    welcomeToNightCityRetailCards,
+    retailCards,
   };
 }

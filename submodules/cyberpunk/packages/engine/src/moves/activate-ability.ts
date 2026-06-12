@@ -2,11 +2,12 @@ import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { MatchState } from "../types/match-state.ts";
 import type { Ability } from "@tcg/cyberpunk-types";
-import { executeAbilityEffects, processCardSpentEventsSince } from "../ability-executor.ts";
+import { continueTriggerResolution, resumeCurrentTrigger } from "../ability-executor.ts";
 import { resolveTarget } from "../effects/target-resolver.ts";
 import type { ResolutionContext } from "../effects/target-resolver.ts";
 import { defOf } from "../state/lookups.ts";
 import { isDefensiveStep } from "./is-defensive-step.ts";
+import { availableEddies } from "./eddie-resources.ts";
 
 export interface ActivateAbilityInput extends MoveInput {
   args: {
@@ -114,29 +115,6 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
       (cardDef as import("@tcg/cyberpunk-types").StructuredCardDefinition)?.abilities ?? [];
     const ability = abilities[abilityIndex]!;
 
-    const ctx: ResolutionContext = {
-      state,
-      sourceCardId: cardId as CardInstanceId,
-      sourcePlayerId: playerId,
-      abilityIndex,
-      contextTargets: {},
-      boundTargets: {},
-    };
-
-    // Pay costs
-    const eventsBeforeCosts = operations.event.getEmittedEvents().length;
-    if (ability.costs) {
-      for (const cost of ability.costs) {
-        if (cost.cost === "spend") {
-          const targets = resolveTarget(cost.target as any, ctx);
-          for (const id of targets) {
-            operations.card.spend(id as CardInstanceId);
-          }
-        }
-      }
-    }
-    processCardSpentEventsSince(eventsBeforeCosts, state as MatchState, operations);
-
     operations.event.emit({
       type: "actionLog",
       messageKey: "move.activateAbility",
@@ -144,8 +122,26 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
       playerId,
     });
 
-    // Execute effects
-    executeAbilityEffects(ability.effects, ctx, operations);
+    state.G.turnMetadata.currentTrigger = {
+      id: `activated-${cardId}-${abilityIndex}-${state.G.turnMetadata.nextTriggerId++}`,
+      sourceCardId: cardId as CardInstanceId,
+      sourcePlayerId: playerId,
+      abilityIndex,
+      abilityText: ability.text,
+      optional: false,
+      event: {
+        type: "actionLog",
+        messageKey: "move.activateAbility",
+        params: { cardName: cardDef.displayName },
+        playerId,
+      },
+      contextTargets: {},
+      boundTargets: {},
+      order: state.G.turnMetadata.nextTriggerId,
+      nextEffectIndex: 0,
+    };
+    resumeCurrentTrigger(state as MatchState, operations);
+    continueTriggerResolution(state as MatchState, operations);
   },
 };
 
@@ -178,6 +174,9 @@ export function canPayCosts(
         const c = state.G.cardIndex[id as string];
         if (c?.meta.spent) return false;
       }
+    }
+    if (cost.cost === "payEddies" && availableEddies(state, playerId) < cost.amount) {
+      return false;
     }
   }
   return true;

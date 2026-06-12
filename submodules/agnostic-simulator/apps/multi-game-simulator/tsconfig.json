@@ -23,6 +23,8 @@
     "paths": {
       "@cyberpunk-engine/*": ["../../../cyberpunk/packages/engine/src/*"],
       "@cyberpunk-simulator/*": ["./src/games/cyberpunk/*"],
+      "@cyberpunk/*": ["./src/games/cyberpunk/*"],
+      "@e2e/*": ["./e2e/*"],
       "@gundam-simulator/*": ["./src/games/gundam/*"],
       "@tcg/simulator-testing": ["../../packages/simulator-testing/src/index.ts"],
       "@tcg/simulator-testing/testing-library": [

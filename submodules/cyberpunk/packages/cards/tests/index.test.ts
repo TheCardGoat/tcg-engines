@@ -18,7 +18,9 @@ import {
 test("generated card snapshots stay aligned across raw and normalized exports", () => {
   expect(rawCards.length).toBe(cards.length);
   expect(rawCards.length).toBeGreaterThan(0);
-  expect(new Set(rawCards.map((card) => card.slug)).size).toBe(rawCards.length);
+  expect(new Set(rawCards.map((card) => `${card.set.code}:${card.slug}`)).size).toBe(
+    rawCards.length,
+  );
   expect(new Set(cards.map((card) => card.id)).size).toBe(cards.length);
 });
 
@@ -36,7 +38,7 @@ test("structured set exports expose parsed abilities", () => {
   expect(alphaCards).toHaveLength(28);
   expect(spoilerCards).toHaveLength(27);
   expect(promoCards).toHaveLength(1);
-  expect(structuredCards).toHaveLength(56);
+  expect(structuredCards).toHaveLength(90);
 
   const corpoSecurity = getStructuredAlphaCardBySlug("corpo-security");
   const viktor = getStructuredAlphaCardBySlug("viktor-vektor-sit-down-and-relax");

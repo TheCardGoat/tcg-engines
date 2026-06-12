@@ -323,4 +323,199 @@ export const programScenarios: Scenario[] = [
         { seed: scenarioSeed("progChromeReverie"), autoGainGig: false },
       ),
   },
+  {
+    id: "progPeaceOffering",
+    group: "program-gig-manipulation",
+    label: "Peace Offering · copy Gig value and draw from a pair",
+    description:
+      "P1 holds Peace Offering and has two friendly Gigs. Tests the two-Gig choice that can create a value-pair and draw a card.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.spoilerPeaceOffering],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [c.alphaVCorporateExile],
+          eddies: 2,
+          gigArea: [
+            { dieType: "d4", faceValue: 3 },
+            { dieType: "d6", faceValue: 6 },
+          ],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: false }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [],
+        },
+        { seed: scenarioSeed("progPeaceOffering"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "progCarnageAtTheColosseum",
+    group: "program-cost-modifier",
+    label: "Carnage At The Colosseum · defeat weaker rival Unit",
+    description:
+      "P1 holds Carnage At The Colosseum with enough eddies and a stronger friendly Unit. Rival has one weak and one strong Unit; only the weaker Unit is a valid defeat target.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.spoilerCarnageAtTheColosseum],
+          field: [{ card: c.alphaArmoredMinotaur, spent: false }],
+          legendArea: [c.alphaVCorporateExile],
+          eddies: 4,
+          gigArea: [
+            { dieType: "d8", faceValue: 8 },
+            { dieType: "d10", faceValue: 8 },
+            { dieType: "d6", faceValue: 5 },
+          ],
+        },
+        {
+          field: [
+            { card: c.alphaRuthlessLowlife, spent: false },
+            { card: c.alphaArmoredMinotaur, spent: false },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progCarnageAtTheColosseum"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: Carnage At The Colosseum (Retail) ───────────────────────────
+  {
+    id: "progCarnageAtTheColosseumRetail",
+    group: "program-cost-modifier",
+    label: "Carnage At The Colosseum (Retail) · defeat weaker rival Unit",
+    description:
+      "P1 holds Carnage At The Colosseum retail with enough eddies and a stronger friendly Unit. Rival has one weak and one strong Unit; only the weaker Unit is a valid defeat target.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailCarnageAtTheColosseum],
+          field: [{ card: c.alphaArmoredMinotaur, spent: false }],
+          legendArea: [c.alphaVCorporateExile],
+          eddies: 4,
+          gigArea: [
+            { dieType: "d8", faceValue: 8 },
+            { dieType: "d10", faceValue: 8 },
+            { dieType: "d6", faceValue: 5 },
+          ],
+        },
+        {
+          field: [
+            { card: c.alphaRuthlessLowlife, spent: false },
+            { card: c.alphaArmoredMinotaur, spent: false },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progCarnageAtTheColosseumRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: Chrome Reverie (Retail) ─────────────────────────────────────
+  {
+    id: "progChromeReverieRetail",
+    group: "program-legend-call",
+    label: "Chrome Reverie (Retail) · min Gig can call a Legend for free",
+    description:
+      "P1 holds Chrome Reverie retail (blue, cost 3). P1 controls a min-value d4 and has a face-down Legend. Rival has a ready Unit that can be targeted with can't-attack.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailChromeReverie],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.spoilerRiverWardDetectiveOnTheHunt, faceDown: true },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 4,
+          gigArea: [
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d6", faceValue: 3 },
+          ],
+        },
+        {
+          field: [
+            { card: c.alphaCorpoSecurity, spent: false },
+            { card: c.alphaSwordwiseHuscle, spent: false },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d8", faceValue: 5 }],
+        },
+        { seed: scenarioSeed("progChromeReverieRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: Cyberpsychosis (Retail) ─────────────────────────────────────
+  {
+    id: "progCyberpsychosisRetail",
+    group: "program-power",
+    label: "Cyberpsychosis (Retail) · equipped unit on field",
+    description:
+      "P1 holds Cyberpsychosis retail (cost 3, yellow). P1 has Swordwise Huscle (equipped with 2 gear cards) on the field. Tests structural setup for the quick-cast buff.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailCyberpsychosis],
+          field: [
+            {
+              card: c.alphaSwordwiseHuscle,
+              spent: false,
+              attachedGears: [c.alphaKiroshiOptics, c.alphaMantisBlades],
+            },
+            { card: c.alphaSecondhandBombus, spent: false },
+          ],
+          legendArea: [{ card: c.alphaVCorporateExile, faceDown: false }],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.alphaCorpoSecurity, spent: true },
+            { card: c.alphaArmoredMinotaur, spent: true },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progCyberpsychosisRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: Peace Offering (Retail) ─────────────────────────────────────
+  {
+    id: "progPeaceOfferingRetail",
+    group: "program-gig-manipulation",
+    label: "Peace Offering (Retail) · copy Gig value and draw from a pair",
+    description:
+      "P1 holds Peace Offering retail and has two friendly Gigs. Tests the two-Gig choice that can create a value-pair and draw a card.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailPeaceOffering],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [c.alphaVCorporateExile],
+          eddies: 2,
+          gigArea: [
+            { dieType: "d4", faceValue: 3 },
+            { dieType: "d6", faceValue: 6 },
+          ],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: false }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [],
+        },
+        {
+          seed: scenarioSeed("progPeaceOfferingRetail"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
 ];

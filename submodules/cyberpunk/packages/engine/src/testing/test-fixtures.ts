@@ -1,7 +1,7 @@
 import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
 import type { PlayerId } from "../types/branded.ts";
 import type { DieType } from "../types/gig-die.ts";
-import type { GamePhase } from "../types/match-state.ts";
+import type { GamePhase, AttackState } from "../types/match-state.ts";
 import type { TimeControlConfig } from "@tcg/engine-core";
 
 export interface GigFixtureEntry {
@@ -78,6 +78,16 @@ export interface TestEngineOptions {
   overtime?: boolean;
   /** Alias for {@link overtime}. */
   overTime?: boolean;
+  /**
+   * When `true`, preserves the explicit order of cards in `deck` fixtures
+   * (when `deck` is an array). Default `false` for backward compatibility.
+   */
+  preserveDeckOrder?: boolean;
+  /**
+   * Preset the attack state so fixtures can start mid-attack
+   * (e.g., defensive step, fight step, steal step).
+   */
+  attackState?: AttackState;
 }
 
 export function extractCard(entry: FixtureCardEntry): StructuredCardDefinition {
