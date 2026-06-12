@@ -1,0 +1,55 @@
+name: One Piece CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-one-piece.yml"
+      - ".bun-version"
+      - "package.json"
+      - "submodules/one-piece-simulator/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_OPTIONS: --max-old-space-size=8192
+  VP_RUN_CONCURRENCY_LIMIT: 4
+  TURBO_RUN_SUMMARY: false
+
+jobs:
+  one-piece:
+    name: One Piece Project CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: ".bun-version"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+          run_install: false
+
+      - name: Set up Vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: 24
+          cache: true
+
+      - name: Install One Piece dependencies
+        working-directory: submodules/one-piece-simulator
+        run: vp install --frozen-lockfile
+
+      - name: Run One Piece full CI
+        working-directory: submodules/one-piece-simulator
+        run: pnpm run ci-check-full
