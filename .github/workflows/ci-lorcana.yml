@@ -1,6 +1,13 @@
 name: Lorcana CI
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-lorcana.yml"
+      - ".bun-version"
+      - "package.json"
+      - "submodules/lorcana/**"
   pull_request:
     branches: [main]
     paths:

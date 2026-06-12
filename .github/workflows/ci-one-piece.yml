@@ -1,6 +1,13 @@
 name: One Piece CI
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-one-piece.yml"
+      - ".bun-version"
+      - "package.json"
+      - "submodules/one-piece-simulator/**"
   pull_request:
     branches: [main]
     paths:

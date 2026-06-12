@@ -1,6 +1,16 @@
 name: Agnostic Simulator CI
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-agnostic.yml"
+      - ".bun-version"
+      - "submodules/agnostic-simulator/**"
+      - "submodules/cyberpunk/**"
+      - "submodules/gundam/**"
+      - "submodules/lorcana/**"
+      - "submodules/one-piece-simulator/**"
   pull_request:
     branches: [main]
     paths:

@@ -1,6 +1,12 @@
 name: Cyberpunk CI
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-cyberpunk.yml"
+      - ".bun-version"
+      - "submodules/cyberpunk/**"
   pull_request:
     branches: [main]
     paths:

@@ -1,6 +1,14 @@
 name: Gundam CI
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ci-gundam.yml"
+      - ".bun-version"
+      - "package.json"
+      - "submodules/gundam/**"
+      - "submodules/agnostic-simulator/**"
   pull_request:
     branches: [main]
     paths:
