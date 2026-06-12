@@ -14,6 +14,7 @@ import type {
   MultiplyPowerEffect,
   PlayCardEffect,
   ReadyEffect,
+  ReadyEddiesEffect,
   RemoveFromGameEffect,
   ReturnToHandEffect,
   SearchDeckEffect,
@@ -51,6 +52,10 @@ export const effect = {
     ...args,
   }),
   ready: (args: Omit<ReadyEffect, "effect">): ReadyEffect => ({ effect: "ready", ...args }),
+  readyEddies: (args: Omit<ReadyEddiesEffect, "effect">): ReadyEddiesEffect => ({
+    effect: "readyEddies",
+    ...args,
+  }),
   lookAt: (args: Omit<LookAtEffect, "effect">): LookAtEffect => ({ effect: "lookAt", ...args }),
   searchDeck: (args: Omit<SearchDeckEffect, "effect">): SearchDeckEffect => ({
     effect: "searchDeck",

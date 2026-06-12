@@ -5,25 +5,20 @@ import {
   alphaCorpoSecurity,
   spoilerGoroTakemuraVengefulBodyguard,
 } from "@tcg/cyberpunk-cards";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
   expectEqual,
-} from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { legendGoroTakemuraVengefulBodyguard } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Goro Takemura - Vengeful Bodyguard grants BLOCKER", async ({ page }) => {
-  await page.goto(
-    "/cyberpunk/simulator/tests/legendGoroTakemuraVengefulBodyguard?ai=off&auto-advance-attack=off",
+  const pom = await createPlaywrightCyberpunkSimulatorPom(
+    page,
+    legendGoroTakemuraVengefulBodyguard,
   );
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
 
   const goro = await pom.getCardInZoneByDefinitionId(
     "legendArea",

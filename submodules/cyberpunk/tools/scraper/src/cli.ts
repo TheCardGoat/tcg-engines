@@ -17,9 +17,12 @@ async function main() {
   );
   const existingSnapshot = await readExistingSnapshot(outputPath);
   const scrapedSnapshot = await scrapeCatalog();
-  const snapshot = existingSnapshot
-    ? preserveStableCardIds(scrapedSnapshot, existingSnapshot)
+  const mergedSnapshot = existingSnapshot
+    ? mergeCatalogSnapshots(existingSnapshot, scrapedSnapshot)
     : scrapedSnapshot;
+  const snapshot = existingSnapshot
+    ? preserveStableCardIds(mergedSnapshot, existingSnapshot)
+    : mergedSnapshot;
 
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(outputPath, formatGeneratedCardsModule(snapshot), "utf8");
@@ -49,6 +52,36 @@ async function readExistingSnapshot(outputPath: string): Promise<ScrapedCatalogS
 
     throw error;
   }
+}
+
+function mergeCatalogSnapshots(
+  existingSnapshot: ScrapedCatalogSnapshot,
+  scrapedSnapshot: ScrapedCatalogSnapshot,
+): ScrapedCatalogSnapshot {
+  return {
+    rawCards: mergeBySetAndSlug(existingSnapshot.rawCards, scrapedSnapshot.rawCards, (card) => {
+      return `${card.set.code}:${card.slug}`;
+    }),
+    cards: mergeBySetAndSlug(existingSnapshot.cards, scrapedSnapshot.cards, (card) => {
+      return `${card.set.code}:${card.slug}`;
+    }),
+  };
+}
+
+function mergeBySetAndSlug<T>(
+  existingCards: readonly T[],
+  scrapedCards: readonly T[],
+  readKey: (card: T) => string,
+): T[] {
+  const cardsByKey = new Map(existingCards.map((card) => [readKey(card), card]));
+
+  for (const card of scrapedCards) {
+    cardsByKey.set(readKey(card), card);
+  }
+
+  return [...cardsByKey.values()].sort((left, right) => {
+    return readKey(left).localeCompare(readKey(right));
+  });
 }
 
 main().catch((error: unknown) => {

@@ -499,6 +499,139 @@ describe("submitGundamSimulatorInteraction", () => {
     expect(report).toHaveBeenCalledWith({ ok: true, stateId: 8 });
   });
 
+  it("projects and submits pending cost selections as payment input", () => {
+    const pendingState: PendingState = {
+      status: "collecting",
+      move: "activateAbility" as never,
+      partialInput: { cardId: "unit-1" },
+      steps: [
+        {
+          kind: "selectCost",
+          costType: "resource",
+          candidateIds: ["resource-1", "resource-2"],
+        } as never,
+      ],
+    };
+    const snapshot = projectGundamSimulatorSnapshot({
+      view: makeView(),
+      viewerId: "p1" as never,
+      interactionView: readyInteractionView(),
+      pendingState,
+      logEntries: [],
+      now: Date.UTC(2026, 0, 1),
+    });
+
+    expect(snapshot.interactions[0]).toMatchObject({
+      id: "pending:cost:resource",
+      input: {
+        kind: "payment",
+        min: 1,
+        max: 2,
+        candidateEntityIds: ["resource-1", "resource-2"],
+      },
+    });
+
+    const basePending = pendingHarness();
+    const pending: PendingMoveControls = {
+      ...basePending,
+      state: pendingState,
+      provide: vi.fn(
+        (): PendingState => ({
+          status: "collecting",
+          move: "activateAbility" as never,
+          partialInput: { cardId: "unit-1", cost: { 0: ["resource-1", "resource-2"] } },
+          steps: [],
+        }),
+      ),
+    };
+    const report = vi.fn((outcome) => outcome);
+    submitGundamSimulatorInteraction({
+      interactionId: "pending:cost:resource",
+      selection: {
+        entityIds: [],
+        optionIds: [],
+        paymentIds: ["resource-1", "resource-2"],
+        orderedIds: [],
+      },
+      pending,
+      interactionView: readyInteractionView(),
+      report,
+      submitMove: vi.fn(),
+    });
+
+    expect(pending.provide).toHaveBeenCalledWith("cost", {
+      0: ["resource-1", "resource-2"],
+    });
+    expect(pending.confirm).toHaveBeenCalledOnce();
+    expect(report).toHaveBeenCalled();
+  });
+
+  it("keeps empty pending cost candidates within the payment input contract", () => {
+    const snapshot = projectGundamSimulatorSnapshot({
+      view: makeView(),
+      viewerId: "p1" as never,
+      interactionView: readyInteractionView(),
+      pendingState: {
+        status: "collecting",
+        move: "activateAbility" as never,
+        partialInput: { cardId: "unit-1" },
+        steps: [
+          {
+            kind: "selectCost",
+            costType: "resource",
+            candidateIds: [],
+          } as never,
+        ],
+      },
+      logEntries: [],
+      now: Date.UTC(2026, 0, 1),
+    });
+
+    expect(snapshot.interactions[0]?.input).toMatchObject({
+      kind: "payment",
+      min: 0,
+      max: 0,
+      candidateEntityIds: [],
+    });
+  });
+
+  it("ignores pending cost submissions outside the advertised candidates", () => {
+    const pendingState: PendingState = {
+      status: "collecting",
+      move: "activateAbility" as never,
+      partialInput: { cardId: "unit-1" },
+      steps: [
+        {
+          kind: "selectCost",
+          costType: "resource",
+          candidateIds: ["resource-1"],
+        } as never,
+      ],
+    };
+    const pending: PendingMoveControls = {
+      ...pendingHarness(),
+      state: pendingState,
+    };
+    const report = vi.fn((outcome) => outcome);
+    submitGundamSimulatorInteraction({
+      interactionId: "pending:cost:resource",
+      selection: {
+        entityIds: [],
+        optionIds: [],
+        paymentIds: ["resource-1", "resource-2"],
+        orderedIds: [],
+      },
+      pending,
+      interactionView: readyInteractionView(),
+      report,
+      submitMove: vi.fn(),
+    });
+
+    expect(pending.provide).not.toHaveBeenCalled();
+    expect(pending.confirm).not.toHaveBeenCalled();
+    expect(report).not.toHaveBeenCalled();
+  });
+
   it("maps shared boolean selections to native pending effect answers", () => {
     const interactionView = resolveEffectInteractionView();
     const action = interactionView.actions[0];

@@ -48,7 +48,7 @@ export class SimulatorPage {
   async gotoFixture(id: ScenarioId, options: { ai?: "off" | "greedy" } = {}): Promise<void> {
     const ai = options.ai ?? "off";
     await this.page.goto(`/cyberpunk/simulator/tests/${id}?ai=${ai}`);
-    await expect(this.playerBoard.root).toBeVisible();
+    await expect(this.playerBoard.root).toBeVisible({ timeout: 15_000 });
     await this.page.waitForFunction(() =>
       Boolean((window as unknown as { __cyberpunkEngine?: unknown }).__cyberpunkEngine),
     );
@@ -76,8 +76,32 @@ export class SimulatorPage {
     return this.evalEngine((engine, p) => engine.getCardsInZone("hand", p).length, player);
   }
 
+  getDeckSize(player: PlayerId): Promise<number> {
+    return this.evalEngine((engine, p) => engine.getCardsInZone("deck", p).length, player);
+  }
+
   getFieldSize(player: PlayerId): Promise<number> {
     return this.evalEngine((engine, p) => engine.getCardsInZone("field", p).length, player);
+  }
+
+  getTrashDefinitionIds(player: PlayerId): Promise<ReadonlyArray<string>> {
+    return this.evalEngine(
+      (engine, p) =>
+        engine
+          .getCardsInZone("trash", p)
+          .map((card) => (card as { definitionId: string }).definitionId),
+      player,
+    );
+  }
+
+  getLegendAreaDefinitionIds(player: PlayerId): Promise<ReadonlyArray<string>> {
+    return this.evalEngine(
+      (engine, p) =>
+        engine
+          .getCardsInZone("legendArea", p)
+          .map((card) => (card as { definitionId: string }).definitionId),
+      player,
+    );
   }
 
   getFixerDiceCount(player: PlayerId): Promise<number> {
@@ -109,6 +133,36 @@ export class SimulatorPage {
     }, player);
   }
 
+  getEligibleTargetIds(player: PlayerId): Promise<ReadonlyArray<string>> {
+    return this.evalEngine((engine, p) => {
+      const eligibleIds = engine.getPrompt(p).choice?.payload.eligibleIds;
+      return Array.isArray(eligibleIds) ? eligibleIds.map(String) : [];
+    }, player);
+  }
+
+  getEligibleStealGigIds(player: PlayerId): Promise<ReadonlyArray<string>> {
+    return this.evalEngine((engine, p) => {
+      const eligibleDieIds = engine.getPrompt(p).choice?.payload.eligibleDieIds;
+      return Array.isArray(eligibleDieIds) ? eligibleDieIds.map(String) : [];
+    }, player);
+  }
+
+  getPendingStealGigChoice(): Promise<null | {
+    chooserId: PlayerId;
+    count: number;
+    eligibleDieIds: string[];
+  }> {
+    return this.evalEngine((engine) => {
+      const choice = engine.getState().G.turnMetadata.pendingChoice;
+      if (!choice || choice.type !== "chooseGigsToSteal") return null;
+      return {
+        chooserId: choice.chooserId as PlayerId,
+        count: choice.payload?.count ?? 0,
+        eligibleDieIds: (choice.payload?.eligibleDieIds ?? []).map(String),
+      };
+    });
+  }
+
   /**
    * Returns the allowed die ids the active player can take, in engine order,
    * along with their die types. Mirrors the helper used in the unit tests.
@@ -127,6 +181,69 @@ export class SimulatorPage {
 
   isGameOver(): Promise<boolean> {
     return this.evalEngine((engine) => engine.isGameOver());
+  }
+
+  getCardsInZone(
+    zone: "hand" | "field" | "eddieArea" | "trash" | "legendArea" | "deck",
+    player: PlayerId,
+  ): Promise<ReadonlyArray<{ instanceId: string; definitionId: string; spent: boolean }>> {
+    return this.evalEngine(
+      (engine, input) =>
+        engine.getCardsInZone(input.zone, input.player).map((card) => {
+          const c = card as {
+            instanceId: string;
+            definitionId: string;
+            meta?: { spent?: boolean };
+          };
+          return {
+            instanceId: String(c.instanceId),
+            definitionId: c.definitionId,
+            spent: Boolean(c.meta?.spent),
+          };
+        }),
+      { zone, player },
+    );
+  }
+
+  getAttackState(): Promise<null | {
+    kind: string;
+    step?: string;
+    attackerId?: string;
+    defenderId: string | null;
+    redirectedByBlocker?: boolean;
+  }> {
+    return this.evalEngine((engine) => engine.getAttackState());
+  }
+
+  getCardDefinitionId(cardId: string): Promise<string> {
+    return this.evalEngine((engine, id) => engine.getState().G.cardIndex[id]!.definitionId, cardId);
+  }
+
+  getSearchDeckRevealedCardIds(player: PlayerId): Promise<ReadonlyArray<string>> {
+    return this.evalEngine((engine, p) => {
+      const choice = engine.getPrompt(p).choice;
+      return choice?.type === "searchDeck"
+        ? (choice.payload.revealedCardIds ?? []).map(String)
+        : [];
+    }, player);
+  }
+
+  async forceFixtureMainPhaseForPlayer(
+    player: PlayerId,
+    options: { spentCardIds?: ReadonlyArray<string> } = {},
+  ): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) => {
+        const state = engine.getState().G;
+        state.gamePhase = "main";
+        state.turnMetadata.activePlayerId = payload.player;
+        state.turnMetadata.pendingChoice = undefined;
+        for (const cardId of payload.spentCardIds) {
+          state.cardIndex[cardId]!.meta.spent = true;
+        }
+      },
+      { player, spentCardIds: options.spentCardIds ?? [] },
+    );
   }
 
   /** Convenience for `getPrompt(...).choice?.type === "gainGig"` workflows. */
@@ -216,6 +333,110 @@ export class SimulatorPage {
     const side = this.sideForPlayer(as);
     const board = side === "player" ? this.playerBoard : this.opponentBoard;
     await board.fixerZone.locator(`[data-testid="fixer-die"][data-die-id="${dieId}"]`).click();
+  }
+
+  async playCardFromHand(cardId: string, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) => engine.playCard(payload.cardId, { as: payload.as }),
+      { cardId, as },
+    );
+  }
+
+  async attackRival(attackerId: string, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) => engine.attackRival(payload.attackerId, { as: payload.as }),
+      { attackerId, as },
+    );
+  }
+
+  async attackUnit(attackerId: string, defenderId: string, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) =>
+        engine.attackUnit(payload.attackerId, payload.defenderId, { as: payload.as }),
+      { attackerId, defenderId, as },
+    );
+  }
+
+  async attachGearFromHand(gearId: string, attachToId: string, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) =>
+        engine.attachGear(payload.gearId, payload.attachToId, { as: payload.as }),
+      { gearId, attachToId, as },
+    );
+  }
+
+  async goSolo(legendId: string, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) =>
+        engine.executeMove("goSolo", { args: { cardId: payload.legendId } }, payload.as),
+      { legendId, as },
+    );
+  }
+
+  async callLegend(legendId: string, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) => engine.callLegend(payload.legendId, { as: payload.as }),
+      { legendId, as },
+    );
+  }
+
+  async useBlocker(blockerId: string, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) => engine.useBlocker(payload.blockerId, { as: payload.as }),
+      { blockerId, as },
+    );
+  }
+
+  async resolveAttack(
+    as: PlayerId,
+    options: { pass?: boolean; gigIdsToSteal?: ReadonlyArray<string> } = {},
+  ): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) =>
+        engine.resolveAttack({
+          as: payload.as,
+          pass: payload.pass,
+          gigIdsToSteal: payload.gigIdsToSteal,
+        }),
+      { as, pass: options.pass, gigIdsToSteal: options.gigIdsToSteal },
+    );
+  }
+
+  async resolveEffectTarget(targetIds: ReadonlyArray<string>, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) =>
+        engine.executeMove(
+          "resolveEffectTarget",
+          { args: { targetIds: payload.targetIds.slice() } },
+          payload.as,
+        ),
+      { targetIds, as },
+    );
+  }
+
+  async resolveSearchDeck(selectedCardIds: ReadonlyArray<string>, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) => engine.resolveSearchDeck(payload.selectedCardIds, { as: payload.as }),
+      { selectedCardIds: selectedCardIds.slice(), as },
+    );
+  }
+
+  async resolveDiscardFromHand(cardIds: ReadonlyArray<string>, as: PlayerId): Promise<void> {
+    await this.dispatchEngine(
+      (engine, payload) => engine.resolveDiscardFromHand(payload.cardIds, { as: payload.as }),
+      { cardIds: cardIds.slice(), as },
+    );
+  }
+
+  executeMove(
+    move: string,
+    args: Record<string, unknown>,
+    as: PlayerId,
+  ): Promise<{ success: boolean; errorCode?: string }> {
+    return this.dispatchEngine(
+      (engine, payload) => engine.executeMove(payload.move, { args: payload.args }, payload.as),
+      { move, args, as },
+    ) as Promise<{ success: boolean; errorCode?: string }>;
   }
 
   /**
@@ -514,7 +735,10 @@ interface CyberpunkEngineHandle {
   getTurnNumber(): number;
   getActivePlayerId(): PlayerId;
   getOpponentOf(p: PlayerId): PlayerId;
-  getCardsInZone(zone: "hand" | "field" | "eddieArea", p: PlayerId): ReadonlyArray<unknown>;
+  getCardsInZone(
+    zone: "hand" | "field" | "eddieArea" | "trash" | "legendArea" | "deck",
+    p: PlayerId,
+  ): ReadonlyArray<unknown>;
   getFixerDice(p: PlayerId): ReadonlyArray<unknown>;
   getGigCount(p: PlayerId): number;
   getGigDice(p: PlayerId): ReadonlyArray<{ id: string; dieType: string; faceValue: number }>;
@@ -524,13 +748,53 @@ interface CyberpunkEngineHandle {
   getPrompt(p: PlayerId): {
     choice: null | {
       type: string;
-      payload: { allowedDieIds?: ReadonlyArray<string> } & Record<string, unknown>;
+      payload: {
+        allowedDieIds?: ReadonlyArray<string>;
+        eligibleIds?: ReadonlyArray<string>;
+        eligibleDieIds?: ReadonlyArray<string>;
+        revealedCardIds?: ReadonlyArray<string>;
+      } & Record<string, unknown>;
     };
   };
-  getState(): { G: { gigDice: Record<string, { dieType: string }> } };
+  getState(): {
+    G: {
+      cardIndex: Record<string, { definitionId: string; meta: { spent?: boolean } }>;
+      gamePhase: string;
+      gigDice: Record<string, { dieType: string }>;
+      turnMetadata: {
+        activePlayerId: PlayerId;
+        pendingChoice?: {
+          type: string;
+          chooserId?: PlayerId;
+          payload?: { count?: number; eligibleDieIds?: ReadonlyArray<string> };
+        };
+      };
+    };
+  };
   isGameOver(): boolean;
+  getAttackState(): null | {
+    kind: string;
+    step?: string;
+    attackerId?: string;
+    defenderId: string | null;
+    redirectedByBlocker?: boolean;
+  };
   mulligan(opts: { as: PlayerId }): unknown;
   keepHand(opts: { as: PlayerId }): unknown;
   gainGig(dieId: string, opts: { as: PlayerId }): unknown;
   passPhase(opts: { as: PlayerId }): unknown;
+  playCard(cardId: string, opts: { as: PlayerId }): unknown;
+  attackRival(attackerId: string, opts: { as: PlayerId }): unknown;
+  attackUnit(attackerId: string, defenderId: string, opts: { as: PlayerId }): unknown;
+  attachGear(gearId: string, attachToId: string, opts: { as: PlayerId }): unknown;
+  callLegend(legendId: string, opts: { as: PlayerId }): unknown;
+  useBlocker(blockerId: string, opts: { as: PlayerId }): unknown;
+  resolveAttack(opts: {
+    as: PlayerId;
+    pass?: boolean;
+    gigIdsToSteal?: ReadonlyArray<string>;
+  }): unknown;
+  executeMove(move: string, input: { args: Record<string, unknown> }, as: PlayerId): unknown;
+  resolveSearchDeck(selectedCardIds: ReadonlyArray<string>, opts: { as: PlayerId }): unknown;
+  resolveDiscardFromHand(cardIds: ReadonlyArray<string>, opts: { as: PlayerId }): unknown;
 }

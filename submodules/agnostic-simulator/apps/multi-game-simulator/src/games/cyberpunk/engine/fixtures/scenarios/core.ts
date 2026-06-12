@@ -29,6 +29,35 @@ export const coreScenarios: Scenario[] = [
       }),
   },
   {
+    id: "retailCardCatalog",
+    group: "core",
+    label: "Retail · official card catalog",
+    description:
+      "P1 trash contains every official retail Cyberpunk card currently returned by the card scraper. Used to prove the simulator can hydrate the new card definitions.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          trash: [
+            ...c.boxToppersRetailCards,
+            ...c.theHeistRetailStarterDeckCards,
+            ...c.welcomeToNightCityRetailCards,
+          ].filter((card) => card.type !== "legend"),
+          legendArea: [
+            ...c.boxToppersRetailCards,
+            ...c.theHeistRetailStarterDeckCards,
+            ...c.welcomeToNightCityRetailCards,
+          ]
+            .filter((card) => card.type === "legend")
+            .slice(0, 3),
+        },
+        opponentBase,
+        {
+          seed: scenarioSeed("retailCardCatalog"),
+          autoGainGig: false,
+        },
+      ),
+  },
+  {
     id: "openingMain",
     group: "core",
     label: "Opening · Your turn",

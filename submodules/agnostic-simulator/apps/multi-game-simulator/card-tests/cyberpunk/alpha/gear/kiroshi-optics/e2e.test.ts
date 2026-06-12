@@ -1,17 +1,14 @@
 import { test } from "@playwright/test";
 
 import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
-import { CYBERPUNK_P1 } from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { gearKiroshiOptics } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Kiroshi Optics - peek at a face-down legend", async ({ page }) => {
-  await page.goto("/cyberpunk/simulator/tests/gearKiroshiOptics?ai=off&auto-advance-attack=off");
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, gearKiroshiOptics);
 
   const attacker = await pom.getCardInZoneByDefinitionId(
     "field",

@@ -22,7 +22,7 @@ export function CardZone({
   ariaLabel,
 }: CardZoneProps) {
   if (compact && zone?.layoutHint === "fan" && entities.length > 0) {
-    return <CompactHandZone entities={entities} />;
+    return <CompactHandZone entities={entities} ariaLabel={ariaLabel} />;
   }
 
   if (compact) {

@@ -1,6 +1,8 @@
 import type {
   CardDefinition,
   CardZone,
+  CardTargetDSL,
+  CostModifier,
   RuleModifier,
   Effect,
   SearchDeckSelect,
@@ -33,7 +35,12 @@ export type AttackStep = "offensive" | "defensive" | "fight" | "defeat" | "steal
 
 export type FightResult = "attackerWins" | "defenderWins" | "mutual";
 
-export type ActiveEffectKind = "powerModifier" | "powerMultiplier" | "grantRule";
+export type ActiveEffectKind =
+  | "powerModifier"
+  | "powerMultiplier"
+  | "grantRule"
+  | "costModifier"
+  | "defeatAtEndOfTurnIfAttacked";
 export type ActiveEffectOrigin = "static" | "imperative";
 
 export interface ActiveEffect {
@@ -44,6 +51,11 @@ export interface ActiveEffect {
   powerModifier?: number;
   powerMultiplier?: number;
   rule?: RuleModifier;
+  costModifier?: CostModifier;
+  appliesTo?: CardTargetDSL;
+  playerId?: PlayerId;
+  remainingUses?: number;
+  triggered?: boolean;
   duration: "turn" | "continuous" | "untilSourceNextTurn";
   expiresAtStartOfTurnForPlayerId?: PlayerId;
   origin: ActiveEffectOrigin;

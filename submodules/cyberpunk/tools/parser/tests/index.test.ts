@@ -7,9 +7,12 @@ import {
   generateStructuredCardFiles,
   loadGeneratedCards,
   parseAlphaCards,
+  parseBoxToppersRetailCards,
   parsePromoCards,
   parseSpoilerCards,
   parseStructuredCards,
+  parseTheHeistRetailStarterDeckCards,
+  parseWelcomeToNightCityRetailCards,
 } from "../src/index.ts";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
@@ -21,12 +24,18 @@ test("parser builds structured cards from generated source", async () => {
   const alphaCards = parseAlphaCards(generatedCards);
   const spoilerCards = parseSpoilerCards(generatedCards);
   const promoCards = parsePromoCards(generatedCards);
+  const boxToppersRetailCards = parseBoxToppersRetailCards(generatedCards);
+  const theHeistRetailStarterDeckCards = parseTheHeistRetailStarterDeckCards(generatedCards);
+  const welcomeToNightCityRetailCards = parseWelcomeToNightCityRetailCards(generatedCards);
   const cards = parseStructuredCards(generatedCards);
 
   expect(alphaCards).toHaveLength(28);
   expect(spoilerCards).toHaveLength(27);
   expect(promoCards).toHaveLength(1);
-  expect(cards).toHaveLength(56);
+  expect(boxToppersRetailCards).toHaveLength(5);
+  expect(theHeistRetailStarterDeckCards).toHaveLength(1);
+  expect(welcomeToNightCityRetailCards).toHaveLength(28);
+  expect(cards).toHaveLength(90);
 
   const armoredMinotaur = alphaCards.find((card) => card.slug === "armored-minotaur");
   expect(armoredMinotaur?.abilities).toHaveLength(1);
@@ -214,6 +223,10 @@ test("generator writes set card files and root indexes", async () => {
   expect(result.alphaCards).toHaveLength(28);
   expect(result.spoilerCards).toHaveLength(27);
   expect(result.promoCards).toHaveLength(1);
+  expect(result.boxToppersRetailCards).toHaveLength(5);
+  expect(result.theHeistRetailStarterDeckCards).toHaveLength(1);
+  expect(result.welcomeToNightCityRetailCards).toHaveLength(28);
+  expect(result.retailCards).toHaveLength(34);
   expect(
     result.alphaCards.find((card) => card.slug === "yorinobu-arasaka-embracing-destruction")?.id,
   ).toBe("stable-existing-yori-id");
@@ -221,6 +234,18 @@ test("generator writes set card files and root indexes", async () => {
   const alphaIndex = await readFile(resolve(outputDir, "alpha/index.ts"), "utf8");
   const spoilerIndex = await readFile(resolve(outputDir, "spoiler/index.ts"), "utf8");
   const promoIndex = await readFile(resolve(outputDir, "promo/index.ts"), "utf8");
+  const boxToppersRetailIndex = await readFile(
+    resolve(outputDir, "boxtoppersretail/index.ts"),
+    "utf8",
+  );
+  const theHeistRetailStarterDeckIndex = await readFile(
+    resolve(outputDir, "theheistretailstarterdeck/index.ts"),
+    "utf8",
+  );
+  const welcomeToNightCityRetailIndex = await readFile(
+    resolve(outputDir, "welcometonightcityretail/index.ts"),
+    "utf8",
+  );
   const spoilerGoroFile = await readFile(
     resolve(outputDir, "spoiler/legends/goro-takemura-vengeful-bodyguard.ts"),
     "utf8",
@@ -239,6 +264,18 @@ test("generator writes set card files and root indexes", async () => {
   expect(spoilerIndex).toContain("export const spoilerCards = [");
   expect(spoilerIndex).toContain("...spoilerPrograms");
   expect(promoIndex).toContain("export const promoCards = [");
+  expect(boxToppersRetailIndex).toContain("import type { BoxToppersRetailCardDefinition } from");
+  expect(boxToppersRetailIndex).toContain("export const boxToppersRetailCards = [");
+  expect(theHeistRetailStarterDeckIndex).toContain(
+    "import type { TheHeistRetailStarterDeckCardDefinition } from",
+  );
+  expect(theHeistRetailStarterDeckIndex).toContain(
+    "export const theHeistRetailStarterDeckCards = [",
+  );
+  expect(welcomeToNightCityRetailIndex).toContain(
+    "import type { WelcomeToNightCityRetailCardDefinition } from",
+  );
+  expect(welcomeToNightCityRetailIndex).toContain("export const welcomeToNightCityRetailCards = [");
   expect(yorinobuFile).toContain('id: "stable-existing-yori-id"');
   expect(yorinobuFile).toContain("AbilityBuilder.triggered().build()");
   expect(yorinobuFile).toContain('collectorNumber: "α001"');

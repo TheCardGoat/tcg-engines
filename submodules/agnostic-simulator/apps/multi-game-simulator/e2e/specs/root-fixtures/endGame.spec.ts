@@ -4,10 +4,10 @@ import {
   CYBERPUNK_P1,
   CYBERPUNK_P2,
   type CyberpunkSimulatorPom,
-} from "../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+} from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 
 async function expectEndGameFixtureState(pom: CyberpunkSimulatorPom): Promise<void> {
   expectEqual("endGame phase", await pom.getPhase(), "main");
@@ -36,9 +36,7 @@ async function expectEndGameFixtureState(pom: CyberpunkSimulatorPom): Promise<vo
 test("End game - fully revealed", async ({ page }) => {
   await page.goto("/cyberpunk/simulator/tests/endGame?ai=off&auto-advance-attack=off");
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page);
 
   await expectEndGameFixtureState(pom);
 

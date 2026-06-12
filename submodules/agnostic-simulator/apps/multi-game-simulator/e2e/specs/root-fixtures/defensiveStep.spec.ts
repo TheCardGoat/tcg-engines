@@ -1,20 +1,15 @@
 import { test } from "@playwright/test";
 
 import { alphaArmoredMinotaur, alphaSecondhandBombus } from "@tcg/cyberpunk-cards";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 
 test("Defensive - block decision", async ({ page }) => {
   await page.goto("/cyberpunk/simulator/tests/defensiveStep?ai=off&auto-advance-attack=off");
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page);
 
   expectEqual("defensiveStep phase", await pom.getPhase(), "main");
   expectEqual("defensiveStep active player", await pom.getActivePlayerId(), CYBERPUNK_P2);

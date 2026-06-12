@@ -31,6 +31,30 @@ export default defineConfig({
         find: /^@cyberpunk-simulator\/(.+)$/,
         replacement: resolve(configDir, "src/games/cyberpunk/$1"),
       },
+      ...(isVitest
+        ? [
+            {
+              find: "@cyberpunk/animation",
+              replacement: resolve(configDir, "src/games/cyberpunk/testing/__mocks__/animation.ts"),
+            },
+          ]
+        : []),
+      {
+        find: /^@cyberpunk$/,
+        replacement: resolve(configDir, "src/games/cyberpunk"),
+      },
+      {
+        find: /^@cyberpunk\/(.+)$/,
+        replacement: resolve(configDir, "src/games/cyberpunk/$1"),
+      },
+      {
+        find: /^@e2e$/,
+        replacement: resolve(configDir, "e2e"),
+      },
+      {
+        find: /^@e2e\/(.+)$/,
+        replacement: resolve(configDir, "e2e/$1"),
+      },
       {
         find: /^@gundam-simulator$/,
         replacement: resolve(configDir, "src/games/gundam"),

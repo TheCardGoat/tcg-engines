@@ -1,22 +1,14 @@
 import { test } from "@playwright/test";
 
 import { alphaGoroTakemuraLosingHisWay } from "@tcg/cyberpunk-cards";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { unitGoroTakemuraLosingHisWay } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Goro Takemura - power scales with face-up legends", async ({ page }) => {
-  await page.goto(
-    "/cyberpunk/simulator/tests/unitGoroTakemuraLosingHisWay?ai=off&auto-advance-attack=off",
-  );
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, unitGoroTakemuraLosingHisWay);
 
   const goro = await pom.getCardInZoneByDefinitionId(
     "field",

@@ -1,9 +1,19 @@
 import { DSL_VERSION, type StructuredCardDefinition } from "@tcg/cyberpunk-types";
 import { alphaCards } from "./alpha/index.ts";
+import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
 import { promoCards } from "./promo/index.ts";
 import { spoilerCards } from "./spoiler/index.ts";
+import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
+import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
 
-const structuredCards: StructuredCardDefinition[] = [...alphaCards, ...spoilerCards, ...promoCards];
+const structuredCards: StructuredCardDefinition[] = [
+  ...alphaCards,
+  ...spoilerCards,
+  ...promoCards,
+  ...boxToppersRetailCards,
+  ...theHeistRetailStarterDeckCards,
+  ...welcomeToNightCityRetailCards,
+];
 
 /**
  * DSL version of every card in {@link cardBundle}. External consumers should

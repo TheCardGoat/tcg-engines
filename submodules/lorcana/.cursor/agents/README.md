@@ -1,1 +1,0 @@
-From https://github.com/vijaythecoder/awesome-claude-agents

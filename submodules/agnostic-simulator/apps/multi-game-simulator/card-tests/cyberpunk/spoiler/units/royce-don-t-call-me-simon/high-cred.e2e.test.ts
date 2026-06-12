@@ -5,29 +5,21 @@ import {
   alphaCorpoSecurity,
   spoilerRoyceDonTCallMeSimon,
 } from "@tcg/cyberpunk-cards";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import {
   expectExcludes,
   expectIncludes,
   getChoiceDefinitionIds,
-} from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-unit-fixture-helpers";
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-unit-fixture-helpers";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { unitRoyceDonTCallMeSimonHighCred } from "@cyberpunk/testing/e2e-fixtures";
 
 const POWER_THREE_MOCK_ID = "scenario-royce-power-three-mock";
 
 test("Royce - high Street Cred targets power three units", async ({ page }) => {
-  await page.goto(
-    "/cyberpunk/simulator/tests/unitRoyceDonTCallMeSimonHighCred?ai=off&auto-advance-attack=off",
-  );
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, unitRoyceDonTCallMeSimonHighCred);
 
   const royce = await pom.getCardInZoneByDefinitionId(
     "hand",

@@ -4,10 +4,10 @@ import {
   CYBERPUNK_P1,
   CYBERPUNK_P2,
   type CyberpunkSimulatorPom,
-} from "../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+} from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 
 async function expectOpponentTurnState(pom: CyberpunkSimulatorPom): Promise<void> {
   expectEqual("opponentTurn phase", await pom.getPhase(), "main");
@@ -37,9 +37,7 @@ async function expectOpponentTurnState(pom: CyberpunkSimulatorPom): Promise<void
 test("Observing - opponent's turn", async ({ page }) => {
   await page.goto("/cyberpunk/simulator/tests/opponentTurn?ai=off&auto-advance-attack=off");
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page);
 
   await expectOpponentTurnState(pom);
 

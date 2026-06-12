@@ -1,19 +1,14 @@
 import { test } from "@playwright/test";
 
 import { spoilerKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
-import { CYBERPUNK_P1 } from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { unitKerryEurodyneTheLastRockerboy } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Kerry Eurodyne - max-value gig ability draws two", async ({ page }) => {
-  await page.goto(
-    "/cyberpunk/simulator/tests/unitKerryEurodyneTheLastRockerboy?ai=off&auto-advance-attack=off",
-  );
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, unitKerryEurodyneTheLastRockerboy);
 
   const kerry = await pom.getCardInZoneByDefinitionId(
     "field",

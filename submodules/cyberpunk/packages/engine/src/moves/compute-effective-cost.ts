@@ -21,6 +21,12 @@ export interface EffectiveCostDetails {
   modifiers: EffectiveCostModifierDetail[];
 }
 
+interface CostModifierEntry {
+  id: string;
+  sourceCardId: CardInstanceId;
+  modifier: CostModifier;
+}
+
 /**
  * Compute the eddie cost a player must pay to play this card, after
  * applying any card-level cost modifier. The printed `cost` on the
@@ -50,11 +56,6 @@ export function computeEffectiveCostDetails(
   }
   const def = defOf(card) as StructuredCardDefinition;
   const base = def.cost ?? 0;
-  const modifier = def.costModifier;
-  if (!modifier) {
-    return { printedCost: base, effectiveCost: base, modifiers: [] };
-  }
-
   const ctx: ResolutionContext = {
     state,
     sourceCardId: cardId,
@@ -64,34 +65,114 @@ export function computeEffectiveCostDetails(
     boundTargets: {},
   };
 
-  if (modifier.reducer === "perTargetCount") {
-    const count = resolveTarget(modifier.target, ctx).length;
-    const reduced = base - count * modifier.reductionPerCount;
-    const effectiveCost = Math.max(modifier.min, reduced);
-    const delta = effectiveCost - base;
-    const sourceName = def.displayName ?? def.name;
-    return {
-      printedCost: base,
-      effectiveCost,
-      modifiers:
-        delta === 0
-          ? []
-          : [
-              {
-                id: `${cardId as string}:costModifier`,
-                sourceCardId: cardId,
-                sourceName,
-                label: `${signedNumber(delta)} COST`,
-                detail: buildCostModifierDetail(sourceName, modifier, count, delta),
-                modifierLabel: signedNumber(delta),
-                delta,
-                matchedCount: count,
-              },
-            ],
-    };
+  const modifiers: CostModifierEntry[] = [
+    ...(def.costModifier
+      ? [
+          {
+            id: `${cardId as string}:costModifier`,
+            sourceCardId: cardId,
+            modifier: def.costModifier,
+          },
+        ]
+      : []),
+    ...state.G.activeEffects
+      .filter(
+        (effect) =>
+          effect.kind === "costModifier" &&
+          effect.playerId === playerId &&
+          effect.costModifier &&
+          effect.appliesTo &&
+          resolveTarget(effect.appliesTo, ctx).includes(cardId as string),
+      )
+      .map((effect) => ({
+        id: effect.id,
+        sourceCardId: effect.sourceCardId,
+        modifier: effect.costModifier!,
+      })),
+  ];
+
+  if (modifiers.length === 0) {
+    return { printedCost: base, effectiveCost: base, modifiers: [] };
   }
 
-  return { printedCost: base, effectiveCost: base, modifiers: [] };
+  let runningCost = base;
+  const details: EffectiveCostModifierDetail[] = [];
+  for (const entry of modifiers) {
+    const modifier = entry.modifier;
+    const before = runningCost;
+    const applied = applyCostModifier(ctx, modifier, before);
+    runningCost = applied.effectiveCost;
+    const delta = runningCost - before;
+    if (delta === 0) continue;
+    const sourceCard = state.G.cardIndex[entry.sourceCardId as string];
+    const sourceName = sourceCard ? defOf(sourceCard).displayName : def.displayName;
+    details.push({
+      id: entry.id,
+      sourceCardId: entry.sourceCardId,
+      sourceName,
+      label: `${signedNumber(delta)} COST`,
+      detail: buildCostModifierDetail(sourceName, modifier, applied.matchedCount, delta),
+      modifierLabel: signedNumber(delta),
+      delta,
+      matchedCount: applied.matchedCount,
+    });
+  }
+
+  return {
+    printedCost: base,
+    effectiveCost: runningCost,
+    modifiers: details,
+  };
+}
+
+export function consumeCostModifierUse(
+  state: MatchState,
+  cardId: CardInstanceId,
+  playerId: PlayerId,
+): void {
+  const ctx: ResolutionContext = {
+    state,
+    sourceCardId: cardId,
+    sourcePlayerId: playerId,
+    abilityIndex: -1,
+    contextTargets: {},
+    boundTargets: {},
+  };
+
+  for (const effect of state.G.activeEffects) {
+    if (
+      effect.kind !== "costModifier" ||
+      effect.playerId !== playerId ||
+      !effect.costModifier ||
+      !effect.appliesTo ||
+      !resolveTarget(effect.appliesTo, ctx).includes(cardId as string) ||
+      effect.remainingUses === undefined
+    ) {
+      continue;
+    }
+    effect.remainingUses -= 1;
+  }
+  state.G.activeEffects = state.G.activeEffects.filter(
+    (effect) =>
+      effect.kind !== "costModifier" ||
+      effect.remainingUses === undefined ||
+      effect.remainingUses > 0,
+  );
+}
+
+function applyCostModifier(
+  ctx: ResolutionContext,
+  modifier: CostModifier,
+  currentCost: number,
+): { effectiveCost: number; matchedCount: number } {
+  if (modifier.reducer === "perTargetCount") {
+    const count = resolveTarget(modifier.target, ctx).length;
+    const reduced = currentCost - count * modifier.reductionPerCount;
+    const effectiveCost = Math.max(modifier.min, reduced);
+    return { effectiveCost, matchedCount: count };
+  }
+
+  return { effectiveCost: currentCost, matchedCount: 0 };
 }
 
 function buildCostModifierDetail(

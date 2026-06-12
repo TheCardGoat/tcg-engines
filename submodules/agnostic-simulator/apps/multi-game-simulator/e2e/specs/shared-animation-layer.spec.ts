@@ -9,11 +9,8 @@ import {
   spoilerKerryEurodyneTheLastRockerboy,
 } from "@tcg/cyberpunk-cards";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../poms/CyberpunkPlaywrightHarnessClient";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 
 test.describe("Cyberpunk shared animation layer", () => {
   test("default real board path uses shared transfers and keeps unsupported fallback cues", async ({
@@ -21,8 +18,8 @@ test.describe("Cyberpunk shared animation layer", () => {
   }) => {
     await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
 
-    const pom = createPlaywrightCyberpunkSimulatorPom(page);
-    await pom.waitForReady();
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page, { skipStructuralState: true });
+
     const card = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
@@ -48,8 +45,8 @@ test.describe("Cyberpunk shared animation layer", () => {
   test("real board card move uses the shared zone transfer overlay", async ({ page }) => {
     await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
 
-    const pom = createPlaywrightCyberpunkSimulatorPom(page);
-    await pom.waitForReady();
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
     const card = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
@@ -72,8 +69,8 @@ test.describe("Cyberpunk shared animation layer", () => {
   test("real board opponent draw uses the shared draw transfer", async ({ page }) => {
     await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
 
-    const pom = createPlaywrightCyberpunkSimulatorPom(page);
-    await pom.waitForReady();
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
     const handBefore = await pom.getHandSize(CYBERPUNK_P2);
     const deckBefore = await pom.getDeckSize(CYBERPUNK_P2);
 
@@ -105,8 +102,8 @@ test.describe("Cyberpunk shared animation layer", () => {
       "/cyberpunk/simulator/tests/unitKerryEurodyneTheLastRockerboy?ai=off&auto-advance-attack=off",
     );
 
-    const pom = createPlaywrightCyberpunkSimulatorPom(page);
-    await pom.waitForReady();
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
     const handBefore = await pom.getHandSize(CYBERPUNK_P1);
     const deckBefore = await pom.getDeckSize(CYBERPUNK_P1);
     const kerry = await pom.getCardInZoneByDefinitionId(
@@ -141,8 +138,8 @@ test.describe("Cyberpunk shared animation layer", () => {
   test("real board card exit uses the shared primitive overlay", async ({ page }) => {
     await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
 
-    const pom = createPlaywrightCyberpunkSimulatorPom(page);
-    await pom.waitForReady();
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
     const card = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaFloorIt.id);
 
     await observePrimitiveOverlay(page, "zoneExit");
@@ -166,8 +163,8 @@ test.describe("Cyberpunk shared animation layer", () => {
       "/cyberpunk/simulator/tests/gearAttachToGoSoloLegend?ai=off&auto-advance-attack=off",
     );
 
-    const pom = createPlaywrightCyberpunkSimulatorPom(page);
-    await pom.waitForReady();
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
     const gear = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaMantisBlades.id);
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
@@ -230,8 +227,8 @@ test.describe("Cyberpunk shared animation layer", () => {
   test("real board legend reveal uses the shared primitive overlay", async ({ page }) => {
     await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
 
-    const pom = createPlaywrightCyberpunkSimulatorPom(page);
-    await pom.waitForReady();
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
     const legend = (await pom.getCardsInZone("legendArea", CYBERPUNK_P1)).find(
       (candidate) => candidate.faceDown,
     );
@@ -264,8 +261,8 @@ test.describe("Cyberpunk shared animation layer", () => {
       "/cyberpunk/simulator/tests/progCorporateSurveillance?ai=off&auto-advance-attack=off",
     );
 
-    const pom = createPlaywrightCyberpunkSimulatorPom(page);
-    await pom.waitForReady();
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
     const program = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
@@ -299,8 +296,8 @@ test.describe("Cyberpunk shared animation layer", () => {
       "/cyberpunk/simulator/tests/progAfterpartyAtLizzies?ai=off&auto-advance-attack=off",
     );
 
-    const pom = createPlaywrightCyberpunkSimulatorPom(page);
-    await pom.waitForReady();
+    const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
     const program = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
@@ -344,8 +341,10 @@ test.describe("Cyberpunk shared animation layer", () => {
       )
       .toBe(true);
 
-    const movePom = createPlaywrightCyberpunkSimulatorPom(page);
-    await movePom.waitForReady();
+    const movePom = await createPlaywrightCyberpunkSimulatorPom(page, {
+      skipStructuralState: true,
+    });
+
     const movingCard = await movePom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
@@ -358,8 +357,10 @@ test.describe("Cyberpunk shared animation layer", () => {
     await expect(page.getByTestId("zone-transfer-overlay")).toHaveCount(0);
 
     await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
-    const exitPom = createPlaywrightCyberpunkSimulatorPom(page);
-    await exitPom.waitForReady();
+    const exitPom = await createPlaywrightCyberpunkSimulatorPom(page, {
+      skipStructuralState: true,
+    });
+
     const exitCard = await exitPom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
@@ -375,8 +376,10 @@ test.describe("Cyberpunk shared animation layer", () => {
     await page.goto(
       "/cyberpunk/simulator/tests/gearAttachToGoSoloLegend?ai=off&auto-advance-attack=off",
     );
-    const attachPom = createPlaywrightCyberpunkSimulatorPom(page);
-    await attachPom.waitForReady();
+    const attachPom = await createPlaywrightCyberpunkSimulatorPom(page, {
+      skipStructuralState: true,
+    });
+
     const gear = await attachPom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
@@ -401,8 +404,10 @@ test.describe("Cyberpunk shared animation layer", () => {
     await expect(page.getByTestId("sim-animation-overlay")).toHaveCount(0);
 
     await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
-    const revealPom = createPlaywrightCyberpunkSimulatorPom(page);
-    await revealPom.waitForReady();
+    const revealPom = await createPlaywrightCyberpunkSimulatorPom(page, {
+      skipStructuralState: true,
+    });
+
     const faceDownLegendSlots = page.locator(
       '[data-testid="legends-zone"][data-side="player"] [data-testid="legend-slot"][data-face-down="true"]',
     );

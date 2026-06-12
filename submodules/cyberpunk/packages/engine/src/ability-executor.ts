@@ -475,7 +475,45 @@ function passesEventFilter(
         return false;
       }
     }
-    if (!cardMatchesEventFilter(filter.target, spentCard, abilityCardId, state)) {
+    if (!cardMatchesEventFilter(filter.target, spentCard, abilityCardId, state, sourcePlayerId)) {
+      return false;
+    }
+  }
+
+  if (ability.trigger.event.event === "cardDefeated" && event.type === "cardDefeated") {
+    const filter = ability.trigger.event;
+    const defeatedCard = state.G.cardIndex[event.cardId as string];
+    if (!defeatedCard) return false;
+    if (filter.player && filter.player !== "any") {
+      const defeatedController = defeatedCard.controllerId as string;
+      if (filter.player === "friendly" && defeatedController !== (sourcePlayerId as string)) {
+        return false;
+      }
+      if (filter.player === "rival" && defeatedController === (sourcePlayerId as string)) {
+        return false;
+      }
+    }
+    if (
+      !cardMatchesEventFilter(filter.target, defeatedCard, abilityCardId, state, sourcePlayerId)
+    ) {
+      return false;
+    }
+  }
+
+  if (ability.trigger.event.event === "blockerActivated" && event.type === "blockerActivated") {
+    const filter = ability.trigger.event;
+    const blocker = state.G.cardIndex[event.blockerId as string];
+    if (!blocker) return false;
+    if (filter.player && filter.player !== "any") {
+      const blockerController = blocker.controllerId as string;
+      if (filter.player === "friendly" && blockerController !== (sourcePlayerId as string)) {
+        return false;
+      }
+      if (filter.player === "rival" && blockerController === (sourcePlayerId as string)) {
+        return false;
+      }
+    }
+    if (!cardMatchesEventFilter(filter.target, blocker, abilityCardId, state, sourcePlayerId)) {
       return false;
     }
   }
@@ -507,6 +545,21 @@ function passesEventFilter(
     }
   }
 
+  if (ability.trigger.event.event === "turnEnded" && event.type === "turnEnded") {
+    const filter = ability.trigger.event;
+    if (filter.player && filter.player !== "any") {
+      if (
+        filter.player === "friendly" &&
+        (event.playerId as string) !== (sourcePlayerId as string)
+      ) {
+        return false;
+      }
+      if (filter.player === "rival" && (event.playerId as string) === (sourcePlayerId as string)) {
+        return false;
+      }
+    }
+  }
+
   if (ability.trigger.event.event === "fightResolved" && event.type === "attackResolved") {
     // Only fight outcomes; direct attacks (gigsStolen / blocked) don't fire fightResolved.
     if (event.attackKind !== "fight") return false;
@@ -533,13 +586,15 @@ function passesEventFilter(
     }
     if (
       filter.attacker &&
-      !cardMatchesEventFilter(filter.attacker, attacker, abilityCardId, state)
+      !cardMatchesEventFilter(filter.attacker, attacker, abilityCardId, state, sourcePlayerId)
     ) {
       return false;
     }
     if (filter.defender) {
       if (!defender) return false;
-      if (!cardMatchesEventFilter(filter.defender, defender, abilityCardId, state)) {
+      if (
+        !cardMatchesEventFilter(filter.defender, defender, abilityCardId, state, sourcePlayerId)
+      ) {
         return false;
       }
     }
@@ -594,6 +649,7 @@ function cardMatchesEventFilter(
   card: import("./types/card-instance.ts").CardInstance,
   abilityCardId: CardInstanceId | undefined,
   state: MatchState,
+  sourcePlayerId: PlayerId,
 ): boolean {
   if (filter.selector === "self") {
     return abilityCardId !== undefined && (card.instanceId as string) === (abilityCardId as string);
@@ -613,13 +669,18 @@ function cardMatchesEventFilter(
       if (!hasMatch) return false;
     }
     if (filter.colors && !filter.colors.includes(def.color)) return false;
+    if (filter.hasAttachedCards !== undefined) {
+      const hasAttachedCards = card.meta.attachedGearIds.length > 0;
+      if (filter.hasAttachedCards !== hasAttachedCards) return false;
+    }
     if (filter.controller) {
-      const owner = card.controllerId as string;
-      // Without a known sourcePlayerId here, we assume the attacker filter is
-      // already validated upstream by `filter.player`. `controller` on the
-      // attacker/defender filters typically refines further; accept rival/friendly
-      // by passing through for now (callers should prefer `filter.player`).
-      void owner;
+      const controller = card.controllerId as string;
+      if (filter.controller === "friendly" && controller !== (sourcePlayerId as string)) {
+        return false;
+      }
+      if (filter.controller === "rival" && controller === (sourcePlayerId as string)) {
+        return false;
+      }
     }
     return true;
   }
@@ -637,6 +698,12 @@ function buildContextTargets(event: GameEvent): Record<string, string[]> {
   }
   if (event.type === "cardSpent" && event.cardId) {
     ctx["triggerCard"] = [event.cardId as string];
+  }
+  if (event.type === "cardDefeated" && event.cardId) {
+    ctx["triggerCard"] = [event.cardId as string];
+  }
+  if (event.type === "blockerActivated" && event.blockerId) {
+    ctx["triggerCard"] = [event.blockerId as string];
   }
   if (event.type === "gigStolen" && event.dieId) {
     ctx["triggeredGigs"] = [event.dieId as string];
@@ -795,6 +862,8 @@ function describeConditionFailure(condition: Condition): string {
       return `${relativePlayerText(condition.controller)} does not control ${condition.minCount} different Gig values`;
     case "hasMinGig":
       return `${relativePlayerText(condition.controller)} does not control a min Gig`;
+    case "hasEquippedUnitsOrLegends":
+      return `${relativePlayerText(condition.controller)} does not control ${condition.minCount} equipped Units and/or Legends`;
     case "matchingGig":
       return `no ${relativePlayerText(condition.controller)} Gig matches the target`;
     case "streetCred":
@@ -871,6 +940,10 @@ function canPayAbilityCosts(ability: Ability, ctx: ResolutionContext): boolean {
         if (availableEddies(ctx.state, ctx.sourcePlayerId) < (defOf(card).cost ?? 0)) return false;
         break;
       }
+      case "payEddies": {
+        if (availableEddies(ctx.state, ctx.sourcePlayerId) < cost.amount) return false;
+        break;
+      }
       default:
         return assertNever(cost);
     }
@@ -900,6 +973,10 @@ function payAbilityCosts(ability: Ability, ctx: ResolutionContext, operations: O
         }
         break;
       }
+      case "payEddies": {
+        operations.game.spendEddies(ctx.sourcePlayerId, cost.amount, "abilityCost");
+        break;
+      }
       default:
         assertNever(cost);
     }
@@ -927,6 +1004,9 @@ function allRequiredEffectsHaveTargets(
       return true;
     }
     if (effect.optional) return true;
+    if (effect.effect === "searchDeck") {
+      return true;
+    }
     if (effect.effect === "ifYouDo") {
       const doEffect = (effect as import("@tcg/cyberpunk-types").IfYouDoEffect).doEffect;
       if (doEffect.optional && "attachTo" in doEffect && (doEffect as any).attachTo) {

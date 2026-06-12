@@ -4,6 +4,7 @@ import type {
   AbilityTrigger,
   AlphaCardDefinition,
   AttachmentDefinition,
+  BoxToppersRetailCardDefinition,
   CardDefinition,
   CardKeyword,
   CardTargetDSL,
@@ -15,10 +16,14 @@ import type {
   GigTargetDSL,
   NumericValue,
   PromoCardDefinition,
+  StructuredCardDefinitionBySetCode,
+  StructuredSetCode,
   SpoilerCardDefinition,
   StructuredCardDefinition,
   TargetDSL,
+  TheHeistRetailStarterDeckCardDefinition,
   TimingTrigger,
+  WelcomeToNightCityRetailCardDefinition,
 } from "@tcg/cyberpunk-types";
 
 const SELF_TARGET: TargetDSL = { selector: "self" };
@@ -167,7 +172,7 @@ function fightWonAgainstRivalUnit(target: TargetDSL): Condition {
   };
 }
 
-function keywordAbility(text: string, keyword: "blocker" | "goSolo", source?: TargetDSL): Ability {
+function keywordAbility(text: string, keyword: CardKeyword, source?: TargetDSL): Ability {
   return {
     kind: "keyword",
     text,
@@ -265,7 +270,14 @@ function removeStandaloneKeywordText(
 }
 
 function normalizeText(text: string): string {
-  return text.replace(/\s+/g, " ").trim();
+  return text
+    .replace(
+      /(?:\[|\{)(PLAY|ATTACK|FLIP|CALL|DEFEATED|BLOCKER|GO SOLO|ADRENALINE|QUICK)(?:\]|\})/gi,
+      "$1",
+    )
+    .replace(/\[Spend Icon:\]/gi, "SPEND")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function stripTrailingReminders(text: string, reminderText: string[]): string {
@@ -321,6 +333,26 @@ function parseKeywordAbilities(
     if (result.match) {
       abilities.push(keywordAbility(result.match, "blocker", gearHostOrSelf(card)));
     }
+  }
+
+  if (/ADRENALINE(?:\s*\([^)]*\))?/i.test(working)) {
+    const result = removeStandaloneKeywordText(
+      working,
+      /(^ADRENALINE(?:\s*\([^)]*\))?|(?<=\.\s)(ADRENALINE(?:\s*\([^)]*\))?))/i,
+    );
+    working = result.text;
+    abilities.push(
+      keywordAbility(result.match ?? "ADRENALINE", "adrenaline", gearHostOrSelf(card)),
+    );
+  }
+
+  if (/QUICK(?:\s*\([^)]*\))?/i.test(working)) {
+    const result = removeStandaloneKeywordText(
+      working,
+      /(^QUICK(?:\s*\([^)]*\))?|(?<=\.\s)(QUICK(?:\s*\([^)]*\))?))/i,
+    );
+    working = result.text;
+    abilities.push(keywordAbility(result.match ?? "QUICK", "quick", gearHostOrSelf(card)));
   }
 
   return {
@@ -2046,27 +2078,67 @@ function parseMainAbility(card: CardDefinition, text: string): Ability[] {
     return [];
   }
 
-  const specialAbilities = parseSpecialAbilities(card, text);
-  if (specialAbilities) {
-    return specialAbilities;
-  }
+  try {
+    const specialAbilities = parseSpecialAbilities(card, text);
+    if (specialAbilities) {
+      return specialAbilities;
+    }
 
-  const triggeredPrefix = /^(PLAY|ATTACK|FLIP|CALL|DEFEATED)\s+(.+)$/.exec(text);
-  if (triggeredPrefix) {
-    const trigger = triggeredPrefix[1]!.toLowerCase() as
-      | "play"
-      | "attack"
-      | "flip"
-      | "call"
-      | "defeated";
-    return [parseTriggeredByPrefix(card, trigger, triggeredPrefix[2]!, text)];
-  }
+    const triggeredPrefix = /^(PLAY|ATTACK|FLIP|CALL|DEFEATED)\s+(.+)$/.exec(text);
+    if (triggeredPrefix) {
+      const trigger = triggeredPrefix[1]!.toLowerCase() as
+        | "play"
+        | "attack"
+        | "flip"
+        | "call"
+        | "defeated";
+      return [parseTriggeredByPrefix(card, trigger, triggeredPrefix[2]!, text)];
+    }
 
-  if (/^(When|The first time)/i.test(text)) {
-    return [parseEventAbility(card, text)];
-  }
+    if (/^(When|The first time)/i.test(text)) {
+      return [parseEventAbility(card, text)];
+    }
 
-  return [parseDirectEffectAbility(card, text)];
+    return [parseDirectEffectAbility(card, text)];
+  } catch (error) {
+    if (isLegacySetCode(card.set.code)) {
+      throw error;
+    }
+
+    return [
+      staticAbility({
+        text,
+        effects: [],
+      }),
+    ];
+  }
+}
+
+const LEGACY_SET_CODES = [
+  "alpha",
+  "spoiler",
+  "promo",
+] as const satisfies readonly StructuredSetCode[];
+
+const LEGACY_SET_CODE_SET: ReadonlySet<string> = new Set(LEGACY_SET_CODES);
+
+function isLegacySetCode(setCode: string): boolean {
+  return LEGACY_SET_CODE_SET.has(setCode);
+}
+
+const STRUCTURED_SET_CODES = [
+  "alpha",
+  "spoiler",
+  "promo",
+  "boxtoppersretail",
+  "theheistretailstarterdeck",
+  "welcometonightcityretail",
+] as const satisfies readonly StructuredSetCode[];
+
+const STRUCTURED_SET_CODE_SET: ReadonlySet<string> = new Set(STRUCTURED_SET_CODES);
+
+function isStructuredSetCode(setCode: string): setCode is StructuredSetCode {
+  return STRUCTURED_SET_CODE_SET.has(setCode);
 }
 
 export function parseStructuredCard(card: CardDefinition): StructuredCardDefinition {
@@ -2154,32 +2226,89 @@ export function parsePromoCard(card: CardDefinition): PromoCardDefinition {
   return parseStructuredCard(card) as PromoCardDefinition;
 }
 
+export function parseBoxToppersRetailCard(card: CardDefinition): BoxToppersRetailCardDefinition {
+  if (card.set.code !== "boxtoppersretail") {
+    throw new Error(
+      `Expected a Box Toppers retail card, received ${card.slug} from ${card.set.code}`,
+    );
+  }
+
+  return parseStructuredCard(card) as BoxToppersRetailCardDefinition;
+}
+
+export function parseTheHeistRetailStarterDeckCard(
+  card: CardDefinition,
+): TheHeistRetailStarterDeckCardDefinition {
+  if (card.set.code !== "theheistretailstarterdeck") {
+    throw new Error(
+      `Expected a The Heist retail starter deck card, received ${card.slug} from ${card.set.code}`,
+    );
+  }
+
+  return parseStructuredCard(card) as TheHeistRetailStarterDeckCardDefinition;
+}
+
+export function parseWelcomeToNightCityRetailCard(
+  card: CardDefinition,
+): WelcomeToNightCityRetailCardDefinition {
+  if (card.set.code !== "welcometonightcityretail") {
+    throw new Error(
+      `Expected a Welcome to Night City retail card, received ${card.slug} from ${card.set.code}`,
+    );
+  }
+
+  return parseStructuredCard(card) as WelcomeToNightCityRetailCardDefinition;
+}
+
 export function parseStructuredCards(cards: CardDefinition[]): StructuredCardDefinition[] {
   return cards
-    .filter((card) => ["alpha", "spoiler", "promo"].includes(card.set.code))
+    .filter((card) => isStructuredSetCode(card.set.code))
     .map((card) => parseStructuredCard(card));
 }
 
-export function parseAlphaCards(cards: CardDefinition[]): AlphaCardDefinition[] {
+export function parseStructuredSetCards<TSetCode extends StructuredSetCode>(
+  cards: CardDefinition[],
+  setCode: TSetCode,
+): StructuredCardDefinitionBySetCode[TSetCode][] {
   return cards
-    .filter((card): card is CardDefinition & { set: { code: "alpha"; name: string } } => {
-      return card.set.code === "alpha";
-    })
-    .map((card) => parseAlphaCard(card));
+    .filter(
+      (
+        card,
+      ): card is CardDefinition & {
+        set: { code: TSetCode; name: string };
+      } => {
+        return card.set.code === setCode;
+      },
+    )
+    .map((card) => parseStructuredCard(card) as StructuredCardDefinitionBySetCode[TSetCode]);
+}
+
+export function parseAlphaCards(cards: CardDefinition[]): AlphaCardDefinition[] {
+  return parseStructuredSetCards(cards, "alpha");
 }
 
 export function parseSpoilerCards(cards: CardDefinition[]): SpoilerCardDefinition[] {
-  return cards
-    .filter((card): card is CardDefinition & { set: { code: "spoiler"; name: string } } => {
-      return card.set.code === "spoiler";
-    })
-    .map((card) => parseSpoilerCard(card));
+  return parseStructuredSetCards(cards, "spoiler");
 }
 
 export function parsePromoCards(cards: CardDefinition[]): PromoCardDefinition[] {
-  return cards
-    .filter((card): card is CardDefinition & { set: { code: "promo"; name: string } } => {
-      return card.set.code === "promo";
-    })
-    .map((card) => parsePromoCard(card));
+  return parseStructuredSetCards(cards, "promo");
+}
+
+export function parseBoxToppersRetailCards(
+  cards: CardDefinition[],
+): BoxToppersRetailCardDefinition[] {
+  return parseStructuredSetCards(cards, "boxtoppersretail");
+}
+
+export function parseTheHeistRetailStarterDeckCards(
+  cards: CardDefinition[],
+): TheHeistRetailStarterDeckCardDefinition[] {
+  return parseStructuredSetCards(cards, "theheistretailstarterdeck");
+}
+
+export function parseWelcomeToNightCityRetailCards(
+  cards: CardDefinition[],
+): WelcomeToNightCityRetailCardDefinition[] {
+  return parseStructuredSetCards(cards, "welcometonightcityretail");
 }

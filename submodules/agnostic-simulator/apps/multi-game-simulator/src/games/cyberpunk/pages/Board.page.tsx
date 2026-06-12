@@ -24,7 +24,7 @@ import {
 } from "../components/GameBoard";
 import { ChoiceModal, PromptBanner } from "../components/Prompt";
 import { EndGameModal } from "../components/EndGameModal";
-import { CyberpunkSharedAnimationLayer, ScriptPlayer, SoundPlayer } from "../animation";
+import { CyberpunkSharedAnimationLayer, ScriptPlayer, SoundPlayer } from "@cyberpunk/animation";
 import { AiControlPanel } from "../components/AiControlPanel";
 import { ChatPanel } from "../components/ChatPanel";
 import { MoveLogPanel } from "../components/MoveLogPanel";

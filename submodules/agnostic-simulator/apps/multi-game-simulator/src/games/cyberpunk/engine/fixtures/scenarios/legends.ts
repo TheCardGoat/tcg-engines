@@ -10,6 +10,33 @@ import {
 } from "./shared";
 
 export const legendScenarios: Scenario[] = [
+  {
+    id: "legendLucynaKushinada",
+    group: "legend-passive",
+    label: "Lucyna Kushinada · promo legend",
+    description:
+      "P1 has Lucyna Kushinada in the legend area. Tests that the promo legend hydrates and renders as a zero-power no-ability card.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          legendArea: [
+            { card: c.promoLucynaKushinada, faceDown: true },
+            { card: c.alphaVCorporateExile, faceDown: false },
+            { card: c.spoilerVStreetkid, faceDown: false },
+          ],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: false }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendLucynaKushinada"), autoGainGig: false },
+      ),
+  },
+
   // ── Legend: GO SOLO (V - Corporate Exile) ────────────────────────────────
   {
     id: "legendVCorporateExile",
@@ -545,6 +572,464 @@ export const legendScenarios: Scenario[] = [
         skipGainGig(engine);
       }
       engine.attackRival(c.alphaArmoredMinotaur, { as: P2 });
+      return engine;
+    },
+  },
+
+  // ── Legend: Royce — Psycho on the Edge (Retail) ──────────────────────────
+  {
+    id: "legendRoycePsychoOnTheEdgeRetail",
+    group: "legend-go-solo",
+    label: "Royce · Psycho on the Edge (Retail) · gear-scaled power",
+    description:
+      "P1 has Royce (red, cost 6, power 6, GO SOLO) revealed. Royce has +2 power per equipped gear. Tests static power boost during friendly turn. With 8 eddies, can Go Solo as a unit.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            {
+              card: c.welcomeToNightCityRetailRoycePsychoOnTheEdge,
+              faceDown: false,
+              attachedGears: [c.alphaMantisBlades, c.alphaKiroshiOptics],
+            },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 8,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.alphaCorpoSecurity, spent: true },
+            { card: c.alphaArmoredMinotaur, spent: true },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendRoycePsychoOnTheEdgeRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Legend: V — Streetkid (Retail) ───────────────────────────────────────
+  {
+    id: "legendVStreetkidRetail",
+    group: "legend-go-solo",
+    label: "V · Streetkid (Retail) · CALL trashes 3 and recovers Braindance",
+    description:
+      "P1 has V - Streetkid (red, cost 5, power 6, GO SOLO) face-down. Trash has Afterparty at Lizzie's (Braindance). CALL flips V face-up, trashes top 3 deck cards, and adds the Braindance to hand.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: true },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          trash: [c.spoilerAfterpartyAtLizzieS, c.alphaCorporateSurveillance],
+          eddies: 5,
+          deck: 8,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaSwordwiseHuscle, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendVStreetkidRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Legend: Alt Cunningham — Soulkiller Architect (Retail) ───────────────
+  {
+    id: "legendAltCunninghamSoulkillerArchitectRetail",
+    group: "legend-call-trigger",
+    label: "Alt Cunningham · play Program from trash",
+    description:
+      "P1 has Alt Cunningham (blue) revealed. Trash has Corporate Surveillance. SPEND Alt to play the Program from trash for its cost.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, faceDown: false },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          trash: [c.alphaCorporateSurveillance],
+          eddies: 8,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendAltCunninghamSoulkillerArchitectRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Legend: Dum Dum — Maelstrom Triggerman (Retail) ──────────────────────
+  {
+    id: "legendDumDumMaelstromTriggermanRetail",
+    group: "legend-call-trigger",
+    label: "Dum Dum · defeat gear to draw 2",
+    description:
+      "P1 can call Dum Dum (yellow). P1 has T-Bug equipped with Kiroshi Optics. CALL: may defeat the gear to draw 2. Tests the if-you-do branching.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaRuthlessLowlife],
+          field: [
+            {
+              card: c.alphaTBugAmateurPhilosopher,
+              spent: false,
+              attachedGears: [c.alphaKiroshiOptics],
+            },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailDumDumMaelstromTriggerman, faceDown: true },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendDumDumMaelstromTriggermanRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Legend: Evelyn Parker — Beautiful Enigma (Retail) ────────────────────
+  {
+    id: "legendEvelynParkerBeautifulEnigmaRetail",
+    group: "legend-passive",
+    label: "Evelyn Parker · renders in legend area",
+    description:
+      "P1 has Evelyn Parker (blue) revealed. Tests that the retail legend hydrates and renders correctly. Abilities are currently structural-only in the engine.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaRuthlessLowlife],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailEvelynParkerBeautifulEnigma, faceDown: false },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendEvelynParkerBeautifulEnigmaRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Legend: Goro Takemura — Vengeful Bodyguard (Retail) ──────────────────
+  {
+    id: "legendGoroTakemuraVengefulBodyguardRetail",
+    group: "legend-call-trigger",
+    label: "Goro Takemura · grants BLOCKER and +1 power with gig pair",
+    description:
+      "P1 has Goro Takemura (green) revealed. P1 has a friendly unit with cost ≤ 4 and a value-pair of Gigs. SPEND Goro to grant BLOCKER and +1 power.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailGoroTakemuraVengefulBodyguard, faceDown: false },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 5,
+          gigArea: [
+            { dieType: "d6", faceValue: 3 },
+            { dieType: "d8", faceValue: 3 },
+          ],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendGoroTakemuraVengefulBodyguardRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Legend: Panam Palmer — Nomad Cavalry (Retail) ─────────────────────────
+  {
+    id: "legendPanamPalmerNomadCavalryRetail",
+    group: "legend-call-trigger",
+    label: "Panam Palmer · move gear to unit and ready",
+    description:
+      "P1 has Panam Palmer (green) revealed with a Gear attached. Field has an unequipped friendly Unit. SPEND Panam to move the gear to the unit and ready it.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            {
+              card: c.welcomeToNightCityRetailPanamPalmerNomadCavalry,
+              faceDown: false,
+              attachedGears: [c.alphaKiroshiOptics],
+            },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 5,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendPanamPalmerNomadCavalryRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Legend: River Ward — Detective on the Hunt (Retail) ───────────────────
+  {
+    id: "legendRiverWardDetectiveOnTheHuntRetail",
+    group: "legend-call-trigger",
+    label: "River Ward · play gear from hand for free",
+    description:
+      "P1 has River Ward (yellow) revealed. Hand has a Gear with cost ≤ 2. SPEND River to play the Gear from hand for free.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaKiroshiOptics],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, faceDown: false },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 5,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendRiverWardDetectiveOnTheHuntRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Retail Legend: GO SOLO (V - Corporate Exile) ─────────────────────────
+  {
+    id: "legendVCorporateExileRetail",
+    group: "legend-go-solo",
+    label: "V · Corporate Exile (Retail) · revealed, can Go Solo",
+    description:
+      "P1 has V - Corporate Exile (Retail) (blue, cost 5, power 8, GO SOLO) revealed face-up in legend area with 6 eddies.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaRuthlessLowlife],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.boxTopperRetailVCorporateExile, faceDown: false },
+            { card: c.alphaYorinobuArasakaEmbracingDestruction, faceDown: false },
+            { card: c.alphaGoroTakemuraHandsUnclean, faceDown: false },
+          ],
+          eddies: 6,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.alphaCorpoSecurity, spent: true },
+            { card: c.alphaArmoredMinotaur, spent: true },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendVCorporateExileRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Retail Legend: GO SOLO + BLOCKER (Goro Takemura - Hands Unclean) ─────
+  {
+    id: "legendGoroTakemuraHandsUncleanRetail",
+    group: "legend-go-solo",
+    label: "Goro Takemura · Hands Unclean (Retail) · GO SOLO + BLOCKER",
+    description:
+      "P1 has Goro Takemura (Retail) (green, cost 5, power 7, GO SOLO + BLOCKER) revealed.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.boxTopperRetailGoroTakemuraHandsUnclean, faceDown: false },
+            { card: c.alphaVCorporateExile, faceDown: false },
+            { card: c.alphaYorinobuArasakaEmbracingDestruction, faceDown: false },
+          ],
+          eddies: 6,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.alphaCorpoSecurity, spent: true },
+            { card: c.alphaArmoredMinotaur, spent: true },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendGoroTakemuraHandsUncleanRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Retail Legend: Passive +1 power to Arasaka attackers (Saburo Arasaka) ─
+  {
+    id: "legendSaburoArasakaStubbornPatriachRetail",
+    group: "legend-passive",
+    label: "Saburo Arasaka (Retail) · Arasaka units gain +1 power attacking",
+    description:
+      "P1 has Saburo Arasaka (Retail) (green) revealed. P1 field has Armored Minotaur (Arasaka, base power 9) and Ruthless Lowlife.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaRuthlessLowlife],
+          field: [
+            { card: c.alphaArmoredMinotaur, spent: false },
+            { card: c.alphaRuthlessLowlife, spent: false },
+          ],
+          legendArea: [
+            { card: c.boxTopperRetailSaburoArasakaStubbornPatriarch, faceDown: false },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.alphaCorpoSecurity, spent: true },
+            { card: c.alphaSecondhandBombus, spent: true },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendSaburoArasakaStubbornPatriachRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Retail Legend: Attack trigger draw + conditional discard (Yorinobu) ───
+  {
+    id: "legendYorinobuArasakaEmbracingDestructionRetail",
+    group: "legend-attack-trigger",
+    label: "Yorinobu (Retail) · first Arasaka attack draws, then conditional discard",
+    description:
+      "P1 has Yorinobu (Retail) (red) revealed. P1 has Armored Minotaur (Arasaka) ready.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaRuthlessLowlife, c.alphaFloorIt],
+          field: [
+            { card: c.alphaArmoredMinotaur, spent: false },
+            { card: c.alphaRuthlessLowlife, spent: false },
+          ],
+          legendArea: [
+            { card: c.boxTopperRetailYorinobuArasakaEmbracingDestruction, faceDown: false },
+            { card: c.alphaSaburoArasakaStubbornPatriach, faceDown: false },
+          ],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 4 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("legendYorinobuArasakaEmbracingDestructionRetail"),
+          autoGainGig: false,
+        },
+      ),
+  },
+
+  // ── Retail Legend: Blue card played → gig increase (Jackie Welles) ────────
+  {
+    id: "legendJackieWellesPourOneOutForMeRetail",
+    group: "legend-attack-trigger",
+    label: "Jackie Welles (Retail) · blue card triggers gig increase",
+    description:
+      "P1 has Jackie Welles (Retail) (blue) revealed. P1 holds Dying Night - V's Pistol (blue gear) and has a gig at face value 2.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaFloorIt, c.alphaDyingNightVSPistol],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.boxTopperRetailJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaSaburoArasakaStubbornPatriach],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendJackieWellesPourOneOutForMeRetail"), autoGainGig: false },
+      ),
+  },
+
+  // ── Retail Legend: FLIP search deck for gear (Viktor Vektor) ──────────────
+  {
+    id: "legendViktorVektorSitDownAndRelaxRetail",
+    group: "legend-call-trigger",
+    label: "Viktor Vektor (Retail) · FLIP searches deck for low-cost gear",
+    description:
+      "P1 can call Viktor Vektor (Retail) (yellow). On FLIP (call), searches top 5 cards for up to 2 gear with cost ≤ 2.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaRuthlessLowlife],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckViktorVektorSitDownAndRelax, faceDown: true },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendViktorVektorSitDownAndRelaxRetail"), autoGainGig: false },
+      );
+      setPlayerDeckToDefinitions(engine, P1, [
+        c.alphaKiroshiOptics,
+        c.alphaMantisBlades,
+        c.alphaSandevistan,
+        c.alphaFloorIt,
+        c.alphaDyingNightVSPistol,
+      ]);
       return engine;
     },
   },

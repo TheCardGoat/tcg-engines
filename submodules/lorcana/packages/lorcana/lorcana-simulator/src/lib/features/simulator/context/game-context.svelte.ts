@@ -420,6 +420,7 @@ export interface LorcanaGameContextValue {
     ownerId: string | null | undefined,
   ) => LorcanaResolvedPlayerVisualSettings;
   getOwnPlayerVisualSettings: () => LorcanaPlayerVisualSettings | undefined;
+  setOwnPlayerVisualSettings: (settings: LorcanaPlayerVisualSettings) => void;
   setSelectedCardId: (nextSelectedCardId: string | null) => void;
   setSelectedMulliganCardIds: (nextSelectedMulliganCardIds: string[]) => void;
   setChallengeSourceCardId: (nextChallengeSourceCardId: string | null) => void;
@@ -707,7 +708,7 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
   #lastTrackedMoveAt: number | null = null;
   #matchAnalyticsContext: { mode?: string; format?: string; deckId?: string } = {};
   #readModel: SimulatorShellReadModel | undefined = undefined;
-  #playerSettings: LorcanaPlayerSettingsMap = {};
+  #playerSettings = $state<LorcanaPlayerSettingsMap>({});
   #playerMetadata: Record<string, PlayerMatchMetadata> = {};
   #unsubscribeReadModelStateUpdates: (() => void) | null = null;
   #unsubscribeProtocolErrors: (() => void) | null = null;
@@ -1588,6 +1589,22 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
     const ownerId = this.getOwnerIdForSide(side);
     if (!ownerId) return undefined;
     return this.#playerSettings[ownerId];
+  };
+
+  readonly setOwnPlayerVisualSettings = (settings: LorcanaPlayerVisualSettings): void => {
+    const side = this.ownerSide();
+    if (!side) return;
+    const ownerId = this.getOwnerIdForSide(side);
+    if (!ownerId) return;
+
+    this.#playerSettings = {
+      ...this.#playerSettings,
+      [ownerId]: {
+        ...this.#playerSettings[ownerId],
+        ...settings,
+      },
+    };
+    this.#refreshSnapshot("visual-settings-change");
   };
 
   readonly setSelectedCardId = (nextSelectedCardId: string | null): void => {
@@ -4614,6 +4631,9 @@ export class LorcanaSidebarPresenter {
     this.#settings = new PlayerSettingsStore();
     this.#settings.setSaveToServer((update) => {
       saveGameplaySettings(update).catch(() => {});
+    });
+    this.#settings.setSaveVisualSettingsToServer((update) => {
+      saveVisualSettings(update.visualSettings).catch(() => {});
     });
 
     this.activePlayerGuidanceController = {
@@ -10304,11 +10324,13 @@ export class LorcanaSidebarPresenter {
   }
 
   handleCardBackChange = (id: string): void => {
-    void saveVisualSettings({ cardBack: id });
+    this.#settings.handleCardBackChange(id);
+    this.#game.setOwnPlayerVisualSettings({ cardBack: id });
   };
 
   handlePlaymatChange = (id: string): void => {
-    void saveVisualSettings({ playmat: id });
+    this.#settings.handlePlaymatChange(id);
+    this.#game.setOwnPlayerVisualSettings({ playmat: id });
   };
 }
 

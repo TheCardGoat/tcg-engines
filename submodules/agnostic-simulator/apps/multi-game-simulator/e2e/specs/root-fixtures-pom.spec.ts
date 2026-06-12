@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 import { ROOT_FIXTURE_SCENARIO_CASES } from "../../src/games/cyberpunk/testing/root-fixture-scenarios";
 
 test.describe("Cyberpunk root fixture POM smoke", () => {
@@ -8,9 +8,7 @@ test.describe("Cyberpunk root fixture POM smoke", () => {
     test(`${scenario.name} exposes structural state through Playwright`, async ({ page }) => {
       await page.goto(`/cyberpunk/simulator/tests/${scenario.id}?ai=off`);
 
-      const pom = createPlaywrightCyberpunkSimulatorPom(page);
-      await pom.waitForReady();
-      await pom.expectStructuralState();
+      const pom = await createPlaywrightCyberpunkSimulatorPom(page);
     });
   }
 });

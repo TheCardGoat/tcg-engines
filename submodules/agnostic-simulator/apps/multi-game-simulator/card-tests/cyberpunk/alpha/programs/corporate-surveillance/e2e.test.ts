@@ -1,24 +1,16 @@
 import { test } from "@playwright/test";
 
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
   expectEqual,
-} from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { progCorporateSurveillance } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Corporate Surveillance - rival field has targets", async ({ page }) => {
-  await page.goto(
-    "/cyberpunk/simulator/tests/progCorporateSurveillance?ai=off&auto-advance-attack=off",
-  );
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, progCorporateSurveillance);
 
   await pom.expectHandSize(CYBERPUNK_P1, 1);
   await pom.expectEddies(CYBERPUNK_P1, 3);

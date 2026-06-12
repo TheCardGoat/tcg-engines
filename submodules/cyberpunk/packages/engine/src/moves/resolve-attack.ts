@@ -2,6 +2,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { AttackState, FightResult } from "../types/match-state.ts";
 import { getEffectivePower } from "../active-effects/index.ts";
 import { processEventTriggers } from "../ability-executor.ts";
+import { markDefeatAtEndOfTurnIfAttacked } from "../active-effects/index.ts";
 import { getDefinitionFor, tryDefOf } from "../state/lookups.ts";
 export interface ResolveAttackInput extends MoveInput {
   args: {
@@ -248,6 +249,9 @@ export function performGigSteal(opts: {
   attackerPower: number;
 }): void {
   const { state, operations, attack, gigIds, playerId, attackerName, attackerPower } = opts;
+  if (gigIds.length > 0) {
+    markDefeatAtEndOfTurnIfAttacked(state, attack.attackerId);
+  }
   for (const gigId of gigIds) {
     operations.gig.moveGig(gigId, playerId, attack.attackerId);
   }

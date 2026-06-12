@@ -216,6 +216,8 @@ function applyFixture(
   activePlayerId: PlayerId,
   gamePhase: MatchState["G"]["gamePhase"],
   overtime: boolean,
+  preserveDeckOrder: boolean,
+  attackState: MatchState["G"]["attackState"],
 ): MatchState {
   const usedMappings = new Set<number>();
 
@@ -255,6 +257,15 @@ function applyFixture(
         }
       }
       configureFixtureTurnState(draft, activePlayerId);
+    }
+
+    if (preserveDeckOrder) {
+      preservePlayerDeckOrder(draft, "p1", p1Fixture);
+      preservePlayerDeckOrder(draft, "p2", p2Fixture);
+    }
+
+    if (attackState) {
+      draft.G.attackState = attackState;
     }
   });
 }
@@ -439,6 +450,45 @@ function warnFixture(message: string): void {
   console.warn(`[fixture] ${message}`);
 }
 
+function preservePlayerDeckOrder(
+  draft: MatchState,
+  playerId: "p1" | "p2",
+  fixture: PlayerFixture,
+): void {
+  if (!fixture.deck || typeof fixture.deck === "number") return;
+
+  const desiredOrder = (fixture.deck as FixtureCardEntry[]).map((entry) => extractCard(entry).id);
+  const player = draft.G.players[playerId];
+  if (!player) return;
+
+  const deckCards = player.zones.deck;
+  const deckMap = new Map<string, string[]>();
+  for (const id of deckCards) {
+    const inst = draft.G.cardIndex[id as string];
+    if (!inst) continue;
+    const arr = deckMap.get(inst.definitionId) ?? [];
+    arr.push(id as string);
+    deckMap.set(inst.definitionId, arr);
+  }
+
+  const newDeck: string[] = [];
+  for (const defId of desiredOrder) {
+    const ids = deckMap.get(defId);
+    if (ids && ids.length > 0) {
+      newDeck.push(ids.shift()!);
+    }
+  }
+
+  const used = new Set(newDeck);
+  for (const id of deckCards) {
+    if (!used.has(id as string)) {
+      newDeck.push(id as string);
+    }
+  }
+
+  player.zones.deck = newDeck as CardInstanceId[];
+}
+
 function applyPlayerFixture(
   draft: MatchState,
   playerId: string,
@@ -589,6 +639,8 @@ export function createTestMatchState(
   const activePlayerId = opts?.activePlayerId ?? P1;
   const gamePhase = opts?.gamePhase ?? "main";
   const overtime = opts?.overtime ?? opts?.overTime ?? false;
+  const preserveDeckOrder = opts?.preserveDeckOrder ?? false;
+  const attackState = opts?.attackState ?? null;
 
   const p1Fixture = p1;
   const p2Fixture = p2 ?? { deck: DEFAULT_DECK_SIZE };
@@ -623,6 +675,8 @@ export function createTestMatchState(
     activePlayerId,
     gamePhase,
     overtime,
+    preserveDeckOrder,
+    attackState,
   );
 }
 

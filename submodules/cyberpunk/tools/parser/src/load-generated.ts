@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { runInNewContext } from "node:vm";
-import type { CardDefinition } from "@tcg/cyberpunk-types";
+import type { CardDefinition, SetCode } from "@tcg/cyberpunk-types";
 
 interface GeneratedCardModule {
   cards: CardDefinition[];
@@ -41,7 +41,7 @@ export async function loadGeneratedCards(filePath: string): Promise<CardDefiniti
 
 export async function loadGeneratedSetCards(
   filePath: string,
-  setCode: "alpha" | "spoiler" | "promo",
+  setCode: SetCode,
 ): Promise<CardDefinition[]> {
   const cards = await loadGeneratedCards(filePath);
 

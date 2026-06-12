@@ -5,6 +5,8 @@ import { createEmptyLorcanaStaticResources } from "./testing/serialization";
 import { lorcanaRuntimeConfig } from "./runtime-game";
 
 const API_ORIGIN = "https://api.tcg.online";
+const RUN_DEBUG_REPLAY = process.env.RUN_DEBUG_REPLAY === "1";
+const debugReplayIt = RUN_DEBUG_REPLAY ? it : it.skip;
 
 // Helper to unwrap initialState, copied from turn-extractor
 function parseInitialState(raw: string) {
@@ -30,7 +32,7 @@ function parseInitialState(raw: string) {
 }
 
 describe("Replay Debugger", () => {
-  it("verifies validation of passTurn at step 119", async () => {
+  debugReplayIt("verifies validation of passTurn at step 119", async () => {
     const gameId = "mgzc1BwLK-aClC34OHFH1Ct";
     const response = await fetch(
       `${API_ORIGIN}/v1/play/replays/${encodeURIComponent(gameId)}/data`,

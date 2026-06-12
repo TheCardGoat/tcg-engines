@@ -180,7 +180,7 @@ export function PromptContainer() {
       // Each `modes[i]` has `{id, label}`; clicking a mode feeds
       // `effectIndex` (as a number) into the pending input, which lets
       // `describeProcedure` advance to its `confirm` step.
-      const modeActions: PromptAction[] = step.modes.map((mode) => ({
+      const modeActions: PromptAction[] = step.modes.map((mode: { id: string; label: string }) => ({
         label: mode.label,
         onClick: () => provide("effectIndex", Number(mode.id)),
         kind: "primary" as const,

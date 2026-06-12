@@ -5,20 +5,14 @@ import {
   spoilerAfterpartyAtLizzieS,
   spoilerVStreetkid,
 } from "@tcg/cyberpunk-cards";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { legendVStreetkid } from "@cyberpunk/testing/e2e-fixtures";
 
 test("V - Streetkid - GO SOLO defeated trigger", async ({ page }) => {
-  await page.goto("/cyberpunk/simulator/tests/legendVStreetkid?ai=off&auto-advance-attack=off");
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, legendVStreetkid);
 
   const v = await pom.getCardInZoneByDefinitionId("legendArea", CYBERPUNK_P1, spoilerVStreetkid.id);
   const defender = await pom.getCardInZoneByDefinitionId(

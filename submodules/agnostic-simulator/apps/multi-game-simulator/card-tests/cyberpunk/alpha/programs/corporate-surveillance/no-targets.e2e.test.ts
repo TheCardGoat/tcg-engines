@@ -1,25 +1,17 @@
 import { test } from "@playwright/test";
 
 import { alphaArmoredMinotaur } from "@tcg/cyberpunk-cards";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
   expectEqual,
-} from "../../../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+} from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../../../../e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { progCorporateSurveillanceNoTargets } from "@cyberpunk/testing/e2e-fixtures";
 
 test("Corporate Surveillance - no valid targets", async ({ page }) => {
-  await page.goto(
-    "/cyberpunk/simulator/tests/progCorporateSurveillanceNoTargets?ai=off&auto-advance-attack=off",
-  );
-
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
-  await pom.expectStructuralState();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, progCorporateSurveillanceNoTargets);
 
   const minotaur = await pom.getCardInZoneByDefinitionId(
     "field",

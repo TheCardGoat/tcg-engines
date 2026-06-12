@@ -436,6 +436,16 @@ export class CyberpunkTestEngine {
     return this.exec("resolveEffectTarget", { args: { targetIds } }, playerId);
   }
 
+  resolveEffectTargetIds(targetIds: ReadonlyArray<string>, opts?: MoveOpts): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
+      throw new Error("No chooseTarget effectTarget pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolveEffectTarget", { args: { targetIds: targetIds.slice() } }, playerId);
+  }
+
   // ── Judge moves (test-only state manipulation) ─────────────────────
 
   judgeSpendCard(card: CardRef, opts?: MoveOpts): CommandSuccess {
@@ -830,6 +840,20 @@ export class CyberpunkTestEngine {
   spendAllLegends(playerId: PlayerId = P1): void {
     for (const legend of this.getCardsInZone("legendArea", playerId)) {
       this.judgeSpendCard(legend, { as: playerId });
+    }
+  }
+
+  /**
+   * Pass the current player's turn and skip the gain-gig choice so the
+   * next player becomes active. Use this in fixture setup instead of
+   * `judgeSetTurnMetadata` to keep tests on the human-action surface.
+   */
+  skipToNextPlayerTurn(playerId?: PlayerId): void {
+    const active = playerId ?? this.getActivePlayerId();
+    this.completeTurn({ as: active });
+    const choice = this.getState().G.turnMetadata.pendingChoice;
+    if (choice?.type === "gainGig" && choice.payload.allowedDieIds[0]) {
+      this.gainGig(choice.payload.allowedDieIds[0] as string, { as: choice.chooserId });
     }
   }
 

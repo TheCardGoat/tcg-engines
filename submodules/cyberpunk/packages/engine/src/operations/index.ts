@@ -248,8 +248,18 @@ export function createOperations(
       const host = G.cardIndex[hostId as string];
       if (!gear || !host) return;
 
+      if (gear.meta.attachedToId) {
+        const previousHost = G.cardIndex[gear.meta.attachedToId as string];
+        if (previousHost) {
+          const previousIdx = previousHost.meta.attachedGearIds.indexOf(gearId);
+          if (previousIdx !== -1) previousHost.meta.attachedGearIds.splice(previousIdx, 1);
+        }
+      }
+
       gear.meta.attachedToId = hostId;
-      host.meta.attachedGearIds.push(gearId);
+      if (!host.meta.attachedGearIds.includes(gearId)) {
+        host.meta.attachedGearIds.push(gearId);
+      }
 
       events.push({
         type: "cardAttached",

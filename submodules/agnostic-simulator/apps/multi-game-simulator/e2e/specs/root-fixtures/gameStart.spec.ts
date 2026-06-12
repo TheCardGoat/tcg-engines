@@ -1,19 +1,16 @@
 import { test } from "@playwright/test";
 
-import { createPlaywrightCyberpunkSimulatorPom } from "../../poms/CyberpunkPlaywrightHarnessClient";
-import {
-  CYBERPUNK_P1,
-  CYBERPUNK_P2,
-} from "../../../src/games/cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "../../../src/games/cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
+import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
 test("gameStart starts both players in setup with six cards, private legends, fixer dice, and no gigs", async ({
   page,
 }) => {
   await page.goto("/cyberpunk/simulator/tests/gameStart?ai=off&auto-advance-attack=off");
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, { skipStructuralState: true });
+
   expectEqual("initial phase", await pom.getPhase(), "setup");
 
   for (const player of [CYBERPUNK_P1, CYBERPUNK_P2]) {
@@ -30,8 +27,8 @@ test("gameStart first player mulligans their hand and the game stays in setup fo
 }) => {
   await page.goto("/cyberpunk/simulator/tests/gameStart?ai=off&auto-advance-attack=off");
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
   const first = await pom.getActivePlayerId();
 
   await pom.clearDispatchLog();
@@ -47,8 +44,8 @@ test("gameStart second player keeps their hand and the game advances to the star
 }) => {
   await page.goto("/cyberpunk/simulator/tests/gameStart?ai=off&auto-advance-attack=off");
 
-  const pom = createPlaywrightCyberpunkSimulatorPom(page);
-  await pom.waitForReady();
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+
   const first = await pom.getActivePlayerId();
   const second = await pom.getOpponentOf(first);
 
