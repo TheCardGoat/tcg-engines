@@ -88,7 +88,6 @@ function commonFields(params: BaseMockParams): CommonFields {
     selectedPrintingId: null,
     artist: "Mock Artist",
     imageUrl: "",
-    sourceImageUrl: "",
     rarity: null,
     legality: "legal",
     hasSellTag: params.hasSellTag ?? false,

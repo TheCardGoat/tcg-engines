@@ -71,7 +71,6 @@ test("extracts visible detail fields from DOM fallback markup without TSR state"
     artist: "Miguel Valderrama",
     imageUrl:
       "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a028.webp?Expires=1775139886&Key-Pair-Id=K3SGRHESIHQPEW&Signature=fallback",
-    sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a028.webp",
     printings: [
       {
         href: "/cards/yorinobu-arasaka-embracing-destruction?printing=%CE%B1001",
@@ -105,6 +104,21 @@ test("normalizes raw labels, nullable legend stats, and program null power", asy
   expect(normalizedProgram.printNumber).toBe("α028");
   expect(normalizedProgram.color).toBe("yellow");
   expect(normalizedProgram.hasSellTag).toBe(true);
+  expect(normalizedProgram.imageUrl).toBe(
+    "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a028.webp",
+  );
+  expect("sourceImageUrl" in normalizedProgram).toBe(false);
+  expect(normalizedProgram.printings[0]).toMatchObject({
+    id: rawProgram.printings[0]?.id,
+    collectorNumber: "α028",
+    setCode: "alpha",
+    rarity: null,
+  });
+  expect(
+    normalizedProgram.printings.some((printing) =>
+      ["imageUrl", "sourceImageUrl", "set", "finish", "artist"].some((field) => field in printing),
+    ),
+  ).toBe(false);
 
   const rawLegend: RawCardRecord = {
     ...rawProgram,

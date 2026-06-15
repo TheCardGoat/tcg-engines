@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = {
   externalId: "cb-river-ward-detective-on-the-hunt",
   slug: "river-ward-detective-on-the-hunt",
   name: "River Ward — Detective on the Hunt",
-  subname: null,
   displayName: "River Ward — Detective on the Hunt",
   rulesText:
     "[QUICK] [Spend Icon:] Play a Gear with cost 2 or less from your hand for free.\nWhen a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "yellow",
   classifications: ["NCPD"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = {
     {
       id: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
       collectorNumber: "039",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/039.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b3895f75-e147-49b0-a6d8-6fb35b356b2e/render-mpvmn1j1.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Rare",
-      finish: "standard",
-      artist: "Daniel Valaisis",
     },
     {
       id: "b217ae88-52a6-44b3-b021-964db4534dbd",
       collectorNumber: "β039",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b039.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b217ae88-52a6-44b3-b021-964db4534dbd/render-mpu63yha.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Rare",
-      finish: "standard",
-      artist: "Daniel Valaisis",
     },
   ],
   selectedPrintingId: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
   artist: "Daniel Valaisis",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/039.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b3895f75-e147-49b0-a6d8-6fb35b356b2e/render-mpvmn1j1.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/039.webp",
   rarity: "Rare",
   legality: "legal",
   hasSellTag: true,

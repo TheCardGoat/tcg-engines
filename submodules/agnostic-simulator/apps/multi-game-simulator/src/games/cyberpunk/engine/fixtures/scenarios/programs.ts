@@ -382,6 +382,40 @@ export const programScenarios: Scenario[] = [
       ),
   },
 
+  // ── Program: Bootleg Black Sapphire Show (Retail) ───────────────────────
+  {
+    id: "progBootlegBlackSapphireShowRetail",
+    group: "program-gig-manipulation",
+    label: "Bootleg Black Sapphire Show (Retail) · sells deck and draws from odd/even Gigs",
+    description:
+      "P1 holds Bootleg Black Sapphire Show retail and controls one even-value Gig plus one odd-value Gig. Tests selling the top deck card before drawing two from the conditional bonus.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailBootlegBlackSapphireShow],
+          deck: [c.alphaCorpoSecurity, c.alphaRuthlessLowlife, c.alphaSwordwiseHuscle],
+          field: [{ card: c.alphaSecondhandBombus, spent: false }],
+          legendArea: [c.alphaVCorporateExile],
+          eddies: 5,
+          gigArea: [
+            { dieType: "d4", faceValue: 2 },
+            { dieType: "d6", faceValue: 3 },
+          ],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: false }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [],
+        },
+        {
+          seed: scenarioSeed("progBootlegBlackSapphireShowRetail"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+
   // ── Program: Carnage At The Colosseum (Retail) ───────────────────────────
   {
     id: "progCarnageAtTheColosseumRetail",

@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailPanamPalmerNomadCavalry = {
   externalId: "cb-panam-palmer-nomad-cavalry",
   slug: "panam-palmer-nomad-cavalry",
   name: "Panam Palmer — Nomad Cavalry",
-  subname: null,
   displayName: "Panam Palmer — Nomad Cavalry",
   rulesText:
     "2 €$, [Spend Icon:] Move a Gear from this Legend to an unequipped friendly Unit. If you do, ready that Unit.\nAt the end of your turn, if 5 or more friendly Units and/or Legends are equipped, ready them.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "green",
   classifications: ["Aldecado", "Merc", "Nomad"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailPanamPalmerNomadCavalry = {
     {
       id: "6e4ee31b-82d1-421c-b658-ba3f79520365",
       collectorNumber: "075",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/075.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6e4ee31b-82d1-421c-b658-ba3f79520365/render-mpvmowoc.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Epic",
-      finish: "standard",
-      artist: "Łukasz Poller",
     },
     {
       id: "2cfe57a5-cafe-4611-90fd-c72f33250933",
       collectorNumber: "β075",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b075.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/2cfe57a5-cafe-4611-90fd-c72f33250933/render-mpvknt1u.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Epic",
-      finish: "standard",
-      artist: "Łukasz Poller",
     },
   ],
   selectedPrintingId: "6e4ee31b-82d1-421c-b658-ba3f79520365",
   artist: "Łukasz Poller",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/075.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6e4ee31b-82d1-421c-b658-ba3f79520365/render-mpvmowoc.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/075.webp",
   rarity: "Epic",
   legality: "legal",
   hasSellTag: true,

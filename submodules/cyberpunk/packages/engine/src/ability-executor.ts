@@ -862,6 +862,8 @@ function describeConditionFailure(condition: Condition): string {
       return `${relativePlayerText(condition.controller)} does not control ${condition.minCount} different Gig values`;
     case "hasMinGig":
       return `${relativePlayerText(condition.controller)} does not control a min Gig`;
+    case "hasEvenAndOddGigValues":
+      return `${relativePlayerText(condition.controller)} does not control both even and odd Gig values`;
     case "hasEquippedUnitsOrLegends":
       return `${relativePlayerText(condition.controller)} does not control ${condition.minCount} equipped Units and/or Legends`;
     case "matchingGig":

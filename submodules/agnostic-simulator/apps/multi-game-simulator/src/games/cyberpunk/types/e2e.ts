@@ -119,6 +119,7 @@ export type ScenarioId =
   | "legendGoroTakemuraVengefulBodyguardRetail"
   | "legendPanamPalmerNomadCavalryRetail"
   | "legendRiverWardDetectiveOnTheHuntRetail"
+  | "progBootlegBlackSapphireShowRetail"
   | "progCarnageAtTheColosseumRetail"
   | "progChromeReverieRetail"
   | "progCyberpsychosisRetail"

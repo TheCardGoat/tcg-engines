@@ -10,7 +10,6 @@ export const alphaGoroTakemuraLosingHisWay = {
   displayName: "Goro Takemura - Losing His Way",
   rulesText:
     "This unit has +1 power during your turn for each face-up legend in your legends area.",
-  flavorText: null,
   color: "green",
   classifications: ["Arasaka", "Corpo"],
   set: {
@@ -22,21 +21,13 @@ export const alphaGoroTakemuraLosingHisWay = {
     {
       id: "4a40ce11-128b-4560-9d46-294c859475ff",
       collectorNumber: "α018",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a018.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a018.webp",
-      set: {
-        code: "alpha",
-        name: "Alpha Kit Set",
-      },
+      setCode: "alpha",
       rarity: null,
-      finish: "standard",
-      artist: "Ilya Kuvshinov",
     },
   ],
   selectedPrintingId: "4a40ce11-128b-4560-9d46-294c859475ff",
   artist: "Ilya Kuvshinov",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a018.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a018.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a018.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,

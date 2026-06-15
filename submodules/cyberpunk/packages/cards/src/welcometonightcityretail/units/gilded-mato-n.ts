@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailGildedMatoN = {
   externalId: "cb-gilded-mato-n",
   slug: "gilded-mato-n",
   name: "Gilded Matón",
-  subname: null,
   displayName: "Gilded Matón",
   rulesText:
     "[PLAY] You may defeat a friendly Gear. If you do, defeat a rival Unit with cost 3 or less.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "yellow",
   classifications: ["Ganger", "Valentino"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailGildedMatoN = {
     {
       id: "846b55b4-5e12-44b6-a204-53bd8c862888",
       collectorNumber: "045",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/045.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/846b55b4-5e12-44b6-a204-53bd8c862888/render-mpvluwwg.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Common",
-      finish: "standard",
-      artist: "Josan Gonzalez (Deathburger)",
     },
     {
       id: "cbbcb49e-6c6f-436c-91cf-e9716f6a30af",
       collectorNumber: "β045",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b045.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/cbbcb49e-6c6f-436c-91cf-e9716f6a30af/render-mpv4cq2h.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Common",
-      finish: "standard",
-      artist: "Josan Gonzalez (Deathburger)",
     },
   ],
   selectedPrintingId: "846b55b4-5e12-44b6-a204-53bd8c862888",
   artist: "Josan Gonzalez (Deathburger)",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/045.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/846b55b4-5e12-44b6-a204-53bd8c862888/render-mpvluwwg.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/045.webp",
   rarity: "Common",
   legality: "legal",
   hasSellTag: false,

@@ -1,4 +1,4 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { TheHeistRetailStarterDeckCardDefinition } from "@tcg/cyberpunk-types";
 import { theHeistRetailStarterDeckLegends } from "./legends/index.ts";
 import { theHeistRetailStarterDeckUnits } from "./units/index.ts";
 import { theHeistRetailStarterDeckGear } from "./gear/index.ts";
@@ -14,10 +14,10 @@ export const theHeistRetailStarterDeckCards = [
   ...theHeistRetailStarterDeckUnits,
   ...theHeistRetailStarterDeckGear,
   ...theHeistRetailStarterDeckPrograms,
-] satisfies StructuredCardDefinition[];
+] satisfies TheHeistRetailStarterDeckCardDefinition[];
 
 export function getTheHeistRetailStarterDeckCardBySlug(
   slug: string,
-): StructuredCardDefinition | undefined {
+): TheHeistRetailStarterDeckCardDefinition | undefined {
   return theHeistRetailStarterDeckCards.find((card) => card.slug === slug);
 }

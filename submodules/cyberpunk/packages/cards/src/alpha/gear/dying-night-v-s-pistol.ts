@@ -11,7 +11,6 @@ export const alphaDyingNightVSPistol = {
   displayName: "Dying Night - V's Pistol",
   rulesText:
     "(Equip to a unit or face-up legend.) ATTACK If you have 7+ Street Cred, defeat a rival gear card that costs 2 or less.",
-  flavorText: null,
   color: "blue",
   classifications: ["Weapon", "Merc"],
   set: {
@@ -23,21 +22,13 @@ export const alphaDyingNightVSPistol = {
     {
       id: "5f7f3400-87c7-4794-a7b9-7e74b18ed630",
       collectorNumber: "α022",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a022.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a022.webp",
-      set: {
-        code: "alpha",
-        name: "Alpha Kit Set",
-      },
+      setCode: "alpha",
       rarity: null,
-      finish: "standard",
-      artist: "Ivan Shavrin",
     },
   ],
   selectedPrintingId: "5f7f3400-87c7-4794-a7b9-7e74b18ed630",
   artist: "Ivan Shavrin",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a022.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a022.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a022.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,

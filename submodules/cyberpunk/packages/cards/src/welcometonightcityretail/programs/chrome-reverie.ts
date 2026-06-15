@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailChromeReverie = {
   externalId: "cb-chrome-reverie",
   slug: "chrome-reverie",
   name: "Chrome Reverie",
-  subname: null,
   displayName: "Chrome Reverie",
   rulesText:
     "A rival Unit can't attack until your next turn. If you control a min Gig, you may Call a Legend for free. (You can only Call a Legend once per turn.)",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "blue",
   classifications: ["Braindance"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailChromeReverie = {
     {
       id: "3f0319b8-e315-4e71-85b7-147a5b8ceba5",
       collectorNumber: "131",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/131.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/3f0319b8-e315-4e71-85b7-147a5b8ceba5/render-mpvmbh1k.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Common",
-      finish: "standard",
-      artist: "ADIA",
     },
     {
       id: "0be394e3-ce41-4f16-a95b-33ec951bf43c",
       collectorNumber: "β131",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b131.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/0be394e3-ce41-4f16-a95b-33ec951bf43c/render-mpvk6evl.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Common",
-      finish: "standard",
-      artist: "ADIA",
     },
   ],
   selectedPrintingId: "3f0319b8-e315-4e71-85b7-147a5b8ceba5",
   artist: "ADIA",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/131.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/3f0319b8-e315-4e71-85b7-147a5b8ceba5/render-mpvmbh1k.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/131.webp",
   rarity: "Common",
   legality: "legal",
   hasSellTag: true,

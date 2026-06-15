@@ -52,6 +52,7 @@ export const ALL_DICE: GigFixtureEntry[] = [
 ];
 
 export type CardRef = string | CardInstance | StructuredCardDefinition;
+export type CardDefinitionRef = string | StructuredCardDefinition;
 type GameEventType = GameEvent["type"];
 type GameEventOfType<T extends GameEventType> = Extract<GameEvent, { type: T }>;
 
@@ -114,6 +115,10 @@ function resolveCardRef(
   throw new Error(
     `Card "${definition.slug ?? definition.name ?? definition.id}" not found in state.`,
   );
+}
+
+function readDefinitionId(card: CardDefinitionRef): string {
+  return typeof card === "string" ? card : card.id;
 }
 
 function assertChoiceSourceMatchesCard(
@@ -662,6 +667,18 @@ export class CyberpunkTestEngine {
       .filter((c): c is CardInstance => c !== undefined);
   }
 
+  findDeckCard(card: CardDefinitionRef, opts?: MoveOpts): CardInstance {
+    const playerId = opts?.as ?? this.getActivePlayerId();
+    const definitionId = readDefinitionId(card);
+    const instance = this.getCardsInZone("deck", playerId).find((candidate) => {
+      return candidate.definitionId === definitionId;
+    });
+    if (!instance) {
+      throw new Error(`Expected ${definitionId} in ${playerId as string} deck.`);
+    }
+    return instance;
+  }
+
   findCardId(card: CardRef, zone: CardZone, playerId: PlayerId): CardInstanceId {
     return resolveCardRef(this.getState(), card, zone, playerId);
   }
@@ -1034,6 +1051,9 @@ export class PlayerHandle {
   }
   judgeStackDeck(cards: CardRef[], opts?: { replace?: boolean }): CommandSuccess {
     return this.engine.judgeStackDeck(cards, { ...opts, as: this.playerId });
+  }
+  findDeckCard(card: CardDefinitionRef): CardInstance {
+    return this.engine.findDeckCard(card, { as: this.playerId });
   }
   judgeMoveFixerDieToGigArea(opts?: {
     dieId?: string;

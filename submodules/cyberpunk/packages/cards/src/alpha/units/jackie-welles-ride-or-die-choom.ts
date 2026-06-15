@@ -10,7 +10,6 @@ export const alphaJackieWellesRideOrDieChoom = {
   displayName: "Jackie Welles - Ride Or Die Choom",
   rulesText:
     "This unit has +2 power for each of your friendly gigs. (Units steal an extra gig for every 10 power.)",
-  flavorText: null,
   color: "yellow",
   classifications: ["Merc"],
   set: {
@@ -22,21 +21,13 @@ export const alphaJackieWellesRideOrDieChoom = {
     {
       id: "a9d250d6-bc4a-4d54-81e8-ea1ab6261d76",
       collectorNumber: "α013",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a013.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a013.webp",
-      set: {
-        code: "alpha",
-        name: "Alpha Kit Set",
-      },
+      setCode: "alpha",
       rarity: null,
-      finish: "standard",
-      artist: "Ilya Kuvshinov",
     },
   ],
   selectedPrintingId: "a9d250d6-bc4a-4d54-81e8-ea1ab6261d76",
   artist: "Ilya Kuvshinov",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a013.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a013.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a013.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,

@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailGorillaArms = {
   externalId: "cb-gorilla-arms",
   slug: "gorilla-arms",
   name: "Gorilla Arms",
-  subname: null,
   displayName: "Gorilla Arms",
   rulesText:
     "(Equip to a friendly Unit or face-up Legend.)\nThe first time this Unit steals 1 or more Gigs each turn, steal a rival Gig with a value not shared by a friendly Gig.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "yellow",
   classifications: ["Cyberware"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailGorillaArms = {
     {
       id: "e1959b9e-d32d-43be-94c3-a595809e0c28",
       collectorNumber: "060",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/060.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/e1959b9e-d32d-43be-94c3-a595809e0c28/render-mpvmy1s4.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Common",
-      finish: "standard",
-      artist: "TOPDOG Entertainment",
     },
     {
       id: "73b6b3d3-6a7f-44ed-a267-add6ae389b5a",
       collectorNumber: "β060",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b060.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/73b6b3d3-6a7f-44ed-a267-add6ae389b5a/render-mpvjtn9o.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Common",
-      finish: "standard",
-      artist: "TOPDOG Entertainment",
     },
   ],
   selectedPrintingId: "e1959b9e-d32d-43be-94c3-a595809e0c28",
   artist: "TOPDOG Entertainment",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/060.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/e1959b9e-d32d-43be-94c3-a595809e0c28/render-mpvmy1s4.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/060.webp",
   rarity: "Common",
   legality: "legal",
   hasSellTag: true,

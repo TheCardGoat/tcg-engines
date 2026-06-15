@@ -11,7 +11,6 @@ export const alphaSatoriSwordOfSaburo = {
   displayName: "Satori - Sword of Saburo",
   rulesText:
     "(Equip to a unit or face-up legend.) ATTACK If this unit wins a fight against a rival unit, draw a card.",
-  flavorText: null,
   color: "red",
   classifications: ["Weapon", "Arasaka"],
   set: {
@@ -23,21 +22,13 @@ export const alphaSatoriSwordOfSaburo = {
     {
       id: "d0cd01e9-2bb5-4cd6-abdf-19f1004a47c9",
       collectorNumber: "α020",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a020.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a020.webp",
-      set: {
-        code: "alpha",
-        name: "Alpha Kit Set",
-      },
+      setCode: "alpha",
       rarity: null,
-      finish: "standard",
-      artist: "Ivan Shavrin",
     },
   ],
   selectedPrintingId: "d0cd01e9-2bb5-4cd6-abdf-19f1004a47c9",
   artist: "Ivan Shavrin",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a020.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a020.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a020.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,

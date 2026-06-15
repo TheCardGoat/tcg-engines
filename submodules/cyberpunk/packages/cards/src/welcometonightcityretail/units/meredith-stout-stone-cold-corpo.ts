@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailMeredithStoutStoneColdCorpo = {
   externalId: "cb-meredith-stout-stone-cold-corpo",
   slug: "meredith-stout-stone-cold-corpo",
   name: "Meredith Stout — Stone Cold Corpo",
-  subname: null,
   displayName: "Meredith Stout — Stone Cold Corpo",
   rulesText:
     "[BLOCKER]\nThis Unit has +2 power while fighting a Legend.\nWhen a Rival adjusts or swaps 1 or more friendly Gigs, you may add a card from your trash to your hand.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "red",
   classifications: ["Corpo", "Militech"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailMeredithStoutStoneColdCorpo = {
     {
       id: "5939771d-bdcc-4b42-aea4-376311189e93",
       collectorNumber: "014",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/014.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/5939771d-bdcc-4b42-aea4-376311189e93/render-mpvm79jg.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Rare",
-      finish: "standard",
-      artist: "Daniel Valaisis",
     },
     {
       id: "96e76b12-4e53-4e2c-aca3-3fedf6f21e18",
       collectorNumber: "β014",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b014.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/96e76b12-4e53-4e2c-aca3-3fedf6f21e18/render-mpv4pykc.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Rare",
-      finish: "standard",
-      artist: "Daniel Valaisis",
     },
   ],
   selectedPrintingId: "5939771d-bdcc-4b42-aea4-376311189e93",
   artist: "Daniel Valaisis",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/014.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/5939771d-bdcc-4b42-aea4-376311189e93/render-mpvm79jg.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/014.webp",
   rarity: "Rare",
   legality: "legal",
   hasSellTag: false,

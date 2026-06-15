@@ -33,9 +33,9 @@ test("parser builds structured cards from generated source", async () => {
   expect(spoilerCards).toHaveLength(27);
   expect(promoCards).toHaveLength(1);
   expect(boxToppersRetailCards).toHaveLength(5);
-  expect(theHeistRetailStarterDeckCards).toHaveLength(1);
-  expect(welcomeToNightCityRetailCards).toHaveLength(28);
-  expect(cards).toHaveLength(90);
+  expect(theHeistRetailStarterDeckCards).toHaveLength(4);
+  expect(welcomeToNightCityRetailCards).toHaveLength(48);
+  expect(cards).toHaveLength(113);
 
   const armoredMinotaur = alphaCards.find((card) => card.slug === "armored-minotaur");
   expect(armoredMinotaur?.abilities).toHaveLength(1);
@@ -71,6 +71,23 @@ test("parser builds structured cards from generated source", async () => {
 
   const lucyna = promoCards.find((card) => card.slug === "lucyna-kushinada");
   expect(lucyna?.abilities).toEqual([]);
+
+  const bootlegBlackSapphireShow = welcomeToNightCityRetailCards.find(
+    (card) => card.slug === "bootleg-black-sapphire-show",
+  );
+  expect(bootlegBlackSapphireShow?.abilities[0]?.effects).toMatchObject([
+    {
+      effect: "sellFromDeck",
+      player: "friendly",
+      amount: 1,
+    },
+    {
+      effect: "draw",
+      player: "friendly",
+      amount: 2,
+      conditions: [{ condition: "hasEvenAndOddGigValues", controller: "friendly" }],
+    },
+  ]);
 
   const chromeReverie = spoilerCards.find((card) => card.slug === "chrome-reverie");
   expect(chromeReverie?.abilities[0]?.effects).toMatchObject([
@@ -183,12 +200,14 @@ test("parser builds structured cards from generated source", async () => {
       {
         id: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6",
         collectorNumber: "α001",
-        finish: "standard",
+        setCode: "alpha",
+        rarity: null,
       },
       {
         id: "0df78ba5-116a-4794-b975-7bbf85b95d3b",
         collectorNumber: "α031",
-        finish: "foil",
+        setCode: "alpha",
+        rarity: null,
       },
     ],
     selectedPrintingId: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6",
@@ -224,9 +243,9 @@ test("generator writes set card files and root indexes", async () => {
   expect(result.spoilerCards).toHaveLength(27);
   expect(result.promoCards).toHaveLength(1);
   expect(result.boxToppersRetailCards).toHaveLength(5);
-  expect(result.theHeistRetailStarterDeckCards).toHaveLength(1);
-  expect(result.welcomeToNightCityRetailCards).toHaveLength(28);
-  expect(result.retailCards).toHaveLength(34);
+  expect(result.theHeistRetailStarterDeckCards).toHaveLength(4);
+  expect(result.welcomeToNightCityRetailCards).toHaveLength(48);
+  expect(result.retailCards).toHaveLength(57);
   expect(
     result.alphaCards.find((card) => card.slug === "yorinobu-arasaka-embracing-destruction")?.id,
   ).toBe("stable-existing-yori-id");

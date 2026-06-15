@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailZetatechFaceplate = {
   externalId: "cb-zetatech-faceplate",
   slug: "zetatech-faceplate",
   name: "Zetatech Faceplate",
-  subname: null,
   displayName: "Zetatech Faceplate",
   rulesText:
     "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "yellow",
   classifications: ["Cyberware", "Zetatech"],
   set: {
@@ -24,37 +19,31 @@ export const welcomeToNightCityRetailZetatechFaceplate = {
     {
       id: "79cdc9a5-d94d-4df4-9f88-aa02fb0357b3",
       collectorNumber: "064",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/064.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/79cdc9a5-d94d-4df4-9f88-aa02fb0357b3/render-mpvn0qb5.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Uncommon",
-      finish: "standard",
-      artist: "ADIA",
     },
     {
       id: "25077971-70cc-4524-b7cf-cd8258abc28c",
       collectorNumber: "β064",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b064.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/25077971-70cc-4524-b7cf-cd8258abc28c/render-mpvjwuu4.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Uncommon",
-      finish: "standard",
-      artist: "ADIA",
+    },
+    {
+      id: "26b755e4-b754-48fc-b89b-ba8ce670d43b",
+      collectorNumber: "009",
+      setCode: "theheistretailstarterdeck",
+      rarity: "Uncommon",
+    },
+    {
+      id: "e38dee5b-9f4a-4323-a18f-aff42256b158",
+      collectorNumber: "β009",
+      setCode: "theheistbetastarterdeck",
+      rarity: "Uncommon",
     },
   ],
   selectedPrintingId: "79cdc9a5-d94d-4df4-9f88-aa02fb0357b3",
   artist: "ADIA",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/064.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/79cdc9a5-d94d-4df4-9f88-aa02fb0357b3/render-mpvn0qb5.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/064.webp",
   rarity: "Uncommon",
   legality: "legal",
   hasSellTag: true,
