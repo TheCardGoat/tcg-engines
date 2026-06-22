@@ -382,6 +382,14 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
       return dice.some((d) => d.faceValue === 1);
     }
 
+    case "hasEvenAndOddGigValues": {
+      const playerId = resolveRelativePlayer(condition.controller, ctx);
+      const player = ctx.state.G.players[playerId as string];
+      if (!player) return false;
+      const dice = player.gigArea.map((id) => ctx.state.G.gigDice[id as string]).filter(Boolean);
+      return dice.some((d) => d.faceValue % 2 === 0) && dice.some((d) => d.faceValue % 2 !== 0);
+    }
+
     case "hasEquippedUnitsOrLegends": {
       const playerId = resolveRelativePlayer(condition.controller, ctx);
       const player = ctx.state.G.players[playerId as string];

@@ -119,6 +119,7 @@ export type ScenarioId =
   | "legendGoroTakemuraVengefulBodyguardRetail"
   | "legendPanamPalmerNomadCavalryRetail"
   | "legendRiverWardDetectiveOnTheHuntRetail"
+  | "progBootlegBlackSapphireShowRetail"
   | "progCarnageAtTheColosseumRetail"
   | "progChromeReverieRetail"
   | "progCyberpsychosisRetail"
@@ -170,7 +171,8 @@ export type ScenarioId =
   | "legendYorinobuArasakaEmbracingDestructionRetail"
   | "legendViktorVektorSitDownAndRelaxRetail"
   | "progPeaceOffering"
-  | "progCarnageAtTheColosseum";
+  | "progCarnageAtTheColosseum"
+  | "progCarnageAtTheColosseumCostReduction";
 
 /**
  * Discriminated union of UI-driven engine actions. Each maps 1:1 onto a method
@@ -193,7 +195,7 @@ export type EngineAction =
       as?: PlayerId;
     }
   | { type: "attackRival"; attackerId: string; as?: PlayerId }
-  | { type: "useBlocker"; blockerId: string; as?: PlayerId }
+  | { type: "useBlocker"; blockerId: string; as?: PlayerId; success?: boolean }
   | { type: "activateAbility"; cardId: string; abilityIndex: number; as?: PlayerId }
   | { type: "resolveAttack"; pass?: boolean; as?: PlayerId }
   | { type: "resolveStealGigs"; dieIds: string[]; as?: PlayerId }

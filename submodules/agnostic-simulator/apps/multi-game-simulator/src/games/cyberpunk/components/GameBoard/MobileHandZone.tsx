@@ -1,6 +1,5 @@
 import { Card } from "./Card";
 import { CardImage } from "./CardImage";
-import { simEntityAnchor, simZoneAnchor } from "./animationAnchors";
 import { useDragDrop } from "./DragDropContext";
 import { useHandCommand, useSelectedHandCard } from "./useHandCommand";
 import { useZoneDroppable } from "./useZoneDroppable";
@@ -70,13 +69,14 @@ export function MobileHandZone({
       ref={drop.setNodeRef}
       className={`${classes.zone} ${variantClass}`}
       data-testid="hand-zone"
+      data-zone-id={zoneName}
+      data-active-fan="true"
       data-side={side}
       data-face-down={faceDown ? "true" : "false"}
       data-count={renderCount}
       data-drop-zone={!faceDown ? zoneName : undefined}
       data-drop-ready={isReturnDropReady ? "return" : undefined}
       data-drop-over={drop.isOver ? "true" : "false"}
-      {...simZoneAnchor({ id: zoneName, side, visibility: "private", role: "hand" })}
     >
       {faceDown ? (
         <div className={classes.oppCount} data-testid="opponent-hand-count">
@@ -136,12 +136,6 @@ export function MobileHandZone({
                   "data-power": card.effectivePower ?? card.power ?? undefined,
                   "data-affordable":
                     affordable === undefined ? undefined : affordable ? "true" : "false",
-                  ...simEntityAnchor({
-                    entityId: card.cardId,
-                    zoneId: zoneName,
-                    side,
-                    face: "public",
-                  }),
                 }
               : {};
           return (

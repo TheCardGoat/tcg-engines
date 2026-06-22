@@ -4,17 +4,18 @@ import {
   theHeistRetailStarterDeckCards,
   welcomeToNightCityRetailCards,
 } from "@tcg/cyberpunk-cards";
+import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
 import { CyberpunkTestEngine, P1 } from "../src/testing/index.ts";
 
 const retailCards = [
   ...boxToppersRetailCards,
   ...theHeistRetailStarterDeckCards,
   ...welcomeToNightCityRetailCards,
-];
+] satisfies StructuredCardDefinition[];
 
 describe("official retail cards", () => {
   it("loads every official retail card into an engine fixture", () => {
-    expect(retailCards).toHaveLength(34);
+    expect(retailCards).toHaveLength(57);
 
     for (const card of retailCards) {
       const engine = CyberpunkTestEngine.createWithFixture(

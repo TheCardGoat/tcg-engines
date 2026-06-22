@@ -1,5 +1,4 @@
 import { Card, type CardGearAttachment } from "./Card";
-import { simEntityAnchor, simZoneAnchor } from "./animationAnchors";
 import { useDragDrop } from "./DragDropContext";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { ZoneBadge } from "./ZoneBadge";
@@ -55,11 +54,11 @@ export function FieldZone({ units = [], opponent = false, side }: FieldZoneProps
       ref={drop.setNodeRef}
       className={`${classes.zone} ${opponent ? classes.opp : ""} ${drop.isOver ? classes.dropOver : ""}`}
       data-testid="field-zone"
+      data-zone-id={zoneName}
       data-side={side}
       data-count={units.length}
       data-drop-ready={dropReady}
       data-drop-over={drop.isOver ? "true" : "false"}
-      {...simZoneAnchor({ id: zoneName, side, visibility: "public", role: "battlefield" })}
     >
       <ZoneBadge position={opponent ? "bottom" : "top"} className={classes.fieldBadge}>
         Field
@@ -86,12 +85,6 @@ export function FieldZone({ units = [], opponent = false, side }: FieldZoneProps
             data-played-this-turn={unit.playedThisTurn ? "true" : "false"}
             data-ready={unit.tapped ? "false" : "true"}
             data-gear-count={unit.gear?.length ?? 0}
-            {...simEntityAnchor({
-              entityId: unit.cardId,
-              zoneId: zoneName,
-              side,
-              face: "public",
-            })}
           >
             <Card
               imageUrl={unit.imageUrl}

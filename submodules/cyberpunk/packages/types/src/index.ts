@@ -109,7 +109,9 @@ export type KnownCardClassification =
   | "Rocker"
   | "Rockerboy"
   | "Samurai"
+  | "Scavenger"
   | "Tech"
+  | "Trauma Team"
   | "Tyger Claws"
   | "Valentino"
   | "Vehicle"
@@ -172,12 +174,8 @@ export interface CardSet {
 export interface CardPrinting {
   id: string;
   collectorNumber: string;
-  imageUrl: string;
-  sourceImageUrl: string;
-  set: CardSet;
+  setCode: SetCode;
   rarity: CardRarity | null;
-  finish: PrintFinish;
-  artist: string;
 }
 
 export interface CardCatalogMetadata extends CardIdentity, CardText {
@@ -189,7 +187,6 @@ export interface CardCatalogMetadata extends CardIdentity, CardText {
   selectedPrintingId?: string | null;
   artist: string;
   imageUrl: string;
-  sourceImageUrl: string;
   rarity: CardRarity | null;
   legality: CardLegality;
   hasSellTag: boolean;
@@ -476,6 +473,11 @@ export interface HasMinGigCondition {
   controller: RelativePlayer;
 }
 
+export interface HasEvenAndOddGigValuesCondition {
+  condition: "hasEvenAndOddGigValues";
+  controller: RelativePlayer;
+}
+
 export interface HasEquippedUnitsOrLegendsCondition {
   condition: "hasEquippedUnitsOrLegends";
   controller: RelativePlayer;
@@ -515,6 +517,7 @@ export type Condition =
   | HasGigPairCondition
   | HasDistinctGigValuesCondition
   | HasMinGigCondition
+  | HasEvenAndOddGigValuesCondition
   | HasEquippedUnitsOrLegendsCondition
   | MatchingGigCondition
   | FightKindCondition
@@ -693,6 +696,12 @@ export interface TrashFromDeckEffect extends EffectBase {
   amount: number;
 }
 
+export interface SellFromDeckEffect extends EffectBase {
+  effect: "sellFromDeck";
+  player: RelativePlayer;
+  amount: number;
+}
+
 export interface IfYouDoEffect extends EffectBase {
   effect: "ifYouDo";
   doEffect: Effect;
@@ -769,6 +778,7 @@ export type Effect =
   | RemoveFromGameEffect
   | StealGigEffect
   | TrashFromDeckEffect
+  | SellFromDeckEffect
   | IfYouDoEffect
   | DelayedEffect
   | DefeatAtEndOfTurnIfAttacksEffect
@@ -983,6 +993,12 @@ export type TheHeistRetailStarterDeckCardDefinition = StructuredCardDefinition &
   };
 };
 
+export type EmbracingPowerRetailStarterDeckCardDefinition = StructuredCardDefinition & {
+  set: CardSet & {
+    code: "embracingpowerretailstarterdeck";
+  };
+};
+
 export type WelcomeToNightCityRetailCardDefinition = StructuredCardDefinition & {
   set: CardSet & {
     code: "welcometonightcityretail";
@@ -995,6 +1011,7 @@ export interface StructuredCardDefinitionBySetCode {
   promo: PromoCardDefinition;
   boxtoppersretail: BoxToppersRetailCardDefinition;
   theheistretailstarterdeck: TheHeistRetailStarterDeckCardDefinition;
+  embracingpowerretailstarterdeck: EmbracingPowerRetailStarterDeckCardDefinition;
   welcometonightcityretail: WelcomeToNightCityRetailCardDefinition;
 }
 

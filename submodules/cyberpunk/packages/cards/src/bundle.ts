@@ -4,6 +4,7 @@ import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
 import { promoCards } from "./promo/index.ts";
 import { spoilerCards } from "./spoiler/index.ts";
 import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
+import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
 import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
 
 const structuredCards: StructuredCardDefinition[] = [
@@ -12,6 +13,7 @@ const structuredCards: StructuredCardDefinition[] = [
   ...promoCards,
   ...boxToppersRetailCards,
   ...theHeistRetailStarterDeckCards,
+  ...embracingPowerRetailStarterDeckCards,
   ...welcomeToNightCityRetailCards,
 ];
 

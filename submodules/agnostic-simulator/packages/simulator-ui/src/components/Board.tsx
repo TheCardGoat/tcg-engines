@@ -117,6 +117,7 @@ export function Board({ table, entities, layout, label }: BoardProps) {
   return (
     <div
       className={boardClass}
+      data-testid="game-board"
       data-board-variant={variant}
       data-board-density={density}
       data-board-fit={layout.appearance?.fit ?? "content"}

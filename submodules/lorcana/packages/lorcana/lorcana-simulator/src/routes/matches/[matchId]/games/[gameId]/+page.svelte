@@ -30,11 +30,14 @@
   let startedAtMs = Date.now();
 
   function shouldLogSsrPayload(): boolean {
-    if (import.meta.env.DEV) return true;
+    if (import.meta.env.DEV) {
+      return true;
+    }
 
     const publicEnvironment = env.PUBLIC_OTEL_DEPLOYMENT_ENVIRONMENT?.toLowerCase();
     const publicApiUrl = env.PUBLIC_API_URL?.toLowerCase();
     const hostname = window.location.hostname.toLowerCase();
+
     return (
       publicEnvironment === 'staging' ||
       hostname.includes('staging') ||
@@ -43,7 +46,9 @@
   }
 
   function logSsrPayloadForDebugging(): void {
-    if (!shouldLogSsrPayload()) return;
+    if (!shouldLogSsrPayload()) {
+      return;
+    }
 
     const participantVisualSettings =
       data.mode === 'server'
@@ -79,7 +84,9 @@
       },
       body: JSON.stringify({ clientId, code }),
     });
-    if (!response.ok) return null;
+    if (!response.ok) {
+      return null;
+    }
     const body = (await response.json()) as { accessToken?: string };
     return body.accessToken ?? null;
   };
@@ -114,6 +121,7 @@
         );
       }
     });
+
     return () => {
       void clearDiscordPlayingGamePresence({
         clientId,

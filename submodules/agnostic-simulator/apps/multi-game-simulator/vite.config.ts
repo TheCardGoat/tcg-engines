@@ -126,6 +126,10 @@ export default defineConfig({
         ),
       },
       {
+        find: /^@tcg\/gateway-client$/,
+        replacement: resolve(configDir, "../../packages/gateway-client/src/index.ts"),
+      },
+      {
         find: /^@tcg\/protocol$/,
         replacement: resolve(configDir, "../../packages/protocol/src/index.ts"),
       },

@@ -1,11 +1,18 @@
 import type { ComponentType, ReactNode } from "react";
 import type { RouteObject } from "react-router-dom";
 
-import type { GameSlug } from "@tcg/simulator-contract";
+import type {
+  GameSlug,
+  SimulatorRendererPackage,
+  SimulatorRendererProps,
+} from "@tcg/simulator-contract";
 import { CyberpunkSimulatorProviders } from "../games/cyberpunk/App";
 import { cyberpunkSimulatorRoutes } from "../games/cyberpunk/Router";
+import { cyberpunkRendererPackage } from "../games/cyberpunk/cyberpunkRenderer";
 import { GundamSimulatorProviders } from "../games/gundam/App";
 import { gundamSimulatorRoutes } from "../games/gundam/Router";
+
+type RendererPackage = ComponentType<SimulatorRendererProps>;
 
 export interface MountedSimulatorRoute {
   gameSlug: GameSlug;
@@ -13,6 +20,7 @@ export interface MountedSimulatorRoute {
   basename: string;
   Providers: ComponentType<{ children: ReactNode }>;
   routes: RouteObject[];
+  rendererPackage?: SimulatorRendererPackage<RendererPackage>;
 }
 
 export const MOUNTED_SIMULATOR_ROUTES: readonly MountedSimulatorRoute[] = [
@@ -29,6 +37,7 @@ export const MOUNTED_SIMULATOR_ROUTES: readonly MountedSimulatorRoute[] = [
     basename: "/cyberpunk/simulator",
     Providers: CyberpunkSimulatorProviders,
     routes: cyberpunkSimulatorRoutes,
+    rendererPackage: cyberpunkRendererPackage,
   },
 ];
 

@@ -144,6 +144,7 @@ export function InteractionPanel({
             className="interaction-card grid gap-3 rounded-lg border border-[var(--border)] bg-[var(--surface-soft)] p-3.5"
             data-testid={`interaction-card:${interaction.id}`}
             data-interaction-id={interaction.id}
+            data-move-command={`${interaction.movePreview.engine}.${interaction.movePreview.command}`}
           >
             <div className="interaction-header">
               <p className={eyebrowClass}>active prompt</p>

@@ -39,6 +39,7 @@ const REQUIRED_FIELDS: Record<Effect["effect"], readonly string[]> = {
   removeFromGame: ["target"],
   stealGig: ["target"],
   trashFromDeck: ["player", "amount"],
+  sellFromDeck: ["player", "amount"],
   ifYouDo: ["doEffect", "ifEffects"],
   delayed: ["timing", "effects"],
   defeatAtEndOfTurnIfAttacks: ["target"],

@@ -7,6 +7,7 @@ export * from "./spoiler/index.ts";
 export * from "./promo/index.ts";
 export * from "./boxtoppersretail/index.ts";
 export * from "./theheistretailstarterdeck/index.ts";
+export * from "./embracingpowerretailstarterdeck/index.ts";
 export * from "./welcometonightcityretail/index.ts";
 
 import { cards, rawCards } from "./generated.ts";
@@ -15,6 +16,7 @@ import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
 import { promoCards } from "./promo/index.ts";
 import { spoilerCards } from "./spoiler/index.ts";
 import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
+import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
 import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
 
 export function getCardBySlug(slug: string): CardDefinition | undefined {
@@ -31,6 +33,7 @@ export const structuredCards = [
   ...promoCards,
   ...boxToppersRetailCards,
   ...theHeistRetailStarterDeckCards,
+  ...embracingPowerRetailStarterDeckCards,
   ...welcomeToNightCityRetailCards,
 ] satisfies StructuredCardDefinition[];
 

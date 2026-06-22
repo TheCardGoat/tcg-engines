@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import {
   IconArrowBarToDown,
   IconArrowBarToUp,
-  IconInfoCircle,
   IconListDetails,
   IconMaximize,
   IconMinus,
@@ -30,7 +29,7 @@ import {
   type AttackTriggerSummary,
 } from "../../engine/attackTriggers";
 import { useMoveSelection, type DirectCardMoveId } from "../GameBoard/MoveSelectionContext";
-import { CardNameToken } from "../GameBoard/CardNameToken";
+import { CardNameToken } from "../CardDisplay/CardNameToken";
 import { choiceModalActionFromInteractionView } from "./choiceModalAction";
 import {
   setChoiceModalOpen,
@@ -112,33 +111,6 @@ function HeaderActions({
         </button>
       ) : null}
     </div>
-  );
-}
-
-function PromptHelperTooltip({ text }: { text: string }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <button
-      type="button"
-      className={`${classes.iconButton} ${classes.promptHelpButton} ${
-        open ? classes.promptHelpButtonOpen : ""
-      }`}
-      data-testid="prompt-banner-helper"
-      aria-label={text}
-      aria-expanded={open}
-      title={text}
-      onBlur={() => setOpen(false)}
-      onClick={() => setOpen(true)}
-      onFocus={() => setOpen(true)}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
-      <IconInfoCircle size={14} stroke={1.8} aria-hidden="true" />
-      <span className={classes.promptHelpTooltip} role="tooltip">
-        {text}
-      </span>
-    </button>
   );
 }
 
@@ -247,21 +219,6 @@ export function PromptBanner({
     targetModalAction !== null &&
     targetModalAction.id !== "resolveTrigger" &&
     targetModalAction.id !== "resolveSearchDeck";
-  const orderedGigCopyChoiceForHeader = isOrderedGigCopyChoice(prompt.choice);
-  const targetRequirementForHeader =
-    mode === "select-target" &&
-    prompt.choice?.type === "chooseTarget" &&
-    !orderedGigCopyChoiceForHeader &&
-    (prompt.choice.payload.type === "effectTarget" ||
-      prompt.choice.payload.type === "discardFromHand")
-      ? describeChoice(prompt)
-      : null;
-  const promptHelperText = orderedGigCopyChoiceForHeader
-    ? "Select the Gig to copy from first, then select the Gig to change."
-    : targetRequirementForHeader;
-  const promptHelperAction = promptHelperText ? (
-    <PromptHelperTooltip text={promptHelperText} />
-  ) : null;
   const targetModalButton =
     showTargetModalAction && !compact ? (
       <button
@@ -289,9 +246,8 @@ export function PromptBanner({
       </button>
     ) : null;
   const extraAction =
-    promptHelperAction || targetModalButton || modalRestoreAction ? (
+    targetModalButton || modalRestoreAction ? (
       <>
-        {promptHelperAction}
         {targetModalButton}
         {modalRestoreAction}
       </>
@@ -593,7 +549,6 @@ export function PromptBanner({
             : "Choose a target for ";
     const titleRequirement =
       choice?.type === "chooseTarget" &&
-      !orderedGigCopyChoice &&
       (choice.payload.type === "effectTarget" || choice.payload.type === "discardFromHand")
         ? sentence
         : null;
@@ -621,15 +576,11 @@ export function PromptBanner({
           }
         : null;
     const compactTargetChoice = Boolean(sourceForTitle && !orderedGigCopyChoice && !compact);
-    const effectRulesText = effectSource?.rulesText;
-    const bannerEffectRulesText = !orderedGigCopyChoice ? effectRulesText : undefined;
     return (
       <div
         className={`${classes.banner} ${classes.bannerTarget} ${
           compactTargetChoice ? classes.bannerTargetSlim : ""
-        } ${orderedGigCopyChoice ? classes.bannerOrderedGigCopy : ""}${
-          compactClass ? ` ${compactClass.trim()}` : ""
-        }`}
+        }${compactClass}`}
         data-side={side}
         data-testid="prompt-banner"
         data-state="select-target"
@@ -652,23 +603,37 @@ export function PromptBanner({
             )}
           </span>
         </p>
-        {bannerEffectRulesText ? (
+        {titleRequirement ? (
+          compact && showTargetModalAction ? (
+            <button
+              type="button"
+              className={`${classes.titleMeta} ${classes.iconButton} ${classes.targetListButton} ${classes.targetRequirementButton}`}
+              data-testid="prompt-banner-message"
+              aria-label={`${titleRequirement}. Open choice modal`}
+              title={`${titleRequirement}. Open choice modal`}
+              onClick={() => setChoiceModalOpen(side, targetModalAction!.requestId, true)}
+            >
+              <IconListDetails size={18} stroke={1.9} />
+            </button>
+          ) : (
+            <span className={classes.titleMeta} data-testid="prompt-banner-message">
+              {titleRequirement}
+            </span>
+          )
+        ) : null}
+        {effectSource?.rulesText ? (
           <div className={classes.promptCopy}>
             <p className={classes.effectText} data-testid="prompt-banner-effect">
-              {bannerEffectRulesText}
+              {effectSource.rulesText}
             </p>
           </div>
         ) : null}
         {orderedGigCopyChoice || (!sourceForTitle && !titleRequirement) ? (
           <div className={classes.promptCopy}>
             {orderedGigCopyChoice ? (
-              <>
-                {effectRulesText ? (
-                  <p className={classes.effectText} data-testid="prompt-banner-effect">
-                    {effectRulesText}
-                  </p>
-                ) : null}
-              </>
+              <p className={classes.sequenceHint} data-testid="prompt-banner-sequence">
+                First Gig supplies the value. Second Gig changes to match it.
+              </p>
             ) : null}
             {!sourceForTitle && !titleRequirement ? (
               <p className={classes.message} data-testid="prompt-banner-message">

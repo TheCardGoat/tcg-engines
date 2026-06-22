@@ -15,6 +15,7 @@ const GAME_PATHS: Record<GameSlug, string> = {
   gundam: "gundam/cards",
   cyberpunk: "cyberpunk/cards",
   lorcana: "lorcana/cards",
+  platform: "platform/cards",
 };
 
 const SIZE_SUFFIXES: Record<string, string> = {

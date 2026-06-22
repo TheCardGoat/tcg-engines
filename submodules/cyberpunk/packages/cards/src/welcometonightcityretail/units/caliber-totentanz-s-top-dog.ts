@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailCaliberTotentanzSTopDog = {
   externalId: "cb-caliber-totentanz-s-top-dog",
   slug: "caliber-totentanz-s-top-dog",
   name: "Caliber — Totentanz's Top Dog",
-  subname: null,
   displayName: "Caliber — Totentanz's Top Dog",
   rulesText:
     "[PLAY] Defeat a rival Unit with cost 2 or less.\n[DEFEATED] A Rival discards 1. If the card's cost equals the value of a friendly Gig, that Rival discards 1 more.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "yellow",
   classifications: ["Ganger", "Maelstrom"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailCaliberTotentanzSTopDog = {
     {
       id: "4b5dc479-0db1-46dd-859f-e7dc34d50f03",
       collectorNumber: "044",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/044.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/4b5dc479-0db1-46dd-859f-e7dc34d50f03/render-mpvm8ira.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Rare",
-      finish: "standard",
-      artist: "André Lima Araújo & Chris O'Halloran",
     },
     {
       id: "20cd09ad-b0c6-4ffe-9036-04ff24d8fe59",
       collectorNumber: "β044",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b044.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/20cd09ad-b0c6-4ffe-9036-04ff24d8fe59/render-mpv4ralp.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Rare",
-      finish: "standard",
-      artist: "André Lima Araújo & Chris O'Halloran",
     },
   ],
   selectedPrintingId: "4b5dc479-0db1-46dd-859f-e7dc34d50f03",
   artist: "André Lima Araújo & Chris O'Halloran",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/044.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/4b5dc479-0db1-46dd-859f-e7dc34d50f03/render-mpvm8ira.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/044.webp",
   rarity: "Rare",
   legality: "legal",
   hasSellTag: false,

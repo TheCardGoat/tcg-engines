@@ -7,7 +7,7 @@ import {
   getStrategyById,
   loadPracticeMatchConfig,
 } from "../engine";
-import { BoardPage } from "./Board.page";
+import { BoardSharedPage } from "./BoardShared.page";
 import classes from "./Practice.module.css";
 
 export function PracticeMatchPage() {
@@ -29,7 +29,7 @@ export function PracticeMatchPage() {
   }
 
   return (
-    <BoardPage
+    <BoardSharedPage
       key={config.matchId}
       scenarioId={DEFAULT_SCENARIO}
       initialEngineBuilder={() => createPracticeEngine(config)}

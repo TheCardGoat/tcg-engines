@@ -11,6 +11,7 @@ import type { PlayerId } from "../types/branded.ts";
 import type { CommandEnvelope } from "../types/command.ts";
 import type { PublishedGameEvent } from "../types/game-events.ts";
 import { GundamTestEngine, PLAYER_ONE, createMockUnit, createMockResource } from "../index.ts";
+import { asPlayerId } from "../types/branded.ts";
 
 function resources(n: number) {
   return Array.from({ length: n }, () => createMockResource());
@@ -174,5 +175,66 @@ describe("MatchRuntime.onGameEvent", () => {
     for (const e of received) {
       expect(e.event.type).toBe("UNIT_DEPLOYED");
     }
+  });
+});
+
+describe("MatchRuntime.getGameLogHistory", () => {
+  it("accumulates public log entries across commands", () => {
+    const engine = GundamTestEngine.create({}, {}, { skipToMainPhase: false });
+    const runtime = engine.getRuntime();
+
+    expect(runtime.getGameLogHistory()).toHaveLength(0);
+
+    engine.doMove("chooseFirstPlayer", asPlayerId(PLAYER_ONE), { playerId: PLAYER_ONE });
+
+    const history = runtime.getGameLogHistory();
+    expect(history.length).toBeGreaterThanOrEqual(1);
+    const firstPlayerEntry = history.find(
+      (tagged) => tagged.entry.type === "gundam.setup.firstPlayerChosen",
+    );
+    expect(firstPlayerEntry).toBeDefined();
+    expect(firstPlayerEntry!.turnNumber).toBe(runtime.getState().ctx.status.turn);
+  });
+
+  it("rolls back log entries on undo", () => {
+    const engine = GundamTestEngine.create();
+    const runtime = engine.getRuntime();
+
+    engine.doMove("passTurn", asPlayerId(PLAYER_ONE), {});
+    const lengthAfterPass = runtime.getGameLogHistory().length;
+    expect(lengthAfterPass).toBeGreaterThan(0);
+    const passedEntry = runtime
+      .getGameLogHistory()
+      .find((tagged) => tagged.entry.type === "gundam.move.pass");
+    expect(passedEntry).toBeDefined();
+
+    runtime.undo(PLAYER_ONE as PlayerId);
+    expect(runtime.getGameLogHistory().length).toBeLessThan(lengthAfterPass);
+    expect(
+      runtime.getGameLogHistory().find((tagged) => tagged.entry.type === "gundam.move.pass"),
+    ).toBeUndefined();
+  });
+
+  it("restores history through loadState", () => {
+    const engine = GundamTestEngine.create({}, {}, { skipToMainPhase: false });
+    const runtime = engine.getRuntime();
+
+    engine.doMove("chooseFirstPlayer", asPlayerId(PLAYER_ONE), { playerId: PLAYER_ONE });
+    const saved = runtime.getGameLogHistory();
+    expect(saved.length).toBeGreaterThan(0);
+
+    const state = runtime.getState();
+    runtime.initialize(
+      state.ctx.playerIds.map((id) => ({
+        id,
+        name: String(id),
+        deck: [],
+        resourceDeck: [],
+      })),
+    );
+    expect(runtime.getGameLogHistory()).toHaveLength(0);
+
+    runtime.loadState(state, { gameLogHistory: saved });
+    expect(runtime.getGameLogHistory()).toHaveLength(saved.length);
   });
 });

@@ -2,7 +2,7 @@ import { IconSparkles } from "@tabler/icons-react";
 import { useEffect, type CSSProperties } from "react";
 import type { HarnessFixture } from "@tcg/simulator-contract";
 import { GAMES, groupFixturesByGame } from "../simulator/games";
-import { buildMountedHref } from "../router-paths";
+import { buildMountedHref } from "../routes/router-paths.ts";
 
 export interface GameIndexProps {
   fixtures: readonly HarnessFixture[];

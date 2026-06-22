@@ -15,7 +15,7 @@ import {
   type Side,
 } from "../../engine";
 import { CardImage } from "../GameBoard/CardImage";
-import { CardNameToken } from "../GameBoard/CardNameToken";
+import { CardNameToken } from "../CardDisplay/CardNameToken";
 import { choiceModalActionFromInteractionView } from "./choiceModalAction";
 import {
   setChoiceModalMinimized,
@@ -522,9 +522,7 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
             {canSkip ? (
               <button
                 type="button"
-                className={`${classes.secondary} ${
-                  selectedCount === 0 ? classes.emptySelectionPrimary : ""
-                }`}
+                className={classes.secondary}
                 data-testid="search-deck-skip"
                 onClick={() => {
                   submitInteraction("resolveSearchDeck", { selectedCardIds: [] });

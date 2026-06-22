@@ -1,4 +1,4 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { BoxToppersRetailCardDefinition } from "@tcg/cyberpunk-types";
 import { boxTopperRetailGoroTakemuraHandsUnclean } from "./goro-takemura-hands-unclean.ts";
 import { boxTopperRetailJackieWellesPourOneOutForMe } from "./jackie-welles-pour-one-out-for-me.ts";
 import { boxTopperRetailSaburoArasakaStubbornPatriarch } from "./saburo-arasaka-stubborn-patriarch.ts";
@@ -17,4 +17,4 @@ export const boxTopperRetailLegends = [
   boxTopperRetailSaburoArasakaStubbornPatriarch,
   boxTopperRetailVCorporateExile,
   boxTopperRetailYorinobuArasakaEmbracingDestruction,
-] satisfies StructuredCardDefinition[];
+] satisfies BoxToppersRetailCardDefinition[];

@@ -1,4 +1,4 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { WelcomeToNightCityRetailCardDefinition } from "@tcg/cyberpunk-types";
 import { welcomeToNightCityRetailLegends } from "./legends/index.ts";
 import { welcomeToNightCityRetailUnits } from "./units/index.ts";
 import { welcomeToNightCityRetailGear } from "./gear/index.ts";
@@ -14,10 +14,10 @@ export const welcomeToNightCityRetailCards = [
   ...welcomeToNightCityRetailUnits,
   ...welcomeToNightCityRetailGear,
   ...welcomeToNightCityRetailPrograms,
-] satisfies StructuredCardDefinition[];
+] satisfies WelcomeToNightCityRetailCardDefinition[];
 
 export function getWelcomeToNightCityRetailCardBySlug(
   slug: string,
-): StructuredCardDefinition | undefined {
+): WelcomeToNightCityRetailCardDefinition | undefined {
   return welcomeToNightCityRetailCards.find((card) => card.slug === slug);
 }

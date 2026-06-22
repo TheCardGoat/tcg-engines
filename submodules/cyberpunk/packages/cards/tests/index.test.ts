@@ -38,7 +38,7 @@ test("structured set exports expose parsed abilities", () => {
   expect(alphaCards).toHaveLength(28);
   expect(spoilerCards).toHaveLength(27);
   expect(promoCards).toHaveLength(1);
-  expect(structuredCards).toHaveLength(90);
+  expect(structuredCards).toHaveLength(118);
 
   const corpoSecurity = getStructuredAlphaCardBySlug("corpo-security");
   const viktor = getStructuredAlphaCardBySlug("viktor-vektor-sit-down-and-relax");

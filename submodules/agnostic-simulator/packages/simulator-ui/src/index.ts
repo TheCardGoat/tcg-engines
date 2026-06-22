@@ -1,4 +1,5 @@
 // Components
+export { AiControlPanel, type AiControlPanelProps } from "./components/AiControlPanel";
 export { Board } from "./components/Board";
 export { BoardBlock } from "./components/BoardBlock";
 export { BoardLayout } from "./components/BoardLayout";
@@ -8,7 +9,9 @@ export { CardFan } from "./components/CardFan";
 export { CardGrid } from "./components/CardGrid";
 export { CardImage, DEFAULT_CARD_ASPECT_RATIO } from "./components/CardImage";
 export { CardZone } from "./components/CardZone";
+export { ChatPanel, type ChatMessage, type ChatPanelProps } from "./components/ChatPanel";
 export { CompactHandZone } from "./components/CompactHandZone";
+export { ConnectionPanel, type ConnectionPanelProps } from "./components/ConnectionPanel";
 export { CardRow } from "./components/CardRow";
 export { ChoiceChips } from "./components/ChoiceChips";
 export { ChoiceModal } from "./components/ChoiceModal";
@@ -25,6 +28,7 @@ export { FixtureNavigation } from "./components/FixtureNavigation";
 export { HandZone } from "./components/HandZone";
 export { MobileShell } from "./components/MobileShell";
 export { InteractionPanel } from "./components/InteractionPanel";
+export { PostGameModal, type PostGameModalProps } from "./components/PostGameModal";
 export { RunbookPanel } from "./components/RunbookPanel";
 export { SeatSummary } from "./components/SeatSummary";
 export { SimulatorHarness } from "./SimulatorHarness";

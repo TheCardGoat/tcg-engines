@@ -782,7 +782,7 @@ export const unitScenarios: Scenario[] = [
 
   // ── Program: Cost reducer + cross-power defeat (Carnage At The Colosseum)
   {
-    id: "progCarnageAtTheColosseum",
+    id: "progCarnageAtTheColosseumCostReduction",
     group: "program-cost-modifier",
     label: "Carnage At The Colosseum · -1 €$ per friendly Gig at 8+ value",
     description:
@@ -809,7 +809,11 @@ export const unitScenarios: Scenario[] = [
           eddies: 4,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
-        { seed: scenarioSeed("progCarnageAtTheColosseum"), autoGainGig: false, activePlayerId: P1 },
+        {
+          seed: scenarioSeed("progCarnageAtTheColosseumCostReduction"),
+          autoGainGig: false,
+          activePlayerId: P1,
+        },
       ),
   },
 

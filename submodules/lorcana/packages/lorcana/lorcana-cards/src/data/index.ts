@@ -59,6 +59,7 @@ export interface CanonicalCard {
   keywords?: string[];
   rulesText: string;
   abilities?: AbilityDefinition[];
+  franchise?: string;
 }
 
 /** Derive display name from name + version (e.g. "Baloo - Friend and Guardian") */
@@ -341,6 +342,7 @@ function toCanonicalCard(card: LorcanaCard): CanonicalCard {
     ...(card.cardType === "action" ? { actionSubtype: card.actionSubtype ?? null } : {}),
     rulesText: cardTextToRulesText(card.text) ?? "",
     ...(card.abilities ? { abilities: card.abilities } : {}),
+    ...(card.franchise ? { franchise: card.franchise } : {}),
   };
 }
 

@@ -1,6 +1,6 @@
 import { useUserConfig, type DieType } from "../../engine";
 import classes from "./DieDisplay.module.css";
-import { getDiceImageUrl } from "./dieAssets";
+import { getDiceImageUrl } from "../DieAssets/dieAssets";
 
 /** Text code passed to the Dicier font to render a die with this face value. */
 function dicierCode(dieType: DieType, faceValue: number | undefined): string {

@@ -32,5 +32,10 @@
       ]
     }
   },
-  "include": ["src", "card-tests", "../../../cyberpunk/packages/engine/src/testing/matchers.d.ts"]
+  "include": [
+    "src",
+    "server",
+    "card-tests",
+    "../../../cyberpunk/packages/engine/src/testing/matchers.d.ts"
+  ]
 }

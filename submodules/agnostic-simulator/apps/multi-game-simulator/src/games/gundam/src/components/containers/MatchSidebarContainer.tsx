@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from "react";
 
+import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
+
 import {
   asMoveName,
   useBoardProjection,
@@ -7,13 +9,9 @@ import {
   useLogEntries,
   useViewerId,
 } from "../../game/index.ts";
-import { useMoveLogs } from "../../game/hooks.ts";
-import { m } from "../../lib/i18n/messages.ts";
-import { CardLink } from "../ui/CardLink.tsx";
+import { projectEventLog } from "../../game/simulator-snapshot.ts";
 import { MatchSidebar } from "../ui/MatchSidebar.tsx";
 import type { MatchInfo, PlayerInfo } from "../ui/types.ts";
-import { toLogTurns } from "./log-mapper.tsx";
-import { toStructuredLogTurns } from "./move-log-mapper.tsx";
 import { resolveOpponentId, zoneCount } from "./mappers.ts";
 import { useSubmitError } from "./submit-error-context.tsx";
 import { VsAiControls } from "../ui/VsAiControls.tsx";
@@ -28,38 +26,12 @@ export function MatchSidebarContainer({ onCollapse }: MatchSidebarContainerProps
   const { adapter } = useGundamGame();
   const { report } = useSubmitError();
   const logEntries = useLogEntries();
-  const moveLogs = useMoveLogs();
   const resolvedOpponent = resolveOpponentId(view, viewerId);
   const opponentId = resolvedOpponent ?? viewerId;
-  const log = useMemo(() => {
-    const prettyNames = {
-      self: m["sim.log.prettyName.self"](),
-      opponent: m["sim.log.prettyName.opponent"](),
-    };
-    const renderCardLink = (cardId: string, name: string, key: string) => (
-      <CardLink key={key} cardId={cardId} name={name} />
-    );
-    const structured =
-      moveLogs.length > 0
-        ? toStructuredLogTurns(
-            moveLogs,
-            String(viewerId),
-            adapter.cardDefinitionOf,
-            prettyNames,
-            renderCardLink,
-          )
-        : [];
-    return structured.length > 0
-      ? structured
-      : toLogTurns(
-          logEntries,
-          String(viewerId),
-          resolvedOpponent,
-          adapter.cardDefinitionOf,
-          prettyNames,
-          renderCardLink,
-        );
-  }, [logEntries, moveLogs, viewerId, resolvedOpponent, adapter]);
+  const eventLogEntries: SimulatorEventLogEntry[] = useMemo(
+    () => projectEventLog(logEntries),
+    [logEntries],
+  );
 
   const matchInfo: MatchInfo = {
     format: view.status.gameSegment ?? "setup",
@@ -111,7 +83,7 @@ export function MatchSidebarContainer({ onCollapse }: MatchSidebarContainerProps
       players={[opponent, self]}
       currentTurn={currentTurn}
       priorityHolder={priorityHolder}
-      log={log}
+      eventLogEntries={eventLogEntries}
       onUndo={onUndo}
       canUndo={canUndo}
       onConcede={onConcede}

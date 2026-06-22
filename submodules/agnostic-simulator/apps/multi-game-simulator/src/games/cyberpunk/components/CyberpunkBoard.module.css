@@ -1,0 +1,218 @@
+.root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: #07090c;
+  overflow: hidden;
+  font-family: "Share Tech Mono", monospace;
+}
+
+.boardWrap {
+  /* Hand-anchoring bleed shared by .handTop/.handBottom (which are siblings
+     of .boardShell, so vars defined only on .boardShell do not cascade to
+     them). Declaring it here makes the hands resolve the offset correctly and
+     keeps a single source of truth for overlays anchored above the hand. */
+  --hand-arc-bleed: 32px;
+  position: absolute;
+  inset: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.boardShell {
+  --hand-board-gap: clamp(18px, 3cqh, 32px);
+  --hand-arc-bleed: 32px;
+  --side-col-w: clamp(92px, calc(8.7cqh + 14px), 118px);
+  --zone-gutter: 4px;
+  --zone-pad: 6px;
+  --zone-border: 1px solid rgb(245 230 66 / 32%);
+  --unit-card-h: 15cqh;
+  --board-edge-gutter: clamp(22px, 2.6cqh, 34px);
+  --center-row-h: minmax(58px, 5.4%);
+
+  position: absolute;
+  inset: var(--hand-board-gap) 0;
+  border: 1px solid rgb(245 230 66 / 82%);
+  border-right-color: rgb(74 217 255 / 18%);
+  background: #07090c;
+  display: grid;
+  container-type: size;
+  grid-template-rows:
+    var(--board-edge-gutter) minmax(0, 1fr) var(--center-row-h) minmax(0, 1fr)
+    var(--board-edge-gutter);
+}
+
+.opponentSide {
+  grid-row: 2;
+  --priority-rgb: 255 61 138;
+}
+
+.centerWrapper {
+  grid-row: 3;
+  position: relative;
+  z-index: 70;
+  min-height: 0;
+  margin: 4px 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgb(245 230 66 / 6%), transparent 58%),
+    linear-gradient(
+      90deg,
+      rgb(245 230 66 / 8%) 0,
+      rgb(245 230 66 / 8%) 1px,
+      transparent 1px,
+      transparent calc(100% - 1px),
+      rgb(245 230 66 / 8%) calc(100% - 1px)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 42px,
+      rgb(245 230 66 / 5%) 42px,
+      rgb(245 230 66 / 5%) 43px
+    ),
+    #07090c;
+}
+
+.playerSide {
+  grid-row: 4;
+  --priority-rgb: 74 217 255;
+}
+
+.opponentSide,
+.playerSide {
+  position: relative;
+  min-height: 0;
+  isolation: isolate;
+  transition:
+    filter 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.opponentSide > *,
+.playerSide > * {
+  position: relative;
+  z-index: 1;
+}
+
+.opponentSide::before,
+.playerSide::before,
+.opponentSide::after,
+.playerSide::after {
+  content: "";
+  position: absolute;
+  inset: -3px 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.opponentSide::before,
+.playerSide::before {
+  z-index: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgb(var(--priority-rgb) / 9%),
+      rgb(var(--priority-rgb) / 3%) 34%,
+      transparent 68%
+    ),
+    radial-gradient(ellipse at 18% 50%, rgb(var(--priority-rgb) / 7%), transparent 54%);
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--priority-rgb) / 20%),
+    inset 0 0 30px rgb(var(--priority-rgb) / 8%);
+}
+
+.opponentSide::before {
+  background:
+    linear-gradient(
+      270deg,
+      rgb(var(--priority-rgb) / 10%),
+      rgb(var(--priority-rgb) / 3%) 36%,
+      transparent 70%
+    ),
+    radial-gradient(ellipse at 82% 50%, rgb(var(--priority-rgb) / 8%), transparent 54%);
+}
+
+.opponentSide::after,
+.playerSide::after {
+  inset: -3px 0 auto;
+  z-index: 2;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 6%,
+    rgb(var(--priority-rgb) / 68%),
+    transparent 94%
+  );
+  box-shadow: 0 0 12px rgb(var(--priority-rgb) / 24%);
+}
+
+.playerSide::after {
+  inset: auto 0 -3px;
+}
+
+.opponentSide[data-priority="true"],
+.playerSide[data-priority="true"] {
+  filter: saturate(1.08);
+  box-shadow: 0 0 18px rgb(var(--priority-rgb) / 7%);
+}
+
+.opponentSide[data-priority="true"]::before,
+.playerSide[data-priority="true"]::before,
+.opponentSide[data-priority="true"]::after,
+.playerSide[data-priority="true"]::after {
+  opacity: 1;
+}
+
+.handTop {
+  position: absolute;
+  top: var(--hand-arc-bleed);
+  left: 0;
+  right: 0;
+  height: 18cqh;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.handBottom {
+  position: absolute;
+  bottom: var(--hand-arc-bleed);
+  left: 0;
+  right: 0;
+  height: 17cqh;
+  z-index: 180;
+  pointer-events: none;
+}
+
+/*
+  Floating action panel re-homed from MobileShell's right-hand interactions
+  column. Anchored just above the self hand (.handBottom): hand bottom offset
+  + hand height + a small gap. Centered horizontally over the self hand with a
+  capped width so it never spans the whole board. cqh matches .handBottom so
+  the offset tracks the hand at every viewport; --hand-arc-bleed is declared
+  on .boardWrap so it resolves here too.
+*/
+.actionPanelFloating {
+  position: absolute;
+  bottom: calc(var(--hand-arc-bleed) + 17cqh + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 190;
+  width: min(560px, calc(100% - 32px));
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opponentSide,
+  .playerSide {
+    transition: none;
+  }
+
+  .opponentSide::before,
+  .playerSide::before,
+  .opponentSide::after,
+  .playerSide::after {
+    transition: none;
+  }
+}

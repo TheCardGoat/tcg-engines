@@ -10,10 +10,11 @@ import {
 import { useParams, useSearchParams } from "react-router-dom";
 import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
 import {
+  createLiveMatchSession,
   stringifySimulatorConnectionDiagnostic,
   type ConnectionDiagnosticEvent,
   type SimulatorConnectionStatus,
-} from "@tcg/game-page-contract/connection-diagnostic";
+} from "@tcg/game-page-contract";
 import {
   buildDiscordRichPresenceMatchUrl,
   clearDiscordPlayingGamePresence,
@@ -24,13 +25,10 @@ import {
 import {
   buildDiscordActivityTokenUrl,
   buildGatewaySocketIoUrl,
-  openLiveGateway,
-  requestGatewayTicket,
-  requestQuickMatchGatewayTicket,
   parseLiveGatewayEvent,
-  type LiveGatewaySocket,
-  type GatewayTicket,
 } from "../src/engine/live/liveGateway.ts";
+import type { GatewayHandle } from "@tcg/gateway-client";
+import { getGatewayManager } from "../../../lib/gateway/gateway-manager.ts";
 import { reduceLiveGatewayMessage } from "../src/engine/live/liveMessages.ts";
 import {
   createInitialLiveMatchView,
@@ -59,7 +57,7 @@ import { TargetingProvider } from "../src/components/ui/targeting-context.tsx";
 import { DualModeProvider } from "../src/components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "../src/components/ui/pending-effect-selection-context.tsx";
 import { CardInspectDialog } from "../src/components/ui/CardInspectDialogContainer.tsx";
-import { GameBoard } from "../src/components/ui/GameBoard.tsx";
+import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "../src/components/ui/GameTable.tsx";
 import { FloatingUndoButton } from "../src/components/ui/FloatingUndoButton.tsx";
 import { PhaseRibbon } from "../src/components/ui/PhaseRibbon.tsx";
@@ -135,11 +133,10 @@ export function LiveMatchPage() {
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [connectionEvents, setConnectionEvents] = useState<ConnectionDiagnosticEvent[]>([]);
   const [copyFeedback, setCopyFeedback] = useState<"copied" | "failed" | null>(null);
-  const socketRef = useRef<LiveGatewaySocket | null>(null);
+  const handleRef = useRef<GatewayHandle | null>(null);
   const runtimeRef = useRef<MatchRuntime | null>(null);
   const staticResourcesRef = useRef<MatchStaticResources | null>(null);
   const latestViewRef = useRef<LiveMatchView | null>(null);
-  const authRefreshAttemptedRef = useRef(false);
   const startedAtMsRef = useRef(Date.now());
   const discordClientId =
     import.meta.env.VITE_DISCORD_ACTIVITY_CLIENT_ID ?? import.meta.env.VITE_DISCORD_CLIENT_ID;
@@ -195,15 +192,15 @@ export function LiveMatchPage() {
   }
 
   // Stable callback for the remote adapter — the simulator UI calls
-  // this for every move. Captures the latest socket from the ref so
+  // this for every move. Captures the latest handle from the ref so
   // reconnects don't need to re-wire the SimulatorApp tree.
   const remoteSubmit: RemoteSubmitFn = useCallback(
     (submission, expectedVersion) => {
-      const socket = socketRef.current;
-      if (!socket?.connected) {
+      const handle = handleRef.current;
+      if (!handle || handle.getState().status !== "connected") {
         throw new Error("Gateway is not connected.");
       }
-      socket.emit("submit_interaction", {
+      handle.emit("submit_interaction", {
         gameId,
         expectedVersion,
         submission,
@@ -226,9 +223,17 @@ export function LiveMatchPage() {
       return;
     }
 
-    let cancelled = false;
-    let socket: LiveGatewaySocket | null = null;
-    authRefreshAttemptedRef.current = false;
+    // Acquire a handle on the SHARED gundam namespace socket (the root
+    // clientLoader already holds one for presence and installed the
+    // credentials controller). ref-count → 2; releasing this handle on
+    // unmount leaves the root socket open across navigation. The root-socket
+    // owns the ticket: SSR-resolved at load and refreshed on auth failure by
+    // the library-owned credentials controller, so this page no longer
+    // resolves or refreshes gateway tickets itself.
+    const manager = getGatewayManager();
+    const handle: GatewayHandle = manager.acquire("gundam");
+    handleRef.current = handle;
+
     setConnectionStatus("connecting");
     setConnectionError(null);
     setConnectionEvents([
@@ -239,161 +244,131 @@ export function LiveMatchPage() {
       view: createInitialLiveMatchView({ matchId, gameId, playerId }),
     });
 
-    const connectGateway = (ticket: GatewayTicket) => {
-      const nextSocket = openLiveGateway(ticket);
-      socket = nextSocket;
-      socketRef.current = nextSocket;
+    const handleEvent = (type: string, payload: unknown) => {
+      const message = parseLiveGatewayEvent(type, payload);
+      if (!message) return;
+      appendConnectionEvent(setConnectionEvents, {
+        type: message.type,
+        message: message.type === "gateway_error" ? message.message : undefined,
+      });
 
-      nextSocket.on("connect", () => {
-        setConnectionStatus("connected");
-        setConnectionId(nextSocket.id ?? null);
-        appendConnectionEvent(setConnectionEvents, {
-          type: "connect",
-          message: "Gateway socket connected",
-          details: { socketId: nextSocket.id },
-        });
-        nextSocket.emit("join_game", {
+      if (message.type === "move_rejected") {
+        // eslint-disable-next-line no-console
+        console.warn("[live-match] move rejected", message.reason ?? message.code);
+      }
+      if (message.type === "gateway_error") {
+        setConnectionError(message.message ?? message.code ?? "Gateway error");
+      }
+
+      setLoadState((previous) => {
+        if (previous.status === "error" || previous.status === "idle") {
+          return previous;
+        }
+        const effect = reduceLiveGatewayMessage(previous.view, message, {
+          matchId,
           gameId,
-          role: "player",
-          correlationId: correlationId(),
+          search: searchString,
         });
+        if (effect.type === "redirect") {
+          window.location.replace(effect.href);
+          return previous;
+        }
+        if (effect.type === "ignore") return previous;
+        latestViewRef.current = effect.view;
+
+        // First state we've seen — bring up the runtime.
+        if (previous.status === "connecting") {
+          if (!effect.view.state) return previous;
+          const { runtime, staticResources } = createLiveMatchViewerEngine(effect.view.state);
+          runtimeRef.current = runtime;
+          staticResourcesRef.current = staticResources;
+          return {
+            status: "ready",
+            view: effect.view,
+            runtime,
+            staticResources,
+          };
+        }
+
+        // Already ready — overlay onto the existing runtime so the
+        // store's onStateUpdate listener triggers a render.
+        if (effect.view.state && runtimeRef.current && staticResourcesRef.current) {
+          applyLiveStateUpdate(runtimeRef.current, staticResourcesRef.current, effect.view.state);
+        }
+        return { ...previous, view: effect.view };
       });
+    };
 
-      const handleEvent = (type: string, payload: unknown) => {
-        const message = parseLiveGatewayEvent(type, payload);
-        if (!message) return;
-        appendConnectionEvent(setConnectionEvents, {
-          type: message.type,
-          message: message.type === "gateway_error" ? message.message : undefined,
-        });
+    // Single session call: owns join lifecycle, the presence map, latency
+    // probes, and connection-state mirroring. The consumer wires its game
+    // reducer (onGameEvent) and mirrors session state for UI. Gundam has no
+    // session-owned heartbeat — the manager-level loop still runs if
+    // configured, and clean-cut says don't add behavior that wasn't there.
+    const session = createLiveMatchSession({
+      handle,
+      gameId,
+      matchId,
+      resolveRole: () => "player",
+      resolveGameProfileId: () => undefined,
+      onGameEvent: (event, payload) => handleEvent(event, payload),
+    });
 
-        if (
-          ((message.type === "welcome" && message.authenticated === false) ||
-            (message.type === "gateway_error" && message.code === "unauthenticated")) &&
-          maybeRefreshTicket(nextSocket)
-        ) {
-          return;
-        }
+    session.start();
 
-        if (message.type === "move_rejected") {
-          // eslint-disable-next-line no-console
-          console.warn("[live-match] move rejected", message.reason ?? message.code);
-        }
-        if (message.type === "gateway_error") {
-          setConnectionError(message.message ?? message.code ?? "Gateway error");
-        }
+    // Mirror session-owned state into React state for rendering. The session
+    // owns status/connectionId/error; the consumer only mirrors. Connection-
+    // lifecycle diagnostic events (connect / disconnect / connect_error) are
+    // derived from status transitions because the session forwards session-
+    // level events (game_joined, presence_change, latency, ...) via
+    // onDiagnostic, which Gundam's handleEvent already records per message.
+    let prevStatus: SimulatorConnectionStatus | null = null;
+    let prevError: string | null = null;
 
-        setLoadState((previous) => {
-          if (previous.status === "error" || previous.status === "idle") {
-            return previous;
-          }
-          const effect = reduceLiveGatewayMessage(previous.view, message, {
-            matchId,
-            gameId,
-            search: searchString,
+    const unsubSessionState = session.subscribeState((s) => {
+      setConnectionStatus(s.status);
+      setConnectionId(s.connectionId);
+
+      if (s.status !== prevStatus) {
+        if (s.status === "connected" && prevStatus !== "connected") {
+          appendConnectionEvent(setConnectionEvents, {
+            type: "connect",
+            message: "Gateway socket connected",
+            details: { socketId: s.connectionId ?? undefined },
           });
-          if (effect.type === "redirect") {
-            window.location.replace(effect.href);
-            return previous;
-          }
-          if (effect.type === "ignore") return previous;
-          latestViewRef.current = effect.view;
+        }
+        if (s.status === "reconnecting" && prevStatus !== "reconnecting") {
+          appendConnectionEvent(setConnectionEvents, {
+            type: "disconnect",
+            message: "Gateway socket disconnected",
+          });
+        }
+        prevStatus = s.status;
+      }
 
-          // First state we've seen — bring up the runtime.
-          if (previous.status === "connecting") {
-            if (!effect.view.state) return previous;
-            const { runtime, staticResources } = createLiveMatchViewerEngine(effect.view.state);
-            runtimeRef.current = runtime;
-            staticResourcesRef.current = staticResources;
-            return {
-              status: "ready",
-              view: effect.view,
-              runtime,
-              staticResources,
-            };
-          }
-
-          // Already ready — overlay onto the existing runtime so the
-          // store's onStateUpdate listener triggers a render.
-          if (effect.view.state && runtimeRef.current && staticResourcesRef.current) {
-            applyLiveStateUpdate(runtimeRef.current, staticResourcesRef.current, effect.view.state);
-          }
-          return { ...previous, view: effect.view };
-        });
-      };
-
-      nextSocket.onAny(handleEvent);
-      nextSocket.on("disconnect", () => {
-        setConnectionStatus("reconnecting");
-        appendConnectionEvent(setConnectionEvents, {
-          type: "disconnect",
-          message: "Gateway socket disconnected",
-        });
-        if (socketRef.current === nextSocket) socketRef.current = null;
-      });
-      nextSocket.on("connect_error", (error) => {
-        setConnectionStatus("reconnecting");
-        setConnectionError(error.message || "Connection error");
+      // Surface the live gateway error string (and a connect_error diagnostic)
+      // only when the error changes — dedupes repeated state pushes.
+      if (s.error && s.error !== prevError) {
+        setConnectionError(s.error);
         appendConnectionEvent(setConnectionEvents, {
           type: "connect_error",
-          message: error.message || "Connection error",
+          message: s.error,
         });
-        // eslint-disable-next-line no-console
-        console.warn("[live-match] gateway connection failed", error);
-      });
-    };
-
-    const maybeRefreshTicket = (currentSocket: LiveGatewaySocket): boolean => {
-      if (authRefreshAttemptedRef.current) return false;
-      authRefreshAttemptedRef.current = true;
-      requestQuickMatchGatewayTicket({ matchId, playerId })
-        .then((fresh) => {
-          if (cancelled) return;
-          if (socketRef.current === currentSocket) socketRef.current = null;
-          currentSocket.disconnect();
-          setConnectionStatus("reconnecting");
-          appendConnectionEvent(setConnectionEvents, {
-            type: "ticket_refresh",
-            message: "Refreshing gateway credentials",
-          });
-          connectGateway(fresh);
-        })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.warn("[live-match] ticket refresh failed", error);
-        });
-      return true;
-    };
-
-    resolveGatewayTicket({ ticket: initialTicket, authToken: initialAuthToken })
-      .then((ticket) => {
-        if (!cancelled) connectGateway(ticket);
-      })
-      .catch((error) => {
-        if (cancelled) return;
-        setLoadState({
-          status: "error",
-          message: error instanceof Error ? error.message : "Failed to fetch gateway ticket.",
-        });
-        setConnectionStatus("disconnected");
-        setConnectionError(
-          error instanceof Error ? error.message : "Failed to fetch gateway ticket.",
-        );
-        appendConnectionEvent(setConnectionEvents, {
-          type: "ticket_request_failed",
-          message: error instanceof Error ? error.message : "Failed to fetch gateway ticket.",
-        });
-      });
+      }
+      prevError = s.error;
+    });
 
     return () => {
-      cancelled = true;
-      socket?.disconnect();
-      if (socketRef.current === socket) socketRef.current = null;
+      session.stop();
+      unsubSessionState();
+      if (handleRef.current === handle) handleRef.current = null;
       runtimeRef.current = null;
       staticResourcesRef.current = null;
       latestViewRef.current = null;
+      // Release only THIS handle (ref-count → 1). The root keeps the shared
+      // socket open across navigation.
+      handle.release();
     };
-  }, [gameId, initialAuthToken, initialTicket, matchId, playerId, searchString]);
+  }, [gameId, matchId, playerId, searchString]);
 
   useEffect(() => {
     startedAtMsRef.current = Date.now();
@@ -501,10 +476,9 @@ function LiveSimulatorShell({
 }: LiveSimulatorShellProps) {
   const layoutMode = useLayoutMode();
   const isMobile = layoutMode === "mobile";
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const matchTree = (
-    <GameBoard isMobile={isMobile} drawerOpen={drawerOpen} onDrawerOpenChange={setDrawerOpen}>
+    <GundamBoardLayout>
       <GameTable>
         <PlayerSeatContainer side="top" />
         {!isMobile && (
@@ -525,7 +499,7 @@ function LiveSimulatorShell({
         <MatchOverviewModalContainer />
         <SubmitErrorToast />
       </GameTable>
-    </GameBoard>
+    </GundamBoardLayout>
   );
 
   return (
@@ -615,17 +589,4 @@ function appendConnectionEvent(
   event: Omit<ConnectionDiagnosticEvent, "at">,
 ): void {
   setEvents((current) => [...current, { at: new Date().toISOString(), ...event }].slice(-20));
-}
-
-async function resolveGatewayTicket(input: {
-  ticket: string | null;
-  authToken: string | null;
-}): Promise<GatewayTicket> {
-  if (input.ticket || input.authToken) {
-    return {
-      ticket: input.ticket ?? undefined,
-      authToken: input.authToken ?? undefined,
-    };
-  }
-  return requestGatewayTicket();
 }

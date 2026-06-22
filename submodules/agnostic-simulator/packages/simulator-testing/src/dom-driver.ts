@@ -78,6 +78,10 @@ export interface SimulatorDomElement {
   first(): SimulatorDomElement;
   count(): Promise<number>;
   click(options?: SimulatorClickOptions): Promise<void>;
+  /** Programmatic click that bypasses pointer-hit testing. Useful when a real
+   *  pointer click is intercepted by overlays (e.g. Playwright) or when driving
+   *  the DOM directly (e.g. jsdom). */
+  clickJs(): Promise<void>;
   getAttribute(name: string): Promise<string | null>;
   textContent(): Promise<string>;
   isVisible(): Promise<boolean>;

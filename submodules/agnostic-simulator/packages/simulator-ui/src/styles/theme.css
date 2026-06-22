@@ -24,6 +24,31 @@
   --pill-bg: rgba(216, 229, 247, 0.12);
   --pill-text: #f8fbff;
   --pill-border: rgba(216, 229, 247, 0.28);
+
+  /* Event log tokens */
+  --log-bg: rgba(13, 27, 46, 0.64);
+  --log-bg-gradient: rgba(111, 154, 211, 0.05);
+  --log-border: rgba(111, 154, 211, 0.22);
+  --log-scrollbar: rgba(111, 154, 211, 0.28);
+  --log-turn-line: rgba(111, 154, 211, 0.22);
+  --log-turn-text: rgba(111, 154, 211, 0.55);
+  --log-turn-text-hover: rgba(111, 154, 211, 0.8);
+  --log-entry-hover-bg: rgba(111, 154, 211, 0.06);
+  --log-entry-highlight-bg: rgba(109, 76, 194, 0.1);
+  --log-focus: rgba(111, 154, 211, 0.4);
+  --log-speaker-player: rgba(74, 217, 255, 0.9);
+  --log-speaker-opponent: rgba(255, 61, 138, 0.9);
+  --log-speaker-system: rgba(245, 230, 66, 0.9);
+  --log-tag-border: rgba(216, 229, 247, 0.22);
+  --log-tag-hover-bg: rgba(216, 229, 247, 0.06);
+  --log-tag-active-border: var(--game-accent);
+  --log-tag-active-bg: rgba(109, 76, 194, 0.14);
+  --log-tag-active-text: var(--game-accent);
+  --log-tag-system: rgba(216, 229, 247, 0.65);
+  --log-tag-move: rgba(111, 154, 211, 0.8);
+  --log-tag-combat: rgba(245, 100, 100, 0.8);
+  --log-tag-ability: rgba(180, 130, 240, 0.8);
+
   --surface: #0f172a;
   --surface-soft: #1e293b;
   --text: #f8fbff;
@@ -50,6 +75,31 @@
   --pill-bg: rgba(148, 163, 184, 0.15);
   --pill-text: #334155;
   --pill-border: rgba(148, 163, 184, 0.3);
+
+  /* Event log tokens (light) */
+  --log-bg: rgba(241, 245, 249, 0.82);
+  --log-bg-gradient: rgba(148, 163, 184, 0.05);
+  --log-border: rgba(148, 163, 184, 0.3);
+  --log-scrollbar: rgba(148, 163, 184, 0.35);
+  --log-turn-line: rgba(148, 163, 184, 0.25);
+  --log-turn-text: rgba(100, 116, 139, 0.7);
+  --log-turn-text-hover: rgba(71, 85, 105, 0.9);
+  --log-entry-hover-bg: rgba(148, 163, 184, 0.1);
+  --log-entry-highlight-bg: rgba(109, 76, 194, 0.08);
+  --log-focus: rgba(109, 76, 194, 0.4);
+  --log-speaker-player: rgba(29, 78, 216, 0.9);
+  --log-speaker-opponent: rgba(190, 24, 93, 0.9);
+  --log-speaker-system: rgba(180, 83, 9, 0.9);
+  --log-tag-border: rgba(148, 163, 184, 0.3);
+  --log-tag-hover-bg: rgba(148, 163, 184, 0.08);
+  --log-tag-active-border: var(--game-accent);
+  --log-tag-active-bg: rgba(109, 76, 194, 0.1);
+  --log-tag-active-text: var(--game-accent);
+  --log-tag-system: rgba(100, 116, 139, 0.75);
+  --log-tag-move: rgba(29, 78, 216, 0.85);
+  --log-tag-combat: rgba(185, 28, 28, 0.85);
+  --log-tag-ability: rgba(126, 34, 206, 0.85);
+
   --surface: #ffffff;
   --surface-soft: #f8fafc;
   --text: #0f172a;
@@ -71,13 +121,54 @@
 [data-game="gundam"] {
   --game-accent: #1f5faa;
   --game-accent-soft: #e8f1fb;
+  --board-layout-bg: #f8fafc;
+  --board-mat-bg: #f1f5f9;
+  --board-surface: rgba(255, 255, 255, 0.96);
+  --board-surface-soft: rgba(248, 250, 252, 0.98);
+  --board-text: #0f172a;
+  --board-muted: rgba(15, 23, 42, 0.62);
+  --board-border: rgba(30, 73, 199, 0.18);
+  --board-border-strong: rgba(30, 73, 199, 0.28);
+  --board-player-label-bg: #2563eb;
+  --board-opponent-label-bg: #d7263d;
+  --board-shared-label-bg: #1f5faa;
+  --board-label-text: #ffffff;
+  --card-bg: #ffffff;
+  --card-border: rgba(30, 73, 199, 0.22);
   --card-art-a: #1f5faa;
   --card-art-b: #b8d7ff;
   --card-art-c: #18223a;
+  --pill-bg: rgba(30, 73, 199, 0.08);
+  --pill-text: #1f5faa;
+  --pill-border: rgba(30, 73, 199, 0.2);
+
+  /* Event log Gundam overrides */
+  --log-bg: rgba(255, 255, 255, 0.72);
+  --log-bg-gradient: rgba(30, 73, 199, 0.03);
+  --log-border: rgba(30, 73, 199, 0.15);
+  --log-scrollbar: rgba(30, 73, 199, 0.25);
+  --log-turn-line: rgba(30, 73, 199, 0.12);
+  --log-turn-text: rgba(30, 73, 199, 0.55);
+  --log-turn-text-hover: rgba(30, 73, 199, 0.85);
+  --log-entry-hover-bg: rgba(30, 73, 199, 0.05);
+  --log-entry-highlight-bg: rgba(30, 73, 199, 0.08);
+  --log-focus: rgba(30, 73, 199, 0.35);
+  --log-speaker-player: rgba(37, 99, 235, 0.9);
+  --log-speaker-opponent: rgba(215, 38, 61, 0.9);
+  --log-speaker-system: rgba(31, 95, 170, 0.9);
+  --log-tag-border: rgba(30, 73, 199, 0.2);
+  --log-tag-hover-bg: rgba(30, 73, 199, 0.04);
+  --log-tag-active-border: rgba(31, 95, 170, 0.7);
+  --log-tag-active-bg: rgba(31, 95, 170, 0.1);
+  --log-tag-active-text: #1f5faa;
+  --log-tag-system: rgba(100, 116, 139, 0.75);
+  --log-tag-move: rgba(31, 95, 170, 0.85);
+  --log-tag-combat: rgba(215, 38, 61, 0.85);
+  --log-tag-ability: rgba(124, 58, 237, 0.85);
 }
 
 [data-game="cyberpunk"] {
-  --game-accent: #b47919;
+  --game-accent: #f5e642;
   --game-accent-soft: #fff5df;
   --board-layout-bg: #07090c;
   --board-mat-bg: #07090c;
@@ -99,6 +190,30 @@
   --pill-bg: rgba(245, 230, 66, 0.1);
   --pill-text: #f5e642;
   --pill-border: rgba(245, 230, 66, 0.22);
+
+  /* Event log cyberpunk overrides */
+  --log-bg: rgba(4, 8, 12, 0.64);
+  --log-bg-gradient: rgba(74, 217, 255, 0.05);
+  --log-border: rgba(74, 217, 255, 0.22);
+  --log-scrollbar: rgba(74, 217, 255, 0.28);
+  --log-turn-line: rgba(74, 217, 255, 0.22);
+  --log-turn-text: rgba(74, 217, 255, 0.55);
+  --log-turn-text-hover: rgba(74, 217, 255, 0.8);
+  --log-entry-hover-bg: rgba(74, 217, 255, 0.06);
+  --log-entry-highlight-bg: rgba(245, 230, 66, 0.1);
+  --log-focus: rgba(245, 230, 66, 0.5);
+  --log-speaker-player: rgba(74, 217, 255, 0.9);
+  --log-speaker-opponent: rgba(255, 61, 138, 0.9);
+  --log-speaker-system: rgba(245, 230, 66, 0.9);
+  --log-tag-border: rgba(245, 230, 66, 0.22);
+  --log-tag-hover-bg: rgba(245, 230, 66, 0.06);
+  --log-tag-active-border: rgba(245, 230, 66, 0.78);
+  --log-tag-active-bg: rgba(245, 230, 66, 0.14);
+  --log-tag-active-text: #f5e642;
+  --log-tag-system: rgba(247, 251, 255, 0.65);
+  --log-tag-move: rgba(74, 217, 255, 0.85);
+  --log-tag-combat: rgba(255, 61, 94, 0.85);
+  --log-tag-ability: rgba(255, 159, 61, 0.85);
 }
 
 [data-game="lorcana"] {

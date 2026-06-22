@@ -28,7 +28,7 @@ import { TargetingProvider } from "../src/components/ui/targeting-context.tsx";
 import { DualModeProvider } from "../src/components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "../src/components/ui/pending-effect-selection-context.tsx";
 import { CardInspectDialog } from "../src/components/ui/CardInspectDialogContainer.tsx";
-import { GameBoard } from "../src/components/ui/GameBoard.tsx";
+import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "../src/components/ui/GameTable.tsx";
 import { PhaseRibbon } from "../src/components/ui/PhaseRibbon.tsx";
 import { HintsProvider } from "../src/lib/use-hints-enabled.ts";
@@ -179,10 +179,9 @@ interface BotVsBotShellProps {
 function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProps) {
   const layoutMode = useLayoutMode();
   const isMobile = layoutMode === "mobile";
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const matchTree = (
-    <GameBoard isMobile={isMobile} drawerOpen={drawerOpen} onDrawerOpenChange={setDrawerOpen}>
+    <GundamBoardLayout>
       <GameTable>
         <PlayerSeatContainer side="top" />
         {!isMobile && (
@@ -200,7 +199,7 @@ function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProp
         <MatchOverviewModalContainer />
         <SubmitErrorToast />
       </GameTable>
-    </GameBoard>
+    </GundamBoardLayout>
   );
 
   return (

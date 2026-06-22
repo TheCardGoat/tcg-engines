@@ -11,7 +11,7 @@ import { CYBERPUNK_GAME_SLUG } from "./apiOrigin";
 import { createLiveHttpError } from "./httpFeedback";
 import { cyberpunkRuntimeRequestHeaders, readServerRuntimeHeaders } from "./runtimeHeaders";
 import type { ChatPresetKey } from "../chat";
-import { buildMountedHref } from "../../../../router-paths";
+import { buildMountedHref } from "../../../../routes/router-paths.ts";
 
 export interface LiveMatchContext {
   match: {

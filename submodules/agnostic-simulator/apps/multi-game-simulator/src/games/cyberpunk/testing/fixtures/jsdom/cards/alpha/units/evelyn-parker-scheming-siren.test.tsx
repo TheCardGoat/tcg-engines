@@ -32,7 +32,7 @@ describe("Evelyn Parker - Scheming Siren jsdom happy path", () => {
       if (!p1GigToSteal) {
         throw new Error("Expected P1 to have a Gig for Evelyn to react to.");
       }
-      await pom.harness.dispatchEngine((engine) => {
+      await pom.harness.evalEngine((engine) => {
         const state = engine.getState().G;
         state.cardIndex[evelyn.instanceId]!.meta.spent = true;
         state.gamePhase = "main";

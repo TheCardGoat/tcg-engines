@@ -8,7 +8,7 @@ describe("Lucyna Kushinada", () => {
     expect(promoLucynaKushinada.set.code).toBe("promo");
     expect(promoLucynaKushinada.cost).toBeNull();
     expect(promoLucynaKushinada.power).toBe(0);
-    expect(promoLucynaKushinada.rulesText).toBeNull();
+    expect("rulesText" in promoLucynaKushinada).toBe(false);
     expect(promoLucynaKushinada.abilities).toEqual([]);
   });
 

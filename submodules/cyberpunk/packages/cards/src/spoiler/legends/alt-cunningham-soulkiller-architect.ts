@@ -9,7 +9,6 @@ export const spoilerAltCunninghamSoulkillerArchitect = {
   displayName: "Alt Cunningham - Soulkiller Architect",
   rulesText:
     "GO SOLO When this Legend steals a Gig, you may remove this Legend from the game. If you do, choose a Program from your trash. Play it for free.",
-  flavorText: null,
   color: "blue",
   classifications: ["Merc", "Netrunner"],
   set: {
@@ -21,21 +20,13 @@ export const spoilerAltCunninghamSoulkillerArchitect = {
     {
       id: "ba44e0d0-80ee-4ee1-8828-57cdb90aaa5f",
       collectorNumber: "121",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b121.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b121.webp",
-      set: {
-        code: "spoiler",
-        name: "Spoiler Set",
-      },
+      setCode: "spoiler",
       rarity: null,
-      finish: "foil",
-      artist: "Pandart Studio",
     },
   ],
   selectedPrintingId: "ba44e0d0-80ee-4ee1-8828-57cdb90aaa5f",
   artist: "Pandart Studio",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b121.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b121.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/121.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,

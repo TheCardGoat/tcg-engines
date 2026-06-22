@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Navigate, createBrowserRouter, RouterProvider, type RouteObject } from "react-router-dom";
-import { normalizeRouterBasename } from "../../router-paths";
+import { normalizeRouterBasename } from "../../routes/router-paths.ts";
 import { BotBenchUiPage } from "./pages/BotBenchUi.page";
 import { BotVsBotPage } from "./pages/BotVsBot.page";
 import { LiveMatchPage } from "./pages/LiveMatch.page";

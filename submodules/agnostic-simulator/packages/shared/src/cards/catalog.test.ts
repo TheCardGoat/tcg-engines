@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 
-import { createRecordCardCatalog } from "./catalog";
+import { createRecordCardCatalog } from "./catalog.js";
 
 describe("createRecordCardCatalog", () => {
   it("returns cards by id", () => {

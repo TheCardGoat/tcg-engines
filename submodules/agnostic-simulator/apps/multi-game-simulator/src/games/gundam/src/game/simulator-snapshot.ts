@@ -947,7 +947,9 @@ function fallbackOpponentId(viewerId: string): string {
   return `${viewerId}:opponent`;
 }
 
-function projectEventLog(logEntries: readonly TurnTaggedLogEntry[]): SimulatorEventLogEntry[] {
+export function projectEventLog(
+  logEntries: readonly TurnTaggedLogEntry[],
+): SimulatorEventLogEntry[] {
   return logEntries.map(({ entry, turnNumber }) => ({
     id: String(entry.id),
     turn: turnNumber,

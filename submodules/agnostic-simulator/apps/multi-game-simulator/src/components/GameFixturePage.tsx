@@ -19,7 +19,10 @@ export default function GameFixturePage({ gameSlug, fixtures, onNavigate }: Game
 
   const fixtureIds = useMemo(() => new Set(fixtures.map((f) => f.id)), [fixtures]);
 
-  const requestedFixtureId = new URLSearchParams(window.location.search).get("fixture");
+  const requestedFixtureId =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("fixture")
+      : null;
 
   const [selectedFixtureId, setSelectedFixtureId] = useState(
     requestedFixtureId && fixtureIds.has(requestedFixtureId)

@@ -3,7 +3,7 @@ import {
   shouldClearPendingAfterAuthoritativeState,
   shouldClearPendingAfterSubmitInteractionOk,
   type PendingOptimisticMove,
-} from "./livePendingMove";
+} from "./livePendingMove.js";
 
 type StateUpdateMessage = Parameters<typeof shouldClearPendingAfterAuthoritativeState>[1];
 

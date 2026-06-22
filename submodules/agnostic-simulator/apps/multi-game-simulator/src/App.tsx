@@ -4,7 +4,7 @@ import type { GameSlug } from "@tcg/simulator-contract";
 import { fixtures } from "./simulator/fixtures";
 import { findMountedSimulatorRoute } from "./simulator/mountedSimulators";
 import { isGameSlug } from "./simulator/games";
-import { normalizeRouterBasename } from "./router-paths";
+import { normalizeRouterBasename } from "./routes/router-paths.ts";
 import GameIndex from "./components/GameIndex";
 import GameFixturePage from "./components/GameFixturePage";
 import { MountedBrowserSimulator } from "./components/MountedBrowserSimulator";

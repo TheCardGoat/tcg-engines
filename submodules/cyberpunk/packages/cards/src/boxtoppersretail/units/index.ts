@@ -1,3 +1,3 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { BoxToppersRetailCardDefinition } from "@tcg/cyberpunk-types";
 
-export const boxTopperRetailUnits = [] satisfies StructuredCardDefinition[];
+export const boxTopperRetailUnits = [] satisfies BoxToppersRetailCardDefinition[];

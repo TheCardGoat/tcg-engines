@@ -6,7 +6,7 @@ import {
   getSupporterPerks,
   hasActiveAlternateArtAccess,
   normalizeSupporterPerkTier,
-} from "./supporter-perks";
+} from "./supporter-perks.js";
 
 describe("supporter perk config", () => {
   it("returns no paid perks for free or unknown tiers", () => {

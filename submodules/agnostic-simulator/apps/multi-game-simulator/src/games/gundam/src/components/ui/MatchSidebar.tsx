@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
 
+import { EventLogPanel } from "@tcg/simulator-ui";
+import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
+
 import { m } from "../../lib/i18n/messages.ts";
 import { useHintsEnabled } from "../../lib/use-hints-enabled.ts";
 import { Button } from "../primitives/index.ts";
-import type { LogItem, LogTurn, MatchInfo, PlayerInfo } from "./types.ts";
+import type { MatchInfo, PlayerInfo } from "./types.ts";
 import { UndoButton } from "./UndoButton.tsx";
 import { PlayerTimer } from "./PlayerTimer.tsx";
 
@@ -18,7 +21,7 @@ export interface MatchSidebarProps {
   readonly currentTurn: CurrentTurn;
   /** Which seat currently holds priority (fast signal, distinct from turn). */
   readonly priorityHolder?: CurrentTurn;
-  readonly log: readonly LogTurn[];
+  readonly eventLogEntries: readonly SimulatorEventLogEntry[];
   readonly onUndo: () => void;
   readonly canUndo: boolean;
   readonly onConcede: () => void;
@@ -37,7 +40,7 @@ export function MatchSidebar({
   players,
   currentTurn,
   priorityHolder,
-  log,
+  eventLogEntries,
   onUndo,
   canUndo,
   onConcede,
@@ -67,7 +70,9 @@ export function MatchSidebar({
       />
       {aboveBattleData}
       <MatchMetaBlock matchInfo={matchInfo} />
-      <EventLog log={log} />
+      <div className="flex-1 min-h-0 overflow-hidden px-hud-sm">
+        <EventLogPanel entries={eventLogEntries} />
+      </div>
       <FooterActions
         onUndo={onUndo}
         canUndo={canUndo}
@@ -279,81 +284,6 @@ function MetaRow({ label, value }: { readonly label: string; readonly value: str
       <span className="text-hud-info font-bold [text-shadow:0_0_6px_rgba(76,195,255,.35)]">
         {value}
       </span>
-    </div>
-  );
-}
-
-function EventLog({ log }: { readonly log: readonly LogTurn[] }) {
-  return (
-    <div
-      role="log"
-      aria-label={m["sim.sidebar.log.regionLabel"]()}
-      aria-live="polite"
-      className="flex-1 overflow-y-auto py-2.5 pr-hud-sm pl-hud-md min-h-0"
-    >
-      <div className="flex items-center gap-1.5 mb-2">
-        <span className="font-mono text-hud-xs text-hud-accent font-bold flex items-center gap-1.5 tracking-hud-label">
-          <span className="w-1.5 h-1.5 bg-hud-accent" style={{ clipPath: CLIP_TRIANGLE_DOWN }} />
-          {m["sim.sidebar.log.heading"]()}
-        </span>
-        <span
-          className="font-mono ml-auto text-hud-xs text-hud-info font-bold px-[7px] py-[2px] tracking-hud-display"
-          style={{
-            background: "rgba(30,73,199,.2)",
-            border: "1px solid rgba(76,195,255,.3)",
-          }}
-        >
-          {m["sim.sidebar.log.cycleCount"]({ count: log.length })}
-        </span>
-      </div>
-
-      {log.map((t, i) => (
-        <div key={i}>
-          <div
-            className="font-display text-center py-[5px] my-2.5 mb-2 text-hud-sm text-hud-accent font-extrabold tracking-hud-wide clip-hud-tag-l"
-            style={{
-              border: "1px solid rgba(45,107,255,.35)",
-              background:
-                "linear-gradient(90deg, transparent, rgba(45,107,255,.08) 50%, transparent)",
-            }}
-          >
-            {m["sim.sidebar.log.cycleHeader"]({ turn: String(t.turn).padStart(2, "0") })}
-          </div>
-          {t.groups.map((g, gi) => (
-            <LogGroup key={gi} who={g.who} items={g.items} />
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function LogGroup({ who, items }: LogItem) {
-  const isYou = who === "YOU";
-  const color = isYou ? "#4cc3ff" : "#d7263d";
-  const glow = isYou ? "rgba(76,195,255,.4)" : "rgba(255,45,122,.4)";
-  return (
-    <div
-      className="mb-2 pl-2.5"
-      style={{
-        borderLeft: `2px solid ${color}`,
-        boxShadow: `-1px 0 6px ${glow}`,
-      }}
-    >
-      <div
-        className="font-mono text-hud-xs font-bold mb-[3px] tracking-hud-label"
-        style={{ color }}
-      >
-        {isYou ? m["sim.sidebar.log.pilotTag"]() : m["sim.sidebar.log.hostileTag"]()}
-      </div>
-      {items.map((it, i) => (
-        <div
-          key={i}
-          className="font-body text-xs text-hud-text-muted mb-[2px] font-medium leading-[1.45]"
-        >
-          {it}
-        </div>
-      ))}
     </div>
   );
 }

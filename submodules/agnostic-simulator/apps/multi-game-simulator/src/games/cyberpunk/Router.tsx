@@ -11,7 +11,7 @@ import { LiveMatchPage } from "./pages/LiveMatch.page";
 import { LiveMatchLandingPage } from "./pages/LiveMatchLanding.page";
 import { ReplayPage } from "./pages/Replay.page";
 import { ReplayForkPage } from "./pages/ReplayFork.page";
-import { normalizeRouterBasename } from "../../router-paths";
+import { normalizeRouterBasename } from "../../routes/router-paths.ts";
 
 export const cyberpunkSimulatorRoutes = [
   // Root home — fixture chooser.

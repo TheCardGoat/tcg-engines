@@ -33,6 +33,7 @@ export const progCyberpsychosis = fixture("progCyberpsychosis");
 export const progChromeReverie = fixture("progChromeReverie");
 export const progPeaceOffering = fixture("progPeaceOffering");
 export const progCarnageAtTheColosseum = fixture("progCarnageAtTheColosseum");
+export const progBootlegBlackSapphireShowRetail = fixture("progBootlegBlackSapphireShowRetail");
 export const progCarnageAtTheColosseumRetail = fixture("progCarnageAtTheColosseumRetail");
 export const progChromeReverieRetail = fixture("progChromeReverieRetail");
 export const progCyberpsychosisRetail = fixture("progCyberpsychosisRetail");

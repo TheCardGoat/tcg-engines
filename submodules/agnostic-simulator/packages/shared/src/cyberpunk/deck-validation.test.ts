@@ -6,7 +6,7 @@ import {
   validateCyberpunkDeck,
   type CyberpunkDeckValidationCard,
   type CyberpunkDeckValidationEntry,
-} from "./deck-validation";
+} from "./deck-validation.js";
 
 describe("validateCyberpunkDeck", () => {
   it("accepts a deck with three unique Legends, 40-50 main deck cards, copy limits, and RAM coverage", () => {

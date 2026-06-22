@@ -463,5 +463,5 @@ export function useSideZones(side: Side): SideZoneViews {
       streetCred,
       gigCount: player.gigArea.length,
     };
-  }, [matchState, side]);
+  }, [matchState.ctx.stateID, side]);
 }

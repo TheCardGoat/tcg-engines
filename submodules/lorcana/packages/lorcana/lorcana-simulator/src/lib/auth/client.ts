@@ -6,7 +6,6 @@
 import { createAuthClient } from "better-auth/svelte";
 import { getApiOrigin } from "$lib/config/public-url-config.js";
 import { adminClient, genericOAuthClient } from "better-auth/client/plugins";
-import { sentinelClient } from "@better-auth/infra/client";
 import { stripeClient } from "@better-auth/stripe/client";
 /**
  * Base URL for the API server.
@@ -26,10 +25,5 @@ export const authClient = createAuthClient({
   fetchOptions: {
     credentials: "include",
   },
-  plugins: [
-    adminClient(),
-    sentinelClient(),
-    genericOAuthClient(),
-    stripeClient({ subscription: true }),
-  ],
+  plugins: [adminClient(), genericOAuthClient(), stripeClient({ subscription: true })],
 });

@@ -1,0 +1,123 @@
+.desktop {
+  display: grid;
+  align-items: start;
+  gap: 1rem;
+}
+
+.desktopTwoColumns {
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+}
+
+.desktopThreeColumns {
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr) minmax(280px, 360px);
+}
+
+.desktopRail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 48px;
+  max-width: 48px;
+  padding: 0.5rem 0;
+  border: 1px solid var(--board-border, rgba(216, 229, 247, 0.22));
+  border-radius: 0.5rem;
+  background: var(--board-surface, #0f172a);
+}
+
+.railToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  padding: 0;
+  border: 1px solid var(--board-border, rgba(216, 229, 247, 0.22));
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--board-text, #f8fbff);
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+.railToggle:hover {
+  background: var(--board-surface-soft, rgba(216, 229, 247, 0.08));
+}
+
+.railCollapsedContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.sidebarContainer {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mobileDrawer {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
+
+.mobileTopBar,
+.mobileBottomBar {
+  flex: 0 0 auto;
+}
+
+.mobileBoard {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid var(--board-border, rgba(216, 229, 247, 0.22));
+  background: var(--board-surface-soft, rgba(13, 27, 46, 0.64));
+}
+
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.drawerSheet {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 50;
+  width: min(360px, 85vw);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: var(--board-surface, #0f172a);
+  border-right: 1px solid var(--board-border, rgba(216, 229, 247, 0.22));
+  overflow-y: auto;
+}
+
+.drawerClose {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--board-border, rgba(216, 229, 247, 0.22));
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--board-text, #f8fbff);
+  cursor: pointer;
+}

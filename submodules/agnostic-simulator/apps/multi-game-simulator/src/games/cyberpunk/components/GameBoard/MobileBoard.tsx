@@ -15,8 +15,6 @@ import { useGameClock } from "./useGameClock";
 import { useGameState } from "./gameStateContext";
 import { AiControlPanel } from "../AiControlPanel";
 import { ChatPanel } from "../ChatPanel";
-import { ConnectionDiagnosticPopover } from "../ConnectionDiagnostics";
-import { MoveLogPanel } from "../MoveLogPanel";
 import { PromptBanner } from "../Prompt/PromptBanner";
 import { UserConfigButton } from "../UserConfig/UserConfigDialog";
 import { CombatArrowOverlay } from "./CombatArrowOverlay";
@@ -596,7 +594,6 @@ function ReconnectCue() {
 export function MobileBoard({
   playerIdentities,
   playerConnections,
-  connectionDiagnostic,
   onClaimRivalDrop,
 }: {
   playerIdentities?: PlayerIdentityBySide;
@@ -661,17 +658,7 @@ export function MobileBoard({
 
         <div className={classes.topControls}>
           <div className={classes.opponentIdentity} aria-label="Opponent status">
-            <ConnectionDiagnosticPopover
-              className={classes.connectionDot}
-              connection={playerConnections?.[rivalSide]}
-              allConnections={playerConnections}
-              diagnostic={connectionDiagnostic}
-              label={rivalIdentity?.displayName ?? "Rival"}
-              side={rivalSide}
-              playerId={rivalIdentity?.id}
-              onClaimDrop={onClaimRivalDrop}
-              claimAvailable={rivalClaimAvailable}
-            />
+            <span className={classes.connectionDot} aria-hidden="true" />
             <div className={classes.opponentIdentityText}>
               <strong
                 data-subscriber={
@@ -827,16 +814,7 @@ export function MobileBoard({
             className={`${classes.opponentIdentity} ${classes.playerIdentity}`}
             aria-label="Player status"
           >
-            <ConnectionDiagnosticPopover
-              className={classes.connectionDot}
-              connection={playerConnections?.[humanSide]}
-              allConnections={playerConnections}
-              diagnostic={connectionDiagnostic}
-              label={humanIdentity?.displayName ?? "You"}
-              side={humanSide}
-              playerId={humanIdentity?.id}
-              self
-            />
+            <span className={classes.connectionDot} aria-hidden="true" />
             <div className={classes.opponentIdentityText}>
               <strong>{humanIdentity?.displayName ?? "You"}</strong>
               <span>
@@ -869,7 +847,7 @@ export function MobileBoard({
         title="Logs"
         classNames={drawerClassNames}
       >
-        <MoveLogPanel />
+        <div>Logs are not available in this build.</div>
       </Drawer>
 
       <Drawer

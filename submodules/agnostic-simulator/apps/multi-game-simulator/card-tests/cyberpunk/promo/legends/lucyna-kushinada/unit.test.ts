@@ -46,7 +46,7 @@ describe("Lucyna Kushinada", () => {
     });
 
     it("declares no card-specific timing triggers, keywords, or abilities", () => {
-      expect(lucyna.rulesText).toBeNull();
+      expect("rulesText" in lucyna).toBe(false);
       expect(lucyna.timingTriggers).toEqual([]);
       expect(lucyna.keywords).toEqual([]);
       expect(lucyna.abilities).toEqual([]);

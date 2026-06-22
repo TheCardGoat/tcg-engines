@@ -26,6 +26,10 @@
       "types": "./src/cards/index.ts",
       "default": "./src/cards/index.ts"
     },
+    "./pack-simulator": {
+      "types": "./src/pack-simulator/index.ts",
+      "default": "./src/pack-simulator/index.ts"
+    },
     "./cards/sync": {
       "types": "./src/cards/sync.ts",
       "default": "./src/cards/sync.ts"

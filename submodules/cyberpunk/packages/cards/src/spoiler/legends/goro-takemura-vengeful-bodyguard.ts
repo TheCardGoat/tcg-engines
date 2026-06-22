@@ -9,7 +9,6 @@ export const spoilerGoroTakemuraVengefulBodyguard = {
   displayName: "Goro Takemura - Vengeful Bodyguard",
   rulesText:
     "CALL Ready this Legend. When a rival Unit attacks, [Spend Icon]: If you have a sided-pair of Gigs, give a friendly Unit with cost 4 or less +1 power and BLOCKER this turn.",
-  flavorText: null,
   color: "green",
   classifications: ["Arasaka", "Corpo"],
   set: {
@@ -21,21 +20,13 @@ export const spoilerGoroTakemuraVengefulBodyguard = {
     {
       id: "6635333e-b206-42b5-abd7-2e2f4810eb95",
       collectorNumber: "125",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b125.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b125.webp",
-      set: {
-        code: "spoiler",
-        name: "Spoiler Set",
-      },
+      setCode: "spoiler",
       rarity: null,
-      finish: "foil",
-      artist: "Pandart Studio",
     },
   ],
   selectedPrintingId: "6635333e-b206-42b5-abd7-2e2f4810eb95",
   artist: "Pandart Studio",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b125.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b125.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/125.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,

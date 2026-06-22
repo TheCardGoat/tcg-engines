@@ -11,7 +11,7 @@ import {
   RawGatewaySubmitInteractionMessageSchema,
   type RawGatewayClientMessage,
   type RawGatewayServerMessage,
-} from "./gateway";
+} from "./gateway.js";
 import {
   ExecuteMoveMessage,
   GatewayClientMessage,
@@ -21,7 +21,7 @@ import {
   LeaveGameMessage,
   RequestGameStateSyncMessage,
   SubmitInteractionMessage,
-} from "./schemas";
+} from "./schemas.js";
 
 const standaloneClientMessages: RawGatewayClientMessage[] = [
   { type: "ping", t: 123 },

@@ -44,7 +44,6 @@ export const powerThreeMockUnit = {
   rulesText: "Scenario-only mock unit with 3 power.",
   power: 3,
   imageUrl: POWER_THREE_MOCK_UNIT_IMAGE,
-  sourceImageUrl: POWER_THREE_MOCK_UNIT_IMAGE,
   abilities: [],
 } satisfies FixtureCardEntry;
 
@@ -159,6 +158,7 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   legendGoroTakemuraVengefulBodyguardRetail: "scenario:legendGoroTakemuraVengefulBodyguardRetail",
   legendPanamPalmerNomadCavalryRetail: "scenario:legendPanamPalmerNomadCavalryRetail",
   legendRiverWardDetectiveOnTheHuntRetail: "scenario:legendRiverWardDetectiveOnTheHuntRetail",
+  progBootlegBlackSapphireShowRetail: "scenario:progBootlegBlackSapphireShowRetail",
   progCarnageAtTheColosseumRetail: "scenario:progCarnageAtTheColosseumRetail",
   progChromeReverieRetail: "scenario:progChromeReverieRetail",
   progCyberpsychosisRetail: "scenario:progCyberpsychosisRetail",
@@ -212,6 +212,7 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   legendViktorVektorSitDownAndRelaxRetail: "scenario:legendViktorVektorSitDownAndRelaxRetail",
   progPeaceOffering: "scenario:progPeaceOffering",
   progCarnageAtTheColosseum: "scenario:progCarnageAtTheColosseum",
+  progCarnageAtTheColosseumCostReduction: "scenario:progCarnageAtTheColosseumCostReduction",
 };
 
 export function scenarioSeed(id: ScenarioId): string {

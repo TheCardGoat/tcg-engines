@@ -1,4 +1,5 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { WelcomeToNightCityRetailCardDefinition } from "@tcg/cyberpunk-types";
+import { welcomeToNightCityRetailAdamSmasherEnderOfLegends } from "./adam-smasher-ender-of-legends.ts";
 import { welcomeToNightCityRetailAltCunninghamSoulkillerArchitect } from "./alt-cunningham-soulkiller-architect.ts";
 import { welcomeToNightCityRetailDumDumMaelstromTriggerman } from "./dum-dum-maelstrom-triggerman.ts";
 import { welcomeToNightCityRetailEvelynParkerBeautifulEnigma } from "./evelyn-parker-beautiful-enigma.ts";
@@ -8,6 +9,7 @@ import { welcomeToNightCityRetailRiverWardDetectiveOnTheHunt } from "./river-war
 import { welcomeToNightCityRetailRoycePsychoOnTheEdge } from "./royce-psycho-on-the-edge.ts";
 import { welcomeToNightCityRetailVStreetkid } from "./v-streetkid.ts";
 
+export { welcomeToNightCityRetailAdamSmasherEnderOfLegends } from "./adam-smasher-ender-of-legends.ts";
 export { welcomeToNightCityRetailAltCunninghamSoulkillerArchitect } from "./alt-cunningham-soulkiller-architect.ts";
 export { welcomeToNightCityRetailDumDumMaelstromTriggerman } from "./dum-dum-maelstrom-triggerman.ts";
 export { welcomeToNightCityRetailEvelynParkerBeautifulEnigma } from "./evelyn-parker-beautiful-enigma.ts";
@@ -18,6 +20,7 @@ export { welcomeToNightCityRetailRoycePsychoOnTheEdge } from "./royce-psycho-on-
 export { welcomeToNightCityRetailVStreetkid } from "./v-streetkid.ts";
 
 export const welcomeToNightCityRetailLegends = [
+  welcomeToNightCityRetailAdamSmasherEnderOfLegends,
   welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
   welcomeToNightCityRetailDumDumMaelstromTriggerman,
   welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
@@ -26,4 +29,4 @@ export const welcomeToNightCityRetailLegends = [
   welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
   welcomeToNightCityRetailRoycePsychoOnTheEdge,
   welcomeToNightCityRetailVStreetkid,
-] satisfies StructuredCardDefinition[];
+] satisfies WelcomeToNightCityRetailCardDefinition[];

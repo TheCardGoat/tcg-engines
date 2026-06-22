@@ -20,6 +20,7 @@
     "./cards": "./src/cards/index.ts",
     "./cards/images": "./src/cards/images.ts",
     "./cards/catalog": "./src/cards/catalog.ts",
+    "./pack-simulator": "./src/pack-simulator/index.ts",
     "./cyberpunk": "./src/cyberpunk/index.ts",
     "./discord-rich-presence": "./src/discord-rich-presence.ts",
     "./cyberpunk/deck-validation": "./src/cyberpunk/deck-validation.ts",

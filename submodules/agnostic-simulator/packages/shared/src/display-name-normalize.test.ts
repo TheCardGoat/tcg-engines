@@ -6,7 +6,7 @@ import { describe, expect, it } from "bun:test";
 import {
   normalizeDisplayNameApostropheInsensitive,
   normalizeDisplayNameForMatch,
-} from "./display-name-normalize";
+} from "./display-name-normalize.js";
 
 describe("normalizeDisplayNameForMatch", () => {
   it("trims whitespace", () => {

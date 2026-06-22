@@ -1,17 +1,12 @@
-import { useLoaderData, useLocation, type LoaderFunctionArgs } from "react-router";
-import { platformAuthSessionContext } from "../../server/context";
+import { useLocation, useRouteLoaderData } from "react-router";
+import type { loader as rootLoader } from "../root";
 
 import App from "../App";
 import { ServerAuthSessionHydrator } from "../games/cyberpunk/auth/ServerAuthSessionHydrator";
 
-export function loader({ context }: LoaderFunctionArgs) {
-  return {
-    auth: context.get(platformAuthSessionContext),
-  };
-}
-
 export default function SimulatorRoute() {
-  const { auth } = useLoaderData<typeof loader>();
+  const data = useRouteLoaderData<typeof rootLoader>("root");
+  const auth = data?.auth ?? null;
   const location = useLocation();
 
   return (

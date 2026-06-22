@@ -1,4 +1,4 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { BoxToppersRetailCardDefinition } from "@tcg/cyberpunk-types";
 import { boxTopperRetailLegends } from "./legends/index.ts";
 import { boxTopperRetailUnits } from "./units/index.ts";
 import { boxTopperRetailGear } from "./gear/index.ts";
@@ -14,8 +14,10 @@ export const boxToppersRetailCards = [
   ...boxTopperRetailUnits,
   ...boxTopperRetailGear,
   ...boxTopperRetailPrograms,
-] satisfies StructuredCardDefinition[];
+] satisfies BoxToppersRetailCardDefinition[];
 
-export function getBoxToppersRetailCardBySlug(slug: string): StructuredCardDefinition | undefined {
+export function getBoxToppersRetailCardBySlug(
+  slug: string,
+): BoxToppersRetailCardDefinition | undefined {
   return boxToppersRetailCards.find((card) => card.slug === slug);
 }

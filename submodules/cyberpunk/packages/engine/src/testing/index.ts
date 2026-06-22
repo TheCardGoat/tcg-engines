@@ -3,6 +3,7 @@ export {
   P1,
   P2,
   type CardRef,
+  type CardDefinitionRef,
   PlayerHandle,
   ServerView,
   MoveFailedError,

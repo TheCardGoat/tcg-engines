@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import { getDefinition } from "@tcg/cyberpunk-engine";
 import type { CardsMaps } from "@tcg/shared/game-adapter";
-import { cyberpunkServerAdapter } from "./adapter";
-import { cyberpunkCreateServerEngine } from "./cyberpunk-engine-lifecycle";
+import { cyberpunkServerAdapter } from "./adapter.js";
+import { cyberpunkCreateServerEngine } from "./cyberpunk-engine-lifecycle.js";
 
 const JACKIE_ID = "8ecb2fe3-9117-40be-9ffe-adbc5bbd2899";
 const JACKIE_SLUG = "jackie-welles-pour-one-out-for-me";

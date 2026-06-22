@@ -3,8 +3,8 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import type { DeckListInvalidEntry } from "./deck-list-errors";
-import { formatInvalidEntriesComment } from "./deck-list-errors";
+import type { DeckListInvalidEntry } from "./deck-list-errors.js";
+import { formatInvalidEntriesComment } from "./deck-list-errors.js";
 
 describe("formatInvalidEntriesComment", () => {
   it("returns empty string for empty array", () => {

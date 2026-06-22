@@ -34,6 +34,7 @@
     "@tcg/cyberpunk-types": "link:../../../cyberpunk/packages/types",
     "@tcg/cyberpunk-utils": "link:../../../cyberpunk/packages/utils",
     "@tcg/game-page-contract": "link:../../packages/game-page-contract",
+    "@tcg/gateway-client": "link:../../packages/gateway-client",
     "@tcg/gundam-cards": "link:../../../gundam/packages/cards",
     "@tcg/gundam-engine": "link:../../../gundam/packages/engine",
     "@tcg/gundam-server-adapter": "link:../../packages/gundam/gundam-server-adapter",

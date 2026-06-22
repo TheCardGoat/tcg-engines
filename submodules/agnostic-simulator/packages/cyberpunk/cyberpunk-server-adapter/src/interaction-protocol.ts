@@ -426,6 +426,16 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
 function inputsForMove(move: AvailableMove): InteractionInput[] {
   switch (move.inputSpec.type) {
     case "none":
+      if (move.moveId === "resolveAttack") {
+        return [
+          booleanInput(
+            "pass",
+            { key: "cyberpunk.input.pass" },
+            { key: "cyberpunk.input.pass.true" },
+            { key: "cyberpunk.input.pass.false" },
+          ),
+        ];
+      }
       return [];
     case "selectCard":
       return [
@@ -617,6 +627,22 @@ function entityInputFromCandidates(
     max: limit.max,
     ordered: options.ordered ?? false,
     candidates: [...candidates],
+  };
+}
+
+function booleanInput(
+  id: string,
+  text: InteractionAction["text"],
+  trueText: InteractionAction["text"],
+  falseText: InteractionAction["text"],
+): InteractionInput {
+  return {
+    kind: "boolean",
+    id,
+    text,
+    required: false,
+    trueText,
+    falseText,
   };
 }
 

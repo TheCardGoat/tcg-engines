@@ -4,7 +4,9 @@ import { pathToFileURL } from "node:url";
 import { fileURLToPath } from "node:url";
 
 import {
+  deduplicateRawCardsById,
   formatGeneratedCardsModule,
+  normalizeCard,
   preserveStableCardIds,
   scrapeCatalog,
   type ScrapedCatalogSnapshot,
@@ -20,9 +22,14 @@ async function main() {
   const mergedSnapshot = existingSnapshot
     ? mergeCatalogSnapshots(existingSnapshot, scrapedSnapshot)
     : scrapedSnapshot;
+  const dedupedSnapshot: ScrapedCatalogSnapshot = {
+    rawCards: deduplicateRawCardsById(mergedSnapshot.rawCards),
+    cards: mergedSnapshot.cards,
+  };
+  const normalizedSnapshot = normalizeCatalogSnapshot(dedupedSnapshot);
   const snapshot = existingSnapshot
-    ? preserveStableCardIds(mergedSnapshot, existingSnapshot)
-    : mergedSnapshot;
+    ? preserveStableCardIds(normalizedSnapshot, existingSnapshot)
+    : normalizedSnapshot;
 
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(outputPath, formatGeneratedCardsModule(snapshot), "utf8");
@@ -30,6 +37,13 @@ async function main() {
   console.log(
     `Wrote ${snapshot.rawCards.length} raw cards and ${snapshot.cards.length} normalized cards to ${outputPath}.`,
   );
+}
+
+function normalizeCatalogSnapshot(snapshot: ScrapedCatalogSnapshot): ScrapedCatalogSnapshot {
+  return {
+    rawCards: snapshot.rawCards,
+    cards: snapshot.rawCards.map(normalizeCard),
+  };
 }
 
 async function readExistingSnapshot(outputPath: string): Promise<ScrapedCatalogSnapshot | null> {

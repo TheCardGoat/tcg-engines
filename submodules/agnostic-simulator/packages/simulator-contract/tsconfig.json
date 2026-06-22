@@ -1,6 +1,7 @@
 {
   "extends": "@tcg/typescript-config/base.json",
   "compilerOptions": {
+    "types": ["node", "@types/bun"],
     "lib": ["ESNext", "DOM"]
   },
   "include": ["src"]

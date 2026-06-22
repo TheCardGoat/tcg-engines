@@ -5,7 +5,7 @@ import {
   clearDiscordPlayingGamePresence,
   isDiscordActivityLaunch,
   updateDiscordPlayingGamePresence,
-} from "./discord-rich-presence";
+} from "./discord-rich-presence.js";
 
 describe("Discord Rich Presence helpers", () => {
   beforeEach(() => {

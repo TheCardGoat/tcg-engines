@@ -1,8 +1,8 @@
 Public export generated from:
   private repository: /home/runner/work/the-card-goat-online/the-card-goat-online
-  private commit: 0d0db2a40f5ee1d167b46703685c3a04457a12ee
-  export branch: public-sync/2026-W24
-  generated at: 2026-06-12T17:12:06Z
+  private commit: 8414e9200cef64ff263b586504b05e7d98b8c6f4
+  export branch: public-sync/2026-W26
+  generated at: 2026-06-22T01:00:01Z
 
 Allowlisted source:
   - submodules/agnostic-simulator
@@ -10,6 +10,7 @@ Allowlisted source:
   - submodules/cyberpunk
   - submodules/gundam
   - submodules/one-piece-simulator
+  - submodules/star-wars-unlimited
 
 Forbidden private path verified absent:
   - submodules/platform

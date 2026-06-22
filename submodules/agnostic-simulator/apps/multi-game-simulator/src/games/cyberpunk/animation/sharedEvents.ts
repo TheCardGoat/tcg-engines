@@ -1,7 +1,8 @@
 import type { CardZone } from "@tcg/cyberpunk-types";
 import type { SimulatorAnimationEvent } from "@tcg/simulator-ui";
-import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
+import type { SimulatorEntity } from "@tcg/simulator-contract";
 
+import { cyberpunkCardZoneToSimulatorZone } from "../engine/projectSimulator";
 import { PLAYER_SIDE_TO_ID, type Side } from "../engine";
 import type { AnimationScript, AnimationStep } from "./types";
 
@@ -173,65 +174,6 @@ function currentCardZoneForEntity(entity: SimulatorEntity): CardZone {
     default:
       return "trash";
   }
-}
-
-export function cyberpunkCardZoneToSimulatorZone(zone: CardZone, side: Side): SimulatorZone {
-  const ownerId = String(PLAYER_SIDE_TO_ID[side]);
-  const id = cyberpunkZoneAnchorId(zone, side);
-  switch (zone) {
-    case "deck":
-      return zoneDescriptor(id, "Deck", "deck", ownerId, "secret");
-    case "hand":
-      return zoneDescriptor(id, "Hand", "hand", ownerId, "private");
-    case "field":
-      return zoneDescriptor(id, "Field", "battlefield", ownerId, "public");
-    case "trash":
-      return zoneDescriptor(id, "Trash", "discard", ownerId, "public");
-    case "legendArea":
-      return zoneDescriptor(id, "Legends", "custom", ownerId, "private");
-    case "eddieArea":
-      return zoneDescriptor(id, "Eddies", "resource", ownerId, "private");
-    case "gigArea":
-      return zoneDescriptor(id, "Gigs", "resource", ownerId, "public");
-  }
-}
-
-function cyberpunkZoneAnchorId(zone: CardZone, side: Side): string {
-  const prefix = side === "player" ? "p" : "opp";
-  switch (zone) {
-    case "deck":
-      return `${prefix}-deck`;
-    case "hand":
-      return `${prefix}-hand`;
-    case "field":
-      return `${prefix}-field`;
-    case "trash":
-      return `${prefix}-trash`;
-    case "legendArea":
-      return `${prefix}-legends`;
-    case "eddieArea":
-      return `${prefix}-eddies`;
-    case "gigArea":
-      return `${prefix}-gigs`;
-  }
-}
-
-function zoneDescriptor(
-  id: string,
-  label: string,
-  role: SimulatorZone["role"],
-  ownerId: string,
-  visibility: SimulatorZone["visibility"],
-): SimulatorZone {
-  return {
-    id,
-    label,
-    role,
-    ownerId,
-    visibility,
-    entityIds: [],
-    hint: label,
-  };
 }
 
 function resolveStepSide(

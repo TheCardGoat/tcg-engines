@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
-import { PLAYER_SIDE_TO_ID } from "../engine";
+import { PLAYER_SIDE_TO_ID } from "../engine/index.js";
 import type {
   CardAttachStep,
   CardEnterStep,
@@ -9,13 +9,13 @@ import type {
   CardLandStep,
   CardMoveStep,
   LegendRevealStep,
-} from "./types";
+} from "./types.js";
 import {
   type CyberpunkSharedAnimationContext,
   cyberpunkAnimationScriptToSimulatorEvents,
   cyberpunkAnimationStepToSimulatorEvent,
   isCyberpunkAnimationStepSharedSupported,
-} from "./sharedEvents";
+} from "./sharedEvents.js";
 
 const baseEntity: SimulatorEntity = {
   id: "card-1",
@@ -144,7 +144,7 @@ describe("cyberpunkAnimationStepToSimulatorEvent", () => {
     });
     expect(cyberpunkAnimationStepToSimulatorEvent(reveal, context)).toMatchObject({
       primitive: "flipReveal",
-      zone: { id: "p-legends" },
+      zone: { id: "p-legendArea" },
     });
   });
 

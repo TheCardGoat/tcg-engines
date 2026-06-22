@@ -35,6 +35,10 @@ export async function createPlaywrightCyberpunkSimulatorPom(
     ? { fixture: fixtureOrOptions }
     : (fixtureOrOptions ?? {});
 
+  // Force a desktop viewport so the InteractionPanel is rendered inline
+  // rather than hidden behind the mobile-shell tab.
+  await page.setViewportSize({ width: 1440, height: 900 });
+
   if (options.fixture) {
     await page.goto(
       `/cyberpunk/simulator/tests/${options.fixture.scenarioId}?ai=off&auto-advance-attack=off`,

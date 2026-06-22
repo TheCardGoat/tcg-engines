@@ -9,7 +9,6 @@ export const spoilerEvelynParkerBeautifulEnigma = {
   displayName: "Evelyn Parker - Beautiful Enigma",
   rulesText:
     "CALL Decrease a rival Gig's value by 3. [Spend Icon]: Search the top 3 cards of your deck for up to 1 Braindance Program. Add it to your hand. Bottom-deck the rest.",
-  flavorText: null,
   color: "blue",
   classifications: ["Doll"],
   set: {
@@ -21,21 +20,13 @@ export const spoilerEvelynParkerBeautifulEnigma = {
     {
       id: "2f22896b-5b5e-4c62-9b72-37bc64156d01",
       collectorNumber: "122",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b122.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b122.webp",
-      set: {
-        code: "spoiler",
-        name: "Spoiler Set",
-      },
+      setCode: "spoiler",
       rarity: null,
-      finish: "foil",
-      artist: "Pandart Studio",
     },
   ],
   selectedPrintingId: "2f22896b-5b5e-4c62-9b72-37bc64156d01",
   artist: "Pandart Studio",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b122.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b122.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/122.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,
