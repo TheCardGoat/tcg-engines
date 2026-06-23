@@ -134,6 +134,13 @@ function hasMinGigCondition(): Condition {
   };
 }
 
+function hasEvenAndOddGigValuesCondition(): Condition {
+  return {
+    condition: "hasEvenAndOddGigValues",
+    controller: "friendly",
+  };
+}
+
 function matchingGigValueCondition(target: TargetDSL, controller: "friendly" | "rival"): Condition {
   return {
     condition: "matchingGig",
@@ -1961,6 +1968,31 @@ function parseStaticAbility(card: CardDefinition, text: string): Ability {
 
 function parseDirectEffectAbility(card: CardDefinition, text: string): Ability {
   const source = gearHostOrSelf(card);
+
+  if (
+    /^Sell the top card of your deck\. If you control a Gig with an even value and a Gig with an odd value, draw 2\.$/i.test(
+      text,
+    )
+  ) {
+    return triggeredAbility({
+      text,
+      trigger: { trigger: "play" },
+      source,
+      effects: [
+        {
+          effect: "sellFromDeck",
+          player: "friendly",
+          amount: 1,
+        },
+        {
+          effect: "draw",
+          player: "friendly",
+          amount: 2,
+          conditions: [hasEvenAndOddGigValuesCondition()],
+        },
+      ],
+    });
+  }
 
   const spendUnit = /^Spend a rival unit with cost (\d+) or less\.$/i.exec(text);
   if (spendUnit) {

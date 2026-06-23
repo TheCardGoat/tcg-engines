@@ -5,14 +5,9 @@ export const theHeistRetailStarterDeckViktorVektorSitDownAndRelax = {
   externalId: "cb-viktor-vektor-sit-down-and-relax",
   slug: "viktor-vektor-sit-down-and-relax",
   name: "Viktor Vektor — Sit Down and Relax",
-  subname: null,
   displayName: "Viktor Vektor — Sit Down and Relax",
   rulesText:
     "[CALL] Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "yellow",
   classifications: ["Merc", "Ripperdoc"],
   set: {
@@ -24,65 +19,31 @@ export const theHeistRetailStarterDeckViktorVektorSitDownAndRelax = {
     {
       id: "7d539173-4022-402e-a9f4-100338935fd2",
       collectorNumber: "001",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/theheistretailstarterdeck/001.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/7d539173-4022-402e-a9f4-100338935fd2/render-mpwcnsje.webp",
-      set: {
-        code: "theheistretailstarterdeck",
-        name: "The Heist — Retail Starter Deck",
-      },
+      setCode: "theheistretailstarterdeck",
       rarity: "Epic",
-      finish: "standard",
-      artist: "Envar",
-    },
-    {
-      id: "c9ceb0e7-c803-45d1-8da1-8c85c3b2e7e8",
-      collectorNumber: "002",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/boxtoppersretail/002.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/c9ceb0e7-c803-45d1-8da1-8c85c3b2e7e8/render-mpvt1hjv.webp",
-      set: {
-        code: "boxtoppersretail",
-        name: "Box Toppers — Retail",
-      },
-      rarity: "Epic",
-      finish: "standard",
-      artist: "Unknown",
     },
     {
       id: "56a13bb3-7e1d-4846-ac79-9163f33c0143",
       collectorNumber: "β001",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/theheistbetastarterdeck/b001.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/56a13bb3-7e1d-4846-ac79-9163f33c0143/render-mpwcftz8.webp",
-      set: {
-        code: "theheistbetastarterdeck",
-        name: "The Heist — Beta Starter Deck",
-      },
+      setCode: "theheistbetastarterdeck",
       rarity: "Epic",
-      finish: "standard",
-      artist: "Envar",
+    },
+    {
+      id: "c9ceb0e7-c803-45d1-8da1-8c85c3b2e7e8",
+      collectorNumber: "002",
+      setCode: "boxtoppersretail",
+      rarity: "Epic",
     },
     {
       id: "a33c6299-f1ee-404e-9197-cad5f7e84fce",
       collectorNumber: "β002",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b002.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a33c6299-f1ee-404e-9197-cad5f7e84fce/render-mpvsu7dk.webp",
-      set: {
-        code: "boxtoppersbeta",
-        name: "Box Toppers — Beta",
-      },
+      setCode: "boxtoppersbeta",
       rarity: "Epic",
-      finish: "standard",
-      artist: "Unknown",
     },
   ],
   selectedPrintingId: "7d539173-4022-402e-a9f4-100338935fd2",
   artist: "Envar",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/theheistretailstarterdeck/001.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/7d539173-4022-402e-a9f4-100338935fd2/render-mpwcnsje.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/theheistretailstarterdeck/001.webp",
   rarity: "Epic",
   legality: "legal",
   hasSellTag: true,

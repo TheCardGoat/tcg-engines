@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailWraithMarauders = {
   externalId: "cb-wraith-marauders",
   slug: "wraith-marauders",
   name: "Wraith Marauders",
-  subname: null,
   displayName: "Wraith Marauders",
   rulesText:
     "When this Unit steals a Gig, ready another friendly Unit with power equal to the Gig's value.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "green",
   classifications: ["Ganger", "Nomad", "Raffen Shiv"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailWraithMarauders = {
     {
       id: "0944037e-5b14-4332-b345-7935924c2125",
       collectorNumber: "092",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/092.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/0944037e-5b14-4332-b345-7935924c2125/render-mpvm4vc3.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Uncommon",
-      finish: "standard",
-      artist: "Daniel Valaisis",
     },
     {
       id: "89c5ec5e-dcc1-4ce4-970d-28b0226272b1",
       collectorNumber: "β092",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b092.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/89c5ec5e-dcc1-4ce4-970d-28b0226272b1/render-mpv4ofxy.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Uncommon",
-      finish: "standard",
-      artist: "Daniel Valaisis",
     },
   ],
   selectedPrintingId: "0944037e-5b14-4332-b345-7935924c2125",
   artist: "Daniel Valaisis",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/092.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/0944037e-5b14-4332-b345-7935924c2125/render-mpvm4vc3.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/092.webp",
   rarity: "Uncommon",
   legality: "legal",
   hasSellTag: false,

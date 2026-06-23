@@ -10,7 +10,6 @@ export const alphaViktorVektorSitDownAndRelax = {
   displayName: "Viktor Vektor - Sit Down and Relax",
   rulesText:
     "CALL Search the top 5 cards of your deck for up to 2 gear that costs 2 or less each. Reveal them and add them to your hand. (Place the other cards on the bottom of your deck in a random order.)",
-  flavorText: null,
   color: "yellow",
   classifications: ["Ripperdoc", "Merc"],
   set: {
@@ -22,21 +21,13 @@ export const alphaViktorVektorSitDownAndRelax = {
     {
       id: "ced3a1c6-3e58-4717-a7d9-e4c1d0f2460c",
       collectorNumber: "α006",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a006.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a006.webp",
-      set: {
-        code: "alpha",
-        name: "Alpha Kit Set",
-      },
+      setCode: "alpha",
       rarity: null,
-      finish: "standard",
-      artist: "Envar",
     },
   ],
   selectedPrintingId: "ced3a1c6-3e58-4717-a7d9-e4c1d0f2460c",
   artist: "Envar",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/alpha/a006.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/a006.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a006.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,

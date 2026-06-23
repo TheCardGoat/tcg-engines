@@ -9,7 +9,6 @@ export const spoilerPlacideVoodooSentinel = {
   displayName: "Placide - Voodoo Sentinel",
   rulesText:
     "PLAY ATTACK You may discard a Program from your hand. If you do, bottom-deck a rival Unit.",
-  flavorText: null,
   color: "blue",
   classifications: ["Ganger", "Netrunner", "Voodoo Boys"],
   set: {
@@ -21,21 +20,13 @@ export const spoilerPlacideVoodooSentinel = {
     {
       id: "4b8e26aa-4406-4a4d-9ffc-0ac9f5b774bf",
       collectorNumber: "073",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b073.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b073.webp",
-      set: {
-        code: "spoiler",
-        name: "Spoiler Set",
-      },
+      setCode: "spoiler",
       rarity: null,
-      finish: "foil",
-      artist: "Mooncolony",
     },
   ],
   selectedPrintingId: "4b8e26aa-4406-4a4d-9ffc-0ac9f5b774bf",
   artist: "Mooncolony",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b073.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b073.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/073.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,

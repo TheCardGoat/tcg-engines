@@ -20,6 +20,7 @@ import type {
   RemoveFromGameEffect,
   StealGigEffect,
   TrashFromDeckEffect,
+  SellFromDeckEffect,
   IfYouDoEffect,
   DelayedEffect,
   DefeatAtEndOfTurnIfAttacksEffect,
@@ -745,6 +746,29 @@ function handleTrashFromDeck(
   return { status: "resolved" };
 }
 
+function handleSellFromDeck(
+  effect: SellFromDeckEffect,
+  ctx: ResolutionContext,
+  ops: Operations,
+): EffectHandlerResult {
+  const playerId = resolveRelativePlayer(effect.player, ctx);
+  const player = ctx.state.G.players[playerId as string];
+  if (!player) {
+    warnMissingPlayerState("handleSellFromDeck", playerId, ctx);
+    return { status: "resolved" };
+  }
+
+  const count = Math.min(effect.amount, player.zones.deck.length);
+  for (let index = 0; index < count; index += 1) {
+    const cardId = player.zones.deck[0];
+    if (!cardId) break;
+    ops.zone.moveCard(cardId, "eddieArea", playerId);
+    ops.game.gainEddies(playerId, 1);
+  }
+
+  return { status: "resolved" };
+}
+
 function handleIfYouDo(
   effect: IfYouDoEffect,
   ctx: ResolutionContext,
@@ -1084,6 +1108,7 @@ export const effectHandlers: EffectHandlerRegistry = {
   removeFromGame: handleRemoveFromGame,
   stealGig: handleStealGig,
   trashFromDeck: handleTrashFromDeck,
+  sellFromDeck: handleSellFromDeck,
   ifYouDo: handleIfYouDo,
   delayed: handleDelayed,
   defeatAtEndOfTurnIfAttacks: handleDefeatAtEndOfTurnIfAttacks,

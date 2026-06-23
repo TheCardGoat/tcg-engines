@@ -1,3 +1,4 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { TheHeistRetailStarterDeckCardDefinition } from "@tcg/cyberpunk-types";
 
-export const theHeistRetailStarterDeckPrograms = [] satisfies StructuredCardDefinition[];
+export const theHeistRetailStarterDeckPrograms =
+  [] satisfies TheHeistRetailStarterDeckCardDefinition[];

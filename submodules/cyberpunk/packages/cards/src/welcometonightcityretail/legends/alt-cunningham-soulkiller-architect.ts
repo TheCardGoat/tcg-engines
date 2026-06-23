@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailAltCunninghamSoulkillerArchitect = {
   externalId: "cb-alt-cunningham-soulkiller-architect",
   slug: "alt-cunningham-soulkiller-architect",
   name: "Alt Cunningham — Soulkiller Architect",
-  subname: null,
   displayName: "Alt Cunningham — Soulkiller Architect",
   rulesText:
     "[Spend Icon:] Your next Program this turn plays for -1 €$ for each friendly min Gig, to a minimum of 1 €$.\n1 €$, [Spend Icon:] Play a Program from your trash. Bottom-deck it after you play it. (You still pay its cost.)",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "blue",
   classifications: ["Merc", "Netrunner"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailAltCunninghamSoulkillerArchitect = {
     {
       id: "cb23a651-dd1d-48f8-aca3-8d33fef79fdd",
       collectorNumber: "106",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/106.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/cb23a651-dd1d-48f8-aca3-8d33fef79fdd/render-mpvmnn4t.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Rare",
-      finish: "standard",
-      artist: "Daniel Valaisis",
     },
     {
       id: "873656f0-c32a-46fb-856f-8a5ee44b8d21",
       collectorNumber: "β106",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b106.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/873656f0-c32a-46fb-856f-8a5ee44b8d21/render-mpu65z5j.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Rare",
-      finish: "standard",
-      artist: "Daniel Valaisis",
     },
   ],
   selectedPrintingId: "cb23a651-dd1d-48f8-aca3-8d33fef79fdd",
   artist: "Daniel Valaisis",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/106.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/cb23a651-dd1d-48f8-aca3-8d33fef79fdd/render-mpvmnn4t.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/106.webp",
   rarity: "Rare",
   legality: "legal",
   hasSellTag: true,

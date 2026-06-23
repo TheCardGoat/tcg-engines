@@ -167,13 +167,36 @@ function toTs(value: unknown): string {
   return JSON.stringify(value, null, 2).replace(/"([A-Za-z0-9_]+)":/g, "$1:");
 }
 
+const OMITTED_NULL_GENERATED_PROPERTIES = [
+  "subname",
+  "rulesText",
+  "flavorText",
+  "description",
+  "youtubeUrl",
+  "sourceUrl",
+  "selectedPrintingId",
+] as const;
+
+function omitPrintedNullProperties(card: StructuredSetCardDefinition): Record<string, unknown> {
+  const generatedCard: Record<string, unknown> = { ...card };
+
+  for (const property of OMITTED_NULL_GENERATED_PROPERTIES) {
+    if (generatedCard[property] === null) {
+      delete generatedCard[property];
+    }
+  }
+
+  return generatedCard;
+}
+
 function renderCardFile(card: StructuredSetCardDefinition): string {
   const { typeName } = setConfigForCard(card);
+  const generatedCard = omitPrintedNullProperties(card);
 
   return [
     `import type { ${typeName} } from "@tcg/cyberpunk-types";`,
     "",
-    `export const ${constName(card)} = ${toTs(card)} satisfies ${typeName};`,
+    `export const ${constName(card)} = ${toTs(generatedCard)} satisfies ${typeName};`,
     "",
   ].join("\n");
 }
@@ -197,7 +220,9 @@ function renderMergedCardFile(card: StructuredSetCardDefinition, existingSource:
     toTs(card.selectedPrintingId ?? null),
   );
   source = replaceObjectProperty(source, "imageUrl", toTs(card.imageUrl));
-  source = replaceObjectProperty(source, "sourceImageUrl", toTs(card.sourceImageUrl));
+  source = removeObjectProperty(source, "sourceImageUrl");
+  source = removePrintedNullProperties(source);
+  source = source.replace(/,,/g, ",");
 
   return source.endsWith("\n") ? source : `${source}\n`;
 }
@@ -213,6 +238,20 @@ function replaceObjectProperty(source: string, propertyName: string, value: stri
   const valueEnd = findTopLevelPropertyEnd(source, valueStart);
 
   return `${source.slice(0, valueStart)} ${value}${source.slice(valueEnd)}`;
+}
+
+function removeObjectProperty(source: string, propertyName: string): string {
+  return source.replace(new RegExp(`\\n\\s+${propertyName}: [^\\n]+,?`, "g"), "");
+}
+
+function removePrintedNullProperties(source: string): string {
+  let nextSource = source;
+
+  for (const propertyName of OMITTED_NULL_GENERATED_PROPERTIES) {
+    nextSource = nextSource.replace(new RegExp(`\\n  ${propertyName}: null,?`, "g"), "");
+  }
+
+  return nextSource;
 }
 
 function findTopLevelPropertyEnd(source: string, valueStart: number): number {

@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailPeaceOffering = {
   externalId: "cb-peace-offering",
   slug: "peace-offering",
   name: "Peace Offering",
-  subname: null,
   displayName: "Peace Offering",
   rulesText:
     "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "green",
   classifications: ["Braindance"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailPeaceOffering = {
     {
       id: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
       collectorNumber: "101",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/101.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/8570122a-52aa-4a6b-8d72-4c8848df0f9b/render-mpvmc6bc.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Common",
-      finish: "standard",
-      artist: "Mattia De Iulis",
     },
     {
       id: "2cff513f-6a75-40f0-8e70-e1491d340472",
       collectorNumber: "β101",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b101.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/2cff513f-6a75-40f0-8e70-e1491d340472/render-mpvk6xve.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Common",
-      finish: "standard",
-      artist: "Mattia De Iulis",
     },
   ],
   selectedPrintingId: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
   artist: "Mattia De Iulis",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/101.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/8570122a-52aa-4a6b-8d72-4c8848df0f9b/render-mpvmc6bc.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/101.webp",
   rarity: "Common",
   legality: "legal",
   hasSellTag: true,

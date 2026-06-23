@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { listScenarios, type ScenarioId } from "../engine";
-import { BoardPage } from "./Board.page";
+import { BoardSharedPage } from "./BoardShared.page";
 import { NotFound } from "./Tests.page";
 
 const VALID_IDS: ReadonlySet<string> = new Set(listScenarios().map((s) => s.id));
@@ -23,7 +23,10 @@ export function TestFixturePage() {
 
   return (
     <>
-      <BoardPage scenarioId={fixtureId as ScenarioId} autoResolveSingletonCardTargets={false} />
+      <BoardSharedPage
+        scenarioId={fixtureId as ScenarioId}
+        autoResolveSingletonCardTargets={false}
+      />
     </>
   );
 }

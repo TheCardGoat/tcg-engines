@@ -9,7 +9,6 @@ export const spoilerDumDumMaelstromTriggerman = {
   displayName: "Dum Dum - Maelstrom Triggerman",
   rulesText:
     "CALL You may defeat a friendly Gear. If you do, draw 4 cards. Otherwise, draw 1 card.",
-  flavorText: null,
   color: "yellow",
   classifications: ["Ganger", "Maelstrom"],
   set: {
@@ -21,21 +20,13 @@ export const spoilerDumDumMaelstromTriggerman = {
     {
       id: "fabf7f53-bf0e-4ddf-90ca-e0165ac7b99c",
       collectorNumber: "133",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b133.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b133.webp",
-      set: {
-        code: "spoiler",
-        name: "Spoiler Set",
-      },
+      setCode: "spoiler",
       rarity: null,
-      finish: "foil",
-      artist: "Pandart Studio",
     },
   ],
   selectedPrintingId: "fabf7f53-bf0e-4ddf-90ca-e0165ac7b99c",
   artist: "Pandart Studio",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b133.webp",
-  sourceImageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b133.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/133.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,

@@ -9,7 +9,6 @@ export const spoilerRiverWardDetectiveOnTheHunt = {
   displayName: "River Ward - Detective on the Hunt",
   rulesText:
     "CALL Draw a card. When a Unit attacks, [Spend Icon]: Choose a Gear from your hand with cost 2 or less. Equip it for free to a friendly Yellow Unit with no equipped Gears.",
-  flavorText: null,
   color: "yellow",
   classifications: ["NCPD"],
   set: {
@@ -21,21 +20,13 @@ export const spoilerRiverWardDetectiveOnTheHunt = {
     {
       id: "cd02a445-e212-4937-b904-cecbf29f792f",
       collectorNumber: "135",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b135.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b135.webp",
-      set: {
-        code: "spoiler",
-        name: "Spoiler Set",
-      },
+      setCode: "spoiler",
       rarity: null,
-      finish: "foil",
-      artist: "Pandart Studio",
     },
   ],
   selectedPrintingId: "cd02a445-e212-4937-b904-cecbf29f792f",
   artist: "Pandart Studio",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b135.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b135.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/135.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,

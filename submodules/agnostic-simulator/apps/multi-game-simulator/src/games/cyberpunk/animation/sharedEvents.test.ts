@@ -144,7 +144,7 @@ describe("cyberpunkAnimationStepToSimulatorEvent", () => {
     });
     expect(cyberpunkAnimationStepToSimulatorEvent(reveal, context)).toMatchObject({
       primitive: "flipReveal",
-      zone: { id: "p-legends" },
+      zone: { id: "p-legendArea" },
     });
   });
 

@@ -1,4 +1,4 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { WelcomeToNightCityRetailCardDefinition } from "@tcg/cyberpunk-types";
 import { welcomeToNightCityRetailAltCunninghamSoulkillerArchitect } from "./alt-cunningham-soulkiller-architect.ts";
 import { welcomeToNightCityRetailDumDumMaelstromTriggerman } from "./dum-dum-maelstrom-triggerman.ts";
 import { welcomeToNightCityRetailEvelynParkerBeautifulEnigma } from "./evelyn-parker-beautiful-enigma.ts";
@@ -26,4 +26,4 @@ export const welcomeToNightCityRetailLegends = [
   welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
   welcomeToNightCityRetailRoycePsychoOnTheEdge,
   welcomeToNightCityRetailVStreetkid,
-] satisfies StructuredCardDefinition[];
+] satisfies WelcomeToNightCityRetailCardDefinition[];

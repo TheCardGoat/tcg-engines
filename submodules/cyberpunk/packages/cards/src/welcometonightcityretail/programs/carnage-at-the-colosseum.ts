@@ -5,14 +5,9 @@ export const welcomeToNightCityRetailCarnageAtTheColosseum = {
   externalId: "cb-carnage-at-the-colosseum",
   slug: "carnage-at-the-colosseum",
   name: "Carnage at the Colosseum",
-  subname: null,
   displayName: "Carnage at the Colosseum",
   rulesText:
     "Play this Program for -1 €$ for each friendly Gig with 8+ value, to a minimum of 1 €$.\nDefeat a rival Unit with less power than a friendly Unit.",
-  flavorText: null,
-  description: null,
-  youtubeUrl: null,
-  sourceUrl: null,
   color: "red",
   classifications: ["Braindance", "Extreme"],
   set: {
@@ -24,37 +19,19 @@ export const welcomeToNightCityRetailCarnageAtTheColosseum = {
     {
       id: "36128749-4cb1-440d-b4de-4fd463cc2f5c",
       collectorNumber: "030",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/030.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/36128749-4cb1-440d-b4de-4fd463cc2f5c/render-mpvmaxtd.webp",
-      set: {
-        code: "welcometonightcityretail",
-        name: "Welcome to Night City — Retail",
-      },
+      setCode: "welcometonightcityretail",
       rarity: "Common",
-      finish: "standard",
-      artist: "Matías Bergara",
     },
     {
       id: "171b21b1-90d0-4d3b-a060-740c413b7bf2",
       collectorNumber: "β030",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b030.webp",
-      sourceImageUrl:
-        "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/171b21b1-90d0-4d3b-a060-740c413b7bf2/render-mpvk5s9p.webp",
-      set: {
-        code: "welcometonightcitybeta",
-        name: "Welcome to Night City — Beta",
-      },
+      setCode: "welcometonightcitybeta",
       rarity: "Common",
-      finish: "standard",
-      artist: "Matías Bergara",
     },
   ],
   selectedPrintingId: "36128749-4cb1-440d-b4de-4fd463cc2f5c",
   artist: "Matías Bergara",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/welcometonightcityretail/030.webp",
-  sourceImageUrl:
-    "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/36128749-4cb1-440d-b4de-4fd463cc2f5c/render-mpvmaxtd.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/030.webp",
   rarity: "Common",
   legality: "legal",
   hasSellTag: true,

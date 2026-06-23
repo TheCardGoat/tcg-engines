@@ -23,7 +23,7 @@ import {
 } from "../engine/live/runtimeHeaders";
 import { CYBERPUNK_GAME_SLUG } from "../engine/live/apiOrigin";
 import { playUrl } from "../../../runtime/gameRuntimeApi";
-import { BoardPage } from "./Board.page";
+import { BoardSharedPage } from "./BoardShared.page";
 import classes from "./Practice.module.css";
 
 interface ActiveImport {
@@ -190,7 +190,7 @@ export function WebviewPracticePage() {
       return null;
     }
     return (
-      <BoardPage
+      <BoardSharedPage
         key={activeImport.config.matchId}
         scenarioId={DEFAULT_SCENARIO}
         initialEngineBuilder={() => createPracticeEngine(activeImport.config)}

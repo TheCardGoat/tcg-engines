@@ -15,6 +15,7 @@ import { cards, rawCards, structuredCards } from "../src/index.ts";
 
 const SLUG_REGEX = /^[a-z0-9-]+$/;
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const CARD_IMAGE_BASE_URL = "https://cdn.tcg.online/public/cyberpunk/cards/";
 const KNOWN_SET_CODE_VALUES: ReadonlySet<string> = new Set([
   "alpha",
   "promo",
@@ -140,6 +141,51 @@ function assertNonNegativeInt(
   }
 }
 
+function assertCompactPrintings(
+  source: string,
+  printings: readonly unknown[],
+  violations: Violation[],
+): void {
+  const omittedFields = ["imageUrl", "sourceImageUrl", "set", "finish", "artist"] as const;
+  for (const [index, printing] of printings.entries()) {
+    const fieldPrefix = `printings[${index}]`;
+    if (!printing || typeof printing !== "object") {
+      violations.push({
+        cardSlug: source,
+        field: fieldPrefix,
+        reason: "not an object",
+        value: printing,
+      });
+      continue;
+    }
+
+    const record = printing as Record<string, unknown>;
+    assertString(source, `${fieldPrefix}.id`, record.id, violations, { regex: UUID_REGEX });
+    assertString(source, `${fieldPrefix}.collectorNumber`, record.collectorNumber, violations);
+    assertEnum(source, `${fieldPrefix}.setCode`, record.setCode, KNOWN_SET_CODE_VALUES, violations);
+    if (record.rarity !== null && typeof record.rarity !== "string") {
+      violations.push({
+        cardSlug: source,
+        field: `${fieldPrefix}.rarity`,
+        reason: "not a string or null",
+        value: record.rarity,
+      });
+    }
+
+    for (const field of omittedFields) {
+      if (field in record) {
+        violations.push({
+          cardSlug: source,
+          field: `${fieldPrefix}.${field}`,
+          reason:
+            "normalized printings should only expose id, collectorNumber, setCode, and rarity",
+          value: record[field],
+        });
+      }
+    }
+  }
+}
+
 describe("card record invariants", () => {
   it("rawCards records all satisfy structural invariants", () => {
     const violations: Violation[] = [];
@@ -188,10 +234,18 @@ describe("card record invariants", () => {
       assertEnum(slug, "color", card.color, KNOWN_COLORS, violations);
       assertEnum(slug, "type", card.type, KNOWN_CARD_TYPES, violations);
       assertEnum(slug, "legality", card.legality, KNOWN_LEGALITIES, violations);
-      assertString(slug, "imageUrl", card.imageUrl, violations, { startsWith: "https://" });
-      assertString(slug, "sourceImageUrl", card.sourceImageUrl, violations, {
-        startsWith: "https://",
+      assertString(slug, "imageUrl", card.imageUrl, violations, {
+        startsWith: CARD_IMAGE_BASE_URL,
       });
+      if ("sourceImageUrl" in card) {
+        violations.push({
+          cardSlug: slug,
+          field: "sourceImageUrl",
+          reason: "normalized cards should only expose imageUrl",
+          value: card.sourceImageUrl,
+        });
+      }
+      assertCompactPrintings(slug, card.printings, violations);
       assertString(slug, "printNumber", card.printNumber, violations);
       assertString(slug, "artist", card.artist, violations);
       assertNonNegativeInt(slug, "ram", card.ram, violations);
@@ -242,6 +296,18 @@ describe("card record invariants", () => {
       assertEnum(slug, "set.code", card.set?.code, KNOWN_SET_CODE_VALUES, violations);
       assertEnum(slug, "color", card.color, KNOWN_COLORS, violations);
       assertEnum(slug, "type", card.type, KNOWN_CARD_TYPES, violations);
+      assertString(slug, "imageUrl", card.imageUrl, violations, {
+        startsWith: CARD_IMAGE_BASE_URL,
+      });
+      if ("sourceImageUrl" in card) {
+        violations.push({
+          cardSlug: slug,
+          field: "sourceImageUrl",
+          reason: "structured cards should only expose imageUrl",
+          value: card.sourceImageUrl,
+        });
+      }
+      assertCompactPrintings(slug, card.printings, violations);
       if (!Array.isArray(card.abilities)) {
         violations.push({
           cardSlug: slug,

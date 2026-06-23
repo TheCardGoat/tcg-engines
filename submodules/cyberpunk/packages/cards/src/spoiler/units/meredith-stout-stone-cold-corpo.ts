@@ -9,7 +9,6 @@ export const spoilerMeredithStoutStoneColdCorpo = {
   displayName: "Meredith Stout - Stone Cold Corpo",
   rulesText:
     "When a rival decreases the value of your friendly Gig, you may choose a card from your trash and add it to your hand.",
-  flavorText: null,
   color: "red",
   classifications: ["Corpo", "Militech"],
   set: {
@@ -21,21 +20,13 @@ export const spoilerMeredithStoutStoneColdCorpo = {
     {
       id: "0d09e470-1130-4ace-a5e7-7094ca9256f4",
       collectorNumber: "069",
-      imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b069.webp",
-      sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b069.webp",
-      set: {
-        code: "spoiler",
-        name: "Spoiler Set",
-      },
+      setCode: "spoiler",
       rarity: null,
-      finish: "foil",
-      artist: "Daniel Valaisis",
     },
   ],
   selectedPrintingId: "0d09e470-1130-4ace-a5e7-7094ca9256f4",
   artist: "Daniel Valaisis",
-  imageUrl: "https://r2.tcg.online/public/cyberpunk/cards/spoiler/b069.webp",
-  sourceImageUrl: "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/b069.webp",
+  imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/069.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,
