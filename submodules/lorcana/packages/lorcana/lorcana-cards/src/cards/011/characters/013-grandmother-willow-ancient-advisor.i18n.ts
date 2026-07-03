@@ -17,9 +17,9 @@ export const grandmotherWillowAncientAdvisorI18n: Record<Languages, I18nProperti
     version: "Uralte Ratgeberin",
     text: [
       {
-        title: "DEN WEG EBNEN",
+        title: "Den Weg ebnen",
         description:
-          "Einmal während deines Zuges zahlst du 1 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "Einmal während deines Zuges zahlst du 1 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const grandmotherWillowAncientAdvisorI18n: Record<Languages, I18nProperti
     version: "Conseillère ancestrale",
     text: [
       {
-        title: "FACILITE LES CHOSES",
+        title: "Facilite les choses",
         description:
-          "Une fois durant votre tour, le prochain personnage que vous jouez ce tour-ci vous coûte 1 de moins.",
+          "Une fois durant votre tour, le prochain personnage que vous jouez ce tour-ci vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const grandmotherWillowAncientAdvisorI18n: Record<Languages, I18nProperti
     version: "Antica Consigliera",
     text: [
       {
-        title: "SPIANARE LA STRADA",
+        title: "Spianare la Strada",
         description:
-          "Una volta durante il tuo turno, paga 1 in meno per giocare il tuo prossimo personaggio per questo turno.",
+          "Una volta durante il tuo turno, paga 1 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

@@ -19,13 +19,13 @@ export const greatStoneDragonI18n: Record<Languages, I18nProperties> = {
     name: "Großer Stein-Drache",
     text: [
       {
-        title: "SCHLAFEND",
+        title: "Schlafend",
         description: "Dieser Gegenstand kommt erschöpft ins Spiel.",
       },
       {
-        title: "ERWECKEN",
+        title: "Erwecken",
         description:
-          "— Lege 1 Charakterkarte aus deinem Ablagestapel verdeckt und erschöpft in deinen Tintenvorrat.",
+          "{E} — Lege 1 Charakterkarte aus deinem Ablagestapel verdeckt und erschöpft in deinen Tintenvorrat.",
       },
     ],
   },
@@ -33,13 +33,13 @@ export const greatStoneDragonI18n: Record<Languages, I18nProperties> = {
     name: "Grand Dragon de Pierre",
     text: [
       {
-        title: "ENDORMI",
+        title: "Endormi",
         description: "Cet objet entre en jeu épuisé.",
       },
       {
-        title: "RÉVEILLÉ",
+        title: "Réveillé",
         description:
-          "— Choisissez une carte Personnage de votre défausse et placez-la dans votre réserve d'encre, face cachée et épuisée.",
+          "{E} — Choisissez une carte Personnage de votre défausse et placez-la dans votre réserve d'encre, face cachée et épuisée.",
       },
     ],
   },
@@ -47,13 +47,13 @@ export const greatStoneDragonI18n: Record<Languages, I18nProperties> = {
     name: "Grande Drago di Pietra",
     text: [
       {
-        title: "DORMIENTE",
+        title: "Dormiente",
         description: "Questo oggetto entra in gioco impegnato.",
       },
       {
-        title: "RIDESTARSI",
+        title: "Ridestarsi",
         description:
-          "— Aggiungi una carta personaggio dai tuoi scarti al tuo calamaio, a faccia in giù e impegnata.",
+          "{E} — Aggiungi una carta personaggio dai tuoi scarti al tuo calamaio, a faccia in giù e impegnata.",
       },
     ],
   },

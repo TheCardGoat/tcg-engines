@@ -4,6 +4,17 @@ import { sisuEmboldenedWarriorI18n } from "./124-sisu-emboldened-warrior.i18n";
 export const sisuEmboldenedWarrior: CharacterCard = {
   id: "TMv",
   canonicalId: "ci_rQr",
+  slug: "lorcana-ci_rQr",
+  printings: [
+    {
+      id: "set4-124",
+      artId: "set4-124",
+      setCode: "set4",
+      collectorNumber: "124",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-124", "set9-118"],
   cardType: "character",
   name: "Sisu",
@@ -20,7 +31,7 @@ export const sisuEmboldenedWarrior: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_03cbb7961ddc4db7b724f1a934e1114b",
-    tcgPlayer: 650054,
+    tcgPlayer: "650054",
   },
   text: [
     {

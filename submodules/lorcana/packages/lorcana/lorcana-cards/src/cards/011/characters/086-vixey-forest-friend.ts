@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { vixeyForestFriendI18n } from "./086-vixey-forest-friend.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const vixeyForestFriend: CharacterCard = {
   id: "tPQ",
   canonicalId: "ci_tPQ",
+  slug: "lorcana-ci_tPQ",
+  printings: [
+    {
+      id: "set11-086",
+      artId: "set11-086",
+      setCode: "set11",
+      collectorNumber: "86",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-086"],
   cardType: "character",
   name: "Vixey",
@@ -21,7 +33,7 @@ export const vixeyForestFriend: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6edf9f351f6d4d8ea588fbbdbf8ed253",
-    tcgPlayer: 676204,
+    tcgPlayer: "676204",
   },
   text: [
     {

@@ -16,7 +16,7 @@ export const edHystericalPartygoerI18n: Record<Languages, I18nProperties> = {
     version: "Hysterischer Partygast",
     text: [
       {
-        title: "UNGEHOBELTER GAST",
+        title: "Ungehobelter Gast",
         description: "Beschädigte Charaktere können diesen Charakter nicht herausfordern.",
       },
     ],
@@ -26,7 +26,7 @@ export const edHystericalPartygoerI18n: Record<Languages, I18nProperties> = {
     version: "Fêtard hystérique",
     text: [
       {
-        title: "INVITÉ CHAHUTEUR",
+        title: "Invité chahuteur",
         description:
           "Ce personnage ne peut pas être défié par des personnages ayant au moins un dommage sur eux.",
       },
@@ -37,8 +37,8 @@ export const edHystericalPartygoerI18n: Record<Languages, I18nProperties> = {
     version: "Festaiolo Svalvolato",
     text: [
       {
-        title: "OSPITE RUMOROSO I",
-        description: "personaggi danneggiati non possono sfidare questo personaggio.",
+        title: "Ospite Rumoroso",
+        description: "I personaggi danneggiati non possono sfidare questo personaggio.",
       },
     ],
   },

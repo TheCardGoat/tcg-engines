@@ -19,11 +19,12 @@ export const lythosRockTitanI18n: Record<Languages, I18nProperties> = {
     version: "Stein Titan",
     text: [
       {
-        title: "Robust +2",
+        title:
+          "<Robust> +2 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
       },
       {
-        title: "STEINHAUT",
-        description: "— Ein Charakter deiner Wahl erhält in diesem Zuges Robust +2.",
+        title: "Steinhaut",
+        description: "{E} — Ein Charakter deiner Wahl erhält in diesem Zuges <Robust> +2.",
       },
     ],
   },
@@ -32,11 +33,12 @@ export const lythosRockTitanI18n: Record<Languages, I18nProperties> = {
     version: "Titan de pierre",
     text: [
       {
-        title: "Résistance +2",
+        title: "<Résistance> +2",
       },
       {
-        title: "PEAU DE PIERRE",
-        description: "— Choisissez un personnage, il gagne Résistance +2 pour le reste de ce tour.",
+        title: "Peau de pierre",
+        description:
+          "{E} — Choisissez un personnage, il gagne <Résistance> +2 pour le reste de ce tour.",
       },
     ],
   },
@@ -45,11 +47,11 @@ export const lythosRockTitanI18n: Record<Languages, I18nProperties> = {
     version: "Titano di Roccia",
     text: [
       {
-        title: "Resistere +2",
+        title: "<Resistere> +2",
       },
       {
-        title: "PELLE DI PIETRA",
-        description: "— Un personaggio a tua scelta ottiene Resistere +2 per questo turno.",
+        title: "Pelle di Pietra",
+        description: "{E} — Un personaggio a tua scelta ottiene <Resistere> +2 per questo turno.",
       },
     ],
   },

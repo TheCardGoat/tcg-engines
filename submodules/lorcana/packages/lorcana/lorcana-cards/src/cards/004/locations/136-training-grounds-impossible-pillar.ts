@@ -4,6 +4,17 @@ import { trainingGroundsImpossiblePillarI18n } from "./136-training-grounds-impo
 export const trainingGroundsImpossiblePillar: LocationCard = {
   id: "n6q",
   canonicalId: "ci_n6q",
+  slug: "lorcana-ci_n6q",
+  printings: [
+    {
+      id: "set4-136",
+      artId: "set4-136",
+      setCode: "set4",
+      collectorNumber: "136",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-136"],
   cardType: "location",
   name: "Training Grounds",
@@ -20,7 +31,7 @@ export const trainingGroundsImpossiblePillar: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ed931c16cb0142469bd6f7571576d61a",
-    tcgPlayer: 550604,
+    tcgPlayer: "550604",
   },
   text: [
     {

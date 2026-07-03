@@ -4,6 +4,17 @@ import { magicalAidI18n } from "./063-magical-aid.i18n";
 export const magicalAid: ActionCard = {
   id: "ntG",
   canonicalId: "ci_ntG",
+  slug: "lorcana-ci_ntG",
+  printings: [
+    {
+      id: "set5-063",
+      artId: "set5-063",
+      setCode: "set5",
+      collectorNumber: "63",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-063"],
   cardType: "action",
   name: "Magical Aid",
@@ -16,7 +27,7 @@ export const magicalAid: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6efcf80c6ccc458e9892bacc332c32d7",
-    tcgPlayer: 561627,
+    tcgPlayer: "561627",
   },
   text: 'Chosen character gains Challenger +3 and "When this character is banished in a challenge, return this card to your hand" this turn. (They get +3 {S} while challenging.)',
   abilities: [

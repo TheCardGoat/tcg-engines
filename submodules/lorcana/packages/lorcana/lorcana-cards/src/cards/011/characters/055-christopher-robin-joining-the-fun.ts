@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { christopherRobinJoiningTheFunI18n } from "./055-christopher-robin-joining-the-fun.i18n";
+
 import { underdog } from "../../../helpers/abilities/underdog";
 
 export const christopherRobinJoiningTheFun: CharacterCard = {
   id: "OZm",
   canonicalId: "ci_OZm",
+  slug: "lorcana-ci_OZm",
+  printings: [
+    {
+      id: "set11-055",
+      artId: "set11-055",
+      setCode: "set11",
+      collectorNumber: "55",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-055"],
   cardType: "character",
   name: "Christopher Robin",
@@ -21,7 +33,7 @@ export const christopherRobinJoiningTheFun: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6ef0db16a9b944d29c9a18fb37a8916d",
-    tcgPlayer: 676194,
+    tcgPlayer: "676194",
   },
   text: [
     {

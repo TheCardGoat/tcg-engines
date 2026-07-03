@@ -4,6 +4,17 @@ import { chiefBogoRespectedOfficerI18n } from "./175-chief-bogo-respected-office
 export const chiefBogoRespectedOfficer: CharacterCard = {
   id: "mU4",
   canonicalId: "ci_mU4",
+  slug: "lorcana-ci_mU4",
+  printings: [
+    {
+      id: "set2-175",
+      artId: "set2-175",
+      setCode: "set2",
+      collectorNumber: "175",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-175"],
   cardType: "character",
   name: "Chief Bogo",
@@ -20,7 +31,7 @@ export const chiefBogoRespectedOfficer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2f24650e05da4e108e8988b03fb64a01",
-    tcgPlayer: 526396,
+    tcgPlayer: "526396",
   },
   text: [
     {

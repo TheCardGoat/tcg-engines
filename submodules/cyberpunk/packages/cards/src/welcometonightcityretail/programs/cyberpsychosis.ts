@@ -1,13 +1,15 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { quickAbility } from "@tcg/cyberpunk-types";
 
-export const welcomeToNightCityRetailCyberpsychosis = {
+export const welcomeToNightCityRetailCyberpsychosis = defineCyberpunkCard({
   id: "d0991502-57e5-42e2-b37b-64b425f4f1b5",
-  externalId: "cb-cyberpsychosis",
   slug: "cyberpsychosis",
+  rulesText:
+    "{Quick} Give an equipped Unit +3 power this turn for each if its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
   name: "Cyberpsychosis",
   displayName: "Cyberpsychosis",
-  rulesText:
-    "[QUICK] Give an equipped Unit +3 power this turn for each if its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
+  canonicalId: "cyberpsychosis",
   color: "yellow",
   classifications: ["Quickhack"],
   set: {
@@ -15,42 +17,19 @@ export const welcomeToNightCityRetailCyberpsychosis = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "067",
-  printings: [
-    {
-      id: "5aafe80b-7c7d-4060-8677-a2881a21dd72",
-      collectorNumber: "067",
-      setCode: "welcometonightcityretail",
-      rarity: "Uncommon",
-    },
-    {
-      id: "b3329aae-77de-4c61-b400-114f51bbae5a",
-      collectorNumber: "β067",
-      setCode: "welcometonightcitybeta",
-      rarity: "Uncommon",
-    },
-  ],
-  selectedPrintingId: "5aafe80b-7c7d-4060-8677-a2881a21dd72",
   artist: "Michal Ivan",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/067.webp",
   rarity: "Uncommon",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
+  timingTriggers: ["play"],
   keywords: ["quick"],
   type: "program",
   cost: 3,
   power: null,
   abilities: [
-    {
-      kind: "keyword",
-      text: "QUICK",
-      keyword: "quick",
-      source: {
-        selector: "self",
-      },
-      effects: [],
-    },
+    quickAbility(),
     {
       kind: "triggered",
       text: "Give an equipped Unit +3 power this turn for each if its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
@@ -110,4 +89,4 @@ export const welcomeToNightCityRetailCyberpsychosis = {
     },
   ],
   reminderText: ["Discard programs after they resolve."],
-} satisfies StructuredCardDefinition;
+}) satisfies ProgramCardDefinition;

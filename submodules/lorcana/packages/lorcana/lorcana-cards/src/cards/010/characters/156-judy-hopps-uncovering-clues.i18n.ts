@@ -17,7 +17,7 @@ export const judyHoppsUncoveringCluesI18n: Record<Languages, I18nProperties> = {
     version: "Auf der Suche nach Hinweisen",
     text: [
       {
-        title: "GRÜNDLICHE ERMITTLUNG",
+        title: "Gründliche Ermittlung",
         description:
           "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Detektiv daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const judyHoppsUncoveringCluesI18n: Record<Languages, I18nProperties> = {
     version: "Découvrant des indices",
     text: [
       {
-        title: "ENQUÊTE APPROFONDIE",
+        title: "Enquête approfondie",
         description:
           "Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Détective parmi elles et la placer dans votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const judyHoppsUncoveringCluesI18n: Record<Languages, I18nProperties> = {
     version: "Alla Scoperta di Indizi",
     text: [
       {
-        title: "INDAGINE METICOLOSA",
+        title: "Indagine Meticolosa",
         description:
           "Quando giochi questo personaggio e ogni volta che va all'avventura, guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio Detective e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

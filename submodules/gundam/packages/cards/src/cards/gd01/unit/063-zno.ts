@@ -7,14 +7,17 @@ export const gd01Zno063: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD01-063",
-  externalId: "gundam:gd01-063",
-  slug: "zno-gd01-063",
+  canonicalId: "GD01-063",
+  externalIds: { bandai: "gundam:gd01-063" },
+  slug: "zno/gd01-063",
   displayName: "ZnO",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-063",
   printings: [
     {
       id: "GD01-063",
+      artId: "GD01-063",
+      setCode: "GD01",
       collectorNumber: "GD01-063",
       cardNumber: "GD01-063",
       set: {
@@ -29,6 +32,7 @@ export const gd01Zno063: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-063"],
   selectedPrintingId: "GD01-063",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-063.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-063.webp?260424",

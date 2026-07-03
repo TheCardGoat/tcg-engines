@@ -20,12 +20,12 @@ export const wendyDarlingCourageousCaptainI18n: Record<Languages, I18nProperties
     version: "Mutige Kapitänin",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "MACHT SCHNELL, LEUTE!",
+        title: "Macht schnell, Leute!",
         description:
-          "Solange du mindestens einen weiteren Piraten im Spiel hast, erhält dieser Charakter +1 und +1.",
+          "Solange du mindestens einen weiteren Piraten im Spiel hast, erhält dieser Charakter +1 {S} und +1 {L}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const wendyDarlingCourageousCaptainI18n: Record<Languages, I18nProperties
     version: "Capitaine courageuse",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "BOUGEZ-VOUS, MOUSSAILLONS!",
+        title: "Bougez-vous, moussaillons!",
         description:
-          "Tant que vous avez un autre personnage Pirate en jeu, ce personnage-ci gagne +1 et +1.",
+          "Tant que vous avez un autre personnage Pirate en jeu, ce personnage-ci gagne +1 {S} et +1 {L}.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const wendyDarlingCourageousCaptainI18n: Record<Languages, I18nProperties
     version: "Capitana Coraggiosa",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "DATEVI UNA MOSSA, CIURMA!",
+        title: "Datevi una mossa, ciurma!",
         description:
-          "Mentre hai in gioco un altro personaggio Pirata, questo personaggio riceve +1 e +1.",
+          "Mentre hai in gioco un altro personaggio Pirata, questo personaggio riceve +1 {S} e +1 {L}.",
       },
     ],
   },

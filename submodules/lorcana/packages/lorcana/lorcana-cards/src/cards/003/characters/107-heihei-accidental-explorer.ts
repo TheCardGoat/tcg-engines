@@ -4,6 +4,17 @@ import { heiheiAccidentalExplorerI18n } from "./107-heihei-accidental-explorer.i
 export const heiheiAccidentalExplorer: CharacterCard = {
   id: "93O",
   canonicalId: "ci_93O",
+  slug: "lorcana-ci_93O",
+  printings: [
+    {
+      id: "set3-107",
+      artId: "set3-107",
+      setCode: "set3",
+      collectorNumber: "107",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-107"],
   cardType: "character",
   name: "HeiHei",
@@ -20,7 +31,7 @@ export const heiheiAccidentalExplorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_27a77344b85748bd9d7d45de2969c918",
-    tcgPlayer: 538342,
+    tcgPlayer: "538342",
   },
   text: [
     {

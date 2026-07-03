@@ -16,9 +16,9 @@ export const merlinBackFromBermudaI18n: Record<Languages, I18nProperties> = {
     version: "Zurück von den Bermudas",
     text: [
       {
-        title: "LANG LEBE DER KÖNIG!",
+        title: "Lang lebe der König!",
         description:
-          "Deine Arthur-Charaktere erhalten Robust +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine Arthur-Charaktere erhalten <Robust> +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const merlinBackFromBermudaI18n: Record<Languages, I18nProperties> = {
     version: "De retour de Saint-Trop'",
     text: [
       {
-        title: "VIVE LE ROI ARTHUR!",
-        description: "Vos personnages Arthur gagnent Résistance +1.",
+        title: "Vive le roi Arthur!",
+        description: "Vos personnages Arthur gagnent <Résistance> +1.",
       },
     ],
   },
@@ -37,11 +37,8 @@ export const merlinBackFromBermudaI18n: Record<Languages, I18nProperties> = {
     version: "Tornato da Honolulu",
     text: [
       {
-        title: "EVVIVA IL RE!",
-      },
-      {
-        title: "I",
-        description: "tuoi personaggi chiamati Artù ottengono Resistere +1.",
+        title: "Evviva il Re!",
+        description: "I tuoi personaggi chiamati Artù ottengono <Resistere> +1.",
       },
     ],
   },

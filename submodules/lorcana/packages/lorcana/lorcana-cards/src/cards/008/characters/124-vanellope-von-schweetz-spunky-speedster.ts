@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { vanellopeVonSchweetzSpunkySpeedsterI18n } from "./124-vanellope-von-schweetz-spunky-speedster.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const vanellopeVonSchweetzSpunkySpeedster: CharacterCard = {
   id: "SCj",
   canonicalId: "ci_SCj",
+  slug: "lorcana-ci_SCj",
+  printings: [
+    {
+      id: "set8-124",
+      artId: "set8-124",
+      setCode: "set8",
+      collectorNumber: "124",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-124"],
   cardType: "character",
   name: "Vanellope Von Schweetz",
@@ -21,7 +33,7 @@ export const vanellopeVonSchweetzSpunkySpeedster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3b52c05d999944679005cd5fe94c2adb",
-    tcgPlayer: 631430,
+    tcgPlayer: "631430",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Hero", "Princess", "Racer"],

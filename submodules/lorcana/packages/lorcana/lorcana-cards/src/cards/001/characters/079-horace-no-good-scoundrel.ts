@@ -4,6 +4,17 @@ import { horaceNogoodScoundrelI18n } from "./079-horace-no-good-scoundrel.i18n";
 export const horaceNogoodScoundrel: CharacterCard = {
   id: "dBe",
   canonicalId: "ci_dBe",
+  slug: "lorcana-ci_dBe",
+  printings: [
+    {
+      id: "set1-079",
+      artId: "set1-079",
+      setCode: "set1",
+      collectorNumber: "79",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-079"],
   cardType: "character",
   name: "Horace",
@@ -21,7 +32,7 @@ export const horaceNogoodScoundrel: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_449f6f94972b4bce9a87460460204cd8",
-    tcgPlayer: 507494,
+    tcgPlayer: "507494",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: horaceNogoodScoundrelI18n,

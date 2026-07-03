@@ -4,6 +4,17 @@ import { ratiganVeryLargeMouseI18n } from "./121-ratigan-very-large-mouse.i18n";
 export const ratiganVeryLargeMouse: CharacterCard = {
   id: "jfe",
   canonicalId: "ci_jfe",
+  slug: "lorcana-ci_jfe",
+  printings: [
+    {
+      id: "set2-121",
+      artId: "set2-121",
+      setCode: "set2",
+      collectorNumber: "121",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-121"],
   cardType: "character",
   name: "Ratigan",
@@ -20,7 +31,7 @@ export const ratiganVeryLargeMouse: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_35af0ddde9834b5e8b37b9ba98126c71",
-    tcgPlayer: 527276,
+    tcgPlayer: "527276",
   },
   text: [
     {
@@ -53,7 +64,9 @@ export const ratiganVeryLargeMouse: CharacterCard = {
             type: "restriction",
             duration: "this-turn",
             restriction: "cant-quest",
-            target: { ref: "previous-target" },
+            target: {
+              ref: "previous-target",
+            },
           },
         ],
       },

@@ -4,6 +4,17 @@ import { mickeyMouseExpeditionLeaderI18n } from "./026-mickey-mouse-expedition-l
 export const mickeyMouseExpeditionLeader: CharacterCard = {
   id: "APc",
   canonicalId: "ci_APc",
+  slug: "lorcana-ci_APc",
+  printings: [
+    {
+      id: "set12-026",
+      artId: "set12-026",
+      setCode: "set12",
+      collectorNumber: "26",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-026"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,6 +30,7 @@ export const mickeyMouseExpeditionLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c1295a70475b44d392fa06adbbc74b6b",
+    tcgPlayer: "690520",
   },
   text: [
     {

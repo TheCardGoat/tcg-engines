@@ -4,6 +4,17 @@ import { percyPupsicleI18n } from "./027-percy-pupsicle.i18n";
 export const percyPupsicle: CharacterCard = {
   id: "0V8",
   canonicalId: "ci_0V8",
+  slug: "lorcana-ci_0V8",
+  printings: [
+    {
+      id: "set11-027",
+      artId: "set11-027",
+      setCode: "set11",
+      collectorNumber: "27",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-027"],
   cardType: "character",
   name: "Percy",
@@ -20,7 +31,7 @@ export const percyPupsicle: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1a61d954f0524416a6c0f46814520495",
-    tcgPlayer: 674830,
+    tcgPlayer: "674830",
   },
   text: [
     {

@@ -24,7 +24,18 @@ function createMockActionCard(params: {
 }): ActionCard {
   return {
     id: params.id,
+    printings: [
+      {
+        id: params.id,
+        artId: params.id,
+        setCode: "TST",
+        collectorNumber: "1",
+        rarity: "common",
+        imageUrl: "",
+      },
+    ],
     canonicalId: `ci_${params.id}`,
+    slug: `lorcana-ci_${params.id}`,
     cardType: "action",
     name: params.name,
     cost: params.cost,
@@ -339,6 +350,54 @@ const simpleAction = createMockActionCard({
   ],
 });
 
+const stagedTargetCountAction = createMockActionCard({
+  id: "staged-target-count-action",
+  name: "Staged Target Count Action",
+  cost: 1,
+  text: "You may put any number of cards from your hand on the bottom of your deck. If you do, draw that number plus 1.",
+  abilities: [
+    {
+      type: "action",
+      effect: {
+        type: "optional",
+        chooser: "CONTROLLER",
+        effect: {
+          type: "sequence",
+          steps: [
+            {
+              type: "put-on-bottom",
+              ordering: "player-choice",
+              target: {
+                selector: "chosen",
+                count: { upTo: 99 },
+                owner: "you",
+                zones: ["hand"],
+              },
+            },
+            {
+              type: "conditional",
+              condition: {
+                type: "if-you-do",
+              },
+              then: {
+                type: "draw",
+                target: "CONTROLLER",
+                amount: {
+                  type: "difference",
+                  left: {
+                    type: "last-effect-target-count",
+                  },
+                  right: -1,
+                },
+              },
+            },
+          ],
+        },
+      },
+    },
+  ],
+});
+
 describe("LorcanaEngineBase bag auto-resolution", () => {
   it("auto-resolves a single mandatory no-target triggered bag effect", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
@@ -638,6 +697,92 @@ describe("LorcanaEngineBase bag auto-resolution", () => {
     expect(testEngine.isExerted(target)).toBe(true);
   });
 
+  it("allows declining an accepted optional follow-up target prompt without targets", () => {
+    const target = createMockCharacter({
+      id: "optional-targeted-follow-up-decline-victim",
+      name: "Optional Targeted Follow Up Decline Victim",
+      cost: 2,
+      strength: 2,
+      willpower: 2,
+      lore: 1,
+    });
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+      {
+        hand: [simpleAction],
+        inkwell: simpleAction.cost,
+        play: [optionalTargetedActionWatcher],
+        deck: 2,
+      },
+      {
+        play: [target],
+        deck: 2,
+      },
+    );
+
+    expect(
+      testEngine.asPlayerOne().playCard(simpleAction, {
+        preventAutoResolveTriggeredEffects: true,
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(
+      testEngine
+        .asPlayerOne()
+        .resolvePendingByCard(testEngine.asPlayerOne().getBagEffects()[0]!.sourceId, {
+          resolveOptional: true,
+        }),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(1);
+
+    expect(
+      testEngine.asPlayerOne().resolveNextPending({
+        resolveOptional: false,
+      }),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(0);
+    expect(testEngine.isExerted(target)).toBe(false);
+  });
+
+  it("preserves selected target count when a staged sequence continues", () => {
+    const bottomCardOne = createMockCharacter({
+      id: "staged-target-count-bottom-one",
+      name: "Staged Target Count Bottom One",
+      cost: 1,
+      lore: 1,
+    });
+    const bottomCardTwo = createMockCharacter({
+      id: "staged-target-count-bottom-two",
+      name: "Staged Target Count Bottom Two",
+      cost: 1,
+      lore: 1,
+    });
+    const drawnCards = Array.from({ length: 3 }, (_, index) =>
+      createMockCharacter({
+        id: `staged-target-count-drawn-${index + 1}`,
+        name: `Staged Target Count Drawn ${index + 1}`,
+        cost: 1,
+        lore: 1,
+      }),
+    );
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [stagedTargetCountAction, bottomCardOne, bottomCardTwo],
+      inkwell: stagedTargetCountAction.cost,
+      deck: drawnCards,
+    });
+
+    expect(testEngine.asPlayerOne().playCard(stagedTargetCountAction)).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(stagedTargetCountAction, {
+        resolveOptional: true,
+        targets: [bottomCardOne, bottomCardTwo],
+      }),
+    ).toBeSuccessfulCommand();
+
+    for (const card of drawnCards) {
+      expect(testEngine.asPlayerOne().getCardZone(card)).toBe("hand");
+    }
+  });
+
   it("allows declining optional targeted bag effects without providing targets", () => {
     const target = createMockCharacter({
       id: "optional-targeted-decline-victim",
@@ -675,6 +820,62 @@ describe("LorcanaEngineBase bag auto-resolution", () => {
         }),
     ).toBeSuccessfulCommand();
     expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
+    expect(testEngine.isExerted(target)).toBe(false);
+    const publicLogKeys = testEngine
+      .getServerEngine()
+      .getRuntime()
+      .getMoveLogHistory()
+      .flatMap((log) => log.public.map((entry) => entry.key));
+    expect(
+      publicLogKeys.filter((key) => key === "lorcana.effect.resolve.optionalSelection.rejected"),
+    ).toHaveLength(1);
+    expect(
+      publicLogKeys.filter((key) => key.startsWith("lorcana.bag.resolve.completed")),
+    ).toHaveLength(0);
+  });
+
+  it("rejects false optional declines on mandatory pending target prompts", () => {
+    const target = createMockCharacter({
+      id: "mandatory-target-decline-victim",
+      name: "Mandatory Target Decline Victim",
+      cost: 2,
+      strength: 2,
+      willpower: 2,
+      lore: 1,
+    });
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+      {
+        hand: [simpleAction],
+        inkwell: simpleAction.cost,
+        play: [targetedActionWatcher],
+        deck: 2,
+      },
+      {
+        play: [target],
+        deck: 2,
+      },
+    );
+
+    expect(
+      testEngine.asPlayerOne().playCard(simpleAction, {
+        preventAutoResolveTriggeredEffects: true,
+      }),
+    ).toBeSuccessfulCommand();
+    expect(
+      testEngine
+        .asPlayerOne()
+        .resolvePendingByCard(testEngine.asPlayerOne().getBagEffects()[0]!.sourceId),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(1);
+
+    const result = testEngine.asPlayerOne().resolveNextPending({
+      resolveOptional: false,
+    });
+    expect(result).toMatchObject({
+      success: false,
+      errorCode: "RESOLVE_EFFECT_TARGETS_REQUIRED",
+    });
+    expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(1);
     expect(testEngine.isExerted(target)).toBe(false);
   });
 

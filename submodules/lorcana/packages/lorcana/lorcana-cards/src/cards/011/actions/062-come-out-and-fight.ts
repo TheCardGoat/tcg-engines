@@ -4,6 +4,17 @@ import { comeOutAndFightI18n } from "./062-come-out-and-fight.i18n";
 export const comeOutAndFight: ActionCard = {
   id: "H72",
   canonicalId: "ci_H72",
+  slug: "lorcana-ci_H72",
+  printings: [
+    {
+      id: "set11-062",
+      artId: "set11-062",
+      setCode: "set11",
+      collectorNumber: "62",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-062"],
   cardType: "action",
   name: "Come Out and Fight!",
@@ -15,7 +26,7 @@ export const comeOutAndFight: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9d9eb44aa6324c2ebce958cbf92a2d31",
-    tcgPlayer: 675298,
+    tcgPlayer: "675298",
   },
   text: "Put all cards from under chosen character, item, or location on the bottom of their player's deck in a random order. Draw a card.",
   abilities: [

@@ -4,6 +4,17 @@ import { queenOfHeartsQuicktemperedI18n } from "./090-queen-of-hearts-quick-temp
 export const queenOfHeartsQuicktempered: CharacterCard = {
   id: "VtO",
   canonicalId: "ci_VtO",
+  slug: "lorcana-ci_VtO",
+  printings: [
+    {
+      id: "set2-090",
+      artId: "set2-090",
+      setCode: "set2",
+      collectorNumber: "90",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-090"],
   cardType: "character",
   name: "Queen of Hearts",
@@ -20,7 +31,7 @@ export const queenOfHeartsQuicktempered: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2f01947ccb4d4bae8b2cda6308a77323",
-    tcgPlayer: 525079,
+    tcgPlayer: "525079",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { arielOnHumanLegsI18n } from "./001-ariel-on-human-legs.i18n";
 export const arielOnHumanLegs: CharacterCard = {
   id: "WeA",
   canonicalId: "ci_WeA",
+  slug: "lorcana-ci_WeA",
+  printings: [
+    {
+      id: "set1-001",
+      artId: "set1-001",
+      setCode: "set1",
+      collectorNumber: "1",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-001"],
   cardType: "character",
   name: "Ariel",
@@ -20,7 +31,7 @@ export const arielOnHumanLegs: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d9f3b86af85f48579ed9d0d7ce0de129",
-    tcgPlayer: 494102,
+    tcgPlayer: "494102",
   },
   text: [
     {

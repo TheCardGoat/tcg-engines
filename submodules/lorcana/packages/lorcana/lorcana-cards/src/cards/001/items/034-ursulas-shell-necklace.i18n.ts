@@ -5,8 +5,8 @@ export const ursulasShellNecklaceI18n: Record<Languages, I18nProperties> = {
     name: "Ursula’s Shell Necklace",
     text: [
       {
-        title: "NOW, SING!",
-        description: "Whenever you play a song, you may pay 1 to draw a card.",
+        title: "Now, Sing!",
+        description: "Whenever you play a song, you may pay 1 {I} to draw a card.",
       },
     ],
   },
@@ -14,9 +14,9 @@ export const ursulasShellNecklaceI18n: Record<Languages, I18nProperties> = {
     name: "Ursulas Muschel-Halskette",
     text: [
       {
-        title: "UND JETZT SING!",
+        title: "Und jetzt Sing!",
         description:
-          "Jedes Mal, wenn du ein Lied ausspielst, darfst du 1 zahlen, um 1 Karte zu ziehen.",
+          "Jedes Mal, wenn du ein Lied ausspielst, darfst du 1 {I} zahlen, um 1 Karte zu ziehen.",
       },
     ],
   },
@@ -26,7 +26,7 @@ export const ursulasShellNecklaceI18n: Record<Languages, I18nProperties> = {
       {
         title: "MAINTENANT, CHANTE!",
         description:
-          "Chaque fois que vous jouez une chanson, vous pouvez payer 1 pour piocher une carte.",
+          "Chaque fois que vous jouez une chanson, vous pouvez payer 1 {I} pour piocher une carte.",
       },
     ],
   },
@@ -34,8 +34,8 @@ export const ursulasShellNecklaceI18n: Record<Languages, I18nProperties> = {
     name: "Ursula’s Shell Necklace",
     text: [
       {
-        title: "NOW, SING!",
-        description: "Whenever you play a song, you may pay 1 to draw a card.",
+        title: "Now, Sing!",
+        description: "Whenever you play a song, you may pay 1 {I} to draw a card.",
       },
     ],
   },

@@ -17,9 +17,9 @@ export const theQueenJealousBeautyI18n: Record<Languages, I18nProperties> = {
     version: "Eifersüchtige Schönheit",
     text: [
       {
-        title: "KEIN",
+        title: "Kein gewöhnlicher Apfel",
         description:
-          "GEWÖHNLICHER APFEL — Wähle 3 Karten aus einem gegnerischen Ablagestapel und lege diese unter das zugehörige Deck, um 3 Legenden zu sammeln. Falls du so mindestens eine Prinzessinnen-Karte bewegt hast, sammelst du stattdessen 4 Legenden.",
+          "{E} — Wähle 3 Karten aus einem gegnerischen Ablagestapel und lege diese unter das zugehörige Deck, um 3 Legenden zu sammeln. Falls du so mindestens eine Prinzessinnen-Karte bewegt hast, sammelst du stattdessen 4 Legenden.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const theQueenJealousBeautyI18n: Record<Languages, I18nProperties> = {
     version: "Beauté jalouse",
     text: [
       {
-        title: "PAS UNE POMME ORDINAIRE",
+        title: "Pas une pomme ordinaire",
         description:
-          "— Choisissez un adversaire. Choisissez 3 cartes de sa défausse et placez-les sous sa pioche pour gagner 3 éclats de Lore. Si vous avez déplacé au moins un personnage Princesse de cette façon, gagnez 4 éclats de Lore à la place.",
+          "{E} — Choisissez un adversaire. Choisissez 3 cartes de sa défausse et placez-les sous sa pioche pour gagner 3 éclats de Lore. Si vous avez déplacé au moins un personnage Princesse de cette façon, gagnez 4 éclats de Lore à la place.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const theQueenJealousBeautyI18n: Record<Languages, I18nProperties> = {
     version: "Bellezza Gelosa",
     text: [
       {
-        title: "NON",
+        title: "Non È una Mela Come un'Altra",
         description:
-          "È UNA MELA COME UN'ALTRA — Scegli 3 carte dagli scarti di un avversario a tua scelta e mettile in fondo al suo mazzo per ottenere 3 leggenda. Se una qualsiasi carta Principessa è stata spostata in questo modo, ottieni invece 4 leggenda.",
+          "{E} — Scegli 3 carte dagli scarti di un avversario a tua scelta e mettile in fondo al suo mazzo per ottenere 3 leggenda. Se una qualsiasi carta Principessa è stata spostata in questo modo, ottieni invece 4 leggenda.",
       },
     ],
   },

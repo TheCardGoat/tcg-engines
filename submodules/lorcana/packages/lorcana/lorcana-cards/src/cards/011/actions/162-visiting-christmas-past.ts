@@ -4,6 +4,17 @@ import { visitingChristmasPastI18n } from "./162-visiting-christmas-past.i18n";
 export const visitingChristmasPast: ActionCard = {
   id: "RW2",
   canonicalId: "ci_RW2",
+  slug: "lorcana-ci_RW2",
+  printings: [
+    {
+      id: "set11-162",
+      artId: "set11-162",
+      setCode: "set11",
+      collectorNumber: "162",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-162"],
   cardType: "action",
   name: "Visiting Christmas Past",
@@ -16,7 +27,7 @@ export const visitingChristmasPast: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8c8dd7b9235e4b778aeff7b8b4da14ce",
-    tcgPlayer: 673742,
+    tcgPlayer: "673742",
   },
   text: "Put any number of cards from under your characters and locations into your inkwell facedown and exerted.",
   abilities: [

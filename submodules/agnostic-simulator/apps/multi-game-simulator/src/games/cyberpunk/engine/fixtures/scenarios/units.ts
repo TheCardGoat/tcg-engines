@@ -10,6 +10,61 @@ import {
 } from "./shared";
 
 export const unitScenarios: Scenario[] = [
+  {
+    id: "retailNewCardAbilities",
+    group: "unit-play-trigger",
+    label: "Retail new cards · ability review board",
+    description:
+      "P1 has the newly ingested retail cards staged across hand, field, trash, and legends. Use this board to visually inspect images, card text, Field Operator's even-Street-Cred draw, Viktor's trash Cyberware equip, and Goro/Saburo/Yorinobu attack interactions.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailFieldOperator,
+            c.welcomeToNightCityRetailIndustrialAssembly,
+            c.welcomeToNightCityRetailOverTheEdge,
+            c.welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch,
+          ],
+          deck: [c.alphaRuthlessLowlife, c.alphaSwordwiseHuscle],
+          field: [
+            {
+              card: c.embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
+              spent: false,
+              playedThisTurn: false,
+            },
+            { card: c.alphaRuthlessLowlife, spent: false, playedThisTurn: false },
+          ],
+          trash: [c.alphaMantisBlades],
+          legendArea: [
+            {
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+              faceDown: false,
+            },
+            {
+              card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+          ],
+          eddies: 8,
+          gigArea: [
+            { dieType: "d20", faceValue: 3 },
+            { dieType: "d8", faceValue: 5 },
+          ],
+        },
+        {
+          hand: [c.alphaRebootOptics],
+          field: [
+            { card: c.alphaCorpoSecurity, spent: true },
+            { card: c.alphaArmoredMinotaur, spent: false },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 4 }],
+        },
+        { seed: scenarioSeed("retailNewCardAbilities"), autoGainGig: false },
+      ),
+  },
+
   // ── Unit: BLOCKER + can't attack (Secondhand Bombus, Corpo Security) ────
   {
     id: "unitSecondhandBombus",
@@ -782,7 +837,7 @@ export const unitScenarios: Scenario[] = [
 
   // ── Program: Cost reducer + cross-power defeat (Carnage At The Colosseum)
   {
-    id: "progCarnageAtTheColosseum",
+    id: "progCarnageAtTheColosseumCostReduction",
     group: "program-cost-modifier",
     label: "Carnage At The Colosseum · -1 €$ per friendly Gig at 8+ value",
     description:
@@ -809,7 +864,11 @@ export const unitScenarios: Scenario[] = [
           eddies: 4,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
-        { seed: scenarioSeed("progCarnageAtTheColosseum"), autoGainGig: false, activePlayerId: P1 },
+        {
+          seed: scenarioSeed("progCarnageAtTheColosseumCostReduction"),
+          autoGainGig: false,
+          activePlayerId: P1,
+        },
       ),
   },
 

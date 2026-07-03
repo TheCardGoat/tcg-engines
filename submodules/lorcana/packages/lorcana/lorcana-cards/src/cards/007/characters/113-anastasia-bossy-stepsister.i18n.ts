@@ -6,9 +6,9 @@ export const anastasiaBossyStepsisterI18n: Record<Languages, I18nProperties> = {
     version: "Bossy Stepsister",
     text: [
       {
-        title: "OH, I HATE THIS!",
+        title: "OH,",
         description:
-          "Whenever this character is challenged, the challenging player chooses and discards a card.",
+          "I HATE THIS! Whenever this character is challenged, the challenging player chooses and discards a card.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const anastasiaBossyStepsisterI18n: Record<Languages, I18nProperties> = {
     version: "Rechthaberische Stiefschwester",
     text: [
       {
-        title: "ICH HASSE ES!",
+        title: "Ich hasse es!",
         description:
           "Jedes Mal, wenn dieser Charakter herausgefordert wird, wählt die herausfordernde Person 1 Karte aus ihrer Hand und wirft sie ab.",
       },
@@ -28,7 +28,7 @@ export const anastasiaBossyStepsisterI18n: Record<Languages, I18nProperties> = {
     version: "Belle-soeur autoritaire",
     text: [
       {
-        title: "OH, JE DÉTESTE ÇA!",
+        title: "Oh, je déteste ça!",
         description:
           "Chaque fois que ce personnage est défié, le joueur qui a lancé le défi choisit et défausse une de ses cartes.",
       },
@@ -39,7 +39,7 @@ export const anastasiaBossyStepsisterI18n: Record<Languages, I18nProperties> = {
     version: "Sorellastra Prepotente",
     text: [
       {
-        title: "CHE PORCHERIA!",
+        title: "Che Porcheria!",
         description:
           "Ogni volta che questo personaggio viene sfidato, il giocatore sfidante sceglie e scarta una carta.",
       },

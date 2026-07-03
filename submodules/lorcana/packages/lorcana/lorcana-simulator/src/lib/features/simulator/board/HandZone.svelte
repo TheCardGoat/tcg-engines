@@ -4,7 +4,6 @@
     import ChevronUpIcon from "@lucide/svelte/icons/chevron-up";
     import ChevronDownIcon from "@lucide/svelte/icons/chevron-down";
     import type {
-        LorcanaCardSnapshot,
         LorcanaPlayerSide,
         LorcanaTableSeat
     } from "@/features/simulator/model/contracts.js";
@@ -52,12 +51,29 @@
   const inFlightCardIds = $derived(board.inFlightCardIds);
   const handCards = $derived(board.getZoneCards(playerSide, "hand").filter((card) => !inFlightCardIds.has(card.cardId)));
   const fromUnderCards = $derived(isOpponent ? [] : board.getPlayableFromUnderCards(playerSide));
-  const cards = $derived([...handCards, ...fromUnderCards]);
+  const fromDiscardCards = $derived(
+    isOpponent
+      ? []
+      : board.getPlayableFromDiscardCards(playerSide).filter((card) => !inFlightCardIds.has(card.cardId)),
+  );
+  const cards = $derived([...handCards, ...fromUnderCards, ...fromDiscardCards]);
+  const hasVirtualPlayableCards = $derived(
+    fromUnderCards.length > 0 || fromDiscardCards.length > 0,
+  );
   const totalCards = $derived(board.getZoneTotalCards(playerSide, "hand"));
   const isMasked = $derived(board.isZoneMasked(playerSide, "hand"));
   const ownerId = $derived(board.getOwnerIdForSide(playerSide));
   const selectedCardIds = $derived(board.selectedCardIds);
   const playableCardIds = $derived(board.playableHandCardIds);
+  const actionPlayableCardIds = $derived.by(() => {
+    const playableIds = new Set<string>();
+    for (const card of cards) {
+      if (sidebar.getCardActionHighlightState(card).playable) {
+        playableIds.add(card.cardId);
+      }
+    }
+    return playableIds;
+  });
   const handDroppable = createOptionalDroppable({
     zone: "hand",
     get player() {
@@ -166,14 +182,6 @@
     const step = maxSpread / (total - 1);
     const rotation = -maxSpread / 2 + step * index;
     return seat === "top" ? -rotation : rotation;
-  }
-
-  function isPlayable(card: LorcanaCardSnapshot): boolean {
-    if (isOpponent || isMasked) {
-      return false;
-    }
-
-    return playableCardIds.includes(card.cardId);
   }
 
   const MAX_VISIBLE_HIDDEN_CARDS = 10;
@@ -310,10 +318,12 @@
   class:hand-zone--player-two={seat === "top"}
   class:hand-zone--opponent={isOpponent}
   class:hand-zone--tucked={isTucked}
+  class:hand-zone--virtual-playables={hasVirtualPlayableCards}
   data-layout-mode={layoutMode}
   data-player-seat={seat}
   data-player-side={playerSide}
   data-zone-id="hand"
+  data-action-playable-card-ids={[...actionPlayableCardIds].join(",")}
   data-testid={`hand-zone-${playerSide}`}
 >
   {#if showDesktopTuckControl}
@@ -374,7 +384,12 @@
     {#if cards.length > 0}
       {#each cards as card, index (card.cardId)}
         {@const rotation = getFanRotation(index, cards.length)}
-        {@const playable = isPlayable(card)}
+        {@const playable =
+          !isOpponent &&
+          !isMasked &&
+          (card.isFromDiscard ||
+            playableCardIds.includes(card.cardId) ||
+            actionPlayableCardIds.has(card.cardId))}
         {@const actionState = sidebar.getActionSessionCardState(card.cardId)}
         {@const selectable = actionState.isSelectable || playable}
         {@const isSelected =
@@ -392,12 +407,14 @@
           class:hand-card--dragging={dnd.draggedCardId === card.cardId}
           class:hand-card--playable={playable}
           class:hand-card--from-under={card.isFromUnder}
+          class:hand-card--from-discard={card.isFromDiscard}
           class:hand-card--selected={isSelected}
           class:hand-card--selected-flat={disableMobileSelectedLift && isSelected}
           data-card-id={card.cardId}
           data-player-seat={seat}
           data-player-id={card.ownerId}
           data-zone-id={card.zoneId}
+          data-display-zone={card.isFromDiscard ? "playable-discard" : card.isFromUnder ? "playable-under" : "hand"}
           data-board-anchor-id={createCardAnchorId(playerSide, "hand", card.cardId)}
           style:--rotation="{rotation}deg"
           {@attach draggable.attach}
@@ -628,6 +645,23 @@
     z-index: 2;
   }
 
+  .hand-zone--virtual-playables:not(.hand-zone--opponent) .hand-container::before {
+    content: "";
+    position: absolute;
+    inset: -0.55rem -0.85rem -0.75rem;
+    z-index: -1;
+    border: 1px solid rgba(168, 85, 247, 0.56);
+    border-radius: 18px;
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(168, 85, 247, 0.32), transparent 66%),
+      linear-gradient(180deg, rgba(76, 29, 149, 0.08), rgba(30, 15, 56, 0.48));
+    box-shadow:
+      0 0 0 1px rgba(216, 180, 254, 0.12) inset,
+      0 18px 40px rgba(88, 28, 135, 0.26),
+      0 0 34px rgba(168, 85, 247, 0.18);
+    pointer-events: none;
+  }
+
   .hand-zone--player-two .hand-container {
     align-items: flex-start;
   }
@@ -680,21 +714,39 @@
     opacity: 0.3;
   }
 
-  .hand-card--from-under {
+  .hand-card--from-under,
+  .hand-card--from-discard {
+    --playable-highlight: rgba(192, 132, 252, 0.96);
+    --playable-glow: rgba(168, 85, 247, 0.58);
+
     position: relative;
   }
 
-  .hand-card--from-under::after {
+  .hand-card--from-under::after,
+  .hand-card--from-discard::after {
     content: "";
     position: absolute;
-    inset: 0;
-    border: 2px dashed rgba(168, 85, 247, 0.7);
+    inset: -5px;
+    border: 3px solid rgba(192, 132, 252, 0.96);
     border-radius: 12px;
     box-shadow:
-      0 0 10px rgba(168, 85, 247, 0.25),
-      inset 0 0 6px rgba(168, 85, 247, 0.1);
+      0 0 0 1px rgba(76, 29, 149, 0.75),
+      0 0 22px rgba(168, 85, 247, 0.55),
+      0 12px 28px rgba(88, 28, 135, 0.32),
+      inset 0 0 14px rgba(216, 180, 254, 0.18);
     pointer-events: none;
     z-index: 5;
+  }
+
+  .hand-card--from-under :global(.card-face),
+  .hand-card--from-discard :global(.card-face) {
+    --playable-highlight: rgba(192, 132, 252, 0.96);
+    --playable-glow: rgba(168, 85, 247, 0.58);
+  }
+
+  .hand-card--from-under :global(.playable-glow),
+  .hand-card--from-discard :global(.playable-glow) {
+    background: linear-gradient(135deg, rgba(192, 132, 252, 0.26), rgba(88, 28, 135, 0.18));
   }
 
   .hand-card--player-two {
@@ -789,6 +841,11 @@
 
   .hand-zone[data-layout-mode="mobile"] .hand-card--playable {
     filter: drop-shadow(0 0 16px rgba(250, 204, 21, 0.46));
+  }
+
+  .hand-zone[data-layout-mode="mobile"] .hand-card--from-under.hand-card--playable,
+  .hand-zone[data-layout-mode="mobile"] .hand-card--from-discard.hand-card--playable {
+    filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.56));
   }
 
   .hand-zone[data-layout-mode="mobile"] .hand-overflow-badge {

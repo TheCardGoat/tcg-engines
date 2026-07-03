@@ -14,8 +14,8 @@ export const magicMirrorI18n: Record<Languages, I18nProperties> = {
     name: "Wunderspiegel",
     text: [
       {
-        title: "SPRICH!, 4",
-        description: "— Ziehe 1 Karte.",
+        title: "Sprich!",
+        description: "{E}, 4 {I} — Ziehe 1 Karte.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const magicMirrorI18n: Record<Languages, I18nProperties> = {
     name: "MIROIR MAGIQUE",
     text: [
       {
-        title: "PARLE!, 4",
-        description: "— Piochez une carte.",
+        title: "PARLE!",
+        description: "{E}, 4 {I} — Piochez une carte.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const magicMirrorI18n: Record<Languages, I18nProperties> = {
     name: "Magic Mirror",
     text: [
       {
-        title: "SPEAK!, 4",
-        description: "— Draw a card.",
+        title: "Speak!",
+        description: "{E}, 4 {I} — Draw a card.",
       },
     ],
   },

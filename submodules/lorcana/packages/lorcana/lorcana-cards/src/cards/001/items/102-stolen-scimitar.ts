@@ -4,6 +4,17 @@ import { stolenScimitarI18n } from "./102-stolen-scimitar.i18n";
 export const stolenScimitar: ItemCard = {
   id: "EDv",
   canonicalId: "ci_EDv",
+  slug: "lorcana-ci_EDv",
+  printings: [
+    {
+      id: "set1-102",
+      artId: "set1-102",
+      setCode: "set1",
+      collectorNumber: "102",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-102"],
   cardType: "item",
   name: "Stolen Scimitar",
@@ -16,7 +27,7 @@ export const stolenScimitar: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a86ebded73ba41e2ab58fcebfd30eeb0",
-    tcgPlayer: 507262,
+    tcgPlayer: "507262",
   },
   text: [
     {

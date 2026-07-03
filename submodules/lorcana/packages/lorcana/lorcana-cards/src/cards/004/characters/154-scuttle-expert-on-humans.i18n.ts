@@ -17,7 +17,7 @@ export const scuttleExpertOnHumansI18n: Record<Languages, I18nProperties> = {
     version: "Experte für Menschen",
     text: [
       {
-        title: "LASST MAL SEHEN",
+        title: "Laßt mal sehen",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const scuttleExpertOnHumansI18n: Record<Languages, I18nProperties> = {
     version: "Expert en humains",
     text: [
       {
-        title: "VOYONS VOIR",
+        title: "Voyons voir",
         description:
           "Lorsque vous jouez ce personnage, regardez les 4 premières cartes de votre pioche. Vous pouvez révéler une carte Objet et l'ajouter à votre main. Remettez le reste sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const scuttleExpertOnHumansI18n: Record<Languages, I18nProperties> = {
     version: "Esperto in Umani",
     text: [
       {
-        title: "FATE UN PO' VEDERE",
+        title: "Fate un Po' Vedere",
         description:
           "Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

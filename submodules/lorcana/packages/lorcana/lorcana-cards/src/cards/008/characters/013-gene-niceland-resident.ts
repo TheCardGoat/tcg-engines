@@ -4,6 +4,17 @@ import { geneNicelandResidentI18n } from "./013-gene-niceland-resident.i18n";
 export const geneNicelandResident: CharacterCard = {
   id: "DbU",
   canonicalId: "ci_DbU",
+  slug: "lorcana-ci_DbU",
+  printings: [
+    {
+      id: "set8-013",
+      artId: "set8-013",
+      setCode: "set8",
+      collectorNumber: "13",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-013"],
   cardType: "character",
   name: "Gene",
@@ -20,7 +31,7 @@ export const geneNicelandResident: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c4cc9368ba4d4f488b35ac8f8b0b07a1",
-    tcgPlayer: 631357,
+    tcgPlayer: "631357",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const geneNicelandResident: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           target: {
             selector: "chosen",
             count: 1,

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 
-import { CANONICAL_PLAYER_ONE, CANONICAL_PLAYER_TWO, SPECTATOR_PLAYER_ID } from "./index";
+import { CANONICAL_PLAYER_ONE, CANONICAL_PLAYER_TWO, SPECTATOR_PLAYER_ID } from "./index.js";
 
 describe("testing constants", () => {
   it("exports stable shared player ids", () => {

@@ -19,11 +19,12 @@ export const stratosTornadoTitanI18n: Record<Languages, I18nProperties> = {
     version: "Tornado Titan",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "WIRBELSTURM",
-        description: "— Sammle so viele Legenden, wie die Anzahl deiner Titanen im Spiel beträgt.",
+        title: "Wirbelsturm",
+        description:
+          "{E} — Sammle so viele Legenden, wie die Anzahl deiner Titanen im Spiel beträgt.",
       },
     ],
   },
@@ -32,12 +33,12 @@ export const stratosTornadoTitanI18n: Record<Languages, I18nProperties> = {
     version: "Titan du vent",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "CYCLONE",
+        title: "Cyclone",
         description:
-          "— Gagnez un nombre d'éclats de Lore égal au nombre de personnages Titan que vous avez en jeu.",
+          "{E} — Gagnez un nombre d'éclats de Lore égal au nombre de personnages Titan que vous avez en jeu.",
       },
     ],
   },
@@ -46,11 +47,11 @@ export const stratosTornadoTitanI18n: Record<Languages, I18nProperties> = {
     version: "Titano del Tornado",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "CICLONE",
-        description: "— Ottieni leggenda pari al numero di personaggi Titano che hai in gioco.",
+        title: "Ciclone",
+        description: "{E} — Ottieni leggenda pari al numero di personaggi Titano che hai in gioco.",
       },
     ],
   },

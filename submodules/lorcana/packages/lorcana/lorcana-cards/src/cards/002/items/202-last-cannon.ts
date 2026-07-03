@@ -4,6 +4,17 @@ import { lastCannonI18n } from "./202-last-cannon.i18n";
 export const lastCannon: ItemCard = {
   id: "Q9b",
   canonicalId: "ci_Q9b",
+  slug: "lorcana-ci_Q9b",
+  printings: [
+    {
+      id: "set2-202",
+      artId: "set2-202",
+      setCode: "set2",
+      collectorNumber: "202",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-202"],
   cardType: "item",
   name: "Last Cannon",
@@ -16,7 +27,7 @@ export const lastCannon: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a776fb952998401394dcee6936d85b56",
-    tcgPlayer: 527780,
+    tcgPlayer: "527780",
   },
   text: [
     {

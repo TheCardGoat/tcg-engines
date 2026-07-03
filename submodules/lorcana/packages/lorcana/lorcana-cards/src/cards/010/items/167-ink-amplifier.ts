@@ -4,6 +4,17 @@ import { inkAmplifierI18n } from "./167-ink-amplifier.i18n";
 export const inkAmplifier: ItemCard = {
   id: "rjo",
   canonicalId: "ci_rjo",
+  slug: "lorcana-ci_rjo",
+  printings: [
+    {
+      id: "set10-167",
+      artId: "set10-167",
+      setCode: "set10",
+      collectorNumber: "167",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-167"],
   cardType: "item",
   name: "Ink Amplifier",
@@ -16,7 +27,7 @@ export const inkAmplifier: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_999386b36e224d6b9c1693142b62a20c",
-    tcgPlayer: 658883,
+    tcgPlayer: "658883",
   },
   text: [
     {

@@ -17,7 +17,7 @@ export const galacticCouncilChamberCourtroomI18n: Record<Languages, I18nProperti
     version: "Gerichtssaal",
     text: [
       {
-        title: "FÖDERATIONSERLASS",
+        title: "Föderationserlass",
         description:
           "Solange du mindestens einen Alien oder Roboter an diesem Ort hast, kann dieser Ort nicht herausgefordert werden.",
       },
@@ -28,7 +28,7 @@ export const galacticCouncilChamberCourtroomI18n: Record<Languages, I18nProperti
     version: "Salle d'audience",
     text: [
       {
-        title: "DÉCRET DE LA FÉDÉRATION",
+        title: "Décret de la Fédération",
         description:
           "Tant que vous avez au moins un personnage Alien ou Robot sur ce lieu, ce lieu ne peut pas être défié.",
       },
@@ -39,7 +39,7 @@ export const galacticCouncilChamberCourtroomI18n: Record<Languages, I18nProperti
     version: "Aula di Tribunale",
     text: [
       {
-        title: "DECRETO DELLA FEDERAZIONE",
+        title: "Decreto della Federazione",
         description:
           "Mentre hai un personaggio Alieno o Robot in questo luogo, questo luogo non può essere sfidato.",
       },

@@ -7,14 +7,17 @@ export const gd03Defurse064: UnitCard = {
   color: "purple",
   traits: ["ue", "vagan"],
   id: "GD03-064",
-  externalId: "gundam:gd03-064",
-  slug: "defurse-gd03-064",
+  canonicalId: "GD03-064",
+  externalIds: { bandai: "gundam:gd03-064" },
+  slug: "defurse/gd03-064",
   displayName: "Defurse",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-064",
   printings: [
     {
       id: "GD03-064",
+      artId: "GD03-064",
+      setCode: "GD03",
       collectorNumber: "GD03-064",
       cardNumber: "GD03-064",
       set: {
@@ -29,6 +32,7 @@ export const gd03Defurse064: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-064"],
   selectedPrintingId: "GD03-064",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-064.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-064.webp?260424",

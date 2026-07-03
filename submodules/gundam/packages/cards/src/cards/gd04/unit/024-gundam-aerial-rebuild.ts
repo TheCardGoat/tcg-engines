@@ -7,14 +7,17 @@ export const gd04GundamAerialRebuild024: UnitCard = {
   color: "green",
   traits: ["academy"],
   id: "GD04-024",
-  externalId: "gundam:gd04-024",
-  slug: "gundam-aerial-rebuild-gd04-024",
+  canonicalId: "GD04-024",
+  externalIds: { bandai: "gundam:gd04-024" },
+  slug: "gundam-aerial-rebuild/gd04-024",
   displayName: "Gundam Aerial Rebuild",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-024",
   printings: [
     {
       id: "GD04-024",
+      artId: "GD04-024",
+      setCode: "GD04",
       collectorNumber: "GD04-024",
       cardNumber: "GD04-024",
       set: {
@@ -30,6 +33,8 @@ export const gd04GundamAerialRebuild024: UnitCard = {
     },
     {
       id: "GD04-024_p1",
+      artId: "GD04-024_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-024_p1",
       cardNumber: "GD04-024",
       set: {
@@ -45,6 +50,7 @@ export const gd04GundamAerialRebuild024: UnitCard = {
         "Booster Pack Phantom Aria [GD04] Release Event Commemorative Items for Participants",
     },
   ],
+  reprints: ["GD04-024", "GD04-024_p1"],
   selectedPrintingId: "GD04-024",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-024.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-024.webp?260424",

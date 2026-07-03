@@ -13,6 +13,7 @@ import { defOf } from "../state/lookups.ts";
 import type { MatchState } from "../types/match-state.ts";
 import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
 import type { EffectTarget } from "../types/game-events.ts";
+import { resumeSuspendedEndTurn } from "./pass-phase.ts";
 
 export interface ResolveEffectTargetInput extends MoveInput {
   args: {
@@ -105,6 +106,7 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
         if (status === "suspended") return;
       }
       resumeCurrentTrigger(state, operations);
+      resumeSuspendedEndTurn(state, operations);
       return;
     }
 
@@ -153,6 +155,7 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
         });
       }
       resumeCurrentTrigger(state, operations);
+      resumeSuspendedEndTurn(state, operations);
       return;
     }
 
@@ -182,6 +185,7 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
       const emitted = eventsAfter[i]!;
       if (
         emitted.type === "gigValueChanged" ||
+        emitted.type === "gigDieRolled" ||
         emitted.type === "legendFlipped" ||
         emitted.type === "legendCalled" ||
         emitted.type === "cardSpent"
@@ -212,6 +216,7 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
     }
 
     resumeCurrentTrigger(state, operations);
+    resumeSuspendedEndTurn(state, operations);
   },
 };
 

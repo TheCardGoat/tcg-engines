@@ -15,9 +15,9 @@ export const potionOfMightI18n: Record<Languages, I18nProperties> = {
     name: "Trank der Macht",
     text: [
       {
-        title: "ABSCHEULICHES",
+        title: "Abscheuliches Gebräu",
         description:
-          "GEBRÄU 1, Verbanne diesen Gegenstand — Gib einem Charakter deiner Wahl in diesem Zug +3. Wählst du einen Schurken, dann gib dem Charakter stattdessen +4.",
+          "1 {I}, Verbanne diesen Gegenstand — Gib einem Charakter deiner Wahl in diesem Zug +3 {S}. Wählst du einen Schurken, dann gib dem Charakter stattdessen +4 {S}.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const potionOfMightI18n: Record<Languages, I18nProperties> = {
     name: "Potion de puissance",
     text: [
       {
-        title: "DÉCOCTION ABJECTE",
+        title: "Décoction abjecte",
         description:
-          "1, bannissez cet objet — Choisissez un personnage qui gagne +3 pour le reste de ce tour. Si ce personnage est un Méchant, il gagne +4 à la place.",
+          "1 {I}, bannissez cet objet — Choisissez un personnage qui gagne +3 {S} pour le reste de ce tour. Si ce personnage est un Méchant, il gagne +4 {S} à la place.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const potionOfMightI18n: Record<Languages, I18nProperties> = {
     name: "Pozione della Forza",
     text: [
       {
-        title: "INTRUGLIO DISGUSTOSO 1,",
+        title: "Intruglio Disgustoso",
         description:
-          "esilia questo oggetto — Un personaggio a tua scelta riceve +3 per questo turno. Se quel personaggio è un Cattivo, riceve invece +4.",
+          "1 {I}, esilia questo oggetto — Un personaggio a tua scelta riceve +3 {S} per questo turno. Se quel personaggio è un Cattivo, riceve invece +4 {S}.",
       },
     ],
   },

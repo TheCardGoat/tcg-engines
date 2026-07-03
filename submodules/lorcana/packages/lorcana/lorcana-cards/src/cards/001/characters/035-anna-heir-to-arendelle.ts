@@ -4,6 +4,17 @@ import { annaHeirToArendelleI18n } from "./035-anna-heir-to-arendelle.i18n";
 export const annaHeirToArendelle: CharacterCard = {
   id: "PD8",
   canonicalId: "ci_PD8",
+  slug: "lorcana-ci_PD8",
+  printings: [
+    {
+      id: "set1-035",
+      artId: "set1-035",
+      setCode: "set1",
+      collectorNumber: "35",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-035"],
   cardType: "character",
   name: "Anna",
@@ -20,7 +31,7 @@ export const annaHeirToArendelle: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6e2cd50802964cfdb903d16ef856caae",
-    tcgPlayer: 504444,
+    tcgPlayer: "504444",
   },
   text: [
     {

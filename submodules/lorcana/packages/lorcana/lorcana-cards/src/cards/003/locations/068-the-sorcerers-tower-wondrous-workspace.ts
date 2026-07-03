@@ -4,6 +4,17 @@ import { theSorcerersTowerWondrousWorkspaceI18n } from "./068-the-sorcerers-towe
 export const theSorcerersTowerWondrousWorkspace: LocationCard = {
   id: "GJL",
   canonicalId: "ci_GJL",
+  slug: "lorcana-ci_GJL",
+  printings: [
+    {
+      id: "set3-068",
+      artId: "set3-068",
+      setCode: "set3",
+      collectorNumber: "68",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-068"],
   cardType: "location",
   name: "The Sorcerer's Tower",
@@ -20,7 +31,7 @@ export const theSorcerersTowerWondrousWorkspace: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d9a1c24b8bf4469f8535e75c38cf61f7",
-    tcgPlayer: 535148,
+    tcgPlayer: "535148",
   },
   text: [
     {

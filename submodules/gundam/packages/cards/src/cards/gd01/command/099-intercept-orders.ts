@@ -7,14 +7,17 @@ export const gd01InterceptOrders099: CommandCard = {
   color: "blue",
   traits: ["-"],
   id: "GD01-099",
-  externalId: "gundam:gd01-099",
-  slug: "intercept-orders-gd01-099",
+  canonicalId: "GD01-099",
+  externalIds: { bandai: "gundam:gd01-099" },
+  slug: "intercept-orders/gd01-099",
   displayName: "Intercept Orders",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-099",
   printings: [
     {
       id: "GD01-099",
+      artId: "GD01-099",
+      setCode: "GD01",
       collectorNumber: "GD01-099",
       cardNumber: "GD01-099",
       set: {
@@ -30,6 +33,8 @@ export const gd01InterceptOrders099: CommandCard = {
     },
     {
       id: "GD01-099_p1",
+      artId: "GD01-099_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-099_p1",
       cardNumber: "GD01-099",
       set: {
@@ -44,6 +49,7 @@ export const gd01InterceptOrders099: CommandCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-099", "GD01-099_p1"],
   selectedPrintingId: "GD01-099",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-099.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-099.webp?260424",

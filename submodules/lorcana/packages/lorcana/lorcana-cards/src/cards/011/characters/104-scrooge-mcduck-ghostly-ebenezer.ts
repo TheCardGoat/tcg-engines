@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { scroogeMcduckGhostlyEbenezerI18n } from "./104-scrooge-mcduck-ghostly-ebenezer.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const scroogeMcduckGhostlyEbenezer: CharacterCard = {
   id: "cXq",
   canonicalId: "ci_cXq",
+  slug: "lorcana-ci_cXq",
+  printings: [
+    {
+      id: "set11-104",
+      artId: "set11-104",
+      setCode: "set11",
+      collectorNumber: "104",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-104"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -21,7 +33,7 @@ export const scroogeMcduckGhostlyEbenezer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4209198480ed495d9d5ed7608ece035f",
-    tcgPlayer: 676209,
+    tcgPlayer: "676209",
   },
   text: [
     {

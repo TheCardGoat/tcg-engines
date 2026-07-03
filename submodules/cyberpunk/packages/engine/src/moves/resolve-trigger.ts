@@ -1,6 +1,7 @@
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseTriggerPendingChoice } from "../types/match-state.ts";
 import { passOptionalTriggers, resolveQueuedTrigger } from "../ability-executor.ts";
+import { resumeSuspendedEndTurn } from "./pass-phase.ts";
 
 export interface ResolveTriggerInput extends MoveInput {
   args: {
@@ -49,8 +50,10 @@ export const resolveTriggerMove: MoveDefinition<ResolveTriggerInput> = {
   execute({ state, playerId, input, operations }) {
     if (input.args.pass) {
       passOptionalTriggers(state, operations, playerId);
+      resumeSuspendedEndTurn(state, operations);
       return;
     }
     resolveQueuedTrigger(input.args.triggerId!, state, operations);
+    resumeSuspendedEndTurn(state, operations);
   },
 };

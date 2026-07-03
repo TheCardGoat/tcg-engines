@@ -17,7 +17,7 @@ export const antonioMadrigalFriendToAllI18n: Record<Languages, I18nProperties> =
     version: "Freund von allen",
     text: [
       {
-        title: "NATÜRLICH KÖNNEN SIE AUCH KOMMEN",
+        title: "Natürlich können sie auch kommen",
         description:
           "Einmal während deines Zuges, wenn einer deiner Charaktere ein Lied singt, darfst du dein Deck nach einer Charakterkarte durchsuchen, die 3 oder weniger kostet, und diese allen Mitspielenden zeigen. Nimm die Karte auf deine Hand und mische danach dein Deck.",
       },
@@ -28,7 +28,7 @@ export const antonioMadrigalFriendToAllI18n: Record<Languages, I18nProperties> =
     version: "Ami de tous",
     text: [
       {
-        title: "BIEN SÛR QU'ILS PEUVENT VENIR",
+        title: "Bien sûr qu'ils peuvent venir",
         description:
           "Une fois durant votre tour, lorsque l'un de vos personnages chante une chanson, vous pouvez chercher dans votre pioche une carte Personnage coûtant 3 ou moins et la révéler à tous les joueurs. Placez la carte révélée dans votre main puis mélangez votre pioche.",
       },
@@ -39,7 +39,7 @@ export const antonioMadrigalFriendToAllI18n: Record<Languages, I18nProperties> =
     version: "Amico di Tutti",
     text: [
       {
-        title: "CERTO CHE POSSONO VENIRE",
+        title: "Certo che Possono Venire",
         description:
           "Una volta durante il tuo turno, ogni volta che uno dei tuoi personaggi canta una canzone, puoi cercare una carta personaggio con costo 3 o inferiore nel tuo mazzo e rivelare quella carta a tutti i giocatori. Aggiungi quella carta alla tua mano e rimescola il tuo mazzo.",
       },

@@ -7,14 +7,17 @@ export const gd01Adzam038: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-038",
-  externalId: "gundam:gd01-038",
-  slug: "adzam-gd01-038",
+  canonicalId: "GD01-038",
+  externalIds: { bandai: "gundam:gd01-038" },
+  slug: "adzam/gd01-038",
   displayName: "Adzam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-038",
   printings: [
     {
       id: "GD01-038",
+      artId: "GD01-038",
+      setCode: "GD01",
       collectorNumber: "GD01-038",
       cardNumber: "GD01-038",
       set: {
@@ -29,6 +32,7 @@ export const gd01Adzam038: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-038"],
   selectedPrintingId: "GD01-038",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-038.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-038.webp?260424",

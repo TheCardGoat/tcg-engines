@@ -7,14 +7,17 @@ export const gd02Daughtress049: UnitCard = {
   color: "red",
   traits: ["new une"],
   id: "GD02-049",
-  externalId: "gundam:gd02-049",
-  slug: "daughtress-gd02-049",
+  canonicalId: "GD02-049",
+  externalIds: { bandai: "gundam:gd02-049" },
+  slug: "daughtress/gd02-049",
   displayName: "Daughtress",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-049",
   printings: [
     {
       id: "GD02-049",
+      artId: "GD02-049",
+      setCode: "GD02",
       collectorNumber: "GD02-049",
       cardNumber: "GD02-049",
       set: {
@@ -29,6 +32,7 @@ export const gd02Daughtress049: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-049"],
   selectedPrintingId: "GD02-049",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-049.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-049.webp?260424",

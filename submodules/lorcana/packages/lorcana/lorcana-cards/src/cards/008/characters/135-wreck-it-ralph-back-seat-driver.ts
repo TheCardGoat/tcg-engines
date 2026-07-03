@@ -4,6 +4,17 @@ import { wreckitRalphBackSeatDriverI18n } from "./135-wreck-it-ralph-back-seat-d
 export const wreckitRalphBackSeatDriver: CharacterCard = {
   id: "mFI",
   canonicalId: "ci_mFI",
+  slug: "lorcana-ci_mFI",
+  printings: [
+    {
+      id: "set8-135",
+      artId: "set8-135",
+      setCode: "set8",
+      collectorNumber: "135",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-135"],
   cardType: "character",
   name: "Wreck-It Ralph",
@@ -20,7 +31,7 @@ export const wreckitRalphBackSeatDriver: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9eeb0424b962449d8a91e3ff5487e96c",
-    tcgPlayer: 631692,
+    tcgPlayer: "631692",
   },
   text: [
     {

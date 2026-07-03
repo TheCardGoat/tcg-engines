@@ -7,14 +7,17 @@ export const gd02GundamMkIiAeug071: UnitCard = {
   color: "white",
   traits: ["aeug"],
   id: "GD02-071",
-  externalId: "gundam:gd02-071",
-  slug: "gundam-mk-ii-aeug-gd02-071",
+  canonicalId: "GD02-071",
+  externalIds: { bandai: "gundam:gd02-071" },
+  slug: "gundam-mk-ii-aeug/gd02-071",
   displayName: "Gundam Mk-II (AEUG)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-071",
   printings: [
     {
       id: "GD02-071",
+      artId: "GD02-071",
+      setCode: "GD02",
       collectorNumber: "GD02-071",
       cardNumber: "GD02-071",
       set: {
@@ -29,6 +32,7 @@ export const gd02GundamMkIiAeug071: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-071"],
   selectedPrintingId: "GD02-071",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-071.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-071.webp?260424",

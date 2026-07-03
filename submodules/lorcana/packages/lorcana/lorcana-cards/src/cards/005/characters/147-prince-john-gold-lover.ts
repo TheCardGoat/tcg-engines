@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { princeJohnGoldLoverI18n } from "./147-prince-john-gold-lover.i18n";
 
 export const princeJohnGoldLover: CharacterCard = {
-  id: "1ju",
-  canonicalId: "ci_1ju",
+  id: "xgq",
+  canonicalId: "ci_ktV",
+  slug: "lorcana-ci_ktV",
+  printings: [
+    {
+      id: "set5-147",
+      artId: "set5-147",
+      setCode: "set5",
+      collectorNumber: "147",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-147"],
   cardType: "character",
   name: "Prince John",
@@ -20,7 +31,7 @@ export const princeJohnGoldLover: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b6134218a3104ed7b31df482ccb0b0a9",
-    tcgPlayer: 556435,
+    tcgPlayer: "556435",
   },
   text: [
     {

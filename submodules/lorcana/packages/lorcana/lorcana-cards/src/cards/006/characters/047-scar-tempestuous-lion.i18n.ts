@@ -18,10 +18,10 @@ export const scarTempestuousLionI18n: Record<Languages, I18nProperties> = {
     version: "Temperamentvoller Löwe",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "Herausfordern +3",
+        title: "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
       },
     ],
   },
@@ -30,10 +30,10 @@ export const scarTempestuousLionI18n: Record<Languages, I18nProperties> = {
     version: "Lion tempétueux",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "Offensif +3",
+        title: "<Offensif> +3",
       },
     ],
   },
@@ -42,10 +42,10 @@ export const scarTempestuousLionI18n: Record<Languages, I18nProperties> = {
     version: "Leone Tempestoso",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "Sfidante +3",
+        title: "<Sfidante> +3",
       },
     ],
   },

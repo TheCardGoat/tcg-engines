@@ -7,14 +7,17 @@ export const gd04GFalcon061: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD04-061",
-  externalId: "gundam:gd04-061",
-  slug: "g-falcon-gd04-061",
+  canonicalId: "GD04-061",
+  externalIds: { bandai: "gundam:gd04-061" },
+  slug: "g-falcon/gd04-061",
   displayName: "G-Falcon",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-061",
   printings: [
     {
       id: "GD04-061",
+      artId: "GD04-061",
+      setCode: "GD04",
       collectorNumber: "GD04-061",
       cardNumber: "GD04-061",
       set: {
@@ -29,6 +32,7 @@ export const gd04GFalcon061: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-061"],
   selectedPrintingId: "GD04-061",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-061.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-061.webp?260424",

@@ -4,6 +4,17 @@ import { imperialBowI18n } from "./201-imperial-bow.i18n";
 export const imperialBow: ItemCard = {
   id: "qox",
   canonicalId: "ci_qox",
+  slug: "lorcana-ci_qox",
+  printings: [
+    {
+      id: "set4-201",
+      artId: "set4-201",
+      setCode: "set4",
+      collectorNumber: "201",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-201"],
   cardType: "item",
   name: "Imperial Bow",
@@ -16,7 +27,7 @@ export const imperialBow: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c7979a7d0305443eb9ddb9b10469644d",
-    tcgPlayer: 549617,
+    tcgPlayer: "549617",
   },
   text: [
     {

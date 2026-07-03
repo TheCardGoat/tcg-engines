@@ -16,9 +16,9 @@ export const yaoSnowWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Schneekrieger",
     text: [
       {
-        title: "OOH, ICH HABE ANGST",
+        title: "Ooh, ich habe Angst",
         description:
-          "Dieser Charakter erhält im Zug einer gegnerischen Person Robust +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
+          "Dieser Charakter erhält im Zug einer gegnerischen Person <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const yaoSnowWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerrier des neiges",
     text: [
       {
-        title: "OOH, J'AI PEUR",
-        description: "Durant le tour de vos adversaires, ce personnage gagne Résistance +2.",
+        title: "Ooh, j'ai peur",
+        description: "Durant le tour de vos adversaires, ce personnage gagne <Résistance> +2.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const yaoSnowWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerriero delle Nevi",
     text: [
       {
-        title: "OOH, CHE PAURA",
-        description: "Durante i turni degli avversari, questo personaggio ottiene Resistere +2.",
+        title: "Ooh, che Paura",
+        description: "Durante i turni degli avversari, questo personaggio ottiene <Resistere> +2.",
       },
     ],
   },

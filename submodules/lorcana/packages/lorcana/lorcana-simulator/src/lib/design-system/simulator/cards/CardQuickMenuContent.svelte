@@ -261,6 +261,8 @@
                       alt={token.code}
                       class="inline-symbol"
                     />
+                  {:else if token.type === "keyword"}
+                    <strong class="inline-keyword">{token.value}</strong>
                   {:else}
                     {token.value}
                   {/if}
@@ -275,6 +277,8 @@
                         alt={token.code}
                         class="inline-symbol"
                       />
+                    {:else if token.type === "keyword"}
+                      <strong class="inline-keyword">{token.value}</strong>
                     {:else}
                       {token.value}
                     {/if}
@@ -339,5 +343,10 @@
     /* The shared symbol SVGs are authored for the cream card body; brighten
        them so they read on the dark Quick-menu surface. */
     filter: brightness(0) invert(1);
+  }
+
+  .inline-keyword {
+    font-weight: 800;
+    font-style: italic;
   }
 </style>

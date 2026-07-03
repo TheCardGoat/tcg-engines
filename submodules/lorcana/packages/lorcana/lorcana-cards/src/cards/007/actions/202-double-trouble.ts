@@ -4,6 +4,17 @@ import { doubleTroubleI18n } from "./202-double-trouble.i18n";
 export const doubleTrouble: ActionCard = {
   id: "Y2J",
   canonicalId: "ci_Y2J",
+  slug: "lorcana-ci_Y2J",
+  printings: [
+    {
+      id: "set7-202",
+      artId: "set7-202",
+      setCode: "set7",
+      collectorNumber: "202",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-202"],
   cardType: "action",
   name: "Double Trouble",
@@ -16,7 +27,7 @@ export const doubleTrouble: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b03fcfe1974a4516a5b260cd9cd838b2",
-    tcgPlayer: 619524,
+    tcgPlayer: "619524",
   },
   text: "Deal 1 damage each to up to 2 chosen characters.",
   abilities: [

@@ -110,11 +110,17 @@ export interface CardSelectionFilter {
   sameNameAsSource?: boolean;
   sameNameAsChosenCard?: boolean;
   sameInstanceAsSource?: boolean;
+  sameInstanceAsTriggerSubject?: boolean;
+  inEventSnapshotCardsUnder?: boolean;
   excludeChosenCard?: boolean;
 }
 
 export interface SongFilterExpr {
   type: "song";
+}
+
+export interface IsSongFilterExpr {
+  type: "is-song";
 }
 
 export interface FloodbornFilterExpr {
@@ -264,6 +270,7 @@ type CardOnlyFilterExpr =
   | CardTypeFilterExpr
   | NotCardTypeFilterExpr
   | SongFilterExpr
+  | IsSongFilterExpr
   | FloodbornFilterExpr
   | StrengthFilterExpr
   | StrengthComparisonFilterExpr

@@ -9,16 +9,16 @@ export const tiggerWonderfulThingI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Tigger",
     version: "Superste Sache",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "TIGROU",
     version: "Merveilleux d'être un tigrou",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Tigro",
     version: "Pieno di Elettricità",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

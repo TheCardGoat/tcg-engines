@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { theHornedKingWickedRulerI18n } from "./036-the-horned-king-wicked-ruler.i18n";
 
 export const theHornedKingWickedRuler: CharacterCard = {
-  id: "siB",
+  id: "xFu",
   canonicalId: "ci_yas",
+  slug: "lorcana-ci_yas",
+  printings: [
+    {
+      id: "set10-036",
+      artId: "set10-036",
+      setCode: "set10",
+      collectorNumber: "36",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-036"],
   cardType: "character",
   name: "The Horned King",
@@ -20,7 +31,7 @@ export const theHornedKingWickedRuler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_831e34ca1c2143dd82785500356c339e",
-    tcgPlayer: 660044,
+    tcgPlayer: "660044",
   },
   text: [
     {

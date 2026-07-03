@@ -4,6 +4,17 @@ import { batteringRamI18n } from "./101-battering-ram.i18n";
 export const batteringRam: ItemCard = {
   id: "3pR",
   canonicalId: "ci_3pR",
+  slug: "lorcana-ci_3pR",
+  printings: [
+    {
+      id: "set11-101",
+      artId: "set11-101",
+      setCode: "set11",
+      collectorNumber: "101",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-101"],
   cardType: "item",
   name: "Battering Ram",
@@ -16,7 +27,7 @@ export const batteringRam: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c49a2f008f0048d4951384b30880eba6",
-    tcgPlayer: 675394,
+    tcgPlayer: "675394",
   },
   text: [
     {

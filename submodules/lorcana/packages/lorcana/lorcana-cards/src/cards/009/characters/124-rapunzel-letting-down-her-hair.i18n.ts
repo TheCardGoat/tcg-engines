@@ -16,7 +16,7 @@ export const rapunzelLettingDownHerHairI18n: Record<Languages, I18nProperties> =
     version: "Lässt ihr Haar herunter",
     text: [
       {
-        title: "EINWICKELN",
+        title: "Einwickeln",
         description:
           "Wenn du diesen Charakter ausspielst, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -37,7 +37,7 @@ export const rapunzelLettingDownHerHairI18n: Record<Languages, I18nProperties> =
     version: "Letting Down Her Hair",
     text: [
       {
-        title: "TANGLE",
+        title: "Tangle",
         description: "When you play this character, each opponent loses 1 lore.",
       },
     ],

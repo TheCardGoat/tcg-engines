@@ -16,9 +16,9 @@ export const launchpadHideoutDefenderI18n: Record<Languages, I18nProperties> = {
     version: "Verteidiger des Verstecks",
     text: [
       {
-        title: "WACHE STEHEN",
+        title: "Wache stehen",
         description:
-          "Deine Orte erhalten Robust +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine Orte erhalten <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const launchpadHideoutDefenderI18n: Record<Languages, I18nProperties> = {
     version: "Défenseur de la cachette",
     text: [
       {
-        title: "MONTE LA GARDE",
-        description: "Vos lieux gagnent Résistance +1.",
+        title: "Monte la garde",
+        description: "Vos lieux gagnent <Résistance> +1.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const launchpadHideoutDefenderI18n: Record<Languages, I18nProperties> = {
     version: "Difensore del Nasondiglio",
     text: [
       {
-        title: "FARE LA GUARDIA I",
-        description: "tuoi luoghi ottengono Resistere +1.",
+        title: "Fare la Guardia",
+        description: "I tuoi luoghi ottengono <Resistere> +1.",
       },
     ],
   },

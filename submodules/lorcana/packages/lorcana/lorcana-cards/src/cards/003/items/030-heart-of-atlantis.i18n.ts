@@ -14,9 +14,9 @@ export const heartOfAtlantisI18n: Record<Languages, I18nProperties> = {
     name: "Herz von Atlantis",
     text: [
       {
-        title: "LEBENSSPENDER",
+        title: "Lebensspender",
         description:
-          "— Du zahlst 2 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "{E} — Du zahlst 2 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -24,9 +24,9 @@ export const heartOfAtlantisI18n: Record<Languages, I18nProperties> = {
     name: "Cœur de l'Atlantide",
     text: [
       {
-        title: "SOURCE DE VIE",
+        title: "Source de vie",
         description:
-          "— Le prochain personnage que vous jouez durant ce tour vous coûte 2 de moins.",
+          "{E} — Le prochain personnage que vous jouez durant ce tour vous coûte 2 {I} de moins.",
       },
     ],
   },
@@ -34,8 +34,9 @@ export const heartOfAtlantisI18n: Record<Languages, I18nProperties> = {
     name: "Il Cuore di Atlantide",
     text: [
       {
-        title: "DONARE VITA",
-        description: "— Paga 2 in meno per giocare il tuo prossimo personaggio per questo turno.",
+        title: "Donare Vita",
+        description:
+          "{E} — Paga 2 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

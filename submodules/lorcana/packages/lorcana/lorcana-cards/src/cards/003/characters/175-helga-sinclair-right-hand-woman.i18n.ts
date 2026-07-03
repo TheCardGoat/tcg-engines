@@ -9,16 +9,16 @@ export const helgaSinclairRighthandWomanI18n: Record<Languages, I18nProperties> 
   de: {
     name: "Helga Sinclair",
     version: "Rechte Hand",
-    text: "Herausfordern +2",
+    text: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
   },
   fr: {
     name: "Helga Sinclair",
     version: "Bras droit",
-    text: "Offensif +2",
+    text: "<Offensif> +2",
   },
   it: {
     name: "Helga Sinclair",
     version: "Braccio Destro",
-    text: "Sfidante +2",
+    text: "<Sfidante> +2",
   },
 };

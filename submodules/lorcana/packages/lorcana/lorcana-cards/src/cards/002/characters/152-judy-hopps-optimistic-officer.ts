@@ -4,6 +4,17 @@ import { judyHoppsOptimisticOfficerI18n } from "./152-judy-hopps-optimistic-offi
 export const judyHoppsOptimisticOfficer: CharacterCard = {
   id: "mSk",
   canonicalId: "ci_pT4",
+  slug: "lorcana-ci_pT4",
+  printings: [
+    {
+      id: "set2-152",
+      artId: "set2-152",
+      setCode: "set2",
+      collectorNumber: "152",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-152", "set9-157"],
   cardType: "character",
   name: "Judy Hopps",
@@ -20,7 +31,7 @@ export const judyHoppsOptimisticOfficer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bb0a1c04d9ed4941a9cda16b55a05da9",
-    tcgPlayer: 650092,
+    tcgPlayer: "650092",
   },
   text: [
     {

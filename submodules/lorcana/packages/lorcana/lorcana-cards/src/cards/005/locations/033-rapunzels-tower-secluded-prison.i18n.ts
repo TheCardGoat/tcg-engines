@@ -16,8 +16,8 @@ export const rapunzelsTowerSecludedPrisonI18n: Record<Languages, I18nProperties>
     version: "Abgelegenes Gefängnis",
     text: [
       {
-        title: "DAMIT DIR NICHTS GESCHIEHT",
-        description: "Charaktere an diesem Ort erhalten +3.",
+        title: "Damit dir nichts geschieht",
+        description: "Charaktere an diesem Ort erhalten +3 {W}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const rapunzelsTowerSecludedPrisonI18n: Record<Languages, I18nProperties>
     version: "Prison cachée",
     text: [
       {
-        title: "POUR QU'IL NE T'ARRIVE RIEN",
-        description: "Les personnages sur ce lieu gagnent +3.",
+        title: "Pour qu'il ne t'arrive rien",
+        description: "Les personnages sur ce lieu gagnent +3 {W}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const rapunzelsTowerSecludedPrisonI18n: Record<Languages, I18nProperties>
     version: "Prigione Isolata",
     text: [
       {
-        title: "VEGLIO SU DI TE I",
-        description: "personaggi ricevono +3 mentre si trovano in questo luogo.",
+        title: "Veglio su di Te",
+        description: "I personaggi ricevono +3 {W} mentre si trovano in questo luogo.",
       },
     ],
   },

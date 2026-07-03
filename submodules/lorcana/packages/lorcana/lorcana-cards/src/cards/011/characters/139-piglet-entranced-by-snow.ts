@@ -4,6 +4,17 @@ import { pigletEntrancedBySnowI18n } from "./139-piglet-entranced-by-snow.i18n";
 export const pigletEntrancedBySnow: CharacterCard = {
   id: "N08",
   canonicalId: "ci_N08",
+  slug: "lorcana-ci_N08",
+  printings: [
+    {
+      id: "set11-139",
+      artId: "set11-139",
+      setCode: "set11",
+      collectorNumber: "139",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-139"],
   cardType: "character",
   name: "Piglet",
@@ -21,7 +32,7 @@ export const pigletEntrancedBySnow: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_39ccc87a07884c2789a33b03738f2bb3",
-    tcgPlayer: 676219,
+    tcgPlayer: "676219",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: pigletEntrancedBySnowI18n,

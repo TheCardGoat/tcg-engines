@@ -13,35 +13,35 @@ export const minnieMousePirateLookoutI18n: Record<Languages, I18nProperties> = {
     ],
   },
   de: {
-    name: "Minnie Mouse",
-    version: "Pirate Lookout",
+    name: "Minnie Maus",
+    version: "Piraten-Ausguck",
     text: [
       {
-        title: "LAND, HO!",
+        title: "Land ho!",
         description:
-          "Once during your turn, whenever a card is put into your inkwell, you may return a location card from your discard to your hand.",
+          "Einmal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du eine Ortskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
     ],
   },
   fr: {
-    name: "Minnie Mouse",
-    version: "Pirate Lookout",
+    name: "Minnie",
+    version: "Vigie pirate",
     text: [
       {
-        title: "LAND, HO!",
+        title: "Terre!",
         description:
-          "Once during your turn, whenever a card is put into your inkwell, you may return a location card from your discard to your hand.",
+          "Une fois durant votre tour, quand une carte est placée dans votre réserve d'encre, vous pouvez renvoyer un lieu de votre défausse dans votre main.",
       },
     ],
   },
   it: {
-    name: "Minnie Mouse",
-    version: "Pirate Lookout",
+    name: "Minni",
+    version: "Vedetta Pirata",
     text: [
       {
-        title: "LAND, HO!",
+        title: "Terra in Vista!",
         description:
-          "Once during your turn, whenever a card is put into your inkwell, you may return a location card from your discard to your hand.",
+          "Una volta durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi riprendere in mano una carta luogo dai tuoi scarti.",
       },
     ],
   },

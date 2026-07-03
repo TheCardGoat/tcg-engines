@@ -4,6 +4,17 @@ import { unfortunateSituationI18n } from "./199-unfortunate-situation.i18n";
 export const unfortunateSituation: ActionCard = {
   id: "z7M",
   canonicalId: "ci_z7M",
+  slug: "lorcana-ci_z7M",
+  printings: [
+    {
+      id: "set6-199",
+      artId: "set6-199",
+      setCode: "set6",
+      collectorNumber: "199",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-199"],
   cardType: "action",
   name: "Unfortunate Situation",
@@ -16,7 +27,7 @@ export const unfortunateSituation: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_178a79a0d95a433d9a6add9dccca0730",
-    tcgPlayer: 587974,
+    tcgPlayer: "587974",
   },
   text: "Each opponent chooses one of their characters and deals 4 damage to them.",
   abilities: [

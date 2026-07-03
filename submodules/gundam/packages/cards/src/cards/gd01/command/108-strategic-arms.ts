@@ -7,14 +7,17 @@ export const gd01StrategicArms108: CommandCard = {
   color: "green",
   traits: ["-"],
   id: "GD01-108",
-  externalId: "gundam:gd01-108",
-  slug: "strategic-arms-gd01-108",
+  canonicalId: "GD01-108",
+  externalIds: { bandai: "gundam:gd01-108" },
+  slug: "strategic-arms/gd01-108",
   displayName: "Strategic Arms",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-108",
   printings: [
     {
       id: "GD01-108",
+      artId: "GD01-108",
+      setCode: "GD01",
       collectorNumber: "GD01-108",
       cardNumber: "GD01-108",
       set: {
@@ -29,6 +32,7 @@ export const gd01StrategicArms108: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-108"],
   selectedPrintingId: "GD01-108",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-108.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-108.webp?260424",

@@ -4,6 +4,17 @@ import { mrIncredibleBobParrI18n } from "./104-mr-incredible-bob-parr.i18n";
 export const mrIncredibleBobParr: CharacterCard = {
   id: "MpT",
   canonicalId: "ci_MpT",
+  slug: "lorcana-ci_MpT",
+  printings: [
+    {
+      id: "set12-104",
+      artId: "set12-104",
+      setCode: "set12",
+      collectorNumber: "104",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-104"],
   cardType: "character",
   name: "Mr. Incredible",
@@ -20,7 +31,8 @@ export const mrIncredibleBobParr: CharacterCard = {
   inkable: true,
   vanilla: true,
   externalIds: {
-    lorcast: "crd_89a70d23433346ac879702a68882a0e4",
+    lorcast: "crd_04e84b2e5eca458da5e3ce89ac7b19cb",
+    tcgPlayer: "692211",
   },
   classifications: ["Storyborn", "Super", "Hero"],
   i18n: mrIncredibleBobParrI18n,

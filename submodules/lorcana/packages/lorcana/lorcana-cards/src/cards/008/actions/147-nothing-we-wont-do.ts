@@ -4,6 +4,17 @@ import { nothingWeWontDoI18n } from "./147-nothing-we-wont-do.i18n";
 export const nothingWeWontDo: ActionCard = {
   id: "vhy",
   canonicalId: "ci_vhy",
+  slug: "lorcana-ci_vhy",
+  printings: [
+    {
+      id: "set8-147",
+      artId: "set8-147",
+      setCode: "set8",
+      collectorNumber: "147",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-147"],
   cardType: "action",
   name: "Nothing We Won't Do",
@@ -16,7 +27,7 @@ export const nothingWeWontDo: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d3991d318fce49248c57af5fea2ee5a7",
-    tcgPlayer: 631447,
+    tcgPlayer: "631447",
   },
   text: [
     {

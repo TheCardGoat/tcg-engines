@@ -7,14 +7,17 @@ export const gd04ShrikeTeamSBulwark104: CommandCard = {
   color: "blue",
   traits: ["league militaire", "shrike team"],
   id: "GD04-104",
-  externalId: "gundam:gd04-104",
-  slug: "shrike-team-s-bulwark-gd04-104",
+  canonicalId: "GD04-104",
+  externalIds: { bandai: "gundam:gd04-104" },
+  slug: "shrike-team-s-bulwark/gd04-104",
   displayName: "Shrike Team's Bulwark",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-104",
   printings: [
     {
       id: "GD04-104",
+      artId: "GD04-104",
+      setCode: "GD04",
       collectorNumber: "GD04-104",
       cardNumber: "GD04-104",
       set: {
@@ -29,6 +32,7 @@ export const gd04ShrikeTeamSBulwark104: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-104"],
   selectedPrintingId: "GD04-104",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-104.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-104.webp?260424",

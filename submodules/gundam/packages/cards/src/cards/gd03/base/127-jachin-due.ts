@@ -6,14 +6,17 @@ export const gd03JachinDue127: BaseCard = {
   type: "base",
   traits: ["zaft", "stronghold"],
   id: "GD03-127",
-  externalId: "gundam:gd03-127",
-  slug: "jachin-due-gd03-127",
+  canonicalId: "GD03-127",
+  externalIds: { bandai: "gundam:gd03-127" },
+  slug: "jachin-due/gd03-127",
   displayName: "Jachin Due",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-127",
   printings: [
     {
       id: "GD03-127",
+      artId: "GD03-127",
+      setCode: "GD03",
       collectorNumber: "GD03-127",
       cardNumber: "GD03-127",
       set: {
@@ -28,6 +31,7 @@ export const gd03JachinDue127: BaseCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-127"],
   selectedPrintingId: "GD03-127",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-127.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-127.webp?260424",

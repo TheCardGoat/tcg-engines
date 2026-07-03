@@ -4,7 +4,7 @@
     "lib": ["ESNext", "DOM"],
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "types": []
+    "types": ["vite-plus/client", "@types/bun"]
   },
   "include": ["src"]
 }

@@ -19,10 +19,11 @@ export const broadwaySturdyAndStrongI18n: Record<Languages, I18nProperties> = {
     version: "Robust und stark",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "AM TAGE AUS STEIN",
+        title: "Am Tage aus Stein",
         description:
           "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
       },
@@ -33,10 +34,11 @@ export const broadwaySturdyAndStrongI18n: Record<Languages, I18nProperties> = {
     version: "Fort et robuste",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "STATUE LE JOUR",
+        title: "Statue le jour",
         description:
           "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
       },
@@ -47,10 +49,10 @@ export const broadwaySturdyAndStrongI18n: Record<Languages, I18nProperties> = {
     version: "Robusto e Forte",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "STATUE DI GIORNO",
+        title: "Statue di Giorno",
         description: "Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
       },
     ],

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { belleApprenticeInventorI18n } from "./159-belle-apprentice-inventor.i18n";
 
 export const belleApprenticeInventor: CharacterCard = {
-  id: "hVz",
-  canonicalId: "ci_hVz",
+  id: "oP9",
+  canonicalId: "ci_vbJ",
+  slug: "lorcana-ci_vbJ",
+  printings: [
+    {
+      id: "set7-159",
+      artId: "set7-159",
+      setCode: "set7",
+      collectorNumber: "159",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-159"],
   cardType: "character",
   name: "Belle",
@@ -19,14 +30,13 @@ export const belleApprenticeInventor: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_13859ddeec154d23a532a94835179144",
-    tcgPlayer: 619497,
+    lorcast: "crd_fcb0a2f9a4044b86bba8e0ff3ade2988",
   },
   text: [
     {
-      title: "WHAT A MESS",
+      title: "WHAT",
       description:
-        "During your turn, you may banish chosen item of yours to play this character for free.",
+        "A MESS During your turn, you may banish chosen item of yours to play this character for free.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess", "Inventor"],

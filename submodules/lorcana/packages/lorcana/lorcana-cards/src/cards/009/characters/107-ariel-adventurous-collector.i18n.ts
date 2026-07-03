@@ -20,12 +20,12 @@ export const arielAdventurousCollectorI18n: Record<Languages, I18nProperties> = 
     version: "Abenteuerlustige Sammlerin",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "BEGEISTERNDE STIMME",
+        title: "Begeisternde Stimme",
         description:
-          "Jedes Mal, wenn du ein Lied ausspielst, wähle einen deiner Charaktere, er erhält bis zu Beginn deines nächsten Zuges Wendig.",
+          "Jedes Mal, wenn du ein Lied ausspielst, wähle einen deiner Charaktere, er erhält bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const arielAdventurousCollectorI18n: Record<Languages, I18nProperties> = 
     version: "Collectionneuse intrépide",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "VOIX INSPIRANTE",
+        title: "Voix inspirante",
         description:
-          "Chaque fois que vous jouez une chanson, choisissez l'un de vos personnages qui gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "Chaque fois que vous jouez une chanson, choisissez l'un de vos personnages qui gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const arielAdventurousCollectorI18n: Record<Languages, I18nProperties> = 
     version: "Collezionista Avventurosa",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "VOCE MOTIVANTE",
+        title: "Voce Motivante",
         description:
-          "Ogni volta che giochi una canzone, uno dei tuoi personaggi a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che giochi una canzone, uno dei tuoi personaggi a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

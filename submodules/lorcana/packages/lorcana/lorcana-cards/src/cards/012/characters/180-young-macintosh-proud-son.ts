@@ -4,6 +4,17 @@ import { youngMacintoshProudSonI18n } from "./180-young-macintosh-proud-son.i18n
 export const youngMacintoshProudSon: CharacterCard = {
   id: "ABk",
   canonicalId: "ci_ABk",
+  slug: "lorcana-ci_ABk",
+  printings: [
+    {
+      id: "set12-180",
+      artId: "set12-180",
+      setCode: "set12",
+      collectorNumber: "180",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-180"],
   cardType: "character",
   name: "Young Macintosh",
@@ -21,6 +32,7 @@ export const youngMacintoshProudSon: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_35c7f5fe2959472a8f4abc38de41a8af",
+    tcgPlayer: "692078",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: youngMacintoshProudSonI18n,

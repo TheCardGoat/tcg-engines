@@ -4,6 +4,17 @@ import { judyHoppsLeadDetectiveI18n } from "./150-judy-hopps-lead-detective.i18n
 export const judyHoppsLeadDetective: CharacterCard = {
   id: "7DY",
   canonicalId: "ci_04m",
+  slug: "lorcana-ci_04m",
+  printings: [
+    {
+      id: "set10-150",
+      artId: "set10-150",
+      setCode: "set10",
+      collectorNumber: "150",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-150"],
   cardType: "character",
   name: "Judy Hopps",
@@ -20,7 +31,7 @@ export const judyHoppsLeadDetective: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5413c96876fd4884861caaef3fcb58b5",
-    tcgPlayer: 660043,
+    tcgPlayer: "660043",
   },
   text: [
     {

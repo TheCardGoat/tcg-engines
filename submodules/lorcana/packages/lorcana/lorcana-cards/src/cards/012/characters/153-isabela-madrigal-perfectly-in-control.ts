@@ -4,6 +4,17 @@ import { isabelaMadrigalPerfectlyInControlI18n } from "./153-isabela-madrigal-pe
 export const isabelaMadrigalPerfectlyInControl: CharacterCard = {
   id: "45l",
   canonicalId: "ci_45l",
+  slug: "lorcana-ci_45l",
+  printings: [
+    {
+      id: "set12-153",
+      artId: "set12-153",
+      setCode: "set12",
+      collectorNumber: "153",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-153"],
   cardType: "character",
   name: "Isabela Madrigal",
@@ -20,6 +31,7 @@ export const isabelaMadrigalPerfectlyInControl: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fc677f7c6b3b4781b5772602b566a1df",
+    tcgPlayer: "692185",
   },
   text: [
     {

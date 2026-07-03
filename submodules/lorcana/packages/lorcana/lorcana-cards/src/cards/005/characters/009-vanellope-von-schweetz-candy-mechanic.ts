@@ -4,6 +4,17 @@ import { vanellopeVonSchweetzCandyMechanicI18n } from "./009-vanellope-von-schwe
 export const vanellopeVonSchweetzCandyMechanic: CharacterCard = {
   id: "gcm",
   canonicalId: "ci_gcm",
+  slug: "lorcana-ci_gcm",
+  printings: [
+    {
+      id: "set5-009",
+      artId: "set5-009",
+      setCode: "set5",
+      collectorNumber: "9",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-009"],
   cardType: "character",
   name: "Vanellope von Schweetz",
@@ -20,7 +31,7 @@ export const vanellopeVonSchweetzCandyMechanic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_48fb46a8fbdd4615a2c9ab99f304a0f2",
-    tcgPlayer: 561946,
+    tcgPlayer: "561946",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { hamishHubertHarrisMakingMischiefI18n } from "./050-hamish-hubert-harris
 export const hamishHubertHarrisMakingMischief: CharacterCard = {
   id: "WiE",
   canonicalId: "ci_WiE",
+  slug: "lorcana-ci_WiE",
+  printings: [
+    {
+      id: "set12-050",
+      artId: "set12-050",
+      setCode: "set12",
+      collectorNumber: "50",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-050"],
   cardType: "character",
   name: "Hamish, Hubert & Harris",
@@ -18,13 +29,17 @@ export const hamishHubertHarrisMakingMischief: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_f97b251adbeb4697b06c2cdaa80bc6e5",
+    tcgPlayer: "692159",
+  },
   text: [
     {
-      title: "Stay Quiet",
+      title: "STAY QUIET",
       description: "This character may enter play exerted.",
     },
     {
-      title: "Clever Trap",
+      title: "CLEVER TRAP",
       description:
         "At the end of your turn, if this character is exerted, chosen opposing character can't ready at the start of their next turn.",
     },

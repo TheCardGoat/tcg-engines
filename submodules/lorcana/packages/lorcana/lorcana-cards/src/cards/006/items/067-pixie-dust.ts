@@ -4,6 +4,17 @@ import { pixieDustI18n } from "./067-pixie-dust.i18n";
 export const pixieDust: ItemCard = {
   id: "lTK",
   canonicalId: "ci_lTK",
+  slug: "lorcana-ci_lTK",
+  printings: [
+    {
+      id: "set6-067",
+      artId: "set6-067",
+      setCode: "set6",
+      collectorNumber: "67",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-067"],
   cardType: "item",
   name: "Pixie Dust",
@@ -16,7 +27,7 @@ export const pixieDust: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_030f9799a2ef4cc0afedc46a03650e70",
-    tcgPlayer: 583854,
+    tcgPlayer: "583854",
   },
   text: [
     {

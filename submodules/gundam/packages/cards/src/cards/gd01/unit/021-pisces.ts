@@ -7,14 +7,17 @@ export const gd01Pisces021: UnitCard = {
   color: "blue",
   traits: ["oz"],
   id: "GD01-021",
-  externalId: "gundam:gd01-021",
-  slug: "pisces-gd01-021",
+  canonicalId: "GD01-021",
+  externalIds: { bandai: "gundam:gd01-021" },
+  slug: "pisces/gd01-021",
   displayName: "Pisces",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-021",
   printings: [
     {
       id: "GD01-021",
+      artId: "GD01-021",
+      setCode: "GD01",
       collectorNumber: "GD01-021",
       cardNumber: "GD01-021",
       set: {
@@ -29,6 +32,7 @@ export const gd01Pisces021: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-021"],
   selectedPrintingId: "GD01-021",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-021.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-021.webp?260424",

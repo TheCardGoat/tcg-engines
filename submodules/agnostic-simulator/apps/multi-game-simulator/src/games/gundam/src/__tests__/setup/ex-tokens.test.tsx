@@ -19,16 +19,16 @@ describe("Setup · EX tokens", () => {
     await user.click(screen.getByRole("button", { name: /i go first/i }));
     await user.click(await screen.findByRole("button", { name: /keep hand/i }));
 
-    const yourBase = await screen.findByRole("region", { name: /your base/i });
-    const opponentBase = await screen.findByRole("region", { name: /opponent base/i });
+    const yourBase = await screen.findByRole("region", { name: /your base section/i });
+    const opponentBase = await screen.findByRole("region", { name: /opponent base section/i });
     expect(within(yourBase).getAllByRole("listitem")).toHaveLength(1);
     expect(within(opponentBase).getAllByRole("listitem")).toHaveLength(1);
 
     const opponentResources = await screen.findByRole("region", {
       name: /opponent resource area/i,
     });
-    expect(
-      within(opponentResources).getByRole("listitem", { name: /EX Resource/i }),
-    ).not.toBeNull();
+    // Opponent resources render face-down, so the EX Resource name is
+    // masked. The 01/01 counter proves exactly one token is seated.
+    expect(opponentResources.textContent ?? "").toMatch(/01\s*\/\s*01/);
   });
 });

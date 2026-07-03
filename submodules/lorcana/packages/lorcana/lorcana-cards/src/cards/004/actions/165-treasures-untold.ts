@@ -4,6 +4,17 @@ import { treasuresUntoldI18n } from "./165-treasures-untold.i18n";
 export const treasuresUntold: ActionCard = {
   id: "WWB",
   canonicalId: "ci_WWB",
+  slug: "lorcana-ci_WWB",
+  printings: [
+    {
+      id: "set4-165",
+      artId: "set4-165",
+      setCode: "set4",
+      collectorNumber: "165",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-165"],
   cardType: "action",
   name: "Treasures Untold",
@@ -16,7 +27,7 @@ export const treasuresUntold: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e0862c1712b84e8eafa76836362c9870",
-    tcgPlayer: 547772,
+    tcgPlayer: "547772",
   },
   text: "Return up to 2 item cards from your discard into your hand.",
   actionSubtype: "song",

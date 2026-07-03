@@ -9,21 +9,16 @@ export const rayEasygoingFireflyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Ray",
     version: "Unbekümmertes Glühwürmchen",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Ray",
     version: "Luciole décontractée",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Ray",
     version: "Easygoing Firefly",
-    text: [
-      {
-        title: "Evasive",
-        description: "(Only characters with Evasive can challenge this character.)",
-      },
-    ],
+    text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
 };

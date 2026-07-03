@@ -3,7 +3,18 @@ import { theGreatIlluminaryAbandonedLaboratoryI18n } from "./068-the-great-illum
 
 export const theGreatIlluminaryAbandonedLaboratory: LocationCard = {
   id: "CGw",
-  canonicalId: "ci_CGw",
+  canonicalId: "ci_IJS",
+  slug: "lorcana-ci_IJS",
+  printings: [
+    {
+      id: "set10-068",
+      artId: "set10-068",
+      setCode: "set10",
+      collectorNumber: "68",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-068"],
   cardType: "location",
   name: "The Great Illuminary",
@@ -20,7 +31,7 @@ export const theGreatIlluminaryAbandonedLaboratory: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f0a21489090449a4af62aa6f09ad9552",
-    tcgPlayer: 658467,
+    tcgPlayer: "658467",
   },
   text: [
     {

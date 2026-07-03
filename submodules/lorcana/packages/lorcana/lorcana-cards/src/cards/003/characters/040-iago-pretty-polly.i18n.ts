@@ -9,16 +9,16 @@ export const iagoPrettyPollyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Jago",
     version: "Papageichen",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Iago",
     version: "Gentil Coco",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Iago",
     version: "Bel Pappagallino",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

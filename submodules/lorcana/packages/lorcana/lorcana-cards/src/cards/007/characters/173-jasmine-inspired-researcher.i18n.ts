@@ -17,7 +17,7 @@ export const jasmineInspiredResearcherI18n: Record<Languages, I18nProperties> = 
     version: "Inspirierte Forscherin",
     text: [
       {
-        title: "ZUSÄTZLICHE UNTERSTÜTZUNG",
+        title: "Zusätzliche Unterstützung",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, falls du keine Karten auf der Hand hast, ziehe 1 Karte für jeden Verbündeten, den du im Spiel hast.",
       },
@@ -28,7 +28,7 @@ export const jasmineInspiredResearcherI18n: Record<Languages, I18nProperties> = 
     version: "Chercheuse inspirée",
     text: [
       {
-        title: "AIDE SUPPLÉMENTAIRE",
+        title: "Aide supplémentaire",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, si vous n'avez aucune carte en main, piochez une carte pour chaque personnage Allié que vous avez en jeu.",
       },
@@ -39,7 +39,7 @@ export const jasmineInspiredResearcherI18n: Record<Languages, I18nProperties> = 
     version: "Ricercatrice Ispirata",
     text: [
       {
-        title: "AIUTO AGGIUNTIVO",
+        title: "Aiuto Aggiuntivo",
         description:
           "Ogni volta che questo personaggio va all'avventura, se non hai carte in mano, pesca una carta per ogni personaggio Alleato che hai in gioco.",
       },

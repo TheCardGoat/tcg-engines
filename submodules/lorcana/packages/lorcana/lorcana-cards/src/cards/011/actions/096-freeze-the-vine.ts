@@ -4,6 +4,17 @@ import { freezeTheVineI18n } from "./096-freeze-the-vine.i18n";
 export const freezeTheVine: ActionCard = {
   id: "DI6",
   canonicalId: "ci_LB6",
+  slug: "lorcana-ci_LB6",
+  printings: [
+    {
+      id: "set11-096",
+      artId: "set11-096",
+      setCode: "set11",
+      collectorNumber: "96",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-096"],
   cardType: "action",
   name: "Freeze the Vine",
@@ -16,7 +27,7 @@ export const freezeTheVine: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d0659baf8fad4748ae9abf7260279d8c",
-    tcgPlayer: 675395,
+    tcgPlayer: "675395",
   },
   text: "Banish all locations. Draw 2 cards, then choose and discard a card.",
   abilities: [

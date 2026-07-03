@@ -17,7 +17,7 @@ export const bellwetherMasterManipulatorI18n: Record<Languages, I18nProperties> 
     version: "Meisterhafte Manipulatorin",
     text: [
       {
-        title: "VENDETTA",
+        title: "Vendetta",
         description:
           "Wenn dieser Charakter herausgefordert und verbannt wird, lege 1 Schadensmarker auf jeden gegnerischen Charakter.",
       },
@@ -28,7 +28,7 @@ export const bellwetherMasterManipulatorI18n: Record<Languages, I18nProperties> 
     version: "Maîtresse en manipulation",
     text: [
       {
-        title: "VENDETTA",
+        title: "Vendetta",
         description:
           "Lorsque ce personnage est défié et banni, placez 1 dommage sur chaque personnage adverse.",
       },
@@ -39,7 +39,7 @@ export const bellwetherMasterManipulatorI18n: Record<Languages, I18nProperties> 
     version: "Magistrale Manipolatrice",
     text: [
       {
-        title: "VENDETTA",
+        title: "Vendetta",
         description:
           "Quando questo personaggio viene sfidato ed esiliato, metti 1 segnalino danno su ogni personaggio avversario.",
       },

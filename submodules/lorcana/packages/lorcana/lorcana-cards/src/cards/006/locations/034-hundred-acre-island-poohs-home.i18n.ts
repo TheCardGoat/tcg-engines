@@ -17,7 +17,7 @@ export const hundredAcreIslandPoohsHomeI18n: Record<Languages, I18nProperties> =
     version: "Puuhs Zuhause",
     text: [
       {
-        title: "FREUNDE FÜR IMMER",
+        title: "Freunde für immer",
         description:
           "Jedes Mal, wenn einer deiner Charaktere an diesem Ort im Zug einer gegnerischen Person verbannt wird, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const hundredAcreIslandPoohsHomeI18n: Record<Languages, I18nProperties> =
     version: "Maison de Winnie",
     text: [
       {
-        title: "AMIS POUR LA VIE",
+        title: "Amis pour la vie",
         description:
           "Pendant le tour de vos adversaires, chaque fois qu'un personnage sur ce lieu est banni, vous gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const hundredAcreIslandPoohsHomeI18n: Record<Languages, I18nProperties> =
     version: "Casa di Pooh",
     text: [
       {
-        title: "AMICI PER SEMPRE",
+        title: "Amici Per Sempre",
         description:
           "Durante il turno di un avversario, ogni volta che un personaggio viene esiliato mentre si trova in questo luogo, ottieni 1 leggenda.",
       },

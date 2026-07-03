@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { copperOnTheScentI18n } from "./107-copper-on-the-scent.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 import { reckless } from "../../../helpers/abilities/reckless";
 
 export const copperOnTheScent: CharacterCard = {
   id: "5td",
   canonicalId: "ci_5td",
+  slug: "lorcana-ci_5td",
+  printings: [
+    {
+      id: "set11-107",
+      artId: "set11-107",
+      setCode: "set11",
+      collectorNumber: "107",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-107"],
   cardType: "character",
   name: "Copper",
@@ -22,7 +34,7 @@ export const copperOnTheScent: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f5ec9aa34cb2438fb19806535e9ffcc5",
-    tcgPlayer: 675496,
+    tcgPlayer: "675496",
   },
   text: [
     {

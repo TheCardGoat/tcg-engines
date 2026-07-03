@@ -17,9 +17,9 @@ export const madameMedusaTheBossI18n: Record<Languages, I18nProperties> = {
     version: "Die Chefin",
     text: [
       {
-        title: "DIESE FURCHTBARE FRAU",
+        title: "Diese Furchtbare Frau",
         description:
-          "Wenn du diesen Charakter ausspielst, verbanne einen gegnerischen Charakter deiner Wahl mit 3 oder weniger.",
+          "Wenn du diesen Charakter ausspielst, verbanne einen gegnerischen Charakter deiner Wahl mit 3 oder weniger {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const madameMedusaTheBossI18n: Record<Languages, I18nProperties> = {
     version: "La patronne",
     text: [
       {
-        title: "JE VOUS PULVÉRISE",
+        title: "Je vous pulvérise",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse avec 3 ou moins et bannissez-le.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse avec 3 {S} ou moins et bannissez-le.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const madameMedusaTheBossI18n: Record<Languages, I18nProperties> = {
     version: "Il Boss",
     text: [
       {
-        title: "QUELL'ORRIBILE DONNA",
+        title: "Quell'Orribile Donna",
         description:
-          "Quando giochi questo personaggio, esilia un personaggio avversario a tua scelta con 3 o inferiore.",
+          "Quando giochi questo personaggio, esilia un personaggio avversario a tua scelta con 3 {S} o inferiore.",
       },
     ],
   },

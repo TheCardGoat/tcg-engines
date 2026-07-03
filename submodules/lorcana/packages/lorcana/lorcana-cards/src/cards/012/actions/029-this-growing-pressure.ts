@@ -4,6 +4,17 @@ import { thisGrowingPressureI18n } from "./029-this-growing-pressure.i18n";
 export const thisGrowingPressure: ActionCard = {
   id: "JWU",
   canonicalId: "ci_JWU",
+  slug: "lorcana-ci_JWU",
+  printings: [
+    {
+      id: "set12-029",
+      artId: "set12-029",
+      setCode: "set12",
+      collectorNumber: "29",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-029"],
   cardType: "action",
   name: "This Growing Pressure",
@@ -14,9 +25,9 @@ export const thisGrowingPressure: ActionCard = {
   rarity: "common",
   cost: 3,
   inkable: true,
-
   externalIds: {
     lorcast: "crd_aef0af5d54a84b1dadfd6351fbec3a01",
+    tcgPlayer: "692156",
   },
   text: "Chosen opposing character can't challenge and must quest during their next turn if able. Draw a card.",
   actionSubtype: "song",

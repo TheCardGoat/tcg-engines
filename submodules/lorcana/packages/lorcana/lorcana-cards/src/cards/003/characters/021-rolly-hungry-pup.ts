@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rollyHungryPupI18n } from "./021-rolly-hungry-pup.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const rollyHungryPup: CharacterCard = {
   id: "5D2",
   canonicalId: "ci_5D2",
+  slug: "lorcana-ci_5D2",
+  printings: [
+    {
+      id: "set3-021",
+      artId: "set3-021",
+      setCode: "set3",
+      collectorNumber: "21",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-021"],
   cardType: "character",
   name: "Rolly",
@@ -21,7 +33,7 @@ export const rollyHungryPup: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2e4b186b853e4bd7b5d3144645efd6a1",
-    tcgPlayer: 538353,
+    tcgPlayer: "538353",
   },
   text: "Support",
   classifications: ["Storyborn", "Puppy"],

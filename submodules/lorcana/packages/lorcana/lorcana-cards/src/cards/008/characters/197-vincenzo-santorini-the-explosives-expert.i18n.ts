@@ -16,7 +16,7 @@ export const vincenzoSantoriniTheExplosivesExpertI18n: Record<Languages, I18nPro
     version: "Der Sprengstoffexperte",
     text: [
       {
-        title: "ICH SPRENGE GERN SACHEN IN DIE LUFT",
+        title: "Ich sprenge gern Sachen in die Luft",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl 3 Schaden zufügen.",
       },
@@ -27,7 +27,7 @@ export const vincenzoSantoriniTheExplosivesExpertI18n: Record<Languages, I18nPro
     version: "L'expert en explosifs",
     text: [
       {
-        title: "MOI CE QUI M'ÉCLATE, C'EST CE QUI FAIT BOUM",
+        title: "Moi ce qui m'éclate, c'est ce qui fait boum",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui infliger 3 dommages.",
       },
@@ -38,7 +38,7 @@ export const vincenzoSantoriniTheExplosivesExpertI18n: Record<Languages, I18nPro
     version: "L'Esperto di Esplosivi",
     text: [
       {
-        title: "MI PIACE FAR ESPLODERE LE COSE",
+        title: "Mi Piace Far Esplodere le Cose",
         description:
           "Quando giochi questo personaggio, puoi infliggere 3 danni a un personaggio a tua scelta.",
       },

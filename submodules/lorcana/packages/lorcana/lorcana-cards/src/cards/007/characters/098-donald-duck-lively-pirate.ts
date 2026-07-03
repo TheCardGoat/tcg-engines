@@ -4,6 +4,17 @@ import { donaldDuckLivelyPirateI18n } from "./098-donald-duck-lively-pirate.i18n
 export const donaldDuckLivelyPirate: CharacterCard = {
   id: "z2w",
   canonicalId: "ci_z2w",
+  slug: "lorcana-ci_z2w",
+  printings: [
+    {
+      id: "set7-098",
+      artId: "set7-098",
+      setCode: "set7",
+      collectorNumber: "98",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-098"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckLivelyPirate: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3c1ded27230c410bb3f454c406bab158",
-    tcgPlayer: 619458,
+    tcgPlayer: "619458",
   },
   text: [
     {

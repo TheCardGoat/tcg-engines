@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { darkwingDuckDrakeMallardI18n } from "./145-darkwing-duck-drake-mallard.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const darkwingDuckDrakeMallard: CharacterCard = {
   id: "oJV",
   canonicalId: "ci_oJV",
+  slug: "lorcana-ci_oJV",
+  printings: [
+    {
+      id: "set11-145",
+      artId: "set11-145",
+      setCode: "set11",
+      collectorNumber: "145",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-145"],
   cardType: "character",
   name: "Darkwing Duck",
@@ -21,7 +33,7 @@ export const darkwingDuckDrakeMallard: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_39abc3bfefc14489beca55a40a48153c",
-    tcgPlayer: 673743,
+    tcgPlayer: "673743",
   },
   text: "Ward",
   classifications: ["Storyborn", "Super", "Hero", "Detective"],

@@ -5,13 +5,11 @@ import { resolveFixtureForTestRoute } from "@/features/simulator-devtools/routes
 export const ssr = false;
 
 export const load: PageLoad = ({ params }) => {
-  const fixture = resolveFixtureForTestRoute(params.fixtureId);
-
-  if (!fixture) {
+  if (!resolveFixtureForTestRoute(params.fixtureId)) {
     throw error(404, `Fixture "${params.fixtureId}" not found`);
   }
 
   return {
-    fixtureId: fixture.id,
+    fixtureId: params.fixtureId,
   };
 };

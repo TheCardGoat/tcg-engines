@@ -168,7 +168,7 @@ function buildExternalIds(
         externalIds.lorcast = lorcastEntry.id;
       }
       if (lorcastEntry.tcgplayer_id != null) {
-        externalIds.tcgPlayer = lorcastEntry.tcgplayer_id;
+        externalIds.tcgPlayer = String(lorcastEntry.tcgplayer_id);
       }
     }
   }
@@ -675,6 +675,7 @@ export function generateCanonicalCardsFromPrintings(
   lorcastIndex?: LorcastTextIndex,
   lorcastCardIndex?: LorcastFullIndex,
   existingCanonicalCards?: Record<string, CanonicalCard>,
+  existingSourceCanonicalIds?: Record<string, string>,
 ): Record<string, CanonicalCard> {
   const canonicalCards: Record<string, CanonicalCard> = {};
   let idx = 0;
@@ -690,7 +691,8 @@ export function generateCanonicalCardsFromPrintings(
     }
     const canonicalKey = getFullNameFromCard(card).toLowerCase();
     const canonicalShortId = idMapping.byCanonicalKey[canonicalKey];
-    const candidate = existingCanonicalCards?.[printingId]?.canonicalId;
+    const candidate =
+      existingSourceCanonicalIds?.[printingId] ?? existingCanonicalCards?.[printingId]?.canonicalId;
     const canonicalId =
       candidate && candidate.startsWith("ci_") ? candidate : `ci_${canonicalShortId ?? shortId}`;
     const canonical = transformToCanonicalCardForPrinting(

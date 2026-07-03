@@ -9,16 +9,16 @@ export const auroraTranquilPrincessI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Aurora",
     version: "Gelassene Prinzessin",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "Aurore",
     version: "Princesse sereine",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Aurora",
     version: "Principessa Pacata",
-    text: "Protetto",
+    text: "<Protetto>",
   },
 };

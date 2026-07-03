@@ -9,21 +9,16 @@ export const thePhantomBlotShadowyFigureI18n: Record<Languages, I18nProperties> 
   de: {
     name: "Das Phantom",
     version: "Schattenhafte Gestalt",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Le Fantôme Noir",
     version: "Figure de l'ombre",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Macchia Nera",
     version: "Figura Misteriosa",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

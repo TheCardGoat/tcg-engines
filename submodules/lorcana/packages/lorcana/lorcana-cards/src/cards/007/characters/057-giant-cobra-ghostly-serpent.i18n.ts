@@ -21,12 +21,11 @@ export const giantCobraGhostlySerpentI18n: Record<Languages, I18nProperties> = {
     version: "Geisterhafte Schlange",
     text: [
       {
-        title: "Verschwinden",
-        description:
-          "(Jedes Mal, wenn dieser Charakter von einer Aktion einer gegnerischen Person ausgewählt wird, verbanne ihn.)",
+        title:
+          "<Verschwinden> (Jedes Mal, wenn dieser Charakter von einer Aktion einer gegnerischen Person ausgewählt wird, verbanne ihn.)",
       },
       {
-        title: "MYSTERIÖSER VORTEIL",
+        title: "Mysteriöser Vorteil",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du eine Karte von deiner Hand auswählen und abwerfen, um 2 Legenden zu sammeln.",
       },
@@ -37,11 +36,11 @@ export const giantCobraGhostlySerpentI18n: Record<Languages, I18nProperties> = {
     version: "Serpent fantomatique",
     text: [
       {
-        title: "Dissipation",
-        description: "(Lorsqu'un adversaire choisit ce personnage avec une action, bannissez-le.)",
+        title:
+          "<Dissipation> (Lorsqu'un adversaire choisit ce personnage avec une action, bannissez-le.)",
       },
       {
-        title: "MYSTÉRIEUX AVANTAGE",
+        title: "Mystérieux avantage",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez défausser une carte pour gagner 2 éclats de Lore.",
       },
@@ -52,11 +51,11 @@ export const giantCobraGhostlySerpentI18n: Record<Languages, I18nProperties> = {
     version: "Serpente Spettrale",
     text: [
       {
-        title: "Svanire",
-        description: "(Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
+        title:
+          "<Svanire> (Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
       },
       {
-        title: "VANTAGGIO MISTERIOSO",
+        title: "Vantaggio Misterioso",
         description:
           "Quando giochi questo personaggio, puoi scegliere e scartare una carta per ottenere 2 leggenda.",
       },

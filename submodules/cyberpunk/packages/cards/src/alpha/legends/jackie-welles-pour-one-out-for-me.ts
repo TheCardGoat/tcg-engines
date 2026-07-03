@@ -1,15 +1,16 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, condition, effect, target } from "../../helpers/builders/index.ts";
 
-export const alphaJackieWellesPourOneOutForMe = {
+export const alphaJackieWellesPourOneOutForMe = defineCyberpunkCard({
   id: "8ecb2fe3-9117-40be-9ffe-adbc5bbd2899",
-  externalId: "cyberpunk:jackie-welles-pour-one-out-for-me",
   slug: "jackie-welles-pour-one-out-for-me",
-  name: "Jackie Welles",
-  subname: "Pour One Out For Me",
-  displayName: "Jackie Welles - Pour One Out For Me",
   rulesText:
     "The first time you play a blue unit or blue gear each turn, you may increase a friendly gig by 2. Then, if it's at max value, draw a card.",
+  subname: "Pour One Out For Me",
+  name: "Jackie Welles",
+  displayName: "Jackie Welles - Pour One Out For Me",
+  canonicalId: "jackie-welles-pour-one-out-for-me",
   color: "blue",
   classifications: ["Merc"],
   set: {
@@ -17,23 +18,12 @@ export const alphaJackieWellesPourOneOutForMe = {
     name: "Alpha Kit Set",
   },
   printNumber: "α002",
-  printings: [
-    {
-      id: "e60cdc66-c3e9-46a9-9be4-45424fd65c71",
-      collectorNumber: "α002",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "e60cdc66-c3e9-46a9-9be4-45424fd65c71",
   artist: "Envar",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a002.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "legend",
   cost: null,
   power: 0,
@@ -77,5 +67,4 @@ export const alphaJackieWellesPourOneOutForMe = {
       )
       .build(),
   ],
-  reminderText: [],
-} satisfies AlphaCardDefinition;
+}) satisfies LegendCardDefinition;

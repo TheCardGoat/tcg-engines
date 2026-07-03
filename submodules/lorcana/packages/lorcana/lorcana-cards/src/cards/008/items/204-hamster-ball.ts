@@ -4,6 +4,17 @@ import { hamsterBallI18n } from "./204-hamster-ball.i18n";
 export const hamsterBall: ItemCard = {
   id: "ohB",
   canonicalId: "ci_ohB",
+  slug: "lorcana-ci_ohB",
+  printings: [
+    {
+      id: "set8-204",
+      artId: "set8-204",
+      setCode: "set8",
+      collectorNumber: "204",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-204"],
   cardType: "item",
   name: "Hamster Ball",
@@ -16,7 +27,7 @@ export const hamsterBall: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_38ec8cb24ad14a0cb16620ec01a89b88",
-    tcgPlayer: 631485,
+    tcgPlayer: "631485",
   },
   text: [
     {

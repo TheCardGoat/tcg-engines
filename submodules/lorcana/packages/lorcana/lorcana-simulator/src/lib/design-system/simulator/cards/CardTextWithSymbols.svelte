@@ -17,6 +17,8 @@ const tokens = $derived(tokenizeTextWithSymbols(text));
       alt={token.code}
       class="inline-symbol"
     />
+  {:else if token.type === "keyword"}
+    <strong class="inline-keyword">{token.value}</strong>
   {:else}
     {token.value}
   {/if}
@@ -30,5 +32,10 @@ const tokens = $derived(tokenizeTextWithSymbols(text));
     margin: 0 0.06em;
     vertical-align: -0.1em;
     object-fit: contain;
+  }
+
+  .inline-keyword {
+    font-weight: 800;
+    font-style: italic;
   }
 </style>

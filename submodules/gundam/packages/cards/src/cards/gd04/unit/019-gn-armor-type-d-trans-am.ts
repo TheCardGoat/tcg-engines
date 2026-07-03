@@ -7,14 +7,17 @@ export const gd04GnArmorTypeDTransAm019: UnitCard = {
   color: "green",
   traits: ["cb", "gn drive"],
   id: "GD04-019",
-  externalId: "gundam:gd04-019",
-  slug: "gn-armor-type-d-trans-am-gd04-019",
+  canonicalId: "GD04-019",
+  externalIds: { bandai: "gundam:gd04-019" },
+  slug: "gn-armor-type-d-trans-am/gd04-019",
   displayName: "GN Armor Type-D (Trans-Am)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-019",
   printings: [
     {
       id: "GD04-019",
+      artId: "GD04-019",
+      setCode: "GD04",
       collectorNumber: "GD04-019",
       cardNumber: "GD04-019",
       set: {
@@ -29,6 +32,7 @@ export const gd04GnArmorTypeDTransAm019: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-019"],
   selectedPrintingId: "GD04-019",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-019.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-019.webp?260424",

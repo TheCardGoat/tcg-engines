@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { auroraWakingBeautyI18n } from "./014-aurora-waking-beauty.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const auroraWakingBeauty: CharacterCard = {
   id: "t37",
   canonicalId: "ci_ove",
+  slug: "lorcana-ci_ove",
+  printings: [
+    {
+      id: "set7-014",
+      artId: "set7-014",
+      setCode: "set7",
+      collectorNumber: "14",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-014"],
   cardType: "character",
   name: "Aurora",
@@ -21,7 +33,7 @@ export const auroraWakingBeauty: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_54102dba80604a609eed679b7f33fad3",
-    tcgPlayer: 619733,
+    tcgPlayer: "619733",
   },
   text: [
     {

@@ -8,7 +8,7 @@ export const brutusFearsomeCrocodileI18n: Record<Languages, I18nProperties> = {
       {
         title: "SPITEFUL",
         description:
-          "During your turn, when this character is banished, if one of your characters took damage this turn, gain 2 lore.",
+          "During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const brutusFearsomeCrocodileI18n: Record<Languages, I18nProperties> = {
     version: "Furchterregendes Krokodil",
     text: [
       {
-        title: "BISSIG",
+        title: "Bissig",
         description:
-          "Wenn dieser Charakter in deinem Zug verbannt wird, falls in diesem Zug einer deiner Charaktere beschädigt wurde, sammelst du 2 Legenden.",
+          "Wenn dieser Charakter in deinem Zug verbannt wird, falls in diesem Zug einer deiner Charaktere Schaden erhalten hat, sammelst du 2 Legenden.",
       },
     ],
   },
@@ -28,7 +28,7 @@ export const brutusFearsomeCrocodileI18n: Record<Languages, I18nProperties> = {
     version: "Redoutable crocodile",
     text: [
       {
-        title: "MALVEILLANT",
+        title: "Malveillant",
         description:
           "Durant votre tour, lorsque ce personnage est banni, si l'un de vos personnages a subi un dommage ou plus ce tour-ci, gagnez 2 éclats de Lore.",
       },
@@ -39,9 +39,9 @@ export const brutusFearsomeCrocodileI18n: Record<Languages, I18nProperties> = {
     version: "Coccodrillo Spaventoso",
     text: [
       {
-        title: "MALEVOLO",
+        title: "Malevolo",
         description:
-          "Durante il tuo turno, quando questo personaggio viene esiliato, se uno dei tuoi personaggi è stato danneggiato in questo turno, ottieni 2 leggenda.",
+          "Durante il tuo turno, quando questo personaggio viene esiliato, se uno dei tuoi personaggi ha subito danno in questo turno, ottieni 2 leggenda.",
       },
     ],
   },

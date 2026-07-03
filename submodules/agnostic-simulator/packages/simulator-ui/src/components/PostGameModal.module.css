@@ -1,0 +1,200 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(12px, 3vw, 28px);
+  background: rgb(4 6 8 / 82%);
+  backdrop-filter: blur(8px);
+  animation: fade-in 0.18s ease-out;
+}
+
+.card {
+  position: relative;
+  width: min(980px, 96vw);
+  max-height: min(92vh, 860px);
+  display: grid;
+  grid-template-rows: auto auto minmax(260px, 1fr) auto;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--simulator-panel, #11151c) 94%, #14110a);
+  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 32%);
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgb(var(--simulator-accent-rgb, 245 230 66) / 14%),
+    0 28px 80px rgb(0 0 0 / 76%);
+}
+
+.minimizeButton {
+  appearance: none;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 6px;
+  background: rgb(255 255 255 / 5%);
+  color: var(--simulator-text-secondary, #b0b6bf);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.minimizeButton:hover {
+  border-color: rgb(var(--simulator-accent-rgb, 245 230 66) / 34%);
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 8%);
+  color: var(--simulator-accent, #f5e642);
+}
+
+.header {
+  padding: 28px 28px 18px;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--simulator-accent, #f5e642);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.headline {
+  margin: 0;
+  color: var(--simulator-text, #f1f1f1);
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1;
+}
+
+.card[data-outcome="loss"] .headline {
+  color: rgb(255 126 118);
+}
+
+.card[data-outcome="draw"] .headline {
+  color: var(--simulator-text-secondary, #b0b6bf);
+}
+
+.reason {
+  max-width: 64ch;
+  margin: 10px 0 0;
+  color: var(--simulator-text-secondary, #b0b6bf);
+  font-size: 14px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 18px;
+  overflow-x: auto;
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+}
+
+.tabButton {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--simulator-text-secondary, #b0b6bf);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tabButtonActive {
+  border-color: rgb(var(--simulator-accent-rgb, 245 230 66) / 30%);
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 10%);
+  color: var(--simulator-accent, #f5e642);
+}
+
+.body {
+  overflow: auto;
+  padding: 18px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px 18px;
+  border-top: 1px solid rgb(255 255 255 / 8%);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.returnLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  border-radius: 6px;
+  padding: 8px 14px;
+  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 42%);
+  background: transparent;
+  color: var(--simulator-text, #f1f1f1);
+  font-size: 13px;
+  font-weight: 850;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (width <= 720px) {
+  .card {
+    width: 100%;
+    max-height: 94vh;
+    grid-template-rows: auto auto minmax(220px, 1fr) auto;
+  }
+
+  .header {
+    padding: 22px 18px 14px;
+  }
+
+  .minimizeButton span {
+    display: none;
+  }
+
+  .minimizeButton {
+    width: 34px;
+    padding: 0;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
+
+  .actions {
+    width: 100%;
+  }
+}

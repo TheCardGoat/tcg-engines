@@ -16,8 +16,8 @@ export const mrBigShrewdTycoonI18n: Record<Languages, I18nProperties> = {
     version: "Raffinierter Geschäftsmann",
     text: [
       {
-        title: "REPUTATION",
-        description: "Charaktere mit 2 oder mehr können diesen Charakter nicht herausfordern.",
+        title: "Reputation",
+        description: "Charaktere mit 2 oder mehr {S} können diesen Charakter nicht herausfordern.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const mrBigShrewdTycoonI18n: Record<Languages, I18nProperties> = {
     version: "Magnat avisé",
     text: [
       {
-        title: "RÉPUTATION",
-        description: "Ce personnage ne peut pas être défié par des personnages avec 2 ou plus.",
+        title: "Réputation",
+        description: "Ce personnage ne peut pas être défié par des personnages avec 2 {S} ou plus.",
       },
     ],
   },
@@ -36,8 +36,9 @@ export const mrBigShrewdTycoonI18n: Record<Languages, I18nProperties> = {
     version: "Scaltro Magnate",
     text: [
       {
-        title: "REPUTAZIONE",
-        description: "Questo personaggio non può essere sfidato da personaggi con 2 o superiore.",
+        title: "Reputazione",
+        description:
+          "Questo personaggio non può essere sfidato da personaggi con 2 {S} o superiore.",
       },
     ],
   },

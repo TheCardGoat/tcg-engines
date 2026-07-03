@@ -4,6 +4,17 @@ import { hadesRuthlessTyrantI18n } from "./048-hades-ruthless-tyrant.i18n";
 export const hadesRuthlessTyrant: CharacterCard = {
   id: "C4b",
   canonicalId: "ci_C4b",
+  slug: "lorcana-ci_C4b",
+  printings: [
+    {
+      id: "set8-048",
+      artId: "set8-048",
+      setCode: "set8",
+      collectorNumber: "48",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-048"],
   cardType: "character",
   name: "Hades",
@@ -20,7 +31,7 @@ export const hadesRuthlessTyrant: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4c3204fa9fa14ff9a13a41cadc4259aa",
-    tcgPlayer: 630060,
+    tcgPlayer: "630060",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { theQueenDisguisedPeddlerI18n } from "./093-the-queen-disguised-peddler.
 export const theQueenDisguisedPeddler: CharacterCard = {
   id: "zX1",
   canonicalId: "ci_zX1",
+  slug: "lorcana-ci_zX1",
+  printings: [
+    {
+      id: "set2-093",
+      artId: "set2-093",
+      setCode: "set2",
+      collectorNumber: "93",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-093"],
   cardType: "character",
   name: "The Queen",
@@ -20,7 +31,7 @@ export const theQueenDisguisedPeddler: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6cdb5c7da33a4158b6646d784ec0f2d5",
-    tcgPlayer: 527273,
+    tcgPlayer: "527273",
   },
   text: [
     {

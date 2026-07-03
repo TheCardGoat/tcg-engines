@@ -19,14 +19,14 @@ export const mushusRocketI18n: Record<Languages, I18nProperties> = {
     name: "Mushus Rakete",
     text: [
       {
-        title: "KÖNNT IHR MIR MAL FEUER GEBEN?",
+        title: "Könnt ihr mir mal Feuer geben?",
         description:
-          "Wenn du diesen Gegenstand ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Rasant. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+          "Wenn du diesen Gegenstand ausspielst, erhält ein Charakter deiner Wahl in diesem Zug <Rasant>. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
       },
       {
-        title: "MITFAHREN 2,",
+        title: "Mitfahren",
         description:
-          "Verbanne diesen Gegenstand — Ein Charakter deiner Wahl erhält in diesem Zug Rasant.",
+          "2 {I}, Verbanne diesen Gegenstand — Ein Charakter deiner Wahl erhält in diesem Zug <Rasant>.",
       },
     ],
   },
@@ -34,14 +34,14 @@ export const mushusRocketI18n: Record<Languages, I18nProperties> = {
     name: "Fusée de Mushu",
     text: [
       {
-        title: "VOUS N'AURIEZ PAS DU FEU?",
+        title: "Vous n'auriez pas du feu?",
         description:
-          "Lorsque vous jouez cet objet, choisissez un personnage qui gagne Charge pour le reste de ce tour.",
+          "Lorsque vous jouez cet objet, choisissez un personnage qui gagne <Charge> pour le reste de ce tour.",
       },
       {
-        title: "MONTURE DE FORTUNE 2,",
+        title: "Monture de fortune",
         description:
-          "Bannissez cet objet — Choisissez un personnage qui gagne Charge pour le reste de ce tour.",
+          "2 {I}, Bannissez cet objet — Choisissez un personnage qui gagne <Charge> pour le reste de ce tour.",
       },
     ],
   },
@@ -49,14 +49,14 @@ export const mushusRocketI18n: Record<Languages, I18nProperties> = {
     name: "Razzo di Mushu",
     text: [
       {
-        title: "VOGLIO LA POTENZA DEL FUOCO",
+        title: "Voglio la Potenza del Fuoco",
         description:
-          "Quando giochi questo oggetto, un personaggio a tua scelta ottiene Lesto per questo turno. (Può sfidare nel turno in cui viene giocato.)",
+          "Quando giochi questo oggetto, un personaggio a tua scelta ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)",
       },
       {
-        title: "SCROCCARE UN PASSAGGIO 2,",
+        title: "Scroccare un Passaggio",
         description:
-          "esilia questo oggetto — Un personaggio a tua scelta ottiene Lesto per questo turno.",
+          "2 {I}, esilia questo oggetto — Un personaggio a tua scelta ottiene <Lesto> per questo turno.",
       },
     ],
   },

@@ -20,14 +20,14 @@ export const blueSmokeI18n: Record<Languages, I18nProperties> = {
     name: "Blauer Rauch",
     text: [
       {
-        title: "THEATRALISCHER EINGANG",
+        title: "Theatralischer Eingang",
         description:
-          "Falls du einen Darkwing-Duck-Charakter im Spiel hast, zahlst du 1 weniger, um diesen Gegenstand auszuspielen.",
+          "Falls du einen Darkwing-Duck-Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Gegenstand auszuspielen.",
       },
       {
-        title: "MYSTERIÖSE WOLKE,",
+        title: "Mysteriöse Wolke",
         description:
-          "1, Verbanne diesen Gegenstand — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Behütet. (Gegnerische Mitspielende können den Charakter nicht auswählen, außer um ihn herauszufordern.)",
+          "{E}, 1 {I}, Verbanne diesen Gegenstand — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Behütet>. (Gegnerische Mitspielende können den Charakter nicht auswählen, außer um ihn herauszufordern.)",
       },
     ],
   },
@@ -35,14 +35,14 @@ export const blueSmokeI18n: Record<Languages, I18nProperties> = {
     name: "Fumée bleue",
     text: [
       {
-        title: "ENTRÉE THÉÂTRALE",
+        title: "Entrée théâtrale",
         description:
-          "Jouer cet objet vous coûte 1 de moins si vous avez un personnage Myster Mask en jeu.",
+          "Jouer cet objet vous coûte 1 {I} de moins si vous avez un personnage Myster Mask en jeu.",
       },
       {
-        title: "NUAGE DE",
+        title: "Nuage de mystère",
         description:
-          "MYSTÈRE, 1, Bannissez cet objet — Choisissez un personnage qui gagne Hors d'atteinte jusqu'au début de votre prochain tour.",
+          "{E}, 1 {I}, Bannissez cet objet — Choisissez un personnage qui gagne <Hors d'atteinte> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -50,14 +50,14 @@ export const blueSmokeI18n: Record<Languages, I18nProperties> = {
     name: "Fumo Blu",
     text: [
       {
-        title: "ENTRATA TEATRALE",
+        title: "Entrata Teatrale",
         description:
-          "Se hai in gioco un personaggio chiamato Darkwing Duck, paga 1 in meno per giocare questo oggetto.",
+          "Se hai in gioco un personaggio chiamato Darkwing Duck, paga 1 {I} in meno per giocare questo oggetto.",
       },
       {
-        title: "NUVOLA DI MISTERO, 1,",
+        title: "Nuvola di Mistero",
         description:
-          "esilia questo oggetto — Un personaggio a tua scelta ottiene Protetto fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+          "{E}, 1 {I}, esilia questo oggetto — Un personaggio a tua scelta ottiene <Protetto> fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
       },
     ],
   },

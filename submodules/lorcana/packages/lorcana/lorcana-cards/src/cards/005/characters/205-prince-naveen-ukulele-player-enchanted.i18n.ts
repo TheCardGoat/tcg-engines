@@ -20,10 +20,10 @@ export const princeNaveenUkulelePlayerEnchantedI18n: Record<Languages, I18nPrope
     version: "Ukulelespieler",
     text: [
       {
-        title: "Singen 6",
+        title: "<Singen> 6 (Die Kosten dieses Charakters gelten als 6 für das Singen von Liedern.)",
       },
       {
-        title: "SCHÖN, NICHT WAHR?",
+        title: "Schön, nicht wahr?",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du ein Lied, das 6 oder weniger kostet, kostenlos ausspielen.",
       },
@@ -34,10 +34,11 @@ export const princeNaveenUkulelePlayerEnchantedI18n: Record<Languages, I18nPrope
     version: "Joueur de ukulélé",
     text: [
       {
-        title: "Mélomane 6",
+        title:
+          "<Mélomane> 6 (Ce personnage est considéré comme ayant un coût de 6 pour chanter des chansons.)",
       },
       {
-        title: "C'EST MERVEILLEUX, NON?",
+        title: "C'est merveilleux, non?",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez jouer gratuitement une carte Chanson coûtant 6 ou moins.",
       },
@@ -48,11 +49,12 @@ export const princeNaveenUkulelePlayerEnchantedI18n: Record<Languages, I18nPrope
     version: "Suonatore di Ukulele",
     text: [
       {
-        title: "Melodioso 6",
+        title: "<Melodioso> 6",
       },
       {
-        title:
-          "È BELLISSIMA, NO? Quando giochi questo personaggio, puoi giocare una canzone con costo 6 o inferiore gratis.",
+        title: "È Bellissima, No?",
+        description:
+          "Quando giochi questo personaggio, puoi giocare una canzone con costo 6 o inferiore gratis.",
       },
     ],
   },

@@ -16,7 +16,7 @@ export const stitchTeamUnderdogI18n: Record<Languages, I18nProperties> = {
     version: "Team Außenseiter",
     text: [
       {
-        title: "HAU RUCK!",
+        title: "Hau ruck!",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl 2 Schaden zufügen.",
       },
@@ -27,7 +27,7 @@ export const stitchTeamUnderdogI18n: Record<Languages, I18nProperties> = {
     version: "Outsider de l'équipe",
     text: [
       {
-        title: "HO HISSE!",
+        title: "Ho hisse!",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui infliger 2 dommages.",
       },
@@ -38,7 +38,7 @@ export const stitchTeamUnderdogI18n: Record<Languages, I18nProperties> = {
     version: "Sfavorito della Squadra",
     text: [
       {
-        title: "OH ISSA!",
+        title: "Oh Issa!",
         description:
           "Quando giochi questo personaggio, puoi infliggere 2 danni a un personaggio a tua scelta.",
       },

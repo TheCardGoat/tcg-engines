@@ -21,13 +21,13 @@ export const namaariSinglemindedRivalI18n: Record<Languages, I18nProperties> = {
     version: "Zielstrebige Rivalin",
     text: [
       {
-        title: "STRATEGISCHER VORTEIL",
+        title: "Strategischer Vorteil",
         description:
           "Wenn du diesen Charakter ausspielst, und zu Beginn deines Zuges, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
       {
-        title: "EXTREMER FOKUS",
-        description: "Dieser Charakter erhält +1 für jede Karte in deinem Ablagestapel.",
+        title: "Extremer Fokus",
+        description: "Dieser Charakter erhält +1 {S} für jede Karte in deinem Ablagestapel.",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const namaariSinglemindedRivalI18n: Record<Languages, I18nProperties> = {
     version: "Rivale obstinée",
     text: [
       {
-        title: "AVANTAGE STRATÉGIQUE",
+        title: "Avantage stratégique",
         description:
           "Lorsque vous jouez ce personnage et au début de votre tour, vous pouvez piocher une carte puis défausser une carte.",
       },
       {
-        title: "CONCENTRATION EXTRÊME",
-        description: "Ce personnage a +1 pour chaque carte dans votre défausse.",
+        title: "Concentration extrême",
+        description: "Ce personnage a +1 {S} pour chaque carte dans votre défausse.",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const namaariSinglemindedRivalI18n: Record<Languages, I18nProperties> = {
     version: "Rivale Ostinata",
     text: [
       {
-        title: "SUPERIORITÀ STRATEGICA",
+        title: "Superiorità Strategica",
         description:
           "Quando giochi questo personaggio e all'inizio del tuo turno, puoi pescare una carta, poi scegli e scarta una carta.",
       },
       {
-        title: "CONCENTRAZIONE ESTREMA",
-        description: "Questo personaggio riceve +1 per ogni carta nei tuoi scarti.",
+        title: "Concentrazione Estrema",
+        description: "Questo personaggio riceve +1 {S} per ogni carta nei tuoi scarti.",
       },
     ],
   },

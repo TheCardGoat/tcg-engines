@@ -4,6 +4,17 @@ import { kingLouieJungleVipI18n } from "./012-king-louie-jungle-vip.i18n";
 export const kingLouieJungleVip: CharacterCard = {
   id: "184",
   canonicalId: "ci_184",
+  slug: "lorcana-ci_184",
+  printings: [
+    {
+      id: "set2-012",
+      artId: "set2-012",
+      setCode: "set2",
+      collectorNumber: "12",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-012"],
   cardType: "character",
   name: "King Louie",
@@ -20,7 +31,7 @@ export const kingLouieJungleVip: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5a9c44f3e0884493b853e0a1c8b1fca6",
-    tcgPlayer: 527613,
+    tcgPlayer: "527613",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const kingLouieJungleVip: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           target: "SELF",
           type: "remove-damage",
         },

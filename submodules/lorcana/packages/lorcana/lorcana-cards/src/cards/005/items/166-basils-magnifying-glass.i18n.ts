@@ -15,9 +15,9 @@ export const basilsMagnifyingGlassI18n: Record<Languages, I18nProperties> = {
     name: "Basils Lupe",
     text: [
       {
-        title: "VERBORGENES FINDEN, 2",
+        title: "Verborgenes finden",
         description:
-          "— Schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+          "{E}, 2 {I} — Schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const basilsMagnifyingGlassI18n: Record<Languages, I18nProperties> = {
     name: "Loupe de Basil",
     text: [
       {
-        title: "RÉVÉLER L'INVISIBLE,",
+        title: "Révéler l'invisible",
         description:
-          "2 — Regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Objet parmi elles et la prendre en main. Remettez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+          "{E}, 2 {I} — Regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Objet parmi elles et la prendre en main. Remettez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const basilsMagnifyingGlassI18n: Record<Languages, I18nProperties> = {
     name: "Lente d'Ingrandimento di Basil",
     text: [
       {
-        title: "TROVARE",
+        title: "Trovare Ciò Che È Nascosto",
         description:
-          "CIÒ CHE È NASCOSTO, 2 — Guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+          "{E}, 2 {I} — Guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },
     ],
   },

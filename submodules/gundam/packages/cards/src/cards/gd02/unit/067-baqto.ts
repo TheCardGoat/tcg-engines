@@ -7,14 +7,17 @@ export const gd02Baqto067: UnitCard = {
   color: "purple",
   traits: ["ue", "vagan"],
   id: "GD02-067",
-  externalId: "gundam:gd02-067",
-  slug: "baqto-gd02-067",
+  canonicalId: "GD02-067",
+  externalIds: { bandai: "gundam:gd02-067" },
+  slug: "baqto/gd02-067",
   displayName: "Baqto",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-067",
   printings: [
     {
       id: "GD02-067",
+      artId: "GD02-067",
+      setCode: "GD02",
       collectorNumber: "GD02-067",
       cardNumber: "GD02-067",
       set: {
@@ -29,6 +32,7 @@ export const gd02Baqto067: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-067"],
   selectedPrintingId: "GD02-067",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-067.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-067.webp?260424",

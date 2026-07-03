@@ -7,14 +7,17 @@ export const st03CloseCombat013: CommandCard = {
   color: "red",
   traits: ["-"],
   id: "ST03-013",
-  externalId: "gundam:st03-013",
-  slug: "close-combat-st03-013",
+  canonicalId: "ST03-013",
+  externalIds: { bandai: "gundam:st03-013" },
+  slug: "close-combat/st03-013",
   displayName: "Close Combat",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-013",
   printings: [
     {
       id: "ST03-013",
+      artId: "ST03-013",
+      setCode: "ST03",
       collectorNumber: "ST03-013",
       cardNumber: "ST03-013",
       set: {
@@ -30,6 +33,8 @@ export const st03CloseCombat013: CommandCard = {
     },
     {
       id: "ST03-013_p1",
+      artId: "ST03-013_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-013_p1",
       cardNumber: "ST03-013",
       set: {
@@ -45,6 +50,8 @@ export const st03CloseCombat013: CommandCard = {
     },
     {
       id: "ST03-013_p2",
+      artId: "ST03-013_p2",
+      setCode: "ST03",
       collectorNumber: "ST03-013_p2",
       cardNumber: "ST03-013",
       set: {
@@ -60,6 +67,8 @@ export const st03CloseCombat013: CommandCard = {
     },
     {
       id: "ST03-013_p3",
+      artId: "ST03-013_p3",
+      setCode: "ST06",
       collectorNumber: "ST03-013_p3",
       cardNumber: "ST03-013",
       set: {
@@ -75,6 +84,8 @@ export const st03CloseCombat013: CommandCard = {
     },
     {
       id: "ST03-013_p4",
+      artId: "ST03-013_p4",
+      setCode: "ST06",
       collectorNumber: "ST03-013_p4",
       cardNumber: "ST03-013",
       set: {
@@ -89,6 +100,7 @@ export const st03CloseCombat013: CommandCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST03-013", "ST03-013_p1", "ST03-013_p2", "ST03-013_p3", "ST03-013_p4"],
   selectedPrintingId: "ST03-013",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-013.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-013.webp?260424",

@@ -4,6 +4,17 @@ import { kakamoraBandOfPiratesI18n } from "./192-kakamora-band-of-pirates.i18n";
 export const kakamoraBandOfPirates: CharacterCard = {
   id: "TUI",
   canonicalId: "ci_TUI",
+  slug: "lorcana-ci_TUI",
+  printings: [
+    {
+      id: "set7-192",
+      artId: "set7-192",
+      setCode: "set7",
+      collectorNumber: "192",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-192"],
   cardType: "character",
   name: "Kakamora",
@@ -20,7 +31,7 @@ export const kakamoraBandOfPirates: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e97a6df3786a4f2489911d0b9201a127",
-    tcgPlayer: 619518,
+    tcgPlayer: "619518",
   },
   text: [
     {

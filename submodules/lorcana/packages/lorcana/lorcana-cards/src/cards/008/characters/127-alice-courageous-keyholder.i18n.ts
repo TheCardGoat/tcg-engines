@@ -17,7 +17,7 @@ export const aliceCourageousKeyholderI18n: Record<Languages, I18nProperties> = {
     version: "Mutige Schlüsselträgerin",
     text: [
       {
-        title: "HIERLANG GEHT'S RAUS",
+        title: "Hierlang geht's raus",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen deiner beschädigten Charaktere bereit machen. Er kann in diesem Zug nicht mehr erkunden.",
       },
@@ -28,7 +28,7 @@ export const aliceCourageousKeyholderI18n: Record<Languages, I18nProperties> = {
     version: "Courageuse porteuse de clé",
     text: [
       {
-        title: "PAR ICI LA SORTIE",
+        title: "Par ici la sortie",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir l'un de vos personnages avec un dommage ou plus et le redresser. Ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
@@ -39,7 +39,7 @@ export const aliceCourageousKeyholderI18n: Record<Languages, I18nProperties> = {
     version: "Coraggiosa Custode della Chiave",
     text: [
       {
-        title: "DA QUESTA PARTE",
+        title: "Da Questa Parte",
         description:
           "Quando giochi questo personaggio, puoi preparare un tuo personaggio danneggiato a tua scelta. Non può andare all'avventura per il resto di questo turno.",
       },

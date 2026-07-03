@@ -4,6 +4,17 @@ import { magicCarpetAmazingFlierI18n } from "./051-magic-carpet-amazing-flier.i1
 export const magicCarpetAmazingFlier: CharacterCard = {
   id: "2JV",
   canonicalId: "ci_2JV",
+  slug: "lorcana-ci_2JV",
+  printings: [
+    {
+      id: "set6-051",
+      artId: "set6-051",
+      setCode: "set6",
+      collectorNumber: "51",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-051"],
   cardType: "character",
   name: "Magic Carpet",
@@ -21,7 +32,7 @@ export const magicCarpetAmazingFlier: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_00d0840f303c41b1868ce427b9aaf837",
-    tcgPlayer: 592026,
+    tcgPlayer: "592026",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: magicCarpetAmazingFlierI18n,

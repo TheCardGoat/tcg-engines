@@ -4,6 +4,17 @@ import { grammaTalaStorytellerI18n } from "./146-gramma-tala-storyteller.i18n";
 export const grammaTalaStoryteller: CharacterCard = {
   id: "ROE",
   canonicalId: "ci_ROE",
+  slug: "lorcana-ci_ROE",
+  printings: [
+    {
+      id: "set1-146",
+      artId: "set1-146",
+      setCode: "set1",
+      collectorNumber: "146",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-146"],
   cardType: "character",
   name: "Gramma Tala",
@@ -20,7 +31,7 @@ export const grammaTalaStoryteller: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2556ec8a10224e6bb75f2bd54e7a612f",
-    tcgPlayer: 508842,
+    tcgPlayer: "508842",
   },
   text: [
     {

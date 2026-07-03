@@ -4,6 +4,17 @@ import { pickAFightI18n } from "./200-pick-a-fight.i18n";
 export const pickAFight: ActionCard = {
   id: "3r0",
   canonicalId: "ci_3r0",
+  slug: "lorcana-ci_3r0",
+  printings: [
+    {
+      id: "set2-200",
+      artId: "set2-200",
+      setCode: "set2",
+      collectorNumber: "200",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-200"],
   cardType: "action",
   name: "Pick a Fight",
@@ -16,7 +27,7 @@ export const pickAFight: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5516a5f756734f2c89d1ef63e8c9964d",
-    tcgPlayer: 527296,
+    tcgPlayer: "527296",
   },
   text: "Chosen character can challenge ready characters this turn.",
   abilities: [

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { yenSidPowerfulSorcererI18n } from "./059-yen-sid-powerful-sorcerer.i18n";
 
 export const yenSidPowerfulSorcerer: CharacterCard = {
-  id: "cl6",
+  id: "gBI",
   canonicalId: "ci_iNw",
+  slug: "lorcana-ci_iNw",
+  printings: [
+    {
+      id: "set4-059",
+      artId: "set4-059",
+      setCode: "set4",
+      collectorNumber: "59",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-059"],
   cardType: "character",
   name: "Yen Sid",
@@ -20,7 +31,7 @@ export const yenSidPowerfulSorcerer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_86d6559da2404639813a26adaa8ccedf",
-    tcgPlayer: 544492,
+    tcgPlayer: "544492",
   },
   text: [
     {

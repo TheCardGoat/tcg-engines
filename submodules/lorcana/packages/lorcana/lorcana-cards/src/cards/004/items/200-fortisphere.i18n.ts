@@ -19,13 +19,13 @@ export const fortisphereI18n: Record<Languages, I18nProperties> = {
     name: "Fortisphäre",
     text: [
       {
-        title: "EINFALLSREICH",
+        title: "Einfallsreich",
         description: "Wenn du diesen Gegenstand ausspielst, darfst du 1 Karte ziehen.",
       },
       {
-        title: "EXTRAKT AUS STAHL 1,",
+        title: "Extrakt aus Stahl",
         description:
-          "Verbanne diesen Gegenstand — Wähle einen deiner Charaktere, er erhält bis zu Beginn deines nächsten Zuges Beschützen. (Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
+          "1 {I}, Verbanne diesen Gegenstand — Wähle einen deiner Charaktere, er erhält bis zu Beginn deines nächsten Zuges <Beschützen>. (Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
     ],
   },
@@ -33,13 +33,13 @@ export const fortisphereI18n: Record<Languages, I18nProperties> = {
     name: "Sphère d'endurance",
     text: [
       {
-        title: "PLEINE DE RESSOURCE",
+        title: "Pleine de ressource",
         description: "Lorsque vous jouez cet objet, vous pouvez piocher une carte.",
       },
       {
-        title: "EXTRAIT D'ACIER 1,",
+        title: "Extrait d'acier",
         description:
-          "Bannissez cet objet — Choisissez un de vos personnages qui gagne Rempart jusqu'au début de votre prochain tour. (Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
+          "1 {I}, Bannissez cet objet — Choisissez un de vos personnages qui gagne <Rempart> jusqu'au début de votre prochain tour. (Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
     ],
   },
@@ -47,13 +47,13 @@ export const fortisphereI18n: Record<Languages, I18nProperties> = {
     name: "Fortisfera",
     text: [
       {
-        title: "PIENA DI RISORSE",
+        title: "Piena di Risorse",
         description: "Quando giochi questo oggetto, puoi pescare una carta.",
       },
       {
-        title: "ESTRATTO DI ACCIAIO 1,",
+        title: "Estratto di Acciaio",
         description:
-          "esilia questo oggetto — Un tuo personaggio a tua scelta ottiene Guardiano fino all'inizio del tuo prossimo turno. (Un personaggio avversario che sfida uno dei tuoi personaggi deve sceglierne uno con Guardiano, se possibile.)",
+          "1 {I}, esilia questo oggetto — Un tuo personaggio a tua scelta ottiene <Guardiano> fino all'inizio del tuo prossimo turno. (Un personaggio avversario che sfida uno dei tuoi personaggi deve sceglierne uno con Guardiano, se possibile.)",
       },
     ],
   },

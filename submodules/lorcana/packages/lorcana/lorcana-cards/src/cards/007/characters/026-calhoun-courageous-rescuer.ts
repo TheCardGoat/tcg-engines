@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { calhounCourageousRescuerI18n } from "./026-calhoun-courageous-rescuer.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const calhounCourageousRescuer: CharacterCard = {
   id: "Vkp",
   canonicalId: "ci_Vkp",
+  slug: "lorcana-ci_Vkp",
+  printings: [
+    {
+      id: "set7-026",
+      artId: "set7-026",
+      setCode: "set7",
+      collectorNumber: "26",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-026"],
   cardType: "character",
   name: "Calhoun",
@@ -21,7 +33,7 @@ export const calhounCourageousRescuer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5d8c259d718d4d54ac5e45275bffbcf0",
-    tcgPlayer: 618130,
+    tcgPlayer: "618130",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { johnSilverVengefulPirateI18n } from "./109-john-silver-vengeful-pirate.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const johnSilverVengefulPirate: CharacterCard = {
   id: "haz",
   canonicalId: "ci_haz",
+  slug: "lorcana-ci_haz",
+  printings: [
+    {
+      id: "set7-109",
+      artId: "set7-109",
+      setCode: "set7",
+      collectorNumber: "109",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-109"],
   cardType: "character",
   name: "John Silver",
@@ -21,13 +33,13 @@ export const johnSilverVengefulPirate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b6a644c09d674fe6ace0502427a05c6e",
-    tcgPlayer: 619466,
+    tcgPlayer: "619466",
   },
   text: [
     {
-      title: "DRAWN TO A FIGHT",
+      title: "DRAWN TO",
       description:
-        "If an opposing character took damage this turn, you pay 2 {I} less to play this character.",
+        "A FIGHT If an opposing character was damaged this turn, you pay 2 {I} less to play this character.",
     },
     {
       title: "Resist +1",

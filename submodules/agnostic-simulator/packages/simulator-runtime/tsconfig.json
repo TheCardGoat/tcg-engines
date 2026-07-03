@@ -1,6 +1,7 @@
 {
   "extends": "@tcg/typescript-config/react.json",
   "compilerOptions": {
+    "types": ["node", "@types/bun"],
     "lib": ["esnext", "DOM", "DOM.Iterable"]
   },
   "include": ["src"],

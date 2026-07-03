@@ -4,6 +4,17 @@ import { johnSilverShipsCookI18n } from "./181-john-silver-ships-cook.i18n";
 export const johnSilverShipsCook: CharacterCard = {
   id: "d07",
   canonicalId: "ci_d07",
+  slug: "lorcana-ci_d07",
+  printings: [
+    {
+      id: "set6-181",
+      artId: "set6-181",
+      setCode: "set6",
+      collectorNumber: "181",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-181"],
   cardType: "character",
   name: "John Silver",
@@ -20,7 +31,7 @@ export const johnSilverShipsCook: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fef968cf2e0d47fbb8f241fa7d91fd27",
-    tcgPlayer: 587755,
+    tcgPlayer: "587755",
   },
   text: [
     {

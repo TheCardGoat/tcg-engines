@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { kidaGuardianOfThePathI18n } from "./144-kida-guardian-of-the-path.i18n";
 
 export const kidaGuardianOfThePath: CharacterCard = {
-  id: "ucq",
+  id: "562",
   canonicalId: "ci_ucq",
+  slug: "lorcana-ci_ucq",
+  printings: [
+    {
+      id: "set12-144",
+      artId: "set12-144",
+      setCode: "set12",
+      collectorNumber: "144",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-144"],
   cardType: "character",
   name: "Kida",
@@ -19,7 +30,8 @@ export const kidaGuardianOfThePath: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_36826a0cb54b4f06b8e5de879e20d926",
+    lorcast: "crd_4f772bcbcd244314a99264fb106166dd",
+    tcgPlayer: "692212",
   },
   text: [
     {

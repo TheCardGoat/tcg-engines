@@ -41,13 +41,23 @@ function createRevealAndRouteTestContext(args: { zoneCards: Record<string, CardI
     reveal: (cards: CardInstanceId[]) => {
       void cards;
     },
-    moveCard: (cardId: CardInstanceId, to: { playerId: PlayerId; zone: string }) => {
+    moveCard: (
+      cardId: CardInstanceId,
+      to: { playerId: PlayerId; zone: string },
+      options?: { index?: number },
+    ) => {
       const fromZone = cardIndex[cardId]?.zoneKey;
       if (fromZone && zoneCards[fromZone]) {
         zoneCards[fromZone] = zoneCards[fromZone]!.filter((id) => id !== cardId);
       }
       const toZoneKey = `${to.zone}:${to.playerId}`;
-      zoneCards[toZoneKey] = [...(zoneCards[toZoneKey] ?? []), cardId];
+      const existing = [...(zoneCards[toZoneKey] ?? [])];
+      if (typeof options?.index === "number") {
+        existing.splice(options.index, 0, cardId);
+        zoneCards[toZoneKey] = existing;
+      } else {
+        zoneCards[toZoneKey] = [...existing, cardId];
+      }
       cardIndex[cardId] = { ownerID: to.playerId, zoneKey: toZoneKey };
     },
     shuffle: () => {},
@@ -125,6 +135,39 @@ function createRevealAndRouteTestContext(args: { zoneCards: Record<string, CardI
 }
 
 describe("reveal-and-route", () => {
+  it("puts unmatched revealed cards on the bottom when fallback is deck-bottom", () => {
+    const bottomCard = "bottom-card" as CardInstanceId;
+    const topCard = "top-card" as CardInstanceId;
+    const { ctx } = createRevealAndRouteTestContext({
+      zoneCards: {
+        [`deck:${PLAYER_ONE}`]: [bottomCard, topCard],
+      },
+    });
+
+    resolveRevealAndRouteEffect(
+      ctx,
+      createCardPlayedPayload("source" as CardInstanceId, PLAYER_ONE),
+      {
+        type: "reveal-and-route",
+        target: "CONTROLLER",
+        routes: [
+          {
+            condition: { type: "revealed-is-card-type", cardType: "character" },
+            destination: { zone: "hand" },
+          },
+        ],
+        fallback: { zone: "deck-bottom" },
+      },
+      {},
+      () => ({ status: "resolved" }),
+    );
+
+    expect(ctx.framework.zones.getCards({ zone: "deck", playerId: PLAYER_ONE })).toEqual([
+      topCard,
+      bottomCard,
+    ]);
+  });
+
   it("emits cardInked as public when routing a revealed deck card to inkwell", () => {
     const topCard = "top-card" as CardInstanceId;
     const { ctx, emittedEvents } = createRevealAndRouteTestContext({

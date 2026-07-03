@@ -5,11 +5,11 @@ export const syndromesRemoteI18n: Record<Languages, I18nProperties> = {
     name: "Syndrome's Remote",
     text: [
       {
-        title: "Zero-Point Energy",
+        title: "ZERO-POINT ENERGY",
         description: "{E}, 2 {I} — Chosen character can't challenge during their next turn.",
       },
       {
-        title: "Learn From Their Losses",
+        title: "LEARN FROM THEIR LOSSES",
         description:
           "Whenever a Robot character is banished, you may banish this item to discard your hand and draw 2 cards.",
       },

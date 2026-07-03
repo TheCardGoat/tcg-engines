@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { svenKeeneyedReindeerI18n } from "./065-sven-keen-eyed-reindeer.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const svenKeeneyedReindeer: CharacterCard = {
   id: "snv",
   canonicalId: "ci_snv",
+  slug: "lorcana-ci_snv",
+  printings: [
+    {
+      id: "set7-065",
+      artId: "set7-065",
+      setCode: "set7",
+      collectorNumber: "65",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-065"],
   cardType: "character",
   name: "Sven",
@@ -21,7 +33,7 @@ export const svenKeeneyedReindeer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7b2b13682a1c4b4198f7c27df73abc46",
-    tcgPlayer: 618135,
+    tcgPlayer: "618135",
   },
   text: [
     {

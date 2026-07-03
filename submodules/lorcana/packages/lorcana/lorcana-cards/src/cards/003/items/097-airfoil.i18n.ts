@@ -14,9 +14,9 @@ export const airfoilI18n: Record<Languages, I18nProperties> = {
     name: "Wolkensurfer",
     text: [
       {
-        title: "ICH MUSS JETZT GEHEN",
+        title: "Ich muss jetzt gehen",
         description:
-          "— Falls du in diesem Zug mindestens 2 Aktionen ausgespielt hast, ziehe 1 Karte.",
+          "{E} — Falls du in diesem Zug mindestens 2 Aktionen ausgespielt hast, ziehe 1 Karte.",
       },
     ],
   },
@@ -24,9 +24,9 @@ export const airfoilI18n: Record<Languages, I18nProperties> = {
     name: "Aéro-surf",
     text: [
       {
-        title: "IL FAUT QUE J'Y AILLE",
+        title: "Il faut que j'y aille",
         description:
-          "— Si vous avez joué au moins 2 cartes Action durant votre tour, piochez une carte.",
+          "{E} — Si vous avez joué au moins 2 cartes Action durant votre tour, piochez une carte.",
       },
     ],
   },
@@ -34,8 +34,8 @@ export const airfoilI18n: Record<Languages, I18nProperties> = {
     name: "Surf Aereo",
     text: [
       {
-        title: "IO ALLORA VADO",
-        description: "— Se hai giocato 2 o più azioni in questo turno, pesca 1 carta.",
+        title: "Io Allora Vado",
+        description: "{E} — Se hai giocato 2 o più azioni in questo turno, pesca 1 carta.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const st07GundamExia001: UnitCard = {
   color: "purple",
   traits: ["cb", "gn drive"],
   id: "ST07-001",
-  externalId: "gundam:st07-001",
-  slug: "gundam-exia-st07-001",
+  canonicalId: "ST07-001",
+  externalIds: { bandai: "gundam:st07-001" },
+  slug: "gundam-exia/st07-001",
   displayName: "Gundam Exia",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-001",
   printings: [
     {
       id: "ST07-001",
+      artId: "ST07-001",
+      setCode: "ST07",
       collectorNumber: "ST07-001",
       cardNumber: "ST07-001",
       set: {
@@ -30,6 +33,8 @@ export const st07GundamExia001: UnitCard = {
     },
     {
       id: "ST07-001_p1",
+      artId: "ST07-001_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-001_p1",
       cardNumber: "ST07-001",
       set: {
@@ -44,6 +49,7 @@ export const st07GundamExia001: UnitCard = {
       productName: "Celestial Drive [ST07] Bonus Pack",
     },
   ],
+  reprints: ["ST07-001", "ST07-001_p1"],
   selectedPrintingId: "ST07-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-001.webp?260424",

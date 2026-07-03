@@ -4,6 +4,17 @@ import { doloresMadrigalEasyListenerI18n } from "./041-dolores-madrigal-easy-lis
 export const doloresMadrigalEasyListener: CharacterCard = {
   id: "Gf5",
   canonicalId: "ci_xFh",
+  slug: "lorcana-ci_xFh",
+  printings: [
+    {
+      id: "set4-041",
+      artId: "set4-041",
+      setCode: "set4",
+      collectorNumber: "41",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-041", "set9-051"],
   cardType: "character",
   name: "Dolores Madrigal",
@@ -20,7 +31,7 @@ export const doloresMadrigalEasyListener: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d9a1ea3bfe5d4911918825597c51e0a6",
-    tcgPlayer: 649995,
+    tcgPlayer: "649995",
   },
   text: [
     {

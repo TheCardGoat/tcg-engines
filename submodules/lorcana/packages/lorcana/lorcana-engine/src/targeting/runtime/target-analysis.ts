@@ -67,6 +67,8 @@ type PlayCardSelectionDescriptor = {
     name?: string;
     sameNameAsSource?: boolean;
     sameNameAsChosenCard?: boolean;
+    sameInstanceAsTriggerSubject?: boolean;
+    inEventSnapshotCardsUnder?: boolean;
   };
 };
 
@@ -1409,10 +1411,12 @@ function matchesPlayCardSelectionTypeConstraint(
 }
 
 function matchesPlayCardSelectionCriteria(
+  cardId: CardInstanceId,
   definition: ActionTargetCardDefinition,
   descriptor: PlayCardSelectionDescriptor,
   sourceDefinition?: ActionTargetCardDefinition,
   chosenDefinition?: ActionTargetCardDefinition,
+  eventSnapshot?: DynamicAmountEventSnapshot,
 ): boolean {
   if (!matchesPlayCardSelectionTypeConstraint(definition, descriptor.cardType)) {
     return false;
@@ -1457,6 +1461,20 @@ function matchesPlayCardSelectionCriteria(
     }
   }
 
+  if (
+    filter.sameInstanceAsTriggerSubject === true &&
+    eventSnapshot?.subjectCardId !== cardId
+  ) {
+    return false;
+  }
+
+  if (filter.inEventSnapshotCardsUnder === true) {
+    const cardsUnderIds = eventSnapshot?.cardsUnderIdsBeforeBanish;
+    if (!Array.isArray(cardsUnderIds) || !cardsUnderIds.includes(cardId)) {
+      return false;
+    }
+  }
+
   return true;
 }
 
@@ -1475,6 +1493,7 @@ function resolveActionPlayCardSelectionCandidates(
   playerId: PlayerId,
   ctx: ActionTargetRuntimeContext,
   sourceCardId?: CardInstanceId,
+  eventSnapshot?: DynamicAmountEventSnapshot,
 ): CardInstanceId[] {
   if (targetDescriptors.length === 0) {
     return [];
@@ -1510,10 +1529,12 @@ function resolveActionPlayCardSelectionCandidates(
           }
           if (
             !matchesPlayCardSelectionCriteria(
+              cardId,
               definition,
               targetDescriptor,
               sourceDefinition,
               chosenDefinition,
+              eventSnapshot,
             )
           ) {
             continue;
@@ -1679,6 +1700,7 @@ export function analyzeEffectTargets(
     playerId,
     ctx,
     sourceCardId,
+    options?.eventSnapshot,
   );
   const playerCandidates = chosenPlayerTarget ? [...ctx.framework.state.playerIds] : [];
 

@@ -25,14 +25,19 @@ export const mauisFishHookI18n: Record<Languages, I18nProperties> = {
     name: "Mauis Fischhaken",
     text: [
       {
-        title: "JETZT IST MAUI ZEIT!",
+        title: "Jetzt ist Maui Zeit!",
         description:
           "Wenn du einen Maui-Charakter im Spiel hast, darfst du die Formwandler-Fähigkeit dieses Gegenstands kostenlos einsetzen.",
       },
       {
-        title: "FORMWANDLER, 2",
-        description:
-          "— Wähle eine Möglickeit aus: • Gib einem Charakter deiner Wahl in diesem Zug +3. • Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Wendig.",
+        title: "Formwandler",
+        description: "{E}, 2 {I} — Wähle eine Möglickeit aus:",
+      },
+      {
+        title: "• Gib einem Charakter deiner Wahl in diesem Zug +3 {S}.",
+      },
+      {
+        title: "• Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -40,14 +45,20 @@ export const mauisFishHookI18n: Record<Languages, I18nProperties> = {
     name: "L'hameçon de Maui",
     text: [
       {
-        title: "MAUI EST DE RETOUR!",
+        title: "Maui est de retour!",
         description:
           "Si vous avez un personnage Maui en jeu, vous pouvez utiliser gratuitement la capacité Métamorphose de cet objet.",
       },
       {
-        title: "MÉTAMORPHOSE,",
-        description:
-          "2 — Choisissez entre: • Choisissez un personnage, il gagne Insaisissable jusqu'au début de votre prochain tour. • Choisissez un personnage, il gagne +3 pour le reste de ce tour.",
+        title: "Métamorphose",
+        description: "{E}, 2 {I} — Choisissez entre:",
+      },
+      {
+        title:
+          "• Choisissez un personnage, il gagne <Insaisissable> jusqu'au début de votre prochain tour.",
+      },
+      {
+        title: "• Choisissez un personnage, il gagne +3 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -55,13 +66,20 @@ export const mauisFishHookI18n: Record<Languages, I18nProperties> = {
     name: "Amo da Pesca di Maui",
     text: [
       {
-        title:
-          "È L'ORA DI MAUI! Se hai un personaggio chiamato Maui in gioco, puoi usare gratis l'abilità Mutaforma di questo oggetto.",
+        title: "È l'Ora di Maui!",
+        description:
+          "Se hai un personaggio chiamato Maui in gioco, puoi usare gratis l'abilità Mutaforma di questo oggetto.",
       },
       {
-        title: "MUTAFORMA, 2",
-        description:
-          "— Scegli uno: • Un personaggio a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.) • Un personaggio a tua scelta riceve +3 per questo turno.",
+        title: "Mutaforma",
+        description: "{E}, 2 {I} — Scegli uno:",
+      },
+      {
+        title:
+          "• Un personaggio a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+      },
+      {
+        title: "• Un personaggio a tua scelta riceve +3 {S} per questo turno.",
       },
     ],
   },

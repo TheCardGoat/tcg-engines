@@ -4,7 +4,12 @@ export const syndromeEvilInventorI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Syndrome",
     version: "Evil Inventor",
-    text: "<Alert> (This character can challenge as if they had Evasive.)",
+    text: [
+      {
+        title: "Alert",
+        description: "(This character can challenge as if they had Evasive.)",
+      },
+    ],
   },
   de: {
     name: "Syndrom",

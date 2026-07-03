@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { reckless } from "../../../helpers/abilities/reckless";
 import { aresGodOfWarI18n } from "./104-ares-god-of-war.i18n";
+
+import { reckless } from "../../../helpers/abilities/reckless";
 
 export const aresGodOfWar: CharacterCard = {
   id: "S33",
   canonicalId: "ci_S33",
+  slug: "lorcana-ci_S33",
+  printings: [
+    {
+      id: "set10-104",
+      artId: "set10-104",
+      setCode: "set10",
+      collectorNumber: "104",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-104"],
   cardType: "character",
   name: "Ares",
@@ -21,7 +33,7 @@ export const aresGodOfWar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1b9b2bd814d249f2ab8ae1db9949c045",
-    tcgPlayer: 660339,
+    tcgPlayer: "660339",
   },
   text: "Reckless CALL TO BATTLE Once during your turn, whenever you put a card under one of your characters or locations, you may ready chosen character. If you do, that character can't quest for the rest of this turn.",
   classifications: ["Storyborn", "Deity"],

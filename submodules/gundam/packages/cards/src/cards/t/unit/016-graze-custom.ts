@@ -6,14 +6,17 @@ export const tGrazeCustom016: UnitCard = {
   type: "unit",
   traits: ["tekkadan"],
   id: "T-016",
-  externalId: "gundam:t-016",
-  slug: "graze-custom-t-016",
+  canonicalId: "T-016",
+  externalIds: { bandai: "gundam:t-016" },
+  slug: "graze-custom/t-016",
   displayName: "Graze Custom",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "T-016",
   printings: [
     {
       id: "T-016",
+      artId: "T-016",
+      setCode: "GD03",
       collectorNumber: "T-016",
       cardNumber: "T-016",
       set: {
@@ -29,6 +32,8 @@ export const tGrazeCustom016: UnitCard = {
     },
     {
       id: "T-016_p1",
+      artId: "T-016_p1",
+      setCode: "PC01A",
       collectorNumber: "T-016_p1",
       cardNumber: "T-016",
       set: {
@@ -44,6 +49,7 @@ export const tGrazeCustom016: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam IRON-BLOODED ORPHANS-[PC01A]",
     },
   ],
+  reprints: ["T-016", "T-016_p1"],
   selectedPrintingId: "T-016",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-016.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-016.webp?260424",

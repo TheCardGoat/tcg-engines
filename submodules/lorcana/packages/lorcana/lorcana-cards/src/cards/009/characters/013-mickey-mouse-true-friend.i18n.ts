@@ -6,15 +6,18 @@ export const mickeyMouseTrueFriendI18n: Record<Languages, I18nProperties> = {
     version: "True Friend",
   },
   de: {
-    name: "Micky Maus",
-    version: "Wahrer Freund",
+    name: "Mickey Mouse",
+    version: "True Friend",
+    text: "As long as he's around, newcomers to the Great Illuminary will always get a warm welcome.",
   },
   fr: {
-    name: "MICKEY MOUSE",
-    version: "Véritable ami",
+    name: "Mickey Mouse",
+    version: "True Friend",
+    text: "As long as he's around, newcomers to the Great Illuminary will always get a warm welcome.",
   },
   it: {
-    name: "Topolino",
-    version: "Vero Amico",
+    name: "Mickey Mouse",
+    version: "True Friend",
+    text: "As long as he's around, newcomers to the Great Illuminary will always get a warm welcome.",
   },
 };

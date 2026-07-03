@@ -4,6 +4,17 @@ import { imperialProclamationI18n } from "./131-imperial-proclamation.i18n";
 export const imperialProclamation: ItemCard = {
   id: "NaH",
   canonicalId: "ci_NaH",
+  slug: "lorcana-ci_NaH",
+  printings: [
+    {
+      id: "set4-131",
+      artId: "set4-131",
+      setCode: "set4",
+      collectorNumber: "131",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-131"],
   cardType: "item",
   name: "Imperial Proclamation",
@@ -16,7 +27,7 @@ export const imperialProclamation: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_32f858adfcc74249b32a879235f871c1",
-    tcgPlayer: 548191,
+    tcgPlayer: "548191",
   },
   text: [
     {

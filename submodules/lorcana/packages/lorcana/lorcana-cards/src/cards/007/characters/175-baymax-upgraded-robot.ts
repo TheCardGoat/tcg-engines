@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { baymaxUpgradedRobotI18n } from "./175-baymax-upgraded-robot.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const baymaxUpgradedRobot: CharacterCard = {
   id: "ibv",
   canonicalId: "ci_ibv",
+  slug: "lorcana-ci_ibv",
+  printings: [
+    {
+      id: "set7-175",
+      artId: "set7-175",
+      setCode: "set7",
+      collectorNumber: "175",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-175"],
   cardType: "character",
   name: "Baymax",
@@ -21,7 +33,7 @@ export const baymaxUpgradedRobot: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4b7cdb55b647410f85f60e74a4a4b619",
-    tcgPlayer: 619507,
+    tcgPlayer: "619507",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rollyChubbyPuppyI18n } from "./026-rolly-chubby-puppy.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const rollyChubbyPuppy: CharacterCard = {
   id: "3aw",
   canonicalId: "ci_3aw",
+  slug: "lorcana-ci_3aw",
+  printings: [
+    {
+      id: "set8-026",
+      artId: "set8-026",
+      setCode: "set8",
+      collectorNumber: "26",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-026"],
   cardType: "character",
   name: "Rolly",
@@ -21,7 +33,7 @@ export const rollyChubbyPuppy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b2cd67df2b87491f9b39c5d31e7b91d1",
-    tcgPlayer: 631369,
+    tcgPlayer: "631369",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { earthGiantLivingMountainI18n } from "./041-earth-giant-living-mountain.
 export const earthGiantLivingMountain: CharacterCard = {
   id: "hC5",
   canonicalId: "ci_hC5",
+  slug: "lorcana-ci_hC5",
+  printings: [
+    {
+      id: "set5-041",
+      artId: "set5-041",
+      setCode: "set5",
+      collectorNumber: "41",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-041"],
   cardType: "character",
   name: "Earth Giant",
@@ -20,7 +31,7 @@ export const earthGiantLivingMountain: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_314343a109e74d31bb84143aeb72d25f",
-    tcgPlayer: 561487,
+    tcgPlayer: "561487",
   },
   text: [
     {

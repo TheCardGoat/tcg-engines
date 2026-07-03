@@ -1,5 +1,11 @@
 import { createFixture } from "./fixture-factory";
-import { friendsOnTheOtherSide, hakunaMatata, reflection } from "@tcg/lorcana-cards/cards/001";
+import {
+  friendsOnTheOtherSide,
+  genieOnTheJob,
+  geniePowersUnleashed,
+  hakunaMatata,
+  reflection,
+} from "@tcg/lorcana-cards/cards/001";
 import { diabloFaithfulPet } from "@tcg/lorcana-cards/cards/003";
 import {
   aladdinBraveRescuer,
@@ -15,15 +21,19 @@ import {
 import {
   clarabelleClumsyGuest,
   clarabelleLightOnHerHoovesEnchanted,
+  moanaDeterminedExplorer,
 } from "@tcg/lorcana-cards/cards/005";
+import { chipFriendIndeed, chipNDaleRecoveryRangers } from "@tcg/lorcana-cards/cards/006";
 import { baymaxGiantRobot, thunderboltWonderDog } from "@tcg/lorcana-cards/cards/007";
-import { dalmatianPuppyTailWagger } from "@tcg/lorcana-cards/cards/008";
+import { dalmatianPuppyTailWagger, daleBumbler } from "@tcg/lorcana-cards/cards/008";
+import { balooCarefreeBear, balooLaidbackBear } from "@tcg/lorcana-cards/cards/010";
+import { aladdinGenieMischievousPals } from "@tcg/lorcana-cards/cards/013";
 
 export const shiftFixture = createFixture({
   id: "shift",
   name: "Shift",
   description:
-    "Testing shift UI: Universal Shift, Puppy Shift, discard-cost Shift, and named Shift with multiple target names",
+    "Testing shift UI: Universal Shift, Puppy Shift, discard-cost Shift, named Shift with multiple target names, and Set 13 Aladdin or Genie Shift",
   skipPreGame: true,
   playerOne: {
     inkwell: 20,
@@ -33,7 +43,11 @@ export const shiftFixture = createFixture({
       diabloDevotedHerald,
       ursulaEricsBride,
       clarabelleLightOnHerHoovesEnchanted,
+      balooCarefreeBear,
+      geniePowersUnleashed,
+      chipNDaleRecoveryRangers,
       aladdinBraveRescuer,
+      aladdinGenieMischievousPals,
       flotsamJetsamEntanglingEels,
       reflection,
       hakunaMatata,
@@ -45,6 +59,11 @@ export const shiftFixture = createFixture({
       diabloFaithfulPet,
       ursulaVanessa,
       clarabelleClumsyGuest,
+      balooLaidbackBear,
+      genieOnTheJob,
+      chipFriendIndeed,
+      daleBumbler,
+      moanaDeterminedExplorer,
       aladdinResoluteSwordsman,
       flotsamUrsulasBaby,
       jetsamUrsulasBaby,

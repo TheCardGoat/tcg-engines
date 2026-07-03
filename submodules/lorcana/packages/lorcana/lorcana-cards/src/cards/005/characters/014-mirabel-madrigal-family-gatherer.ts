@@ -3,7 +3,18 @@ import { mirabelMadrigalFamilyGathererI18n } from "./014-mirabel-madrigal-family
 
 export const mirabelMadrigalFamilyGatherer: CharacterCard = {
   id: "284",
-  canonicalId: "ci_284",
+  canonicalId: "ci_t20",
+  slug: "lorcana-ci_t20",
+  printings: [
+    {
+      id: "set5-014",
+      artId: "set5-014",
+      setCode: "set5",
+      collectorNumber: "14",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-014"],
   cardType: "character",
   name: "Mirabel Madrigal",
@@ -20,7 +31,7 @@ export const mirabelMadrigalFamilyGatherer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_79ca7c747dcb4e7189ed8bc3a6b14f8b",
-    tcgPlayer: 561210,
+    tcgPlayer: "561210",
   },
   text: [
     {

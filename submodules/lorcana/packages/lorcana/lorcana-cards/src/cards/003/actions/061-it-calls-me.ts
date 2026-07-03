@@ -4,6 +4,17 @@ import { itCallsMeI18n } from "./061-it-calls-me.i18n";
 export const itCallsMe: ActionCard = {
   id: "LAX",
   canonicalId: "ci_LAX",
+  slug: "lorcana-ci_LAX",
+  printings: [
+    {
+      id: "set3-061",
+      artId: "set3-061",
+      setCode: "set3",
+      collectorNumber: "61",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-061"],
   cardType: "action",
   name: "It Calls Me",
@@ -16,7 +27,7 @@ export const itCallsMe: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7a47845bdb01452e9faae9028fb22eeb",
-    tcgPlayer: 539078,
+    tcgPlayer: "539078",
   },
   text: "Draw a card. Then, choose up to 3 cards from chosen opponent's discard and shuffle them into their deck.",
   actionSubtype: "song",

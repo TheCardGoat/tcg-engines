@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { willOTheWispForestSpiritI18n } from "./047-will-o-the-wisp-forest-spirit.i18n";
 
 export const willOTheWispForestSpirit: CharacterCard = {
-  id: "SZs",
+  id: "TFi",
   canonicalId: "ci_SZs",
+  slug: "lorcana-ci_SZs",
+  printings: [
+    {
+      id: "set12-047",
+      artId: "set12-047",
+      setCode: "set12",
+      collectorNumber: "47",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-047"],
   cardType: "character",
   name: "Will o' the Wisp",
@@ -20,6 +31,7 @@ export const willOTheWispForestSpirit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4d61ccc401a942719bfcafde3a132578",
+    tcgPlayer: "690524",
   },
   text: [
     {

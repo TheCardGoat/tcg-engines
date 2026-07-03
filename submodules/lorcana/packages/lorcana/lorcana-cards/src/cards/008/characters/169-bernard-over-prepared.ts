@@ -4,6 +4,17 @@ import { bernardOverpreparedI18n } from "./169-bernard-over-prepared.i18n";
 export const bernardOverprepared: CharacterCard = {
   id: "xHO",
   canonicalId: "ci_xHO",
+  slug: "lorcana-ci_xHO",
+  printings: [
+    {
+      id: "set8-169",
+      artId: "set8-169",
+      setCode: "set8",
+      collectorNumber: "169",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-169"],
   cardType: "character",
   name: "Bernard",
@@ -20,7 +31,7 @@ export const bernardOverprepared: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_66c4a3962c704f18ac6b7131fa2662f1",
-    tcgPlayer: 631465,
+    tcgPlayer: "631465",
   },
   text: [
     {

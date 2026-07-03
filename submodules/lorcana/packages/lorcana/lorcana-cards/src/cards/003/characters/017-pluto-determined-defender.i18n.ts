@@ -22,13 +22,15 @@ export const plutoDeterminedDefenderI18n: Record<Languages, I18nProperties> = {
     version: "Entschlossener Verteidiger",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Pluto-Charaktere auszuspielen.)",
       },
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "WACHHUND",
+        title: "Wachhund",
         description: "Zu Beginn deines Zuges, entferne bis zu 3 Schaden von diesem Charakter.",
       },
     ],
@@ -38,13 +40,15 @@ export const plutoDeterminedDefenderI18n: Record<Languages, I18nProperties> = {
     version: "Protecteur déterminé",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Pluto.)",
       },
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il vous défie, un personnage adverse doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "CHIEN DE GARDE",
+        title: "Chien de garde",
         description: "Au début de votre tour, retirez jusqu'à 3 jetons Dommage de ce personnage.",
       },
     ],
@@ -54,13 +58,14 @@ export const plutoDeterminedDefenderI18n: Record<Languages, I18nProperties> = {
     version: "Guardia Risoluta",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Pluto.)",
       },
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "CANE DA GUARDIA",
+        title: "Cane da Guardia",
         description: "All'inizio del tuo turno, rimuovi fino a 3 danni da questo personaggio.",
       },
     ],

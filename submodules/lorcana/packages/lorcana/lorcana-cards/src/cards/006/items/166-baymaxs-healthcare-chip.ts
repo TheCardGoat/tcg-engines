@@ -4,6 +4,17 @@ import { baymaxsHealthcareChipI18n } from "./166-baymaxs-healthcare-chip.i18n";
 export const baymaxsHealthcareChip: ItemCard = {
   id: "zdZ",
   canonicalId: "ci_zdZ",
+  slug: "lorcana-ci_zdZ",
+  printings: [
+    {
+      id: "set6-166",
+      artId: "set6-166",
+      setCode: "set6",
+      collectorNumber: "166",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-166"],
   cardType: "item",
   name: "Baymax's Healthcare Chip",
@@ -16,7 +27,7 @@ export const baymaxsHealthcareChip: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_edfd3ef020dd41d5b1733088bdf2c991",
-    tcgPlayer: 587969,
+    tcgPlayer: "587969",
   },
   text: [
     {
@@ -69,19 +80,28 @@ export const baymaxsHealthcareChip: ItemCard = {
           options: [
             {
               type: "remove-damage",
-              amount: { type: "up-to", value: 1 },
+              amount: {
+                type: "up-to",
+                value: 1,
+              },
               target: "CHOSEN_CHARACTER",
             },
             {
               type: "remove-damage",
-              amount: { type: "up-to", value: 3 },
+              amount: {
+                type: "up-to",
+                value: 3,
+              },
               target: "CHOSEN_CHARACTER",
             },
           ],
         },
         else: {
           type: "remove-damage",
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           target: "CHOSEN_CHARACTER",
         },
       },

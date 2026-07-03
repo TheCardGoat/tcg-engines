@@ -17,7 +17,7 @@ export const stitchCarefreeSurferEnchantedI18n: Record<Languages, I18nProperties
     version: "Sorgloser Surfer",
     text: [
       {
-        title: "OHANA",
+        title: "Ohana",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens 2 weitere Charaktere im Spiel hast, darfst du 2 Karten ziehen.",
       },
@@ -39,7 +39,7 @@ export const stitchCarefreeSurferEnchantedI18n: Record<Languages, I18nProperties
     version: "Carefree Surfer",
     text: [
       {
-        title: "OHANA",
+        title: "Ohana",
         description:
           "When you play this character, if you have 2 or more other characters in play, you may draw 2 cards.",
       },

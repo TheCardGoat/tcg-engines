@@ -4,6 +4,17 @@ import { baymaxArmoredCompanionI18n } from "./157-baymax-armored-companion.i18n"
 export const baymaxArmoredCompanion: CharacterCard = {
   id: "w4v",
   canonicalId: "ci_w4v",
+  slug: "lorcana-ci_w4v",
+  printings: [
+    {
+      id: "set6-157",
+      artId: "set6-157",
+      setCode: "set6",
+      collectorNumber: "157",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-157"],
   cardType: "character",
   name: "Baymax",
@@ -20,7 +31,7 @@ export const baymaxArmoredCompanion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_982364cf0c5f42ee9ba82a335bf674b5",
-    tcgPlayer: 578165,
+    tcgPlayer: "578165",
   },
   text: [
     {
@@ -38,7 +49,10 @@ export const baymaxArmoredCompanion: CharacterCard = {
           type: "sequence",
           steps: [
             {
-              amount: { type: "up-to", value: 2 },
+              amount: {
+                type: "up-to",
+                value: 2,
+              },
               target: {
                 selector: "chosen",
                 count: 1,
@@ -79,7 +93,10 @@ export const baymaxArmoredCompanion: CharacterCard = {
           type: "sequence",
           steps: [
             {
-              amount: { type: "up-to", value: 2 },
+              amount: {
+                type: "up-to",
+                value: 2,
+              },
               target: {
                 selector: "chosen",
                 count: 1,

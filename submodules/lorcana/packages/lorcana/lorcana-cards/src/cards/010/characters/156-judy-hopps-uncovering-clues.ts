@@ -4,6 +4,17 @@ import { judyHoppsUncoveringCluesI18n } from "./156-judy-hopps-uncovering-clues.
 export const judyHoppsUncoveringClues: CharacterCard = {
   id: "Imt",
   canonicalId: "ci_Imt",
+  slug: "lorcana-ci_Imt",
+  printings: [
+    {
+      id: "set10-156",
+      artId: "set10-156",
+      setCode: "set10",
+      collectorNumber: "156",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-156"],
   cardType: "character",
   name: "Judy Hopps",
@@ -20,7 +31,7 @@ export const judyHoppsUncoveringClues: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_977a785a450a4621b0dcff4404592877",
-    tcgPlayer: 653916,
+    tcgPlayer: "653916",
   },
   text: [
     {

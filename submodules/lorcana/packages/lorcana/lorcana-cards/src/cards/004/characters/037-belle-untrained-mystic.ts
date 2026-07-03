@@ -4,6 +4,17 @@ import { belleUntrainedMysticI18n } from "./037-belle-untrained-mystic.i18n";
 export const belleUntrainedMystic: CharacterCard = {
   id: "1Mo",
   canonicalId: "ci_b5v",
+  slug: "lorcana-ci_b5v",
+  printings: [
+    {
+      id: "set4-037",
+      artId: "set4-037",
+      setCode: "set4",
+      collectorNumber: "37",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-037", "set9-039"],
   cardType: "character",
   name: "Belle",
@@ -20,7 +31,7 @@ export const belleUntrainedMystic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_53d3d0830c344ef08b076c3aada0afa6",
-    tcgPlayer: 649986,
+    tcgPlayer: "649986",
   },
   text: [
     {
@@ -46,7 +57,10 @@ export const belleUntrainedMystic: CharacterCard = {
         chooser: "CONTROLLER",
         effect: {
           type: "move-damage",
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           from: "CHOSEN_CHARACTER",
           to: "CHOSEN_OPPOSING_CHARACTER",
         },

@@ -17,7 +17,7 @@ export const rajahRoyalProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Königlicher Beschützer",
     text: [
       {
-        title: "WACHSAMER BLICK",
+        title: "Wachsamer Blick",
         description:
           "Wenn du keine Karten auf der Hand hast, können Charaktere, die 4 oder weniger kosten, diesen Charakter nicht herausfordern.",
       },
@@ -28,7 +28,7 @@ export const rajahRoyalProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Protecteur Royal",
     text: [
       {
-        title: "NE QUITTE PAS DES YEUX",
+        title: "Ne quitte pas des yeux",
         description:
           "Tant que vous n'avez aucune carte en main, ce personnage ne peut pas être défié par des personnages coûtant 4 ou moins.",
       },
@@ -39,7 +39,7 @@ export const rajahRoyalProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Protettore Reale",
     text: [
       {
-        title: "SGUARDO FERMO",
+        title: "Sguardo Fermo",
         description:
           "Mentre non hai carte in mano, questo personaggio non può essere sfidato da personaggi con costo 4 o inferiore.",
       },

@@ -4,6 +4,17 @@ import { mickeyMouseArtfulRogueI18n } from "./088-mickey-mouse-artful-rogue.i18n
 export const mickeyMouseArtfulRogue: CharacterCard = {
   id: "PiO",
   canonicalId: "ci_8IO",
+  slug: "lorcana-ci_8IO",
+  printings: [
+    {
+      id: "set1-088",
+      artId: "set1-088",
+      setCode: "set1",
+      collectorNumber: "88",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-088"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseArtfulRogue: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1a8604b7ba6c45e2bc8b32b0a70d08b5",
-    tcgPlayer: 510156,
+    tcgPlayer: "510156",
   },
   text: [
     {

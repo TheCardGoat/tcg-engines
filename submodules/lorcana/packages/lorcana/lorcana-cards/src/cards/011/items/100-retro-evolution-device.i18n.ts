@@ -15,9 +15,9 @@ export const retroEvolutionDeviceI18n: Record<Languages, I18nProperties> = {
     name: "Evolutions-Umkehr-Gerät",
     text: [
       {
-        title: "DINOSAURIERVERWANDLUNG, 1,",
+        title: "Dinosaurierverwandlung",
         description:
-          "Wähle und verbanne einen deiner Charaktere — Spiele einen Charakter, der bis zu 2 mehr als der verbannte Charakter kostet, kostenlos aus.",
+          "{E}, 1 {I}, Wähle und verbanne einen deiner Charaktere — Spiele einen Charakter, der bis zu 2 mehr als der verbannte Charakter kostet, kostenlos aus.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const retroEvolutionDeviceI18n: Record<Languages, I18nProperties> = {
     name: "Rétro-fusil à évolution",
     text: [
       {
-        title: "TRANSFORMER EN DINOSAURE, 1,",
+        title: "Transformer en dinosaure",
         description:
-          "Choisissez l'un de vos personnages et bannissez-le — Jouez gratuitement un personnage coûtant jusqu'à 2 de plus que le personnage banni.",
+          "{E}, 1 {I}, Choisissez l'un de vos personnages et bannissez-le — Jouez gratuitement un personnage coûtant jusqu'à 2 de plus que le personnage banni.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const retroEvolutionDeviceI18n: Record<Languages, I18nProperties> = {
     name: "Apparecchio Retroevolutore",
     text: [
       {
-        title: "TRASFORMARE IN DINOSAURO, 1,",
+        title: "Trasformare in Dinosauro",
         description:
-          "esilia un tuo personaggio a tua scelta — Gioca un personaggio con costo fino a 2 in più rispetto a quello del personaggio esiliato, gratis.",
+          "{E}, 1 {I}, esilia un tuo personaggio a tua scelta — Gioca un personaggio con costo fino a 2 in più rispetto a quello del personaggio esiliato, gratis.",
       },
     ],
   },

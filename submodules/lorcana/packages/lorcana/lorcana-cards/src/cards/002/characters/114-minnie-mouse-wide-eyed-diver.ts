@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMouseWideeyedDiverI18n } from "./114-minnie-mouse-wide-eyed-diver.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const minnieMouseWideeyedDiver: CharacterCard = {
   id: "8gH",
-  canonicalId: "ci_8gH",
+  canonicalId: "ci_OUg",
+  slug: "lorcana-ci_OUg",
+  printings: [
+    {
+      id: "set2-114",
+      artId: "set2-114",
+      setCode: "set2",
+      collectorNumber: "114",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-114"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -21,7 +33,7 @@ export const minnieMouseWideeyedDiver: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a79cd84bf7444d0f847f6ceb36c93f24",
-    tcgPlayer: 519169,
+    tcgPlayer: "519169",
   },
   text: [
     {

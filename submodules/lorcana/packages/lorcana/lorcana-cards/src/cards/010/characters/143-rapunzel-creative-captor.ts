@@ -4,6 +4,17 @@ import { rapunzelCreativeCaptorI18n } from "./143-rapunzel-creative-captor.i18n"
 export const rapunzelCreativeCaptor: CharacterCard = {
   id: "Gl7",
   canonicalId: "ci_Gl7",
+  slug: "lorcana-ci_Gl7",
+  printings: [
+    {
+      id: "set10-143",
+      artId: "set10-143",
+      setCode: "set10",
+      collectorNumber: "143",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-143"],
   cardType: "character",
   name: "Rapunzel",
@@ -20,7 +31,7 @@ export const rapunzelCreativeCaptor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_000a947aaa794fb098baed9d88b6fab1",
-    tcgPlayer: 659455,
+    tcgPlayer: "659455",
   },
   text: [
     {

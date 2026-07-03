@@ -3,7 +3,18 @@ import { scroogeMcduckShushAgentI18n } from "./089-scrooge-mcduck-shush-agent.i1
 
 export const scroogeMcduckShushAgent: CharacterCard = {
   id: "uUH",
-  canonicalId: "ci_uUH",
+  canonicalId: "ci_8Wc",
+  slug: "lorcana-ci_8Wc",
+  printings: [
+    {
+      id: "set10-089",
+      artId: "set10-089",
+      setCode: "set10",
+      collectorNumber: "89",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-089"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -20,7 +31,7 @@ export const scroogeMcduckShushAgent: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4572c32844ee48398f43a1c7aa86826d",
-    tcgPlayer: 659464,
+    tcgPlayer: "659464",
   },
   text: [
     {

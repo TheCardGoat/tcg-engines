@@ -7,14 +7,17 @@ export const gd01Mistral078: UnitCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "GD01-078",
-  externalId: "gundam:gd01-078",
-  slug: "mistral-gd01-078",
+  canonicalId: "GD01-078",
+  externalIds: { bandai: "gundam:gd01-078" },
+  slug: "mistral/gd01-078",
   displayName: "Mistral",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-078",
   printings: [
     {
       id: "GD01-078",
+      artId: "GD01-078",
+      setCode: "GD01",
       collectorNumber: "GD01-078",
       cardNumber: "GD01-078",
       set: {
@@ -29,6 +32,7 @@ export const gd01Mistral078: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-078"],
   selectedPrintingId: "GD01-078",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-078.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-078.webp?260424",

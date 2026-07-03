@@ -17,7 +17,7 @@ export const theQueenMirrorSeekerEpicI18n: Record<Languages, I18nProperties> = {
     version: "Spiegel-Sucherin",
     text: [
       {
-        title: "BERECHNEND UND EITEL",
+        title: "Berechnend und eitel",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du dir die obersten 3 Karten deines Decks anschauen und in beliebiger Reihenfolge zurücklegen.",
       },
@@ -28,7 +28,7 @@ export const theQueenMirrorSeekerEpicI18n: Record<Languages, I18nProperties> = {
     version: "Narcissique",
     text: [
       {
-        title: "CALCULATRICE ET VANITEUSE",
+        title: "Calculatrice et vaniteuse",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez regarder les 3 premières cartes de votre pioche, puis les remettre sur le dessus de votre pioche dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const theQueenMirrorSeekerEpicI18n: Record<Languages, I18nProperties> = {
     version: "Consultatrice di Specchi",
     text: [
       {
-        title: "CALCOLATRICE E VANITOSA",
+        title: "Calcolatrice e Vanitosa",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi guardare le prime 3 carte del tuo mazzo e rimetterle in cima al mazzo in qualsiasi ordine.",
       },

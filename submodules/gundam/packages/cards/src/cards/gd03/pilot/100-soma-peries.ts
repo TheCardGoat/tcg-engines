@@ -7,14 +7,17 @@ export const gd03SomaPeries100: PilotCard = {
   color: "white",
   traits: ["superpower bloc", "un", "super soldier"],
   id: "GD03-100",
-  externalId: "gundam:gd03-100",
-  slug: "soma-peries-gd03-100",
+  canonicalId: "GD03-100",
+  externalIds: { bandai: "gundam:gd03-100" },
+  slug: "soma-peries/gd03-100",
   displayName: "Soma Peries",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-100",
   printings: [
     {
       id: "GD03-100",
+      artId: "GD03-100",
+      setCode: "GD03",
       collectorNumber: "GD03-100",
       cardNumber: "GD03-100",
       set: {
@@ -30,6 +33,8 @@ export const gd03SomaPeries100: PilotCard = {
     },
     {
       id: "GD03-100_p1",
+      artId: "GD03-100_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-100_p1",
       cardNumber: "GD03-100",
       set: {
@@ -44,6 +49,7 @@ export const gd03SomaPeries100: PilotCard = {
       productName: "WORLD CHAMPIONSHIPS 26-27 Participation Pack 26-27 Vol.1",
     },
   ],
+  reprints: ["GD03-100", "GD03-100_p1"],
   selectedPrintingId: "GD03-100",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-100.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-100.webp?260424",

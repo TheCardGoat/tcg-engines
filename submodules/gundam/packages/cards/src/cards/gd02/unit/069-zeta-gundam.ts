@@ -7,14 +7,17 @@ export const gd02ZetaGundam069: UnitCard = {
   color: "white",
   traits: ["aeug"],
   id: "GD02-069",
-  externalId: "gundam:gd02-069",
-  slug: "zeta-gundam-gd02-069",
+  canonicalId: "GD02-069",
+  externalIds: { bandai: "gundam:gd02-069" },
+  slug: "zeta-gundam/gd02-069",
   displayName: "Zeta Gundam",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-069",
   printings: [
     {
       id: "GD02-069",
+      artId: "GD02-069",
+      setCode: "GD02",
       collectorNumber: "GD02-069",
       cardNumber: "GD02-069",
       set: {
@@ -30,6 +33,8 @@ export const gd02ZetaGundam069: UnitCard = {
     },
     {
       id: "GD02-069_p1",
+      artId: "GD02-069_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-069_p1",
       cardNumber: "GD02-069",
       set: {
@@ -45,6 +50,8 @@ export const gd02ZetaGundam069: UnitCard = {
     },
     {
       id: "GD02-069_p2",
+      artId: "GD02-069_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-069_p2",
       cardNumber: "GD02-069",
       set: {
@@ -59,6 +66,7 @@ export const gd02ZetaGundam069: UnitCard = {
       productName: "Newtype Challenge 2025 Mission 2",
     },
   ],
+  reprints: ["GD02-069", "GD02-069_p1", "GD02-069_p2"],
   selectedPrintingId: "GD02-069",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-069.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-069.webp?260424",

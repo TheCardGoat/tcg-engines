@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { rush } from "../../../helpers/abilities/rush";
 import { duckworthGhostButlerI18n } from "./047-duckworth-ghost-butler.i18n";
+
+import { rush } from "../../../helpers/abilities/rush";
 
 export const duckworthGhostButler: CharacterCard = {
   id: "8zy",
   canonicalId: "ci_8zy",
+  slug: "lorcana-ci_8zy",
+  printings: [
+    {
+      id: "set10-047",
+      artId: "set10-047",
+      setCode: "set10",
+      collectorNumber: "47",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-047"],
   cardType: "character",
   name: "Duckworth",
@@ -21,7 +33,7 @@ export const duckworthGhostButler: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_8fc9a082fe1d49d0a81867c9665b00b2",
-    tcgPlayer: 658331,
+    tcgPlayer: "658331",
   },
   text: [
     {

@@ -18,13 +18,13 @@ export const theThunderquackI18n: Record<Languages, I18nProperties> = {
     name: "Der Donnerquack",
     text: [
       {
-        title: "SELBSTJUSTIZ",
+        title: "Selbstjustiz",
         description: "Alle gegnerischen Charaktere erhalten die Klassifizierung Schurke.",
       },
       {
-        title: "LAGE DES LANDES",
+        title: "Lage des Landes",
         description:
-          "— Falls in diesem Zug ein Charakter durch eine Herausforderung verbannt wurde, sammelst du 1 Legende.",
+          "{E} — Falls in diesem Zug ein Charakter durch eine Herausforderung verbannt wurde, sammelst du 1 Legende.",
       },
     ],
   },
@@ -32,13 +32,13 @@ export const theThunderquackI18n: Record<Languages, I18nProperties> = {
     name: "Le Myster Quack",
     text: [
       {
-        title: "LA JUSTICE DES JUSTICIERS",
+        title: "La justice des justiciers",
         description: "Tous les personnages adverses gagnent la classification Méchant.",
       },
       {
-        title: "RECONNAISSANCE DU TERRAIN",
+        title: "Reconnaissance du terrain",
         description:
-          "— Si un personnage a été banni via un défi ce tour-ci, gagnez 1 éclat de Lore.",
+          "{E} — Si un personnage a été banni via un défi ce tour-ci, gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -46,13 +46,13 @@ export const theThunderquackI18n: Record<Languages, I18nProperties> = {
     name: "Il Thunderquack",
     text: [
       {
-        title: "GIUSTIZIA DEL VIGILANTE",
+        title: "Giustizia del Vigilante",
         description: "Tutti i personaggi avversari ottengono la classificazione Cattivo.",
       },
       {
-        title: "GIRO DI RICOGNIZIONE",
+        title: "Giro di Ricognizione",
         description:
-          "— Se un personaggio è stato esiliato in una sfida in questo turno, ottieni 1 leggenda.",
+          "{E} — Se un personaggio è stato esiliato in una sfida in questo turno, ottieni 1 leggenda.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { rudyGrooveDisrupterI18n } from "./174-rudy-groove-disrupter.i18n";
 export const rudyGrooveDisrupter: CharacterCard = {
   id: "SOG",
   canonicalId: "ci_SOG",
+  slug: "lorcana-ci_SOG",
+  printings: [
+    {
+      id: "set5-174",
+      artId: "set5-174",
+      setCode: "set5",
+      collectorNumber: "174",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-174"],
   cardType: "character",
   name: "Rudy",
@@ -21,7 +32,7 @@ export const rudyGrooveDisrupter: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_74b0d91817074173a048a42d0835275d",
-    tcgPlayer: 559791,
+    tcgPlayer: "559791",
   },
   classifications: ["Storyborn"],
   i18n: rudyGrooveDisrupterI18n,

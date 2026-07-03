@@ -6,14 +6,17 @@ export const gd0113thTacticalTestingSector130: BaseCard = {
   type: "base",
   traits: ["academy", "stronghold"],
   id: "GD01-130",
-  externalId: "gundam:gd01-130",
-  slug: "13th-tactical-testing-sector-gd01-130",
+  canonicalId: "GD01-130",
+  externalIds: { bandai: "gundam:gd01-130" },
+  slug: "13th-tactical-testing-sector/gd01-130",
   displayName: "13th Tactical Testing Sector",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-130",
   printings: [
     {
       id: "GD01-130",
+      artId: "GD01-130",
+      setCode: "GD01",
       collectorNumber: "GD01-130",
       cardNumber: "GD01-130",
       set: {
@@ -28,6 +31,7 @@ export const gd0113thTacticalTestingSector130: BaseCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-130"],
   selectedPrintingId: "GD01-130",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-130.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-130.webp?260424",

@@ -6,14 +6,17 @@ export const exbExBase002: BaseCard = {
   type: "base",
   traits: [],
   id: "EXB-002",
-  externalId: "gundam:exb-002",
-  slug: "ex-base-exb-002",
+  canonicalId: "EXB-002",
+  externalIds: { bandai: "gundam:exb-002" },
+  slug: "ex-base/exb-002",
   displayName: "EX Base",
   set: { code: "ST09", name: "Destiny Ignition [ST09]", packageId: "616009" },
   printNumber: "EXB-002",
   printings: [
     {
       id: "EXB-002",
+      artId: "EXB-002",
+      setCode: "ST09",
       collectorNumber: "EXB-002",
       cardNumber: "EXB-002",
       set: {
@@ -29,6 +32,8 @@ export const exbExBase002: BaseCard = {
     },
     {
       id: "EXB-002_p1",
+      artId: "EXB-002_p1",
+      setCode: "ST09",
       collectorNumber: "EXB-002_p1",
       cardNumber: "EXB-002",
       set: {
@@ -43,6 +48,7 @@ export const exbExBase002: BaseCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["EXB-002", "EXB-002_p1"],
   selectedPrintingId: "EXB-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exb/EXB-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXB-002.webp?260424",

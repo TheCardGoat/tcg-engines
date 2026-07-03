@@ -16,9 +16,9 @@ export const gadgetHackwrenchCreativeThinkerI18n: Record<Languages, I18nProperti
     version: "Kreativer Kopf",
     text: [
       {
-        title: "GEISTESBLITZ",
+        title: "Geistesblitz",
         description:
-          "Jedes Mal, wenn du einen Gegenstand ausspielst, erhält dieser Charakter in diesem Zug +1.",
+          "Jedes Mal, wenn du einen Gegenstand ausspielst, erhält dieser Charakter in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const gadgetHackwrenchCreativeThinkerI18n: Record<Languages, I18nProperti
     version: "Esprit créatif",
     text: [
       {
-        title: "REMUE-MÉNINGES",
+        title: "Remue-méninges",
         description:
-          "Chaque fois que vous jouez un objet, ce personnage gagne +1 pour le reste de ce tour.",
+          "Chaque fois que vous jouez un objet, ce personnage gagne +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const gadgetHackwrenchCreativeThinkerI18n: Record<Languages, I18nProperti
     version: "Pensatrice Creativa",
     text: [
       {
-        title: "SCERVELLARSI",
+        title: "Scervellarsi",
         description:
-          "Ogni volta che giochi un oggetto, questo personaggio riceve +1 per questo turno.",
+          "Ogni volta che giochi un oggetto, questo personaggio riceve +1 {L} per questo turno.",
       },
     ],
   },

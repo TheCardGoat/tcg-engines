@@ -4,6 +4,17 @@ import { jimHawkinsThrillSeekerI18n } from "./110-jim-hawkins-thrill-seeker.i18n
 export const jimHawkinsThrillSeeker: CharacterCard = {
   id: "n5A",
   canonicalId: "ci_n5A",
+  slug: "lorcana-ci_n5A",
+  printings: [
+    {
+      id: "set3-110",
+      artId: "set3-110",
+      setCode: "set3",
+      collectorNumber: "110",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-110"],
   cardType: "character",
   name: "Jim Hawkins",
@@ -21,7 +32,7 @@ export const jimHawkinsThrillSeeker: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_bdeabb102e8a43af9b4e1699df256503",
-    tcgPlayer: 536113,
+    tcgPlayer: "536113",
   },
   classifications: ["Dreamborn", "Hero"],
   i18n: jimHawkinsThrillSeekerI18n,

@@ -33,17 +33,24 @@
     "check-types": "tsc --noEmit",
     "format": "vp fmt ./src",
     "lint": "vp lint ./src",
-    "test": "bun test"
+    "test": "vp test run src"
   },
   "dependencies": {
     "@floating-ui/dom": "catalog:",
+    "@mantine/core": "9.0.0",
+    "@mantine/hooks": "9.0.0",
+    "@tabler/icons-react": "catalog:",
     "@tcg/simulator-contract": "link:../simulator-contract",
+    "@tcg/simulator-runtime": "link:../simulator-runtime",
+    "canvas-confetti": "^1.9.4",
     "motion": "catalog:"
   },
   "devDependencies": {
     "@storybook/react-vite": "10.4.2",
     "@tailwindcss/vite": "4.1.18",
     "@tcg/typescript-config": "link:../typescript-config",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "react": "catalog:",

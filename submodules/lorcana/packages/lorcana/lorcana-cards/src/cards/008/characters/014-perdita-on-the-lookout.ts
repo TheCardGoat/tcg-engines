@@ -4,6 +4,17 @@ import { perditaOnTheLookoutI18n } from "./014-perdita-on-the-lookout.i18n";
 export const perditaOnTheLookout: CharacterCard = {
   id: "MrJ",
   canonicalId: "ci_MrJ",
+  slug: "lorcana-ci_MrJ",
+  printings: [
+    {
+      id: "set8-014",
+      artId: "set8-014",
+      setCode: "set8",
+      collectorNumber: "14",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-014"],
   cardType: "character",
   name: "Perdita",
@@ -20,7 +31,7 @@ export const perditaOnTheLookout: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c033341068524d02a75e3ff4d9c9f3e8",
-    tcgPlayer: 631358,
+    tcgPlayer: "631358",
   },
   text: [
     {

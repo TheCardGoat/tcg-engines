@@ -20,10 +20,10 @@ export const gazelleBalladSingerI18n: Record<Languages, I18nProperties> = {
     version: "Balladensängerin",
     text: [
       {
-        title: "Singen 7",
+        title: "<Singen> 7 (Die Kosten dieses Charakters gelten als 7 für das Singen von Liedern.)",
       },
       {
-        title: "PUBLIKUMSLIEBLING",
+        title: "Publikumsliebling",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Liedkarte aus deinem Ablagestapel wählen und als oberste Karte auf dein Deck legen.",
       },
@@ -34,10 +34,11 @@ export const gazelleBalladSingerI18n: Record<Languages, I18nProperties> = {
     version: "Chanteuse de slow",
     text: [
       {
-        title: "Mélomane 7",
+        title:
+          "<Mélomane> 7 (Ce personnage est considéré comme ayant un coût de 7 pour chanter des chansons.)",
       },
       {
-        title: "FAVORITE DU PUBLIC",
+        title: "Favorite du public",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez placer sur votre pioche une carte Chanson de votre défausse.",
       },
@@ -48,10 +49,10 @@ export const gazelleBalladSingerI18n: Record<Languages, I18nProperties> = {
     version: "Cantante di Ballate",
     text: [
       {
-        title: "Melodioso 7",
+        title: "<Melodioso> 7",
       },
       {
-        title: "AMATA DALLA FOLLA",
+        title: "Amata dalla Folla",
         description:
           "Quando giochi questo personaggio, puoi mettere una carta canzone dai tuoi scarti in cima al tuo mazzo.",
       },

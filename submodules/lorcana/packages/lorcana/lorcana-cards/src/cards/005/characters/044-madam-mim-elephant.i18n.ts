@@ -22,12 +22,12 @@ export const madamMimElephantI18n: Record<Languages, I18nProperties> = {
     version: "Elefant",
     text: [
       {
-        title: "EIN KLEINES SPIELCHEN",
+        title: "Ein kleines Spielchen",
         description:
           "Wenn du diesen Charakter ausspielst, musst du ihn verbannen oder einen deiner anderen Charaktere wählen und zurück auf deine Hand nehmen.",
       },
       {
-        title: "RAFFINIERTER SCHACHZUG",
+        title: "Raffinierter Schachzug",
         description:
           "Zu Beginn deines Zuges, darfst du bis zu 2 Schadensmarker von diesem Charakter zu einem gegnerischen Charakter deiner Wahl verschieben.",
       },
@@ -38,12 +38,12 @@ export const madamMimElephantI18n: Record<Languages, I18nProperties> = {
     version: "En éléphante",
     text: [
       {
-        title: "UN PETIT JEU",
+        title: "Un petit jeu",
         description:
           "Lorsque vous jouez ce personnage, bannissez-le ou renvoyez l'un de vos autres personnages en jeu dans votre main.",
       },
       {
-        title: "COUP EN DOUCE",
+        title: "Coup en douce",
         description:
           "Au début de votre tour, vous pouvez déplacer jusqu'à 2 dommages de ce personnage vers un personnage adverse.",
       },
@@ -54,12 +54,12 @@ export const madamMimElephantI18n: Record<Languages, I18nProperties> = {
     version: "Elefante",
     text: [
       {
-        title: "UN GIOCHETTO",
+        title: "Un Giochetto",
         description:
           "Quando giochi questo personaggio, esilialo o riprendi in mano un tuo altro personaggio a tua scelta.",
       },
       {
-        title: "MOSSA SUBDOLA",
+        title: "Mossa Subdola",
         description:
           "All'inizio del tuo turno, puoi spostare fino a 2 segnalini danno da questo personaggio a un personaggio avversario a tua scelta.",
       },

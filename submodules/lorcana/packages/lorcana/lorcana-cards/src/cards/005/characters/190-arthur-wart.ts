@@ -4,6 +4,17 @@ import { arthurWartI18n } from "./190-arthur-wart.i18n";
 export const arthurWart: CharacterCard = {
   id: "2AA",
   canonicalId: "ci_2AA",
+  slug: "lorcana-ci_2AA",
+  printings: [
+    {
+      id: "set5-190",
+      artId: "set5-190",
+      setCode: "set5",
+      collectorNumber: "190",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-190"],
   cardType: "character",
   name: "Arthur",
@@ -21,7 +32,7 @@ export const arthurWart: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_93993a91205c4c6bb310fd17b0417b7f",
-    tcgPlayer: 561298,
+    tcgPlayer: "561298",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: arthurWartI18n,

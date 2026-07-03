@@ -1,4 +1,7 @@
-import { structuredCards as cyberpunkStructuredCards } from "@tcg/cyberpunk-cards";
+import {
+  getCyberpunkCanonicalForCardId,
+  structuredCards as cyberpunkStructuredCards,
+} from "@tcg/cyberpunk-cards";
 import {
   validateCyberpunkDeck,
   type CyberpunkDeckValidationEntry,
@@ -70,6 +73,16 @@ export const cyberpunkServerAdapter: GameAdapter = {
       // to match the cross-game CardSummary contract.
       colors: card.color ? [card.color] : [],
     };
+  },
+
+  /**
+   * Resolve any Cyberpunk runtime public id (per-set/spoiler id, printing id
+   * that merged onto a retail canonical) to the merged canonical id. The
+   * atelier helper already applies the slug-merge canonicalization; returns
+   * null for truly-unknown ids so callers fall back to the raw publicId.
+   */
+  getCanonicalCardId(publicId: string): string | null {
+    return getCyberpunkCanonicalForCardId(publicId);
   },
 
   getRuntimeFingerprint() {

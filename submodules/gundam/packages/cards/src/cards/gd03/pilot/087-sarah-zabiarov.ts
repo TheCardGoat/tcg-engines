@@ -7,14 +7,17 @@ export const gd03SarahZabiarov087: PilotCard = {
   color: "blue",
   traits: ["titans", "jupitris", "newtype"],
   id: "GD03-087",
-  externalId: "gundam:gd03-087",
-  slug: "sarah-zabiarov-gd03-087",
+  canonicalId: "GD03-087",
+  externalIds: { bandai: "gundam:gd03-087" },
+  slug: "sarah-zabiarov/gd03-087",
   displayName: "Sarah Zabiarov",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-087",
   printings: [
     {
       id: "GD03-087",
+      artId: "GD03-087",
+      setCode: "GD03",
       collectorNumber: "GD03-087",
       cardNumber: "GD03-087",
       set: {
@@ -30,6 +33,8 @@ export const gd03SarahZabiarov087: PilotCard = {
     },
     {
       id: "GD03-087_p1",
+      artId: "GD03-087_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-087_p1",
       cardNumber: "GD03-087",
       set: {
@@ -45,6 +50,8 @@ export const gd03SarahZabiarov087: PilotCard = {
     },
     {
       id: "GD03-087_p2",
+      artId: "GD03-087_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-087_p2",
       cardNumber: "GD03-087",
       set: {
@@ -59,6 +66,7 @@ export const gd03SarahZabiarov087: PilotCard = {
       productName: "Store Tournament Winner Pack 04",
     },
   ],
+  reprints: ["GD03-087", "GD03-087_p1", "GD03-087_p2"],
   selectedPrintingId: "GD03-087",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-087.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-087.webp?260424",

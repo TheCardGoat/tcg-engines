@@ -6,9 +6,9 @@ export const duckburgFunsosFunzoneI18n: Record<Languages, I18nProperties> = {
     version: "Funso’s Funzone",
     text: [
       {
-        title: "WHERE FUN IS IN THE ZONE",
+        title: "Where Fun Is in the Zone",
         description:
-          "Whenever a character quests while here, you pay 2 less for the next character you play this turn.",
+          "Whenever a character quests while here, you pay 2 {I} less for the next character you play this turn.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const duckburgFunsosFunzoneI18n: Record<Languages, I18nProperties> = {
     version: "Fonsos Funpark",
     text: [
       {
-        title: "FÜR SPASS, WIE ICH IHN MAG",
+        title: "Für Spaß, wie ich ihn mag",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere an diesem Ort erkundet, zahlst du 2 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn einer deiner Charaktere an diesem Ort erkundet, zahlst du 2 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const duckburgFunsosFunzoneI18n: Record<Languages, I18nProperties> = {
     version: "Au pays des jeux de Funso",
     text: [
       {
-        title: "FUNSO FAIT DES HEUREUX",
+        title: "Funso fait des heureux",
         description:
-          "Chaque fois qu'un personnage sur ce lieu est envoyé à l'aventure, le prochain personnage que vous jouez ce tour-ci vous coûte 2 de moins.",
+          "Chaque fois qu'un personnage sur ce lieu est envoyé à l'aventure, le prochain personnage que vous jouez ce tour-ci vous coûte 2 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const duckburgFunsosFunzoneI18n: Record<Languages, I18nProperties> = {
     version: "Casa dello Spasso di Spassi",
     text: [
       {
-        title: "LA CASA DELLO SPASSO",
+        title: "La Casa dello Spasso",
         description:
-          "Ogni volta che un personaggio va all'avventura mentre si trova in questo luogo, paga 2 in meno per giocare il tuo prossimo personaggio per questo turno.",
+          "Ogni volta che un personaggio va all'avventura mentre si trova in questo luogo, paga 2 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

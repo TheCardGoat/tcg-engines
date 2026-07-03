@@ -20,12 +20,12 @@ export const vixeyForestFriendI18n: Record<Languages, I18nProperties> = {
     version: "Freundin des Waldes",
     text: [
       {
-        title: "KOMMST DU?",
+        title: "Kommst du?",
         description:
-          "Falls du einen Cap-Charakter im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Falls du einen Cap-Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const vixeyForestFriendI18n: Record<Languages, I18nProperties> = {
     version: "Amie de la forêt",
     text: [
       {
-        title: "CELLE QUI T'ATTEND",
+        title: "Celle qui t'attend",
         description:
-          "Jouer ce personnage vous coûte 1 de moins si vous avez un personnage Rox en jeu.",
+          "Jouer ce personnage vous coûte 1 {I} de moins si vous avez un personnage Rox en jeu.",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const vixeyForestFriendI18n: Record<Languages, I18nProperties> = {
     version: "Amica del Bosco",
     text: [
       {
-        title: "FARTI NOTARE",
+        title: "Farti Notare",
         description:
-          "Se hai in gioco un personaggio chiamato Red, paga 1 meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio chiamato Red, paga 1 {I} meno per giocare questo personaggio.",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
     ],
   },

@@ -5,10 +5,9 @@ import type {
   LorcanaSimulatorView,
 } from "@/features/simulator/model/contracts.js";
 import {
-  getLorcanaFixture,
-  LORCANA_SIMULATOR_FIXTURES,
+  isKnownLorcanaFixtureId,
+  loadLorcanaFixtureOrDefault,
 } from "@/features/simulator-devtools/fixtures";
-import { decodeInlineFixtureParam, deserializeInlineFixture } from "./browser-fixture";
 import {
   LORCANA_HARNESS_DEFAULT_BROWSER_TRANSPORT,
   LORCANA_HARNESS_DEFAULT_FIXTURE_ID,
@@ -37,7 +36,7 @@ export function normalizeFixtureId(value: string | null): string {
     return LORCANA_HARNESS_DEFAULT_FIXTURE_ID;
   }
 
-  return candidate in LORCANA_SIMULATOR_FIXTURES ? candidate : LORCANA_HARNESS_DEFAULT_FIXTURE_ID;
+  return isKnownLorcanaFixtureId(candidate) ? candidate : LORCANA_HARNESS_DEFAULT_FIXTURE_ID;
 }
 
 function normalizeTransportMode(value: string | null): BrowserTransportConfig["mode"] {
@@ -75,19 +74,35 @@ export function resolveBrowserTransportConfig(url: URL): BrowserTransportConfig 
   });
 }
 
-export function resolveBrowserRouteState(url: URL): LorcanaBrowserRouteState {
+export async function resolveBrowserRouteState(url: URL): Promise<LorcanaBrowserRouteState> {
   const browserTransport = resolveBrowserTransportConfig(url);
   const view = normalizeView(url.searchParams.get("view"));
   const fixtureId = normalizeFixtureId(url.searchParams.get("fixtureId"));
-  const parsedFixture = decodeInlineFixtureParam(url.searchParams.get("fixture"));
-  const fixture = parsedFixture
-    ? deserializeInlineFixture(parsedFixture)
-    : getLorcanaFixture(fixtureId);
+  const encodedFixture = url.searchParams.get("fixture");
+
+  if (encodedFixture) {
+    const { decodeInlineFixtureParam, deserializeInlineFixture } =
+      await import("./browser-fixture");
+    const parsedFixture = decodeInlineFixtureParam(encodedFixture);
+
+    if (parsedFixture) {
+      const fixture = deserializeInlineFixture(parsedFixture);
+
+      return {
+        browserTransport,
+        fixture,
+        fixtureId: parsedFixture.id ?? fixture.id ?? fixtureId,
+        view,
+      };
+    }
+  }
+
+  const fixture = await loadLorcanaFixtureOrDefault(fixtureId);
 
   return {
     browserTransport,
     fixture,
-    fixtureId: parsedFixture?.id ?? fixture.id ?? fixtureId,
+    fixtureId: fixture.id ?? fixtureId,
     view,
   };
 }

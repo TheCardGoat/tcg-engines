@@ -6,14 +6,17 @@ export const tGundamBarbatos4thForm017: UnitCard = {
   type: "unit",
   traits: ["tekkadan"],
   id: "T-017",
-  externalId: "gundam:t-017",
-  slug: "gundam-barbatos-4th-form-t-017",
+  canonicalId: "T-017",
+  externalIds: { bandai: "gundam:t-017" },
+  slug: "gundam-barbatos-4th-form/t-017",
   displayName: "Gundam Barbatos 4th Form",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "T-017",
   printings: [
     {
       id: "T-017",
+      artId: "T-017",
+      setCode: "GD03",
       collectorNumber: "T-017",
       cardNumber: "T-017",
       set: {
@@ -29,6 +32,8 @@ export const tGundamBarbatos4thForm017: UnitCard = {
     },
     {
       id: "T-017_p1",
+      artId: "T-017_p1",
+      setCode: "PC01A",
       collectorNumber: "T-017_p1",
       cardNumber: "T-017",
       set: {
@@ -44,6 +49,7 @@ export const tGundamBarbatos4thForm017: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam IRON-BLOODED ORPHANS-[PC01A]",
     },
   ],
+  reprints: ["T-017", "T-017_p1"],
   selectedPrintingId: "T-017",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-017.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-017.webp?260424",

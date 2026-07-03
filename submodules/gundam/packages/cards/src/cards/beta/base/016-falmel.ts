@@ -6,14 +6,17 @@ export const betaFalmel016: BaseCard = {
   type: "base",
   traits: ["zeon", "battleship"],
   id: "ST03-016_p2",
-  externalId: "gundam:st03-016_p2",
-  slug: "falmel-st03-016-p2",
+  canonicalId: "ST03-016",
+  externalIds: { bandai: "gundam:st03-016_p2" },
+  slug: "falmel/st03-016",
   displayName: "Falmel",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "ST03-016_p2",
   printings: [
     {
       id: "ST03-016",
+      artId: "ST03-016",
+      setCode: "ST03",
       collectorNumber: "ST03-016",
       cardNumber: "ST03-016",
       set: {
@@ -29,6 +32,8 @@ export const betaFalmel016: BaseCard = {
     },
     {
       id: "ST03-016_p1",
+      artId: "ST03-016_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-016_p1",
       cardNumber: "ST03-016",
       set: {
@@ -44,6 +49,8 @@ export const betaFalmel016: BaseCard = {
     },
     {
       id: "ST03-016_p2",
+      artId: "ST03-016_p2",
+      setCode: "BETA",
       collectorNumber: "ST03-016_p2",
       cardNumber: "ST03-016",
       set: {
@@ -58,6 +65,7 @@ export const betaFalmel016: BaseCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST03-016", "ST03-016_p1", "ST03-016_p2"],
   selectedPrintingId: "ST03-016_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST03-016_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-016_p2.webp?260424",

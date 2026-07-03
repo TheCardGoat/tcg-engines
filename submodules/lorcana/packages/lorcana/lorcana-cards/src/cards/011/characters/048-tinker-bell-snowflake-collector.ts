@@ -3,7 +3,18 @@ import { tinkerBellSnowflakeCollectorI18n } from "./048-tinker-bell-snowflake-co
 
 export const tinkerBellSnowflakeCollector: CharacterCard = {
   id: "AqR",
-  canonicalId: "ci_AqR",
+  canonicalId: "ci_GMw",
+  slug: "lorcana-ci_GMw",
+  printings: [
+    {
+      id: "set11-048",
+      artId: "set11-048",
+      setCode: "set11",
+      collectorNumber: "48",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-048"],
   cardType: "character",
   name: "Tinker Bell",
@@ -20,7 +31,7 @@ export const tinkerBellSnowflakeCollector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_52cd7cdc36254654b13e484e2dbc989e",
-    tcgPlayer: 673332,
+    tcgPlayer: "673332",
   },
   text: [
     {

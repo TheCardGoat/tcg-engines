@@ -17,7 +17,7 @@ export const simbaRightfulHeirI18n: Record<Languages, I18nProperties> = {
     version: "Rechtmäßiger Thronfolger",
     text: [
       {
-        title: "ICH WEISS, WAS MEINE PFLICHT IST",
+        title: "Ich weiß, was meine Pflicht ist",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 1 Legende.",
       },
@@ -39,7 +39,7 @@ export const simbaRightfulHeirI18n: Record<Languages, I18nProperties> = {
     version: "Rightful Heir",
     text: [
       {
-        title: "I KNOW WHAT I HAVE TO DO",
+        title: "I Know What I Have To Do",
         description:
           "During your turn, whenever this character banishes another character in a challenge, you gain 1 lore.",
       },

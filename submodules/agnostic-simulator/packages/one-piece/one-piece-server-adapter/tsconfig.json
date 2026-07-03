@@ -2,6 +2,7 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.test.ts"],
   "compilerOptions": {
+    "types": ["node", "@types/bun"],
     "target": "ES2023",
     "module": "ESNext",
     "moduleResolution": "bundler",
@@ -12,9 +13,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@tcg/op-cards": ["../../../../one-piece-simulator/packages/cards/src/index.ts"],
-      "@tcg/op-engine": ["../../../../one-piece-simulator/packages/engine/src/index.ts"],
-      "@tcg/op-types": ["../../../../one-piece-simulator/packages/types/src/index.ts"],
+      "@tcg/op-cards": ["../../../../one-piece/packages/cards/src/index.ts"],
+      "@tcg/op-engine": ["../../../../one-piece/packages/engine/src/index.ts"],
+      "@tcg/op-types": ["../../../../one-piece/packages/types/src/index.ts"],
       "@tcg/protocol": ["../../protocol/src/index.ts"],
       "@tcg/shared": ["../../shared/src/index.ts"]
     }

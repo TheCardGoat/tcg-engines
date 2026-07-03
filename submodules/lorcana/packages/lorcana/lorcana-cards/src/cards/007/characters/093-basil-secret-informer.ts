@@ -4,6 +4,17 @@ import { basilSecretInformerI18n } from "./093-basil-secret-informer.i18n";
 export const basilSecretInformer: CharacterCard = {
   id: "10Q",
   canonicalId: "ci_10Q",
+  slug: "lorcana-ci_10Q",
+  printings: [
+    {
+      id: "set7-093",
+      artId: "set7-093",
+      setCode: "set7",
+      collectorNumber: "93",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-093"],
   cardType: "character",
   name: "Basil",
@@ -20,7 +31,7 @@ export const basilSecretInformer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_06d0c264e2e34e248fcce5ce2e0d3efe",
-    tcgPlayer: 619456,
+    tcgPlayer: "619456",
   },
   text: [
     {

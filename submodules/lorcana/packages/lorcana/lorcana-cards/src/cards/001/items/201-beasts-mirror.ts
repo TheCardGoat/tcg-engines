@@ -4,6 +4,17 @@ import { beastsMirrorI18n } from "./201-beasts-mirror.i18n";
 export const beastsMirror: ItemCard = {
   id: "g9u",
   canonicalId: "ci_j5a",
+  slug: "lorcana-ci_j5a",
+  printings: [
+    {
+      id: "set1-201",
+      artId: "set1-201",
+      setCode: "set1",
+      collectorNumber: "201",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-201", "set9-203"],
   cardType: "item",
   name: "Beast’s Mirror",
@@ -16,12 +27,12 @@ export const beastsMirror: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d23121463b6b482ab4af10faa55ba4ba",
-    tcgPlayer: 650135,
+    tcgPlayer: "650135",
   },
   text: [
     {
-      title: "SHOW ME",
-      description: "3, 3 {I} — If you have no cards in your hand, draw a card.",
+      title: "Show Me",
+      description: "{E}, 3 {I} — If you have no cards in your hand, draw a card.",
     },
   ],
   abilities: [

@@ -4,6 +4,17 @@ import { chipRangerLeaderI18n } from "./012-chip-ranger-leader.i18n";
 export const chipRangerLeader: CharacterCard = {
   id: "kcI",
   canonicalId: "ci_kcI",
+  slug: "lorcana-ci_kcI",
+  printings: [
+    {
+      id: "set6-012",
+      artId: "set6-012",
+      setCode: "set6",
+      collectorNumber: "12",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-012"],
   cardType: "character",
   name: "Chip",
@@ -20,7 +31,7 @@ export const chipRangerLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_68660de4a81d4426acdb185e3ff4813a",
-    tcgPlayer: 578169,
+    tcgPlayer: "578169",
   },
   text: [
     {

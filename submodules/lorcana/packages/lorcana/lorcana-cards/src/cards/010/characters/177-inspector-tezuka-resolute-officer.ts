@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { inspectorTezukaResoluteOfficerI18n } from "./177-inspector-tezuka-resolute-officer.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const inspectorTezukaResoluteOfficer: CharacterCard = {
   id: "CfV",
   canonicalId: "ci_CfV",
+  slug: "lorcana-ci_CfV",
+  printings: [
+    {
+      id: "set10-177",
+      artId: "set10-177",
+      setCode: "set10",
+      collectorNumber: "177",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-177"],
   cardType: "character",
   name: "Inspector Tezuka",
@@ -21,7 +33,7 @@ export const inspectorTezukaResoluteOfficer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0033f4eb44a14ebea87dbdca205d9247",
-    tcgPlayer: 659404,
+    tcgPlayer: "659404",
   },
   text: "Bodyguard",
   classifications: ["Storyborn", "Ally", "Detective"],

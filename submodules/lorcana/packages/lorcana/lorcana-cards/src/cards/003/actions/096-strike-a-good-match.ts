@@ -4,6 +4,17 @@ import { strikeAGoodMatchI18n } from "./096-strike-a-good-match.i18n";
 export const strikeAGoodMatch: ActionCard = {
   id: "Uzr",
   canonicalId: "ci_vCE",
+  slug: "lorcana-ci_vCE",
+  printings: [
+    {
+      id: "set3-096",
+      artId: "set3-096",
+      setCode: "set3",
+      collectorNumber: "96",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-096", "set11-094"],
   cardType: "action",
   name: "Strike a Good Match",
@@ -16,7 +27,7 @@ export const strikeAGoodMatch: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5423fd35369b41ebbfff99eeb1928fc4",
-    tcgPlayer: 674693,
+    tcgPlayer: "674693",
   },
   text: "Draw 2 cards, then choose and discard a card.",
   actionSubtype: "song",

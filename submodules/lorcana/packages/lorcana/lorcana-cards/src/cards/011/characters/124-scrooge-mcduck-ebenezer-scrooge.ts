@@ -4,6 +4,17 @@ import { scroogeMcduckEbenezerScroogeI18n } from "./124-scrooge-mcduck-ebenezer-
 export const scroogeMcduckEbenezerScrooge: CharacterCard = {
   id: "3lL",
   canonicalId: "ci_3lL",
+  slug: "lorcana-ci_3lL",
+  printings: [
+    {
+      id: "set11-124",
+      artId: "set11-124",
+      setCode: "set11",
+      collectorNumber: "124",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-124"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -20,7 +31,7 @@ export const scroogeMcduckEbenezerScrooge: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a06d887649d146a89f4c56939b02ad13",
-    tcgPlayer: 676214,
+    tcgPlayer: "676214",
   },
   text: [
     {

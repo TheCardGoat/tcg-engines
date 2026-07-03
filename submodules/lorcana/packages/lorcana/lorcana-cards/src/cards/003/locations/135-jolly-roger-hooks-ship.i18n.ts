@@ -21,12 +21,12 @@ export const jollyRogerHooksShipI18n: Record<Languages, I18nProperties> = {
     version: "Hooks Schiff",
     text: [
       {
-        title: "VORWÄRTS, IHR LAPPEN!",
+        title: "Vorwärts, ihr Lappen!",
         description:
-          "Charaktere an diesem Ort erhalten Rasant. (Die Charaktere können im selben Zug herausfordern, in dem sie ausgespielt werden.)",
+          "Charaktere an diesem Ort erhalten <Rasant>. (Die Charaktere können im selben Zug herausfordern, in dem sie ausgespielt werden.)",
       },
       {
-        title: "ALLE AN DECK!",
+        title: "Alle an Deck!",
         description: "Deine Piratinnen und Piraten können sich kostenlos zu diesem Ort bewegen.",
       },
     ],
@@ -36,12 +36,12 @@ export const jollyRogerHooksShipI18n: Record<Languages, I18nProperties> = {
     version: "Navire du Capitaine Crochet",
     text: [
       {
-        title: "JE VEUX L'AVOIR MORT OU VIF!",
+        title: "Je veux l'avoir mort ou vif!",
         description:
-          "Les personnages sur ce lieu gagnent Charge. (Ces personnages peuvent défier le tour où ils sont joués.)",
+          "Les personnages sur ce lieu gagnent <Charge>. (Ces personnages peuvent défier le tour où ils sont joués.)",
       },
       {
-        title: "TOUT LE MONDE À SON POSTE!",
+        title: "Tout le monde à son poste!",
         description: "Vos personnages Pirate peuvent être déplacés gratuitement sur ce lieu.",
       },
     ],
@@ -51,19 +51,13 @@ export const jollyRogerHooksShipI18n: Record<Languages, I18nProperties> = {
     version: "Nave di Uncino",
     text: [
       {
-        title: "ANIMO, MANIGOLDI!",
-      },
-      {
-        title: "I",
+        title: "Animo, Manigoldi!",
         description:
-          "personaggi ottengono Lesto mentre si trovano in questo luogo. (Possono sfidare nel turno in cui vengono giocati.)",
+          "I personaggi ottengono <Lesto> mentre si trovano in questo luogo. (Possono sfidare nel turno in cui vengono giocati.)",
       },
       {
-        title: "TUTTI IN COPERTA!",
-      },
-      {
-        title: "I",
-        description: "tuoi personaggi Pirata possono spostarsi in questo luogo gratis.",
+        title: "Tutti in Coperta!",
+        description: "I tuoi personaggi Pirata possono spostarsi in questo luogo gratis.",
       },
     ],
   },

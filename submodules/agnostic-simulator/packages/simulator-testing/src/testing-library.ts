@@ -92,6 +92,10 @@ class TestingLibraryDomElement implements SimulatorDomElement {
     await this.user.click(element);
   }
 
+  async clickJs(): Promise<void> {
+    fireEvent.click(this.firstElement());
+  }
+
   async getAttribute(name: string): Promise<string | null> {
     return this.firstElement().getAttribute(name);
   }

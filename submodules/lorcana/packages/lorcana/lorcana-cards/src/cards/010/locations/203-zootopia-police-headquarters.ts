@@ -4,6 +4,17 @@ import { zootopiaPoliceHeadquartersI18n } from "./203-zootopia-police-headquarte
 export const zootopiaPoliceHeadquarters: LocationCard = {
   id: "hOa",
   canonicalId: "ci_hOa",
+  slug: "lorcana-ci_hOa",
+  printings: [
+    {
+      id: "set10-203",
+      artId: "set10-203",
+      setCode: "set10",
+      collectorNumber: "203",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-203"],
   cardType: "location",
   name: "Zootopia",
@@ -20,7 +31,7 @@ export const zootopiaPoliceHeadquarters: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e86d177fb9f24d4683e8f639595038d1",
-    tcgPlayer: 659415,
+    tcgPlayer: "659415",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jasmineSteadyStrategistI18n } from "./171-jasmine-steady-strategist.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const jasmineSteadyStrategist: CharacterCard = {
   id: "iaq",
   canonicalId: "ci_UgP",
+  slug: "lorcana-ci_UgP",
+  printings: [
+    {
+      id: "set8-171",
+      artId: "set8-171",
+      setCode: "set8",
+      collectorNumber: "171",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-171"],
   cardType: "character",
   name: "Jasmine",
@@ -21,7 +33,7 @@ export const jasmineSteadyStrategist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a8b66e0b4abe48f58f9c47dc25593197",
-    tcgPlayer: 633098,
+    tcgPlayer: "633098",
   },
   text: [
     {

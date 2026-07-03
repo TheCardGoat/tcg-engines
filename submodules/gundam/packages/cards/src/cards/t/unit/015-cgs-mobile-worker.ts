@@ -6,14 +6,17 @@ export const tCgsMobileWorker015: UnitCard = {
   type: "unit",
   traits: ["tekkadan"],
   id: "T-015",
-  externalId: "gundam:t-015",
-  slug: "cgs-mobile-worker-t-015",
+  canonicalId: "T-015",
+  externalIds: { bandai: "gundam:t-015" },
+  slug: "cgs-mobile-worker/t-015",
   displayName: "CGS Mobile Worker",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "T-015",
   printings: [
     {
       id: "T-015",
+      artId: "T-015",
+      setCode: "GD03",
       collectorNumber: "T-015",
       cardNumber: "T-015",
       set: {
@@ -29,6 +32,8 @@ export const tCgsMobileWorker015: UnitCard = {
     },
     {
       id: "T-015_p1",
+      artId: "T-015_p1",
+      setCode: "PC01A",
       collectorNumber: "T-015_p1",
       cardNumber: "T-015",
       set: {
@@ -44,6 +49,7 @@ export const tCgsMobileWorker015: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam IRON-BLOODED ORPHANS-[PC01A]",
     },
   ],
+  reprints: ["T-015", "T-015_p1"],
   selectedPrintingId: "T-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-015.webp?260424",

@@ -4,6 +4,17 @@ import { hiroHamadaRoboticsProdigyI18n } from "./145-hiro-hamada-robotics-prodig
 export const hiroHamadaRoboticsProdigy: CharacterCard = {
   id: "YrC",
   canonicalId: "ci_YrC",
+  slug: "lorcana-ci_YrC",
+  printings: [
+    {
+      id: "set6-145",
+      artId: "set6-145",
+      setCode: "set6",
+      collectorNumber: "145",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-145"],
   cardType: "character",
   name: "Hiro Hamada",
@@ -20,7 +31,7 @@ export const hiroHamadaRoboticsProdigy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4aa4ce170d6840e393a1ffd6c44d96ee",
-    tcgPlayer: 578190,
+    tcgPlayer: "578190",
   },
   text: [
     {

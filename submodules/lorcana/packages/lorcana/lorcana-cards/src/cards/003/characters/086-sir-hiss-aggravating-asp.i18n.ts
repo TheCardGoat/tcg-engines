@@ -9,16 +9,16 @@ export const sirHissAggravatingAspI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Sir Hiss",
     version: "Geifernde Giftschlange",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Triste Sire",
     version: "Aspic envenimant",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Sir Biss",
     version: "Aspide Esasperante",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

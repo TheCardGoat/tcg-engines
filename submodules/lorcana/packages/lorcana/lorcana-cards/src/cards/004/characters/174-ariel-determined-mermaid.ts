@@ -4,6 +4,17 @@ import { arielDeterminedMermaidI18n } from "./174-ariel-determined-mermaid.i18n"
 export const arielDeterminedMermaid: CharacterCard = {
   id: "Z4g",
   canonicalId: "ci_uu8",
+  slug: "lorcana-ci_uu8",
+  printings: [
+    {
+      id: "set4-174",
+      artId: "set4-174",
+      setCode: "set4",
+      collectorNumber: "174",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-174", "set9-196"],
   cardType: "character",
   name: "Ariel",
@@ -20,7 +31,7 @@ export const arielDeterminedMermaid: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8e9017b673fa48039cb919188a8dae7a",
-    tcgPlayer: 650129,
+    tcgPlayer: "650129",
   },
   text: [
     {

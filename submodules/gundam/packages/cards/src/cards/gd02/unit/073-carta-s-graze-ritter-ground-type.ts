@@ -7,14 +7,17 @@ export const gd02CartaSGrazeRitterGroundType073: UnitCard = {
   color: "white",
   traits: ["gjallarhorn"],
   id: "GD02-073",
-  externalId: "gundam:gd02-073",
-  slug: "carta-s-graze-ritter-ground-type-gd02-073",
+  canonicalId: "GD02-073",
+  externalIds: { bandai: "gundam:gd02-073" },
+  slug: "carta-s-graze-ritter-ground-type/gd02-073",
   displayName: "Carta's Graze Ritter (Ground Type)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-073",
   printings: [
     {
       id: "GD02-073",
+      artId: "GD02-073",
+      setCode: "GD02",
       collectorNumber: "GD02-073",
       cardNumber: "GD02-073",
       set: {
@@ -30,6 +33,8 @@ export const gd02CartaSGrazeRitterGroundType073: UnitCard = {
     },
     {
       id: "GD02-073_p1",
+      artId: "GD02-073_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-073_p1",
       cardNumber: "GD02-073",
       set: {
@@ -44,6 +49,7 @@ export const gd02CartaSGrazeRitterGroundType073: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-073", "GD02-073_p1"],
   selectedPrintingId: "GD02-073",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-073.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-073.webp?260424",

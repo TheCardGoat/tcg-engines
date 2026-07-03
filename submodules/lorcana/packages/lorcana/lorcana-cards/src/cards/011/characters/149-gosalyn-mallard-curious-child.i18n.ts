@@ -17,7 +17,7 @@ export const gosalynMallardCuriousChildI18n: Record<Languages, I18nProperties> =
     version: "Neugieriges Kind",
     text: [
       {
-        title: "IST JA IRRE",
+        title: "Ist ja irre",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const gosalynMallardCuriousChildI18n: Record<Languages, I18nProperties> =
     version: "Jeune curieuse",
     text: [
       {
-        title: "ÉQUIPEMENT DE POINTE",
+        title: "Équipement de pointe",
         description:
           "Lorsque vous jouez ce personnage, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Objet parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const gosalynMallardCuriousChildI18n: Record<Languages, I18nProperties> =
     version: "Bambina Curiosa",
     text: [
       {
-        title: "CHE SCHIANTO",
+        title: "Che Schianto",
         description:
           "Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

@@ -4,6 +4,17 @@ import { pepaMadrigalWeatherMakerI18n } from "./053-pepa-madrigal-weather-maker.
 export const pepaMadrigalWeatherMaker: CharacterCard = {
   id: "Vvx",
   canonicalId: "ci_Vvx",
+  slug: "lorcana-ci_Vvx",
+  printings: [
+    {
+      id: "set4-053",
+      artId: "set4-053",
+      setCode: "set4",
+      collectorNumber: "53",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-053"],
   cardType: "character",
   name: "Pepa Madrigal",
@@ -20,7 +31,7 @@ export const pepaMadrigalWeatherMaker: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_8f5bdfa86b31418bb75a251ce2ebd313",
-    tcgPlayer: 548205,
+    tcgPlayer: "548205",
   },
   text: [
     {
@@ -65,7 +76,9 @@ export const pepaMadrigalWeatherMaker: CharacterCard = {
                   type: "at-location",
                 },
               },
-              target: { ref: "previous-target" },
+              target: {
+                ref: "previous-target",
+              },
             },
           ],
         },

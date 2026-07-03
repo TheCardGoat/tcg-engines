@@ -9,16 +9,16 @@ export const kitCloudkickerSpunkyBearCubI18n: Record<Languages, I18nProperties> 
   de: {
     name: "Kit Wolkenflitzer",
     version: "Furchtloser Bärenjunge",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "Kit",
     version: "Ourson intrépide",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Kit Nuvoletta",
     version: "Intrepido Orsetto",
-    text: "Protetto",
+    text: "<Protetto>",
   },
 };

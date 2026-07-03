@@ -4,6 +4,17 @@ import { hydrosIceTitanI18n } from "./039-hydros-ice-titan.i18n";
 export const hydrosIceTitan: CharacterCard = {
   id: "vgI",
   canonicalId: "ci_vgI",
+  slug: "lorcana-ci_vgI",
+  printings: [
+    {
+      id: "set3-039",
+      artId: "set3-039",
+      setCode: "set3",
+      collectorNumber: "39",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-039"],
   cardType: "character",
   name: "Hydros",
@@ -20,7 +31,7 @@ export const hydrosIceTitan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fabf6b8091ab49a1b2dccff0b1bb66ab",
-    tcgPlayer: 537614,
+    tcgPlayer: "537614",
   },
   text: [
     {

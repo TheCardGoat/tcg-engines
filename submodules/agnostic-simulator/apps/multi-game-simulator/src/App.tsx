@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { GameSlug } from "@tcg/simulator-contract";
-import { fixtures } from "./simulator/fixtures";
 import { findMountedSimulatorRoute } from "./simulator/mountedSimulators";
-import { isGameSlug } from "./simulator/games";
-import { normalizeRouterBasename } from "./router-paths";
+import { getGameDefaultIndexPath, isGameSlug } from "./simulator/games";
+import { normalizeRouterBasename } from "./routes/router-paths.ts";
 import GameIndex from "./components/GameIndex";
-import GameFixturePage from "./components/GameFixturePage";
 import { MountedBrowserSimulator } from "./components/MountedBrowserSimulator";
 import AnimationFixturesPage from "./components/AnimationFixturesPage";
 
@@ -32,6 +30,19 @@ function parseGameSlug(pathValue: string): GameSlug | null {
   }
 }
 
+function trimTrailingSlash(pathValue: string): string {
+  return pathValue.length > 1 && pathValue.endsWith("/") ? pathValue.slice(0, -1) : pathValue;
+}
+
+function isExternalNavigationTarget(to: string): boolean {
+  try {
+    const url = new URL(to);
+    return url.origin !== window.location.origin;
+  } catch {
+    return false;
+  }
+}
+
 function isAnimationFixturePath(pathValue: string): boolean {
   if (pathValue === "/animation-fixtures") {
     return true;
@@ -41,8 +52,30 @@ function isAnimationFixturePath(pathValue: string): boolean {
   return basePath !== "/" && pathValue === `${basePath}/animation-fixtures`;
 }
 
+interface NavigateOptions {
+  replace?: boolean;
+}
+
 export interface AppProps {
   initialPath?: string;
+}
+
+function GameIndexRedirect({
+  to,
+  onNavigate,
+}: {
+  to: string;
+  onNavigate: (path: string, options?: NavigateOptions) => void;
+}) {
+  useEffect(() => {
+    onNavigate(to, { replace: true });
+  }, [onNavigate, to]);
+
+  return (
+    <main className="mx-auto flex min-h-svh w-full max-w-[1200px] items-center justify-center p-6">
+      <p className="text-sm font-semibold text-[var(--muted)]">Opening visual fixtures...</p>
+    </main>
+  );
 }
 
 export default function App({ initialPath }: AppProps) {
@@ -52,13 +85,21 @@ export default function App({ initialPath }: AppProps) {
 
   const gameSlug = useMemo(() => parseGameSlug(path), [path]);
 
-  const gameFixtures = useMemo(
-    () => (gameSlug ? fixtures.filter((f) => f.gameSlug === gameSlug) : []),
-    [gameSlug],
-  );
+  const navigate = useCallback((to: string, options: NavigateOptions = {}) => {
+    if (isExternalNavigationTarget(to)) {
+      if (options.replace) {
+        window.location.replace(to);
+      } else {
+        window.location.assign(to);
+      }
+      return;
+    }
 
-  const navigate = useCallback((to: string) => {
-    window.history.pushState({}, "", to);
+    if (options.replace) {
+      window.history.replaceState({}, "", to);
+    } else {
+      window.history.pushState({}, "", to);
+    }
     setPath(getPath());
     window.scrollTo(0, 0);
   }, []);
@@ -70,7 +111,7 @@ export default function App({ initialPath }: AppProps) {
   }, []);
 
   if (path === "/" || path === "") {
-    return <GameIndex fixtures={fixtures} onNavigate={navigate} />;
+    return <GameIndex onNavigate={navigate} />;
   }
 
   if (isAnimationFixturePath(path)) {
@@ -88,7 +129,15 @@ export default function App({ initialPath }: AppProps) {
   }
 
   if (gameSlug) {
-    return <GameFixturePage gameSlug={gameSlug} fixtures={gameFixtures} onNavigate={navigate} />;
+    const defaultIndexPath = getGameDefaultIndexPath(gameSlug);
+    const normalizedPath = trimTrailingSlash(path);
+    if (
+      defaultIndexPath &&
+      normalizedPath === `/${gameSlug}` &&
+      defaultIndexPath !== normalizedPath
+    ) {
+      return <GameIndexRedirect to={defaultIndexPath} onNavigate={navigate} />;
+    }
   }
 
   return (

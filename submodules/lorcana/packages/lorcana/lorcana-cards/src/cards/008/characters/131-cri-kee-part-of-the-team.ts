@@ -4,6 +4,17 @@ import { crikeePartOfTheTeamI18n } from "./131-cri-kee-part-of-the-team.i18n";
 export const crikeePartOfTheTeam: CharacterCard = {
   id: "2w3",
   canonicalId: "ci_2w3",
+  slug: "lorcana-ci_2w3",
+  printings: [
+    {
+      id: "set8-131",
+      artId: "set8-131",
+      setCode: "set8",
+      collectorNumber: "131",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-131"],
   cardType: "character",
   name: "Cri-Kee",
@@ -20,7 +31,7 @@ export const crikeePartOfTheTeam: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_084eb569ca02425791bf38993a74f23f",
-    tcgPlayer: 631436,
+    tcgPlayer: "631436",
   },
   text: [
     {

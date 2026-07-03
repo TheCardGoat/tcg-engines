@@ -16,7 +16,7 @@ export const donaldDuckAlongForTheRideEpicI18n: Record<Languages, I18nProperties
     version: "Mit auf der Reise",
     text: [
       {
-        title: "ICH BRECHE DURCH!",
+        title: "Ich breche durch!",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen.",
       },
@@ -27,7 +27,7 @@ export const donaldDuckAlongForTheRideEpicI18n: Record<Languages, I18nProperties
     version: "Se laisse embarquer",
     text: [
       {
-        title: "ATTENTION, J'ARRIVE!",
+        title: "Attention, j'arrive!",
         description: "Lorsque vous jouez ce personnage, vous pouvez choisir un objet et le bannir.",
       },
     ],
@@ -37,7 +37,7 @@ export const donaldDuckAlongForTheRideEpicI18n: Record<Languages, I18nProperties
     version: "Che Si Lascia Trasportare",
     text: [
       {
-        title: "FATE LARGO!",
+        title: "Fate Largo!",
         description: "Quando giochi questo personaggio, puoi esiliare un oggetto a tua scelta.",
       },
     ],

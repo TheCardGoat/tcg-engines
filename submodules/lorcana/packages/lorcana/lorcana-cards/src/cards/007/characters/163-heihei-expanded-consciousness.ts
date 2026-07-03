@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { heiheiExpandedConsciousnessI18n } from "./163-heihei-expanded-consciousness.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { resist } from "../../../helpers/abilities/resist";
 
 export const heiheiExpandedConsciousness: CharacterCard = {
   id: "MiH",
   canonicalId: "ci_MiH",
+  slug: "lorcana-ci_MiH",
+  printings: [
+    {
+      id: "set7-163",
+      artId: "set7-163",
+      setCode: "set7",
+      collectorNumber: "163",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-163"],
   cardType: "character",
   name: "Heihei",
@@ -22,7 +34,7 @@ export const heiheiExpandedConsciousness: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f424db642c4340f7a412e29c1bcde568",
-    tcgPlayer: 619500,
+    tcgPlayer: "619500",
   },
   text: [
     {

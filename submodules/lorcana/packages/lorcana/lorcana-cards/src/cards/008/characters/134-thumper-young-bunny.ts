@@ -4,6 +4,17 @@ import { thumperYoungBunnyI18n } from "./134-thumper-young-bunny.i18n";
 export const thumperYoungBunny: CharacterCard = {
   id: "tI0",
   canonicalId: "ci_tI0",
+  slug: "lorcana-ci_tI0",
+  printings: [
+    {
+      id: "set8-134",
+      artId: "set8-134",
+      setCode: "set8",
+      collectorNumber: "134",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-134"],
   cardType: "character",
   name: "Thumper",
@@ -20,7 +31,7 @@ export const thumperYoungBunny: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_def9163ddaf740d6820cbc2df3fddbf3",
-    tcgPlayer: 631438,
+    tcgPlayer: "631438",
   },
   text: [
     {

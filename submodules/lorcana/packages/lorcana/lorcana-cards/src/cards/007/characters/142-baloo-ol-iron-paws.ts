@@ -4,6 +4,17 @@ import { balooOlIronPawsI18n } from "./142-baloo-ol-iron-paws.i18n";
 export const balooOlIronPaws: CharacterCard = {
   id: "ye2",
   canonicalId: "ci_ye2",
+  slug: "lorcana-ci_ye2",
+  printings: [
+    {
+      id: "set7-142",
+      artId: "set7-142",
+      setCode: "set7",
+      collectorNumber: "142",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-142"],
   cardType: "character",
   name: "Baloo",
@@ -20,12 +31,12 @@ export const balooOlIronPaws: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_aded94a6d9d84b958d8e1b56f83af565",
-    tcgPlayer: 618325,
+    tcgPlayer: "618325",
   },
   text: [
     {
-      title: "FIGHT LIKE A BEAR",
-      description: "Your characters with 7 {S} or more can't be dealt damage.",
+      title: "FIGHT LIKE",
+      description: "A BEAR Your characters with 7 {S} or more can't be dealt damage.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

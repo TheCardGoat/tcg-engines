@@ -17,7 +17,7 @@ export const simbaRightfulKingI18n: Record<Languages, I18nProperties> = {
     version: "Rechtmäßiger König",
     text: [
       {
-        title: "TRIUMPHALE HALTUNG",
+        title: "Triumphale Haltung",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, wähle einen gegnerischen Charakter. Er kann in seinem nächsten Zug nicht herausfordern.",
       },
@@ -28,7 +28,7 @@ export const simbaRightfulKingI18n: Record<Languages, I18nProperties> = {
     version: "Roi légitime",
     text: [
       {
-        title: "POSE TRIOMPHANTE",
+        title: "Pose triomphante",
         description:
           "Chaque fois que ce personnage en bannit un autre via un défi durant votre tour, choisissez un personnage adverse, il ne pourra pas défier durant son prochain tour.",
       },
@@ -39,7 +39,7 @@ export const simbaRightfulKingI18n: Record<Languages, I18nProperties> = {
     version: "Sovrano Legittimo",
     text: [
       {
-        title: "POSA TRIONFALE",
+        title: "Posa Trionfale",
         description:
           "Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, un personaggio avversario a tua scelta non può sfidare durante il suo prossimo turno.",
       },

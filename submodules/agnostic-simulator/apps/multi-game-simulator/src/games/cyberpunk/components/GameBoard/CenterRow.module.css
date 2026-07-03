@@ -135,7 +135,6 @@
 
 .resolvingProgramCard {
   width: 100%;
-  aspect-ratio: 5 / 7;
   filter: drop-shadow(0 0 10px rgb(245 230 66 / 48%));
   pointer-events: auto;
 }

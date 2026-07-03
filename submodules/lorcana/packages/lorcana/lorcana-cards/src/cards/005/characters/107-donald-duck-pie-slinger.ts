@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { donaldDuckPieSlingerI18n } from "./107-donald-duck-pie-slinger.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const donaldDuckPieSlinger: CharacterCard = {
-  id: "17X",
+  id: "ZiJ",
   canonicalId: "ci_gl4",
+  slug: "lorcana-ci_gl4",
+  printings: [
+    {
+      id: "set5-107",
+      artId: "set5-107",
+      setCode: "set5",
+      collectorNumber: "107",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-107"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,8 +31,8 @@ export const donaldDuckPieSlinger: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_306fb0ac65b44f289a2cbacac51ba9fe",
-    tcgPlayer: 559716,
+    lorcast: "crd_27e379eda1c04eabbf3be9fc19cda671",
+    tcgPlayer: "668573",
   },
   text: [
     {

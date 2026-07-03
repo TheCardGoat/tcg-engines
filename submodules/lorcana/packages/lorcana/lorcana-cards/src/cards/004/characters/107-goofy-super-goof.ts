@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goofySuperGoofI18n } from "./107-goofy-super-goof.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const goofySuperGoof: CharacterCard = {
   id: "FBH",
   canonicalId: "ci_EA0",
+  slug: "lorcana-ci_EA0",
+  printings: [
+    {
+      id: "set4-107",
+      artId: "set4-107",
+      setCode: "set4",
+      collectorNumber: "107",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-107"],
   cardType: "character",
   name: "Goofy",
@@ -20,7 +32,7 @@ export const goofySuperGoof: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3088ee50256240d0b22c045f593df9a8",
-    tcgPlayer: 550542,
+    tcgPlayer: "550542",
   },
   text: [
     {

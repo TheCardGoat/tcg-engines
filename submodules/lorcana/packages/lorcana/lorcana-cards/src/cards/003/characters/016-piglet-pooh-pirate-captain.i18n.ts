@@ -17,9 +17,9 @@ export const pigletPoohPirateCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Puuhs Piratenkapitän",
     text: [
       {
-        title: "UND ICH BIN DER KAPITÄN!",
+        title: "Und ich bin der Kapitän!",
         description:
-          "Solange du mindestens 2 weitere Charaktere im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens 2 weitere Charaktere im Spiel hast, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const pigletPoohPirateCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Capitaine pirate de Winnie",
     text: [
       {
-        title: "ET JE SERAI LE CAPITAINE!",
+        title: "Et je serai le capitaine!",
         description:
-          "Tant que vous avez au moins 2 autres personnages en jeu, ce personnage gagne +2.",
+          "Tant que vous avez au moins 2 autres personnages en jeu, ce personnage gagne +2 {L}.",
       },
     ],
   },
@@ -39,8 +39,9 @@ export const pigletPoohPirateCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Capitano del Pirata Pooh",
     text: [
       {
-        title: "E IO SONO IL CAPITANO!",
-        description: "Mentre hai altri 2 o più personaggi in gioco, questo personaggio riceve +2.",
+        title: "E Io Sono il Capitano!",
+        description:
+          "Mentre hai altri 2 o più personaggi in gioco, questo personaggio riceve +2 {L}.",
       },
     ],
   },

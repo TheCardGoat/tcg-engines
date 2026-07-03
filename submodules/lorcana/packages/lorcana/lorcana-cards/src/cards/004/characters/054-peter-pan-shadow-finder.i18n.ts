@@ -22,14 +22,14 @@ export const peterPanShadowFinderI18n: Record<Languages, I18nProperties> = {
     version: "Schattenfinder",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "FLIEGEN NATÜRLICH",
-        description: "Deine anderen Charaktere mit Wendig erhalten Rasant.",
+        title: "Fliegen natürlich",
+        description: "Deine anderen Charaktere mit <Wendig> erhalten <Rasant>.",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const peterPanShadowFinderI18n: Record<Languages, I18nProperties> = {
     version: "Trouveur d'ombre",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "EN VOLANT, BIEN SÛR!",
-        description: "Vos autres personnages avec Insaisissable gagnent Charge.",
+        title: "En volant, bien sûr!",
+        description: "Vos autres personnages avec <Insaisissable> gagnent <Charge>.",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const peterPanShadowFinderI18n: Record<Languages, I18nProperties> = {
     version: "Cercatore di Ombre",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "VOLANDO!",
-        description: "I tuoi altri personaggi con Sfuggente ottengono Lesto.",
+        title: "Volando!",
+        description: "I tuoi altri personaggi con <Sfuggente> ottengono <Lesto>.",
       },
     ],
   },

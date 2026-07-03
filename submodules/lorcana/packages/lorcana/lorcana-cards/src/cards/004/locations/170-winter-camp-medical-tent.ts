@@ -4,6 +4,17 @@ import { winterCampMedicalTentI18n } from "./170-winter-camp-medical-tent.i18n";
 export const winterCampMedicalTent: LocationCard = {
   id: "oLN",
   canonicalId: "ci_oLN",
+  slug: "lorcana-ci_oLN",
+  printings: [
+    {
+      id: "set4-170",
+      artId: "set4-170",
+      setCode: "set4",
+      collectorNumber: "170",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-170"],
   cardType: "location",
   name: "Winter Camp",
@@ -20,7 +31,7 @@ export const winterCampMedicalTent: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0d7681a6ac944b5aa5606946cff8ebd5",
-    tcgPlayer: 550616,
+    tcgPlayer: "550616",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const winterCampMedicalTent: LocationCard = {
         type: "sequence",
         steps: [
           {
-            amount: { type: "up-to", value: 2 },
+            amount: {
+              type: "up-to",
+              value: 2,
+            },
             target: {
               selector: "all",
               count: 1,
@@ -64,7 +78,10 @@ export const winterCampMedicalTent: LocationCard = {
               },
             },
             then: {
-              amount: { type: "up-to", value: 2 },
+              amount: {
+                type: "up-to",
+                value: 2,
+              },
               target: {
                 selector: "all",
                 count: 1,

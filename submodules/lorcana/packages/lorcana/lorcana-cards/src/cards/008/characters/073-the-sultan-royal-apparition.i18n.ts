@@ -21,12 +21,11 @@ export const theSultanRoyalApparitionI18n: Record<Languages, I18nProperties> = {
     version: "Königliche Erscheinung",
     text: [
       {
-        title: "Verschwinden",
-        description:
-          "(Jedes Mal, wenn dieser Charakter von einer Aktion einer gegnerischen Person ausgewählt wird, verbanne ihn.)",
+        title:
+          "<Verschwinden> (Jedes Mal, wenn dieser Charakter von einer Aktion einer gegnerischen Person ausgewählt wird, verbanne ihn.)",
       },
       {
-        title: "SOUVERÄNE PRÄSENZ",
+        title: "Souveräne Präsenz",
         description:
           "Jedes Mal, wenn eine deiner Illusionen erkundet, erschöpfe einen gegnerischen Charakter deiner Wahl.",
       },
@@ -37,11 +36,11 @@ export const theSultanRoyalApparitionI18n: Record<Languages, I18nProperties> = {
     version: "Apparition royale",
     text: [
       {
-        title: "Dissipation",
-        description: "(Lorsqu'un adversaire choisit ce personnage avec une action, bannissez-le.)",
+        title:
+          "<Dissipation> (Lorsqu'un adversaire choisit ce personnage avec une action, bannissez-le.)",
       },
       {
-        title: "PRÉSENCE IMPÉRIEUSE",
+        title: "Présence impérieuse",
         description:
           "Chaque fois que l'un de vos personnages Illusion est envoyé à l'aventure, choisissez un personnage adverse et épuisez-le.",
       },
@@ -52,11 +51,11 @@ export const theSultanRoyalApparitionI18n: Record<Languages, I18nProperties> = {
     version: "Apparizione Reale",
     text: [
       {
-        title: "Svanire",
-        description: "(Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
+        title:
+          "<Svanire> (Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
       },
       {
-        title: "PRESENZA AUTOREVOLE",
+        title: "Presenza Autorevole",
         description:
           "Ogni volta che uno dei tuoi personaggi Illusione va all'avventura, impegna un personaggio avversario a tua scelta.",
       },

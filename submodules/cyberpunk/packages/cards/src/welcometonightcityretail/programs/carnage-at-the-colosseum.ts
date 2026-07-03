@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailCarnageAtTheColosseum = {
+export const welcomeToNightCityRetailCarnageAtTheColosseum = defineCyberpunkCard({
   id: "81fb66ee-b054-4f78-b0c9-7d2c9ff53435",
-  externalId: "cb-carnage-at-the-colosseum",
   slug: "carnage-at-the-colosseum",
-  name: "Carnage at the Colosseum",
-  displayName: "Carnage at the Colosseum",
   rulesText:
     "Play this Program for -1 €$ for each friendly Gig with 8+ value, to a minimum of 1 €$.\nDefeat a rival Unit with less power than a friendly Unit.",
+  name: "Carnage at the Colosseum",
+  displayName: "Carnage at the Colosseum",
+  canonicalId: "carnage-at-the-colosseum",
   color: "red",
   classifications: ["Braindance", "Extreme"],
   set: {
@@ -15,21 +16,6 @@ export const welcomeToNightCityRetailCarnageAtTheColosseum = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "030",
-  printings: [
-    {
-      id: "36128749-4cb1-440d-b4de-4fd463cc2f5c",
-      collectorNumber: "030",
-      setCode: "welcometonightcityretail",
-      rarity: "Common",
-    },
-    {
-      id: "171b21b1-90d0-4d3b-a060-740c413b7bf2",
-      collectorNumber: "β030",
-      setCode: "welcometonightcitybeta",
-      rarity: "Common",
-    },
-  ],
-  selectedPrintingId: "36128749-4cb1-440d-b4de-4fd463cc2f5c",
   artist: "Matías Bergara",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/030.webp",
   rarity: "Common",
@@ -37,7 +23,6 @@ export const welcomeToNightCityRetailCarnageAtTheColosseum = {
   hasSellTag: true,
   ram: 3,
   timingTriggers: ["play"],
-  keywords: [],
   type: "program",
   cost: 6,
   power: null,
@@ -87,4 +72,4 @@ export const welcomeToNightCityRetailCarnageAtTheColosseum = {
     },
     min: 1,
   },
-} satisfies StructuredCardDefinition;
+}) satisfies ProgramCardDefinition;

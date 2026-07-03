@@ -4,6 +4,17 @@ import { beOurGuestI18n } from "./025-be-our-guest.i18n";
 export const beOurGuest: ActionCard = {
   id: "nXA",
   canonicalId: "ci_XYl",
+  slug: "lorcana-ci_XYl",
+  printings: [
+    {
+      id: "set1-025",
+      artId: "set1-025",
+      setCode: "set1",
+      collectorNumber: "25",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-025", "set9-031"],
   cardType: "action",
   name: "Be Our Guest",
@@ -16,7 +27,7 @@ export const beOurGuest: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ecf737e88516492c9592efb0c0b6da85",
-    tcgPlayer: 649978,
+    tcgPlayer: "649978",
   },
   text: "Look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
   actionSubtype: "song",

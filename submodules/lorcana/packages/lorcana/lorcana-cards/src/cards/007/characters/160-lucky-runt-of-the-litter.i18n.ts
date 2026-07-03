@@ -17,7 +17,7 @@ export const luckyRuntOfTheLitterI18n: Record<Languages, I18nProperties> = {
     version: "Der Jüngste im Wurf",
     text: [
       {
-        title: "FOLGE MEINER STIMME",
+        title: "Folge meiner Stimme",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, schaue dir die obersten 2 Karten deines Decks an. Du darfst beliebig viele Welpen-Charakterkarten daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const luckyRuntOfTheLitterI18n: Record<Languages, I18nProperties> = {
     version: "Miraculé de la portée",
     text: [
       {
-        title: "SUIVEZ MA VOIX",
+        title: "Suivez ma voix",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, regardez les 2 cartes du dessus de votre pioche. Vous pouvez révéler autant de cartes Personnage Chiot parmi elles que vous le souhaitez. Placez ces cartes dans votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const luckyRuntOfTheLitterI18n: Record<Languages, I18nProperties> = {
     version: "Il Più Piccolo della Cucciolata",
     text: [
       {
-        title: "SEGUITE LA MIA VOCE",
+        title: "Seguite la mia Voce",
         description:
           "Ogni volta che questo personaggio va all'avventura, guarda le prime 2 carte del tuo mazzo. Puoi rivelare un qualsiasi numero di carte personaggio Cucciolo e aggiungerle alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

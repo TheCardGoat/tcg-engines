@@ -20,12 +20,13 @@ export const ursulaWhisperOfVanessaI18n: Record<Languages, I18nProperties> = {
     version: "Geflüster von Vanessa",
     text: [
       {
-        title: "Stärken 1",
+        title:
+          "<Stärken> 1 {I} (Einmal während deines Zuges darfst du 1 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "GERISSENER ZAUBER",
+        title: "Gerissener Zauber",
         description:
-          "Solange dieser Charakter mindestens eine Karte unter sich hat, erhält er +1 und Wendig.",
+          "Solange dieser Charakter mindestens eine Karte unter sich hat, erhält er +1 {L} und <Wendig>.",
       },
     ],
   },
@@ -34,11 +35,13 @@ export const ursulaWhisperOfVanessaI18n: Record<Languages, I18nProperties> = {
     version: "Lueur de Vanessa",
     text: [
       {
-        title: "Boost 1",
+        title:
+          "<Boost> 1 {I} (Une fois durant votre tour, vous pouvez payer 1 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "SORT ÉVASIF",
-        description: "Tant qu'il y a une carte sous ce personnage, il gagne +1 et Insaisissable.",
+        title: "Sort évasif",
+        description:
+          "Tant qu'il y a une carte sous ce personnage, il gagne +1 {L} et <Insaisissable>.",
       },
     ],
   },
@@ -47,12 +50,13 @@ export const ursulaWhisperOfVanessaI18n: Record<Languages, I18nProperties> = {
     version: "Sussurro di Vanessa",
     text: [
       {
-        title: "Potenziamento 1",
+        title:
+          "<Potenziamento> 1 {I} (Una volta durante il tuo turno, puoi pagare 1 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "INCANTESIMO SUBDOLO",
+        title: "Incantesimo Subdolo",
         description:
-          "Mentre c'è una carta sotto a questo personaggio, questo riceve +1 e ottiene Sfuggente. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Mentre c'è una carta sotto a questo personaggio, questo riceve +1 {L} e ottiene <Sfuggente>. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

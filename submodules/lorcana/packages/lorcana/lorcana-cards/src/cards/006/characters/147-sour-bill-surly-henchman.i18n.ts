@@ -17,9 +17,9 @@ export const sourBillSurlyHenchmanI18n: Record<Languages, I18nProperties> = {
     version: "Mürrischer Handlanger",
     text: [
       {
-        title: "UNGENIESSBAR",
+        title: "Ungenießbar",
         description:
-          "Wenn du diesen Charakter ausspielst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -2.",
+          "Wenn du diesen Charakter ausspielst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -2 {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const sourBillSurlyHenchmanI18n: Record<Languages, I18nProperties> = {
     version: "Acolyte maussade",
     text: [
       {
-        title: "INDIGESTE",
+        title: "Indigeste",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const sourBillSurlyHenchmanI18n: Record<Languages, I18nProperties> = {
     version: "Braccio Destro Scorbutico",
     text: [
       {
-        title: "IMMANGIABILE",
+        title: "Immangiabile",
         description:
-          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -2 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -2 {S} per questo turno.",
       },
     ],
   },

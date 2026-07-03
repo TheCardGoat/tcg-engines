@@ -24,7 +24,7 @@
   },
   "scripts": {
     "check-types": "tsc --noEmit",
-    "test": "vp test run"
+    "test": "vp test run --configLoader runner"
   },
   "dependencies": {
     "zod": "^4.4.2"

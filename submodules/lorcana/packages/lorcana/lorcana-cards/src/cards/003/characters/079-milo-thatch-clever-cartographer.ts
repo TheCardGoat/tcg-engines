@@ -4,6 +4,17 @@ import { miloThatchCleverCartographerI18n } from "./079-milo-thatch-clever-carto
 export const miloThatchCleverCartographer: CharacterCard = {
   id: "NSM",
   canonicalId: "ci_NSM",
+  slug: "lorcana-ci_NSM",
+  printings: [
+    {
+      id: "set3-079",
+      artId: "set3-079",
+      setCode: "set3",
+      collectorNumber: "79",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-079"],
   cardType: "character",
   name: "Milo Thatch",
@@ -21,7 +32,7 @@ export const miloThatchCleverCartographer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8745424825aa4fa6840fbb0a19711247",
-    tcgPlayer: 536280,
+    tcgPlayer: "536280",
   },
   classifications: ["Dreamborn", "Hero"],
   i18n: miloThatchCleverCartographerI18n,

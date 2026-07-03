@@ -20,12 +20,13 @@ export const scarEerilyPreparedI18n: Record<Languages, I18nProperties> = {
     version: "Unheimlich bereit",
     text: [
       {
-        title: "Stärken 2",
+        title:
+          "<Stärken> 2 {I} (Einmal während deines Zuges darfst du 2 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "DAS ÜBERLEBEN DES STÄRKEREN",
+        title: "Das Überleben des Stärkeren",
         description:
-          "Jedes Mal, wenn du eine Karte unter diesen Charakter legst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -5.",
+          "Jedes Mal, wenn du eine Karte unter diesen Charakter legst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -5 {S}.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const scarEerilyPreparedI18n: Record<Languages, I18nProperties> = {
     version: "Étrangement prêt",
     text: [
       {
-        title: "Boost 2",
+        title:
+          "<Boost> 2 {I} (Une fois durant votre tour, vous pouvez payer 2 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "SURVIE DU PLUS APTE",
+        title: "Survie du plus apte",
         description:
-          "Chaque fois que vous placez une carte sous ce personnage, choisissez un personnage adverse qui subit -5 pour le reste de ce tour.",
+          "Chaque fois que vous placez une carte sous ce personnage, choisissez un personnage adverse qui subit -5 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const scarEerilyPreparedI18n: Record<Languages, I18nProperties> = {
     version: "Misteriosamente Pronto",
     text: [
       {
-        title: "Potenziamento 2",
+        title:
+          "<Potenziamento> 2 {I} (Una volta durante il tuo turno, puoi pagare 2 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "LEGGE DELLA GIUNGLA",
+        title: "Legge della Giungla",
         description:
-          "Ogni volta che metti una carta sotto a questo personaggio, un personaggio avversario a tua scelta riceve -5 per questo turno.",
+          "Ogni volta che metti una carta sotto a questo personaggio, un personaggio avversario a tua scelta riceve -5 {S} per questo turno.",
       },
     ],
   },

@@ -1,3 +1,4 @@
+export { strengthOfARagingFireP3Challenge } from "./p3-008-strength-of-a-raging-fire-challenge";
 export { lookAtThisFamily } from "./025-look-at-this-family";
 export { circleOfLife } from "./026-circle-of-life";
 export { healWhatHasBeenHurt } from "./027-heal-what-has-been-hurt";

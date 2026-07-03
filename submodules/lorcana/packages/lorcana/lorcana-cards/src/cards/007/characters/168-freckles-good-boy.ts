@@ -4,6 +4,17 @@ import { frecklesGoodBoyI18n } from "./168-freckles-good-boy.i18n";
 export const frecklesGoodBoy: CharacterCard = {
   id: "64q",
   canonicalId: "ci_64q",
+  slug: "lorcana-ci_64q",
+  printings: [
+    {
+      id: "set7-168",
+      artId: "set7-168",
+      setCode: "set7",
+      collectorNumber: "168",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-168"],
   cardType: "character",
   name: "Freckles",
@@ -20,7 +31,7 @@ export const frecklesGoodBoy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_150d93e25ca744b69a232651dcd2caa3",
-    tcgPlayer: 619502,
+    tcgPlayer: "619502",
   },
   text: [
     {

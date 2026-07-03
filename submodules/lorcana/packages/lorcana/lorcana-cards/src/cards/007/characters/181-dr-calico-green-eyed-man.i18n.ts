@@ -16,9 +16,9 @@ export const drCalicoGreeneyedManI18n: Record<Languages, I18nProperties> = {
     version: "Grünäugiger Mann",
     text: [
       {
-        title: "SO LANGSAM NERVEN SIE MICH",
+        title: "So langsam nerven Sie mich",
         description:
-          "Solange dieser Charakter unbeschädigt ist, erhält er Robust +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
+          "Solange dieser Charakter unbeschädigt ist, erhält er <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const drCalicoGreeneyedManI18n: Record<Languages, I18nProperties> = {
     version: "L'homme à l'œil vert",
     text: [
       {
-        title: "VOUS COMMENCEZ À M'INDISPOSER",
-        description: "Tant que ce personnage n'a aucun dommage, il gagne Résistance +2.",
+        title: "Vous commencez à m'indisposer",
+        description: "Tant que ce personnage n'a aucun dommage, il gagne <Résistance> +2.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const drCalicoGreeneyedManI18n: Record<Languages, I18nProperties> = {
     version: "Uomo dall'Occhio Verde",
     text: [
       {
-        title: "COSÌ MI FARÀ IRRITARE",
-        description: "Mentre questo personaggio non ha danno, ottiene Resistere +2.",
+        title: "Così Mi Farà Irritare",
+        description: "Mentre questo personaggio non ha danno, ottiene <Resistere> +2.",
       },
     ],
   },

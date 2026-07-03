@@ -4,6 +4,17 @@ import { yzmaTransformedKittenI18n } from "./059-yzma-transformed-kitten.i18n";
 export const yzmaTransformedKitten: CharacterCard = {
   id: "uOG",
   canonicalId: "ci_uOG",
+  slug: "lorcana-ci_uOG",
+  printings: [
+    {
+      id: "set7-059",
+      artId: "set7-059",
+      setCode: "set7",
+      collectorNumber: "59",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-059"],
   cardType: "character",
   name: "Yzma",
@@ -20,7 +31,7 @@ export const yzmaTransformedKitten: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5a028a55c4554cfd94686805d26929b1",
-    tcgPlayer: 619437,
+    tcgPlayer: "619437",
   },
   text: [
     {

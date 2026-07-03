@@ -4,6 +4,17 @@ import { wreckitRalphDemolitionDudeI18n } from "./104-wreck-it-ralph-demolition-
 export const wreckitRalphDemolitionDude: CharacterCard = {
   id: "N3o",
   canonicalId: "ci_N3o",
+  slug: "lorcana-ci_N3o",
+  printings: [
+    {
+      id: "set5-104",
+      artId: "set5-104",
+      setCode: "set5",
+      collectorNumber: "104",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-104"],
   cardType: "character",
   name: "Wreck-It Ralph",
@@ -20,7 +31,7 @@ export const wreckitRalphDemolitionDude: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f41934191f364d68bc66e64860cc0c92",
-    tcgPlayer: 555259,
+    tcgPlayer: "555259",
   },
   text: [
     {

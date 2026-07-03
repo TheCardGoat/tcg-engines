@@ -17,7 +17,7 @@ export const johnSmithSnowTrackerI18n: Record<Languages, I18nProperties> = {
     version: "Fährtenleser im Schnee",
     text: [
       {
-        title: "FOLGE DEN SPUREN",
+        title: "Folge den Spuren",
         description:
           "Am Ende deines Zuges, falls dieser Charakter erschöpft ist und in diesem Zug keiner deiner Charaktere herausgefordert hat, sammelst du 1 Legende.",
       },
@@ -28,9 +28,9 @@ export const johnSmithSnowTrackerI18n: Record<Languages, I18nProperties> = {
     version: "Pisteur des neiges",
     text: [
       {
-        title: "SUIT LES TRACES À",
+        title: "Suit les traces",
         description:
-          "la fin de votre tour, si ce personnage est épuisé et qu'aucun de vos personnages n'a défié ce tour-ci, gagnez 1 éclat de Lore.",
+          "À la fin de votre tour, si ce personnage est épuisé et qu'aucun de vos personnages n'a défié ce tour-ci, gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -39,7 +39,7 @@ export const johnSmithSnowTrackerI18n: Record<Languages, I18nProperties> = {
     version: "Inseguitore sulla Neve",
     text: [
       {
-        title: "SEGUIRE LE TRACCE",
+        title: "Seguire le Tracce",
         description:
           "Alla fine del tuo turno, se questo personaggio è impegnato e nessuno dei tuoi personaggi ha sfidato in questo turno, ottieni 1 leggenda.",
       },

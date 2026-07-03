@@ -6,7 +6,7 @@ export const sleepyDeepSleeperI18n: Record<Languages, I18nProperties> = {
     version: "Deep Sleeper",
     text: [
       {
-        title: "Pleasant Dreams",
+        title: "PLEASANT DREAMS",
         description:
           "When this character is banished, if you have a Seven Dwarfs or Princess character in play, you may draw a card.",
       },

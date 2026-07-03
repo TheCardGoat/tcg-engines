@@ -7,14 +7,17 @@ export const gd03Farsia058: UnitCard = {
   color: "purple",
   traits: ["ue", "vagan"],
   id: "GD03-058",
-  externalId: "gundam:gd03-058",
-  slug: "farsia-gd03-058",
+  canonicalId: "GD03-058",
+  externalIds: { bandai: "gundam:gd03-058" },
+  slug: "farsia/gd03-058",
   displayName: "Farsia",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-058",
   printings: [
     {
       id: "GD03-058",
+      artId: "GD03-058",
+      setCode: "GD03",
       collectorNumber: "GD03-058",
       cardNumber: "GD03-058",
       set: {
@@ -29,6 +32,7 @@ export const gd03Farsia058: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-058"],
   selectedPrintingId: "GD03-058",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-058.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-058.webp?260424",

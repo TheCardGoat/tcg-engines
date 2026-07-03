@@ -7,14 +7,17 @@ export const gd03TierenTaozi074: UnitCard = {
   color: "white",
   traits: ["superpower bloc"],
   id: "GD03-074",
-  externalId: "gundam:gd03-074",
-  slug: "tieren-taozi-gd03-074",
+  canonicalId: "GD03-074",
+  externalIds: { bandai: "gundam:gd03-074" },
+  slug: "tieren-taozi/gd03-074",
   displayName: "Tieren Taozi",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-074",
   printings: [
     {
       id: "GD03-074",
+      artId: "GD03-074",
+      setCode: "GD03",
       collectorNumber: "GD03-074",
       cardNumber: "GD03-074",
       set: {
@@ -29,6 +32,7 @@ export const gd03TierenTaozi074: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-074"],
   selectedPrintingId: "GD03-074",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-074.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-074.webp?260424",

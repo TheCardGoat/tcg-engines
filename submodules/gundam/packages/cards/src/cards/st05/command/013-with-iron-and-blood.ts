@@ -7,14 +7,17 @@ export const st05WithIronAndBlood013: CommandCard = {
   color: "purple",
   traits: ["-"],
   id: "ST05-013",
-  externalId: "gundam:st05-013",
-  slug: "with-iron-and-blood-st05-013",
+  canonicalId: "ST05-013",
+  externalIds: { bandai: "gundam:st05-013" },
+  slug: "with-iron-and-blood/st05-013",
   displayName: "With Iron and Blood",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-013",
   printings: [
     {
       id: "ST05-013",
+      artId: "ST05-013",
+      setCode: "ST05",
       collectorNumber: "ST05-013",
       cardNumber: "ST05-013",
       set: {
@@ -30,6 +33,8 @@ export const st05WithIronAndBlood013: CommandCard = {
     },
     {
       id: "ST05-013_p1",
+      artId: "ST05-013_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-013_p1",
       cardNumber: "ST05-013",
       set: {
@@ -45,6 +50,8 @@ export const st05WithIronAndBlood013: CommandCard = {
     },
     {
       id: "ST05-013_p2",
+      artId: "ST05-013_p2",
+      setCode: "ST05",
       collectorNumber: "ST05-013_p2",
       cardNumber: "ST05-013",
       set: {
@@ -60,6 +67,8 @@ export const st05WithIronAndBlood013: CommandCard = {
     },
     {
       id: "ST05-013_p3",
+      artId: "ST05-013_p3",
+      setCode: "GD03",
       collectorNumber: "ST05-013_p3",
       cardNumber: "ST05-013",
       set: {
@@ -74,6 +83,7 @@ export const st05WithIronAndBlood013: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["ST05-013", "ST05-013_p1", "ST05-013_p2", "ST05-013_p3"],
   selectedPrintingId: "ST05-013",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-013.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-013.webp?260424",

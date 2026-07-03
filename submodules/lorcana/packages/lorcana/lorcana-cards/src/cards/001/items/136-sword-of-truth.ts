@@ -4,6 +4,17 @@ import { swordOfTruthI18n } from "./136-sword-of-truth.i18n";
 export const swordOfTruth: ItemCard = {
   id: "4Du",
   canonicalId: "ci_4Du",
+  slug: "lorcana-ci_4Du",
+  printings: [
+    {
+      id: "set1-136",
+      artId: "set1-136",
+      setCode: "set1",
+      collectorNumber: "136",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-136"],
   cardType: "item",
   name: "Sword of Truth",
@@ -16,7 +27,7 @@ export const swordOfTruth: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_19c135ff62f2427d93b3131114b4c10b",
-    tcgPlayer: 508793,
+    tcgPlayer: "508793",
   },
   text: [
     {

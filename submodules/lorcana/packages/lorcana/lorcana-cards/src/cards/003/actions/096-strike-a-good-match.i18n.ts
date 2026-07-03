@@ -11,10 +11,26 @@ export const strikeAGoodMatchI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Crois-moi j'ai vu pire",
-    text: "Piochez 2 cartes puis choisissez et défaussez une carte.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Piochez 2 cartes puis choisissez et défaussez une carte.",
+      },
+    ],
   },
   it: {
     name: "Un Uomo Purché Sia",
-    text: "(Un personaggio con costo 2 o superiore può per giocare questa canzone gratis.) Pesca 2 carte, poi scegli e scarta 1 carta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per giocare questa canzone gratis.)",
+      },
+      {
+        title: "Pesca 2 carte, poi scegli e scarta 1 carta.",
+      },
+    ],
   },
 };

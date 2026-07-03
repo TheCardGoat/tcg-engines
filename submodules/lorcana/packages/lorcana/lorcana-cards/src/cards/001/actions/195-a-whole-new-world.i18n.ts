@@ -9,9 +9,10 @@ export const aWholeNewWorldI18n: Record<Languages, I18nProperties> = {
     name: "A Whole New World",
     text: [
       {
-        title: "(A",
-        description:
-          "character with cost 5 or more can to sing this song for free.) Each player discards their hand and draws 7 cards.",
+        title: "(A character with cost 5 or more can {E} to sing this song for free.)",
+      },
+      {
+        title: "Each player discards their hand and draws 7 cards.",
       },
     ],
   },
@@ -19,9 +20,10 @@ export const aWholeNewWorldI18n: Record<Languages, I18nProperties> = {
     name: "A Whole New World",
     text: [
       {
-        title: "(A",
-        description:
-          "character with cost 5 or more can to sing this song for free.) Each player discards their hand and draws 7 cards.",
+        title: "(A character with cost 5 or more can {E} to sing this song for free.)",
+      },
+      {
+        title: "Each player discards their hand and draws 7 cards.",
       },
     ],
   },

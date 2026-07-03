@@ -25,6 +25,7 @@
     ExecutableMoveEntry,
     ExecutableMovePresentationCategoryId,
     LorcanaPlayerSide,
+    LorcanaSimulatorMoveParams,
     LorcanaSimulatorReadModel,
     SimulatorMoveError,
   } from "@/features/simulator/model/contracts.js";
@@ -548,17 +549,46 @@
     sidebar.handleAvailableMoveClick(move);
   }
 
+  function createFallbackConfirmableDirectMove(
+    categoryId: "pass-turn" | "undo" | "quest-all",
+  ): ExecutableMoveEntry | null {
+    if (categoryId === "pass-turn") {
+      return {
+        id: "passTurn",
+        label: m["sim.actions.label.passTurn"]({}),
+        moveId: "passTurn",
+        params: {} as LorcanaSimulatorMoveParams["passTurn"],
+        presentation: {
+          kind: "direct",
+          categoryId: "pass-turn",
+          categoryLabel: m["sim.actions.label.passTurn"]({}),
+        },
+      };
+    }
+
+    if (categoryId === "quest-all") {
+      return {
+        id: "questWithAll",
+        label: m["sim.actions.label.questAll"]({}),
+        moveId: "questWithAll",
+        params: {} as LorcanaSimulatorMoveParams["questWithAll"],
+        presentation: {
+          kind: "direct",
+          categoryId: "quest-all",
+          categoryLabel: m["sim.actions.label.questAll"]({}),
+        },
+      };
+    }
+
+    return null;
+  }
+
   function handleConfirmableDirectMoveCategory(
     categoryId: "pass-turn" | "undo" | "quest-all",
     source: "keyboard" | "pointer" = "pointer",
   ): void {
-    const summary = moveCategorySummaries.find((candidate) => candidate.categoryId === categoryId);
-    if (!summary) {
-      return;
-    }
-
-    const moves = sidebar.expandCategoryMoves(summary.categoryId);
-    const move = moves[0];
+    const moves = sidebar.expandCategoryMoves(categoryId);
+    const move = moves[0] ?? createFallbackConfirmableDirectMove(categoryId);
     if (!move) {
       return;
     }
@@ -857,6 +887,8 @@
         onToggleAccessibleMobileControls={sidebar.handleAccessibleMobileControlsToggle}
         showZoneCounters={sidebar.showZoneCounters}
         onToggleShowZoneCounters={sidebar.handleShowZoneCountersToggle}
+        priorityNudgeEnabled={sidebar.priorityNudgeEnabled}
+        onTogglePriorityNudgeEnabled={sidebar.handlePriorityNudgeEnabledToggle}
         selectedCardBack={sidebar.selectedCardBack}
         selectedPlaymat={sidebar.selectedPlaymat}
         onCardBackChange={sidebar.handleCardBackChange}

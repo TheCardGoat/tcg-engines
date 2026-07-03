@@ -4,6 +4,17 @@ import { hypnoticStrengthI18n } from "./059-hypnotic-strength.i18n";
 export const hypnoticStrength: ActionCard = {
   id: "ZhD",
   canonicalId: "ci_ZhD",
+  slug: "lorcana-ci_ZhD",
+  printings: [
+    {
+      id: "set5-059",
+      artId: "set5-059",
+      setCode: "set5",
+      collectorNumber: "59",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-059"],
   cardType: "action",
   name: "Hypnotic Strength",
@@ -16,7 +27,7 @@ export const hypnoticStrength: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9444cd2552124a658a0c276513934a4f",
-    tcgPlayer: 561345,
+    tcgPlayer: "561345",
   },
   text: "Draw a card. Chosen character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
   abilities: [

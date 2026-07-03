@@ -9,16 +9,16 @@ export const eeyoreOverstuffedDonkeyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "I-Aah",
     version: "Trübsinniger Esel",
-    text: "Robust +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+    text: "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
   },
   fr: {
     name: "Bourriquet",
     version: "Âne trop rembourré",
-    text: "Résistance +1",
+    text: "<Résistance> +1",
   },
   it: {
     name: "Ih-Oh",
     version: "Asinello Molto Imbottito",
-    text: "Resistere +1",
+    text: "<Resistere> +1",
   },
 };

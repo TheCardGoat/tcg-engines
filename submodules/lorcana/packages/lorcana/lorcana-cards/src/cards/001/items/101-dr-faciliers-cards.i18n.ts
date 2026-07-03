@@ -5,8 +5,8 @@ export const drFaciliersCardsI18n: Record<Languages, I18nProperties> = {
     name: "Dr. Facilier’s Cards",
     text: [
       {
-        title: "THE CARDS WILL TELL",
-        description: "— You pay 1 less for the next action you play this turn.",
+        title: "The Cards Will Tell",
+        description: "{E} — You pay 1 {I} less for the next action you play this turn.",
       },
     ],
   },
@@ -14,9 +14,9 @@ export const drFaciliersCardsI18n: Record<Languages, I18nProperties> = {
     name: "Dr. Faciliers Karten",
     text: [
       {
-        title: "IN DEN KARTEN STEHT'S",
+        title: "In den Karten steht's",
         description:
-          "— Du zahlst 1 weniger für die nächste Aktion, die du in diesem Zug ausspielst.",
+          "{E} — Du zahlst 1 {I} weniger für die nächste Aktion, die du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -25,7 +25,8 @@ export const drFaciliersCardsI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "DIVINATION",
-        description: "— La prochaine carte action que vous jouez durant ce tour coûte 1 de moins.",
+        description:
+          "{E} — La prochaine carte action que vous jouez durant ce tour coûte 1 {I} de moins.",
       },
     ],
   },
@@ -33,8 +34,8 @@ export const drFaciliersCardsI18n: Record<Languages, I18nProperties> = {
     name: "Dr. Facilier’s Cards",
     text: [
       {
-        title: "THE CARDS WILL TELL",
-        description: "— You pay 1 less for the next action you play this turn.",
+        title: "The Cards Will Tell",
+        description: "{E} — You pay 1 {I} less for the next action you play this turn.",
       },
     ],
   },

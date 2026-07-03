@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jafarWickedSorcererI18n } from "./045-jafar-wicked-sorcerer.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const jafarWickedSorcerer: CharacterCard = {
   id: "APi",
   canonicalId: "ci_APi",
+  slug: "lorcana-ci_APi",
+  printings: [
+    {
+      id: "set1-045",
+      artId: "set1-045",
+      setCode: "set1",
+      collectorNumber: "45",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-045"],
   cardType: "character",
   name: "Jafar",
@@ -21,7 +33,7 @@ export const jafarWickedSorcerer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_695cab1b70c24a0289cc2d3c2316dfed",
-    tcgPlayer: 494098,
+    tcgPlayer: "494098",
   },
   text: "Challenger +3",
   classifications: ["Dreamborn", "Villain", "Sorcerer"],

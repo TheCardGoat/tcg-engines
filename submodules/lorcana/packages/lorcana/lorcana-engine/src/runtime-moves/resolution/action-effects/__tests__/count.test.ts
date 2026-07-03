@@ -32,6 +32,39 @@ describe("count", () => {
     ).toBe(2);
   });
 
+  it("records the number of distinct ink types among your characters in play", () => {
+    const ctx = createTestContext({
+      definitions: {
+        amber: { id: "amber", cardType: "character", inkType: ["amber"] },
+        rubySteel: { id: "ruby-steel", cardType: "character", inkType: ["ruby", "steel"] },
+        item: { id: "item", cardType: "item", inkType: ["emerald"] },
+        duplicateAmber: { id: "duplicate-amber", cardType: "character", inkType: ["amber"] },
+      },
+      zoneCards: {
+        "play:player-one": ["amber", "rubySteel", "item"],
+        "play:player-two": ["duplicateAmber"],
+      },
+    });
+    const effect: CountEffect = {
+      type: "count",
+      what: "distinct-character-ink-types",
+      controller: "you",
+    };
+    const resolutionInput = { eventSnapshot: {} } as const;
+
+    resolveCountEffect(
+      ctx,
+      createCardPlayed({ cardId: "src", playerId: PLAYER_ONE }),
+      effect,
+      resolutionInput as never,
+    );
+
+    expect(
+      (resolutionInput as { eventSnapshot: { triggerAmount?: number } }).eventSnapshot
+        .triggerAmount,
+    ).toBe(3);
+  });
+
   it("counts discarded action cards", () => {
     const ctx = createTestContext({
       definitions: {

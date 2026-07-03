@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { beastSnowfieldTroublemakerI18n } from "./118-beast-snowfield-troublemaker.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const beastSnowfieldTroublemaker: CharacterCard = {
-  id: "dg5",
+  id: "bEk",
   canonicalId: "ci_dg5",
+  slug: "lorcana-ci_dg5",
+  printings: [
+    {
+      id: "set11-118",
+      artId: "set11-118",
+      setCode: "set11",
+      collectorNumber: "118",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-118"],
   cardType: "character",
   name: "Beast",
@@ -21,7 +33,7 @@ export const beastSnowfieldTroublemaker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cde01953c3aa414290991fddcffe4651",
-    tcgPlayer: 673337,
+    tcgPlayer: "673337",
   },
   text: [
     {

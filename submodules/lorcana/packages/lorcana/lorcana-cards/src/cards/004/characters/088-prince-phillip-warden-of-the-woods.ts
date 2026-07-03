@@ -4,6 +4,17 @@ import { princePhillipWardenOfTheWoodsI18n } from "./088-prince-phillip-warden-o
 export const princePhillipWardenOfTheWoods: CharacterCard = {
   id: "vCW",
   canonicalId: "ci_eM1",
+  slug: "lorcana-ci_eM1",
+  printings: [
+    {
+      id: "set4-088",
+      artId: "set4-088",
+      setCode: "set4",
+      collectorNumber: "88",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-088", "set9-072"],
   cardType: "character",
   name: "Prince Phillip",
@@ -20,7 +31,7 @@ export const princePhillipWardenOfTheWoods: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_330073fee4914065839565db68acf025",
-    tcgPlayer: 650014,
+    tcgPlayer: "650014",
   },
   text: [
     {

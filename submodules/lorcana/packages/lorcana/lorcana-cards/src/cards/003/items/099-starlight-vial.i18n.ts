@@ -18,14 +18,14 @@ export const starlightVialI18n: Record<Languages, I18nProperties> = {
     name: "Sternenlicht-Phiole",
     text: [
       {
-        title: "WIRKSAME ENERGIE",
+        title: "Wirksame Energie",
         description:
-          "— Du zahlst 2 weniger für die nächste Aktion, die du in diesem Zug ausspielst.",
+          "{E} — Du zahlst 2 {I} weniger für die nächste Aktion, die du in diesem Zug ausspielst.",
       },
       {
-        title: "FALLE 2,",
+        title: "Falle",
         description:
-          "Verbanne diesen Gegenstand — Ziehe 2 Karten. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
+          "2 {I}, Verbanne diesen Gegenstand — Ziehe 2 Karten. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
     ],
   },
@@ -33,14 +33,14 @@ export const starlightVialI18n: Record<Languages, I18nProperties> = {
     name: "Fiole de lumière d'étoile",
     text: [
       {
-        title: "ÉNERGIE EFFICACE",
+        title: "Énergie efficace",
         description:
-          "— La prochaine carte Action que vous jouez durant ce tour vous coûte 2 de moins.",
+          "{E} — La prochaine carte Action que vous jouez durant ce tour vous coûte 2 {I} de moins.",
       },
       {
-        title: "PIÈGE",
+        title: "Piège",
         description:
-          "2, Bannissez cet objet — Piochez 2 cartes puis choisissez et défaussez une carte.",
+          "2 {I}, Bannissez cet objet — Piochez 2 cartes puis choisissez et défaussez une carte.",
       },
     ],
   },
@@ -48,12 +48,13 @@ export const starlightVialI18n: Record<Languages, I18nProperties> = {
     name: "Fiala di Luce Stellare",
     text: [
       {
-        title: "ENERGIA EFFICIENTE",
-        description: "— Paga 2 in meno per giocare la tua prossima azione per questo turno.",
+        title: "Energia Efficiente",
+        description:
+          "{E} — Paga 2 {I} in meno per giocare la tua prossima azione per questo turno.",
       },
       {
-        title: "TRAPPOLA 2,",
-        description: "esilia questo oggetto — Pesca 2 carte, poi scegli e scarta una carta.",
+        title: "Trappola",
+        description: "2 {I}, esilia questo oggetto — Pesca 2 carte, poi scegli e scarta una carta.",
       },
     ],
   },

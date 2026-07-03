@@ -7,14 +7,17 @@ export const st06GquuuuuuxOmegaPsycommu002: UnitCard = {
   color: "red",
   traits: ["clan"],
   id: "ST06-002",
-  externalId: "gundam:st06-002",
-  slug: "gquuuuuux-omega-psycommu-st06-002",
+  canonicalId: "ST06-002",
+  externalIds: { bandai: "gundam:st06-002" },
+  slug: "gquuuuuux-omega-psycommu/st06-002",
   displayName: "GQuuuuuuX (Omega Psycommu)",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-002",
   printings: [
     {
       id: "ST06-002",
+      artId: "ST06-002",
+      setCode: "ST06",
       collectorNumber: "ST06-002",
       cardNumber: "ST06-002",
       set: {
@@ -30,6 +33,8 @@ export const st06GquuuuuuxOmegaPsycommu002: UnitCard = {
     },
     {
       id: "ST06-002_p1",
+      artId: "ST06-002_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-002_p1",
       cardNumber: "ST06-002",
       set: {
@@ -45,6 +50,8 @@ export const st06GquuuuuuxOmegaPsycommu002: UnitCard = {
     },
     {
       id: "ST06-002_p2",
+      artId: "ST06-002_p2",
+      setCode: "ST06",
       collectorNumber: "ST06-002_p2",
       cardNumber: "ST06-002",
       set: {
@@ -60,6 +67,8 @@ export const st06GquuuuuuxOmegaPsycommu002: UnitCard = {
     },
     {
       id: "ST06-002_p3",
+      artId: "ST06-002_p3",
+      setCode: "EVX05",
       collectorNumber: "ST06-002_p3",
       cardNumber: "ST06-002",
       set: {
@@ -74,6 +83,7 @@ export const st06GquuuuuuxOmegaPsycommu002: UnitCard = {
       productName: "Premium Card Collection [EVX05]",
     },
   ],
+  reprints: ["ST06-002", "ST06-002_p1", "ST06-002_p2", "ST06-002_p3"],
   selectedPrintingId: "ST06-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-002.webp?260424",

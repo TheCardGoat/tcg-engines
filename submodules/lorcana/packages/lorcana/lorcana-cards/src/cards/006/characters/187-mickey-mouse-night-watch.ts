@@ -4,6 +4,17 @@ import { mickeyMouseNightWatchI18n } from "./187-mickey-mouse-night-watch.i18n";
 export const mickeyMouseNightWatch: CharacterCard = {
   id: "3YP",
   canonicalId: "ci_3YP",
+  slug: "lorcana-ci_3YP",
+  printings: [
+    {
+      id: "set6-187",
+      artId: "set6-187",
+      setCode: "set6",
+      collectorNumber: "187",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-187"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseNightWatch: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_59714153da7e4a6884f25a5c5edad2c1",
-    tcgPlayer: 591144,
+    tcgPlayer: "591144",
   },
   text: [
     {
@@ -35,7 +46,12 @@ export const mickeyMouseNightWatch: CharacterCard = {
         target: {
           cardTypes: ["character"],
           count: "all",
-          filter: [{ type: "has-name", name: "Pluto" }],
+          filter: [
+            {
+              type: "has-name",
+              name: "Pluto",
+            },
+          ],
           owner: "you",
           selector: "all",
           zones: ["play"],

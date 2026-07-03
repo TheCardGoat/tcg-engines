@@ -16,9 +16,9 @@ export const timothyQMouseFlightInstructorI18n: Record<Languages, I18nProperties
     version: "Fluglehrer",
     text: [
       {
-        title: "JETZT ZEIG'S IHNEN, DUMBO!",
+        title: "Jetzt zeig's ihnen, Dumbo!",
         description:
-          "Solange du mindestens einen Charakter mit Wendig im Spiel hast, erhält dieser Charakter +1.",
+          "Solange du mindestens einen Charakter mit <Wendig> im Spiel hast, erhält dieser Charakter +1 {L}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const timothyQMouseFlightInstructorI18n: Record<Languages, I18nProperties
     version: "Instructeur de vol",
     text: [
       {
-        title: "MONTRE-LEUR, DUMBO!",
+        title: "Montre-leur, Dumbo!",
         description:
-          "Tant que vous avez un personnage avec Insaisissable en jeu, ce personnage-ci gagne +1.",
+          "Tant que vous avez un personnage avec <Insaisissable> en jeu, ce personnage-ci gagne +1 {L}.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const timothyQMouseFlightInstructorI18n: Record<Languages, I18nProperties
     version: "Istruttore di Volo",
     text: [
       {
-        title: "BENE COSÌ, DUMBO!",
+        title: "Bene Così, Dumbo!",
         description:
-          "Mentre hai in gioco un personaggio con Sfuggente, questo personaggio riceve +1.",
+          "Mentre hai in gioco un personaggio con <Sfuggente>, questo personaggio riceve +1 {L}.",
       },
     ],
   },

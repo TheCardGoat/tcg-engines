@@ -4,6 +4,17 @@ import { fredMajorScienceEnthusiastI18n } from "./092-fred-major-science-enthusi
 export const fredMajorScienceEnthusiast: CharacterCard = {
   id: "7A9",
   canonicalId: "ci_7A9",
+  slug: "lorcana-ci_7A9",
+  printings: [
+    {
+      id: "set8-092",
+      artId: "set8-092",
+      setCode: "set8",
+      collectorNumber: "92",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-092"],
   cardType: "character",
   name: "Fred",
@@ -20,7 +31,7 @@ export const fredMajorScienceEnthusiast: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cce48aee1b594c6db6fbc7f6bc3eada7",
-    tcgPlayer: 631411,
+    tcgPlayer: "631411",
   },
   text: [
     {

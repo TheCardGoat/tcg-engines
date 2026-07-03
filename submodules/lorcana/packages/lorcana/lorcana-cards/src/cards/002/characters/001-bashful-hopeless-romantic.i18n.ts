@@ -17,7 +17,7 @@ export const bashfulHopelessRomanticI18n: Record<Languages, I18nProperties> = {
     version: "Hoffnungsloser Romantiker",
     text: [
       {
-        title: "OH, JA!",
+        title: "Oh, ja!",
         description:
           "Dieser Charakter kann nicht erkunden, außer du hast mindestens einen weiteren der Sieben Zwerge im Spiel.",
       },
@@ -28,7 +28,7 @@ export const bashfulHopelessRomanticI18n: Record<Languages, I18nProperties> = {
     version: "Grand sentimental",
     text: [
       {
-        title: "OH...",
+        title: "Oh...",
         description:
           "Vous devez avoir un autre personnage Sept Nains en jeu pour pouvoir envoyer ce personnage à l'aventure.",
       },
@@ -39,7 +39,7 @@ export const bashfulHopelessRomanticI18n: Record<Languages, I18nProperties> = {
     version: "Hopeless Romantic",
     text: [
       {
-        title: "OH, GOSH!",
+        title: "Oh, Gosh!",
         description:
           "This character can't quest unless you have another Seven Dwarfs character in play.",
       },

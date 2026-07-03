@@ -15,9 +15,9 @@ export const gizmosuitI18n: Record<Languages, I18nProperties> = {
     name: "Krachbumm-Anzug",
     text: [
       {
-        title: "CYBERNETISCHE",
+        title: "Cybernetische Rüstung",
         description:
-          "RÜSTUNG Verbanne diesen Gegenstand — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Robust +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
+          "Verbanne diesen Gegenstand — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Robust> +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const gizmosuitI18n: Record<Languages, I18nProperties> = {
     name: "Le costume de Robotik",
     text: [
       {
-        title: "ARMURE",
+        title: "Armure cybernétique",
         description:
-          "CYBERNÉTIQUE Bannissez cet objet — Choisissez un personnage, il gagne Résistance +2 jusqu'au début de votre prochain tour.",
+          "Bannissez cet objet — Choisissez un personnage, il gagne <Résistance> +2 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const gizmosuitI18n: Record<Languages, I18nProperties> = {
     name: "Armatura di Robopap",
     text: [
       {
-        title: "CORAZZA CIBERNETICA",
+        title: "Corazza Cibernetica",
         description:
-          "Esilia questo oggetto — Un personaggio a tua scelta ottiene Resistere +2 fino all'inizio del tuo prossimo turno.",
+          "Esilia questo oggetto — Un personaggio a tua scelta ottiene <Resistere> +2 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { generalLiHeadOfTheImperialArmyI18n } from "./187-general-li-head-of-the-imperial-army.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   id: "KF3",
   canonicalId: "ci_KF3",
+  slug: "lorcana-ci_KF3",
+  printings: [
+    {
+      id: "set8-187",
+      artId: "set8-187",
+      setCode: "set8",
+      collectorNumber: "187",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-187"],
   cardType: "character",
   name: "General Li",
@@ -21,7 +33,7 @@ export const generalLiHeadOfTheImperialArmy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a0a9f2ad02684ebd877ed697c7ce1188",
-    tcgPlayer: 631473,
+    tcgPlayer: "631473",
   },
   text: "Resist +1",
   classifications: ["Storyborn", "Mentor"],

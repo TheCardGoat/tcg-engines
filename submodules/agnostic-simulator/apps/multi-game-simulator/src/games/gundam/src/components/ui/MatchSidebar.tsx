@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
+import { EventLogPanel } from "@tcg/simulator-ui";
 
 import { m } from "../../lib/i18n/messages.ts";
 import { useHintsEnabled } from "../../lib/use-hints-enabled.ts";
@@ -19,6 +21,7 @@ export interface MatchSidebarProps {
   /** Which seat currently holds priority (fast signal, distinct from turn). */
   readonly priorityHolder?: CurrentTurn;
   readonly log: readonly LogTurn[];
+  readonly eventLogEntries?: readonly SimulatorEventLogEntry[];
   readonly onUndo: () => void;
   readonly canUndo: boolean;
   readonly onConcede: () => void;
@@ -38,6 +41,7 @@ export function MatchSidebar({
   currentTurn,
   priorityHolder,
   log,
+  eventLogEntries,
   onUndo,
   canUndo,
   onConcede,
@@ -67,7 +71,7 @@ export function MatchSidebar({
       />
       {aboveBattleData}
       <MatchMetaBlock matchInfo={matchInfo} />
-      <EventLog log={log} />
+      <EventLog log={log} eventLogEntries={eventLogEntries} />
       <FooterActions
         onUndo={onUndo}
         canUndo={canUndo}
@@ -283,7 +287,24 @@ function MetaRow({ label, value }: { readonly label: string; readonly value: str
   );
 }
 
-function EventLog({ log }: { readonly log: readonly LogTurn[] }) {
+function EventLog({
+  log,
+  eventLogEntries,
+}: {
+  readonly log: readonly LogTurn[];
+  readonly eventLogEntries?: readonly SimulatorEventLogEntry[];
+}) {
+  if (eventLogEntries && eventLogEntries.length > 0) {
+    return (
+      <div
+        className="flex-1 overflow-hidden py-2.5 pr-hud-sm pl-hud-md min-h-0"
+        style={sharedEventLogStyle}
+      >
+        <EventLogPanel embedded entries={eventLogEntries} />
+      </div>
+    );
+  }
+
   return (
     <div
       role="log"
@@ -307,8 +328,8 @@ function EventLog({ log }: { readonly log: readonly LogTurn[] }) {
         </span>
       </div>
 
-      {log.map((t, i) => (
-        <div key={i}>
+      {log.map((t) => (
+        <div key={`turn-${t.turn}`}>
           <div
             className="font-display text-center py-[5px] my-2.5 mb-2 text-hud-sm text-hud-accent font-extrabold tracking-hud-wide clip-hud-tag-l"
             style={{
@@ -320,13 +341,40 @@ function EventLog({ log }: { readonly log: readonly LogTurn[] }) {
             {m["sim.sidebar.log.cycleHeader"]({ turn: String(t.turn).padStart(2, "0") })}
           </div>
           {t.groups.map((g, gi) => (
-            <LogGroup key={gi} who={g.who} items={g.items} />
+            <LogGroup key={`${t.turn}-${g.who}-${gi}`} who={g.who} items={g.items} />
           ))}
         </div>
       ))}
     </div>
   );
 }
+
+const sharedEventLogStyle = {
+  "--board-text": "var(--color-hud-text)",
+  "--board-muted": "var(--color-hud-text-dim)",
+  "--game-accent": "var(--color-hud-accent)",
+  "--log-border": "color-mix(in srgb, var(--color-hud-accent) 22%, transparent)",
+  "--log-bg": "color-mix(in srgb, var(--color-hud-surface-raised) 72%, transparent)",
+  "--log-bg-gradient": "color-mix(in srgb, var(--color-hud-accent) 8%, transparent)",
+  "--log-entry-hover-bg": "color-mix(in srgb, var(--color-hud-accent) 7%, transparent)",
+  "--log-entry-highlight-bg": "color-mix(in srgb, var(--color-hud-accent) 12%, transparent)",
+  "--log-focus": "color-mix(in srgb, var(--color-hud-accent) 45%, transparent)",
+  "--log-speaker-player": "color-mix(in srgb, var(--color-hud-info) 95%, transparent)",
+  "--log-speaker-opponent": "color-mix(in srgb, var(--color-hud-danger) 90%, transparent)",
+  "--log-speaker-system": "color-mix(in srgb, var(--color-hud-accent-deep) 80%, transparent)",
+  "--log-tag-active-bg": "color-mix(in srgb, var(--color-hud-accent) 12%, transparent)",
+  "--log-tag-active-border": "color-mix(in srgb, var(--color-hud-accent) 55%, transparent)",
+  "--log-tag-active-text": "var(--color-hud-accent-deep)",
+  "--log-tag-border": "color-mix(in srgb, var(--color-hud-accent) 22%, transparent)",
+  "--log-tag-hover-bg": "color-mix(in srgb, var(--color-hud-accent) 6%, transparent)",
+  "--log-tag-move": "color-mix(in srgb, var(--color-hud-accent-deep) 75%, transparent)",
+  "--log-tag-combat": "color-mix(in srgb, var(--color-hud-danger) 80%, transparent)",
+  "--log-tag-ability": "color-mix(in srgb, var(--color-hud-info) 85%, transparent)",
+  "--log-tag-system": "color-mix(in srgb, var(--color-hud-text-muted) 75%, transparent)",
+  "--log-turn-line": "color-mix(in srgb, var(--color-hud-accent) 20%, transparent)",
+  "--log-turn-text": "color-mix(in srgb, var(--color-hud-accent-deep) 62%, transparent)",
+  "--log-turn-text-hover": "color-mix(in srgb, var(--color-hud-accent-deep) 88%, transparent)",
+} as CSSProperties;
 
 function LogGroup({ who, items }: LogItem) {
   const isYou = who === "YOU";

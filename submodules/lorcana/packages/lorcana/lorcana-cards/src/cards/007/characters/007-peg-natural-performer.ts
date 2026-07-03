@@ -4,6 +4,17 @@ import { pegNaturalPerformerI18n } from "./007-peg-natural-performer.i18n";
 export const pegNaturalPerformer: CharacterCard = {
   id: "HEg",
   canonicalId: "ci_HEg",
+  slug: "lorcana-ci_HEg",
+  printings: [
+    {
+      id: "set7-007",
+      artId: "set7-007",
+      setCode: "set7",
+      collectorNumber: "7",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-007"],
   cardType: "character",
   name: "Peg",
@@ -20,7 +31,7 @@ export const pegNaturalPerformer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7085d6eb08764015945d684bc74bceb5",
-    tcgPlayer: 619410,
+    tcgPlayer: "619410",
   },
   text: [
     {

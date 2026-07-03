@@ -4,6 +4,17 @@ import { candleheadDedicatedRacerI18n } from "./017-candlehead-dedicated-racer.i
 export const candleheadDedicatedRacer: CharacterCard = {
   id: "isc",
   canonicalId: "ci_isc",
+  slug: "lorcana-ci_isc",
+  printings: [
+    {
+      id: "set7-017",
+      artId: "set7-017",
+      setCode: "set7",
+      collectorNumber: "17",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-017"],
   cardType: "character",
   name: "Candlehead",
@@ -20,7 +31,7 @@ export const candleheadDedicatedRacer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_71551dd2d3334d509ce2f72fb84bd5fe",
-    tcgPlayer: 618717,
+    tcgPlayer: "618717",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const candleheadDedicatedRacer: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           target: {
             selector: "chosen",
             count: 1,

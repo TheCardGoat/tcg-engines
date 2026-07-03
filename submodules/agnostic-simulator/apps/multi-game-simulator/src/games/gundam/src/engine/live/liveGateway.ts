@@ -1,7 +1,6 @@
 import type { ServerToClientEvents } from "@tcg/protocol";
 import type { GameSlug } from "@tcg/simulator-contract";
 import {
-  openSimulatorGateway,
   parseGatewayEvent,
   parseGatewayMessage,
   requestGatewayTicket as requestSharedGatewayTicket,
@@ -17,7 +16,7 @@ import {
   playUrl,
 } from "../../../../../runtime/gameRuntimeApi";
 
-export type { GatewayAuthMode, GatewayTicket } from "@tcg/simulator-runtime/gateway";
+export type { GatewayTicket } from "@tcg/simulator-runtime/gateway";
 
 export const GUNDAM_GAME_SLUG = "gundam" satisfies GameSlug;
 
@@ -60,14 +59,6 @@ export async function requestQuickMatchGatewayTicket(
   return { ticket: body.ticket, authToken: body.authToken ?? undefined };
 }
 
-export function openLiveGateway(ticket: GatewayTicket): LiveGatewaySocket {
-  return openSimulatorGateway(ticket, {
-    gameSlug: GUNDAM_GAME_SLUG,
-    gatewayOrigin: gatewaySocketOrigin(GUNDAM_GAME_SLUG),
-    debugSlug: GUNDAM_GAME_SLUG,
-  });
-}
-
 export function parseLiveGatewayMessage(data: unknown): LiveGatewayMessage | null {
   return parseGatewayMessage(data);
 }
@@ -86,11 +77,4 @@ export function buildDiscordActivityTokenUrl(): string {
 
 export function buildGatewaySocketIoUrl(): string {
   return gatewaySocketUrl(GUNDAM_GAME_SLUG);
-}
-
-function gatewaySocketOrigin(gameSlug: GameSlug): string {
-  const socketUrl = gatewaySocketUrl(gameSlug);
-  const suffix = `/${gameSlug}`;
-  const origin = socketUrl.endsWith(suffix) ? socketUrl.slice(0, -suffix.length) : socketUrl;
-  return origin || socketUrl;
 }

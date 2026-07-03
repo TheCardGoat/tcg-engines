@@ -4,6 +4,17 @@ import { pachaEmperorsGuideI18n } from "./143-pacha-emperors-guide.i18n";
 export const pachaEmperorsGuide: CharacterCard = {
   id: "sLG",
   canonicalId: "ci_sLG",
+  slug: "lorcana-ci_sLG",
+  printings: [
+    {
+      id: "set5-143",
+      artId: "set5-143",
+      setCode: "set5",
+      collectorNumber: "143",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-143"],
   cardType: "character",
   name: "Pacha",
@@ -20,7 +31,7 @@ export const pachaEmperorsGuide: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_761315af205f480fae3ecf8c5018db46",
-    tcgPlayer: 561471,
+    tcgPlayer: "561471",
   },
   text: [
     {

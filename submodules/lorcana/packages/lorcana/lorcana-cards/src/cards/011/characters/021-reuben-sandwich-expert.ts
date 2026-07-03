@@ -4,6 +4,17 @@ import { reubenSandwichExpertI18n } from "./021-reuben-sandwich-expert.i18n";
 export const reubenSandwichExpert: CharacterCard = {
   id: "YVY",
   canonicalId: "ci_YVY",
+  slug: "lorcana-ci_YVY",
+  printings: [
+    {
+      id: "set11-021",
+      artId: "set11-021",
+      setCode: "set11",
+      collectorNumber: "21",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-021"],
   cardType: "character",
   name: "Reuben",
@@ -20,7 +31,7 @@ export const reubenSandwichExpert: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_47d6da02d19a4b82a6d7aaf593ca151e",
-    tcgPlayer: 673306,
+    tcgPlayer: "673306",
   },
   text: [
     {
@@ -44,7 +55,10 @@ export const reubenSandwichExpert: CharacterCard = {
         steps: [
           {
             type: "remove-damage",
-            amount: { type: "up-to", value: 2 },
+            amount: {
+              type: "up-to",
+              value: 2,
+            },
             target: "YOUR_CHOSEN_CHARACTER",
           },
           {

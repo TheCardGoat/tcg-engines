@@ -17,7 +17,7 @@ export const jasperCommonCrookI18n: Record<Languages, I18nProperties> = {
     version: "Gewöhnlicher Ganove",
     text: [
       {
-        title: "WELPEN-ENTFÜHRUNG",
+        title: "Welpen-Entführung",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, wähle einen gegnerischen Charakter. Er kann in seinem nächsten Zug nicht erkunden.",
       },
@@ -39,7 +39,7 @@ export const jasperCommonCrookI18n: Record<Languages, I18nProperties> = {
     version: "Comune Ladruncolo",
     text: [
       {
-        title: "A NANNA CUCCIOLI",
+        title: "A Nanna Cuccioli",
         description:
           "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta non potrà andare all'avventura nel suo prossimo turno.",
       },

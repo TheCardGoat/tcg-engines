@@ -103,10 +103,14 @@ function getBagTargetSelectionValidationInput(
           ? targetDsl.cardTypes
           : undefined;
       if (Array.isArray(cardTypes) && cardTypes.includes("location")) {
-        return [...explicitTargets.location] as ActionResolutionInput["targets"];
+        return explicitTargets.location.filter((target) =>
+          cardCandidateIds.some((candidateId) => candidateId === target),
+        ) as ActionResolutionInput["targets"];
       }
 
-      return [...explicitTargets.subject] as ActionResolutionInput["targets"];
+      return explicitTargets.subject.filter((target) =>
+        cardCandidateIds.some((candidateId) => candidateId === target),
+      ) as ActionResolutionInput["targets"];
     }
 
     if (Array.isArray(explicitTargets)) {
@@ -130,7 +134,10 @@ function effectContainsTriggerDestinationMoveToLocation(effect: unknown): boolea
 
   if (effect.type === "move-to-location") {
     const location = effect.location;
-    return isRecord(location) && location.ref === "trigger-destination";
+    return (
+      isRecord(location) &&
+      (location.ref === "trigger-destination" || location.ref === "trigger-subject")
+    );
   }
 
   const nestedEffect = effect.effect;
@@ -176,6 +183,50 @@ function effectContainsOptional(effect: unknown): boolean {
   return nestedEffects.some(effectContainsOptional);
 }
 
+function effectContainsType(effect: unknown, type: string): boolean {
+  if (!effect || typeof effect !== "object") {
+    return false;
+  }
+  if (Array.isArray(effect)) {
+    return effect.some((nested) => effectContainsType(nested, type));
+  }
+
+  const record = effect as Record<string, unknown>;
+  if (record.type === type) {
+    return true;
+  }
+
+  const nestedEffects = [
+    ...(Array.isArray(record.steps) ? record.steps : []),
+    ...(Array.isArray(record.effects) ? record.effects : []),
+    record.effect,
+    record.then,
+    record.else,
+    record.ifTrue,
+    record.ifFalse,
+  ];
+
+  return nestedEffects.some((nested) => effectContainsType(nested, type));
+}
+
+function getResolveBagLogTargets(
+  bagEffect: NonNullable<ReturnType<typeof getBagEffect>>,
+  resolutionInput: ActionResolutionInput,
+): LogTargetId[] {
+  const selectedTargets =
+    normalizeResolveBagTargets(getCurrentSelectionInput(resolutionInput)) ?? [];
+  if (selectedTargets.length > 0) {
+    return selectedTargets;
+  }
+
+  const chosenCardId = resolutionInput.eventSnapshot?.chosenCardId;
+  if (typeof chosenCardId === "string" && effectContainsType(bagEffect.effect, "play-card")) {
+    return normalizeResolveBagTargets(chosenCardId) ?? [];
+  }
+
+  return selectedTargets;
+}
+
 function logResolveBagMessage(
   ctx: ResolveBagExecutionContext,
   bagEffect: NonNullable<ReturnType<typeof getBagEffect>>,
@@ -188,7 +239,11 @@ function logResolveBagMessage(
     sourceId: bagEffect.sourceId,
   };
   const abilityName = bagEffect.abilityName?.trim();
-  const targets = normalizeResolveBagTargets(getCurrentSelectionInput(resolutionInput));
+  const targets = getResolveBagLogTargets(bagEffect, resolutionInput);
+  const playCardFromDiscardDetail =
+    resolutionInput.effectType === "play-card" && resolutionInput.sourceZone === "discard"
+      ? { effectType: "play-card" as const, sourceZone: "discard" as const }
+      : {};
 
   const visibility = { mode: "PUBLIC" as const };
   const category = "action" as const;
@@ -203,6 +258,7 @@ function logResolveBagMessage(
               ...common,
               abilityName,
               targets,
+              ...playCardFromDiscardDetail,
             },
             visibility,
             category,
@@ -214,6 +270,7 @@ function logResolveBagMessage(
             {
               ...common,
               targets,
+              ...playCardFromDiscardDetail,
             },
             visibility,
             category,
@@ -312,6 +369,69 @@ function logResolveBagMessage(
   })();
 
   ctx.framework.log(projection);
+}
+
+function restorePriorityToTurnPlayer(ctx: ResolveBagExecutionContext): void {
+  const turnPlayer = resolveTurnOwnerId(ctx.framework.state, ctx.G);
+  if (!turnPlayer || ctx.framework.state.currentPlayer === turnPlayer) {
+    return;
+  }
+
+  if (typeof ctx.framework.priority?.setHolder === "function") {
+    ctx.framework.priority.setHolder(turnPlayer);
+  } else {
+    (ctx.framework.state.priority as { holder?: PlayerId }).holder = turnPlayer;
+  }
+}
+
+function settlePostBagResolution(ctx: ResolveBagExecutionContext): void {
+  flushTriggeredEventsToBag(ctx);
+
+  if (hasPendingBagItems(ctx)) {
+    return;
+  }
+
+  ctx.G.triggeredAbilities.bag.lastResolvedPlayerId = undefined;
+  if (ctx.framework.state.priority.pendingChoice || (ctx.G.pendingEffects?.length ?? 0) > 0) {
+    return;
+  }
+
+  if (ctx.G.pendingTurnTransition) {
+    continuePendingTurnTransition(ctx);
+    return;
+  }
+
+  if (ctx.G.challengeState) {
+    continuePendingChallengeResolution(ctx);
+    if (
+      !ctx.G.challengeState &&
+      !hasPendingBagItems(ctx) &&
+      !ctx.framework.state.priority.pendingChoice &&
+      (ctx.G.pendingEffects?.length ?? 0) === 0
+    ) {
+      restorePriorityToTurnPlayer(ctx);
+    }
+    return;
+  }
+
+  restorePriorityToTurnPlayer(ctx);
+}
+
+function logResolveBagOptionalDecline(
+  ctx: ResolveBagExecutionContext,
+  bagEffect: NonNullable<ReturnType<typeof getBagEffect>>,
+): void {
+  ctx.framework.log(
+    createLorcanaLogProjection(
+      "lorcana.effect.resolve.optionalSelection.rejected",
+      {
+        playerId: bagEffect.controllerId,
+        sourceCardId: bagEffect.sourceId,
+      },
+      { mode: "PUBLIC" },
+      "action",
+    ),
+  );
 }
 
 function getBagEffect(
@@ -702,7 +822,10 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
         validationTargets !== explicitTargets
           ? {
               ...selectionAnalysisForValidation,
-              minSelections: Math.min(selectionAnalysisForValidation.minSelections, 1),
+              minSelections: Math.min(
+                selectionAnalysisForValidation.minSelections,
+                countExplicitTargetSelections(validationTargets),
+              ),
             }
           : selectionAnalysisForValidation;
       const selectionValidation = validateAndNormalizeTargetSelection(
@@ -966,6 +1089,7 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
           ctx,
           bagEffect.sourceId as CardInstanceId,
           "bag-decision",
+          bagEffect.resolutionInput?.eventSnapshot,
         ) ||
         (effectRequirements.requiresExplicitTargetSelection &&
           executeRawTargets !== undefined &&
@@ -976,6 +1100,26 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
       } else {
         (resolutionInput as Record<string, unknown>).resolveOptional = true;
       }
+    }
+    if (
+      topLevelType !== "sequence" &&
+      effectRequirements.isOptional &&
+      resolutionInput.resolveOptional === false
+    ) {
+      logResolveBagOptionalDecline(ctx, bagEffect);
+      recordBagEffectResolution(ctx, bagEffect);
+      removeBagEffect(ctx, bagId);
+      traceLorcanaRuntimeStep({
+        kind: "bag.effect.resolution.completed",
+        moveId: "resolveBag",
+        playerId: bagEffect.controllerId,
+        bagItemId: bagId,
+        cardId: bagEffect.sourceId,
+        cardName: sourceCardName,
+        message: "Effect resolution completes (optional declined)",
+      });
+      settlePostBagResolution(ctx);
+      return;
     }
 
     // For a sequence whose first step(s) contain an optional, auto-accept the
@@ -1063,6 +1207,13 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
           cardName: sourceCardName,
           message: "Effect goes to resolution",
         });
+        const preResolutionTargetAnalysis = analyzeEffectTargets(
+          bagEffect.effect,
+          bagEffect.controllerId,
+          ctx,
+          bagEffect.sourceId as CardInstanceId,
+          { eventSnapshot: resolutionInput.eventSnapshot },
+        );
         const result = resolveActionEffect(
           ctx,
           bagEffect.cardPlayed,
@@ -1159,6 +1310,15 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
             targetAnalysis,
           );
           if (availability.shouldAutoRejectForNoValidTargets) return true;
+          if (
+            preResolutionTargetAnalysis.requiresExplicitSelection &&
+            preResolutionTargetAnalysis.minSelections > 0 &&
+            preResolutionTargetAnalysis.cardCandidates.length +
+              preResolutionTargetAnalysis.playerCandidates.length ===
+              0
+          ) {
+            return true;
+          }
           const firstStepEffect =
             effectRecord?.type === "sequence"
               ? ((effectRecord.steps as unknown[] | undefined)?.[0] ?? null)
@@ -1170,8 +1330,19 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
               ctx,
               bagEffect.sourceId as CardInstanceId,
             );
-            return analyzeTargetSelectionAvailabilityFromAnalysis(firstStepEffect, stepAnalysis)
-              .shouldAutoRejectForNoValidTargets;
+            if (
+              analyzeTargetSelectionAvailabilityFromAnalysis(firstStepEffect, stepAnalysis)
+                .shouldAutoRejectForNoValidTargets
+            ) {
+              return true;
+            }
+            return (
+              preResolutionTargetAnalysis.requiresExplicitSelection &&
+              preResolutionTargetAnalysis.minSelections > 0 &&
+              preResolutionTargetAnalysis.cardCandidates.length +
+                preResolutionTargetAnalysis.playerCandidates.length ===
+                0
+            );
           }
           return false;
         })();
@@ -1188,53 +1359,7 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
       logResolveBagMessage(ctx, bagEffect, resolutionInput, "cancelled", "restriction");
     }
 
-    flushTriggeredEventsToBag(ctx);
-
-    if (!hasPendingBagItems(ctx)) {
-      ctx.G.triggeredAbilities.bag.lastResolvedPlayerId = undefined;
-      if (
-        !ctx.framework.state.priority.pendingChoice &&
-        (ctx.G.pendingEffects?.length ?? 0) === 0
-      ) {
-        if (ctx.G.pendingTurnTransition) {
-          continuePendingTurnTransition(ctx);
-        } else if (ctx.G.challengeState) {
-          continuePendingChallengeResolution(ctx);
-          // After challenge resolution completes, challengeState may have been cleared.
-          // If so (and no new bag items were enqueued), restore priority to the turn
-          // player so that the active player can continue taking actions.
-          if (
-            !ctx.G.challengeState &&
-            !hasPendingBagItems(ctx) &&
-            !ctx.framework.state.priority.pendingChoice &&
-            (ctx.G.pendingEffects?.length ?? 0) === 0
-          ) {
-            const turnPlayer = resolveTurnOwnerId(ctx.framework.state, ctx.G);
-            if (turnPlayer && ctx.framework.state.currentPlayer !== turnPlayer) {
-              if (typeof ctx.framework.priority?.setHolder === "function") {
-                ctx.framework.priority.setHolder(turnPlayer);
-              } else {
-                (ctx.framework.state.priority as { holder?: PlayerId }).holder = turnPlayer;
-              }
-            }
-          }
-        } else {
-          // Bag resolved mid-turn (no pending transition or challenge).
-          // Priority may have been temporarily transferred to the bag controller
-          // for resolution.  Restore it to the actual turn player so that
-          // subsequent triggered-ability restriction checks (e.g. "during an
-          // opponent's turn") evaluate against the correct active player.
-          const turnPlayer = resolveTurnOwnerId(ctx.framework.state, ctx.G);
-          if (turnPlayer && ctx.framework.state.currentPlayer !== turnPlayer) {
-            if (typeof ctx.framework.priority?.setHolder === "function") {
-              ctx.framework.priority.setHolder(turnPlayer);
-            } else {
-              (ctx.framework.state.priority as { holder?: PlayerId }).holder = turnPlayer;
-            }
-          }
-        }
-      }
-    }
+    settlePostBagResolution(ctx);
   },
 
   available: (ctx) => {

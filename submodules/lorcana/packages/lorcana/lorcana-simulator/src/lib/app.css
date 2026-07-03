@@ -308,11 +308,11 @@ body[data-immersive-app="active"] main {
   0%,
   100% {
     opacity: 0.6;
-    transform: scale(1);
+    box-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
   }
   50% {
     opacity: 1;
-    transform: scale(1.05);
+    box-shadow: 0 0 22px rgba(250, 204, 21, 0.58);
   }
 }
 

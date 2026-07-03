@@ -4,6 +4,17 @@ import { infrapinkUltraScanSpecsI18n } from "./201-infra-pink-ultra-scan-specs.i
 export const infrapinkUltraScanSpecs: ItemCard = {
   id: "nZg",
   canonicalId: "ci_nZg",
+  slug: "lorcana-ci_nZg",
+  printings: [
+    {
+      id: "set11-201",
+      artId: "set11-201",
+      setCode: "set11",
+      collectorNumber: "201",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-201"],
   cardType: "item",
   name: "Infra-Pink Ultra Scan Specs",
@@ -16,7 +27,7 @@ export const infrapinkUltraScanSpecs: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_472838feca334c31913db3f2fc0b39db",
-    tcgPlayer: 676249,
+    tcgPlayer: "676249",
   },
   text: [
     {

@@ -18,7 +18,7 @@
     onError,
   }: {
     set: string | number;
-    number: number;
+    number: number | string;
     lang?: string;
     crop?: ImageFormat;
     alt: string;
@@ -28,21 +28,25 @@
   } = $props();
 
   function getPaddedSet(s: string | number): string {
-    const setStr = String(s);
-    // If it's just a number like "6" or 6, pad it to "006".
-    // If it's "set6", we might need to extract the number or just use it if the legacy format allows.
-    // Based on the user request:
-    // https://cdn.assets.lorcanito.com/assets/images/cards/EN/006/143.webp
-    // The set is "006". "set6" in the data maps to this.
+    const setStr = String(s).trim();
+    const setMatch = /^set(\d+)$/i.exec(setStr);
 
-    // Check if it starts with "set"
-    if (setStr.startsWith("set")) {
-      const numPart = setStr.replace("set", "");
+    if (setMatch) {
+      const [, numPart] = setMatch;
       return numPart.padStart(3, "0");
     }
 
-    // Otherwise assume it's a number
-    return setStr.padStart(3, "0");
+    if (/^\d+$/.test(setStr)) {
+      return setStr.padStart(3, "0");
+    }
+
+    const promoMatch = /^(P|C|Q|G)(\d+)$/i.exec(setStr);
+    if (promoMatch) {
+      const [, prefix, numPart] = promoMatch;
+      return `${prefix.toUpperCase()}${numPart.padStart(2, "0")}`;
+    }
+
+    return setStr.toUpperCase();
   }
 
   const imageUrl = $derived.by(() => {

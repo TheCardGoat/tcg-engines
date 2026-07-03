@@ -4,6 +4,17 @@ import { friendOwlCantankerousNeighborI18n } from "./144-friend-owl-cantankerous
 export const friendOwlCantankerousNeighbor: CharacterCard = {
   id: "CQX",
   canonicalId: "ci_CQX",
+  slug: "lorcana-ci_CQX",
+  printings: [
+    {
+      id: "set8-144",
+      artId: "set8-144",
+      setCode: "set8",
+      collectorNumber: "144",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-144"],
   cardType: "character",
   name: "Friend Owl",
@@ -21,7 +32,7 @@ export const friendOwlCantankerousNeighbor: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_fee05898e5484f948ef002681b38ec43",
-    tcgPlayer: 631444,
+    tcgPlayer: "631444",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: friendOwlCantankerousNeighborI18n,

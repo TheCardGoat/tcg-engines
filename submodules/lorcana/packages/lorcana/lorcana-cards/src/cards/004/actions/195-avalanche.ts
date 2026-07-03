@@ -4,6 +4,17 @@ import { avalancheI18n } from "./195-avalanche.i18n";
 export const avalanche: ActionCard = {
   id: "4mu",
   canonicalId: "ci_4mu",
+  slug: "lorcana-ci_4mu",
+  printings: [
+    {
+      id: "set4-195",
+      artId: "set4-195",
+      setCode: "set4",
+      collectorNumber: "195",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-195"],
   cardType: "action",
   name: "Avalanche",
@@ -16,7 +27,7 @@ export const avalanche: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9bf4859e7a784073aa4b4de08c5211f0",
-    tcgPlayer: 550623,
+    tcgPlayer: "550623",
   },
   text: "Deal 1 damage to each opposing character. You may banish chosen location.",
   abilities: [

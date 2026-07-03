@@ -20,10 +20,10 @@ export const scarVengefulLionEnchantedI18n: Record<Languages, I18nProperties> = 
     version: "Rachsüchtiger Löwe",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "DIE WELT IST SO UNGERECHT, NICHT WAHR?",
+        title: "Die Welt ist so ungerecht, nicht wahr?",
         description:
           "Jedes Mal, wenn einer deiner Charaktere einen beschädigten Charakter herausfordert, darfst du 1 Karte ziehen.",
       },
@@ -34,10 +34,10 @@ export const scarVengefulLionEnchantedI18n: Record<Languages, I18nProperties> = 
     version: "Lion revanchard",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "LA VIE N'EST PAS JUSTE, TU VOIS?",
+        title: "La vie n'est pas juste, tu vois?",
         description:
           "Chaque fois que l'un de vos personnages défie un personnage ayant au moins un dommage sur lui, vous pouvez piocher une carte.",
       },
@@ -48,12 +48,12 @@ export const scarVengefulLionEnchantedI18n: Record<Languages, I18nProperties> = 
     version: "Leone Vendicativo",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "LA VITA",
+        title: "La Vita a Volte È Ingiusta, non È Vero?",
         description:
-          "A VOLTE È INGIUSTA, NON È VERO? Ogni volta che uno dei tuoi personaggi sfida un personaggio danneggiato, puoi pescare una carta.",
+          "Ogni volta che uno dei tuoi personaggi sfida un personaggio danneggiato, puoi pescare una carta.",
       },
     ],
   },

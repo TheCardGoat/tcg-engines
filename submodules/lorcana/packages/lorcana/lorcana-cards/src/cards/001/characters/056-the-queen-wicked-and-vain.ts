@@ -4,6 +4,17 @@ import { theQueenWickedAndVainI18n } from "./056-the-queen-wicked-and-vain.i18n"
 export const theQueenWickedAndVain: CharacterCard = {
   id: "KjI",
   canonicalId: "ci_yYu",
+  slug: "lorcana-ci_yYu",
+  printings: [
+    {
+      id: "set1-056",
+      artId: "set1-056",
+      setCode: "set1",
+      collectorNumber: "56",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-056", "set9-035"],
   cardType: "character",
   name: "The Queen",
@@ -20,7 +31,7 @@ export const theQueenWickedAndVain: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ab6a9775bfbb446bb03724f1f7ba0f3a",
-    tcgPlayer: 649982,
+    tcgPlayer: "649982",
   },
   text: [
     {

@@ -2,11 +2,10 @@
 
 ## TL;DR
 
-Playwright + POM-based end-to-end tests for the simulator. One spec per move
-or flow. Each assertion checks **both** the engine state (via a dev-only
-`window.__cyberpunkEngine` bridge) AND the rendered UI (via `data-testid`
-locators). Specs talk to a `SimulatorPage` POM — they never call
-`page.evaluate` directly.
+Playwright + POM-based end-to-end tests for the Cyberpunk simulator. Every
+action is driven through the rendered `InteractionPanel`; the dev-only engine
+bridge (`window.__cyberpunkEngine`) is used only for assertions, the dispatch
+spy, and test seat control.
 
 ## Quickstart
 
@@ -29,46 +28,77 @@ fixture routes and the `window.__cyberpunkEngine` bridge are gated behind
 ```
 e2e/
   poms/
-    SimulatorPage.ts      # top-level POM; owns the engine bridge + sub-POMs
-    GameBoardSection.ts   # one side of the board (player | opponent)
-    PromptBanner.ts       # per-side prompt banner + verb buttons
-  fixtures/
-    test.ts               # Playwright test.extend → injects `simulator` fixture
+    CyberpunkPlaywrightHarnessClient.ts  # Playwright factory + harness client
   specs/
-    two-turns.spec.ts     # full SETUP → MULLIGAN → 4 half-turns flow
-    play-card.spec.ts     # drag-and-drop playCard / sellCard smoke
-  tsconfig.json           # scoped to e2e/**/*.ts; does not pull React app surface
+    root-fixtures/                        # one behavior spec per root fixture scenario
+    root-fixtures-pom.spec.ts             # structural smoke tests for every fixture
+    two-turns.spec.ts                     # full SETUP → MULLIGAN → 4 half-turns flow
+    retail-card-catalog.spec.ts           # static render of every official retail card
+    main-routes.spec.ts                   # route / navigation smoke tests
+    mobile-prompt.spec.ts                 # mobile PromptBanner rendering
+    ...
+  tsconfig.json                           # scoped to e2e/**/*.ts
 ```
 
-The e2e [tsconfig.json](./tsconfig.json) deliberately excludes
-`apps/multi-game-simulator/src/games/cyberpunk` — it only typechecks `e2e/**/*.ts` plus
-[`../playwright.config.ts`](../playwright.config.ts). That's why
-`SimulatorPage` redeclares the `ScenarioId` union and uses a structural
-`CyberpunkEngineHandle` interface rather than importing the engine class.
+The entry point for every test is `createPlaywrightCyberpunkSimulatorPom`:
+
+```ts
+import { test, expect } from "@playwright/test";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
+
+test("my flow", async ({ page }) => {
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, {
+    fixture: { scenarioId: "openingMain" },
+  });
+
+  await pom.expectHandSize("p1", 3);
+});
+```
+
+The factory:
+
+1. Navigates to `/cyberpunk/simulator/tests/${scenarioId}?ai=off&auto-advance-attack=off`.
+2. Builds a `CyberpunkSimulatorPom` backed by `PlaywrightDomDriver` and `PlaywrightCyberpunkHarnessClient`.
+3. Waits for the simulator bridge and asserts the structural state.
+
+## Action path: InteractionPanel only
+
+`CyberpunkSimulatorPom` methods such as `mulligan`, `keepHand`, `passPhase`,
+`playCardFromHand`, `attackRival`, `attackUnit`, `gainGig`, `resolveAttack`,
+etc., all click elements inside the shared `InteractionPanel`. The underlying
+`InteractionPanelPom` translates those clicks into:
+
+- `data-move-command` selectors for the interaction card,
+- `data-testid="interaction-candidate:${interactionId}:${entityId}"` for candidates,
+- `data-testid="choice-chip:${optionId}"` for option chips,
+- `data-testid="interaction-submit:${interactionId}"` for the submit button.
+
+The engine bridge is **not** used to perform moves. It remains available for:
+
+- read-only engine state queries (`getPhase`, `getCardsInZone`, ...),
+- the dispatch spy (`getDispatchLog`, `clearDispatchLog`, `expectLastDispatch`),
+- flipping the human seat (`getHumanSide`, `setHumanSide`).
 
 ## Two layers, every assertion
 
-The harness asserts the **engine** value first (fast, exact via the bridge),
-then asserts the **DOM** matches via Playwright's auto-retrying matchers.
-A divergence between the two — engine says hand=7 but the UI rendered 6
-cards — fails the test.
+The POM's `expect*` helpers assert the engine value first, then assert the
+rendered DOM matches via Playwright's auto-retrying matchers. A divergence
+between the two surfaces fails the test.
 
 ```ts
-// expectHandSize from poms/SimulatorPage.ts:
-async expectHandSize(player: PlayerId, n: number): Promise<void> {
-  expect(await this.getHandSize(player), `engine hand size for ${player}`).toBe(n);
-  await expect(this.boardForPlayer(player).handCards).toHaveCount(n);
+// expectHandSize from CyberpunkSimulatorPom:
+async expectHandSize(player: PlayerId, expected: number): Promise<void> {
+  const handSize = await this.getHandSize(player);
+  if (handSize !== expected) {
+    throw new Error(`Expected hand size ${expected}, found ${handSize}.`);
+  }
+  await expectDomAttribute(this.boardForPlayer(player).handZone(), "data-count", String(expected));
+  // ... visible card count assertion
 }
 ```
 
-Use the layered helpers as your default. Drop down to one layer only when
-the other has no representation:
-
-| Use                | When                                                         |
-| ------------------ | ------------------------------------------------------------ |
-| `expect*` combined | Almost always. Engine + UI must agree.                       |
-| Bridge-only `getX` | The data isn't visible (e.g. specific die ids in `gainGig`). |
-| UI-driven action   | Whenever a UI counterpart exists. Use `clickVerb` / `drag`.  |
+Use the layered helpers as your default. Drop down to one layer only when the
+other has no representation.
 
 ## The dispatch spy
 
@@ -77,63 +107,67 @@ bridge. Specs verify a UI click translated to the right engine call via
 `expectLastDispatch`:
 
 ```ts
-await simulator.clearDispatchLog();
-await simulator.mulligan(first);
-await simulator.expectLastDispatch({ type: "mulligan", as: first });
+await pom.clearDispatchLog();
+await pom.mulligan(first);
+await pom.expectLastDispatch({ type: "mulligan", as: first });
 ```
 
-This catches silent UI bugs an engine-only assertion would miss — wrong
-button wired up, missing handler, decoded action shape drifted.
-
 The recorder is gated behind `import.meta.env.DEV` (see
-`apps/multi-game-simulator/src/games/cyberpunk/engine/EngineProvider.tsx`) — production builds don't
-ship the spy or the bridge.
+`apps/multi-game-simulator/src/games/cyberpunk/engine/EngineProvider.tsx`) —
+production builds don't ship the spy or the bridge.
 
 ## POM reference
 
-All helpers live on `SimulatorPage` ([poms/SimulatorPage.ts](./poms/SimulatorPage.ts)).
+All helpers live on `CyberpunkSimulatorPom`
+([src/games/cyberpunk/testing/cyberpunk-simulator-pom.ts](../src/games/cyberpunk/testing/cyberpunk-simulator-pom.ts)).
 
-### Navigation
+### Navigation / factory
 
-| Helper                     | What it does                                                                               |
-| -------------------------- | ------------------------------------------------------------------------------------------ |
-| `gotoFixture(id, { ai? })` | Navigates to `/cyberpunk/simulator/tests/${id}?ai=off` (default) and waits for the bridge. |
-| `takeControl(player)`      | Flips the human seat. Mirrors the "Take Control" sidebar button.                           |
-| `getHumanSide()`           | Reads the current human seat from the bridge.                                              |
+| Helper                                                                     | What it does                                            |
+| -------------------------------------------------------------------------- | ------------------------------------------------------- |
+| `createPlaywrightCyberpunkSimulatorPom(page, { fixture: { scenarioId } })` | Navigates to the fixture and returns a ready POM.       |
+| `pom.waitForReady()`                                                       | Waits for the simulator bridge and the rendered board.  |
+| `pom.takeControl(player)`                                                  | Flips the human seat to the side that maps to `player`. |
+| `pom.getHumanSide()`                                                       | Reads the current human seat.                           |
 
 ### UI-driven moves
 
-These click the rendered React tree — same path a human would take. The
-dispatch spy records the resulting engine action.
-
-| Helper                 | UI counterpart                                                                                |
-| ---------------------- | --------------------------------------------------------------------------------------------- |
-| `mulligan(as)`         | Clicks the side's `prompt-verb-mulligan` button.                                              |
-| `keepHand(as)`         | Clicks `prompt-verb-keepHand`.                                                                |
-| `passPhase(as)`        | Clicks `prompt-verb-passPhase`.                                                               |
-| `gainGig(dieId, as)`   | Clicks the matching `fixer-die` in the FixerZone.                                             |
-| `drag(source, target)` | Raw pointer events past dnd-kit's 4px activation threshold; used for `playCard` / `sellCard`. |
+| Helper                                             | InteractionPanel move command |
+| -------------------------------------------------- | ----------------------------- |
+| `pom.mulligan(as)`                                 | `cyberpunk.mulligan`          |
+| `pom.keepHand(as)`                                 | `cyberpunk.keepHand`          |
+| `pom.passPhase(as)`                                | `cyberpunk.passPhase`         |
+| `pom.gainGig(dieId, as)`                           | `cyberpunk.gainGig`           |
+| `pom.playCardFromHand(cardOrRef, as)`              | `cyberpunk.playCard`          |
+| `pom.attachGearFromHand(gearId, attachToId, as)`   | `cyberpunk.playCard`          |
+| `pom.goSolo(cardOrRef, as)`                        | `cyberpunk.goSolo`            |
+| `pom.callLegend(legendId, as)`                     | `cyberpunk.callLegend`        |
+| `pom.attackRival(attackerId, as)`                  | `cyberpunk.attackRival`       |
+| `pom.attackUnit(attackerId, defenderId, as)`       | `cyberpunk.attackUnit`        |
+| `pom.useBlocker(blockerId, as)`                    | `cyberpunk.useBlocker`        |
+| `pom.resolveAttack(as, { pass?, gigIdsToSteal? })` | `cyberpunk.resolveAttack`     |
+| `pom.resolveStealGigs(dieIds, as)`                 | `cyberpunk.resolveStealGigs`  |
 
 ### Engine state reads (bridge-only)
 
 `getPhase`, `getTurnNumber`, `getActivePlayerId`, `getOpponentOf(player)`,
-`getHandSize(player)`, `getFieldSize(player)`, `getFixerDiceCount(player)`,
-`getGigCount(player)`, `getEddies(player)`, `getSpentLegendsCount(player)`,
-`getPendingChoiceType(player)`, `getAllowedGigDice(player)`,
-`pickFirstAllowedDie(player)`, `isGameOver()`, `getActiveSide()`.
+`getCardsInZone(zone, player)`, `getHandSize(player)`, `getFieldSize(player)`,
+`getFixerDiceCount(player)`, `getGigCount(player)`, `getGigDice(player)`,
+`getEddies(player)`, `getAllowedGigDice(player)`, `pickFirstAllowedDie(player)`,
+`getPendingChoiceType(player)`, `isGameOver()`.
 
-### Combined engine + UI assertions
+### Combined engine + DOM assertions
 
-Prefer these whenever both layers have a representation:
-
-| Helper                                  | Engine value                   | UI hook                                   |
-| --------------------------------------- | ------------------------------ | ----------------------------------------- |
-| `expectHandSize(player, n)`             | `getCardsInZone("hand")`       | `[data-testid="hand-card"]` count         |
-| `expectFixerDiceCount(player, n)`       | `getFixerDice(p).length`       | `[data-testid="fixer-die"]` count         |
-| `expectGigCount(player, n)`             | `getGigCount(p)`               | `[data-testid="gig-die"]` count           |
-| `expectEddies(player, n)`               | `getEddies(p)`                 | `[data-testid="eddies-zone"][data-count]` |
-| `expectFaceDownLegendsCount(player, n)` | `getFaceDownLegends(p).length` | `[data-face-down="true"]` slots           |
-| `expectActiveBoardMode(mode)`           | `getActivePlayerId()`          | `[data-mode="..."]` on the active board   |
+| Helper                                  | Engine value                             | DOM hook                          |
+| --------------------------------------- | ---------------------------------------- | --------------------------------- |
+| `expectHandSize(player, n)`             | `getCardsInZone("hand")`                 | zone `data-count` + visible cards |
+| `expectFieldSize(player, n)`            | `getCardsInZone("field")`                | zone `data-count` + field cards   |
+| `expectFixerDiceCount(player, n)`       | `getFixerDice().length`                  | zone `data-count` + dice          |
+| `expectGigCount(player, n)`             | `getGigCount()`                          | zone `data-count` + dice          |
+| `expectEddies(player, n)`               | `getEddies()`                            | zone `data-count`                 |
+| `expectTrashSize(player, n)`            | `getCardsInZone("trash").length`         | zone `data-count`                 |
+| `expectFaceDownLegendsCount(player, n)` | `getCardsInZone("legendArea")` face-down | face-down legend slots            |
+| `expectBoardMode(player, mode)`         | active player / prompt                   | board `data-mode`                 |
 
 ### Dispatch spy
 
@@ -142,36 +176,34 @@ Prefer these whenever both layers have a representation:
 | `clearDispatchLog()`              | Reset the log between phases / actions.          |
 | `getDispatchLog()`                | Read the recorded actions + results.             |
 | `expectLastDispatch({ type, … })` | Deep-equality on every key in the latest action. |
+| `expectDispatch({ type, … })`     | True if any action in the scoped log matches.    |
 
 ## `data-testid` conventions
 
-Every zone wrapper carries `data-side="player" | "opponent"` and (where
-applicable) `data-count="..."` so the same locators work on both sides.
+The shared `InteractionPanel` exposes:
 
-| Testid                                                                                                                                        | Owner                                                          |
-| --------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| `hand-zone`, `hand-card`                                                                                                                      | [HandZone.tsx](../src/components/GameBoard/HandZone.tsx)       |
-| `fixer-zone`, `fixer-die`                                                                                                                     | [FixerZone.tsx](../src/components/GameBoard/FixerZone.tsx)     |
-| `field-zone`, `field-unit`                                                                                                                    | [FieldZone.tsx](../src/components/GameBoard/FieldZone.tsx)     |
-| `legends-zone`, `legend-slot` (`data-occupied`, `data-face-down`)                                                                             | [LegendsZone.tsx](../src/components/GameBoard/LegendsZone.tsx) |
-| `eddies-zone` (`data-count`)                                                                                                                  | [EddiesZone.tsx](../src/components/GameBoard/EddiesZone.tsx)   |
-| `gig-row`, `gig-die`                                                                                                                          | [CenterRow.tsx](../src/components/GameBoard/CenterRow.tsx)     |
-| `prompt-banner`, `prompt-banner-title`, `prompt-banner-message`, `prompt-banner-verbs`, `prompt-verb-${moveId}`, `prompt-gain-gig-${dieType}` | [PromptBanner.tsx](../src/components/Prompt/PromptBanner.tsx)  |
+| Testid                                    | Meaning                           |
+| ----------------------------------------- | --------------------------------- |
+| `interaction-card:${id}`                  | A single move/interaction card    |
+| `interaction-candidate:${id}:${entityId}` | Selectable candidate button       |
+| `interaction-payment:${id}:${entityId}`   | Payment selection button          |
+| `interaction-order:${id}:${entityId}`     | Ordering selection button         |
+| `interaction-submit:${id}`                | Submit button for the interaction |
+| `choice-chip:${optionId}`                 | Boolean / option chip             |
 
-The `GameBoard` root carries `data-side` + `data-mode="view" | "select-action" | "select-target"` —
-that's what `expectActiveBoardMode` queries.
+Board zones are selected via `data-zone-id` inside the active shell:
 
-## Mobile caveat
+| Zone id                           | Purpose         |
+| --------------------------------- | --------------- |
+| `p-hand` / `opp-hand`             | Hand zone       |
+| `p-field` / `opp-field`           | Field zone      |
+| `p-legendArea` / `opp-legendArea` | Legends zone    |
+| `p-fixer` / `opp-fixer`           | Fixer dice zone |
+| `p-gigArea` / `opp-gigArea`       | Gig dice row    |
+| `p-eddieArea` / `opp-eddieArea`   | Eddies zone     |
+| `p-trash` / `opp-trash`           | Trash zone      |
 
-The desktop layout is fully covered by these tests. The mobile layout is
-**not** yet harness-friendly: [MobileBoard.tsx](../src/components/GameBoard/MobileBoard.tsx)
-doesn't plumb the `side` prop into all its zones, so a mobile-viewport spec
-would fail every `[data-side="..."]` query. Track W1-M will fix this — until
-then, run specs at the default chromium desktop viewport.
-
-The Vite dev iframe served by `preview` reports `vw=0`, so manually opening
-a fixture in the in-IDE preview pane does not render the desktop layout.
-For visual proof, write a Playwright spec — don't rely on the preview.
+Cards and dice inside zones carry `data-testid="card"` and `data-card-kind`.
 
 ## Determinism
 
@@ -180,9 +212,10 @@ pins its own seed via the `SCENARIO_SEEDS` map. `createMatchState` defaults
 to a stable `"default"` seed (no `Date.now()`), so reloading the same fixture
 produces identical state.
 
-`gotoFixture` always passes `?ai=off` unless explicitly overridden — the
-default Board page boots a greedy AI on the rival seat that would race the
-test driver and resolve pending choices before assertions could run.
+`createPlaywrightCyberpunkSimulatorPom` always passes `?ai=off` and
+`auto-advance-attack=off` unless explicitly overridden — the default Board page
+boots a greedy AI on the rival seat that would race the test driver and resolve
+pending choices before assertions could run.
 
 ## Adding a new spec — checklist
 
@@ -190,20 +223,22 @@ test driver and resolve pending choices before assertions could run.
 2. If the flow needs a new starting state, add a fixture entry to
    [../src/engine/fixtures/scenarios.ts](../src/engine/fixtures/scenarios.ts)
    and pin a seed in `SCENARIO_SEEDS`.
-3. Create `e2e/specs/your-flow.spec.ts` and import the extended fixture:
+3. Create `e2e/specs/your-flow.spec.ts` and import from `@playwright/test`:
    ```ts
-   import { test, expect } from "../fixtures/test";
+   import { test, expect } from "@playwright/test";
+   import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
    ```
-4. Use the `simulator` fixture passed to your test:
+4. Use the factory inside your test:
    ```ts
-   test("my flow", async ({ simulator }) => {
-     await simulator.gotoFixture("openingMain");
+   test("my flow", async ({ page }) => {
+     const pom = await createPlaywrightCyberpunkSimulatorPom(page, {
+       fixture: { scenarioId: "openingMain" },
+     });
      // …
    });
    ```
-5. Prefer `simulator.expect*` over raw `getX` so engine and UI are asserted
-   together.
-6. For UI-driven moves, click via the POM (`mulligan`, `passPhase`, `drag`,
+5. Prefer `pom.expect*` over raw `getX` so engine and UI are asserted together.
+6. Drive every action through the POM (`mulligan`, `playCardFromHand`, `attackRival`,
    etc.) and add `expectLastDispatch` to verify the action shape.
 7. Run locally: `pnpm e2e specs/your-flow.spec.ts`.
 
@@ -216,22 +251,18 @@ test driver and resolve pending choices before assertions could run.
   [../playwright.config.ts](../playwright.config.ts).
 - **HTML report** — open `playwright-report/index.html` after a run.
 - **CI failures** — the workflow uploads `playwright-report/` and
-  `test-results/` artifacts on failure (per the W1-A track).
+  `test-results/` artifacts on failure.
 
 ### Determinism debugging
 
 Specs in this harness should not be flaky. If you observe flakiness, suspect:
 
-- **AI raced you.** Confirm the spec used `gotoFixture(...)` without an
-  `{ ai: "greedy" }` override — the default is `?ai=off`.
-- **Stale render.** Most assertions go through Playwright's auto-retrying
-  matchers (`toHaveCount`, `toHaveAttribute`), which retry until a timeout.
-  A bare `await sim.getHandSize(p)` returns the _latest_ engine snapshot
-  with no retry — if the move was UI-driven and React hasn't flushed, that
-  read can land on the pre-state. Either drive through the POM (which
-  already calls `forceRender` for bridge-only moves) or assert via
-  `expect*` so Playwright retries.
-- **Different seed.** If you pulled a new fixture into `SCENARIO_SEEDS`,
-  earlier hand contents may shift — pin the seed to a value that gives you
-  the cards you need rather than asserting on whichever cards happened to
-  draw last time.
+- **AI raced you.** Confirm the spec used `createPlaywrightCyberpunkSimulatorPom`
+  without an `{ ai: "greedy" }` override — the default is `?ai=off`.
+- **Stale render.** `expect*` helpers assert the DOM through Playwright's
+  auto-retrying matchers. A bare `await pom.getHandSize(p)` returns the latest
+  engine snapshot with no retry — if you need to wait for a UI update, assert
+  via `expect*`.
+- **Different seed.** If you pulled a new fixture into `SCENARIO_SEEDS`, earlier
+  hand contents may shift — pin the seed to a value that gives you the cards you
+  need rather than asserting on whichever cards happened to draw last time.

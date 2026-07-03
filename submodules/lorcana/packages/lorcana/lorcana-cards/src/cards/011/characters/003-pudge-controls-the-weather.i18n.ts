@@ -17,7 +17,7 @@ export const pudgeControlsTheWeatherI18n: Record<Languages, I18nProperties> = {
     version: "Bestimmt das Wetter",
     text: [
       {
-        title: "GUTER FREUND",
+        title: "Guter Freund",
         description:
           "Falls du einen Lilo-Charakter im Spiel hast, kannst du diesen Charakter kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const pudgeControlsTheWeatherI18n: Record<Languages, I18nProperties> = {
     version: "Fait venir le soleil",
     text: [
       {
-        title: "BON COMPAGNON",
+        title: "Bon compagnon",
         description:
           "Si vous avez un personnage Lilo en jeu, vous pouvez jouez ce personnage-ci gratuitement.",
       },
@@ -39,7 +39,7 @@ export const pudgeControlsTheWeatherI18n: Record<Languages, I18nProperties> = {
     version: "Controlla il Tempo",
     text: [
       {
-        title: "BUON AMICO",
+        title: "Buon Amico",
         description:
           "Se hai in gioco un personaggio chiamato Lilo, puoi giocare questo personaggio gratis.",
       },

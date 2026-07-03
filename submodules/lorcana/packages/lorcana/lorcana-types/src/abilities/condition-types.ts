@@ -259,6 +259,14 @@ export interface RevealedIsCharacterNamedCondition {
 }
 
 /**
+ * Check if the revealed card has a specific classification.
+ */
+export interface RevealedHasClassificationCondition {
+  type: "revealed-has-classification";
+  classification: string;
+}
+
+/**
  * Check if this is the second inkwell this turn
  */
 export interface SecondInkwellThisTurnCondition {
@@ -506,6 +514,7 @@ export type CountableResource =
   | "locations"
   | "cards-in-hand"
   | "cards-in-inkwell"
+  | "ready-cards-in-inkwell"
   | "cards-in-discard"
   | "damage-on-self"
   | "damaged-characters"
@@ -955,6 +964,11 @@ export interface PlayContextCondition {
   comparison?: ConditionComparison;
 }
 
+export interface PlayedCardHasKeywordCondition {
+  type: "played-card-has-keyword";
+  keyword: string;
+}
+
 export interface FirstTurnNonOtpCondition {
   type: "first-turn-non-otp";
 }
@@ -1163,6 +1177,7 @@ export type Condition =
   | TargetAggregateComparisonCondition
   | TurnMetricCondition
   | PlayContextCondition
+  | PlayedCardHasKeywordCondition
   | FirstTurnNonOtpCondition
   // Parser catch-all
   | IfCondition
@@ -1205,6 +1220,7 @@ export type Condition =
   | BeingChallengedCondition
   | SelfHasDamageCondition
   | RevealedIsCharacterNamedCondition
+  | RevealedHasClassificationCondition
   | SecondInkwellThisTurnCondition
   | WhileInPlayCondition
   | PlayedCardThisTurnCondition

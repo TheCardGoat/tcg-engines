@@ -20,12 +20,13 @@ export const vanellopeVonSchweetzSugarRushPrincessI18n: Record<Languages, I18nPr
     version: "Sugar Rush Princess",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named Vanellope von Schweetz.)",
       },
       {
-        title: "I HEREBY DECREE",
+        title: "I Hereby Decree",
         description:
-          "Whenever you play another Princess character, all opposing characters get -1 until the start of your next turn.",
+          "Whenever you play another Princess character, all opposing characters get -1 {S} until the start of your next turn.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const vanellopeVonSchweetzSugarRushPrincessI18n: Record<Languages, I18nPr
     version: "Sugar Rush Princess",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named Vanellope von Schweetz.)",
       },
       {
-        title: "I HEREBY DECREE",
+        title: "I Hereby Decree",
         description:
-          "Whenever you play another Princess character, all opposing characters get -1 until the start of your next turn.",
+          "Whenever you play another Princess character, all opposing characters get -1 {S} until the start of your next turn.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const vanellopeVonSchweetzSugarRushPrincessI18n: Record<Languages, I18nPr
     version: "Sugar Rush Princess",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named Vanellope von Schweetz.)",
       },
       {
-        title: "I HEREBY DECREE",
+        title: "I Hereby Decree",
         description:
-          "Whenever you play another Princess character, all opposing characters get -1 until the start of your next turn.",
+          "Whenever you play another Princess character, all opposing characters get -1 {S} until the start of your next turn.",
       },
     ],
   },

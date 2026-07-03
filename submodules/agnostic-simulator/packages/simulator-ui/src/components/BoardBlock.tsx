@@ -135,6 +135,9 @@ export function BoardBlock({
       data-block-size={block.size}
       data-zone-id={zone?.id ?? ""}
       data-zone-role={zone?.role ?? "custom"}
+      data-zone-visibility={zone?.visibility ?? "public"}
+      data-count={entityCount}
+      data-collapsed="false"
       role={block.kind === "zone" ? "region" : undefined}
     >
       {block.kind === "seat" ? (

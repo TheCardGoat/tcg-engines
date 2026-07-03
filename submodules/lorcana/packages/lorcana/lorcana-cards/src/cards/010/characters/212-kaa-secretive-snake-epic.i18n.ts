@@ -9,16 +9,16 @@ export const kaaSecretiveSnakeEpicI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Kaa",
     version: "Geheimnisvolle Schlange",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Kaa",
     version: "Serpent dissimulé",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Kaa",
     version: "Serpente sulle Sue",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

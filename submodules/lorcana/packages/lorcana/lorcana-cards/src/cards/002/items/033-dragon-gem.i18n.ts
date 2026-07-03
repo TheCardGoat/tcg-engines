@@ -15,9 +15,9 @@ export const dragonGemI18n: Record<Languages, I18nProperties> = {
     name: "Drachenjuwel",
     text: [
       {
-        title: "WIEDERBELEBEN, 3",
+        title: "Wiederbeleben",
         description:
-          "— Nimm eine Charakterkarte mit der Fähigkeit Unterstützen aus deinem Ablagestapel zurück auf deine Hand.",
+          "{E}, 3 {I} — Nimm eine Charakterkarte mit der Fähigkeit <Unterstützen> aus deinem Ablagestapel zurück auf deine Hand.",
       },
     ],
   },
@@ -25,8 +25,9 @@ export const dragonGemI18n: Record<Languages, I18nProperties> = {
     name: "Pierre de Dragon",
     text: [
       {
-        title: "RAMENER",
-        description: "À LA VIE, 3 — Reprenez en main un personnage avec Soutien de votre défausse.",
+        title: "Ramener à la vie",
+        description:
+          "{E}, 3 {I} — Reprenez en main un personnage avec <Soutien> de votre défausse.",
       },
     ],
   },
@@ -34,8 +35,9 @@ export const dragonGemI18n: Record<Languages, I18nProperties> = {
     name: "Dragon Gem",
     text: [
       {
-        title: "BRING BACK TO LIFE, 3",
-        description: "— Return a character card with Support from your discard to your hand.",
+        title: "Bring Back to Life",
+        description:
+          "{E}, 3 {I} — Return a character card with <Support> from your discard to your hand.",
       },
     ],
   },

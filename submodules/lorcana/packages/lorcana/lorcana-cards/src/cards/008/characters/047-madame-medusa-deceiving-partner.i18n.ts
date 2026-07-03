@@ -17,7 +17,7 @@ export const madameMedusaDeceivingPartnerI18n: Record<Languages, I18nProperties>
     version: "Betrügerische Partnerin",
     text: [
       {
-        title: "FALSCHES SPIEL",
+        title: "Falsches Spiel",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen deiner anderen Charaktere wählen und ihm 2 Schaden zufügen, um einen Charakter deiner Wahl, der 2 oder weniger kostet, auf die zugehörige Hand zurückzuschicken.",
       },
@@ -28,7 +28,7 @@ export const madameMedusaDeceivingPartnerI18n: Record<Languages, I18nProperties>
     version: "Partenaire perfide",
     text: [
       {
-        title: "DUPLICITÉ",
+        title: "Duplicité",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un autre de vos personnages et lui infliger 2 dommages. Si vous le faites, choisissez un personnage coûtant 2 ou moins et renvoyez-le dans la main de son propriétaire.",
       },
@@ -39,7 +39,7 @@ export const madameMedusaDeceivingPartnerI18n: Record<Languages, I18nProperties>
     version: "Partner Ingannevole",
     text: [
       {
-        title: "DOPPIO GIOCO",
+        title: "Doppio Gioco",
         description:
           "Quando giochi questo personaggio, puoi infliggere 2 danni a un tuo altro personaggio a tua scelta per far riprendere in mano al suo giocatore un personaggio a tua scelta con costo 2 o inferiore.",
       },

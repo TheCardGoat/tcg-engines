@@ -4,6 +4,17 @@ import { magicBroomLivelySweeperI18n } from "./049-magic-broom-lively-sweeper.i1
 export const magicBroomLivelySweeper: CharacterCard = {
   id: "9ap",
   canonicalId: "ci_9ap",
+  slug: "lorcana-ci_9ap",
+  printings: [
+    {
+      id: "set4-049",
+      artId: "set4-049",
+      setCode: "set4",
+      collectorNumber: "49",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-049"],
   cardType: "character",
   name: "Magic Broom",
@@ -21,7 +32,7 @@ export const magicBroomLivelySweeper: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_bdc1291ed02b4526802da87554f615fd",
-    tcgPlayer: 550567,
+    tcgPlayer: "550567",
   },
   classifications: ["Dreamborn", "Broom"],
   i18n: magicBroomLivelySweeperI18n,

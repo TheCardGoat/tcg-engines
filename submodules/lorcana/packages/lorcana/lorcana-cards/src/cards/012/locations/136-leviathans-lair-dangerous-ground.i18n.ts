@@ -6,7 +6,7 @@ export const leviathansLairDangerousGroundI18n: Record<Languages, I18nProperties
     version: "Dangerous Ground",
     text: [
       {
-        title: "Lost to the Dunes",
+        title: "LOST TO THE DUNES",
         description:
           "When this location is banished, each opponent chooses and banishes one of their characters.",
       },

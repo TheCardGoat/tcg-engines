@@ -1,5 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { svenLeapingReindeerI18n } from "./060-sven-leaping-reindeer.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 import { challenger } from "../../../helpers/abilities/challenger";
 import { evasive } from "../../../helpers/abilities/evasive";
@@ -7,6 +8,17 @@ import { evasive } from "../../../helpers/abilities/evasive";
 export const svenLeapingReindeer: CharacterCard = {
   id: "JOj",
   canonicalId: "ci_JOj",
+  slug: "lorcana-ci_JOj",
+  printings: [
+    {
+      id: "set11-060",
+      artId: "set11-060",
+      setCode: "set11",
+      collectorNumber: "60",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-060"],
   cardType: "character",
   name: "Sven",
@@ -23,7 +35,7 @@ export const svenLeapingReindeer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ad33da4d6a2e44569e0bb8f16810ba1a",
-    tcgPlayer: 676195,
+    tcgPlayer: "676195",
   },
   text: [
     {

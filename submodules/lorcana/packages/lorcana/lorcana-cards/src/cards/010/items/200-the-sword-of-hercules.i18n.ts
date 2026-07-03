@@ -19,12 +19,12 @@ export const theSwordOfHerculesI18n: Record<Languages, I18nProperties> = {
     name: "Hercules’ Schwert",
     text: [
       {
-        title: "MÄCHTIGER TREFFER",
+        title: "Mächtiger Treffer",
         description:
           "Wenn du diesen Gegenstand ausspielst, verbanne eine gegnerische Gottheit deiner Wahl.",
       },
       {
-        title: "MANN GEGEN MANN",
+        title: "Mann gegen Mann",
         description:
           "Jedes Mal während deines Zuges, wenn einer deiner Charaktere durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 1 Legende.",
       },
@@ -34,12 +34,12 @@ export const theSwordOfHerculesI18n: Record<Languages, I18nProperties> = {
     name: "L'épée d'Hercule",
     text: [
       {
-        title: "COUP PUISSANT",
+        title: "Coup puissant",
         description:
           "Lorsque vous jouez cet objet, choisissez un personnage Dieu adverse et bannissez-le.",
       },
       {
-        title: "CORPS-À-CORPS",
+        title: "Corps-à-corps",
         description:
           "Durant votre tour, chaque fois que l'un de vos personnages en bannit un autre via un défi, gagnez 1 éclat de Lore.",
       },
@@ -49,12 +49,12 @@ export const theSwordOfHerculesI18n: Record<Languages, I18nProperties> = {
     name: "La Spada di Ercole",
     text: [
       {
-        title: "COLPO POTENTE",
+        title: "Colpo Potente",
         description:
           "Quando giochi questo oggetto, esilia un personaggio Divinità avversario a tua scelta.",
       },
       {
-        title: "CORPO A CORPO",
+        title: "Corpo a Corpo",
         description:
           "Durante il tuo turno, ogni volta che uno dei tuoi personaggi esilia un altro personaggio in una sfida, ottieni 1 leggenda.",
       },

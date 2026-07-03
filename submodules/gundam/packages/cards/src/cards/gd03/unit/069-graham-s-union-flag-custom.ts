@@ -7,14 +7,17 @@ export const gd03GrahamSUnionFlagCustom069: UnitCard = {
   color: "white",
   traits: ["superpower bloc"],
   id: "GD03-069",
-  externalId: "gundam:gd03-069",
-  slug: "graham-s-union-flag-custom-gd03-069",
+  canonicalId: "GD03-069",
+  externalIds: { bandai: "gundam:gd03-069" },
+  slug: "graham-s-union-flag-custom/gd03-069",
   displayName: "Graham's Union Flag Custom",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-069",
   printings: [
     {
       id: "GD03-069",
+      artId: "GD03-069",
+      setCode: "GD03",
       collectorNumber: "GD03-069",
       cardNumber: "GD03-069",
       set: {
@@ -30,6 +33,8 @@ export const gd03GrahamSUnionFlagCustom069: UnitCard = {
     },
     {
       id: "GD03-069_p1",
+      artId: "GD03-069_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-069_p1",
       cardNumber: "GD03-069",
       set: {
@@ -44,6 +49,7 @@ export const gd03GrahamSUnionFlagCustom069: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-069", "GD03-069_p1"],
   selectedPrintingId: "GD03-069",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-069.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-069.webp?260424",

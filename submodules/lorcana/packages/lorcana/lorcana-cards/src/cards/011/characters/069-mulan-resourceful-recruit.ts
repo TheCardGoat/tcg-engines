@@ -4,6 +4,17 @@ import { mulanResourcefulRecruitI18n } from "./069-mulan-resourceful-recruit.i18
 export const mulanResourcefulRecruit: CharacterCard = {
   id: "uLx",
   canonicalId: "ci_qCB",
+  slug: "lorcana-ci_qCB",
+  printings: [
+    {
+      id: "set11-069",
+      artId: "set11-069",
+      setCode: "set11",
+      collectorNumber: "69",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-069"],
   cardType: "character",
   name: "Mulan",
@@ -20,7 +31,7 @@ export const mulanResourcefulRecruit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5eb205c36e0b4038a8a46aa47dd50b0f",
-    tcgPlayer: 677162,
+    tcgPlayer: "677162",
   },
   text: [
     {

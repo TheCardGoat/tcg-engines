@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { taffytaMuttonfudgeSourSpeedsterI18n } from "./117-taffyta-muttonfudge-sour-speedster.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const taffytaMuttonfudgeSourSpeedster: CharacterCard = {
   id: "5D9",
   canonicalId: "ci_5D9",
+  slug: "lorcana-ci_5D9",
+  printings: [
+    {
+      id: "set5-117",
+      artId: "set5-117",
+      setCode: "set5",
+      collectorNumber: "117",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-117"],
   cardType: "character",
   name: "Taffyta Muttonfudge",
@@ -21,7 +33,7 @@ export const taffytaMuttonfudgeSourSpeedster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b486db00d41f4888984650e72cc36b00",
-    tcgPlayer: 555270,
+    tcgPlayer: "555270",
   },
   text: [
     {

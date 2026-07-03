@@ -21,11 +21,11 @@ export const maleficentMistressOfAllEvilEnchantedI18n: Record<Languages, I18nPro
     version: "Herrin des Bösen",
     text: [
       {
-        title: "FINSTERES WISSEN",
+        title: "Finsteres Wissen",
         description: "Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 Karte ziehen.",
       },
       {
-        title: "WAHRSAGUNG",
+        title: "Wahrsagung",
         description:
           "Jedes Mal, wenn du in deinem Zug 1 Karte ziehst, darfst du 1 Schadensmarker von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
       },
@@ -36,12 +36,12 @@ export const maleficentMistressOfAllEvilEnchantedI18n: Record<Languages, I18nPro
     version: "Maîtresse du Mal",
     text: [
       {
-        title: "SAVOIR OBSCUR",
+        title: "Savoir obscur",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez piocher une carte.",
       },
       {
-        title: "DIVINATION",
+        title: "Divination",
         description:
           "Chaque fois que vous piochez une carte durant votre tour, vous pouvez choisir un personnage et déplacer 1 de ses jetons Dommage sur un personnage adverse de votre choix.",
       },
@@ -52,11 +52,11 @@ export const maleficentMistressOfAllEvilEnchantedI18n: Record<Languages, I18nPro
     version: "Signora di Ogni Male",
     text: [
       {
-        title: "SAPERE OSCURO",
+        title: "Sapere Oscuro",
         description: "Ogni volta che questo personaggio va all'avventura, puoi pescare una carta.",
       },
       {
-        title: "DIVINAZIONE",
+        title: "Divinazione",
         description:
           "Durante il tuo turno, ogni volta che peschi una carta, puoi spostare 1 segnalino danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },

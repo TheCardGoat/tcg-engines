@@ -7,14 +7,17 @@ export const gd03DistantReunion115: CommandCard = {
   color: "purple",
   traits: ["civilian", "vagan", "x-rounder"],
   id: "GD03-115",
-  externalId: "gundam:gd03-115",
-  slug: "distant-reunion-gd03-115",
+  canonicalId: "GD03-115",
+  externalIds: { bandai: "gundam:gd03-115" },
+  slug: "distant-reunion/gd03-115",
   displayName: "Distant Reunion",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-115",
   printings: [
     {
       id: "GD03-115",
+      artId: "GD03-115",
+      setCode: "GD03",
       collectorNumber: "GD03-115",
       cardNumber: "GD03-115",
       set: {
@@ -29,6 +32,7 @@ export const gd03DistantReunion115: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-115"],
   selectedPrintingId: "GD03-115",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-115.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-115.webp?260424",

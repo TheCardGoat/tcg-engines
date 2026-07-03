@@ -4,6 +4,17 @@ import { improviseI18n } from "./099-improvise.i18n";
 export const improvise: ActionCard = {
   id: "EPR",
   canonicalId: "ci_nRj",
+  slug: "lorcana-ci_nRj",
+  printings: [
+    {
+      id: "set2-099",
+      artId: "set2-099",
+      setCode: "set2",
+      collectorNumber: "99",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-099", "set9-096"],
   cardType: "action",
   name: "Improvise",
@@ -16,7 +27,7 @@ export const improvise: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_856e21edc8814f10863eae7f75635f23",
-    tcgPlayer: 650034,
+    tcgPlayer: "650034",
   },
   text: "Chosen character gets +1 {S} this turn. Draw a card.",
   abilities: [

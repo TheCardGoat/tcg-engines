@@ -17,7 +17,7 @@ export const idunaCaringMotherI18n: Record<Languages, I18nProperties> = {
     version: "Fürsorgliche Mutter",
     text: [
       {
-        title: "EWIGE LIEBE",
+        title: "Ewige Liebe",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du diese Karte verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const idunaCaringMotherI18n: Record<Languages, I18nProperties> = {
     version: "Mère bienveillante",
     text: [
       {
-        title: "AMOUR ÉTERNEL",
+        title: "Amour éternel",
         description:
           "Lorsque ce personnage est banni, vous pouvez le placer dans votre réserve d'encre, face cachée et épuisé.",
       },
@@ -39,7 +39,7 @@ export const idunaCaringMotherI18n: Record<Languages, I18nProperties> = {
     version: "Madre Premurosa",
     text: [
       {
-        title: "AMORE DUREVOLE",
+        title: "Amore Durevole",
         description:
           "Quando questo personaggio viene esiliato, puoi aggiungere questa carta al tuo calamaio, a faccia in giù e impegnata.",
       },

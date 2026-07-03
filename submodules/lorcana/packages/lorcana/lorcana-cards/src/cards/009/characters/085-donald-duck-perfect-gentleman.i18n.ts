@@ -19,10 +19,11 @@ export const donaldDuckPerfectGentlemanI18n: Record<Languages, I18nProperties> =
     version: "Perfekter Gentleman",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Donald-Duck-Charaktere auszuspielen.)",
       },
       {
-        title: "GESTATTEN?",
+        title: "Gestatten?",
         description:
           "Jedes Mal zu Beginn deines Zuges dürfen alle Mitspielenden (auch du) je 1 Karte ziehen.",
       },
@@ -33,10 +34,11 @@ export const donaldDuckPerfectGentlemanI18n: Record<Languages, I18nProperties> =
     version: "Parfait gentleman",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Donald.)",
       },
       {
-        title: "PERMETTEZ-MOI",
+        title: "Permettez-moi",
         description: "Au début de chacun de vos tours, chaque joueur peut piocher une carte.",
       },
     ],
@@ -46,10 +48,11 @@ export const donaldDuckPerfectGentlemanI18n: Record<Languages, I18nProperties> =
     version: "Perfect Gentleman",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Donald Duck.)",
       },
       {
-        title: "ALLOW ME",
+        title: "Allow Me",
         description: "At the start of your turn, each player may draw a card.",
       },
     ],

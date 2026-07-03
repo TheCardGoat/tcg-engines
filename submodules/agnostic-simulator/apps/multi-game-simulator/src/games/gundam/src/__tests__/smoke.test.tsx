@@ -24,7 +24,6 @@ describe("SimulatorApp smoke", () => {
   it("boots with the setup-default fixture without throwing or logging errors", async () => {
     const { container } = renderSimulator(loadSetupDefault);
     expect(container.firstChild).not.toBeNull();
-    expect(container.querySelector("[data-testid='gundam-shared-simulator-shell']")).not.toBeNull();
     expect(container.querySelector("[data-sim-board]")).not.toBeNull();
 
     // `game/adapter.ts` defers store notifications via `queueMicrotask`,

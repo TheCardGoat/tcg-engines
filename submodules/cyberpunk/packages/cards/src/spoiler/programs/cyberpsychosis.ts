@@ -1,13 +1,14 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerCyberpsychosis = {
+export const spoilerCyberpsychosis = defineCyberpunkCard({
   id: "d0991502-57e5-42e2-b37b-64b425f4f1b5",
-  externalId: "cyberpunk:cyberpsychosis",
   slug: "cyberpsychosis",
-  name: "Cyberpsychosis",
-  displayName: "Cyberpsychosis",
   rulesText:
     "You may also play this Program when a Unit attacks by paying this card's cost and spending a friendly Unit or face-up Legend. Give an equipped Unit +2 power this turn for each of its equipped Gear. Defeat the Unit at the end of this turn.",
+  name: "Cyberpsychosis",
+  displayName: "Cyberpsychosis",
+  canonicalId: "cyberpsychosis",
   color: "yellow",
   classifications: ["Quickhack"],
   set: {
@@ -15,23 +16,12 @@ export const spoilerCyberpsychosis = {
     name: "Spoiler Set",
   },
   printNumber: "102",
-  printings: [
-    {
-      id: "e55b7a69-2b0b-48eb-a781-7e802b3e7099",
-      collectorNumber: "102",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "e55b7a69-2b0b-48eb-a781-7e802b3e7099",
   artist: "Michal Ivan",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/102.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,
   ram: 3,
-  timingTriggers: [],
-  keywords: [],
   type: "program",
   cost: 2,
   power: null,
@@ -130,4 +120,4 @@ export const spoilerCyberpsychosis = {
     },
   ],
   reminderText: ["Discard programs after they resolve."],
-} satisfies SpoilerCardDefinition;
+}) satisfies ProgramCardDefinition;

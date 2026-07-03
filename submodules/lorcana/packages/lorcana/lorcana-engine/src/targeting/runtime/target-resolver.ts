@@ -15,10 +15,11 @@ import type {
 import { normalizeLorcanaTarget } from "@tcg/lorcana-types/targeting";
 import type { CardPlayedPayload, LorcanaG } from "../../types";
 import type { DynamicAmountEventSnapshot } from "../../types/domain-events";
-import { cardHasName, hasKeyword } from "../../card-utils";
+import { cardHasName, hasKeyword, isSong } from "../../card-utils";
 import { compareOperator } from "../../rules/operator-utils";
 import {
   createProjectionState,
+  getActiveStaticClassificationGrants,
   getEffectiveLore,
   getEffectiveStrength,
   getEffectiveWillpower,
@@ -164,7 +165,7 @@ function isAwaitingParentTargetComparison(
 }
 
 function isCardStillInPlay(ctx: EffectTargetRuntimeContext, cardId: CardInstanceId): boolean {
-  const zoneKey = ctx.framework.zones.getCardZone(cardId);
+  const zoneKey = getCardZoneKey(ctx, cardId);
   return typeof zoneKey === "string" && (zoneKey === "play" || zoneKey.startsWith("play:"));
 }
 
@@ -607,6 +608,20 @@ export function passesFilter(
     return false;
   }
 
+  if (
+    filter.sameInstanceAsTriggerSubject === true &&
+    options?.eventSnapshot?.subjectCardId !== cardId
+  ) {
+    return false;
+  }
+
+  if (filter.inEventSnapshotCardsUnder === true) {
+    const cardsUnderIds = options?.eventSnapshot?.cardsUnderIdsBeforeBanish;
+    if (!Array.isArray(cardsUnderIds) || !cardsUnderIds.includes(cardId)) {
+      return false;
+    }
+  }
+
   if (filter.excludeChosenCard === true && chosenCardId && cardId === chosenCardId) {
     return false;
   }
@@ -690,22 +705,32 @@ export function passesFilter(
       const expectedType = String(filter.cardType ?? filter.value ?? "");
       const actualCardType = cardDefinition?.cardType;
       if (expectedType === "song") {
-        return actualCardType === "action" && (cardDefinition as any)?.actionSubtype === "song";
+        return cardDefinition ? isSong(cardDefinition) : false;
       }
       return typeof actualCardType === "string" && expectedType.length > 0
         ? actualCardType === expectedType
         : expectedType.length === 0;
     }
 
+    case "is-song": {
+      return cardDefinition ? isSong(cardDefinition) : false;
+    }
+
     case "classification":
     case "has-classification": {
       const classification = String(filter.classification ?? "");
-      const classifications = cardDefinition?.classifications;
-      return (
-        classification.length > 0 &&
-        Array.isArray(classifications) &&
-        classifications.some((value) => value === classification)
-      );
+      const grantedClassifications = getActiveStaticClassificationGrants({
+        definition: cardDefinition,
+        state: getDerivedState(ctx),
+        zoneID: getCardZoneKey(ctx, cardId),
+        cardInstanceId: cardId,
+        registry: getFilterRegistry(),
+      });
+      const classifications = [
+        ...(cardDefinition?.classifications ?? []),
+        ...grantedClassifications,
+      ];
+      return classification.length > 0 && classifications.some((value) => value === classification);
     }
 
     case "has-keyword": {
@@ -895,7 +920,7 @@ export function passesFilter(
 
     case "zone": {
       const expectedZone = String(filter.zone ?? "");
-      const zoneKey = ctx.framework.zones.getCardZone(cardId);
+      const zoneKey = getCardZoneKey(ctx, cardId);
       if (typeof zoneKey !== "string" || expectedZone.length === 0) {
         return true;
       }
@@ -1307,7 +1332,7 @@ function resolveCandidateTargetsInternal(
         return true;
       }
 
-      const zoneType = ctx.framework.zones.getCardZone(cardId)?.split(":")[0];
+      const zoneType = getCardZoneKey(ctx, cardId)?.split(":")[0];
       const cardDefinition = getCardDefinition(ctx, cardId);
       const isCharacterOrItem =
         cardDefinition?.cardType === "character" || cardDefinition?.cardType === "item";

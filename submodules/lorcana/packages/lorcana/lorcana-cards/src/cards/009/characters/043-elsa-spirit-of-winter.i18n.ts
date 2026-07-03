@@ -20,10 +20,11 @@ export const elsaSpiritOfWinterI18n: Record<Languages, I18nProperties> = {
     version: "Magie des Winters",
     text: [
       {
-        title: "Gestaltwandel 6",
+        title:
+          "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Elsa-Charaktere auszuspielen.)",
       },
       {
-        title: "EISESKÄLTE",
+        title: "Eiseskälte",
         description:
           "Wenn du diesen Charakter ausspielst, erschöpfe bis zu 2 Charaktere deiner Wahl. Sie werden zu Beginn ihres nächsten Zugs nicht bereit gemacht.",
       },
@@ -34,10 +35,11 @@ export const elsaSpiritOfWinterI18n: Record<Languages, I18nProperties> = {
     version: "Esprit de l'hiver",
     text: [
       {
-        title: "Alter 6",
+        title:
+          "<Alter> 6 (Vous pouvez payer 6 {I} pour jouer ce personnage sur l'un de vos personnages Elsa.)",
       },
       {
-        title: "GEL INTENSE\\",
+        title: "GEL \\INTENSE",
         description:
           "Lorsque vous jouez ce personnage, choisissez jusqu'à 2 personnages et épuisez-les. Ils ne peuvent pas être redressés au début de leur prochain tour.",
       },
@@ -48,10 +50,11 @@ export const elsaSpiritOfWinterI18n: Record<Languages, I18nProperties> = {
     version: "Spirit of Winter",
     text: [
       {
-        title: "Shift 6",
+        title:
+          "<Shift> 6 (You may pay 6 {I} to play this on top of one of your characters named Elsa.)",
       },
       {
-        title: "DEEP FREEZE",
+        title: "Deep Freeze",
         description:
           "When you play this character, exert up to 2 chosen characters. They can't ready at the start of their next turn.",
       },

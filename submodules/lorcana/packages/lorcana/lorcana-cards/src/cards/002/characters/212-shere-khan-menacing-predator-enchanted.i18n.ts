@@ -16,7 +16,7 @@ export const shereKhanMenacingPredatorEnchantedI18n: Record<Languages, I18nPrope
     version: "Bedrohliches Raubtier",
     text: [
       {
-        title: "BELEIDIGE NICHT MEINE INTELLIGENZ",
+        title: "Beleidige nicht meine Intelligenz",
         description:
           "Jedes Mal, wenn einer deiner Charaktere einen anderen Charakter herausfordert, sammelst du 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const shereKhanMenacingPredatorEnchantedI18n: Record<Languages, I18nPrope
     version: "Prédateur menaçant",
     text: [
       {
-        title: "N'INSULTE PAS MON INTELLIGENCE",
+        title: "N'insulte pas mon intelligence",
         description:
           "Chaque fois que l'un de vos personnages en défie un autre, gagnez 1 éclat de Lore.",
       },
@@ -38,7 +38,7 @@ export const shereKhanMenacingPredatorEnchantedI18n: Record<Languages, I18nPrope
     version: "Menacing Predator",
     text: [
       {
-        title: "DON'T INSULT MY INTELLIGENCE",
+        title: "Don't Insult My Intelligence",
         description: "Whenever one of your characters challenges another character, gain 1 lore.",
       },
     ],

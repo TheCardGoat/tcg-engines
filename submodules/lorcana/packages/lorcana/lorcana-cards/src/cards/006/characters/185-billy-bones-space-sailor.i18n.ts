@@ -16,7 +16,7 @@ export const billyBonesSpaceSailorI18n: Record<Languages, I18nProperties> = {
     version: "Weltraum-Segler",
     text: [
       {
-        title: "HALT ES VERSTECKT",
+        title: "Halt es versteckt",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du einen Gegenstand oder Ort deiner Wahl verbannen.",
       },
@@ -27,7 +27,7 @@ export const billyBonesSpaceSailorI18n: Record<Languages, I18nProperties> = {
     version: "Marin de l'espace",
     text: [
       {
-        title: "CACHE-LE BIEN",
+        title: "Cache-le bien",
         description:
           "Lorsque ce personnage est banni, vous pouvez choisir un objet ou un lieu et le bannir.",
       },
@@ -38,7 +38,7 @@ export const billyBonesSpaceSailorI18n: Record<Languages, I18nProperties> = {
     version: "Marinaio Spaziale",
     text: [
       {
-        title: "TIENILO NASCOSTO",
+        title: "Tienilo Nascosto",
         description:
           "Quando questo personaggio viene esiliato, puoi esiliare un oggetto o un luogo a tua scelta.",
       },

@@ -6,11 +6,11 @@ export const ringOfStonesPlaceOfLegendsI18n: Record<Languages, I18nProperties> =
     version: "Place of Legends",
     text: [
       {
-        title: "Follow Your Fate",
+        title: "FOLLOW YOUR FATE",
         description: "Your exerted characters can move here for free.",
       },
       {
-        title: "Part the Veil",
+        title: "PART THE VEIL",
         description: "Once during your turn, whenever a character moves here, gain 1 lore.",
       },
     ],

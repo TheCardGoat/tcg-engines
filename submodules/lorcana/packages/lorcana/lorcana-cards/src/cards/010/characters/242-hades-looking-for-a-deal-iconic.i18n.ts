@@ -17,7 +17,7 @@ export const hadesLookingForADealIconicI18n: Record<Languages, I18nProperties> =
     version: "Möchte ein Geschäft abschließen",
     text: [
       {
-        title: "NA, WAS SAGST DU?",
+        title: "Na, was sagst du?",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter wählen. Wenn du dies tust, ziehe 2 Karten, außer die Person, die den gewählten Charakter im Spiel hat, legt ihn unter ihr Deck.",
       },
@@ -28,7 +28,7 @@ export const hadesLookingForADealIconicI18n: Record<Languages, I18nProperties> =
     version: "Cherchant un accord",
     text: [
       {
-        title: "ON S'LA SERRE?",
+        title: "On s'la serre?",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse. Si vous le faites, piochez 2 cartes sauf si son propriétaire place cette carte sous sa pioche.",
       },
@@ -39,7 +39,7 @@ export const hadesLookingForADealIconicI18n: Record<Languages, I18nProperties> =
     version: "In Cerca di un Affare",
     text: [
       {
-        title: "UNA STRETTA DI MANO?",
+        title: "Una Stretta di Mano?",
         description:
           "Quando giochi questo personaggio, puoi scegliere un personaggio avversario. Se lo fai, pesca 2 carte a meno che il giocatore di quel personaggio non metta quella carta in fondo al suo mazzo.",
       },

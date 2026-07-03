@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { scroogeMcduckRichestDuckInTheWorldI18n } from "./154-scrooge-mcduck-richest-duck-in-the-world.i18n";
 
 export const scroogeMcduckRichestDuckInTheWorld: CharacterCard = {
-  id: "wAM",
+  id: "dLT",
   canonicalId: "ci_SyL",
+  slug: "lorcana-ci_SyL",
+  printings: [
+    {
+      id: "set3-154",
+      artId: "set3-154",
+      setCode: "set3",
+      collectorNumber: "154",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-154"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -20,7 +31,7 @@ export const scroogeMcduckRichestDuckInTheWorld: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ee9f19ba64f54bf78ba3cf40e0cac256",
-    tcgPlayer: 539168,
+    tcgPlayer: "539168",
   },
   text: [
     {

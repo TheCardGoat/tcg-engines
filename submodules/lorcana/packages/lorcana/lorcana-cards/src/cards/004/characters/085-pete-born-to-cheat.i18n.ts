@@ -17,9 +17,9 @@ export const peteBornToCheatI18n: Record<Languages, I18nProperties> = {
     version: "Gemeiner Hund",
     text: [
       {
-        title: "ICH MACHE DICH FERTIG!",
+        title: "Ich mache dich fertig!",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, solange er 5 oder mehr hat, schicke einen Charakter deiner Wahl mit 2 oder weniger, auf die zugehörige Hand zurück.",
+          "Jedes Mal, wenn dieser Charakter erkundet, solange er 5 oder mehr {S} hat, schicke einen Charakter deiner Wahl mit 2 oder weniger {S}, auf die zugehörige Hand zurück.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const peteBornToCheatI18n: Record<Languages, I18nProperties> = {
     version: "Tricheur-né",
     text: [
       {
-        title: "JE VAIS T'ÉCRASER!",
+        title: "Je vais t'écraser!",
         description:
-          "Si ce personnage a 5 ou plus lorsqu'il est envoyé à l'aventure, choisissez un personnage avec 2 ou moins et renvoyez-le dans la main de son propriétaire.",
+          "Si ce personnage a 5 {S} ou plus lorsqu'il est envoyé à l'aventure, choisissez un personnage avec 2 {S} ou moins et renvoyez-le dans la main de son propriétaire.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const peteBornToCheatI18n: Record<Languages, I18nProperties> = {
     version: "Nato per Truffare",
     text: [
       {
-        title: "IO TI DISTRUGGO!",
+        title: "Io ti Distruggo!",
         description:
-          "Ogni volta che questo personaggio va all'avventura mentre ha 5 o superiore, fai riprendere in mano al suo giocatore un personaggio a tua scelta con 2 o inferiore.",
+          "Ogni volta che questo personaggio va all'avventura mentre ha 5 {S} o superiore, fai riprendere in mano al suo giocatore un personaggio a tua scelta con 2 {S} o inferiore.",
       },
     ],
   },

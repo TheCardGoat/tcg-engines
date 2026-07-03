@@ -4,6 +4,17 @@ import { ringOfStonesPlaceOfLegendsI18n } from "./068-ring-of-stones-place-of-le
 export const ringOfStonesPlaceOfLegends: LocationCard = {
   id: "EaV",
   canonicalId: "ci_EaV",
+  slug: "lorcana-ci_EaV",
+  printings: [
+    {
+      id: "set12-068",
+      artId: "set12-068",
+      setCode: "set12",
+      collectorNumber: "68",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-068"],
   cardType: "location",
   name: "Ring of Stones",
@@ -20,6 +31,7 @@ export const ringOfStonesPlaceOfLegends: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7a5bbd2bed1b4b109511ea5bcd384252",
+    tcgPlayer: "690711",
   },
   text: [
     {

@@ -27,22 +27,14 @@ describe("Turn-cycle · Multi-turn exhaust → ready", () => {
     expect(within(hand).getAllByRole("listitem")).toHaveLength(1);
 
     const resources = screen.getByRole("region", { name: /your resource area/i });
-    const resourceCards = () => within(resources).queryAllByRole("listitem");
-    const readyResources = () =>
-      resourceCards().filter((card) => card.getAttribute("data-card-states")?.includes("ready"));
-    const restedResources = () =>
-      resourceCards().filter((card) => card.getAttribute("data-card-states")?.includes("rested"));
-    expect(resourceCards()).toHaveLength(3);
-    expect(readyResources()).toHaveLength(3);
+    expect(resources.textContent ?? "").toMatch(/03\s*\/\s*03/);
 
     // Deploy the cost-1 RX-78-2 (hand 1 → 0, resources 03/03 → 02/03).
     // deployUnit auto-submits on click — no confirm step.
     await user.click(within(hand).getByRole("listitem", { name: /RX-78-2/i }));
 
     await waitFor(() => {
-      expect(resourceCards()).toHaveLength(3);
-      expect(readyResources()).toHaveLength(2);
-      expect(restedResources()).toHaveLength(1);
+      expect(resources.textContent ?? "").toMatch(/02\s*\/\s*03/);
       expect(within(hand).queryAllByRole("listitem")).toHaveLength(0);
     });
 
@@ -70,8 +62,7 @@ describe("Turn-cycle · Multi-turn exhaust → ready", () => {
     // → 04/04.
     await waitFor(
       () => {
-        expect(resourceCards()).toHaveLength(4);
-        expect(readyResources()).toHaveLength(4);
+        expect(resources.textContent ?? "").toMatch(/04\s*\/\s*04/);
         expect(within(hand).getAllByRole("listitem")).toHaveLength(1);
       },
       { timeout: 15_000 },

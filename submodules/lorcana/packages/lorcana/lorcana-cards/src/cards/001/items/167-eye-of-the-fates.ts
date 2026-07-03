@@ -4,6 +4,17 @@ import { eyeOfTheFatesI18n } from "./167-eye-of-the-fates.i18n";
 export const eyeOfTheFates: ItemCard = {
   id: "xSb",
   canonicalId: "ci_xSb",
+  slug: "lorcana-ci_xSb",
+  printings: [
+    {
+      id: "set1-167",
+      artId: "set1-167",
+      setCode: "set1",
+      collectorNumber: "167",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-167"],
   cardType: "item",
   name: "Eye of the Fates",
@@ -16,7 +27,7 @@ export const eyeOfTheFates: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2c6eae027003403c832a8463afbb6ec0",
-    tcgPlayer: 508825,
+    tcgPlayer: "508825",
   },
   text: [
     {

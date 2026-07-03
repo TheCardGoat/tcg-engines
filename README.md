@@ -18,7 +18,7 @@ included here.
   server adapter.
 - `submodules/gundam` - Gundam engine, cards, simulator, tooling, and server
   adapter.
-- `submodules/one-piece-simulator` - One Piece simulator, engine, cards, types,
+- `submodules/one-piece` - One Piece simulator, engine, cards, types,
   and utilities.
 
 ## Requirements

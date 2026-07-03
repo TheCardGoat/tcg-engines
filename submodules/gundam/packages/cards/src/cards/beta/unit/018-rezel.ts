@@ -7,14 +7,17 @@ export const betaRezel018: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-018_p1",
-  externalId: "gundam:gd01-018_p1",
-  slug: "rezel-gd01-018-p1",
+  canonicalId: "GD01-018",
+  externalIds: { bandai: "gundam:gd01-018_p1" },
+  slug: "rezel/gd01-018",
   displayName: "ReZEL",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-018_p1",
   printings: [
     {
       id: "GD01-018",
+      artId: "GD01-018",
+      setCode: "GD01",
       collectorNumber: "GD01-018",
       cardNumber: "GD01-018",
       set: {
@@ -30,6 +33,8 @@ export const betaRezel018: UnitCard = {
     },
     {
       id: "GD01-018_p1",
+      artId: "GD01-018_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-018_p1",
       cardNumber: "GD01-018",
       set: {
@@ -44,6 +49,7 @@ export const betaRezel018: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-018", "GD01-018_p1"],
   selectedPrintingId: "GD01-018_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-018_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-018_p1.webp?260424",

@@ -15,12 +15,6 @@ export const restoringAtlantisI18n: Record<Languages, I18nProperties> = {
   },
   it: {
     name: "Ricostruire Atlantide",
-    text: [
-      {
-        title: "I",
-        description:
-          "tuoi personaggi non possono essere sfidati fino all'inizio del tuo prossimo turno.",
-      },
-    ],
+    text: "I tuoi personaggi non possono essere sfidati fino all'inizio del tuo prossimo turno.",
   },
 };

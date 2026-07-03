@@ -67,6 +67,7 @@ export function loadLorcanaServerAuthoritativeState(
       matchID: state.ctx.matchID,
       gameID: state.ctx.gameID,
       goingFirst: (state.ctx.status.choosingFirstPlayer ?? "") as PlayerId,
+      capturePatches: true,
       _skipInitialization: true,
     });
   engine.loadState(state);
@@ -95,6 +96,7 @@ export function loadLorcanaServerAuthoritativeSnapshot(
       matchID: snapshot.state.ctx.matchID,
       gameID: snapshot.state.ctx.gameID,
       goingFirst: (snapshot.state.ctx.status.choosingFirstPlayer ?? "") as PlayerId,
+      capturePatches: true,
       _skipInitialization: true,
     });
 

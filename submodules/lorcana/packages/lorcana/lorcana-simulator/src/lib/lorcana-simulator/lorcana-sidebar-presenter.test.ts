@@ -1794,6 +1794,12 @@ describe("LorcanaSidebarPresenter", () => {
       summaryTitle: expectedSummary,
     });
     expect(presenter.activePlayerGuidance[0]?.message).toBe(expectedSummary);
+    expect(presenter.activePlayerGuidance[0]?.inlineReference).toMatchObject({
+      label: "Hades - Looking for a Deal",
+      card: { cardId: sourceCardId },
+      prefix: "Resolving ",
+      suffix: ": WHAT D'YA SAY? targeting Cinderella - Dream Come True.",
+    });
   });
 
   it("lists pending choice alternatives in the sidebar and submits the chosen branch", () => {
@@ -1957,7 +1963,7 @@ describe("LorcanaSidebarPresenter", () => {
     });
   });
 
-  it("updates named-card search and submits the selected card name", () => {
+  it("updates named-card search and submits the selected card name", async () => {
     const executedMoves: Array<Record<string, unknown>> = [];
     const sourceCard = createCardSnapshot("playerOne", "play", {
       id: "card-1",
@@ -2018,7 +2024,15 @@ describe("LorcanaSidebarPresenter", () => {
     });
     presenter.handleAvailableMovesNamedCardQueryInput("elsa");
 
-    const selectionState = presenter.availableMovesSelectionState;
+    let selectionState = presenter.availableMovesSelectionState;
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      if (selectionState?.mode === "resolution-name-card" && selectionState.entries.length > 0) {
+        break;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      selectionState = presenter.availableMovesSelectionState;
+    }
+
     expect(selectionState?.mode).toBe("resolution-name-card");
     expect(selectionState?.entries.length).toBeGreaterThan(0);
 
@@ -3628,7 +3642,7 @@ describe("LorcanaSidebarPresenter", () => {
 
     expect(action?.enabled).toBe(true);
     expect(action?.interaction).toBe("expand-on-click");
-    expect(action?.moves).toEqual([]);
+    expect(action?.moves).toEqual([moveToLocationMove]);
     expect(action && presenter.handleCardActionClick(action)).toBe(true);
     expect(presenter.actionSelectionSession?.phase).toBe("choose-target");
     expect(presenter.actionSelectionSession?.sourceCardId).toBe(character.cardId);
@@ -4152,6 +4166,11 @@ describe("LorcanaSidebarPresenter", () => {
       name: "Ursula - Sea Witch",
       type: "character",
     });
+    const bystander = createCardSnapshot("playerOne", "play", {
+      id: "bystander",
+      name: "Bystander - Available Action",
+      type: "character",
+    });
     const executedMoves: Array<LorcanaSimulatorMoveParams["playCard"]> = [];
     const shiftMove = createExecutableMove({
       id: "shiftCard:shift-card:shift-target",
@@ -4191,7 +4210,16 @@ describe("LorcanaSidebarPresenter", () => {
           [discardSong.cardId]: discardSong,
           [alternateDiscardSong.cardId]: alternateDiscardSong,
           [shiftTarget.cardId]: shiftTarget,
+          [bystander.cardId]: bystander,
         }),
+        moveCategorySummaries: () => [
+          {
+            categoryId: "quest",
+            categoryLabel: "Quest",
+            sourceCardIds: [bystander.cardId],
+            isDirect: false,
+          },
+        ],
         executeMove: (moveId, params) => {
           if (moveId !== "playCard") {
             return false;
@@ -4204,6 +4232,7 @@ describe("LorcanaSidebarPresenter", () => {
     );
     presenter.skipActionConfirmation = false;
 
+    expect(presenter.getCardActionHighlightState(bystander).playable).toBe(true);
     expect(presenter.startActionSelectionSession("shift-card", [shiftMove])).toBe(true);
     expect(presenter.handleAvailableMovesSelectionCard(shiftCard.cardId)).toBe(true);
     expect(presenter.activePlayerGuidance[0]?.message).toBe(
@@ -4232,6 +4261,7 @@ describe("LorcanaSidebarPresenter", () => {
     expect(presenter.activePlayerGuidance[0]?.message).toBe(
       `Choose a shift target for ${shiftCard.label}.`,
     );
+    expect(presenter.getCardActionHighlightState(bystander).playable).toBe(false);
     expect(presenter.availableMovesSelectionState).toMatchObject({
       categoryId: "shift-card",
       phase: "choose-target",
@@ -4257,5 +4287,173 @@ describe("LorcanaSidebarPresenter", () => {
         targets: [shiftTarget.cardId],
       },
     ]);
+  });
+
+  it("opens Maleficent & Diablo's Fools action directly at deck-bottom cost selection", () => {
+    const shiftCard = {
+      ...createCardSnapshot("playerOne", "hand", {
+        id: "maleficent-diablo",
+        name: "Maleficent & Diablo - Evil Incarnate",
+        type: "character",
+      }),
+      keywords: ["Shift"],
+      shiftInkCost: 5,
+      textEntries: [
+        { title: "Shift 5 {I}", description: "" },
+        {
+          title: "Fools!",
+          description:
+            "You may put 5 character cards from your discard on the bottom of your deck in any order to shift this character for free.",
+        },
+      ],
+    };
+    const shiftTarget = createCardSnapshot("playerOne", "play", {
+      id: "maleficent-target",
+      name: "Maleficent - Exultant Spellcaster",
+      type: "character",
+    });
+    const discardCharacters = Array.from({ length: 5 }, (_, index) =>
+      createCardSnapshot("playerOne", "discard", {
+        id: `discard-character-${index + 1}`,
+        name: `Discard Character ${index + 1}`,
+        type: "character",
+      }),
+    );
+    const paidShiftMove = createExecutableMove({
+      id: "shiftCard:maleficent-diablo:maleficent-target",
+      label: "Maleficent & Diablo - Evil Incarnate (Shift) -> Maleficent - Exultant Spellcaster",
+      moveId: "playCard",
+      params: {
+        cardId: shiftCard.cardId,
+        cost: "shift",
+        shiftTarget: shiftTarget.cardId,
+        targets: [shiftTarget.cardId],
+      },
+      presentation: {
+        kind: "targeted",
+        categoryId: "shift-card",
+        categoryLabel: "Shift",
+        optionLabel: "Shift: 5 ink",
+      },
+    });
+    const foolsShiftMove = createExecutableMove({
+      id: "shiftCard:maleficent-diablo:maleficent-target:putOnDeckBottom",
+      label: "Maleficent & Diablo - Evil Incarnate (Shift) -> Maleficent - Exultant Spellcaster",
+      moveId: "playCard",
+      params: {
+        cardId: shiftCard.cardId,
+        cost: "shift",
+        shiftTarget: shiftTarget.cardId,
+        targets: [shiftTarget.cardId],
+      },
+      presentation: {
+        kind: "targeted",
+        categoryId: "shift-card",
+        categoryLabel: "Shift",
+        optionLabel: "Put 5 on Deck Bottom",
+        selectableCosts: [
+          {
+            kind: "putOnDeckBottom",
+            count: 5,
+            candidateCardIds: discardCharacters.map((card) => card.cardId as CardInstanceId),
+            zone: "discard",
+            cardType: "character",
+          },
+        ],
+      },
+    });
+
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        ownerSide: () => "playerOne",
+        executableMoves: () => [paidShiftMove, foolsShiftMove],
+        cardSnapshotsById: () => ({
+          [shiftCard.cardId]: shiftCard,
+          [shiftTarget.cardId]: shiftTarget,
+          ...Object.fromEntries(discardCharacters.map((card) => [card.cardId, card])),
+        }),
+      }),
+    );
+
+    const foolsAction = presenter
+      .getCardActionViews(shiftCard)
+      .find((candidate) => candidate.label === "Fools!");
+
+    expect(foolsAction).toMatchObject({
+      categoryId: "shift-card",
+      detail: "Put 5 characters on deck bottom",
+      moves: [foolsShiftMove],
+    });
+    expect(foolsAction && presenter.handleCardActionClick(foolsAction)).toBe(true);
+    expect(presenter.actionSelectionSession).toMatchObject({
+      categoryId: "shift-card",
+      sourceCardId: shiftCard.cardId,
+      phase: "choose-cost",
+      selectedMoveId: null,
+    });
+    expect(presenter.activePlayerGuidance[0]?.message).toBe(
+      `Choose 5 character cards from your discard to put on bottom of your deck to play ${shiftCard.label} for free.`,
+    );
+  });
+
+  it("describes multi-shift selection as an upper bound instead of selected over required", () => {
+    const shiftCard = createCardSnapshot("playerOne", "hand", {
+      id: "sulley-boo",
+      name: "Sulley & Boo - Scare Buddies",
+      type: "character",
+    });
+    const boo = createCardSnapshot("playerOne", "play", {
+      id: "boo",
+      name: "Boo - Energetic Child",
+      type: "character",
+    });
+    const sulley = createCardSnapshot("playerOne", "play", {
+      id: "sulley",
+      name: "Sulley - The New Boss",
+      type: "character",
+    });
+    const multiShiftMove = createExecutableMove({
+      id: "playCard:sulley-boo:shift",
+      label: `Shift ${shiftCard.label}`,
+      moveId: "playCard",
+      params: { cardId: shiftCard.cardId, cost: "shift", targets: [boo.cardId] },
+      presentation: {
+        kind: "targeted",
+        categoryId: "shift-card",
+        categoryLabel: "Shift",
+        optionLabel: `Shift ${shiftCard.label}`,
+        selectionMode: "multiShift",
+        candidateCards: [{ cardId: boo.cardId }, { cardId: sulley.cardId }],
+        minSelections: 1,
+        maxSelections: 2,
+      },
+    });
+
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        ownerSide: () => "playerOne",
+        cardSnapshotsById: () => ({
+          [shiftCard.cardId]: shiftCard,
+          [boo.cardId]: boo,
+          [sulley.cardId]: sulley,
+        }),
+      }),
+    );
+
+    expect(presenter.startActionSelectionSession("shift-card", [multiShiftMove])).toBe(true);
+    expect(presenter.handleAvailableMovesSelectionCard(shiftCard.cardId)).toBe(true);
+    expect(presenter.availableMovesSelectionState?.message).toBe(
+      `Choose Shift targets for ${shiftCard.label}: 0 selected, at least 1 required, up to 2.`,
+    );
+
+    expect(presenter.handleAvailableMovesSelectionCard(boo.cardId)).toBe(true);
+    expect(presenter.availableMovesSelectionState?.message).toBe(
+      `Choose Shift targets for ${shiftCard.label}: 1 selected, at least 1 required, up to 2.`,
+    );
+
+    expect(presenter.handleAvailableMovesSelectionCard(sulley.cardId)).toBe(true);
+    expect(presenter.availableMovesSelectionState?.message).toBe(
+      `Choose Shift targets for ${shiftCard.label}: 2 selected, at least 1 required, up to 2.`,
+    );
   });
 });

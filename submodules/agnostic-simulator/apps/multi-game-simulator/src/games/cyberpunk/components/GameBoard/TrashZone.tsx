@@ -1,5 +1,4 @@
 import { Card } from "./Card";
-import { simEntityAnchor, simZoneAnchor } from "./animationAnchors";
 import { useMoveSelection } from "./MoveSelectionContext";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { ZoneBadge } from "./ZoneBadge";
@@ -39,9 +38,9 @@ export function TrashZone({ topCard, opponent = false, side, count = 0 }: TrashZ
       ref={drop.setNodeRef}
       className={`${classes.zone} ${drop.isOver ? classes.dropOver : ""}`}
       data-testid="trash-zone"
+      data-zone-id={opponent ? "opp-trash" : "p-trash"}
       data-side={side}
       data-count={count}
-      {...simZoneAnchor({ id: zoneName, side, visibility: "public", role: "discard" })}
     >
       <div className={classes.inner}>
         {topCard ? (
@@ -51,12 +50,6 @@ export function TrashZone({ topCard, opponent = false, side, count = 0 }: TrashZ
             data-card-id={topCard.cardId}
             data-card-name={topCard.name}
             data-resolving-program={hideResolvingTopCard ? "true" : undefined}
-            {...simEntityAnchor({
-              entityId: topCard.cardId,
-              zoneId: zoneName,
-              side,
-              face: "public",
-            })}
           >
             <Card
               imageUrl={topCard.imageUrl}

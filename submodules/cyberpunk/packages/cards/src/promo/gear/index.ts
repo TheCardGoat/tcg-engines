@@ -1,3 +1,3 @@
-import type { PromoCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
 
-export const promoGear = [] satisfies PromoCardDefinition[];
+export const promoGear = [] satisfies GearCardDefinition[];

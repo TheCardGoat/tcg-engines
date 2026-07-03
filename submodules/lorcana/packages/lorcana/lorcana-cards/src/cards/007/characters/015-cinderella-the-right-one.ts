@@ -4,6 +4,17 @@ import { cinderellaTheRightOneI18n } from "./015-cinderella-the-right-one.i18n";
 export const cinderellaTheRightOne: CharacterCard = {
   id: "25y",
   canonicalId: "ci_25y",
+  slug: "lorcana-ci_25y",
+  printings: [
+    {
+      id: "set7-015",
+      artId: "set7-015",
+      setCode: "set7",
+      collectorNumber: "15",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-015"],
   cardType: "character",
   name: "Cinderella",
@@ -20,7 +31,7 @@ export const cinderellaTheRightOne: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7c8e2317de8840ecaa50bffbff20c87d",
-    tcgPlayer: 619415,
+    tcgPlayer: "619415",
   },
   text: [
     {

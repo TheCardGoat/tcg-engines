@@ -19,11 +19,11 @@ export const donaldDuckNotAgainI18n: Record<Languages, I18nProperties> = {
     version: "Nicht schon wieder!",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "ES REICHT!",
-        description: "Dieser Charakter erhält für jeden Schaden auf ihm +1.",
+        title: "Es reicht!",
+        description: "Dieser Charakter erhält für jeden Schaden auf ihm +1 {L}.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const donaldDuckNotAgainI18n: Record<Languages, I18nProperties> = {
     version: "Pas encore !",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "J'EN AI ASSEZ!",
-        description: "Ce personnage gagne +1 pour chaque jeton Dommage sur lui.",
+        title: "J'en ai assez!",
+        description: "Ce personnage gagne +1 {L} pour chaque jeton Dommage sur lui.",
       },
     ],
   },
@@ -45,11 +45,11 @@ export const donaldDuckNotAgainI18n: Record<Languages, I18nProperties> = {
     version: "Not Again!",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "PHOOEY!",
-        description: "This character gets +1 for each 1 damage on him.",
+        title: "Phooey!",
+        description: "This character gets +1 {L} for each 1 damage on him.",
       },
     ],
   },

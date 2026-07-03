@@ -18,8 +18,10 @@
   import { cardsAuxKv } from "@tcg/lorcana-cards/data";
   import {
     getFullName,
+    getEffectiveDeckInkTypes,
     INK_TYPES,
     CARD_TYPES,
+    type CardFormatData,
     type InkType,
     type CardType,
     type LorcanaCardDefinition,
@@ -183,6 +185,19 @@
     return DEFAULT_MAX_COPIES;
   }
 
+  function cardFormatDataFor(card: LorcanaCardDefinition): CardFormatData {
+    return {
+      canonicalId: canonicalIdForCard(card),
+      fullName: getFullName(card),
+      sets: [],
+      inkTypes: card.inkType,
+      cardType: card.cardType,
+      classifications: "classifications" in card ? card.classifications : undefined,
+      deckConstructionRules: card.deckConstructionRules,
+      cardCopyLimit: card.cardCopyLimit,
+    };
+  }
+
   const cardsList = $derived(Object.values(cardsById));
 
   const availableSets = $derived.by(() => {
@@ -207,9 +222,14 @@
   const deckCount = $derived(deckCards.reduce((sum, c) => sum + c.quantity, 0));
 
   const selectedInks = $derived.by(() => {
-    const inks = new Set<InkType>();
-    for (const c of deckCards) for (const i of c.inkType) inks.add(i);
-    return INK_TYPES.filter((i) => inks.has(i));
+    const effectiveInks = getEffectiveDeckInkTypes(
+      deckCards.map((c) => ({ cardId: c.id, quantity: c.quantity })),
+      (id) => {
+        const card = cardsById[id];
+        return card ? cardFormatDataFor(card) : undefined;
+      },
+    );
+    return INK_TYPES.filter((i) => effectiveInks.includes(i));
   });
 
   const costCurve = $derived.by(() => {

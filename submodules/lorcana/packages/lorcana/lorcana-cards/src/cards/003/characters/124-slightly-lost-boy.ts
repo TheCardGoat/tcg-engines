@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { slightlyLostBoyI18n } from "./124-slightly-lost-boy.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const slightlyLostBoy: CharacterCard = {
   id: "pa7",
   canonicalId: "ci_pa7",
+  slug: "lorcana-ci_pa7",
+  printings: [
+    {
+      id: "set3-124",
+      artId: "set3-124",
+      setCode: "set3",
+      collectorNumber: "124",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-124"],
   cardType: "character",
   name: "Slightly",
@@ -21,7 +33,7 @@ export const slightlyLostBoy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3893e351132b4fc28df9093b721f4f28",
-    tcgPlayer: 537948,
+    tcgPlayer: "537948",
   },
   text: [
     {

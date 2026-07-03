@@ -1,5 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { archimedesElectrifiedOwlI18n } from "./047-archimedes-electrified-owl.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 import { challenger } from "../../../helpers/abilities/challenger";
@@ -7,6 +8,17 @@ import { challenger } from "../../../helpers/abilities/challenger";
 export const archimedesElectrifiedOwl: CharacterCard = {
   id: "IT1",
   canonicalId: "ci_CCb",
+  slug: "lorcana-ci_CCb",
+  printings: [
+    {
+      id: "set5-047",
+      artId: "set5-047",
+      setCode: "set5",
+      collectorNumber: "47",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-047"],
   cardType: "character",
   name: "Archimedes",
@@ -23,7 +35,7 @@ export const archimedesElectrifiedOwl: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cb38cec5fa8e49139bb0377111d6d048",
-    tcgPlayer: 561977,
+    tcgPlayer: "561977",
   },
   text: [
     {

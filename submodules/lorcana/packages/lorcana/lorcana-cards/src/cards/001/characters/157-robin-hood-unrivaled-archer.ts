@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { robinHoodUnrivaledArcherI18n } from "./157-robin-hood-unrivaled-archer.i18n";
 
 export const robinHoodUnrivaledArcher: CharacterCard = {
-  id: "0is",
+  id: "P20",
   canonicalId: "ci_h2F",
+  slug: "lorcana-ci_h2F",
+  printings: [
+    {
+      id: "set1-157",
+      artId: "set1-157",
+      setCode: "set1",
+      collectorNumber: "157",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-157", "set9-162"],
   cardType: "character",
   name: "Robin Hood",
@@ -20,7 +31,7 @@ export const robinHoodUnrivaledArcher: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b00a7190a315433ebbd327dd79450960",
-    tcgPlayer: 650096,
+    tcgPlayer: "650096",
   },
   text: [
     {
@@ -48,9 +59,15 @@ export const robinHoodUnrivaledArcher: CharacterCard = {
       },
       condition: {
         type: "comparison",
-        left: { type: "cards-in-hand", controller: "opponent" },
+        left: {
+          type: "cards-in-hand",
+          controller: "opponent",
+        },
         comparison: "greater",
-        right: { type: "cards-in-hand", controller: "you" },
+        right: {
+          type: "cards-in-hand",
+          controller: "you",
+        },
       },
       effect: {
         amount: 1,

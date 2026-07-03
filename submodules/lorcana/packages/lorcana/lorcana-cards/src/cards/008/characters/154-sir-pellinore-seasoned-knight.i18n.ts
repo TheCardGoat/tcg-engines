@@ -17,9 +17,9 @@ export const sirPellinoreSeasonedKnightI18n: Record<Languages, I18nProperties> =
     version: "Erfahrener Ritter",
     text: [
       {
-        title: "EHRENKODEX",
+        title: "Ehrenkodex",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Charaktere in diesem Zug Unterstützen. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Charaktere in diesem Zug <Unterstützen>. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const sirPellinoreSeasonedKnightI18n: Record<Languages, I18nProperties> =
     version: "Chevalier chevronné",
     text: [
       {
-        title: "CODE DE CHEVALERIE",
+        title: "Code de chevalerie",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages gagnent Soutien pour le reste de ce tour. (Lorsque ces personnages sont envoyés à l'aventure, vous pouvez ajouter leur à celle d'un autre personnage au choix pour le reste de ce tour.)",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages gagnent <Soutien> pour le reste de ce tour. (Lorsque ces personnages sont envoyés à l'aventure, vous pouvez ajouter leur {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const sirPellinoreSeasonedKnightI18n: Record<Languages, I18nProperties> =
     version: "Cavaliere Esperto",
     text: [
       {
-        title: "CODICE D'ONORE",
+        title: "Codice d'Onore",
         description:
-          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi ottengono Aiutante per questo turno. (Ogni volta che vanno all'avventura, puoi aggiungere la loro alla di un altro personaggio a tua scelta per questo turno.)",
+          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi ottengono <Aiutante> per questo turno. (Ogni volta che vanno all'avventura, puoi aggiungere la loro {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
     ],
   },

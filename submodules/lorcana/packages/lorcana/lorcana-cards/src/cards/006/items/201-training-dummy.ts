@@ -4,6 +4,17 @@ import { trainingDummyI18n } from "./201-training-dummy.i18n";
 export const trainingDummy: ItemCard = {
   id: "Y5U",
   canonicalId: "ci_Y5U",
+  slug: "lorcana-ci_Y5U",
+  printings: [
+    {
+      id: "set6-201",
+      artId: "set6-201",
+      setCode: "set6",
+      collectorNumber: "201",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-201"],
   cardType: "item",
   name: "Training Dummy",
@@ -16,7 +27,7 @@ export const trainingDummy: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_513288f8ceec405e9b17fafcb0f5523a",
-    tcgPlayer: 588158,
+    tcgPlayer: "588158",
   },
   text: [
     {

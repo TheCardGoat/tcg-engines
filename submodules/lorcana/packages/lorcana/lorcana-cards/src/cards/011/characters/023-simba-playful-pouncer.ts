@@ -4,6 +4,17 @@ import { simbaPlayfulPouncerI18n } from "./023-simba-playful-pouncer.i18n";
 export const simbaPlayfulPouncer: CharacterCard = {
   id: "ymd",
   canonicalId: "ci_ymd",
+  slug: "lorcana-ci_ymd",
+  printings: [
+    {
+      id: "set11-023",
+      artId: "set11-023",
+      setCode: "set11",
+      collectorNumber: "23",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-023"],
   cardType: "character",
   name: "Simba",
@@ -20,13 +31,13 @@ export const simbaPlayfulPouncer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9a221a16584b472c8bdec14c1b4ae5b8",
-    tcgPlayer: 674317,
+    tcgPlayer: "674317",
   },
   text: [
     {
-      title: "YOU DON'T STAND A CHANCE",
+      title: "YOU DON'T STAND",
       description:
-        "When you play this character, chosen opposing character gets -2 {S} until the start of your next turn.",
+        "A CHANCE When you play this character, chosen opposing character gets -2 {S} until the start of your next turn.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

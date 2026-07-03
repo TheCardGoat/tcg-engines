@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { arielTreasureCollectorI18n } from "./139-ariel-treasure-collector.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const arielTreasureCollector: CharacterCard = {
   id: "Sxx",
   canonicalId: "ci_Sxx",
+  slug: "lorcana-ci_Sxx",
+  printings: [
+    {
+      id: "set4-139",
+      artId: "set4-139",
+      setCode: "set4",
+      collectorNumber: "139",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-139"],
   cardType: "character",
   name: "Ariel",
@@ -21,7 +33,7 @@ export const arielTreasureCollector: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_268651d4999a481faa22b6598a4dea0c",
-    tcgPlayer: 549440,
+    tcgPlayer: "549440",
   },
   text: [
     {

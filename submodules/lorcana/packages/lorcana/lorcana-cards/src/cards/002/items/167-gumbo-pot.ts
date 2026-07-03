@@ -4,6 +4,17 @@ import { gumboPotI18n } from "./167-gumbo-pot.i18n";
 export const gumboPot: ItemCard = {
   id: "MEA",
   canonicalId: "ci_A51",
+  slug: "lorcana-ci_A51",
+  printings: [
+    {
+      id: "set2-167",
+      artId: "set2-167",
+      setCode: "set2",
+      collectorNumber: "167",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-167"],
   cardType: "item",
   name: "Gumbo Pot",
@@ -16,7 +27,7 @@ export const gumboPot: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_45bfb8a9f002440191e7bfd8b993fd22",
-    tcgPlayer: 525309,
+    tcgPlayer: "525309",
   },
   text: [
     {

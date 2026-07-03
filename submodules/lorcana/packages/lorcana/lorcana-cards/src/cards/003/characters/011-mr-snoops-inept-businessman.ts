@@ -4,6 +4,17 @@ import { mrSnoopsIneptBusinessmanI18n } from "./011-mr-snoops-inept-businessman.
 export const mrSnoopsIneptBusinessman: CharacterCard = {
   id: "kVc",
   canonicalId: "ci_kVc",
+  slug: "lorcana-ci_kVc",
+  printings: [
+    {
+      id: "set3-011",
+      artId: "set3-011",
+      setCode: "set3",
+      collectorNumber: "11",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-011"],
   cardType: "character",
   name: "Mr. Snoops",
@@ -21,7 +32,7 @@ export const mrSnoopsIneptBusinessman: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_748599af9c8e4272b5f2926597a405ba",
-    tcgPlayer: 539064,
+    tcgPlayer: "539064",
   },
   classifications: ["Dreamborn", "Ally"],
   i18n: mrSnoopsIneptBusinessmanI18n,

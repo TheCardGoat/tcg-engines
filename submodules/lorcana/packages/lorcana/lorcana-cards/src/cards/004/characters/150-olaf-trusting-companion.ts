@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { olafTrustingCompanionI18n } from "./150-olaf-trusting-companion.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const olafTrustingCompanion: CharacterCard = {
   id: "QcK",
   canonicalId: "ci_QcK",
+  slug: "lorcana-ci_QcK",
+  printings: [
+    {
+      id: "set4-150",
+      artId: "set4-150",
+      setCode: "set4",
+      collectorNumber: "150",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-150"],
   cardType: "character",
   name: "Olaf",
@@ -21,7 +33,7 @@ export const olafTrustingCompanion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d7ce71c1b8814223bb8f1d9ed75cdfb6",
-    tcgPlayer: 550609,
+    tcgPlayer: "550609",
   },
   text: "Support",
   classifications: ["Storyborn", "Ally"],

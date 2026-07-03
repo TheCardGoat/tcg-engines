@@ -7,14 +7,17 @@ export const gd04Esperansa060: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD04-060",
-  externalId: "gundam:gd04-060",
-  slug: "esperansa-gd04-060",
+  canonicalId: "GD04-060",
+  externalIds: { bandai: "gundam:gd04-060" },
+  slug: "esperansa/gd04-060",
   displayName: "Esperansa",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-060",
   printings: [
     {
       id: "GD04-060",
+      artId: "GD04-060",
+      setCode: "GD04",
       collectorNumber: "GD04-060",
       cardNumber: "GD04-060",
       set: {
@@ -29,6 +32,7 @@ export const gd04Esperansa060: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-060"],
   selectedPrintingId: "GD04-060",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-060.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-060.webp?260424",

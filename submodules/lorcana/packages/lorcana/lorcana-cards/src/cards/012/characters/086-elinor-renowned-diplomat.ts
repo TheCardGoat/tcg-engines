@@ -4,6 +4,17 @@ import { elinorRenownedDiplomatI18n } from "./086-elinor-renowned-diplomat.i18n"
 export const elinorRenownedDiplomat: CharacterCard = {
   id: "9Uo",
   canonicalId: "ci_9Uo",
+  slug: "lorcana-ci_9Uo",
+  printings: [
+    {
+      id: "set12-086",
+      artId: "set12-086",
+      setCode: "set12",
+      collectorNumber: "86",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-086"],
   cardType: "character",
   name: "Elinor",
@@ -20,6 +31,7 @@ export const elinorRenownedDiplomat: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5d81f75d900f4ec4b6868519fc9c557e",
+    tcgPlayer: "692042",
   },
   text: [
     {

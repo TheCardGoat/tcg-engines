@@ -4,6 +4,17 @@ import { naniNoWorriesI18n } from "./184-nani-no-worries.i18n";
 export const naniNoWorries: CharacterCard = {
   id: "wNB",
   canonicalId: "ci_wNB",
+  slug: "lorcana-ci_wNB",
+  printings: [
+    {
+      id: "set11-184",
+      artId: "set11-184",
+      setCode: "set11",
+      collectorNumber: "184",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-184"],
   cardType: "character",
   name: "Nani",
@@ -20,7 +31,7 @@ export const naniNoWorries: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b10b1d80d4a94ec5b2ed59c1318bb046",
-    tcgPlayer: 673760,
+    tcgPlayer: "673760",
   },
   text: [
     {

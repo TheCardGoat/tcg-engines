@@ -4,6 +4,17 @@ import { arthurTrainedSwordsmanI18n } from "./069-arthur-trained-swordsman.i18n"
 export const arthurTrainedSwordsman: CharacterCard = {
   id: "Dov",
   canonicalId: "ci_Dov",
+  slug: "lorcana-ci_Dov",
+  printings: [
+    {
+      id: "set2-069",
+      artId: "set2-069",
+      setCode: "set2",
+      collectorNumber: "69",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-069"],
   cardType: "character",
   name: "Arthur",
@@ -21,7 +32,7 @@ export const arthurTrainedSwordsman: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_fd6fc618265f462787b1a9bc6c988b54",
-    tcgPlayer: 527744,
+    tcgPlayer: "527744",
   },
   classifications: ["Dreamborn", "Hero"],
   i18n: arthurTrainedSwordsmanI18n,

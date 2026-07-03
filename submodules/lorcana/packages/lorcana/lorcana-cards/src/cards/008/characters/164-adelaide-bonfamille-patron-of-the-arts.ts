@@ -4,6 +4,17 @@ import { adelaideBonfamillePatronOfTheArtsI18n } from "./164-adelaide-bonfamille
 export const adelaideBonfamillePatronOfTheArts: CharacterCard = {
   id: "XtA",
   canonicalId: "ci_XtA",
+  slug: "lorcana-ci_XtA",
+  printings: [
+    {
+      id: "set8-164",
+      artId: "set8-164",
+      setCode: "set8",
+      collectorNumber: "164",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-164"],
   cardType: "character",
   name: "Adelaide Bonfamille",
@@ -21,7 +32,7 @@ export const adelaideBonfamillePatronOfTheArts: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_c624490feea04b46b3c6dbd9863d61f0",
-    tcgPlayer: 631461,
+    tcgPlayer: "631461",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: adelaideBonfamillePatronOfTheArtsI18n,

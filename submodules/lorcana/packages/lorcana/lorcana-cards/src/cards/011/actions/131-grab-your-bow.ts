@@ -4,6 +4,17 @@ import { grabYourBowI18n } from "./131-grab-your-bow.i18n";
 export const grabYourBow: ActionCard = {
   id: "EtL",
   canonicalId: "ci_EtL",
+  slug: "lorcana-ci_EtL",
+  printings: [
+    {
+      id: "set11-131",
+      artId: "set11-131",
+      setCode: "set11",
+      collectorNumber: "131",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-131"],
   cardType: "action",
   name: "Grab Your Bow",
@@ -16,7 +27,7 @@ export const grabYourBow: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4bf208bd16b043ac8eb27209b522c3c6",
-    tcgPlayer: 675343,
+    tcgPlayer: "675343",
   },
   text: "Banish up to 2 chosen characters with 2 {S} or less.",
   actionSubtype: "song",

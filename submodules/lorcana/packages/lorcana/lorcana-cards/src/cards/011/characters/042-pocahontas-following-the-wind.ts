@@ -4,6 +4,17 @@ import { pocahontasFollowingTheWindI18n } from "./042-pocahontas-following-the-w
 export const pocahontasFollowingTheWind: CharacterCard = {
   id: "o0i",
   canonicalId: "ci_o0i",
+  slug: "lorcana-ci_o0i",
+  printings: [
+    {
+      id: "set11-042",
+      artId: "set11-042",
+      setCode: "set11",
+      collectorNumber: "42",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-042"],
   cardType: "character",
   name: "Pocahontas",
@@ -20,7 +31,7 @@ export const pocahontasFollowingTheWind: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_044b499eebfa487ea9fb1a43e8d5fcdb",
-    tcgPlayer: 674700,
+    tcgPlayer: "674700",
   },
   text: [
     {
@@ -51,7 +62,11 @@ export const pocahontasFollowingTheWind: CharacterCard = {
             owner: "any",
             zones: ["play"],
             cardTypes: ["character"],
-            filter: [{ type: "exerted" }],
+            filter: [
+              {
+                type: "exerted",
+              },
+            ],
             excludeSelf: true,
           },
         },

@@ -7,14 +7,14 @@ export const performanceReviewI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Leistungsbewertung",
-    text: "einen deiner bereiten Charaktere, um so viele Karten zu ziehen, wie dieser hat.",
+    text: "{E} einen deiner bereiten Charaktere, um so viele Karten zu ziehen, wie dieser {L} hat.",
   },
   fr: {
     name: "Bilan de performance",
-    text: "Choisissez et l'un de vos personnages redressés pour piocher autant de cartes que son.",
+    text: "Choisissez et {E} l'un de vos personnages redressés pour piocher autant de cartes que son {L}.",
   },
   it: {
     name: "Valutazione delle Prestazioni",
-    text: "un tuo personaggio preparato a tua scelta per pescare carte pari al di quel personaggio.",
+    text: "{E} un tuo personaggio preparato a tua scelta per pescare carte pari al {L} di quel personaggio.",
   },
 };

@@ -4,6 +4,17 @@ import { edHystericalPartygoerI18n } from "./081-ed-hysterical-partygoer.i18n";
 export const edHystericalPartygoer: CharacterCard = {
   id: "28X",
   canonicalId: "ci_28X",
+  slug: "lorcana-ci_28X",
+  printings: [
+    {
+      id: "set5-081",
+      artId: "set5-081",
+      setCode: "set5",
+      collectorNumber: "81",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-081"],
   cardType: "character",
   name: "Ed",
@@ -20,7 +31,7 @@ export const edHystericalPartygoer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f291329542f04339988b4051333a446e",
-    tcgPlayer: 559626,
+    tcgPlayer: "559626",
   },
   text: [
     {

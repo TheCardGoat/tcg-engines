@@ -7,14 +7,17 @@ export const gd02FlitAsuno088: PilotCard = {
   color: "green",
   traits: ["earth federation", "asuno family", "x-rounder"],
   id: "GD02-088",
-  externalId: "gundam:gd02-088",
-  slug: "flit-asuno-gd02-088",
+  canonicalId: "GD02-088",
+  externalIds: { bandai: "gundam:gd02-088" },
+  slug: "flit-asuno/gd02-088",
   displayName: "Flit Asuno",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-088",
   printings: [
     {
       id: "GD02-088",
+      artId: "GD02-088",
+      setCode: "GD02",
       collectorNumber: "GD02-088",
       cardNumber: "GD02-088",
       set: {
@@ -30,6 +33,8 @@ export const gd02FlitAsuno088: PilotCard = {
     },
     {
       id: "GD02-088_p1",
+      artId: "GD02-088_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-088_p1",
       cardNumber: "GD02-088",
       set: {
@@ -45,6 +50,8 @@ export const gd02FlitAsuno088: PilotCard = {
     },
     {
       id: "GD02-088_p2",
+      artId: "GD02-088_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-088_p2",
       cardNumber: "GD02-088",
       set: {
@@ -59,6 +66,7 @@ export const gd02FlitAsuno088: PilotCard = {
       productName: "Booster Release Event",
     },
   ],
+  reprints: ["GD02-088", "GD02-088_p1", "GD02-088_p2"],
   selectedPrintingId: "GD02-088",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-088.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-088.webp?260424",

@@ -4,6 +4,17 @@ import { hesGotASwordI18n } from "./132-hes-got-a-sword.i18n";
 export const hesGotASword: ActionCard = {
   id: "CpS",
   canonicalId: "ci_CpS",
+  slug: "lorcana-ci_CpS",
+  printings: [
+    {
+      id: "set1-132",
+      artId: "set1-132",
+      setCode: "set1",
+      collectorNumber: "132",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-132"],
   cardType: "action",
   name: "He's Got a Sword!",
@@ -16,7 +27,7 @@ export const hesGotASword: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3f328e2a6ea741bcb31348ee2954b3e8",
-    tcgPlayer: 508782,
+    tcgPlayer: "508782",
   },
   text: "Chosen character gets +2 {S} this turn.",
   abilities: [

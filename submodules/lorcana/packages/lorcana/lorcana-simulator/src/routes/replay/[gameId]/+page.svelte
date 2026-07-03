@@ -22,19 +22,17 @@
   import ReplayForkPlayerPicker from "@/features/replay/ReplayForkPlayerPicker.svelte";
   import { trackEvent } from "$lib/analytics/analytics.js";
   import { logError } from "$lib/telemetry/logs.js";
-  import {
-    ArrowLeft,
-    ChevronLeft,
-    ChevronRight,
-    ChevronsLeft,
-    ChevronsRight,
-    GitFork,
-    NotebookPen,
-    SkipBack,
-    SkipForward,
-    Play,
-    Pause,
-  } from "@lucide/svelte";
+  import ArrowLeft from "@lucide/svelte/icons/arrow-left";
+  import ChevronLeft from "@lucide/svelte/icons/chevron-left";
+  import ChevronRight from "@lucide/svelte/icons/chevron-right";
+  import ChevronsLeft from "@lucide/svelte/icons/chevrons-left";
+  import ChevronsRight from "@lucide/svelte/icons/chevrons-right";
+  import GitFork from "@lucide/svelte/icons/git-fork";
+  import NotebookPen from "@lucide/svelte/icons/notebook-pen";
+  import Pause from "@lucide/svelte/icons/pause";
+  import Play from "@lucide/svelte/icons/play";
+  import SkipBack from "@lucide/svelte/icons/skip-back";
+  import SkipForward from "@lucide/svelte/icons/skip-forward";
   import { authSession } from "$lib/auth/session.svelte.js";
   import ReplayNotesPanel from "@/features/replay/ReplayNotesPanel.svelte";
 

@@ -4,6 +4,17 @@ import { panicUnderworldImpI18n } from "./087-panic-underworld-imp.i18n";
 export const panicUnderworldImp: CharacterCard = {
   id: "Ixv",
   canonicalId: "ci_Ixv",
+  slug: "lorcana-ci_Ixv",
+  printings: [
+    {
+      id: "set2-087",
+      artId: "set2-087",
+      setCode: "set2",
+      collectorNumber: "87",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-087"],
   cardType: "character",
   name: "Panic",
@@ -20,7 +31,7 @@ export const panicUnderworldImp: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_995ce4bea35048d3b53f224ba4fc7664",
-    tcgPlayer: 519492,
+    tcgPlayer: "519492",
   },
   text: [
     {

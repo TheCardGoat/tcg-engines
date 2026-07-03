@@ -11,10 +11,28 @@ export const theBossIsOnARollI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Je complète ma collection",
-    text: "Regardez les 5 premières cartes de votre pioche. Remettez-en autant que vous voulez sur le dessus de votre pioche et le reste en dessous, dans l'ordre de votre choix. Gagnez 1 éclat de Lore.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Regardez les 5 premières cartes de votre pioche. Remettez-en autant que vous voulez sur le dessus de votre pioche et le reste en dessous, dans l'ordre de votre choix. Gagnez 1 éclat de Lore.",
+      },
+    ],
   },
   it: {
     name: "Abbiam vinto Ancora Noi",
-    text: "(Un personaggio con costo 3 o superiore può per giocare questa canzone gratis.) Guarda le prime 5 carte del tuo mazzo. Mettine un qualsiasi numero in cima o in fondo al tuo mazzo in qualsiasi ordine. Ottieni 1 leggenda.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per giocare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Guarda le prime 5 carte del tuo mazzo. Mettine un qualsiasi numero in cima o in fondo al tuo mazzo in qualsiasi ordine. Ottieni 1 leggenda.",
+      },
+    ],
   },
 };

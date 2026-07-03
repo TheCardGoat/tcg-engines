@@ -4,6 +4,17 @@ import { patchIntimidatingPupI18n } from "./014-patch-intimidating-pup.i18n";
 export const patchIntimidatingPup: CharacterCard = {
   id: "530",
   canonicalId: "ci_530",
+  slug: "lorcana-ci_530",
+  printings: [
+    {
+      id: "set3-014",
+      artId: "set3-014",
+      setCode: "set3",
+      collectorNumber: "14",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-014"],
   cardType: "character",
   name: "Patch",
@@ -20,7 +31,7 @@ export const patchIntimidatingPup: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d087e066b0484bf9aed46a182f60f0ff",
-    tcgPlayer: 539066,
+    tcgPlayer: "539066",
   },
   text: [
     {

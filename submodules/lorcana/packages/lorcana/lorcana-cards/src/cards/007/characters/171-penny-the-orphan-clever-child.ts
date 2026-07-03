@@ -4,6 +4,17 @@ import { pennyTheOrphanCleverChildI18n } from "./171-penny-the-orphan-clever-chi
 export const pennyTheOrphanCleverChild: CharacterCard = {
   id: "Dl9",
   canonicalId: "ci_Dl9",
+  slug: "lorcana-ci_Dl9",
+  printings: [
+    {
+      id: "set7-171",
+      artId: "set7-171",
+      setCode: "set7",
+      collectorNumber: "171",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-171"],
   cardType: "character",
   name: "Penny the Orphan",
@@ -20,7 +31,7 @@ export const pennyTheOrphanCleverChild: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ca23777aebb648ae879ec623bc4f760d",
-    tcgPlayer: 619504,
+    tcgPlayer: "619504",
   },
   text: [
     {

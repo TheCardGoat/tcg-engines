@@ -11,7 +11,9 @@ const i18nText = (text: string) => ({
 
 const baseCard = {
   id: "aaa",
+  printings: [{ id: "aaa", artId: "aaa", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
   canonicalId: "ci_merida",
+  slug: "lorcana-ci_merida",
   cardType: "character",
   name: "Merida",
   version: "Formidable Archer",

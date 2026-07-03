@@ -11,10 +11,27 @@ export const everAsBeforeI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Rien n'est plus pareil",
-    text: "Choisissez autant de personnages que vous le souhaitez et retirez-leur jusqu'à 2 dommages chacun.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez autant de personnages que vous le souhaitez et retirez-leur jusqu'à 2 dommages chacun.",
+      },
+    ],
   },
   it: {
     name: "Stessa Melodia",
-    text: "(Un personaggio con costo 2 o superiore può per cantare questa canzone gratis.) Rimuovi fino a 2 danni da un qualsiasi numero di personaggi a tua scelta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Rimuovi fino a 2 danni da un qualsiasi numero di personaggi a tua scelta.",
+      },
+    ],
   },
 };

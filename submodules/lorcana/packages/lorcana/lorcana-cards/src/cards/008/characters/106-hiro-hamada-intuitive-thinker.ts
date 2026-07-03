@@ -4,6 +4,17 @@ import { hiroHamadaIntuitiveThinkerI18n } from "./106-hiro-hamada-intuitive-thin
 export const hiroHamadaIntuitiveThinker: CharacterCard = {
   id: "OeW",
   canonicalId: "ci_OeW",
+  slug: "lorcana-ci_OeW",
+  printings: [
+    {
+      id: "set8-106",
+      artId: "set8-106",
+      setCode: "set8",
+      collectorNumber: "106",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-106"],
   cardType: "character",
   name: "Hiro Hamada",
@@ -20,7 +31,7 @@ export const hiroHamadaIntuitiveThinker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6153926b4f794e639c0b628501b8fc1a",
-    tcgPlayer: 631418,
+    tcgPlayer: "631418",
   },
   text: [
     {
@@ -41,7 +52,12 @@ export const hiroHamadaIntuitiveThinker: CharacterCard = {
           owner: "any",
           zones: ["play"],
           cardTypes: ["character"],
-          filter: [{ type: "has-classification", classification: "Floodborn" }],
+          filter: [
+            {
+              type: "has-classification",
+              classification: "Floodborn",
+            },
+          ],
         },
         type: "ready",
       },

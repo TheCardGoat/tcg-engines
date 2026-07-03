@@ -22,12 +22,12 @@ export const eeyoreInTheWayI18n: Record<Languages, I18nProperties> = {
     version: "Im Weg",
     text: [
       {
-        title: "DANKE FÜR DIE BEACHTUNG",
+        title: "Danke für die Beachtung",
         description:
-          "Für jeden erschöpften Charakter im Spiel zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jeden erschöpften Charakter im Spiel zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "DAS TUT MIR LEID",
+        title: "Das tut mir leid",
         description:
           "Wenn du diesen Charakter ausspielst, wähle für jede gegnerische Person je einen ihrer Charaktere. Jene werden zu Beginn ihres nächsten Zuges nicht bereit gemacht.",
       },
@@ -38,12 +38,12 @@ export const eeyoreInTheWayI18n: Record<Languages, I18nProperties> = {
     version: "En travers du chemin",
     text: [
       {
-        title: "MERCI DE T'INTÉRESSER À MOI",
+        title: "Merci de t'intéresser à moi",
         description:
-          "Jouer ce personnage vous coûte 1 de moins pour chaque personnage épuisé en jeu.",
+          "Jouer ce personnage vous coûte 1 {I} de moins pour chaque personnage épuisé en jeu.",
       },
       {
-        title: "DÉSOLÉ POUR ÇA",
+        title: "Désolé pour ça",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir l'un des personnages de chaque adversaire. Ces personnages ne se redressent pas au début de leur prochain tour.",
       },
@@ -54,12 +54,12 @@ export const eeyoreInTheWayI18n: Record<Languages, I18nProperties> = {
     version: "In Mezzo",
     text: [
       {
-        title: "GRAZIE PER AVERMI NOTATO",
+        title: "Grazie per avermi notato",
         description:
-          "Per ogni personaggio impegnato in gioco, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni personaggio impegnato in gioco, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "MI DISPIACE",
+        title: "Mi Dispiace",
         description:
           "Quando giochi questo personaggio, per ogni giocatore avversario, puoi scegliere un suo personaggio. Quel personaggio non si può preparare all'inizio del suo prossimo turno.",
       },

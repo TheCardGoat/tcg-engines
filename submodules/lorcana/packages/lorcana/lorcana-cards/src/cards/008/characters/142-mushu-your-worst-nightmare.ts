@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mushuYourWorstNightmareI18n } from "./142-mushu-your-worst-nightmare.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const mushuYourWorstNightmare: CharacterCard = {
-  id: "dhS",
+  id: "v0p",
   canonicalId: "ci_wxW",
+  slug: "lorcana-ci_wxW",
+  printings: [
+    {
+      id: "set8-142",
+      artId: "set8-142",
+      setCode: "set8",
+      collectorNumber: "142",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-142"],
   cardType: "character",
   name: "Mushu",
@@ -21,7 +33,7 @@ export const mushuYourWorstNightmare: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4ea909f6818d4776ae936aa51aed88b8",
-    tcgPlayer: 632228,
+    tcgPlayer: "632228",
   },
   text: [
     {

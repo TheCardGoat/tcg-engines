@@ -127,6 +127,10 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
   "trigger.copyGigValueCapped":
     "{sourceCardName} could not copy {sourceDieType}'s {sourceValue} to {targetDieType}; {targetDieType} can show at most {targetMax}, so it {resultText}.",
   "trigger.delayedDefeat": "{sourceCardName} defeated {targetNames} at the end of the turn.",
+  "trigger.revealTopCardType.hit":
+    "{sourceCardName} revealed a {revealedType} after choosing {chosenType} and added it to hand.",
+  "trigger.revealTopCardType.miss":
+    "{sourceCardName} revealed a {revealedType} after choosing {chosenType} and trashed it.",
 };
 
 /**

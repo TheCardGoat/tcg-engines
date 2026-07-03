@@ -111,6 +111,8 @@ export interface LogCardReference {
   cardType?: "character" | "action" | "item" | "location";
   set?: string;
   cardNumber?: number;
+  imageSet?: string;
+  imageCardNumber?: string;
 }
 
 export interface LorcanaCardSnapshot {
@@ -170,6 +172,8 @@ export interface LorcanaCardSnapshot {
   playedViaShift?: boolean;
   /** True when this card is displayed in the hand via a play-from-under permission (e.g. Black Cauldron) */
   isFromUnder?: boolean;
+  /** True when this card is displayed in the hand lane via a play-from-discard permission. */
+  isFromDiscard?: boolean;
   facePresentation: CardFacePresentation;
   activeEffects?: LorcanaActiveEffectSummary[];
 
@@ -186,6 +190,8 @@ export interface LorcanaCardSnapshot {
   // Image metadata
   set?: string;
   cardNumber?: number;
+  imageSet?: string;
+  imageCardNumber?: string;
 
   // Rarity
   rarity?:
@@ -427,9 +433,12 @@ export type ExecutableMovePresentation =
       categoryLabel: string;
       optionLabel: string;
       selectableCosts?: MoveOptionSelectableCost[];
-      selectionMode?: "singTogether";
-      candidateCards?: Array<{ cardId: string; value: number }>;
+      selectionMode?: "singTogether" | "multiShift";
+      candidateCards?: Array<{ cardId: string; value?: number; requiredName?: string }>;
       requiredValue?: number;
+      minSelections?: number;
+      maxSelections?: number;
+      requiredNames?: string[];
     };
 
 export type CardActionCategoryId =
@@ -454,6 +463,11 @@ export interface CardActionView {
   enabled: boolean;
   reason?: string;
   moves: ExecutableMoveEntry[];
+}
+
+export interface CardActionHighlightState {
+  playable: boolean;
+  activatable: boolean;
 }
 
 export type SimulatorSerializedValue =
@@ -604,6 +618,7 @@ export type LorcanaSimulatorMoveParams = ExactMoveParamMap<{
     cost: LorcanaRuntimeMoveParams["playCard"]["cost"];
     discardCards?: string[];
     shiftTarget?: string;
+    additionalShiftTargets?: string[];
     sacrificeTarget?: string;
     deckBottomTarget?: string;
     exertTargets?: string[];

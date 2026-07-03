@@ -7,14 +7,17 @@ export const gd03GundamKyriosTailUnitFlightMode030: UnitCard = {
   color: "green",
   traits: ["cb", "gn drive"],
   id: "GD03-030",
-  externalId: "gundam:gd03-030",
-  slug: "gundam-kyrios-tail-unit-flight-mode-gd03-030",
+  canonicalId: "GD03-030",
+  externalIds: { bandai: "gundam:gd03-030" },
+  slug: "gundam-kyrios-tail-unit-flight-mode/gd03-030",
   displayName: "Gundam Kyrios (Tail Unit Flight Mode)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-030",
   printings: [
     {
       id: "GD03-030",
+      artId: "GD03-030",
+      setCode: "GD03",
       collectorNumber: "GD03-030",
       cardNumber: "GD03-030",
       set: {
@@ -29,6 +32,7 @@ export const gd03GundamKyriosTailUnitFlightMode030: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-030"],
   selectedPrintingId: "GD03-030",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-030.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-030.webp?260424",

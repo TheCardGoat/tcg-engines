@@ -4,6 +4,17 @@ import { hypnotizeI18n } from "./098-hypnotize.i18n";
 export const hypnotize: ActionCard = {
   id: "Sez",
   canonicalId: "ci_Sez",
+  slug: "lorcana-ci_Sez",
+  printings: [
+    {
+      id: "set2-098",
+      artId: "set2-098",
+      setCode: "set2",
+      collectorNumber: "98",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-098"],
   cardType: "action",
   name: "Hypnotize",
@@ -16,7 +27,7 @@ export const hypnotize: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1391eb60b4054ac9a02e6b1f0e150c0f",
-    tcgPlayer: 518790,
+    tcgPlayer: "518790",
   },
   text: "Each opponent chooses and discards a card. Draw a card.",
   abilities: [

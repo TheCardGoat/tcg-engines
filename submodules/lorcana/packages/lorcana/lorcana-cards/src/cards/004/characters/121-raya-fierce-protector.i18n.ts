@@ -17,7 +17,7 @@ export const rayaFierceProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Treue Beschützerin",
     text: [
       {
-        title: "KOMM MIR NICHT IN DIE QUERE",
+        title: "Komm mir nicht in die Quere",
         description:
           "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, sammelst du 1 Legende für jeden deiner anderen Charaktere, der beschädigt ist.",
       },
@@ -28,7 +28,7 @@ export const rayaFierceProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Protectrice acharnée",
     text: [
       {
-        title: "NE ME CONTRARIEZ PAS",
+        title: "Ne me contrariez pas",
         description:
           "Chaque fois que ce personnage en défie un autre, gagnez 1 éclat de Lore pour chaque autre personnage que vous avez en jeu ayant au moins un jeton Dommage.",
       },
@@ -39,7 +39,7 @@ export const rayaFierceProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Protettrice Feroce",
     text: [
       {
-        title: "NON PROVOCARMI",
+        title: "Non Provocarmi",
         description:
           "Ogni volta che questo personaggio sfida un altro personaggio, ottieni 1 leggenda per ogni altro personaggio danneggiato che hai in gioco.",
       },

@@ -17,7 +17,7 @@ export const naniStageManagerI18n: Record<Languages, I18nProperties> = {
     version: "Bühnenmanagerin",
     text: [
       {
-        title: "DAS IST DEIN STICHWORT",
+        title: "Das ist dein Stichwort",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Charakterkarte mit Kosten von 2 oder weniger daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const naniStageManagerI18n: Record<Languages, I18nProperties> = {
     version: "Régisseuse",
     text: [
       {
-        title: "C'EST VOTRE TOUR",
+        title: "C'est votre tour",
         description:
           "Lorsque vous jouez ce personnage, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage coûtant 2 ou moins parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const naniStageManagerI18n: Record<Languages, I18nProperties> = {
     version: "Stage Manager",
     text: [
       {
-        title: "TOCCA A TE",
+        title: "Tocca a Te",
         description:
           "Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio con costo 2 o inferiore e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

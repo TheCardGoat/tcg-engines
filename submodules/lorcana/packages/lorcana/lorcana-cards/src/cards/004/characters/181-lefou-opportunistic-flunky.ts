@@ -4,6 +4,17 @@ import { lefouOpportunisticFlunkyI18n } from "./181-lefou-opportunistic-flunky.i
 export const lefouOpportunisticFlunky: CharacterCard = {
   id: "ggW",
   canonicalId: "ci_ggW",
+  slug: "lorcana-ci_ggW",
+  printings: [
+    {
+      id: "set4-181",
+      artId: "set4-181",
+      setCode: "set4",
+      collectorNumber: "181",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-181"],
   cardType: "character",
   name: "LeFou",
@@ -20,7 +31,7 @@ export const lefouOpportunisticFlunky: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_91f835d4527741b8b1190e6695d55698",
-    tcgPlayer: 549559,
+    tcgPlayer: "549559",
   },
   text: [
     {

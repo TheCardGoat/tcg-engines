@@ -6,6 +6,7 @@ import type {
   RuleModifier,
   Effect,
   SearchDeckSelect,
+  CardType,
 } from "@tcg/cyberpunk-types";
 import type { ZoneRuntimeState } from "@tcg/engine-core";
 import type { GameEvent } from "./game-events.ts";
@@ -40,7 +41,8 @@ export type ActiveEffectKind =
   | "powerMultiplier"
   | "grantRule"
   | "costModifier"
-  | "defeatAtEndOfTurnIfAttacked";
+  | "defeatAtEndOfTurnIfAttacked"
+  | "preventNextRivalFightDefeat";
 export type ActiveEffectOrigin = "static" | "imperative";
 
 export interface ActiveEffect {
@@ -104,6 +106,10 @@ export interface TurnMetadata {
   previousTurnNoGigTaken: boolean;
   gigTakenThisTurn: boolean;
   overtimeActive: boolean;
+  suspendedEndTurn?: {
+    playerId: PlayerId;
+    turnNumber: number;
+  };
   pendingChoice?: PendingChoice;
   abilityFiredThisTurn: FiredAbilityEntry[];
   triggerQueue: QueuedTrigger[];
@@ -119,6 +125,7 @@ export type PendingChoice =
   | ChooseGigsToStealPendingChoice
   | ChooseCardToPlayPendingChoice
   | ChooseCardToMovePendingChoice
+  | ChooseCardTypePendingChoice
   | GainGigPendingChoice;
 
 /** Discriminator union of every {@link PendingChoice} variant. */
@@ -266,6 +273,18 @@ export interface ChooseCardToMovePendingChoice {
     ifEffects: Effect[];
     elseEffects: Effect[];
     canDecline?: boolean;
+  };
+}
+
+export interface ChooseCardTypePendingChoice {
+  type: "chooseCardType";
+  chooserId: PlayerId;
+  effectId: string;
+  payload: {
+    cardTypes: CardType[];
+    sourceCardId: CardInstanceId;
+    sourcePlayerId: PlayerId;
+    abilityIndex: number;
   };
 }
 

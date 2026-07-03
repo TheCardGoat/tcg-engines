@@ -1,10 +1,15 @@
+import {
+  adrenalineAbility,
+  blockerAbility,
+  goSoloAbility,
+  quickAbility,
+} from "@tcg/cyberpunk-types";
 import type {
   Ability,
   AbilityLimit,
   AbilityTrigger,
   AlphaCardDefinition,
   AttachmentDefinition,
-  BoxToppersRetailCardDefinition,
   CardDefinition,
   CardKeyword,
   CardTargetDSL,
@@ -179,16 +184,6 @@ function fightWonAgainstRivalUnit(target: TargetDSL): Condition {
   };
 }
 
-function keywordAbility(text: string, keyword: CardKeyword, source?: TargetDSL): Ability {
-  return {
-    kind: "keyword",
-    text,
-    keyword,
-    source: source ?? SELF_TARGET,
-    effects: [],
-  };
-}
-
 function staticAbility(args: {
   text: string;
   source?: TargetDSL;
@@ -328,7 +323,7 @@ function parseKeywordAbilities(
       /(^GO SOLO(?:\s*\([^)]*\))?)(?=\s|$|[A-Z])/i,
     );
     working = result.text;
-    abilities.push(keywordAbility(result.match ?? "GO SOLO", "goSolo"));
+    abilities.push(goSoloAbility({ text: result.match ?? "GO SOLO" }));
   }
 
   if (/BLOCKER(?:\s*\([^)]*\))?/i.test(working)) {
@@ -338,7 +333,7 @@ function parseKeywordAbilities(
     );
     working = result.text;
     if (result.match) {
-      abilities.push(keywordAbility(result.match, "blocker", gearHostOrSelf(card)));
+      abilities.push(blockerAbility({ text: result.match, host: card.type === "gear" }));
     }
   }
 
@@ -349,7 +344,10 @@ function parseKeywordAbilities(
     );
     working = result.text;
     abilities.push(
-      keywordAbility(result.match ?? "ADRENALINE", "adrenaline", gearHostOrSelf(card)),
+      adrenalineAbility({
+        text: result.match ?? "ADRENALINE",
+        host: card.type === "gear",
+      }),
     );
   }
 
@@ -359,7 +357,7 @@ function parseKeywordAbilities(
       /(^QUICK(?:\s*\([^)]*\))?|(?<=\.\s)(QUICK(?:\s*\([^)]*\))?))/i,
     );
     working = result.text;
-    abilities.push(keywordAbility(result.match ?? "QUICK", "quick", gearHostOrSelf(card)));
+    abilities.push(quickAbility({ text: result.match ?? "QUICK", host: card.type === "gear" }));
   }
 
   return {
@@ -2111,6 +2109,26 @@ function parseMainAbility(card: CardDefinition, text: string): Ability[] {
   }
 
   try {
+    const cantAttackPrefix = /^(This Unit can't attack\.)\s+([\s\S]+)$/i.exec(text);
+    if (cantAttackPrefix) {
+      const cantAttackAbility = parseStaticAbility(card, cantAttackPrefix[1]!);
+      try {
+        return [cantAttackAbility, ...parseMainAbility(card, cantAttackPrefix[2]!)];
+      } catch (error) {
+        if (isLegacySetCode(card.set.code)) {
+          throw error;
+        }
+
+        return [
+          cantAttackAbility,
+          staticAbility({
+            text: cantAttackPrefix[2]!,
+            effects: [],
+          }),
+        ];
+      }
+    }
+
     const specialAbilities = parseSpecialAbilities(card, text);
     if (specialAbilities) {
       return specialAbilities;
@@ -2162,8 +2180,10 @@ const STRUCTURED_SET_CODES = [
   "alpha",
   "spoiler",
   "promo",
+  "PRM01",
   "boxtoppersretail",
   "theheistretailstarterdeck",
+  "embracingpowerretailstarterdeck",
   "welcometonightcityretail",
 ] as const satisfies readonly StructuredSetCode[];
 
@@ -2258,16 +2278,6 @@ export function parsePromoCard(card: CardDefinition): PromoCardDefinition {
   return parseStructuredCard(card) as PromoCardDefinition;
 }
 
-export function parseBoxToppersRetailCard(card: CardDefinition): BoxToppersRetailCardDefinition {
-  if (card.set.code !== "boxtoppersretail") {
-    throw new Error(
-      `Expected a Box Toppers retail card, received ${card.slug} from ${card.set.code}`,
-    );
-  }
-
-  return parseStructuredCard(card) as BoxToppersRetailCardDefinition;
-}
-
 export function parseTheHeistRetailStarterDeckCard(
   card: CardDefinition,
 ): TheHeistRetailStarterDeckCardDefinition {
@@ -2327,9 +2337,11 @@ export function parsePromoCards(cards: CardDefinition[]): PromoCardDefinition[] 
   return parseStructuredSetCards(cards, "promo");
 }
 
-export function parseBoxToppersRetailCards(
-  cards: CardDefinition[],
-): BoxToppersRetailCardDefinition[] {
+export function parsePrm01Cards(cards: CardDefinition[]) {
+  return parseStructuredSetCards(cards, "PRM01");
+}
+
+export function parseBoxToppersRetailCards(cards: CardDefinition[]) {
   return parseStructuredSetCards(cards, "boxtoppersretail");
 }
 
@@ -2337,6 +2349,10 @@ export function parseTheHeistRetailStarterDeckCards(
   cards: CardDefinition[],
 ): TheHeistRetailStarterDeckCardDefinition[] {
   return parseStructuredSetCards(cards, "theheistretailstarterdeck");
+}
+
+export function parseEmbracingPowerRetailStarterDeckCards(cards: CardDefinition[]) {
+  return parseStructuredSetCards(cards, "embracingpowerretailstarterdeck");
 }
 
 export function parseWelcomeToNightCityRetailCards(

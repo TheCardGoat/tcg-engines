@@ -7,6 +7,7 @@
 export * from "./auth";
 export * from "./cards";
 export * from "./chat";
+export * from "./pack-simulator";
 export * from "./cyberpunk";
 export * from "./discord-rich-presence";
 export * from "./testing";

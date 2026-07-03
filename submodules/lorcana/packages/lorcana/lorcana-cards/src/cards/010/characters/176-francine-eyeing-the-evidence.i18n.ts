@@ -9,16 +9,16 @@ export const francineEyeingTheEvidenceI18n: Record<Languages, I18nProperties> = 
   de: {
     name: "Francine",
     version: "Die Beweise im Blick",
-    text: "Robust +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+    text: "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
   },
   fr: {
     name: "Francine",
     version: "Examinant les preuves",
-    text: "Résistance +1",
+    text: "<Résistance> +1",
   },
   it: {
     name: "Francine",
     version: "Che Esamina le Prove",
-    text: "Resistere +1",
+    text: "<Resistere> +1",
   },
 };

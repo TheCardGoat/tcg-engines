@@ -20,10 +20,11 @@ export const baymaxUpgradedRobotI18n: Record<Languages, I18nProperties> = {
     version: "Aufgerüsteter Roboter",
     text: [
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "ERWEITERTER SCANNER",
+        title: "Erweiterter Scanner",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Flutgestalt-Charakterkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -34,10 +35,11 @@ export const baymaxUpgradedRobotI18n: Record<Languages, I18nProperties> = {
     version: "Robot amélioré",
     text: [
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "SUPER CAPTEUR",
+        title: "Super capteur",
         description:
           "Lorsque vous jouez ce personnage, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler un personnage Floodborn parmi elles et le placer dans votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -48,10 +50,11 @@ export const baymaxUpgradedRobotI18n: Record<Languages, I18nProperties> = {
     version: "Robot Potenziato",
     text: [
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "SCANNER AVANZATO",
+        title: "Scanner Avanzato",
         description:
           "Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio Imbevuto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

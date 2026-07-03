@@ -17,7 +17,7 @@ export const archimedesExceptionalOwlI18n: Record<Languages, I18nProperties> = {
     version: "Außergewöhnliche Eule",
     text: [
       {
-        title: "MEHR ZU LERNEN",
+        title: "Mehr zu lernen",
         description:
           "Jedes Mal, wenn dieser Charakter von einer Aktion oder Fähigkeit einer gegnerischen Person ausgewählt wird, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const archimedesExceptionalOwlI18n: Record<Languages, I18nProperties> = {
     version: "Hibou exceptionnel",
     text: [
       {
-        title: "TANT À APPRENDRE",
+        title: "Tant à apprendre",
         description:
           "Chaque fois qu'un adversaire choisit ce personnage avec une action ou une capacité, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const archimedesExceptionalOwlI18n: Record<Languages, I18nProperties> = {
     version: "Gufo Eccezionale",
     text: [
       {
-        title: "TANTO DA IMPARARE",
+        title: "Tanto da Imparare",
         description:
           "Ogni volta che un avversario sceglie questo personaggio per un'azione o un'abilità, puoi pescare una carta.",
       },

@@ -1,15 +1,42 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { arielSingingMermaid as canonicalArielSingingMermaid } from "../../004";
+import { arielSingingMermaidI18n } from "./015-ariel-singing-mermaid.i18n";
+
+import { singer } from "../../../helpers/abilities/singer";
 
 export const arielSingingMermaid: CharacterCard = {
-  ...canonicalArielSingingMermaid,
-  id: "h0r",
+  id: "PCk",
+  canonicalId: "ci_k8k",
+  slug: "lorcana-ci_k8k",
+  printings: [
+    {
+      id: "set9-015",
+      artId: "set9-015",
+      setCode: "set9",
+      collectorNumber: "15",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-003", "set9-015"],
+  cardType: "character",
+  name: "Ariel",
+  version: "Singing Mermaid",
+  inkType: ["amber"],
+  franchise: "Little Mermaid",
   set: "009",
   cardNumber: 15,
   rarity: "rare",
+  cost: 4,
+  strength: 3,
+  willpower: 3,
+  lore: 2,
+  inkable: true,
   externalIds: {
     lorcast: "crd_4b656001901d4c34829cfe124d5c166b",
-    tcgPlayer: 647652,
+    tcgPlayer: "647652",
   },
+  text: "Singer 7",
+  classifications: ["Storyborn", "Hero", "Princess"],
+  abilities: [singer(7)],
+  i18n: arielSingingMermaidI18n,
 };

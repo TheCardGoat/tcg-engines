@@ -4,6 +4,17 @@ import { plutoMickeysCleverFriendI18n } from "./152-pluto-mickeys-clever-friend.
 export const plutoMickeysCleverFriend: CharacterCard = {
   id: "bHm",
   canonicalId: "ci_bHm",
+  slug: "lorcana-ci_bHm",
+  printings: [
+    {
+      id: "set3-152",
+      artId: "set3-152",
+      setCode: "set3",
+      collectorNumber: "152",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-152"],
   cardType: "character",
   name: "Pluto",
@@ -20,7 +31,7 @@ export const plutoMickeysCleverFriend: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_936d98ea79ba4a54bd3ef0a166ce6875",
-    tcgPlayer: 539099,
+    tcgPlayer: "539099",
   },
   classifications: ["Dreamborn", "Ally"],
   i18n: plutoMickeysCleverFriendI18n,

@@ -17,7 +17,7 @@ export const kuzcosPalaceHomeOfTheEmperorI18n: Record<Languages, I18nProperties>
     version: "Heimat des Königs",
     text: [
       {
-        title: "STADTMAUERN",
+        title: "Stadtmauern",
         description:
           "Jedes Mal, wenn einer deiner Charaktere an diesem Ort herausgefordert und verbannt wird, verbanne den herausfordernden Charakter.",
       },
@@ -28,7 +28,7 @@ export const kuzcosPalaceHomeOfTheEmperorI18n: Record<Languages, I18nProperties>
     version: "Résidence de l'empereur",
     text: [
       {
-        title: "MURS DE LA CITÉ",
+        title: "Murs de la cité",
         description:
           "Chaque fois qu'un personnage sur ce lieu est défié et banni, bannissez le personnage qui l'a défié.",
       },
@@ -39,7 +39,7 @@ export const kuzcosPalaceHomeOfTheEmperorI18n: Record<Languages, I18nProperties>
     version: "Casa dell'Imperatore",
     text: [
       {
-        title: "MURA CITTADINE",
+        title: "Mura Cittadine",
         description:
           "Ogni volta che un personaggio viene sfidato ed esiliato mentre si trova in questo luogo, esilia il personaggio che lo ha sfidato.",
       },

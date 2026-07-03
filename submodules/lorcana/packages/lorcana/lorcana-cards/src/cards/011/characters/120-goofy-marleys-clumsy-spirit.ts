@@ -4,6 +4,17 @@ import { goofyMarleysClumsySpiritI18n } from "./120-goofy-marleys-clumsy-spirit.
 export const goofyMarleysClumsySpirit: CharacterCard = {
   id: "z3A",
   canonicalId: "ci_z3A",
+  slug: "lorcana-ci_z3A",
+  printings: [
+    {
+      id: "set11-120",
+      artId: "set11-120",
+      setCode: "set11",
+      collectorNumber: "120",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-120"],
   cardType: "character",
   name: "Goofy",
@@ -20,7 +31,7 @@ export const goofyMarleysClumsySpirit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_aeb75ac2ab524eb690b3b96aeddc80cc",
-    tcgPlayer: 673759,
+    tcgPlayer: "673759",
   },
   text: [
     {

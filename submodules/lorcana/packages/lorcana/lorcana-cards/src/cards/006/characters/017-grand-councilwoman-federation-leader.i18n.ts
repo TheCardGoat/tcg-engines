@@ -17,9 +17,9 @@ export const grandCouncilwomanFederationLeaderI18n: Record<Languages, I18nProper
     version: "Leiterin der Galaktischen Föderation",
     text: [
       {
-        title: "FINDET ES!",
+        title: "Findet Es!",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Aliens in diesem Zug +1.",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Aliens in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const grandCouncilwomanFederationLeaderI18n: Record<Languages, I18nProper
     version: "Dirigeante de la Fédération",
     text: [
       {
-        title: "TROUVEZ-LE!",
+        title: "Trouvez-le!",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages Alien gagnent +1 pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages Alien gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const grandCouncilwomanFederationLeaderI18n: Record<Languages, I18nProper
     version: "Leader della Federazione",
     text: [
       {
-        title: "TROVATELO!",
+        title: "Trovatelo!",
         description:
-          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi Alieno ricevono +1 per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi Alieno ricevono +1 {L} per questo turno.",
       },
     ],
   },

@@ -20,12 +20,13 @@ export const copperChampionOfTheForestI18n: Record<Languages, I18nProperties> = 
     version: "Held des Waldes",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Capper-Charaktere auszuspielen.)",
       },
       {
-        title: "MEHR ZU ERFORSCHEN",
+        title: "Mehr zu erforschen",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine Charaktere mit Wendig in diesem Zug +1.",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine Charaktere mit <Wendig> in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const copperChampionOfTheForestI18n: Record<Languages, I18nProperties> = 
     version: "Champion de la forêt",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Rouky.)",
       },
       {
-        title: "DAVANTAGE",
+        title: "Davantage à explorer",
         description:
-          "À EXPLORER Chaque fois que ce personnage est envoyé à l'aventure, vos personnages avec Insaisissable gagnent +1 pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vos personnages avec <Insaisissable> gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const copperChampionOfTheForestI18n: Record<Languages, I18nProperties> = 
     version: "Campione del Bosco",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Toby.)",
       },
       {
-        title: "PIÙ COSE DA ESPLORARE",
+        title: "Più Cose da Esplorare",
         description:
-          "Ogni volta che questo personaggio va all'avventura, i tuoi personaggi con Sfuggente ricevono +1 per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, i tuoi personaggi con <Sfuggente> ricevono +1 {L} per questo turno.",
       },
     ],
   },

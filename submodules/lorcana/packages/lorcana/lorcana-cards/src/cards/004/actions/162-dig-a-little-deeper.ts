@@ -4,6 +4,17 @@ import { digALittleDeeperI18n } from "./162-dig-a-little-deeper.i18n";
 export const digALittleDeeper: ActionCard = {
   id: "Cxc",
   canonicalId: "ci_VM4",
+  slug: "lorcana-ci_VM4",
+  printings: [
+    {
+      id: "set4-162",
+      artId: "set4-162",
+      setCode: "set4",
+      collectorNumber: "162",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-162", "set9-166"],
   cardType: "action",
   name: "Dig a Little Deeper",
@@ -16,7 +27,7 @@ export const digALittleDeeper: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_7dc546270337447fb4c4bac833fc4c17",
-    tcgPlayer: 650100,
+    tcgPlayer: "650100",
   },
   text: [
     {

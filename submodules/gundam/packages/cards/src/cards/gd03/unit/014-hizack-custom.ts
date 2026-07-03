@@ -7,14 +7,17 @@ export const gd03HizackCustom014: UnitCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD03-014",
-  externalId: "gundam:gd03-014",
-  slug: "hizack-custom-gd03-014",
+  canonicalId: "GD03-014",
+  externalIds: { bandai: "gundam:gd03-014" },
+  slug: "hizack-custom/gd03-014",
   displayName: "Hizack Custom",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-014",
   printings: [
     {
       id: "GD03-014",
+      artId: "GD03-014",
+      setCode: "GD03",
       collectorNumber: "GD03-014",
       cardNumber: "GD03-014",
       set: {
@@ -29,6 +32,7 @@ export const gd03HizackCustom014: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-014"],
   selectedPrintingId: "GD03-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-014.webp?260424",

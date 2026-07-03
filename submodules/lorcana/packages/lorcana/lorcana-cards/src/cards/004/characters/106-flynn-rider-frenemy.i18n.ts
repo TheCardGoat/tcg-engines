@@ -17,9 +17,9 @@ export const flynnRiderFrenemyI18n: Record<Languages, I18nProperties> = {
     version: "Freind",
     text: [
       {
-        title: "KNAPPER VORSPRUNG",
+        title: "Knapper Vorsprung",
         description:
-          "Zu Beginn deines Zuges, wenn du einen Charakter mit einer höheren als die aller gegnerischen Charaktere im Spiel hast, sammelst du 3 Legenden.",
+          "Zu Beginn deines Zuges, wenn du einen Charakter mit einer höheren {S} als die {S} aller gegnerischen Charaktere im Spiel hast, sammelst du 3 Legenden.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const flynnRiderFrenemyI18n: Record<Languages, I18nProperties> = {
     version: "Faux ami",
     text: [
       {
-        title: "MINCE AVANTAGE",
+        title: "Mince avantage",
         description:
-          "Au début de votre tour, si vous avez un personnage en jeu avec une supérieure à celle de chaque personnage adverse en jeu, gagnez 3 éclats de Lore.",
+          "Au début de votre tour, si vous avez un personnage en jeu avec une {S} supérieure à celle de chaque personnage adverse en jeu, gagnez 3 éclats de Lore.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const flynnRiderFrenemyI18n: Record<Languages, I18nProperties> = {
     version: "Amico-Nemico",
     text: [
       {
-        title: "VANTAGGIO LIMITATO",
+        title: "Vantaggio Limitato",
         description:
-          "All'inizio del tuo turno, se hai in gioco un personaggio con superiore a quella di ogni personaggio avversario, ottieni 3 leggenda.",
+          "All'inizio del tuo turno, se hai in gioco un personaggio con {S} superiore a quella di ogni personaggio avversario, ottieni 3 leggenda.",
       },
     ],
   },

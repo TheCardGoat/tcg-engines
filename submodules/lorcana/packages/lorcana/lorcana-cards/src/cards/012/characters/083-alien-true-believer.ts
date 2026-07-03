@@ -4,6 +4,17 @@ import { alienTrueBelieverI18n } from "./083-alien-true-believer.i18n";
 export const alienTrueBeliever: CharacterCard = {
   id: "m43",
   canonicalId: "ci_m43",
+  slug: "lorcana-ci_m43",
+  printings: [
+    {
+      id: "set12-083",
+      artId: "set12-083",
+      setCode: "set12",
+      collectorNumber: "83",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-083"],
   cardType: "character",
   name: "Alien",
@@ -20,6 +31,7 @@ export const alienTrueBeliever: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c671f23fc8e74ee3a7925ad650577008",
+    tcgPlayer: "692220",
   },
   text: [
     {
@@ -81,7 +93,10 @@ export const alienTrueBeliever: CharacterCard = {
         cardName: "Alien",
         destination: "hand",
         target: "CONTROLLER",
-        filter: { type: "source", ref: "other" },
+        filter: {
+          type: "source",
+          ref: "other",
+        },
       },
     },
   ],

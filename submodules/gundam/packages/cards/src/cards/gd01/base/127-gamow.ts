@@ -6,14 +6,17 @@ export const gd01Gamow127: BaseCard = {
   type: "base",
   traits: ["zaft", "warship"],
   id: "GD01-127",
-  externalId: "gundam:gd01-127",
-  slug: "gamow-gd01-127",
+  canonicalId: "GD01-127",
+  externalIds: { bandai: "gundam:gd01-127" },
+  slug: "gamow/gd01-127",
   displayName: "Gamow",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-127",
   printings: [
     {
       id: "GD01-127",
+      artId: "GD01-127",
+      setCode: "GD01",
       collectorNumber: "GD01-127",
       cardNumber: "GD01-127",
       set: {
@@ -28,6 +31,7 @@ export const gd01Gamow127: BaseCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-127"],
   selectedPrintingId: "GD01-127",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-127.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-127.webp?260424",

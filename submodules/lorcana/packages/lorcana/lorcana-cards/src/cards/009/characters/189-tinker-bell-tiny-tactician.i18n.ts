@@ -16,8 +16,8 @@ export const tinkerBellTinyTacticianI18n: Record<Languages, I18nProperties> = {
     version: "Winzige Taktikerin",
     text: [
       {
-        title: "SCHLACHTPLÄNE",
-        description: "— Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
+        title: "Schlachtpläne",
+        description: "{E} — Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
     ],
   },
@@ -27,7 +27,7 @@ export const tinkerBellTinyTacticianI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "PLANS DE BATAILLE",
-        description: "— Piochez une carte puis défaussez-en une.",
+        description: "{E} — Piochez une carte puis défaussez-en une.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const tinkerBellTinyTacticianI18n: Record<Languages, I18nProperties> = {
     version: "Tiny Tactician",
     text: [
       {
-        title: "BATTLE PLANS",
-        description: "— Draw a card, then choose and discard a card.",
+        title: "Battle Plans",
+        description: "{E} — Draw a card, then choose and discard a card.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { johnSilverTerrorOfTheRealmI18n } from "./148-john-silver-terror-of-the-
 export const johnSilverTerrorOfTheRealm: CharacterCard = {
   id: "z4o",
   canonicalId: "ci_z4o",
+  slug: "lorcana-ci_z4o",
+  printings: [
+    {
+      id: "set4-148",
+      artId: "set4-148",
+      setCode: "set4",
+      collectorNumber: "148",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-148"],
   cardType: "character",
   name: "John Silver",
@@ -21,7 +32,7 @@ export const johnSilverTerrorOfTheRealm: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_08cbc914c0634bae8d6932b81f7bcdcb",
-    tcgPlayer: 550608,
+    tcgPlayer: "550608",
   },
   classifications: ["Dreamborn", "Villain", "Alien", "Pirate", "Captain"],
   i18n: johnSilverTerrorOfTheRealmI18n,

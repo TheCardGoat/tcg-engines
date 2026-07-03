@@ -17,7 +17,7 @@ export const theHuntsmanReluctantEnforcerI18n: Record<Languages, I18nProperties>
     version: "Zögerlicher Vollstrecker",
     text: [
       {
-        title: "SINNESWANDEL",
+        title: "Sinneswandel",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
@@ -28,7 +28,7 @@ export const theHuntsmanReluctantEnforcerI18n: Record<Languages, I18nProperties>
     version: "Homme de main réticent",
     text: [
       {
-        title: "ÉCHANGE DE CŒUR",
+        title: "Échange de cœur",
         description:
           "Lorsque ce personnage est envoyé à l'aventure, vous pouvez piocher une carte puis en défaussez une.",
       },
@@ -39,7 +39,7 @@ export const theHuntsmanReluctantEnforcerI18n: Record<Languages, I18nProperties>
     version: "Reluctant Enforcer",
     text: [
       {
-        title: "CHANGE OF HEART",
+        title: "Change of Heart",
         description:
           "Whenever this character quests, you may draw a card, then choose and discard a card.",
       },

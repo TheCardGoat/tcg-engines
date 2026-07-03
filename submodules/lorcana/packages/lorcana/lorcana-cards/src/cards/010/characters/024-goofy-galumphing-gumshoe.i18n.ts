@@ -20,12 +20,13 @@ export const goofyGalumphingGumshoeI18n: Record<Languages, I18nProperties> = {
     version: "Stolzierender Schnüffler",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Goofy-Charaktere auszuspielen.)",
       },
       {
-        title: "HITZIGE VERFOLGUNGSJAGD",
+        title: "Hitzige Verfolgungsjagd",
         description:
-          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, gib allen gegnerischen Charakteren bis zu Beginn deines nächsten Zuges -1.",
+          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, gib allen gegnerischen Charakteren bis zu Beginn deines nächsten Zuges -1 {S}.",
       },
     ],
   },
@@ -34,12 +35,12 @@ export const goofyGalumphingGumshoeI18n: Record<Languages, I18nProperties> = {
     version: "Détective pas très privé",
     text: [
       {
-        title: "Alter 5",
+        title: "<Alter> 5 {I}",
       },
       {
-        title: "POURSUITE EFFRÉNÉE",
+        title: "Poursuite effrénée",
         description:
-          "Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, chaque personnage adverse subit -1 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, chaque personnage adverse subit -1 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +49,12 @@ export const goofyGalumphingGumshoeI18n: Record<Languages, I18nProperties> = {
     version: "Investigatore Goffo",
     text: [
       {
-        title: "Trasformazione 5",
+        title: "<Trasformazione> 5 {I}",
       },
       {
-        title: "INSEGUIMENTO SERRATO",
+        title: "Inseguimento Serrato",
         description:
-          "Quando giochi questo personaggio e ogni volta che va all'avventura, ogni personaggio avversario riceve -1 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio e ogni volta che va all'avventura, ogni personaggio avversario riceve -1 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

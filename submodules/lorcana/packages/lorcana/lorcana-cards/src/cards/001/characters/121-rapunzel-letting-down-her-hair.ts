@@ -4,6 +4,17 @@ import { rapunzelLettingDownHerHairI18n } from "./121-rapunzel-letting-down-her-
 export const rapunzelLettingDownHerHair: CharacterCard = {
   id: "nSe",
   canonicalId: "ci_Su6",
+  slug: "lorcana-ci_Su6",
+  printings: [
+    {
+      id: "set1-121",
+      artId: "set1-121",
+      setCode: "set1",
+      collectorNumber: "121",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-121", "set9-124"],
   cardType: "character",
   name: "Rapunzel",
@@ -20,7 +31,7 @@ export const rapunzelLettingDownHerHair: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cdba0ed02d3a4361afb0aaa7689ee1de",
-    tcgPlayer: 650059,
+    tcgPlayer: "650059",
   },
   text: [
     {

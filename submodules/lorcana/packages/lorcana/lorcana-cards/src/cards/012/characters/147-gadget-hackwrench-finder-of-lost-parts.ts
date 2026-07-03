@@ -4,6 +4,17 @@ import { gadgetHackwrenchFinderOfLostPartsI18n } from "./147-gadget-hackwrench-f
 export const gadgetHackwrenchFinderOfLostParts: CharacterCard = {
   id: "XOw",
   canonicalId: "ci_XOw",
+  slug: "lorcana-ci_XOw",
+  printings: [
+    {
+      id: "set12-147",
+      artId: "set12-147",
+      setCode: "set12",
+      collectorNumber: "147",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-147"],
   cardType: "character",
   name: "Gadget Hackwrench",
@@ -20,6 +31,7 @@ export const gadgetHackwrenchFinderOfLostParts: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bf923e0701574d3b954ea18e6ea2baf5",
+    tcgPlayer: "690549",
   },
   text: [
     {

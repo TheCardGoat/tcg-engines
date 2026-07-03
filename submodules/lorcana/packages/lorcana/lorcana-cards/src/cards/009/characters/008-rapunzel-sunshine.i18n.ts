@@ -16,8 +16,8 @@ export const rapunzelSunshineI18n: Record<Languages, I18nProperties> = {
     version: "Sonnenschein",
     text: [
       {
-        title: "ZAUBERHAARE",
-        description: "— Entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
+        title: "Zauberhaare",
+        description: "{E} — Entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const rapunzelSunshineI18n: Record<Languages, I18nProperties> = {
     version: "Solaire",
     text: [
       {
-        title: "CHEVEUX MAGIQUES",
-        description: "— Choisissez un personnage et retirez-lui jusqu'à 2 jetons Dommage.",
+        title: "Cheveux magiques",
+        description: "{E} — Choisissez un personnage et retirez-lui jusqu'à 2 jetons Dommage.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const rapunzelSunshineI18n: Record<Languages, I18nProperties> = {
     version: "Raggio di Sole",
     text: [
       {
-        title: "CAPELLI MAGICI",
-        description: "— Rimuovi fino a 2 danni da un personaggio a tua scelta.",
+        title: "Capelli Magici",
+        description: "{E} — Rimuovi fino a 2 danni da un personaggio a tua scelta.",
       },
     ],
   },

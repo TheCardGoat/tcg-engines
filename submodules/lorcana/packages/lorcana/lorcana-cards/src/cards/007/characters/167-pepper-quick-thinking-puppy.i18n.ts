@@ -17,7 +17,7 @@ export const pepperQuickthinkingPuppyI18n: Record<Languages, I18nProperties> = {
     version: "Schnelldenker",
     text: [
       {
-        title: "AUF DEN PUNKT GEBRACHT",
+        title: "Auf den Punkt gebracht",
         description:
           "Jedes Mal, wenn einer deiner Welpen verbannt wird, darfst du jenen verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const pepperQuickthinkingPuppyI18n: Record<Languages, I18nProperties> = {
     version: "Chiot vif d’esprit",
     text: [
       {
-        title: "JUSTE À TEMPS",
+        title: "Juste à temps",
         description:
           "Chaque fois que l'un de vos personnages Chiot est banni, vous pouvez le placer dans votre réserve d'encre, face cachée et épuisé.",
       },
@@ -39,7 +39,7 @@ export const pepperQuickthinkingPuppyI18n: Record<Languages, I18nProperties> = {
     version: "Cucciolo Reattivo",
     text: [
       {
-        title: "GIUSTO IN TEMPO",
+        title: "Giusto In Tempo",
         description:
           "Ogni volta che uno dei tuoi personaggi Cucciolo viene esiliato, puoi aggiungere quella carta al tuo calamaio, a faccia in giù e impegnata.",
       },

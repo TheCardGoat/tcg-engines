@@ -4,6 +4,17 @@ import { _99PuppiesI18n } from "./024-99-puppies.i18n";
 export const _99Puppies: ActionCard = {
   id: "V75",
   canonicalId: "ci_V75",
+  slug: "lorcana-ci_V75",
+  printings: [
+    {
+      id: "set3-024",
+      artId: "set3-024",
+      setCode: "set3",
+      collectorNumber: "24",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-024"],
   cardType: "action",
   name: "99 Puppies",
@@ -16,7 +27,7 @@ export const _99Puppies: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_56003cfee81148e9a2ceebe4136e4e06",
-    tcgPlayer: 534480,
+    tcgPlayer: "534480",
   },
   text: "Whenever one of your characters quests this turn, gain 1 lore.",
   abilities: [

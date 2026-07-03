@@ -23,15 +23,16 @@ export const theQueenFairestOfAllI18n: Record<Languages, I18nProperties> = {
     version: "Die Schönste von allen",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Die-Königin-Charaktere auszuspielen.)",
       },
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "SPIEGELBILDER DER EITELKEIT",
+        title: "Spiegelbilder der Eitelkeit",
         description:
-          "Für jeden deiner anderen Die-Königin-Charaktere im Spiel, erhält dieser Charakter +1.",
+          "Für jeden deiner anderen Die-Königin-Charaktere im Spiel, erhält dieser Charakter +1 {L}.",
       },
     ],
   },
@@ -40,15 +41,16 @@ export const theQueenFairestOfAllI18n: Record<Languages, I18nProperties> = {
     version: "La plus belle",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages La Reine.)",
       },
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "REFLETS DE LA VANITÉ",
+        title: "Reflets de la vanité",
         description:
-          "Pour chaque autre personnage La Reine que vous avez en jeu, ce personnage-ci gagne +1.",
+          "Pour chaque autre personnage La Reine que vous avez en jeu, ce personnage-ci gagne +1 {L}.",
       },
     ],
   },
@@ -57,15 +59,16 @@ export const theQueenFairestOfAllI18n: Record<Languages, I18nProperties> = {
     version: "La Più Bella del Reame",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Regina.)",
       },
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "RIFLESSI DI VANITÀ",
+        title: "Riflessi di Vanità",
         description:
-          "Per ogni altro personaggio chiamato Regina che hai in gioco, questo personaggio riceve +1.",
+          "Per ogni altro personaggio chiamato Regina che hai in gioco, questo personaggio riceve +1 {L}.",
       },
     ],
   },

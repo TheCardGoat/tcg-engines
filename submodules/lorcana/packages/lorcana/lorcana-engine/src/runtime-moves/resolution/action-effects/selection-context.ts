@@ -77,6 +77,7 @@ type ResolutionSelectionBuildArgs = ResolutionSelectionBuildBase & {
   condition?: Condition;
   legalChoiceIndices?: number[];
   originatesFromOptional?: boolean;
+  canDeclineSelection?: boolean;
 };
 
 function asRecord(value: unknown): Record<string, unknown> | null {
@@ -869,9 +870,29 @@ function buildGenericTargetSelectionContext(
       : [];
   const cardCandidates = [...new Set(runtimeCardCandidates)];
   const playerCandidates = [...new Set(runtimePlayerCandidates)];
+  const expectedSlottedKind = deriveSlottedKind(effectRecord);
+  const autoResolvedSlots = expectedSlottedKind
+    ? deriveAutoResolvedSlots(expectedSlottedKind, effectRecord)
+    : undefined;
+  const hasRequiredUnavailableSlot = hasRequiredSlottedTargetWithoutCandidates({
+    expectedSlottedKind,
+    targetDsl: analysis.targetDsl,
+    ctx: chooserScopedCtx,
+    cardPlayed: args.cardPlayed,
+    sourceCardId: args.sourceCardId,
+    currentSelection,
+    eventSnapshot: args.resolutionInput.eventSnapshot,
+  });
+  if (hasRequiredUnavailableSlot) {
+    return undefined;
+  }
   const availability = analyzeTargetSelectionAvailabilityFromAnalysis(args.effect, analysis);
   const candidateCount = cardCandidates.length + playerCandidates.length;
   const hasCandidates = candidateCount > 0;
+  const hasAutoResolvedSelection =
+    expectedSlottedKind === "move-to-location" &&
+    Array.isArray(autoResolvedSlots) &&
+    autoResolvedSlots.includes("subject");
   const allowEmptyResolution =
     availability.shouldAutoRejectForNoValidTargets &&
     !availability.allowsExplicitEmptyTargetSelection &&
@@ -890,7 +911,7 @@ function buildGenericTargetSelectionContext(
   if (!analysis.requiresExplicitSelection) {
     return undefined;
   }
-  if (!hasCandidates && !allowEmptyResolution) {
+  if (!hasCandidates && !allowEmptyResolution && !hasAutoResolvedSelection) {
     return undefined;
   }
   const maxSelections = analysis.allowDuplicateTargets
@@ -907,10 +928,6 @@ function buildGenericTargetSelectionContext(
     return undefined;
   }
 
-  const expectedSlottedKind = deriveSlottedKind(effectRecord);
-  const autoResolvedSlots = expectedSlottedKind
-    ? deriveAutoResolvedSlots(expectedSlottedKind, effectRecord)
-    : undefined;
   const projectedCurrentSelection: ResolutionSelectionCurrentSelection = { ...currentSelection };
   const [onlyTargetDsl] = analysis.targetDsl;
   const onlyTargetCardTypes =
@@ -976,6 +993,78 @@ function deriveSlottedKind(
   }
 }
 
+function getRequiredSelectionCount(descriptor: unknown): number {
+  if (!descriptor || typeof descriptor !== "object" || Array.isArray(descriptor)) {
+    return 0;
+  }
+
+  const count = (descriptor as { count?: unknown }).count;
+  if (typeof count === "number") {
+    return Math.max(0, count);
+  }
+
+  if (count && typeof count === "object") {
+    const amount = (count as { amount?: unknown; value?: unknown; upTo?: unknown }).amount;
+    const value = (count as { amount?: unknown; value?: unknown; upTo?: unknown }).value;
+    const upTo = (count as { amount?: unknown; value?: unknown; upTo?: unknown }).upTo;
+    if (typeof upTo === "number") {
+      return 0;
+    }
+    if (typeof amount === "number") {
+      return Math.max(0, amount);
+    }
+    if (typeof value === "number") {
+      return Math.max(0, value);
+    }
+  }
+
+  return 1;
+}
+
+function hasRequiredSlottedTargetWithoutCandidates(args: {
+  expectedSlottedKind: SlottedTargetKind | undefined;
+  targetDsl: readonly unknown[];
+  ctx: ResolutionSelectionRuntimeContext;
+  cardPlayed: CardPlayedPayload;
+  sourceCardId: CardInstanceId;
+  currentSelection: ResolutionSelectionCurrentSelection;
+  eventSnapshot: PendingActionResolutionInput["eventSnapshot"];
+}): boolean {
+  if (args.expectedSlottedKind !== "move-to-location") {
+    return false;
+  }
+
+  const selectedTargets = normalizeSelectedTargets(args.currentSelection.targets) ?? [];
+
+  return args.targetDsl.some((descriptor) => {
+    if (getRequiredSelectionCount(descriptor) <= 0) {
+      return false;
+    }
+
+    const targetDescriptor = normalizeTargetDescriptor(descriptor);
+    const resolvedTargets =
+      resolveEffectTargets(
+        args.ctx,
+        args.cardPlayed,
+        targetDescriptor,
+        selectedTargets,
+        args.eventSnapshot,
+      ) ?? [];
+    if (resolvedTargets.length > 0) {
+      return false;
+    }
+
+    const candidateTargets = resolveCandidateTargets(args.ctx, args.cardPlayed, targetDescriptor, {
+      controllerId: args.cardPlayed.playerId,
+      sourceCardId: args.sourceCardId,
+      selectedTargets,
+      eventSnapshot: args.eventSnapshot,
+    });
+
+    return candidateTargets.length === 0;
+  });
+}
+
 /**
  * Identify the slot keys the engine already bound to the source card. The
  * canonical signal is a slot whose printed descriptor names `SELF` — that
@@ -1003,9 +1092,12 @@ function deriveAutoResolvedSlots(
     }
     return auto.length > 0 ? auto : undefined;
   }
-  // Other slotted kinds (move-to-location, shift-and-choose, banish-and-play)
-  // currently don't expose `SELF`-bound slots in printed effects; leave
-  // unset until a card actually needs it.
+  if (kind === "move-to-location" && effectRecord.includeSelf === true) {
+    return ["subject"];
+  }
+  // Other slotted kinds (shift-and-choose, banish-and-play) currently don't
+  // expose `SELF`-bound slots in printed effects; leave unset until a card
+  // actually needs it.
   return undefined;
 }
 
@@ -1079,7 +1171,9 @@ function isNameRestrictedPlayCard(effectRecord: Record<string, unknown>): boolea
   return (
     typeof filterRecord.name === "string" ||
     filterRecord.sameNameAsChosenCard === true ||
-    filterRecord.sameInstanceAsSource === true
+    filterRecord.sameInstanceAsSource === true ||
+    filterRecord.sameInstanceAsTriggerSubject === true ||
+    filterRecord.inEventSnapshotCardsUnder === true
   );
 }
 
@@ -1091,6 +1185,7 @@ function isContextDependentPlayCardFilter(filter: unknown): boolean {
   return (
     f.excludeChosenCard === true ||
     f.sameNameAsChosenCard === true ||
+    f.inEventSnapshotCardsUnder === true ||
     f.maxCost === "chosen-card-cost" ||
     (typeof f.maxCost === "object" &&
       f.maxCost !== null &&
@@ -1278,6 +1373,18 @@ function getEligibleZoneCardsForPlayCardEffect(
         args.resolutionInput.eventSnapshot?.chosenCardId === cardId
       ) {
         return false;
+      }
+      if (
+        filterRecord.sameInstanceAsTriggerSubject === true &&
+        args.resolutionInput.eventSnapshot?.subjectCardId !== cardId
+      ) {
+        return false;
+      }
+      if (filterRecord.inEventSnapshotCardsUnder === true) {
+        const cardsUnderIds = args.resolutionInput.eventSnapshot?.cardsUnderIdsBeforeBanish;
+        if (!Array.isArray(cardsUnderIds) || !cardsUnderIds.includes(cardId)) {
+          return false;
+        }
       }
       if (
         typeof filterRecord.classification === "string" &&
@@ -1593,7 +1700,10 @@ function buildImmediateSelectionContext(
         immediateContext &&
         immediateContext.kind === "target-selection" &&
         immediateContext.currentSelection.resolveOptional === undefined &&
-        immediateContext.cardCandidateIds.length + immediateContext.playerCandidateIds.length > 0 &&
+        (immediateContext.cardCandidateIds.length + immediateContext.playerCandidateIds.length >
+          0 ||
+          (Array.isArray(immediateContext.autoResolvedSlots) &&
+            immediateContext.autoResolvedSlots.length > 0)) &&
         (args.origin !== "bag" ||
           (immediateContext.targetDsl as unknown[]).length > 0 ||
           (immediateContext.playCardEntryModeCandidateIds?.length ?? 0) > 0)

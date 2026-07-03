@@ -7,14 +7,17 @@ export const gd01FortressDefense106: CommandCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-106",
-  externalId: "gundam:gd01-106",
-  slug: "fortress-defense-gd01-106",
+  canonicalId: "GD01-106",
+  externalIds: { bandai: "gundam:gd01-106" },
+  slug: "fortress-defense/gd01-106",
   displayName: "Fortress Defense",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-106",
   printings: [
     {
       id: "GD01-106",
+      artId: "GD01-106",
+      setCode: "GD01",
       collectorNumber: "GD01-106",
       cardNumber: "GD01-106",
       set: {
@@ -30,6 +33,8 @@ export const gd01FortressDefense106: CommandCard = {
     },
     {
       id: "GD01-106_p1",
+      artId: "GD01-106_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-106_p1",
       cardNumber: "GD01-106",
       set: {
@@ -44,6 +49,7 @@ export const gd01FortressDefense106: CommandCard = {
       productName: "Championship Participation Pack 01",
     },
   ],
+  reprints: ["GD01-106", "GD01-106_p1"],
   selectedPrintingId: "GD01-106",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-106.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-106.webp?260424",

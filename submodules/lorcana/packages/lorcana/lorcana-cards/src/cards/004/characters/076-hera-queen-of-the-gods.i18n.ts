@@ -13,8 +13,8 @@ export const heraQueenOfTheGodsI18n: Record<Languages, I18nProperties> = {
         description: "Your characters named Zeus gain Ward.",
       },
       {
-        title: "YOU'RE A TRUE HERO",
-        description: "Your characters named Hercules gain Evasive.",
+        title: "YOU'RE",
+        description: "A TRUE HERO Your characters named Hercules gain Evasive.",
       },
     ],
   },
@@ -23,15 +23,15 @@ export const heraQueenOfTheGodsI18n: Record<Languages, I18nProperties> = {
     version: "Königin der Götter",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "SCHÜTZENDE GÖTTIN",
-        description: "Deine Zeus-Charaktere erhalten Behütet.",
+        title: "Schützende Göttin",
+        description: "Deine Zeus-Charaktere erhalten <Behütet>.",
       },
       {
-        title: "DU BIST EIN WAHRER HELD",
-        description: "Deine Hercules-Charaktere erhalten Wendig.",
+        title: "Du bist ein wahrer Held",
+        description: "Deine Hercules-Charaktere erhalten <Wendig>.",
       },
     ],
   },
@@ -40,16 +40,16 @@ export const heraQueenOfTheGodsI18n: Record<Languages, I18nProperties> = {
     version: "Reine des Dieux",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "DÉESSE PROTECTRICE",
-        description: "Vos personnages Zeus gagnent Hors d'atteinte.",
+        title: "Déesse protectrice",
+        description: "Vos personnages Zeus gagnent <Hors d'atteinte>.",
       },
       {
-        title: "TU ES UN VÉRITABLE HÉROS",
+        title: "Tu es un véritable héros",
         description:
-          "Vos personnages Hercule gagnent Insaisissable. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
+          "Vos personnages Hercule gagnent <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
       },
     ],
   },
@@ -58,16 +58,16 @@ export const heraQueenOfTheGodsI18n: Record<Languages, I18nProperties> = {
     version: "Regina degli Dei",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "DEA PROTETTIVA",
-        description: "I tuoi personaggi chiamati Zeus ottengono Protetto.",
+        title: "Dea Protettiva",
+        description: "I tuoi personaggi chiamati Zeus ottengono <Protetto>.",
       },
       {
-        title: "SEI UN VERO EROE",
+        title: "Sei un Vero Eroe",
         description:
-          "I tuoi personaggi chiamati Ercole ottengono Sfuggente. (Solo altri personaggi con Sfuggente possono sfidarli.)",
+          "I tuoi personaggi chiamati Ercole ottengono <Sfuggente>. (Solo altri personaggi con Sfuggente possono sfidarli.)",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { alanadaleRockinRoosterI18n } from "./020-alan-a-dale-rockin-rooster.i18
 export const alanadaleRockinRooster: CharacterCard = {
   id: "Jj0",
   canonicalId: "ci_Jj0",
+  slug: "lorcana-ci_Jj0",
+  printings: [
+    {
+      id: "set5-020",
+      artId: "set5-020",
+      setCode: "set5",
+      collectorNumber: "20",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-020"],
   cardType: "character",
   name: "Alan-a-Dale",
@@ -20,7 +31,7 @@ export const alanadaleRockinRooster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d46b1371e56d486786fb471a1c043d3a",
-    tcgPlayer: 560630,
+    tcgPlayer: "560630",
   },
   text: [
     {

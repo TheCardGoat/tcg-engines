@@ -1,13 +1,14 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerKerryEurodyneTheLastRockerboy = {
+export const spoilerKerryEurodyneTheLastRockerboy = defineCyberpunkCard({
   id: "52233c7f-5e0a-455d-b96b-b87af97bc473",
-  externalId: "cyberpunk:kerry-eurodyne-the-last-rockerboy",
   slug: "kerry-eurodyne-the-last-rockerboy",
-  name: "Kerry Eurodyne",
-  subname: "The Last Rockerboy",
-  displayName: "Kerry Eurodyne - The Last Rockerboy",
   rulesText: "[Spend Icon]: If you have a Gig at max value, draw 2 cards.",
+  subname: "The Last Rockerboy",
+  name: "Kerry Eurodyne",
+  displayName: "Kerry Eurodyne - The Last Rockerboy",
+  canonicalId: "kerry-eurodyne-the-last-rockerboy",
   color: "red",
   classifications: ["Rockerboy", "Samurai"],
   set: {
@@ -15,23 +16,12 @@ export const spoilerKerryEurodyneTheLastRockerboy = {
     name: "Spoiler Set",
   },
   printNumber: "067",
-  printings: [
-    {
-      id: "c0e526e4-0cd0-4554-ad3b-8b04d2614a32",
-      collectorNumber: "067",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "c0e526e4-0cd0-4554-ad3b-8b04d2614a32",
   artist: "Bogna Gawrońska",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/067.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "unit",
   cost: 4,
   power: 3,
@@ -68,5 +58,4 @@ export const spoilerKerryEurodyneTheLastRockerboy = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

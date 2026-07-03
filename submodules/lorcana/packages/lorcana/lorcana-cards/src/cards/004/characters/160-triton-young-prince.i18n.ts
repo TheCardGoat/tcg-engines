@@ -22,12 +22,12 @@ export const tritonYoungPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Junger Prinz",
     text: [
       {
-        title: "HERVORRAGENDER SCHWIMMER",
+        title: "Hervorragender Schwimmer",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
       {
-        title: "WÄCHTER VON ATLANTICA",
+        title: "Wächter von Atlantica",
         description:
           "Jedes Mal, wenn einer deiner Orte verbannt wird, darfst du jenen verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -38,12 +38,12 @@ export const tritonYoungPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Jeune Prince",
     text: [
       {
-        title: "NAGEUR EXCEPTIONNEL",
+        title: "Nageur exceptionnel",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier les personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier les personnages avec Insaisissable.)",
       },
       {
-        title: "GARDIEN D'ATLANTICA",
+        title: "Gardien d'Atlantica",
         description:
           "Chaque fois que l'un de vos lieux est banni, vous pouvez le placer dans votre réserve d'encre, face cachée et épuisé.",
       },
@@ -54,12 +54,12 @@ export const tritonYoungPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Giovane Principe",
     text: [
       {
-        title: "NUOTATORE PROVETTO",
+        title: "Nuotatore Provetto",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
       {
-        title: "CUSTODE DI ATLANTICA",
+        title: "Custode di Atlantica",
         description:
           "Ogni volta che uno dei tuoi luoghi viene esiliato, puoi aggiungere quella carta al tuo calamaio, a faccia in giù e impegnata.",
       },

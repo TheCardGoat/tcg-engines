@@ -16,8 +16,8 @@ export const whiteAgonyPlainsGoldenLagoonI18n: Record<Languages, I18nProperties>
     version: "Goldene Lagune",
     text: [
       {
-        title: "REINES FLÜSSIGES GOLD",
-        description: "Dieser Ort erhält +1 für jeden Charakter an diesem Ort.",
+        title: "Reines flüssiges Gold",
+        description: "Dieser Ort erhält +1 {L} für jeden Charakter an diesem Ort.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const whiteAgonyPlainsGoldenLagoonI18n: Record<Languages, I18nProperties>
     version: "Lagon doré",
     text: [
       {
-        title: "DE L'OR LIQUIDE PUR",
-        description: "Ce lieu gagne +1 pour chaque personnage sur lui.",
+        title: "De l'or liquide pur",
+        description: "Ce lieu gagne +1 {L} pour chaque personnage sur lui.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const whiteAgonyPlainsGoldenLagoonI18n: Record<Languages, I18nProperties>
     version: "Laguna Dorata",
     text: [
       {
-        title: "CASCATE DI ORO LIQUIDO",
-        description: "Questo luogo riceve +1 per ogni personaggio in questo luogo.",
+        title: "Cascate di Oro Liquido",
+        description: "Questo luogo riceve +1 {L} per ogni personaggio in questo luogo.",
       },
     ],
   },

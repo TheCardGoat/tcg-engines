@@ -4,6 +4,17 @@ import { timeToGoI18n } from "./131-time-to-go.i18n";
 export const timeToGo: ActionCard = {
   id: "W3D",
   canonicalId: "ci_W3D",
+  slug: "lorcana-ci_W3D",
+  printings: [
+    {
+      id: "set10-131",
+      artId: "set10-131",
+      setCode: "set10",
+      collectorNumber: "131",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-131"],
   cardType: "action",
   name: "Time to Go!",
@@ -16,7 +27,7 @@ export const timeToGo: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a34fbc1360b340faa269ab2347af7ee1",
-    tcgPlayer: 660003,
+    tcgPlayer: "660003",
   },
   text: "Banish chosen character of yours to draw 2 cards. If that character had a card under them, draw 3 cards instead.",
   abilities: [

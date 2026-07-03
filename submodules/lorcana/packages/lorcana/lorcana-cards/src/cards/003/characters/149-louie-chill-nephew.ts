@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { louieChillNephewI18n } from "./149-louie-chill-nephew.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const louieChillNephew: CharacterCard = {
   id: "ph4",
   canonicalId: "ci_VS6",
+  slug: "lorcana-ci_VS6",
+  printings: [
+    {
+      id: "set3-149",
+      artId: "set3-149",
+      setCode: "set3",
+      collectorNumber: "149",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-149", "set9-140"],
   cardType: "character",
   name: "Louie",
@@ -21,7 +33,7 @@ export const louieChillNephew: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f81fa2c1489a44eab54bd8e0528cc202",
-    tcgPlayer: 650075,
+    tcgPlayer: "650075",
   },
   text: "Support",
   classifications: ["Dreamborn", "Ally"],

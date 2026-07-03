@@ -4,6 +4,17 @@ import { prepareToBoardI18n } from "./094-prepare-to-board.i18n";
 export const prepareToBoard: ActionCard = {
   id: "ZLw",
   canonicalId: "ci_ZLw",
+  slug: "lorcana-ci_ZLw",
+  printings: [
+    {
+      id: "set6-094",
+      artId: "set6-094",
+      setCode: "set6",
+      collectorNumber: "94",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-094"],
   cardType: "action",
   name: "Prepare to Board!",
@@ -16,7 +27,7 @@ export const prepareToBoard: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7ce20e98d86e43eaaf8c525c60f4086c",
-    tcgPlayer: 587968,
+    tcgPlayer: "587968",
   },
   text: "Chosen character gets +2 {S} this turn. If a Pirate character is chosen, they get +3 {S} instead.",
   abilities: [

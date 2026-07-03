@@ -4,6 +4,17 @@ import { hadesMeticulousPlotterI18n } from "./145-hades-meticulous-plotter.i18n"
 export const hadesMeticulousPlotter: CharacterCard = {
   id: "Otw",
   canonicalId: "ci_Otw",
+  slug: "lorcana-ci_Otw",
+  printings: [
+    {
+      id: "set4-145",
+      artId: "set4-145",
+      setCode: "set4",
+      collectorNumber: "145",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-145"],
   cardType: "character",
   name: "Hades",
@@ -21,7 +32,7 @@ export const hadesMeticulousPlotter: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_d555fad606ee4b13b0493364de8c4cda",
-    tcgPlayer: 550606,
+    tcgPlayer: "550606",
   },
   classifications: ["Storyborn", "Villain", "Deity"],
   i18n: hadesMeticulousPlotterI18n,

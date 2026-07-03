@@ -4,6 +4,17 @@ import { namaariNemesisI18n } from "./118-namaari-nemesis.i18n";
 export const namaariNemesis: CharacterCard = {
   id: "SWw",
   canonicalId: "ci_SWw",
+  slug: "lorcana-ci_SWw",
+  printings: [
+    {
+      id: "set2-118",
+      artId: "set2-118",
+      setCode: "set2",
+      collectorNumber: "118",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-118"],
   cardType: "character",
   name: "Namaari",
@@ -12,7 +23,7 @@ export const namaariNemesis: CharacterCard = {
   franchise: "Raya and the Last Dragon",
   set: "002",
   cardNumber: 118,
-  rarity: "super_rare",
+  rarity: "common",
   cost: 4,
   strength: 3,
   willpower: 3,
@@ -20,7 +31,7 @@ export const namaariNemesis: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6b414f08443c4f009d32f627f1d46256",
-    tcgPlayer: 527757,
+    tcgPlayer: "527757",
   },
   text: [
     {

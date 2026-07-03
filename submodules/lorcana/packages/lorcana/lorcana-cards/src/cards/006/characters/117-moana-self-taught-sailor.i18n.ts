@@ -16,7 +16,7 @@ export const moanaSelftaughtSailorI18n: Record<Languages, I18nProperties> = {
     version: "Autodidaktische Seglerin",
     text: [
       {
-        title: "ARBEITET SICH EIN",
+        title: "Arbeitet sich ein",
         description:
           "Dieser Charakter kann nicht herausfordern, außer du hast mindestens einen Kapitän im Spiel.",
       },
@@ -27,7 +27,7 @@ export const moanaSelftaughtSailorI18n: Record<Languages, I18nProperties> = {
     version: "Navigatrice autodidacte",
     text: [
       {
-        title: "APPRENDRE LES FICELLES DU MÉTIER",
+        title: "Apprendre les ficelles du métier",
         description:
           "Ce personnage ne peut pas défier à moins que vous n'ayez un personnage Capitaine en jeu.",
       },
@@ -38,7 +38,7 @@ export const moanaSelftaughtSailorI18n: Record<Languages, I18nProperties> = {
     version: "Marinaia Autodidatta",
     text: [
       {
-        title: "IMPARARE LE BASI",
+        title: "Imparare le Basi",
         description:
           "Questo personaggio non può sfidare a meno che tu non abbia in gioco un personaggio Capitano.",
       },

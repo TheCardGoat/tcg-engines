@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { miloThatchGettingHisHandsDirtyI18n } from "./082-milo-thatch-getting-his-hands-dirty.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const miloThatchGettingHisHandsDirty: CharacterCard = {
-  id: "d9j",
+  id: "Iy7",
   canonicalId: "ci_d9j",
+  slug: "lorcana-ci_d9j",
+  printings: [
+    {
+      id: "set12-082",
+      artId: "set12-082",
+      setCode: "set12",
+      collectorNumber: "82",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-082"],
   cardType: "character",
   name: "Milo Thatch",
@@ -20,7 +32,8 @@ export const miloThatchGettingHisHandsDirty: CharacterCard = {
   lore: 3,
   inkable: true,
   externalIds: {
-    lorcast: "crd_9e585ec03c314f3b9a6299163eb1c9a9",
+    lorcast: "crd_2ec97929d9ee45578f91dea1a62048b8",
+    tcgPlayer: "692221",
   },
   text: [
     {

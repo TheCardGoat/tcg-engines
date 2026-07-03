@@ -3,7 +3,18 @@ import { snowWhiteFairestInTheLandI18n } from "./033-snow-white-fairest-in-the-l
 
 export const snowWhiteFairestInTheLand: CharacterCard = {
   id: "3bd",
-  canonicalId: "ci_3bd",
+  canonicalId: "ci_LZE",
+  slug: "lorcana-ci_LZE",
+  printings: [
+    {
+      id: "set7-033",
+      artId: "set7-033",
+      setCode: "set7",
+      collectorNumber: "33",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-033"],
   cardType: "character",
   name: "Snow White",
@@ -20,7 +31,7 @@ export const snowWhiteFairestInTheLand: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2f6b2d82972a4c47aca9ebf61a664045",
-    tcgPlayer: 619425,
+    tcgPlayer: "619425",
   },
   text: [
     {

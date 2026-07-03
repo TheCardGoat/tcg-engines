@@ -7,14 +7,17 @@ export const st05GundamBarbatos2ndForm002: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "ST05-002",
-  externalId: "gundam:st05-002",
-  slug: "gundam-barbatos-2nd-form-st05-002",
+  canonicalId: "ST05-002",
+  externalIds: { bandai: "gundam:st05-002" },
+  slug: "gundam-barbatos-2nd-form/st05-002",
   displayName: "Gundam Barbatos 2nd Form",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-002",
   printings: [
     {
       id: "ST05-002",
+      artId: "ST05-002",
+      setCode: "ST05",
       collectorNumber: "ST05-002",
       cardNumber: "ST05-002",
       set: {
@@ -30,6 +33,8 @@ export const st05GundamBarbatos2ndForm002: UnitCard = {
     },
     {
       id: "ST05-002_p1",
+      artId: "ST05-002_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-002_p1",
       cardNumber: "ST05-002",
       set: {
@@ -45,6 +50,8 @@ export const st05GundamBarbatos2ndForm002: UnitCard = {
     },
     {
       id: "ST05-002_p2",
+      artId: "ST05-002_p2",
+      setCode: "ST05",
       collectorNumber: "ST05-002_p2",
       cardNumber: "ST05-002",
       set: {
@@ -60,6 +67,8 @@ export const st05GundamBarbatos2ndForm002: UnitCard = {
     },
     {
       id: "ST05-002_p3",
+      artId: "ST05-002_p3",
+      setCode: "EVX05",
       collectorNumber: "ST05-002_p3",
       cardNumber: "ST05-002",
       set: {
@@ -74,6 +83,7 @@ export const st05GundamBarbatos2ndForm002: UnitCard = {
       productName: "Premium Card Collection [EVX05]",
     },
   ],
+  reprints: ["ST05-002", "ST05-002_p1", "ST05-002_p2", "ST05-002_p3"],
   selectedPrintingId: "ST05-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-002.webp?260424",

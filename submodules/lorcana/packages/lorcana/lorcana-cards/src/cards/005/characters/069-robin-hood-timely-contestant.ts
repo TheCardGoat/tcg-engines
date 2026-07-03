@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { robinHoodTimelyContestantI18n } from "./069-robin-hood-timely-contestant.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const robinHoodTimelyContestant: CharacterCard = {
   id: "LKY",
   canonicalId: "ci_LKY",
+  slug: "lorcana-ci_LKY",
+  printings: [
+    {
+      id: "set5-069",
+      artId: "set5-069",
+      setCode: "set5",
+      collectorNumber: "69",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-069"],
   cardType: "character",
   name: "Robin Hood",
@@ -21,7 +33,7 @@ export const robinHoodTimelyContestant: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e563c6bf2df446f5b77fbf41d3d3b30a",
-    tcgPlayer: 557730,
+    tcgPlayer: "557730",
   },
   text: [
     {

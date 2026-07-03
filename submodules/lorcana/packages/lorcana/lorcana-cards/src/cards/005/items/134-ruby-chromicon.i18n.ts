@@ -14,8 +14,8 @@ export const rubyChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Rubin Chromikon",
     text: [
       {
-        title: "RUBINFARBENES LICHT",
-        description: "— Gib einem Charakter deiner Wahl in diesem Zug +1.",
+        title: "Rubinfarbenes Licht",
+        description: "{E} — Gib einem Charakter deiner Wahl in diesem Zug +1 {S}.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const rubyChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Chromicône de Rubis",
     text: [
       {
-        title: "LUEUR DE RUBIS",
-        description: "— Choisissez un personnage qui gagne +1 pour le reste de ce tour.",
+        title: "Lueur de rubis",
+        description: "{E} — Choisissez un personnage qui gagne +1 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const rubyChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Cromicon di Rubino",
     text: [
       {
-        title: "LUCE DI RUBINO",
-        description: "— Un personaggio a tua scelta riceve +1 per questo turno.",
+        title: "Luce di Rubino",
+        description: "{E} — Un personaggio a tua scelta riceve +1 {S} per questo turno.",
       },
     ],
   },

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { nickWildePersistentInvestigatorI18n } from "./187-nick-wilde-persistent-investigator.i18n";
 
 export const nickWildePersistentInvestigator: CharacterCard = {
-  id: "DbJ",
+  id: "crr",
   canonicalId: "ci_YpV",
+  slug: "lorcana-ci_YpV",
+  printings: [
+    {
+      id: "set10-187",
+      artId: "set10-187",
+      setCode: "set10",
+      collectorNumber: "187",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-187"],
   cardType: "character",
   name: "Nick Wilde",
@@ -20,7 +31,7 @@ export const nickWildePersistentInvestigator: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_8a558015ad0948f5be96f85dc60b3c76",
-    tcgPlayer: 660030,
+    tcgPlayer: "660030",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd01GuelSDilanza083: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-083",
-  externalId: "gundam:gd01-083",
-  slug: "guel-s-dilanza-gd01-083",
+  canonicalId: "GD01-083",
+  externalIds: { bandai: "gundam:gd01-083" },
+  slug: "guel-s-dilanza/gd01-083",
   displayName: "Guel's Dilanza",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-083",
   printings: [
     {
       id: "GD01-083",
+      artId: "GD01-083",
+      setCode: "GD01",
       collectorNumber: "GD01-083",
       cardNumber: "GD01-083",
       set: {
@@ -29,6 +32,7 @@ export const gd01GuelSDilanza083: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-083"],
   selectedPrintingId: "GD01-083",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-083.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-083.webp?260424",

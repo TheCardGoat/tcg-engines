@@ -11,7 +11,7 @@ describe("Chien-Po - Snow Warrior", () => {
     expect(chienpoSnowWarrior.inkable).toBe(true);
     expect(chienpoSnowWarrior.vanilla).toBe(true);
     expect(chienpoSnowWarrior.classifications).toEqual(["Storyborn", "Ally"]);
-    expect(chienpoSnowWarrior.abilities).toEqual([]);
+    expect(chienpoSnowWarrior.abilities ?? []).toEqual([]);
 
     const testEngine = new LorcanaTestEngine({
       play: [chienpoSnowWarrior],

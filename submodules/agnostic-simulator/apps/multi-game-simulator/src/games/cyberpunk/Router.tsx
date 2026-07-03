@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { TestsPage, HomePage } from "./pages/Tests.page";
 import { TestFixturePage } from "./pages/TestFixture.page";
+import { CyberpunkTestStatePage } from "./pages/TestState.page";
 import { PracticePage } from "./pages/Practice.page";
 import { PracticeMatchPage } from "./pages/PracticeMatch.page";
 import { MatchmakingPage } from "./pages/Matchmaking.page";
@@ -11,7 +12,7 @@ import { LiveMatchPage } from "./pages/LiveMatch.page";
 import { LiveMatchLandingPage } from "./pages/LiveMatchLanding.page";
 import { ReplayPage } from "./pages/Replay.page";
 import { ReplayForkPage } from "./pages/ReplayFork.page";
-import { normalizeRouterBasename } from "../../router-paths";
+import { normalizeRouterBasename } from "../../routes/router-paths.ts";
 
 export const cyberpunkSimulatorRoutes = [
   // Root home — fixture chooser.
@@ -24,6 +25,10 @@ export const cyberpunkSimulatorRoutes = [
   {
     path: "/tests",
     element: <TestsPage />,
+  },
+  {
+    path: "/tests/test-engine-state",
+    element: <CyberpunkTestStatePage />,
   },
   {
     path: "/tests/:fixtureId",

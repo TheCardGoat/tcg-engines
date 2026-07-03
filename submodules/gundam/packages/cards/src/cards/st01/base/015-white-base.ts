@@ -6,14 +6,17 @@ export const st01WhiteBase015: BaseCard = {
   type: "base",
   traits: ["earth federation", "white base team", "warship"],
   id: "ST01-015",
-  externalId: "gundam:st01-015",
-  slug: "white-base-st01-015",
+  canonicalId: "ST01-015",
+  externalIds: { bandai: "gundam:st01-015" },
+  slug: "white-base/st01-015",
   displayName: "White Base",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-015",
   printings: [
     {
       id: "ST01-015",
+      artId: "ST01-015",
+      setCode: "ST01",
       collectorNumber: "ST01-015",
       cardNumber: "ST01-015",
       set: {
@@ -29,6 +32,8 @@ export const st01WhiteBase015: BaseCard = {
     },
     {
       id: "ST01-015_p1",
+      artId: "ST01-015_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-015_p1",
       cardNumber: "ST01-015",
       set: {
@@ -44,6 +49,8 @@ export const st01WhiteBase015: BaseCard = {
     },
     {
       id: "ST01-015_p2",
+      artId: "ST01-015_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-015_p2",
       cardNumber: "ST01-015",
       set: {
@@ -58,6 +65,7 @@ export const st01WhiteBase015: BaseCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST01-015", "ST01-015_p1", "ST01-015_p2"],
   selectedPrintingId: "ST01-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-015.webp?260424",

@@ -16,9 +16,9 @@ export const mattiasArendelleGeneralI18n: Record<Languages, I18nProperties> = {
     version: "General von Arendelle",
     text: [
       {
-        title: "BEREIT ZU BESCHÜTZEN",
+        title: "Bereit zu beschützen",
         description:
-          "Deine Königinnen erhalten Behütet. (Gegnerische Mitspielende können diese Charaktere nicht auswählen, außer um sie herauszufordern.)",
+          "Deine Königinnen erhalten <Behütet>. (Gegnerische Mitspielende können diese Charaktere nicht auswählen, außer um sie herauszufordern.)",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const mattiasArendelleGeneralI18n: Record<Languages, I18nProperties> = {
     version: "Général d’Arendelle",
     text: [
       {
-        title: "FIER DE SERVIR",
+        title: "Fier de servir",
         description:
-          "Vos personnages Reine gagnent Hors d'atteinte. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)",
+          "Vos personnages Reine gagnent <Hors d'atteinte>. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const mattiasArendelleGeneralI18n: Record<Languages, I18nProperties> = {
     version: "Generale di Arendelle",
     text: [
       {
-        title: "FIERI DI SERVIRE I",
+        title: "Fieri di Servire",
         description:
-          "tuoi personaggi Regina ottengono Protetto. (Gli avversari non possono sceglierli se non per sfidarli.)",
+          "I tuoi personaggi Regina ottengono <Protetto>. (Gli avversari non possono sceglierli se non per sfidarli.)",
       },
     ],
   },

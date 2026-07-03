@@ -4,6 +4,17 @@ import { mickeyMouseSnowboardAceI18n } from "./091-mickey-mouse-snowboard-ace.i1
 export const mickeyMouseSnowboardAce: CharacterCard = {
   id: "FDn",
   canonicalId: "ci_FDn",
+  slug: "lorcana-ci_FDn",
+  printings: [
+    {
+      id: "set11-091",
+      artId: "set11-091",
+      setCode: "set11",
+      collectorNumber: "91",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-091"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseSnowboardAce: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_23f005944c784e158b9709de1c587d1e",
-    tcgPlayer: 673081,
+    tcgPlayer: "673081",
   },
   text: [
     {

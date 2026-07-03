@@ -7,14 +7,17 @@ export const st04StrikeDagger005: UnitCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "ST04-005",
-  externalId: "gundam:st04-005",
-  slug: "strike-dagger-st04-005",
+  canonicalId: "ST04-005",
+  externalIds: { bandai: "gundam:st04-005" },
+  slug: "strike-dagger/st04-005",
   displayName: "Strike Dagger",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-005",
   printings: [
     {
       id: "ST04-005",
+      artId: "ST04-005",
+      setCode: "ST04",
       collectorNumber: "ST04-005",
       cardNumber: "ST04-005",
       set: {
@@ -30,6 +33,8 @@ export const st04StrikeDagger005: UnitCard = {
     },
     {
       id: "ST04-005_p1",
+      artId: "ST04-005_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-005_p1",
       cardNumber: "ST04-005",
       set: {
@@ -45,6 +50,8 @@ export const st04StrikeDagger005: UnitCard = {
     },
     {
       id: "ST04-005_p2",
+      artId: "ST04-005_p2",
+      setCode: "BETA",
       collectorNumber: "ST04-005_p2",
       cardNumber: "ST04-005",
       set: {
@@ -59,6 +66,7 @@ export const st04StrikeDagger005: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST04-005", "ST04-005_p1", "ST04-005_p2"],
   selectedPrintingId: "ST04-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-005.webp?260424",

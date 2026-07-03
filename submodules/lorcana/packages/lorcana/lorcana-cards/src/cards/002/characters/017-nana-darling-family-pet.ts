@@ -4,6 +4,17 @@ import { nanaDarlingFamilyPetI18n } from "./017-nana-darling-family-pet.i18n";
 export const nanaDarlingFamilyPet: CharacterCard = {
   id: "RVI",
   canonicalId: "ci_RVI",
+  slug: "lorcana-ci_RVI",
+  printings: [
+    {
+      id: "set2-017",
+      artId: "set2-017",
+      setCode: "set2",
+      collectorNumber: "17",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-017"],
   cardType: "character",
   name: "Nana",
@@ -20,7 +31,7 @@ export const nanaDarlingFamilyPet: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2efc304326314401b518565ccfc8f238",
-    tcgPlayer: 527718,
+    tcgPlayer: "527718",
   },
   text: [
     {

@@ -19,14 +19,14 @@ export const iceSpikesI18n: Record<Languages, I18nProperties> = {
     name: "Eisstacheln",
     text: [
       {
-        title: "HALT STILL",
+        title: "Halt still",
         description:
           "Wenn du diesen Gegenstand ausspielst, erschöpfe einen gegnerischen Charakter deiner Wahl.",
       },
       {
-        title: "ES KLEMMT, 1",
+        title: "Es klemmt",
         description:
-          "— Erschöpfe einen gegnerischen Gegenstand deiner Wahl. Er wird zu Beginn seines nächsten Zuges nicht bereit gemacht.",
+          "{E}, 1 {I} — Erschöpfe einen gegnerischen Gegenstand deiner Wahl. Er wird zu Beginn seines nächsten Zuges nicht bereit gemacht.",
       },
     ],
   },
@@ -34,14 +34,14 @@ export const iceSpikesI18n: Record<Languages, I18nProperties> = {
     name: "Pics de glace",
     text: [
       {
-        title: "NE BOUGEZ PLUS",
+        title: "Ne bougez plus",
         description:
           "Lorsque vous jouez cet objet, choisissez un personnage adverse et épuisez-le.",
       },
       {
-        title: "C'EST",
+        title: "C'est coincé",
         description:
-          "COINCÉ, 1 — Choisissez un objet adverse et épuisez-le. Il ne se redresse pas au début du prochain tour de son propriétaire.",
+          "{E}, 1 {I} — Choisissez un objet adverse et épuisez-le. Il ne se redresse pas au début du prochain tour de son propriétaire.",
       },
     ],
   },
@@ -49,9 +49,14 @@ export const iceSpikesI18n: Record<Languages, I18nProperties> = {
     name: "Spuntoni di Ghiaccio",
     text: [
       {
-        title: "STAI FERMO",
+        title: "Stai Fermo",
         description:
-          "Quando giochi questo oggetto, impegna un personaggio avversario a tua scelta. È BLOCCATO, 1 — Impegna un oggetto avversario a tua scelta. Non si può preparare all'inizio del suo prossimo turno.",
+          "Quando giochi questo oggetto, impegna un personaggio avversario a tua scelta.",
+      },
+      {
+        title: "È Bloccato",
+        description:
+          "{E}, 1 {I} — Impegna un oggetto avversario a tua scelta. Non si può preparare all'inizio del suo prossimo turno.",
       },
     ],
   },

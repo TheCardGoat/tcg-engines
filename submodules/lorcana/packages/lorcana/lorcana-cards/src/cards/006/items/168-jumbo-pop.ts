@@ -4,6 +4,17 @@ import { jumboPopI18n } from "./168-jumbo-pop.i18n";
 export const jumboPop: ItemCard = {
   id: "iYv",
   canonicalId: "ci_iYv",
+  slug: "lorcana-ci_iYv",
+  printings: [
+    {
+      id: "set6-168",
+      artId: "set6-168",
+      setCode: "set6",
+      collectorNumber: "168",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-168"],
   cardType: "item",
   name: "Jumbo Pop",
@@ -16,7 +27,7 @@ export const jumboPop: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f19a04399d3d44a9b9e346a4ee4741a4",
-    tcgPlayer: 591138,
+    tcgPlayer: "591138",
   },
   text: [
     {
@@ -33,7 +44,10 @@ export const jumboPop: ItemCard = {
       effect: {
         steps: [
           {
-            amount: { type: "up-to", value: 2 },
+            amount: {
+              type: "up-to",
+              value: 2,
+            },
             target: {
               selector: "all",
               count: "all",

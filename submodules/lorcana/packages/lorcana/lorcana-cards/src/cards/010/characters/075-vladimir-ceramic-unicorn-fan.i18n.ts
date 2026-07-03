@@ -16,7 +16,7 @@ export const vladimirCeramicUnicornFanI18n: Record<Languages, I18nProperties> = 
     version: "Fan von Keramik-Einhörnern",
     text: [
       {
-        title: "HOHE ANSPRÜCHE",
+        title: "Hohe Ansprüche",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen Gegenstand deiner Wahl verbannen.",
       },
@@ -27,7 +27,7 @@ export const vladimirCeramicUnicornFanI18n: Record<Languages, I18nProperties> = 
     version: "Fan de petites licornes",
     text: [
       {
-        title: "GRANDES EXIGENCES",
+        title: "Grandes exigences",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un objet et le bannir.",
       },
@@ -38,7 +38,7 @@ export const vladimirCeramicUnicornFanI18n: Record<Languages, I18nProperties> = 
     version: "Fan degli Unicorni in Ceramica",
     text: [
       {
-        title: "STANDARD ELEVATI",
+        title: "Standard Elevati",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi esiliare un oggetto a tua scelta.",
       },

@@ -4,6 +4,17 @@ import { hydraDeadlySerpentI18n } from "./108-hydra-deadly-serpent.i18n";
 export const hydraDeadlySerpent: CharacterCard = {
   id: "dZ8",
   canonicalId: "ci_dZ8",
+  slug: "lorcana-ci_dZ8",
+  printings: [
+    {
+      id: "set3-108",
+      artId: "set3-108",
+      setCode: "set3",
+      collectorNumber: "108",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-108"],
   cardType: "character",
   name: "Hydra",
@@ -20,13 +31,13 @@ export const hydraDeadlySerpent: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f9025821a35c4cea9fd04182f7db5896",
-    tcgPlayer: 539088,
+    tcgPlayer: "539088",
   },
   text: [
     {
       title: "WATCH THE TEETH",
       description:
-        "Whenever this character takes damage, deal that much damage to chosen opposing character.",
+        "Whenever this character is dealt damage, deal that much damage to chosen opposing character.",
     },
   ],
   classifications: ["Storyborn"],

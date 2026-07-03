@@ -196,4 +196,50 @@ describe("CardFace", () => {
 
     expect(body).toContain("https://new-cdn.lorcanito.com/public/lorcana/004/art_only/128.webp");
   });
+
+  it("uses the printing image metadata when a card is grouped under another set", () => {
+    const { body } = render(CardFaceTestHost, {
+      props: {
+        card: createCardSnapshot({
+          set: "013",
+          cardNumber: 3,
+          imageSet: "PD1",
+          imageCardNumber: "003",
+        }),
+        displayWidth: 132,
+        displayHeight: 184,
+        imageFormat: "art_and_name",
+        aspectRatio: 734 / 1024,
+      },
+    });
+
+    expect(body).toContain('data-testid="PD1-003-art_and_name"');
+    expect(body).toContain(
+      "https://new-cdn.lorcanito.com/public/lorcana/EN/PD1/art_and_name/003.webp",
+    );
+    expect(body).not.toContain("/EN/013/art_and_name/003.webp");
+  });
+
+  it("does not render real card art for masked snapshots", () => {
+    const { body } = render(CardFaceTestHost, {
+      props: {
+        card: createCardSnapshot({
+          cardNumber: 3,
+          imageCardNumber: "003",
+          imageSet: "PD1",
+          isMasked: true,
+          set: "013",
+        }),
+        displayWidth: 132,
+        displayHeight: 184,
+        imageFormat: "art_and_name",
+        aspectRatio: 734 / 1024,
+      },
+    });
+
+    expect(body).not.toContain(
+      "https://new-cdn.lorcanito.com/public/lorcana/EN/PD1/art_and_name/003.webp",
+    );
+    expect(body).not.toContain('data-testid="PD1-003-art_and_name"');
+  });
 });

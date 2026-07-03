@@ -18,12 +18,14 @@ export const rafikisBakoraStaffI18n: Record<Languages, I18nProperties> = {
     name: "Rafikis Bakora-Stab",
     text: [
       {
-        title: "LIES DIE OMEN, 1",
-        description: "— Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
+        title: "Lies die Omen",
+        description:
+          "{E}, 1 {I} — Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
       {
-        title: "BONK! 1,",
-        description: "Verbanne diesen Gegenstand — Füge einem Charakter deiner Wahl 1 Schaden zu.",
+        title: "Bonk!",
+        description:
+          "1 {I}, Verbanne diesen Gegenstand — Füge einem Charakter deiner Wahl 1 Schaden zu.",
       },
     ],
   },
@@ -31,12 +33,13 @@ export const rafikisBakoraStaffI18n: Record<Languages, I18nProperties> = {
     name: "Bâton bakora de Rafiki",
     text: [
       {
-        title: "LIRE LES",
-        description: "PRÉSAGES, 1 — Piochez une carte puis défaussez une carte.",
+        title: "Lire les présages",
+        description: "{E}, 1 {I} — Piochez une carte puis défaussez une carte.",
       },
       {
-        title: "PAF! 1,",
-        description: "Bannissez cet objet — Choisissez un personnage et infligez-lui 1 dommage.",
+        title: "Paf!",
+        description:
+          "1 {I}, Bannissez cet objet — Choisissez un personnage et infligez-lui 1 dommage.",
       },
     ],
   },
@@ -44,12 +47,13 @@ export const rafikisBakoraStaffI18n: Record<Languages, I18nProperties> = {
     name: "Bastone Bakora di Rafiki",
     text: [
       {
-        title: "LEGGERE I SEGNI, 1",
-        description: "— Pesca una carta, poi scegli e scarta una carta.",
+        title: "Leggere i Segni",
+        description: "{E}, 1 {I} — Pesca una carta, poi scegli e scarta una carta.",
       },
       {
-        title: "BONK! 1,",
-        description: "esilia questo oggetto — Infliggi 1 danno a un personaggio a tua scelta.",
+        title: "Bonk!",
+        description:
+          "1 {I}, esilia questo oggetto — Infliggi 1 danno a un personaggio a tua scelta.",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tinkerBellGiantFairyI18n } from "./193-tinker-bell-giant-fairy.i18n";
+
 import { shift } from "../../../helpers/abilities";
 
 export const tinkerBellGiantFairy: CharacterCard = {
   id: "gVL",
   canonicalId: "ci_6gQ",
+  slug: "lorcana-ci_6gQ",
+  printings: [
+    {
+      id: "set1-193",
+      artId: "set1-193",
+      setCode: "set1",
+      collectorNumber: "193",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-193", "set9-188"],
   cardType: "character",
   name: "Tinker Bell",
@@ -21,7 +33,7 @@ export const tinkerBellGiantFairy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a77ba07844374c399becfa3d49262642",
-    tcgPlayer: 650121,
+    tcgPlayer: "650121",
   },
   text: [
     {

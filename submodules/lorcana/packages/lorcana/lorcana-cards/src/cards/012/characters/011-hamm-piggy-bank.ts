@@ -4,6 +4,17 @@ import { hammPiggyBankI18n } from "./011-hamm-piggy-bank.i18n";
 export const hammPiggyBank: CharacterCard = {
   id: "shb",
   canonicalId: "ci_shb",
+  slug: "lorcana-ci_shb",
+  printings: [
+    {
+      id: "set12-011",
+      artId: "set12-011",
+      setCode: "set12",
+      collectorNumber: "11",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-011"],
   cardType: "character",
   name: "Hamm",
@@ -20,6 +31,7 @@ export const hammPiggyBank: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_44d3ef4753ac4e039c91e30ecfe1dcaf",
+    tcgPlayer: "692149",
   },
   text: [
     {

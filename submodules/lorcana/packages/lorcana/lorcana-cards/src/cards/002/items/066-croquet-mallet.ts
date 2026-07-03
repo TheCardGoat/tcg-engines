@@ -4,6 +4,17 @@ import { croquetMalletI18n } from "./066-croquet-mallet.i18n";
 export const croquetMallet: ItemCard = {
   id: "Jp2",
   canonicalId: "ci_Jp2",
+  slug: "lorcana-ci_Jp2",
+  printings: [
+    {
+      id: "set2-066",
+      artId: "set2-066",
+      setCode: "set2",
+      collectorNumber: "66",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-066"],
   cardType: "item",
   name: "Croquet Mallet",
@@ -16,7 +27,7 @@ export const croquetMallet: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2f8f2276cb254195b2abf5cffd2b8193",
-    tcgPlayer: 527741,
+    tcgPlayer: "527741",
   },
   text: [
     {

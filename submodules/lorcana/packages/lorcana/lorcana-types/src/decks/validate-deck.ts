@@ -62,6 +62,9 @@
  * ```
  */
 
+import type { CardType, DeckConstructionRule } from "../cards/card-types";
+import type { Classification } from "../cards/classifications";
+
 // ---------------------------------------------------------------------------
 // Set codes
 // ---------------------------------------------------------------------------
@@ -79,7 +82,8 @@ export type LorcanaSetCode =
   | "FAB" // set9 — Fabled
   | "WIW" // set10 — Whispers in the Well
   | "WSP" // set11 — Winterspell
-  | "WUN"; // set12 — Wilds Unknown
+  | "WUN" // set12 — Wilds Unknown
+  | "013"; // set13 — Attack of the Vine!
 
 // ---------------------------------------------------------------------------
 // Format identifiers
@@ -88,6 +92,7 @@ export type LorcanaSetCode =
 export type LorcanaFormatId =
   | "infinity"
   | "core-constructed"
+  | "attack-of-the-vine"
   | "archazias-island"
   | "shimmering-skies"
   | "azurite-sea";
@@ -163,12 +168,13 @@ const FORTISPHERE = "PSk";
 
 export const LORCANA_FORMATS: Record<LorcanaFormatId, LorcanaFormat> = {
   /**
-   * All released sets legal; only Hiram Flaversham - Toymaker banned.
+   * All publicly released sets legal; early-access release sets stay in their
+   * own queue until official release.
    */
   infinity: {
     id: "infinity",
     label: "Infinity",
-    description: "All released sets are legal. One card is banned.",
+    description: "All publicly released sets are legal. One card is banned.",
     allowedSets: [
       "TFC",
       "ROF",
@@ -187,7 +193,8 @@ export const LORCANA_FORMATS: Record<LorcanaFormatId, LorcanaFormat> = {
   },
 
   /**
-   * Rotating constructed format. Includes the most recent six sets.
+   * Rotating constructed format. Set 13 is only available through its release
+   * queue until the official rotation date.
    * Both Hiram Flaversham - Toymaker and Fortisphere are banned.
    */
   "core-constructed": {
@@ -200,36 +207,44 @@ export const LORCANA_FORMATS: Record<LorcanaFormatId, LorcanaFormat> = {
   },
 
   /**
-   * Archazia's Island format. Sets SSK through FAB (five sets).
+   * Attack of the Vine early-access release queue. Uses the new rotation window
+   * before Core Constructed officially rotates.
    */
-  "archazias-island": {
-    id: "archazias-island",
-    label: "Archazia's Island",
-    description: "Sets SSK through FAB are legal. No banned cards.",
-    allowedSets: ["SSK", "AZS", "ARC", "ROJ", "FAB"],
+  "attack-of-the-vine": {
+    id: "attack-of-the-vine",
+    label: "Attack of the Vine",
+    description: "Attack of the Vine early-access queue. Set 13 cards are legal.",
+    allowedSets: ["FAB", "WIW", "WSP", "WUN", "013"],
+    bannedCardIds: [HIRAM_FLAVERSHAM_TOYMAKER, FORTISPHERE],
   },
 
   /**
-   * Shimmering Skies format. Legacy format covering the first five sets.
+   * Historical snapshot formats used for deck tagging and older queue data.
+   * These intentionally use set-only legality rather than Ravensburger's
+   * current rotation state.
    */
   "shimmering-skies": {
     id: "shimmering-skies",
     label: "Shimmering Skies",
-    description: "Sets TFC through SSK are legal. No banned cards.",
+    description: "Historical format snapshot through Shimmering Skies.",
     allowedSets: ["TFC", "ROF", "ITI", "URR", "SSK"],
+    bannedCardIds: [HIRAM_FLAVERSHAM_TOYMAKER],
   },
 
-  /**
-   * Azurite Sea format. Sets TFC through AZS are legal.
-   * Certain promotional Fabled cards are also allowed via specialAllowedCardIds.
-   */
   "azurite-sea": {
     id: "azurite-sea",
     label: "Azurite Sea",
-    description: "Sets TFC through AZS are legal, plus select Fabled promo cards.",
+    description: "Historical format snapshot through Azurite Sea.",
     allowedSets: ["TFC", "ROF", "ITI", "URR", "SSK", "AZS"],
-    // Populate with Fabled promotional card shortIds when available.
-    specialAllowedCardIds: [],
+    bannedCardIds: [HIRAM_FLAVERSHAM_TOYMAKER],
+  },
+
+  "archazias-island": {
+    id: "archazias-island",
+    label: "Archazia's Island",
+    description: "Historical format snapshot through Archazia's Island.",
+    allowedSets: ["TFC", "ROF", "ITI", "URR", "SSK", "AZS", "ARC"],
+    bannedCardIds: [HIRAM_FLAVERSHAM_TOYMAKER],
   },
 };
 
@@ -273,6 +288,12 @@ export interface CardFormatData {
   sets: LorcanaSetCode[];
   /** Ink types for this card. One-ink cards supply a single-element array. */
   inkTypes: string[];
+  /** Card type used by card-specific deck construction rules. */
+  cardType?: CardType;
+  /** Character classifications used by card-specific deck construction rules. */
+  classifications?: Classification[];
+  /** Static deck construction rules granted by this card. */
+  deckConstructionRules?: DeckConstructionRule[];
   /**
    * Override the default 4-copy limit.
    * `"no-limit"` means unlimited copies (treated as Infinity internally).
@@ -296,11 +317,50 @@ export type FormatValidationKind =
   | "BANNED_CARD"
   | "REQUIRES_ANY_SET";
 
+export interface FormatValidationCardDetail {
+  publicId: string;
+  fullName: string;
+  sets: LorcanaSetCode[];
+  quantity?: number;
+  maximum?: number | "unlimited";
+}
+
+export type FormatRuleDetails =
+  | {
+      type: "DECK_SIZE";
+      count: number;
+      minimum: number;
+    }
+  | {
+      type: "INK_TYPES";
+      inkTypes: string[];
+      maximum: number;
+    }
+  | {
+      type: "CARD_QUANTITY";
+      cards: FormatValidationCardDetail[];
+    }
+  | {
+      type: "CARD_SET";
+      formatLabel: string;
+      cards: FormatValidationCardDetail[];
+    }
+  | {
+      type: "BANNED_CARD";
+      formatLabel: string;
+      cards: FormatValidationCardDetail[];
+    }
+  | {
+      type: "REQUIRES_ANY_SET";
+      requiredSets: LorcanaSetCode[];
+    };
+
 /** Result of a single validation rule. */
 export interface FormatRuleResult {
   kind: FormatValidationKind;
   passed: boolean;
   message: string;
+  details?: FormatRuleDetails;
 }
 
 /** All validation results for one format. */
@@ -318,16 +378,17 @@ export interface DeckFormatResult {
 function groupByCanonical(
   cards: DeckCard[],
   lookup: (id: string) => CardFormatData | undefined,
-): Map<string, { data: CardFormatData; totalQty: number }> {
-  const groups = new Map<string, { data: CardFormatData; totalQty: number }>();
+): Map<string, { data: CardFormatData; totalQty: number; publicIds: string[] }> {
+  const groups = new Map<string, { data: CardFormatData; totalQty: number; publicIds: string[] }>();
   for (const card of cards) {
     const data = lookup(card.cardId);
     if (!data) continue;
     const existing = groups.get(data.canonicalId);
     if (existing) {
       existing.totalQty += card.quantity;
+      existing.publicIds.push(card.cardId);
     } else {
-      groups.set(data.canonicalId, { data, totalQty: card.quantity });
+      groups.set(data.canonicalId, { data, totalQty: card.quantity, publicIds: [card.cardId] });
     }
   }
   return groups;
@@ -336,6 +397,61 @@ function groupByCanonical(
 function resolveMaxCopies(limit: number | "no-limit" | undefined): number {
   if (limit === "no-limit") return Infinity;
   return typeof limit === "number" ? limit : 4;
+}
+
+function cardMatchesDeckConstructionFilter(
+  data: CardFormatData,
+  filter: DeckConstructionRule["filter"],
+): boolean {
+  if (filter.cardType != null && data.cardType !== filter.cardType) {
+    return false;
+  }
+  if (filter.classification != null && !data.classifications?.includes(filter.classification)) {
+    return false;
+  }
+  return true;
+}
+
+function shouldIgnoreInkTypes(
+  data: CardFormatData,
+  activeRules: Array<{ sourceCanonicalId: string; rule: DeckConstructionRule }>,
+): boolean {
+  return activeRules.some(({ sourceCanonicalId, rule }) => {
+    switch (rule.type) {
+      case "ignore-ink-types":
+        return (
+          (!rule.excludeSourceCard || data.canonicalId !== sourceCanonicalId) &&
+          cardMatchesDeckConstructionFilter(data, rule.filter)
+        );
+    }
+  });
+}
+
+export function getEffectiveDeckInkTypes(
+  cards: DeckCard[],
+  lookup: (id: string) => CardFormatData | undefined,
+): string[] {
+  const cardData = cards
+    .map((card) => lookup(card.cardId))
+    .filter((data): data is CardFormatData => data != null);
+  const activeRules = cardData.flatMap((data) =>
+    (data.deckConstructionRules ?? []).map((rule) => ({
+      sourceCanonicalId: data.canonicalId,
+      rule,
+    })),
+  );
+  const inkTypes = new Set<string>();
+
+  for (const data of cardData) {
+    if (shouldIgnoreInkTypes(data, activeRules)) {
+      continue;
+    }
+    for (const ink of data.inkTypes) {
+      inkTypes.add(ink);
+    }
+  }
+
+  return [...inkTypes];
 }
 
 // ---------------------------------------------------------------------------
@@ -366,37 +482,46 @@ export function validateDeckForFormat(
       totalCards >= minSize
         ? `Deck has ${totalCards} cards (minimum ${minSize}).`
         : `Deck has ${totalCards} cards but requires at least ${minSize}.`,
+    details: {
+      type: "DECK_SIZE",
+      count: totalCards,
+      minimum: minSize,
+    },
   });
 
   // INK_TYPES
-  const inkTypes = new Set<string>();
-  for (const card of cards) {
-    const data = lookup(card.cardId);
-    if (data) {
-      for (const ink of data.inkTypes) {
-        inkTypes.add(ink);
-      }
-    }
-  }
-  const inkCount = inkTypes.size;
+  const inkTypes = getEffectiveDeckInkTypes(cards, lookup);
+  const inkCount = inkTypes.length;
   rules.push({
     kind: "INK_TYPES",
     passed: inkCount <= maxInkTypes,
     message:
       inkCount <= maxInkTypes
         ? `Deck uses ${inkCount} ink type(s) (maximum ${maxInkTypes}).`
-        : `Deck uses ${inkCount} ink types (${[...inkTypes].join(", ")}), but at most ${maxInkTypes} are allowed.`,
+        : `Deck uses ${inkCount} ink types (${inkTypes.join(", ")}), but at most ${maxInkTypes} are allowed.`,
+    details: {
+      type: "INK_TYPES",
+      inkTypes,
+      maximum: maxInkTypes,
+    },
   });
 
   // CARD_QUANTITY — enforced per canonical card across all printings
   const groups = groupByCanonical(cards, lookup);
   const quantityFailures: string[] = [];
-  for (const { data, totalQty } of groups.values()) {
+  const quantityFailureDetails: FormatValidationCardDetail[] = [];
+  for (const { data, totalQty, publicIds } of groups.values()) {
     const max = resolveMaxCopies(data.cardCopyLimit);
     if (totalQty > max) {
-      quantityFailures.push(
-        `${data.fullName}: ${totalQty} copies (maximum ${max === Infinity ? "unlimited" : max})`,
-      );
+      const renderedMax = max === Infinity ? "unlimited" : max;
+      quantityFailures.push(`${data.fullName}: ${totalQty} copies (maximum ${renderedMax})`);
+      quantityFailureDetails.push({
+        publicId: publicIds[0] ?? data.canonicalId,
+        fullName: data.fullName,
+        sets: data.sets,
+        quantity: totalQty,
+        maximum: renderedMax,
+      });
     }
   }
   rules.push({
@@ -406,6 +531,10 @@ export function validateDeckForFormat(
       quantityFailures.length === 0
         ? "All card quantities are within the allowed limits."
         : `Too many copies: ${quantityFailures.join("; ")}.`,
+    details: {
+      type: "CARD_QUANTITY",
+      cards: quantityFailureDetails,
+    },
   });
 
   // CARD_SET — a card passes if any printing is in an allowed set,
@@ -413,6 +542,7 @@ export function validateDeckForFormat(
   // Cards whose printings live entirely in `excludedSets` are rejected even
   // when rotation state would otherwise admit them.
   const setFailures: string[] = [];
+  const setFailureDetails: FormatValidationCardDetail[] = [];
   for (const card of cards) {
     if (format.specialAllowedCardIds?.includes(card.cardId)) continue;
     const data = lookup(card.cardId);
@@ -428,6 +558,12 @@ export function validateDeckForFormat(
     const passes = !allInExcluded && (inAllowedSet || matchesRotation);
     if (!passes) {
       setFailures.push(`${data.fullName} (sets: ${data.sets.join(", ") || "unknown"})`);
+      setFailureDetails.push({
+        publicId: card.cardId,
+        fullName: data.fullName,
+        sets: data.sets,
+        quantity: card.quantity,
+      });
     }
   }
   rules.push({
@@ -437,15 +573,27 @@ export function validateDeckForFormat(
       setFailures.length === 0
         ? "All cards are legal for this format."
         : `Cards not legal in ${format.label}: ${setFailures.join("; ")}.`,
+    details: {
+      type: "CARD_SET",
+      formatLabel: format.label,
+      cards: setFailureDetails,
+    },
   });
 
   // BANNED_CARD
   if (format.bannedCardIds && format.bannedCardIds.length > 0) {
     const bannedFailures: string[] = [];
+    const bannedFailureDetails: FormatValidationCardDetail[] = [];
     for (const card of cards) {
       if (format.bannedCardIds.includes(card.cardId)) {
         const data = lookup(card.cardId);
         bannedFailures.push(data ? data.fullName : card.cardId);
+        bannedFailureDetails.push({
+          publicId: card.cardId,
+          fullName: data ? data.fullName : card.cardId,
+          sets: data?.sets ?? [],
+          quantity: card.quantity,
+        });
       }
     }
     rules.push({
@@ -455,6 +603,11 @@ export function validateDeckForFormat(
         bannedFailures.length === 0
           ? "No banned cards in deck."
           : `Banned in ${format.label}: ${bannedFailures.join(", ")}.`,
+      details: {
+        type: "BANNED_CARD",
+        formatLabel: format.label,
+        cards: bannedFailureDetails,
+      },
     });
   }
 
@@ -471,6 +624,10 @@ export function validateDeckForFormat(
       message: hasRequiredSet
         ? `Deck contains at least one card from the required sets (${format.requiresAnySet.join(", ")}).`
         : `${format.label} requires at least one card from: ${format.requiresAnySet.join(", ")}.`,
+      details: {
+        type: "REQUIRES_ANY_SET",
+        requiredSets: format.requiresAnySet,
+      },
     });
   }
 

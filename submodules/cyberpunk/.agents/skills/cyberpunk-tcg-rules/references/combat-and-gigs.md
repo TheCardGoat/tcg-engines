@@ -25,6 +25,7 @@
 - Compute Street Cred by summing the face values of the dice in a player's Gig area.
 - Let cards care about Street Cred totals when their text says so.
 - Keep in mind that two small dice are closer to winning than one large die, because the win condition counts dice rather than pips.
+- Use Unit power while attacking. Fights compare power, and direct attacks steal extra Gigs for every full 10 power.
 
 ## Combat restrictions
 
@@ -40,11 +41,12 @@ When a Unit attacks a spent rival Unit:
 
 1. Spend the attacking Unit.
 2. Resolve the attacker's `ATTACK` trigger, if any.
-3. Give the defender a chance to call a Legend, activate `QUICK` effects, or assign a ready `BLOCKER`.
-4. Compare total power values.
-5. Defeat the lower-power side, or defeat both sides on a tie.
-6. Move defeated Units and attached Gear to the trash.
-7. Resolve any `DEFEATED` effects on defeated Units.
+3. Declare the spent rival Unit as the target.
+4. Give the defender a chance to call a Legend, activate `QUICK` effects, or assign a ready `BLOCKER`.
+5. Compare total power values.
+6. Defeat the lower-power side, or defeat both sides on a tie.
+7. Move defeated Units and attached Gear to the trash.
+8. Resolve any `DEFEATED` effects on defeated Units.
 
 ## Direct attacks and theft
 
@@ -52,12 +54,14 @@ When a Unit attacks the rival directly:
 
 1. Spend the attacking Unit.
 2. Resolve the attacker's `ATTACK` trigger, if any.
-3. Give the defender a chance to call a Legend, activate `QUICK` effects, or assign a ready `BLOCKER`.
-4. If the attack still connects, steal Gig Dice from the rival.
+3. Declare the rival Gig area as the target.
+4. Give the defender a chance to call a Legend, activate `QUICK` effects, or assign a ready `BLOCKER`.
+5. If the attack still connects, steal Gig Dice from the rival.
 
 Theft amount:
 
-- Steal 1 Gig by default.
+- Steal 0 Gigs at 0 power.
+- Steal 1 Gig at 1-9 power.
 - Steal 2 total Gigs at 10 power.
 - Steal 3 total Gigs at 20 power.
 - Continue adding 1 Gig for each additional full 10 power.
@@ -66,7 +70,7 @@ Let the attacker choose which die or dice to take from the rival's Gig area.
 
 ## Defensive interruptions
 
-- Allow the defender to call a Legend during the defensive step, once per rival turn.
+- Allow the defender to call a Legend as a reaction during the defensive step, once during that rival turn.
 - Allow the defender to activate `QUICK` effects or play `QUICK` Programs during the defensive step.
 - Allow a ready `BLOCKER` to spend and redirect the attack to itself.
 - Treat a redirected direct attack as a fight against the blocking Unit.

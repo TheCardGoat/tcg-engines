@@ -22,14 +22,14 @@ export const heiheiNotsotrickyChickenI18n: Record<Languages, I18nProperties> = {
     version: "Weniger trickreiches Hühnchen",
     text: [
       {
-        title: "ISST ALLES",
+        title: "Isst Alles",
         description:
           "Wenn du diesen Charakter ausspielst, erschöpfe einen gegnerischen Gegenstand deiner Wahl. Er wird zu Beginn seines nächsten Zuges nicht bereit gemacht.",
       },
       {
-        title: "ZUM ESSEN UNTERWEGS",
+        title: "zum Essen unterwegs",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const heiheiNotsotrickyChickenI18n: Record<Languages, I18nProperties> = {
     version: "Poulet pas si malin",
     text: [
       {
-        title: "MANGER N'IMPORTE QUOI",
+        title: "Manger n'importe quoi",
         description:
           "Lorsque vous jouez ce personnage, choisissez un objet adverse et épuisez-le. Il ne se redresse pas au début de son prochain tour.",
       },
       {
-        title: "PAUSE DÉJEUNER",
+        title: "Pause déjeuner",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier des personnages avec Insaisissable.)",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const heiheiNotsotrickyChickenI18n: Record<Languages, I18nProperties> = {
     version: "Pollo Non Particolarmente Furbo",
     text: [
       {
-        title: "MANGIARE QUALSIASI COSA",
+        title: "Mangiare Qualsiasi Cosa",
         description:
           "Quando giochi questo personaggio, impegna un oggetto avversario a tua scelta. Non si può preparare all'inizio del suo prossimo turno.",
       },
       {
-        title: "FUORI A PRANZO",
+        title: "Fuori a Pranzo",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

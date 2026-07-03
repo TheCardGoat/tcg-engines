@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { goofyGroundbreakingChefI18n } from "./004-goofy-groundbreaking-chef.i18n";
 
 export const goofyGroundbreakingChef: CharacterCard = {
-  id: "cVT",
+  id: "4GN",
   canonicalId: "ci_fqx",
+  slug: "lorcana-ci_fqx",
+  printings: [
+    {
+      id: "set8-004",
+      artId: "set8-004",
+      setCode: "set8",
+      collectorNumber: "4",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-004"],
   cardType: "character",
   name: "Goofy",
@@ -18,8 +29,8 @@ export const goofyGroundbreakingChef: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_5271034abc194947b4c2b0e9c66b7f78",
-    tcgPlayer: 632719,
+    lorcast: "crd_964fd75940c7465caafa4cec1e84ed4f",
+    tcgPlayer: "634263",
   },
   text: [
     {
@@ -42,7 +53,10 @@ export const goofyGroundbreakingChef: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           target: {
             selector: "all",
             count: "all",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { chichaDedicatedMotherI18n } from "./146-chicha-dedicated-mother.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const chichaDedicatedMother: CharacterCard = {
   id: "RHS",
-  canonicalId: "ci_RHS",
+  canonicalId: "ci_4rT",
+  slug: "lorcana-ci_4rT",
+  printings: [
+    {
+      id: "set5-146",
+      artId: "set5-146",
+      setCode: "set5",
+      collectorNumber: "146",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-146"],
   cardType: "character",
   name: "Chicha",
@@ -21,7 +33,7 @@ export const chichaDedicatedMother: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_775c901d8b4d4fd3884750a11cb7b1be",
-    tcgPlayer: 561998,
+    tcgPlayer: "561998",
   },
   text: [
     {

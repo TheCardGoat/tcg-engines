@@ -17,7 +17,7 @@ export const mrsPottsEnchantedTeapotI18n: Record<Languages, I18nProperties> = {
     version: "Verzauberte Teekanne",
     text: [
       {
-        title: "AM ENDE WIRD ALLES GUT",
+        title: "Am Ende wird alles gut",
         description:
           "Wenn du diesen Charakter ausspielst und einen Lumière-Charakter oder einen Von-Unruh-Charakter im Spiel hast, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const mrsPottsEnchantedTeapotI18n: Record<Languages, I18nProperties> = {
     version: "Théière enchantée",
     text: [
       {
-        title: "IL Y AURA DES JOURS MEILLEURS",
+        title: "Il y aura des jours meilleurs",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un personnage Lumière ou Big Ben en jeu, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const mrsPottsEnchantedTeapotI18n: Record<Languages, I18nProperties> = {
     version: "Teiera Incantata",
     text: [
       {
-        title: "VEDRAI CHE TUTTO SI AGGIUSTERÀ",
+        title: "Vedrai che Tutto si Aggiusterà",
         description:
           "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Lumiere o Tockins, puoi pescare una carta.",
       },

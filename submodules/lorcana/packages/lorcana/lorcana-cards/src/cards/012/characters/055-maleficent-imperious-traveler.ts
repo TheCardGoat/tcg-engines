@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { maleficentImperiousTravelerI18n } from "./055-maleficent-imperious-traveler.i18n";
 
 export const maleficentImperiousTraveler: CharacterCard = {
-  id: "pn3",
-  canonicalId: "ci_pn3",
+  id: "hpp",
+  canonicalId: "ci_6j1",
+  slug: "lorcana-ci_6j1",
+  printings: [
+    {
+      id: "set12-055",
+      artId: "set12-055",
+      setCode: "set12",
+      collectorNumber: "55",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-055"],
   cardType: "character",
   name: "Maleficent",
@@ -20,6 +31,7 @@ export const maleficentImperiousTraveler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_586e5a2d7baa4cefb96e5f65a68e0cc2",
+    tcgPlayer: "690527",
   },
   text: [
     {

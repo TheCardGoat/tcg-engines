@@ -16,9 +16,9 @@ export const kingOfHeartsMonarchOfWonderlandI18n: Record<Languages, I18nProperti
     version: "Monarch des Wunderlands",
     text: [
       {
-        title: "HULDIGT DER",
+        title: "Huldigt der Königin",
         description:
-          "KÖNIGIN — Wähle einen erschöpften Charakter. Er wird zu Beginn seines nächsten Zuges nicht bereit gemacht.",
+          "{E} — Wähle einen erschöpften Charakter. Er wird zu Beginn seines nächsten Zuges nicht bereit gemacht.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const kingOfHeartsMonarchOfWonderlandI18n: Record<Languages, I18nProperti
     version: "Monarque du Pays des Merveilles",
     text: [
       {
-        title: "ÉCOUTEZ LA REINE!",
+        title: "Écoutez la Reine!",
         description:
-          "— Choisissez un personnage épuisé qui ne se redresse pas au début de son prochain tour.",
+          "{E} — Choisissez un personnage épuisé qui ne se redresse pas au début de son prochain tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const kingOfHeartsMonarchOfWonderlandI18n: Record<Languages, I18nProperti
     version: "Monarca del Paese delle Meraviglie",
     text: [
       {
-        title: "COMPIACERE LA REGINA",
+        title: "Compiacere la Regina",
         description:
-          "— Un personaggio impegnato a tua scelta non si può preparare all'inizio del suo prossimo turno.",
+          "{E} — Un personaggio impegnato a tua scelta non si può preparare all'inizio del suo prossimo turno.",
       },
     ],
   },

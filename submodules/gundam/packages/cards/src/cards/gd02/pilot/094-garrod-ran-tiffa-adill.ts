@@ -7,14 +7,17 @@ export const gd02GarrodRanTiffaAdill094: PilotCard = {
   color: "purple",
   traits: ["vulture", "newtype"],
   id: "GD02-094",
-  externalId: "gundam:gd02-094",
-  slug: "garrod-ran-tiffa-adill-gd02-094",
+  canonicalId: "GD02-094",
+  externalIds: { bandai: "gundam:gd02-094" },
+  slug: "garrod-ran-and-tiffa-adill/gd02-094",
   displayName: "Garrod Ran & Tiffa Adill",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-094",
   printings: [
     {
       id: "GD02-094",
+      artId: "GD02-094",
+      setCode: "GD02",
       collectorNumber: "GD02-094",
       cardNumber: "GD02-094",
       set: {
@@ -30,6 +33,8 @@ export const gd02GarrodRanTiffaAdill094: PilotCard = {
     },
     {
       id: "GD02-094_p1",
+      artId: "GD02-094_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-094_p1",
       cardNumber: "GD02-094",
       set: {
@@ -44,6 +49,7 @@ export const gd02GarrodRanTiffaAdill094: PilotCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-094", "GD02-094_p1"],
   selectedPrintingId: "GD02-094",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-094.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-094.webp?260424",

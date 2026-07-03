@@ -17,9 +17,9 @@ export const theQueenDisguisedPeddlerI18n: Record<Languages, I18nProperties> = {
     version: "Verkleidete Hausiererin",
     text: [
       {
-        title: "NIEMAND WIRD MICH ERKENNEN,",
+        title: "Niemand wird mich erkennen",
         description:
-          "Wirf eine Charakterkarte aus deiner Hand ab — Sammle so viele Legenden, wie der -Wert des abgeworfenen Charakters beträgt.",
+          "{E}, Wirf eine Charakterkarte aus deiner Hand ab — Sammle so viele Legenden, wie der {L}-Wert des abgeworfenen Charakters beträgt.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const theQueenDisguisedPeddlerI18n: Record<Languages, I18nProperties> = {
     version: "Déguisée en mendiante",
     text: [
       {
-        title: "LE",
+        title: "Le déguisement parfait",
         description:
-          "DÉGUISEMENT PARFAIT, Choisissez une carte Personnage et défaussez-la — Vous gagnez un nombre d'éclats de Lore égal à la du personnage défaussé.",
+          "{E}, Choisissez une carte Personnage et défaussez-la — Vous gagnez un nombre d'éclats de Lore égal à la {L} du personnage défaussé.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const theQueenDisguisedPeddlerI18n: Record<Languages, I18nProperties> = {
     version: "Disguised Peddler",
     text: [
       {
-        title: "A PERFECT DISGUISE,",
+        title: "A Perfect Disguise",
         description:
-          "Choose and discard a character card — Gain lore equal to the discarded character's.",
+          "{E}, Choose and discard a character card — Gain lore equal to the discarded character's {L}.",
       },
     ],
   },

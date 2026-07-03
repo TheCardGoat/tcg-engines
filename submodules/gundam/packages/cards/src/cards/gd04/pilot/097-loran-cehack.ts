@@ -7,14 +7,17 @@ export const gd04LoranCehack097: PilotCard = {
   color: "white",
   traits: ["militia", "moonrace"],
   id: "GD04-097",
-  externalId: "gundam:gd04-097",
-  slug: "loran-cehack-gd04-097",
+  canonicalId: "GD04-097",
+  externalIds: { bandai: "gundam:gd04-097" },
+  slug: "loran-cehack/gd04-097",
   displayName: "Loran Cehack",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-097",
   printings: [
     {
       id: "GD04-097",
+      artId: "GD04-097",
+      setCode: "GD04",
       collectorNumber: "GD04-097",
       cardNumber: "GD04-097",
       set: {
@@ -30,6 +33,8 @@ export const gd04LoranCehack097: PilotCard = {
     },
     {
       id: "GD04-097_p1",
+      artId: "GD04-097_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-097_p1",
       cardNumber: "GD04-097",
       set: {
@@ -44,6 +49,7 @@ export const gd04LoranCehack097: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-097", "GD04-097_p1"],
   selectedPrintingId: "GD04-097",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-097.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-097.webp?260424",

@@ -1,15 +1,16 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts";
 
-export const alphaViktorVektorSitDownAndRelax = {
+export const alphaViktorVektorSitDownAndRelax = defineCyberpunkCard({
   id: "d759e31e-12fd-4e44-92ad-7fd2535d43f5",
-  externalId: "cyberpunk:viktor-vektor-sit-down-and-relax",
   slug: "viktor-vektor-sit-down-and-relax",
-  name: "Viktor Vektor",
-  subname: "Sit Down and Relax",
-  displayName: "Viktor Vektor - Sit Down and Relax",
   rulesText:
-    "CALL Search the top 5 cards of your deck for up to 2 gear that costs 2 or less each. Reveal them and add them to your hand. (Place the other cards on the bottom of your deck in a random order.)",
+    "FLIP Search the top 5 cards of your deck for up yo 2 gear that costs 2 or less each. Reveal them and add them to your hand. (Place the other cards on the bottom of your deck in a random order.)",
+  subname: "Sit Down and Relax",
+  name: "Viktor Vektor",
+  displayName: "Viktor Vektor - Sit Down and Relax",
+  canonicalId: "viktor-vektor-sit-down-and-relax",
   color: "yellow",
   classifications: ["Ripperdoc", "Merc"],
   set: {
@@ -17,15 +18,6 @@ export const alphaViktorVektorSitDownAndRelax = {
     name: "Alpha Kit Set",
   },
   printNumber: "α006",
-  printings: [
-    {
-      id: "ced3a1c6-3e58-4717-a7d9-e4c1d0f2460c",
-      collectorNumber: "α006",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "ced3a1c6-3e58-4717-a7d9-e4c1d0f2460c",
   artist: "Envar",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a006.webp",
   rarity: null,
@@ -33,7 +25,6 @@ export const alphaViktorVektorSitDownAndRelax = {
   hasSellTag: true,
   ram: 2,
   timingTriggers: ["call"],
-  keywords: [],
   type: "legend",
   cost: null,
   power: 0,
@@ -68,5 +59,4 @@ export const alphaViktorVektorSitDownAndRelax = {
       )
       .build(),
   ],
-  reminderText: [],
-} satisfies AlphaCardDefinition;
+}) satisfies LegendCardDefinition;

@@ -6,7 +6,18 @@ import { unconventionalTool } from "./150-unconventional-tool";
 
 const expensivePrototype: ItemCard = {
   id: "unconventional-tool-expensive-item",
+  printings: [
+    {
+      id: "unconventional-tool-expensive-item",
+      artId: "unconventional-tool-expensive-item",
+      setCode: "TST",
+      collectorNumber: "1",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   canonicalId: "ci_unconventional-tool-expensive-item",
+  slug: "lorcana-ci_unconventional-tool-expensive-item",
   cardType: "item",
   name: "Expensive Prototype",
   cost: 4,

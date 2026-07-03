@@ -4,6 +4,17 @@ import { johnSmithsCompassI18n } from "./033-john-smiths-compass.i18n";
 export const johnSmithsCompass: ItemCard = {
   id: "1U5",
   canonicalId: "ci_1U5",
+  slug: "lorcana-ci_1U5",
+  printings: [
+    {
+      id: "set11-033",
+      artId: "set11-033",
+      setCode: "set11",
+      collectorNumber: "33",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-033"],
   cardType: "item",
   name: "John Smith's Compass",
@@ -16,7 +27,7 @@ export const johnSmithsCompass: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_09f9741601234011a2ea8ad45c845099",
-    tcgPlayer: 674832,
+    tcgPlayer: "674832",
   },
   text: [
     {

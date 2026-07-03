@@ -4,6 +4,17 @@ import { jujuMamaOdiesCompanionI18n } from "./041-juju-mama-odies-companion.i18n
 export const jujuMamaOdiesCompanion: CharacterCard = {
   id: "N2e",
   canonicalId: "ci_N2e",
+  slug: "lorcana-ci_N2e",
+  printings: [
+    {
+      id: "set6-041",
+      artId: "set6-041",
+      setCode: "set6",
+      collectorNumber: "41",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-041"],
   cardType: "character",
   name: "Juju",
@@ -20,7 +31,7 @@ export const jujuMamaOdiesCompanion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_617dc5c42bf6460da3d61a1f330186bf",
-    tcgPlayer: 588154,
+    tcgPlayer: "588154",
   },
   text: [
     {

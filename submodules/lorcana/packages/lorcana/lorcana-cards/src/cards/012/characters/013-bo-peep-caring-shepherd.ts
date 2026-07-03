@@ -4,6 +4,17 @@ import { boPeepCaringShepherdI18n } from "./013-bo-peep-caring-shepherd.i18n";
 export const boPeepCaringShepherd: CharacterCard = {
   id: "Jcm",
   canonicalId: "ci_Jcm",
+  slug: "lorcana-ci_Jcm",
+  printings: [
+    {
+      id: "set12-013",
+      artId: "set12-013",
+      setCode: "set12",
+      collectorNumber: "13",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-013"],
   cardType: "character",
   name: "Bo Peep",
@@ -20,6 +31,7 @@ export const boPeepCaringShepherd: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e63fe9e08c924f4b973fa0f6d4f9a00b",
+    tcgPlayer: "690517",
   },
   text: [
     {

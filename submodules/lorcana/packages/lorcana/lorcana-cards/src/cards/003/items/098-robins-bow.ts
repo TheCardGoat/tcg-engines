@@ -4,6 +4,17 @@ import { robinsBowI18n } from "./098-robins-bow.i18n";
 export const robinsBow: ItemCard = {
   id: "Ezk",
   canonicalId: "ci_Ezk",
+  slug: "lorcana-ci_Ezk",
+  printings: [
+    {
+      id: "set3-098",
+      artId: "set3-098",
+      setCode: "set3",
+      collectorNumber: "98",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-098"],
   cardType: "item",
   name: "Robin's Bow",
@@ -16,7 +27,7 @@ export const robinsBow: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1784510055ec43e49b13b2837192c1d1",
-    tcgPlayer: 537827,
+    tcgPlayer: "537827",
   },
   text: [
     {

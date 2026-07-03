@@ -4,6 +4,17 @@ import { merlinsCarpetbagI18n } from "./167-merlins-carpetbag.i18n";
 export const merlinsCarpetbag: ItemCard = {
   id: "0a0",
   canonicalId: "ci_0a0",
+  slug: "lorcana-ci_0a0",
+  printings: [
+    {
+      id: "set5-167",
+      artId: "set5-167",
+      setCode: "set5",
+      collectorNumber: "167",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-167"],
   cardType: "item",
   name: "Merlin's Carpetbag",
@@ -16,7 +27,7 @@ export const merlinsCarpetbag: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b17b7e285ce043a2bc97e5953a39c574",
-    tcgPlayer: 560543,
+    tcgPlayer: "560543",
   },
   text: [
     {

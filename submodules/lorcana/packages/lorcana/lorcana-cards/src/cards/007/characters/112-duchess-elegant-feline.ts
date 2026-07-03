@@ -4,6 +4,17 @@ import { duchessElegantFelineI18n } from "./112-duchess-elegant-feline.i18n";
 export const duchessElegantFeline: CharacterCard = {
   id: "gHW",
   canonicalId: "ci_gHW",
+  slug: "lorcana-ci_gHW",
+  printings: [
+    {
+      id: "set7-112",
+      artId: "set7-112",
+      setCode: "set7",
+      collectorNumber: "112",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-112"],
   cardType: "character",
   name: "Duchess",
@@ -21,7 +32,7 @@ export const duchessElegantFeline: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_03494b6689ad4bbb9d4e5afac6db733d",
-    tcgPlayer: 618153,
+    tcgPlayer: "618153",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: duchessElegantFelineI18n,

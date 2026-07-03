@@ -15,9 +15,9 @@ export const theSwordOfShanyuI18n: Record<Languages, I18nProperties> = {
     name: "Das Schwert des Shan-Yu",
     text: [
       {
-        title: "WÜRDIGE WAFFE,",
+        title: "Würdige Waffe",
         description:
-          "einen deiner Charaktere — Mache einen Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
+          "{E}, {E} einen deiner Charaktere — Mache einen Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const theSwordOfShanyuI18n: Record<Languages, I18nProperties> = {
     name: "L’épée de Shan-Yu",
     text: [
       {
-        title: "UNE ARME DIGNE DE CE NOM,",
+        title: "Une arme digne de ce nom",
         description:
-          "l'un de vos personnages — Choisissez un personnage et redressez-le. Ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+          "{E}, {E} l'un de vos personnages — Choisissez un personnage et redressez-le. Ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const theSwordOfShanyuI18n: Record<Languages, I18nProperties> = {
     name: "La Spada di Shan-Yu",
     text: [
       {
-        title: "ARMA DEGNA,",
+        title: "Arma Degna",
         description:
-          "uno dei tuoi personaggi — Prepara un personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno.",
+          "{E}, {E} uno dei tuoi personaggi — Prepara un personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno.",
       },
     ],
   },

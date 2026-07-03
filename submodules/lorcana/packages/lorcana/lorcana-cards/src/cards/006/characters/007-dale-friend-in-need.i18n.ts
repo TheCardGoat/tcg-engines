@@ -17,7 +17,7 @@ export const daleFriendInNeedI18n: Record<Languages, I18nProperties> = {
     version: "Freund in der Not",
     text: [
       {
-        title: "CHIPS PARTNER",
+        title: "Chips Partner",
         description:
           "Dieser Charakter kommt erschöpft ins Spiel, außer du hast mindestens einen Chip-Charakter im Spiel.",
       },
@@ -28,7 +28,7 @@ export const daleFriendInNeedI18n: Record<Languages, I18nProperties> = {
     version: "Ami dans le besoin",
     text: [
       {
-        title: "PARTENAIRE DE TIC",
+        title: "Partenaire de Tic",
         description:
           "Ce personnage entre en jeu épuisé à moins que vous n'ayez un personnage Tic en jeu.",
       },
@@ -39,7 +39,7 @@ export const daleFriendInNeedI18n: Record<Languages, I18nProperties> = {
     version: "Amico Bisognoso",
     text: [
       {
-        title: "PARTNER DI CIP",
+        title: "Partner di Cip",
         description:
           "Questo personaggio entra in gioco impegnato a meno che tu non abbia in gioco un personaggio chiamato Cip.",
       },

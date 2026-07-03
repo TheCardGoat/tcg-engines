@@ -4,6 +4,17 @@ import { angelExperiment624I18n } from "./191-angel-experiment-624.i18n";
 export const angelExperiment624: CharacterCard = {
   id: "oBs",
   canonicalId: "ci_oxv",
+  slug: "lorcana-ci_oxv",
+  printings: [
+    {
+      id: "set11-191",
+      artId: "set11-191",
+      setCode: "set11",
+      collectorNumber: "191",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-191"],
   cardType: "character",
   name: "Angel",
@@ -20,7 +31,7 @@ export const angelExperiment624: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fbad358f2f804554838545c738341380",
-    tcgPlayer: 677169,
+    tcgPlayer: "677169",
   },
   text: [
     {

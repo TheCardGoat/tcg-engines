@@ -17,7 +17,7 @@ export const genieSupportiveFriendI18n: Record<Languages, I18nProperties> = {
     version: "Hilfsbereiter Freund",
     text: [
       {
-        title: "DREI WÜNSCHE",
+        title: "Drei Wünsche",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du diese Karte in dein Deck mischen, um 3 Karten zu ziehen.",
       },
@@ -28,7 +28,7 @@ export const genieSupportiveFriendI18n: Record<Languages, I18nProperties> = {
     version: "Ami encourageant",
     text: [
       {
-        title: "TROIS VŒUX",
+        title: "Trois vœux",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez le remélanger dans votre pioche, puis piocher 3 cartes.",
       },
@@ -39,7 +39,7 @@ export const genieSupportiveFriendI18n: Record<Languages, I18nProperties> = {
     version: "Amico Solidale",
     text: [
       {
-        title: "TRE DESIDERI",
+        title: "Tre Desideri",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi rimescolare questa carta nel mazzo per pescare 3 carte.",
       },

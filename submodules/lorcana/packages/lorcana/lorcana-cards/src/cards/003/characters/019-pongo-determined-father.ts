@@ -4,6 +4,17 @@ import { pongoDeterminedFatherI18n } from "./019-pongo-determined-father.i18n";
 export const pongoDeterminedFather: CharacterCard = {
   id: "6fe",
   canonicalId: "ci_4Yx",
+  slug: "lorcana-ci_4Yx",
+  printings: [
+    {
+      id: "set3-019",
+      artId: "set3-019",
+      setCode: "set3",
+      collectorNumber: "19",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-019", "set9-002"],
   cardType: "character",
   name: "Pongo",
@@ -20,7 +31,7 @@ export const pongoDeterminedFather: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c233fd3627b24b02bd616aa62bbdc83a",
-    tcgPlayer: 651110,
+    tcgPlayer: "651110",
   },
   text: [
     {
@@ -45,7 +56,10 @@ export const pongoDeterminedFather: CharacterCard = {
             zone: "hand",
             min: 0,
             max: 1,
-            filter: { type: "card-type", cardType: "character" },
+            filter: {
+              type: "card-type",
+              cardType: "character",
+            },
           },
           {
             zone: "deck-bottom",

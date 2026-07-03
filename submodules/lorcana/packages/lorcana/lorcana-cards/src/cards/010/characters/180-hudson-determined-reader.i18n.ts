@@ -21,12 +21,12 @@ export const hudsonDeterminedReaderI18n: Record<Languages, I18nProperties> = {
     version: "Entschlossener Leser",
     text: [
       {
-        title: "ANTWORTEN FINDEN",
+        title: "Antworten finden",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
       {
-        title: "AM TAGE AUS STEIN",
+        title: "Am Tage aus Stein",
         description:
           "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
       },
@@ -37,12 +37,12 @@ export const hudsonDeterminedReaderI18n: Record<Languages, I18nProperties> = {
     version: "Lecteur déterminé",
     text: [
       {
-        title: "TROUVER DES RÉPONSES",
+        title: "Trouver des réponses",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez piocher une carte puis en défausser une.",
       },
       {
-        title: "STATUE LE JOUR",
+        title: "Statue le jour",
         description:
           "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
       },
@@ -53,12 +53,12 @@ export const hudsonDeterminedReaderI18n: Record<Languages, I18nProperties> = {
     version: "Lettore Determinato",
     text: [
       {
-        title: "IN CERCA DI RISPOSTE",
+        title: "In Cerca di Risposte",
         description:
           "Quando giochi questo personaggio, puoi pescare una carta, poi scegli e scarta una carta.",
       },
       {
-        title: "STATUE DI GIORNO",
+        title: "Statue di Giorno",
         description: "Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
       },
     ],

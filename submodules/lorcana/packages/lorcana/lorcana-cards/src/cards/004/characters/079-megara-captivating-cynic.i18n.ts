@@ -17,7 +17,7 @@ export const megaraCaptivatingCynicI18n: Record<Languages, I18nProperties> = {
     version: "Hinreißende Zynikerin",
     text: [
       {
-        title: "ZWIELICHTIGES GESCHÄFT",
+        title: "Zwielichtiges Geschäft",
         description:
           "Wenn du diesen Charakter ausspielst, wähle eine Karte aus deiner Hand und wirf sie ab oder verbanne diesen Charakter.",
       },
@@ -28,7 +28,7 @@ export const megaraCaptivatingCynicI18n: Record<Languages, I18nProperties> = {
     version: "Cynique captivante",
     text: [
       {
-        title: "ACCORD LOUCHE",
+        title: "Accord louche",
         description:
           "Lorsque vous jouez ce personnage, bannissez-le ou défaussez-vous d'une carte.",
       },
@@ -39,7 +39,7 @@ export const megaraCaptivatingCynicI18n: Record<Languages, I18nProperties> = {
     version: "Cinica Affascinante",
     text: [
       {
-        title: "PATTO LOSCO",
+        title: "Patto Losco",
         description:
           "Quando giochi questo personaggio, scegli e scarta una carta o esilia questo personaggio.",
       },

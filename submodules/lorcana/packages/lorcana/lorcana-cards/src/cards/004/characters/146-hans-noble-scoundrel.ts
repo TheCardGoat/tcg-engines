@@ -4,6 +4,17 @@ import { hansNobleScoundrelI18n } from "./146-hans-noble-scoundrel.i18n";
 export const hansNobleScoundrel: CharacterCard = {
   id: "fmb",
   canonicalId: "ci_nNC",
+  slug: "lorcana-ci_nNC",
+  printings: [
+    {
+      id: "set4-146",
+      artId: "set4-146",
+      setCode: "set4",
+      collectorNumber: "146",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-146", "set9-148"],
   cardType: "character",
   name: "Hans",
@@ -20,7 +31,7 @@ export const hansNobleScoundrel: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_34956960ca9c4048b6d2887bb9ca7446",
-    tcgPlayer: 650083,
+    tcgPlayer: "650083",
   },
   text: [
     {

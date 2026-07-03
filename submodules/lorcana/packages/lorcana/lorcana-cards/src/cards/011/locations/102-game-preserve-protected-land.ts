@@ -4,6 +4,17 @@ import { gamePreserveProtectedLandI18n } from "./102-game-preserve-protected-lan
 export const gamePreserveProtectedLand: LocationCard = {
   id: "NKo",
   canonicalId: "ci_NKo",
+  slug: "lorcana-ci_NKo",
+  printings: [
+    {
+      id: "set11-102",
+      artId: "set11-102",
+      setCode: "set11",
+      collectorNumber: "102",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-102"],
   cardType: "location",
   name: "Game Preserve",
@@ -20,7 +31,7 @@ export const gamePreserveProtectedLand: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f25d2634d58b4a00ab2ac2f2753b8116",
-    tcgPlayer: 677135,
+    tcgPlayer: "677135",
   },
   text: [
     {

@@ -1224,6 +1224,7 @@ export function buildStaticEffectRegistry(
           cardName?: unknown;
           name?: unknown;
           playMethod?: "shift" | "standard" | "either";
+          target?: unknown;
         };
 
         addToPlayer(byPlayer, controllerId, {
@@ -1239,6 +1240,7 @@ export function buildStaticEffectRegistry(
             classification: costEffect.classification,
             cardName: costEffect.cardName ?? costEffect.name,
             playMethod: costEffect.playMethod,
+            target: costEffect.target,
           },
         });
         continue;

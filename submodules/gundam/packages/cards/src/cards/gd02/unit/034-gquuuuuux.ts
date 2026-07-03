@@ -7,14 +7,17 @@ export const gd02Gquuuuuux034: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD02-034",
-  externalId: "gundam:gd02-034",
-  slug: "gquuuuuux-gd02-034",
+  canonicalId: "GD02-034",
+  externalIds: { bandai: "gundam:gd02-034" },
+  slug: "gquuuuuux/gd02-034",
   displayName: "GQuuuuuuX",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-034",
   printings: [
     {
       id: "GD02-034",
+      artId: "GD02-034",
+      setCode: "GD02",
       collectorNumber: "GD02-034",
       cardNumber: "GD02-034",
       set: {
@@ -29,6 +32,7 @@ export const gd02Gquuuuuux034: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-034"],
   selectedPrintingId: "GD02-034",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-034.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-034.webp?260424",

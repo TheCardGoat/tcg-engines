@@ -4,6 +4,17 @@ import { bullseyeLoyalHorseI18n } from "./017-bullseye-loyal-horse.i18n";
 export const bullseyeLoyalHorse: CharacterCard = {
   id: "1zQ",
   canonicalId: "ci_1zQ",
+  slug: "lorcana-ci_1zQ",
+  printings: [
+    {
+      id: "set12-017",
+      artId: "set12-017",
+      setCode: "set12",
+      collectorNumber: "17",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-017"],
   cardType: "character",
   name: "Bullseye",
@@ -20,6 +31,7 @@ export const bullseyeLoyalHorse: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_029d768f40084d1ca1f66a01a5e6981e",
+    tcgPlayer: "690518",
   },
   text: [
     {

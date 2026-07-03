@@ -4,6 +4,17 @@ import { queenOfHeartsWonderlandEmpressI18n } from "./020-queen-of-hearts-wonder
 export const queenOfHeartsWonderlandEmpress: CharacterCard = {
   id: "VAS",
   canonicalId: "ci_0HZ",
+  slug: "lorcana-ci_0HZ",
+  printings: [
+    {
+      id: "set3-020",
+      artId: "set3-020",
+      setCode: "set3",
+      collectorNumber: "20",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-020", "set9-023"],
   cardType: "character",
   name: "Queen of Hearts",
@@ -20,7 +31,7 @@ export const queenOfHeartsWonderlandEmpress: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8da184a94db34eee8c9b4cc378a58d11",
-    tcgPlayer: 649971,
+    tcgPlayer: "649971",
   },
   text: [
     {
@@ -43,7 +54,12 @@ export const queenOfHeartsWonderlandEmpress: CharacterCard = {
           zones: ["play"],
           cardTypes: ["character"],
           excludeSelf: true,
-          filter: [{ type: "has-classification", classification: "Villain" }],
+          filter: [
+            {
+              type: "has-classification",
+              classification: "Villain",
+            },
+          ],
         },
         type: "modify-stat",
       },

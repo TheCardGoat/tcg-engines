@@ -1,11 +1,16 @@
 import type { CardInstanceId, PlayerId } from "#core";
 import type { CardSelectionFilter, DiscardEffect, LorcanaTargetDSL } from "@tcg/lorcana-types";
 import type { CardPlayedPayload, TargetResolutionSelectionContext } from "../../../types";
-import { emitTriggeredLorcanaEvent, queueTriggeredEvent } from "../../effects/triggered-abilities";
+import {
+  emitTriggeredLorcanaEvent,
+  queueTriggeredEvent,
+  snapshotTriggeredCandidatesForCard,
+} from "../../effects/triggered-abilities";
 import { applyReplacementEffects } from "../../effects/replacement-effects";
 import { resolveTargetPlayerIds } from "./player-target-resolver";
 import { createPendingActionEffect, enqueuePendingActionEffect } from "./pending-action-effects";
 import { markLastEffectPerformed } from "./event-snapshot-utils";
+import { passesFilter } from "../../../targeting/runtime/target-resolver";
 import type {
   ActionEffectResolutionOptions,
   ActionResolutionInput,
@@ -41,8 +46,19 @@ function matchesDiscardFilter(
   ctx: PlayCardExecutionContext,
   cardId: CardInstanceId,
   effect: DiscardEffect,
+  controllerId: PlayerId,
 ): boolean {
   const rawFilter = effect.filter;
+  if (
+    rawFilter &&
+    typeof rawFilter === "object" &&
+    !Array.isArray(rawFilter) &&
+    "type" in rawFilter &&
+    typeof rawFilter.type === "string"
+  ) {
+    return passesFilter(ctx, cardId, rawFilter as Record<string, unknown>, controllerId);
+  }
+
   const filter =
     rawFilter &&
     !Array.isArray(rawFilter) &&
@@ -196,7 +212,7 @@ export function resolveDiscardEffect(
           sourceZone === "hand" &&
           cardId === cardPlayed.cardId &&
           targetPlayerId === cardPlayed.playerId
-        ) && matchesDiscardFilter(ctx, cardId, effect),
+        ) && matchesDiscardFilter(ctx, cardId, effect, cardPlayed.playerId),
     );
     if (candidates.length === 0) {
       continue;
@@ -284,7 +300,12 @@ export function resolveDiscardEffect(
           ? selectedFromCandidates.slice(0, effectiveAmount)
           : candidates.slice(0, effectiveAmount);
 
+    const triggerCandidatesByCardId = new Map<
+      CardInstanceId,
+      ReturnType<typeof snapshotTriggeredCandidatesForCard>
+    >();
     for (const cardId of cardsToDiscard) {
+      triggerCandidatesByCardId.set(cardId, snapshotTriggeredCandidatesForCard(ctx, cardId));
       ctx.framework.zones.moveCard(cardId, {
         zone: "discard",
         playerId: targetPlayerId,
@@ -318,6 +339,7 @@ export function resolveDiscardEffect(
             triggerBatchKey,
             triggerAmount: cardsToDiscard.length,
           },
+          triggerCandidates: triggerCandidatesByCardId.get(cardId),
         });
       }
     }

@@ -17,9 +17,9 @@ export const pachaTrekmateI18n: Record<Languages, I18nProperties> = {
     version: "Wanderkumpan",
     text: [
       {
-        title: "VOLLES GEPÄCK",
+        title: "Volles Gepäck",
         description:
-          "Solange du mehr Karten als jede gegnerische Person auf der Hand hast, erhält dieser Charakter +2.",
+          "Solange du mehr Karten als jede gegnerische Person auf der Hand hast, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const pachaTrekmateI18n: Record<Languages, I18nProperties> = {
     version: "Compagnon de randonnée",
     text: [
       {
-        title: "SAC PLEIN À CRAQUER",
+        title: "Sac plein à craquer",
         description:
-          "Tant que vous avez plus de cartes en main que chacun de vos adversaires, ce personnage gagne +2.",
+          "Tant que vous avez plus de cartes en main que chacun de vos adversaires, ce personnage gagne +2 {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const pachaTrekmateI18n: Record<Languages, I18nProperties> = {
     version: "Compagno di Cammino",
     text: [
       {
-        title: "ZAINO PIENO",
+        title: "Zaino Pieno",
         description:
-          "Mentre hai in mano più carte di ogni avversario, questo personaggio riceve +2.",
+          "Mentre hai in mano più carte di ogni avversario, questo personaggio riceve +2 {L}.",
       },
     ],
   },

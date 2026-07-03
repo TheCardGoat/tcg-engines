@@ -22,14 +22,14 @@ export const kuzcoSelfishEmperorI18n: Record<Languages, I18nProperties> = {
     version: "Selbstsüchtiger Herrscher",
     text: [
       {
-        title: "AUSMUSTERN",
+        title: "Ausmustern",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand oder Ort deiner Wahl verdeckt und erschöpft in den zugehörigen Tintenvorrat legen.",
       },
       {
-        title: "NUR AUF EINLADUNG 4",
+        title: "Nur auf Einladung",
         description:
-          "— Deine anderen Charaktere erhalten bis zu Beginn deines nächsten Zuges Robust +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "4 {I} — Deine anderen Charaktere erhalten bis zu Beginn deines nächsten Zuges <Robust> +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const kuzcoSelfishEmperorI18n: Record<Languages, I18nProperties> = {
     version: "Empereur égoïste",
     text: [
       {
-        title: "COUPES DRASTIQUES",
+        title: "Coupes drastiques",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un lieu ou un objet et le placer dans la réserve d'encre de son propriétaire, face cachée et épuisé.",
       },
       {
-        title: "SUR INVITATION SEULEMENT 4",
+        title: "Sur invitation seulement",
         description:
-          "— Vos autres personnages gagnent Résistance +1 jusqu'au début de votre prochain tour.",
+          "4 {I} — Vos autres personnages gagnent <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -54,9 +54,14 @@ export const kuzcoSelfishEmperorI18n: Record<Languages, I18nProperties> = {
     version: "Imperatore Egoista",
     text: [
       {
-        title: "RIDUZIONE DEL PERSONALE",
+        title: "Riduzione del Personale",
         description:
-          "Quando giochi questo personaggio, puoi aggiungere un oggetto o un luogo a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato. SOLO SU INVITO 4 — I tuoi altri personaggi ottengono Resistere +1 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, puoi aggiungere un oggetto o un luogo a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato.",
+      },
+      {
+        title: "Solo su Invito",
+        description:
+          "4 {I} — I tuoi altri personaggi ottengono <Resistere> +1 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

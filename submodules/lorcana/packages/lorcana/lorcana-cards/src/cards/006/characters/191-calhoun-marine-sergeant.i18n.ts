@@ -20,10 +20,11 @@ export const calhounMarineSergeantI18n: Record<Languages, I18nProperties> = {
     version: "Marinefeldwebel",
     text: [
       {
-        title: "Robust +1",
+        title:
+          "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
       {
-        title: "AUFLEVELN",
+        title: "Aufleveln",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 2 Legenden.",
       },
@@ -34,10 +35,11 @@ export const calhounMarineSergeantI18n: Record<Languages, I18nProperties> = {
     version: "Sergent",
     text: [
       {
-        title: "Résistance +1",
+        title:
+          "<Résistance> +1 (Les dommages qui sont infligés à ce personnage sont réduits de 1.)",
       },
       {
-        title: "NIVEAU SUPÉRIEUR",
+        title: "Niveau supérieur",
         description:
           "Pendant votre tour, chaque fois que ce personnage en bannit un autre via un défi, gagnez 2 éclats de Lore.",
       },
@@ -48,10 +50,10 @@ export const calhounMarineSergeantI18n: Record<Languages, I18nProperties> = {
     version: "Sergente Marine",
     text: [
       {
-        title: "Resistere +1",
+        title: "<Resistere> +1",
       },
       {
-        title: "SALIRE DI LIVELLO",
+        title: "Salire di Livello",
         description:
           "Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, ottieni 2 leggenda.",
       },

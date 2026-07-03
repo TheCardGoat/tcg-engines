@@ -4,6 +4,17 @@ import { donaldDuckFocusedFlatfootI18n } from "./155-donald-duck-focused-flatfoo
 export const donaldDuckFocusedFlatfoot: CharacterCard = {
   id: "X12",
   canonicalId: "ci_X12",
+  slug: "lorcana-ci_X12",
+  printings: [
+    {
+      id: "set5-155",
+      artId: "set5-155",
+      setCode: "set5",
+      collectorNumber: "155",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-155"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckFocusedFlatfoot: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d82ace7e03d34ca587519f2c089dc515",
-    tcgPlayer: 561650,
+    tcgPlayer: "561650",
   },
   text: [
     {

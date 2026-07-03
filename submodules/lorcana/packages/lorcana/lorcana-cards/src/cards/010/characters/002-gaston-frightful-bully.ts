@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { gastonFrightfulBullyI18n } from "./002-gaston-frightful-bully.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const gastonFrightfulBully: CharacterCard = {
   id: "Kjy",
   canonicalId: "ci_JyZ",
+  slug: "lorcana-ci_JyZ",
+  printings: [
+    {
+      id: "set10-002",
+      artId: "set10-002",
+      setCode: "set10",
+      collectorNumber: "2",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-002"],
   cardType: "character",
   name: "Gaston",
@@ -21,7 +33,7 @@ export const gastonFrightfulBully: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_22fb811c179742f6b17bead54e0d68f2",
-    tcgPlayer: 657888,
+    tcgPlayer: "657888",
   },
   text: [
     {

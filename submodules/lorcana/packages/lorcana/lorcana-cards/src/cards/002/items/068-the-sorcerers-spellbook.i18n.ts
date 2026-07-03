@@ -14,8 +14,8 @@ export const theSorcerersSpellbookI18n: Record<Languages, I18nProperties> = {
     name: "Das Buch der Zaubersprüche",
     text: [
       {
-        title: "WISSEN, 1",
-        description: "— Sammle 1 Legende.",
+        title: "Wissen",
+        description: "{E}, 1 {I} — Sammle 1 Legende.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const theSorcerersSpellbookI18n: Record<Languages, I18nProperties> = {
     name: "Grimoire du sorcier",
     text: [
       {
-        title: "CONNAISSANCE, 1",
-        description: "— Gagnez 1 éclat de Lore.",
+        title: "Connaissance",
+        description: "{E}, 1 {I} — Gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const theSorcerersSpellbookI18n: Record<Languages, I18nProperties> = {
     name: "The Sorcerer's Spellbook",
     text: [
       {
-        title: "KNOWLEDGE, 1",
-        description: "— Gain 1 lore.",
+        title: "Knowledge",
+        description: "{E}, 1 {I} — Gain 1 lore.",
       },
     ],
   },

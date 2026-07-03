@@ -4,6 +4,17 @@ import { mapOfTreasurePlanetI18n } from "./201-map-of-treasure-planet.i18n";
 export const mapOfTreasurePlanet: ItemCard = {
   id: "Bf0",
   canonicalId: "ci_Bf0",
+  slug: "lorcana-ci_Bf0",
+  printings: [
+    {
+      id: "set3-201",
+      artId: "set3-201",
+      setCode: "set3",
+      collectorNumber: "201",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-201"],
   cardType: "item",
   name: "Map of Treasure Planet",
@@ -16,7 +27,7 @@ export const mapOfTreasurePlanet: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_07d0c6cc94bc4eee9c5f12d78bc8a84c",
-    tcgPlayer: 537395,
+    tcgPlayer: "537395",
   },
   text: [
     {

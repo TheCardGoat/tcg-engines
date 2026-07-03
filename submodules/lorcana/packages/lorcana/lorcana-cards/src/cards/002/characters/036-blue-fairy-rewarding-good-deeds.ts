@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { blueFairyRewardingGoodDeedsI18n } from "./036-blue-fairy-rewarding-good-deeds.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const blueFairyRewardingGoodDeeds: CharacterCard = {
   id: "llN",
   canonicalId: "ci_llN",
+  slug: "lorcana-ci_llN",
+  printings: [
+    {
+      id: "set2-036",
+      artId: "set2-036",
+      setCode: "set2",
+      collectorNumber: "36",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-036"],
   cardType: "character",
   name: "Blue Fairy",
@@ -21,7 +33,7 @@ export const blueFairyRewardingGoodDeeds: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fde84e341b0c47929fba2503d3141e45",
-    tcgPlayer: 527542,
+    tcgPlayer: "527542",
   },
   text: [
     {

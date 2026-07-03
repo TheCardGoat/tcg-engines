@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { pascalGardenChameleonI18n } from "./019-pascal-garden-chameleon.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const pascalGardenChameleon: CharacterCard = {
   id: "CD3",
   canonicalId: "ci_CD3",
+  slug: "lorcana-ci_CD3",
+  printings: [
+    {
+      id: "set7-019",
+      artId: "set7-019",
+      setCode: "set7",
+      collectorNumber: "19",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-019"],
   cardType: "character",
   name: "Pascal",
@@ -21,7 +33,7 @@ export const pascalGardenChameleon: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b2dd259955af479c8816391e13d4e16d",
-    tcgPlayer: 618129,
+    tcgPlayer: "618129",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Ally"],

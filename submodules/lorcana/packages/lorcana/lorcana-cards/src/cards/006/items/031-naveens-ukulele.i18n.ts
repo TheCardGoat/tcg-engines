@@ -15,9 +15,9 @@ export const naveensUkuleleI18n: Record<Languages, I18nProperties> = {
     name: "Naveens Ukulele",
     text: [
       {
-        title: "LASS SIE SINGEN 1,",
+        title: "Lass sie Singen",
         description:
-          "Verbanne diesen Gegenstand — Wähle einen Charakter. Die Kosten jenes Charakters gelten in diesem Zug als +3 für das Singen von Liedern.",
+          "1 {I}, Verbanne diesen Gegenstand — Wähle einen Charakter. Die Kosten jenes Charakters gelten in diesem Zug als +3 für das Singen von Liedern.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const naveensUkuleleI18n: Record<Languages, I18nProperties> = {
     name: "Ukulele de Naveen",
     text: [
       {
-        title: "TIRES-EN UNE",
+        title: "Tires-en une mélodie",
         description:
-          "MÉLODIE 1, bannissez cet objet — Choisissez un personnage qui compte comme ayant un coût de +3 pour chanter des chansons pour le reste de ce tour.",
+          "1 {I}, bannissez cet objet — Choisissez un personnage qui compte comme ayant un coût de +3 pour chanter des chansons pour le reste de ce tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const naveensUkuleleI18n: Record<Languages, I18nProperties> = {
     name: "Ukulele di Naveen",
     text: [
       {
-        title: "FALLO CANTARE 1,",
+        title: "Fallo Cantare",
         description:
-          "esilia questo oggetto — Un personaggio a tua scelta conta come se avesse costo +3 per cantare le canzoni per questo turno.",
+          "1 {I}, esilia questo oggetto — Un personaggio a tua scelta conta come se avesse costo +3 per cantare le canzoni per questo turno.",
       },
     ],
   },

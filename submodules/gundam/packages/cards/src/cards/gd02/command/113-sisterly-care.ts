@@ -7,14 +7,17 @@ export const gd02SisterlyCare113: CommandCard = {
   color: "purple",
   traits: ["teiwaz"],
   id: "GD02-113",
-  externalId: "gundam:gd02-113",
-  slug: "sisterly-care-gd02-113",
+  canonicalId: "GD02-113",
+  externalIds: { bandai: "gundam:gd02-113" },
+  slug: "sisterly-care/gd02-113",
   displayName: "Sisterly Care",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-113",
   printings: [
     {
       id: "GD02-113",
+      artId: "GD02-113",
+      setCode: "GD02",
       collectorNumber: "GD02-113",
       cardNumber: "GD02-113",
       set: {
@@ -29,6 +32,7 @@ export const gd02SisterlyCare113: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-113"],
   selectedPrintingId: "GD02-113",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-113.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-113.webp?260424",

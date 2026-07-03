@@ -123,6 +123,11 @@ export function cyberpunkSubmissionToPayload(submission: InteractionSubmission):
         moveType: submission.actionId,
         payload: { value: requireNumber(submission, "value") },
       };
+    case "resolveCardTypeChoice":
+      return {
+        moveType: submission.actionId,
+        payload: { cardType: requireString(submission, "cardType") },
+      };
     case "resolveCardToMove": {
       const cardId = optionalString(submission, "cardId");
       const pass = optionalBoolean(submission, "pass") ?? false;
@@ -388,6 +393,40 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
         ],
       });
     }
+    case "chooseCardType":
+      return choiceAction({
+        stateVersion,
+        id: "resolveCardTypeChoice",
+        intent: "choose-option",
+        source: choice.payload.source
+          ? {
+              kind: "card",
+              instanceId: choice.payload.source.cardId,
+            }
+          : undefined,
+        textParams: choice.payload.source
+          ? {
+              sourceCardId: choice.payload.source.cardId,
+              sourceDisplayName: choice.payload.source.displayName,
+              sourceRulesText: choice.payload.source.rulesText ?? "",
+            }
+          : undefined,
+        inputs: [
+          {
+            kind: "option-selection",
+            id: "cardType",
+            text: { key: "cyberpunk.choice.chooseCardType" },
+            required: true,
+            min: 1,
+            max: 1,
+            options: choice.payload.cardTypes.map((cardType) => ({
+              id: cardType,
+              text: { key: `cyberpunk.cardType.${cardType}` },
+              enabled: true,
+            })),
+          },
+        ],
+      });
     case "gainGig":
       return choiceAction({
         stateVersion,
@@ -426,6 +465,16 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
 function inputsForMove(move: AvailableMove): InteractionInput[] {
   switch (move.inputSpec.type) {
     case "none":
+      if (move.moveId === "resolveAttack") {
+        return [
+          booleanInput(
+            "pass",
+            { key: "cyberpunk.input.pass" },
+            { key: "cyberpunk.input.pass.true" },
+            { key: "cyberpunk.input.pass.false" },
+          ),
+        ];
+      }
       return [];
     case "selectCard":
       return [
@@ -617,6 +666,22 @@ function entityInputFromCandidates(
     max: limit.max,
     ordered: options.ordered ?? false,
     candidates: [...candidates],
+  };
+}
+
+function booleanInput(
+  id: string,
+  text: InteractionAction["text"],
+  trueText: InteractionAction["text"],
+  falseText: InteractionAction["text"],
+): InteractionInput {
+  return {
+    kind: "boolean",
+    id,
+    text,
+    required: false,
+    trueText,
+    falseText,
   };
 }
 

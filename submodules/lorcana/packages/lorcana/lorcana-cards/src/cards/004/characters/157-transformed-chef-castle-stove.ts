@@ -4,6 +4,17 @@ import { transformedChefCastleStoveI18n } from "./157-transformed-chef-castle-st
 export const transformedChefCastleStove: CharacterCard = {
   id: "kyi",
   canonicalId: "ci_kyi",
+  slug: "lorcana-ci_kyi",
+  printings: [
+    {
+      id: "set4-157",
+      artId: "set4-157",
+      setCode: "set4",
+      collectorNumber: "157",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-157"],
   cardType: "character",
   name: "Transformed Chef",
@@ -20,7 +31,7 @@ export const transformedChefCastleStove: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a5ecfd31d79b4556ab6bf7233081349c",
-    tcgPlayer: 550528,
+    tcgPlayer: "550528",
   },
   text: [
     {
@@ -32,7 +43,10 @@ export const transformedChefCastleStove: CharacterCard = {
   abilities: [
     {
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         target: {
           cardTypes: ["character"],
           count: 1,

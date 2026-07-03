@@ -4,6 +4,17 @@ import { tianaDiligentWaitressI18n } from "./197-tiana-diligent-waitress.i18n";
 export const tianaDiligentWaitress: CharacterCard = {
   id: "XAu",
   canonicalId: "ci_ni7",
+  slug: "lorcana-ci_ni7",
+  printings: [
+    {
+      id: "set2-197",
+      artId: "set2-197",
+      setCode: "set2",
+      collectorNumber: "197",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-197", "set9-179"],
   cardType: "character",
   name: "Tiana",
@@ -21,7 +32,7 @@ export const tianaDiligentWaitress: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_1843141c81254b5bb5dd3dfc7cc624dc",
-    tcgPlayer: 650112,
+    tcgPlayer: "650112",
   },
   classifications: ["Storyborn", "Hero", "Princess"],
   i18n: tianaDiligentWaitressI18n,

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMouseFoodFightDefenderI18n } from "./176-mickey-mouse-food-fight-defender.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const mickeyMouseFoodFightDefender: CharacterCard = {
   id: "z89",
   canonicalId: "ci_z89",
+  slug: "lorcana-ci_z89",
+  printings: [
+    {
+      id: "set5-176",
+      artId: "set5-176",
+      setCode: "set5",
+      collectorNumber: "176",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-176"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -20,7 +32,7 @@ export const mickeyMouseFoodFightDefender: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3fcdfc49c12743bea7e8f632ba06c41b",
-    tcgPlayer: 561848,
+    tcgPlayer: "561848",
   },
   text: "Resist +1",
   classifications: ["Storyborn", "Hero"],

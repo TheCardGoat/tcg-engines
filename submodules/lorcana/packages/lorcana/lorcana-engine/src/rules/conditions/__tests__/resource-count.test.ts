@@ -56,4 +56,31 @@ describe("resource-count", () => {
       ),
     ).toBe(true);
   });
+
+  it("counts ready cards in the controller's inkwell", () => {
+    const ctx = createTestContext({
+      zoneCards: {
+        "inkwell:player-one": ["ready-ink", "exerted-ink"],
+      },
+      cardMeta: {
+        "exerted-ink": { state: "exerted" },
+      },
+    });
+    const oneReadyInkwellCard: Condition = {
+      type: "resource-count",
+      controller: "you",
+      what: "ready-cards-in-inkwell",
+      comparison: "equal",
+      value: 1,
+    };
+
+    expect(
+      evaluateActionCondition(
+        oneReadyInkwellCard,
+        ctx,
+        createCardPlayed({ cardId: "src", playerId: PLAYER_ONE }),
+        {},
+      ),
+    ).toBe(true);
+  });
 });

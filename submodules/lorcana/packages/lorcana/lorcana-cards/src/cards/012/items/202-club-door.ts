@@ -4,6 +4,17 @@ import { clubDoorI18n } from "./202-club-door.i18n";
 export const clubDoor: ItemCard = {
   id: "sj6",
   canonicalId: "ci_sj6",
+  slug: "lorcana-ci_sj6",
+  printings: [
+    {
+      id: "set12-202",
+      artId: "set12-202",
+      setCode: "set12",
+      collectorNumber: "202",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-202"],
   cardType: "item",
   name: "Club Door",
@@ -16,6 +27,7 @@ export const clubDoor: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b0a88627594c4886893325e28443db63",
+    tcgPlayer: "690725",
   },
   text: [
     {

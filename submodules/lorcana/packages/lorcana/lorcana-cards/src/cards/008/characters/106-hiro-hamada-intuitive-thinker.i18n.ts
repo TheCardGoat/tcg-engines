@@ -16,8 +16,8 @@ export const hiroHamadaIntuitiveThinkerI18n: Record<Languages, I18nProperties> =
     version: "Intuitiver Denker",
     text: [
       {
-        title: "SUCHE EINEN NEUEN BLICKWINKEL",
-        description: "— Mache eine Flutgestalt deiner Wahl bereit.",
+        title: "Suche einen neuen Blickwinkel",
+        description: "{E} — Mache eine Flutgestalt deiner Wahl bereit.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const hiroHamadaIntuitiveThinkerI18n: Record<Languages, I18nProperties> =
     version: "Penseur intuitif",
     text: [
       {
-        title: "VOYEZ LES CHOSES SOUS UN AUTRE ANGLE",
-        description: "— Choisissez un personnage Floodborn et redressez-le.",
+        title: "Voyez les choses sous un autre angle",
+        description: "{E} — Choisissez un personnage Floodborn et redressez-le.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const hiroHamadaIntuitiveThinkerI18n: Record<Languages, I18nProperties> =
     version: "Pensatore Intuitivo",
     text: [
       {
-        title: "GUARDATE DA UN'ALTRA PROSPETTIVA",
-        description: "— Prepara un personaggio Imbevuto a tua scelta.",
+        title: "Guardate da un'Altra Prospettiva",
+        description: "{E} — Prepara un personaggio Imbevuto a tua scelta.",
       },
     ],
   },

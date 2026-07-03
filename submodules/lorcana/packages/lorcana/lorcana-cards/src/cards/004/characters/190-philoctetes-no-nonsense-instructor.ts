@@ -4,6 +4,17 @@ import { philoctetesNononsenseInstructorI18n } from "./190-philoctetes-no-nonsen
 export const philoctetesNononsenseInstructor: CharacterCard = {
   id: "Lpe",
   canonicalId: "ci_C1p",
+  slug: "lorcana-ci_C1p",
+  printings: [
+    {
+      id: "set4-190",
+      artId: "set4-190",
+      setCode: "set4",
+      collectorNumber: "190",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-190", "set9-171"],
   cardType: "character",
   name: "Philoctetes",
@@ -20,7 +31,7 @@ export const philoctetesNononsenseInstructor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f92eff31c1e24bb7802247c709840973",
-    tcgPlayer: 650105,
+    tcgPlayer: "650105",
   },
   text: [
     {

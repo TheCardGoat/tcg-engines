@@ -16,7 +16,7 @@ export const figaroTuxedoCatI18n: Record<Languages, I18nProperties> = {
     version: "Tuxedo-Katze",
     text: [
       {
-        title: "VERSPIELTHEIT",
+        title: "Verspieltheit",
         description: "Gegnerische Gegenstände kommen erschöpft ins Spiel.",
       },
     ],
@@ -26,7 +26,7 @@ export const figaroTuxedoCatI18n: Record<Languages, I18nProperties> = {
     version: "Chat tuxedo",
     text: [
       {
-        title: "ESPIÈGLERIE",
+        title: "Espièglerie",
         description: "Les objets adverses entrent en jeu épuisés.",
       },
     ],
@@ -36,7 +36,7 @@ export const figaroTuxedoCatI18n: Record<Languages, I18nProperties> = {
     version: "Gatto Bicolore",
     text: [
       {
-        title: "GIOCOSO",
+        title: "Giocoso",
         description: "Gli oggetti avversari entrano in gioco impegnati.",
       },
     ],

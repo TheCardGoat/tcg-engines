@@ -4,6 +4,17 @@ import { sevenDwarfsMineSecureFortressI18n } from "./204-seven-dwarfs-mine-secur
 export const sevenDwarfsMineSecureFortress: LocationCard = {
   id: "1uO",
   canonicalId: "ci_1uO",
+  slug: "lorcana-ci_1uO",
+  printings: [
+    {
+      id: "set5-204",
+      artId: "set5-204",
+      setCode: "set5",
+      collectorNumber: "204",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-204"],
   cardType: "location",
   name: "Seven Dwarfs' Mine",
@@ -20,7 +31,7 @@ export const sevenDwarfsMineSecureFortress: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_30df26498319433588a4ee13b1397ea1",
-    tcgPlayer: 561853,
+    tcgPlayer: "561853",
   },
   text: [
     {

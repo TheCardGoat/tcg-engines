@@ -1,6 +1,6 @@
 import type { Draft } from "mutative";
 import type { MatchState } from "./types";
-import type { CardQueryAPI } from "./card-runtime";
+import { getCardQueryRuntimeInternals, type CardQueryAPI } from "./card-runtime";
 import type {
   CardRuntimeAPI,
   CardRuntimeReadAPI,
@@ -24,6 +24,10 @@ export function createCardRuntimeAPI(
   draft: Draft<MatchState>,
   cardsApi: CardQueryAPI,
 ): CardRuntimeAPI {
+  const invalidateCardViews = () => {
+    getCardQueryRuntimeInternals(cardsApi)?.invalidateCardViews();
+  };
+
   return {
     ...cardsApi,
     setMeta: (cardId, meta) => {
@@ -40,6 +44,7 @@ export function createCardRuntimeAPI(
       if (changed) {
         invalidateStaticEffects(draft);
       }
+      invalidateCardViews();
     },
     patchMeta: (cardId, patch) => {
       const current = (draft.ctx.zones.private.cardMeta[cardId] ?? {}) as BaseCardMeta;
@@ -61,6 +66,7 @@ export function createCardRuntimeAPI(
       ) {
         invalidateStaticEffects(draft);
       }
+      invalidateCardViews();
 
       return next;
     },
@@ -77,6 +83,7 @@ export function createCardRuntimeAPI(
       if (carriedStatic) {
         invalidateStaticEffects(draft);
       }
+      invalidateCardViews();
     },
     entriesMeta: () =>
       Object.entries(draft.ctx.zones.private.cardMeta).map(

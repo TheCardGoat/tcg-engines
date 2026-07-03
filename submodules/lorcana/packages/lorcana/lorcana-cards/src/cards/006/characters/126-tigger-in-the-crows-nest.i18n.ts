@@ -20,12 +20,12 @@ export const tiggerInTheCrowsNestI18n: Record<Languages, I18nProperties> = {
     version: "Im Krähennest",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "SCHWINGT EURE SCHNALLEN",
+        title: "Schwingt eure Schnallen",
         description:
-          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter in diesem Zug +1 und +1.",
+          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter in diesem Zug +1 {S} und +1 {L}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const tiggerInTheCrowsNestI18n: Record<Languages, I18nProperties> = {
     version: "Dans le nid-de-pie",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "FANFARON",
+        title: "Fanfaron",
         description:
-          "Chaque fois que vous jouez une action, ce personnage gagne +1 et +1 pour le reste de ce tour.",
+          "Chaque fois que vous jouez une action, ce personnage gagne +1 {S} et +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const tiggerInTheCrowsNestI18n: Record<Languages, I18nProperties> = {
     version: "Nella Coffa",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "MOZZO, STAI ATTENTO",
+        title: "Mozzo, Stai Attento",
         description:
-          "Ogni volta che giochi un'azione, questo personaggio riceve +1 e +1 per questo turno.",
+          "Ogni volta che giochi un'azione, questo personaggio riceve +1 {S} e +1 {L} per questo turno.",
       },
     ],
   },

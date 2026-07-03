@@ -20,12 +20,12 @@ export const donaldDuckRubyChampionI18n: Record<Languages, I18nProperties> = {
     version: "Rubin-Champion",
     text: [
       {
-        title: "VIEL ENERGIE",
-        description: "Deine anderen Rubin-Charaktere erhalten +1.",
+        title: "Viel Energie",
+        description: "Deine anderen Rubin-Charaktere erhalten +1 {S}.",
       },
       {
-        title: "MÄCHTIGE BELOHNUNG",
-        description: "Deine anderen Rubin-Charaktere mit 7 oder mehr erhalten +1.",
+        title: "Mächtige Belohnung",
+        description: "Deine anderen Rubin-Charaktere mit 7 oder mehr {S} erhalten +1 {L}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const donaldDuckRubyChampionI18n: Record<Languages, I18nProperties> = {
     version: "Champion Rubis",
     text: [
       {
-        title: "PLEIN D'ÉNERGIE",
-        description: "Vos autres personnages Rubis gagnent +1.",
+        title: "Plein d'énergie",
+        description: "Vos autres personnages Rubis gagnent +1 {S}.",
       },
       {
-        title: "PUISSANTE RÉCOMPENSE",
-        description: "Vos autres personnages Rubis ayant 7 ou plus gagnent +1.",
+        title: "Puissante récompense",
+        description: "Vos autres personnages Rubis ayant 7 {S} ou plus gagnent +1 {L}.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const donaldDuckRubyChampionI18n: Record<Languages, I18nProperties> = {
     version: "Campione di Rubino",
     text: [
       {
-        title: "SUPER ENERGIA I",
-        description: "tuoi altri personaggi Rubino ricevono +1.",
+        title: "Super Energia",
+        description: "I tuoi altri personaggi Rubino ricevono +1 {S}.",
       },
       {
-        title: "RICOMPENSA POTENTE I",
-        description: "tuoi altri personaggi Rubino con 7 o superiore ricevono +1.",
+        title: "Ricompensa Potente",
+        description: "I tuoi altri personaggi Rubino con 7 {S} o superiore ricevono +1 {L}.",
       },
     ],
   },

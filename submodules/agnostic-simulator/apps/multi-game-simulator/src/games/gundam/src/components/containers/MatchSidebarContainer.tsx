@@ -11,9 +11,13 @@ import { useMoveLogs } from "../../game/hooks.ts";
 import { m } from "../../lib/i18n/messages.ts";
 import { CardLink } from "../ui/CardLink.tsx";
 import { MatchSidebar } from "../ui/MatchSidebar.tsx";
-import type { MatchInfo, PlayerInfo } from "../ui/types.ts";
+import type { LogTurn, MatchInfo, PlayerInfo } from "../ui/types.ts";
 import { toLogTurns } from "./log-mapper.tsx";
 import { toStructuredLogTurns } from "./move-log-mapper.tsx";
+import {
+  projectGundamLegacyEventLogEntries,
+  projectGundamMoveLogEntries,
+} from "./move-log-projection.ts";
 import { resolveOpponentId, zoneCount } from "./mappers.ts";
 import { useSubmitError } from "./submit-error-context.tsx";
 import { VsAiControls } from "../ui/VsAiControls.tsx";
@@ -39,6 +43,14 @@ export function MatchSidebarContainer({ onCollapse }: MatchSidebarContainerProps
     const renderCardLink = (cardId: string, name: string, key: string) => (
       <CardLink key={key} cardId={cardId} name={name} />
     );
+    const legacy = toLogTurns(
+      logEntries,
+      String(viewerId),
+      resolvedOpponent,
+      adapter.cardDefinitionOf,
+      prettyNames,
+      renderCardLink,
+    );
     const structured =
       moveLogs.length > 0
         ? toStructuredLogTurns(
@@ -49,17 +61,29 @@ export function MatchSidebarContainer({ onCollapse }: MatchSidebarContainerProps
             renderCardLink,
           )
         : [];
-    return structured.length > 0
-      ? structured
-      : toLogTurns(
-          logEntries,
-          String(viewerId),
-          resolvedOpponent,
-          adapter.cardDefinitionOf,
-          prettyNames,
-          renderCardLink,
-        );
+    return mergeLogTurns(legacy, structured);
   }, [logEntries, moveLogs, viewerId, resolvedOpponent, adapter]);
+  const eventLogEntries = useMemo(() => {
+    const phase = view.status.phase ?? view.status.gameSegment ?? "setup";
+    const projectedMoveEntries = projectGundamMoveLogEntries(
+      moveLogs,
+      String(viewerId),
+      phase,
+      adapter.cardDefinitionOf,
+      { revealPrivateFields: adapter.revealsPrivateMoveLogFields === true },
+    );
+    if (projectedMoveEntries.length === 0) return [];
+
+    return [
+      ...projectedMoveEntries,
+      ...projectGundamLegacyEventLogEntries(
+        logEntries,
+        String(viewerId),
+        phase,
+        adapter.cardDefinitionOf,
+      ),
+    ].sort((a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp));
+  }, [logEntries, moveLogs, viewerId, view.status.phase, view.status.gameSegment, adapter]);
 
   const matchInfo: MatchInfo = {
     format: view.status.gameSegment ?? "setup",
@@ -112,6 +136,7 @@ export function MatchSidebarContainer({ onCollapse }: MatchSidebarContainerProps
       currentTurn={currentTurn}
       priorityHolder={priorityHolder}
       log={log}
+      eventLogEntries={eventLogEntries}
       onUndo={onUndo}
       canUndo={canUndo}
       onConcede={onConcede}
@@ -123,4 +148,26 @@ export function MatchSidebarContainer({ onCollapse }: MatchSidebarContainerProps
       aboveBattleData={<VsAiControls />}
     />
   );
+}
+
+function mergeLogTurns(
+  legacyTurns: readonly LogTurn[],
+  structuredTurns: readonly LogTurn[],
+): LogTurn[] {
+  const byTurn = new Map<number, LogTurn>();
+
+  for (const turn of [...legacyTurns, ...structuredTurns]) {
+    const existing = byTurn.get(turn.turn);
+    byTurn.set(
+      turn.turn,
+      existing
+        ? {
+            turn: turn.turn,
+            groups: [...existing.groups, ...turn.groups],
+          }
+        : turn,
+    );
+  }
+
+  return [...byTurn.values()].sort((a, b) => a.turn - b.turn);
 }

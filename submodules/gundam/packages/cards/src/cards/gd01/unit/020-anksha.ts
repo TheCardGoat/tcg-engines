@@ -7,14 +7,17 @@ export const gd01Anksha020: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-020",
-  externalId: "gundam:gd01-020",
-  slug: "anksha-gd01-020",
+  canonicalId: "GD01-020",
+  externalIds: { bandai: "gundam:gd01-020" },
+  slug: "anksha/gd01-020",
   displayName: "Anksha",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-020",
   printings: [
     {
       id: "GD01-020",
+      artId: "GD01-020",
+      setCode: "GD01",
       collectorNumber: "GD01-020",
       cardNumber: "GD01-020",
       set: {
@@ -29,6 +32,7 @@ export const gd01Anksha020: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-020"],
   selectedPrintingId: "GD01-020",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-020.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-020.webp?260424",

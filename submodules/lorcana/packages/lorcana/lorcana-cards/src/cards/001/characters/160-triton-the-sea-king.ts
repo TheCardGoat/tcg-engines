@@ -4,6 +4,17 @@ import { tritonTheSeaKingI18n } from "./160-triton-the-sea-king.i18n";
 export const tritonTheSeaKing: CharacterCard = {
   id: "0PV",
   canonicalId: "ci_0PV",
+  slug: "lorcana-ci_0PV",
+  printings: [
+    {
+      id: "set1-160",
+      artId: "set1-160",
+      setCode: "set1",
+      collectorNumber: "160",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-160"],
   cardType: "character",
   name: "Triton",
@@ -21,7 +32,7 @@ export const tritonTheSeaKing: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_76258afdc2084ca2b2657664bbca3efa",
-    tcgPlayer: 506023,
+    tcgPlayer: "506023",
   },
   classifications: ["Storyborn", "King"],
   i18n: tritonTheSeaKingI18n,

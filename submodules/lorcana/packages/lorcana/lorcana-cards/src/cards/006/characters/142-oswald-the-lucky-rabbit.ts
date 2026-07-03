@@ -4,7 +4,18 @@ import { oswaldTheLuckyRabbitI18n } from "./142-oswald-the-lucky-rabbit.i18n";
 export const oswaldTheLuckyRabbit: CharacterCard = {
   id: "Wrn",
   canonicalId: "ci_Wrn",
-  reprints: ["set6-142"],
+  slug: "lorcana-ci_Wrn",
+  printings: [
+    {
+      id: "set6-142",
+      artId: "set6-142",
+      setCode: "set6",
+      collectorNumber: "142",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set6-d23-006", "set6-142"],
   cardType: "character",
   name: "Oswald",
   version: "The Lucky Rabbit",
@@ -19,7 +30,7 @@ export const oswaldTheLuckyRabbit: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5fe66ed6c5c842ac9e0ea2eba5ca3a4f",
-    tcgPlayer: 579933,
+    tcgPlayer: "579933",
   },
   text: [
     {

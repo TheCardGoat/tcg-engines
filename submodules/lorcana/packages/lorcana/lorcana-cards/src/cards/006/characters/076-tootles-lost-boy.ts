@@ -4,6 +4,17 @@ import { tootlesLostBoyI18n } from "./076-tootles-lost-boy.i18n";
 export const tootlesLostBoy: CharacterCard = {
   id: "YhD",
   canonicalId: "ci_YhD",
+  slug: "lorcana-ci_YhD",
+  printings: [
+    {
+      id: "set6-076",
+      artId: "set6-076",
+      setCode: "set6",
+      collectorNumber: "76",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-076"],
   cardType: "character",
   name: "Tootles",
@@ -21,7 +32,7 @@ export const tootlesLostBoy: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_7c33f5d581a4424f97da41b37ef8f723",
-    tcgPlayer: 588068,
+    tcgPlayer: "588068",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: tootlesLostBoyI18n,

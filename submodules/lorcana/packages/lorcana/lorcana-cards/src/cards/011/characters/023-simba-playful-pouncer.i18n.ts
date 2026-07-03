@@ -6,9 +6,9 @@ export const simbaPlayfulPouncerI18n: Record<Languages, I18nProperties> = {
     version: "Playful Pouncer",
     text: [
       {
-        title: "YOU DON'T STAND A CHANCE",
+        title: "YOU DON'T STAND",
         description:
-          "When you play this character, chosen opposing character gets -2 {S} until the start of your next turn.",
+          "A CHANCE When you play this character, chosen opposing character gets -2 {S} until the start of your next turn.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const simbaPlayfulPouncerI18n: Record<Languages, I18nProperties> = {
     version: "Verspielter Fänger",
     text: [
       {
-        title: "DU HAST KEINE CHANCE",
+        title: "Du hast keine Chance",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2.",
+          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const simbaPlayfulPouncerI18n: Record<Languages, I18nProperties> = {
     version: "Bondisseur espiègle",
     text: [
       {
-        title: "TU N'AS AUCUNE CHANCE",
+        title: "Tu n'as aucune chance",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -2 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -2 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const simbaPlayfulPouncerI18n: Record<Languages, I18nProperties> = {
     version: "Predatore Giocherellone",
     text: [
       {
-        title: "NON HAI SCAMPO",
+        title: "Non Hai Scampo",
         description:
-          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -2 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -2 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

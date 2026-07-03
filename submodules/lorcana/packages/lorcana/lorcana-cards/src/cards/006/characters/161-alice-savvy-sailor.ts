@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { aliceSavvySailorI18n } from "./161-alice-savvy-sailor.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const aliceSavvySailor: CharacterCard = {
   id: "4E5",
   canonicalId: "ci_4E5",
+  slug: "lorcana-ci_4E5",
+  printings: [
+    {
+      id: "set6-161",
+      artId: "set6-161",
+      setCode: "set6",
+      collectorNumber: "161",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-161"],
   cardType: "character",
   name: "Alice",
@@ -21,7 +33,7 @@ export const aliceSavvySailor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_dc30f4ddffb84e7daf742ee323cfb552",
-    tcgPlayer: 591979,
+    tcgPlayer: "591979",
   },
   text: [
     {

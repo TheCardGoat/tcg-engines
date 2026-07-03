@@ -3,7 +3,18 @@ import { jafarHighSultanOfLorcanaI18n } from "./074-jafar-high-sultan-of-lorcana
 
 export const jafarHighSultanOfLorcana: CharacterCard = {
   id: "i56",
-  canonicalId: "ci_i56",
+  canonicalId: "ci_A6H",
+  slug: "lorcana-ci_A6H",
+  printings: [
+    {
+      id: "set8-074",
+      artId: "set8-074",
+      setCode: "set8",
+      collectorNumber: "74",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-074"],
   cardType: "character",
   name: "Jafar",
@@ -20,7 +31,7 @@ export const jafarHighSultanOfLorcana: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_30ee33dee0c64851bcdcc676e724a787",
-    tcgPlayer: 631400,
+    tcgPlayer: "631400",
   },
   text: [
     {

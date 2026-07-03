@@ -4,6 +4,17 @@ import { daleBumblerI18n } from "./094-dale-bumbler.i18n";
 export const daleBumbler: CharacterCard = {
   id: "WWj",
   canonicalId: "ci_WWj",
+  slug: "lorcana-ci_WWj",
+  printings: [
+    {
+      id: "set8-094",
+      artId: "set8-094",
+      setCode: "set8",
+      collectorNumber: "94",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-094"],
   cardType: "character",
   name: "Dale",
@@ -21,7 +32,7 @@ export const daleBumbler: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_bfb723663a9d477c92b6b0322d7a578d",
-    tcgPlayer: 631347,
+    tcgPlayer: "631347",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: daleBumblerI18n,

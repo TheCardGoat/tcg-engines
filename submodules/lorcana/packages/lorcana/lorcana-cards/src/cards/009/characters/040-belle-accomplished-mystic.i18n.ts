@@ -20,10 +20,11 @@ export const belleAccomplishedMysticI18n: Record<Languages, I18nProperties> = {
     version: "Accomplished Mystic",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Belle.)",
       },
       {
-        title: "ENHANCED HEALING",
+        title: "Enhanced Healing",
         description:
           "When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
       },
@@ -34,10 +35,11 @@ export const belleAccomplishedMysticI18n: Record<Languages, I18nProperties> = {
     version: "Accomplished Mystic",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Belle.)",
       },
       {
-        title: "ENHANCED HEALING",
+        title: "Enhanced Healing",
         description:
           "When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
       },
@@ -48,10 +50,11 @@ export const belleAccomplishedMysticI18n: Record<Languages, I18nProperties> = {
     version: "Accomplished Mystic",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Belle.)",
       },
       {
-        title: "ENHANCED HEALING",
+        title: "Enhanced Healing",
         description:
           "When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
       },

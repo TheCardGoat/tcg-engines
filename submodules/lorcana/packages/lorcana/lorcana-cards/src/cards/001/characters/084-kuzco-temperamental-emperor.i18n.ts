@@ -20,10 +20,10 @@ export const kuzcoTemperamentalEmperorI18n: Record<Languages, I18nProperties> = 
     version: "Temperamental Emperor",
     text: [
       {
-        title: "Ward",
+        title: "<Ward> (Opponents can't choose this character except to challenge.)",
       },
       {
-        title: "NO TOUCHY!",
+        title: "No Touchy!",
         description:
           "When this character is challenged and banished, you may banish the challenging character.",
       },
@@ -34,10 +34,10 @@ export const kuzcoTemperamentalEmperorI18n: Record<Languages, I18nProperties> = 
     version: "Temperamental Emperor",
     text: [
       {
-        title: "Ward",
+        title: "<Ward> (Opponents can't choose this character except to challenge.)",
       },
       {
-        title: "NO TOUCHY!",
+        title: "No Touchy!",
         description:
           "When this character is challenged and banished, you may banish the challenging character.",
       },
@@ -48,10 +48,10 @@ export const kuzcoTemperamentalEmperorI18n: Record<Languages, I18nProperties> = 
     version: "Temperamental Emperor",
     text: [
       {
-        title: "Ward",
+        title: "<Ward> (Opponents can't choose this character except to challenge.)",
       },
       {
-        title: "NO TOUCHY!",
+        title: "No Touchy!",
         description:
           "When this character is challenged and banished, you may banish the challenging character.",
       },

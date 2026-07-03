@@ -1,19 +1,17 @@
 <script lang="ts">
   import { untrack } from "svelte";
-  import {
-    ChevronDown,
-    CircleHelp,
-    Clock3,
-    Droplets,
-    Flag,
-    MapPinned,
-    OctagonX,
-    PauseCircle,
-    Play,
-    ScrollText,
-    Swords,
-    WandSparkles,
-  } from "@lucide/svelte";
+  import ChevronDown from "@lucide/svelte/icons/chevron-down";
+  import CircleHelp from "@lucide/svelte/icons/circle-help";
+  import Clock3 from "@lucide/svelte/icons/clock-3";
+  import Droplets from "@lucide/svelte/icons/droplets";
+  import Flag from "@lucide/svelte/icons/flag";
+  import MapPinned from "@lucide/svelte/icons/map-pinned";
+  import OctagonX from "@lucide/svelte/icons/octagon-x";
+  import PauseCircle from "@lucide/svelte/icons/pause-circle";
+  import Play from "@lucide/svelte/icons/play";
+  import ScrollText from "@lucide/svelte/icons/scroll-text";
+  import Swords from "@lucide/svelte/icons/swords";
+  import WandSparkles from "@lucide/svelte/icons/wand-sparkles";
   import { m } from "$lib/i18n/messages.js";
   import { Badge } from "$lib/design-system/primitives/badge";
   import CardLogToken from "@/features/simulator/panels/CardLogToken.svelte";

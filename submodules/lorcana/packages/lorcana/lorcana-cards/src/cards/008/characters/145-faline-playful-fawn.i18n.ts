@@ -20,12 +20,12 @@ export const falinePlayfulFawnI18n: Record<Languages, I18nProperties> = {
     version: "Verspieltes Rehkitz",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "VORWITZIGE FREUNDIN",
+        title: "Vorwitzige Freundin",
         description:
-          "Solange du einen Charakter mit einer höheren als die jedes gegnerischen Charakters im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du einen Charakter mit einer höheren {S} als die {S} jedes gegnerischen Charakters im Spiel hast, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const falinePlayfulFawnI18n: Record<Languages, I18nProperties> = {
     version: "Faonne enjouée",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "AMIE DE JEUNESSE",
+        title: "Amie de jeunesse",
         description:
-          "Tant que vous avez un personnage en jeu avec plus de que n'importe quel autre personnage adverse, ce personnage-ci gagne +2.",
+          "Tant que vous avez un personnage en jeu avec plus de {S} que n'importe quel autre personnage adverse, ce personnage-ci gagne +2 {L}.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const falinePlayfulFawnI18n: Record<Languages, I18nProperties> = {
     version: "Cerbiatta Giocosa",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "AMICA ALLA MANO",
+        title: "Amica Alla Mano",
         description:
-          "Mentre hai in gioco un personaggio con più di ogni personaggio avversario, questo personaggio riceve +2.",
+          "Mentre hai in gioco un personaggio con più {S} di ogni personaggio avversario, questo personaggio riceve +2 {L}.",
       },
     ],
   },

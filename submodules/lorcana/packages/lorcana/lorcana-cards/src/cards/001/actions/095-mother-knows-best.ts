@@ -4,6 +4,17 @@ import { motherKnowsBestI18n } from "./095-mother-knows-best.i18n";
 export const motherKnowsBest: ActionCard = {
   id: "VGx",
   canonicalId: "ci_12N",
+  slug: "lorcana-ci_12N",
+  printings: [
+    {
+      id: "set1-095",
+      artId: "set1-095",
+      setCode: "set1",
+      collectorNumber: "95",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-095", "set9-099"],
   cardType: "action",
   name: "Mother Knows Best",
@@ -16,7 +27,7 @@ export const motherKnowsBest: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_39a0e5d019794fcd9a96be1309addb7c",
-    tcgPlayer: 650037,
+    tcgPlayer: "650037",
   },
   text: "Return chosen character to their player's hand.",
   actionSubtype: "song",

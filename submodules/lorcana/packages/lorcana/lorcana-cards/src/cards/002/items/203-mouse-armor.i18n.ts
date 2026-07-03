@@ -14,9 +14,9 @@ export const mouseArmorI18n: Record<Languages, I18nProperties> = {
     name: "Mäuserüstung",
     text: [
       {
-        title: "SCHUTZ",
+        title: "Schutz",
         description:
-          "— Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Robust +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+          "{E} — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -24,9 +24,9 @@ export const mouseArmorI18n: Record<Languages, I18nProperties> = {
     name: "Armure de souris",
     text: [
       {
-        title: "PROTECTION",
+        title: "Protection",
         description:
-          "— Choisissez un personnage, il gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "{E} — Choisissez un personnage, il gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -34,9 +34,9 @@ export const mouseArmorI18n: Record<Languages, I18nProperties> = {
     name: "Armatura per Topi",
     text: [
       {
-        title: "PROTEZIONE",
+        title: "Protezione",
         description:
-          "— Un personaggio a tua scelta ottiene Resistere +1 fino all'inizio del tuo prossimo turno.",
+          "{E} — Un personaggio a tua scelta ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

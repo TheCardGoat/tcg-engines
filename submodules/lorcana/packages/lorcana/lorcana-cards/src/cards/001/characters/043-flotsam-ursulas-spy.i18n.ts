@@ -6,10 +6,10 @@ export const flotsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
     version: "Ursula’s Spy",
     text: [
       {
-        title: "Rush",
+        title: "<Rush>",
       },
       {
-        title: "DEXTEROUS LUNGE",
+        title: "Dexterous Lunge",
         description: "Your characters named Jetsam gain Rush.",
       },
     ],
@@ -17,22 +17,14 @@ export const flotsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Abschaum",
     version: "Ursulas Spion",
-    text: [
-      {
-        title: "Rasant",
-      },
-      {
-        title: "FLINK UND HINTERHÄLTIG",
-        description: "Deine Meerschaum-Charaktere erhalten Rasant.",
-      },
-    ],
+    text: "<Rasant> \\Flink und Hinterhältig\\ Deine Meerschaum-Charaktere erhalten Rasant.",
   },
   fr: {
     name: "FLOTSAM",
     version: "Espion d'Ursula",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
         title: "COUP BAS",
@@ -45,10 +37,10 @@ export const flotsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
     version: "Ursula’s Spy",
     text: [
       {
-        title: "Rush",
+        title: "<Rush> (This character can challenge the turn they're played.)",
       },
       {
-        title: "DEXTEROUS LUNGE",
+        title: "Dexterous Lunge",
         description: "Your characters named Jetsam gain Rush.",
       },
     ],

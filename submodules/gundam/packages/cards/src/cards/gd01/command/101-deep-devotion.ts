@@ -7,14 +7,17 @@ export const gd01DeepDevotion101: CommandCard = {
   color: "blue",
   traits: ["oz"],
   id: "GD01-101",
-  externalId: "gundam:gd01-101",
-  slug: "deep-devotion-gd01-101",
+  canonicalId: "GD01-101",
+  externalIds: { bandai: "gundam:gd01-101" },
+  slug: "deep-devotion/gd01-101",
   displayName: "Deep Devotion",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-101",
   printings: [
     {
       id: "GD01-101",
+      artId: "GD01-101",
+      setCode: "GD01",
       collectorNumber: "GD01-101",
       cardNumber: "GD01-101",
       set: {
@@ -29,6 +32,7 @@ export const gd01DeepDevotion101: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-101"],
   selectedPrintingId: "GD01-101",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-101.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-101.webp?260424",

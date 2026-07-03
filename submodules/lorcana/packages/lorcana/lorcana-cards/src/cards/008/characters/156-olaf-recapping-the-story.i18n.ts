@@ -17,9 +17,9 @@ export const olafRecappingTheStoryI18n: Record<Languages, I18nProperties> = {
     version: "Fasst die Geschichte zusammen",
     text: [
       {
-        title: "UNENDLICHE ERZÄHLUNG",
+        title: "Unendliche Erzählung",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl in diesem Zug -1.",
+          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl in diesem Zug -1 {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const olafRecappingTheStoryI18n: Record<Languages, I18nProperties> = {
     version: "Résumant l’histoire",
     text: [
       {
-        title: "RÉCIT SANS FIN",
+        title: "Récit sans fin",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -1 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -1 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const olafRecappingTheStoryI18n: Record<Languages, I18nProperties> = {
     version: "Che Riassume la Storia",
     text: [
       {
-        title: "RACCONTO INFINITO",
+        title: "Racconto Infinito",
         description:
-          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -1 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -1 {S} per questo turno.",
       },
     ],
   },

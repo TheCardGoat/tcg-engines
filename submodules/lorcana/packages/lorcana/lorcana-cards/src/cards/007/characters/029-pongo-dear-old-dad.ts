@@ -4,6 +4,17 @@ import { pongoDearOldDadI18n } from "./029-pongo-dear-old-dad.i18n";
 export const pongoDearOldDad: CharacterCard = {
   id: "eBt",
   canonicalId: "ci_eBt",
+  slug: "lorcana-ci_eBt",
+  printings: [
+    {
+      id: "set7-029",
+      artId: "set7-029",
+      setCode: "set7",
+      collectorNumber: "29",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-029"],
   cardType: "character",
   name: "Pongo",
@@ -20,7 +31,7 @@ export const pongoDearOldDad: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9fbbf95f7db645ad87d4e78d12a05a96",
-    tcgPlayer: 619422,
+    tcgPlayer: "619422",
   },
   text: [
     {

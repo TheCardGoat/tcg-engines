@@ -4,6 +4,17 @@ import { shereKhanFierceAndFuriousI18n } from "./128-shere-khan-fierce-and-furio
 export const shereKhanFierceAndFurious: CharacterCard = {
   id: "vOh",
   canonicalId: "ci_vOh",
+  slug: "lorcana-ci_vOh",
+  printings: [
+    {
+      id: "set10-128",
+      artId: "set10-128",
+      setCode: "set10",
+      collectorNumber: "128",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-128"],
   cardType: "character",
   name: "Shere Khan",
@@ -20,7 +31,7 @@ export const shereKhanFierceAndFurious: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_024a30a70f624c58bc3219532ffdd37c",
-    tcgPlayer: 659419,
+    tcgPlayer: "659419",
   },
   text: [
     {

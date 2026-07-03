@@ -20,12 +20,12 @@ export const duckworthGhostButlerI18n: Record<Languages, I18nProperties> = {
     version: "Geisterbutler",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "LETZTER AKT",
+        title: "Letzter Akt",
         description:
-          "Wenn dieser Charakter in deinem Zug verbannt wird, darfst du die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit Stärken legen.",
+          "Wenn dieser Charakter in deinem Zug verbannt wird, darfst du die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit <Stärken> legen.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const duckworthGhostButlerI18n: Record<Languages, I18nProperties> = {
     version: "Majordome fantôme",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "DERNIER ACTE",
+        title: "Dernier acte",
         description:
-          "Lorsque ce personnage est banni durant votre tour, vous pouvez placer la carte du dessus de votre pioche face cachée sous l'un de vos personnages ou de vos lieux ayant Boost.",
+          "Lorsque ce personnage est banni durant votre tour, vous pouvez placer la carte du dessus de votre pioche face cachée sous l'un de vos personnages ou de vos lieux ayant <Boost>.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const duckworthGhostButlerI18n: Record<Languages, I18nProperties> = {
     version: "Maggiordomo Fantasma",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "ATTO FINALE",
+        title: "Atto Finale",
         description:
-          "Durante il tuo turno, quando questo personaggio viene esiliato, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con Potenziamento.",
+          "Durante il tuo turno, quando questo personaggio viene esiliato, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con <Potenziamento>.",
       },
     ],
   },

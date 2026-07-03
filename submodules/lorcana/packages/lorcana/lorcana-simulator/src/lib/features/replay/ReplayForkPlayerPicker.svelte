@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Button } from "$lib/design-system/primitives/button";
   import * as Dialog from "$lib/design-system/primitives/dialog";
-  import { GitFork } from "@lucide/svelte";
+  import GitFork from "@lucide/svelte/icons/git-fork";
 
   interface Props {
     open: boolean;

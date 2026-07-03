@@ -4,6 +4,17 @@ import { drFacilierAgentProvocateurI18n } from "./037-dr-facilier-agent-provocat
 export const drFacilierAgentProvocateur: CharacterCard = {
   id: "Af3",
   canonicalId: "ci_Af3",
+  slug: "lorcana-ci_Af3",
+  printings: [
+    {
+      id: "set1-037",
+      artId: "set1-037",
+      setCode: "set1",
+      collectorNumber: "37",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-037"],
   cardType: "character",
   name: "Dr. Facilier",
@@ -20,7 +31,7 @@ export const drFacilierAgentProvocateur: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a23c8618b0aa41f9b41b9f0603495380",
-    tcgPlayer: 508723,
+    tcgPlayer: "508723",
   },
   text: [
     {

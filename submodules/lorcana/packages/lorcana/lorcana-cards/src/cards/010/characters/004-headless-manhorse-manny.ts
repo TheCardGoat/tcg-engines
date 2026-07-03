@@ -4,6 +4,17 @@ import { headlessManhorseMannyI18n } from "./004-headless-manhorse-manny.i18n";
 export const headlessManhorseManny: CharacterCard = {
   id: "foC",
   canonicalId: "ci_foC",
+  slug: "lorcana-ci_foC",
+  printings: [
+    {
+      id: "set10-004",
+      artId: "set10-004",
+      setCode: "set10",
+      collectorNumber: "4",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-004"],
   cardType: "character",
   name: "Headless Manhorse",
@@ -21,7 +32,7 @@ export const headlessManhorseManny: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_b29df88a89414f9cb5ad2f74b7fd428c",
-    tcgPlayer: 660014,
+    tcgPlayer: "660014",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: headlessManhorseMannyI18n,

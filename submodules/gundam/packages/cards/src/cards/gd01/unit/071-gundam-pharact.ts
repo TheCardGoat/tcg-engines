@@ -7,14 +7,17 @@ export const gd01GundamPharact071: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-071",
-  externalId: "gundam:gd01-071",
-  slug: "gundam-pharact-gd01-071",
+  canonicalId: "GD01-071",
+  externalIds: { bandai: "gundam:gd01-071" },
+  slug: "gundam-pharact/gd01-071",
   displayName: "Gundam Pharact",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-071",
   printings: [
     {
       id: "GD01-071",
+      artId: "GD01-071",
+      setCode: "GD01",
       collectorNumber: "GD01-071",
       cardNumber: "GD01-071",
       set: {
@@ -30,6 +33,8 @@ export const gd01GundamPharact071: UnitCard = {
     },
     {
       id: "GD01-071_p1",
+      artId: "GD01-071_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-071_p1",
       cardNumber: "GD01-071",
       set: {
@@ -44,6 +49,7 @@ export const gd01GundamPharact071: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-071", "GD01-071_p1"],
   selectedPrintingId: "GD01-071",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-071.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-071.webp?260424",

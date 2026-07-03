@@ -4,6 +4,17 @@ import { maleficentBidingHerTimeI18n } from "./048-maleficent-biding-her-time.i1
 export const maleficentBidingHerTime: CharacterCard = {
   id: "6FJ",
   canonicalId: "ci_6FJ",
+  slug: "lorcana-ci_6FJ",
+  printings: [
+    {
+      id: "set1-048",
+      artId: "set1-048",
+      setCode: "set1",
+      collectorNumber: "48",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-048"],
   cardType: "character",
   name: "Maleficent",
@@ -21,7 +32,7 @@ export const maleficentBidingHerTime: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_ed5b22e519844e948a57784cdc4d5a48",
-    tcgPlayer: 493485,
+    tcgPlayer: "493485",
   },
   classifications: ["Dreamborn", "Villain", "Sorcerer"],
   i18n: maleficentBidingHerTimeI18n,

@@ -18,10 +18,11 @@ export const clawhauserFrontDeskOfficerI18n: Record<Languages, I18nProperties> =
     version: "Empfangsoffizier",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "Singen 4",
+        title: "<Singen> 4 (Die Kosten dieses Charakters gelten als 4 für das Singen von Liedern.)",
       },
     ],
   },
@@ -30,10 +31,12 @@ export const clawhauserFrontDeskOfficerI18n: Record<Languages, I18nProperties> =
     version: "Agent d'accueil",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "Mélomane 4",
+        title:
+          "<Mélomane> 4 (Ce personnage est considéré comme ayant un coût de 4 pour chanter des chansons.)",
       },
     ],
   },
@@ -42,10 +45,10 @@ export const clawhauserFrontDeskOfficerI18n: Record<Languages, I18nProperties> =
     version: "Ufficiale dell'Accettazione",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "Melodioso 4",
+        title: "<Melodioso> 4",
       },
     ],
   },

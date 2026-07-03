@@ -4,6 +4,17 @@ import { dellaDuckReturningMotherI18n } from "./022-della-duck-returning-mother.
 export const dellaDuckReturningMother: CharacterCard = {
   id: "p1c",
   canonicalId: "ci_p1c",
+  slug: "lorcana-ci_p1c",
+  printings: [
+    {
+      id: "set10-022",
+      artId: "set10-022",
+      setCode: "set10",
+      collectorNumber: "22",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-022"],
   cardType: "character",
   name: "Della Duck",
@@ -20,7 +31,7 @@ export const dellaDuckReturningMother: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_93548601e4fd42fcb0d385947c09fc8e",
-    tcgPlayer: 658334,
+    tcgPlayer: "658334",
   },
   text: [
     {

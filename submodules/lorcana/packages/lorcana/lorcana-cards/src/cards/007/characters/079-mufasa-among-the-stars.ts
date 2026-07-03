@@ -1,5 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mufasaAmongTheStarsI18n } from "./079-mufasa-among-the-stars.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 import { resist } from "../../../helpers/abilities/resist";
@@ -7,6 +8,17 @@ import { resist } from "../../../helpers/abilities/resist";
 export const mufasaAmongTheStars: CharacterCard = {
   id: "ClW",
   canonicalId: "ci_ClW",
+  slug: "lorcana-ci_ClW",
+  printings: [
+    {
+      id: "set7-079",
+      artId: "set7-079",
+      setCode: "set7",
+      collectorNumber: "79",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-079"],
   cardType: "character",
   name: "Mufasa",
@@ -23,7 +35,7 @@ export const mufasaAmongTheStars: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5118e8478d8b437693d1b7ff7c09d7fd",
-    tcgPlayer: 618137,
+    tcgPlayer: "618137",
   },
   text: [
     {

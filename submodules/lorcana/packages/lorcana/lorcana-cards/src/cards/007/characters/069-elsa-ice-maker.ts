@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { elsaIceMakerI18n } from "./069-elsa-ice-maker.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const elsaIceMaker: CharacterCard = {
   id: "EtJ",
-  canonicalId: "ci_6Se",
+  canonicalId: "ci_EtJ",
+  slug: "lorcana-ci_EtJ",
+  printings: [
+    {
+      id: "set7-069",
+      artId: "set7-069",
+      setCode: "set7",
+      collectorNumber: "69",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-069"],
   cardType: "character",
   name: "Elsa",
@@ -20,8 +32,8 @@ export const elsaIceMaker: CharacterCard = {
   lore: 2,
   inkable: false,
   externalIds: {
-    lorcast: "crd_01c4835a62df4960bb973aeff81f2bb2",
-    tcgPlayer: 618356,
+    lorcast: "crd_be9f1031cbc84de7a5a4a388a036857a",
+    tcgPlayer: "655962",
   },
   text: [
     {

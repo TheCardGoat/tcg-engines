@@ -6,14 +6,17 @@ export const gd02Sleipnir130: BaseCard = {
   type: "base",
   traits: ["gjallarhorn", "warship"],
   id: "GD02-130",
-  externalId: "gundam:gd02-130",
-  slug: "sleipnir-gd02-130",
+  canonicalId: "GD02-130",
+  externalIds: { bandai: "gundam:gd02-130" },
+  slug: "sleipnir/gd02-130",
   displayName: "Sleipnir",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-130",
   printings: [
     {
       id: "GD02-130",
+      artId: "GD02-130",
+      setCode: "GD02",
       collectorNumber: "GD02-130",
       cardNumber: "GD02-130",
       set: {
@@ -28,6 +31,7 @@ export const gd02Sleipnir130: BaseCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-130"],
   selectedPrintingId: "GD02-130",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-130.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-130.webp?260424",

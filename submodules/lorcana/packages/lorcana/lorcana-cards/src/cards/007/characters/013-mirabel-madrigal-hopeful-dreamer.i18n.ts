@@ -18,10 +18,10 @@ export const mirabelMadrigalHopefulDreamerI18n: Record<Languages, I18nProperties
     version: "Hoffnungsvolle Träumerin",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "Singen 5",
+        title: "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)",
       },
     ],
   },
@@ -30,10 +30,11 @@ export const mirabelMadrigalHopefulDreamerI18n: Record<Languages, I18nProperties
     version: "Rêveuse pleine d'espoir",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "Mélomane 5",
+        title:
+          "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)",
       },
     ],
   },
@@ -42,10 +43,10 @@ export const mirabelMadrigalHopefulDreamerI18n: Record<Languages, I18nProperties
     version: "Sognatrice Speranzosa",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "Melodioso 5",
+        title: "<Melodioso> 5",
       },
     ],
   },

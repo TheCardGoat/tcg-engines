@@ -4,6 +4,17 @@ import { rabbitIndignantPirateI18n } from "./022-rabbit-indignant-pirate.i18n";
 export const rabbitIndignantPirate: CharacterCard = {
   id: "p9G",
   canonicalId: "ci_p9G",
+  slug: "lorcana-ci_p9G",
+  printings: [
+    {
+      id: "set6-022",
+      artId: "set6-022",
+      setCode: "set6",
+      collectorNumber: "22",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-022"],
   cardType: "character",
   name: "Rabbit",
@@ -20,7 +31,7 @@ export const rabbitIndignantPirate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6656edfc61dd4cc0846fee37f6c8e7b9",
-    tcgPlayer: 587238,
+    tcgPlayer: "587238",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const rabbitIndignantPirate: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           target: {
             selector: "chosen",
             count: 1,

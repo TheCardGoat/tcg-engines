@@ -16,8 +16,8 @@ export const tritonDiscerningKingI18n: Record<Languages, I18nProperties> = {
     version: "Anspruchsvoller König",
     text: [
       {
-        title: "IN DIE TIEFE SCHICKEN,",
-        description: "Verbanne einen deiner Gegenstände — Sammle 3 Legenden.",
+        title: "In die Tiefe schicken",
+        description: "{E}, Verbanne einen deiner Gegenstände — Sammle 3 Legenden.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const tritonDiscerningKingI18n: Record<Languages, I18nProperties> = {
     version: "Roi clairvoyant",
     text: [
       {
-        title: "RELÉGUÉ DANS LES PROFONDEURS,",
-        description: "Bannissez l'un de vos objets — Gagnez 3 éclats de Lore.",
+        title: "Relégué dans les profondeurs",
+        description: "{E}, Bannissez l'un de vos objets — Gagnez 3 éclats de Lore.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const tritonDiscerningKingI18n: Record<Languages, I18nProperties> = {
     version: "Re Accorto",
     text: [
       {
-        title: "CONSEGNARE ALL'ABISSO,",
-        description: "esilia uno dei tuoi oggetti — Ottieni 3 leggenda.",
+        title: "Consegnare all'Abisso",
+        description: "{E}, esilia uno dei tuoi oggetti — Ottieni 3 leggenda.",
       },
     ],
   },

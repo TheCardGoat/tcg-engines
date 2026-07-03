@@ -4,6 +4,17 @@ import { hiramFlavershamToymakerI18n } from "./149-hiram-flaversham-toymaker.i18
 export const hiramFlavershamToymaker: CharacterCard = {
   id: "LsX",
   canonicalId: "ci_LsX",
+  slug: "lorcana-ci_LsX",
+  printings: [
+    {
+      id: "set2-149",
+      artId: "set2-149",
+      setCode: "set2",
+      collectorNumber: "149",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-149"],
   cardType: "character",
   name: "Hiram Flaversham",
@@ -20,7 +31,7 @@ export const hiramFlavershamToymaker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e0ddeb51820a4e46840686240e076a57",
-    tcgPlayer: 527277,
+    tcgPlayer: "527277",
   },
   text: [
     {
@@ -49,7 +60,9 @@ export const hiramFlavershamToymaker: CharacterCard = {
             },
             {
               type: "conditional",
-              condition: { type: "if-you-do" },
+              condition: {
+                type: "if-you-do",
+              },
               then: {
                 amount: 2,
                 target: "CONTROLLER",
@@ -88,7 +101,9 @@ export const hiramFlavershamToymaker: CharacterCard = {
             },
             {
               type: "conditional",
-              condition: { type: "if-you-do" },
+              condition: {
+                type: "if-you-do",
+              },
               then: {
                 amount: 2,
                 target: "CONTROLLER",

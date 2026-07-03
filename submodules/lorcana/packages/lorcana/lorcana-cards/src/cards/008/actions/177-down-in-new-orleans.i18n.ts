@@ -11,10 +11,28 @@ export const downInNewOrleansI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "La Nouvelle-Orléans",
-    text: "Regardez les 3 premières cartes de votre pioche. Vous pouvez révéler parmi elles une carte Personnage, Objet ou Lieu coûtant 6 ou moins et la jouer gratuitement. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 6 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Regardez les 3 premières cartes de votre pioche. Vous pouvez révéler parmi elles une carte Personnage, Objet ou Lieu coûtant 6 ou moins et la jouer gratuitement. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+      },
+    ],
   },
   it: {
     name: "Benvenuto a New Orleans",
-    text: "(Un personaggio con costo 6 o superiore può per cantare questa canzone gratis.) Guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio, oggetto o luogo con costo 6 o inferiore e giocarla gratis. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 6 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio, oggetto o luogo con costo 6 o inferiore e giocarla gratis. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+      },
+    ],
   },
 };

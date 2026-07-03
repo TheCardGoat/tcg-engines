@@ -21,14 +21,14 @@ export const cruellaDeVilStyleIconEnchantedI18n: Record<Languages, I18nPropertie
     version: "Stilikone",
     text: [
       {
-        title: "AUSSERHALB DER SAISON",
+        title: "Außerhalb der Saison",
         description:
           "Einmal während deines Zuges, wenn ein Charakter mit Kosten von 2 oder weniger verbannt wird, lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat.",
       },
       {
-        title: "BELEIDIGENDER KOMMENTAR",
+        title: "Beleidigender Kommentar",
         description:
-          "In deinem Zug erhält jeder gegnerische Charakter mit Kosten von 2 oder weniger -1.",
+          "In deinem Zug erhält jeder gegnerische Charakter mit Kosten von 2 oder weniger -1 {S}.",
       },
     ],
   },
@@ -37,13 +37,14 @@ export const cruellaDeVilStyleIconEnchantedI18n: Record<Languages, I18nPropertie
     version: "Icône de la mode",
     text: [
       {
-        title: "HORS-SAISON",
+        title: "Hors-saison",
         description:
           "Une fois durant votre tour, lorsqu'un personnage coûtant 2 ou moins est banni, placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
       {
-        title: "REMARQUE OFFENSANTE",
-        description: "Durant votre tour, chaque personnage adverse coûtant 2 ou moins subit -1.",
+        title: "Remarque offensante",
+        description:
+          "Durant votre tour, chaque personnage adverse coûtant 2 ou moins subit -1 {S}.",
       },
     ],
   },
@@ -52,14 +53,14 @@ export const cruellaDeVilStyleIconEnchantedI18n: Record<Languages, I18nPropertie
     version: "Icona di Stile",
     text: [
       {
-        title: "FUORI STAGIONE",
+        title: "Fuori Stagione",
         description:
           "Una volta durante il tuo turno, ogni volta che un personaggio con costo 2 o inferiore viene esiliato, aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },
       {
-        title: "COMMENTO OFFENSIVO",
+        title: "Commento Offensivo",
         description:
-          "Durante il tuo turno, ogni personaggio avversario con costo 2 o inferiore riceve -1.",
+          "Durante il tuo turno, ogni personaggio avversario con costo 2 o inferiore riceve -1 {S}.",
       },
     ],
   },

@@ -20,12 +20,12 @@ export const goofyExtremeAthleteI18n: Record<Languages, I18nProperties> = {
     version: "Extremsportler",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "MACHT DER BERÜHMTHEIT",
+        title: "Macht der Berühmtheit",
         description:
-          "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, erhalten deine anderen Charaktere in diesem Zug +1.",
+          "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, erhalten deine anderen Charaktere in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const goofyExtremeAthleteI18n: Record<Languages, I18nProperties> = {
     version: "Athlète de l'extrême",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "POUVOIR DE STAR",
+        title: "Pouvoir de Star",
         description:
-          "Chaque fois que ce personnage en défie un autre, vos autres personnages gagnent +1 pour le reste de ce tour.",
+          "Chaque fois que ce personnage en défie un autre, vos autres personnages gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const goofyExtremeAthleteI18n: Record<Languages, I18nProperties> = {
     version: "Atleta Estremo",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "TALENTO DA STAR",
+        title: "Talento da Star",
         description:
-          "Ogni volta che questo personaggio sfida un altro personaggio, i tuoi altri personaggi ricevono +1 per questo turno.",
+          "Ogni volta che questo personaggio sfida un altro personaggio, i tuoi altri personaggi ricevono +1 {L} per questo turno.",
       },
     ],
   },

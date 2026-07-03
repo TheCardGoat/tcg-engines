@@ -20,12 +20,13 @@ export const theQueenCommandingPresenceI18n: Record<Languages, I18nProperties> =
     version: "Imposantes Auftreten",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Die-Königin-Charaktere auszuspielen.)",
       },
       {
-        title: "WER IST DIE SCHÖNSTE?",
+        title: "Wer ist die Schönste?",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, darfst du in diesem Zug einem gegnerischen Charakter deiner Wahl -4 und einem Charakter deiner Wahl +4 geben.",
+          "Jedes Mal, wenn dieser Charakter erkundet, darfst du in diesem Zug einem gegnerischen Charakter deiner Wahl -4 {S} und einem Charakter deiner Wahl +4 {S} geben.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const theQueenCommandingPresenceI18n: Record<Languages, I18nProperties> =
     version: "Autorité naturelle",
     text: [
       {
-        title: "Alter 2",
+        title:
+          "<Alter> 2 (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages La Reine.)",
       },
       {
-        title: "QUI EST LA PLUS BELLE?",
+        title: "Qui est la plus belle?",
         description:
-          "Lorsque ce personnage est envoyé à l'aventure, choisissez un personnage qui gagne +4 et un personnage adverse qui subit -4, pour le reste de ce tour.",
+          "Lorsque ce personnage est envoyé à l'aventure, choisissez un personnage qui gagne +4 {S} et un personnage adverse qui subit -4 {S}, pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const theQueenCommandingPresenceI18n: Record<Languages, I18nProperties> =
     version: "Commanding Presence",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named The Queen.)",
       },
       {
-        title: "WHO IS THE FAIREST?",
+        title: "Who is the Fairest?",
         description:
-          "Whenever this character quests, chosen opposing character gets -4 this turn and chosen character gets +4 this turn.",
+          "Whenever this character quests, chosen opposing character gets -4 {S} this turn and chosen character gets +4 {S} this turn.",
       },
     ],
   },

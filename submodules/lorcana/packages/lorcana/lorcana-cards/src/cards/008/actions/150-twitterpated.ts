@@ -4,6 +4,17 @@ import { twitterpatedI18n } from "./150-twitterpated.i18n";
 export const twitterpated: ActionCard = {
   id: "WEP",
   canonicalId: "ci_WEP",
+  slug: "lorcana-ci_WEP",
+  printings: [
+    {
+      id: "set8-150",
+      artId: "set8-150",
+      setCode: "set8",
+      collectorNumber: "150",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-150"],
   cardType: "action",
   name: "Twitterpated",
@@ -16,7 +27,7 @@ export const twitterpated: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5bdb76e9410847a48c43a4a8b0f2ef81",
-    tcgPlayer: 631450,
+    tcgPlayer: "631450",
   },
   text: "Chosen character gains Evasive until the start of your next turn.",
   abilities: [

@@ -23,13 +23,14 @@ export const webbyVanderquackJuniorProspectorEnchantedI18n: Record<Languages, I1
     version: "Junior-Schürferin",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 {I} (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Nicky-Vanderquack-Charaktere auszuspielen.)",
       },
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "SCHLAUER ARBEITEN",
+        title: "Schlauer Arbeiten",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, falls mindestens eine gegnerische Person mehr Karten in ihrem Tintenvorrat hat als du, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -40,13 +41,13 @@ export const webbyVanderquackJuniorProspectorEnchantedI18n: Record<Languages, I1
     version: "Prospectrice junior",
     text: [
       {
-        title: "Alter 2",
+        title: "<Alter> 2 {I}",
       },
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "TRAVAIL MALIN",
+        title: "Travail malin",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, si un adversaire a plus de cartes dans sa réserve d'encre que vous, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -55,18 +56,6 @@ export const webbyVanderquackJuniorProspectorEnchantedI18n: Record<Languages, I1
   it: {
     name: "Gaia Vanderquack",
     version: "Apprendista Cercatrice",
-    text: [
-      {
-        title: "Trasformazione 2",
-      },
-      {
-        title: "Protetto",
-      },
-      {
-        title: "LAVORARE MEGLIO",
-        description:
-          "Ogni volta che questo personaggio va all'avventura, se un avversario ha più carte nel suo calamaio di te, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
-      },
-    ],
+    text: "<Trasformazione> 2 {I}, <Protetto> Lavorare Meglio Ogni volta che questo personaggio va all'avventura, se un avversario ha più carte nel suo calamaio di te, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
   },
 };

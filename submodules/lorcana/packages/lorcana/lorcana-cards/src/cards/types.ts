@@ -20,6 +20,7 @@ export interface AbilityDefinition {
   value?: number;
   cost?: unknown;
   shiftTarget?: string;
+  shiftClassification?: string;
 }
 
 export interface ExternalIds {

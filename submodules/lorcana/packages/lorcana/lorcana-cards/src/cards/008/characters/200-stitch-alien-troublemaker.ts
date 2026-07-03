@@ -4,6 +4,17 @@ import { stitchAlienTroublemakerI18n } from "./200-stitch-alien-troublemaker.i18
 export const stitchAlienTroublemaker: CharacterCard = {
   id: "gd1",
   canonicalId: "ci_gd1",
+  slug: "lorcana-ci_gd1",
+  printings: [
+    {
+      id: "set8-200",
+      artId: "set8-200",
+      setCode: "set8",
+      collectorNumber: "200",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-200"],
   cardType: "character",
   name: "Stitch",
@@ -20,7 +31,7 @@ export const stitchAlienTroublemaker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e402670f5e814601b3995fd962e79a7e",
-    tcgPlayer: 631332,
+    tcgPlayer: "631332",
   },
   text: [
     {
@@ -40,7 +51,12 @@ export const stitchAlienTroublemaker: CharacterCard = {
         event: "banish-in-challenge",
         on: "SELF",
         timing: "whenever",
-        restrictions: [{ type: "during-turn", whose: "your" }],
+        restrictions: [
+          {
+            type: "during-turn",
+            whose: "your",
+          },
+        ],
       },
       effect: {
         type: "optional",

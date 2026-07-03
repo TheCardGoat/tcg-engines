@@ -4,6 +4,17 @@ import { baymaxsChargingStationI18n } from "./180-baymaxs-charging-station.i18n"
 export const baymaxsChargingStation: ItemCard = {
   id: "Xqf",
   canonicalId: "ci_Xqf",
+  slug: "lorcana-ci_Xqf",
+  printings: [
+    {
+      id: "set7-180",
+      artId: "set7-180",
+      setCode: "set7",
+      collectorNumber: "180",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-180"],
   cardType: "item",
   name: "Baymax's Charging Station",
@@ -16,7 +27,7 @@ export const baymaxsChargingStation: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c2a15901752f4d5289f1296558834989",
-    tcgPlayer: 618725,
+    tcgPlayer: "618725",
   },
   text: [
     {

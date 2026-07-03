@@ -4,6 +4,17 @@ import { khanWarHorseI18n } from "./193-khan-war-horse.i18n";
 export const khanWarHorse: CharacterCard = {
   id: "9Tf",
   canonicalId: "ci_9Tf",
+  slug: "lorcana-ci_9Tf",
+  printings: [
+    {
+      id: "set8-193",
+      artId: "set8-193",
+      setCode: "set8",
+      collectorNumber: "193",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-193"],
   cardType: "character",
   name: "Khan",
@@ -21,7 +32,7 @@ export const khanWarHorse: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_3ae06939a98a4e41a6c37b577aedd462",
-    tcgPlayer: 631477,
+    tcgPlayer: "631477",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: khanWarHorseI18n,

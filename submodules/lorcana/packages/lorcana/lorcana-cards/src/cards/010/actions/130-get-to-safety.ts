@@ -4,6 +4,17 @@ import { getToSafetyI18n } from "./130-get-to-safety.i18n";
 export const getToSafety: ActionCard = {
   id: "a5f",
   canonicalId: "ci_a5f",
+  slug: "lorcana-ci_a5f",
+  printings: [
+    {
+      id: "set10-130",
+      artId: "set10-130",
+      setCode: "set10",
+      collectorNumber: "130",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-130"],
   cardType: "action",
   name: "Get to Safety!",
@@ -16,7 +27,7 @@ export const getToSafety: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_898936239d774f7199fa2911d1528878",
-    tcgPlayer: 660023,
+    tcgPlayer: "660023",
   },
   text: "Play a location with cost 3 or less from your discard for free. Then, if you have a location named Sleepy Hollow in play, draw a card.",
   abilities: [

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tianaNaturalTalentI18n } from "./009-tiana-natural-talent.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const tianaNaturalTalent: CharacterCard = {
   id: "9h6",
   canonicalId: "ci_9h6",
+  slug: "lorcana-ci_9h6",
+  printings: [
+    {
+      id: "set8-009",
+      artId: "set8-009",
+      setCode: "set8",
+      collectorNumber: "9",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-009"],
   cardType: "character",
   name: "Tiana",
@@ -21,7 +33,7 @@ export const tianaNaturalTalent: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e1412fbad88c459a989f3738fb678789",
-    tcgPlayer: 631333,
+    tcgPlayer: "631333",
   },
   text: [
     {

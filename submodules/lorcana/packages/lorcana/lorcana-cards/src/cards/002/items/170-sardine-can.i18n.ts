@@ -14,9 +14,9 @@ export const sardineCanI18n: Record<Languages, I18nProperties> = {
     name: "Sardinenbüchse",
     text: [
       {
-        title: "FLUGKABINE",
+        title: "Flugkabine",
         description:
-          "Deine erschöpften Charaktere erhalten Behütet. (Gegnerische Karten können die Charaktere nicht auswählen, außer um sie herauszufordern.)",
+          "Deine erschöpften Charaktere erhalten <Behütet>. (Gegnerische Karten können die Charaktere nicht auswählen, außer um sie herauszufordern.)",
       },
     ],
   },
@@ -24,9 +24,9 @@ export const sardineCanI18n: Record<Languages, I18nProperties> = {
     name: "Boîte de sardines",
     text: [
       {
-        title: "CABINE DE VOL",
+        title: "Cabine de vol",
         description:
-          "Vos personnages épuisés gagnent Hors d'atteinte. (Ils ne peuvent pas être choisis par vos adversaires, hormis pour un défi.)",
+          "Vos personnages épuisés gagnent <Hors d'atteinte>. (Ils ne peuvent pas être choisis par vos adversaires, hormis pour un défi.)",
       },
     ],
   },
@@ -34,9 +34,9 @@ export const sardineCanI18n: Record<Languages, I18nProperties> = {
     name: "Sardine Can",
     text: [
       {
-        title: "FLIGHT CABIN",
+        title: "Flight Cabin",
         description:
-          "Your exerted characters gain Ward. (Opponents can't choose them except to challenge.)",
+          "Your exerted characters gain <Ward>. (Opponents can't choose them except to challenge.)",
       },
     ],
   },

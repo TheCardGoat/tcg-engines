@@ -17,9 +17,9 @@ export const fergusMcduckScroogesFatherI18n: Record<Languages, I18nProperties> =
     version: "Dagoberts Vater",
     text: [
       {
-        title: "ABHÄRTEN",
+        title: "Abhärten",
         description:
-          "Wenn du diesen Charakter ausspielst, wähle einen deiner Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges Behütet. (Gegnerische Mitspielende können den Charakter nicht auswählen, außer um ihn herauszufordern.)",
+          "Wenn du diesen Charakter ausspielst, wähle einen deiner Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges <Behütet>. (Gegnerische Mitspielende können den Charakter nicht auswählen, außer um ihn herauszufordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const fergusMcduckScroogesFatherI18n: Record<Languages, I18nProperties> =
     version: "Père de Balthazar",
     text: [
       {
-        title: "ENDURCIR",
+        title: "Endurcir",
         description:
-          "Lorsque vous jouez ce personnage, choisissez l'un de vos personnages qui gagne Hors d'atteinte jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez l'un de vos personnages qui gagne <Hors d'atteinte> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const fergusMcduckScroogesFatherI18n: Record<Languages, I18nProperties> =
     version: "Padre di Paperone",
     text: [
       {
-        title: "INDURIRSI",
+        title: "Indurirsi",
         description:
-          "Quando giochi questo personaggio, un tuo personaggio a tua scelta ottiene Protetto fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+          "Quando giochi questo personaggio, un tuo personaggio a tua scelta ottiene <Protetto> fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
       },
     ],
   },

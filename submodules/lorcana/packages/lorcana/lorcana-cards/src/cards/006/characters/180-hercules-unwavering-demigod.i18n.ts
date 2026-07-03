@@ -16,16 +16,16 @@ export const herculesUnwaveringDemigodI18n: Record<Languages, I18nProperties> = 
   de: {
     name: "Hercules",
     version: "Unermüdlicher Halbgott",
-    text: "Herausfordern +2",
+    text: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
   },
   fr: {
     name: "Hercule",
     version: "Demi-dieu inébranlable",
-    text: "Offensif +2",
+    text: "<Offensif> +2",
   },
   it: {
     name: "Ercole",
     version: "Semidio Risoluto",
-    text: "Sfidante +2",
+    text: "<Sfidante> +2",
   },
 };

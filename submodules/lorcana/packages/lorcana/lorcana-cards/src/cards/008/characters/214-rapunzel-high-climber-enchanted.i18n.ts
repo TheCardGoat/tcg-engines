@@ -20,10 +20,10 @@ export const rapunzelHighClimberEnchantedI18n: Record<Languages, I18nProperties>
     version: "Kletterin",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "EINGEWICKELT",
+        title: "Eingewickelt",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, wähle einen gegnerischen Charakter. Jener kann in seinem nächsten Zug nicht erkunden.",
       },
@@ -34,10 +34,10 @@ export const rapunzelHighClimberEnchantedI18n: Record<Languages, I18nProperties>
     version: "Grimpeuse en haute altitude",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "ENROULÉ",
+        title: "Enroulé",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage adverse qui ne peut pas être envoyé à l'aventure durant son prochain tour.",
       },
@@ -48,10 +48,10 @@ export const rapunzelHighClimberEnchantedI18n: Record<Languages, I18nProperties>
     version: "Scalatrice d'Alta Quota",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "AVVOLTO",
+        title: "Avvolto",
         description:
           "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta non può andare all'avventura durante il suo prossimo turno.",
       },

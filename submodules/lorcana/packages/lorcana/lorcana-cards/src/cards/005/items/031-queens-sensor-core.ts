@@ -4,6 +4,17 @@ import { queensSensorCoreI18n } from "./031-queens-sensor-core.i18n";
 export const queensSensorCore: ItemCard = {
   id: "Xs0",
   canonicalId: "ci_Xs0",
+  slug: "lorcana-ci_Xs0",
+  printings: [
+    {
+      id: "set5-031",
+      artId: "set5-031",
+      setCode: "set5",
+      collectorNumber: "31",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-031"],
   cardType: "item",
   name: "Queen's Sensor Core",
@@ -16,7 +27,7 @@ export const queensSensorCore: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a3736e115d014a5e85d5913b9d100f9e",
-    tcgPlayer: 560914,
+    tcgPlayer: "560914",
   },
   text: [
     {

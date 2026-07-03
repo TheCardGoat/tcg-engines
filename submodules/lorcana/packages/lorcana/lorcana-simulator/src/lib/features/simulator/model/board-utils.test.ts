@@ -553,4 +553,119 @@ describe("buildCardSnapshotMap", () => {
       expect(snapshots["card-4"].textEntries).toBeUndefined();
     });
   });
+
+  describe("image metadata projection", () => {
+    function makeBoard(cardId: string, definitionId: string): LorcanaProjectedBoardView {
+      return {
+        stateID: 42,
+        cards: {
+          [cardId]: {
+            cardId,
+            definitionId,
+            ownerId: "player_one",
+            zone: "play",
+            fullName: "Test Card",
+            publicFaceState: "faceUp",
+            hidden: false,
+            exerted: false,
+          },
+        },
+        players: {
+          player_one: {
+            hand: [],
+            play: [cardId],
+            inkwell: [],
+            discard: [],
+            deckCount: 0,
+          },
+          player_two: {
+            hand: [],
+            play: [],
+            inkwell: [],
+            discard: [],
+            deckCount: 0,
+          },
+        },
+        playerOrder: ["player_one", "player_two"],
+        pendingEffects: [],
+        bagEffects: [],
+      } as unknown as LorcanaProjectedBoardView;
+    }
+
+    function makeStaticResources(
+      instanceId: string,
+      definitionId: string,
+      cardDefinition: object,
+    ): MatchStaticResources {
+      return {
+        instances: new Map([
+          [
+            instanceId,
+            {
+              instanceId,
+              definitionId,
+              ownerID: "player_one",
+            },
+          ],
+        ]),
+        cards: new Map([[definitionId, { id: definitionId, ...cardDefinition }]]),
+      } as unknown as MatchStaticResources;
+    }
+
+    it("normalizes retail Set 13 printings to the zero-padded asset folder", () => {
+      const board = makeBoard("card-13-1", "set13-001");
+      const staticResources = makeStaticResources("card-13-1", "set13-001", {
+        name: "Test Retail",
+        cardNumber: 1,
+        set: "set13",
+        cardType: "character",
+        cost: 2,
+        strength: 2,
+        willpower: 2,
+        lore: 1,
+        printings: [
+          {
+            collectorNumber: "001",
+            id: "set13-001",
+            setCode: "set13",
+          },
+        ],
+      });
+
+      const snapshots = buildCardSnapshotMap(board, staticResources);
+      expect(snapshots["card-13-1"]).toMatchObject({
+        imageSet: "013",
+        imageCardNumber: "001",
+      });
+    });
+
+    it("uses the primary promo printing bucket instead of the grouped retail set", () => {
+      const board = makeBoard("card-pd1-3", "set13-pd1-003-promo");
+      const staticResources = makeStaticResources("card-pd1-3", "set13-pd1-003-promo", {
+        name: "Test Promo",
+        cardNumber: 3,
+        set: "013",
+        cardType: "character",
+        cost: 2,
+        strength: 2,
+        willpower: 2,
+        lore: 1,
+        printings: [
+          {
+            collectorNumber: "003",
+            id: "set13-pd1-003-promo",
+            setCode: "set13",
+          },
+        ],
+      });
+
+      const snapshots = buildCardSnapshotMap(board, staticResources);
+      expect(snapshots["card-pd1-3"]).toMatchObject({
+        set: "013",
+        cardNumber: 3,
+        imageSet: "PD1",
+        imageCardNumber: "003",
+      });
+    });
+  });
 });

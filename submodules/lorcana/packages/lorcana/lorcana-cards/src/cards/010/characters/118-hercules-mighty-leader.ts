@@ -4,6 +4,17 @@ import { herculesMightyLeaderI18n } from "./118-hercules-mighty-leader.i18n";
 export const herculesMightyLeader: CharacterCard = {
   id: "xm6",
   canonicalId: "ci_xm6",
+  slug: "lorcana-ci_xm6",
+  printings: [
+    {
+      id: "set10-118",
+      artId: "set10-118",
+      setCode: "set10",
+      collectorNumber: "118",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-118"],
   cardType: "character",
   name: "Hercules",
@@ -20,7 +31,7 @@ export const herculesMightyLeader: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ee4bc5f80eb74a19b749e0b31be7d920",
-    tcgPlayer: 660037,
+    tcgPlayer: "660037",
   },
   text: [
     {
@@ -69,7 +80,12 @@ export const herculesMightyLeader: CharacterCard = {
           zones: ["play"],
           cardTypes: ["character"],
           excludeSelf: true,
-          filter: [{ type: "has-classification", classification: "Hero" }],
+          filter: [
+            {
+              type: "has-classification",
+              classification: "Hero",
+            },
+          ],
         },
         condition: {
           type: "not",

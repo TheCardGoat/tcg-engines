@@ -1,15 +1,46 @@
 import type { ActionCard } from "@tcg/lorcana-types";
-import { oneJumpAhead as canonicalOneJumpAhead } from "../../001";
+import { oneJumpAheadI18n } from "./165-one-jump-ahead.i18n";
 
 export const oneJumpAhead: ActionCard = {
-  ...canonicalOneJumpAhead,
-  id: "GXc",
+  id: "YfD",
+  canonicalId: "ci_0Iz",
+  slug: "lorcana-ci_0Iz",
+  printings: [
+    {
+      id: "set9-165",
+      artId: "set9-165",
+      setCode: "set9",
+      collectorNumber: "165",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-164", "set9-165"],
+  cardType: "action",
+  name: "One Jump Ahead",
+  inkType: ["sapphire"],
+  franchise: "Aladdin",
   set: "009",
   cardNumber: 165,
   rarity: "common",
+  cost: 2,
+  inkable: false,
   externalIds: {
     lorcast: "crd_5bc8b5538ba94d59979d7ebb574c0bd2",
-    tcgPlayer: 650099,
+    tcgPlayer: "650099",
   },
+  text: "Put the top card of your deck into your inkwell facedown and exerted.",
+  actionSubtype: "song",
+  abilities: [
+    {
+      type: "action",
+      effect: {
+        type: "put-into-inkwell",
+        source: "top-of-deck",
+        facedown: true,
+        exerted: true,
+      },
+    },
+  ],
+  i18n: oneJumpAheadI18n,
 };

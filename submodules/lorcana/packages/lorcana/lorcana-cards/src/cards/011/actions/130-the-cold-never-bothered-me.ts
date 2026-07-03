@@ -4,6 +4,17 @@ import { theColdNeverBotheredMeI18n } from "./130-the-cold-never-bothered-me.i18
 export const theColdNeverBotheredMe: ActionCard = {
   id: "bJE",
   canonicalId: "ci_Vdn",
+  slug: "lorcana-ci_Vdn",
+  printings: [
+    {
+      id: "set11-130",
+      artId: "set11-130",
+      setCode: "set11",
+      collectorNumber: "130",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-130"],
   cardType: "action",
   name: "The Cold Never Bothered Me",
@@ -16,7 +27,7 @@ export const theColdNeverBotheredMe: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e3dbc3e8ae3543059ee67af1d144c576",
-    tcgPlayer: 677165,
+    tcgPlayer: "677165",
   },
   text: "Look at the top 4 cards of your deck. You may reveal a location card and put it into your hand. Put the rest into your discard. You pay 3 {I} less for the next location you play this turn.",
   actionSubtype: "song",

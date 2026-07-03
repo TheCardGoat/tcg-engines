@@ -19,10 +19,11 @@ export const gizmoduckSuitedUpI18n: Record<Languages, I18nProperties> = {
     version: "Ausgerüstet",
     text: [
       {
-        title: "Robust +1",
+        title:
+          "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
       {
-        title: "AUSGETROCKNETER ENTENTÜMPEL",
+        title: "Ausgetrockneter Ententümpel",
         description: "Dieser Charakter kann bereite, beschädigte Charaktere herausfordern.",
       },
     ],
@@ -32,10 +33,10 @@ export const gizmoduckSuitedUpI18n: Record<Languages, I18nProperties> = {
     version: "En costume",
     text: [
       {
-        title: "Résistance +1",
+        title: "<Résistance> +1",
       },
       {
-        title: "NOM D'UN CIRCUIT INTÉGRÉ",
+        title: "Nom d'un circuit intégré",
         description:
           "Ce personnage peut défier les personnages redressés s'ils ont au moins un dommage.",
       },
@@ -46,10 +47,10 @@ export const gizmoduckSuitedUpI18n: Record<Languages, I18nProperties> = {
     version: "Armaturato",
     text: [
       {
-        title: "Resistere +1",
+        title: "<Resistere> +1",
       },
       {
-        title: "FANFALUCA CIARLANTE",
+        title: "Fanfaluca Ciarlante",
         description: "Questo personaggio può sfidare i personaggi preparati danneggiati.",
       },
     ],

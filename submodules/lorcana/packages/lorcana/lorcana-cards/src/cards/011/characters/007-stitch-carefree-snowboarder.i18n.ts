@@ -17,7 +17,7 @@ export const stitchCarefreeSnowboarderI18n: Record<Languages, I18nProperties> = 
     version: "Sorgloser Snowboarder",
     text: [
       {
-        title: "BRINGT EURE FREUNDE MIT",
+        title: "Bringt eure Freunde mit",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet und du mindestens 2 weitere Charaktere im Spiel hast, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const stitchCarefreeSnowboarderI18n: Record<Languages, I18nProperties> = 
     version: "Snowboardeur insouciant",
     text: [
       {
-        title: "AMÈNE TES AMIS",
+        title: "Amène tes amis",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, si vous avez 2 autres personnages ou plus en jeu, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const stitchCarefreeSnowboarderI18n: Record<Languages, I18nProperties> = 
     version: "Snowboarder Spensierato",
     text: [
       {
-        title: "PORTA I TUOI AMICI",
+        title: "Porta i Tuoi Amici",
         description:
           "Ogni volta che questo personaggio va all'avventura, se hai in gioco 2 o più altri personaggi, puoi pescare una carta.",
       },

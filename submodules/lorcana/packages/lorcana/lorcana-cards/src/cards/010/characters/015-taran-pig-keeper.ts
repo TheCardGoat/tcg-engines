@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { support } from "../../../helpers/abilities/support";
 import { taranPigKeeperI18n } from "./015-taran-pig-keeper.i18n";
+
+import { support } from "../../../helpers/abilities/support";
 
 export const taranPigKeeper: CharacterCard = {
   id: "JL3",
   canonicalId: "ci_JL3",
+  slug: "lorcana-ci_JL3",
+  printings: [
+    {
+      id: "set10-015",
+      artId: "set10-015",
+      setCode: "set10",
+      collectorNumber: "15",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-015"],
   cardType: "character",
   name: "Taran",
@@ -21,7 +33,7 @@ export const taranPigKeeper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8f86e553eb5c40dc8833c69b23a732ff",
-    tcgPlayer: 658291,
+    tcgPlayer: "658291",
   },
   text: [
     {

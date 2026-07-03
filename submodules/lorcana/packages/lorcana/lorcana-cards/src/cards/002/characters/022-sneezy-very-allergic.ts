@@ -4,6 +4,17 @@ import { sneezyVeryAllergicI18n } from "./022-sneezy-very-allergic.i18n";
 export const sneezyVeryAllergic: CharacterCard = {
   id: "hWr",
   canonicalId: "ci_hWr",
+  slug: "lorcana-ci_hWr",
+  printings: [
+    {
+      id: "set2-022",
+      artId: "set2-022",
+      setCode: "set2",
+      collectorNumber: "22",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-022"],
   cardType: "character",
   name: "Sneezy",
@@ -20,7 +31,7 @@ export const sneezyVeryAllergic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e7b04611dd234fc7a07b0e48c2811fd2",
-    tcgPlayer: 526375,
+    tcgPlayer: "526375",
   },
   text: [
     {

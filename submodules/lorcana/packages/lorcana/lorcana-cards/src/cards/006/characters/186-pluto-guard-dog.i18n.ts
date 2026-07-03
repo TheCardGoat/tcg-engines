@@ -19,11 +19,12 @@ export const plutoGuardDogI18n: Record<Languages, I18nProperties> = {
     version: "Wachhund",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "GUTER JUNGE",
-        description: "Solange dieser Charakter unbeschädigt ist, erhält er +4.",
+        title: "Guter Junge",
+        description: "Solange dieser Charakter unbeschädigt ist, erhält er +4 {S}.",
       },
     ],
   },
@@ -32,11 +33,12 @@ export const plutoGuardDogI18n: Record<Languages, I18nProperties> = {
     version: "Chien de garde",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "BON CHIEN",
-        description: "Tant que ce personnage n'a aucun dommage sur lui, il gagne +4.",
+        title: "Bon chien",
+        description: "Tant que ce personnage n'a aucun dommage sur lui, il gagne +4 {S}.",
       },
     ],
   },
@@ -45,11 +47,11 @@ export const plutoGuardDogI18n: Record<Languages, I18nProperties> = {
     version: "Cane da Guardia",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "BRAVO",
-        description: "Mentre questo personaggio non ha danno, riceve +4.",
+        title: "Bravo",
+        description: "Mentre questo personaggio non ha danno, riceve +4 {S}.",
       },
     ],
   },

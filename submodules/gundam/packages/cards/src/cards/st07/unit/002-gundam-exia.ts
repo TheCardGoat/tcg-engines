@@ -7,14 +7,17 @@ export const st07GundamExia002: UnitCard = {
   color: "purple",
   traits: ["cb", "gn drive"],
   id: "ST07-002",
-  externalId: "gundam:st07-002",
-  slug: "gundam-exia-st07-002",
+  canonicalId: "ST07-002",
+  externalIds: { bandai: "gundam:st07-002" },
+  slug: "gundam-exia/st07-002",
   displayName: "Gundam Exia",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-002",
   printings: [
     {
       id: "ST07-002",
+      artId: "ST07-002",
+      setCode: "ST07",
       collectorNumber: "ST07-002",
       cardNumber: "ST07-002",
       set: {
@@ -30,6 +33,8 @@ export const st07GundamExia002: UnitCard = {
     },
     {
       id: "ST07-002_p1",
+      artId: "ST07-002_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-002_p1",
       cardNumber: "ST07-002",
       set: {
@@ -45,6 +50,8 @@ export const st07GundamExia002: UnitCard = {
     },
     {
       id: "ST07-002_p2",
+      artId: "ST07-002_p2",
+      setCode: "ST07",
       collectorNumber: "ST07-002_p2",
       cardNumber: "ST07-002",
       set: {
@@ -59,6 +66,7 @@ export const st07GundamExia002: UnitCard = {
       productName: "Starter Deck [ST07]/[ST08] Release Event",
     },
   ],
+  reprints: ["ST07-002", "ST07-002_p1", "ST07-002_p2"],
   selectedPrintingId: "ST07-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-002.webp?260424",

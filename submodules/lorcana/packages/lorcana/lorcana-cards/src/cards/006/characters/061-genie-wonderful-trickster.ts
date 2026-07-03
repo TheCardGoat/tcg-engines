@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { genieWonderfulTricksterI18n } from "./061-genie-wonderful-trickster.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const genieWonderfulTrickster: CharacterCard = {
   id: "o38",
   canonicalId: "ci_o38",
+  slug: "lorcana-ci_o38",
+  printings: [
+    {
+      id: "set6-061",
+      artId: "set6-061",
+      setCode: "set6",
+      collectorNumber: "61",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-061"],
   cardType: "character",
   name: "Genie",
@@ -21,7 +33,7 @@ export const genieWonderfulTrickster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5cbbabaf0d9f4ad58c942174904a1d8f",
-    tcgPlayer: 588084,
+    tcgPlayer: "588084",
   },
   text: [
     {

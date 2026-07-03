@@ -11,10 +11,28 @@ export const blastFromYourPastI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Un mirage à deux visages",
-    text: "Nommez une carte. Renvoyez dans votre main toutes les cartes Personnage portant ce nom depuis votre défausse.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 6 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Nommez une carte. Renvoyez dans votre main toutes les cartes Personnage portant ce nom depuis votre défausse.",
+      },
+    ],
   },
   it: {
     name: "Le Tue Menzogne",
-    text: "(Un personaggio con costo 6 o superiore può per cantare questa canzone gratis.) Nomina una carta. Riprendi in mano dai tuoi scarti tutte le carte personaggio con quel nome.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 6 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Nomina una carta. Riprendi in mano dai tuoi scarti tutte le carte personaggio con quel nome.",
+      },
+    ],
   },
 };

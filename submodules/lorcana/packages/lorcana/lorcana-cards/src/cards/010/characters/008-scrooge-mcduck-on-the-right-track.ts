@@ -4,6 +4,17 @@ import { scroogeMcduckOnTheRightTrackI18n } from "./008-scrooge-mcduck-on-the-ri
 export const scroogeMcduckOnTheRightTrack: CharacterCard = {
   id: "NQo",
   canonicalId: "ci_NQo",
+  slug: "lorcana-ci_NQo",
+  printings: [
+    {
+      id: "set10-008",
+      artId: "set10-008",
+      setCode: "set10",
+      collectorNumber: "8",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-008"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -20,7 +31,7 @@ export const scroogeMcduckOnTheRightTrack: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c44b5e749e584c13a821007c6dce1cec",
-    tcgPlayer: 660032,
+    tcgPlayer: "660032",
   },
   text: [
     {
@@ -45,7 +56,13 @@ export const scroogeMcduckOnTheRightTrack: CharacterCard = {
             owner: "any",
             selector: "chosen",
             zones: ["play"],
-            filter: [{ type: "cards-under", comparison: "greater-or-equal", value: 1 }],
+            filter: [
+              {
+                type: "cards-under",
+                comparison: "greater-or-equal",
+                value: 1,
+              },
+            ],
           },
           type: "modify-stat",
         },

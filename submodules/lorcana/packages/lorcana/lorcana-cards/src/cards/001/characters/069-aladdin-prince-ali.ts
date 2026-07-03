@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { aladdinPrinceAliI18n } from "./069-aladdin-prince-ali.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const aladdinPrinceAli: CharacterCard = {
   id: "QEo",
   canonicalId: "ci_D8z",
+  slug: "lorcana-ci_D8z",
+  printings: [
+    {
+      id: "set1-069",
+      artId: "set1-069",
+      setCode: "set1",
+      collectorNumber: "69",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-069", "set9-092"],
   cardType: "character",
   name: "Aladdin",
@@ -21,7 +33,7 @@ export const aladdinPrinceAli: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_24ef95291e2f4379983568b7c01974ff",
-    tcgPlayer: 650031,
+    tcgPlayer: "650031",
   },
   text: "Ward",
   classifications: ["Storyborn", "Hero", "Prince"],

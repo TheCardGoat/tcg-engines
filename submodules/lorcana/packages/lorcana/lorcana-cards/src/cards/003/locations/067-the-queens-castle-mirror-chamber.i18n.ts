@@ -17,7 +17,7 @@ export const theQueensCastleMirrorChamberI18n: Record<Languages, I18nProperties>
     version: "Spiegel-Kammer",
     text: [
       {
-        title: "DEN SPIEGEL BENUTZEN",
+        title: "Den Spiegel benutzen",
         description:
           "Zu Beginn deines Zuges, kannst du für jeden deiner Charaktere an diesem Ort, 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const theQueensCastleMirrorChamberI18n: Record<Languages, I18nProperties>
     version: "Salle du miroir",
     text: [
       {
-        title: "UTILISATION DU MIROIR",
+        title: "Utilisation du miroir",
         description:
           "Au début de votre tour, pour chacun de vos personnages sur ce lieu, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const theQueensCastleMirrorChamberI18n: Record<Languages, I18nProperties>
     version: "Stanza dello Specchio",
     text: [
       {
-        title: "USARE LO SPECCHIO",
+        title: "Usare lo Specchio",
         description:
           "All'inizio del tuo turno, per ogni personaggio che hai in questo luogo, puoi pescare una carta.",
       },

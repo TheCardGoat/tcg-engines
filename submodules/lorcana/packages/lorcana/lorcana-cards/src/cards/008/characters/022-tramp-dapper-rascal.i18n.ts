@@ -20,10 +20,11 @@ export const trampDapperRascalI18n: Record<Languages, I18nProperties> = {
     version: "Eleganter Rabauke",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Strolch-Charaktere auszuspielen.)",
       },
       {
-        title: "BLEIB COOL",
+        title: "Bleib cool",
         description:
           "Jedes Mal, wenn einer deiner Charaktere im Zug einer gegnerischen Person verbannt wird, darfst du 1 Karte ziehen.",
       },
@@ -34,10 +35,11 @@ export const trampDapperRascalI18n: Record<Languages, I18nProperties> = {
     version: "Voyou élégant",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Clochard.)",
       },
       {
-        title: "GARDER SON SANG-FROID",
+        title: "Garder son sang-froid",
         description:
           "Durant le tour d'un adversaire, chaque fois que l'un de vos personnages est banni, vous pouvez piocher une carte.",
       },
@@ -48,10 +50,11 @@ export const trampDapperRascalI18n: Record<Languages, I18nProperties> = {
     version: "Elegante Mascalzone",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Biagio.)",
       },
       {
-        title: "RESTARE CALMO",
+        title: "Restare Calmo",
         description:
           "Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi viene esiliato, puoi pescare una carta.",
       },

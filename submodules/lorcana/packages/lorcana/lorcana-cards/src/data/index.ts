@@ -14,6 +14,7 @@
 import type {
   AbilityDefinition as LorcanaAbilityDefinition,
   CardText,
+  DeckConstructionRule,
   I18nProperties,
   Languages,
   LorcanaCard,
@@ -59,6 +60,8 @@ export interface CanonicalCard {
   keywords?: string[];
   rulesText: string;
   abilities?: AbilityDefinition[];
+  deckConstructionRules?: DeckConstructionRule[];
+  franchise?: string;
 }
 
 /** Derive display name from name + version (e.g. "Baloo - Friend and Guardian") */
@@ -98,6 +101,14 @@ export interface CardPrintingMetadata {
   cardNumber: number;
   rarity: Rarity;
   specialRarity?: SpecialRarity;
+  /**
+   * Art/illustration id (RFC §4 Lorcana / §7). Platform-derived, not an upstream
+   * passthrough: alt-art tiers (`specialRarity` enchanted/epic/iconic/promo/challenge)
+   * map to `${canonicalId}-${specialRarity}`; base-rarity printings are degenerate
+   * (`artId === id`). Surfaced on aux so the catalog and atelier adapter consume it
+   * without re-deriving (RFC §10 Lorcana step 3).
+   */
+  artId: string;
   /**
    * Promo sheet code from upstream Ravensburger card_identifier (e.g. "P1", "P2", "P3").
    * Present when the printing is a promo from a Promo Set rather than a regular printing
@@ -341,6 +352,8 @@ function toCanonicalCard(card: LorcanaCard): CanonicalCard {
     ...(card.cardType === "action" ? { actionSubtype: card.actionSubtype ?? null } : {}),
     rulesText: cardTextToRulesText(card.text) ?? "",
     ...(card.abilities ? { abilities: card.abilities } : {}),
+    ...(card.deckConstructionRules ? { deckConstructionRules: card.deckConstructionRules } : {}),
+    ...(card.franchise ? { franchise: card.franchise } : {}),
   };
 }
 

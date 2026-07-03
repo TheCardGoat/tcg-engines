@@ -4,6 +4,17 @@ import { theBayouMysteriousSwampI18n } from "./204-the-bayou-mysterious-swamp.i1
 export const theBayouMysteriousSwamp: LocationCard = {
   id: "RGw",
   canonicalId: "ci_RGw",
+  slug: "lorcana-ci_RGw",
+  printings: [
+    {
+      id: "set3-204",
+      artId: "set3-204",
+      setCode: "set3",
+      collectorNumber: "204",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-204"],
   cardType: "location",
   name: "The Bayou",
@@ -20,7 +31,7 @@ export const theBayouMysteriousSwamp: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_65119a74cb394cec89eab4175ad228bf",
-    tcgPlayer: 538683,
+    tcgPlayer: "538683",
   },
   text: [
     {

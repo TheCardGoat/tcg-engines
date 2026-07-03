@@ -4,6 +4,17 @@ import { annaEagerAcolyteI18n } from "./056-anna-eager-acolyte.i18n";
 export const annaEagerAcolyte: CharacterCard = {
   id: "Bnt",
   canonicalId: "ci_Bnt",
+  slug: "lorcana-ci_Bnt",
+  printings: [
+    {
+      id: "set5-056",
+      artId: "set5-056",
+      setCode: "set5",
+      collectorNumber: "56",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-056"],
   cardType: "character",
   name: "Anna",
@@ -20,7 +31,7 @@ export const annaEagerAcolyte: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_63be1159dcec47dba6234bf124f86c75",
-    tcgPlayer: 561954,
+    tcgPlayer: "561954",
   },
   text: [
     {

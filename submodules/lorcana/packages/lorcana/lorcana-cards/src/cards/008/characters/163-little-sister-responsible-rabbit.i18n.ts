@@ -17,7 +17,7 @@ export const littleSisterResponsibleRabbitI18n: Record<Languages, I18nProperties
     version: "Verantwortungsvolles Kaninchen",
     text: [
       {
-        title: "LASS MICH HELFEN",
+        title: "Lass mich helfen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du bis zu 1 Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -28,7 +28,7 @@ export const littleSisterResponsibleRabbitI18n: Record<Languages, I18nProperties
     version: "Lapine responsable",
     text: [
       {
-        title: "LAISSEZ-MOI VOUS AIDER",
+        title: "Laissez-moi vous aider",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui retirer jusqu'à 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const littleSisterResponsibleRabbitI18n: Record<Languages, I18nProperties
     version: "Coniglietta Responsabile",
     text: [
       {
-        title: "LASCIA CHE TI AIUTI",
+        title: "Lascia Che Ti Aiuti",
         description:
           "Quando giochi questo personaggio, puoi rimuovere fino a 1 danno da un personaggio a tua scelta.",
       },

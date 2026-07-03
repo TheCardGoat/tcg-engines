@@ -1,14 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerPlacideVoodooSentinel = {
+export const spoilerPlacideVoodooSentinel = defineCyberpunkCard({
   id: "7cd71a63-f430-4e26-884c-3956f929dfef",
-  externalId: "cyberpunk:placide-voodoo-sentinel",
   slug: "placide-voodoo-sentinel",
-  name: "Placide",
-  subname: "Voodoo Sentinel",
-  displayName: "Placide - Voodoo Sentinel",
   rulesText:
     "PLAY ATTACK You may discard a Program from your hand. If you do, bottom-deck a rival Unit.",
+  subname: "Voodoo Sentinel",
+  name: "Placide",
+  displayName: "Placide - Voodoo Sentinel",
+  canonicalId: "placide-voodoo-sentinel",
   color: "blue",
   classifications: ["Ganger", "Netrunner", "Voodoo Boys"],
   set: {
@@ -16,15 +17,6 @@ export const spoilerPlacideVoodooSentinel = {
     name: "Spoiler Set",
   },
   printNumber: "073",
-  printings: [
-    {
-      id: "4b8e26aa-4406-4a4d-9ffc-0ac9f5b774bf",
-      collectorNumber: "073",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "4b8e26aa-4406-4a4d-9ffc-0ac9f5b774bf",
   artist: "Mooncolony",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/073.webp",
   rarity: null,
@@ -32,7 +24,6 @@ export const spoilerPlacideVoodooSentinel = {
   hasSellTag: false,
   ram: 2,
   timingTriggers: ["play", "attack"],
-  keywords: [],
   type: "unit",
   cost: 8,
   power: 10,
@@ -124,5 +115,4 @@ export const spoilerPlacideVoodooSentinel = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

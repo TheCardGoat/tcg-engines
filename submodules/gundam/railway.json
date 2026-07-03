@@ -6,7 +6,9 @@
   },
   "deploy": {
     "startCommand": "node server.js",
+    "numReplicas": 1,
     "restartPolicyMaxRetries": 3,
-    "restartPolicyWindowSeconds": 60
+    "restartPolicyWindowSeconds": 60,
+    "sleepApplication": true
   }
 }

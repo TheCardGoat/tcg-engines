@@ -14,26 +14,16 @@ export const sinaVigilantParentI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Sina",
     version: "Wachsames Elternteil",
-    text: [
-      {
-        title: "Alarmiert",
-        description: "(Dieser Charakter kann herausfordern, als hätte er Wendig.)",
-      },
-    ],
+    text: "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
   },
   fr: {
     name: "Sina",
     version: "Parent vigilant",
-    text: "Agilité (Ce personnage peut défier comme s'il était Insaisissable.)",
+    text: "<Agilité> (Ce personnage peut défier comme s'il était Insaisissable.)",
   },
   it: {
     name: "Sina",
     version: "Genitrice Attenta",
-    text: [
-      {
-        title: "Vigile",
-        description: "(Questo personaggio può sfidare come se avesse Sfuggente.)",
-      },
-    ],
+    text: "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
   },
 };

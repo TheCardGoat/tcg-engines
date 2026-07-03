@@ -4,6 +4,17 @@ import { iFindEmIFlattenEmI18n } from "./196-i-find-em-i-flatten-em.i18n";
 export const iFindEmIFlattenEm: ActionCard = {
   id: "40P",
   canonicalId: "ci_lHK",
+  slug: "lorcana-ci_lHK",
+  printings: [
+    {
+      id: "set4-196",
+      artId: "set4-196",
+      setCode: "set4",
+      collectorNumber: "196",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-196", "set9-199"],
   cardType: "action",
   name: "I Find ’Em, I Flatten ’Em",
@@ -16,7 +27,7 @@ export const iFindEmIFlattenEm: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_47f56a5b08b04ccda46e94744710ad9c",
-    tcgPlayer: 650132,
+    tcgPlayer: "650132",
   },
   text: "Banish all items.",
   actionSubtype: "song",

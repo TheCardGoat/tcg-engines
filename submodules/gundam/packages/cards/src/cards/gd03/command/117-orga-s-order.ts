@@ -7,14 +7,17 @@ export const gd03OrgaSOrder117: CommandCard = {
   color: "purple",
   traits: [],
   id: "GD03-117",
-  externalId: "gundam:gd03-117",
-  slug: "orga-s-order-gd03-117",
+  canonicalId: "GD03-117",
+  externalIds: { bandai: "gundam:gd03-117" },
+  slug: "orga-s-order/gd03-117",
   displayName: "Orga's Order",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-117",
   printings: [
     {
       id: "GD03-117",
+      artId: "GD03-117",
+      setCode: "GD03",
       collectorNumber: "GD03-117",
       cardNumber: "GD03-117",
       set: {
@@ -30,6 +33,8 @@ export const gd03OrgaSOrder117: CommandCard = {
     },
     {
       id: "GD03-117_p1",
+      artId: "GD03-117_p1",
+      setCode: "PC01A",
       collectorNumber: "GD03-117_p1",
       cardNumber: "GD03-117",
       set: {
@@ -45,6 +50,7 @@ export const gd03OrgaSOrder117: CommandCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam IRON-BLOODED ORPHANS-[PC01A]",
     },
   ],
+  reprints: ["GD03-117", "GD03-117_p1"],
   selectedPrintingId: "GD03-117",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-117.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-117.webp?260424",

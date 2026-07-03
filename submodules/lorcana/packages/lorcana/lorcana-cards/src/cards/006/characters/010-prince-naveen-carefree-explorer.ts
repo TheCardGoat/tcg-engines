@@ -4,6 +4,17 @@ import { princeNaveenCarefreeExplorerI18n } from "./010-prince-naveen-carefree-e
 export const princeNaveenCarefreeExplorer: CharacterCard = {
   id: "dBs",
   canonicalId: "ci_dBs",
+  slug: "lorcana-ci_dBs",
+  printings: [
+    {
+      id: "set6-010",
+      artId: "set6-010",
+      setCode: "set6",
+      collectorNumber: "10",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-010"],
   cardType: "character",
   name: "Prince Naveen",
@@ -21,7 +32,7 @@ export const princeNaveenCarefreeExplorer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_65868398266f4f95944543e1568bf043",
-    tcgPlayer: 593038,
+    tcgPlayer: "593038",
   },
   classifications: ["Storyborn", "Hero", "Prince"],
   i18n: princeNaveenCarefreeExplorerI18n,

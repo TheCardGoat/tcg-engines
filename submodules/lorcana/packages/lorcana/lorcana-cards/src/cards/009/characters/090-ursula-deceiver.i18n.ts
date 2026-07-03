@@ -17,7 +17,7 @@ export const ursulaDeceiverI18n: Record<Languages, I18nProperties> = {
     version: "Deceiver",
     text: [
       {
-        title: "YOU'LL NEVER EVEN MISS IT",
+        title: "You'll Never Even Miss It",
         description:
           "When you play this character, chosen opponent reveals their hand and discards a song card of your choice.",
       },
@@ -28,7 +28,7 @@ export const ursulaDeceiverI18n: Record<Languages, I18nProperties> = {
     version: "Deceiver",
     text: [
       {
-        title: "YOU'LL NEVER EVEN MISS IT",
+        title: "You'll Never Even Miss It",
         description:
           "When you play this character, chosen opponent reveals their hand and discards a song card of your choice.",
       },
@@ -39,7 +39,7 @@ export const ursulaDeceiverI18n: Record<Languages, I18nProperties> = {
     version: "Deceiver",
     text: [
       {
-        title: "YOU'LL NEVER EVEN MISS IT",
+        title: "You'll Never Even Miss It",
         description:
           "When you play this character, chosen opponent reveals their hand and discards a song card of your choice.",
       },

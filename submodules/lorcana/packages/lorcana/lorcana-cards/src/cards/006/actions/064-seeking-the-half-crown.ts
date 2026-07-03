@@ -4,6 +4,17 @@ import { seekingTheHalfCrownI18n } from "./064-seeking-the-half-crown.i18n";
 export const seekingTheHalfCrown: ActionCard = {
   id: "Kza",
   canonicalId: "ci_xtY",
+  slug: "lorcana-ci_xtY",
+  printings: [
+    {
+      id: "set6-064",
+      artId: "set6-064",
+      setCode: "set6",
+      collectorNumber: "64",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-064"],
   cardType: "action",
   name: "Seeking the Half Crown",
@@ -16,7 +27,7 @@ export const seekingTheHalfCrown: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_bb8cbf92bd50483b979bd9ad606987ae",
-    tcgPlayer: 593042,
+    tcgPlayer: "593042",
   },
   text: [
     {

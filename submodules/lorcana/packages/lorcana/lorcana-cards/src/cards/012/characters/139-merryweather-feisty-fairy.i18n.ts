@@ -7,18 +7,18 @@ export const merryweatherFeistyFairyI18n: Record<Languages, I18nProperties> = {
     text: "Ward",
   },
   de: {
-    name: "Merryweather",
-    version: "Feisty Fairy",
-    text: "Ward",
+    name: "Sonnenschein",
+    version: "Temperamentvolle Fee",
+    text: "<Behütet>",
   },
   fr: {
-    name: "Merryweather",
-    version: "Feisty Fairy",
-    text: "Ward",
+    name: "Pimprenelle",
+    version: "Fée fougueuse",
+    text: "<Hors d'atteinte>",
   },
   it: {
-    name: "Merryweather",
-    version: "Feisty Fairy",
-    text: "Ward",
+    name: "Serenella",
+    version: "Fata Grintosa",
+    text: "<Protetto>",
   },
 };

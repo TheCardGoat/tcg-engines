@@ -306,8 +306,76 @@ function getPlayModeOptionLabel(
   return null;
 }
 
+function getShiftOptionLabel(cardId: string, cards: CardSnapshotMap): string {
+  const shiftInkCost = cards[cardId]?.shiftInkCost;
+  return typeof shiftInkCost === "number" && Number.isFinite(shiftInkCost)
+    ? `Shift: ${shiftInkCost} ink`
+    : "Shift";
+}
+
+function getPutOnDeckBottomOptionLabel(
+  selectableCosts: readonly { kind: string; count?: number }[],
+): string {
+  const count = selectableCosts.find((cost) => cost.kind === "putOnDeckBottom")?.count ?? 5;
+  return `Put ${count} on Deck Bottom`;
+}
+
 const KEYWORD_PATTERN =
   /^(Rush|Ward|Evasive|Bodyguard|Support|Reckless|Vanish|Alert|Challenger \+\d+|Resist \+\d+|Singer \d+|Sing Together \d+|Boost \d+|(?:Puppy |Universal )?Shift \d+)$/i;
+
+function getMultiShiftRules(
+  engine: LorcanaEngineBase,
+  cardId: string,
+): {
+  targetNames: string[];
+  minTargets: number;
+  maxTargets: number;
+  requireEachTargetName?: boolean;
+} | null {
+  const definition = engine.getCardDefinitionByInstanceId(cardId as CardInstanceId) as
+    | {
+        abilities?: Array<{
+          keyword?: string;
+          multiShift?: {
+            targetNames?: string[];
+            minTargets?: number;
+            maxTargets?: number;
+            requireEachTargetName?: boolean;
+          };
+        }>;
+      }
+    | undefined;
+  const multiShift = definition?.abilities?.find(
+    (ability) => ability.keyword === "Shift" && ability.multiShift,
+  )?.multiShift;
+
+  if (
+    !multiShift ||
+    !Array.isArray(multiShift.targetNames) ||
+    typeof multiShift.minTargets !== "number" ||
+    typeof multiShift.maxTargets !== "number"
+  ) {
+    return null;
+  }
+
+  return {
+    targetNames: multiShift.targetNames,
+    minTargets: multiShift.minTargets,
+    maxTargets: multiShift.maxTargets,
+    requireEachTargetName: multiShift.requireEachTargetName,
+  };
+}
+
+function getMatchedShiftName(
+  engine: LorcanaEngineBase,
+  cardId: string,
+  targetNames: readonly string[],
+): string | undefined {
+  const definition = engine.getCardDefinitionByInstanceId(cardId as CardInstanceId) as
+    | { name?: string }
+    | undefined;
+  return targetNames.find((targetName) => definition?.name === targetName);
+}
 
 function getMoveOptionLabel(
   moveId: string,
@@ -739,23 +807,28 @@ function buildEntriesForAvailableMove(
       case "shiftCard": {
         const id = String(cardId);
         const shiftTargetOptions = engine.getMoveOptions("shiftCard", cardId);
+        const multiShiftRules = getMultiShiftRules(engine, id);
 
         if (shiftTargetOptions.length > 0) {
-          for (const option of shiftTargetOptions) {
-            if (option.kind !== "card") {
-              continue;
-            }
-
-            const targetId = String(option.cardId);
+          if (multiShiftRules) {
+            const targetIds = shiftTargetOptions.flatMap((option) =>
+              option.kind === "card" ? [String(option.cardId)] : [],
+            );
+            const selectableCosts = shiftTargetOptions.flatMap((option) =>
+              option.kind === "card" ? (option.selectableCosts ?? []) : [],
+            );
+            const costSuffix = selectableCosts
+              .map((cost) => cost.kind)
+              .sort()
+              .join("-");
             const params = {
               cardId: id,
               cost: "shift",
-              shiftTarget: targetId,
-              targets: [targetId],
+              targets: targetIds,
             } as LorcanaSimulatorMoveParams["playCard"];
             const label = getMoveOptionLabel("playCard", params, cards);
             entries.push({
-              id: `shiftCard:${id}:${targetId}`,
+              id: costSuffix ? `shiftCard:${id}:multi:${costSuffix}` : `shiftCard:${id}:multi`,
               label,
               moveId: "playCard",
               params,
@@ -764,7 +837,56 @@ function buildEntriesForAvailableMove(
                 categoryId: "shift-card",
                 categoryLabel: getMoveCategoryLabel("shiftCard"),
                 optionLabel: label,
-                ...(option.selectableCosts ? { selectableCosts: option.selectableCosts } : {}),
+                selectionMode: "multiShift",
+                candidateCards: targetIds.map((targetId) => ({
+                  cardId: targetId,
+                  requiredName: getMatchedShiftName(engine, targetId, multiShiftRules.targetNames),
+                })),
+                minSelections: multiShiftRules.minTargets,
+                maxSelections: multiShiftRules.maxTargets,
+                requiredNames: multiShiftRules.requireEachTargetName
+                  ? multiShiftRules.targetNames
+                  : undefined,
+                ...(selectableCosts.length > 0 ? { selectableCosts } : {}),
+              },
+            });
+            continue;
+          }
+
+          for (const option of shiftTargetOptions) {
+            if (option.kind !== "card") {
+              continue;
+            }
+
+            const targetId = String(option.cardId);
+            const selectableCosts = option.selectableCosts ?? [];
+            const costSuffix = selectableCosts
+              .map((cost) => cost.kind)
+              .sort()
+              .join("-");
+            const params = {
+              cardId: id,
+              cost: "shift",
+              shiftTarget: targetId,
+              targets: [targetId],
+            } as LorcanaSimulatorMoveParams["playCard"];
+            const label = getMoveOptionLabel("playCard", params, cards);
+            entries.push({
+              id: costSuffix
+                ? `shiftCard:${id}:${targetId}:${costSuffix}`
+                : `shiftCard:${id}:${targetId}`,
+              label,
+              moveId: "playCard",
+              params,
+              presentation: {
+                kind: "targeted",
+                categoryId: "shift-card",
+                categoryLabel: getMoveCategoryLabel("shiftCard"),
+                optionLabel:
+                  costSuffix === "putOnDeckBottom"
+                    ? getPutOnDeckBottomOptionLabel(selectableCosts)
+                    : getShiftOptionLabel(id, cards),
+                ...(selectableCosts.length > 0 ? { selectableCosts } : {}),
               },
             });
           }

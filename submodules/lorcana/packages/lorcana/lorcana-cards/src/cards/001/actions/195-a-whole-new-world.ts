@@ -4,6 +4,17 @@ import { aWholeNewWorldI18n } from "./195-a-whole-new-world.i18n";
 export const aWholeNewWorld: ActionCard = {
   id: "YDE",
   canonicalId: "ci_YDE",
+  slug: "lorcana-ci_YDE",
+  printings: [
+    {
+      id: "set1-195",
+      artId: "set1-195",
+      setCode: "set1",
+      collectorNumber: "195",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-195"],
   cardType: "action",
   name: "A Whole New World",

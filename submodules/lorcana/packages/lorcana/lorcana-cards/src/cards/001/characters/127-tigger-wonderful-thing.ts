@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tiggerWonderfulThingI18n } from "./127-tigger-wonderful-thing.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const tiggerWonderfulThing: CharacterCard = {
   id: "H06",
   canonicalId: "ci_H06",
+  slug: "lorcana-ci_H06",
+  printings: [
+    {
+      id: "set1-127",
+      artId: "set1-127",
+      setCode: "set1",
+      collectorNumber: "127",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-127"],
   cardType: "character",
   name: "Tigger",
@@ -21,7 +33,7 @@ export const tiggerWonderfulThing: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f1f7e5ef15f04872a721d1792aa677d1",
-    tcgPlayer: 489638,
+    tcgPlayer: "489638",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Tigger"],

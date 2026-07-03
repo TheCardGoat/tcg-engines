@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { woodyJungleGuideI18n } from "./015-woody-jungle-guide.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const woodyJungleGuide: CharacterCard = {
-  id: "1z1",
+  id: "h1q",
   canonicalId: "ci_1z1",
+  slug: "lorcana-ci_1z1",
+  printings: [
+    {
+      id: "set12-015",
+      artId: "set12-015",
+      setCode: "set12",
+      collectorNumber: "15",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-015"],
   cardType: "character",
   name: "Woody",
@@ -21,6 +33,7 @@ export const woodyJungleGuide: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_23f90c492e514c569e969d30089ba8cf",
+    tcgPlayer: "690203",
   },
   text: [
     {

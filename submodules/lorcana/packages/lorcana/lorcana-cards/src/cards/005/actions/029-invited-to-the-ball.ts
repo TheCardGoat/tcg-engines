@@ -4,6 +4,17 @@ import { invitedToTheBallI18n } from "./029-invited-to-the-ball.i18n";
 export const invitedToTheBall: ActionCard = {
   id: "20P",
   canonicalId: "ci_20P",
+  slug: "lorcana-ci_20P",
+  printings: [
+    {
+      id: "set5-029",
+      artId: "set5-029",
+      setCode: "set5",
+      collectorNumber: "29",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-029"],
   cardType: "action",
   name: "Invited to the Ball",
@@ -16,7 +27,7 @@ export const invitedToTheBall: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d544feda22c44e0e9fccb9936fb20202",
-    tcgPlayer: 559086,
+    tcgPlayer: "559086",
   },
   text: "Reveal the top 2 cards of your deck. Put revealed character cards into your hand. Put the rest on the bottom of your deck in any order.",
   abilities: [

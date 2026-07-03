@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { wendyDarlingPirateQueenI18n } from "./012-wendy-darling-pirate-queen.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const wendyDarlingPirateQueen: CharacterCard = {
   id: "3a1",
   canonicalId: "ci_3a1",
+  slug: "lorcana-ci_3a1",
+  printings: [
+    {
+      id: "set7-012",
+      artId: "set7-012",
+      setCode: "set7",
+      collectorNumber: "12",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-012"],
   cardType: "character",
   name: "Wendy Darling",
@@ -21,7 +33,7 @@ export const wendyDarlingPirateQueen: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f25f3276ffc641a6a188b538ca96ac6a",
-    tcgPlayer: 619413,
+    tcgPlayer: "619413",
   },
   text: [
     {

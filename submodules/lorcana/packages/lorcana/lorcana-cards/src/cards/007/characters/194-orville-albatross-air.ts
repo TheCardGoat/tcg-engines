@@ -4,6 +4,17 @@ import { orvilleAlbatrossAirI18n } from "./194-orville-albatross-air.i18n";
 export const orvilleAlbatrossAir: CharacterCard = {
   id: "DJD",
   canonicalId: "ci_DJD",
+  slug: "lorcana-ci_DJD",
+  printings: [
+    {
+      id: "set7-194",
+      artId: "set7-194",
+      setCode: "set7",
+      collectorNumber: "194",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-194"],
   cardType: "character",
   name: "Orville",
@@ -20,7 +31,7 @@ export const orvilleAlbatrossAir: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9d44a1dff239492ebbafca394d0f475c",
-    tcgPlayer: 618729,
+    tcgPlayer: "618729",
   },
   text: [
     {
@@ -39,12 +50,22 @@ export const orvilleAlbatrossAir: CharacterCard = {
       condition: {
         type: "and",
         conditions: [
-          { type: "your-turn" },
+          {
+            type: "your-turn",
+          },
           {
             type: "or",
             conditions: [
-              { type: "has-named-character", name: "Miss Bianca", controller: "you" },
-              { type: "has-named-character", name: "Bernard", controller: "you" },
+              {
+                type: "has-named-character",
+                name: "Miss Bianca",
+                controller: "you",
+              },
+              {
+                type: "has-named-character",
+                name: "Bernard",
+                controller: "you",
+              },
             ],
           },
         ],

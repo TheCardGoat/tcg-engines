@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { flotsamUrsulasSpyI18n } from "./043-flotsam-ursulas-spy.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const flotsamUrsulasSpy: CharacterCard = {
   id: "BDi",
   canonicalId: "ci_BDi",
+  slug: "lorcana-ci_BDi",
+  printings: [
+    {
+      id: "set1-043",
+      artId: "set1-043",
+      setCode: "set1",
+      collectorNumber: "43",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-043"],
   cardType: "character",
   name: "Flotsam",
@@ -21,9 +33,17 @@ export const flotsamUrsulasSpy: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e5912655e48f42a9ab863ac2337171cc",
-    tcgPlayer: 503318,
+    tcgPlayer: "503318",
   },
-  text: "Rush DEXTEROUS LUNGE Your characters named Jetsam gain Rush.",
+  text: [
+    {
+      title: "<Rush>",
+    },
+    {
+      title: "Dexterous Lunge",
+      description: "Your characters named Jetsam gain Rush.",
+    },
+  ],
   classifications: ["Storyborn", "Ally"],
   abilities: [
     rush,

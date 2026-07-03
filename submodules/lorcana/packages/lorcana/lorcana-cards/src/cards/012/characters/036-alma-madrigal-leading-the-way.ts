@@ -4,6 +4,17 @@ import { almaMadrigalLeadingTheWayI18n } from "./036-alma-madrigal-leading-the-w
 export const almaMadrigalLeadingTheWay: CharacterCard = {
   id: "CTq",
   canonicalId: "ci_CTq",
+  slug: "lorcana-ci_CTq",
+  printings: [
+    {
+      id: "set12-036",
+      artId: "set12-036",
+      setCode: "set12",
+      collectorNumber: "36",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-036"],
   cardType: "character",
   name: "Alma Madrigal",
@@ -20,6 +31,7 @@ export const almaMadrigalLeadingTheWay: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a4eb09772d744fb6ace3010ef6f15745",
+    tcgPlayer: "692013",
   },
   text: [
     {

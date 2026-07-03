@@ -7,14 +7,30 @@ export const trialsAndTribulationsI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Oft war ich verzweifelt",
-    text: "Gib einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -4.",
+    text: "Gib einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -4 {S}.",
   },
   fr: {
     name: "Je travaillerai sans trêve",
-    text: "Choisissez un personnage qui subit -4 jusqu'au début de votre prochain tour.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Choisissez un personnage qui subit -4 {S} jusqu'au début de votre prochain tour.",
+      },
+    ],
   },
   it: {
     name: "Mille Ostacoli e Impedimenti",
-    text: "(Un personaggio con costo 2 o superiore può per cantare questa canzone gratis.) Un personaggio a tua scelta riceve -4 fino all'inizio del tuo prossimo turno.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Un personaggio a tua scelta riceve -4 {S} fino all'inizio del tuo prossimo turno.",
+      },
+    ],
   },
 };

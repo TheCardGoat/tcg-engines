@@ -4,6 +4,17 @@ import { amethystCoilI18n } from "./084-amethyst-coil.i18n";
 export const amethystCoil: ItemCard = {
   id: "aGu",
   canonicalId: "ci_aGu",
+  slug: "lorcana-ci_aGu",
+  printings: [
+    {
+      id: "set7-084",
+      artId: "set7-084",
+      setCode: "set7",
+      collectorNumber: "84",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-084"],
   cardType: "item",
   name: "Amethyst Coil",
@@ -16,7 +27,7 @@ export const amethystCoil: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e26f9abffd3943c096c50b0cef7425ff",
-    tcgPlayer: 619451,
+    tcgPlayer: "619451",
   },
   text: [
     {

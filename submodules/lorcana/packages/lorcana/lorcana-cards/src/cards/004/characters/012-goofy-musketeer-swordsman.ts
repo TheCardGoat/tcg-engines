@@ -4,6 +4,17 @@ import { goofyMusketeerSwordsmanI18n } from "./012-goofy-musketeer-swordsman.i18
 export const goofyMusketeerSwordsman: CharacterCard = {
   id: "PI2",
   canonicalId: "ci_PI2",
+  slug: "lorcana-ci_PI2",
+  printings: [
+    {
+      id: "set4-012",
+      artId: "set4-012",
+      setCode: "set4",
+      collectorNumber: "12",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-012"],
   cardType: "character",
   name: "Goofy",
@@ -19,7 +30,7 @@ export const goofyMusketeerSwordsman: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_497f584c0a1d45e3aea9795cff7150df",
-    tcgPlayer: 548549,
+    tcgPlayer: "548549",
   },
   text: [
     {

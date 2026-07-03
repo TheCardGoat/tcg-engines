@@ -4,6 +4,17 @@ import { rooLittlestPirateI18n } from "./023-roo-littlest-pirate.i18n";
 export const rooLittlestPirate: CharacterCard = {
   id: "JPo",
   canonicalId: "ci_JPo",
+  slug: "lorcana-ci_JPo",
+  printings: [
+    {
+      id: "set6-023",
+      artId: "set6-023",
+      setCode: "set6",
+      collectorNumber: "23",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-023"],
   cardType: "character",
   name: "Roo",
@@ -20,13 +31,13 @@ export const rooLittlestPirate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8497d60197bd451c91b4c2468f85b156",
-    tcgPlayer: 587967,
+    tcgPlayer: "587967",
   },
   text: [
     {
-      title: "I'M A PIRATE TOO!",
+      title: "I'M",
       description:
-        "When you play this character, you may give chosen character -2 {S} until the start of your next turn.",
+        "A PIRATE TOO! When you play this character, you may give chosen character -2 {S} until the start of your next turn.",
     },
   ],
   classifications: ["Dreamborn", "Ally", "Pirate"],

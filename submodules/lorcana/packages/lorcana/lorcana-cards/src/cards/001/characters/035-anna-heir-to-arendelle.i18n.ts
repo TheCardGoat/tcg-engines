@@ -17,7 +17,7 @@ export const annaHeirToArendelleI18n: Record<Languages, I18nProperties> = {
     version: "Thronfolgerin von Arendelle",
     text: [
       {
-        title: "LIEBEVOLLES HERZ",
+        title: "Liebevolles Herz",
         description:
           "Wenn du diesen Charakter ausspielst und einen Elsa-Charakter im Spiel hast, wähle einen gegnerischen Charakter. Er wird zu Beginn seines nächsten Zugs nicht bereit gemacht.",
       },
@@ -39,7 +39,7 @@ export const annaHeirToArendelleI18n: Record<Languages, I18nProperties> = {
     version: "Heir to Arendelle",
     text: [
       {
-        title: "LOVING HEART",
+        title: "Loving Heart",
         description:
           "When you play this character, if you have a character named Elsa in play, choose an opposing character. The chosen character doesn't ready at the start of their next turn.",
       },

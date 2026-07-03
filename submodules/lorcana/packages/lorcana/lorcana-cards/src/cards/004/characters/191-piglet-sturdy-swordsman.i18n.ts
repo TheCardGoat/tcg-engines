@@ -20,10 +20,11 @@ export const pigletSturdySwordsmanI18n: Record<Languages, I18nProperties> = {
     version: "Tapferer Schwertkämpfer",
     text: [
       {
-        title: "Robust +1",
+        title:
+          "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
       {
-        title: "NICHT MEHR GANZ SO KLEIN",
+        title: "Nicht mehr ganz so klein",
         description:
           "Solange du keine Karten auf der Hand hast, kann dieser Charakter bereite Charaktere herausfordern.",
       },
@@ -34,10 +35,10 @@ export const pigletSturdySwordsmanI18n: Record<Languages, I18nProperties> = {
     version: "Épéiste costaud",
     text: [
       {
-        title: "Résistance +1",
+        title: "<Résistance> +1",
       },
       {
-        title: "PLUS SI PETIT",
+        title: "Plus si petit",
         description:
           "Tant que vous n'avez aucune carte en main, ce personnage peut défier des personnages redressés.",
       },
@@ -48,10 +49,10 @@ export const pigletSturdySwordsmanI18n: Record<Languages, I18nProperties> = {
     version: "Spadaccino Robusto",
     text: [
       {
-        title: "Resistere +1",
+        title: "<Resistere> +1",
       },
       {
-        title: "NON PIÙ COSÌ PICCOLO",
+        title: "Non Più Così Piccolo",
         description:
           "Mentre non hai carte in mano, questo personaggio può sfidare i personaggi preparati.",
       },

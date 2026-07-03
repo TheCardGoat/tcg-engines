@@ -7,14 +7,17 @@ export const gd02ANewSign117: CommandCard = {
   color: "white",
   traits: ["-"],
   id: "GD02-117",
-  externalId: "gundam:gd02-117",
-  slug: "a-new-sign-gd02-117",
+  canonicalId: "GD02-117",
+  externalIds: { bandai: "gundam:gd02-117" },
+  slug: "a-new-sign/gd02-117",
   displayName: "A New Sign",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-117",
   printings: [
     {
       id: "GD02-117",
+      artId: "GD02-117",
+      setCode: "GD02",
       collectorNumber: "GD02-117",
       cardNumber: "GD02-117",
       set: {
@@ -30,6 +33,8 @@ export const gd02ANewSign117: CommandCard = {
     },
     {
       id: "GD02-117_p1",
+      artId: "GD02-117_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-117_p1",
       cardNumber: "GD02-117",
       set: {
@@ -44,6 +49,7 @@ export const gd02ANewSign117: CommandCard = {
       productName: "Newtype Challenge 2025 Mission 2",
     },
   ],
+  reprints: ["GD02-117", "GD02-117_p1"],
   selectedPrintingId: "GD02-117",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-117.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-117.webp?260424",

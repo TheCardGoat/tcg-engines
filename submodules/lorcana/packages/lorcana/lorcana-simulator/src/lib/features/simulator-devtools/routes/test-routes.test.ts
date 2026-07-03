@@ -3,10 +3,12 @@ import { describe, expect, it } from "bun:test";
 import {
   buildFixtureTestRouteHref,
   buildRegressionFixtureTestRouteHref,
+  loadFixtureForTestRoute,
   REGRESSION_FIXTURE_INDEX_ROUTE,
   resolveFixtureForTestRoute,
-  resolveRegressionFixtureForTestRoute,
 } from "./test-routes.js";
+import { resolveRegressionFixtureForTestRoute } from "./regression-test-routes.js";
+import { SET13_MANUAL_VALIDATION_FIXTURE_IDS } from "../fixtures/set13-manual-validation.js";
 
 describe("test-routes", () => {
   it("builds fixture routes under /tests", () => {
@@ -63,9 +65,9 @@ describe("test-routes", () => {
     expect(buildFixtureTestRouteHref(fixtureId)).toBe(`/tests/${fixtureId}`);
   });
 
-  it("resolves the 2026-05-18 Luisa and Mulan move-damage visual fixture", () => {
+  it("loads the 2026-05-18 Luisa and Mulan move-damage visual fixture", async () => {
     const fixtureId = "triage-2026-05-18-luisa-mulan-move-damage";
-    const fixture = resolveFixtureForTestRoute(fixtureId);
+    const fixture = await loadFixtureForTestRoute(fixtureId);
 
     expect(fixture?.id).toBe(fixtureId);
     expect(buildFixtureTestRouteHref(fixtureId)).toBe(`/tests/${fixtureId}`);
@@ -92,9 +94,9 @@ describe("test-routes", () => {
     }
   });
 
-  it("resolves the 2026-05-20 Simba and Cinderella free-play visual fixture", () => {
+  it("loads the 2026-05-20 Simba and Cinderella free-play visual fixture", async () => {
     const fixtureId = "triage-2026-05-20-simba-cinderella-free-play";
-    const fixture = resolveFixtureForTestRoute(fixtureId);
+    const fixture = await loadFixtureForTestRoute(fixtureId);
 
     expect(fixture?.id).toBe(fixtureId);
     expect(buildFixtureTestRouteHref(fixtureId)).toBe(`/tests/${fixtureId}`);
@@ -103,9 +105,9 @@ describe("test-routes", () => {
     expect(fixture?.playerOne.deck).toHaveLength(3);
   });
 
-  it("resolves the 2026-05-20 Fergus discard-location visual fixture", () => {
+  it("loads the 2026-05-20 Fergus discard-location visual fixture", async () => {
     const fixtureId = "triage-2026-05-20-fergus-discard-location";
-    const fixture = resolveFixtureForTestRoute(fixtureId);
+    const fixture = await loadFixtureForTestRoute(fixtureId);
 
     expect(fixture?.id).toBe(fixtureId);
     expect(buildFixtureTestRouteHref(fixtureId)).toBe(`/tests/${fixtureId}`);
@@ -121,6 +123,13 @@ describe("test-routes", () => {
     ];
 
     for (const fixtureId of fixtureIds) {
+      expect(resolveFixtureForTestRoute(fixtureId)?.id).toBe(fixtureId);
+      expect(buildFixtureTestRouteHref(fixtureId)).toBe(`/tests/${fixtureId}`);
+    }
+  });
+
+  it("resolves the set13 manual validation visual chunks", () => {
+    for (const fixtureId of SET13_MANUAL_VALIDATION_FIXTURE_IDS) {
       expect(resolveFixtureForTestRoute(fixtureId)?.id).toBe(fixtureId);
       expect(buildFixtureTestRouteHref(fixtureId)).toBe(`/tests/${fixtureId}`);
     }

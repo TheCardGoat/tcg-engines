@@ -138,6 +138,16 @@ export interface TimeToFirstMoveParams {
 export interface TimeToMulliganParams {
   duration_ms: number;
 }
+export interface MoveExecutionLatencySummaryParams {
+  executions_total: number;
+  over_200_count: number;
+  over_500_count: number;
+  max_duration_ms: number;
+  flush_reason: "interval" | "game_end" | "destroy";
+  mode?: string;
+  format?: string;
+  deck_id?: string;
+}
 
 // ── Exception / Error Events ─────────────────────────────────
 export interface AppExceptionParams {
@@ -299,6 +309,7 @@ export interface AnalyticsEventMap {
   web_vital: WebVitalParams;
   time_to_first_move: TimeToFirstMoveParams;
   time_to_mulligan: TimeToMulliganParams;
+  move_execution_latency_summary: MoveExecutionLatencySummaryParams;
 
   // Exceptions
   app_exception: AppExceptionParams;

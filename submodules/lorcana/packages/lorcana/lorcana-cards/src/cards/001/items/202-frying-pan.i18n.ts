@@ -14,7 +14,7 @@ export const fryingPanI18n: Record<Languages, I18nProperties> = {
     name: "Bratpfanne",
     text: [
       {
-        title: "KLONG!",
+        title: "Klong!",
         description:
           "Verbanne diesen Gegenstand — wähle einen gegnerischen Charakter. Er kann in seinem nächsten Zug nicht herausfordern.",
       },
@@ -34,7 +34,7 @@ export const fryingPanI18n: Record<Languages, I18nProperties> = {
     name: "Frying Pan",
     text: [
       {
-        title: "CLANG!",
+        title: "Clang!",
         description: "Banish this item — Chosen character can't challenge during their next turn.",
       },
     ],

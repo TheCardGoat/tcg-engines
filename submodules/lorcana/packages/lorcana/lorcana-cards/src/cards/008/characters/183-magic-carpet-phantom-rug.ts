@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { magicCarpetPhantomRugI18n } from "./183-magic-carpet-phantom-rug.i18n";
+
 import { vanish } from "../../../helpers/abilities/vanish";
 
 export const magicCarpetPhantomRug: CharacterCard = {
   id: "a00",
   canonicalId: "ci_a00",
+  slug: "lorcana-ci_a00",
+  printings: [
+    {
+      id: "set8-183",
+      artId: "set8-183",
+      setCode: "set8",
+      collectorNumber: "183",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-183"],
   cardType: "character",
   name: "Magic Carpet",
@@ -21,7 +33,7 @@ export const magicCarpetPhantomRug: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bbeb5ead52854a1d869e7e449dc6aee7",
-    tcgPlayer: 631472,
+    tcgPlayer: "631472",
   },
   text: [
     {

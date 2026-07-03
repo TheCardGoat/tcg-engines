@@ -25,7 +25,7 @@ export const dunbrochFamilyTapestryI18n: Record<Languages, I18nProperties> = {
       {
         title: "Das Band wiederherstellen",
         description:
-          "{E}, Verbanne diesen Gegenstand — Alle Mitspielenden (auch du) mischen alle Charakterkarten aus ihrem Ablagestapel zurück in ihr Deck.",
+          "{E}, Verbanne diesen Gegenstand — Alle Mitspielenden mischen alle Charakterkarten aus ihrem Ablagestapel zurück in ihr Deck.",
       },
     ],
   },

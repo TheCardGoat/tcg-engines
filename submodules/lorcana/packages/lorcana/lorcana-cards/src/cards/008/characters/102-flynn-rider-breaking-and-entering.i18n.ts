@@ -6,9 +6,9 @@ export const flynnRiderBreakingAndEnteringI18n: Record<Languages, I18nProperties
     version: "Breaking and Entering",
     text: [
       {
-        title: "THIS IS A VERY BIG DAY",
+        title: "THIS IS",
         description:
-          "Whenever this character is challenged, the challenging player may choose and discard a card. If they don't, you gain 2 lore.",
+          "A VERY BIG DAY Whenever this character is challenged, the challenging player may choose and discard a card. If they don't, you gain 2 lore.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const flynnRiderBreakingAndEnteringI18n: Record<Languages, I18nProperties
     version: "Einbrecher",
     text: [
       {
-        title: "HEUTE IST EIN GANZ BESONDERER TAG",
+        title: "Heute ist ein ganz besonderer Tag",
         description:
           "Jedes Mal, wenn dieser Charakter herausgefordert wird, darf die herausfordernde Person 1 Karte aus ihrer Hand auswählen und abwerfen. Falls sie keine Karte abwirft, sammelst du 2 Legenden.",
       },
@@ -28,7 +28,7 @@ export const flynnRiderBreakingAndEnteringI18n: Record<Languages, I18nProperties
     version: "Entrant par effraction",
     text: [
       {
-        title: "AUJOURD'HUI EST UN GRAND JOUR",
+        title: "Aujourd'hui est un grand jour",
         description:
           "Chaque fois que ce personnage est défié, le joueur qui a lancé le défi peut défausser une carte. S'il ne le fait pas, vous gagnez 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const flynnRiderBreakingAndEnteringI18n: Record<Languages, I18nProperties
     version: "Entrato di Soppiatto",
     text: [
       {
-        title: "QUESTO È DAVVERO UN GRANDE GIORNO",
+        title: "Questo È Davvero un Grande Giorno",
         description:
           "Ogni volta che questo personaggio viene sfidato, il giocatore sfidante può scegliere e scartare una carta. Se non lo fa, ottieni 2 leggenda.",
       },

@@ -4,6 +4,17 @@ import { sirPellinoreSeasonedKnightI18n } from "./154-sir-pellinore-seasoned-kni
 export const sirPellinoreSeasonedKnight: CharacterCard = {
   id: "u5n",
   canonicalId: "ci_u5n",
+  slug: "lorcana-ci_u5n",
+  printings: [
+    {
+      id: "set8-154",
+      artId: "set8-154",
+      setCode: "set8",
+      collectorNumber: "154",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-154"],
   cardType: "character",
   name: "Sir Pellinore",
@@ -20,7 +31,7 @@ export const sirPellinoreSeasonedKnight: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b4a7b13bd7904038ac156d59dedf0023",
-    tcgPlayer: 631829,
+    tcgPlayer: "631829",
   },
   text: [
     {

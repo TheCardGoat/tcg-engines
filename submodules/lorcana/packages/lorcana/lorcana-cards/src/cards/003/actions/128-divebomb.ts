@@ -4,6 +4,17 @@ import { divebombI18n } from "./128-divebomb.i18n";
 export const divebomb: ActionCard = {
   id: "lb1",
   canonicalId: "ci_lb1",
+  slug: "lorcana-ci_lb1",
+  printings: [
+    {
+      id: "set3-128",
+      artId: "set3-128",
+      setCode: "set3",
+      collectorNumber: "128",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-128"],
   cardType: "action",
   name: "Divebomb",
@@ -16,7 +27,7 @@ export const divebomb: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a4bd827fb4c6497fba686f38a21448ee",
-    tcgPlayer: 537755,
+    tcgPlayer: "537755",
   },
   text: "Banish one of your characters with Reckless to banish chosen character with less {S} than that character.",
   abilities: [

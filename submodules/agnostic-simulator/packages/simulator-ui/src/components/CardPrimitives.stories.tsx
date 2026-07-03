@@ -8,11 +8,18 @@ import { CardGrid } from "./CardGrid";
 import { CardImage } from "./CardImage";
 import { CardInspector } from "./CardInspector";
 import { CardRow } from "./CardRow";
+import { CardStack } from "./CardStack";
 import { CardZone } from "./CardZone";
+import { DeckStackZone } from "./DeckStackZone";
+import { DiscardPileZone } from "./DiscardPileZone";
 import { EmptyZone } from "./EmptyZone";
 import { HandZone } from "./HandZone";
 import { PriorityRing } from "./PriorityRing";
+import { SingleCardZone } from "./SingleCardZone";
+import { TabletopActionButton } from "./TabletopActionButton";
+import { TabletopCounterBadge } from "./TabletopCounterBadge";
 import { TokenRow } from "./TokenRow";
+import { TurnIndicator } from "./TurnIndicator";
 import { StoryCase, StoryFrame, StoryGrid } from "../storybook/StoryFrame";
 import { entities, zones } from "../storybook/fixtures";
 
@@ -146,6 +153,65 @@ export const CardRowStates: Story = {
   ),
 };
 
+export const CardStackStates: Story = {
+  render: () => (
+    <StoryFrame title="CardStack states">
+      <StoryGrid>
+        <StoryCase title="public stack">
+          <CardStack
+            zone={zones[3]}
+            entities={entities.slice(0, 1)}
+            entityCount={32}
+            label="Deck"
+          />
+        </StoryCase>
+        <StoryCase title="hidden stack">
+          <CardStack zone={zones[3]} entities={entities.slice(3, 4)} entityCount={5} label="Life" />
+        </StoryCase>
+        <StoryCase title="empty stack">
+          <CardStack zone={zones[3]} entities={[]} entityCount={0} label="Trash" />
+        </StoryCase>
+      </StoryGrid>
+    </StoryFrame>
+  ),
+};
+
+export const TabletopZoneStates: Story = {
+  render: () => (
+    <StoryFrame title="Tabletop zone states">
+      <StoryGrid>
+        <StoryCase title="single card">
+          <SingleCardZone
+            zone={zones[0]}
+            entities={entities.slice(0, 1)}
+            entityCount={1}
+            label="Leader"
+          />
+        </StoryCase>
+        <StoryCase title="empty single slot">
+          <SingleCardZone zone={zones[0]} entities={[]} entityCount={0} emptyLabel="Stage Card" />
+        </StoryCase>
+        <StoryCase title="facedown deck">
+          <DeckStackZone
+            zone={zones[3]}
+            entities={entities.slice(0, 1)}
+            entityCount={32}
+            label="Deck"
+          />
+        </StoryCase>
+        <StoryCase title="face-up discard">
+          <DiscardPileZone
+            zone={zones[4]}
+            entities={entities.slice(2, 3)}
+            entityCount={3}
+            label="Discard"
+          />
+        </StoryCase>
+      </StoryGrid>
+    </StoryFrame>
+  ),
+};
+
 export const CardFanStates: Story = {
   render: () => {
     const [selectedId, setSelectedId] = useState("runner");
@@ -264,6 +330,38 @@ export const TokenRowStates: Story = {
         </StoryCase>
         <StoryCase title="empty">
           <TokenRow tokens={[]} />
+        </StoryCase>
+      </StoryGrid>
+    </StoryFrame>
+  ),
+};
+
+export const TabletopPrimitiveStates: Story = {
+  render: () => (
+    <StoryFrame title="Tabletop primitives">
+      <StoryGrid>
+        <StoryCase title="turn indicators">
+          <div className="flex flex-wrap gap-3">
+            <TurnIndicator phase="Main Phase" turn={4} />
+            <TurnIndicator phase="Main Phase" step="Combat" turn={4} variant="ribbon" />
+          </div>
+        </StoryCase>
+        <StoryCase title="counters">
+          <div className="flex flex-wrap items-center gap-4">
+            <TabletopCounterBadge label="Life" value={5} variant="circle" />
+            <TabletopCounterBadge label="Characters" value={2} variant="compact" />
+            <TabletopCounterBadge label="DON!! Area" value="2/10" />
+          </div>
+        </StoryCase>
+        <StoryCase title="actions">
+          <div className="flex flex-wrap items-center gap-4">
+            <TabletopActionButton disabled variant="primary">
+              Turn End
+            </TabletopActionButton>
+            <TabletopActionButton aria-label="Settings" disabled>
+              S
+            </TabletopActionButton>
+          </div>
         </StoryCase>
       </StoryGrid>
     </StoryFrame>

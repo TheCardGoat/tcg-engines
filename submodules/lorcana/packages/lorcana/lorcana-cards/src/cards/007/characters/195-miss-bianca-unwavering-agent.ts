@@ -4,6 +4,17 @@ import { missBiancaUnwaveringAgentI18n } from "./195-miss-bianca-unwavering-agen
 export const missBiancaUnwaveringAgent: CharacterCard = {
   id: "Knt",
   canonicalId: "ci_Knt",
+  slug: "lorcana-ci_Knt",
+  printings: [
+    {
+      id: "set7-195",
+      artId: "set7-195",
+      setCode: "set7",
+      collectorNumber: "195",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-195"],
   cardType: "character",
   name: "Miss Bianca",
@@ -20,13 +31,13 @@ export const missBiancaUnwaveringAgent: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_977124ea617d440a9224e0eb1619ded6",
-    tcgPlayer: 619520,
+    tcgPlayer: "619520",
   },
   text: [
     {
-      title: "HAVE A LITTLE FAITH",
+      title: "HAVE",
       description:
-        "If you have an Ally character in play, you pay 2 {I} less to play this character.",
+        "A LITTLE FAITH If you have an Ally character in play, you pay 2 {I} less to play this character.",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

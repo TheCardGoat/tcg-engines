@@ -4,6 +4,17 @@ import { faZhouWarHeroI18n } from "./188-fa-zhou-war-hero.i18n";
 export const faZhouWarHero: CharacterCard = {
   id: "HVE",
   canonicalId: "ci_HVE",
+  slug: "lorcana-ci_HVE",
+  printings: [
+    {
+      id: "set7-188",
+      artId: "set7-188",
+      setCode: "set7",
+      collectorNumber: "188",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-188"],
   cardType: "character",
   name: "Fa Zhou",
@@ -20,7 +31,7 @@ export const faZhouWarHero: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c7f70b64da8740e0a6cc47d0862b88e3",
-    tcgPlayer: 619515,
+    tcgPlayer: "619515",
   },
   text: [
     {
@@ -52,7 +63,11 @@ export const faZhouWarHero: CharacterCard = {
         event: "challenge",
         on: "YOUR_CHARACTERS",
         timing: "whenever",
-        restrictions: [{ type: "defender-is-character" }],
+        restrictions: [
+          {
+            type: "defender-is-character",
+          },
+        ],
       },
       type: "triggered",
     },

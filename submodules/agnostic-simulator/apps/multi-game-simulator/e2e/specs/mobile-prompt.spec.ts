@@ -1,4 +1,4 @@
-import { test, expect } from "../fixtures/test";
+import { test, expect } from "@playwright/test";
 import type { Locator } from "@playwright/test";
 
 test.describe("mobile prompt parity", () => {

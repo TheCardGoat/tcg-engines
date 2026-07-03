@@ -21,14 +21,13 @@ export const magicCarpetPhantomRugI18n: Record<Languages, I18nProperties> = {
     version: "Phantomteppich",
     text: [
       {
-        title: "Verschwinden",
-        description:
-          "(Jedes Mal, wenn dieser Charakter von einer Aktion einer gegnerischen Person ausgewählt wird, verbanne ihn.)",
+        title:
+          "<Verschwinden> (Jedes Mal, wenn dieser Charakter von einer Aktion einer gegnerischen Person ausgewählt wird, verbanne ihn.)",
       },
       {
-        title: "SPEKTRALE KRAFT",
+        title: "Spektrale Kraft",
         description:
-          "Deine anderen Illusionen erhalten Herausfordern +1. (Während sie herausfordern, erhalten sie +1.)",
+          "Deine anderen Illusionen erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)",
       },
     ],
   },
@@ -37,13 +36,13 @@ export const magicCarpetPhantomRugI18n: Record<Languages, I18nProperties> = {
     version: "Apparition tapissière",
     text: [
       {
-        title: "Dissipation",
-        description: "(Lorsqu'un adversaire choisit ce personnage avec une action, bannissez-le.)",
+        title:
+          "<Dissipation> (Lorsqu'un adversaire choisit ce personnage avec une action, bannissez-le.)",
       },
       {
-        title: "FORCE SPECTRALE",
+        title: "Force spectrale",
         description:
-          "Vos autres personnages Illusion gagnent Offensif +1. (Lorsqu'ils défient, ces personnages gagnent +1.)",
+          "Vos autres personnages Illusion gagnent <Offensif> +1. (Lorsqu'ils défient, ces personnages gagnent +1 {S}.)",
       },
     ],
   },
@@ -52,13 +51,13 @@ export const magicCarpetPhantomRugI18n: Record<Languages, I18nProperties> = {
     version: "Zerbino Fantasma",
     text: [
       {
-        title: "Svanire",
-        description: "(Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
+        title:
+          "<Svanire> (Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
       },
       {
-        title: "FORZA SPETTRALE",
+        title: "Forza Spettrale",
         description:
-          "I tuoi altri personaggi Illusione ottengono Sfidante +1. (Ricevono +1 mentre stanno sfidando.)",
+          "I tuoi altri personaggi Illusione ottengono <Sfidante> +1. (Ricevono +1 {S} mentre stanno sfidando.)",
       },
     ],
   },

@@ -7,10 +7,7 @@ export const theWardrobePerceptiveFriendI18n: Record<Languages, I18nProperties> 
     text: [
       {
         title: "I HAVE JUST THE THING!",
-      },
-      {
-        title: "{E},",
-        description: "Choose and discard an item card — Draw 2 cards.",
+        description: "{E}, Choose and discard an item card — Draw 2 cards.",
       },
     ],
   },
@@ -19,9 +16,9 @@ export const theWardrobePerceptiveFriendI18n: Record<Languages, I18nProperties> 
     version: "Aufmerksame Freundin",
     text: [
       {
-        title: "DAS HIER PASST BESTIMMT!,",
+        title: "Das hier passt bestimmt!",
         description:
-          "Wähle eine Gegenstandskarte aus deiner Hand und wirf sie ab — Ziehe 2 Karten.",
+          "{E}, Wähle eine Gegenstandskarte aus deiner Hand und wirf sie ab — Ziehe 2 Karten.",
       },
     ],
   },
@@ -30,8 +27,8 @@ export const theWardrobePerceptiveFriendI18n: Record<Languages, I18nProperties> 
     version: "Amie perspicace",
     text: [
       {
-        title: "J'AI CE QU'IL VOUS FAUT!,",
-        description: "Défaussez un objet — Piochez 2 cartes.",
+        title: "J'ai ce qu'il vous faut!",
+        description: "{E}, Défaussez un objet — Piochez 2 cartes.",
       },
     ],
   },
@@ -40,8 +37,8 @@ export const theWardrobePerceptiveFriendI18n: Record<Languages, I18nProperties> 
     version: "Amica Perspicace",
     text: [
       {
-        title: "HO PROPRIO LA COSA GIUSTA!,",
-        description: "scegli e scarta una carta oggetto — Pesca 2 carte.",
+        title: "Ho Proprio la Cosa Giusta!",
+        description: "{E}, scegli e scarta una carta oggetto — Pesca 2 carte.",
       },
     ],
   },

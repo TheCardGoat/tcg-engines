@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { aladdinOnTheEdgeOfAdventureI18n } from "./081-aladdin-on-the-edge-of-adventure.i18n";
 
 export const aladdinOnTheEdgeOfAdventure: CharacterCard = {
-  id: "RwC",
+  id: "FwZ",
   canonicalId: "ci_ioY",
+  slug: "lorcana-ci_ioY",
+  printings: [
+    {
+      id: "set11-081",
+      artId: "set11-081",
+      setCode: "set11",
+      collectorNumber: "81",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-081"],
   cardType: "character",
   name: "Aladdin",
@@ -20,7 +31,7 @@ export const aladdinOnTheEdgeOfAdventure: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_629d577b144c424286035635ec968b4a",
-    tcgPlayer: 677146,
+    tcgPlayer: "677146",
   },
   text: [
     {

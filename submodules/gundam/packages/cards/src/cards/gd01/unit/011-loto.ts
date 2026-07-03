@@ -7,14 +7,17 @@ export const gd01Loto011: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-011",
-  externalId: "gundam:gd01-011",
-  slug: "loto-gd01-011",
+  canonicalId: "GD01-011",
+  externalIds: { bandai: "gundam:gd01-011" },
+  slug: "loto/gd01-011",
   displayName: "Loto",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-011",
   printings: [
     {
       id: "GD01-011",
+      artId: "GD01-011",
+      setCode: "GD01",
       collectorNumber: "GD01-011",
       cardNumber: "GD01-011",
       set: {
@@ -30,6 +33,8 @@ export const gd01Loto011: UnitCard = {
     },
     {
       id: "GD01-011_p1",
+      artId: "GD01-011_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-011_p1",
       cardNumber: "GD01-011",
       set: {
@@ -44,6 +49,7 @@ export const gd01Loto011: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-011", "GD01-011_p1"],
   selectedPrintingId: "GD01-011",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-011.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-011.webp?260424",

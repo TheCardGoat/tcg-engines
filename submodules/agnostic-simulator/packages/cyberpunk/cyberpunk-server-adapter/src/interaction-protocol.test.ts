@@ -4,7 +4,7 @@ import type { PlayerPrompt } from "@tcg/cyberpunk-engine";
 import {
   buildCyberpunkInteractionView,
   cyberpunkSubmissionToPayload,
-} from "./interaction-protocol";
+} from "./interaction-protocol.js";
 
 describe("Cyberpunk interaction protocol adapter", () => {
   it("projects native available moves into protocol actions", () => {

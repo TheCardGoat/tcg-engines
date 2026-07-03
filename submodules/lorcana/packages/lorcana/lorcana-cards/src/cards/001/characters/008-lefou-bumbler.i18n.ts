@@ -17,9 +17,9 @@ export const lefouBumblerI18n: Record<Languages, I18nProperties> = {
     version: "Tollpatsch",
     text: [
       {
-        title: "LOYAL",
+        title: "Loyal",
         description:
-          "Wenn du einen Gaston-Charakter im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Wenn du einen Gaston-Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
     ],
   },
@@ -30,7 +30,7 @@ export const lefouBumblerI18n: Record<Languages, I18nProperties> = {
       {
         title: "LOYAL",
         description:
-          "Si vous avez un personnage Gaston en jeu, jouer ce personnage coûte 1 de moins.",
+          "Si vous avez un personnage Gaston en jeu, jouer ce personnage coûte 1 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const lefouBumblerI18n: Record<Languages, I18nProperties> = {
     version: "Bumbler",
     text: [
       {
-        title: "LOYAL",
+        title: "Loyal",
         description:
-          "If you have a character named Gaston in play, you pay 1 less to play this character.",
+          "If you have a character named Gaston in play, you pay 1 {I} less to play this character.",
       },
     ],
   },

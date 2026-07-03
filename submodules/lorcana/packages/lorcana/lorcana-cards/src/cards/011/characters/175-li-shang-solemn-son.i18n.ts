@@ -9,16 +9,16 @@ export const liShangSolemnSonI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Li Shang",
     version: "Frommer Sohn",
-    text: "Herausfordern +2",
+    text: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
   },
   fr: {
     name: "Li Shang",
     version: "Fils solennel",
-    text: "Offensif +2",
+    text: "<Offensif> +2",
   },
   it: {
     name: "Li Shang",
     version: "Figlio Solenne",
-    text: "Sfidante +2",
+    text: "<Sfidante> +2",
   },
 };

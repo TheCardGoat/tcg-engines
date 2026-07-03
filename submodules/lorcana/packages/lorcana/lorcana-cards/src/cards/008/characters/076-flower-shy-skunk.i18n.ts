@@ -17,7 +17,7 @@ export const flowerShySkunkI18n: Record<Languages, I18nProperties> = {
     version: "Schüchternes Stinktier",
     text: [
       {
-        title: "AUF DER SUCHE NACH FREUNDEN",
+        title: "Auf der Suche nach Freunden",
         description:
           "Jedes Mal, wenn du einen anderen Charakter ausspielst, darfst du dir die oberste Karte deines Decks anschauen. Lege sie anschließend entweder auf dein Deck oder darunter.",
       },
@@ -28,7 +28,7 @@ export const flowerShySkunkI18n: Record<Languages, I18nProperties> = {
     version: "Mouffette timide",
     text: [
       {
-        title: "À LA RECHERCHE D'AMIS",
+        title: "À la recherche d'amis",
         description:
           "Chaque fois que vous jouez un autre personnage, regardez la carte du dessus de votre pioche. Placez-la sur ou sous votre pioche.",
       },
@@ -39,7 +39,7 @@ export const flowerShySkunkI18n: Record<Languages, I18nProperties> = {
     version: "Puzzola Timida",
     text: [
       {
-        title: "IN CERCA DI AMICI",
+        title: "In Cerca di Amici",
         description:
           "Ogni volta che giochi un altro personaggio, guarda la prima carta del tuo mazzo. Mettila in cima o in fondo al tuo mazzo.",
       },

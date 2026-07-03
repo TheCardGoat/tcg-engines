@@ -20,12 +20,12 @@ export const scroogeMcduckReformedEbenezerI18n: Record<Languages, I18nProperties
     version: "Reformierter Ebenezer",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title: "<Gestaltwandel> 4 {I}",
       },
       {
-        title: "FREUDE VERBREITEN",
+        title: "Freude verbreiten",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du jeweils für jeden deiner anderen Charaktere die oberste Karte deines Decks verdeckt unter jenen Charakter legen. Wenn du dies tust, erhalten jene Charaktere bis zu Beginn deines nächsten Zuges Behütet.",
+          "Wenn du diesen Charakter ausspielst, darfst du jeweils für jeden deiner anderen Charaktere die oberste Karte deines Decks verdeckt unter jenen Charakter legen. Wenn du dies tust, erhalten jene Charaktere bis zu Beginn deines nächsten Zuges <Behütet>.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const scroogeMcduckReformedEbenezerI18n: Record<Languages, I18nProperties
     version: "Ebenezer repenti",
     text: [
       {
-        title: "Alter 4",
+        title: "<Alter> 4 {I}",
       },
       {
-        title: "RÉPAND LA JOIE",
+        title: "Répand la joie",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez placer une carte du dessus de votre pioche, face cachée, sous chacun de vos autres personnages. Si vous le faites, ces personnages gagnent Hors d'atteinte jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez placer une carte du dessus de votre pioche, face cachée, sous chacun de vos autres personnages. Si vous le faites, ces personnages gagnent <Hors d'atteinte> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const scroogeMcduckReformedEbenezerI18n: Record<Languages, I18nProperties
     version: "Ebenezer Redento",
     text: [
       {
-        title: "Trasformazione 4",
+        title: "<Trasformazione> 4 {I}",
       },
       {
-        title: "DISTRIBUIRE GIOIA",
+        title: "Distribuire Gioia",
         description:
-          "Quando giochi questo personaggio, puoi mettere una carta dalla cima del tuo mazzo a faccia in giù sotto a ogni tuo altro personaggio. Se lo fai, quei personaggi ottengono Protetto fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, puoi mettere una carta dalla cima del tuo mazzo a faccia in giù sotto a ogni tuo altro personaggio. Se lo fai, quei personaggi ottengono <Protetto> fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

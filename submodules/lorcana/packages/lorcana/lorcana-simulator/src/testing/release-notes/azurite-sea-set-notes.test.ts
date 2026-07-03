@@ -246,9 +246,9 @@ describe("Azurite Sea Set Notes (Unofficial - LorcanaJudges.com)", () => {
     });
 
     describe("Dale - Mischievous Ranger", () => {
-      it("should require exactly 3 cards in deck to pay Nuts About Pranks cost - cannot partially pay", () => {
+      it("requires exactly 3 cards in deck to pay Nuts About Pranks cost", () => {
         // Dale: "NUTS ABOUT PRANKS" - When played, may put top 3 cards of deck into discard
-        // to give chosen character -3 S. Cannot partially pay (need exactly 3 cards).
+        // to give chosen character -3 S. This "to" cost cannot be paid partially.
         const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
           {
             hand: [daleMischievousRanger],
@@ -273,7 +273,7 @@ describe("Azurite Sea Set Notes (Unofficial - LorcanaJudges.com)", () => {
           });
         }
 
-        // Strong attacker should not have -3 strength since cost couldn't be paid
+        expect(testEngine.asPlayerOne()).toHaveZoneCounts({ deck: 2, discard: 0 });
         expect(testEngine.asPlayerTwo().getCardStrength(strongAttacker)).toBe(
           strongAttacker.strength,
         );
@@ -431,11 +431,7 @@ describe("Azurite Sea Set Notes (Unofficial - LorcanaJudges.com)", () => {
         testEngine.asServer().manualReadyCard(simbaId);
         expect(testEngine.asPlayerOne().isExerted(simbaPrideProtector)).toBe(false);
 
-        // Resolve the bag effect - secondary condition fails
-        const bagEffects = testEngine.asPlayerOne().getBagEffects();
-        testEngine
-          .asPlayerOne()
-          .resolvePendingByCard(bagEffects[0]!.sourceId, { resolveOptional: true });
+        expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
 
         // Filler should still be exerted (ability had no effect)
         expect(testEngine.asPlayerOne().isExerted(fillerCharacter)).toBe(true);

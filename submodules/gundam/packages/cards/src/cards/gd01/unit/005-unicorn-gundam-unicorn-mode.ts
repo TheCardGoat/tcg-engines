@@ -7,14 +7,17 @@ export const gd01UnicornGundamUnicornMode005: UnitCard = {
   color: "blue",
   traits: ["civilian"],
   id: "GD01-005",
-  externalId: "gundam:gd01-005",
-  slug: "unicorn-gundam-unicorn-mode-gd01-005",
+  canonicalId: "GD01-005",
+  externalIds: { bandai: "gundam:gd01-005" },
+  slug: "unicorn-gundam-unicorn-mode/gd01-005",
   displayName: "Unicorn Gundam (Unicorn Mode)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-005",
   printings: [
     {
       id: "GD01-005",
+      artId: "GD01-005",
+      setCode: "GD01",
       collectorNumber: "GD01-005",
       cardNumber: "GD01-005",
       set: {
@@ -30,6 +33,8 @@ export const gd01UnicornGundamUnicornMode005: UnitCard = {
     },
     {
       id: "GD01-005_p1",
+      artId: "GD01-005_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-005_p1",
       cardNumber: "GD01-005",
       set: {
@@ -45,6 +50,8 @@ export const gd01UnicornGundamUnicornMode005: UnitCard = {
     },
     {
       id: "GD01-005_p2",
+      artId: "GD01-005_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-005_p2",
       cardNumber: "GD01-005",
       set: {
@@ -60,6 +67,8 @@ export const gd01UnicornGundamUnicornMode005: UnitCard = {
     },
     {
       id: "GD01-005_p3",
+      artId: "GD01-005_p3",
+      setCode: "GD01",
       collectorNumber: "GD01-005_p3",
       cardNumber: "GD01-005",
       set: {
@@ -74,6 +83,7 @@ export const gd01UnicornGundamUnicornMode005: UnitCard = {
       productName: "GUNDAM CARD GAME Booster Pack Launch Event",
     },
   ],
+  reprints: ["GD01-005", "GD01-005_p1", "GD01-005_p2", "GD01-005_p3"],
   selectedPrintingId: "GD01-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-005.webp?260424",

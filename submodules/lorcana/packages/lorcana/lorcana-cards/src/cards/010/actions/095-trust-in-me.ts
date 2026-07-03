@@ -4,6 +4,17 @@ import { trustInMeI18n } from "./095-trust-in-me.i18n";
 export const trustInMe: ActionCard = {
   id: "c7R",
   canonicalId: "ci_c7R",
+  slug: "lorcana-ci_c7R",
+  printings: [
+    {
+      id: "set10-095",
+      artId: "set10-095",
+      setCode: "set10",
+      collectorNumber: "95",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-095"],
   cardType: "action",
   name: "Trust In Me",
@@ -16,7 +27,7 @@ export const trustInMe: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a8554e2076074a8599f09e171436ac14",
-    tcgPlayer: 658461,
+    tcgPlayer: "658461",
   },
   text: "Choose one:\n- Each opposing character gets -1 until the start of your next turn.\n- Each opponent chooses and discards 2 cards.",
   actionSubtype: "song",

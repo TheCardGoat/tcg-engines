@@ -7,14 +7,17 @@ export const gd03PaptimusScirocco084: PilotCard = {
   color: "blue",
   traits: ["titans", "jupitris", "newtype"],
   id: "GD03-084",
-  externalId: "gundam:gd03-084",
-  slug: "paptimus-scirocco-gd03-084",
+  canonicalId: "GD03-084",
+  externalIds: { bandai: "gundam:gd03-084" },
+  slug: "paptimus-scirocco/gd03-084",
   displayName: "Paptimus Scirocco",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-084",
   printings: [
     {
       id: "GD03-084",
+      artId: "GD03-084",
+      setCode: "GD03",
       collectorNumber: "GD03-084",
       cardNumber: "GD03-084",
       set: {
@@ -30,6 +33,8 @@ export const gd03PaptimusScirocco084: PilotCard = {
     },
     {
       id: "GD03-084_p1",
+      artId: "GD03-084_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-084_p1",
       cardNumber: "GD03-084",
       set: {
@@ -44,6 +49,7 @@ export const gd03PaptimusScirocco084: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-084", "GD03-084_p1"],
   selectedPrintingId: "GD03-084",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-084.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-084.webp?260424",

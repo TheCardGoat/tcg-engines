@@ -4,6 +4,17 @@ import { jasmineInspiredResearcherI18n } from "./173-jasmine-inspired-researcher
 export const jasmineInspiredResearcher: CharacterCard = {
   id: "TlP",
   canonicalId: "ci_TlP",
+  slug: "lorcana-ci_TlP",
+  printings: [
+    {
+      id: "set7-173",
+      artId: "set7-173",
+      setCode: "set7",
+      collectorNumber: "173",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-173"],
   cardType: "character",
   name: "Jasmine",
@@ -20,7 +31,7 @@ export const jasmineInspiredResearcher: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_62c3a4d3b2234f26b7d63be72faf93a4",
-    tcgPlayer: 619505,
+    tcgPlayer: "619505",
   },
   text: [
     {

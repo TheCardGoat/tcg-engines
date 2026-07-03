@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { ursulaWhisperOfVanessaI18n } from "./059-ursula-whisper-of-vanessa.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const ursulaWhisperOfVanessa: CharacterCard = {
   id: "BB3",
   canonicalId: "ci_BB3",
+  slug: "lorcana-ci_BB3",
+  printings: [
+    {
+      id: "set10-059",
+      artId: "set10-059",
+      setCode: "set10",
+      collectorNumber: "59",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-059"],
   cardType: "character",
   name: "Ursula",
@@ -21,7 +33,7 @@ export const ursulaWhisperOfVanessa: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_340e919c6c0647b89636411cc834debc",
-    tcgPlayer: 658327,
+    tcgPlayer: "658327",
   },
   text: [
     {

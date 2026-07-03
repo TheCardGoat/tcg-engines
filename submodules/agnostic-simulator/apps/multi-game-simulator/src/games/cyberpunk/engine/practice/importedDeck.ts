@@ -28,7 +28,14 @@ export interface CyberpunkDeckPayload {
 export interface DeckCardEntry {
   cardId?: string;
   slug?: string;
-  externalId?: string;
+  /**
+   * Cross-game identity anchor (RFC §7 / ADR-11). Replaces the legacy
+   * `externalId` field, which carried Cyberpunk's dropped slug-derived `cb-*`
+   * id (RFC open Q9). For Cyberpunk `canonicalId == slug` post-merge, but the
+   * field is kept distinct from `slug` so future games whose canonical id
+   * diverges from their URL slug can still resolve through this path.
+   */
+  canonicalId?: string;
   quantity: number;
 }
 
@@ -75,8 +82,11 @@ const cardsById = new Map<string, CardDefinition>(structuredCards.map((card) => 
 const cardsBySlug = new Map<string, CardDefinition>(
   structuredCards.map((card) => [card.slug, card]),
 );
-const cardsByExternalId = new Map<string, CardDefinition>(
-  structuredCards.map((card) => [card.externalId, card]),
+// Indexed by canonicalId (RFC cross-game identity anchor) as the third import
+// resolution key alongside id and slug. The legacy `externalId` index was
+// removed when Cyberpunk dropped its slug-derived `cb-*` external id (RFC Q9).
+const cardsByCanonicalId = new Map<string, CardDefinition>(
+  structuredCards.map((card) => [card.canonicalId, card]),
 );
 
 export function isCyberpunkDeckImportMessage(value: unknown): value is CyberpunkDeckImportMessage {
@@ -232,7 +242,7 @@ function expandEntries(
     if (!resolved) {
       errors.push({
         code: "UNKNOWN_CARD",
-        message: "Could not resolve card from cardId, slug, or externalId.",
+        message: "Could not resolve card from cardId, slug, or canonicalId.",
         cardRef: entry,
       });
       continue;
@@ -247,14 +257,14 @@ function expandEntries(
 function resolveCardEntry(entry: DeckCardEntry, warnings: string[]): CardDefinition | undefined {
   const byId = entry.cardId ? cardsById.get(entry.cardId) : undefined;
   const bySlug = entry.slug ? cardsBySlug.get(entry.slug) : undefined;
-  const byExternalId = entry.externalId ? cardsByExternalId.get(entry.externalId) : undefined;
-  const resolved = byId ?? bySlug ?? byExternalId;
+  const byCanonicalId = entry.canonicalId ? cardsByCanonicalId.get(entry.canonicalId) : undefined;
+  const resolved = byId ?? bySlug ?? byCanonicalId;
   if (
     resolved &&
     byId &&
-    ((bySlug && bySlug.id !== byId.id) || (byExternalId && byExternalId.id !== byId.id))
+    ((bySlug && bySlug.id !== byId.id) || (byCanonicalId && byCanonicalId.id !== byId.id))
   ) {
-    warnings.push(`Card id ${entry.cardId} disagreed with slug or externalId; cardId was used.`);
+    warnings.push(`Card id ${entry.cardId} disagreed with slug or canonicalId; cardId was used.`);
   }
   return resolved;
 }

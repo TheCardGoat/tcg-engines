@@ -17,7 +17,7 @@ export const davidXanatosSteelClanLeaderI18n: Record<Languages, I18nProperties> 
     version: "Stahl-Clan-Anführer",
     text: [
       {
-        title: "KLEINE UNANNEHMLICHKEIT",
+        title: "Kleine Unannehmlichkeit",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du eine Karte von deiner Hand auswählen und abwerfen, um einem Charakter deiner Wahl 2 Schaden zuzufügen.",
       },
@@ -28,7 +28,7 @@ export const davidXanatosSteelClanLeaderI18n: Record<Languages, I18nProperties> 
     version: "Leader du Clan d'Acier",
     text: [
       {
-        title: "PETIT DÉSAGRÉMENT",
+        title: "Petit désagrément",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez défausser une carte pour choisir un personnage et lui infliger 2 dommages.",
       },
@@ -39,7 +39,7 @@ export const davidXanatosSteelClanLeaderI18n: Record<Languages, I18nProperties> 
     version: "Leader del Clan d'Acciaio",
     text: [
       {
-        title: "PICCOLO INCONVENIENTE",
+        title: "Piccolo Inconveniente",
         description:
           "Quando giochi questo personaggio, puoi scegliere e scartare una carta per infliggere 2 danni a un personaggio a tua scelta.",
       },

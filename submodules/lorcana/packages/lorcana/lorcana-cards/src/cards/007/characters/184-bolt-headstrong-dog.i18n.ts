@@ -17,7 +17,7 @@ export const boltHeadstrongDogI18n: Record<Languages, I18nProperties> = {
     version: "Starrköpfiger Hund",
     text: [
       {
-        title: "ES GIBT KEIN ZURÜCK",
+        title: "Es gibt kein Zurück",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, falls er unbeschädigt ist, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
@@ -28,7 +28,7 @@ export const boltHeadstrongDogI18n: Record<Languages, I18nProperties> = {
     version: "Chien obstiné",
     text: [
       {
-        title: "LA ROUTE SERA LONGUE",
+        title: "La route sera longue",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, s'il n'a aucun dommage, vous pouvez piocher une carte puis en défausser une.",
       },
@@ -39,7 +39,7 @@ export const boltHeadstrongDogI18n: Record<Languages, I18nProperties> = {
     version: "Cane Caparbio",
     text: [
       {
-        title: "NON SI PUÒ TORNARE INDIETRO",
+        title: "Non si Può Tornare Indietro",
         description:
           "Ogni volta che questo personaggio va all'avventura, se non ha danno, puoi pescare una carta, poi scegli e scarta una carta.",
       },

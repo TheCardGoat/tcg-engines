@@ -4,6 +4,17 @@ import { plasmaBlasterI18n } from "./204-plasma-blaster.i18n";
 export const plasmaBlaster: ItemCard = {
   id: "zJQ",
   canonicalId: "ci_zJQ",
+  slug: "lorcana-ci_zJQ",
+  printings: [
+    {
+      id: "set1-204",
+      artId: "set1-204",
+      setCode: "set1",
+      collectorNumber: "204",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-204"],
   cardType: "item",
   name: "Plasma Blaster",
@@ -16,7 +27,7 @@ export const plasmaBlaster: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_22373df684c0420ea90d2f8508ac096c",
-    tcgPlayer: 508929,
+    tcgPlayer: "508929",
   },
   text: [
     {

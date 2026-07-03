@@ -19,12 +19,12 @@ export const ingeniousDeviceI18n: Record<Languages, I18nProperties> = {
     name: "Kunstvoller Apparat",
     text: [
       {
-        title: "ÜBERRASCHUNG,",
+        title: "Überraschung",
         description:
-          "2, Verbanne diesen Gegenstand — Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
+          "{E}, 2 {I}, Verbanne diesen Gegenstand — Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
       {
-        title: "DIE ZEIT WIRD KNAPP",
+        title: "Die Zeit wird knapp",
         description:
           "Wenn dieser Gegenstand in deinem Zug verbannt wird, füge einem Charakter oder Ort deiner Wahl 3 Schaden zu.",
       },
@@ -34,11 +34,11 @@ export const ingeniousDeviceI18n: Record<Languages, I18nProperties> = {
     name: "Mécanisme très ingénieux",
     text: [
       {
-        title: "UN GENRE DE PAQUET SURPRISE, 2,",
-        description: "Bannissez cet objet — Piochez une carte puis défaussez-en une.",
+        title: "Un genre de paquet surprise",
+        description: "{E}, 2 {I}, Bannissez cet objet — Piochez une carte puis défaussez-en une.",
       },
       {
-        title: "COMME LE TEMPS PASSE",
+        title: "Comme le temps passe",
         description:
           "Durant votre tour, lorsque cet objet est banni, choisissez un personnage ou un lieu et infligez-lui 3 dommages.",
       },
@@ -48,11 +48,12 @@ export const ingeniousDeviceI18n: Record<Languages, I18nProperties> = {
     name: "Ingegnoso Ordigno",
     text: [
       {
-        title: "SOUVENIR, 2,",
-        description: "esilia questo oggetto — Pesca una carta, poi scegli e scarta una carta.",
+        title: "Souvenir",
+        description:
+          "{E}, 2 {I}, esilia questo oggetto — Pesca una carta, poi scegli e scarta una carta.",
       },
       {
-        title: "IL TEMPO VOLA",
+        title: "Il Tempo Vola",
         description:
           "Durante il tuo turno, quando questo oggetto viene esiliato, infliggi 3 danni a un personaggio o a un luogo a tua scelta.",
       },

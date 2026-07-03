@@ -17,7 +17,7 @@ export const simbaFutureKingI18n: Record<Languages, I18nProperties> = {
     version: "Zukünftiger König",
     text: [
       {
-        title: "WEISST DU WAS?",
+        title: "Weißt du was?",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
@@ -39,7 +39,7 @@ export const simbaFutureKingI18n: Record<Languages, I18nProperties> = {
     version: "Future King",
     text: [
       {
-        title: "GUESS WHAT?",
+        title: "Guess What?",
         description:
           "When you play this character, you may draw a card, then choose and discard a card.",
       },

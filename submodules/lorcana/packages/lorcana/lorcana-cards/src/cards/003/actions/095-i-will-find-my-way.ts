@@ -4,6 +4,17 @@ import { iWillFindMyWayI18n } from "./095-i-will-find-my-way.i18n";
 export const iWillFindMyWay: ActionCard = {
   id: "iQ6",
   canonicalId: "ci_iQ6",
+  slug: "lorcana-ci_iQ6",
+  printings: [
+    {
+      id: "set3-095",
+      artId: "set3-095",
+      setCode: "set3",
+      collectorNumber: "95",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-095"],
   cardType: "action",
   name: "I Will Find My Way",
@@ -16,7 +27,7 @@ export const iWillFindMyWay: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_699c0e28637945e0a2ad8698e9695bb0",
-    tcgPlayer: 538723,
+    tcgPlayer: "538723",
   },
   text: "Chosen character of yours gets +2 {S} this turn. They may move to a location for free.",
   actionSubtype: "song",

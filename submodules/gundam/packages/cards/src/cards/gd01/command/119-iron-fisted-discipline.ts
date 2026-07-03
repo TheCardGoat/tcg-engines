@@ -7,14 +7,17 @@ export const gd01IronFistedDiscipline119: CommandCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-119",
-  externalId: "gundam:gd01-119",
-  slug: "iron-fisted-discipline-gd01-119",
+  canonicalId: "GD01-119",
+  externalIds: { bandai: "gundam:gd01-119" },
+  slug: "iron-fisted-discipline/gd01-119",
   displayName: "Iron-Fisted Discipline",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-119",
   printings: [
     {
       id: "GD01-119",
+      artId: "GD01-119",
+      setCode: "GD01",
       collectorNumber: "GD01-119",
       cardNumber: "GD01-119",
       set: {
@@ -29,6 +32,7 @@ export const gd01IronFistedDiscipline119: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-119"],
   selectedPrintingId: "GD01-119",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-119.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-119.webp?260424",

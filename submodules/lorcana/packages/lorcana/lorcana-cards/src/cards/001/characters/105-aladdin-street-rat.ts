@@ -4,6 +4,17 @@ import { aladdinStreetRatI18n } from "./105-aladdin-street-rat.i18n";
 export const aladdinStreetRat: CharacterCard = {
   id: "ZTM",
   canonicalId: "ci_ZTM",
+  slug: "lorcana-ci_ZTM",
+  printings: [
+    {
+      id: "set1-105",
+      artId: "set1-105",
+      setCode: "set1",
+      collectorNumber: "105",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-105"],
   cardType: "character",
   name: "Aladdin",
@@ -20,7 +31,7 @@ export const aladdinStreetRat: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a2d28e5e695747fb95ebe50f891eb0b4",
-    tcgPlayer: 505947,
+    tcgPlayer: "505947",
   },
   text: [
     {

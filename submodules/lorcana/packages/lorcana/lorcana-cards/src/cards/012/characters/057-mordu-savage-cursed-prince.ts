@@ -4,6 +4,17 @@ import { morduSavageCursedPrinceI18n } from "./057-mordu-savage-cursed-prince.i1
 export const morduSavageCursedPrince: CharacterCard = {
   id: "Imn",
   canonicalId: "ci_Imn",
+  slug: "lorcana-ci_Imn",
+  printings: [
+    {
+      id: "set12-057",
+      artId: "set12-057",
+      setCode: "set12",
+      collectorNumber: "57",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-057"],
   cardType: "character",
   name: "Mor'du",
@@ -20,14 +31,15 @@ export const morduSavageCursedPrince: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_05dcb2ebcf1340c4a16fab77145a1fec",
+    tcgPlayer: "692034",
   },
   text: [
     {
-      title: "Ferocious Roar",
+      title: "FEROCIOUS ROAR",
       description: "When you play this character, exert all your characters not named Mor'du.",
     },
     {
-      title: "Rooted by Fear",
+      title: "ROOTED BY FEAR",
       description: "Your characters not named Mor'du can't ready at the start of your turn.",
     },
   ],

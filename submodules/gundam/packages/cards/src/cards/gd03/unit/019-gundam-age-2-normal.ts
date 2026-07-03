@@ -7,14 +7,17 @@ export const gd03GundamAge2Normal019: UnitCard = {
   color: "green",
   traits: ["earth federation", "age system"],
   id: "GD03-019",
-  externalId: "gundam:gd03-019",
-  slug: "gundam-age-2-normal-gd03-019",
+  canonicalId: "GD03-019",
+  externalIds: { bandai: "gundam:gd03-019" },
+  slug: "gundam-age-2-normal/gd03-019",
   displayName: "Gundam AGE-2 Normal",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-019",
   printings: [
     {
       id: "GD03-019",
+      artId: "GD03-019",
+      setCode: "GD03",
       collectorNumber: "GD03-019",
       cardNumber: "GD03-019",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamAge2Normal019: UnitCard = {
     },
     {
       id: "GD03-019_p1",
+      artId: "GD03-019_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-019_p1",
       cardNumber: "GD03-019",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamAge2Normal019: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-019", "GD03-019_p1"],
   selectedPrintingId: "GD03-019",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-019.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-019.webp?260424",

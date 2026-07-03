@@ -11,10 +11,28 @@ export const theBareNecessitiesI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Il en faut peu pour être heureux",
-    text: "Choisissez un adversaire, il révèle sa main et défausse une carte non-Personnage de votre choix.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un adversaire, il révèle sa main et défausse une carte non-Personnage de votre choix.",
+      },
+    ],
   },
   it: {
     name: "Lo Stretto Indispensabile",
-    text: "(Un personaggio con costo 2 o superiore può per giocare questa canzone gratis.) Un avversario a tua scelta rivela la sua mano e scarta una carta non personaggio a tua scelta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per giocare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Un avversario a tua scelta rivela la sua mano e scarta una carta non personaggio a tua scelta.",
+      },
+    ],
   },
 };

@@ -4,6 +4,17 @@ import { jumbaJookibaProlificInventorI18n } from "./019-jumba-jookiba-prolific-i
 export const jumbaJookibaProlificInventor: CharacterCard = {
   id: "mgC",
   canonicalId: "ci_mgC",
+  slug: "lorcana-ci_mgC",
+  printings: [
+    {
+      id: "set11-019",
+      artId: "set11-019",
+      setCode: "set11",
+      collectorNumber: "19",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-019"],
   cardType: "character",
   name: "Jumba Jookiba",
@@ -20,7 +31,7 @@ export const jumbaJookibaProlificInventor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_aa9fd9e677e946f0ab5f0148b0874568",
-    tcgPlayer: 673070,
+    tcgPlayer: "673070",
   },
   text: [
     {
@@ -36,7 +47,6 @@ export const jumbaJookibaProlificInventor: CharacterCard = {
   ],
   classifications: ["Storyborn", "Ally", "Alien", "Inventor"],
   abilities: [
-    // WELCOMING CROWD: For each character you have in play, you pay 1 less to play this character.
     {
       id: "mgC-1",
       name: "WELCOMING CROWD",
@@ -54,7 +64,6 @@ export const jumbaJookibaProlificInventor: CharacterCard = {
       },
       text: "WELCOMING CROWD For each character you have in play, you pay 1 {I} less to play this character.",
     },
-    // I AM HELPING: Whenever this character quests, you may remove all damage from chosen character.
     {
       id: "mgC-2",
       name: "I AM HELPING",

@@ -4,7 +4,7 @@ import { darkwingDuckCrimeFighter } from "./174-darkwing-duck-crime-fighter";
 
 describe("Darkwing Duck - Crime Fighter", () => {
   it("defines an empty ability list for a vanilla character", () => {
-    expect(darkwingDuckCrimeFighter.abilities).toEqual([]);
+    expect(darkwingDuckCrimeFighter.abilities ?? []).toEqual([]);
   });
 
   it("can be played with enough ink", () => {

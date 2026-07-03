@@ -17,9 +17,9 @@ export const chacaJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
     version: "Junior Chipmunk",
     text: [
       {
-        title: "UNTER GLEICHGESINNTEN",
+        title: "Unter Gleichgesinnten",
         description:
-          "Wenn du diesen Charakter ausspielst und einen Tipo-Charakter im Spiel hast, erhält ein gegnerischer Charakter deiner Wahl in seinem nächsten Zug Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+          "Wenn du diesen Charakter ausspielst und einen Tipo-Charakter im Spiel hast, erhält ein gegnerischer Charakter deiner Wahl in seinem nächsten Zug <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const chacaJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
     version: "Ragondin Junior",
     text: [
       {
-        title: "DE MÈCHE",
+        title: "De mèche",
         description:
-          "Lorsque vous jouez ce personnage, si vous avez un personnage nommé Tipo en jeu, choisissez un personnage adverse qui gagne Combattant durant son prochain tour.",
+          "Lorsque vous jouez ce personnage, si vous avez un personnage nommé Tipo en jeu, choisissez un personnage adverse qui gagne <Combattant> durant son prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const chacaJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
     version: "Giovane Marmotta",
     text: [
       {
-        title: "COMPLICI",
+        title: "Complici",
         description:
-          "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Tipo, un personaggio avversario a tua scelta ottiene Attaccabrighe durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+          "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Tipo, un personaggio avversario a tua scelta ottiene <Attaccabrighe> durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
       },
     ],
   },

@@ -22,14 +22,14 @@ export const yenSidPowerfulSorcererEnchantedI18n: Record<Languages, I18nProperti
     version: "Mächtiger Zauberer",
     text: [
       {
-        title: "RECHTZEITIGES EINGREIFEN",
+        title: "Rechtzeitiges Eingreifen",
         description:
           "Wenn du diesen Charakter ausspielst und einen Zauberbesen-Charakter im Spiel hast, darfst du 1 Karte ziehen.",
       },
       {
-        title: "ARKANES STUDIUM",
+        title: "Arkanes Studium",
         description:
-          "Solange du mindestens 2 Zauberbesen-Charaktere im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens 2 Zauberbesen-Charaktere im Spiel hast, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const yenSidPowerfulSorcererEnchantedI18n: Record<Languages, I18nProperti
     version: "Puissant sorcier",
     text: [
       {
-        title: "INTERVENTION OPPORTUNE",
+        title: "Intervention opportune",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un personnage Balais magiques en jeu, vous pouvez piocher une carte.",
       },
       {
-        title: "ÉTUDE ARCANIQUE",
+        title: "Étude arcanique",
         description:
-          "Tant que vous avez 2 personnages Balai ou plus en jeu, ce personnage gagne +2.",
+          "Tant que vous avez 2 personnages Balai ou plus en jeu, ce personnage gagne +2 {L}.",
       },
     ],
   },
@@ -54,13 +54,14 @@ export const yenSidPowerfulSorcererEnchantedI18n: Record<Languages, I18nProperti
     version: "Potente Stregone",
     text: [
       {
-        title: "AIUTO TEMPESTIVO",
+        title: "Aiuto Tempestivo",
         description:
           "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Scopa Magica, puoi pescare una carta.",
       },
       {
-        title: "STUDIO ARCANO",
-        description: "Mentre hai in gioco 2 o più personaggi Scopa, questo personaggio riceve +2.",
+        title: "Studio Arcano",
+        description:
+          "Mentre hai in gioco 2 o più personaggi Scopa, questo personaggio riceve +2 {L}.",
       },
     ],
   },

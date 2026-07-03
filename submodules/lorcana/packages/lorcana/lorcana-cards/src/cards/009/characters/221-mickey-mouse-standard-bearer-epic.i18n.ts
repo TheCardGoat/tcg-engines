@@ -17,9 +17,9 @@ export const mickeyMouseStandardBearerEpicI18n: Record<Languages, I18nProperties
     version: "Standartenträger",
     text: [
       {
-        title: "STARK BLEIBEN",
+        title: "Stark bleiben",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Herausfordern +2. (Während der Charakter herausfordert, erhält er +2).",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}).",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const mickeyMouseStandardBearerEpicI18n: Record<Languages, I18nProperties
     version: "Porte-étendard",
     text: [
       {
-        title: "SOIS FORT",
+        title: "Sois fort",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne Offensif +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Offensif> +2 pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const mickeyMouseStandardBearerEpicI18n: Record<Languages, I18nProperties
     version: "Standard-iere",
     text: [
       {
-        title: "RIMANERE SALDO",
+        title: "Rimanere Saldo",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene Sfidante +2 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
       },
     ],
   },

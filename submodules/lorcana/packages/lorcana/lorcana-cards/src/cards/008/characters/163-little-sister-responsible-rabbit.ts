@@ -4,6 +4,17 @@ import { littleSisterResponsibleRabbitI18n } from "./163-little-sister-responsib
 export const littleSisterResponsibleRabbit: CharacterCard = {
   id: "gBt",
   canonicalId: "ci_gBt",
+  slug: "lorcana-ci_gBt",
+  printings: [
+    {
+      id: "set8-163",
+      artId: "set8-163",
+      setCode: "set8",
+      collectorNumber: "163",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-163"],
   cardType: "character",
   name: "Little Sister",
@@ -20,7 +31,7 @@ export const littleSisterResponsibleRabbit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fe47a07a0f14415284cb6ad8cbdd190e",
-    tcgPlayer: 631460,
+    tcgPlayer: "631460",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const littleSisterResponsibleRabbit: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           target: {
             selector: "chosen",
             count: 1,

@@ -7,14 +7,17 @@ export const gd01GuelJeturk097: PilotCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-097",
-  externalId: "gundam:gd01-097",
-  slug: "guel-jeturk-gd01-097",
+  canonicalId: "GD01-097",
+  externalIds: { bandai: "gundam:gd01-097" },
+  slug: "guel-jeturk/gd01-097",
   displayName: "Guel Jeturk",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-097",
   printings: [
     {
       id: "GD01-097",
+      artId: "GD01-097",
+      setCode: "GD01",
       collectorNumber: "GD01-097",
       cardNumber: "GD01-097",
       set: {
@@ -30,6 +33,8 @@ export const gd01GuelJeturk097: PilotCard = {
     },
     {
       id: "GD01-097_p1",
+      artId: "GD01-097_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-097_p1",
       cardNumber: "GD01-097",
       set: {
@@ -44,6 +49,7 @@ export const gd01GuelJeturk097: PilotCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-097", "GD01-097_p1"],
   selectedPrintingId: "GD01-097",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-097.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-097.webp?260424",

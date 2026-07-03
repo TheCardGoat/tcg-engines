@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tamatoaSeekerOfShineI18n } from "./156-tamatoa-seeker-of-shine.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 import { ward } from "../../../helpers/abilities/ward";
 
 export const tamatoaSeekerOfShine: CharacterCard = {
-  id: "lED",
+  id: "Qp0",
   canonicalId: "ci_zL3",
+  slug: "lorcana-ci_zL3",
+  printings: [
+    {
+      id: "set11-156",
+      artId: "set11-156",
+      setCode: "set11",
+      collectorNumber: "156",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-156"],
   cardType: "character",
   name: "Tamatoa",
@@ -22,7 +34,7 @@ export const tamatoaSeekerOfShine: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_82807328c2514c0d8f22366b4720a583",
-    tcgPlayer: 677168,
+    tcgPlayer: "677168",
   },
   text: [
     {

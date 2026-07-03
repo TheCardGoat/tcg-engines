@@ -17,7 +17,7 @@ export const lefouInstigatorI18n: Record<Languages, I18nProperties> = {
     version: "Anstifter",
     text: [
       {
-        title: "ENTFACHT DAS FEUER!",
+        title: "Entfacht das Feuer!",
         description:
           "Wenn du diesen Charakter ausspielst, mache einen Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
@@ -39,7 +39,7 @@ export const lefouInstigatorI18n: Record<Languages, I18nProperties> = {
     version: "Instigator",
     text: [
       {
-        title: "FAN THE FLAMES",
+        title: "Fan the Flames",
         description:
           "When you play this character, ready chosen character. They can't quest for the rest of this turn.",
       },

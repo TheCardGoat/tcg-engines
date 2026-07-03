@@ -14,9 +14,9 @@ export const sleepysFluteI18n: Record<Languages, I18nProperties> = {
     name: "Schlafmütz‘ Flöte",
     text: [
       {
-        title: "GAUDIUM IM UNSINN",
+        title: "Gaudium im Unsinn",
         description:
-          "— Falls du in diesem Zug mindestens ein Lied ausgespielt hast, sammelst du 1 Legende.",
+          "{E} — Falls du in diesem Zug mindestens ein Lied ausgespielt hast, sammelst du 1 Legende.",
       },
     ],
   },
@@ -24,8 +24,9 @@ export const sleepysFluteI18n: Record<Languages, I18nProperties> = {
     name: "Flûte de Dormeur",
     text: [
       {
-        title: "CHANSON TYROLIENNE",
-        description: "— Gagnez 1 éclat de Lore si vous avez joué une chanson durant votre tour.",
+        title: "Chanson Tyrolienne",
+        description:
+          "{E} — Gagnez 1 éclat de Lore si vous avez joué une chanson durant votre tour.",
       },
     ],
   },
@@ -33,8 +34,8 @@ export const sleepysFluteI18n: Record<Languages, I18nProperties> = {
     name: "Sleepy's Flute",
     text: [
       {
-        title: "A SILLY SONG",
-        description: "— If you played a song this turn, gain 1 lore.",
+        title: "A Silly Song",
+        description: "{E} — If you played a song this turn, gain 1 lore.",
       },
     ],
   },

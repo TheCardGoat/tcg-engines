@@ -4,6 +4,17 @@ import { billyBonesSpaceSailorI18n } from "./185-billy-bones-space-sailor.i18n";
 export const billyBonesSpaceSailor: CharacterCard = {
   id: "MbE",
   canonicalId: "ci_MbE",
+  slug: "lorcana-ci_MbE",
+  printings: [
+    {
+      id: "set6-185",
+      artId: "set6-185",
+      setCode: "set6",
+      collectorNumber: "185",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-185"],
   cardType: "character",
   name: "Billy Bones",
@@ -20,7 +31,7 @@ export const billyBonesSpaceSailor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bd9c0c2fd69e467c82c247d1733c0d19",
-    tcgPlayer: 587375,
+    tcgPlayer: "587375",
   },
   text: [
     {

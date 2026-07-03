@@ -4,6 +4,17 @@ import { youCanFlyI18n } from "./133-you-can-fly.i18n";
 export const youCanFly: ActionCard = {
   id: "1AV",
   canonicalId: "ci_JGS",
+  slug: "lorcana-ci_JGS",
+  printings: [
+    {
+      id: "set2-133",
+      artId: "set2-133",
+      setCode: "set2",
+      collectorNumber: "133",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-133", "set9-131"],
   cardType: "action",
   name: "You Can Fly!",
@@ -16,7 +27,7 @@ export const youCanFly: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_53b7756b77ee49df8373e45db50bd1de",
-    tcgPlayer: 650066,
+    tcgPlayer: "650066",
   },
   text: "Chosen character gains Evasive until the start of your next turn.",
   actionSubtype: "song",

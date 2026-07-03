@@ -62,25 +62,23 @@ describe("catalog integrity", () => {
     expect(duplicates).toEqual([]);
   });
 
-  // Catches the regression where a P3-promo printing inherits set "012" from its
-  // base card and then overrides only cardNumber, producing the same (set, cardNumber)
-  // tuple as another card in set 012. Several frontend lookups (catalog views, image
-  // path builders) key off (set, cardNumber); a collision shows the wrong card in the
-  // popup. Promo printings should declare their own promo-set code (e.g. "P03").
-  it("no two cards share the same (set, cardNumber)", async () => {
+  // Catches regressions where special printings are generated without enough identity
+  // to distinguish them from the base collector number.
+  it("no two cards share the same printing id", async () => {
     const allCards = await getAllCards();
     const seen = new Map<string, { id: string; name: string }>();
     const duplicates: string[] = [];
 
     for (const card of allCards) {
-      const key = `${card.set}-${card.cardNumber}`;
-      const prev = seen.get(key);
-      if (prev !== undefined) {
-        duplicates.push(
-          `(set=${card.set}, cardNumber=${card.cardNumber}) shared by "${prev.name}" [${prev.id}] and "${card.name}" [${card.id}]`,
-        );
-      } else {
-        seen.set(key, { id: card.id, name: card.name });
+      for (const printing of card.printings) {
+        const prev = seen.get(printing.id);
+        if (prev !== undefined) {
+          duplicates.push(
+            `printing "${printing.id}" shared by "${prev.name}" [${prev.id}] and "${card.name}" [${card.id}]`,
+          );
+        } else {
+          seen.set(printing.id, { id: card.id, name: card.name });
+        }
       }
     }
 

@@ -4,6 +4,17 @@ import { starlightVialI18n } from "./099-starlight-vial.i18n";
 export const starlightVial: ItemCard = {
   id: "0Az",
   canonicalId: "ci_0Az",
+  slug: "lorcana-ci_0Az",
+  printings: [
+    {
+      id: "set3-099",
+      artId: "set3-099",
+      setCode: "set3",
+      collectorNumber: "99",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-099"],
   cardType: "item",
   name: "Starlight Vial",
@@ -16,7 +27,7 @@ export const starlightVial: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c6b673289f9a4d2680a50dc6be9605dc",
-    tcgPlayer: 539086,
+    tcgPlayer: "539086",
   },
   text: [
     {

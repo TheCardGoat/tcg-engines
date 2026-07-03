@@ -6,9 +6,9 @@ export const nickWildeWilyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Wily Fox",
     text: [
       {
-        title: "IT'S CALLED A HUSTLE",
+        title: "IT'S CALLED",
         description:
-          "When you play this character, you may return an item card named Pawpsicle from your discard to your hand.",
+          "A HUSTLE When you play this character, you may return an item card named Pawpsicle from your discard to your hand.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const nickWildeWilyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Schlauer Fuchs",
     text: [
       {
-        title: "DAS WAR EIN TRICK",
+        title: "Das war ein Trick",
         description:
           'Wenn du diesen Charakter ausspielst, darfst du 1 "Tatziatella"-Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.',
       },
@@ -28,7 +28,7 @@ export const nickWildeWilyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Rusé comme un renard",
     text: [
       {
-        title: "ÇA S'APPELLE UNE ARNAQUE",
+        title: "Ça s'appelle une arnaque",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez reprendre en main un objet Glace à l'eau de votre défausse.",
       },
@@ -39,7 +39,7 @@ export const nickWildeWilyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Wily Fox",
     text: [
       {
-        title: "IT'S CALLED A HUSTLE",
+        title: "It's Called a Hustle",
         description:
           "When you play this character, you may return an item card named Pawpsicle from your discard to your hand.",
       },

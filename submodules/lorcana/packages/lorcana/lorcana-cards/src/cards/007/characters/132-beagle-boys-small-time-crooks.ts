@@ -4,6 +4,17 @@ import { beagleBoysSmalltimeCrooksI18n } from "./132-beagle-boys-small-time-croo
 export const beagleBoysSmalltimeCrooks: CharacterCard = {
   id: "WJM",
   canonicalId: "ci_WJM",
+  slug: "lorcana-ci_WJM",
+  printings: [
+    {
+      id: "set7-132",
+      artId: "set7-132",
+      setCode: "set7",
+      collectorNumber: "132",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-132"],
   cardType: "character",
   name: "Beagle Boys",
@@ -20,7 +31,7 @@ export const beagleBoysSmalltimeCrooks: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0d3c06bef62348d7b6dcb0fe03afa6d0",
-    tcgPlayer: 619478,
+    tcgPlayer: "619478",
   },
   text: [
     {

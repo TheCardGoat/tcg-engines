@@ -1,12 +1,13 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerMamanBrigitte = {
+export const spoilerMamanBrigitte = defineCyberpunkCard({
   id: "0e07190f-3e75-4b5e-ba24-5840801d9f34",
-  externalId: "cyberpunk:maman-brigitte",
   slug: "maman-brigitte",
+  rulesText: "PLAY You may discard 2 Programs. If you do, bottom-deck a rival unequipped Unit.",
   name: "Maman Brigitte",
   displayName: "Maman Brigitte",
-  rulesText: "PLAY You may discard 2 Programs. If you do, bottom-deck a rival unequipped Unit.",
+  canonicalId: "maman-brigitte",
   color: "blue",
   classifications: ["Mystic", "Netrunner", "Voodoo Boys"],
   set: {
@@ -14,15 +15,6 @@ export const spoilerMamanBrigitte = {
     name: "Spoiler Set",
   },
   printNumber: "118",
-  printings: [
-    {
-      id: "61e6b13d-963f-4ac4-b142-24f8c6497a84",
-      collectorNumber: "118",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "61e6b13d-963f-4ac4-b142-24f8c6497a84",
   artist: "TOPDOG Entertainment",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/118.webp",
   rarity: null,
@@ -30,7 +22,6 @@ export const spoilerMamanBrigitte = {
   hasSellTag: false,
   ram: 4,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 5,
   power: 3,
@@ -81,5 +72,4 @@ export const spoilerMamanBrigitte = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

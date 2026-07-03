@@ -4,6 +4,17 @@ import { madamMimElephantI18n } from "./044-madam-mim-elephant.i18n";
 export const madamMimElephant: CharacterCard = {
   id: "jUU",
   canonicalId: "ci_jUU",
+  slug: "lorcana-ci_jUU",
+  printings: [
+    {
+      id: "set5-044",
+      artId: "set5-044",
+      setCode: "set5",
+      collectorNumber: "44",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-044"],
   cardType: "character",
   name: "Madam Mim",
@@ -20,7 +31,7 @@ export const madamMimElephant: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_68ff503b4be94f6cbf93a9b0cd097c80",
-    tcgPlayer: 560092,
+    tcgPlayer: "560092",
   },
   text: [
     {
@@ -85,7 +96,11 @@ export const madamMimElephant: CharacterCard = {
               query: {
                 selector: "all",
                 reference: "source",
-                filters: [{ type: "damaged" }],
+                filters: [
+                  {
+                    type: "damaged",
+                  },
+                ],
               },
               comparison: {
                 operator: "gte",
@@ -112,7 +127,10 @@ export const madamMimElephant: CharacterCard = {
         type: "optional",
         effect: {
           type: "move-damage",
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           from: {
             ref: "self",
           },

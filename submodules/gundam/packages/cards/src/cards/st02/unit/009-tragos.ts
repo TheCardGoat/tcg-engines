@@ -7,14 +7,17 @@ export const st02Tragos009: UnitCard = {
   color: "blue",
   traits: ["oz"],
   id: "ST02-009",
-  externalId: "gundam:st02-009",
-  slug: "tragos-st02-009",
+  canonicalId: "ST02-009",
+  externalIds: { bandai: "gundam:st02-009" },
+  slug: "tragos/st02-009",
   displayName: "Tragos",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-009",
   printings: [
     {
       id: "ST02-009",
+      artId: "ST02-009",
+      setCode: "ST02",
       collectorNumber: "ST02-009",
       cardNumber: "ST02-009",
       set: {
@@ -30,6 +33,8 @@ export const st02Tragos009: UnitCard = {
     },
     {
       id: "ST02-009_p1",
+      artId: "ST02-009_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-009_p1",
       cardNumber: "ST02-009",
       set: {
@@ -44,6 +49,7 @@ export const st02Tragos009: UnitCard = {
       productName: "Wings of Advance [ST02] Bonus Pack",
     },
   ],
+  reprints: ["ST02-009", "ST02-009_p1"],
   selectedPrintingId: "ST02-009",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-009.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-009.webp?260424",

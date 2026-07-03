@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jimHawkinsHonorablePirateI18n } from "./025-jim-hawkins-honorable-pirate.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const jimHawkinsHonorablePirate: CharacterCard = {
   id: "I2f",
   canonicalId: "ci_I2f",
+  slug: "lorcana-ci_I2f",
+  printings: [
+    {
+      id: "set6-025",
+      artId: "set6-025",
+      setCode: "set6",
+      collectorNumber: "25",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-025"],
   cardType: "character",
   name: "Jim Hawkins",
@@ -21,16 +33,16 @@ export const jimHawkinsHonorablePirate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5de4864e187a4039b3e47b6ada93b801",
-    tcgPlayer: 578171,
+    tcgPlayer: "578171",
   },
   text: [
     {
       title: "Bodyguard",
     },
     {
-      title: "HIRE A CREW",
+      title: "HIRE",
       description:
-        "When you play this character, look at the top 4 cards of your deck. You may reveal any number of Pirate character cards and put them into your hand. Put the rest on the bottom of your deck in any order.",
+        "A CREW When you play this character, look at the top 4 cards of your deck. You may reveal any number of Pirate character cards and put them into your hand. Put the rest on the bottom of your deck in any order.",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Pirate", "Captain"],

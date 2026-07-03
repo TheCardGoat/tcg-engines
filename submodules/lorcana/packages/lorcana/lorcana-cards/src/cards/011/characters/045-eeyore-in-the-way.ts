@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { eeyoreInTheWayI18n } from "./045-eeyore-in-the-way.i18n";
 
 export const eeyoreInTheWay: CharacterCard = {
-  id: "A85",
+  id: "sDu",
   canonicalId: "ci_e9D",
+  slug: "lorcana-ci_e9D",
+  printings: [
+    {
+      id: "set11-045",
+      artId: "set11-045",
+      setCode: "set11",
+      collectorNumber: "45",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-045"],
   cardType: "character",
   name: "Eeyore",
@@ -20,7 +31,7 @@ export const eeyoreInTheWay: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_758bab20496f4673991e53ac59f1bcaa",
-    tcgPlayer: 675279,
+    tcgPlayer: "675279",
   },
   text: [
     {

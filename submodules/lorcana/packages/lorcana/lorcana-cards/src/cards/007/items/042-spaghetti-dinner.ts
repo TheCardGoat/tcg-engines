@@ -4,6 +4,17 @@ import { spaghettiDinnerI18n } from "./042-spaghetti-dinner.i18n";
 export const spaghettiDinner: ItemCard = {
   id: "4Q1",
   canonicalId: "ci_4Q1",
+  slug: "lorcana-ci_4Q1",
+  printings: [
+    {
+      id: "set7-042",
+      artId: "set7-042",
+      setCode: "set7",
+      collectorNumber: "42",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-042"],
   cardType: "item",
   name: "Spaghetti Dinner",
@@ -16,7 +27,7 @@ export const spaghettiDinner: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_568855977d47447e9b2977c859dc31c7",
-    tcgPlayer: 618164,
+    tcgPlayer: "618164",
   },
   text: [
     {

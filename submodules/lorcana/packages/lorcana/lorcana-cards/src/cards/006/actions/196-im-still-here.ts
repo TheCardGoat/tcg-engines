@@ -4,6 +4,17 @@ import { imStillHereI18n } from "./196-im-still-here.i18n";
 export const imStillHere: ActionCard = {
   id: "HdJ",
   canonicalId: "ci_HdJ",
+  slug: "lorcana-ci_HdJ",
+  printings: [
+    {
+      id: "set6-196",
+      artId: "set6-196",
+      setCode: "set6",
+      collectorNumber: "196",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-196"],
   cardType: "action",
   name: "I'm Still Here",
@@ -16,7 +27,7 @@ export const imStillHere: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_139b6ae1e1c04ea0aef5ef864e8ed14b",
-    tcgPlayer: 588151,
+    tcgPlayer: "588151",
   },
   text: "Chosen character gains Resist +2 until the start of your next turn. Draw a card.",
   actionSubtype: "song",

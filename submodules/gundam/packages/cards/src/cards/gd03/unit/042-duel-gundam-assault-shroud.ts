@@ -7,14 +7,17 @@ export const gd03DuelGundamAssaultShroud042: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD03-042",
-  externalId: "gundam:gd03-042",
-  slug: "duel-gundam-assault-shroud-gd03-042",
+  canonicalId: "GD03-042",
+  externalIds: { bandai: "gundam:gd03-042" },
+  slug: "duel-gundam-assault-shroud/gd03-042",
   displayName: "Duel Gundam (Assault Shroud)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-042",
   printings: [
     {
       id: "GD03-042",
+      artId: "GD03-042",
+      setCode: "GD03",
       collectorNumber: "GD03-042",
       cardNumber: "GD03-042",
       set: {
@@ -29,6 +32,7 @@ export const gd03DuelGundamAssaultShroud042: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-042"],
   selectedPrintingId: "GD03-042",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-042.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-042.webp?260424",

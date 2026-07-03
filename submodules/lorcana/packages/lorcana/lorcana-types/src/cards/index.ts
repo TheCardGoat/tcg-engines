@@ -17,7 +17,10 @@ export type {
   BaseCardProperties,
   CardText,
   CardTextEntry,
+  DeckConstructionCardFilter,
+  DeckConstructionRule,
   I18nProperties,
+  IgnoreInkTypesDeckConstructionRule,
   // Card type constants
   CardType,
   CharacterCard,

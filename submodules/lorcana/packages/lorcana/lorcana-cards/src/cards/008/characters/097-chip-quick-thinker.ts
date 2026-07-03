@@ -4,6 +4,17 @@ import { chipQuickThinkerI18n } from "./097-chip-quick-thinker.i18n";
 export const chipQuickThinker: CharacterCard = {
   id: "oOq",
   canonicalId: "ci_oOq",
+  slug: "lorcana-ci_oOq",
+  printings: [
+    {
+      id: "set8-097",
+      artId: "set8-097",
+      setCode: "set8",
+      collectorNumber: "97",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-097"],
   cardType: "character",
   name: "Chip",
@@ -20,7 +31,7 @@ export const chipQuickThinker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_51597c28f0b444a6a4cf319ff579c839",
-    tcgPlayer: 631346,
+    tcgPlayer: "631346",
   },
   text: [
     {

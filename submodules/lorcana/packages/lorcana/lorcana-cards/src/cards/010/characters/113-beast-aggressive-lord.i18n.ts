@@ -20,10 +20,11 @@ export const beastAggressiveLordI18n: Record<Languages, I18nProperties> = {
     version: "Wütender Gebieter",
     text: [
       {
-        title: "Stärken 2",
+        title:
+          "<Stärken> 2 {I} (Einmal während deines Zuges darfst du 2 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "DAS IST MEINS",
+        title: "Das ist meins",
         description:
           "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, falls dieser Charakter mindestens eine Karte unter sich hat, verlieren alle gegnerischen Mitspielenden je 1 Legende und du sammelst 1 Legende.",
       },
@@ -34,12 +35,13 @@ export const beastAggressiveLordI18n: Record<Languages, I18nProperties> = {
     version: "Noble agressif",
     text: [
       {
-        title: "Boost 2",
+        title:
+          "<Boost> 2 {I} (Une fois durant votre tour, vous pouvez payer 2 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "C'EST",
+        title: "C'est à moi!",
         description:
-          "À MOI! Chaque fois qu'il défie un autre personnage, s'il y a une carte sous ce personnage-ci, chaque adversaire perd 1 éclat de Lore et vous gagnez 1 éclat de Lore.",
+          "Chaque fois qu'il défie un autre personnage, s'il y a une carte sous ce personnage-ci, chaque adversaire perd 1 éclat de Lore et vous gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -48,11 +50,13 @@ export const beastAggressiveLordI18n: Record<Languages, I18nProperties> = {
     version: "Signore Aggressivo",
     text: [
       {
-        title: "Potenziamento 2",
+        title:
+          "<Potenziamento> 2 {I} (Una volta durante il tuo turno, puoi pagare 2 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title:
-          "È MIA Ogni volta che sfida un altro personaggio, se c'è una carta sotto a questo personaggio, ogni avversario perde 1 leggenda e tu ottieni 1 leggenda.",
+        title: "È Mia",
+        description:
+          "Ogni volta che sfida un altro personaggio, se c'è una carta sotto a questo personaggio, ogni avversario perde 1 leggenda e tu ottieni 1 leggenda.",
       },
     ],
   },

@@ -5,6 +5,17 @@ import { syndromeEvilInventorI18n } from "./143-syndrome-evil-inventor.i18n";
 export const syndromeEvilInventor: CharacterCard = {
   id: "ib4",
   canonicalId: "ci_ib4",
+  slug: "lorcana-ci_ib4",
+  printings: [
+    {
+      id: "set12-143",
+      artId: "set12-143",
+      setCode: "set12",
+      collectorNumber: "143",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-143"],
   cardType: "character",
   name: "Syndrome",
@@ -19,8 +30,10 @@ export const syndromeEvilInventor: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  abilities: [alert],
   externalIds: {
     lorcast: "crd_6a4abcb645cf41f282d3e6466283ea8d",
+    tcgPlayer: "692064",
   },
   text: [
     {
@@ -29,6 +42,5 @@ export const syndromeEvilInventor: CharacterCard = {
     },
   ],
   classifications: ["Storyborn", "Super", "Villain", "Inventor"],
-  abilities: [alert],
   i18n: syndromeEvilInventorI18n,
 };

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mauiSoaringDemigodI18n } from "./113-maui-soaring-demigod.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 
 export const mauiSoaringDemigod: CharacterCard = {
   id: "IYc",
   canonicalId: "ci_IYc",
+  slug: "lorcana-ci_IYc",
+  printings: [
+    {
+      id: "set3-113",
+      artId: "set3-113",
+      setCode: "set3",
+      collectorNumber: "113",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-113"],
   cardType: "character",
   name: "Maui",
@@ -21,7 +33,7 @@ export const mauiSoaringDemigod: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1b985f3a7a854505902294c666c69c34",
-    tcgPlayer: 539090,
+    tcgPlayer: "539090",
   },
   text: [
     {

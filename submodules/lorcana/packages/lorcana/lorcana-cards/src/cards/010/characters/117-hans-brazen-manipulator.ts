@@ -4,6 +4,17 @@ import { hansBrazenManipulatorI18n } from "./117-hans-brazen-manipulator.i18n";
 export const hansBrazenManipulator: CharacterCard = {
   id: "8Rp",
   canonicalId: "ci_8Rp",
+  slug: "lorcana-ci_8Rp",
+  printings: [
+    {
+      id: "set10-117",
+      artId: "set10-117",
+      setCode: "set10",
+      collectorNumber: "117",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-117"],
   cardType: "character",
   name: "Hans",
@@ -20,7 +31,7 @@ export const hansBrazenManipulator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c8a9d4fc3bd241468dc26f8415bea95a",
-    tcgPlayer: 659620,
+    tcgPlayer: "659620",
   },
   text: [
     {

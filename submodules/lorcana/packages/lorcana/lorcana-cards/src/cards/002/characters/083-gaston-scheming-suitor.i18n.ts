@@ -17,9 +17,9 @@ export const gastonSchemingSuitorI18n: Record<Languages, I18nProperties> = {
     version: "Intriganter Verehrer",
     text: [
       {
-        title: "ICH BIN FURCHTERREGEND",
+        title: "Ich bin furchterregend",
         description:
-          "Solange mindestens eine gegnerische Person keine Handkarten hat, erhält dieser Charakter +3.",
+          "Solange mindestens eine gegnerische Person keine Handkarten hat, erhält dieser Charakter +3 {S}.",
       },
     ],
   },
@@ -28,8 +28,8 @@ export const gastonSchemingSuitorI18n: Record<Languages, I18nProperties> = {
     version: "Prétendant fourbe",
     text: [
       {
-        title: "UN CORPS D'APOLLON, DU PLOMB DANS LA TÊTE",
-        description: "Tant qu'un adversaire n'a plus de carte en main, ce personnage gagne +3.",
+        title: "Un corps d'Apollon, du plomb dans la tête",
+        description: "Tant qu'un adversaire n'a plus de carte en main, ce personnage gagne +3 {S}.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const gastonSchemingSuitorI18n: Record<Languages, I18nProperties> = {
     version: "Scheming Suitor",
     text: [
       {
-        title: "YES, I'M INTIMIDATING",
+        title: "Yes, I'm Intimidating",
         description:
-          "While one or more opponents have no cards in their hands, this character gets +3.",
+          "While one or more opponents have no cards in their hands, this character gets +3 {S}.",
       },
     ],
   },

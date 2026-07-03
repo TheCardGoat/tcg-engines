@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
-import { CardImage as SharedCardImage } from "@tcg/simulator-ui";
-import { useCardPreview, type CardPreviewDetails } from "./CardPreviewContext";
+import { AspectRatio } from "@mantine/core";
+import { useCardPreview, type CardPreviewDetails } from "../CardPreview/CardPreviewContext";
 import classes from "./CardImage.module.css";
 
 export const CARD_BACK = "https://r2.tcg.online/public/cyberpunk/cards/back/card-back.webp";
 export const LEGEND_CARD_BACK =
   "https://r2.tcg.online/public/cyberpunk/cards/back/legend-card-back.webp";
-export const CARD_ASPECT_RATIO = 744 / 1039;
+export const CARD_ASPECT_RATIO = 5 / 7;
 
 interface CardImageProps {
   imageUrl?: string;
@@ -59,18 +59,9 @@ export function CardImage({
   });
 
   return (
-    <SharedCardImage
-      imageRef={imageRef}
-      src={src}
-      alt={alt}
-      aspectRatio={CARD_ASPECT_RATIO}
-      fit="contain"
-      fill
+    <AspectRatio
+      ratio={CARD_ASPECT_RATIO}
       className={`${classes.wrap} ${className ?? ""}`}
-      imageClassName={classes.img}
-      loading="eager"
-      onImageLoad={onImageLoad}
-      onImageError={onImageError}
       onMouseEnter={
         previewable
           ? () =>
@@ -83,6 +74,15 @@ export function CardImage({
           : undefined
       }
       onMouseLeave={previewable ? () => hide() : undefined}
-    />
+    >
+      <img
+        ref={imageRef}
+        src={src}
+        alt={alt}
+        className={classes.img}
+        onLoad={onImageLoad}
+        onError={onImageError}
+      />
+    </AspectRatio>
   );
 }

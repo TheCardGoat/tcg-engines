@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMouseBraveLittlePrinceI18n } from "./111-mickey-mouse-brave-little-prince.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const mickeyMouseBraveLittlePrince: CharacterCard = {
   id: "7B1",
   canonicalId: "ci_Ka8",
+  slug: "lorcana-ci_Ka8",
+  printings: [
+    {
+      id: "set9-111",
+      artId: "set9-111",
+      setCode: "set9",
+      collectorNumber: "111",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-111"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -21,7 +33,7 @@ export const mickeyMouseBraveLittlePrince: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4d10d4cd91454ff389318fd9a19a879f",
-    tcgPlayer: 647663,
+    tcgPlayer: "647663",
   },
   text: [
     {

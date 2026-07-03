@@ -7,14 +7,17 @@ export const gd03AwakenedPotential118: CommandCard = {
   color: "white",
   traits: [],
   id: "GD03-118",
-  externalId: "gundam:gd03-118",
-  slug: "awakened-potential-gd03-118",
+  canonicalId: "GD03-118",
+  externalIds: { bandai: "gundam:gd03-118" },
+  slug: "awakened-potential/gd03-118",
   displayName: "Awakened Potential",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-118",
   printings: [
     {
       id: "GD03-118",
+      artId: "GD03-118",
+      setCode: "GD03",
       collectorNumber: "GD03-118",
       cardNumber: "GD03-118",
       set: {
@@ -30,6 +33,8 @@ export const gd03AwakenedPotential118: CommandCard = {
     },
     {
       id: "GD03-118_p1",
+      artId: "GD03-118_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-118_p1",
       cardNumber: "GD03-118",
       set: {
@@ -45,6 +50,8 @@ export const gd03AwakenedPotential118: CommandCard = {
     },
     {
       id: "GD03-118_p2",
+      artId: "GD03-118_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-118_p2",
       cardNumber: "GD03-118",
       set: {
@@ -60,6 +67,8 @@ export const gd03AwakenedPotential118: CommandCard = {
     },
     {
       id: "GD03-118_p3",
+      artId: "GD03-118_p3",
+      setCode: "GD03",
       collectorNumber: "GD03-118_p3",
       cardNumber: "GD03-118",
       set: {
@@ -75,6 +84,8 @@ export const gd03AwakenedPotential118: CommandCard = {
     },
     {
       id: "GD03-118_p4",
+      artId: "GD03-118_p4",
+      setCode: "GD03",
       collectorNumber: "GD03-118_p4",
       cardNumber: "GD03-118",
       set: {
@@ -89,6 +100,7 @@ export const gd03AwakenedPotential118: CommandCard = {
       productName: "Newtype Challenge 2026 Mission 1",
     },
   ],
+  reprints: ["GD03-118", "GD03-118_p1", "GD03-118_p2", "GD03-118_p3", "GD03-118_p4"],
   selectedPrintingId: "GD03-118",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-118.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-118.webp?260424",

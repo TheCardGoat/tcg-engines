@@ -17,9 +17,9 @@ export const mulanResourcefulRecruitEnchantedI18n: Record<Languages, I18nPropert
     version: "Raffinierte Rekrutin",
     text: [
       {
-        title: "STRENGE AUSBILDUNG",
+        title: "Strenge Ausbildung",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, sammle so viele Legenden, wie sein -Wert beträgt, bis zu einem Maximum von 6.",
+          "Jedes Mal, wenn dieser Charakter erkundet, sammle so viele Legenden, wie sein {S}-Wert beträgt, bis zu einem Maximum von 6.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const mulanResourcefulRecruitEnchantedI18n: Record<Languages, I18nPropert
     version: "Recrue pleine de ressources",
     text: [
       {
-        title: "ENTRAÎNEMENT RIGOUREUX",
+        title: "Entraînement rigoureux",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, gagnez autant d'éclats de Lore que sa, jusqu'à un maximum de 6 éclats de Lore.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, gagnez autant d'éclats de Lore que sa {S}, jusqu'à un maximum de 6 éclats de Lore.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const mulanResourcefulRecruitEnchantedI18n: Record<Languages, I18nPropert
     version: "Recluta Piena di Risorse",
     text: [
       {
-        title: "ADDESTRAMENTO RIGOROSO",
+        title: "Addestramento Rigoroso",
         description:
-          "Ogni volta che questo personaggio va all'avventura, ottieni leggenda pari alla sua, fino a un massimo di 6 leggenda.",
+          "Ogni volta che questo personaggio va all'avventura, ottieni leggenda pari alla sua {S}, fino a un massimo di 6 leggenda.",
       },
     ],
   },

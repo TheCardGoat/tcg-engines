@@ -21,14 +21,14 @@ export const illuminaryTunnelsLinkedCavernsI18n: Record<Languages, I18nPropertie
     version: "Verbundene Höhlen",
     text: [
       {
-        title: "UNTERIRDISCHES NETZWERK",
+        title: "Unterirdisches Netzwerk",
         description:
-          "Solange du mindestens einen Charakter an diesem Ort hast, erhält dieser Ort +1 für jeden anderen Ort, den du im Spiel hast.",
+          "Solange du mindestens einen Charakter an diesem Ort hast, erhält dieser Ort +1 {L} für jeden anderen Ort, den du im Spiel hast.",
       },
       {
-        title: "LOCUS",
+        title: "Locus",
         description:
-          "Solange du mindestens einen Charakter an diesem Ort hast, zahlst du 1 weniger, um Orte auszuspielen.",
+          "Solange du mindestens einen Charakter an diesem Ort hast, zahlst du 1 {I} weniger, um Orte auszuspielen.",
       },
     ],
   },
@@ -37,14 +37,14 @@ export const illuminaryTunnelsLinkedCavernsI18n: Record<Languages, I18nPropertie
     version: "Cavernes reliées",
     text: [
       {
-        title: "RÉSEAU SOUTERRAIN",
+        title: "Réseau souterrain",
         description:
-          "Tant que vous avez un personnage sur ce lieu, ce lieu gagne +1 pour chaque autre lieu que vous avez en jeu.",
+          "Tant que vous avez un personnage sur ce lieu, ce lieu gagne +1 {L} pour chaque autre lieu que vous avez en jeu.",
       },
       {
-        title: "LOCUS",
+        title: "Locus",
         description:
-          "Tant que vous avez un personnage sur ce lieu, jouer un lieu vous coûte 1 de moins.",
+          "Tant que vous avez un personnage sur ce lieu, jouer un lieu vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -53,14 +53,14 @@ export const illuminaryTunnelsLinkedCavernsI18n: Record<Languages, I18nPropertie
     version: "Rete di Caverne",
     text: [
       {
-        title: "RETE SOTTERRANEA",
+        title: "Rete Sotterranea",
         description:
-          "Mentre hai un personaggio in questo luogo, questo luogo riceve +1 per ogni altro luogo che hai in gioco.",
+          "Mentre hai un personaggio in questo luogo, questo luogo riceve +1 {L} per ogni altro luogo che hai in gioco.",
       },
       {
-        title: "LOCUS",
+        title: "Locus",
         description:
-          "Mentre hai un personaggio in questo luogo, paga 1 in meno per giocare i luoghi.",
+          "Mentre hai un personaggio in questo luogo, paga 1 {I} in meno per giocare i luoghi.",
       },
     ],
   },

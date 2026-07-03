@@ -20,12 +20,13 @@ export const princeEricUrsulasGroomI18n: Record<Languages, I18nProperties> = {
     version: "Ursulas Bräutigam",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Prinz-Eric-Charaktere auszuspielen.)",
       },
       {
-        title: "IN VANESSAS BANN",
+        title: "In Vanessas Bann",
         description:
-          "Solange du mindestens einen Ursula-Charakter im Spiel hast, erhält dieser Charakter +2 und Beschützen. (Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
+          "Solange du mindestens einen Ursula-Charakter im Spiel hast, erhält dieser Charakter +2 {W} und <Beschützen>. (Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const princeEricUrsulasGroomI18n: Record<Languages, I18nProperties> = {
     version: "Fiancé d'Ursula",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Prince Eric.)",
       },
       {
-        title: "SOUS LE CHARME DE VANESSA",
+        title: "Sous le charme de Vanessa",
         description:
-          "Tant que vous avez un personnage Ursula en jeu, ce personnage-ci gagne Rempart et +2. (Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
+          "Tant que vous avez un personnage Ursula en jeu, ce personnage-ci gagne <Rempart> et +2 {W}. (Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const princeEricUrsulasGroomI18n: Record<Languages, I18nProperties> = {
     version: "Sposo di Ursula",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Principe Eric.)",
       },
       {
-        title: "SOTTO L'INCANTO DI VANESSA",
+        title: "Sotto l'Incanto di Vanessa",
         description:
-          "Mentre hai in gioco un personaggio chiamato Ursula, questo personaggio ottiene Guardiano e riceve +2. (Un personaggio avversario che sfida uno dei tuoi personaggi deve sceglierne uno con Guardiano, se possibile.)",
+          "Mentre hai in gioco un personaggio chiamato Ursula, questo personaggio ottiene <Guardiano> e riceve +2 {W}. (Un personaggio avversario che sfida uno dei tuoi personaggi deve sceglierne uno con Guardiano, se possibile.)",
       },
     ],
   },

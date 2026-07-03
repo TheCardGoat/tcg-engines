@@ -7,14 +7,17 @@ export const gd03ZakuFourSnakeEyesYetiGq032: UnitCard = {
   color: "green",
   traits: ["clan"],
   id: "GD03-032",
-  externalId: "gundam:gd03-032",
-  slug: "zaku-four-snake-eyes-yeti-gq-gd03-032",
+  canonicalId: "GD03-032",
+  externalIds: { bandai: "gundam:gd03-032" },
+  slug: "zaku-four-snake-eyes-yeti-gq/gd03-032",
   displayName: "Zaku (Four Snake Eyes') [YETI] (GQ)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-032",
   printings: [
     {
       id: "GD03-032",
+      artId: "GD03-032",
+      setCode: "GD03",
       collectorNumber: "GD03-032",
       cardNumber: "GD03-032",
       set: {
@@ -29,6 +32,7 @@ export const gd03ZakuFourSnakeEyesYetiGq032: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-032"],
   selectedPrintingId: "GD03-032",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-032.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-032.webp?260424",

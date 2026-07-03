@@ -19,11 +19,11 @@ export const lenaSabrewingPureEnergyI18n: Record<Languages, I18nProperties> = {
     version: "Reine Energie",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "ÜBERNATÜRLICHE RACHE",
-        description: "— Füge einem Charakter deiner Wahl 1 Schaden zu.",
+        title: "Übernatürliche Rache",
+        description: "{E} — Füge einem Charakter deiner Wahl 1 Schaden zu.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const lenaSabrewingPureEnergyI18n: Record<Languages, I18nProperties> = {
     version: "Énergie pure",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "VENGEANCE DE",
-        description: "L'AU-DELÀ — Choisissez un personnage et infligez-lui 1 dommage.",
+        title: "Vengeance de l'au-delà",
+        description: "{E} — Choisissez un personnage et infligez-lui 1 dommage.",
       },
     ],
   },
@@ -45,11 +45,11 @@ export const lenaSabrewingPureEnergyI18n: Record<Languages, I18nProperties> = {
     version: "Pura Energia",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "VENDETTA SOPRANNATURALE",
-        description: "— Infliggi 1 danno a un personaggio a tua scelta.",
+        title: "Vendetta Soprannaturale",
+        description: "{E} — Infliggi 1 danno a un personaggio a tua scelta.",
       },
     ],
   },

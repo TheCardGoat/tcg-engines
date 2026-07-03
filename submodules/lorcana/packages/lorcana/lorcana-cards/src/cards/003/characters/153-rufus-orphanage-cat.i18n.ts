@@ -17,7 +17,7 @@ export const rufusOrphanageCatI18n: Record<Languages, I18nProperties> = {
     version: "Katze aus dem Waisenhaus",
     text: [
       {
-        title: "ZU ALT, ZUR MÄUSEJAGD",
+        title: "Zu alt, zur Mäusejagd",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du diese Karte verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const rufusOrphanageCatI18n: Record<Languages, I18nProperties> = {
     version: "Chat d'orphelinat",
     text: [
       {
-        title: "JE N'AI PLUS L'ÂGE POUR JOUER AU CHAT ET À LA SOURIS",
+        title: "Je n'ai plus l'âge pour jouer au chat et à la souris",
         description:
           "Lorsque ce personnage est banni, vous pouvez le placer dans votre réserve d'encre, face cachée et épuisé.",
       },
@@ -39,7 +39,7 @@ export const rufusOrphanageCatI18n: Record<Languages, I18nProperties> = {
     version: "Gatto da Orfanotrofio",
     text: [
       {
-        title: "UN TANTINO TROPPO VECCHIO PER DAR LA CACCIA AI TOPI",
+        title: "Un Tantino Troppo Vecchio per dar la Caccia ai Topi",
         description:
           "Quando questo personaggio viene esiliato, puoi aggiungerlo al tuo calamaio, a faccia in giù e impegnato.",
       },

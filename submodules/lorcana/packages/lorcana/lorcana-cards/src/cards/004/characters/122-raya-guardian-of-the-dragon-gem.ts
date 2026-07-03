@@ -4,6 +4,17 @@ import { rayaGuardianOfTheDragonGemI18n } from "./122-raya-guardian-of-the-drago
 export const rayaGuardianOfTheDragonGem: CharacterCard = {
   id: "ztE",
   canonicalId: "ci_ztE",
+  slug: "lorcana-ci_ztE",
+  printings: [
+    {
+      id: "set4-122",
+      artId: "set4-122",
+      setCode: "set4",
+      collectorNumber: "122",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-122"],
   cardType: "character",
   name: "Raya",
@@ -20,7 +31,7 @@ export const rayaGuardianOfTheDragonGem: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_37a7ae2b078b415aab3dff267ca8c86d",
-    tcgPlayer: 550599,
+    tcgPlayer: "550599",
   },
   text: [
     {

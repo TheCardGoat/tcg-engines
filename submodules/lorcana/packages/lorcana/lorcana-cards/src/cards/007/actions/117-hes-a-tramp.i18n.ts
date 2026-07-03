@@ -7,14 +7,32 @@ export const hesATrampI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "So ein Strolch",
-    text: "Gib einem Charakter deiner Wahl in diesem Zug +1 für jeden deiner Charaktere im Spiel.",
+    text: "Gib einem Charakter deiner Wahl in diesem Zug +1 {S} für jeden deiner Charaktere im Spiel.",
   },
   fr: {
     name: "Il se traîne",
-    text: "Choisissez un personnage qui gagne +1 pour le reste de ce tour pour chaque personnage que vous avez en jeu.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 1 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage qui gagne +1 {S} pour le reste de ce tour pour chaque personnage que vous avez en jeu.",
+      },
+    ],
   },
   it: {
     name: "È un Briccon",
-    text: "(Un personaggio con costo 1 o superiore può per cantare questa canzone gratis.) Un personaggio a tua scelta riceve +1 per ogni personaggio che hai in gioco per questo turno.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 1 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Un personaggio a tua scelta riceve +1 {S} per ogni personaggio che hai in gioco per questo turno.",
+      },
+    ],
   },
 };

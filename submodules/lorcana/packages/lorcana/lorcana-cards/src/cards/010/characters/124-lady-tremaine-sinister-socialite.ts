@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { ladyTremaineSinisterSocialiteI18n } from "./124-lady-tremaine-sinister-socialite.i18n";
 
+import { boost } from "../../../helpers/abilities/boost";
+
 export const ladyTremaineSinisterSocialite: CharacterCard = {
-  id: "Na7",
+  id: "0Cr",
   canonicalId: "ci_F4M",
+  slug: "lorcana-ci_F4M",
+  printings: [
+    {
+      id: "set10-124",
+      artId: "set10-124",
+      setCode: "set10",
+      collectorNumber: "124",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-124"],
   cardType: "character",
   name: "Lady Tremaine",
@@ -21,7 +33,7 @@ export const ladyTremaineSinisterSocialite: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ee5abfdfaa9d469e93dd20e1253ed1d0",
-    tcgPlayer: 660042,
+    tcgPlayer: "660042",
   },
   text: [
     {

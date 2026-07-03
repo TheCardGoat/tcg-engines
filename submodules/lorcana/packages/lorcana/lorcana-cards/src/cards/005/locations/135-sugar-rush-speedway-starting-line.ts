@@ -4,6 +4,17 @@ import { sugarRushSpeedwayStartingLineI18n } from "./135-sugar-rush-speedway-sta
 export const sugarRushSpeedwayStartingLine: LocationCard = {
   id: "ibi",
   canonicalId: "ci_ibi",
+  slug: "lorcana-ci_ibi",
+  printings: [
+    {
+      id: "set5-135",
+      artId: "set5-135",
+      setCode: "set5",
+      collectorNumber: "135",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-135"],
   cardType: "location",
   name: "Sugar Rush Speedway",
@@ -20,7 +31,7 @@ export const sugarRushSpeedwayStartingLine: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_38b31e4f9b2043259a5d8909cb58b8d3",
-    tcgPlayer: 559787,
+    tcgPlayer: "559787",
   },
   text: [
     {

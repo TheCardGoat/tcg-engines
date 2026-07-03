@@ -17,9 +17,9 @@ export const ramaVigilantFatherI18n: Record<Languages, I18nProperties> = {
     version: "Wachsamer Vater",
     text: [
       {
-        title: "SCHUTZ DES RUDELS",
+        title: "Schutz des Rudels",
         description:
-          "Jedes Mal, wenn du einen anderen Charakter mit 5 oder mehr ausspielst, darfst du diesen Charakter bereit machen. Wenn du dies tust, kann er in diesem Zug nicht mehr erkunden.",
+          "Jedes Mal, wenn du einen anderen Charakter mit 5 oder mehr {S} ausspielst, darfst du diesen Charakter bereit machen. Wenn du dies tust, kann er in diesem Zug nicht mehr erkunden.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const ramaVigilantFatherI18n: Record<Languages, I18nProperties> = {
     version: "Père vigilant",
     text: [
       {
-        title: "LA PROTECTION DE NOTRE CLAN",
+        title: "La protection de notre clan",
         description:
-          "Chaque fois que vous jouez un autre personnage ayant 5 ou plus, vous pouvez redresser ce personnage-ci. Si vous le faites, ce personnage-ci ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+          "Chaque fois que vous jouez un autre personnage ayant 5 {S} ou plus, vous pouvez redresser ce personnage-ci. Si vous le faites, ce personnage-ci ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const ramaVigilantFatherI18n: Record<Languages, I18nProperties> = {
     version: "Padre Vigile",
     text: [
       {
-        title: "PROTEZIONE DEL BRANCO",
+        title: "Protezione del Branco",
         description:
-          "Ogni volta che giochi un altro personaggio con 5 o superiore, puoi preparare questo personaggio. Se lo fai, non può andare all'avventura per il resto di questo turno.",
+          "Ogni volta che giochi un altro personaggio con 5 {S} o superiore, puoi preparare questo personaggio. Se lo fai, non può andare all'avventura per il resto di questo turno.",
       },
     ],
   },

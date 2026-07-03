@@ -16,7 +16,7 @@ export const princeEricExpertHelmsmanI18n: Record<Languages, I18nProperties> = {
     version: "Erfahrener Steuermann",
     text: [
       {
-        title: "ÜBERRASCHUNGSMANÖVER",
+        title: "Überraschungsmanöver",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du einen Charakter deiner Wahl verbannen.",
       },
@@ -27,7 +27,7 @@ export const princeEricExpertHelmsmanI18n: Record<Languages, I18nProperties> = {
     version: "Maître timonier",
     text: [
       {
-        title: "MANŒUVRE SURPRISE",
+        title: "Manœuvre surprise",
         description: "Lorsque ce personnage est banni, choisissez un personnage et bannissez-le.",
       },
     ],
@@ -37,7 +37,7 @@ export const princeEricExpertHelmsmanI18n: Record<Languages, I18nProperties> = {
     version: "Timoniere Esperto",
     text: [
       {
-        title: "MANOVRA A SORPRESA",
+        title: "Manovra a Sorpresa",
         description:
           "Quando questo personaggio viene esiliato, puoi esiliare un personaggio a tua scelta.",
       },

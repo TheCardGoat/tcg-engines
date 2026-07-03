@@ -7,14 +7,14 @@ export const magicalAidI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Magische Unterstützung",
-    text: 'Ein Charakter deiner Wahl erhält in diesem Zug: "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand" und Herausfordern +3. (Während der Charakter herausfordert, erhält er +3.)',
+    text: 'Ein Charakter deiner Wahl erhält in diesem Zug: "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand" und <Herausfordern> +3. (Während der Charakter herausfordert, erhält er +3 {S}.)',
   },
   fr: {
     name: "Assistance magique",
-    text: 'Choisissez un personnage qui gagne Offensif +3 et "lorsque ce personnage est banni via un défi, renvoyez cette carte dans votre main" pour le reste de ce tour.',
+    text: 'Choisissez un personnage qui gagne <Offensif> +3 et "lorsque ce personnage est banni via un défi, renvoyez cette carte dans votre main" pour le reste de ce tour.',
   },
   it: {
     name: "Aiuto Magico",
-    text: 'Un personaggio a tua scelta ottiene Sfidante +3 e "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta" per questo turno.',
+    text: 'Un personaggio a tua scelta ottiene <Sfidante> +3 e "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta" per questo turno. (Riceve +3 {S} mentre sta sfidando.)',
   },
 };

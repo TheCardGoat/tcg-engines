@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { theReturnOfHerculesI18n } from "./118-the-return-of-hercules.i18n";
 
 export const theReturnOfHercules: ActionCard = {
-  id: "yAe",
+  id: "Wr7",
   canonicalId: "ci_B2d",
+  slug: "lorcana-ci_B2d",
+  printings: [
+    {
+      id: "set7-118",
+      artId: "set7-118",
+      setCode: "set7",
+      collectorNumber: "118",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-118"],
   cardType: "action",
   name: "The Return of Hercules",
@@ -16,7 +27,7 @@ export const theReturnOfHercules: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7896cd21215c42609fc262c908068d94",
-    tcgPlayer: 619743,
+    tcgPlayer: "619743",
   },
   text: "Each player may reveal a character card from their hand and play it for free.",
   abilities: [

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kuzcoTemperamentalEmperorI18n } from "./084-kuzco-temperamental-emperor.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const kuzcoTemperamentalEmperor: CharacterCard = {
-  id: "H6u",
-  canonicalId: "ci_Vm2",
+  id: "Jgm",
+  canonicalId: "ci_2TN",
+  slug: "lorcana-ci_2TN",
+  printings: [
+    {
+      id: "set1-084",
+      artId: "set1-084",
+      setCode: "set1",
+      collectorNumber: "84",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-084", "set9-069"],
   cardType: "character",
   name: "Kuzco",
@@ -21,7 +33,7 @@ export const kuzcoTemperamentalEmperor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_758f6165053247138a43133356718b77",
-    tcgPlayer: 650011,
+    tcgPlayer: "650011",
   },
   text: [
     {

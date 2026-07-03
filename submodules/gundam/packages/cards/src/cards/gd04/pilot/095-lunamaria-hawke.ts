@@ -7,14 +7,17 @@ export const gd04LunamariaHawke095: PilotCard = {
   color: "purple",
   traits: ["zaft", "minerva squad", "coordinator"],
   id: "GD04-095",
-  externalId: "gundam:gd04-095",
-  slug: "lunamaria-hawke-gd04-095",
+  canonicalId: "GD04-095",
+  externalIds: { bandai: "gundam:gd04-095" },
+  slug: "lunamaria-hawke/gd04-095",
   displayName: "Lunamaria Hawke",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-095",
   printings: [
     {
       id: "GD04-095",
+      artId: "GD04-095",
+      setCode: "GD04",
       collectorNumber: "GD04-095",
       cardNumber: "GD04-095",
       set: {
@@ -30,6 +33,8 @@ export const gd04LunamariaHawke095: PilotCard = {
     },
     {
       id: "GD04-095_p1",
+      artId: "GD04-095_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-095_p1",
       cardNumber: "GD04-095",
       set: {
@@ -44,6 +49,7 @@ export const gd04LunamariaHawke095: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-095", "GD04-095_p1"],
   selectedPrintingId: "GD04-095",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-095.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-095.webp?260424",

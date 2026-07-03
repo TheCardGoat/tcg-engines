@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { skippyEnergeticRabbitI18n } from "./087-skippy-energetic-rabbit.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const skippyEnergeticRabbit: CharacterCard = {
   id: "Wyz",
   canonicalId: "ci_Wyz",
+  slug: "lorcana-ci_Wyz",
+  printings: [
+    {
+      id: "set3-087",
+      artId: "set3-087",
+      setCode: "set3",
+      collectorNumber: "87",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-087"],
   cardType: "character",
   name: "Skippy",
@@ -21,7 +33,7 @@ export const skippyEnergeticRabbit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5aab3c53b77844b2921a280dfe53bdaa",
-    tcgPlayer: 537933,
+    tcgPlayer: "537933",
   },
   text: "Ward",
   classifications: ["Storyborn", "Ally"],

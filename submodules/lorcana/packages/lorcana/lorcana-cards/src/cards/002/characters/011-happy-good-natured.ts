@@ -4,6 +4,17 @@ import { happyGoodnaturedI18n } from "./011-happy-good-natured.i18n";
 export const happyGoodnatured: CharacterCard = {
   id: "Rek",
   canonicalId: "ci_Rek",
+  slug: "lorcana-ci_Rek",
+  printings: [
+    {
+      id: "set2-011",
+      artId: "set2-011",
+      setCode: "set2",
+      collectorNumber: "11",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-011"],
   cardType: "character",
   name: "Happy",
@@ -20,7 +31,7 @@ export const happyGoodnatured: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7bea75aa713d410a9be82d9e82ace333",
-    tcgPlayer: 526383,
+    tcgPlayer: "526383",
   },
   text: "Support",
   classifications: ["Storyborn", "Ally", "Seven Dwarfs"],

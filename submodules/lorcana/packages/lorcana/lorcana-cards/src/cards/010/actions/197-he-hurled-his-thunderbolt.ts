@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { heHurledHisThunderboltI18n } from "./197-he-hurled-his-thunderbolt.i18n";
 
 export const heHurledHisThunderbolt: ActionCard = {
-  id: "3ft",
+  id: "Je6",
   canonicalId: "ci_2tJ",
+  slug: "lorcana-ci_2tJ",
+  printings: [
+    {
+      id: "set10-197",
+      artId: "set10-197",
+      setCode: "set10",
+      collectorNumber: "197",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-197"],
   cardType: "action",
   name: "He Hurled His Thunderbolt",
@@ -16,7 +27,7 @@ export const heHurledHisThunderbolt: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_de5dfda85c534def9ee3a0d93cb55597",
-    tcgPlayer: 660026,
+    tcgPlayer: "660026",
   },
   text: "Deal 4 damage to chosen character. Your Deity characters gain Challenger +2 this turn. (They get +2 {S} while challenging.)",
   actionSubtype: "song",

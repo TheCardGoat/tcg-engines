@@ -4,6 +4,17 @@ import { gruesomeAndGrimI18n } from "./062-gruesome-and-grim.i18n";
 export const gruesomeAndGrim: ActionCard = {
   id: "bqW",
   canonicalId: "ci_bqW",
+  slug: "lorcana-ci_bqW",
+  printings: [
+    {
+      id: "set2-062",
+      artId: "set2-062",
+      setCode: "set2",
+      collectorNumber: "62",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-062"],
   cardType: "action",
   name: "Gruesome and Grim",
@@ -16,7 +27,7 @@ export const gruesomeAndGrim: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_15c2ebf5713c436eaf0478e2b7f8547c",
-    tcgPlayer: 525344,
+    tcgPlayer: "525344",
   },
   text: "Play a character with cost 4 or less for free. They gain Rush. At the end of the turn, banish them. (They can challenge the turn they're played.)",
   actionSubtype: "song",

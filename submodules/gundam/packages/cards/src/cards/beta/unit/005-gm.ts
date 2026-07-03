@@ -7,14 +7,17 @@ export const betaGm005: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "ST01-005_p2",
-  externalId: "gundam:st01-005_p2",
-  slug: "gm-st01-005-p2",
+  canonicalId: "ST01-005",
+  externalIds: { bandai: "gundam:st01-005_p2" },
+  slug: "gm/st01-005",
   displayName: "GM",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "ST01-005_p2",
   printings: [
     {
       id: "ST01-005",
+      artId: "ST01-005",
+      setCode: "ST01",
       collectorNumber: "ST01-005",
       cardNumber: "ST01-005",
       set: {
@@ -30,6 +33,8 @@ export const betaGm005: UnitCard = {
     },
     {
       id: "ST01-005_p1",
+      artId: "ST01-005_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-005_p1",
       cardNumber: "ST01-005",
       set: {
@@ -45,6 +50,8 @@ export const betaGm005: UnitCard = {
     },
     {
       id: "ST01-005_p2",
+      artId: "ST01-005_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-005_p2",
       cardNumber: "ST01-005",
       set: {
@@ -59,6 +66,7 @@ export const betaGm005: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST01-005", "ST01-005_p1", "ST01-005_p2"],
   selectedPrintingId: "ST01-005_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST01-005_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-005_p2.webp?260424",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { magicaDeSpellShadowFormI18n } from "./066-magica-de-spell-shadow-form.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const magicaDeSpellShadowForm: CharacterCard = {
   id: "dre",
   canonicalId: "ci_dre",
+  slug: "lorcana-ci_dre",
+  printings: [
+    {
+      id: "set8-066",
+      artId: "set8-066",
+      setCode: "set8",
+      collectorNumber: "66",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-066"],
   cardType: "character",
   name: "Magica De Spell",
@@ -21,7 +33,7 @@ export const magicaDeSpellShadowForm: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_67e61d2f97084cb69e58b70c2a5d90d4",
-    tcgPlayer: 632709,
+    tcgPlayer: "632709",
   },
   text: [
     {

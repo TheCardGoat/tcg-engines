@@ -1,17 +1,15 @@
 <script lang="ts">
-  import {
-    Bug,
-    ChevronDown,
-    Download,
-    Flag,
-    LoaderCircle,
-    Lock,
-    MessageSquarePlus,
-    NotebookPen,
-    Save,
-    ScrollText,
-    Trophy,
-  } from "@lucide/svelte";
+  import Bug from "@lucide/svelte/icons/bug";
+  import ChevronDown from "@lucide/svelte/icons/chevron-down";
+  import Download from "@lucide/svelte/icons/download";
+  import Flag from "@lucide/svelte/icons/flag";
+  import LoaderCircle from "@lucide/svelte/icons/loader-circle";
+  import Lock from "@lucide/svelte/icons/lock";
+  import MessageSquarePlus from "@lucide/svelte/icons/message-square-plus";
+  import NotebookPen from "@lucide/svelte/icons/notebook-pen";
+  import Save from "@lucide/svelte/icons/save";
+  import ScrollText from "@lucide/svelte/icons/scroll-text";
+  import Trophy from "@lucide/svelte/icons/trophy";
   import { m } from "$lib/i18n/messages.js";
   import { Badge } from "$lib/design-system/primitives/badge";
   import { Button } from "$lib/design-system/primitives/button";

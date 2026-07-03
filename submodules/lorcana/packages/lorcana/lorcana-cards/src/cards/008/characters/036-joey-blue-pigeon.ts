@@ -4,6 +4,17 @@ import { joeyBluePigeonI18n } from "./036-joey-blue-pigeon.i18n";
 export const joeyBluePigeon: CharacterCard = {
   id: "Zwk",
   canonicalId: "ci_Zwk",
+  slug: "lorcana-ci_Zwk",
+  printings: [
+    {
+      id: "set8-036",
+      artId: "set8-036",
+      setCode: "set8",
+      collectorNumber: "36",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-036"],
   cardType: "character",
   name: "Joey",
@@ -20,7 +31,7 @@ export const joeyBluePigeon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8667edc82b784cbb96e48962ef4583a9",
-    tcgPlayer: 631376,
+    tcgPlayer: "631376",
   },
   text: [
     {
@@ -35,14 +46,22 @@ export const joeyBluePigeon: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           target: {
             selector: "all",
             count: "all",
             owner: "you",
             zones: ["play"],
             cardTypes: ["character"],
-            filter: [{ type: "has-keyword", keyword: "Bodyguard" }],
+            filter: [
+              {
+                type: "has-keyword",
+                keyword: "Bodyguard",
+              },
+            ],
           },
           type: "remove-damage",
         },

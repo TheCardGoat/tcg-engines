@@ -4,6 +4,17 @@ import { dinglehopperI18n } from "./032-dinglehopper.i18n";
 export const dinglehopper: ItemCard = {
   id: "hoX",
   canonicalId: "ci_hoX",
+  slug: "lorcana-ci_hoX",
+  printings: [
+    {
+      id: "set1-032",
+      artId: "set1-032",
+      setCode: "set1",
+      collectorNumber: "32",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-032"],
   cardType: "item",
   name: "Dinglehopper",
@@ -16,7 +27,7 @@ export const dinglehopper: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4ab0c55e07324d30903f51b7bbd41c8d",
-    tcgPlayer: 492733,
+    tcgPlayer: "492733",
   },
   text: [
     {
@@ -30,7 +41,10 @@ export const dinglehopper: ItemCard = {
         exert: true,
       },
       effect: {
-        amount: { type: "up-to", value: 1 },
+        amount: {
+          type: "up-to",
+          value: 1,
+        },
         target: "CHOSEN_CHARACTER",
         type: "remove-damage",
       },

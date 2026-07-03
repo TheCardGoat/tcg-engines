@@ -17,9 +17,9 @@ export const donaldDuckBuccaneerI18n: Record<Languages, I18nProperties> = {
     version: "Buccaneer",
     text: [
       {
-        title: "BOARDING PARTY",
+        title: "Boarding Party",
         description:
-          "During your turn, whenever this character banishes a character in a challenge, your other characters get +1 this turn.",
+          "During your turn, whenever this character banishes a character in a challenge, your other characters get +1 {L} this turn.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const donaldDuckBuccaneerI18n: Record<Languages, I18nProperties> = {
     version: "Buccaneer",
     text: [
       {
-        title: "BOARDING PARTY",
+        title: "Boarding Party",
         description:
-          "During your turn, whenever this character banishes a character in a challenge, your other characters get +1 this turn.",
+          "During your turn, whenever this character banishes a character in a challenge, your other characters get +1 {L} this turn.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const donaldDuckBuccaneerI18n: Record<Languages, I18nProperties> = {
     version: "Buccaneer",
     text: [
       {
-        title: "BOARDING PARTY",
+        title: "Boarding Party",
         description:
-          "During your turn, whenever this character banishes a character in a challenge, your other characters get +1 this turn.",
+          "During your turn, whenever this character banishes a character in a challenge, your other characters get +1 {L} this turn.",
       },
     ],
   },

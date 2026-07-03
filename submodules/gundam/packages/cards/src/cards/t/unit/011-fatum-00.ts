@@ -6,14 +6,17 @@ export const tFatum00011: UnitCard = {
   type: "unit",
   traits: ["triple ship alliance"],
   id: "T-011",
-  externalId: "gundam:t-011",
-  slug: "fatum-00-t-011",
+  canonicalId: "T-011",
+  externalIds: { bandai: "gundam:t-011" },
+  slug: "fatum-00/t-011",
   displayName: "Fatum-00",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "T-011",
   printings: [
     {
       id: "T-011",
+      artId: "T-011",
+      setCode: "GD01",
       collectorNumber: "T-011",
       cardNumber: "T-011",
       set: {
@@ -28,6 +31,7 @@ export const tFatum00011: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["T-011"],
   selectedPrintingId: "T-011",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-011.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-011.webp?260424",

@@ -9,9 +9,9 @@ export const basilGreatMouseDetectiveI18n: Record<Languages, I18nProperties> = {
         title: "Shift 5",
       },
       {
-        title: "THERE'S ALWAYS A CHANCE",
+        title: "THERE'S ALWAYS",
         description:
-          "If you used Shift to play this character, you may draw 2 cards when he enters play.",
+          "A CHANCE If you used Shift to play this character, you may draw 2 cards when he enters play.",
       },
     ],
   },
@@ -20,12 +20,13 @@ export const basilGreatMouseDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Der große Mäusedetektiv",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Basil-Charaktere auszuspielen.)",
       },
       {
-        title: "ES GIBT IMMER EINE CHANCE",
+        title: "Es gibt immer eine Chance",
         description:
-          "Falls du Gestaltwandel benutzt hast, um diesen Charakter auszuspielen, darfst du beim Ausspielen 2 Karten ziehen.",
+          "Falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, darfst du beim Ausspielen 2 Karten ziehen.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const basilGreatMouseDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Détective Privé",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Basil.)",
       },
       {
-        title: "TANT QU'IL",
+        title: "Tant qu'il y a de la vie, il y a de l'espoir",
         description:
-          "Y A DE LA VIE, IL Y A DE L'ESPOIR Si vous utilisez Alter pour jouer ce personnage, vous pouvez piocher 2 cartes lorsqu'il entre en jeu.",
+          "Si vous utilisez <Alter> pour jouer ce personnage, vous pouvez piocher 2 cartes lorsqu'il entre en jeu.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const basilGreatMouseDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Great Mouse Detective",
     text: [
       {
-        title: "Shift 5",
+        title:
+          "<Shift> 5 (You may pay 5 {I} to play this on top of one of your characters named Basil.)",
       },
       {
-        title: "THERE'S ALWAYS",
+        title: "There's Always a Chance",
         description:
-          "A CHANCE If you used Shift to play this character, you may draw 2 cards when he enters play.",
+          "If you used <Shift> to play this character, you may draw 2 cards when he enters play.",
       },
     ],
   },

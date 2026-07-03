@@ -4,6 +4,17 @@ import { thebesTheBigOliveI18n } from "./204-thebes-the-big-olive.i18n";
 export const thebesTheBigOlive: LocationCard = {
   id: "SOw",
   canonicalId: "ci_SOw",
+  slug: "lorcana-ci_SOw",
+  printings: [
+    {
+      id: "set4-204",
+      artId: "set4-204",
+      setCode: "set4",
+      collectorNumber: "204",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-204"],
   cardType: "location",
   name: "Thebes",
@@ -20,7 +31,7 @@ export const thebesTheBigOlive: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d30e4b994223457c8b38bc696aa91e06",
-    tcgPlayer: 549295,
+    tcgPlayer: "549295",
   },
   text: [
     {

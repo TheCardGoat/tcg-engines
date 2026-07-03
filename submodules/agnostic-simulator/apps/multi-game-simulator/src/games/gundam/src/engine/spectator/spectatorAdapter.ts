@@ -33,7 +33,14 @@ export function createSpectatorEngineAdapter(config: EngineAdapterConfig): Engin
   // the convention the live-match route uses for the human seat.
   const perspectivePlayerId = asPlayerId(String(viewerId));
 
-  const logTrail: { entry: GameLogEntry; turnNumber: number }[] = [];
+  const isVisibleToViewer = (entry: GameLogEntry): boolean => {
+    const { visibleTo } = entry;
+    if (visibleTo === undefined || visibleTo === "all") return true;
+    // Spectators have no actor identity, so per-player visibility lists never
+    // match them. The original spectator contract filters to `visibleTo === "all"`
+    // only, which is the safe default for a revealed board.
+    return false;
+  };
 
   return {
     viewerId,
@@ -72,8 +79,10 @@ export function createSpectatorEngineAdapter(config: EngineAdapterConfig): Engin
     pendingChoice: () => runtime.getPendingChoice({ role: "spectator" }),
 
     moveHistory: () => runtime.getMoveHistory(),
+    revealsPrivateMoveLogFields: true,
 
-    logEntries: () => logTrail,
+    logEntries: () =>
+      runtime.getGameLogHistory().filter((tagged) => isVisibleToViewer(tagged.entry)),
     moveLogs: () =>
       runtime.getMoveLogHistory().map((log) => ({
         log,

@@ -16,8 +16,8 @@ export const queenOfHeartsLosingHerTemperI18n: Record<Languages, I18nProperties>
     version: "Fassungslos",
     text: [
       {
-        title: "KÖNIGLICHER SCHMERZ",
-        description: "Solange dieser Charakter beschädigt ist, erhält er +3.",
+        title: "Königlicher Schmerz",
+        description: "Solange dieser Charakter beschädigt ist, erhält er +3 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const queenOfHeartsLosingHerTemperI18n: Record<Languages, I18nProperties>
     version: "Perd son sang-froid",
     text: [
       {
-        title: "DOULEUR ROYALE",
-        description: "Tant que ce personnage a au moins un dommage, il gagne +3.",
+        title: "Douleur royale",
+        description: "Tant que ce personnage a au moins un dommage, il gagne +3 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const queenOfHeartsLosingHerTemperI18n: Record<Languages, I18nProperties>
     version: "Che Perde le Staffe",
     text: [
       {
-        title: "REGALE SPINA NEL FIANCO",
-        description: "Mentre questo personaggio ha danno, riceve +3.",
+        title: "Regale Spina nel Fianco",
+        description: "Mentre questo personaggio ha danno, riceve +3 {S}.",
       },
     ],
   },

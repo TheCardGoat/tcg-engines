@@ -17,9 +17,9 @@ export const elisaMazaIntrepidInvestigatorI18n: Record<Languages, I18nProperties
     version: "Unerschrockene Ermittlerin",
     text: [
       {
-        title: "BESONDERES DETAIL",
+        title: "Besonderes Detail",
         description:
-          "Solange du mindestens 2 weitere Charaktere mit 5 oder mehr im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens 2 weitere Charaktere mit 5 oder mehr {S} im Spiel hast, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const elisaMazaIntrepidInvestigatorI18n: Record<Languages, I18nProperties
     version: "Investigatrice intrépide",
     text: [
       {
-        title: "UNITÉ SPÉCIALE",
+        title: "Unité spéciale",
         description:
-          "Tant que vous avez 2 autres personnages ou plus ayant 5 ou plus, ce personnage-ci gagne +2.",
+          "Tant que vous avez 2 autres personnages ou plus ayant 5 {S} ou plus, ce personnage-ci gagne +2 {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const elisaMazaIntrepidInvestigatorI18n: Record<Languages, I18nProperties
     version: "Investigatrice Intrepida",
     text: [
       {
-        title: "INCARICO SPECIALE",
+        title: "Incarico Speciale",
         description:
-          "Mentre hai in gioco 2 o più altri personaggi con 5 o superiore, questo personaggio riceve +2.",
+          "Mentre hai in gioco 2 o più altri personaggi con 5 {S} o superiore, questo personaggio riceve +2 {L}.",
       },
     ],
   },

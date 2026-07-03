@@ -17,7 +17,7 @@ export const dukeWeaseltonSurlyCrookI18n: Record<Languages, I18nProperties> = {
     version: "Mürrischer Gauner",
     text: [
       {
-        title: "FESTGENOMMEN",
+        title: "Festgenommen",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du einen Charakter, der 2 oder weniger kostet, kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const dukeWeaseltonSurlyCrookI18n: Record<Languages, I18nProperties> = {
     version: "Arnaqueur revêche",
     text: [
       {
-        title: "APPRÉHENDÉ",
+        title: "Appréhendé",
         description:
           "Lorsque ce personnage est banni, vous pouvez jouer gratuitement un personnage coûtant 2 ou moins.",
       },
@@ -39,7 +39,7 @@ export const dukeWeaseltonSurlyCrookI18n: Record<Languages, I18nProperties> = {
     version: "Furfante Scontroso",
     text: [
       {
-        title: "ARRESTATO",
+        title: "Arrestato",
         description:
           "Quando questo personaggio viene esiliato, puoi giocare un personaggio con costo 2 o inferiore gratis.",
       },

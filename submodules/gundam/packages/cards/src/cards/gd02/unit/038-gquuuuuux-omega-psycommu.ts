@@ -7,14 +7,17 @@ export const gd02GquuuuuuxOmegaPsycommu038: UnitCard = {
   color: "red",
   traits: ["clan"],
   id: "GD02-038",
-  externalId: "gundam:gd02-038",
-  slug: "gquuuuuux-omega-psycommu-gd02-038",
+  canonicalId: "GD02-038",
+  externalIds: { bandai: "gundam:gd02-038" },
+  slug: "gquuuuuux-omega-psycommu/gd02-038",
   displayName: "GQuuuuuuX (Omega Psycommu)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-038",
   printings: [
     {
       id: "GD02-038",
+      artId: "GD02-038",
+      setCode: "GD02",
       collectorNumber: "GD02-038",
       cardNumber: "GD02-038",
       set: {
@@ -30,6 +33,8 @@ export const gd02GquuuuuuxOmegaPsycommu038: UnitCard = {
     },
     {
       id: "GD02-038_p1",
+      artId: "GD02-038_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-038_p1",
       cardNumber: "GD02-038",
       set: {
@@ -45,6 +50,8 @@ export const gd02GquuuuuuxOmegaPsycommu038: UnitCard = {
     },
     {
       id: "GD02-038_p2",
+      artId: "GD02-038_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-038_p2",
       cardNumber: "GD02-038",
       set: {
@@ -59,6 +66,7 @@ export const gd02GquuuuuuxOmegaPsycommu038: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-038", "GD02-038_p1", "GD02-038_p2"],
   selectedPrintingId: "GD02-038",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-038.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-038.webp?260424",

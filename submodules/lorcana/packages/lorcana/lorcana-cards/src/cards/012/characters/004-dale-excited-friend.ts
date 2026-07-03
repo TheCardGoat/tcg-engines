@@ -4,6 +4,17 @@ import { daleExcitedFriendI18n } from "./004-dale-excited-friend.i18n";
 export const daleExcitedFriend: CharacterCard = {
   id: "CQL",
   canonicalId: "ci_CQL",
+  slug: "lorcana-ci_CQL",
+  printings: [
+    {
+      id: "set12-004",
+      artId: "set12-004",
+      setCode: "set12",
+      collectorNumber: "4",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-004"],
   cardType: "character",
   name: "Dale",
@@ -20,6 +31,7 @@ export const daleExcitedFriend: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_06e1e4bd136e4a5b8cd9c93e478f2c4f",
+    tcgPlayer: "692006",
   },
   text: [
     {

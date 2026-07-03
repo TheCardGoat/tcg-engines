@@ -4,6 +4,17 @@ import { magicBroomIndustrialModelI18n } from "./188-magic-broom-industrial-mode
 export const magicBroomIndustrialModel: CharacterCard = {
   id: "QlQ",
   canonicalId: "ci_QlQ",
+  slug: "lorcana-ci_QlQ",
+  printings: [
+    {
+      id: "set2-188",
+      artId: "set2-188",
+      setCode: "set2",
+      collectorNumber: "188",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-188"],
   cardType: "character",
   name: "Magic Broom",
@@ -20,7 +31,7 @@ export const magicBroomIndustrialModel: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e3b8971a2d4140a79429277295edc4eb",
-    tcgPlayer: 527777,
+    tcgPlayer: "527777",
   },
   text: [
     {

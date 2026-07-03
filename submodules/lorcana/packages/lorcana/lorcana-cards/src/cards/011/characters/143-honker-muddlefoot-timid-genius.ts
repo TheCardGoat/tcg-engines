@@ -4,6 +4,17 @@ import { honkerMuddlefootTimidGeniusI18n } from "./143-honker-muddlefoot-timid-g
 export const honkerMuddlefootTimidGenius: CharacterCard = {
   id: "3yH",
   canonicalId: "ci_3yH",
+  slug: "lorcana-ci_3yH",
+  printings: [
+    {
+      id: "set11-143",
+      artId: "set11-143",
+      setCode: "set11",
+      collectorNumber: "143",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-143"],
   cardType: "character",
   name: "Honker Muddlefoot",
@@ -20,7 +31,7 @@ export const honkerMuddlefootTimidGenius: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_864fbdcc6f91431db5a365dd2aa4dba1",
-    tcgPlayer: 677136,
+    tcgPlayer: "677136",
   },
   text: [
     {

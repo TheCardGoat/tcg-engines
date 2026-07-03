@@ -4,6 +4,17 @@ import { kakamoraPirateChiefI18n } from "./172-kakamora-pirate-chief.i18n";
 export const kakamoraPirateChief: CharacterCard = {
   id: "2pj",
   canonicalId: "ci_2pj",
+  slug: "lorcana-ci_2pj",
+  printings: [
+    {
+      id: "set6-172",
+      artId: "set6-172",
+      setCode: "set6",
+      collectorNumber: "172",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-172"],
   cardType: "character",
   name: "Kakamora",
@@ -20,7 +31,7 @@ export const kakamoraPirateChief: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_af36de00a5544c83989f3295612c0bbf",
-    tcgPlayer: 593018,
+    tcgPlayer: "593018",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { genieCrampedInTheLampI18n } from "./141-genie-cramped-in-the-lamp.i18n"
 export const genieCrampedInTheLamp: CharacterCard = {
   id: "rD1",
   canonicalId: "ci_rD1",
+  slug: "lorcana-ci_rD1",
+  printings: [
+    {
+      id: "set3-141",
+      artId: "set3-141",
+      setCode: "set3",
+      collectorNumber: "141",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-141"],
   cardType: "character",
   name: "Genie",
@@ -21,7 +32,7 @@ export const genieCrampedInTheLamp: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_c978412b40d24029866de7fb2c2218ee",
-    tcgPlayer: 539095,
+    tcgPlayer: "539095",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: genieCrampedInTheLampI18n,

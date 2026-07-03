@@ -4,6 +4,17 @@ import { peteGamesRefereeI18n } from "./195-pete-games-referee.i18n";
 export const peteGamesReferee: CharacterCard = {
   id: "MzI",
   canonicalId: "ci_MzI",
+  slug: "lorcana-ci_MzI",
+  printings: [
+    {
+      id: "set5-195",
+      artId: "set5-195",
+      setCode: "set5",
+      collectorNumber: "195",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-195"],
   cardType: "character",
   name: "Pete",
@@ -19,7 +30,7 @@ export const peteGamesReferee: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d82108b67c434df495ba7ce11b811e79",
-    tcgPlayer: 561975,
+    tcgPlayer: "561975",
   },
   text: [
     {

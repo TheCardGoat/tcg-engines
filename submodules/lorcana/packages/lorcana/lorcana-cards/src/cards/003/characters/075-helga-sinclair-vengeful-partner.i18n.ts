@@ -17,7 +17,7 @@ export const helgaSinclairVengefulPartnerI18n: Record<Languages, I18nProperties>
     version: "Rachsüchtige Partnerin",
     text: [
       {
-        title: "NIMM'S NICHT PERSÖNLICH",
+        title: "Nimm's nicht persönlich",
         description:
           "Wenn dieser Charakter herausgefordert und verbannt wird, verbanne den herausfordernden Charakter.",
       },
@@ -28,7 +28,7 @@ export const helgaSinclairVengefulPartnerI18n: Record<Languages, I18nProperties>
     version: "Partenaire vengeresse",
     text: [
       {
-        title: "JE VOUS AI JAMAIS AIMÉ",
+        title: "Je vous ai jamais aimé",
         description:
           "Lorsque ce personnage est défié et banni, bannissez le personnage qui l'a défié.",
       },
@@ -39,7 +39,7 @@ export const helgaSinclairVengefulPartnerI18n: Record<Languages, I18nProperties>
     version: "Socia Vendicativa",
     text: [
       {
-        title: "NIENTE DI PERSONALE",
+        title: "Niente di Personale",
         description:
           "Quando questo personaggio viene sfidato ed esiliato, esilia il personaggio che lo ha sfidato.",
       },

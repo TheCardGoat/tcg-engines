@@ -20,11 +20,10 @@ export const lexingtonSmallInStatureI18n: Record<Languages, I18nProperties> = {
     version: "Von kleiner Statur",
     text: [
       {
-        title: "Alarmiert",
-        description: "(Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+        title: "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
       },
       {
-        title: "AM TAGE AUS STEIN",
+        title: "Am Tage aus Stein",
         description:
           "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
       },
@@ -35,10 +34,10 @@ export const lexingtonSmallInStatureI18n: Record<Languages, I18nProperties> = {
     version: "De petite stature",
     text: [
       {
-        title: "Agilité (Ce personnage peut défier comme s'il avait Insaisissable.)",
+        title: "<Agilité> (Ce personnage peut défier comme s'il avait Insaisissable.)",
       },
       {
-        title: "STATUE LE JOUR",
+        title: "Statue le jour",
         description:
           "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
       },
@@ -49,11 +48,10 @@ export const lexingtonSmallInStatureI18n: Record<Languages, I18nProperties> = {
     version: "Piccoletto",
     text: [
       {
-        title: "Vigile",
-        description: "(Questo personaggio può sfidare come se avesse Sfuggente.)",
+        title: "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
       },
       {
-        title: "STATUE DI GIORNO",
+        title: "Statue di Giorno",
         description: "Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
       },
     ],

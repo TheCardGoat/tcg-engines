@@ -1,3 +1,8 @@
+export { dragonFireC1Challenge } from "./c1-001-dragon-fire-challenge";
+export { letItGoC1Challenge } from "./c1-002-let-it-go-challenge";
+export { dragonFireC2Challenge } from "./c2-009-dragon-fire-challenge";
+export { aWholeNewWorldC1Challenge } from "./c1-010-a-whole-new-world-challenge";
+export { letItGoC2Challenge } from "./c2-010-let-it-go-challenge";
 export { beOurGuest } from "./025-be-our-guest";
 export { controlYourTemper } from "./026-control-your-temper";
 export { hakunaMatata } from "./027-hakuna-matata";

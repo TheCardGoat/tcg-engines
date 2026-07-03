@@ -4,6 +4,17 @@ import { luisaMadrigalRockOfTheFamilyI18n } from "./184-luisa-madrigal-rock-of-t
 export const luisaMadrigalRockOfTheFamily: CharacterCard = {
   id: "sIB",
   canonicalId: "ci_sIB",
+  slug: "lorcana-ci_sIB",
+  printings: [
+    {
+      id: "set4-184",
+      artId: "set4-184",
+      setCode: "set4",
+      collectorNumber: "184",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-184"],
   cardType: "character",
   name: "Luisa Madrigal",
@@ -20,7 +31,7 @@ export const luisaMadrigalRockOfTheFamily: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_308aa649ad114f3195d950a5a60586c2",
-    tcgPlayer: 547174,
+    tcgPlayer: "547174",
   },
   text: [
     {

@@ -1,12 +1,13 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailKerryEurodyneTheLastRockerboy = {
+export const welcomeToNightCityRetailKerryEurodyneTheLastRockerboy = defineCyberpunkCard({
   id: "5c4d4058-9185-4305-9e8f-7eca41cf6674",
-  externalId: "cb-kerry-eurodyne-the-last-rockerboy",
   slug: "kerry-eurodyne-the-last-rockerboy",
+  rulesText: "{Spend} If you control a Gig with 8+ value, draw 2.",
   name: "Kerry Eurodyne — The Last Rockerboy",
   displayName: "Kerry Eurodyne — The Last Rockerboy",
-  rulesText: "[Spend Icon:] If you control a Gig with 8+ value, draw 2.",
+  canonicalId: "kerry-eurodyne-the-last-rockerboy",
   color: "red",
   classifications: ["Rocker", "Samurai"],
   set: {
@@ -14,29 +15,12 @@ export const welcomeToNightCityRetailKerryEurodyneTheLastRockerboy = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "012",
-  printings: [
-    {
-      id: "c26c7db6-f540-4073-ab33-b09335631764",
-      collectorNumber: "012",
-      setCode: "welcometonightcityretail",
-      rarity: "Uncommon",
-    },
-    {
-      id: "1a986e5a-fe97-408c-81e9-b675c64bdcf9",
-      collectorNumber: "β012",
-      setCode: "welcometonightcitybeta",
-      rarity: "Uncommon",
-    },
-  ],
-  selectedPrintingId: "c26c7db6-f540-4073-ab33-b09335631764",
   artist: "Bogna Gawrońska",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/012.webp",
   rarity: "Uncommon",
   legality: "legal",
   hasSellTag: false,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "unit",
   cost: 4,
   power: 5,
@@ -50,16 +34,6 @@ export const welcomeToNightCityRetailKerryEurodyneTheLastRockerboy = {
       source: {
         selector: "self",
       },
-      bindings: [
-        {
-          id: "gigWithEightOrMore",
-          target: {
-            selector: "gig",
-            controller: "friendly",
-            minValue: 8,
-          },
-        },
-      ],
       costs: [
         {
           cost: "spend",
@@ -73,9 +47,21 @@ export const welcomeToNightCityRetailKerryEurodyneTheLastRockerboy = {
           effect: "draw",
           player: "friendly",
           amount: 2,
+          conditions: [
+            {
+              condition: "targetValue",
+              target: {
+                selector: "gig",
+                controller: "friendly",
+                minValue: 8,
+              },
+              property: "gigValue",
+              comparison: "gte",
+              value: 8,
+            },
+          ],
         },
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies UnitCardDefinition;

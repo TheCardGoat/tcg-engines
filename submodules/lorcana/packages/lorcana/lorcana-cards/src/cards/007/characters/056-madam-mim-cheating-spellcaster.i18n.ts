@@ -16,7 +16,7 @@ export const madamMimCheatingSpellcasterI18n: Record<Languages, I18nProperties> 
     version: "Betrügerische Zauberkünstlerin",
     text: [
       {
-        title: "UNFAIRE MITTEL",
+        title: "Unfaire Mittel",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, erschöpfe einen gegnerischen Charakter deiner Wahl.",
       },
@@ -27,7 +27,7 @@ export const madamMimCheatingSpellcasterI18n: Record<Languages, I18nProperties> 
     version: "Sorcière tricheuse",
     text: [
       {
-        title: "JOUER AU PLUS FIN",
+        title: "Jouer au plus fin",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage adverse et épuisez-le.",
       },
@@ -38,7 +38,7 @@ export const madamMimCheatingSpellcasterI18n: Record<Languages, I18nProperties> 
     version: "Fattucchiera Imbrogliona",
     text: [
       {
-        title: "GIOCO DURO",
+        title: "Gioco Duro",
         description:
           "Ogni volta che questo personaggio va all'avventura, impegna un personaggio avversario a tua scelta.",
       },

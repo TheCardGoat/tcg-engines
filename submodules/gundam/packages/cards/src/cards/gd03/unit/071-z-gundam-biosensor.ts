@@ -7,14 +7,17 @@ export const gd03ZGundamBiosensor071: UnitCard = {
   color: "white",
   traits: ["aeug"],
   id: "GD03-071",
-  externalId: "gundam:gd03-071",
-  slug: "z-gundam-biosensor-gd03-071",
+  canonicalId: "GD03-071",
+  externalIds: { bandai: "gundam:gd03-071" },
+  slug: "z-gundam-biosensor/gd03-071",
   displayName: "Z Gundam (Biosensor)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-071",
   printings: [
     {
       id: "GD03-071",
+      artId: "GD03-071",
+      setCode: "GD03",
       collectorNumber: "GD03-071",
       cardNumber: "GD03-071",
       set: {
@@ -30,6 +33,8 @@ export const gd03ZGundamBiosensor071: UnitCard = {
     },
     {
       id: "GD03-071_p1",
+      artId: "GD03-071_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-071_p1",
       cardNumber: "GD03-071",
       set: {
@@ -44,6 +49,7 @@ export const gd03ZGundamBiosensor071: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-071", "GD03-071_p1"],
   selectedPrintingId: "GD03-071",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-071.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-071.webp?260424",

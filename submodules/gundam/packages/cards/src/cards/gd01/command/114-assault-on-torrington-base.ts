@@ -7,14 +7,17 @@ export const gd01AssaultOnTorringtonBase114: CommandCard = {
   color: "red",
   traits: ["zeon"],
   id: "GD01-114",
-  externalId: "gundam:gd01-114",
-  slug: "assault-on-torrington-base-gd01-114",
+  canonicalId: "GD01-114",
+  externalIds: { bandai: "gundam:gd01-114" },
+  slug: "assault-on-torrington-base/gd01-114",
   displayName: "Assault on Torrington Base",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-114",
   printings: [
     {
       id: "GD01-114",
+      artId: "GD01-114",
+      setCode: "GD01",
       collectorNumber: "GD01-114",
       cardNumber: "GD01-114",
       set: {
@@ -29,6 +32,7 @@ export const gd01AssaultOnTorringtonBase114: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-114"],
   selectedPrintingId: "GD01-114",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-114.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-114.webp?260424",

@@ -4,6 +4,17 @@ import { flynnRiderFrenemyI18n } from "./106-flynn-rider-frenemy.i18n";
 export const flynnRiderFrenemy: CharacterCard = {
   id: "CR0",
   canonicalId: "ci_CR0",
+  slug: "lorcana-ci_CR0",
+  printings: [
+    {
+      id: "set4-106",
+      artId: "set4-106",
+      setCode: "set4",
+      collectorNumber: "106",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-106"],
   cardType: "character",
   name: "Flynn Rider",
@@ -20,7 +31,7 @@ export const flynnRiderFrenemy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7cdbe543d7e447a6a84144d85870b3b9",
-    tcgPlayer: 550591,
+    tcgPlayer: "550591",
   },
   text: [
     {

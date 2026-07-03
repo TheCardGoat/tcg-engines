@@ -6,14 +6,17 @@ export const gd02Resource013: ResourceCard = {
   type: "resource",
   traits: ["-"],
   id: "R-013",
-  externalId: "gundam:r-013",
-  slug: "resource-r-013",
+  canonicalId: "R-013",
+  externalIds: { bandai: "gundam:r-013" },
+  slug: "resource/r-013",
   displayName: "resource",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "R-013",
   printings: [
     {
       id: "R-013",
+      artId: "R-013",
+      setCode: "GD02",
       collectorNumber: "R-013",
       cardNumber: "R-013",
       set: {
@@ -29,6 +32,8 @@ export const gd02Resource013: ResourceCard = {
     },
     {
       id: "R-013_p1",
+      artId: "R-013_p1",
+      setCode: "GD02",
       collectorNumber: "R-013_p1",
       cardNumber: "R-013",
       set: {
@@ -43,6 +48,7 @@ export const gd02Resource013: ResourceCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["R-013", "R-013_p1"],
   selectedPrintingId: "R-013",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/R-013.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-013.webp?260424",

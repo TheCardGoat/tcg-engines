@@ -4,6 +4,17 @@ import { madamMimSnakeI18n } from "./049-madam-mim-snake.i18n";
 export const madamMimSnake: CharacterCard = {
   id: "zyO",
   canonicalId: "ci_zyO",
+  slug: "lorcana-ci_zyO",
+  printings: [
+    {
+      id: "set2-049",
+      artId: "set2-049",
+      setCode: "set2",
+      collectorNumber: "49",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-049"],
   cardType: "character",
   name: "Madam Mim",
@@ -20,7 +31,7 @@ export const madamMimSnake: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1718e93b703240a8a8be4fd0ab13b4e6",
-    tcgPlayer: 522651,
+    tcgPlayer: "522651",
   },
   text: [
     {

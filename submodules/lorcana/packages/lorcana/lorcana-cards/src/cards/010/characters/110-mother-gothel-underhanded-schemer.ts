@@ -4,6 +4,17 @@ import { motherGothelUnderhandedSchemerI18n } from "./110-mother-gothel-underhan
 export const motherGothelUnderhandedSchemer: CharacterCard = {
   id: "Att",
   canonicalId: "ci_Att",
+  slug: "lorcana-ci_Att",
+  printings: [
+    {
+      id: "set10-110",
+      artId: "set10-110",
+      setCode: "set10",
+      collectorNumber: "110",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-110"],
   cardType: "character",
   name: "Mother Gothel",
@@ -20,7 +31,7 @@ export const motherGothelUnderhandedSchemer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3450ebee9acb4c258e0d161ca6c77010",
-    tcgPlayer: 659190,
+    tcgPlayer: "659190",
   },
   text: [
     {

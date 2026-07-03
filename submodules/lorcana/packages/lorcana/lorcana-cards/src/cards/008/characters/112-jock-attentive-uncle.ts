@@ -4,6 +4,17 @@ import { jockAttentiveUncleI18n } from "./112-jock-attentive-uncle.i18n";
 export const jockAttentiveUncle: CharacterCard = {
   id: "uXU",
   canonicalId: "ci_uXU",
+  slug: "lorcana-ci_uXU",
+  printings: [
+    {
+      id: "set8-112",
+      artId: "set8-112",
+      setCode: "set8",
+      collectorNumber: "112",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-112"],
   cardType: "character",
   name: "Jock",
@@ -20,7 +31,7 @@ export const jockAttentiveUncle: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_69f2afcfdc244d3c9fd71c4dcfd39c25",
-    tcgPlayer: 631422,
+    tcgPlayer: "631422",
   },
   text: [
     {

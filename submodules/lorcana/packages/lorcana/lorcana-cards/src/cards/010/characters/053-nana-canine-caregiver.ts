@@ -4,6 +4,17 @@ import { nanaCanineCaregiverI18n } from "./053-nana-canine-caregiver.i18n";
 export const nanaCanineCaregiver: CharacterCard = {
   id: "wwt",
   canonicalId: "ci_wwt",
+  slug: "lorcana-ci_wwt",
+  printings: [
+    {
+      id: "set10-053",
+      artId: "set10-053",
+      setCode: "set10",
+      collectorNumber: "53",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-053"],
   cardType: "character",
   name: "Nana",
@@ -20,7 +31,7 @@ export const nanaCanineCaregiver: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_217c6bfcdfaa48be949cb14f7ef7a862",
-    tcgPlayer: 660025,
+    tcgPlayer: "660025",
   },
   text: [
     {

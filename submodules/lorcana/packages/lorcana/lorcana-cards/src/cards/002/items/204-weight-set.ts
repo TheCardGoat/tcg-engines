@@ -4,6 +4,17 @@ import { weightSetI18n } from "./204-weight-set.i18n";
 export const weightSet: ItemCard = {
   id: "X1T",
   canonicalId: "ci_X1T",
+  slug: "lorcana-ci_X1T",
+  printings: [
+    {
+      id: "set2-204",
+      artId: "set2-204",
+      setCode: "set2",
+      collectorNumber: "204",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-204"],
   cardType: "item",
   name: "Weight Set",
@@ -16,7 +27,7 @@ export const weightSet: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c3f4b42a04de464a8f93814fd4e1884b",
-    tcgPlayer: 527529,
+    tcgPlayer: "527529",
   },
   text: [
     {

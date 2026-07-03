@@ -14,8 +14,9 @@ export const merlinsCarpetbagI18n: Record<Languages, I18nProperties> = {
     name: "Merlins Reisetasche",
     text: [
       {
-        title: "HOCKETI POCKETI, 1",
-        description: "— Nimm 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand.",
+        title: "Hocketi Pocketi",
+        description:
+          "{E}, 1 {I} — Nimm 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand.",
       },
     ],
   },
@@ -23,8 +24,9 @@ export const merlinsCarpetbagI18n: Record<Languages, I18nProperties> = {
     name: "Sac de voyage de Merlin",
     text: [
       {
-        title: "HOCKETY POCKETY, 1",
-        description: "— Choisissez une carte Objet de votre défausse et placez-la dans votre main.",
+        title: "Hockety Pockety",
+        description:
+          "{E}, 1 {I} — Choisissez une carte Objet de votre défausse et placez-la dans votre main.",
       },
     ],
   },
@@ -32,8 +34,8 @@ export const merlinsCarpetbagI18n: Record<Languages, I18nProperties> = {
     name: "Borsa da Viaggio di Merlino",
     text: [
       {
-        title: "HOCKETY POCKETY, 1",
-        description: "— Riprendi in mano una carta oggetto dai tuoi scarti.",
+        title: "Hockety Pockety",
+        description: "{E}, 1 {I} — Riprendi in mano una carta oggetto dai tuoi scarti.",
       },
     ],
   },

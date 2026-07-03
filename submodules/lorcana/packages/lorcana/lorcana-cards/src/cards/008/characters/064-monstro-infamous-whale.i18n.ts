@@ -20,10 +20,10 @@ export const monstroInfamousWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Berüchtigter Wal",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "VOLLER DURCHBRUCH",
+        title: "Voller Durchbruch",
         description:
           "Wähle eine Karte aus deiner Hand und wirf sie ab — Mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
@@ -34,10 +34,10 @@ export const monstroInfamousWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Baleine tristement célèbre",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "PERCÉE COMPLÈTE",
+        title: "Percée complète",
         description:
           "Défaussez une carte — Redressez ce personnage. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
@@ -48,10 +48,10 @@ export const monstroInfamousWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Famigerato Cetaceo",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "INCURSIONE",
+        title: "Incursione",
         description:
           "Scegli e scarta una carta — Prepara questo personaggio. Non può andare all'avventura per il resto di questo turno.",
       },

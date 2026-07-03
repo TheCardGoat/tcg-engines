@@ -4,6 +4,17 @@ import { magicGoldenFlowerI18n } from "./169-magic-golden-flower.i18n";
 export const magicGoldenFlower: ItemCard = {
   id: "evQ",
   canonicalId: "ci_evQ",
+  slug: "lorcana-ci_evQ",
+  printings: [
+    {
+      id: "set1-169",
+      artId: "set1-169",
+      setCode: "set1",
+      collectorNumber: "169",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-169"],
   cardType: "item",
   name: "Magic Golden Flower",
@@ -16,7 +27,7 @@ export const magicGoldenFlower: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_33a1cfa2557e48ba8b7aac42a10592f6",
-    tcgPlayer: 508860,
+    tcgPlayer: "508860",
   },
   text: [
     {
@@ -30,7 +41,10 @@ export const magicGoldenFlower: ItemCard = {
         banishSelf: true,
       },
       effect: {
-        amount: { type: "up-to", value: 3 },
+        amount: {
+          type: "up-to",
+          value: 3,
+        },
         target: "CHOSEN_CHARACTER",
         type: "remove-damage",
       },

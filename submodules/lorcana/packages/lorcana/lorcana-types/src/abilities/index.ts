@@ -219,6 +219,7 @@ export type {
   Effect,
   // Duration type
   EffectDuration,
+  EnablePlayFromDiscardEffect,
   EnablePlayFromUnderEffect,
   // Special state modification effects
   EntersPlayEffect,

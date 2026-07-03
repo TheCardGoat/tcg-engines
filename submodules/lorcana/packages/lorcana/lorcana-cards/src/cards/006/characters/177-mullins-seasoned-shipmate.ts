@@ -4,6 +4,17 @@ import { mullinsSeasonedShipmateI18n } from "./177-mullins-seasoned-shipmate.i18
 export const mullinsSeasonedShipmate: CharacterCard = {
   id: "jPG",
   canonicalId: "ci_jPG",
+  slug: "lorcana-ci_jPG",
+  printings: [
+    {
+      id: "set6-177",
+      artId: "set6-177",
+      setCode: "set6",
+      collectorNumber: "177",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-177"],
   cardType: "character",
   name: "Mullins",
@@ -20,7 +31,7 @@ export const mullinsSeasonedShipmate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_426eee4c74d74ab08c77aea2b5640760",
-    tcgPlayer: 592011,
+    tcgPlayer: "592011",
   },
   text: [
     {

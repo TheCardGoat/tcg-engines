@@ -4,6 +4,17 @@ import { magicBroomAerialCleanerI18n } from "./185-magic-broom-aerial-cleaner.i1
 export const magicBroomAerialCleaner: CharacterCard = {
   id: "KvN",
   canonicalId: "ci_KvN",
+  slug: "lorcana-ci_KvN",
+  printings: [
+    {
+      id: "set4-185",
+      artId: "set4-185",
+      setCode: "set4",
+      collectorNumber: "185",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-185"],
   cardType: "character",
   name: "Magic Broom",
@@ -20,13 +31,13 @@ export const magicBroomAerialCleaner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_df2a4ae009034326bac684df1aac9287",
-    tcgPlayer: 547705,
+    tcgPlayer: "547705",
   },
   text: [
     {
-      title: "WINGED FOR A DAY",
+      title: "WINGED FOR",
       description:
-        "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+        "A DAY During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
     },
   ],
   classifications: ["Dreamborn", "Broom"],

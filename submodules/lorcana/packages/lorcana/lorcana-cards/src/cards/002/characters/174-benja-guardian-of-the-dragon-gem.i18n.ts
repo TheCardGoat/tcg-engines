@@ -6,8 +6,8 @@ export const benjaGuardianOfTheDragonGemI18n: Record<Languages, I18nProperties> 
     version: "Guardian of the Dragon Gem",
     text: [
       {
-        title: "WE HAVE A CHOICE",
-        description: "When you play this character, you may banish chosen item.",
+        title: "WE HAVE",
+        description: "A CHOICE When you play this character, you may banish chosen item.",
       },
     ],
   },
@@ -16,7 +16,7 @@ export const benjaGuardianOfTheDragonGemI18n: Record<Languages, I18nProperties> 
     version: "Wächter des Drachenjuwels",
     text: [
       {
-        title: "WIR HABEN EINE WAHL",
+        title: "Wir haben eine Wahl",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen.",
       },
@@ -27,7 +27,7 @@ export const benjaGuardianOfTheDragonGemI18n: Record<Languages, I18nProperties> 
     version: "Gardien de la Pierre de Dragon",
     text: [
       {
-        title: "NOUS DEVONS CHOISIR",
+        title: "Nous devons choisir",
         description: "Lorsque vous jouez ce personnage, vous pouvez choisir un objet et le bannir.",
       },
     ],
@@ -37,7 +37,7 @@ export const benjaGuardianOfTheDragonGemI18n: Record<Languages, I18nProperties> 
     version: "Custode della Gemma Drago",
     text: [
       {
-        title: "LA SCELTA È NOSTRA",
+        title: "La Scelta è Nostra",
         description: "Quando giochi questo personaggio, puoi esiliare un oggetto a tua scelta.",
       },
     ],

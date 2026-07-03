@@ -17,9 +17,9 @@ export const badanonVillainSupportCenterEnchantedI18n: Record<Languages, I18nPro
     version: "Zentrum für Schurkenunterstützung",
     text: [
       {
-        title: "ICH",
+        title: "Ich möchte kein anderer sein als ich",
         description:
-          'MÖCHTE KEIN ANDERER SEIN ALS ICH Deine Schurken an diesem Ort erhalten: ", 3 — Spiele einen Charakter, mit demselben Namen wie dieser Charakter, kostenlos aus."',
+          'Deine Schurken an diesem Ort erhalten: "{E}, 3 {I} — Spiele einen Charakter, mit demselben Namen wie dieser Charakter, kostenlos aus."',
       },
     ],
   },
@@ -28,9 +28,9 @@ export const badanonVillainSupportCenterEnchantedI18n: Record<Languages, I18nPro
     version: "Centre de soutien des méchants",
     text: [
       {
-        title: "JE NE VOUDRAIS",
+        title: "Je ne voudrais être personne d'autre que moi",
         description:
-          'ÊTRE PERSONNE D\'AUTRE QUE MOI Les personnages Méchant sur ce lieu gagnent ", 3 — Jouez gratuitement un personnage avec le même nom que celui-ci."',
+          'Les personnages Méchant sur ce lieu gagnent "{E}, 3 {I} — Jouez gratuitement un personnage avec le même nom que celui-ci."',
       },
     ],
   },
@@ -39,9 +39,9 @@ export const badanonVillainSupportCenterEnchantedI18n: Record<Languages, I18nPro
     version: "Centro Assistenza Cattivi",
     text: [
       {
-        title: "NON VORREI ESSERE NESSUN ALTRO A PARTE ME I",
+        title: "Non Vorrei Essere Nessun Altro a Parte Me",
         description:
-          'personaggi Cattivo ottengono ", 3 — Gioca un personaggio con lo stesso nome di questo personaggio, gratis" mentre si trovano in questo luogo.',
+          'I personaggi Cattivo ottengono "{E}, 3 {I} — Gioca un personaggio con lo stesso nome di questo personaggio, gratis" mentre si trovano in questo luogo.',
       },
     ],
   },

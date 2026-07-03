@@ -4,6 +4,17 @@ import { bindingContractI18n } from "./065-binding-contract.i18n";
 export const bindingContract: ItemCard = {
   id: "DNe",
   canonicalId: "ci_DNe",
+  slug: "lorcana-ci_DNe",
+  printings: [
+    {
+      id: "set2-065",
+      artId: "set2-065",
+      setCode: "set2",
+      collectorNumber: "65",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-065"],
   cardType: "item",
   name: "Binding Contract",
@@ -16,7 +27,7 @@ export const bindingContract: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_baa89f6923b94ff6a59e1957814a2645",
-    tcgPlayer: 527740,
+    tcgPlayer: "527740",
   },
   text: [
     {

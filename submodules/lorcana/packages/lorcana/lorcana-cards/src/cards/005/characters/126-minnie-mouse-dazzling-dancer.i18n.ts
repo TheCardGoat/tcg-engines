@@ -17,7 +17,7 @@ export const minnieMouseDazzlingDancerI18n: Record<Languages, I18nProperties> = 
     version: "Strahlende Tänzerin",
     text: [
       {
-        title: "TANZWETTBEWERB",
+        title: "Tanzwettbewerb",
         description:
           "Jedes Mal, wenn dieser Charakter oder einer deiner Micky-Maus-Charaktere einen anderen Charakter herausfordert, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const minnieMouseDazzlingDancerI18n: Record<Languages, I18nProperties> = 
     version: "Danseuse époustouflante",
     text: [
       {
-        title: "CONCOURS DE DANSE",
+        title: "Concours de danse",
         description:
           "Chaque fois que ce personnage ou l'un de vos personnages Mickey Mouse défie un autre personnage, gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const minnieMouseDazzlingDancerI18n: Record<Languages, I18nProperties> = 
     version: "Ballerina Sfavillante",
     text: [
       {
-        title: "SFIDA DI BALLO",
+        title: "Sfida di Ballo",
         description:
           "Ogni volta che questo personaggio o uno dei tuoi personaggi chiamato Topolino sfida un altro personaggio, ottieni 1 leggenda.",
       },

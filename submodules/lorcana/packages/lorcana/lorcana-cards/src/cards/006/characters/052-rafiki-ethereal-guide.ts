@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rafikiEtherealGuideI18n } from "./052-rafiki-ethereal-guide.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const rafikiEtherealGuide: CharacterCard = {
   id: "4UH",
   canonicalId: "ci_ts7",
+  slug: "lorcana-ci_ts7",
+  printings: [
+    {
+      id: "set6-052",
+      artId: "set6-052",
+      setCode: "set6",
+      collectorNumber: "52",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-052"],
   cardType: "character",
   name: "Rafiki",
@@ -21,7 +33,7 @@ export const rafikiEtherealGuide: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d5432572fd3d4dfc95b01b682c71943c",
-    tcgPlayer: 592032,
+    tcgPlayer: "592032",
   },
   text: [
     {

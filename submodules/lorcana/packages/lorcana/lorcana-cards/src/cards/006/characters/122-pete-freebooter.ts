@@ -4,6 +4,17 @@ import { peteFreebooterI18n } from "./122-pete-freebooter.i18n";
 export const peteFreebooter: CharacterCard = {
   id: "SRs",
   canonicalId: "ci_SRs",
+  slug: "lorcana-ci_SRs",
+  printings: [
+    {
+      id: "set6-122",
+      artId: "set6-122",
+      setCode: "set6",
+      collectorNumber: "122",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-122"],
   cardType: "character",
   name: "Pete",
@@ -20,7 +31,7 @@ export const peteFreebooter: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_a545a0ceb41d4f2583bdc22226df0e31",
-    tcgPlayer: 593035,
+    tcgPlayer: "593035",
   },
   classifications: ["Dreamborn", "Villain", "Pirate"],
   i18n: peteFreebooterI18n,

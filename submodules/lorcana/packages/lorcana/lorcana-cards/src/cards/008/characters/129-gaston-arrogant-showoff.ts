@@ -4,6 +4,17 @@ import { gastonArrogantShowoffI18n } from "./129-gaston-arrogant-showoff.i18n";
 export const gastonArrogantShowoff: CharacterCard = {
   id: "Ooh",
   canonicalId: "ci_Ooh",
+  slug: "lorcana-ci_Ooh",
+  printings: [
+    {
+      id: "set8-129",
+      artId: "set8-129",
+      setCode: "set8",
+      collectorNumber: "129",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-129"],
   cardType: "character",
   name: "Gaston",
@@ -20,7 +31,7 @@ export const gastonArrogantShowoff: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0e17eaad60a343068204ccdf776daa36",
-    tcgPlayer: 632687,
+    tcgPlayer: "632687",
   },
   text: [
     {

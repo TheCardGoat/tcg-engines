@@ -6,15 +6,15 @@ export const innerStrengthI18n: Record<Languages, I18nProperties> = {
     text: "Chosen character gets +1 {S} this turn. Draw a card.",
   },
   de: {
-    name: "Inner Strength",
-    text: "Chosen character gets +1 {S} this turn. Draw a card.",
+    name: "Innere Stärke",
+    text: "Ein Charakter deiner Wahl erhält in diesem Zug +1 {S}. Ziehe 1 Karte.",
   },
   fr: {
-    name: "Inner Strength",
-    text: "Chosen character gets +1 {S} this turn. Draw a card.",
+    name: "Force intérieure",
+    text: "Choisissez un personnage qui gagne +1 {S} pour le reste de ce tour. Piochez une carte.",
   },
   it: {
-    name: "Inner Strength",
-    text: "Chosen character gets +1 {S} this turn. Draw a card.",
+    name: "Forza Interiore",
+    text: "Un personaggio a tua scelta riceve +1 {S} per questo turno. Pesca una carta.",
   },
 };

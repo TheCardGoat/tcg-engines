@@ -4,6 +4,17 @@ import { goldCoinI18n } from "./133-gold-coin.i18n";
 export const goldCoin: ItemCard = {
   id: "5vQ",
   canonicalId: "ci_5vQ",
+  slug: "lorcana-ci_5vQ",
+  printings: [
+    {
+      id: "set6-133",
+      artId: "set6-133",
+      setCode: "set6",
+      collectorNumber: "133",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-133"],
   cardType: "item",
   name: "Gold Coin",
@@ -16,7 +27,7 @@ export const goldCoin: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2543ac0748a945e3a4a68ef2f90e2feb",
-    tcgPlayer: 591124,
+    tcgPlayer: "591124",
   },
   text: [
     {

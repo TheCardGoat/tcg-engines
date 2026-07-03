@@ -4,6 +4,17 @@ import { steelChromiconI18n } from "./202-steel-chromicon.i18n";
 export const steelChromicon: ItemCard = {
   id: "Q8H",
   canonicalId: "ci_Q8H",
+  slug: "lorcana-ci_Q8H",
+  printings: [
+    {
+      id: "set5-202",
+      artId: "set5-202",
+      setCode: "set5",
+      collectorNumber: "202",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-202"],
   cardType: "item",
   name: "Steel Chromicon",
@@ -16,7 +27,7 @@ export const steelChromicon: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6cda288d106d4d46837a3c11690dce63",
-    tcgPlayer: 560101,
+    tcgPlayer: "560101",
   },
   text: [
     {

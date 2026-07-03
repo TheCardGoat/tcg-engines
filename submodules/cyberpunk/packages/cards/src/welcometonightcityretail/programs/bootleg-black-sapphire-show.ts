@@ -1,13 +1,14 @@
-import type { WelcomeToNightCityRetailCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailBootlegBlackSapphireShow = {
+export const welcomeToNightCityRetailBootlegBlackSapphireShow = defineCyberpunkCard({
   id: "84561b4c-67f0-4b2e-80ac-6b9c0a2396e3",
-  externalId: "cb-bootleg-black-sapphire-show",
   slug: "bootleg-black-sapphire-show",
-  name: "Bootleg Black Sapphire Show",
-  displayName: "Bootleg Black Sapphire Show",
   rulesText:
     "Sell the top card of your deck.\nIf you control a Gig with an even value and a Gig with an odd value, draw 2.",
+  name: "Bootleg Black Sapphire Show",
+  displayName: "Bootleg Black Sapphire Show",
+  canonicalId: "bootleg-black-sapphire-show",
   color: "yellow",
   classifications: ["Braindance"],
   set: {
@@ -15,21 +16,6 @@ export const welcomeToNightCityRetailBootlegBlackSapphireShow = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "066",
-  printings: [
-    {
-      id: "decc76ed-f5ed-4f02-90d7-e01e2a3975e0",
-      collectorNumber: "066",
-      setCode: "welcometonightcityretail",
-      rarity: "Uncommon",
-    },
-    {
-      id: "20c23b0f-187d-41d8-9670-b8e603049b3d",
-      collectorNumber: "β066",
-      setCode: "welcometonightcitybeta",
-      rarity: "Uncommon",
-    },
-  ],
-  selectedPrintingId: "decc76ed-f5ed-4f02-90d7-e01e2a3975e0",
   artist: "ADIA",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/066.webp",
   rarity: "Uncommon",
@@ -37,7 +23,6 @@ export const welcomeToNightCityRetailBootlegBlackSapphireShow = {
   hasSellTag: true,
   ram: 4,
   timingTriggers: ["play"],
-  keywords: [],
   type: "program",
   cost: 5,
   power: null,
@@ -72,4 +57,4 @@ export const welcomeToNightCityRetailBootlegBlackSapphireShow = {
     },
   ],
   reminderText: ["Discard programs after they resolve."],
-} satisfies WelcomeToNightCityRetailCardDefinition;
+}) satisfies ProgramCardDefinition;

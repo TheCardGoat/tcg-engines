@@ -4,6 +4,17 @@ import { rapunzelSunshineI18n } from "./020-rapunzel-sunshine.i18n";
 export const rapunzelSunshine: CharacterCard = {
   id: "W5W",
   canonicalId: "ci_Zyl",
+  slug: "lorcana-ci_Zyl",
+  printings: [
+    {
+      id: "set2-020",
+      artId: "set2-020",
+      setCode: "set2",
+      collectorNumber: "20",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-020", "set9-008"],
   cardType: "character",
   name: "Rapunzel",
@@ -20,7 +31,7 @@ export const rapunzelSunshine: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ecef763660c74bd49ddb8930fb0ff10b",
-    tcgPlayer: 649957,
+    tcgPlayer: "649957",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const rapunzelSunshine: CharacterCard = {
         exert: true,
       },
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         target: {
           cardTypes: ["character"],
           count: 1,

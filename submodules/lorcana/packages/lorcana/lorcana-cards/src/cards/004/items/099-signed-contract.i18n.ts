@@ -14,7 +14,7 @@ export const signedContractI18n: Record<Languages, I18nProperties> = {
     name: "Unterschriebener Vertrag",
     text: [
       {
-        title: "KLEINGEDRUCKTES",
+        title: "Kleingedrucktes",
         description:
           "Jedes Mal, wenn eine gegnerische Person ein Lied spielt, darfst du 1 Karte ziehen.",
       },
@@ -24,7 +24,7 @@ export const signedContractI18n: Record<Languages, I18nProperties> = {
     name: "Contrat signé",
     text: [
       {
-        title: "PETITS CARACTÈRES",
+        title: "Petits caractères",
         description:
           "Chaque fois qu'un adversaire joue une chanson, vous pouvez piocher une carte.",
       },
@@ -34,7 +34,7 @@ export const signedContractI18n: Record<Languages, I18nProperties> = {
     name: "Contratto Firmato",
     text: [
       {
-        title: "CLAUSOLE IN PICCOLO",
+        title: "Clausole in Piccolo",
         description: "Ogni volta che un avversario gioca una canzone, puoi pescare una carta.",
       },
     ],

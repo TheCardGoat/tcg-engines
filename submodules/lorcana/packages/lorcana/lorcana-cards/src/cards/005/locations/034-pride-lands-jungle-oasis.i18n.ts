@@ -17,7 +17,7 @@ export const prideLandsJungleOasisI18n: Record<Languages, I18nProperties> = {
     version: "Dschungeloase",
     text: [
       {
-        title: "UNSER BESCHEIDENES ZUHAUSE",
+        title: "Unser bescheidenes Zuhause",
         description:
           "Solange du mindestens 3 Charaktere an diesem Ort hast, darfst du diesen Ort verbannen, um einen Charakter von deinem Ablagestapel kostenlos auszuspielen.",
       },
@@ -28,7 +28,7 @@ export const prideLandsJungleOasisI18n: Record<Languages, I18nProperties> = {
     version: "Oasis de la jungle",
     text: [
       {
-        title: "NOTRE HUMBLE CHEZ-NOUS",
+        title: "Notre humble chez-nous",
         description:
           "Tant qu'il y a 3 personnages ou plus sur ce lieu, vous pouvez bannir ce lieu pour jouer gratuitement un personnage de votre défausse.",
       },
@@ -39,7 +39,7 @@ export const prideLandsJungleOasisI18n: Record<Languages, I18nProperties> = {
     version: "Oasi nella Giungla",
     text: [
       {
-        title: "LA NOSTRA UMILE CASA",
+        title: "La Nostra Umile Casa",
         description:
           "Mentre hai 3 o più personaggi in questo luogo, puoi esiliare questo luogo per giocare un personaggio dai tuoi scarti gratis.",
       },

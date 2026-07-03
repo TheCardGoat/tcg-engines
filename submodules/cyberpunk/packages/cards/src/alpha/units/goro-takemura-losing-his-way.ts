@@ -1,15 +1,16 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, condition, effect, target } from "../../helpers/builders/index.ts";
 
-export const alphaGoroTakemuraLosingHisWay = {
+export const alphaGoroTakemuraLosingHisWay = defineCyberpunkCard({
   id: "963f4fd2-9a58-4b50-96f9-d947d4105b56",
-  externalId: "cyberpunk:goro-takemura-losing-his-way",
   slug: "goro-takemura-losing-his-way",
-  name: "Goro Takemura",
-  subname: "Losing His Way",
-  displayName: "Goro Takemura - Losing His Way",
   rulesText:
     "This unit has +1 power during your turn for each face-up legend in your legends area.",
+  subname: "Losing His Way",
+  name: "Goro Takemura",
+  displayName: "Goro Takemura - Losing His Way",
+  canonicalId: "goro-takemura-losing-his-way",
   color: "green",
   classifications: ["Arasaka", "Corpo"],
   set: {
@@ -17,23 +18,12 @@ export const alphaGoroTakemuraLosingHisWay = {
     name: "Alpha Kit Set",
   },
   printNumber: "α018",
-  printings: [
-    {
-      id: "4a40ce11-128b-4560-9d46-294c859475ff",
-      collectorNumber: "α018",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "4a40ce11-128b-4560-9d46-294c859475ff",
   artist: "Ilya Kuvshinov",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a018.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,
   ram: 3,
-  timingTriggers: [],
-  keywords: [],
   type: "unit",
   cost: 4,
   power: 5,
@@ -59,5 +49,4 @@ export const alphaGoroTakemuraLosingHisWay = {
       )
       .build(),
   ],
-  reminderText: [],
-} satisfies AlphaCardDefinition;
+}) satisfies UnitCardDefinition;

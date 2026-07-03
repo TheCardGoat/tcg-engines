@@ -4,6 +4,17 @@ import { mickeyMouseAmberChampionI18n } from "./023-mickey-mouse-amber-champion.
 export const mickeyMouseAmberChampion: CharacterCard = {
   id: "qnB",
   canonicalId: "ci_qnB",
+  slug: "lorcana-ci_qnB",
+  printings: [
+    {
+      id: "set10-023",
+      artId: "set10-023",
+      setCode: "set10",
+      collectorNumber: "23",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-023"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseAmberChampion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_46402c967ba24a1ca2ea62cb69f3b243",
-    tcgPlayer: 659628,
+    tcgPlayer: "659628",
   },
   text: [
     {
@@ -48,12 +59,20 @@ export const mickeyMouseAmberChampion: CharacterCard = {
     },
     {
       condition: {
-        comparison: { operator: "gte", value: 2 },
+        comparison: {
+          operator: "gte",
+          value: 2,
+        },
         query: {
           cardTypes: ["character"],
           count: "all",
           excludeSelf: true,
-          filters: [{ inkType: "amber", type: "ink-type" }],
+          filters: [
+            {
+              inkType: "amber",
+              type: "ink-type",
+            },
+          ],
           owner: "you",
           selector: "all",
           zones: ["play"],

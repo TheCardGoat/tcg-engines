@@ -314,6 +314,67 @@ export function deriveQueuedBoardMoveAnimations(
   return queued;
 }
 
+export function deriveQueuedLocationMoveAnimations(
+  previousSnapshot: LorcanaProjectedBoardView | null,
+  nextSnapshot: LorcanaProjectedBoardView | null,
+  newEntries: MoveLogEntrySnapshot[],
+  resolveCard: (cardId: string) => LorcanaCardSnapshot | null,
+  durationMultiplier = 1,
+): QueuedBoardMoveAnimation[] {
+  if (!previousSnapshot || !nextSnapshot) {
+    return [];
+  }
+
+  const queued: QueuedBoardMoveAnimation[] = [];
+  const relevantEntries = newEntries.filter(
+    (entry) =>
+      entry.moveId === "moveCharacterToLocation" ||
+      entry.moveId === "resolveBag" ||
+      entry.moveId === "resolveEffect",
+  );
+  const fallbackEntryId = relevantEntries[0]?.id ?? `state:${nextSnapshot.stateID}:location-move`;
+
+  for (const [cardId, projectedCard] of Object.entries(nextSnapshot.cards)) {
+    const nextLocationId = projectedCard.atLocationId;
+    const previousLocationId = previousSnapshot.cards[cardId]?.atLocationId;
+    if (!nextLocationId || previousLocationId === nextLocationId) {
+      continue;
+    }
+
+    const nextLocation = findCardLocation(nextSnapshot, cardId, resolveCard);
+    const previousLocation = findCardLocation(previousSnapshot, cardId, resolveCard);
+    if (!nextLocation || nextLocation.zoneId !== "play") {
+      continue;
+    }
+
+    const card = nextLocation.card;
+    if (card.cardType !== "character") {
+      continue;
+    }
+
+    const actorSide = nextLocation.side;
+    queued.push({
+      actorSide,
+      card,
+      destination: buildCardDestination(nextLocation),
+      destinationZoneId: "play",
+      durationMs: Math.round(VARIANT_DURATION_MS["move-to-location"] * durationMultiplier),
+      groupId: fallbackEntryId,
+      id: `${fallbackEntryId}:move-to-location:${cardId}:${nextLocationId}`,
+      impactAt: "destination",
+      moveLogId: fallbackEntryId,
+      phase: "consequence",
+      playback: "parallel",
+      renderFace: "faceUp",
+      source: buildSourceAnchor(previousLocation, actorSide),
+      sourceZoneId: previousLocation?.zoneId ?? "play",
+      variant: "move-to-location",
+    });
+  }
+
+  return queued;
+}
+
 export function deriveQueuedBoardMoveAnimationsFromPacket(
   previousSnapshot: LorcanaProjectedBoardView | null,
   nextSnapshot: LorcanaProjectedBoardView | null,

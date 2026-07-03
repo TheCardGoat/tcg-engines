@@ -22,7 +22,30 @@ mock.module("web-vitals", () => ({
 }));
 
 mock.module("./analytics.js", () => ({
+  ANALYTICS_TEXT_MAX_LENGTH: 100,
+  analyticsErrorFields: (error: unknown) => {
+    const code = error instanceof Error ? error.name : undefined;
+    const rawMessage =
+      error instanceof Error ? error.message : typeof error === "string" ? error : undefined;
+    const message =
+      typeof rawMessage === "string" && rawMessage.length > 0
+        ? rawMessage.slice(0, 100)
+        : undefined;
+    return {
+      ...(code ? { error_code: code } : {}),
+      ...(message ? { error_message: message } : {}),
+    };
+  },
+  initAnalytics: () => {},
+  isAnalyticsConfigured: () => false,
+  normalizePathForAnalytics: (path: string) => path,
+  setUserProperties: () => {},
   trackEvent,
+  trackException: () => {},
+  trackPageView: () => {},
+  truncateForAnalytics: (input: unknown) =>
+    typeof input === "string" ? input.slice(0, 100) : undefined,
+  updateConsent: () => {},
 }));
 
 mock.module("$lib/telemetry/metrics.js", () => ({

@@ -4,6 +4,17 @@ import { flynnRiderCharmingRogueI18n } from "./074-flynn-rider-charming-rogue.i1
 export const flynnRiderCharmingRogue: CharacterCard = {
   id: "a9K",
   canonicalId: "ci_a9K",
+  slug: "lorcana-ci_a9K",
+  printings: [
+    {
+      id: "set1-074",
+      artId: "set1-074",
+      setCode: "set1",
+      collectorNumber: "74",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-074"],
   cardType: "character",
   name: "Flynn Rider",
@@ -20,7 +31,7 @@ export const flynnRiderCharmingRogue: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c0742f7731e04b749870bceb5c6b133b",
-    tcgPlayer: 506833,
+    tcgPlayer: "506833",
   },
   text: [
     {

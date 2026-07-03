@@ -57,6 +57,7 @@ export async function lorcanaCreateServerEngine(
     players,
     cardCatalog: getLorcanaCardCatalogSync(),
     goingFirst,
+    capturePatches: true,
     timeControl: toLorcanaTimeControl(input.timeControl),
   };
   const engine = new LorcanaServer({ ...init, players });

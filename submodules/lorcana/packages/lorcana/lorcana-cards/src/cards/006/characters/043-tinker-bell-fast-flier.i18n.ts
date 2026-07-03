@@ -9,16 +9,16 @@ export const tinkerBellFastFlierI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Naseweis",
     version: "Flinke Fliegerin",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "La Fée Clochette",
     version: "Volant à toute allure",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Trilli",
     version: "Ali Rapide",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

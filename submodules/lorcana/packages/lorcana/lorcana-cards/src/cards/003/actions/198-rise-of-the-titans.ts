@@ -4,6 +4,17 @@ import { riseOfTheTitansI18n } from "./198-rise-of-the-titans.i18n";
 export const riseOfTheTitans: ActionCard = {
   id: "uvL",
   canonicalId: "ci_uvL",
+  slug: "lorcana-ci_uvL",
+  printings: [
+    {
+      id: "set3-198",
+      artId: "set3-198",
+      setCode: "set3",
+      collectorNumber: "198",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-198"],
   cardType: "action",
   name: "Rise of the Titans",
@@ -16,7 +27,7 @@ export const riseOfTheTitans: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d36e3111ff2a40f4916b08b01de3cbeb",
-    tcgPlayer: 537609,
+    tcgPlayer: "537609",
   },
   text: "Banish chosen location or item.",
   abilities: [

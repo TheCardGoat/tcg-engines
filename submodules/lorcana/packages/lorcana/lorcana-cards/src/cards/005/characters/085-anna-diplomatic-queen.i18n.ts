@@ -25,16 +25,16 @@ export const annaDiplomaticQueenI18n: Record<Languages, I18nProperties> = {
     version: "Diplomatische Königin",
     text: [
       {
-        title: "KÖNIGLICHE ENTSCHEIDUNG",
+        title: "Königliche Entscheidung",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du 2 bezahlen, um eine der Möglichkeiten auszuwählen:",
+          "Wenn du diesen Charakter ausspielst, darfst du 2 {I} bezahlen, um eine der Möglichkeiten auszuwählen:",
       },
       {
         title:
           "• Alle gegnerischen Mitspielenden wählen je 1 Karte aus ihrer Hand und werfen sie ab.",
       },
       {
-        title: "• Gib einem Charakter deiner Wahl in diesem Zug +2.",
+        title: "• Gib einem Charakter deiner Wahl in diesem Zug +2 {S}.",
       },
       {
         title: "• Verbanne einen beschädigten Charakter deiner Wahl.",
@@ -46,14 +46,15 @@ export const annaDiplomaticQueenI18n: Record<Languages, I18nProperties> = {
     version: "Reine diplomate",
     text: [
       {
-        title: "DÉTERMINATION ROYALE",
-        description: "Lorsque vous jouez ce personnage, vous pouvez payer 2, pour choisir entre:",
+        title: "Détermination royale",
+        description:
+          "Lorsque vous jouez ce personnage, vous pouvez payer 2 {I}, pour choisir entre:",
       },
       {
         title: "• Chaque adversaire choisit une carte de sa main et la défausse.",
       },
       {
-        title: "• Choisissez un personnage qui gagne +2 pour le reste de ce tour.",
+        title: "• Choisissez un personnage qui gagne +2 {S} pour le reste de ce tour.",
       },
       {
         title: "• Choisissez un personnage ayant au moins un dommage sur lui et bannissez-le.",
@@ -65,14 +66,14 @@ export const annaDiplomaticQueenI18n: Record<Languages, I18nProperties> = {
     version: "Regina Diplomatica",
     text: [
       {
-        title: "DECISIONE REALE",
-        description: "Quando giochi questo personaggio, puoi pagare 2 per scegliere uno:",
+        title: "Decisione Reale",
+        description: "Quando giochi questo personaggio, puoi pagare 2 {I} per scegliere uno:",
       },
       {
         title: "• Ogni avversario sceglie e scarta una carta.",
       },
       {
-        title: "• Un personaggio a tua scelta riceve +2 per questo turno.",
+        title: "• Un personaggio a tua scelta riceve +2 {S} per questo turno.",
       },
       {
         title: "• Esilia un personaggio danneggiato a tua scelta.",

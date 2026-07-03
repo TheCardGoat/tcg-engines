@@ -7,14 +7,17 @@ export const st01GundamMaForm002: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "ST01-002",
-  externalId: "gundam:st01-002",
-  slug: "gundam-ma-form-st01-002",
+  canonicalId: "ST01-002",
+  externalIds: { bandai: "gundam:st01-002" },
+  slug: "gundam-ma-form/st01-002",
   displayName: "Gundam (MA Form)",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-002",
   printings: [
     {
       id: "ST01-002",
+      artId: "ST01-002",
+      setCode: "ST01",
       collectorNumber: "ST01-002",
       cardNumber: "ST01-002",
       set: {
@@ -30,6 +33,8 @@ export const st01GundamMaForm002: UnitCard = {
     },
     {
       id: "ST01-002_p1",
+      artId: "ST01-002_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-002_p1",
       cardNumber: "ST01-002",
       set: {
@@ -45,6 +50,8 @@ export const st01GundamMaForm002: UnitCard = {
     },
     {
       id: "ST01-002_p2",
+      artId: "ST01-002_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-002_p2",
       cardNumber: "ST01-002",
       set: {
@@ -59,6 +66,7 @@ export const st01GundamMaForm002: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST01-002", "ST01-002_p1", "ST01-002_p2"],
   selectedPrintingId: "ST01-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-002.webp?260424",

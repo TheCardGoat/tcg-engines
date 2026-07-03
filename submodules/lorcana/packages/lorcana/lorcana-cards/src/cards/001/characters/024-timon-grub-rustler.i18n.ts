@@ -17,7 +17,7 @@ export const timonGrubRustlerI18n: Record<Languages, I18nProperties> = {
     version: "Larvendieb",
     text: [
       {
-        title: "SCHMECKT WIE HÜHNCHEN",
+        title: "Schmeckt wie Hühnchen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du bis zu 1 Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -39,7 +39,7 @@ export const timonGrubRustlerI18n: Record<Languages, I18nProperties> = {
     version: "Grub Rustler",
     text: [
       {
-        title: "TASTES LIKE CHICKEN",
+        title: "Tastes Like Chicken",
         description:
           "When you play this character, you may remove up to 1 damage from chosen character.",
       },

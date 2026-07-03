@@ -6,7 +6,7 @@ export const liloRockStarEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Rock Star",
     text: [
       {
-        title: "Shift 4",
+        title: "Shift 4 {I}",
       },
       {
         title: "I'LL COUNT YOU IN",
@@ -20,10 +20,10 @@ export const liloRockStarEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Rockstar",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title: "<Gestaltwandel> 4 {I}",
       },
       {
-        title: "ICH ZÄHLE AUF DICH",
+        title: "Ich zähle auf dich",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen Charakter von deinem Ablagestapel, der 2 oder weniger kostet, kostenlos ausspielen.",
       },
@@ -34,10 +34,10 @@ export const liloRockStarEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Rock Star",
     text: [
       {
-        title: "Alter 4",
+        title: "<Alter> 4 {I}",
       },
       {
-        title: "JE TE COMPTE PARMI NOUS",
+        title: "Je te compte parmi nous",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez jouer gratuitement un personnage coûtant 2 ou moins de votre défausse.",
       },
@@ -48,10 +48,10 @@ export const liloRockStarEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Rock Star",
     text: [
       {
-        title: "Trasformazione 4",
+        title: "<Trasformazione> 4 {I}",
       },
       {
-        title: "TI CONTO",
+        title: "Ti Conto",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi giocare un personaggio con costo 2 o inferiore dai tuoi scarti, gratis.",
       },

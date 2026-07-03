@@ -7,14 +7,14 @@ export const divebombI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Sturzbomber",
-    text: "Verbanne einen deiner Charaktere mit Impulsiv, um einen Charakter deiner Wahl, mit einer geringeren als der verbannte Charakter, zu verbannen.",
+    text: "Verbanne einen deiner Charaktere mit <Impulsiv>, um einen Charakter deiner Wahl, mit einer geringeren {S} als der verbannte Charakter, zu verbannen.",
   },
   fr: {
     name: "Bombardement en piqué !",
-    text: "Bannissez l'un de vos personnages avec Combattant puis choisissez un personnage ayant moins de que lui et bannissez-le.",
+    text: "Bannissez l'un de vos personnages avec <Combattant> puis choisissez un personnage ayant moins de {S} que lui et bannissez-le.",
   },
   it: {
     name: "In Picchiata",
-    text: "Esilia uno dei tuoi personaggi con Attaccabrighe per esiliare un personaggio a tua scelta con meno del tuo personaggio.",
+    text: "Esilia uno dei tuoi personaggi con <Attaccabrighe> per esiliare un personaggio a tua scelta con meno {S} del tuo personaggio.",
   },
 };

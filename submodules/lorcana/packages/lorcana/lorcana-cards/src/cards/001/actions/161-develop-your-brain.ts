@@ -4,6 +4,17 @@ import { developYourBrainI18n } from "./161-develop-your-brain.i18n";
 export const developYourBrain: ActionCard = {
   id: "GGr",
   canonicalId: "ci_w1L",
+  slug: "lorcana-ci_w1L",
+  printings: [
+    {
+      id: "set1-161",
+      artId: "set1-161",
+      setCode: "set1",
+      collectorNumber: "161",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-161", "set9-163"],
   cardType: "action",
   name: "Develop Your Brain",
@@ -16,7 +27,7 @@ export const developYourBrain: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_441f1bb9f8c2478d84c13e70dd62755c",
-    tcgPlayer: 650097,
+    tcgPlayer: "650097",
   },
   text: "Look at the top 2 cards of your deck. Put one into your hand and the other on the bottom of the deck.",
   abilities: [

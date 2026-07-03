@@ -17,9 +17,9 @@ export const pocahontasFollowingTheWindI18n: Record<Languages, I18nProperties> =
     version: "Folgt dem Wind",
     text: [
       {
-        title: "WELCHER IST DENN MEIN WEG?",
+        title: "Welcher ist denn mein Weg?",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, wähle einen anderen erschöpften Charakter und sammle so viele Legenden, wie sein -Wert beträgt.",
+          "Jedes Mal, wenn dieser Charakter erkundet, wähle einen anderen erschöpften Charakter und sammle so viele Legenden, wie sein {L}-Wert beträgt.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const pocahontasFollowingTheWindI18n: Record<Languages, I18nProperties> =
     version: "Suit le vent",
     text: [
       {
-        title: "QUEL EST LE DROIT CHEMIN?",
+        title: "Quel est le droit chemin?",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un autre personnage épuisé et gagnez autant d'éclats de Lore que son.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un autre personnage épuisé et gagnez autant d'éclats de Lore que son {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const pocahontasFollowingTheWindI18n: Record<Languages, I18nProperties> =
     version: "Che Segue il Vento",
     text: [
       {
-        title: "QUAL È LA MIA VIA?",
+        title: "Qual è la mia Via?",
         description:
-          "Ogni volta che questo personaggio va all'avventura, ottieni leggenda pari al di un altro personaggio impegnato a tua scelta.",
+          "Ogni volta che questo personaggio va all'avventura, ottieni leggenda pari al {L} di un altro personaggio impegnato a tua scelta.",
       },
     ],
   },

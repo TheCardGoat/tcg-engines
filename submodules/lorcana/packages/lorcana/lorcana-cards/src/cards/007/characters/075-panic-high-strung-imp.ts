@@ -4,6 +4,17 @@ import { panicHighstrungImpI18n } from "./075-panic-high-strung-imp.i18n";
 export const panicHighstrungImp: CharacterCard = {
   id: "0bl",
   canonicalId: "ci_0bl",
+  slug: "lorcana-ci_0bl",
+  printings: [
+    {
+      id: "set7-075",
+      artId: "set7-075",
+      setCode: "set7",
+      collectorNumber: "75",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-075"],
   cardType: "character",
   name: "Panic",
@@ -20,7 +31,7 @@ export const panicHighstrungImp: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4c46bfa161ae4e4d886ddabef7ad8d57",
-    tcgPlayer: 618699,
+    tcgPlayer: "618699",
   },
   text: [
     {
@@ -46,7 +57,10 @@ export const panicHighstrungImp: CharacterCard = {
         chooser: "CONTROLLER",
         effect: {
           type: "move-damage",
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           from: "CHOSEN_CHARACTER",
           to: "CHOSEN_OPPOSING_CHARACTER",
         },

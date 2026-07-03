@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { peterPanNeverLandHeroI18n } from "./119-peter-pan-never-land-hero.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const peterPanNeverLandHero: CharacterCard = {
   id: "kk3",
   canonicalId: "ci_kk3",
+  slug: "lorcana-ci_kk3",
+  printings: [
+    {
+      id: "set3-119",
+      artId: "set3-119",
+      setCode: "set3",
+      collectorNumber: "119",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-119"],
   cardType: "character",
   name: "Peter Pan",
@@ -21,7 +33,7 @@ export const peterPanNeverLandHero: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ffccea571e7e4efb9b5258ecc03e847b",
-    tcgPlayer: 537951,
+    tcgPlayer: "537951",
   },
   text: [
     {

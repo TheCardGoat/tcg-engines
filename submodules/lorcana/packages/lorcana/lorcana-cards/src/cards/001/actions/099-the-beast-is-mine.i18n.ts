@@ -15,6 +15,6 @@ export const theBeastIsMineI18n: Record<Languages, I18nProperties> = {
   },
   it: {
     name: "The Beast is Mine!",
-    text: "Chosen character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+    text: "Chosen character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)",
   },
 };

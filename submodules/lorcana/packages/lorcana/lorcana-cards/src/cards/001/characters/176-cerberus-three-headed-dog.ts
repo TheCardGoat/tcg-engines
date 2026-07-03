@@ -4,6 +4,17 @@ import { cerberusThreeheadedDogI18n } from "./176-cerberus-three-headed-dog.i18n
 export const cerberusThreeheadedDog: CharacterCard = {
   id: "sNx",
   canonicalId: "ci_sNx",
+  slug: "lorcana-ci_sNx",
+  printings: [
+    {
+      id: "set1-176",
+      artId: "set1-176",
+      setCode: "set1",
+      collectorNumber: "176",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-176"],
   cardType: "character",
   name: "Cerberus",
@@ -21,7 +32,7 @@ export const cerberusThreeheadedDog: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_25c3b767ba91433682a1643b31b7645b",
-    tcgPlayer: 497206,
+    tcgPlayer: "497206",
   },
   classifications: ["Storyborn"],
   i18n: cerberusThreeheadedDogI18n,

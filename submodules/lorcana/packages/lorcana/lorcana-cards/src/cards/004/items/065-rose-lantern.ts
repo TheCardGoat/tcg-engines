@@ -4,6 +4,17 @@ import { roseLanternI18n } from "./065-rose-lantern.i18n";
 export const roseLantern: ItemCard = {
   id: "wLO",
   canonicalId: "ci_bo3",
+  slug: "lorcana-ci_bo3",
+  printings: [
+    {
+      id: "set4-065",
+      artId: "set4-065",
+      setCode: "set4",
+      collectorNumber: "65",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-065", "set9-067"],
   cardType: "item",
   name: "Rose Lantern",
@@ -16,7 +27,7 @@ export const roseLantern: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0294484e638d4f389732639af2b5d5e8",
-    tcgPlayer: 647667,
+    tcgPlayer: "647667",
   },
   text: [
     {

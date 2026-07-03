@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { aliceWellreadWhisperI18n } from "./036-alice-well-read-whisper.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const aliceWellreadWhisper: CharacterCard = {
   id: "Sgs",
   canonicalId: "ci_Sgs",
+  slug: "lorcana-ci_Sgs",
+  printings: [
+    {
+      id: "set11-036",
+      artId: "set11-036",
+      setCode: "set11",
+      collectorNumber: "36",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-036"],
   cardType: "character",
   name: "Alice",
@@ -21,7 +33,7 @@ export const aliceWellreadWhisper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4328715a70224a1fae6ee75034f305fa",
-    tcgPlayer: 674841,
+    tcgPlayer: "674841",
   },
   text: [
     {

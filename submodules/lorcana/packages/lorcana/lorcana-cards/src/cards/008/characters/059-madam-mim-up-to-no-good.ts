@@ -4,6 +4,17 @@ import { madamMimUpToNoGoodI18n } from "./059-madam-mim-up-to-no-good.i18n";
 export const madamMimUpToNoGood: CharacterCard = {
   id: "EKX",
   canonicalId: "ci_EKX",
+  slug: "lorcana-ci_EKX",
+  printings: [
+    {
+      id: "set8-059",
+      artId: "set8-059",
+      setCode: "set8",
+      collectorNumber: "59",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-059"],
   cardType: "character",
   name: "Madam Mim",
@@ -21,7 +32,7 @@ export const madamMimUpToNoGood: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_246606d417374c8fa6ba822d85eb9e62",
-    tcgPlayer: 631390,
+    tcgPlayer: "631390",
   },
   classifications: ["Storyborn", "Villain", "Sorcerer"],
   i18n: madamMimUpToNoGoodI18n,

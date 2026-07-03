@@ -11,9 +11,17 @@ export const mauiStubbornTricksterI18n: Record<Languages, I18nProperties> = {
     version: "Sturköpfiger Schwindler",
     text: [
       {
-        title: "ICH BIN NOCH NICHT FERTIG",
-        description:
-          "Wenn dieser Charakter verbannt wird, wähle eine Möglichkeit aus: • Lege 2 Schadensmarker auf alle gegnerischen Charaktere. • Verbanne alle gegnerischen Gegenstände. • Verbanne alle gegnerischen Orte.",
+        title: "Ich bin noch nicht fertig",
+        description: "Wenn dieser Charakter verbannt wird, wähle eine Möglichkeit aus:",
+      },
+      {
+        title: "• Lege 2 Schadensmarker auf alle gegnerischen Charaktere.",
+      },
+      {
+        title: "• Verbanne alle gegnerischen Gegenstände.",
+      },
+      {
+        title: "• Verbanne alle gegnerischen Orte.",
       },
     ],
   },
@@ -22,9 +30,17 @@ export const mauiStubbornTricksterI18n: Record<Languages, I18nProperties> = {
     version: "Filou entêté",
     text: [
       {
-        title: "JE N'EN AI PAS ENCORE FINI",
-        description:
-          "Lorsque ce personnage est banni, choisissez entre: • Placez 2 dommages sur chaque personnage adverse. • Bannissez tous les objets adverses. • Bannissez tous les lieux adverses.",
+        title: "Je n'en ai pas encore fini",
+        description: "Lorsque ce personnage est banni, choisissez entre:",
+      },
+      {
+        title: "• Placez 2 dommages sur chaque personnage adverse.",
+      },
+      {
+        title: "• Bannissez tous les objets adverses.",
+      },
+      {
+        title: "• Bannissez tous les lieux adverses.",
       },
     ],
   },
@@ -33,9 +49,17 @@ export const mauiStubbornTricksterI18n: Record<Languages, I18nProperties> = {
     version: "Imbroglione Cocciuto",
     text: [
       {
-        title: "NON HO ANCORA FINITO",
-        description:
-          "Quando questo personaggio viene esiliato, scegli uno: • Metti 2 segnalini danno su tutti i personaggi avversari. • Esilia tutti gli oggetti avversari. • Esilia tutti i luoghi avversari.",
+        title: "Non Ho Ancora Finito",
+        description: "Quando questo personaggio viene esiliato, scegli uno:",
+      },
+      {
+        title: "• Metti 2 segnalini danno su tutti i personaggi avversari.",
+      },
+      {
+        title: "• Esilia tutti gli oggetti avversari.",
+      },
+      {
+        title: "• Esilia tutti i luoghi avversari.",
       },
     ],
   },

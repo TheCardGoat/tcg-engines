@@ -6,14 +6,17 @@ export const st08Valiant014: BaseCard = {
   type: "base",
   traits: ["mafty", "warship"],
   id: "ST08-014",
-  externalId: "gundam:st08-014",
-  slug: "valiant-st08-014",
+  canonicalId: "ST08-014",
+  externalIds: { bandai: "gundam:st08-014" },
+  slug: "valiant/st08-014",
   displayName: "Valiant",
   set: { code: "ST08", name: "Flash of Radiance [ST08]", packageId: "616008" },
   printNumber: "ST08-014",
   printings: [
     {
       id: "ST08-014",
+      artId: "ST08-014",
+      setCode: "ST08",
       collectorNumber: "ST08-014",
       cardNumber: "ST08-014",
       set: {
@@ -29,6 +32,8 @@ export const st08Valiant014: BaseCard = {
     },
     {
       id: "ST08-014_p1",
+      artId: "ST08-014_p1",
+      setCode: "ST08",
       collectorNumber: "ST08-014_p1",
       cardNumber: "ST08-014",
       set: {
@@ -43,6 +48,7 @@ export const st08Valiant014: BaseCard = {
       productName: "Flash of Radiance [ST08] Bonus Pack",
     },
   ],
+  reprints: ["ST08-014", "ST08-014_p1"],
   selectedPrintingId: "ST08-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st08/ST08-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST08-014.webp?260424",

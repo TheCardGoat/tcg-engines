@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { pinocchioStringsAttachedI18n } from "./061-pinocchio-strings-attached.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const pinocchioStringsAttached: CharacterCard = {
-  id: "4F7",
+  id: "HBo",
   canonicalId: "ci_828",
+  slug: "lorcana-ci_828",
+  printings: [
+    {
+      id: "set8-061",
+      artId: "set8-061",
+      setCode: "set8",
+      collectorNumber: "61",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-061"],
   cardType: "character",
   name: "Pinocchio",
@@ -20,8 +32,8 @@ export const pinocchioStringsAttached: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_a0a931cb7b6248b3a56080e7f39b7e2b",
-    tcgPlayer: 631340,
+    lorcast: "crd_df6cc478635f4764bb880e560219173a",
+    tcgPlayer: "634264",
   },
   text: [
     {

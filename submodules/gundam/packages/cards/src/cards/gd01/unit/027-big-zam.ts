@@ -7,14 +7,17 @@ export const gd01BigZam027: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-027",
-  externalId: "gundam:gd01-027",
-  slug: "big-zam-gd01-027",
+  canonicalId: "GD01-027",
+  externalIds: { bandai: "gundam:gd01-027" },
+  slug: "big-zam/gd01-027",
   displayName: "Big Zam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-027",
   printings: [
     {
       id: "GD01-027",
+      artId: "GD01-027",
+      setCode: "GD01",
       collectorNumber: "GD01-027",
       cardNumber: "GD01-027",
       set: {
@@ -30,6 +33,8 @@ export const gd01BigZam027: UnitCard = {
     },
     {
       id: "GD01-027_p1",
+      artId: "GD01-027_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-027_p1",
       cardNumber: "GD01-027",
       set: {
@@ -44,6 +49,7 @@ export const gd01BigZam027: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-027", "GD01-027_p1"],
   selectedPrintingId: "GD01-027",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-027.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-027.webp?260424",

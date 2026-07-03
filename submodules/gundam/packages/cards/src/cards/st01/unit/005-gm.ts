@@ -7,14 +7,17 @@ export const st01Gm005: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "ST01-005",
-  externalId: "gundam:st01-005",
-  slug: "gm-st01-005",
+  canonicalId: "ST01-005",
+  externalIds: { bandai: "gundam:st01-005" },
+  slug: "gm/st01-005",
   displayName: "GM",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-005",
   printings: [
     {
       id: "ST01-005",
+      artId: "ST01-005",
+      setCode: "ST01",
       collectorNumber: "ST01-005",
       cardNumber: "ST01-005",
       set: {
@@ -30,6 +33,8 @@ export const st01Gm005: UnitCard = {
     },
     {
       id: "ST01-005_p1",
+      artId: "ST01-005_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-005_p1",
       cardNumber: "ST01-005",
       set: {
@@ -45,6 +50,8 @@ export const st01Gm005: UnitCard = {
     },
     {
       id: "ST01-005_p2",
+      artId: "ST01-005_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-005_p2",
       cardNumber: "ST01-005",
       set: {
@@ -59,6 +66,7 @@ export const st01Gm005: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST01-005", "ST01-005_p1", "ST01-005_p2"],
   selectedPrintingId: "ST01-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-005.webp?260424",

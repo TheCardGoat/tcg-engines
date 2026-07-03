@@ -20,10 +20,10 @@ export const beastSnowfieldTroublemakerI18n: Record<Languages, I18nProperties> =
     version: "Schneefeld-Unruhestifter",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "DYNAMISCHES MANÖVER",
+        title: "Dynamisches Manöver",
         description:
           "Jedes Mal, wenn dieser Charakter herausfordert, falls er an einem Ort ist, erhält er keinen Schaden durch die Herausforderung.",
       },
@@ -34,26 +34,26 @@ export const beastSnowfieldTroublemakerI18n: Record<Languages, I18nProperties> =
     version: "Trublion du champ de neige",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "MANŒUVRE DYNAMIQUE",
+        title: "Manœuvre dynamique",
         description:
           "Chaque fois que ce personnage défie, s'il est sur un lieu, il ne subit aucun dommage lors de ce défi.",
       },
     ],
   },
   it: {
-    name: "La Bestia",
-    version: "Combinaguai del Campo Innevato",
+    name: "Beast",
+    version: "Snowfield Troublemaker",
     text: [
       {
-        title: "Lesto",
+        title: "<Rush> (This character can challenge the turn they're played.)",
       },
       {
-        title: "MANOVRA DINAMICA",
+        title: "Dynamic Maneuver",
         description:
-          "Ogni volta che questo personaggio sfida, se si trova in un luogo, non subisce danno dalla sfida.",
+          "Whenever this character challenges, if he's at a location, he takes no damage from the challenge.",
       },
     ],
   },

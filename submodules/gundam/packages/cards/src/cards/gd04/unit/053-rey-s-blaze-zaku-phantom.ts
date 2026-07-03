@@ -7,14 +7,17 @@ export const gd04ReySBlazeZakuPhantom053: UnitCard = {
   color: "purple",
   traits: ["zaft", "minerva squad"],
   id: "GD04-053",
-  externalId: "gundam:gd04-053",
-  slug: "rey-s-blaze-zaku-phantom-gd04-053",
+  canonicalId: "GD04-053",
+  externalIds: { bandai: "gundam:gd04-053" },
+  slug: "rey-s-blaze-zaku-phantom/gd04-053",
   displayName: "Rey's Blaze Zaku Phantom",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-053",
   printings: [
     {
       id: "GD04-053",
+      artId: "GD04-053",
+      setCode: "GD04",
       collectorNumber: "GD04-053",
       cardNumber: "GD04-053",
       set: {
@@ -30,6 +33,8 @@ export const gd04ReySBlazeZakuPhantom053: UnitCard = {
     },
     {
       id: "GD04-053_p1",
+      artId: "GD04-053_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-053_p1",
       cardNumber: "GD04-053",
       set: {
@@ -44,6 +49,7 @@ export const gd04ReySBlazeZakuPhantom053: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-053", "GD04-053_p1"],
   selectedPrintingId: "GD04-053",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-053.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-053.webp?260424",

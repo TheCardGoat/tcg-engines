@@ -9,16 +9,16 @@ export const teKTheBurningOneI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Te Kā",
     version: "Brandgefährlich",
-    text: "Impulsiv",
+    text: "<Impulsiv>",
   },
   fr: {
     name: "TE KĀ",
     version: "Démon de la Terre et du Feu",
-    text: "Combattant",
+    text: "<Combattant>",
   },
   it: {
     name: "Te Kā",
     version: "L'Incandescente",
-    text: "Attaccabrighe",
+    text: "<Attaccabrighe>",
   },
 };

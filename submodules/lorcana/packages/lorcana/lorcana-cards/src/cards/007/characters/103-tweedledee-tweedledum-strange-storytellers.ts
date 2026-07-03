@@ -4,6 +4,17 @@ import { tweedledeeTweedledumStrangeStorytellersI18n } from "./103-tweedledee-tw
 export const tweedledeeTweedledumStrangeStorytellers: CharacterCard = {
   id: "Myt",
   canonicalId: "ci_Myt",
+  slug: "lorcana-ci_Myt",
+  printings: [
+    {
+      id: "set7-103",
+      artId: "set7-103",
+      setCode: "set7",
+      collectorNumber: "103",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-103"],
   cardType: "character",
   name: "Tweedledee & Tweedledum",
@@ -20,7 +31,7 @@ export const tweedledeeTweedledumStrangeStorytellers: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f412907cdf7346cf8bbc1d02fab3d1d6",
-    tcgPlayer: 619461,
+    tcgPlayer: "619461",
   },
   text: [
     {

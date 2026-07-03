@@ -4,6 +4,17 @@ import { scroogeMcduckCavernProspectorI18n } from "./018-scrooge-mcduck-cavern-p
 export const scroogeMcduckCavernProspector: CharacterCard = {
   id: "rwm",
   canonicalId: "ci_rwm",
+  slug: "lorcana-ci_rwm",
+  printings: [
+    {
+      id: "set10-018",
+      artId: "set10-018",
+      setCode: "set10",
+      collectorNumber: "18",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-018"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -20,7 +31,7 @@ export const scroogeMcduckCavernProspector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6da6c21dbc834a55b8b49e039c0e3c52",
-    tcgPlayer: 658381,
+    tcgPlayer: "658381",
   },
   text: [
     {

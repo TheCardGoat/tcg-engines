@@ -11,10 +11,28 @@ export const tryEverythingI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Try Everything",
-    text: "Choisissez un personnage. Retirez-lui jusqu'à 3 dommages et redressez-le. Il ne peut ni partir à l'aventure ni défier pour le reste de ce tour.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage. Retirez-lui jusqu'à 3 dommages et redressez-le. Il ne peut ni partir à l'aventure ni défier pour le reste de ce tour.",
+      },
+    ],
   },
   it: {
     name: "Try Everything",
-    text: "(Un personaggio con costo 4 o superiore può per cantare questa canzone gratis.) Rimuovi fino a 3 danni da un personaggio a tua scelta e preparalo. Non può andare all'avventura o sfidare per il resto di questo turno.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Rimuovi fino a 3 danni da un personaggio a tua scelta e preparalo. Non può andare all'avventura o sfidare per il resto di questo turno.",
+      },
+    ],
   },
 };

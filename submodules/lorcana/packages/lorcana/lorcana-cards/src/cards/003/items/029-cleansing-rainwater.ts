@@ -4,6 +4,17 @@ import { cleansingRainwaterI18n } from "./029-cleansing-rainwater.i18n";
 export const cleansingRainwater: ItemCard = {
   id: "fol",
   canonicalId: "ci_fol",
+  slug: "lorcana-ci_fol",
+  printings: [
+    {
+      id: "set3-029",
+      artId: "set3-029",
+      setCode: "set3",
+      collectorNumber: "29",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-029"],
   cardType: "item",
   name: "Cleansing Rainwater",
@@ -16,7 +27,7 @@ export const cleansingRainwater: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_46df24a1b90a460d8572440c007f0af5",
-    tcgPlayer: 537406,
+    tcgPlayer: "537406",
   },
   text: [
     {
@@ -30,7 +41,10 @@ export const cleansingRainwater: ItemCard = {
         banishSelf: true,
       },
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         target: {
           cardTypes: ["character"],
           count: "all",

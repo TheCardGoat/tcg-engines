@@ -7,14 +7,17 @@ export const gd01CagalliSSkygrasper080: UnitCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "GD01-080",
-  externalId: "gundam:gd01-080",
-  slug: "cagalli-s-skygrasper-gd01-080",
+  canonicalId: "GD01-080",
+  externalIds: { bandai: "gundam:gd01-080" },
+  slug: "cagalli-s-skygrasper/gd01-080",
   displayName: "Cagalli's Skygrasper",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-080",
   printings: [
     {
       id: "GD01-080",
+      artId: "GD01-080",
+      setCode: "GD01",
       collectorNumber: "GD01-080",
       cardNumber: "GD01-080",
       set: {
@@ -29,6 +32,7 @@ export const gd01CagalliSSkygrasper080: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-080"],
   selectedPrintingId: "GD01-080",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-080.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-080.webp?260424",

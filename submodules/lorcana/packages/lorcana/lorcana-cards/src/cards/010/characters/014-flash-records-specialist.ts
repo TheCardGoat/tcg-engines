@@ -4,6 +4,17 @@ import { flashRecordsSpecialistI18n } from "./014-flash-records-specialist.i18n"
 export const flashRecordsSpecialist: CharacterCard = {
   id: "dQW",
   canonicalId: "ci_dQW",
+  slug: "lorcana-ci_dQW",
+  printings: [
+    {
+      id: "set10-014",
+      artId: "set10-014",
+      setCode: "set10",
+      collectorNumber: "14",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-014"],
   cardType: "character",
   name: "Flash",
@@ -20,11 +31,14 @@ export const flashRecordsSpecialist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_08f33a2464654944a7424e6b5971033c",
-    tcgPlayer: 659461,
+    tcgPlayer: "659461",
   },
   text: [
     {
-      title: "HOLD... YOUR HORSES",
+      title: "HOLD...",
+    },
+    {
+      title: "YOUR HORSES",
       description: "This character enters play exerted.",
     },
     {

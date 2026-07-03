@@ -7,14 +7,17 @@ export const gd01StarkJegan017: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-017",
-  externalId: "gundam:gd01-017",
-  slug: "stark-jegan-gd01-017",
+  canonicalId: "GD01-017",
+  externalIds: { bandai: "gundam:gd01-017" },
+  slug: "stark-jegan/gd01-017",
   displayName: "Stark Jegan",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-017",
   printings: [
     {
       id: "GD01-017",
+      artId: "GD01-017",
+      setCode: "GD01",
       collectorNumber: "GD01-017",
       cardNumber: "GD01-017",
       set: {
@@ -29,6 +32,7 @@ export const gd01StarkJegan017: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-017"],
   selectedPrintingId: "GD01-017",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-017.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-017.webp?260424",

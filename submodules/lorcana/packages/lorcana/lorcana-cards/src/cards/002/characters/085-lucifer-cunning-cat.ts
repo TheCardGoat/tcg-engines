@@ -4,6 +4,17 @@ import { luciferCunningCatI18n } from "./085-lucifer-cunning-cat.i18n";
 export const luciferCunningCat: CharacterCard = {
   id: "NN3",
   canonicalId: "ci_NN3",
+  slug: "lorcana-ci_NN3",
+  printings: [
+    {
+      id: "set2-085",
+      artId: "set2-085",
+      setCode: "set2",
+      collectorNumber: "85",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-085"],
   cardType: "character",
   name: "Lucifer",
@@ -20,7 +31,7 @@ export const luciferCunningCat: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_436427be3a944c3983c61f6038ef6ea6",
-    tcgPlayer: 525103,
+    tcgPlayer: "525103",
   },
   text: [
     {

@@ -11,10 +11,28 @@ export const youreWelcomeI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Pour les hommes",
-    text: "Choisissez un personnage, un objet ou un lieu et mélangez-le dans la pioche de son propriétaire. Ce joueur pioche 2 cartes.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage, un objet ou un lieu et mélangez-le dans la pioche de son propriétaire. Ce joueur pioche 2 cartes.",
+      },
+    ],
   },
   it: {
     name: "Tranquilla",
-    text: "(Un personaggio con costo 4 o superiore può per cantare questa canzone gratis.) Rimescola un personaggio, un oggetto o un luogo a tua scelta nel mazzo del suo giocatore. Quel giocatore pesca 2 carte.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Rimescola un personaggio, un oggetto o un luogo a tua scelta nel mazzo del suo giocatore. Quel giocatore pesca 2 carte.",
+      },
+    ],
   },
 };

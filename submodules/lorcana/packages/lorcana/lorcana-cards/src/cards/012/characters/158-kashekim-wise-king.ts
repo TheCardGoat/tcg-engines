@@ -4,6 +4,17 @@ import { kashekimWiseKingI18n } from "./158-kashekim-wise-king.i18n";
 export const kashekimWiseKing: CharacterCard = {
   id: "9CP",
   canonicalId: "ci_9CP",
+  slug: "lorcana-ci_9CP",
+  printings: [
+    {
+      id: "set12-158",
+      artId: "set12-158",
+      setCode: "set12",
+      collectorNumber: "158",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-158"],
   cardType: "character",
   name: "Kashekim",
@@ -20,6 +31,7 @@ export const kashekimWiseKing: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8950c4a97e2f4ccc8c5008b82356aec4",
+    tcgPlayer: "692069",
   },
   text: [
     {

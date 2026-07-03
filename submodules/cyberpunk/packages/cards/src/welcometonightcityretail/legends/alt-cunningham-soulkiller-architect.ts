@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailAltCunninghamSoulkillerArchitect = {
+export const welcomeToNightCityRetailAltCunninghamSoulkillerArchitect = defineCyberpunkCard({
   id: "12475e77-0e16-420e-a935-65eb74290de8",
-  externalId: "cb-alt-cunningham-soulkiller-architect",
   slug: "alt-cunningham-soulkiller-architect",
+  rulesText:
+    "{Spend} Your next Program this turn plays for -1 €$ for each friendly min Gig, to a minimum of 1 €$.\n1 €$, {Spend} Play a Program from your trash. Bottom-deck it after you play it. (You still pay its cost.)",
   name: "Alt Cunningham — Soulkiller Architect",
   displayName: "Alt Cunningham — Soulkiller Architect",
-  rulesText:
-    "[Spend Icon:] Your next Program this turn plays for -1 €$ for each friendly min Gig, to a minimum of 1 €$.\n1 €$, [Spend Icon:] Play a Program from your trash. Bottom-deck it after you play it. (You still pay its cost.)",
+  canonicalId: "alt-cunningham-soulkiller-architect",
   color: "blue",
   classifications: ["Merc", "Netrunner"],
   set: {
@@ -15,29 +16,12 @@ export const welcomeToNightCityRetailAltCunninghamSoulkillerArchitect = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "106",
-  printings: [
-    {
-      id: "cb23a651-dd1d-48f8-aca3-8d33fef79fdd",
-      collectorNumber: "106",
-      setCode: "welcometonightcityretail",
-      rarity: "Rare",
-    },
-    {
-      id: "873656f0-c32a-46fb-856f-8a5ee44b8d21",
-      collectorNumber: "β106",
-      setCode: "welcometonightcitybeta",
-      rarity: "Rare",
-    },
-  ],
-  selectedPrintingId: "cb23a651-dd1d-48f8-aca3-8d33fef79fdd",
   artist: "Daniel Valaisis",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/106.webp",
   rarity: "Rare",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "legend",
   cost: null,
   power: null,
@@ -148,5 +132,4 @@ export const welcomeToNightCityRetailAltCunninghamSoulkillerArchitect = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies LegendCardDefinition;

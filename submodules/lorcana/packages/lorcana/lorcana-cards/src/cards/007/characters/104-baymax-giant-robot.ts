@@ -4,6 +4,17 @@ import { baymaxGiantRobotI18n } from "./104-baymax-giant-robot.i18n";
 export const baymaxGiantRobot: CharacterCard = {
   id: "PVC",
   canonicalId: "ci_PVC",
+  slug: "lorcana-ci_PVC",
+  printings: [
+    {
+      id: "set7-104",
+      artId: "set7-104",
+      setCode: "set7",
+      collectorNumber: "104",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-104"],
   cardType: "character",
   name: "Baymax",
@@ -20,7 +31,7 @@ export const baymaxGiantRobot: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_98c983fba498470ba2ff0518902e8cc5",
-    tcgPlayer: 619462,
+    tcgPlayer: "619462",
   },
   text: [
     {

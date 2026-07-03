@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { moanaUndeterredVoyagerI18n } from "./117-moana-undeterred-voyager.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const moanaUndeterredVoyager: CharacterCard = {
   id: "XuG",
   canonicalId: "ci_HAc",
+  slug: "lorcana-ci_HAc",
+  printings: [
+    {
+      id: "set3-117",
+      artId: "set3-117",
+      setCode: "set3",
+      collectorNumber: "117",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-117", "set9-116"],
   cardType: "character",
   name: "Moana",
@@ -21,7 +33,7 @@ export const moanaUndeterredVoyager: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0f11f39f42d84f9cb09ca24a2893f39d",
-    tcgPlayer: 650052,
+    tcgPlayer: "650052",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Hero", "Princess"],

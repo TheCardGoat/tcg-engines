@@ -1,10 +1,21 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { crikeeGoodLuckCharmI18n } from "./142-cri-kee-good-luck-charm.i18n";
 import { alert } from "../../../helpers/abilities/alert";
+import { crikeeGoodLuckCharmI18n } from "./142-cri-kee-good-luck-charm.i18n";
 
 export const crikeeGoodLuckCharm: CharacterCard = {
   id: "GwP",
   canonicalId: "ci_GwP",
+  slug: "lorcana-ci_GwP",
+  printings: [
+    {
+      id: "set10-142",
+      artId: "set10-142",
+      setCode: "set10",
+      collectorNumber: "142",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-142"],
   cardType: "character",
   name: "Cri-Kee",
@@ -19,9 +30,10 @@ export const crikeeGoodLuckCharm: CharacterCard = {
   willpower: 2,
   lore: 1,
   inkable: true,
+  abilities: [alert],
   externalIds: {
     lorcast: "crd_7b35f4aed143419a821f8426d17be7bf",
-    tcgPlayer: 659454,
+    tcgPlayer: "659454",
   },
   text: [
     {
@@ -30,6 +42,5 @@ export const crikeeGoodLuckCharm: CharacterCard = {
     },
   ],
   classifications: ["Storyborn", "Ally"],
-  abilities: [alert],
   i18n: crikeeGoodLuckCharmI18n,
 };

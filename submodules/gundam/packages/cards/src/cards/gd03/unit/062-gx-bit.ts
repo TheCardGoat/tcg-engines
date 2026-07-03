@@ -7,14 +7,17 @@ export const gd03GxBit062: UnitCard = {
   color: "purple",
   traits: ["old une", "vulture"],
   id: "GD03-062",
-  externalId: "gundam:gd03-062",
-  slug: "gx-bit-gd03-062",
+  canonicalId: "GD03-062",
+  externalIds: { bandai: "gundam:gd03-062" },
+  slug: "gx-bit/gd03-062",
   displayName: "GX-Bit",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-062",
   printings: [
     {
       id: "GD03-062",
+      artId: "GD03-062",
+      setCode: "GD03",
       collectorNumber: "GD03-062",
       cardNumber: "GD03-062",
       set: {
@@ -29,6 +32,7 @@ export const gd03GxBit062: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-062"],
   selectedPrintingId: "GD03-062",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-062.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-062.webp?260424",

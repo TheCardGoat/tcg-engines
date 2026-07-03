@@ -7,14 +7,17 @@ export const gd03FullArmorUnicornGundamDestroyMode010: UnitCard = {
   color: "blue",
   traits: ["civilian"],
   id: "GD03-010",
-  externalId: "gundam:gd03-010",
-  slug: "full-armor-unicorn-gundam-destroy-mode-gd03-010",
+  canonicalId: "GD03-010",
+  externalIds: { bandai: "gundam:gd03-010" },
+  slug: "full-armor-unicorn-gundam-destroy-mode/gd03-010",
   displayName: "Full Armor Unicorn Gundam (Destroy Mode)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-010",
   printings: [
     {
       id: "GD03-010",
+      artId: "GD03-010",
+      setCode: "GD03",
       collectorNumber: "GD03-010",
       cardNumber: "GD03-010",
       set: {
@@ -30,6 +33,8 @@ export const gd03FullArmorUnicornGundamDestroyMode010: UnitCard = {
     },
     {
       id: "GD03-010_p1",
+      artId: "GD03-010_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-010_p1",
       cardNumber: "GD03-010",
       set: {
@@ -45,6 +50,8 @@ export const gd03FullArmorUnicornGundamDestroyMode010: UnitCard = {
     },
     {
       id: "GD03-010_p2",
+      artId: "GD03-010_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-010_p2",
       cardNumber: "GD03-010",
       set: {
@@ -60,6 +67,8 @@ export const gd03FullArmorUnicornGundamDestroyMode010: UnitCard = {
     },
     {
       id: "GD03-010_p3",
+      artId: "GD03-010_p3",
+      setCode: "GD03",
       collectorNumber: "GD03-010_p3",
       cardNumber: "GD03-010",
       set: {
@@ -74,6 +83,7 @@ export const gd03FullArmorUnicornGundamDestroyMode010: UnitCard = {
       productName: "Store Tournament Winner Pack 03",
     },
   ],
+  reprints: ["GD03-010", "GD03-010_p1", "GD03-010_p2", "GD03-010_p3"],
   selectedPrintingId: "GD03-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-010.webp?260424",

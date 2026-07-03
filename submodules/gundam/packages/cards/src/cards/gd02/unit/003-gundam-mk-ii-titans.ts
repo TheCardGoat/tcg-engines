@@ -7,14 +7,17 @@ export const gd02GundamMkIiTitans003: UnitCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD02-003",
-  externalId: "gundam:gd02-003",
-  slug: "gundam-mk-ii-titans-gd02-003",
+  canonicalId: "GD02-003",
+  externalIds: { bandai: "gundam:gd02-003" },
+  slug: "gundam-mk-ii-titans/gd02-003",
   displayName: "Gundam Mk-II (Titans)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-003",
   printings: [
     {
       id: "GD02-003",
+      artId: "GD02-003",
+      setCode: "GD02",
       collectorNumber: "GD02-003",
       cardNumber: "GD02-003",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamMkIiTitans003: UnitCard = {
     },
     {
       id: "GD02-003_p1",
+      artId: "GD02-003_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-003_p1",
       cardNumber: "GD02-003",
       set: {
@@ -45,6 +50,8 @@ export const gd02GundamMkIiTitans003: UnitCard = {
     },
     {
       id: "GD02-003_p2",
+      artId: "GD02-003_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-003_p2",
       cardNumber: "GD02-003",
       set: {
@@ -60,6 +67,8 @@ export const gd02GundamMkIiTitans003: UnitCard = {
     },
     {
       id: "GD02-003_p3",
+      artId: "GD02-003_p3",
+      setCode: "GD02",
       collectorNumber: "GD02-003_p3",
       cardNumber: "GD02-003",
       set: {
@@ -74,6 +83,7 @@ export const gd02GundamMkIiTitans003: UnitCard = {
       productName: "Store Tournament Winner Pack 02",
     },
   ],
+  reprints: ["GD02-003", "GD02-003_p1", "GD02-003_p2", "GD02-003_p3"],
   selectedPrintingId: "GD02-003",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-003.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-003.webp?260424",

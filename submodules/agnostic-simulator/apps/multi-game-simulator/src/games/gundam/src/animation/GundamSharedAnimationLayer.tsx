@@ -33,7 +33,14 @@ export function GundamSharedAnimationLayer({ children }: { readonly children: Re
   const phaseEvents = usePhaseChangeEvents(status);
 
   const cardEvents = useMemo(() => {
-    const records = newMoveLogs.flatMap(({ log }) => gundamMoveLogToCardMoveRecords(log, view));
+    const records = newMoveLogs.flatMap(({ log }) =>
+      gundamMoveLogToCardMoveRecords(
+        log,
+        view,
+        viewerSeatId,
+        adapter.revealsPrivateMoveLogFields === true,
+      ),
+    );
     return cardMoveRecordsToSimulatorEvents(records, {
       viewerSeatId,
       resolveEntity: (cardId) => simulatorEntityForCard(cardId, view, adapter.cardDefinitionOf),
@@ -73,9 +80,11 @@ function useMoveLogsAfterPreviousSnapshot(
   return moveLogs.slice(previousMoveLogs.length);
 }
 
-function gundamMoveLogToCardMoveRecords(
+export function gundamMoveLogToCardMoveRecords(
   log: GundamMoveLog,
   view: BoardProjection,
+  viewerSeatId: string,
+  revealPrivateFields = false,
 ): CardMoveAnimationRecord[] {
   const records: CardMoveAnimationRecord[] = [];
   const prefix = log.commandID ?? `${log.timestamp}:${log.type}`;
@@ -92,6 +101,9 @@ function gundamMoveLogToCardMoveRecords(
 
   for (const moved of log.outcomes?.cardsMoved ?? []) {
     const cardId = String(moved.cardId);
+    if (isDeckToHandMove(moved.from, moved.to)) {
+      continue;
+    }
     records.push({
       id: `${prefix}:move:${cardId}:${records.length}`,
       cardId,
@@ -150,7 +162,11 @@ function gundamMoveLogToCardMoveRecords(
   }
 
   const drawOutcome = log.outcomes?.cardsDrawn;
-  const visibleDrawnCardIds = visiblePrivateValues(drawOutcome?.cardIds);
+  const visibleDrawnCardIds = visiblePrivateValues(
+    drawOutcome?.cardIds,
+    viewerSeatId,
+    revealPrivateFields,
+  );
   const drawOwnerId = String(drawOutcome?.playerId ?? log.playerId);
   drawRecordCardIds({
     prefix,
@@ -170,6 +186,14 @@ function gundamMoveLogToCardMoveRecords(
   });
 
   return dedupeRecords(records);
+}
+
+function isDeckToHandMove(fromZoneId: string | undefined, toZoneId: string): boolean {
+  return baseZoneId(fromZoneId) === "deck" && baseZoneId(toZoneId) === "hand";
+}
+
+function baseZoneId(zoneId: string | undefined): string | undefined {
+  return zoneId?.split(":")[0];
 }
 
 function gundamMoveLogToVisualEvents(
@@ -280,16 +304,29 @@ function playedCardRecord(
   };
 }
 
-function visiblePrivateValues(value: unknown): string[] {
+function visiblePrivateValues(
+  value: unknown,
+  viewerSeatId: string,
+  revealPrivateFields: boolean,
+): string[] {
   if (Array.isArray(value)) {
     return value.filter((id): id is string => typeof id === "string");
   }
   if (
     typeof value === "object" &&
     value !== null &&
+    "__private" in value &&
+    (value as { __private?: unknown }).__private === true &&
     "value" in value &&
+    "visibleTo" in value &&
     Array.isArray((value as { value?: unknown }).value)
   ) {
+    const visibleTo = (value as { visibleTo?: unknown }).visibleTo;
+    const canReveal =
+      revealPrivateFields ||
+      (Array.isArray(visibleTo) &&
+        visibleTo.some((id) => typeof id === "string" && id === viewerSeatId));
+    if (!canReveal) return [];
     return (value as { value: unknown[] }).value.filter(
       (id): id is string => typeof id === "string",
     );

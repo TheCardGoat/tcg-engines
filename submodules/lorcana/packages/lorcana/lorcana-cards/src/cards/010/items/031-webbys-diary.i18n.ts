@@ -15,9 +15,9 @@ export const webbysDiaryI18n: Record<Languages, I18nProperties> = {
     name: "Nickys Tagebuch",
     text: [
       {
-        title: "NEUESTER EINTRAG",
+        title: "Neuester Eintrag",
         description:
-          "Jedes Mal, wenn du eine Karte unter einen deiner Charaktere oder Orte legst, darfst du 1 bezahlen, um 1 Karte zu ziehen.",
+          "Jedes Mal, wenn du eine Karte unter einen deiner Charaktere oder Orte legst, darfst du 1 {I} bezahlen, um 1 Karte zu ziehen.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const webbysDiaryI18n: Record<Languages, I18nProperties> = {
     name: "Le journal de Zaza",
     text: [
       {
-        title: "DERNIÈRE NOTE EN DATE",
+        title: "Dernière note en date",
         description:
-          "Chaque fois que vous placez une carte sous l'un de vos personnages ou de vos lieux, vous pouvez payer 1 pour piocher une carte.",
+          "Chaque fois que vous placez une carte sous l'un de vos personnages ou de vos lieux, vous pouvez payer 1 {I} pour piocher une carte.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const webbysDiaryI18n: Record<Languages, I18nProperties> = {
     name: "Diario di Gaia",
     text: [
       {
-        title: "ULTIMA ANNOTAZIONE",
+        title: "Ultima Annotazione",
         description:
-          "Ogni volta che metti una carta sotto a uno dei tuoi personaggi o luoghi, puoi pagare 1 per pescare una carta.",
+          "Ogni volta che metti una carta sotto a uno dei tuoi personaggi o luoghi, puoi pagare 1 {I} per pescare una carta.",
       },
     ],
   },

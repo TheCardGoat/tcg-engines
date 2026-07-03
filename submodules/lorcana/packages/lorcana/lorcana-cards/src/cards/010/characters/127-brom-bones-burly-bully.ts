@@ -4,6 +4,17 @@ import { bromBonesBurlyBullyI18n } from "./127-brom-bones-burly-bully.i18n";
 export const bromBonesBurlyBully: CharacterCard = {
   id: "sNh",
   canonicalId: "ci_sNh",
+  slug: "lorcana-ci_sNh",
+  printings: [
+    {
+      id: "set10-127",
+      artId: "set10-127",
+      setCode: "set10",
+      collectorNumber: "127",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-127"],
   cardType: "character",
   name: "Brom Bones",
@@ -20,7 +31,7 @@ export const bromBonesBurlyBully: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8f73a6eed2b94aae85021a25eaa083fc",
-    tcgPlayer: 660015,
+    tcgPlayer: "660015",
   },
   text: [
     {

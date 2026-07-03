@@ -1,4 +1,4 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
 import { alphaArmoredMinotaur } from "./armored-minotaur.ts";
 import { alphaCorpoSecurity } from "./corpo-security.ts";
 import { alphaDelamainCab } from "./delamain-cab.ts";
@@ -38,4 +38,4 @@ export const alphaUnits = [
   alphaSecondhandBombus,
   alphaSwordwiseHuscle,
   alphaTBugAmateurPhilosopher,
-] satisfies AlphaCardDefinition[];
+] satisfies UnitCardDefinition[];

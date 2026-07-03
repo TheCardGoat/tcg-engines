@@ -1,3 +1,4 @@
+import type { BaseCardDefinition, ExternalSource, Printing } from "@tcg/card-model";
 import type { CardEffect } from "./effects.ts";
 
 export type { CardEffect } from "./effects.ts";
@@ -58,16 +59,25 @@ export interface KeywordEffectEntry {
 
 export interface CardIdentity {
   /**
-   * Unique printing-level identifier from the source catalog.
+   * Printing-qualified record key from the source catalog (e.g. `ST04-015_p2`).
    *
-   * `cardNumber` remains the gameplay/deckbuilding identity. Consumers that
-   * key engine data by definition id should continue indexing `cardNumber`.
+   * This is NOT the canonical identity — it identifies one concrete card record
+   * (a specific printing/variant). The canonical gameplay identity shared
+   * across every reprint, parallel art, and BETA duplicate is `canonicalId`
+   * (backfilled from `cardNumber`, see {@link CardBase.canonicalId}). Consumers
+   * that need the canonical key should read `canonicalId`; the production
+   * runtime catalog (`gundam-engine-lifecycle.ts`) intentionally keys by this
+   * printing-qualified `id` at the printing tier.
    */
   id?: string;
-  /** Stable cross-system id, e.g. `gundam:gd01-001`. */
-  externalId?: string;
-  /** URL-safe card slug for catalog/detail pages. */
-  slug?: string;
+  /**
+   * Optional dictionary of per-source external ids, keyed by the typed
+   * {@link ExternalSource} union. Gundam populates only `bandai`
+   * (e.g. `{ bandai: "gundam:gd01-001" }`). Not a uniqueness anchor.
+   */
+  externalIds?: Partial<Record<ExternalSource, string>>;
+  /** URL-safe, language-stable card slug for catalog/detail pages. Printing-qualified. */
+  slug: string;
   /** Display name including subtitle/version when the catalog provides one. */
   displayName?: string;
 }
@@ -78,17 +88,28 @@ export interface CardSet {
   packageId?: string;
 }
 
-export interface CardPrinting {
-  /** Unique printing id from the source catalog. */
-  id: string;
-  /** Printed collector number for this art/printing. */
-  collectorNumber: string;
-  /** Gameplay/deckbuilding card number shared by equivalent printings. */
+/**
+ * A single physical printing / variant of a Gundam card.
+ *
+ * Extends the cross-game {@link Printing} contract (RFC §7 / ADR-11) so a
+ * Gundam printing IS-A {@link Printing}: the unified fields `id`, `artId`,
+ * `setCode`, `collectorNumber`, `rarity`, `imageUrl` are inherited, and Gundam
+ * adds its richer `set` object, the gameplay `cardNumber`, and the `finish`
+ * distinction on top.
+ *
+ * `artId` is platform-derived from the parallel-art suffix: base art (no `_pN`
+ * suffix on the printing id) → `artId === cardNumber`; parallel art →
+ * `artId === cardNumber + "_p" + N`. BETA duplicates that reuse the canonical
+ * illustration share the same `artId` (RFC §7 Gundam art layer, ADR-7).
+ */
+export interface CardPrinting extends Printing {
+  /** Gameplay/deckbuilding card number shared by equivalent printings (canonical seed). */
   cardNumber: string;
+  /** Richer set metadata; the cross-game `setCode` is inherited from {@link Printing}. */
   set: CardSet;
-  rarity: CardRarity | null;
+  /** Game-native rarity tier (narrows the base `rarity: string`). */
+  rarity: CardRarity;
   finish: PrintFinish;
-  imageUrl?: string;
   sourceImageUrl?: string;
   productName?: string;
 }
@@ -99,8 +120,6 @@ export interface CardCatalogMetadata extends CardIdentity {
   set?: CardSet;
   /** Source-catalog printing id for this concrete card record. */
   printNumber?: string;
-  /** All known art/printing variants that share this card's gameplay identity. */
-  printings?: CardPrinting[];
   selectedPrintingId?: string | null;
   imageUrl?: string;
   sourceImageUrl?: string;
@@ -111,10 +130,32 @@ export interface CardCatalogMetadata extends CardIdentity {
 
 // ── Card Base ─────────────────────────────────────────────────────────────────
 
-interface CardBase extends CardCatalogMetadata {
+/**
+ * Gundam card base.
+ *
+ * Extends the cross-game {@link BaseCardDefinition} contract (RFC §7 / ADR-11)
+ * so a Gundam card IS-A {@link BaseCardDefinition}: the unified identity fields
+ * (`canonicalId`, `slug`, `name`, `printings`, `externalIds`) are inherited and
+ * Gundam adds its game-specific fields (`cardNumber`, `type`, stats, effects,
+ * …) on top.
+ *
+ * Identity hierarchy (RFC §3: canonical → art → printing):
+ *  - `canonicalId`: backfilled from `cardNumber` with the parallel suffix
+ *    stripped — the gameplay/deckbuilding identity shared across parallel arts
+ *    and BETA duplicates. Uniqueness anchor: `(gameSlug, canonicalId)`.
+ *  - `printings[].artId`: art/illustration tier (see {@link CardPrinting}).
+ *  - `printings[].id`: printing-qualified record key (production catalog key).
+ */
+export interface CardBase extends CardCatalogMetadata, BaseCardDefinition {
   /** Unique card identifier; max 4 copies per deck */
   cardNumber: string;
   name: string;
+  /**
+   * All known art/printing variants that share this card's gameplay identity.
+   * At least one. Narrowed from the base {@link Printing}[] to Gundam's richer
+   * {@link CardPrinting}[] (each element IS-A {@link Printing}).
+   */
+  printings: CardPrinting[];
   /** Cards may have multiple names */
   alternateNames?: string[];
   type: CardType;
@@ -137,12 +178,16 @@ interface CardBase extends CardCatalogMetadata {
   illustrator?: string;
   flavorText?: string;
   /**
-   * Canonical card number across all printings (e.g. the first-print number).
-   * Allows linking reprints back to the original card entry.
+   * Canonical gameplay identity — stable across every reprint, parallel art,
+   * and BETA duplicate of this card. Backfilled from `cardNumber` with the
+   * parallel-art suffix stripped (e.g. `ST04-015`). Inherited as required from
+   * {@link BaseCardDefinition}; redeclared here only to attach this doc.
    */
-  canonicalId?: string;
+  canonicalId: string;
   /**
-   * Card numbers of other printings of this card (alternate art, promos, etc.).
+   * Sibling printing ids that share this card's `cardNumber` (parallel arts,
+   * promos, BETA duplicates). Populated by the catalog generator from the
+   * cross-printing `cardNumber` map. Empty/absent when there are no siblings.
    */
   reprints?: string[];
   /**

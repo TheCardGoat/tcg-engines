@@ -7,14 +7,17 @@ export const gd01UnicornGundam02BansheeDestroyMode003: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-003",
-  externalId: "gundam:gd01-003",
-  slug: "unicorn-gundam-02-banshee-destroy-mode-gd01-003",
+  canonicalId: "GD01-003",
+  externalIds: { bandai: "gundam:gd01-003" },
+  slug: "unicorn-gundam-02-banshee-destroy-mode/gd01-003",
   displayName: "Unicorn Gundam 02 Banshee (Destroy Mode)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-003",
   printings: [
     {
       id: "GD01-003",
+      artId: "GD01-003",
+      setCode: "GD01",
       collectorNumber: "GD01-003",
       cardNumber: "GD01-003",
       set: {
@@ -30,6 +33,8 @@ export const gd01UnicornGundam02BansheeDestroyMode003: UnitCard = {
     },
     {
       id: "GD01-003_p1",
+      artId: "GD01-003_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-003_p1",
       cardNumber: "GD01-003",
       set: {
@@ -44,6 +49,7 @@ export const gd01UnicornGundam02BansheeDestroyMode003: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-003", "GD01-003_p1"],
   selectedPrintingId: "GD01-003",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-003.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-003.webp?260424",

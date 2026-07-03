@@ -9,16 +9,16 @@ export const violetSabrewingSeniorJuniorWoodchuckI18n: Record<Languages, I18nPro
   de: {
     name: "Violetta Degenflügel",
     version: "Senior-Junior-Fieselschweifling",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Violette Campyloptère",
     version: "Castor junior senior",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Violet Sabrewing",
     version: "Giovane Marmotta Senior",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

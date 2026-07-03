@@ -17,9 +17,9 @@ export const iagoLoudmouthedParrotI18n: Record<Languages, I18nProperties> = {
     version: "Großmäuliger Papagei",
     text: [
       {
-        title: "HAST DU'N PROBLEM?",
+        title: "Hast du'n Problem?",
         description:
-          "— Ein Charakter deiner Wahl erhält in seinem nächsten Zug Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+          "{E} — Ein Charakter deiner Wahl erhält in seinem nächsten Zug Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const iagoLoudmouthedParrotI18n: Record<Languages, I18nProperties> = {
     version: "Perroquet braillard",
     text: [
       {
-        title: "T'AS UN",
+        title: "T'AS UN PROBLÈME?",
         description:
-          "PROBLÈME? — Choisissez un personnage, il gagne Combattant durant son prochain tour. (Il ne peut pas être envoyé à l'aventure et doit défier à chaque tour s'il le peut.)",
+          "{E} — Choisissez un personnage, il gagne Combattant durant son prochain tour. (Il ne peut pas être envoyé à l'aventure et doit défier à chaque tour s'il le peut.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const iagoLoudmouthedParrotI18n: Record<Languages, I18nProperties> = {
     version: "Loud-Mouthed Parrot",
     text: [
       {
-        title: "YOU GOT A PROBLEM?",
+        title: "You Got a Problem?",
         description:
-          "— Chosen character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+          "{E} — Chosen character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)",
       },
     ],
   },

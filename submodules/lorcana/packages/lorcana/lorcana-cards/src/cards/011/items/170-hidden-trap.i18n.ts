@@ -10,10 +10,7 @@ export const hiddenTrapI18n: Record<Languages, I18nProperties> = {
       },
       {
         title: "SNAP!",
-      },
-      {
-        title: "{E},",
-        description: "Banish this item — Choose one:",
+        description: "{E}, Banish this item — Choose one:",
       },
       {
         title: "* Banish chosen item.",
@@ -27,13 +24,18 @@ export const hiddenTrapI18n: Record<Languages, I18nProperties> = {
     name: "Versteckte Falle",
     text: [
       {
-        title: "FAST FERTIG",
+        title: "Fast fertig",
         description: "Dieser Gegenstand kommt erschöpft ins Spiel.",
       },
       {
-        title: "SCHNAPP!,",
-        description:
-          "Verbanne diesen Gegenstand — Wähle eine Möglichkeit aus: • Verbanne einen Gegenstand deiner Wahl. • Ein gegnerischer Charakter deiner Wahl erhält in diesem Zug -2.",
+        title: "SCHNAPP!",
+        description: "{E}, Verbanne diesen Gegenstand — Wähle eine Möglichkeit aus:",
+      },
+      {
+        title: "• Verbanne einen Gegenstand deiner Wahl.",
+      },
+      {
+        title: "• Ein gegnerischer Charakter deiner Wahl erhält in diesem Zug -2 {S}.",
       },
     ],
   },
@@ -41,13 +43,18 @@ export const hiddenTrapI18n: Record<Languages, I18nProperties> = {
     name: "Piège caché",
     text: [
       {
-        title: "PRESQUE PRÊT",
+        title: "Presque prêt",
         description: "Cet objet entre en jeu épuisé.",
       },
       {
-        title: "TCHAC!,",
-        description:
-          "Bannissez cet objet — Choisissez entre: • Choisissez un objet et bannissez-le. • Choisissez un personnage adverse qui subit -2 pour le reste de ce tour.",
+        title: "TCHAC!",
+        description: "{E}, Bannissez cet objet — Choisissez entre:",
+      },
+      {
+        title: "• Choisissez un objet et bannissez-le.",
+      },
+      {
+        title: "• Choisissez un personnage adverse qui subit -2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -55,13 +62,18 @@ export const hiddenTrapI18n: Record<Languages, I18nProperties> = {
     name: "Trappola Nascosta",
     text: [
       {
-        title: "QUASI PRONTA",
+        title: "Quasi Pronta",
         description: "Questo oggetto entra in gioco impegnato.",
       },
       {
-        title: "SNAP!,",
-        description:
-          "esilia questo oggetto — Scegli uno: • Esilia un oggetto a tua scelta. • Un personaggio avversario a tua scelta riceve -2 per questo turno.",
+        title: "SNAP!",
+        description: "{E}, esilia questo oggetto — Scegli uno:",
+      },
+      {
+        title: "• Esilia un oggetto a tua scelta.",
+      },
+      {
+        title: "• Un personaggio avversario a tua scelta riceve -2 {S} per questo turno.",
       },
     ],
   },

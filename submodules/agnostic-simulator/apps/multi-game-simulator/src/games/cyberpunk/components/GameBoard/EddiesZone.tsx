@@ -1,6 +1,5 @@
 import type { CSSProperties } from "react";
 import { CardImage } from "./CardImage";
-import { simEntityAnchor, simZoneAnchor } from "./animationAnchors";
 import { useDragDrop } from "./DragDropContext";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { ZoneBadge } from "./ZoneBadge";
@@ -68,6 +67,7 @@ export function EddiesZone({
       ref={drop.setNodeRef}
       className={`${classes.zone} ${opponent ? classes.opponent : ""} ${drop.isOver ? classes.dropOver : ""}`}
       data-testid="eddies-zone"
+      data-zone-id={opponent ? "opp-eddieArea" : "p-eddieArea"}
       data-side={side}
       data-count={count}
       data-card-count={cardCount}
@@ -75,7 +75,6 @@ export function EddiesZone({
       data-total-count={totalCount}
       data-drop-ready={dropReady}
       data-drop-over={drop.isOver ? "true" : "false"}
-      {...simZoneAnchor({ id: zoneName, side, visibility: "private", role: "resource" })}
     >
       <div
         className={classes.counter}
@@ -93,14 +92,12 @@ export function EddiesZone({
           <div
             key={card.cardId ?? i}
             className={`${classes.card} ${card.spent ? classes.spent : ""} ${card.revealed ? classes.revealed : ""}`}
+            data-testid="card"
+            data-card-kind="card"
+            data-entity-id={card.cardId}
+            data-face={card.revealed ? undefined : "hidden"}
             data-spent={card.spent ? "true" : "false"}
             data-revealed={card.revealed ? "true" : "false"}
-            {...simEntityAnchor({
-              entityId: card.revealed ? card.cardId : undefined,
-              zoneId: zoneName,
-              side,
-              face: card.revealed ? "public" : "hidden",
-            })}
           >
             <CardImage
               faceDown={!card.revealed}

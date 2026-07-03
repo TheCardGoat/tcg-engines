@@ -4,6 +4,17 @@ import { donaldDuckSleepwalkerI18n } from "./078-donald-duck-sleepwalker.i18n";
 export const donaldDuckSleepwalker: CharacterCard = {
   id: "a77",
   canonicalId: "ci_P3k",
+  slug: "lorcana-ci_P3k",
+  printings: [
+    {
+      id: "set2-078",
+      artId: "set2-078",
+      setCode: "set2",
+      collectorNumber: "78",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-078", "set9-083"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckSleepwalker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a93802d7a13a4535acb8c9a6bc31dfc2",
-    tcgPlayer: 650023,
+    tcgPlayer: "650023",
   },
   text: [
     {

@@ -10,7 +10,6 @@ import {
 } from "../../engine";
 import { ZoneBadge } from "./ZoneBadge";
 import { DieDisplay } from "./DieDisplay";
-import { simEntityAnchor, simZoneAnchor } from "./animationAnchors";
 import classes from "./FixerZone.module.css";
 
 interface FixerZoneProps {
@@ -105,22 +104,16 @@ export function FixerZone({
           dieId: d.id,
         }))
       : PLACEHOLDER_SLOTS;
-  const zoneId = side ? `${side}-fixer` : "fixer";
 
   return (
     <div
       className={`${classes.zone} ${classes[titlePosition]} ${collapsed ? classes.collapsed : ""}`}
       data-testid="fixer-zone"
+      data-zone-id={side === "opponent" ? "opp-fixer" : "p-fixer"}
       data-side={side}
       data-count={dice?.length ?? slots.length}
       data-picking={isPicker ? "true" : "false"}
       data-collapsed={collapsed ? "true" : "false"}
-      {...simZoneAnchor({
-        id: zoneId,
-        side,
-        visibility: "public",
-        role: "resource",
-      })}
     >
       {collapsed ? (
         <button
@@ -172,17 +165,19 @@ export function FixerZone({
                   data-die-type={die.dieType}
                   data-die-id={die.dieId ?? undefined}
                   data-candidate={candidate ? "true" : "false"}
-                  {...simEntityAnchor({
-                    entityId: die.dieId ?? undefined,
-                    zoneId,
-                    side,
-                    face: "public",
-                  })}
                   disabled={isPicker && !candidate}
                   onClick={candidate && die.dieId ? () => handlePick(die.dieId!) : undefined}
                   aria-label={candidate ? `Take ${die.label}` : die.label}
                 >
-                  <DieDisplay dieType={die.dieType} label={die.label} size="sm" />
+                  <span
+                    data-testid="card"
+                    data-card-kind="die"
+                    data-entity-id={die.dieId ?? undefined}
+                    style={{ display: "contents" }}
+                    aria-hidden
+                  >
+                    <DieDisplay dieType={die.dieType} label={die.label} size="sm" />
+                  </span>
                 </button>
               );
             })}

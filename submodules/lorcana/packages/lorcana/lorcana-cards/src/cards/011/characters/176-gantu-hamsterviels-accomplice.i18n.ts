@@ -16,7 +16,7 @@ export const gantuHamstervielsAccompliceI18n: Record<Languages, I18nProperties> 
     version: "Van Hamsterdams Komplize",
     text: [
       {
-        title: "LEICHTES ZIEL",
+        title: "Leichtes Ziel",
         description:
           "Wenn du diesen Charakter ausspielst, wähle 1 Karte aus deiner Hand und wirf sie ab.",
       },
@@ -27,7 +27,7 @@ export const gantuHamstervielsAccompliceI18n: Record<Languages, I18nProperties> 
     version: "Complice de Hämsterviel",
     text: [
       {
-        title: "CIBLE FACILE",
+        title: "Cible facile",
         description: "Lorsque vous jouez ce personnage, défaussez une carte.",
       },
     ],
@@ -37,7 +37,7 @@ export const gantuHamstervielsAccompliceI18n: Record<Languages, I18nProperties> 
     version: "Complice di Hamsterviel",
     text: [
       {
-        title: "BERSAGLIO FACILE",
+        title: "Bersaglio Facile",
         description: "Quando giochi questo personaggio, scegli e scarta una carta.",
       },
     ],

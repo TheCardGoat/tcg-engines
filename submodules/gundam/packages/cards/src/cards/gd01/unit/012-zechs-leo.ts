@@ -7,14 +7,17 @@ export const gd01ZechsLeo012: UnitCard = {
   color: "blue",
   traits: ["oz"],
   id: "GD01-012",
-  externalId: "gundam:gd01-012",
-  slug: "zechs-leo-gd01-012",
+  canonicalId: "GD01-012",
+  externalIds: { bandai: "gundam:gd01-012" },
+  slug: "zechs-leo/gd01-012",
   displayName: "Zechs' Leo",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-012",
   printings: [
     {
       id: "GD01-012",
+      artId: "GD01-012",
+      setCode: "GD01",
       collectorNumber: "GD01-012",
       cardNumber: "GD01-012",
       set: {
@@ -29,6 +32,7 @@ export const gd01ZechsLeo012: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-012"],
   selectedPrintingId: "GD01-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-012.webp?260424",

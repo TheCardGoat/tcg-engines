@@ -14,7 +14,7 @@ export const perplexingSignpostsI18n: Record<Languages, I18nProperties> = {
     name: "Wirre Wegweiser",
     text: [
       {
-        title: "INS WUNDERLAND",
+        title: "Ins Wunderland",
         description:
           "Verbanne diesen Gegenstand — Wähle einen deiner Charaktere und nimm ihn zurück auf deine Hand.",
       },
@@ -24,7 +24,7 @@ export const perplexingSignpostsI18n: Record<Languages, I18nProperties> = {
     name: "Panneaux déroutants",
     text: [
       {
-        title: "DIRECTION LE PAYS DES MERVEILLES",
+        title: "Direction Le Pays des Merveilles",
         description:
           "Bannissez cet objet — Choisissez l'un de vos personnages en jeu et renvoyez-le dans votre main.",
       },
@@ -34,7 +34,7 @@ export const perplexingSignpostsI18n: Record<Languages, I18nProperties> = {
     name: "Perplexing Signposts",
     text: [
       {
-        title: "TO WONDERLAND",
+        title: "To Wonderland",
         description: "Banish this item — Return chosen character of yours to your hand.",
       },
     ],

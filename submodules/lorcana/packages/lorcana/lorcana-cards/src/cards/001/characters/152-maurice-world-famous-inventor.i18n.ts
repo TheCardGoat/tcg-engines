@@ -6,9 +6,9 @@ export const mauriceWorldfamousInventorI18n: Record<Languages, I18nProperties> =
     version: "World-Famous Inventor",
     text: [
       {
-        title: "GIVE IT A TRY",
+        title: "GIVE IT",
         description:
-          "Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
+          "A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
       },
       {
         title: "IT WORKS!",
@@ -19,13 +19,7 @@ export const mauriceWorldfamousInventorI18n: Record<Languages, I18nProperties> =
   de: {
     name: "Maurice",
     version: "Weltberühmter Erfinder",
-    text: [
-      {
-        title: "VERSUCH'S DOCH MAL",
-        description:
-          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.ES FUNKTIONIERT! Jedes Mal, wenn du einen Gegenstand ausspielst, darfst du 1 Karte ziehen.",
-      },
-    ],
+    text: "Versuch's doch mal Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.\\Es funktioniert!\\ Jedes Mal, wenn du einen Gegenstand ausspielst, darfst du 1 Karte ziehen.",
   },
   fr: {
     name: "MAURICE",
@@ -34,7 +28,7 @@ export const mauriceWorldfamousInventorI18n: Record<Languages, I18nProperties> =
       {
         title: "VOYONS VOIR SI ÇA MARCHE",
         description:
-          "Lorsque ce personnage est envoyé à l'aventure, le prochain objet que vous jouez durant ce tour coûte 2 de moins.",
+          "Lorsque ce personnage est envoyé à l'aventure, le prochain objet que vous jouez durant ce tour coûte 2 {I} de moins.",
       },
       {
         title: "ÇA MARCHE!",
@@ -47,12 +41,12 @@ export const mauriceWorldfamousInventorI18n: Record<Languages, I18nProperties> =
     version: "World-Famous Inventor",
     text: [
       {
-        title: "GIVE IT A TRY",
+        title: "Give it a Try",
         description:
-          "Whenever this character quests, you pay 2 less for the next item you play this turn.",
+          "Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
       },
       {
-        title: "IT WORKS!",
+        title: "It Works!",
         description: "Whenever you play an item, you may draw a card.",
       },
     ],

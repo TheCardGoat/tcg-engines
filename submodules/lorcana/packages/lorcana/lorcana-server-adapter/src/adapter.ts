@@ -59,6 +59,27 @@ export const lorcanaServerAdapter: GameAdapter = {
     };
   },
 
+  /**
+   * Resolves a game-native public id (the Lorcana engine short id, e.g. "0Tb")
+   * to the card's canonical id (e.g. "ci_0Tb").
+   *
+   * Lorcana's `canonicalId` (`ci_*`) is distinct from the engine short id
+   * (`id`/publicId) — it is NOT an identity mapping. See RFC §4 Lorcana row,
+   * §3 worked-example table (Authored id = short id; Canonical = `ci_*`), and
+   * ADR-1 (canonical identity is `canonicalId` on every game card type).
+   *
+   * Implemented as the analytics canonicalization seam: callers (analytics,
+   * meta stats, deck hashing) resolve any short id to its `canonicalId` so
+   * every reprint / alt-art of the same card groups under one key. Returns
+   * `null` for unknown ids so callers can fall back to the raw publicId
+   * (GameAdapter contract; RFC §5 gap 8, ADR-2).
+   */
+  getCanonicalCardId(publicId: string): string | null {
+    const cardsById = getAllCardsByIdSync();
+    const card = cardsById[publicId];
+    return card?.canonicalId ?? null;
+  },
+
   validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult {
     if (!isLorcanaFormatId(formatId)) {
       throw new Error(`Unknown Lorcana format: ${formatId}`);
@@ -72,6 +93,7 @@ export const lorcanaServerAdapter: GameAdapter = {
         kind: String(r.kind),
         passed: r.passed,
         message: r.message,
+        details: r.details,
       })),
     };
   },

@@ -17,9 +17,9 @@ export const vanellopeVonSchweetzCandyMechanicI18n: Record<Languages, I18nProper
     version: "Süßigkeiten-Mechanikerin",
     text: [
       {
-        title: "WER SPIELEN WILL, MUSS BEZAHLEN",
+        title: "Wer spielen will, muss bezahlen",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -1.",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -1 {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const vanellopeVonSchweetzCandyMechanicI18n: Record<Languages, I18nProper
     version: "Mécanicienne de bonbons",
     text: [
       {
-        title: "IL FAUT PAYER POUR JOUER",
+        title: "Il faut payer pour jouer",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage adverse qui subit -1 jusqu'au début de votre prochain tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage adverse qui subit -1 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const vanellopeVonSchweetzCandyMechanicI18n: Record<Languages, I18nProper
     version: "Meccanica di Dolcetti",
     text: [
       {
-        title: "DEVI PAGARE PER GIOCARE",
+        title: "Devi Pagare per Giocare",
         description:
-          "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta riceve -1 fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta riceve -1 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

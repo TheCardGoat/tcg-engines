@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { johnSilverSternCaptainI18n } from "./194-john-silver-stern-captain.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { resist } from "../../../helpers/abilities/resist";
 
 export const johnSilverSternCaptain: CharacterCard = {
   id: "9kF",
   canonicalId: "ci_9kF",
+  slug: "lorcana-ci_9kF",
+  printings: [
+    {
+      id: "set6-194",
+      artId: "set6-194",
+      setCode: "set6",
+      collectorNumber: "194",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-194"],
   cardType: "character",
   name: "John Silver",
@@ -22,7 +34,7 @@ export const johnSilverSternCaptain: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_10eefc9e8b2943c0a29f6e19a1c114a0",
-    tcgPlayer: 588130,
+    tcgPlayer: "588130",
   },
   text: [
     {

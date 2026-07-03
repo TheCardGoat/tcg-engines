@@ -6,14 +6,17 @@ export const tGundam001: UnitCard = {
   type: "unit",
   traits: ["white base team"],
   id: "T-001",
-  externalId: "gundam:t-001",
-  slug: "gundam-t-001",
+  canonicalId: "T-001",
+  externalIds: { bandai: "gundam:t-001" },
+  slug: "gundam/t-001",
   displayName: "Gundam",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "T-001",
   printings: [
     {
       id: "T-001",
+      artId: "T-001",
+      setCode: "ST01",
       collectorNumber: "T-001",
       cardNumber: "T-001",
       set: {
@@ -29,6 +32,8 @@ export const tGundam001: UnitCard = {
     },
     {
       id: "T-001_p1",
+      artId: "T-001_p1",
+      setCode: "BETA",
       collectorNumber: "T-001_p1",
       cardNumber: "T-001",
       set: {
@@ -43,6 +48,7 @@ export const tGundam001: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["T-001", "T-001_p1"],
   selectedPrintingId: "T-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-001.webp?260424",

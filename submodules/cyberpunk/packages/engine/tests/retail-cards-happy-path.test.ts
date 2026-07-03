@@ -15,7 +15,13 @@ const retailCards = [
 
 describe("official retail cards", () => {
   it("loads every official retail card into an engine fixture", () => {
-    expect(retailCards).toHaveLength(57);
+    // Self-adjusting: the count is whatever the three retail sets total today
+    // (box-toppers merged into higher-priority sets, so it can drift).
+    expect(retailCards).toHaveLength(
+      boxToppersRetailCards.length +
+        theHeistRetailStarterDeckCards.length +
+        welcomeToNightCityRetailCards.length,
+    );
 
     for (const card of retailCards) {
       const engine = CyberpunkTestEngine.createWithFixture(

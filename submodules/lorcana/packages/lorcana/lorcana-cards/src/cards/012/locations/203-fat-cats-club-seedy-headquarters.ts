@@ -4,6 +4,17 @@ import { fatCatsClubSeedyHeadquartersI18n } from "./203-fat-cats-club-seedy-head
 export const fatCatsClubSeedyHeadquarters: LocationCard = {
   id: "IZd",
   canonicalId: "ci_IZd",
+  slug: "lorcana-ci_IZd",
+  printings: [
+    {
+      id: "set12-203",
+      artId: "set12-203",
+      setCode: "set12",
+      collectorNumber: "203",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-203"],
   cardType: "location",
   name: "Fat Cat's Club",
@@ -21,6 +32,7 @@ export const fatCatsClubSeedyHeadquarters: LocationCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_f395ea0a746947c69e82b851035edec7",
+    tcgPlayer: "692087",
   },
   i18n: fatCatsClubSeedyHeadquartersI18n,
 };

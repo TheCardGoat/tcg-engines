@@ -4,6 +4,17 @@ import { winnieThePoohHunnyWizardI18n } from "./059-winnie-the-pooh-hunny-wizard
 export const winnieThePoohHunnyWizard: CharacterCard = {
   id: "Ij0",
   canonicalId: "ci_ITi",
+  slug: "lorcana-ci_ITi",
+  printings: [
+    {
+      id: "set2-059",
+      artId: "set2-059",
+      setCode: "set2",
+      collectorNumber: "59",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-059", "set9-041"],
   cardType: "character",
   name: "Winnie the Pooh",
@@ -21,7 +32,7 @@ export const winnieThePoohHunnyWizard: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_69d9b22e10244e2fb65ffbdb5f99da83",
-    tcgPlayer: 651107,
+    tcgPlayer: "651107",
   },
   classifications: ["Dreamborn", "Hero", "Sorcerer"],
   i18n: winnieThePoohHunnyWizardI18n,

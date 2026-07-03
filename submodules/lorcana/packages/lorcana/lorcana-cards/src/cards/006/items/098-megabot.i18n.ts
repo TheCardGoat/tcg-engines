@@ -10,10 +10,7 @@ export const megabotI18n: Record<Languages, I18nProperties> = {
       },
       {
         title: "DESTROY!",
-      },
-      {
-        title: "{E},",
-        description: "Banish this item — Choose one:",
+        description: "{E}, Banish this item — Choose one:",
       },
       {
         title: "* Banish chosen item.",
@@ -27,13 +24,18 @@ export const megabotI18n: Record<Languages, I18nProperties> = {
     name: "MegaBot",
     text: [
       {
-        title: "FREUNDLICHES GESICHT",
+        title: "Freundliches Gesicht",
         description: "Dieser Gegenstand kommt erschöpft ins Spiel.",
       },
       {
-        title: "ZERSTÖRE!,",
-        description:
-          "Verbanne diesen Gegenstand — Wähle eine Möglichkeit aus: • Verbanne einen Gegenstand deiner Wahl. • Verbanne einen beschädigten Charakter deiner Wahl.",
+        title: "Zerstöre!",
+        description: "{E}, Verbanne diesen Gegenstand — Wähle eine Möglichkeit aus:",
+      },
+      {
+        title: "• Verbanne einen Gegenstand deiner Wahl.",
+      },
+      {
+        title: "• Verbanne einen beschädigten Charakter deiner Wahl.",
       },
     ],
   },
@@ -41,13 +43,18 @@ export const megabotI18n: Record<Languages, I18nProperties> = {
     name: "Méga-Robot",
     text: [
       {
-        title: "VISAGE SOURIANT",
+        title: "Visage souriant",
         description: "Cet objet arrive en jeu épuisé.",
       },
       {
-        title: "DÉTRUIS-LE!,",
-        description:
-          "bannissez cet objet — choisissez entre: • Choisissez un objet et bannissez-le. • Choisissez un personnage avec au moins 1 dommage sur lui et bannissez-le.",
+        title: "Détruis-le!",
+        description: "{E}, bannissez cet objet — choisissez entre:",
+      },
+      {
+        title: "• Choisissez un objet et bannissez-le.",
+      },
+      {
+        title: "• Choisissez un personnage avec au moins 1 dommage sur lui et bannissez-le.",
       },
     ],
   },
@@ -55,13 +62,18 @@ export const megabotI18n: Record<Languages, I18nProperties> = {
     name: "Megabot",
     text: [
       {
-        title: "FACCINA FELICE",
+        title: "Faccina Felice",
         description: "Questo oggetto entra in gioco impegnato.",
       },
       {
-        title: "DISTRUGGI!,",
-        description:
-          "esilia questo oggetto — Scegli uno: • Esilia un oggetto a tua scelta. • Esilia un personaggio danneggiato a tua scelta.",
+        title: "Distruggi!",
+        description: "{E}, esilia questo oggetto — Scegli uno:",
+      },
+      {
+        title: "• Esilia un oggetto a tua scelta.",
+      },
+      {
+        title: "• Esilia un personaggio danneggiato a tua scelta.",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { beastAggressiveLordI18n } from "./113-beast-aggressive-lord.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const beastAggressiveLord: CharacterCard = {
   id: "xQ9",
   canonicalId: "ci_xQ9",
+  slug: "lorcana-ci_xQ9",
+  printings: [
+    {
+      id: "set10-113",
+      artId: "set10-113",
+      setCode: "set10",
+      collectorNumber: "113",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-113"],
   cardType: "character",
   name: "Beast",
@@ -21,7 +33,7 @@ export const beastAggressiveLord: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4686c4ed63c846719806ece46f1cc106",
-    tcgPlayer: 658324,
+    tcgPlayer: "658324",
   },
   text: [
     {

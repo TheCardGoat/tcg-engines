@@ -4,6 +4,17 @@ import { nightHowlerRageI18n } from "./095-night-howler-rage.i18n";
 export const nightHowlerRage: ActionCard = {
   id: "38h",
   canonicalId: "ci_38h",
+  slug: "lorcana-ci_38h",
+  printings: [
+    {
+      id: "set5-095",
+      artId: "set5-095",
+      setCode: "set5",
+      collectorNumber: "95",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-095"],
   cardType: "action",
   name: "Night Howler Rage",
@@ -16,7 +27,7 @@ export const nightHowlerRage: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4fc312f6a56240dba9cb3c6fc6efecde",
-    tcgPlayer: 560541,
+    tcgPlayer: "560541",
   },
   text: "Draw a card. Chosen character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
   abilities: [

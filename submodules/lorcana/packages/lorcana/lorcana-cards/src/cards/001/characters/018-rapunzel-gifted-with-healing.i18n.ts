@@ -17,7 +17,7 @@ export const rapunzelGiftedWithHealingI18n: Record<Languages, I18nProperties> = 
     version: "Gifted with Healing",
     text: [
       {
-        title: "GLEAM AND GLOW",
+        title: "Gleam and Glow",
         description:
           "When you play this character, remove up to 3 damage from one of your characters. Draw a card for each 1 damage removed this way.",
       },
@@ -28,7 +28,7 @@ export const rapunzelGiftedWithHealingI18n: Record<Languages, I18nProperties> = 
     version: "Gifted with Healing",
     text: [
       {
-        title: "GLEAM AND GLOW",
+        title: "Gleam and Glow",
         description:
           "When you play this character, remove up to 3 damage from one of your characters. Draw a card for each 1 damage removed this way.",
       },
@@ -39,7 +39,7 @@ export const rapunzelGiftedWithHealingI18n: Record<Languages, I18nProperties> = 
     version: "Gifted with Healing",
     text: [
       {
-        title: "GLEAM AND GLOW",
+        title: "Gleam and Glow",
         description:
           "When you play this character, remove up to 3 damage from one of your characters. Draw a card for each 1 damage removed this way.",
       },

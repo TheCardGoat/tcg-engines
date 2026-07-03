@@ -9,9 +9,11 @@ export const fourDozenEggsI18n: Record<Languages, I18nProperties> = {
     name: "Four Dozen Eggs",
     text: [
       {
-        title: "(A",
-        description:
-          "character with cost 4 or more can to sing this song for free.) Your characters gain Resist +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
+        title: "(A character with cost 4 or more can {E} to sing this song for free.)",
+      },
+      {
+        title:
+          "Your characters gain <Resist> +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
       },
     ],
   },
@@ -19,14 +21,16 @@ export const fourDozenEggsI18n: Record<Languages, I18nProperties> = {
     name: "Four Dozen Eggs",
     text: [
       {
-        title: "(A",
-        description:
-          "character with cost 4 or more can to sing this song for free.) Your characters gain Resist +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
+        title: "(A character with cost 4 or more can {E} to sing this song for free.)",
+      },
+      {
+        title:
+          "Your characters gain <Resist> +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
       },
     ],
   },
   it: {
     name: "Four Dozen Eggs",
-    text: "Your characters gain Resist +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
+    text: "Your characters gain <Resist> +2 until the start of your next turn. (Damage dealt to them is reduced by 2.)",
   },
 };

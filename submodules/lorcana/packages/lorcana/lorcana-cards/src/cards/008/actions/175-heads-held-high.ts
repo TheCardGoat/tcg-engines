@@ -4,6 +4,17 @@ import { headsHeldHighI18n } from "./175-heads-held-high.i18n";
 export const headsHeldHigh: ActionCard = {
   id: "41j",
   canonicalId: "ci_41j",
+  slug: "lorcana-ci_41j",
+  printings: [
+    {
+      id: "set8-175",
+      artId: "set8-175",
+      setCode: "set8",
+      collectorNumber: "175",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-175"],
   cardType: "action",
   name: "Heads Held High",
@@ -16,7 +27,7 @@ export const headsHeldHigh: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9a3f7df243294b3f9247aec8128be37a",
-    tcgPlayer: 631348,
+    tcgPlayer: "631348",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const headsHeldHigh: ActionCard = {
       effect: {
         steps: [
           {
-            amount: { type: "up-to", value: 3 },
+            amount: {
+              type: "up-to",
+              value: 3,
+            },
             target: {
               selector: "chosen",
               count: "all",

@@ -4,6 +4,17 @@ import { simbaRightfulHeirI18n } from "./190-simba-rightful-heir.i18n";
 export const simbaRightfulHeir: CharacterCard = {
   id: "XnN",
   canonicalId: "ci_XnN",
+  slug: "lorcana-ci_XnN",
+  printings: [
+    {
+      id: "set1-190",
+      artId: "set1-190",
+      setCode: "set1",
+      collectorNumber: "190",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-190"],
   cardType: "character",
   name: "Simba",
@@ -20,7 +31,7 @@ export const simbaRightfulHeir: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b2976a87410e4dd5a753e7f871c2b6fc",
-    tcgPlayer: 508941,
+    tcgPlayer: "508941",
   },
   text: [
     {

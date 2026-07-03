@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { ursulaMadSeaWitchI18n } from "./057-ursula-mad-sea-witch.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const ursulaMadSeaWitch: CharacterCard = {
   id: "pPz",
   canonicalId: "ci_pPz",
+  slug: "lorcana-ci_pPz",
+  printings: [
+    {
+      id: "set4-057",
+      artId: "set4-057",
+      setCode: "set4",
+      collectorNumber: "57",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-057"],
   cardType: "character",
   name: "Ursula",
@@ -21,7 +33,7 @@ export const ursulaMadSeaWitch: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3bee770abeec4669a01be3a0e307cf14",
-    tcgPlayer: 550570,
+    tcgPlayer: "550570",
   },
   text: "Challenger +2",
   classifications: ["Dreamborn", "Villain", "Sorcerer"],

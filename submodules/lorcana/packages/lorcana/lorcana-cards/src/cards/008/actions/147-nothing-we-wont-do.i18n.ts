@@ -17,19 +17,40 @@ export const nothingWeWontDoI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Für immer und immer",
-    text: "Gemeinsam singen 8 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 8 oder mehr kosten,, damit sie dieses Lied kostenlos singen.) Mache alle deine Charaktere bereit. Sie erhalten in diesem Zug keinen Schaden durch Herausforderungen und können nicht mehr erkunden.",
+    text: [
+      {
+        title:
+          "<Gemeinsam singen> 8 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 8 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)",
+      },
+      {
+        title:
+          "Mache alle deine Charaktere bereit. Sie erhalten in diesem Zug keinen Schaden durch Herausforderungen und können nicht mehr erkunden.",
+      },
+    ],
   },
   fr: {
     name: "Il n'est rien de plus beau !",
-    text: "À l'unisson 8 (Vous pouvez n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 8 ou plus pour chanter cette chanson gratuitement.) Redressez tous vos personnages. Pour le reste de ce tour, ils ne subissent aucun dommage lors des défis et ils ne peuvent pas être envoyés à l'aventure.",
+    text: [
+      {
+        title:
+          "<À l'unisson> 8 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 8 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Redressez tous vos personnages. Pour le reste de ce tour, ils ne subissent aucun dommage lors des défis et ils ne peuvent pas être envoyés à l'aventure.",
+      },
+    ],
   },
   it: {
     name: "È Questa la Vita",
     text: [
       {
-        title: "Cantare Insieme 8",
-        description:
-          "(Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 8 o superiore può per cantare questa canzone gratis.) Prepara tutti i tuoi personaggi. Per il resto di questo turno, non subiscono danni dalle sfide e non possono andare all'avventura.",
+        title:
+          "<Cantare Insieme> 8 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 8 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Prepara tutti i tuoi personaggi. Per il resto di questo turno, non subiscono danni dalle sfide e non possono andare all'avventura.",
       },
     ],
   },

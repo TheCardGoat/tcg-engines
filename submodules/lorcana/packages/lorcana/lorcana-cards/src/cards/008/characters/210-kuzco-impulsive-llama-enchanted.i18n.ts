@@ -20,10 +20,11 @@ export const kuzcoImpulsiveLlamaEnchantedI18n: Record<Languages, I18nProperties>
     version: "Impulsives Lama",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Kusco-Charaktere auszuspielen.)",
       },
       {
-        title: "WAS MACHT DER HIER?",
+        title: "Was macht der hier?",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle gegnerischen Mitspielenden je einen ihrer Charaktere und legen ihn unter ihr Deck. Dann dürfen alle gegnerischen Mitspielenden je 1 Karte ziehen.",
       },
@@ -34,10 +35,11 @@ export const kuzcoImpulsiveLlamaEnchantedI18n: Record<Languages, I18nProperties>
     version: "Lama impétueux",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Kuzco.)",
       },
       {
-        title: "QU'EST-CE QUE ÇA FAIT?",
+        title: "Qu'est-ce que ça fait?",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire choisit l'un de ses personnages et le place sous sa pioche. Ensuite, chaque adversaire peut piocher une carte.",
       },
@@ -48,10 +50,11 @@ export const kuzcoImpulsiveLlamaEnchantedI18n: Record<Languages, I18nProperties>
     version: "Lama Impulsivo",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Kuzco.)",
       },
       {
-        title: "COSA FA QUESTA?",
+        title: "Cosa Fa Questa?",
         description:
           "Quando giochi questo personaggio, ogni avversario sceglie uno dei suoi personaggi e mette quella carta in fondo al suo mazzo. Poi, ogni avversario può pescare una carta.",
       },

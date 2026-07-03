@@ -4,21 +4,45 @@ export const maleficentImperiousTravelerP3PromoI18n: Record<Languages, I18nPrope
   en: {
     name: "Maleficent",
     version: "Imperious Traveler",
-    text: "\\Heed My Words\\ Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+    text: [
+      {
+        title: "HEED MY WORDS",
+        description:
+          "Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+      },
+    ],
   },
   de: {
     name: "Maleficent",
     version: "Imperious Traveler",
-    text: "\\Heed My Words\\ Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+    text: [
+      {
+        title: "Heed My Words",
+        description:
+          "Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+      },
+    ],
   },
   fr: {
     name: "Maleficent",
     version: "Imperious Traveler",
-    text: "\\Heed My Words\\ Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+    text: [
+      {
+        title: "Heed My Words",
+        description:
+          "Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+      },
+    ],
   },
   it: {
     name: "Maleficent",
     version: "Imperious Traveler",
-    text: "\\Heed My Words\\ Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+    text: [
+      {
+        title: "Heed My Words",
+        description:
+          "Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+      },
+    ],
   },
 };

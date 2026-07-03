@@ -17,7 +17,7 @@ export const motherGothelVainSorceressI18n: Record<Languages, I18nProperties> = 
     version: "Eitle Magierin",
     text: [
       {
-        title: "JETZT MACHST DU MICH WÜTEND",
+        title: "Jetzt machst du mich wütend",
         description:
           "Jedes Mal, wenn einer deiner Charaktere herausfordert, darfst du 1 Schadensmarker von einem deiner Charaktere zu einem gegnerischen Charakter deiner Wahl verschieben.",
       },
@@ -28,7 +28,7 @@ export const motherGothelVainSorceressI18n: Record<Languages, I18nProperties> = 
     version: "Sorcière vaniteuse",
     text: [
       {
-        title: "TOUT CELA ME CONTRARIE",
+        title: "Tout cela me contrarie",
         description:
           "Chaque fois que l'un de vos personnages défie, vous pouvez choisir un personnage et déplacer 1 de ses dommages sur un personnage adverse de votre choix.",
       },
@@ -39,7 +39,7 @@ export const motherGothelVainSorceressI18n: Record<Languages, I18nProperties> = 
     version: "Strega Vanesia",
     text: [
       {
-        title: "ORA MI HAI FATTO ARRABBIARE",
+        title: "Ora mi hai Fatto Arrabbiare",
         description:
           "Ogni volta che uno dei tuoi personaggi sfida, puoi spostare 1 segnalino danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },

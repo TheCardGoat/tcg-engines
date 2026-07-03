@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { puttingItAllTogetherI18n } from "./196-putting-it-all-together.i18n";
 
 export const puttingItAllTogether: ActionCard = {
-  id: "GAi",
-  canonicalId: "ci_GAi",
+  id: "Dia",
+  canonicalId: "ci_fi3",
+  slug: "lorcana-ci_fi3",
+  printings: [
+    {
+      id: "set10-196",
+      artId: "set10-196",
+      setCode: "set10",
+      collectorNumber: "196",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-196"],
   cardType: "action",
   name: "Putting It All Together",
@@ -16,7 +27,7 @@ export const puttingItAllTogether: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5c1f05cc2e5c4dae84e51404de23df74",
-    tcgPlayer: 653912,
+    tcgPlayer: "653912",
   },
   text: "Chosen opposing character can't challenge during their next turn. Draw a card.",
   abilities: [

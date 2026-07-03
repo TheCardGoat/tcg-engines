@@ -4,6 +4,17 @@ import { rubyCoilI18n } from "./149-ruby-coil.i18n";
 export const rubyCoil: ItemCard = {
   id: "Twc",
   canonicalId: "ci_Twc",
+  slug: "lorcana-ci_Twc",
+  printings: [
+    {
+      id: "set7-149",
+      artId: "set7-149",
+      setCode: "set7",
+      collectorNumber: "149",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-149"],
   cardType: "item",
   name: "Ruby Coil",
@@ -16,7 +27,7 @@ export const rubyCoil: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9d23dd955ab74137bba7be82615b2178",
-    tcgPlayer: 619492,
+    tcgPlayer: "619492",
   },
   text: [
     {

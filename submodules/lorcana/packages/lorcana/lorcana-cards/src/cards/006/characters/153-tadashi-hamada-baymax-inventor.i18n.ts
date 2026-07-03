@@ -16,9 +16,9 @@ export const tadashiHamadaBaymaxInventorI18n: Record<Languages, I18nProperties> 
     version: "Erfinder von Baymax",
     text: [
       {
-        title: "ZURÜCK AN DIE ARBEIT",
+        title: "Zurück an die Arbeit",
         description:
-          "Dieser Charakter erhält +1 und +1 für jeden Gegenstand, den du im Spiel hast.",
+          "Dieser Charakter erhält +1 {S} und +1 {W} für jeden Gegenstand, den du im Spiel hast.",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const tadashiHamadaBaymaxInventorI18n: Record<Languages, I18nProperties> 
     version: "Concepteur de Baymax",
     text: [
       {
-        title: "REMETTONS-NOUS AU BOULOT",
-        description: "Ce personnage gagne +1 et +1 pour chaque objet que vous avez en jeu.",
+        title: "Remettons-nous au boulot",
+        description: "Ce personnage gagne +1 {S} et +1 {W} pour chaque objet que vous avez en jeu.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const tadashiHamadaBaymaxInventorI18n: Record<Languages, I18nProperties> 
     version: "Inventore di Baymax",
     text: [
       {
-        title: "TORNIAMO AL LAVORO",
-        description: "Questo personaggio riceve +1 e +1 per ogni oggetto che hai in gioco.",
+        title: "Torniamo al Lavoro",
+        description: "Questo personaggio riceve +1 {S} e +1 {W} per ogni oggetto che hai in gioco.",
       },
     ],
   },

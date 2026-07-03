@@ -6,14 +6,17 @@ export const exbpExBase004: BaseCard = {
   type: "base",
   traits: [],
   id: "EXBP-004",
-  externalId: "gundam:exbp-004",
-  slug: "ex-base-exbp-004",
+  canonicalId: "EXBP-004",
+  externalIds: { bandai: "gundam:exbp-004" },
+  slug: "ex-base/exbp-004",
   displayName: "EX Base",
   set: { code: "EXBP", name: "First Combat", packageId: "616901" },
   printNumber: "EXBP-004",
   printings: [
     {
       id: "EXBP-004",
+      artId: "EXBP-004",
+      setCode: "EXBP",
       collectorNumber: "EXBP-004",
       cardNumber: "EXBP-004",
       set: {
@@ -28,6 +31,7 @@ export const exbpExBase004: BaseCard = {
       productName: "First Combat",
     },
   ],
+  reprints: ["EXBP-004"],
   selectedPrintingId: "EXBP-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-004.webp?260424",

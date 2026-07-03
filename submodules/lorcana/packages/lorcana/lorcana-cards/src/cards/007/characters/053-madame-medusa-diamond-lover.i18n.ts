@@ -17,7 +17,7 @@ export const madameMedusaDiamondLoverI18n: Record<Languages, I18nProperties> = {
     version: "Diamantenliebhaberin",
     text: [
       {
-        title: "SUCHE IM SUMPF",
+        title: "Suche im Sumpf",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen deiner Charaktere wählen und ihm 2 Schaden zufügen, um eine mitspielende Person zu wählen. Diese legt die obersten 3 Karten ihres Decks auf ihren Ablagestapel.",
       },
@@ -28,7 +28,7 @@ export const madameMedusaDiamondLoverI18n: Record<Languages, I18nProperties> = {
     version: "Amoureuse des diamants",
     text: [
       {
-        title: "RECHERCHE DANS LE MARÉCAGE",
+        title: "Recherche dans le marécage",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un autre de vos personnages et lui infliger 2 dommages. Si vous le faites, choisissez un joueur, il place les 3 premières cartes de sa pioche dans sa défausse.",
       },
@@ -39,7 +39,7 @@ export const madameMedusaDiamondLoverI18n: Record<Languages, I18nProperties> = {
     version: "Amante dei Diamanti",
     text: [
       {
-        title: "SETACCIARE LA PALUDE",
+        title: "Setacciare la Palude",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi infliggere 2 danni a un tuo altro personaggio a tua scelta per mettere le prime 3 carte del mazzo di un giocatore a tua scelta nei suoi scarti.",
       },

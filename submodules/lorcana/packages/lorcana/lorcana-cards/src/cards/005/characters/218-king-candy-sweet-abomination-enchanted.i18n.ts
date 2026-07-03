@@ -20,10 +20,11 @@ export const kingCandySweetAbominationEnchantedI18n: Record<Languages, I18nPrope
     version: "Süße Abscheulichkeit",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner King-Candy-Charaktere auszuspielen.)",
       },
       {
-        title: "DEN CODE VERÄNDERN",
+        title: "Den Code verändern",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 2 Karten ziehen, lege dann eine Karte von deiner Hand unter dein Deck.",
       },
@@ -34,10 +35,11 @@ export const kingCandySweetAbominationEnchantedI18n: Record<Languages, I18nPrope
     version: "Douce abomination",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Sa Sucrerie.)",
       },
       {
-        title: "CHANGER LE CODE",
+        title: "Changer le code",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez piocher 2 cartes. Si vous le faites, remettez 1 carte de votre main en-dessous de votre pioche.",
       },
@@ -48,10 +50,11 @@ export const kingCandySweetAbominationEnchantedI18n: Record<Languages, I18nPrope
     version: "Dolce Abominio",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Re Candito.)",
       },
       {
-        title: "MODIFICARE IL CODICE",
+        title: "Modificare il Codice",
         description:
           "Quando giochi questo personaggio, puoi pescare 2 carte, poi metti una carta dalla tua mano in fondo al tuo mazzo.",
       },

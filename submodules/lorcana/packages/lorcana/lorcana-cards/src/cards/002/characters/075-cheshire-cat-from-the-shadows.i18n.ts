@@ -22,14 +22,15 @@ export const cheshireCatFromTheShadowsI18n: Record<Languages, I18nProperties> = 
     version: "Aus den Schatten",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Grinsekatze-Charaktere auszuspielen.)",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "FIESES GRINSEN",
-        description: "— Verbanne einen beschädigten Charakter deiner Wahl.",
+        title: "Fieses Grinsen",
+        description: "{E} — Verbanne einen beschädigten Charakter deiner Wahl.",
       },
     ],
   },
@@ -38,14 +39,15 @@ export const cheshireCatFromTheShadowsI18n: Record<Languages, I18nProperties> = 
     version: "Sorti de l'ombre",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Chat du Cheshire.)",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "SOURIRE MALAISANT",
-        description: "— Choisissez un personnage blessé et banissez-le.",
+        title: "Sourire malaisant",
+        description: "{E} — Choisissez un personnage blessé et banissez-le.",
       },
     ],
   },
@@ -54,14 +56,15 @@ export const cheshireCatFromTheShadowsI18n: Record<Languages, I18nProperties> = 
     version: "From the Shadows",
     text: [
       {
-        title: "Shift 5",
+        title:
+          "<Shift> 5 (You may pay 5 {I} to play this on top of one of your characters named Cheshire Cat.)",
       },
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "WICKED SMILE",
-        description: "— Banish chosen damaged character.",
+        title: "Wicked Smile",
+        description: "{E} — Banish chosen damaged character.",
       },
     ],
   },

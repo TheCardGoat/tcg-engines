@@ -4,7 +4,7 @@ export const morduWickedWithPrideI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Mor'du",
     version: "Wicked with Pride",
-    text: "<Rush>",
+    text: "Rush",
   },
   de: {
     name: "Mor'du",

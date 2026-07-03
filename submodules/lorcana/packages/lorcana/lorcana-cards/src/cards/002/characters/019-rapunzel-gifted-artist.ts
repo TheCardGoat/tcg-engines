@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rapunzelGiftedArtistI18n } from "./019-rapunzel-gifted-artist.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const rapunzelGiftedArtist: CharacterCard = {
-  id: "q6B",
-  canonicalId: "ci_q6B",
+  id: "LF9",
+  canonicalId: "ci_jGU",
+  slug: "lorcana-ci_jGU",
+  printings: [
+    {
+      id: "set2-019",
+      artId: "set2-019",
+      setCode: "set2",
+      collectorNumber: "19",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-019"],
   cardType: "character",
   name: "Rapunzel",
@@ -21,7 +33,7 @@ export const rapunzelGiftedArtist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a324c0fddfab4d7681efcf47adae3c6d",
-    tcgPlayer: 525089,
+    tcgPlayer: "525089",
   },
   text: [
     {

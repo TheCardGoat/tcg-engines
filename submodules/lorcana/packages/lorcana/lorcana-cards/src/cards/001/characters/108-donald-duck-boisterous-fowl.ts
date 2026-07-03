@@ -4,6 +4,17 @@ import { donaldDuckBoisterousFowlI18n } from "./108-donald-duck-boisterous-fowl.
 export const donaldDuckBoisterousFowl: CharacterCard = {
   id: "Blq",
   canonicalId: "ci_Blq",
+  slug: "lorcana-ci_Blq",
+  printings: [
+    {
+      id: "set1-108",
+      artId: "set1-108",
+      setCode: "set1",
+      collectorNumber: "108",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-108"],
   cardType: "character",
   name: "Donald Duck",
@@ -20,7 +31,7 @@ export const donaldDuckBoisterousFowl: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_9db4390c3200400db02bf38305508d38",
-    tcgPlayer: 493487,
+    tcgPlayer: "493487",
   },
   classifications: ["Storyborn"],
   i18n: donaldDuckBoisterousFowlI18n,

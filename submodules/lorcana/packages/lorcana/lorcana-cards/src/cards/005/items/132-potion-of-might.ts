@@ -4,6 +4,17 @@ import { potionOfMightI18n } from "./132-potion-of-might.i18n";
 export const potionOfMight: ItemCard = {
   id: "k9I",
   canonicalId: "ci_k9I",
+  slug: "lorcana-ci_k9I",
+  printings: [
+    {
+      id: "set5-132",
+      artId: "set5-132",
+      setCode: "set5",
+      collectorNumber: "132",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-132"],
   cardType: "item",
   name: "Potion of Might",
@@ -16,7 +27,7 @@ export const potionOfMight: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_96709c5ceb00448ab2b8e4b039319183",
-    tcgPlayer: 561965,
+    tcgPlayer: "561965",
   },
   text: [
     {

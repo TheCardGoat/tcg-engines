@@ -20,12 +20,12 @@ export const princeJohnsMirrorI18n: Record<Languages, I18nProperties> = {
     name: "Prinz Johns Spiegel",
     text: [
       {
-        title: "JEDER ZOLL EIN KÖNIG",
+        title: "Jeder Zoll ein König",
         description:
-          "Wenn du einen Prinz-John-Charakter im Spiel hast, zahlst du 1 weniger, um diesen Gegenstand auszuspielen.",
+          "Wenn du einen Prinz-John-Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Gegenstand auszuspielen.",
       },
       {
-        title: "DAS GEFÜHL VON MACHT",
+        title: "Das Gefühl von Macht",
         description:
           "Am Ende des Zuges jeder gegnerischen Person und falls diese mehr als 3 Karten auf der Hand hat, muss diese Person so lange Karten von der Hand abwerfen, bis sie nur noch 3 Karten auf der Hand hat.",
       },
@@ -35,14 +35,14 @@ export const princeJohnsMirrorI18n: Record<Languages, I18nProperties> = {
     name: "Miroir du Prince Jean",
     text: [
       {
-        title: "VOUS ÊTES UNE ROYALE IMAGE",
+        title: "Vous êtes une royale image",
         description:
-          "Jouer cet objet vous coûte 1 de moins si vous avez un personnage Prince Jean en jeu.",
+          "Jouer cet objet vous coûte 1 {I} de moins si vous avez un personnage Prince Jean en jeu.",
       },
       {
-        title: "UN SENTIMENT DE PUISSANCE À",
+        title: "Un sentiment de puissance",
         description:
-          "la fin du tour de chaque adversaire, s'il a plus de 3 cartes en main, il défausse des cartes jusqu'à en avoir 3 en main.",
+          "À la fin du tour de chaque adversaire, s'il a plus de 3 cartes en main, il défausse des cartes jusqu'à en avoir 3 en main.",
       },
     ],
   },
@@ -50,12 +50,12 @@ export const princeJohnsMirrorI18n: Record<Languages, I18nProperties> = {
     name: "Specchio del Principe Giovanni",
     text: [
       {
-        title: "VI DÀ UN ASPETTO REGALE",
+        title: "Vi Dà un Aspetto Regale",
         description:
-          "Se hai in gioco un personaggio chiamato Principe Giovanni, paga 1 in meno per giocare questo oggetto.",
+          "Se hai in gioco un personaggio chiamato Principe Giovanni, paga 1 {I} in meno per giocare questo oggetto.",
       },
       {
-        title: "IL SENSO DEL POTERE",
+        title: "Il Senso del Potere",
         description:
           "Alla fine del turno di ogni avversario, se questo ha più di 3 carte in mano, deve scartare carte finché non ne ha 3 in mano.",
       },

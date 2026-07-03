@@ -6,14 +6,17 @@ export const gd01NahelArgama123: BaseCard = {
   type: "base",
   traits: ["earth federation", "warship"],
   id: "GD01-123",
-  externalId: "gundam:gd01-123",
-  slug: "nahel-argama-gd01-123",
+  canonicalId: "GD01-123",
+  externalIds: { bandai: "gundam:gd01-123" },
+  slug: "nahel-argama/gd01-123",
   displayName: "Nahel Argama",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-123",
   printings: [
     {
       id: "GD01-123",
+      artId: "GD01-123",
+      setCode: "GD01",
       collectorNumber: "GD01-123",
       cardNumber: "GD01-123",
       set: {
@@ -28,6 +31,7 @@ export const gd01NahelArgama123: BaseCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-123"],
   selectedPrintingId: "GD01-123",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-123.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-123.webp?260424",

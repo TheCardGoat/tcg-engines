@@ -20,10 +20,11 @@ export const kronkJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
     version: "Junior Chipmunk",
     text: [
       {
-        title: "Robust +1",
+        title:
+          "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
       {
-        title: "PFADFINDER",
+        title: "Pfadfinder",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du einem Charakter deiner Wahl 2 Schaden zufügen.",
       },
@@ -34,10 +35,10 @@ export const kronkJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
     version: "Ragondin junior",
     text: [
       {
-        title: "Résistance +1",
+        title: "<Résistance> +1",
       },
       {
-        title: "CHEF SCOUT",
+        title: "Chef scout",
         description:
           "Lorsque ce personnage en bannit un autre via un défi durant votre tour, vous pouvez choisir un personnage et lui infliger 2 dommages.",
       },
@@ -48,10 +49,10 @@ export const kronkJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
     version: "Junior Chipmunk",
     text: [
       {
-        title: "Resist +1",
+        title: "<Resist> +1 (Damage dealt to this character is reduced by 1.)",
       },
       {
-        title: "SCOUT LEADER",
+        title: "Scout Leader",
         description:
           "During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen character.",
       },

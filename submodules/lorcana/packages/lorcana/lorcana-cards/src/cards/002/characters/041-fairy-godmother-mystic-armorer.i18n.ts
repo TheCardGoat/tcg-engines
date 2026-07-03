@@ -9,9 +9,9 @@ export const fairyGodmotherMysticArmorerI18n: Record<Languages, I18nProperties> 
         title: "Shift 2",
       },
       {
-        title: "FORGET THE COACH, HERE'S A SWORD",
+        title: "FORGET THE COACH, HERE'S",
         description:
-          'Whenever this character quests, your characters gain Challenger +3 and "When this character is banished in a challenge, return this card to your hand" this turn. (They get +3 {S} while challenging.)',
+          'A SWORD Whenever this character quests, your characters gain Challenger +3 and "When this character is banished in a challenge, return this card to your hand" this turn. (They get +3 {S} while challenging.)',
       },
     ],
   },
@@ -20,12 +20,13 @@ export const fairyGodmotherMysticArmorerI18n: Record<Languages, I18nProperties> 
     version: "Magische Waffenschmiedin",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Gute-Fee-Charaktere auszuspielen.)",
       },
       {
-        title: "VERGISS DIE KUTSCHE, NIMM EIN SCHWERT",
+        title: "Vergiss die Kutsche, nimm ein Schwert",
         description:
-          'Jedes Mal, wenn dieser Charakter erkundet, erhalten deine Charaktere in diesem Zug: "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand" und Herausfordern +3. (Während die Charaktere herausfordern, erhalten sie +3.)',
+          'Jedes Mal, wenn dieser Charakter erkundet, erhalten deine Charaktere in diesem Zug: "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand" und <Herausfordern> +3. (Während die Charaktere herausfordern, erhalten sie +3 {S}.)',
       },
     ],
   },
@@ -34,12 +35,13 @@ export const fairyGodmotherMysticArmorerI18n: Record<Languages, I18nProperties> 
     version: "Armurière mystique",
     text: [
       {
-        title: "Alter 2",
+        title:
+          "<Alter> 2 (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages La Bonne Fée.)",
       },
       {
-        title: "OUBLIE LE CARROSSE, VOICI UNE ÉPÉE",
+        title: "Oublie le carrosse, voici une épée",
         description:
-          'Lorsque ce personnage est envoyé à l\'aventure, vos personnages gagnent "Lorsque ce personnage est banni via un défi, renvoyez cette carte dans votre main" et Offensif +3, pour le reste du tour.',
+          'Lorsque ce personnage est envoyé à l\'aventure, vos personnages gagnent "Lorsque ce personnage est banni via un défi, renvoyez cette carte dans votre main" et <Offensif> +3, pour le reste du tour.',
       },
     ],
   },
@@ -48,12 +50,13 @@ export const fairyGodmotherMysticArmorerI18n: Record<Languages, I18nProperties> 
     version: "Mystic Armorer",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named Fairy Godmother.)",
       },
       {
-        title: "FORGET THE COACH, HERE'S",
+        title: "Forget the Coach, Here's a Sword",
         description:
-          'A SWORD Whenever this character quests, your characters gain Challenger +3 and "When this character is banished in a challenge, return this card to your hand" this turn. (They get +3 while challenging.)',
+          'Whenever this character quests, your characters gain <Challenger> +3 and "When this character is banished in a challenge, return this card to your hand" this turn. (They get +3 {S} while challenging.)',
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { frozoneSuperSlickI18n } from "./046-frozone-super-slick.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const frozoneSuperSlick: CharacterCard = {
   id: "cV4",
   canonicalId: "ci_cV4",
+  slug: "lorcana-ci_cV4",
+  printings: [
+    {
+      id: "set12-046",
+      artId: "set12-046",
+      setCode: "set12",
+      collectorNumber: "46",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-046"],
   cardType: "character",
   name: "Frozone",
@@ -21,6 +33,7 @@ export const frozoneSuperSlick: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_176292aded014342b14e66e92f47427b",
+    tcgPlayer: "692031",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Super", "Hero"],

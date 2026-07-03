@@ -21,12 +21,12 @@ export const scroogeMcduckEbenezerScroogeI18n: Record<Languages, I18nProperties>
     version: "Ebenezer Scrooge",
     text: [
       {
-        title: "FÄLLIGE ZAHLUNG",
+        title: "Fällige Zahlung",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, verlieren alle gegnerischen Mitspielenden je 1 Legende. Ziehe 1 Karte für jede auf diese Weise verlorene Legende.",
       },
       {
-        title: "ZWANGSVOLLSTRECKUNG",
+        title: "Zwangsvollstreckung",
         description:
           "Am Ende deines Zuges, wenn mindestens eine gegnerische Person 0 Legenden hat, sammelst du 1 Legende.",
       },
@@ -37,14 +37,14 @@ export const scroogeMcduckEbenezerScroogeI18n: Record<Languages, I18nProperties>
     version: "Ebenezer Scrooge",
     text: [
       {
-        title: "ÉCHÉANCE DE PAIEMENT",
+        title: "Échéance de paiement",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, chaque adversaire perd 1 éclat de Lore. Piochez une carte pour chaque éclat de Lore ainsi perdu.",
       },
       {
-        title: "SAISIE À",
+        title: "Saisie",
         description:
-          "la fin de votre tour, si un adversaire a 0 éclat de Lore, vous gagnez 1 éclat de Lore.",
+          "À la fin de votre tour, si un adversaire a 0 éclat de Lore, vous gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -53,12 +53,12 @@ export const scroogeMcduckEbenezerScroogeI18n: Record<Languages, I18nProperties>
     version: "Ebenezer Scrooge",
     text: [
       {
-        title: "RATA DA PAGARE",
+        title: "Rata da Pagare",
         description:
           "Ogni volta che questo personaggio va all'avventura, ogni avversario perde 1 leggenda. Pesca una carta per ogni singola leggenda persa in questo modo.",
       },
       {
-        title: "PIGNORAMENTO",
+        title: "Pignoramento",
         description: "Alla fine del tuo turno, se un avversario ha 0 leggenda, ottieni 1 leggenda.",
       },
     ],

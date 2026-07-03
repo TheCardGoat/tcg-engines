@@ -7,14 +7,17 @@ export const gd02GundamEpyon002: UnitCard = {
   color: "blue",
   traits: ["white fang"],
   id: "GD02-002",
-  externalId: "gundam:gd02-002",
-  slug: "gundam-epyon-gd02-002",
+  canonicalId: "GD02-002",
+  externalIds: { bandai: "gundam:gd02-002" },
+  slug: "gundam-epyon/gd02-002",
   displayName: "Gundam Epyon",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-002",
   printings: [
     {
       id: "GD02-002",
+      artId: "GD02-002",
+      setCode: "GD02",
       collectorNumber: "GD02-002",
       cardNumber: "GD02-002",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamEpyon002: UnitCard = {
     },
     {
       id: "GD02-002_p1",
+      artId: "GD02-002_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-002_p1",
       cardNumber: "GD02-002",
       set: {
@@ -44,6 +49,7 @@ export const gd02GundamEpyon002: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-002", "GD02-002_p1"],
   selectedPrintingId: "GD02-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-002.webp?260424",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { idunaAlarmedQueenI18n } from "./113-iduna-alarmed-queen.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const idunaAlarmedQueen: CharacterCard = {
   id: "whR",
   canonicalId: "ci_HXk",
+  slug: "lorcana-ci_HXk",
+  printings: [
+    {
+      id: "set11-113",
+      artId: "set11-113",
+      setCode: "set11",
+      collectorNumber: "113",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-113"],
   cardType: "character",
   name: "Iduna",
@@ -21,7 +33,7 @@ export const idunaAlarmedQueen: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d79f18fa0da949079077eb5ecaad8426",
-    tcgPlayer: 675499,
+    tcgPlayer: "675499",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Mentor", "Queen"],

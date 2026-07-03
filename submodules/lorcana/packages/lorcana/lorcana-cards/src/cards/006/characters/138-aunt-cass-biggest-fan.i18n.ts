@@ -17,9 +17,9 @@ export const auntCassBiggestFanI18n: Record<Languages, I18nProperties> = {
     version: "Größter Fan",
     text: [
       {
-        title: "ICH HELFE GERN",
+        title: "Ich helfe gern",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhält ein Erfinder deiner Wahl in diesem Zug +1.",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhält ein Erfinder deiner Wahl in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const auntCassBiggestFanI18n: Record<Languages, I18nProperties> = {
     version: "Plus grande fan",
     text: [
       {
-        title: "HEUREUSE D'AIDER",
+        title: "Heureuse d'aider",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage Inventeur qui gagne +1 pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage Inventeur qui gagne +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const auntCassBiggestFanI18n: Record<Languages, I18nProperties> = {
     version: "La Più Grande Fan",
     text: [
       {
-        title: "FELICE DI AIUTARE",
+        title: "Felice di Aiutare",
         description:
-          "Ogni volta che questo personaggio va all'avventura, un personaggio Inventore a tua scelta riceve +1 per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, un personaggio Inventore a tua scelta riceve +1 {L} per questo turno.",
       },
     ],
   },

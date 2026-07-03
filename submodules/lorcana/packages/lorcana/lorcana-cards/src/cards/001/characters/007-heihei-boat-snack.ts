@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { heiheiBoatSnackI18n } from "./007-heihei-boat-snack.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const heiheiBoatSnack: CharacterCard = {
-  id: "7AO",
-  canonicalId: "ci_7AO",
+  id: "fZh",
+  canonicalId: "ci_Tbp",
+  slug: "lorcana-ci_Tbp",
+  printings: [
+    {
+      id: "set1-007",
+      artId: "set1-007",
+      setCode: "set1",
+      collectorNumber: "7",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-007"],
   cardType: "character",
   name: "HeiHei",
@@ -21,7 +33,7 @@ export const heiheiBoatSnack: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7b875417a470447eb4d998d9b634580b",
-    tcgPlayer: 493479,
+    tcgPlayer: "493479",
   },
   text: "Support",
   classifications: ["Storyborn", "Ally"],

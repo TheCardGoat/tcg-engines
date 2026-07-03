@@ -4,6 +4,17 @@ import { baboomI18n } from "./196-ba-boom.i18n";
 export const baboom: ActionCard = {
   id: "GSJ",
   canonicalId: "ci_GSJ",
+  slug: "lorcana-ci_GSJ",
+  printings: [
+    {
+      id: "set3-196",
+      artId: "set3-196",
+      setCode: "set3",
+      collectorNumber: "196",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-196"],
   cardType: "action",
   name: "Ba-Boom!",
@@ -16,7 +27,7 @@ export const baboom: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8355f42d81564fc288c8e67b0f04628c",
-    tcgPlayer: 537636,
+    tcgPlayer: "537636",
   },
   text: "Deal 2 damage to chosen character or location.",
   abilities: [

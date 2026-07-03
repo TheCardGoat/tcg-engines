@@ -4,6 +4,17 @@ import { blessedBagpipesI18n } from "./101-blessed-bagpipes.i18n";
 export const blessedBagpipes: ItemCard = {
   id: "Vui",
   canonicalId: "ci_Vui",
+  slug: "lorcana-ci_Vui",
+  printings: [
+    {
+      id: "set10-101",
+      artId: "set10-101",
+      setCode: "set10",
+      collectorNumber: "101",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-101"],
   cardType: "item",
   name: "Blessed Bagpipes",
@@ -16,7 +27,7 @@ export const blessedBagpipes: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e3db74a687664c44971134d8a326fa68",
-    tcgPlayer: 659598,
+    tcgPlayer: "659598",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const st01Guncannon003: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "ST01-003",
-  externalId: "gundam:st01-003",
-  slug: "guncannon-st01-003",
+  canonicalId: "ST01-003",
+  externalIds: { bandai: "gundam:st01-003" },
+  slug: "guncannon/st01-003",
   displayName: "Guncannon",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-003",
   printings: [
     {
       id: "ST01-003",
+      artId: "ST01-003",
+      setCode: "ST01",
       collectorNumber: "ST01-003",
       cardNumber: "ST01-003",
       set: {
@@ -30,6 +33,8 @@ export const st01Guncannon003: UnitCard = {
     },
     {
       id: "ST01-003_p1",
+      artId: "ST01-003_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-003_p1",
       cardNumber: "ST01-003",
       set: {
@@ -44,6 +49,7 @@ export const st01Guncannon003: UnitCard = {
       productName: "Heroic Beginnings [ST01] Bonus Pack",
     },
   ],
+  reprints: ["ST01-003", "ST01-003_p1"],
   selectedPrintingId: "ST01-003",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-003.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-003.webp?260424",

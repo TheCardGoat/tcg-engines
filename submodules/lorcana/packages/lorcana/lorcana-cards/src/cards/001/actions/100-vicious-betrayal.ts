@@ -4,6 +4,17 @@ import { viciousBetrayalI18n } from "./100-vicious-betrayal.i18n";
 export const viciousBetrayal: ActionCard = {
   id: "sYQ",
   canonicalId: "ci_sYQ",
+  slug: "lorcana-ci_sYQ",
+  printings: [
+    {
+      id: "set1-100",
+      artId: "set1-100",
+      setCode: "set1",
+      collectorNumber: "100",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-100"],
   cardType: "action",
   name: "Vicious Betrayal",
@@ -16,7 +27,7 @@ export const viciousBetrayal: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_85e0edbb8cbd458fa3957029a8bb5697",
-    tcgPlayer: 506150,
+    tcgPlayer: "506150",
   },
   text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
   abilities: [

@@ -7,14 +7,17 @@ export const gd03AileStrikeGundam072: UnitCard = {
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD03-072",
-  externalId: "gundam:gd03-072",
-  slug: "aile-strike-gundam-gd03-072",
+  canonicalId: "GD03-072",
+  externalIds: { bandai: "gundam:gd03-072" },
+  slug: "aile-strike-gundam/gd03-072",
   displayName: "Aile Strike Gundam",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-072",
   printings: [
     {
       id: "GD03-072",
+      artId: "GD03-072",
+      setCode: "GD03",
       collectorNumber: "GD03-072",
       cardNumber: "GD03-072",
       set: {
@@ -30,6 +33,8 @@ export const gd03AileStrikeGundam072: UnitCard = {
     },
     {
       id: "GD03-072_p1",
+      artId: "GD03-072_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-072_p1",
       cardNumber: "GD03-072",
       set: {
@@ -45,6 +50,8 @@ export const gd03AileStrikeGundam072: UnitCard = {
     },
     {
       id: "GD03-072_p2",
+      artId: "GD03-072_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-072_p2",
       cardNumber: "GD03-072",
       set: {
@@ -59,6 +66,7 @@ export const gd03AileStrikeGundam072: UnitCard = {
       productName: "Store Tournament Winner Pack 03",
     },
   ],
+  reprints: ["GD03-072", "GD03-072_p1", "GD03-072_p2"],
   selectedPrintingId: "GD03-072",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-072.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-072.webp?260424",

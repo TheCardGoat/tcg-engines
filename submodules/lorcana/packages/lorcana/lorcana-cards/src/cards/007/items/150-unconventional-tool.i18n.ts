@@ -15,9 +15,9 @@ export const unconventionalToolI18n: Record<Languages, I18nProperties> = {
     name: "Unkonventionelles Werkzeug",
     text: [
       {
-        title: "IM HANDUMDREHEN REPARIERT",
+        title: "Im Handumdrehen repariert",
         description:
-          "Wenn dieser Gegenstand verbannt wird, zahlst du 2 weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
+          "Wenn dieser Gegenstand verbannt wird, zahlst du 2 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const unconventionalToolI18n: Record<Languages, I18nProperties> = {
     name: "Outil inhabituel",
     text: [
       {
-        title: "RÉPARÉ EN UN CLIN D'ŒIL",
+        title: "Réparé en un clin d'œil",
         description:
-          "Lorsque cet objet est banni, le prochain objet que vous jouez ce tour-ci vous coûte 2 de moins.",
+          "Lorsque cet objet est banni, le prochain objet que vous jouez ce tour-ci vous coûte 2 {I} de moins.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const unconventionalToolI18n: Record<Languages, I18nProperties> = {
     name: "Strumento non Convenzionale",
     text: [
       {
-        title: "AGGIUSTATO IN UN MOMENTO",
+        title: "Aggiustato in Un Momento",
         description:
-          "Quando questo oggetto viene esiliato, paga 2 in meno per giocare il tuo prossimo oggetto per questo turno.",
+          "Quando questo oggetto viene esiliato, paga 2 {I} in meno per giocare il tuo prossimo oggetto per questo turno.",
       },
     ],
   },

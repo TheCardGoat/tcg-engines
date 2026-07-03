@@ -75,6 +75,7 @@ export interface DynamicAmountEventSnapshot {
 export interface CardExertedPayload {
   cardId: CardInstanceId;
   source?: string;
+  zone?: string;
   isManual?: boolean;
 }
 

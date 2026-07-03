@@ -4,6 +4,17 @@ import { basilPerceptiveInvestigatorI18n } from "./140-basil-perceptive-investig
 export const basilPerceptiveInvestigator: CharacterCard = {
   id: "Vg9",
   canonicalId: "ci_Vg9",
+  slug: "lorcana-ci_Vg9",
+  printings: [
+    {
+      id: "set2-140",
+      artId: "set2-140",
+      setCode: "set2",
+      collectorNumber: "140",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-140"],
   cardType: "character",
   name: "Basil",
@@ -21,7 +32,7 @@ export const basilPerceptiveInvestigator: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_c26b377f986245bd8f63360bcf26d5be",
-    tcgPlayer: 525243,
+    tcgPlayer: "525243",
   },
   classifications: ["Storyborn", "Hero", "Detective"],
   i18n: basilPerceptiveInvestigatorI18n,

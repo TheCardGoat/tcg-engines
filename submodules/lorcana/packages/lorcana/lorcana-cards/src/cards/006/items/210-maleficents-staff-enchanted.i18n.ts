@@ -15,7 +15,7 @@ export const maleficentsStaffEnchantedI18n: Record<Languages, I18nProperties> = 
     name: "Malefiz’ Stab",
     text: [
       {
-        title: "ZURÜCK, IHR NARREN!",
+        title: "Zurück, ihr Narren!",
         description:
           "Jedes Mal, wenn ein gegnerischer Charakter, Gegenstand oder Ort zurück auf die zugehörige Hand geschickt wird, sammelst du 1 Legende.",
       },
@@ -25,7 +25,7 @@ export const maleficentsStaffEnchantedI18n: Record<Languages, I18nProperties> = 
     name: "Sceptre de Maléfique",
     text: [
       {
-        title: "REVENEZ, IMBÉCILES!",
+        title: "Revenez, imbéciles!",
         description:
           "Chaque fois qu'un personnage, un objet ou un lieu d'un adversaire est renvoyé dans sa main depuis le jeu, vous gagnez 1 éclat de Lore.",
       },
@@ -35,7 +35,7 @@ export const maleficentsStaffEnchantedI18n: Record<Languages, I18nProperties> = 
     name: "Bastone di Malefica",
     text: [
       {
-        title: "INDIETRO, PAZZI!",
+        title: "Indietro, Pazzi!",
         description:
           "Ogni volta che uno dei personaggi, degli oggetti o dei luoghi dei tuoi avversari viene ripreso in mano dal gioco, ottieni 1 leggenda.",
       },

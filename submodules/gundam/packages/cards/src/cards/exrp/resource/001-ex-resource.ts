@@ -6,14 +6,17 @@ export const exrpExResource001: ResourceCard = {
   type: "resource",
   traits: [],
   id: "EXRP-001",
-  externalId: "gundam:exrp-001",
-  slug: "ex-resource-exrp-001",
+  canonicalId: "EXRP-001",
+  externalIds: { bandai: "gundam:exrp-001" },
+  slug: "ex-resource/exrp-001",
   displayName: "EX Resource",
   set: { code: "EXRP", name: "GAMA Expo 2025, other events", packageId: "616901" },
   printNumber: "EXRP-001",
   printings: [
     {
       id: "EXRP-001",
+      artId: "EXRP-001",
+      setCode: "EXRP",
       collectorNumber: "EXRP-001",
       cardNumber: "EXRP-001",
       set: {
@@ -28,6 +31,7 @@ export const exrpExResource001: ResourceCard = {
       productName: "GAMA Expo 2025, other events",
     },
   ],
+  reprints: ["EXRP-001"],
   selectedPrintingId: "EXRP-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exrp/EXRP-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXRP-001.webp?260424",

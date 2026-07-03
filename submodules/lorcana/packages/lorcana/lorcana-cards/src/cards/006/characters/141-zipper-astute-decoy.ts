@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { zipperAstuteDecoyI18n } from "./141-zipper-astute-decoy.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const zipperAstuteDecoy: CharacterCard = {
   id: "aVD",
   canonicalId: "ci_aVD",
+  slug: "lorcana-ci_aVD",
+  printings: [
+    {
+      id: "set6-141",
+      artId: "set6-141",
+      setCode: "set6",
+      collectorNumber: "141",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-141"],
   cardType: "character",
   name: "Zipper",
@@ -21,7 +33,7 @@ export const zipperAstuteDecoy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_975737e961724e1983ed15fa1f6fbb33",
-    tcgPlayer: 588338,
+    tcgPlayer: "588338",
   },
   text: [
     {

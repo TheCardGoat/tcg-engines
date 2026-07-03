@@ -4,6 +4,17 @@ import { daisyDuckDonaldsDateI18n } from "./016-daisy-duck-donalds-date.i18n";
 export const daisyDuckDonaldsDate: CharacterCard = {
   id: "lih",
   canonicalId: "ci_lih",
+  slug: "lorcana-ci_lih",
+  printings: [
+    {
+      id: "set5-016",
+      artId: "set5-016",
+      setCode: "set5",
+      collectorNumber: "16",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-016"],
   cardType: "character",
   name: "Daisy Duck",
@@ -19,7 +30,7 @@ export const daisyDuckDonaldsDate: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_8ae92c4a53ef47acb4aefde6341cba60",
-    tcgPlayer: 559158,
+    tcgPlayer: "559158",
   },
   text: [
     {
@@ -51,7 +62,10 @@ export const daisyDuckDonaldsDate: CharacterCard = {
             zone: "hand",
             min: 0,
             max: 1,
-            filter: { type: "card-type", cardType: "character" },
+            filter: {
+              type: "card-type",
+              cardType: "character",
+            },
             reveal: true,
           },
           {

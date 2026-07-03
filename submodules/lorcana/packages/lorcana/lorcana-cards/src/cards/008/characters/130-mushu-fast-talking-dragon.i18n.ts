@@ -17,9 +17,9 @@ export const mushuFasttalkingDragonI18n: Record<Languages, I18nProperties> = {
     version: "Schnellsprechender Drache",
     text: [
       {
-        title: "BRINGEN WIR DAS",
+        title: "Bringen wir das über die Bühne",
         description:
-          "ÜBER DIE BÜHNE — Ein Charakter deiner Wahl erhält in diesem Zug Rasant. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+          "{E} — Ein Charakter deiner Wahl erhält in diesem Zug <Rasant>. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
       },
     ],
   },
@@ -28,8 +28,8 @@ export const mushuFasttalkingDragonI18n: Record<Languages, I18nProperties> = {
     version: "Dragon jacasseur",
     text: [
       {
-        title: "EN AVANT POUR LA GRANDE AVENTURE",
-        description: "— Choisissez un personnage qui gagne Charge pour le reste de ce tour.",
+        title: "En avant pour la grande aventure",
+        description: "{E} — Choisissez un personnage qui gagne <Charge> pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const mushuFasttalkingDragonI18n: Record<Languages, I18nProperties> = {
     version: "Drago Loquace",
     text: [
       {
-        title: "BUTTIAMOCI NELLA MISCHIA",
+        title: "Buttiamoci Nella Mischia",
         description:
-          "— Un personaggio a tua scelta ottiene Lesto per questo turno. (Può sfidare nel turno in cui viene giocato.)",
+          "{E} — Un personaggio a tua scelta ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)",
       },
     ],
   },

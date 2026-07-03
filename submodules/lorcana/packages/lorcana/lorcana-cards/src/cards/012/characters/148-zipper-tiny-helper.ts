@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { zipperTinyHelperI18n } from "./148-zipper-tiny-helper.i18n";
 
 export const zipperTinyHelper: CharacterCard = {
-  id: "yvl",
-  canonicalId: "ci_yvl",
+  id: "b66",
+  canonicalId: "ci_6uh",
+  slug: "lorcana-ci_6uh",
+  printings: [
+    {
+      id: "set12-148",
+      artId: "set12-148",
+      setCode: "set12",
+      collectorNumber: "148",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-148"],
   cardType: "character",
   name: "Zipper",
@@ -21,6 +32,7 @@ export const zipperTinyHelper: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_a761922905824d819675a01a357e187f",
+    tcgPlayer: "690550",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: zipperTinyHelperI18n,

@@ -7,14 +7,17 @@ export const st03GearaZulu003: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "ST03-003",
-  externalId: "gundam:st03-003",
-  slug: "geara-zulu-st03-003",
+  canonicalId: "ST03-003",
+  externalIds: { bandai: "gundam:st03-003" },
+  slug: "geara-zulu/st03-003",
   displayName: "Geara Zulu",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-003",
   printings: [
     {
       id: "ST03-003",
+      artId: "ST03-003",
+      setCode: "ST03",
       collectorNumber: "ST03-003",
       cardNumber: "ST03-003",
       set: {
@@ -30,6 +33,8 @@ export const st03GearaZulu003: UnitCard = {
     },
     {
       id: "ST03-003_p1",
+      artId: "ST03-003_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-003_p1",
       cardNumber: "ST03-003",
       set: {
@@ -44,6 +49,7 @@ export const st03GearaZulu003: UnitCard = {
       productName: "Zeon's Rush [ST03] Bonus Pack",
     },
   ],
+  reprints: ["ST03-003", "ST03-003_p1"],
   selectedPrintingId: "ST03-003",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-003.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-003.webp?260424",

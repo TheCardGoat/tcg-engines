@@ -7,14 +7,37 @@ export const letTheStormRageOnI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Ein Sturm zieht auf",
-    text: "Füge einem Charakter deiner Wahl 2 Schaden zu. Ziehe 1 Karte.",
+    text: [
+      {
+        title: "Füge einem Charakter deiner Wahl 2 Schaden zu.",
+      },
+      {
+        title: "Ziehe 1 Karte.",
+      },
+    ],
   },
   fr: {
     name: "Perdue dans l'hiver",
-    text: "Choisissez un personnage et infligez-lui 2 dommages. Piochez une carte.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Choisissez un personnage et infligez-lui 2 dommages. Piochez une carte.",
+      },
+    ],
   },
   it: {
     name: "Ecco Qua la Tempesta",
-    text: "(Un personaggio con costo 3 o superiore può per cantare questa canzone gratis.) Infliggi 2 danni a un personaggio a tua scelta. Pesca una carta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Infliggi 2 danni a un personaggio a tua scelta. Pesca una carta.",
+      },
+    ],
   },
 };

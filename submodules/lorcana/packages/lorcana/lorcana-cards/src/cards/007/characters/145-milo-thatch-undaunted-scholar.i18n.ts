@@ -16,9 +16,9 @@ export const miloThatchUndauntedScholarI18n: Record<Languages, I18nProperties> =
     version: "Unerschrockener Wissenschaftler",
     text: [
       {
-        title: "ICH BIN DEIN MANN",
+        title: "Ich bin dein Mann",
         description:
-          "Jedes Mal, wenn du eine Aktion ausspielst, darfst du einem Charakter deiner Wahl in diesem Zug +2 geben.",
+          "Jedes Mal, wenn du eine Aktion ausspielst, darfst du einem Charakter deiner Wahl in diesem Zug +2 {S} geben.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const miloThatchUndauntedScholarI18n: Record<Languages, I18nProperties> =
     version: "Universitaire intrépide",
     text: [
       {
-        title: "JE SUIS VOTRE HOMME",
+        title: "Je suis votre homme",
         description:
-          "Chaque fois que vous jouez une action, vous pouvez choisir un personnage qui gagne +2 pour le reste de ce tour.",
+          "Chaque fois que vous jouez une action, vous pouvez choisir un personnage qui gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const miloThatchUndauntedScholarI18n: Record<Languages, I18nProperties> =
     version: "Studioso Imperterrito",
     text: [
       {
-        title: "SONO IL TUO UOMO",
+        title: "Sono il tuo Uomo",
         description:
-          "Ogni volta che giochi un'azione, puoi dare +2 a un personaggio a tua scelta per questo turno.",
+          "Ogni volta che giochi un'azione, puoi dare +2 {S} a un personaggio a tua scelta per questo turno.",
       },
     ],
   },

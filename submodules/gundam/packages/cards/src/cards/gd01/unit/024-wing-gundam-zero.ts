@@ -7,14 +7,17 @@ export const gd01WingGundamZero024: UnitCard = {
   color: "green",
   traits: ["g team"],
   id: "GD01-024",
-  externalId: "gundam:gd01-024",
-  slug: "wing-gundam-zero-gd01-024",
+  canonicalId: "GD01-024",
+  externalIds: { bandai: "gundam:gd01-024" },
+  slug: "wing-gundam-zero/gd01-024",
   displayName: "Wing Gundam Zero",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-024",
   printings: [
     {
       id: "GD01-024",
+      artId: "GD01-024",
+      setCode: "GD01",
       collectorNumber: "GD01-024",
       cardNumber: "GD01-024",
       set: {
@@ -30,6 +33,8 @@ export const gd01WingGundamZero024: UnitCard = {
     },
     {
       id: "GD01-024_p1",
+      artId: "GD01-024_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-024_p1",
       cardNumber: "GD01-024",
       set: {
@@ -45,6 +50,8 @@ export const gd01WingGundamZero024: UnitCard = {
     },
     {
       id: "GD01-024_p2",
+      artId: "GD01-024_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-024_p2",
       cardNumber: "GD01-024",
       set: {
@@ -59,6 +66,7 @@ export const gd01WingGundamZero024: UnitCard = {
       productName: "Championship Winner Card 01",
     },
   ],
+  reprints: ["GD01-024", "GD01-024_p1", "GD01-024_p2"],
   selectedPrintingId: "GD01-024",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-024.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-024.webp?260424",

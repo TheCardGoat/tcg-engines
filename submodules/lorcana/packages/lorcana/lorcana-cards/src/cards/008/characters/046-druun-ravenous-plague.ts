@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { druunRavenousPlagueI18n } from "./046-druun-ravenous-plague.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const druunRavenousPlague: CharacterCard = {
   id: "puQ",
   canonicalId: "ci_puQ",
+  slug: "lorcana-ci_puQ",
+  printings: [
+    {
+      id: "set8-046",
+      artId: "set8-046",
+      setCode: "set8",
+      collectorNumber: "46",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-046"],
   cardType: "character",
   name: "Druun",
@@ -21,7 +33,7 @@ export const druunRavenousPlague: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e147780b566e405e84ffe7dab98ab97f",
-    tcgPlayer: 632708,
+    tcgPlayer: "632708",
   },
   text: "Challenger +4",
   classifications: ["Storyborn", "Villain"],

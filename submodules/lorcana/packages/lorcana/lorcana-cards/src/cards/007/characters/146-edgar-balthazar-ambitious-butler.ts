@@ -4,6 +4,17 @@ import { edgarBalthazarAmbitiousButlerI18n } from "./146-edgar-balthazar-ambitio
 export const edgarBalthazarAmbitiousButler: CharacterCard = {
   id: "24D",
   canonicalId: "ci_24D",
+  slug: "lorcana-ci_24D",
+  printings: [
+    {
+      id: "set7-146",
+      artId: "set7-146",
+      setCode: "set7",
+      collectorNumber: "146",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-146"],
   cardType: "character",
   name: "Edgar Balthazar",
@@ -21,7 +32,7 @@ export const edgarBalthazarAmbitiousButler: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_4496d449edb34ea2b6994004e5d30c84",
-    tcgPlayer: 618154,
+    tcgPlayer: "618154",
   },
   classifications: ["Storyborn", "Villain"],
   i18n: edgarBalthazarAmbitiousButlerI18n,

@@ -4,6 +4,17 @@ import { mickeyMouseStalwartExplorerI18n } from "./181-mickey-mouse-stalwart-exp
 export const mickeyMouseStalwartExplorer: CharacterCard = {
   id: "tp9",
   canonicalId: "ci_tp9",
+  slug: "lorcana-ci_tp9",
+  printings: [
+    {
+      id: "set3-181",
+      artId: "set3-181",
+      setCode: "set3",
+      collectorNumber: "181",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-181"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,12 +30,12 @@ export const mickeyMouseStalwartExplorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6910c7f861604c41b2921961ebf886d1",
-    tcgPlayer: 539109,
+    tcgPlayer: "539109",
   },
   text: [
     {
-      title: "LET'S TAKE A LOOK",
-      description: "This character gets +1 {S} for each location you have in play.",
+      title: "LET'S TAKE",
+      description: "A LOOK This character gets +1 {S} for each location you have in play.",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

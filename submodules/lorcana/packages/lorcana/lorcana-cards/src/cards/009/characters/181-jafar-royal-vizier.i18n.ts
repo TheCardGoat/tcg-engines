@@ -17,9 +17,9 @@ export const jafarRoyalVizierI18n: Record<Languages, I18nProperties> = {
     version: "Großwesir",
     text: [
       {
-        title: "ICH TRAU IHM NICHT, HOHEIT",
+        title: "Ich trau ihm nicht, Hoheit",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const jafarRoyalVizierI18n: Record<Languages, I18nProperties> = {
     version: "Grand Vizir",
     text: [
       {
-        title: "IL NE M'INSPIRE PAS CONFIANCE",
+        title: "Il ne m'inspire pas confiance",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier les personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier les personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const jafarRoyalVizierI18n: Record<Languages, I18nProperties> = {
     version: "Royal Vizier",
     text: [
       {
-        title: "I DON'T TRUST HIM, SIRE",
+        title: "I Don't Trust Him, Sire",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "During your turn, this character gains <Evasive>. (They can challenge characters with Evasive.)",
       },
     ],
   },

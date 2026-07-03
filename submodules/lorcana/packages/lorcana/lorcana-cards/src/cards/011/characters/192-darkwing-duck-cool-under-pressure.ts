@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { darkwingDuckCoolUnderPressureI18n } from "./192-darkwing-duck-cool-under-pressure.i18n";
 
 export const darkwingDuckCoolUnderPressure: CharacterCard = {
-  id: "snt",
+  id: "aEk",
   canonicalId: "ci_EU8",
+  slug: "lorcana-ci_EU8",
+  printings: [
+    {
+      id: "set11-192",
+      artId: "set11-192",
+      setCode: "set11",
+      collectorNumber: "192",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-192"],
   cardType: "character",
   name: "Darkwing Duck",
@@ -20,7 +31,7 @@ export const darkwingDuckCoolUnderPressure: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_789d5871174e4da293165a39bdfece14",
-    tcgPlayer: 677170,
+    tcgPlayer: "677170",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { chernabogEvildoerI18n } from "./003-chernabog-evildoer.i18n";
 export const chernabogEvildoer: CharacterCard = {
   id: "xP0",
   canonicalId: "ci_dKG",
+  slug: "lorcana-ci_dKG",
+  printings: [
+    {
+      id: "set3-003",
+      artId: "set3-003",
+      setCode: "set3",
+      collectorNumber: "3",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-003"],
   cardType: "character",
   name: "Chernabog",
@@ -20,7 +31,7 @@ export const chernabogEvildoer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_7a288d030d1a471fbb818ccfdddc6052",
-    tcgPlayer: 539156,
+    tcgPlayer: "539156",
   },
   text: [
     {

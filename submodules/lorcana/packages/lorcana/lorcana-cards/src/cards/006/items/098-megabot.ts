@@ -4,6 +4,17 @@ import { megabotI18n } from "./098-megabot.i18n";
 export const megabot: ItemCard = {
   id: "Bvz",
   canonicalId: "ci_Bvz",
+  slug: "lorcana-ci_Bvz",
+  printings: [
+    {
+      id: "set6-098",
+      artId: "set6-098",
+      setCode: "set6",
+      collectorNumber: "98",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-098"],
   cardType: "item",
   name: "MegaBot",
@@ -16,7 +27,7 @@ export const megabot: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1ed3d03ca8724920aa9dccede9e08900",
-    tcgPlayer: 588322,
+    tcgPlayer: "588322",
   },
   text: [
     {

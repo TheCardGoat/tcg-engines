@@ -17,19 +17,40 @@ export const lookAtThisFamilyEnchantedI18n: Record<Languages, I18nProperties> = 
   },
   de: {
     name: "Diese Familie",
-    text: "Gemeinsam singen 7 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 7 oder mehr kosten,, damit sie dieses Lied kostenlos singen.) Schaue dir die obersten 5 Karten deines Decks an. Du darfst bis zu 2 Charakterkarten daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    text: [
+      {
+        title:
+          "<Gemeinsam singen> 7 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 7 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)",
+      },
+      {
+        title:
+          "Schaue dir die obersten 5 Karten deines Decks an. Du darfst bis zu 2 Charakterkarten daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+      },
+    ],
   },
   fr: {
     name: "On est une Famille",
-    text: "À l'unisson 7 (Vous pouvez n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 7 ou plus pour chanter cette chanson gratuitement.) Regardez les 5 premières cartes de votre pioche. Vous pouvez révéler jusqu'à 2 cartes Personnage parmi elles et les ajouter à votre main. Remettez le reste sous votre pioche, dans l'ordre de votre choix.",
+    text: [
+      {
+        title:
+          "<À l'unisson> 7 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 7 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Regardez les 5 premières cartes de votre pioche. Vous pouvez révéler jusqu'à 2 cartes Personnage parmi elles et les ajouter à votre main. Remettez le reste sous votre pioche, dans l'ordre de votre choix.",
+      },
+    ],
   },
   it: {
     name: "Questa Famiglia",
     text: [
       {
-        title: "Cantare Insieme 7",
-        description:
-          "(Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 7 o superiore può per cantare questa canzone gratis.) Guarda le prime 5 carte del tuo mazzo. Puoi rivelare fino a 2 carte personaggio e aggiungerle alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+        title:
+          "<Cantare Insieme> 7 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 7 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Guarda le prime 5 carte del tuo mazzo. Puoi rivelare fino a 2 carte personaggio e aggiungerle alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },
     ],
   },

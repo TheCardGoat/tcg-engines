@@ -4,6 +4,17 @@ import { motherGothelWitheredAndWickedI18n } from "./116-mother-gothel-withered-
 export const motherGothelWitheredAndWicked: CharacterCard = {
   id: "5YN",
   canonicalId: "ci_5YN",
+  slug: "lorcana-ci_5YN",
+  printings: [
+    {
+      id: "set2-116",
+      artId: "set2-116",
+      setCode: "set2",
+      collectorNumber: "116",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-116"],
   cardType: "character",
   name: "Mother Gothel",
@@ -20,7 +31,7 @@ export const motherGothelWitheredAndWicked: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0bac00816e484c9897881390d90a614f",
-    tcgPlayer: 527253,
+    tcgPlayer: "527253",
   },
   text: [
     {

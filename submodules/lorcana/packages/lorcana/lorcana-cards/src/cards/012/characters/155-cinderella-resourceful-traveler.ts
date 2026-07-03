@@ -3,7 +3,18 @@ import { cinderellaResourcefulTravelerI18n } from "./155-cinderella-resourceful-
 
 export const cinderellaResourcefulTraveler: CharacterCard = {
   id: "AKb",
-  canonicalId: "ci_AKb",
+  canonicalId: "ci_fXG",
+  slug: "lorcana-ci_fXG",
+  printings: [
+    {
+      id: "set12-155",
+      artId: "set12-155",
+      setCode: "set12",
+      collectorNumber: "155",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-155"],
   cardType: "character",
   name: "Cinderella",
@@ -20,6 +31,7 @@ export const cinderellaResourcefulTraveler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f4e355fa31614d7885933e92a5d0c821",
+    tcgPlayer: "690551",
   },
   text: [
     {

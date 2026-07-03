@@ -4,6 +4,17 @@ import { whatDidYouCallMeI18n } from "./132-what-did-you-call-me.i18n";
 export const whatDidYouCallMe: ActionCard = {
   id: "Dew",
   canonicalId: "ci_Dew",
+  slug: "lorcana-ci_Dew",
+  printings: [
+    {
+      id: "set2-132",
+      artId: "set2-132",
+      setCode: "set2",
+      collectorNumber: "132",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-132"],
   cardType: "action",
   name: "What Did You Call Me?",
@@ -16,7 +27,7 @@ export const whatDidYouCallMe: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b62b44f1e2144c1e9ebec3da471579c3",
-    tcgPlayer: 527760,
+    tcgPlayer: "527760",
   },
   text: "Chosen damaged character gets +3 {S} this turn.",
   abilities: [

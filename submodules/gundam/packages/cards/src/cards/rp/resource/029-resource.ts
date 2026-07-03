@@ -6,8 +6,9 @@ export const rpResource029: ResourceCard = {
   type: "resource",
   traits: [],
   id: "RP-029",
-  externalId: "gundam:rp-029",
-  slug: "resource-rp-029",
+  canonicalId: "RP-029",
+  externalIds: { bandai: "gundam:rp-029" },
+  slug: "resource/rp-029",
   displayName: "Resource",
   set: {
     code: "PB01",
@@ -18,6 +19,8 @@ export const rpResource029: ResourceCard = {
   printings: [
     {
       id: "RP-029",
+      artId: "RP-029",
+      setCode: "PB01",
       collectorNumber: "RP-029",
       cardNumber: "RP-029",
       set: {
@@ -32,6 +35,7 @@ export const rpResource029: ResourceCard = {
       productName: "Premium Accessory Set -Mobile Suit Gundam Wing- [PB01]",
     },
   ],
+  reprints: ["RP-029"],
   selectedPrintingId: "RP-029",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-029.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-029.webp?260424",

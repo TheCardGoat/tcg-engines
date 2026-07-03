@@ -4,6 +4,17 @@ import { gosalynMallardCuriousChildI18n } from "./149-gosalyn-mallard-curious-ch
 export const gosalynMallardCuriousChild: CharacterCard = {
   id: "wv3",
   canonicalId: "ci_wv3",
+  slug: "lorcana-ci_wv3",
+  printings: [
+    {
+      id: "set11-149",
+      artId: "set11-149",
+      setCode: "set11",
+      collectorNumber: "149",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-149"],
   cardType: "character",
   name: "Gosalyn Mallard",
@@ -20,7 +31,7 @@ export const gosalynMallardCuriousChild: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dc802d9673ac4bd3ae7f6976a4faae09",
-    tcgPlayer: 677137,
+    tcgPlayer: "677137",
   },
   text: [
     {

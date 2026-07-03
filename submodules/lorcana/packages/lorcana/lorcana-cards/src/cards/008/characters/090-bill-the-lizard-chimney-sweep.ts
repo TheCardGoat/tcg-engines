@@ -4,6 +4,17 @@ import { billTheLizardChimneySweepI18n } from "./090-bill-the-lizard-chimney-swe
 export const billTheLizardChimneySweep: CharacterCard = {
   id: "7bC",
   canonicalId: "ci_7bC",
+  slug: "lorcana-ci_7bC",
+  printings: [
+    {
+      id: "set8-090",
+      artId: "set8-090",
+      setCode: "set8",
+      collectorNumber: "90",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-090"],
   cardType: "character",
   name: "Bill the Lizard",
@@ -20,7 +31,7 @@ export const billTheLizardChimneySweep: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f76b2615a724413dbb91cdc1b1787b21",
-    tcgPlayer: 631847,
+    tcgPlayer: "631847",
   },
   text: [
     {

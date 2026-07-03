@@ -3,7 +3,18 @@ import { stitchTeamUnderdogI18n } from "./171-stitch-team-underdog.i18n";
 
 export const stitchTeamUnderdog: CharacterCard = {
   id: "TzT",
-  canonicalId: "ci_TzT",
+  canonicalId: "ci_Jx1",
+  slug: "lorcana-ci_Jx1",
+  printings: [
+    {
+      id: "set5-171",
+      artId: "set5-171",
+      setCode: "set5",
+      collectorNumber: "171",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-171"],
   cardType: "character",
   name: "Stitch",
@@ -20,7 +31,7 @@ export const stitchTeamUnderdog: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_67fb41c26e2a4f10bfe027e81169daaf",
-    tcgPlayer: 561999,
+    tcgPlayer: "561999",
   },
   text: [
     {

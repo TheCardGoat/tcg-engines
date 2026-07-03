@@ -20,10 +20,11 @@ export const ladyTremaineImperiousQueenEnchantedI18n: Record<Languages, I18nProp
     version: "Gebieterische Königin",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Gräfin-Tremaine-Charaktere auszuspielen.)",
       },
       {
-        title: "ENDLICH AN DER MACHT",
+        title: "Endlich an der Macht",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle gegnerischen Mitspielenden je einen ihrer Charaktere und verbannen ihn.",
       },
@@ -34,10 +35,11 @@ export const ladyTremaineImperiousQueenEnchantedI18n: Record<Languages, I18nProp
     version: "Reine impérieuse",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Madame de Trémaine.)",
       },
       {
-        title: "ENFIN, LE POUVOIR DE RÉGNER",
+        title: "Enfin, le pouvoir de régner",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire choisit l'un de ses personnages et le bannit.",
       },
@@ -48,10 +50,11 @@ export const ladyTremaineImperiousQueenEnchantedI18n: Record<Languages, I18nProp
     version: "Imperious Queen",
     text: [
       {
-        title: "Shift 4",
+        title:
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Lady Tremaine.)",
       },
       {
-        title: "POWER TO RULE AT LAST",
+        title: "Power to Rule at Last",
         description:
           "When you play this character, each opponent chooses and banishes one of their characters.",
       },

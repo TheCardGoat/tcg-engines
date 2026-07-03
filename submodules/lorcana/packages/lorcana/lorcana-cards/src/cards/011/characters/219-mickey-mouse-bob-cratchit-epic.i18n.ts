@@ -22,12 +22,12 @@ export const mickeyMouseBobCratchitEpicI18n: Record<Languages, I18nProperties> =
     version: "Bob Cratchit",
     text: [
       {
-        title: "HARTE ARBEIT",
+        title: "Harte Arbeit",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, lege die oberste Karte deines Decks verdeckt unter ihn.",
       },
       {
-        title: "EIN SCHENKENDES HERZ",
+        title: "Ein schenkendes Herz",
         description:
           "Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du alle Karten, die unter diesem Charakter lagen, unter einen deiner anderen Charaktere oder Orte legen.",
       },
@@ -38,12 +38,12 @@ export const mickeyMouseBobCratchitEpicI18n: Record<Languages, I18nProperties> =
     version: "Bob Cratchit",
     text: [
       {
-        title: "DUR LABEUR",
+        title: "Dur labeur",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, placez la carte du dessus de votre pioche, face cachée, sous lui.",
       },
       {
-        title: "UN CŒUR GÉNÉREUX",
+        title: "Un cœur généreux",
         description:
           "Lorsque ce personnage est banni via un défi, vous pouvez placer toutes les cartes qui étaient sous lui, sous l'un de vos autres personnages ou de vos lieux.",
       },
@@ -54,12 +54,12 @@ export const mickeyMouseBobCratchitEpicI18n: Record<Languages, I18nProperties> =
     version: "Bob Cratchit",
     text: [
       {
-        title: "DURO LAVORO",
+        title: "Duro Lavoro",
         description:
           "Ogni volta che questo personaggio va all'avventura, metti la prima carta del tuo mazzo a faccia in giù sotto di esso.",
       },
       {
-        title: "UN CUORE GENEROSO",
+        title: "Un Cuore Generoso",
         description:
           "Quando questo personaggio viene esiliato in una sfida, puoi mettere tutte le carte che erano sotto di esso sotto a un tuo altro personaggio o luogo a tua scelta.",
       },

@@ -7,14 +7,14 @@ export const distractI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Ablenken",
-    text: "Gib einem Charakter deiner Wahl in diesem Zug -2. Ziehe 1 Karte.",
+    text: "Gib einem Charakter deiner Wahl in diesem Zug -2 {S}. Ziehe 1 Karte.",
   },
   fr: {
     name: "Distraction",
-    text: "Choisissez un personnage, il subit -2 pour le reste de ce tour. Piochez une carte.",
+    text: "Choisissez un personnage, il subit -2 {S} pour le reste de ce tour. Piochez une carte.",
   },
   it: {
     name: "Distrarre",
-    text: "Un personaggio a tua scelta riceve -2 per questo turno. Pesca una carta.",
+    text: "Un personaggio a tua scelta riceve -2 {S} per questo turno. Pesca una carta.",
   },
 };

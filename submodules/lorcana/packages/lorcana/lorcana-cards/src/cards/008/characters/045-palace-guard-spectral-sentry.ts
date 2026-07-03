@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { palaceGuardSpectralSentryI18n } from "./045-palace-guard-spectral-sentry.i18n";
+
 import { vanish } from "../../../helpers/abilities/vanish";
 
 export const palaceGuardSpectralSentry: CharacterCard = {
   id: "APE",
   canonicalId: "ci_APE",
+  slug: "lorcana-ci_APE",
+  printings: [
+    {
+      id: "set8-045",
+      artId: "set8-045",
+      setCode: "set8",
+      collectorNumber: "45",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-045"],
   cardType: "character",
   name: "Palace Guard",
@@ -21,7 +33,7 @@ export const palaceGuardSpectralSentry: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d4c1ddfeea1142b192f7e289c5bb880d",
-    tcgPlayer: 631336,
+    tcgPlayer: "631336",
   },
   text: [
     {

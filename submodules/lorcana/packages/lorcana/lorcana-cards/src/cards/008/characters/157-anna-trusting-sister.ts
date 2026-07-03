@@ -4,6 +4,17 @@ import { annaTrustingSisterI18n } from "./157-anna-trusting-sister.i18n";
 export const annaTrustingSister: CharacterCard = {
   id: "wSF",
   canonicalId: "ci_wSF",
+  slug: "lorcana-ci_wSF",
+  printings: [
+    {
+      id: "set8-157",
+      artId: "set8-157",
+      setCode: "set8",
+      collectorNumber: "157",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-157"],
   cardType: "character",
   name: "Anna",
@@ -20,7 +31,7 @@ export const annaTrustingSister: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_37bea5da923b495eaeecaf71420a2beb",
-    tcgPlayer: 631455,
+    tcgPlayer: "631455",
   },
   text: [
     {

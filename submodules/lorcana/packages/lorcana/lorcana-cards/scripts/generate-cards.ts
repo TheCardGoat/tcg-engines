@@ -107,6 +107,7 @@ interface PrintingsPhaseResult {
 
 /** Match the top-level `id: "..."` line in a card TypeScript file. */
 const CARD_ID_RE = /^\s{0,4}id:\s*"([^"]+)"/m;
+const CANONICAL_ID_RE = /^\s{0,4}canonicalId:\s*"([^"]+)"/m;
 
 /**
  * Scan existing TypeScript card source files and extract their `id` values,
@@ -149,6 +150,46 @@ function readSourceCardIds(cardsDir: string): Record<string, string> {
       if (!firstReprint) continue;
 
       result[firstReprint] = sourceId;
+    }
+  }
+
+  walk(cardsDir);
+  return result;
+}
+
+function readSourceCanonicalIds(cardsDir: string): Record<string, string> {
+  const result: Record<string, string> = {};
+
+  function walk(dir: string): void {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(full);
+        continue;
+      }
+      if (
+        !entry.isFile() ||
+        !entry.name.endsWith(".ts") ||
+        entry.name.endsWith(".test.ts") ||
+        entry.name.endsWith(".i18n.ts") ||
+        entry.name === "index.ts" ||
+        entry.name === "types.ts" ||
+        entry.name === "catalog-data.ts" ||
+        entry.name === "catalog-integrity.test.ts"
+      ) {
+        continue;
+      }
+
+      const content = fs.readFileSync(full, "utf-8");
+      const canonicalId = content.match(CANONICAL_ID_RE)?.[1];
+      if (!canonicalId?.startsWith("ci_")) continue;
+
+      const reprintsMatch = content.match(/reprints:\s*\[([^\]]+)\]/);
+      if (!reprintsMatch?.[1]) continue;
+      const firstReprint = reprintsMatch[1].match(/"([^"]+)"/)?.[1];
+      if (!firstReprint) continue;
+
+      result[firstReprint] = canonicalId;
     }
   }
 
@@ -237,11 +278,13 @@ function buildIdMappingAndPrintings(
   console.log("🔑 Assigning unique 3-char id per printing (from existing cards when valid)...");
   const printingIdsInOrder = computePrintingIdsInOrder(printingItems);
   const existingCanonicalCards = loadExistingCanonicalCards();
+  const existingSourceCardIds = readSourceCardIds(CARDS_OUTPUT_DIR);
   const pipelineIdMapping = assignPrintingIds(
     printingItems,
     printingIdsInOrder,
     (card) => getFullNameFromCard(card as InputCard),
     existingCanonicalCards,
+    existingSourceCardIds,
   );
   console.log(`  ${Object.keys(pipelineIdMapping.byPrintingId).length} printing ids (3-char)`);
 
@@ -302,6 +345,7 @@ function buildCanonicalAndValidate(
     lorcastIndex,
     lorcastFullIndex,
     existingCanonicalCards,
+    readSourceCanonicalIds(CARDS_OUTPUT_DIR),
   );
   console.log(`  Generated ${Object.keys(canonicalCards).length} canonical cards`);
 

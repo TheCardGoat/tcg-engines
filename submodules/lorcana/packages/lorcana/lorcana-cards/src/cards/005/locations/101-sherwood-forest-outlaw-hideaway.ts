@@ -4,6 +4,17 @@ import { sherwoodForestOutlawHideawayI18n } from "./101-sherwood-forest-outlaw-h
 export const sherwoodForestOutlawHideaway: LocationCard = {
   id: "DoZ",
   canonicalId: "ci_DoZ",
+  slug: "lorcana-ci_DoZ",
+  printings: [
+    {
+      id: "set5-101",
+      artId: "set5-101",
+      setCode: "set5",
+      collectorNumber: "101",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-101"],
   cardType: "location",
   name: "Sherwood Forest",
@@ -20,7 +31,7 @@ export const sherwoodForestOutlawHideaway: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_846446f8cb0941d293de679be94fac73",
-    tcgPlayer: 559088,
+    tcgPlayer: "559088",
   },
   text: [
     {

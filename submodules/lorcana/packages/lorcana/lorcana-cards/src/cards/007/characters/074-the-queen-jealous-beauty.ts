@@ -4,6 +4,17 @@ import { theQueenJealousBeautyI18n } from "./074-the-queen-jealous-beauty.i18n";
 export const theQueenJealousBeauty: CharacterCard = {
   id: "J3O",
   canonicalId: "ci_J3O",
+  slug: "lorcana-ci_J3O",
+  printings: [
+    {
+      id: "set7-074",
+      artId: "set7-074",
+      setCode: "set7",
+      collectorNumber: "74",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-074"],
   cardType: "character",
   name: "The Queen",
@@ -20,7 +31,7 @@ export const theQueenJealousBeauty: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_db45bcd9604d43b3b9a430ee1f23bec8",
-    tcgPlayer: 619446,
+    tcgPlayer: "619446",
   },
   text: [
     {

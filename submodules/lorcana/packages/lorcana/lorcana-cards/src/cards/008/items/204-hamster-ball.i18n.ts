@@ -15,9 +15,9 @@ export const hamsterBallI18n: Record<Languages, I18nProperties> = {
     name: "Hamsterball",
     text: [
       {
-        title: "FÄNGT JEDEN SCHLAG AB,",
+        title: "Fängt jeden Schlag ab",
         description:
-          "1 — Ein unbeschädigter Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Robust +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
+          "{E}, 1 {I} — Ein unbeschädigter Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Robust> +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const hamsterBallI18n: Record<Languages, I18nProperties> = {
     name: "Boule de hamster",
     text: [
       {
-        title: "FAIRE FACE AUX COUPS, 1",
+        title: "Faire face aux coups",
         description:
-          "— Choisissez un personnage sans dommage sur lui. Il gagne Résistance +2 jusqu'au début de votre prochain tour.",
+          "{E}, 1 {I} — Choisissez un personnage sans dommage sur lui. Il gagne <Résistance> +2 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const hamsterBallI18n: Record<Languages, I18nProperties> = {
     name: "Palla per Criceti",
     text: [
       {
-        title: "RESISTENZA SFERICA, 1",
+        title: "Resistenza Sferica",
         description:
-          "— Un personaggio a tua scelta senza danno ottiene Resistere +2 fino all'inizio del tuo prossimo turno.",
+          "{E}, 1 {I} — Un personaggio a tua scelta senza danno ottiene <Resistere> +2 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

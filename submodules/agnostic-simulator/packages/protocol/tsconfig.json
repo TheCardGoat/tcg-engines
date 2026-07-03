@@ -1,6 +1,7 @@
 {
   "extends": "../typescript-config/node.json",
   "compilerOptions": {
+    "types": ["node", "@types/bun"],
     "lib": ["esnext", "ES2023"]
   },
   "include": ["src"],

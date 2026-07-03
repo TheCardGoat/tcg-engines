@@ -17,9 +17,9 @@ export const basilTenaciousMouseI18n: Record<Languages, I18nProperties> = {
     version: "Hartnäckige Maus",
     text: [
       {
-        title: "HÄLT DIE STELLUNG",
+        title: "Hält die Stellung",
         description:
-          "Jedes Mal, wenn du einen anderen Detektiv ausspielst, erhält dieser Charakter bis zu Beginn deines nächsten Zuges Robust +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+          "Jedes Mal, wenn du einen anderen Detektiv ausspielst, erhält dieser Charakter bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const basilTenaciousMouseI18n: Record<Languages, I18nProperties> = {
     version: "Souris tenace",
     text: [
       {
-        title: "TENIR LA POSITION",
+        title: "Tenir la position",
         description:
-          "Chaque fois que vous jouez un autre personnage Détective, ce personnage-ci gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "Chaque fois que vous jouez un autre personnage Détective, ce personnage-ci gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const basilTenaciousMouseI18n: Record<Languages, I18nProperties> = {
     version: "Topo Tenace",
     text: [
       {
-        title: "DIFENDERE LA POSIZIONE",
+        title: "Difendere la Posizione",
         description:
-          "Ogni volta che giochi un altro personaggio Detective, questo personaggio ottiene Resistere +1 fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che giochi un altro personaggio Detective, questo personaggio ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

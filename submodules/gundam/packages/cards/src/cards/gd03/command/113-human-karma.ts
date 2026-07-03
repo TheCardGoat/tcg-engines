@@ -7,14 +7,17 @@ export const gd03HumanKarma113: CommandCard = {
   color: "red",
   traits: [],
   id: "GD03-113",
-  externalId: "gundam:gd03-113",
-  slug: "human-karma-gd03-113",
+  canonicalId: "GD03-113",
+  externalIds: { bandai: "gundam:gd03-113" },
+  slug: "human-karma/gd03-113",
   displayName: "Human Karma",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-113",
   printings: [
     {
       id: "GD03-113",
+      artId: "GD03-113",
+      setCode: "GD03",
       collectorNumber: "GD03-113",
       cardNumber: "GD03-113",
       set: {
@@ -30,6 +33,8 @@ export const gd03HumanKarma113: CommandCard = {
     },
     {
       id: "GD03-113_p1",
+      artId: "GD03-113_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-113_p1",
       cardNumber: "GD03-113",
       set: {
@@ -45,6 +50,8 @@ export const gd03HumanKarma113: CommandCard = {
     },
     {
       id: "GD03-113_p2",
+      artId: "GD03-113_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-113_p2",
       cardNumber: "GD03-113",
       set: {
@@ -59,6 +66,7 @@ export const gd03HumanKarma113: CommandCard = {
       productName: "Store Tournament Winner Pack 04",
     },
   ],
+  reprints: ["GD03-113", "GD03-113_p1", "GD03-113_p2"],
   selectedPrintingId: "GD03-113",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-113.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-113.webp?260424",

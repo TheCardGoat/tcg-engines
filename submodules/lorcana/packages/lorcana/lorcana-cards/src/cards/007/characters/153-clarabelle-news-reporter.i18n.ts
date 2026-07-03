@@ -19,11 +19,12 @@ export const clarabelleNewsReporterI18n: Record<Languages, I18nProperties> = {
     version: "Nachrichtenreporterin",
     text: [
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "EILMELDUNG",
-        description: "Deine anderen Charaktere mit Unterstützen erhalten +1.",
+        title: "Eilmeldung",
+        description: "Deine anderen Charaktere mit <Unterstützen> erhalten +1 {S}.",
       },
     ],
   },
@@ -32,11 +33,12 @@ export const clarabelleNewsReporterI18n: Record<Languages, I18nProperties> = {
     version: "Journaliste",
     text: [
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "SCOOP",
-        description: "Vos autres personnages avec Soutien gagnent +1.",
+        title: "Scoop",
+        description: "Vos autres personnages avec Soutien gagnent +1 {S}.",
       },
     ],
   },
@@ -45,11 +47,12 @@ export const clarabelleNewsReporterI18n: Record<Languages, I18nProperties> = {
     version: "Giornalista",
     text: [
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "NOTIZIA BOMBA",
-        description: "I tuoi altri personaggi con Aiutante ricevono +1.",
+        title: "Notizia Bomba",
+        description: "I tuoi altri personaggi con <Aiutante> ricevono +1 {S}.",
       },
     ],
   },

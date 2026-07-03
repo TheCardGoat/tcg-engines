@@ -17,7 +17,7 @@ export const castleOfTheHornedKingBastionOfEvilI18n: Record<Languages, I18nPrope
     version: "Bastion des Bösen",
     text: [
       {
-        title: "IN DIE FINSTERNIS",
+        title: "In die Finsternis",
         description:
           "Einmal während deines Zuges, wenn einer deiner Charaktere an diesem Ort erkundet, darfst du einen Gegenstand deiner Wahl bereit machen.",
       },
@@ -28,7 +28,7 @@ export const castleOfTheHornedKingBastionOfEvilI18n: Record<Languages, I18nPrope
     version: "Bastion du mal",
     text: [
       {
-        title: "DANS LA PÉNOMBRE",
+        title: "Dans la pénombre",
         description:
           "Une fois durant votre tour, lorsqu'un personnage sur ce lieu est envoyé à l'aventure, vous pouvez choisir un objet et le redresser.",
       },
@@ -39,7 +39,7 @@ export const castleOfTheHornedKingBastionOfEvilI18n: Record<Languages, I18nPrope
     version: "Roccaforte del Male",
     text: [
       {
-        title: "NELLE TENEBRE",
+        title: "Nelle Tenebre",
         description:
           "Una volta durante il tuo turno, ogni volta che un personaggio va all'avventura mentre si trova in questo luogo, puoi preparare un oggetto a tua scelta.",
       },

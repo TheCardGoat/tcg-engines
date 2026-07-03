@@ -6,9 +6,9 @@ export const jasmineHeirOfAgrabahI18n: Record<Languages, I18nProperties> = {
     version: "Heir of Agrabah",
     text: [
       {
-        title: "I'M A FAST LEARNER",
+        title: "I'M",
         description:
-          "When you play this character, remove up to 1 damage from chosen character of yours.",
+          "A FAST LEARNER When you play this character, remove up to 1 damage from chosen character of yours.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const jasmineHeirOfAgrabahI18n: Record<Languages, I18nProperties> = {
     version: "Thronerbin von Agrabah",
     text: [
       {
-        title: "ICH BEGREIFE SEHR SCHNELL",
+        title: "Ich begreife sehr schnell",
         description:
           "Wenn du diesen Charakter ausspielst, entferne bis zu 1 Schaden von einem deiner Charaktere.",
       },
@@ -28,7 +28,7 @@ export const jasmineHeirOfAgrabahI18n: Record<Languages, I18nProperties> = {
     version: "Héritière d'Agrabah",
     text: [
       {
-        title: "J'APPRENDS VITE",
+        title: "J'apprends vite",
         description:
           "Lorsque vous jouez ce personnage, choisissez l'un de vos personnages et retirez-lui 1 jeton Dommage.",
       },
@@ -39,7 +39,7 @@ export const jasmineHeirOfAgrabahI18n: Record<Languages, I18nProperties> = {
     version: "Erede di Agrabah",
     text: [
       {
-        title: "IMPARO IN FRETTA",
+        title: "Imparo in Fretta",
         description:
           "Quando giochi questo personaggio, rimuovi fino a 1 danno da un tuo personaggio a tua scelta.",
       },

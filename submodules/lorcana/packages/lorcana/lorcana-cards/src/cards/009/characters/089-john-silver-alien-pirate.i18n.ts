@@ -17,7 +17,7 @@ export const johnSilverAlienPirateI18n: Record<Languages, I18nProperties> = {
     version: "Außerirdischer Pirat",
     text: [
       {
-        title: "STREIT ANFANGEN",
+        title: "Streit anfangen",
         description:
           "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, erhält ein gegnerischer Charakter deiner Wahl in seinem nächsten Zug Impulsiv. (Er kann nicht erkunden und muss herausfordern, wenn möglich.)",
       },
@@ -39,9 +39,9 @@ export const johnSilverAlienPirateI18n: Record<Languages, I18nProperties> = {
     version: "Alien Pirate",
     text: [
       {
-        title: "PICK YOUR FIGHTS",
+        title: "Pick Your Fights",
         description:
-          "When you play this character and whenever he quests, chosen opposing character gains Reckless during their next turn. (They can't quest and must challenge if able.)",
+          "When you play this character and whenever he quests, chosen opposing character gains <Reckless> during their next turn. (They can't quest and must challenge if able.)",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { tropicalRainforestJaguarLairI18n } from "./102-tropical-rainforest-jagu
 export const tropicalRainforestJaguarLair: LocationCard = {
   id: "PvR",
   canonicalId: "ci_PvR",
+  slug: "lorcana-ci_PvR",
+  printings: [
+    {
+      id: "set5-102",
+      artId: "set5-102",
+      setCode: "set5",
+      collectorNumber: "102",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-102"],
   cardType: "location",
   name: "Tropical Rainforest",
@@ -20,7 +31,7 @@ export const tropicalRainforestJaguarLair: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_85d29b6399cc45b696b6f1e9abe19910",
-    tcgPlayer: 560240,
+    tcgPlayer: "560240",
   },
   text: [
     {

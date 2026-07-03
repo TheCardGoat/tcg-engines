@@ -4,6 +4,17 @@ import { sleepysFluteI18n } from "./034-sleepys-flute.i18n";
 export const sleepysFlute: ItemCard = {
   id: "duq",
   canonicalId: "ci_duq",
+  slug: "lorcana-ci_duq",
+  printings: [
+    {
+      id: "set2-034",
+      artId: "set2-034",
+      setCode: "set2",
+      collectorNumber: "34",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-034"],
   cardType: "item",
   name: "Sleepy's Flute",
@@ -16,7 +27,7 @@ export const sleepysFlute: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_341b56d7d2d549f5b2caa285c026278e",
-    tcgPlayer: 527729,
+    tcgPlayer: "527729",
   },
   text: [
     {

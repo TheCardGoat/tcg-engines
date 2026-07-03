@@ -4,6 +4,17 @@ import { toulouseArtisticKittenI18n } from "./165-toulouse-artistic-kitten.i18n"
 export const toulouseArtisticKitten: CharacterCard = {
   id: "5do",
   canonicalId: "ci_5do",
+  slug: "lorcana-ci_5do",
+  printings: [
+    {
+      id: "set7-165",
+      artId: "set7-165",
+      setCode: "set7",
+      collectorNumber: "165",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-165"],
   cardType: "character",
   name: "Toulouse",
@@ -21,7 +32,7 @@ export const toulouseArtisticKitten: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_a46f9d543f42488aa953e79ab9993010",
-    tcgPlayer: 618155,
+    tcgPlayer: "618155",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: toulouseArtisticKittenI18n,

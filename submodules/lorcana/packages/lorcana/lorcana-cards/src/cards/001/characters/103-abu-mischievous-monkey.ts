@@ -4,6 +4,17 @@ import { abuMischievousMonkeyI18n } from "./103-abu-mischievous-monkey.i18n";
 export const abuMischievousMonkey: CharacterCard = {
   id: "Dba",
   canonicalId: "ci_Dba",
+  slug: "lorcana-ci_Dba",
+  printings: [
+    {
+      id: "set1-103",
+      artId: "set1-103",
+      setCode: "set1",
+      collectorNumber: "103",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-103"],
   cardType: "character",
   name: "Abu",
@@ -21,7 +32,7 @@ export const abuMischievousMonkey: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_e080b948d1bd4c87b40c050f56b2d50f",
-    tcgPlayer: 507461,
+    tcgPlayer: "507461",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: abuMischievousMonkeyI18n,

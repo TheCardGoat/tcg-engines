@@ -4,6 +4,17 @@ import { theMagicFeatherI18n } from "./064-the-magic-feather.i18n";
 export const theMagicFeather: ItemCard = {
   id: "sHD",
   canonicalId: "ci_sHD",
+  slug: "lorcana-ci_sHD",
+  printings: [
+    {
+      id: "set9-064",
+      artId: "set9-064",
+      setCode: "set9",
+      collectorNumber: "64",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-064"],
   cardType: "item",
   name: "The Magic Feather",
@@ -16,7 +27,7 @@ export const theMagicFeather: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_34d603519eae499991189bf1efc0207c",
-    tcgPlayer: 647677,
+    tcgPlayer: "647677",
   },
   text: [
     {

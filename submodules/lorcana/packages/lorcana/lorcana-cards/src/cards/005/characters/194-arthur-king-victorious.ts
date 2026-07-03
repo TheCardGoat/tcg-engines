@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { arthurKingVictoriousI18n } from "./194-arthur-king-victorious.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const arthurKingVictorious: CharacterCard = {
   id: "xkQ",
   canonicalId: "ci_KRT",
+  slug: "lorcana-ci_KRT",
+  printings: [
+    {
+      id: "set5-194",
+      artId: "set5-194",
+      setCode: "set5",
+      collectorNumber: "194",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-194"],
   cardType: "character",
   name: "Arthur",
@@ -21,7 +33,7 @@ export const arthurKingVictorious: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ad336bbf94b74813aa25312a57af4525",
-    tcgPlayer: 561981,
+    tcgPlayer: "561981",
   },
   text: [
     {

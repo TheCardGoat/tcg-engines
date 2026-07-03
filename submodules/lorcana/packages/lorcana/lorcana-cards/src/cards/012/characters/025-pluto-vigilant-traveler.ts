@@ -4,6 +4,17 @@ import { plutoVigilantTravelerI18n } from "./025-pluto-vigilant-traveler.i18n";
 export const plutoVigilantTraveler: CharacterCard = {
   id: "Tm0",
   canonicalId: "ci_Tm0",
+  slug: "lorcana-ci_Tm0",
+  printings: [
+    {
+      id: "set12-025",
+      artId: "set12-025",
+      setCode: "set12",
+      collectorNumber: "25",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-025"],
   cardType: "character",
   name: "Pluto",
@@ -19,6 +30,7 @@ export const plutoVigilantTraveler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_49511c0b9e594c4ca7a0e38fa31ede19",
+    tcgPlayer: "692154",
   },
   text: [
     {

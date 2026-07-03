@@ -7,14 +7,17 @@ export const gd01Skygrasper079: UnitCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "GD01-079",
-  externalId: "gundam:gd01-079",
-  slug: "skygrasper-gd01-079",
+  canonicalId: "GD01-079",
+  externalIds: { bandai: "gundam:gd01-079" },
+  slug: "skygrasper/gd01-079",
   displayName: "Skygrasper",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-079",
   printings: [
     {
       id: "GD01-079",
+      artId: "GD01-079",
+      setCode: "GD01",
       collectorNumber: "GD01-079",
       cardNumber: "GD01-079",
       set: {
@@ -29,6 +32,7 @@ export const gd01Skygrasper079: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-079"],
   selectedPrintingId: "GD01-079",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-079.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-079.webp?260424",

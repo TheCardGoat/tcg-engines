@@ -16,8 +16,8 @@ export const miloThatchSpiritedScholarI18n: Record<Languages, I18nProperties> = 
     version: "Begabter Gelehrter",
     text: [
       {
-        title: "ICH BIN DABEI!",
-        description: "Solange dieser Charakter an einem Ort ist, erhält er +2.",
+        title: "Ich bin dabei!",
+        description: "Solange dieser Charakter an einem Ort ist, erhält er +2 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const miloThatchSpiritedScholarI18n: Record<Languages, I18nProperties> = 
     version: "Savant intrépide",
     text: [
       {
-        title: "JE SUIS VOTRE HOMME",
-        description: "Tant que ce personnage se trouve sur un lieu, il gagne +2.",
+        title: "Je suis votre homme",
+        description: "Tant que ce personnage se trouve sur un lieu, il gagne +2 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const miloThatchSpiritedScholarI18n: Record<Languages, I18nProperties> = 
     version: "Studioso Vivace",
     text: [
       {
-        title: "SONO L'UOMO GIUSTO!",
-        description: "Mentre questo personaggio si trova in un luogo, riceve +2.",
+        title: "Sono l'Uomo Giusto!",
+        description: "Mentre questo personaggio si trova in un luogo, riceve +2 {S}.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { shieldOfVirtueI18n } from "./135-shield-of-virtue.i18n";
 export const shieldOfVirtue: ItemCard = {
   id: "lec",
   canonicalId: "ci_lec",
+  slug: "lorcana-ci_lec",
+  printings: [
+    {
+      id: "set1-135",
+      artId: "set1-135",
+      setCode: "set1",
+      collectorNumber: "135",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-135"],
   cardType: "item",
   name: "Shield of Virtue",
@@ -16,7 +27,7 @@ export const shieldOfVirtue: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_81867e9c25c44f33aa150e70b57bb4dd",
-    tcgPlayer: 508789,
+    tcgPlayer: "508789",
   },
   text: [
     {

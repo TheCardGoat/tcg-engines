@@ -21,14 +21,14 @@ export const rlsLegacySolarGalleonEnchantedI18n: Record<Languages, I18nPropertie
     version: "Sonnen-Galeone",
     text: [
       {
-        title: "DAS IST UNSER SCHIFF",
+        title: "Das ist unser Schiff",
         description:
-          "Charaktere an diesem Ort erhalten Wendig. (Nur Charaktere mit Wendig können diese Charaktere herausfordern.)",
+          "Charaktere an diesem Ort erhalten <Wendig>. (Nur Charaktere mit Wendig können diese Charaktere herausfordern.)",
       },
       {
-        title: "LANGSAM ABLASSEN",
+        title: "Langsam ablassen",
         description:
-          "Wenn du mindestens einen Charakter an diesem Ort hast, zahlst du 2 weniger, um Charaktere an diesen Ort zu bewegen.",
+          "Wenn du mindestens einen Charakter an diesem Ort hast, zahlst du 2 {I} weniger, um Charaktere an diesen Ort zu bewegen.",
       },
     ],
   },
@@ -37,14 +37,14 @@ export const rlsLegacySolarGalleonEnchantedI18n: Record<Languages, I18nPropertie
     version: "Galion solaire",
     text: [
       {
-        title: "C'EST NOTRE BATEAU",
+        title: "C'est notre bateau",
         description:
-          "Les personnages sur ce lieu gagnent Insaisissable. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
+          "Les personnages sur ce lieu gagnent <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
       },
       {
-        title: "NE TRAVAILLEZ PAS LES UNS CONTRE LES AUTRES",
+        title: "Ne travaillez pas les uns contre les autres",
         description:
-          "Tant que l'un de vos personnages se trouve sur ce lieu, y déplacer un personnage vous coûte 2 de moins.",
+          "Tant que l'un de vos personnages se trouve sur ce lieu, y déplacer un personnage vous coûte 2 {I} de moins.",
       },
     ],
   },
@@ -53,14 +53,14 @@ export const rlsLegacySolarGalleonEnchantedI18n: Record<Languages, I18nPropertie
     version: "Galeone Solare",
     text: [
       {
-        title: "QUESTA È LA NOSTRA NAVE I",
+        title: "Questa è la Nostra Nave",
         description:
-          "personaggi ottengono Sfuggente mentre si trovano in questo luogo. (Solo altri personaggi con Sfuggente possono sfidarli.)",
+          "I personaggi ottengono <Sfuggente> mentre si trovano in questo luogo. (Solo altri personaggi con Sfuggente possono sfidarli.)",
       },
       {
-        title: "TIRATE TUTTI INSIEME",
+        title: "Tirate Tutti Insieme",
         description:
-          "Se hai un personaggio in questo luogo, paga 2 in meno per spostare un tuo personaggio in questo luogo.",
+          "Se hai un personaggio in questo luogo, paga 2 {I} in meno per spostare un tuo personaggio in questo luogo.",
       },
     ],
   },

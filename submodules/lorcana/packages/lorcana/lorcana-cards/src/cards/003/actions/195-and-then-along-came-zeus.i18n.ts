@@ -11,10 +11,26 @@ export const andThenAlongCameZeusI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Quand soudain survint Zeus",
-    text: "Choisissez un personnage ou un lieu et infligez-lui 5 dommages.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Choisissez un personnage ou un lieu et infligez-lui 5 dommages.",
+      },
+    ],
   },
   it: {
     name: "Ma Un Giorno Zeus Tornò",
-    text: "(Un personaggio con costo 4 o superiore può per giocare questa canzone gratis.) Infliggi 5 danni a un personaggio o un luogo a tua scelta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 4 o superiore può {E} per giocare questa canzone gratis.)",
+      },
+      {
+        title: "Infliggi 5 danni a un personaggio o un luogo a tua scelta.",
+      },
+    ],
   },
 };

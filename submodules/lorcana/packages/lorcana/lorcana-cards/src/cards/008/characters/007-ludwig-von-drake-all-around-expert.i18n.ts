@@ -22,12 +22,12 @@ export const ludwigVonDrakeAllaroundExpertI18n: Record<Languages, I18nProperties
     version: "Vielseitiger Experte",
     text: [
       {
-        title: "ÜBERLEGENER VERSTAND",
+        title: "Überlegener Verstand",
         description:
           "Wenn du diesen Charakter ausspielst, zeigt einer der gegnerischen Mitspielenden deiner Wahl alle Handkarten für alle sichtbar vor und wirft eine Karte deiner Wahl, die keine Charakterkarte ist, ab.",
       },
       {
-        title: "EWIGES ERBE",
+        title: "Ewiges Erbe",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du diese Karte verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -38,12 +38,12 @@ export const ludwigVonDrakeAllaroundExpertI18n: Record<Languages, I18nProperties
     version: "Expert polyvalent",
     text: [
       {
-        title: "ESPRIT SUPÉRIEUR",
+        title: "Esprit supérieur",
         description:
           "Lorsque vous jouez ce personnage, choisissez un adversaire qui révèle sa main. Choisissez-y une carte non-Personnage dont il se défausse.",
       },
       {
-        title: "HÉRITAGE DURABLE",
+        title: "Héritage durable",
         description:
           "Lorsque ce personnage est banni, vous pouvez le placer dans votre réserve d'encre, face cachée et épuisé.",
       },
@@ -54,12 +54,12 @@ export const ludwigVonDrakeAllaroundExpertI18n: Record<Languages, I18nProperties
     version: "Esperto a Tutto Tondo",
     text: [
       {
-        title: "MENTE SUPERIORE",
+        title: "Mente Superiore",
         description:
           "Quando giochi questo personaggio, un avversario a tua scelta rivela la sua mano e scarta una carta non personaggio a tua scelta.",
       },
       {
-        title: "EREDITÀ DURATURA",
+        title: "Eredità Duratura",
         description:
           "Quando questo personaggio viene esiliato, puoi aggiungere questa carta al tuo calamaio, a faccia in giù e impegnata.",
       },

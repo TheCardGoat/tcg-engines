@@ -9,16 +9,16 @@ export const ryderFleetfootedInfiltratorI18n: Record<Languages, I18nProperties> 
   de: {
     name: "Ryder",
     version: "Flottfüßiger Eindringling",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Ryder",
     version: "Infiltré agile",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Ryder",
     version: "Infiltratore dal Piede Lesto",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

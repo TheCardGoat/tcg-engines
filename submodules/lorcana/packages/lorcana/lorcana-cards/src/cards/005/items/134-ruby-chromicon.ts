@@ -4,6 +4,17 @@ import { rubyChromiconI18n } from "./134-ruby-chromicon.i18n";
 export const rubyChromicon: ItemCard = {
   id: "RCb",
   canonicalId: "ci_RCb",
+  slug: "lorcana-ci_RCb",
+  printings: [
+    {
+      id: "set5-134",
+      artId: "set5-134",
+      setCode: "set5",
+      collectorNumber: "134",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-134"],
   cardType: "item",
   name: "Ruby Chromicon",
@@ -16,7 +27,7 @@ export const rubyChromicon: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_414acca972834b90bd464855d69b79cf",
-    tcgPlayer: 560100,
+    tcgPlayer: "560100",
   },
   text: [
     {

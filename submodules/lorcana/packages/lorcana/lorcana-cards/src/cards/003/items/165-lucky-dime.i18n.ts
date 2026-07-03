@@ -14,9 +14,9 @@ export const luckyDimeI18n: Record<Languages, I18nProperties> = {
     name: "Glückskreuzer",
     text: [
       {
-        title: "NUMMER EINS, 2",
+        title: "Nummer Eins",
         description:
-          "— Wähle einen deiner Charaktere und sammle so viele Legenden, wie sein -Wert beträgt.",
+          "{E}, 2 {I} — Wähle einen deiner Charaktere und sammle so viele Legenden, wie sein {L}-Wert beträgt.",
       },
     ],
   },
@@ -24,9 +24,9 @@ export const luckyDimeI18n: Record<Languages, I18nProperties> = {
     name: "Sou fétiche",
     text: [
       {
-        title: "PREMIER SOU, 2",
+        title: "Premier sou",
         description:
-          "— Choisissez l'un de vos personnages et gagnez un nombre d'éclats de Lore égal à sa.",
+          "{E}, 2 {I} — Choisissez l'un de vos personnages et gagnez un nombre d'éclats de Lore égal à sa {L}.",
       },
     ],
   },
@@ -34,8 +34,9 @@ export const luckyDimeI18n: Record<Languages, I18nProperties> = {
     name: "Numero Uno",
     text: [
       {
-        title: "DECINO FORTUNATO, 2",
-        description: "— Scegli uno dei tuoi personaggi e ottieni leggenda pari al suo.",
+        title: "Decino Fortunato",
+        description:
+          "{E}, 2 {I} — Scegli uno dei tuoi personaggi e ottieni leggenda pari al suo {L}.",
       },
     ],
   },

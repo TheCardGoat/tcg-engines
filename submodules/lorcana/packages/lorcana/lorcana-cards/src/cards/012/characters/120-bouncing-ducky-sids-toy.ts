@@ -4,6 +4,17 @@ import { bouncingDuckySidsToyI18n } from "./120-bouncing-ducky-sids-toy.i18n";
 export const bouncingDuckySidsToy: CharacterCard = {
   id: "52H",
   canonicalId: "ci_52H",
+  slug: "lorcana-ci_52H",
+  printings: [
+    {
+      id: "set12-120",
+      artId: "set12-120",
+      setCode: "set12",
+      collectorNumber: "120",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-120"],
   cardType: "character",
   name: "Bouncing Ducky",
@@ -20,6 +31,7 @@ export const bouncingDuckySidsToy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_53304492277b499dbe09d52c0708c9ea",
+    tcgPlayer: "690544",
   },
   text: [
     {

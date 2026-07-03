@@ -74,12 +74,10 @@ describe("Damage badge · integration", () => {
     await waitFor(() => {
       const node = findCardsById(jimId)[0];
       expect(node, "expected Jim's card face in the DOM").toBeDefined();
-      const damageCounter = node!.querySelector(
-        "[data-testid='card-overlay-badge'][data-overlay-badge-label='2 DMG']",
-      );
+      const damageCounter = node!.querySelector("[data-testid='damage-counter-overlay']");
       expect(damageCounter).not.toBeNull();
-      expect(damageCounter!.textContent).toBe("2 DMG");
-      expect(damageCounter!.getAttribute("aria-label")).toBe("2 DMG");
+      expect(damageCounter!.textContent).toBe("DMG2");
+      expect(damageCounter!.getAttribute("aria-label")).toBe("This card has taken 2 damage.");
     });
   });
 });

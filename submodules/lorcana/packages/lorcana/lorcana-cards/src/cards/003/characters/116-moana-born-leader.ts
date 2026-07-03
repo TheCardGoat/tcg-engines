@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { moanaBornLeaderI18n } from "./116-moana-born-leader.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const moanaBornLeader: CharacterCard = {
   id: "xR2",
   canonicalId: "ci_xR2",
+  slug: "lorcana-ci_xR2",
+  printings: [
+    {
+      id: "set3-116",
+      artId: "set3-116",
+      setCode: "set3",
+      collectorNumber: "116",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-116"],
   cardType: "character",
   name: "Moana",
@@ -21,7 +33,7 @@ export const moanaBornLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d506a2271c444d7f9c2becae74535475",
-    tcgPlayer: 532861,
+    tcgPlayer: "532861",
   },
   text: [
     {

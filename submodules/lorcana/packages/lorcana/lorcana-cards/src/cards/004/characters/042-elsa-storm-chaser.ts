@@ -4,6 +4,17 @@ import { elsaStormChaserI18n } from "./042-elsa-storm-chaser.i18n";
 export const elsaStormChaser: CharacterCard = {
   id: "pQC",
   canonicalId: "ci_pQC",
+  slug: "lorcana-ci_pQC",
+  printings: [
+    {
+      id: "set4-042",
+      artId: "set4-042",
+      setCode: "set4",
+      collectorNumber: "42",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-042"],
   cardType: "character",
   name: "Elsa",
@@ -20,7 +31,7 @@ export const elsaStormChaser: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_178373b0fe2f483b90202bfeb6014e0a",
-    tcgPlayer: 547847,
+    tcgPlayer: "547847",
   },
   text: [
     {

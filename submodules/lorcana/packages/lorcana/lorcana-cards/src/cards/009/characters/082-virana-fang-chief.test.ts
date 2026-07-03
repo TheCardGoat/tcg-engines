@@ -13,7 +13,7 @@ describe("Virana - Fang Chief (set 009)", () => {
     });
 
     expect(viranaFangChief).toMatchObject({
-      id: "T9y",
+      id: "FMD",
       canonicalId: "ci_N3z",
       reprints: ["set2-095", "set9-082"],
       cardType: "character",

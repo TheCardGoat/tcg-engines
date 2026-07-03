@@ -4,6 +4,17 @@ import { illuminaryTunnelsLinkedCavernsI18n } from "./202-illuminary-tunnels-lin
 export const illuminaryTunnelsLinkedCaverns: LocationCard = {
   id: "YpL",
   canonicalId: "ci_YpL",
+  slug: "lorcana-ci_YpL",
+  printings: [
+    {
+      id: "set10-202",
+      artId: "set10-202",
+      setCode: "set10",
+      collectorNumber: "202",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-202"],
   cardType: "location",
   name: "Illuminary Tunnels",
@@ -20,7 +31,7 @@ export const illuminaryTunnelsLinkedCaverns: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f0d2c7f7fb9243bdb38b6c1e5eb522cd",
-    tcgPlayer: 658460,
+    tcgPlayer: "658460",
   },
   text: [
     {

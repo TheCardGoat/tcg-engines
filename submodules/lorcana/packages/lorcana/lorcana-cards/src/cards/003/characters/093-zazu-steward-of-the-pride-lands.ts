@@ -4,6 +4,17 @@ import { zazuStewardOfThePrideLandsI18n } from "./093-zazu-steward-of-the-pride-
 export const zazuStewardOfThePrideLands: CharacterCard = {
   id: "13r",
   canonicalId: "ci_13r",
+  slug: "lorcana-ci_13r",
+  printings: [
+    {
+      id: "set3-093",
+      artId: "set3-093",
+      setCode: "set3",
+      collectorNumber: "93",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-093"],
   cardType: "character",
   name: "Zazu",
@@ -20,7 +31,7 @@ export const zazuStewardOfThePrideLands: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ad676278d4e74481af58729c5c986b7b",
-    tcgPlayer: 539084,
+    tcgPlayer: "539084",
   },
   text: [
     {

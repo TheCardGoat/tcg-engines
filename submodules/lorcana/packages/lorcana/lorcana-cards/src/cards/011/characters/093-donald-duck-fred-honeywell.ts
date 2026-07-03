@@ -4,6 +4,17 @@ import { donaldDuckFredHoneywellI18n } from "./093-donald-duck-fred-honeywell.i1
 export const donaldDuckFredHoneywell: CharacterCard = {
   id: "Yde",
   canonicalId: "ci_Yde",
+  slug: "lorcana-ci_Yde",
+  printings: [
+    {
+      id: "set11-093",
+      artId: "set11-093",
+      setCode: "set11",
+      collectorNumber: "93",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-093"],
   cardType: "character",
   name: "Donald Duck",
@@ -20,7 +31,7 @@ export const donaldDuckFredHoneywell: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0ad5cc52cd5f49bb9594afa82796f42e",
-    tcgPlayer: 673331,
+    tcgPlayer: "673331",
   },
   text: [
     {

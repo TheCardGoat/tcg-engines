@@ -9,21 +9,16 @@ export const arielSingingMermaidI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Arielle",
     version: "Singende Meerjungfrau",
-    text: [
-      {
-        title: "Singen 7",
-        description: "(Die Kosten dieses Charakters gelten als 7 für das Singen von Liedern.)",
-      },
-    ],
+    text: "<Singen> 7 (Die Kosten dieses Charakters gelten als 7 für das Singen von Liedern.)",
   },
   fr: {
     name: "Ariel",
     version: "Sirène chantante",
-    text: "Mélomane 7 (Ce personnage est considéré comme ayant un coût de 7 pour chanter des chansons.)",
+    text: "<Mélomane> 7 (Ce personnage est considéré comme ayant un coût de 7 pour chanter des chansons.)",
   },
   it: {
     name: "Ariel",
     version: "Sirena Canterina",
-    text: "Melodioso 7",
+    text: "<Melodioso> 7",
   },
 };

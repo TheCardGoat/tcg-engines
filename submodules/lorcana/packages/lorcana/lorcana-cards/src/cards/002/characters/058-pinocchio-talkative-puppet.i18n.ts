@@ -16,7 +16,7 @@ export const pinocchioTalkativePuppetI18n: Record<Languages, I18nProperties> = {
     version: "Talkative Puppet",
     text: [
       {
-        title: "TELLING LIES",
+        title: "Telling Lies",
         description: "When you play this character, you may exert chosen opposing character.",
       },
     ],
@@ -26,7 +26,7 @@ export const pinocchioTalkativePuppetI18n: Record<Languages, I18nProperties> = {
     version: "Talkative Puppet",
     text: [
       {
-        title: "TELLING LIES",
+        title: "Telling Lies",
         description: "When you play this character, you may exert chosen opposing character.",
       },
     ],
@@ -36,7 +36,7 @@ export const pinocchioTalkativePuppetI18n: Record<Languages, I18nProperties> = {
     version: "Talkative Puppet",
     text: [
       {
-        title: "TELLING LIES",
+        title: "Telling Lies",
         description: "When you play this character, you may exert chosen opposing character.",
       },
     ],

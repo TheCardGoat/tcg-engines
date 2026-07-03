@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { jessieLivelyCowgirlI18n } from "./020-jessie-lively-cowgirl.i18n";
 
 export const jessieLivelyCowgirl: CharacterCard = {
-  id: "K5K",
+  id: "7b7",
   canonicalId: "ci_K5K",
+  slug: "lorcana-ci_K5K",
+  printings: [
+    {
+      id: "set12-020",
+      artId: "set12-020",
+      setCode: "set12",
+      collectorNumber: "20",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-020"],
   cardType: "character",
   name: "Jessie",
@@ -19,7 +30,8 @@ export const jessieLivelyCowgirl: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_c7f3b3cbe19c44f7943c510392ea88db",
+    lorcast: "crd_c0337343682c4e9e9bac90b90fb4f24a",
+    tcgPlayer: "692217",
   },
   text: [
     {

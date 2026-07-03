@@ -14,8 +14,8 @@ export const wildcatsWrenchI18n: Record<Languages, I18nProperties> = {
     name: "Wildkatz' Schraubenschlüssel",
     text: [
       {
-        title: "WIEDERHERSTELLEN",
-        description: "— Entferne bis zu 2 Schaden von einem Ort deiner Wahl.",
+        title: "Wiederherstellen",
+        description: "{E} — Entferne bis zu 2 Schaden von einem Ort deiner Wahl.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const wildcatsWrenchI18n: Record<Languages, I18nProperties> = {
     name: "Clé de Turbo",
     text: [
       {
-        title: "RÉPARATION",
-        description: "— Choisissez un Lieu et retirez-lui jusqu'à 2 jetons Dommage.",
+        title: "Réparation",
+        description: "{E} — Choisissez un Lieu et retirez-lui jusqu'à 2 jetons Dommage.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const wildcatsWrenchI18n: Record<Languages, I18nProperties> = {
     name: "Chiave Inglese di Valvola",
     text: [
       {
-        title: "RICOSTRUIRE",
-        description: "— Rimuovi fino a 2 danni da un luogo a tua scelta.",
+        title: "Ricostruire",
+        description: "{E} — Rimuovi fino a 2 danni da un luogo a tua scelta.",
       },
     ],
   },

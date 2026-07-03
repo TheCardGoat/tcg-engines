@@ -4,6 +4,17 @@ import { antonioMadrigalAnimalExpertI18n } from "./035-antonio-madrigal-animal-e
 export const antonioMadrigalAnimalExpert: CharacterCard = {
   id: "PrU",
   canonicalId: "ci_PrU",
+  slug: "lorcana-ci_PrU",
+  printings: [
+    {
+      id: "set4-035",
+      artId: "set4-035",
+      setCode: "set4",
+      collectorNumber: "35",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-035"],
   cardType: "character",
   name: "Antonio Madrigal",
@@ -21,7 +32,7 @@ export const antonioMadrigalAnimalExpert: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_bf3808fbbb364067a497257398cf353d",
-    tcgPlayer: 550521,
+    tcgPlayer: "550521",
   },
   classifications: ["Storyborn", "Ally", "Madrigal"],
   i18n: antonioMadrigalAnimalExpertI18n,

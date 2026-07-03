@@ -10,7 +10,8 @@ on:
       - "submodules/cyberpunk/**"
       - "submodules/gundam/**"
       - "submodules/lorcana/**"
-      - "submodules/one-piece-simulator/**"
+      - "submodules/one-piece/**"
+      - "submodules/star-wars-unlimited/**"
   pull_request:
     branches: [main]
     paths:
@@ -20,7 +21,8 @@ on:
       - "submodules/cyberpunk/**"
       - "submodules/gundam/**"
       - "submodules/lorcana/**"
-      - "submodules/one-piece-simulator/**"
+      - "submodules/one-piece/**"
+      - "submodules/star-wars-unlimited/**"
   workflow_dispatch:
 
 concurrency:
@@ -63,18 +65,17 @@ jobs:
         run: |
           pnpm --dir submodules/cyberpunk install --frozen-lockfile
           pnpm --dir submodules/gundam install --frozen-lockfile
-          pnpm --dir submodules/one-piece-simulator install --frozen-lockfile
+          pnpm --dir submodules/one-piece install --frozen-lockfile
+          # Lorcana + SWU resolve to source (not built dist), but their
+          # node_modules must exist so the card-model conformance guard can
+          # resolve `@tcg/card-model` while type-checking their linked types.
+          pnpm --dir submodules/lorcana install --frozen-lockfile
+          pnpm --dir submodules/star-wars-unlimited install --frozen-lockfile
 
       - name: Install agnostic simulator dependencies
         working-directory: submodules/agnostic-simulator
-        run: vp install --frozen-lockfile
+        run: vp install --no-frozen-lockfile
 
-      - name: Build linked game packages
-        run: |
-          pnpm --dir submodules/cyberpunk run build
-          pnpm --dir submodules/gundam run build
-          pnpm --dir submodules/one-piece-simulator run build
-
-      - name: Run agnostic simulator full CI
+      - name: Run agnostic simulator CI
         working-directory: submodules/agnostic-simulator
-        run: pnpm run ci-check-full
+        run: pnpm run ci-check

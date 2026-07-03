@@ -4,6 +4,17 @@ import { donaldDuckCoinCollectorI18n } from "./037-donald-duck-coin-collector.i1
 export const donaldDuckCoinCollector: CharacterCard = {
   id: "i7B",
   canonicalId: "ci_i7B",
+  slug: "lorcana-ci_i7B",
+  printings: [
+    {
+      id: "set8-037",
+      artId: "set8-037",
+      setCode: "set8",
+      collectorNumber: "37",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-037"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckCoinCollector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fef2291c6e394415a529772dcda9e9b0",
-    tcgPlayer: 631334,
+    tcgPlayer: "631334",
   },
   text: [
     {

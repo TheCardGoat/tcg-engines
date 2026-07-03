@@ -17,7 +17,7 @@ export const cinderellaDreamComeTrueEnchantedI18n: Record<Languages, I18nPropert
     version: "Ein Traum ist wahr geworden",
     text: [
       {
-        title: "DAS LEBEN, ES LACHT MIR DANN ZU",
+        title: "Das Leben, es lacht mir dann zu",
         description:
           "Am Ende deines Zuges, falls du in diesem Zug mindestens 1 Prinzessin ausgespielt hast, darfst du 1 beliebige Karte aus deiner Hand verdeckt in deinen Tintenvorrat legen, um 1 Karte zu ziehen.",
       },
@@ -28,9 +28,9 @@ export const cinderellaDreamComeTrueEnchantedI18n: Record<Languages, I18nPropert
     version: "Rêve qui se réalise",
     text: [
       {
-        title: "LES RÊVES QUI SOMMEILLENT DANS NOS CŒURS À",
+        title: "Les rêves qui sommeillent dans nos cœurs",
         description:
-          "la fin de votre tour, si vous avez joué un personnage Princesse ce tour-ci, vous pouvez placer une carte de votre main dans votre réserve d'encre, face cachée, pour piocher une carte.",
+          "À la fin de votre tour, si vous avez joué un personnage Princesse ce tour-ci, vous pouvez placer une carte de votre main dans votre réserve d'encre, face cachée, pour piocher une carte.",
       },
     ],
   },
@@ -39,7 +39,7 @@ export const cinderellaDreamComeTrueEnchantedI18n: Record<Languages, I18nPropert
     version: "Sogno Divenuto Realtà",
     text: [
       {
-        title: "TI ESPRIMI CON SINCERITÀ",
+        title: "Ti Esprimi con Sincerità",
         description:
           "Alla fine del tuo turno, se hai giocato un personaggio Principessa in questo turno, puoi aggiungere una carta dalla tua mano al tuo calamaio, a faccia in giù, per pescare una carta.",
       },

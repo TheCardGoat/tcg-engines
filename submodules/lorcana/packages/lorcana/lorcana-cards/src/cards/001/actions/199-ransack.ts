@@ -4,6 +4,17 @@ import { ransackI18n } from "./199-ransack.i18n";
 export const ransack: ActionCard = {
   id: "sgV",
   canonicalId: "ci_sgV",
+  slug: "lorcana-ci_sgV",
+  printings: [
+    {
+      id: "set1-199",
+      artId: "set1-199",
+      setCode: "set1",
+      collectorNumber: "199",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-199"],
   cardType: "action",
   name: "Ransack",
@@ -16,7 +27,7 @@ export const ransack: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_151c0155aa7c4f4fbec1bdb3a10f2676",
-    tcgPlayer: 508937,
+    tcgPlayer: "508937",
   },
   text: "Draw 2 cards, then choose and discard 2 cards.",
   abilities: [

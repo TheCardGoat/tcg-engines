@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { zeusGodOfLightningI18n } from "./061-zeus-god-of-lightning.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const zeusGodOfLightning: CharacterCard = {
   id: "oPz",
   canonicalId: "ci_oPz",
+  slug: "lorcana-ci_oPz",
+  printings: [
+    {
+      id: "set1-061",
+      artId: "set1-061",
+      setCode: "set1",
+      collectorNumber: "61",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-061"],
   cardType: "character",
   name: "Zeus",
@@ -22,7 +34,7 @@ export const zeusGodOfLightning: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_48d5eae218d14c72a3b0485e369b2d06",
-    tcgPlayer: 502540,
+    tcgPlayer: "502540",
   },
   text: [
     {

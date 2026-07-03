@@ -4,6 +4,17 @@ import { snowWhiteUnexpectedHouseguestI18n } from "./024-snow-white-unexpected-h
 export const snowWhiteUnexpectedHouseguest: CharacterCard = {
   id: "BdH",
   canonicalId: "ci_BdH",
+  slug: "lorcana-ci_BdH",
+  printings: [
+    {
+      id: "set2-024",
+      artId: "set2-024",
+      setCode: "set2",
+      collectorNumber: "24",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-024"],
   cardType: "character",
   name: "Snow White",
@@ -19,8 +30,7 @@ export const snowWhiteUnexpectedHouseguest: CharacterCard = {
   lore: 1,
   inkable: false,
   externalIds: {
-    lorcast: "crd_a40dcfcf0f944762a1b3f31d9a322c9a",
-    tcgPlayer: 526378,
+    lorcast: "crd_332e095b11d44545865d7878ea27b58d",
   },
   text: [
     {

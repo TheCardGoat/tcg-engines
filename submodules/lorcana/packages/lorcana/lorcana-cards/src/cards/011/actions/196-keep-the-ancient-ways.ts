@@ -4,6 +4,17 @@ import { keepTheAncientWaysI18n } from "./196-keep-the-ancient-ways.i18n";
 export const keepTheAncientWays: ActionCard = {
   id: "Fn8",
   canonicalId: "ci_Fn8",
+  slug: "lorcana-ci_Fn8",
+  printings: [
+    {
+      id: "set11-196",
+      artId: "set11-196",
+      setCode: "set11",
+      collectorNumber: "196",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-196"],
   cardType: "action",
   name: "Keep the Ancient Ways",
@@ -16,7 +27,7 @@ export const keepTheAncientWays: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_491b1cb4aadf4bf999230048abf2cf0b",
-    tcgPlayer: 673432,
+    tcgPlayer: "673432",
   },
   text: "Opponents can't play actions or items until the start of your next turn.",
   actionSubtype: "song",

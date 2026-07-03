@@ -15,6 +15,6 @@ export const sailTheAzuriteSeaI18n: Record<Languages, I18nProperties> = {
   },
   it: {
     name: "Navigare nel Mare di Azzurrite",
-    text: "Per questo turno, puoi aggiungere una carta aggiuntiva al tuo calamaio dalla tua mano, a faccia in giù. Pesca una carta.",
+    text: "Per questo turno, puoi inchiostrare una carta aggiuntiva. Pesca una carta.",
   },
 };

@@ -17,7 +17,7 @@ export const kakamoraLongrangeSpecialistI18n: Record<Languages, I18nProperties> 
     version: "Spezialist für Langstrecken",
     text: [
       {
-        title: "EIN BISSCHEN HILFE",
+        title: "Ein bisschen Hilfe",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen anderen Piraten im Spiel hast, darfst du einem Charakter oder einem Ort deiner Wahl 1 Schaden zufügen.",
       },
@@ -28,7 +28,7 @@ export const kakamoraLongrangeSpecialistI18n: Record<Languages, I18nProperties> 
     version: "Spécialiste de la longue portée",
     text: [
       {
-        title: "TU PEUX M'AIDER?",
+        title: "Tu peux m'aider?",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un autre personnage Pirate en jeu, vous pouvez choisir un personnage ou un lieu et lui infliger 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const kakamoraLongrangeSpecialistI18n: Record<Languages, I18nProperties> 
     version: "Specialista da Lunga Gittata",
     text: [
       {
-        title: "UN PICCOLO AIUTO",
+        title: "Un Piccolo Aiuto",
         description:
           "Quando giochi questo personaggio, se hai in gioco un altro personaggio Pirata, puoi infliggere 1 danno a un personaggio o a un luogo a tua scelta.",
       },

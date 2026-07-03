@@ -20,12 +20,12 @@ export const peterPanNeverLandHeroI18n: Record<Languages, I18nProperties> = {
     version: "Held aus Nimmerland",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "HIER DRÜBEN, NASEWEIS",
+        title: "Hier drüben, Naseweis",
         description:
-          "Solange du mindestens einen Naseweis-Charakter im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens einen Naseweis-Charakter im Spiel hast, erhält dieser Charakter +2 {S}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const peterPanNeverLandHeroI18n: Record<Languages, I18nProperties> = {
     version: "Héros du Pays Imaginaire",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "PAR ICI, FÉE CLOCHETTE",
+        title: "Par ici, Fée Clochette",
         description:
-          "Tant que vous avez un personnage La Fée Clochette en jeu, ce personnage gagne +2.",
+          "Tant que vous avez un personnage La Fée Clochette en jeu, ce personnage gagne +2 {S}.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const peterPanNeverLandHeroI18n: Record<Languages, I18nProperties> = {
     version: "Eroe dell'Isola Che Non C'è",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "DA QUESTA PARTE, TRILLI",
+        title: "Da Questa Parte, Trilli",
         description:
-          "Mentre hai un personaggio chiamato Trilli in gioco, questo personaggio riceve +2.",
+          "Mentre hai un personaggio chiamato Trilli in gioco, questo personaggio riceve +2 {S}.",
       },
     ],
   },

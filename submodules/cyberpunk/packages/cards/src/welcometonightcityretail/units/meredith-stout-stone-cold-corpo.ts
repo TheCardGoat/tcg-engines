@@ -1,13 +1,15 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { blockerAbility } from "@tcg/cyberpunk-types";
 
-export const welcomeToNightCityRetailMeredithStoutStoneColdCorpo = {
+export const welcomeToNightCityRetailMeredithStoutStoneColdCorpo = defineCyberpunkCard({
   id: "21f68be2-c664-4ae0-a7ef-965a3a5a14c8",
-  externalId: "cb-meredith-stout-stone-cold-corpo",
   slug: "meredith-stout-stone-cold-corpo",
+  rulesText:
+    "{Blocker}\nThis Unit has +2 power while fighting a Legend.\nWhen a Rival adjusts or swaps 1 or more friendly Gigs, you may add a card from your trash to your hand.",
   name: "Meredith Stout — Stone Cold Corpo",
   displayName: "Meredith Stout — Stone Cold Corpo",
-  rulesText:
-    "[BLOCKER]\nThis Unit has +2 power while fighting a Legend.\nWhen a Rival adjusts or swaps 1 or more friendly Gigs, you may add a card from your trash to your hand.",
+  canonicalId: "meredith-stout-stone-cold-corpo",
   color: "red",
   classifications: ["Corpo", "Militech"],
   set: {
@@ -15,42 +17,18 @@ export const welcomeToNightCityRetailMeredithStoutStoneColdCorpo = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "014",
-  printings: [
-    {
-      id: "5939771d-bdcc-4b42-aea4-376311189e93",
-      collectorNumber: "014",
-      setCode: "welcometonightcityretail",
-      rarity: "Rare",
-    },
-    {
-      id: "96e76b12-4e53-4e2c-aca3-3fedf6f21e18",
-      collectorNumber: "β014",
-      setCode: "welcometonightcitybeta",
-      rarity: "Rare",
-    },
-  ],
-  selectedPrintingId: "5939771d-bdcc-4b42-aea4-376311189e93",
   artist: "Daniel Valaisis",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/014.webp",
   rarity: "Rare",
   legality: "legal",
   hasSellTag: false,
   ram: 1,
-  timingTriggers: [],
   keywords: ["blocker"],
   type: "unit",
   cost: 4,
   power: 5,
   abilities: [
-    {
-      kind: "keyword",
-      text: "BLOCKER",
-      keyword: "blocker",
-      source: {
-        selector: "self",
-      },
-      effects: [],
-    },
+    blockerAbility({ text: "BLOCKER" }),
     {
       kind: "static",
       text: "This Unit has +2 power while fighting a Legend. When a Rival adjusts or swaps 1 or more friendly Gigs, you may add a card from your trash to your hand.",
@@ -117,5 +95,4 @@ export const welcomeToNightCityRetailMeredithStoutStoneColdCorpo = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies UnitCardDefinition;

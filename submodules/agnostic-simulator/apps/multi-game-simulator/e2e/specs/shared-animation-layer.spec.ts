@@ -404,10 +404,6 @@ test.describe("Cyberpunk shared animation layer", () => {
     await expect(page.getByTestId("sim-animation-overlay")).toHaveCount(0);
 
     await page.goto("/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off");
-    const revealPom = await createPlaywrightCyberpunkSimulatorPom(page, {
-      skipStructuralState: true,
-    });
-
     const faceDownLegendSlots = page.locator(
       '[data-testid="legends-zone"][data-side="player"] [data-testid="legend-slot"][data-face-down="true"]',
     );
@@ -456,7 +452,7 @@ async function triggerFirstFaceDownLegendActionThroughBoardMenu(
 ): Promise<void> {
   const card = page
     .locator(
-      '[data-testid="legends-zone"][data-side="player"] [data-testid="legend-slot"][data-call-legend-actionable="true"] [data-testid="face-down-card"]',
+      '[data-testid="legends-zone"][data-side="player"] [data-testid="legend-slot"][data-call-legend-actionable="true"] [data-testid="card"][data-face="hidden"]',
     )
     .first();
   await expect(card).toHaveAttribute("data-interaction-state", "armable");

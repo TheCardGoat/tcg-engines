@@ -20,10 +20,11 @@ export const perditaDeterminedMotherEnchantedI18n: Record<Languages, I18nPropert
     version: "Entschlossene Mutter",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Perdi-Charaktere auszuspielen.)",
       },
       {
-        title: "SCHNELL, VERSTECKT EUCH",
+        title: "Schnell, versteckt euch",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du alle Welpen-Charakterkarten aus deinem Ablagestapel verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -34,10 +35,11 @@ export const perditaDeterminedMotherEnchantedI18n: Record<Languages, I18nPropert
     version: "Mère déterminée",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Perdita.)",
       },
       {
-        title: "VITE, CACHEZ-VOUS TOUS!",
+        title: "Vite, cachez-vous tous!",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez placer toutes les cartes Personnage Chiot de votre défausse dans votre réserve d'encre, face cachée et épuisées.",
       },
@@ -48,10 +50,11 @@ export const perditaDeterminedMotherEnchantedI18n: Record<Languages, I18nPropert
     version: "Madre Determinata",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Peggy.)",
       },
       {
-        title: "PRESTO, NASCONDETEVI TUTTI",
+        title: "Presto, Nascondetevi Tutti",
         description:
           "Quando giochi questo personaggio, puoi aggiungere al tuo calamaio tutte le carte personaggio Cucciolo dai tuoi scarti, a faccia in giù e impegnate.",
       },

@@ -117,14 +117,14 @@ export type EventLogBody = {
 };
 
 /**
- * Optional resolver used to populate `fallbackLabel` on card segments at format time and
+ * Optional resolver used to populate card fallback fields on card segments at format time and
  * to inject the inkable icon for `lorcana.card.inked` entries.
  * Needed for non-interactive contexts (spectator, devtools) where CardLogToken is not rendered.
  * In the interactive simulator, CardLogToken does live lookup instead.
  */
 export type CardReferenceResolver = (
   cardId: string,
-) => { label?: string; inkable?: boolean } | null;
+) => { label?: string; inkable?: boolean; inkType?: string[] } | null;
 
 export function composeMoveLogForViewer(log: MoveLog, viewerId?: string | null): MoveLog {
   const privateMessages = viewerId ? (log.privateByPlayerId?.[viewerId as PlayerId] ?? []) : [];
@@ -180,6 +180,7 @@ const MARKER_BY_LOG_KEY: Partial<Record<LorcanaLogMessageKey, EventLogMarkerId>>
   "lorcana.effect.lookAtInkwell": "ability",
   "lorcana.effect.lookAtInkwell.detail": "ability",
   "lorcana.move.playCard": "play",
+  "lorcana.move.playCard.fromDiscard": "play",
   "lorcana.move.quest": "quest",
   "lorcana.move.questWithAll": "quest",
   "lorcana.move.challenge": "challenge",
@@ -224,7 +225,9 @@ const MARKER_BY_LOG_KEY: Partial<Record<LorcanaLogMessageKey, EventLogMarkerId>>
   "lorcana.outcome.locationLoreGained": "quest",
   "lorcana.outcome.loreLost": "quest",
   "lorcana.outcome.cardExerted": "ability",
+  "lorcana.outcome.inkwellCardsExerted": "ability",
   "lorcana.outcome.cardReadied": "ability",
+  "lorcana.outcome.inkwellCardsReadied": "ability",
   "lorcana.outcome.cardsMilled": "ability",
   "lorcana.outcome.cardsPutOnBottom": "ability",
   "lorcana.move.playCard.shift": "play",
@@ -447,14 +450,7 @@ export function formatEventLogBody(
   if (!entry.typedLogEntry) {
     let segments = buildManualMoveSegments(entry, viewerSide, locale);
     if (segments && resolveCard) {
-      segments = segments.map((segment) =>
-        segment.kind === "card"
-          ? {
-              ...segment,
-              fallbackLabel: resolveCard(segment.cardId)?.label ?? segment.fallbackLabel,
-            }
-          : segment,
-      );
+      segments = applyCardFallbackLabels(segments, resolveCard);
     }
     if (segments && segments.length > 0) {
       const text = flattenEventLogSegments(segments);
@@ -482,7 +478,7 @@ export function formatEventLogBody(
     const moveLog = typed as MoveLog;
     const marker = MOVE_LOG_TYPE_TO_MARKER[moveLog.moveType] ?? "move";
     const messages = moveLog.public;
-    const segments =
+    let segments =
       messages.length > 0
         ? joinSegments(
             messages.map((message) =>
@@ -491,6 +487,9 @@ export function formatEventLogBody(
             " ",
           )
         : [];
+    if (resolveCard) {
+      segments = applyCardFallbackLabels(segments, resolveCard);
+    }
     const text =
       segments.length > 0 ? flattenEventLogSegments(segments) : entry.title || moveLog.moveType;
     return {
@@ -510,14 +509,7 @@ export function formatEventLogBody(
     let segments = renderFlatMoveLog(entry, moveLog, viewerSide, locale, resolveCard);
 
     if (resolveCard) {
-      segments = segments.map((segment) =>
-        segment.kind === "card"
-          ? {
-              ...segment,
-              fallbackLabel: resolveCard(segment.cardId)?.label ?? segment.fallbackLabel,
-            }
-          : segment,
-      );
+      segments = applyCardFallbackLabels(segments, resolveCard);
     }
 
     const text = segments.length > 0 ? flattenEventLogSegments(segments) : entry.title || moveType;
@@ -537,11 +529,7 @@ export function formatEventLogBody(
   let segments = renderTypedLogMessage(entry, message, viewerSide, locale, resolveCard);
 
   if (resolveCard) {
-    segments = segments.map((s) =>
-      s.kind === "card"
-        ? { ...s, fallbackLabel: resolveCard(s.cardId)?.label ?? s.fallbackLabel }
-        : s,
-    );
+    segments = applyCardFallbackLabels(segments, resolveCard);
   }
 
   return {
@@ -1104,16 +1092,17 @@ function appendOutcomeMessages(
     );
   }
 
-  if (outcomes.loreChanged) {
+  const loreChanges = outcomes.loreChanges ?? (outcomes.loreChanged ? [outcomes.loreChanged] : []);
+  for (const loreChanged of loreChanges) {
     messages.push(
-      outcomes.loreChanged.operation === "add"
+      loreChanged.operation === "add"
         ? createLogMessage("lorcana.outcome.loreGained", {
-            playerId: outcomes.loreChanged.playerId,
-            amount: outcomes.loreChanged.amount,
+            playerId: loreChanged.playerId,
+            amount: loreChanged.amount,
           })
         : createLogMessage("lorcana.outcome.loreLost", {
-            playerId: outcomes.loreChanged.playerId,
-            amount: outcomes.loreChanged.amount,
+            playerId: loreChanged.playerId,
+            amount: loreChanged.amount,
           }),
     );
   }
@@ -1124,10 +1113,18 @@ function appendOutcomeMessages(
     );
   }
 
+  for (const entry of outcomes.inkwellCardsExerted ?? []) {
+    messages.push(createLogMessage("lorcana.outcome.inkwellCardsExerted", entry));
+  }
+
   for (const cardId of outcomes.cardsReadied ?? []) {
     messages.push(
       createLogMessage("lorcana.outcome.cardReadied", { playerId: actorPlayerId, cardId }),
     );
+  }
+
+  for (const entry of outcomes.inkwellCardsReadied ?? []) {
+    messages.push(createLogMessage("lorcana.outcome.inkwellCardsReadied", entry));
   }
 
   if (outcomes.cardsMilled) {
@@ -1475,8 +1472,33 @@ function renderTypedLogMessage(
   locale?: LorcanaSimulatorLocale,
   resolveCard?: CardReferenceResolver,
 ): EventLogSegment[] {
+  if (message.key === "lorcana.effect.resolve.revealTopCard.autoBottom") {
+    return renderRevealTopCardAutoBottomSegments(entry, message.values, viewerSide, locale);
+  }
+
   if (message.key === "lorcana.effect.resolve.choiceSelection" && message.values.choiceLabel) {
     return renderChoiceSelectionSegments(message.values.sourceCardId, message.values.choiceLabel);
+  }
+
+  if (
+    message.key === "lorcana.bag.resolve.cancelled" ||
+    message.key === "lorcana.bag.resolve.cancelled.named" ||
+    message.key === "lorcana.effect.cancelled"
+  ) {
+    const noValidTargetSegments = renderNoValidTargetsCancellationSegments(message);
+    if (noValidTargetSegments) {
+      return noValidTargetSegments;
+    }
+  }
+
+  if (
+    message.key === "lorcana.bag.resolve.completed.targets" ||
+    message.key === "lorcana.bag.resolve.completed.targets.named"
+  ) {
+    const playFromDiscardSegments = renderBagPlayFromDiscardSegments(message);
+    if (playFromDiscardSegments) {
+      return playFromDiscardSegments;
+    }
   }
 
   if (
@@ -1508,6 +1530,131 @@ function renderTypedLogMessage(
   }
 
   return renderedSegments;
+}
+
+function renderBagPlayFromDiscardSegments(
+  message: LorcanaLogMessage,
+): EventLogSegment[] | undefined {
+  if (
+    message.key !== "lorcana.bag.resolve.completed.targets" &&
+    message.key !== "lorcana.bag.resolve.completed.targets.named"
+  ) {
+    return undefined;
+  }
+  if (message.values.effectType !== "play-card" || message.values.sourceZone !== "discard") {
+    return undefined;
+  }
+
+  const playedCardId = message.values.targets[0];
+  if (!playedCardId) {
+    return undefined;
+  }
+
+  const segments: EventLogSegment[] =
+    message.key === "lorcana.bag.resolve.completed.targets.named"
+      ? [
+          { kind: "text", text: "Resolved " },
+          { kind: "text", text: message.values.abilityName },
+          { kind: "text", text: " from " },
+          cardSegment(message.values.sourceId),
+        ]
+      : [{ kind: "text", text: "Resolved an effect from " }, cardSegment(message.values.sourceId)];
+
+  segments.push({ kind: "text", text: ", playing " }, cardSegment(playedCardId), {
+    kind: "text",
+    text: " from discard.",
+  });
+  return segments;
+}
+
+function renderNoValidTargetsCancellationSegments(
+  message: LorcanaLogMessage,
+): EventLogSegment[] | undefined {
+  if (
+    message.key === "lorcana.bag.resolve.cancelled" ||
+    message.key === "lorcana.bag.resolve.cancelled.named"
+  ) {
+    if (message.values.cause !== "no-valid-targets") {
+      return undefined;
+    }
+    const segments: EventLogSegment[] =
+      message.key === "lorcana.bag.resolve.cancelled.named"
+        ? [
+            { kind: "text", text: message.values.abilityName },
+            { kind: "text", text: " from " },
+            cardSegment(message.values.sourceId),
+          ]
+        : [{ kind: "text", text: "Effect from " }, cardSegment(message.values.sourceId)];
+    segments.push({
+      kind: "text",
+      text: " was not resolved because there were no valid targets.",
+    });
+    return segments;
+  }
+
+  if (message.key !== "lorcana.effect.cancelled" || message.values.cause !== "no-valid-targets") {
+    return undefined;
+  }
+
+  return [
+    { kind: "text", text: "Effect from " },
+    cardSegment(message.values.sourceCardId),
+    { kind: "text", text: " was not resolved because there were no valid targets." },
+  ];
+}
+
+function applyCardFallbackLabels(
+  segments: EventLogSegment[],
+  resolveCard: CardReferenceResolver,
+): EventLogSegment[] {
+  return segments.map((segment) =>
+    segment.kind === "card" ? applyCardFallbackLabel(segment, resolveCard) : segment,
+  );
+}
+
+function applyCardFallbackLabel(
+  segment: Extract<EventLogSegment, { kind: "card" }>,
+  resolveCard: CardReferenceResolver,
+): EventLogSegment {
+  const resolved = resolveCard(segment.cardId);
+
+  return {
+    ...segment,
+    fallbackLabel: resolved?.label ?? segment.fallbackLabel,
+    fallbackInkType: resolved?.inkType ?? segment.fallbackInkType,
+  };
+}
+
+function renderRevealTopCardAutoBottomSegments(
+  entry: MoveLogEntrySnapshot,
+  values: LorcanaLogMessageMap["lorcana.effect.resolve.revealTopCard.autoBottom"],
+  viewerSide?: LorcanaPlayerSide | null,
+  locale?: LorcanaSimulatorLocale,
+): EventLogSegment[] {
+  return [
+    { kind: "text", text: "Revealed " },
+    cardSegment(values.revealedCardId),
+    { kind: "text", text: " — put on the bottom of " },
+    {
+      kind: "text",
+      text: deckOwnerPossessiveLabel(entry, values.targetPlayerId, viewerSide, locale),
+    },
+    { kind: "text", text: " deck." },
+  ];
+}
+
+function deckOwnerPossessiveLabel(
+  entry: MoveLogEntrySnapshot,
+  playerId: string,
+  viewerSide?: LorcanaPlayerSide | null,
+  locale?: LorcanaSimulatorLocale,
+): string {
+  const side = resolveSideForPlayerId(entry, playerId);
+  const actor = buildActor(side, viewerSide, locale);
+  if (actor.tone === "self") {
+    return "your";
+  }
+  return `${actor.label}'s`;
 }
 
 function renderChoiceSelectionSegments(

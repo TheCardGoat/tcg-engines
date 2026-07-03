@@ -17,7 +17,7 @@ export const panicImmortalSidekickI18n: Record<Languages, I18nProperties> = {
     version: "Unsterblicher Handlanger",
     text: [
       {
-        title: "MELDEN SICH ZUM DIENST!",
+        title: "Melden sich zum Dienst!",
         description:
           "Solange dieser Charakter erschöpft ist und du einen Pech-Charakter im Spiel hast, können deine Schurkinnen und Schurken nicht herausgefordert werden.",
       },
@@ -28,7 +28,7 @@ export const panicImmortalSidekickI18n: Record<Languages, I18nProperties> = {
     version: "Sous-fifre immortel",
     text: [
       {
-        title: "À VOS ORDRES",
+        title: "À vos ordres",
         description:
           "Tant que ce personnage est épuisé, si vous avez un personnage Peine en jeu, vos personnages Méchant ne peuvent pas être défiés.",
       },
@@ -39,7 +39,7 @@ export const panicImmortalSidekickI18n: Record<Languages, I18nProperties> = {
     version: "Tirapiedi Immortale",
     text: [
       {
-        title: "A RAPPORTO SIGNORE!",
+        title: "A Rapporto Signore!",
         description:
           "Mentre questo personaggio è impegnato, se hai in gioco un personaggio chiamato Pena, i tuoi personaggi Cattivo non possono essere sfidati.",
       },

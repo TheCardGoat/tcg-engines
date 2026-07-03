@@ -43,8 +43,17 @@
 
   const visibleEntries = $derived(filterEntriesToLastTurns(entries));
   const resolveCard = $derived((cardId: string) => {
+    const snapshot = sidebar?.resolveStaticCardSnapshot?.(cardId) ?? null;
     const inkable = sidebar?.resolveCardInkable?.(cardId) ?? null;
-    return inkable !== null ? { inkable } : null;
+    if (!snapshot && inkable === null) {
+      return null;
+    }
+
+    return {
+      inkable: snapshot?.inkable ?? inkable ?? undefined,
+      inkType: snapshot?.inkType,
+      label: snapshot?.label,
+    };
   });
   const groups = $derived(buildActivityFeed(entries, chatMessages, viewerSide, resolveCard));
   const entryById = $derived(

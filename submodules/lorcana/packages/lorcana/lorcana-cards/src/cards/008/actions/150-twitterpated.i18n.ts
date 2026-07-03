@@ -7,14 +7,14 @@ export const twitterpatedI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Schwer verknallt",
-    text: "Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Wendig.",
+    text: "Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Wendig>.",
   },
   fr: {
     name: "Batifolage",
-    text: "Choisissez un personnage qui gagne Insaisissable jusqu'au début de votre prochain tour.",
+    text: "Choisissez un personnage qui gagne <Insaisissable> jusqu'au début de votre prochain tour.",
   },
   it: {
     name: "Rincitrullulito",
-    text: "Un personaggio a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+    text: "Un personaggio a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
   },
 };

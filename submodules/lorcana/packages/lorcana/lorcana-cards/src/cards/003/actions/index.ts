@@ -3,6 +3,7 @@ export { bosssOrders } from "./025-bosss-orders";
 export { healWhatHasBeenHurt } from "./026-heal-what-has-been-hurt";
 export { quickPatch } from "./027-quick-patch";
 export { theBareNecessities } from "./028-the-bare-necessities";
+export { howFarIllGoP1Promo } from "./p1-028-how-far-ill-go-promo";
 export { bestowAGift } from "./060-bestow-a-gift";
 export { itCallsMe } from "./061-it-calls-me";
 export { lastditchEffort } from "./062-last-ditch-effort";

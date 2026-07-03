@@ -7,14 +7,17 @@ export const gd01GallussK058: UnitCard = {
   color: "red",
   traits: ["zeon"],
   id: "GD01-058",
-  externalId: "gundam:gd01-058",
-  slug: "galluss-k-gd01-058",
+  canonicalId: "GD01-058",
+  externalIds: { bandai: "gundam:gd01-058" },
+  slug: "galluss-k/gd01-058",
   displayName: "Galluss-K",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-058",
   printings: [
     {
       id: "GD01-058",
+      artId: "GD01-058",
+      setCode: "GD01",
       collectorNumber: "GD01-058",
       cardNumber: "GD01-058",
       set: {
@@ -29,6 +32,7 @@ export const gd01GallussK058: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-058"],
   selectedPrintingId: "GD01-058",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-058.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-058.webp?260424",

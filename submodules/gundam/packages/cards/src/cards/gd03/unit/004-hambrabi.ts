@@ -7,14 +7,17 @@ export const gd03Hambrabi004: UnitCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD03-004",
-  externalId: "gundam:gd03-004",
-  slug: "hambrabi-gd03-004",
+  canonicalId: "GD03-004",
+  externalIds: { bandai: "gundam:gd03-004" },
+  slug: "hambrabi/gd03-004",
   displayName: "Hambrabi",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-004",
   printings: [
     {
       id: "GD03-004",
+      artId: "GD03-004",
+      setCode: "GD03",
       collectorNumber: "GD03-004",
       cardNumber: "GD03-004",
       set: {
@@ -29,6 +32,7 @@ export const gd03Hambrabi004: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-004"],
   selectedPrintingId: "GD03-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-004.webp?260424",

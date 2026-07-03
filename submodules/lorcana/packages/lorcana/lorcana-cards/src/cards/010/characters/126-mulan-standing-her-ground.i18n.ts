@@ -17,7 +17,7 @@ export const mulanStandingHerGroundI18n: Record<Languages, I18nProperties> = {
     version: "Steht ihre Frau",
     text: [
       {
-        title: "FLIESSENDES SCHWERT",
+        title: "Fließendes Schwert",
         description:
           "Solange in deinem Zug 1 oder mehr Karten unter einen deiner Charaktere oder Orte gelegt wurden, erhält dieser Charakter keinen Schaden durch Herausforderungen.",
       },
@@ -28,7 +28,7 @@ export const mulanStandingHerGroundI18n: Record<Languages, I18nProperties> = {
     version: "Tenant bon",
     text: [
       {
-        title: "LAME FLUIDE",
+        title: "Lame fluide",
         description:
           "Durant votre tour, si vous avez placé une carte sous l'un de vos personnages ou de vos lieux ce tour-ci, ce personnage-ci ne subit aucun dommage lors de défis.",
       },
@@ -39,7 +39,7 @@ export const mulanStandingHerGroundI18n: Record<Languages, I18nProperties> = {
     version: "Che Non Arretra",
     text: [
       {
-        title: "LAMA GUIZZANTE",
+        title: "Lama Guizzante",
         description:
           "Durante il tuo turno, se hai messo una carta sotto a uno dei tuoi personaggi o luoghi in questo turno, questo personaggio non subisce danni dalle sfide.",
       },

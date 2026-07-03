@@ -4,6 +4,17 @@ import { threeArrowsI18n } from "./197-three-arrows.i18n";
 export const threeArrows: ActionCard = {
   id: "cnl",
   canonicalId: "ci_cnl",
+  slug: "lorcana-ci_cnl",
+  printings: [
+    {
+      id: "set12-197",
+      artId: "set12-197",
+      setCode: "set12",
+      collectorNumber: "197",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-197"],
   cardType: "action",
   name: "Three Arrows",
@@ -16,6 +27,7 @@ export const threeArrows: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8bc3e60c6a77434ca8ba598742c86362",
+    tcgPlayer: "690215",
   },
   text: "Deal 2 damage to chosen character. Then, you may deal 1 damage to another chosen character.",
   abilities: [

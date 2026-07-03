@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 
 import { cx } from "../class-names";
+import { useActiveLayout } from "../hooks/useActiveLayout";
 import { CardFace } from "./CardFace";
 
 export interface CardFanProps {
@@ -47,6 +48,7 @@ export function CardFan({
   const cardH = CARD_HEIGHT[density];
   const isLandscape = orientation === "landscape";
   const fanContainerHeight = isLandscape ? cardW * 0.9 : cardH * 1.35;
+  const activeLayout = useActiveLayout();
 
   return (
     <>
@@ -55,6 +57,7 @@ export function CardFan({
           "card-fan-desktop relative hidden min-w-0 items-end justify-center md:flex",
           isLandscape && "items-center",
         )}
+        data-active-fan={activeLayout === "desktop"}
         style={{ height: fanContainerHeight }}
         role="list"
         aria-label={ariaLabel}
@@ -105,6 +108,7 @@ export function CardFan({
 
       <div
         className="card-fan-mobile flex min-w-0 overflow-x-auto pb-2 pt-1 md:hidden"
+        data-active-fan={activeLayout === "mobile"}
         style={{
           minHeight: cardH,
           scrollSnapType: "x mandatory",

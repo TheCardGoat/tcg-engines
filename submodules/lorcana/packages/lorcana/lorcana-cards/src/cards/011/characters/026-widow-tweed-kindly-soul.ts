@@ -4,6 +4,17 @@ import { widowTweedKindlySoulI18n } from "./026-widow-tweed-kindly-soul.i18n";
 export const widowTweedKindlySoul: CharacterCard = {
   id: "EI1",
   canonicalId: "ci_EI1",
+  slug: "lorcana-ci_EI1",
+  printings: [
+    {
+      id: "set11-026",
+      artId: "set11-026",
+      setCode: "set11",
+      collectorNumber: "26",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-026"],
   cardType: "character",
   name: "Widow Tweed",
@@ -20,7 +31,7 @@ export const widowTweedKindlySoul: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5d8b927e8f92419c93dd42424d44f562",
-    tcgPlayer: 676191,
+    tcgPlayer: "676191",
   },
   text: [
     {

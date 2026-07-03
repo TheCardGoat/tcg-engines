@@ -4,6 +4,17 @@ import { aladdinResearchAssistantI18n } from "./197-aladdin-research-assistant.i
 export const aladdinResearchAssistant: CharacterCard = {
   id: "H1M",
   canonicalId: "ci_H1M",
+  slug: "lorcana-ci_H1M",
+  printings: [
+    {
+      id: "set7-197",
+      artId: "set7-197",
+      setCode: "set7",
+      collectorNumber: "197",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-197"],
   cardType: "character",
   name: "Aladdin",
@@ -20,7 +31,7 @@ export const aladdinResearchAssistant: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cf7a354247654f8f914b04e101558f6f",
-    tcgPlayer: 619521,
+    tcgPlayer: "619521",
   },
   text: [
     {

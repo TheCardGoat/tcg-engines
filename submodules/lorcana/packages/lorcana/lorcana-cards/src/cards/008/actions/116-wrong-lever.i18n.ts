@@ -7,14 +7,47 @@ export const wrongLeverI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Das war der Falsche!",
-    text: "Wähle eine Möglichkeit aus: • Schicke einen Charakter deiner Wahl auf die zugehörige Hand zurück. • Lege eine Zieh-den-Hebel!-Karte aus deinem Ablagestapel unter dein Deck, um einen Charakter deiner Wahl unter das zugehörige Deck zu legen.",
+    text: [
+      {
+        title: "Wähle eine Möglichkeit aus:",
+      },
+      {
+        title: "• Schicke einen Charakter deiner Wahl auf die zugehörige Hand zurück.",
+      },
+      {
+        title:
+          "• Lege eine Zieh-den-Hebel!-Karte aus deinem Ablagestapel unter dein Deck, um einen Charakter deiner Wahl unter das zugehörige Deck zu legen.",
+      },
+    ],
   },
   fr: {
     name: "Pas ce levier-là !",
-    text: "Choisissez entre: • Choisissez un personnage et renvoyez-le dans la main de son propriétaire. • Placez une carte nommée Abaisse le levier! de votre défausse sous votre pioche pour choisir un personnage et le placer sous la pioche de son propriétaire.",
+    text: [
+      {
+        title: "Choisissez entre:",
+      },
+      {
+        title: "• Choisissez un personnage et renvoyez-le dans la main de son propriétaire.",
+      },
+      {
+        title:
+          "• Placez une carte nommée Abaisse le levier! de votre défausse sous votre pioche pour choisir un personnage et le placer sous la pioche de son propriétaire.",
+      },
+    ],
   },
   it: {
     name: "L'Altra Leva!",
-    text: "Scegli uno: • Fai riprendere in mano al suo giocatore un personaggio a tua scelta. • Metti una carta chiamata Abbassa la Leva! dai tuoi scarti in fondo al tuo mazzo per mettere un personaggio a tua scelta in fondo al mazzo del suo giocatore.",
+    text: [
+      {
+        title: "Scegli uno:",
+      },
+      {
+        title: "• Fai riprendere in mano al suo giocatore un personaggio a tua scelta.",
+      },
+      {
+        title:
+          "• Metti una carta chiamata Abbassa la Leva! dai tuoi scarti in fondo al tuo mazzo per mettere un personaggio a tua scelta in fondo al mazzo del suo giocatore.",
+      },
+    ],
   },
 };

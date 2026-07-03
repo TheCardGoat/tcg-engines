@@ -2,8 +2,19 @@ import type { ItemCard } from "@tcg/lorcana-types";
 import { theSwordOfHerculesI18n } from "./200-the-sword-of-hercules.i18n";
 
 export const theSwordOfHercules: ItemCard = {
-  id: "v9r",
+  id: "MKL",
   canonicalId: "ci_www",
+  slug: "lorcana-ci_www",
+  printings: [
+    {
+      id: "set10-200",
+      artId: "set10-200",
+      setCode: "set10",
+      collectorNumber: "200",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-200"],
   cardType: "item",
   name: "The Sword of Hercules",
@@ -16,7 +27,7 @@ export const theSwordOfHercules: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_70fa88bf3a35452b8178209944e8604a",
-    tcgPlayer: 660031,
+    tcgPlayer: "660031",
   },
   text: [
     {

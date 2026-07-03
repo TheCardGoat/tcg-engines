@@ -11,7 +11,16 @@ export const oneJumpAheadI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "JE VOLE",
-    text: "Placez la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Placez la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
+      },
+    ],
   },
   it: {
     name: "One Jump Ahead",

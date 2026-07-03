@@ -4,6 +4,17 @@ import { madameMedusaTheBossI18n } from "./112-madame-medusa-the-boss.i18n";
 export const madameMedusaTheBoss: CharacterCard = {
   id: "ktd",
   canonicalId: "ci_ktd",
+  slug: "lorcana-ci_ktd",
+  printings: [
+    {
+      id: "set3-112",
+      artId: "set3-112",
+      setCode: "set3",
+      collectorNumber: "112",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-112"],
   cardType: "character",
   name: "Madame Medusa",
@@ -20,7 +31,7 @@ export const madameMedusaTheBoss: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_62c656f20cba4c43a1ed1f7ebc2ca720",
-    tcgPlayer: 539089,
+    tcgPlayer: "539089",
   },
   text: [
     {

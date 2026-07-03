@@ -16,7 +16,7 @@ export const arthurDeterminedSquireI18n: Record<Languages, I18nProperties> = {
     version: "Entschlossener Knappe",
     text: [
       {
-        title: "KEINE BÜCHER MEHR",
+        title: "Keine Bücher mehr",
         description: 'Überspringe den Schritt "Ziehen" in deinem Zug.',
       },
     ],
@@ -26,7 +26,7 @@ export const arthurDeterminedSquireI18n: Record<Languages, I18nProperties> = {
     version: "Écuyer déterminé",
     text: [
       {
-        title: "FINI LES LIVRES",
+        title: "Fini les livres",
         description: "Passez l'étape Piocher au début de votre tour.",
       },
     ],
@@ -36,7 +36,7 @@ export const arthurDeterminedSquireI18n: Record<Languages, I18nProperties> = {
     version: "Scudiero Determinato",
     text: [
       {
-        title: "BASTA CON I LIBRI",
+        title: "Basta con i Libri",
         description: "Salta il passaggio di Pesca del tuo turno.",
       },
     ],

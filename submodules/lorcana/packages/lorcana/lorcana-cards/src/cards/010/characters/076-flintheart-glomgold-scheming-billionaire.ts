@@ -4,6 +4,17 @@ import { flintheartGlomgoldSchemingBillionaireI18n } from "./076-flintheart-glom
 export const flintheartGlomgoldSchemingBillionaire: CharacterCard = {
   id: "fzp",
   canonicalId: "ci_fzp",
+  slug: "lorcana-ci_fzp",
+  printings: [
+    {
+      id: "set10-076",
+      artId: "set10-076",
+      setCode: "set10",
+      collectorNumber: "76",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-076"],
   cardType: "character",
   name: "Flintheart Glomgold",
@@ -20,7 +31,7 @@ export const flintheartGlomgoldSchemingBillionaire: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6337614f5664420999e442e0bfa1dd31",
-    tcgPlayer: 659184,
+    tcgPlayer: "659184",
   },
   text: [
     {

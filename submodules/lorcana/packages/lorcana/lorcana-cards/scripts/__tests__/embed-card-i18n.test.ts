@@ -13,7 +13,18 @@ import type { CanonicalCard, CardsAuxKv, LocalizationData } from "../types";
 function createCanonicalCard(overrides: Partial<CanonicalCard> = {}): CanonicalCard {
   return {
     id: "abc",
+    printings: [
+      {
+        id: "abc",
+        artId: "abc",
+        setCode: "TST",
+        collectorNumber: "1",
+        rarity: "common",
+        imageUrl: "",
+      },
+    ],
     canonicalId: "ci_shared",
+    slug: "lorcana-ci_shared",
     cardType: "action",
     name: "Test Card",
     version: "",
@@ -108,18 +119,20 @@ describe("embedI18nInCanonicalCards", () => {
     expect(result["set1-001"]?.i18n.it.name).toBe("Rappresentante");
   });
 
-  it("throws when a required locale cannot be resolved", () => {
+  it("falls back to English when a required locale cannot be resolved", () => {
     const cards = {
       "set1-001": createCanonicalCard({ id: "missing" }),
     };
 
-    expect(() =>
-      embedI18nInCanonicalCards(cards, createAuxKv(), {
-        de: {},
-        fr: {},
-        it: {},
-      }),
-    ).toThrow("Missing de localization");
+    const result = embedI18nInCanonicalCards(cards, createAuxKv(), {
+      de: {},
+      fr: {},
+      it: {},
+    });
+
+    expect(result["set1-001"]?.i18n.de).toEqual(result["set1-001"]?.i18n.en);
+    expect(result["set1-001"]?.i18n.fr).toEqual(result["set1-001"]?.i18n.en);
+    expect(result["set1-001"]?.i18n.it).toEqual(result["set1-001"]?.i18n.en);
   });
 });
 

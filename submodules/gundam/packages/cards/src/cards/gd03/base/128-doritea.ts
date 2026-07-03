@@ -6,14 +6,17 @@ export const gd03Doritea128: BaseCard = {
   type: "base",
   traits: ["new une", "warship"],
   id: "GD03-128",
-  externalId: "gundam:gd03-128",
-  slug: "doritea-gd03-128",
+  canonicalId: "GD03-128",
+  externalIds: { bandai: "gundam:gd03-128" },
+  slug: "doritea/gd03-128",
   displayName: "Doritea",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-128",
   printings: [
     {
       id: "GD03-128",
+      artId: "GD03-128",
+      setCode: "GD03",
       collectorNumber: "GD03-128",
       cardNumber: "GD03-128",
       set: {
@@ -28,6 +31,7 @@ export const gd03Doritea128: BaseCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-128"],
   selectedPrintingId: "GD03-128",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-128.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-128.webp?260424",

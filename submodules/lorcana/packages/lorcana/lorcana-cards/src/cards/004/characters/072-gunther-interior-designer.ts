@@ -4,6 +4,17 @@ import { guntherInteriorDesignerI18n } from "./072-gunther-interior-designer.i18
 export const guntherInteriorDesigner: CharacterCard = {
   id: "2U5",
   canonicalId: "ci_2U5",
+  slug: "lorcana-ci_2U5",
+  printings: [
+    {
+      id: "set4-072",
+      artId: "set4-072",
+      setCode: "set4",
+      collectorNumber: "72",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-072"],
   cardType: "character",
   name: "Gunther",
@@ -20,7 +31,7 @@ export const guntherInteriorDesigner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_96a14bbf788e4a138b05f46f08c0fa47",
-    tcgPlayer: 547774,
+    tcgPlayer: "547774",
   },
   text: [
     {
@@ -37,7 +48,9 @@ export const guntherInteriorDesigner: CharacterCard = {
       type: "triggered",
       sourceZones: ["play", "discard"],
       trigger: {
-        challengeContext: { role: "defender" },
+        challengeContext: {
+          role: "defender",
+        },
         event: "challenged-and-banished",
         on: "SELF",
         timing: "when",

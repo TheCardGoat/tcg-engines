@@ -4,6 +4,17 @@ import { emilyQuackfasterLevelheadedLibrarianI18n } from "./080-emily-quackfaste
 export const emilyQuackfasterLevelheadedLibrarian: CharacterCard = {
   id: "Gtk",
   canonicalId: "ci_Gtk",
+  slug: "lorcana-ci_Gtk",
+  printings: [
+    {
+      id: "set10-080",
+      artId: "set10-080",
+      setCode: "set10",
+      collectorNumber: "80",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-080"],
   cardType: "character",
   name: "Emily Quackfaster",
@@ -20,7 +31,7 @@ export const emilyQuackfasterLevelheadedLibrarian: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9309b1cf13e545c2a5ef5292f2ffae01",
-    tcgPlayer: 659451,
+    tcgPlayer: "659451",
   },
   text: [
     {

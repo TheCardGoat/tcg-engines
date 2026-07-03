@@ -4,6 +4,17 @@ import { edLaughingHyenaI18n } from "./074-ed-laughing-hyena.i18n";
 export const edLaughingHyena: CharacterCard = {
   id: "BdA",
   canonicalId: "ci_BdA",
+  slug: "lorcana-ci_BdA",
+  printings: [
+    {
+      id: "set5-074",
+      artId: "set5-074",
+      setCode: "set5",
+      collectorNumber: "74",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-074"],
   cardType: "character",
   name: "Ed",
@@ -20,13 +31,13 @@ export const edLaughingHyena: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_83352cb5f0a94843857df13731c502be",
-    tcgPlayer: 561160,
+    tcgPlayer: "561160",
   },
   text: [
     {
-      title: "CAUSE A PANIC",
+      title: "CAUSE",
       description:
-        "When you play this character, you may deal 2 damage to chosen damaged character.",
+        "A PANIC When you play this character, you may deal 2 damage to chosen damaged character.",
     },
   ],
   classifications: ["Storyborn", "Ally", "Hyena"],

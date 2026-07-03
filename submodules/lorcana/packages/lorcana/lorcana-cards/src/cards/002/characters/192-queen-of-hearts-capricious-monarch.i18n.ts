@@ -16,7 +16,7 @@ export const queenOfHeartsCapriciousMonarchI18n: Record<Languages, I18nPropertie
     version: "Launische Monarchin",
     text: [
       {
-        title: "AB MIT DEM KOPF!",
+        title: "Ab mit dem Kopf!",
         description:
           "Jedes Mal, wenn ein gegnerischer Charakter verbannt wird, darfst du diesen Charakter bereit machen.",
       },
@@ -27,7 +27,7 @@ export const queenOfHeartsCapriciousMonarchI18n: Record<Languages, I18nPropertie
     version: "Monarque capricieuse",
     text: [
       {
-        title: "QU'ON LEUR COUPE LA TÊTE!",
+        title: "Qu'on leur coupe la tête!",
         description:
           "Chaque fois qu'un personnage adverse est banni, vous pouvez redresser ce personnage.",
       },
@@ -38,7 +38,7 @@ export const queenOfHeartsCapriciousMonarchI18n: Record<Languages, I18nPropertie
     version: "Capricious Monarch",
     text: [
       {
-        title: "OFF WITH THEIR HEADS!",
+        title: "Off With Their Heads!",
         description: "Whenever an opposing character is banished, you may ready this character.",
       },
     ],

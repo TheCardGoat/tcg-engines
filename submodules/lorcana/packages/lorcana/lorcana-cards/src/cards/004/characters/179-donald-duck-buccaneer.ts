@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { donaldDuckBuccaneerI18n } from "./179-donald-duck-buccaneer.i18n";
 
 export const donaldDuckBuccaneer: CharacterCard = {
-  id: "LVd",
-  canonicalId: "ci_LVd",
+  id: "HUY",
+  canonicalId: "ci_QUn",
+  slug: "lorcana-ci_QUn",
+  printings: [
+    {
+      id: "set4-179",
+      artId: "set4-179",
+      setCode: "set4",
+      collectorNumber: "179",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-179"],
   cardType: "character",
   name: "Donald Duck",
@@ -18,8 +29,8 @@ export const donaldDuckBuccaneer: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_da097130ff544f99b4ff980b404c053e",
-    tcgPlayer: 549457,
+    lorcast: "crd_48f207edc9374126bd3ac01d43cbc2b8",
+    tcgPlayer: "650211",
   },
   text: [
     {

@@ -16,7 +16,7 @@ export const theFatesOnlyOneEyeI18n: Record<Languages, I18nProperties> = {
     version: "Nur ein Auge",
     text: [
       {
-        title: "ALLES WIRD GESEHEN",
+        title: "Alles wird gesehen",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die oberste Karte des Decks aller gegnerischen Mitspielenden an.",
       },
@@ -27,7 +27,7 @@ export const theFatesOnlyOneEyeI18n: Record<Languages, I18nProperties> = {
     version: "Œil unique",
     text: [
       {
-        title: "NOUS VOYONS TOUT",
+        title: "Nous voyons tout",
         description:
           "Lorsque vous jouez ce personnage, regardez la première carte de la pioche de chaque adversaire.",
       },
@@ -38,7 +38,7 @@ export const theFatesOnlyOneEyeI18n: Record<Languages, I18nProperties> = {
     version: "Con un Solo Occhio",
     text: [
       {
-        title: "ONNISCIENZA",
+        title: "Onniscienza",
         description:
           "Quando giochi questo personaggio, guarda la prima carta del mazzo di ogni avversario.",
       },

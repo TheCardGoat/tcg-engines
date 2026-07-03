@@ -15,9 +15,9 @@ export const mothersNecklaceI18n: Record<Languages, I18nProperties> = {
     name: "Mutters Halskette",
     text: [
       {
-        title: "KOSTBARES GESCHENK",
+        title: "Kostbares Geschenk",
         description:
-          "Am Ende deines Zuges, falls in diesem Zug keiner deiner Charaktere herausgefordert hat, wähle einen deiner Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges Wendig.",
+          "Am Ende deines Zuges, falls in diesem Zug keiner deiner Charaktere herausgefordert hat, wähle einen deiner Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const mothersNecklaceI18n: Record<Languages, I18nProperties> = {
     name: "Collier de la mère",
     text: [
       {
-        title: "UN CADEAU PRÉCIEUX À",
+        title: "Un cadeau précieux",
         description:
-          "la fin de votre tour, si aucun de vos personnages n'a défié ce tour-ci, choisissez l'un de vos personnages qui gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "À la fin de votre tour, si aucun de vos personnages n'a défié ce tour-ci, choisissez l'un de vos personnages qui gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const mothersNecklaceI18n: Record<Languages, I18nProperties> = {
     name: "Collana Materna",
     text: [
       {
-        title: "DONO PREZIOSO",
+        title: "Dono Prezioso",
         description:
-          "Alla fine del tuo turno, se nessuno dei tuoi personaggi ha sfidato in questo turno, un tuo personaggio a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Alla fine del tuo turno, se nessuno dei tuoi personaggi ha sfidato in questo turno, un tuo personaggio a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

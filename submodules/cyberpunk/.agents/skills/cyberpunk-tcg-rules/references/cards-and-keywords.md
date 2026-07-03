@@ -7,6 +7,7 @@
 - Trigger timing
 - Shared keywords
 - Attachment behavior
+- Glossary-only card terms
 
 ## Rule priority
 
@@ -22,7 +23,7 @@
 ## Trigger timing
 
 - `PLAY`: resolve this effect immediately after paying the card's cost.
-- `ATTACK`: resolve this effect when the Unit attacks, before the fight or steal step resolves.
+- `ATTACK`: resolve this effect when the Unit attacks, before target declaration, rival reactions, and the fight or steal step resolves.
 - `CALL`: resolve this effect when you flip this Legend face-up through Call a Legend.
 - `DEFEATED`: resolve this effect when this Unit is defeated.
 
@@ -37,3 +38,10 @@
 
 - When a Unit or Legend leaves the field for another zone, move every Gear attached to it into that same zone.
 - When a defeated Unit goes to the trash, move its attached Gear there too.
+
+## Glossary-only card terms
+
+- `Cost`: number in the top left corner of a card. Spend Eddies equal to a card's cost to play it; Legends can also be spent as 1 `€$` each.
+- `Power`: number in the bottom-right corner of a Unit, used while attacking. Units compare power in a fight, and direct attacks steal extra Gigs for every full 10 power.
+- `Bottom-deck`: put cards at the bottom of your deck in any order.
+- `Trash`: put the top card of your deck into your trash area. If a number is specified, trash that many cards.

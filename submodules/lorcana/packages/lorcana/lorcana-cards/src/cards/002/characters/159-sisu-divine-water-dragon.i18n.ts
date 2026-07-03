@@ -17,7 +17,7 @@ export const sisuDivineWaterDragonI18n: Record<Languages, I18nProperties> = {
     version: "Göttlicher Wasserdrache",
     text: [
       {
-        title: "ICH VERTRAUE DIR",
+        title: "Ich vertraue dir",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, schaue dir die obersten 2 Karten deines Decks an. Du darfst 1 davon auf deine Hand nehmen. Lege den Rest in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const sisuDivineWaterDragonI18n: Record<Languages, I18nProperties> = {
     version: "Dragon d'eau divin",
     text: [
       {
-        title: "J'AI CONFIANCE EN TOI",
+        title: "J'ai confiance en toi",
         description:
           "Lorsque ce personnage est envoyé à l'aventure, regardez les 2 premières cartes de votre pioche, vous pouvez ajouter l'une d'elles à votre main. Remettez le reste sous votre pioche dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const sisuDivineWaterDragonI18n: Record<Languages, I18nProperties> = {
     version: "Divine Water Dragon",
     text: [
       {
-        title: "I TRUST YOU",
+        title: "I Trust You",
         description:
           "Whenever this character quests, look at the top 2 cards of your deck. You may put one into your hand. Put the rest on the bottom of your deck in any order.",
       },

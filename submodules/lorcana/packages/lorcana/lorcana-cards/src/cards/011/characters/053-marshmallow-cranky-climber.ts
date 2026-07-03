@@ -4,6 +4,17 @@ import { marshmallowCrankyClimberI18n } from "./053-marshmallow-cranky-climber.i
 export const marshmallowCrankyClimber: CharacterCard = {
   id: "oie",
   canonicalId: "ci_oie",
+  slug: "lorcana-ci_oie",
+  printings: [
+    {
+      id: "set11-053",
+      artId: "set11-053",
+      setCode: "set11",
+      collectorNumber: "53",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-053"],
   cardType: "character",
   name: "Marshmallow",
@@ -20,7 +31,7 @@ export const marshmallowCrankyClimber: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f000a1651ff54227806f5da0c5d89c42",
-    tcgPlayer: 675281,
+    tcgPlayer: "675281",
   },
   text: [
     {

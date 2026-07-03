@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { arthurWizardsApprenticeI18n } from "./035-arthur-wizards-apprentice.i18n";
 
 export const arthurWizardsApprentice: CharacterCard = {
-  id: "W0X",
+  id: "Dn8",
   canonicalId: "ci_tMV",
+  slug: "lorcana-ci_tMV",
+  printings: [
+    {
+      id: "set2-035",
+      artId: "set2-035",
+      setCode: "set2",
+      collectorNumber: "35",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-035"],
   cardType: "character",
   name: "Arthur",
@@ -20,7 +31,7 @@ export const arthurWizardsApprentice: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_19431b87131547d98fef8a693077a77e",
-    tcgPlayer: 527797,
+    tcgPlayer: "527797",
   },
   text: [
     {

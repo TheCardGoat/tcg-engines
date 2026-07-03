@@ -4,6 +4,17 @@ import { kaaHypnotizingPythonI18n } from "./021-kaa-hypnotizing-python.i18n";
 export const kaaHypnotizingPython: CharacterCard = {
   id: "mhw",
   canonicalId: "ci_mhw",
+  slug: "lorcana-ci_mhw",
+  printings: [
+    {
+      id: "set8-021",
+      artId: "set8-021",
+      setCode: "set8",
+      collectorNumber: "21",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-021"],
   cardType: "character",
   name: "Kaa",
@@ -20,7 +31,7 @@ export const kaaHypnotizingPython: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c71a707f446d4f01b5c4e66bdde91643",
-    tcgPlayer: 631365,
+    tcgPlayer: "631365",
   },
   text: [
     {

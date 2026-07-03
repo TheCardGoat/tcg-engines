@@ -17,7 +17,7 @@ export const theTwinsLostBoysI18n: Record<Languages, I18nProperties> = {
     version: "Verwunschene Kinder",
     text: [
       {
-        title: "ZWEI FÜR EINEN",
+        title: "Zwei für einen",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen Ort im Spiel hast, darfst du einem Charakter deiner Wahl 2 Schaden zufügen.",
       },
@@ -28,7 +28,7 @@ export const theTwinsLostBoysI18n: Record<Languages, I18nProperties> = {
     version: "Enfants perdus",
     text: [
       {
-        title: "DEUX POUR LE PRIX D'UN",
+        title: "Deux pour le prix d'un",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un lieu en jeu, vous pouvez choisir un personnage et lui infliger 2 dommages.",
       },
@@ -39,7 +39,7 @@ export const theTwinsLostBoysI18n: Record<Languages, I18nProperties> = {
     version: "Bimbi Sperduti",
     text: [
       {
-        title: "DUE PER UNO",
+        title: "Due per Uno",
         description:
           "Quando giochi questo personaggio, se hai in gioco un luogo, puoi infliggere 2 danni a un personaggio a tua scelta.",
       },

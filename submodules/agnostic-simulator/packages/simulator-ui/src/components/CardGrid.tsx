@@ -12,6 +12,8 @@ export interface CardGridProps {
   density?: "compact" | "normal" | "large";
   compact?: boolean;
   ariaLabel?: string;
+  selectedId?: string;
+  onSelect?: (entity: SimulatorEntity) => void;
 }
 
 const CARD_GRID_MIN_HEIGHT_CLASS: Record<NonNullable<CardGridProps["density"]>, string> = {
@@ -31,6 +33,8 @@ export function CardGrid({
   density = "normal",
   compact = false,
   ariaLabel,
+  selectedId,
+  onSelect,
 }: CardGridProps) {
   const cardDensity = compact ? "mini" : density;
   const gridClass = cx(
@@ -54,7 +58,9 @@ export function CardGrid({
         entities.map((entity, index) => (
           <motion.div
             key={entity.id}
-            aria-label={ariaLabel ? entity.title : undefined}
+            aria-label={
+              ariaLabel ? (entity.face === "hidden" ? "Hidden card" : entity.title) : undefined
+            }
             aria-posinset={ariaLabel ? index + 1 : undefined}
             aria-setsize={ariaLabel ? entities.length : undefined}
             data-card-id={entity.id}
@@ -66,7 +72,12 @@ export function CardGrid({
             layout="position"
             transition={CARD_LAYOUT_TRANSITION}
           >
-            <CardFace entity={entity} density={cardDensity} />
+            <CardFace
+              entity={entity}
+              density={cardDensity}
+              selected={entity.id === selectedId}
+              onClick={onSelect}
+            />
           </motion.div>
         ))
       ) : (

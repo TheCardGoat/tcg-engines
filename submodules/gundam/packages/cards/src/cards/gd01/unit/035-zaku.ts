@@ -7,14 +7,17 @@ export const gd01Zaku035: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-035",
-  externalId: "gundam:gd01-035",
-  slug: "zaku-gd01-035",
+  canonicalId: "GD01-035",
+  externalIds: { bandai: "gundam:gd01-035" },
+  slug: "zaku-ii/gd01-035",
   displayName: "Zaku Ⅱ",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-035",
   printings: [
     {
       id: "GD01-035",
+      artId: "GD01-035",
+      setCode: "GD01",
       collectorNumber: "GD01-035",
       cardNumber: "GD01-035",
       set: {
@@ -29,6 +32,7 @@ export const gd01Zaku035: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-035"],
   selectedPrintingId: "GD01-035",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-035.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-035.webp?260424",

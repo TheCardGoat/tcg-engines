@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { patchPlayfulPupI18n } from "./025-patch-playful-pup.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const patchPlayfulPup: CharacterCard = {
-  id: "vSi",
-  canonicalId: "ci_vSi",
+  id: "37v",
+  canonicalId: "ci_uA1",
+  slug: "lorcana-ci_uA1",
+  printings: [
+    {
+      id: "set8-025",
+      artId: "set8-025",
+      setCode: "set8",
+      collectorNumber: "25",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-025"],
   cardType: "character",
   name: "Patch",
@@ -21,7 +33,7 @@ export const patchPlayfulPup: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1df8d47cd5c3400293a2fa3d060bd425",
-    tcgPlayer: 631368,
+    tcgPlayer: "631368",
   },
   text: [
     {

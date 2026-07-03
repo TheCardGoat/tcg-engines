@@ -4,6 +4,17 @@ import { atlanticaConcertHallI18n } from "./033-atlantica-concert-hall.i18n";
 export const atlanticaConcertHall: LocationCard = {
   id: "XhY",
   canonicalId: "ci_b67",
+  slug: "lorcana-ci_b67",
+  printings: [
+    {
+      id: "set4-033",
+      artId: "set4-033",
+      setCode: "set4",
+      collectorNumber: "33",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-033", "set9-034"],
   cardType: "location",
   name: "Atlantica",
@@ -20,7 +31,7 @@ export const atlanticaConcertHall: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_74c2fa84872c4c68ac1eb0e2a7a8affc",
-    tcgPlayer: 649981,
+    tcgPlayer: "649981",
   },
   text: [
     {

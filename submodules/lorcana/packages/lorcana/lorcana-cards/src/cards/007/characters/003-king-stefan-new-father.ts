@@ -4,6 +4,17 @@ import { kingStefanNewFatherI18n } from "./003-king-stefan-new-father.i18n";
 export const kingStefanNewFather: CharacterCard = {
   id: "156",
   canonicalId: "ci_156",
+  slug: "lorcana-ci_156",
+  printings: [
+    {
+      id: "set7-003",
+      artId: "set7-003",
+      setCode: "set7",
+      collectorNumber: "3",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-003"],
   cardType: "character",
   name: "King Stefan",
@@ -21,7 +32,7 @@ export const kingStefanNewFather: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_45494b13fa0d45a8befe78f80312b7d9",
-    tcgPlayer: 618685,
+    tcgPlayer: "618685",
   },
   classifications: ["Storyborn", "Mentor", "King"],
   i18n: kingStefanNewFatherI18n,

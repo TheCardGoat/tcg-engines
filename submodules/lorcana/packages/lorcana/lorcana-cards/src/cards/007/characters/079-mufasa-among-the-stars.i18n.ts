@@ -21,13 +21,15 @@ export const mufasaAmongTheStarsI18n: Record<Languages, I18nProperties> = {
     version: "Bei den Sternen",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Mufasa-Charaktere auszuspielen.)",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "Robust +1",
+        title:
+          "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -36,13 +38,14 @@ export const mufasaAmongTheStarsI18n: Record<Languages, I18nProperties> = {
     version: "Parmi les étoiles",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Mufasa.)",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "Résistance +1",
+        title: "<Résistance> +1",
       },
     ],
   },
@@ -51,13 +54,14 @@ export const mufasaAmongTheStarsI18n: Record<Languages, I18nProperties> = {
     version: "Tra le Stelle",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Mufasa.)",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "Resistere +1",
+        title: "<Resistere> +1",
       },
     ],
   },

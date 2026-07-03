@@ -14,7 +14,7 @@ export const cleansingRainwaterI18n: Record<Languages, I18nProperties> = {
     name: "Reinigendes Regenwasser",
     text: [
       {
-        title: "URALTE MACHT",
+        title: "Uralte Macht",
         description:
           "Verbanne diesen Gegenstand — Entferne bis zu 2 Schaden von jedem deiner Charaktere.",
       },
@@ -24,7 +24,7 @@ export const cleansingRainwaterI18n: Record<Languages, I18nProperties> = {
     name: "Eau de pluie purifiante",
     text: [
       {
-        title: "ANCIEN POUVOIR",
+        title: "Ancien pouvoir",
         description:
           "Bannissez cet objet — Retirez jusqu'à 2 jetons Dommage de chacun de vos personnages.",
       },
@@ -34,7 +34,7 @@ export const cleansingRainwaterI18n: Record<Languages, I18nProperties> = {
     name: "Pioggia Purificatrice",
     text: [
       {
-        title: "ANTICO POTERE",
+        title: "Antico Potere",
         description:
           "Esilia questo oggetto — Rimuovi fino a 2 danni da ciascuno dei tuoi personaggi.",
       },

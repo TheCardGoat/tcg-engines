@@ -20,10 +20,11 @@ export const willieTheGiantGhostOfChristmasPresentI18n: Record<Languages, I18nPr
     version: "Geist der gegenwärtigen Weihnacht",
     text: [
       {
-        title: "Stärken 3",
+        title:
+          "<Stärken> 3 {I} (Einmal während deines Zuges darfst du 3 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "DIE SPEISE DER GROSSZÜGIGKEIT",
+        title: "Die Speise der Großzügigkeit",
         description:
           "Dieser Charakter kann nicht erkunden oder herausfordern, außer du hast in diesem Zug bereits eine Karte unter ihn gelegt.",
       },
@@ -34,10 +35,11 @@ export const willieTheGiantGhostOfChristmasPresentI18n: Record<Languages, I18nPr
     version: "Fantôme du Noël présent",
     text: [
       {
-        title: "Boost 3",
+        title:
+          "<Boost> 3 {I} (Une fois durant votre tour, vous pouvez payer 3 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "UNE AFFAIRE DE GÉNÉROSITÉ",
+        title: "Une affaire de générosité",
         description:
           "Ce personnage ne peut ni être envoyé à l'aventure ni défier sauf si vous avez placé une carte sous lui ce tour-ci.",
       },
@@ -48,10 +50,11 @@ export const willieTheGiantGhostOfChristmasPresentI18n: Record<Languages, I18nPr
     version: "Fantasma del Natale Presente",
     text: [
       {
-        title: "Potenziamento 3",
+        title:
+          "<Potenziamento> 3 {I} (Una volta durante il tuo turno, puoi pagare 3 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "IL CIBO DELLA GENEROSITÀ",
+        title: "Il Cibo della Generosità",
         description:
           "Questo personaggio non può andare all'avventura o sfidare a meno che tu non abbia messo una carta sotto di esso in questo turno.",
       },

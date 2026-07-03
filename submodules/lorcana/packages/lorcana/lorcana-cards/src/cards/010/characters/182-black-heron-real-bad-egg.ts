@@ -4,6 +4,17 @@ import { blackHeronRealBadEggI18n } from "./182-black-heron-real-bad-egg.i18n";
 export const blackHeronRealBadEgg: CharacterCard = {
   id: "2S3",
   canonicalId: "ci_2S3",
+  slug: "lorcana-ci_2S3",
+  printings: [
+    {
+      id: "set10-182",
+      artId: "set10-182",
+      setCode: "set10",
+      collectorNumber: "182",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-182"],
   cardType: "character",
   name: "Black Heron",
@@ -21,7 +32,7 @@ export const blackHeronRealBadEgg: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_bc05194173e446a8b3e4dc80c1a68962",
-    tcgPlayer: 659456,
+    tcgPlayer: "659456",
   },
   classifications: ["Storyborn", "Villain"],
   i18n: blackHeronRealBadEggI18n,

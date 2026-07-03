@@ -339,9 +339,9 @@ class SimulatorCardController implements SimulatorCardContextValue {
 
     if (!ownerSide || card.zoneId !== "play" || card.ownerSide !== ownerSide) return;
 
-    const itemAbilityAction = this.#sidebar.getSingleClickItemAbilityAction(card);
-    if (itemAbilityAction) {
-      this.#sidebar.handleCardActionClick(itemAbilityAction);
+    const abilityAction = this.#sidebar.getSingleClickAbilityAction(card);
+    if (abilityAction) {
+      this.#sidebar.handleCardActionClick(abilityAction);
       return;
     }
 

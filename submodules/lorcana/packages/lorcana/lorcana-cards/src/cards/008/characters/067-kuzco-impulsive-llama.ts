@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kuzcoImpulsiveLlamaI18n } from "./067-kuzco-impulsive-llama.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const kuzcoImpulsiveLlama: CharacterCard = {
-  id: "uQg",
+  id: "9aY",
   canonicalId: "ci_7bS",
+  slug: "lorcana-ci_7bS",
+  printings: [
+    {
+      id: "set8-067",
+      artId: "set8-067",
+      setCode: "set8",
+      collectorNumber: "67",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-067"],
   cardType: "character",
   name: "Kuzco",
@@ -21,7 +33,7 @@ export const kuzcoImpulsiveLlama: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7f8ab8154a444fb69a3eed9c7647b623",
-    tcgPlayer: 632245,
+    tcgPlayer: "632245",
   },
   text: [
     {

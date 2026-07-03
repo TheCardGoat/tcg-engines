@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from "vite-plus/test";
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 
 import { renderSimulator } from "../../test/renderSimulator.tsx";
@@ -18,10 +18,10 @@ describe("Setup · shields populated", () => {
     await user.click(screen.getByRole("button", { name: /i go first/i }));
     await user.click(await screen.findByRole("button", { name: /keep hand/i }));
 
-    const yourShields = await screen.findByRole("region", { name: /your shields/i });
-    const opponentShields = await screen.findByRole("region", { name: /opponent shields/i });
+    const yourShields = await screen.findByRole("list", { name: /your shields/i });
+    const opponentShields = await screen.findByRole("list", { name: /opponent shields/i });
 
-    expect(yourShields.textContent ?? "").toMatch(/Card zone\s*\(6\)/i);
-    expect(opponentShields.textContent ?? "").toMatch(/Card zone\s*\(6\)/i);
+    expect(within(yourShields).getAllByRole("listitem")).toHaveLength(6);
+    expect(within(opponentShields).getAllByRole("listitem")).toHaveLength(6);
   });
 });

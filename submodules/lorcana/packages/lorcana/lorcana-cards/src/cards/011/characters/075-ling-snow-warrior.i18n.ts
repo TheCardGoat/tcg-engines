@@ -16,8 +16,8 @@ export const lingSnowWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Schneekrieger",
     text: [
       {
-        title: "MUSKELN AUFBAUEN 1",
-        description: "— Ein Charakter deiner Wahl erhält in diesem Zug +1.",
+        title: "Muskeln aufbauen",
+        description: "1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug +1 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const lingSnowWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerrier des neiges",
     text: [
       {
-        title: "PRENDRE DU MUSCLE 1",
-        description: "— Choisissez un personnage qui gagne +1 pour le reste de ce tour.",
+        title: "Prendre du muscle",
+        description: "1 {I} — Choisissez un personnage qui gagne +1 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const lingSnowWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerriero delle Nevi",
     text: [
       {
-        title: "METTERE SU MUSCOLI 1",
-        description: "— Un personaggio a tua scelta riceve +1 per questo turno.",
+        title: "Mettere Su Muscoli",
+        description: "1 {I} — Un personaggio a tua scelta riceve +1 {S} per questo turno.",
       },
     ],
   },

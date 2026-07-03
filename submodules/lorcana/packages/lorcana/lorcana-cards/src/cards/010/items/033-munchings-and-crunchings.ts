@@ -4,6 +4,17 @@ import { munchingsAndCrunchingsI18n } from "./033-munchings-and-crunchings.i18n"
 export const munchingsAndCrunchings: ItemCard = {
   id: "iM5",
   canonicalId: "ci_iM5",
+  slug: "lorcana-ci_iM5",
+  printings: [
+    {
+      id: "set10-033",
+      artId: "set10-033",
+      setCode: "set10",
+      collectorNumber: "33",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-033"],
   cardType: "item",
   name: "Munchings and Crunchings",
@@ -16,7 +27,7 @@ export const munchingsAndCrunchings: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ef6c610fc243499c894239a4f0d50c00",
-    tcgPlayer: 658768,
+    tcgPlayer: "658768",
   },
   text: [
     {
@@ -34,7 +45,10 @@ export const munchingsAndCrunchings: ItemCard = {
         exert: true,
       },
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         target: {
           cardTypes: ["character"],
           count: 1,

@@ -24,15 +24,16 @@ export const tinkerBellGiantFairyI18n: Record<Languages, I18nProperties> = {
     version: "Gigantische Fee",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Naseweis-Charaktere auszuspielen.)",
       },
       {
-        title: "FLUTWELLE",
+        title: "Flutwelle",
         description:
           "Wenn du diesen Charakter ausspielst, füge jedem gegnerischen Charakter 1 Schaden zu.",
       },
       {
-        title: "MICKRIGER PIRAT!",
+        title: "Mickriger Pirat!",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug einen anderen Charakter durch eine Herausforderung verbannt, darfst du einem gegnerischen Charakter deiner Wahl 2 Schaden zufügen.",
       },
@@ -43,7 +44,8 @@ export const tinkerBellGiantFairyI18n: Record<Languages, I18nProperties> = {
     version: "Fée géante",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur un autre personnage Clochette)",
       },
       {
         title: "SECOUE LE BATEAU",
@@ -62,14 +64,15 @@ export const tinkerBellGiantFairyI18n: Record<Languages, I18nProperties> = {
     version: "Giant Fairy",
     text: [
       {
-        title: "Shift 4",
+        title:
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Tinker Bell.)",
       },
       {
-        title: "ROCK THE BOAT",
+        title: "Rock the Boat",
         description: "When you play this character, deal 1 damage to each opposing character.",
       },
       {
-        title: "PUNY PIRATE!",
+        title: "Puny Pirate!",
         description:
           "During your turn, whenever this character banishes another character in a challenge, you may deal 2 damage to chosen opposing character.",
       },

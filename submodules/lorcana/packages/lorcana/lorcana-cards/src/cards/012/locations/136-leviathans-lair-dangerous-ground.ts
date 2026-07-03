@@ -4,6 +4,17 @@ import { leviathansLairDangerousGroundI18n } from "./136-leviathans-lair-dangero
 export const leviathansLairDangerousGround: LocationCard = {
   id: "MTW",
   canonicalId: "ci_MTW",
+  slug: "lorcana-ci_MTW",
+  printings: [
+    {
+      id: "set12-136",
+      artId: "set12-136",
+      setCode: "set12",
+      collectorNumber: "136",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-136"],
   cardType: "location",
   name: "Leviathan's Lair",
@@ -20,6 +31,7 @@ export const leviathansLairDangerousGround: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6390182da0394996b7ea68dee5b0de54",
+    tcgPlayer: "692058",
   },
   text: [
     {

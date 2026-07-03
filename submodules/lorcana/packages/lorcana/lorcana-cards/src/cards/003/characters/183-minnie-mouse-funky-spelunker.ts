@@ -4,6 +4,17 @@ import { minnieMouseFunkySpelunkerI18n } from "./183-minnie-mouse-funky-spelunke
 export const minnieMouseFunkySpelunker: CharacterCard = {
   id: "xPZ",
   canonicalId: "ci_xPZ",
+  slug: "lorcana-ci_xPZ",
+  printings: [
+    {
+      id: "set3-183",
+      artId: "set3-183",
+      setCode: "set3",
+      collectorNumber: "183",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-183"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -19,7 +30,7 @@ export const minnieMouseFunkySpelunker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e5e54863fdb8474db4d0515a2a562ced",
-    tcgPlayer: 531824,
+    tcgPlayer: "531824",
   },
   text: [
     {

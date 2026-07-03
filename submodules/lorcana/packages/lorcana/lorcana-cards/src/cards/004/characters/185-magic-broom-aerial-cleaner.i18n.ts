@@ -6,9 +6,9 @@ export const magicBroomAerialCleanerI18n: Record<Languages, I18nProperties> = {
     version: "Aerial Cleaner",
     text: [
       {
-        title: "WINGED FOR A DAY",
+        title: "WINGED FOR",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "A DAY During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const magicBroomAerialCleanerI18n: Record<Languages, I18nProperties> = {
     version: "Luftreiniger",
     text: [
       {
-        title: "FÜR EINEN TAG BEFLÜGELT",
+        title: "Für einen Tag beflügelt",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const magicBroomAerialCleanerI18n: Record<Languages, I18nProperties> = {
     version: "Nettoyeur aérien",
     text: [
       {
-        title: "AILÉ POUR UN JOUR",
+        title: "Ailé pour un jour",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier les personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier les personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const magicBroomAerialCleanerI18n: Record<Languages, I18nProperties> = {
     version: "Pulitrice Volante",
     text: [
       {
-        title: "ALATA PER UN GIORNO",
+        title: "Alata per un Giorno",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

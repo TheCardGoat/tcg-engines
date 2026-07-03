@@ -21,11 +21,11 @@ export const hansBrazenManipulatorI18n: Record<Languages, I18nProperties> = {
     version: "Unverschämter Manipulator",
     text: [
       {
-        title: "DAS RINGEN UM MACHT",
+        title: "Das Ringen um Macht",
         description: "Könige und Königinnen können nicht erkunden.",
       },
       {
-        title: "WACHSENDER EINFLUSS",
+        title: "Wachsender Einfluss",
         description:
           "Zu Beginn deines Zuges, wenn mindestens eine gegnerische Person 2 oder mehr bereite Charaktere im Spiel hat, sammelst du 2 Legenden.",
       },
@@ -36,11 +36,11 @@ export const hansBrazenManipulatorI18n: Record<Languages, I18nProperties> = {
     version: "Manipulateur éhonté",
     text: [
       {
-        title: "LUTTE POUR LE POUVOIR",
+        title: "Lutte pour le pouvoir",
         description: "Les personnages Roi et Reine ne peuvent pas être envoyé à l'aventure.",
       },
       {
-        title: "INFLUENCE GRANDISSANTE",
+        title: "Influence grandissante",
         description:
           "Au début de votre tour, si un adversaire a 2 personnages redressés ou plus en jeu, gagnez 2 éclats de Lore.",
       },
@@ -51,11 +51,11 @@ export const hansBrazenManipulatorI18n: Record<Languages, I18nProperties> = {
     version: "Manipolatore Sfacciato",
     text: [
       {
-        title: "SGOMITARE PER IL POTERE I",
-        description: "personaggi Re e Regina non possono andare all'avventura.",
+        title: "Sgomitare per il Potere",
+        description: "I personaggi Re e Regina non possono andare all'avventura.",
       },
       {
-        title: "INFLUENZA CRESCENTE",
+        title: "Influenza Crescente",
         description:
           "All'inizio del tuo turno, se un avversario ha in gioco 2 o più personaggi preparati, ottieni 2 leggenda.",
       },

@@ -7,14 +7,14 @@ export const ghostlyTaleI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Schaurige Geschichte",
-    text: "Erschöpfe alle gegnerischen Charaktere mit 2 oder weniger.",
+    text: "Erschöpfe alle gegnerischen Charaktere mit 2 oder weniger {S}.",
   },
   fr: {
     name: "Histoire de fantôme",
-    text: "Épuisez tous les personnages adverses ayant 2 ou moins.",
+    text: "Épuisez tous les personnages adverses ayant 2 {S} ou moins.",
   },
   it: {
     name: "Storie di Fantasmi",
-    text: "Impegna tutti i personaggi avversari con 2 o inferiore.",
+    text: "Impegna tutti i personaggi avversari con 2 {S} o inferiore.",
   },
 };

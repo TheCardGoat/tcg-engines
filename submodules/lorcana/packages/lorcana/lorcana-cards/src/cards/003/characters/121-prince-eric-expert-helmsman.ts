@@ -4,6 +4,17 @@ import { princeEricExpertHelmsmanI18n } from "./121-prince-eric-expert-helmsman.
 export const princeEricExpertHelmsman: CharacterCard = {
   id: "03G",
   canonicalId: "ci_03G",
+  slug: "lorcana-ci_03G",
+  printings: [
+    {
+      id: "set3-121",
+      artId: "set3-121",
+      setCode: "set3",
+      collectorNumber: "121",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-121"],
   cardType: "character",
   name: "Prince Eric",
@@ -20,7 +31,7 @@ export const princeEricExpertHelmsman: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4d0b6d09ae6c423ea874fbb6c659355e",
-    tcgPlayer: 536265,
+    tcgPlayer: "536265",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { getOutI18n } from "./148-get-out.i18n";
 export const getOut: ActionCard = {
   id: "FWW",
   canonicalId: "ci_FWW",
+  slug: "lorcana-ci_FWW",
+  printings: [
+    {
+      id: "set8-148",
+      artId: "set8-148",
+      setCode: "set8",
+      collectorNumber: "148",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-148"],
   cardType: "action",
   name: "Get Out!",
@@ -16,7 +27,7 @@ export const getOut: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f0f2c6f11556497abc5ada3ae5fabe5c",
-    tcgPlayer: 631448,
+    tcgPlayer: "631448",
   },
   text: "Banish chosen character, then return an item card from your discard to your hand.",
   abilities: [

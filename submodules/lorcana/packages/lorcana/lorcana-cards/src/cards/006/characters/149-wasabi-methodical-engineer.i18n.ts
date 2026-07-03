@@ -22,14 +22,14 @@ export const wasabiMethodicalEngineerI18n: Record<Languages, I18nProperties> = {
     version: "Systematischer Ingenieur",
     text: [
       {
-        title: "KLINGEN DES ZORNS",
+        title: "Klingen des Zorns",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen. Wer den Gegenstand im Spiel hatte, sammelt 1 Legende.",
       },
       {
-        title: "SCHNELLE REFLEXE",
+        title: "Schnelle Reflexe",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const wasabiMethodicalEngineerI18n: Record<Languages, I18nProperties> = {
     version: "Ingénieur méthodique",
     text: [
       {
-        title: "LA FUREUR VERTE!",
+        title: "La fureur verte!",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un objet et le bannir. Son propriétaire gagne 1 éclat de Lore.",
       },
       {
-        title: "RÉFLEXES VIFS",
+        title: "Réflexes vifs",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier des personnages avec Insaisissable.)",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const wasabiMethodicalEngineerI18n: Record<Languages, I18nProperties> = {
     version: "Ingegnere Metodico",
     text: [
       {
-        title: "LAME VERDI",
+        title: "Lame Verdi",
         description:
           "Quando giochi questo personaggio, puoi esiliare un oggetto a tua scelta. Il suo giocatore ottiene 1 leggenda.",
       },
       {
-        title: "RIFLESSI FULMINEI",
+        title: "Riflessi Fulminei",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente> (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

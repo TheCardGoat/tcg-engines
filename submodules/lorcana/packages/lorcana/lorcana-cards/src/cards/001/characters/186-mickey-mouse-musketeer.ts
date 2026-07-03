@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMouseMusketeerI18n } from "./186-mickey-mouse-musketeer.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const mickeyMouseMusketeer: CharacterCard = {
-  id: "sdI",
-  canonicalId: "ci_sdI",
+  id: "0We",
+  canonicalId: "ci_4nt",
+  slug: "lorcana-ci_4nt",
+  printings: [
+    {
+      id: "set1-186",
+      artId: "set1-186",
+      setCode: "set1",
+      collectorNumber: "186",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-186"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -20,7 +32,7 @@ export const mickeyMouseMusketeer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_94245aa3b4a241379cf9f7fbbf7f6cd7",
-    tcgPlayer: 494141,
+    tcgPlayer: "494141",
   },
   text: [
     {

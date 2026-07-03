@@ -4,6 +4,17 @@ import { annaTrueheartedI18n } from "./138-anna-true-hearted.i18n";
 export const annaTruehearted: CharacterCard = {
   id: "0EO",
   canonicalId: "ci_0rK",
+  slug: "lorcana-ci_0rK",
+  printings: [
+    {
+      id: "set4-138",
+      artId: "set4-138",
+      setCode: "set4",
+      collectorNumber: "138",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-138", "set9-137"],
   cardType: "character",
   name: "Anna",
@@ -20,7 +31,7 @@ export const annaTruehearted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a0dbcc4e038e43ee90773445e70c170c",
-    tcgPlayer: 650072,
+    tcgPlayer: "650072",
   },
   text: [
     {

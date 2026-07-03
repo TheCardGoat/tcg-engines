@@ -4,6 +4,17 @@ import { transportPodI18n } from "./100-transport-pod.i18n";
 export const transportPod: ItemCard = {
   id: "prE",
   canonicalId: "ci_prE",
+  slug: "lorcana-ci_prE",
+  printings: [
+    {
+      id: "set6-100",
+      artId: "set6-100",
+      setCode: "set6",
+      collectorNumber: "100",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-100"],
   cardType: "item",
   name: "Transport Pod",
@@ -16,13 +27,13 @@ export const transportPod: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9d508f285a934e1fbdd5182fc46734b9",
-    tcgPlayer: 593046,
+    tcgPlayer: "593046",
   },
   text: [
     {
-      title: "GIVE 'EM A SHOW",
+      title: "GIVE 'EM",
       description:
-        "At the start of your turn, you may move a character of yours to a location for free.",
+        "A SHOW At the start of your turn, you may move a character of yours to a location for free.",
     },
   ],
   abilities: [

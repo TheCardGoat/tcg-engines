@@ -1,10 +1,12 @@
 import { useMemo } from "react";
 import { Navigate, createBrowserRouter, RouterProvider, type RouteObject } from "react-router-dom";
-import { normalizeRouterBasename } from "../../router-paths";
+import { normalizeRouterBasename } from "../../routes/router-paths.ts";
 import { BotBenchUiPage } from "./pages/BotBenchUi.page";
 import { BotVsBotPage } from "./pages/BotVsBot.page";
+import { GundamFixtureIndexPage } from "./pages/FixtureRoutes.page";
 import { LiveMatchPage } from "./pages/LiveMatch.page";
 import { PracticePage } from "./pages/Practice.page";
+import { GundamTestStatePage } from "./pages/TestState.page";
 import { VsAiPage } from "./pages/VsAi.page";
 
 export const gundamSimulatorRoutes: RouteObject[] = [
@@ -15,6 +17,14 @@ export const gundamSimulatorRoutes: RouteObject[] = [
   {
     path: "/vs-ai",
     element: <VsAiPage />,
+  },
+  {
+    path: "/tests",
+    element: <GundamFixtureIndexPage />,
+  },
+  {
+    path: "/tests/test-engine-state",
+    element: <GundamTestStatePage />,
   },
   {
     path: "/practice",

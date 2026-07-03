@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { stabbingtonBrotherWithoutAPatchI18n } from "./125-stabbington-brother-without-a-patch.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const stabbingtonBrotherWithoutAPatch: CharacterCard = {
   id: "ij4",
   canonicalId: "ci_ij4",
+  slug: "lorcana-ci_ij4",
+  printings: [
+    {
+      id: "set7-125",
+      artId: "set7-125",
+      setCode: "set7",
+      collectorNumber: "125",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-125"],
   cardType: "character",
   name: "Stabbington Brother",
@@ -21,7 +33,7 @@ export const stabbingtonBrotherWithoutAPatch: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_bb6b464db7a64c6081cdb443267749e4",
-    tcgPlayer: 619474,
+    tcgPlayer: "619474",
   },
   text: "Rush GET 'EM! Your other characters named Stabbington Brother gain Rush.",
   classifications: ["Storyborn", "Ally"],

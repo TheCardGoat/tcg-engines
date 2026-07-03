@@ -8,7 +8,7 @@ export const nathanielFlintNotoriousPirateI18n: Record<Languages, I18nProperties
       {
         title: "PREDATORY INSTINCT",
         description:
-          "You can't play this character unless an opposing character took damage this turn.",
+          "You can't play this character unless an opposing character was damaged this turn.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const nathanielFlintNotoriousPirateI18n: Record<Languages, I18nProperties
     version: "Berüchtigter Pirat",
     text: [
       {
-        title: "RAUBTIERINSTINKT",
+        title: "Raubtierinstinkt",
         description:
-          "Du kannst diesen Charakter nicht ausspielen, außer in diesem Zug wurde ein gegnerischer Charakter beschädigt.",
+          "Du kannst diesen Charakter nicht ausspielen, außer ein gegnerischer Charakter hat in diesem Zug Schaden erhalten.",
       },
     ],
   },
@@ -28,7 +28,7 @@ export const nathanielFlintNotoriousPirateI18n: Record<Languages, I18nProperties
     version: "Illustre pirate",
     text: [
       {
-        title: "INSTINCT DE PRÉDATEUR",
+        title: "Instinct de prédateur",
         description:
           "Vous ne pouvez pas jouer ce personnage sauf si un personnage adverse a subi un dommage ou plus ce tour-ci.",
       },
@@ -39,9 +39,9 @@ export const nathanielFlintNotoriousPirateI18n: Record<Languages, I18nProperties
     version: "Famigerato Pirata",
     text: [
       {
-        title: "ISTINTO PREDATORIO",
+        title: "Istinto Predatorio",
         description:
-          "Non puoi giocare questo personaggio a meno che un personaggio avversario non sia stato danneggiato in questo turno.",
+          "Non puoi giocare questo personaggio a meno che un personaggio avversario non abbia subito danno in questo turno.",
       },
     ],
   },

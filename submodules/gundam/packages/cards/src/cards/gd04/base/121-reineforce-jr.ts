@@ -6,14 +6,17 @@ export const gd04ReineforceJr121: BaseCard = {
   type: "base",
   traits: ["league militaire", "warship"],
   id: "GD04-121",
-  externalId: "gundam:gd04-121",
-  slug: "reineforce-jr-gd04-121",
+  canonicalId: "GD04-121",
+  externalIds: { bandai: "gundam:gd04-121" },
+  slug: "reineforce-jr/gd04-121",
   displayName: "Reineforce Jr.",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-121",
   printings: [
     {
       id: "GD04-121",
+      artId: "GD04-121",
+      setCode: "GD04",
       collectorNumber: "GD04-121",
       cardNumber: "GD04-121",
       set: {
@@ -28,6 +31,7 @@ export const gd04ReineforceJr121: BaseCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-121"],
   selectedPrintingId: "GD04-121",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-121.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-121.webp?260424",

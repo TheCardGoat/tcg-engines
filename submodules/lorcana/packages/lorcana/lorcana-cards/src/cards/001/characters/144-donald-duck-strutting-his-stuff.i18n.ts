@@ -9,21 +9,16 @@ export const donaldDuckStruttingHisStuffI18n: Record<Languages, I18nProperties> 
   de: {
     name: "Donald Duck",
     version: "Stolziert umher",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "DONALD",
     version: "Inventeur fanfaron",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Donald Duck",
     version: "Strutting His Stuff",
-    text: [
-      {
-        title: "Ward",
-        description: "(Opponents can't choose this character except to challenge.)",
-      },
-    ],
+    text: "<Ward> (Opponents can't choose this character except to challenge.)",
   },
 };

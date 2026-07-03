@@ -4,6 +4,17 @@ import { marianoGuzmanHandsomeSuitorI18n } from "./016-mariano-guzman-handsome-s
 export const marianoGuzmanHandsomeSuitor: CharacterCard = {
   id: "QkD",
   canonicalId: "ci_QkD",
+  slug: "lorcana-ci_QkD",
+  printings: [
+    {
+      id: "set7-016",
+      artId: "set7-016",
+      setCode: "set7",
+      collectorNumber: "16",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-016"],
   cardType: "character",
   name: "Mariano Guzman",
@@ -20,7 +31,7 @@ export const marianoGuzmanHandsomeSuitor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e21853e17196454badd15ded13c064fc",
-    tcgPlayer: 618688,
+    tcgPlayer: "618688",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd02GaelioSSchwalbeGraze082: UnitCard = {
   color: "white",
   traits: ["gjallarhorn"],
   id: "GD02-082",
-  externalId: "gundam:gd02-082",
-  slug: "gaelio-s-schwalbe-graze-gd02-082",
+  canonicalId: "GD02-082",
+  externalIds: { bandai: "gundam:gd02-082" },
+  slug: "gaelio-s-schwalbe-graze/gd02-082",
   displayName: "Gaelio's Schwalbe Graze",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-082",
   printings: [
     {
       id: "GD02-082",
+      artId: "GD02-082",
+      setCode: "GD02",
       collectorNumber: "GD02-082",
       cardNumber: "GD02-082",
       set: {
@@ -29,6 +32,7 @@ export const gd02GaelioSSchwalbeGraze082: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-082"],
   selectedPrintingId: "GD02-082",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-082.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-082.webp?260424",

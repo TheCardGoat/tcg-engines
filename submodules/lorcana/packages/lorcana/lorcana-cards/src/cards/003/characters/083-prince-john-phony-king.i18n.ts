@@ -17,7 +17,7 @@ export const princeJohnPhonyKingI18n: Record<Languages, I18nProperties> = {
     version: "Königsclown",
     text: [
       {
-        title: "STEUERN EINTREIBEN",
+        title: "Steuern eintreiben",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, verlieren alle gegnerischen Mitspielenden, die mehr Legenden als du haben, je 2 Legenden.",
       },
@@ -28,7 +28,7 @@ export const princeJohnPhonyKingI18n: Record<Languages, I18nProperties> = {
     version: "Roi de mauvais aloi",
     text: [
       {
-        title: "COLLECTE DE TAXES",
+        title: "Collecte de taxes",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, chaque adversaire ayant plus d'éclats de Lore que vous en perd 2.",
       },
@@ -39,7 +39,7 @@ export const princeJohnPhonyKingI18n: Record<Languages, I18nProperties> = {
     version: "Re Fasullo",
     text: [
       {
-        title: "RISCUOTERE LE TASSE",
+        title: "Riscuotere le Tasse",
         description:
           "Ogni volta che questo personaggio va all'avventura, ogni avversario con più leggenda di te perde 2 leggenda.",
       },

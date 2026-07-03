@@ -4,6 +4,17 @@ import { daisyDuckMusketeerSpyI18n } from "./007-daisy-duck-musketeer-spy.i18n";
 export const daisyDuckMusketeerSpy: CharacterCard = {
   id: "de6",
   canonicalId: "ci_rUa",
+  slug: "lorcana-ci_rUa",
+  printings: [
+    {
+      id: "set4-007",
+      artId: "set4-007",
+      setCode: "set4",
+      collectorNumber: "7",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-007", "set9-011"],
   cardType: "character",
   name: "Daisy Duck",
@@ -19,7 +30,7 @@ export const daisyDuckMusketeerSpy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_df9fc4392077467ab80211e4c47b6b2c",
-    tcgPlayer: 649960,
+    tcgPlayer: "649960",
   },
   text: [
     {

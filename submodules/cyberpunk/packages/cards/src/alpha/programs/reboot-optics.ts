@@ -1,13 +1,15 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts";
 
-export const alphaRebootOptics = {
+export const alphaRebootOptics = defineCyberpunkCard({
   id: "cc85bde3-16d0-4064-b5f0-35dbd855bfed",
-  externalId: "cyberpunk:reboot-optics",
   slug: "reboot-optics",
+  rulesText:
+    "Give a friendly unit +4 power this turn. Defeat it at the end of the turn. (Discard programs after they resolve.)",
   name: "Reboot Optics",
   displayName: "Reboot Optics",
-  rulesText: "Give a friendly unit +4 power this turn. Defeat it at the end of the turn.",
+  canonicalId: "reboot-optics",
   color: "yellow",
   classifications: ["Tech"],
   set: {
@@ -15,15 +17,6 @@ export const alphaRebootOptics = {
     name: "Alpha Kit Set",
   },
   printNumber: "α028",
-  printings: [
-    {
-      id: "a8f8aa7b-4e5b-4f18-b6a2-d0e15f22f85f",
-      collectorNumber: "α028",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "a8f8aa7b-4e5b-4f18-b6a2-d0e15f22f85f",
   artist: "Miguel Valderrama",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a028.webp",
   rarity: null,
@@ -31,7 +24,6 @@ export const alphaRebootOptics = {
   hasSellTag: true,
   ram: 2,
   timingTriggers: ["play"],
-  keywords: [],
   type: "program",
   cost: 2,
   power: null,
@@ -73,4 +65,4 @@ export const alphaRebootOptics = {
       .build(),
   ],
   reminderText: ["Discard programs after they resolve."],
-} satisfies AlphaCardDefinition;
+}) satisfies ProgramCardDefinition;

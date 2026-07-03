@@ -7,14 +7,17 @@ export const gd03Gfred035: UnitCard = {
   color: "red",
   traits: ["zeon"],
   id: "GD03-035",
-  externalId: "gundam:gd03-035",
-  slug: "gfred-gd03-035",
+  canonicalId: "GD03-035",
+  externalIds: { bandai: "gundam:gd03-035" },
+  slug: "gfred/gd03-035",
   displayName: "GFreD",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-035",
   printings: [
     {
       id: "GD03-035",
+      artId: "GD03-035",
+      setCode: "GD03",
       collectorNumber: "GD03-035",
       cardNumber: "GD03-035",
       set: {
@@ -30,6 +33,8 @@ export const gd03Gfred035: UnitCard = {
     },
     {
       id: "GD03-035_p1",
+      artId: "GD03-035_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-035_p1",
       cardNumber: "GD03-035",
       set: {
@@ -45,6 +50,8 @@ export const gd03Gfred035: UnitCard = {
     },
     {
       id: "GD03-035_p2",
+      artId: "GD03-035_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-035_p2",
       cardNumber: "GD03-035",
       set: {
@@ -59,6 +66,7 @@ export const gd03Gfred035: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-035", "GD03-035_p1", "GD03-035_p2"],
   selectedPrintingId: "GD03-035",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-035.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-035.webp?260424",

@@ -4,6 +4,17 @@ import { madHatterGraciousHostI18n } from "./086-mad-hatter-gracious-host.i18n";
 export const madHatterGraciousHost: CharacterCard = {
   id: "7zd",
   canonicalId: "ci_7zd",
+  slug: "lorcana-ci_7zd",
+  printings: [
+    {
+      id: "set1-086",
+      artId: "set1-086",
+      setCode: "set1",
+      collectorNumber: "86",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-086"],
   cardType: "character",
   name: "Mad Hatter",
@@ -20,7 +31,7 @@ export const madHatterGraciousHost: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6f4d7a28b34b4520a7456a89f3d72a15",
-    tcgPlayer: 508770,
+    tcgPlayer: "508770",
   },
   text: [
     {

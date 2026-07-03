@@ -22,14 +22,14 @@ export const gantuExperiencedEnforcerI18n: Record<Languages, I18nProperties> = {
     version: "Erfahrener Vollstrecker",
     text: [
       {
-        title: "SCHLIESST ALLE KANÄLE",
+        title: "Schließt alle Kanäle",
         description:
           "Wenn du diesen Charakter ausspielst, können Charaktere bis zu Beginn deines nächsten Zuges nicht erschöpft werden, um Lieder zu singen.",
       },
       {
-        title: "KOMM JA NICHT AUF DUMME GEDANKEN Alle Mitspielenden",
+        title: "Komm ja nicht auf dumme Gedanken",
         description:
-          "(auch du) müssen 2 mehr bezahlen, um Aktionen oder Gegenstände auszuspielen. (Dies wirkt sich nicht auf das Singen von Liedern aus.)",
+          "Alle Mitspielenden (auch du) müssen 2 {I} mehr bezahlen, um Aktionen oder Gegenstände auszuspielen. (Dies wirkt sich nicht auf das Singen von Liedern aus.)",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const gantuExperiencedEnforcerI18n: Record<Languages, I18nProperties> = {
     version: "Exécuteur expérimenté",
     text: [
       {
-        title: "FERMER TOUTES LES RADIOS",
+        title: "Fermer toutes les radios",
         description:
           "Lorsque vous jouez ce personnage, aucun personnage ne peut être épuisé pour chanter une chanson jusqu'au début de votre prochain tour.",
       },
       {
-        title: "AU CAS OÙ IL TE VIENDRAIT DES IDÉES",
+        title: "Au cas où il te viendrait des idées",
         description:
-          "Jouer une action ou un objet coûte 2 de plus à tous les joueurs. (Ceci ne compte pas pour chanter des chansons.)",
+          "Jouer une action ou un objet coûte 2 {I} de plus à tous les joueurs. (Ceci ne compte pas pour chanter des chansons.)",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const gantuExperiencedEnforcerI18n: Record<Languages, I18nProperties> = {
     version: "Esperto Tutore dell'Ordine",
     text: [
       {
-        title: "CHIUDETE TUTTI I CANALI",
+        title: "Chiudete Tutti i Canali",
         description:
           "Quando giochi questo personaggio, i personaggi non si possono impegnare per cantare canzoni fino all'inizio del tuo prossimo turno.",
       },
       {
-        title: "NON FARTI VENIRE STRANE IDEE",
+        title: "Non Farti Venire Strane Idee",
         description:
-          "Ogni giocatore paga 2 in più per giocare azioni od oggetti. (Questo non si applica al cantare le canzoni.)",
+          "Ogni giocatore paga 2 {I} in più per giocare azioni od oggetti. (Questo non si applica al cantare le canzoni.)",
       },
     ],
   },

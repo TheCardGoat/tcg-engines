@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { annaMysticalMajestyI18n } from "./046-anna-mystical-majesty.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const annaMysticalMajesty: CharacterCard = {
   id: "JaG",
   canonicalId: "ci_JaG",
+  slug: "lorcana-ci_JaG",
+  printings: [
+    {
+      id: "set5-046",
+      artId: "set5-046",
+      setCode: "set5",
+      collectorNumber: "46",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-046"],
   cardType: "character",
   name: "Anna",
@@ -21,7 +33,7 @@ export const annaMysticalMajesty: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2254457f8600435abc8520521283f8ff",
-    tcgPlayer: 561952,
+    tcgPlayer: "561952",
   },
   text: [
     {

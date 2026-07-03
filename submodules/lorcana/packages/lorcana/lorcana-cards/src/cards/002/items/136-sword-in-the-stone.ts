@@ -4,6 +4,17 @@ import { swordInTheStoneI18n } from "./136-sword-in-the-stone.i18n";
 export const swordInTheStone: ItemCard = {
   id: "zL0",
   canonicalId: "ci_zL0",
+  slug: "lorcana-ci_zL0",
+  printings: [
+    {
+      id: "set2-136",
+      artId: "set2-136",
+      setCode: "set2",
+      collectorNumber: "136",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-136"],
   cardType: "item",
   name: "Sword in the Stone",
@@ -16,7 +27,7 @@ export const swordInTheStone: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_24945449688b42f699bff7a47b3f282b",
-    tcgPlayer: 525105,
+    tcgPlayer: "525105",
   },
   text: "{E}, 2 {I} — Chosen character gets +1 {S} this turn for each 1 damage on them.",
   abilities: [

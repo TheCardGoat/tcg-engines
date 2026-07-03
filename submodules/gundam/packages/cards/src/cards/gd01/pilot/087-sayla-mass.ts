@@ -7,14 +7,17 @@ export const gd01SaylaMass087: PilotCard = {
   color: "blue",
   traits: ["earth federation", "white base team", "newtype"],
   id: "GD01-087",
-  externalId: "gundam:gd01-087",
-  slug: "sayla-mass-gd01-087",
+  canonicalId: "GD01-087",
+  externalIds: { bandai: "gundam:gd01-087" },
+  slug: "sayla-mass/gd01-087",
   displayName: "Sayla Mass",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-087",
   printings: [
     {
       id: "GD01-087",
+      artId: "GD01-087",
+      setCode: "GD01",
       collectorNumber: "GD01-087",
       cardNumber: "GD01-087",
       set: {
@@ -30,6 +33,8 @@ export const gd01SaylaMass087: PilotCard = {
     },
     {
       id: "GD01-087_p1",
+      artId: "GD01-087_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-087_p1",
       cardNumber: "GD01-087",
       set: {
@@ -45,6 +50,8 @@ export const gd01SaylaMass087: PilotCard = {
     },
     {
       id: "GD01-087_p2",
+      artId: "GD01-087_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-087_p2",
       cardNumber: "GD01-087",
       set: {
@@ -60,6 +67,8 @@ export const gd01SaylaMass087: PilotCard = {
     },
     {
       id: "GD01-087_p3",
+      artId: "GD01-087_p3",
+      setCode: "GD01",
       collectorNumber: "GD01-087_p3",
       cardNumber: "GD01-087",
       set: {
@@ -74,6 +83,7 @@ export const gd01SaylaMass087: PilotCard = {
       productName: "Store Tournament Winner Pack 01",
     },
   ],
+  reprints: ["GD01-087", "GD01-087_p1", "GD01-087_p2", "GD01-087_p3"],
   selectedPrintingId: "GD01-087",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-087.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-087.webp?260424",

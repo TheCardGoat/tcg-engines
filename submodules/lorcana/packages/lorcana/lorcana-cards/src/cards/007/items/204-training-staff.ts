@@ -4,6 +4,17 @@ import { trainingStaffI18n } from "./204-training-staff.i18n";
 export const trainingStaff: ItemCard = {
   id: "T3y",
   canonicalId: "ci_T3y",
+  slug: "lorcana-ci_T3y",
+  printings: [
+    {
+      id: "set7-204",
+      artId: "set7-204",
+      setCode: "set7",
+      collectorNumber: "204",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-204"],
   cardType: "item",
   name: "Training Staff",
@@ -16,7 +27,7 @@ export const trainingStaff: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_58e5277d1e554fd28d2b56ce65317d81",
-    tcgPlayer: 619526,
+    tcgPlayer: "619526",
   },
   text: [
     {

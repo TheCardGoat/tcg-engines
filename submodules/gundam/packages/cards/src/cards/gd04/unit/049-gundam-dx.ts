@@ -7,14 +7,17 @@ export const gd04GundamDx049: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD04-049",
-  externalId: "gundam:gd04-049",
-  slug: "gundam-dx-gd04-049",
+  canonicalId: "GD04-049",
+  externalIds: { bandai: "gundam:gd04-049" },
+  slug: "gundam-dx/gd04-049",
   displayName: "Gundam DX",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-049",
   printings: [
     {
       id: "GD04-049",
+      artId: "GD04-049",
+      setCode: "GD04",
       collectorNumber: "GD04-049",
       cardNumber: "GD04-049",
       set: {
@@ -30,6 +33,8 @@ export const gd04GundamDx049: UnitCard = {
     },
     {
       id: "GD04-049_p1",
+      artId: "GD04-049_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-049_p1",
       cardNumber: "GD04-049",
       set: {
@@ -44,6 +49,7 @@ export const gd04GundamDx049: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-049", "GD04-049_p1"],
   selectedPrintingId: "GD04-049",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-049.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-049.webp?260424",

@@ -11,10 +11,26 @@ export const thisIsMyFamilyI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "C'est ma famille",
-    text: "Gagnez 1 éclat de Lore. Piochez une carte.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Gagnez 1 éclat de Lore. Piochez une carte.",
+      },
+    ],
   },
   it: {
     name: "I Mitici Madrigal",
-    text: "(Un personaggio con costo 2 o superiore può per cantare questa canzone gratis.) Ottieni 1 leggenda. Pesca una carta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Ottieni 1 leggenda. Pesca una carta.",
+      },
+    ],
   },
 };

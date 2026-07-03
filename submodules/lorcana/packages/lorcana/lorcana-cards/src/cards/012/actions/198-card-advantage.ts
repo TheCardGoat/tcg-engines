@@ -4,6 +4,17 @@ import { cardAdvantageI18n } from "./198-card-advantage.i18n";
 export const cardAdvantage: ActionCard = {
   id: "dGU",
   canonicalId: "ci_dGU",
+  slug: "lorcana-ci_dGU",
+  printings: [
+    {
+      id: "set12-198",
+      artId: "set12-198",
+      setCode: "set12",
+      collectorNumber: "198",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-198"],
   cardType: "action",
   name: "Card Advantage",
@@ -14,9 +25,9 @@ export const cardAdvantage: ActionCard = {
   rarity: "uncommon",
   cost: 2,
   inkable: true,
-
   externalIds: {
     lorcast: "crd_5a10ae29a3de4850af0cc678162ed6d7",
+    tcgPlayer: "692086",
   },
   text: "If an opposing character was banished in a challenge this turn, draw 2 cards.",
   abilities: [

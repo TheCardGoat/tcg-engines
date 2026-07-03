@@ -4,6 +4,17 @@ import { bellwetherAssistantMayorI18n } from "./090-bellwether-assistant-mayor.i
 export const bellwetherAssistantMayor: CharacterCard = {
   id: "2R6",
   canonicalId: "ci_2R6",
+  slug: "lorcana-ci_2R6",
+  printings: [
+    {
+      id: "set6-090",
+      artId: "set6-090",
+      setCode: "set6",
+      collectorNumber: "90",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-090"],
   cardType: "character",
   name: "Bellwether",
@@ -20,7 +31,7 @@ export const bellwetherAssistantMayor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_94afdca365e64d8ba0d826076fc4448e",
-    tcgPlayer: 591120,
+    tcgPlayer: "591120",
   },
   text: [
     {

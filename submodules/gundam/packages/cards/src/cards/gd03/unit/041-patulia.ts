@@ -7,14 +7,17 @@ export const gd03Patulia041: UnitCard = {
   color: "red",
   traits: ["sra"],
   id: "GD03-041",
-  externalId: "gundam:gd03-041",
-  slug: "patulia-gd03-041",
+  canonicalId: "GD03-041",
+  externalIds: { bandai: "gundam:gd03-041" },
+  slug: "patulia/gd03-041",
   displayName: "Patulia",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-041",
   printings: [
     {
       id: "GD03-041",
+      artId: "GD03-041",
+      setCode: "GD03",
       collectorNumber: "GD03-041",
       cardNumber: "GD03-041",
       set: {
@@ -29,6 +32,7 @@ export const gd03Patulia041: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-041"],
   selectedPrintingId: "GD03-041",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-041.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-041.webp?260424",

@@ -7,14 +7,17 @@ export const gd01CovertOperative122: CommandCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-122",
-  externalId: "gundam:gd01-122",
-  slug: "covert-operative-gd01-122",
+  canonicalId: "GD01-122",
+  externalIds: { bandai: "gundam:gd01-122" },
+  slug: "covert-operative/gd01-122",
   displayName: "Covert Operative",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-122",
   printings: [
     {
       id: "GD01-122",
+      artId: "GD01-122",
+      setCode: "GD01",
       collectorNumber: "GD01-122",
       cardNumber: "GD01-122",
       set: {
@@ -29,6 +32,7 @@ export const gd01CovertOperative122: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-122"],
   selectedPrintingId: "GD01-122",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-122.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-122.webp?260424",

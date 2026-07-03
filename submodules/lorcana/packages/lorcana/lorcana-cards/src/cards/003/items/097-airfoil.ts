@@ -4,6 +4,17 @@ import { airfoilI18n } from "./097-airfoil.i18n";
 export const airfoil: ItemCard = {
   id: "L6c",
   canonicalId: "ci_L6c",
+  slug: "lorcana-ci_L6c",
+  printings: [
+    {
+      id: "set3-097",
+      artId: "set3-097",
+      setCode: "set3",
+      collectorNumber: "97",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-097"],
   cardType: "item",
   name: "Airfoil",
@@ -16,7 +27,7 @@ export const airfoil: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bb11d0da1233459c84ade5157719208f",
-    tcgPlayer: 537757,
+    tcgPlayer: "537757",
   },
   text: [
     {

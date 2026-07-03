@@ -4,6 +4,17 @@ import { camiloMadrigalFamilyCopycatI18n } from "./058-camilo-madrigal-family-co
 export const camiloMadrigalFamilyCopycat: CharacterCard = {
   id: "LZo",
   canonicalId: "ci_LZo",
+  slug: "lorcana-ci_LZo",
+  printings: [
+    {
+      id: "set5-058",
+      artId: "set5-058",
+      setCode: "set5",
+      collectorNumber: "58",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-058"],
   cardType: "character",
   name: "Camilo Madrigal",
@@ -20,7 +31,7 @@ export const camiloMadrigalFamilyCopycat: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7fd5d0e0a462464dbc04f11a37718f4a",
-    tcgPlayer: 561300,
+    tcgPlayer: "561300",
   },
   text: [
     {

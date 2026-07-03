@@ -4,6 +4,17 @@ import { ratiganRagingRatI18n } from "./113-ratigan-raging-rat.i18n";
 export const ratiganRagingRat: CharacterCard = {
   id: "A6r",
   canonicalId: "ci_A6r",
+  slug: "lorcana-ci_A6r",
+  printings: [
+    {
+      id: "set5-113",
+      artId: "set5-113",
+      setCode: "set5",
+      collectorNumber: "113",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-113"],
   cardType: "character",
   name: "Ratigan",
@@ -20,7 +31,7 @@ export const ratiganRagingRat: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_833361002e2a4571b9d12ba392560b16",
-    tcgPlayer: 561636,
+    tcgPlayer: "561636",
   },
   text: [
     {

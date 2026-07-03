@@ -11,6 +11,7 @@ export type TestCardDefinition = {
   strength?: number;
   willpower?: number;
   lore?: number;
+  inkType?: string[];
   classifications?: string[];
   actionSubtype?: string;
   abilities?: unknown[];

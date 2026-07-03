@@ -4,6 +4,17 @@ import { docTakingNotesI18n } from "./040-doc-taking-notes.i18n";
 export const docTakingNotes: CharacterCard = {
   id: "wbe",
   canonicalId: "ci_wbe",
+  slug: "lorcana-ci_wbe",
+  printings: [
+    {
+      id: "set12-040",
+      artId: "set12-040",
+      setCode: "set12",
+      collectorNumber: "40",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-040"],
   cardType: "character",
   name: "Doc",
@@ -19,7 +30,8 @@ export const docTakingNotes: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_abfe55d7cdb441b7b03deed6aec8bc1d",
+    lorcast: "crd_fd529e637c964866821ab9f2946451cb",
+    tcgPlayer: "692207",
   },
   text: [
     {

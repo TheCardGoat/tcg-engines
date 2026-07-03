@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { cobraBubblesFormerCiaI18n } from "./188-cobra-bubbles-former-cia.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const cobraBubblesFormerCia: CharacterCard = {
   id: "xkL",
   canonicalId: "ci_xkL",
+  slug: "lorcana-ci_xkL",
+  printings: [
+    {
+      id: "set6-188",
+      artId: "set6-188",
+      setCode: "set6",
+      collectorNumber: "188",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-188"],
   cardType: "character",
   name: "Cobra Bubbles",
@@ -21,7 +33,7 @@ export const cobraBubblesFormerCia: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0e199ab83f22428784550f317e16fefd",
-    tcgPlayer: 592010,
+    tcgPlayer: "592010",
   },
   text: [
     {

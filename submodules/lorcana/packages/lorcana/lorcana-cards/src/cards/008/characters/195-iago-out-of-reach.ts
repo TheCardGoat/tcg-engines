@@ -4,7 +4,18 @@ import { iagoOutOfReachI18n } from "./195-iago-out-of-reach.i18n";
 export const iagoOutOfReach: CharacterCard = {
   id: "d1f",
   canonicalId: "ci_d1f",
-  reprints: ["set8-195"],
+  slug: "lorcana-ci_d1f",
+  printings: [
+    {
+      id: "set8-195",
+      artId: "set8-195",
+      setCode: "set8",
+      collectorNumber: "195",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set8-d23-008", "set8-195"],
   cardType: "character",
   name: "Iago",
   version: "Out of Reach",
@@ -20,7 +31,7 @@ export const iagoOutOfReach: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_14cf336ace334aa4bb012d3a932242bf",
-    tcgPlayer: 631480,
+    tcgPlayer: "631480",
   },
   text: [
     {

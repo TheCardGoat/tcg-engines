@@ -16,8 +16,8 @@ export const ratiganRagingRatI18n: Record<Languages, I18nProperties> = {
     version: "Rasende Ratte",
     text: [
       {
-        title: "NICHTS WIRD SICH MIR IN DEN WEG STELLEN",
-        description: "Solange dieser Charakter beschädigt ist, erhält er +2.",
+        title: "Nichts wird sich mir in den Weg stellen",
+        description: "Solange dieser Charakter beschädigt ist, erhält er +2 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const ratiganRagingRatI18n: Record<Languages, I18nProperties> = {
     version: "Rat enragé",
     text: [
       {
-        title: "RIEN NE ME RÉSISTERA",
-        description: "Tant que ce personnage a au moins un dommage sur lui, il gagne +2.",
+        title: "Rien ne me résistera",
+        description: "Tant que ce personnage a au moins un dommage sur lui, il gagne +2 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const ratiganRagingRatI18n: Record<Languages, I18nProperties> = {
     version: "Ratto Rabbioso",
     text: [
       {
-        title: "NESSUNO PUÒ METTERMI I BASTONI TRA LE RUOTE",
-        description: "Mentre questo personaggio ha danno, riceve +2.",
+        title: "Nessuno Può Mettermi i Bastoni tra le Ruote",
+        description: "Mentre questo personaggio ha danno, riceve +2 {S}.",
       },
     ],
   },

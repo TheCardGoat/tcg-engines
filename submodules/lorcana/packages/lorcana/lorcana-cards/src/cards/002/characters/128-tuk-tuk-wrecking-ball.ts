@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tukTukWreckingBallI18n } from "./128-tuk-tuk-wrecking-ball.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 
 export const tukTukWreckingBall: CharacterCard = {
   id: "xpC",
   canonicalId: "ci_xpC",
+  slug: "lorcana-ci_xpC",
+  printings: [
+    {
+      id: "set2-128",
+      artId: "set2-128",
+      setCode: "set2",
+      collectorNumber: "128",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-128"],
   cardType: "character",
   name: "Tuk Tuk",
@@ -21,7 +33,7 @@ export const tukTukWreckingBall: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_afce8f318b6d4d68a9ff9ccb5a616655",
-    tcgPlayer: 527759,
+    tcgPlayer: "527759",
   },
   text: "Reckless",
   classifications: ["Storyborn", "Ally"],

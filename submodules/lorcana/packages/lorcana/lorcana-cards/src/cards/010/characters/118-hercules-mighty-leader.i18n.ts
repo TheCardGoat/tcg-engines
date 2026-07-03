@@ -21,13 +21,14 @@ export const herculesMightyLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Mächtiger Anführer",
     text: [
       {
-        title: "STETS WACHSAM",
-        description: "Dieser Charakter erhält keinen Schaden, außer er wird herausgefordert.",
+        title: "Stets wachsam",
+        description:
+          "Diesem Charakter kann kein Schaden zugefügt werden, außer er wird herausgefordert.",
       },
       {
-        title: "STETS WACKER",
+        title: "Stets wacker",
         description:
-          "Solange dieser Charakter erschöpft ist, erhalten deine anderen Helden keinen Schaden, außer sie werden herausgefordert.",
+          "Solange dieser Charakter erschöpft ist, kann deinen anderen Helden kein Schaden zugefügt werden, außer sie werden herausgefordert.",
       },
     ],
   },
@@ -36,11 +37,11 @@ export const herculesMightyLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Puissant meneur",
     text: [
       {
-        title: "TOUJOURS VIGILANT",
+        title: "Toujours vigilant",
         description: "Ce personnage ne peut pas subir de dommages, hormis lorsqu'il est défié.",
       },
       {
-        title: "TOUJOURS VAILLANT",
+        title: "Toujours vaillant",
         description:
           "Tant que ce personnage est épuisé, vos autres personnages Héros ne peuvent pas subir de dommages, hormis lorsqu'ils sont défiés.",
       },
@@ -51,11 +52,11 @@ export const herculesMightyLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Potente Leader",
     text: [
       {
-        title: "SEMPRE ALL'ERTA",
+        title: "Sempre all'Erta",
         description: "Questo personaggio non può subire danni a meno che non venga sfidato.",
       },
       {
-        title: "SEMPRE VALOROSO",
+        title: "Sempre Valoroso",
         description:
           "Mentre questo personaggio è impegnato, i tuoi altri personaggi Eroe non possono subire danni a meno che non vengano sfidati.",
       },

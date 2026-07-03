@@ -17,7 +17,7 @@ export const vanellopeVonSchweetzGutsyGogetterI18n: Record<Languages, I18nProper
     version: "Mutige Draufgängerin",
     text: [
       {
-        title: "ICH WAR NOCH NIE ZUVOR BEREITER",
+        title: "Ich war noch nie zuvor bereiter",
         description:
           "Zu Beginn deines Zuges, wenn dieser Charakter an einem Ort ist, ziehe 1 Karte und sammle 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const vanellopeVonSchweetzGutsyGogetterI18n: Record<Languages, I18nProper
     version: "Fonceuse hardie",
     text: [
       {
-        title: "J'AI JAMAIS ÉTÉ AUSSI PRÊTE DE MA VIE",
+        title: "J'ai jamais été aussi prête de ma vie",
         description:
           "Au début de votre tour, si ce personnage est sur un lieu, piochez une carte et gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const vanellopeVonSchweetzGutsyGogetterI18n: Record<Languages, I18nProper
     version: "Ambiziosa e Intraprendente",
     text: [
       {
-        title: "MAI STATA COSÌ PRONTA",
+        title: "Mai Stata Così Pronta",
         description:
           "All'inizio del tuo turno, se questo personaggio si trova in un luogo, pesca una carta e ottieni 1 leggenda.",
       },

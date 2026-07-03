@@ -4,6 +4,17 @@ import { jasmineDesertWarriorI18n } from "./078-jasmine-desert-warrior.i18n";
 export const jasmineDesertWarrior: CharacterCard = {
   id: "iKc",
   canonicalId: "ci_C4u",
+  slug: "lorcana-ci_C4u",
+  printings: [
+    {
+      id: "set4-078",
+      artId: "set4-078",
+      setCode: "set4",
+      collectorNumber: "78",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-078"],
   cardType: "character",
   name: "Jasmine",
@@ -20,7 +31,7 @@ export const jasmineDesertWarrior: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_54e413e671dc4fa3872b3481db960d47",
-    tcgPlayer: 551944,
+    tcgPlayer: "551944",
   },
   text: [
     {

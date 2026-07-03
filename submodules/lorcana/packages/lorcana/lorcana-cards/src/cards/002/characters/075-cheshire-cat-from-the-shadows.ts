@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { cheshireCatFromTheShadowsI18n } from "./075-cheshire-cat-from-the-shadows.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const cheshireCatFromTheShadows: CharacterCard = {
   id: "zI1",
   canonicalId: "ci_zI1",
+  slug: "lorcana-ci_zI1",
+  printings: [
+    {
+      id: "set2-075",
+      artId: "set2-075",
+      setCode: "set2",
+      collectorNumber: "75",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-075"],
   cardType: "character",
   name: "Cheshire Cat",
@@ -22,7 +34,7 @@ export const cheshireCatFromTheShadows: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7212b4d89eff4f039568f65cc8fd9855",
-    tcgPlayer: 526613,
+    tcgPlayer: "526613",
   },
   text: [
     {

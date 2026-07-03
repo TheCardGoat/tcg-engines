@@ -19,10 +19,10 @@ export const blueFairyRewardingGoodDeedsI18n: Record<Languages, I18nProperties> 
     version: "Belohnt gute Taten",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "HIMMLISCHES LEUCHTEN",
+        title: "Himmlisches Leuchten",
         description: "Jedes Mal, wenn du eine Flutgestalt ausspielst, darfst du 1 Karte ziehen.",
       },
     ],
@@ -32,10 +32,10 @@ export const blueFairyRewardingGoodDeedsI18n: Record<Languages, I18nProperties> 
     version: "Récompense les bonnes actions",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "LUEUR ÉTHÉRÉE",
+        title: "Lueur éthérée",
         description:
           "Chaque fois que vous jouez un personnage Floodborn, vous pouvez piocher une carte.",
       },
@@ -46,10 +46,10 @@ export const blueFairyRewardingGoodDeedsI18n: Record<Languages, I18nProperties> 
     version: "Rewarding Good Deeds",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "ETHEREAL GLOW",
+        title: "Ethereal Glow",
         description: "Whenever you play a Floodborn character, you may draw a card.",
       },
     ],

@@ -1,8 +1,19 @@
+import { useState } from "react";
 import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
 
 import { HintsProvider } from "./lib/use-hints-enabled.ts";
+import { useLayoutMode } from "./lib/use-layout-mode.ts";
 import { GundamGame } from "./components/GundamGame.tsx";
-import { SubmitErrorProvider } from "./components/containers/index.ts";
+import {
+  AttackTargetingOverlayContainer,
+  MatchOverviewModalContainer,
+  PendingEffectsContainer,
+  PlayerSeatContainer,
+  PromptContainer,
+  SetupPromptContainer,
+  SubmitErrorProvider,
+} from "./components/containers/index.ts";
+import { SubmitErrorToast } from "./components/ui/SubmitErrorToast.tsx";
 import { VsAiProvider } from "./game/bot/bot-context.tsx";
 import { CardHoverPreview } from "./components/ui/card/CardHoverPreview.tsx";
 import { CardInspectProvider } from "./components/ui/card/card-inspect-context.tsx";
@@ -11,7 +22,11 @@ import { DualModeProvider } from "./components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "./components/ui/pending-effect-selection-context.tsx";
 import { CardInspectDialog } from "./components/ui/CardInspectDialogContainer.tsx";
 import { GundamSharedAnimationLayer } from "./animation/index.ts";
-import { GundamSimulatorShell } from "./components/GundamSimulatorShell.tsx";
+import { GameBoard } from "./components/ui/GameBoard.tsx";
+import { GameTable } from "./components/ui/GameTable.tsx";
+import { FloatingUndoButton } from "./components/ui/FloatingUndoButton.tsx";
+import { PhaseRibbon } from "./components/ui/PhaseRibbon.tsx";
+import { PriorityActionButton } from "./components/ui/PriorityActionButton.tsx";
 import type { DevRuntimeBotHandle } from "./game/dev-runtime.ts";
 import type { ViewerId } from "./game/types.ts";
 
@@ -23,7 +38,34 @@ export interface SimulatorAppProps {
 }
 
 export function SimulatorApp({ runtime, staticResources, viewerId, bot }: SimulatorAppProps) {
-  const matchTree = <GundamSimulatorShell />;
+  const layoutMode = useLayoutMode();
+  const isMobile = layoutMode === "mobile";
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const matchTree = (
+    <GameBoard isMobile={isMobile} drawerOpen={drawerOpen} onDrawerOpenChange={setDrawerOpen}>
+      <GameTable>
+        <PlayerSeatContainer side="top" />
+        {!isMobile && (
+          <div className="relative h-0">
+            <div className="centerline -top-px" />
+            <PhaseRibbon />
+          </div>
+        )}
+        <PlayerSeatContainer side="bottom" />
+
+        {!isMobile && <PriorityActionButton />}
+        {!isMobile && <FloatingUndoButton />}
+
+        <PromptContainer />
+        <SetupPromptContainer />
+        <AttackTargetingOverlayContainer />
+        <PendingEffectsContainer />
+        <MatchOverviewModalContainer />
+        <SubmitErrorToast />
+      </GameTable>
+    </GameBoard>
+  );
 
   return (
     <GundamGame runtime={runtime} staticResources={staticResources} viewerId={viewerId}>

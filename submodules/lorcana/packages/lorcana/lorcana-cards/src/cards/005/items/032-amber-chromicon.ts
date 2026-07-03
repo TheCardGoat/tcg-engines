@@ -4,6 +4,17 @@ import { amberChromiconI18n } from "./032-amber-chromicon.i18n";
 export const amberChromicon: ItemCard = {
   id: "1vP",
   canonicalId: "ci_1vP",
+  slug: "lorcana-ci_1vP",
+  printings: [
+    {
+      id: "set5-032",
+      artId: "set5-032",
+      setCode: "set5",
+      collectorNumber: "32",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-032"],
   cardType: "item",
   name: "Amber Chromicon",
@@ -16,7 +27,7 @@ export const amberChromicon: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a849716500754889824d4a9aeb2c6b84",
-    tcgPlayer: 560093,
+    tcgPlayer: "560093",
   },
   text: [
     {
@@ -30,7 +41,10 @@ export const amberChromicon: ItemCard = {
         exert: true,
       },
       effect: {
-        amount: { type: "up-to", value: 1 },
+        amount: {
+          type: "up-to",
+          value: 1,
+        },
         target: "YOUR_CHARACTERS",
         type: "remove-damage",
       },

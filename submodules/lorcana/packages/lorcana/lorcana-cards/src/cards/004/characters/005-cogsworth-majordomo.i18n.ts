@@ -17,9 +17,9 @@ export const cogsworthMajordomoI18n: Record<Languages, I18nProperties> = {
     version: "Haushofmeister",
     text: [
       {
-        title: "WIE DU WARST!",
+        title: "Wie du warst!",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 geben.",
+          "Jedes Mal, wenn dieser Charakter erkundet, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 {S} geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const cogsworthMajordomoI18n: Record<Languages, I18nProperties> = {
     version: "Majordome",
     text: [
       {
-        title: "ROMPEZ!",
+        title: "Rompez!",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage qui subit -2 jusqu'au début de votre prochain tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage qui subit -2 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const cogsworthMajordomoI18n: Record<Languages, I18nProperties> = {
     version: "Maggior-domo",
     text: [
       {
-        title: "RIPOSO!",
+        title: "Riposo!",
         description:
-          "Ogni volta che questo personaggio va all'avventura, puoi dare -2 a un personaggio a tua scelta fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che questo personaggio va all'avventura, puoi dare -2 {S} a un personaggio a tua scelta fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

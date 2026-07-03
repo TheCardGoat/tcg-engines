@@ -28,7 +28,7 @@ let _cardPoolPromise: Promise<LorcanaCard[]> | null = null;
 async function getCardPool(): Promise<LorcanaCard[]> {
   if (!_cardPoolPromise) {
     _cardPoolPromise = (async () => {
-      const [m001, m002, m003, m004, m005, m006, m007, m008, m009, m010, m011, m012] =
+      const [m001, m002, m003, m004, m005, m006, m007, m008, m009, m010, m011, m012, m013] =
         await Promise.all([
           import("@tcg/lorcana-cards/cards/001"),
           import("@tcg/lorcana-cards/cards/002"),
@@ -42,6 +42,7 @@ async function getCardPool(): Promise<LorcanaCard[]> {
           import("@tcg/lorcana-cards/cards/010"),
           import("@tcg/lorcana-cards/cards/011"),
           import("@tcg/lorcana-cards/cards/012"),
+          import("@tcg/lorcana-cards/cards/013"),
         ]);
 
       return [
@@ -57,6 +58,7 @@ async function getCardPool(): Promise<LorcanaCard[]> {
         ...m010.all010Cards,
         ...m011.all011Cards,
         ...m012.all012Cards,
+        ...m013.all013Cards,
       ].filter((card) => card?.name != null);
     })();
   }

@@ -4,6 +4,17 @@ import { plutoCleverCluefinderI18n } from "./157-pluto-clever-cluefinder.i18n";
 export const plutoCleverCluefinder: CharacterCard = {
   id: "6GN",
   canonicalId: "ci_6GN",
+  slug: "lorcana-ci_6GN",
+  printings: [
+    {
+      id: "set10-157",
+      artId: "set10-157",
+      setCode: "set10",
+      collectorNumber: "157",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-157"],
   cardType: "character",
   name: "Pluto",
@@ -19,7 +30,7 @@ export const plutoCleverCluefinder: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bfdd0f1b2c564334afb8ee438ebd677e",
-    tcgPlayer: 659385,
+    tcgPlayer: "659385",
   },
   text: [
     {

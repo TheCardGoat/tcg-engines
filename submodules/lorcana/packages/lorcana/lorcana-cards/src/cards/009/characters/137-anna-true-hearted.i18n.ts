@@ -17,9 +17,9 @@ export const annaTrueheartedI18n: Record<Languages, I18nProperties> = {
     version: "Wahres Herz",
     text: [
       {
-        title: "LASS MICH DIR HELFEN",
+        title: "Lass mich dir helfen",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Heldinnen und Helden in diesem Zug +1.",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Heldinnen und Helden in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const annaTrueheartedI18n: Record<Languages, I18nProperties> = {
     version: "Cœur sincère",
     text: [
       {
-        title: "LAISSE-MOI T'AIDER",
+        title: "Laisse-moi t'aider",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages Héros gagnent +1 pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages Héros gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const annaTrueheartedI18n: Record<Languages, I18nProperties> = {
     version: "Cuore Puro",
     text: [
       {
-        title: "LASCIA CHE TI AIUTI",
+        title: "Lascia che Ti Aiuti",
         description:
-          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi Eroe ricevono +1 per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi Eroe ricevono +1 {L} per questo turno.",
       },
     ],
   },

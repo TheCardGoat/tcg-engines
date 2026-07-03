@@ -16,8 +16,8 @@ export const adorabeezleWinterpopIceRocketRacerI18n: Record<Languages, I18nPrope
     version: "Eisraketen-Rennfahrerin",
     text: [
       {
-        title: "FAHR WEITER",
-        description: "Solange dieser Charakter beschädigt ist, erhält er +1.",
+        title: "Fahr weiter",
+        description: "Solange dieser Charakter beschädigt ist, erhält er +1 {L}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const adorabeezleWinterpopIceRocketRacerI18n: Record<Languages, I18nPrope
     version: "Fusée glacée",
     text: [
       {
-        title: "RESTE DANS LA COURSE",
-        description: "Tant que ce personnage a au moins 1 dommage sur lui, il gagne +1.",
+        title: "Reste dans la course",
+        description: "Tant que ce personnage a au moins 1 dommage sur lui, il gagne +1 {L}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const adorabeezleWinterpopIceRocketRacerI18n: Record<Languages, I18nPrope
     version: "Pilota di Ghiaccioli",
     text: [
       {
-        title: "CONTINUA A GUIDARE",
-        description: "Mentre questo personaggio ha danno, riceve +1.",
+        title: "Continua a Guidare",
+        description: "Mentre questo personaggio ha danno, riceve +1 {L}.",
       },
     ],
   },

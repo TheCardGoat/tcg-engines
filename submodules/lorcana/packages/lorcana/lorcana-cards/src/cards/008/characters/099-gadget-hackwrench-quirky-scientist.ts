@@ -4,6 +4,17 @@ import { gadgetHackwrenchQuirkyScientistI18n } from "./099-gadget-hackwrench-qui
 export const gadgetHackwrenchQuirkyScientist: CharacterCard = {
   id: "rbr",
   canonicalId: "ci_rbr",
+  slug: "lorcana-ci_rbr",
+  printings: [
+    {
+      id: "set8-099",
+      artId: "set8-099",
+      setCode: "set8",
+      collectorNumber: "99",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-099"],
   cardType: "character",
   name: "Gadget Hackwrench",
@@ -20,7 +31,7 @@ export const gadgetHackwrenchQuirkyScientist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d09689076d3344cd9a6fb53f2790c103",
-    tcgPlayer: 631412,
+    tcgPlayer: "631412",
   },
   text: [
     {

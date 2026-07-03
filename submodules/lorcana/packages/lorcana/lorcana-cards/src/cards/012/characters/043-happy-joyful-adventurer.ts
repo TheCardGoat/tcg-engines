@@ -4,6 +4,17 @@ import { happyJoyfulAdventurerI18n } from "./043-happy-joyful-adventurer.i18n";
 export const happyJoyfulAdventurer: CharacterCard = {
   id: "lOO",
   canonicalId: "ci_lOO",
+  slug: "lorcana-ci_lOO",
+  printings: [
+    {
+      id: "set12-043",
+      artId: "set12-043",
+      setCode: "set12",
+      collectorNumber: "43",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-043"],
   cardType: "character",
   name: "Happy",
@@ -21,6 +32,7 @@ export const happyJoyfulAdventurer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_19f9cb6d8ec14727aecb704c3d5c1c14",
+    tcgPlayer: "692026",
   },
   classifications: ["Storyborn", "Ally", "Seven Dwarfs"],
   i18n: happyJoyfulAdventurerI18n,

@@ -7,14 +7,17 @@ export const betaGuncannon004: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-004_p1",
-  externalId: "gundam:gd01-004_p1",
-  slug: "guncannon-gd01-004-p1",
+  canonicalId: "GD01-004",
+  externalIds: { bandai: "gundam:gd01-004_p1" },
+  slug: "guncannon/gd01-004",
   displayName: "Guncannon",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-004_p1",
   printings: [
     {
       id: "GD01-004",
+      artId: "GD01-004",
+      setCode: "GD01",
       collectorNumber: "GD01-004",
       cardNumber: "GD01-004",
       set: {
@@ -30,6 +33,8 @@ export const betaGuncannon004: UnitCard = {
     },
     {
       id: "GD01-004_p1",
+      artId: "GD01-004_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-004_p1",
       cardNumber: "GD01-004",
       set: {
@@ -45,6 +50,8 @@ export const betaGuncannon004: UnitCard = {
     },
     {
       id: "GD01-004_p2",
+      artId: "GD01-004_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-004_p2",
       cardNumber: "GD01-004",
       set: {
@@ -59,6 +66,7 @@ export const betaGuncannon004: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-004", "GD01-004_p1", "GD01-004_p2"],
   selectedPrintingId: "GD01-004_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-004_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-004_p1.webp?260424",

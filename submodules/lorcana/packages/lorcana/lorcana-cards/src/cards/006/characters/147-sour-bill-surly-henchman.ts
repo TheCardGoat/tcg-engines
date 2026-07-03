@@ -4,6 +4,17 @@ import { sourBillSurlyHenchmanI18n } from "./147-sour-bill-surly-henchman.i18n";
 export const sourBillSurlyHenchman: CharacterCard = {
   id: "IpU",
   canonicalId: "ci_IpU",
+  slug: "lorcana-ci_IpU",
+  printings: [
+    {
+      id: "set6-147",
+      artId: "set6-147",
+      setCode: "set6",
+      collectorNumber: "147",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-147"],
   cardType: "character",
   name: "Sour Bill",
@@ -20,7 +31,7 @@ export const sourBillSurlyHenchman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6e547f6533974321a1eb89579e98cac0",
-    tcgPlayer: 591983,
+    tcgPlayer: "591983",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kronkJuniorChipmunkI18n } from "./185-kronk-junior-chipmunk.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const kronkJuniorChipmunk: CharacterCard = {
   id: "XpE",
   canonicalId: "ci_XpE",
+  slug: "lorcana-ci_XpE",
+  printings: [
+    {
+      id: "set2-185",
+      artId: "set2-185",
+      setCode: "set2",
+      collectorNumber: "185",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-185"],
   cardType: "character",
   name: "Kronk",
@@ -21,7 +33,7 @@ export const kronkJuniorChipmunk: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_452868f6888045018e50e2b4e41e0f7b",
-    tcgPlayer: 527775,
+    tcgPlayer: "527775",
   },
   text: [
     {

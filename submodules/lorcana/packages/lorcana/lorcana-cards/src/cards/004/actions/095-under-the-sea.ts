@@ -1,10 +1,22 @@
 import type { ActionCard } from "@tcg/lorcana-types";
-import { singTogether } from "../../../helpers/abilities/singTogether";
 import { underTheSeaI18n } from "./095-under-the-sea.i18n";
+
+import { singTogether } from "../../../helpers/abilities/singTogether";
 
 export const underTheSea: ActionCard = {
   id: "EhX",
   canonicalId: "ci_BAQ",
+  slug: "lorcana-ci_BAQ",
+  printings: [
+    {
+      id: "set4-095",
+      artId: "set4-095",
+      setCode: "set4",
+      collectorNumber: "95",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-095", "set9-097"],
   cardType: "action",
   name: "Under the Sea",
@@ -17,7 +29,7 @@ export const underTheSea: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1d6a3d2a881b42f0a7160c2617e19fea",
-    tcgPlayer: 650035,
+    tcgPlayer: "650035",
   },
   text: [
     {

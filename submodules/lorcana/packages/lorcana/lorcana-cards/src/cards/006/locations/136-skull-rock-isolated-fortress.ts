@@ -4,6 +4,17 @@ import { skullRockIsolatedFortressI18n } from "./136-skull-rock-isolated-fortres
 export const skullRockIsolatedFortress: LocationCard = {
   id: "ZZ0",
   canonicalId: "ci_ZZ0",
+  slug: "lorcana-ci_ZZ0",
+  printings: [
+    {
+      id: "set6-136",
+      artId: "set6-136",
+      setCode: "set6",
+      collectorNumber: "136",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-136"],
   cardType: "location",
   name: "Skull Rock",
@@ -20,7 +31,7 @@ export const skullRockIsolatedFortress: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5c09e6638f7f4eccaa8ae9cf545702cc",
-    tcgPlayer: 591987,
+    tcgPlayer: "591987",
   },
   text: [
     {

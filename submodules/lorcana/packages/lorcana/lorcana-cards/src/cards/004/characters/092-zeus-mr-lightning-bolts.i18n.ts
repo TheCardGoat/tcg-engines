@@ -17,9 +17,9 @@ export const zeusMrLightningBoltsI18n: Record<Languages, I18nProperties> = {
     version: "Der geölte Blitz persönlich",
     text: [
       {
-        title: "ZIELSCHEIBEN",
+        title: "Zielscheiben",
         description:
-          "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, erhält er in diesem Zug so viel +, wie die eines Charakters deiner Wahl beträgt.",
+          "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, erhält er in diesem Zug so viel +{S}, wie die {S} eines Charakters deiner Wahl beträgt.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const zeusMrLightningBoltsI18n: Record<Languages, I18nProperties> = {
     version: "M. Crache-la-Foudre",
     text: [
       {
-        title: "TIRER COMME DES PIGEONS",
+        title: "Tirer comme des pigeons",
         description:
-          "Chaque fois que ce personnage en défie un autre, choisissez un personnage et ajoutez sa à celle de ce personnage-ci.",
+          "Chaque fois que ce personnage en défie un autre, choisissez un personnage et ajoutez sa {S} à celle de ce personnage-ci.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const zeusMrLightningBoltsI18n: Record<Languages, I18nProperties> = {
     version: "Mister Fulmini e Saette",
     text: [
       {
-        title: "TIRO AL BERSAGLIO",
+        title: "Tiro al Bersaglio",
         description:
-          "Ogni volta che questo personaggio sfida un altro personaggio, riceve + pari alla di un personaggio a tua scelta per questo turno.",
+          "Ogni volta che questo personaggio sfida un altro personaggio, riceve +{S} pari alla {S} di un personaggio a tua scelta per questo turno.",
       },
     ],
   },

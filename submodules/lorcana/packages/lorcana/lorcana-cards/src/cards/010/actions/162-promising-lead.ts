@@ -4,6 +4,17 @@ import { promisingLeadI18n } from "./162-promising-lead.i18n";
 export const promisingLead: ActionCard = {
   id: "Hql",
   canonicalId: "ci_Hql",
+  slug: "lorcana-ci_Hql",
+  printings: [
+    {
+      id: "set10-162",
+      artId: "set10-162",
+      setCode: "set10",
+      collectorNumber: "162",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-162"],
   cardType: "action",
   name: "Promising Lead",
@@ -16,7 +27,7 @@ export const promisingLead: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7e8b9ff676484f2bb8a16dde98de13a7",
-    tcgPlayer: 658877,
+    tcgPlayer: "658877",
   },
   text: "Chosen character gets +1 {L} and gains Support this turn. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
   abilities: [

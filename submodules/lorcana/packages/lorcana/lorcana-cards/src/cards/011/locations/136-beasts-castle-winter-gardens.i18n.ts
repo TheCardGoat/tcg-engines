@@ -16,7 +16,7 @@ export const beastsCastleWinterGardensI18n: Record<Languages, I18nProperties> = 
     version: "Wintergärten",
     text: [
       {
-        title: "SCHNEEBALLSCHLACHT",
+        title: "Schneeballschlacht",
         description:
           "Jedes Mal, wenn einer deiner Charaktere an diesem Ort einen anderen Charakter herausfordert, sammelst du 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const beastsCastleWinterGardensI18n: Record<Languages, I18nProperties> = 
     version: "Jardins d'hiver",
     text: [
       {
-        title: "DUEL DE BOULES DE NEIGE",
+        title: "Duel de boules de neige",
         description:
           "Chaque fois qu'un personnage sur ce lieu défie un autre personnage, gagnez 1 éclat de Lore.",
       },
@@ -38,7 +38,7 @@ export const beastsCastleWinterGardensI18n: Record<Languages, I18nProperties> = 
     version: "Giardini Invernali",
     text: [
       {
-        title: "STALLO DI PALLE DI NEVE",
+        title: "Stallo di Palle di Neve",
         description:
           "Ogni volta che un personaggio in questo luogo sfida un altro personaggio, ottieni 1 leggenda.",
       },

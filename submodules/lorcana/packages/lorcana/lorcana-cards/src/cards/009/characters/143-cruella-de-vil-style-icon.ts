@@ -4,6 +4,17 @@ import { cruellaDeVilStyleIconI18n } from "./143-cruella-de-vil-style-icon.i18n"
 export const cruellaDeVilStyleIcon: CharacterCard = {
   id: "PDx",
   canonicalId: "ci_J5u",
+  slug: "lorcana-ci_J5u",
+  printings: [
+    {
+      id: "set9-143",
+      artId: "set9-143",
+      setCode: "set9",
+      collectorNumber: "143",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-143"],
   cardType: "character",
   name: "Cruella De Vil",
@@ -20,7 +31,7 @@ export const cruellaDeVilStyleIcon: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f5d62175b09243eda1bf9f34ea01d884",
-    tcgPlayer: 651120,
+    tcgPlayer: "651120",
   },
   text: [
     {

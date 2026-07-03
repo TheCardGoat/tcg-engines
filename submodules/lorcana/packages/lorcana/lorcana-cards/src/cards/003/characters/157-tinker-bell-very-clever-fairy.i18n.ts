@@ -17,7 +17,7 @@ export const tinkerBellVeryCleverFairyI18n: Record<Languages, I18nProperties> = 
     version: "Sehr kluge Fee",
     text: [
       {
-        title: "DAS KANN ICH GUT GEBRAUCHEN",
+        title: "Das kann ich gut gebrauchen",
         description:
           "Jedes Mal, wenn einer deiner Gegenstände verbannt wird, darfst du jenen verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const tinkerBellVeryCleverFairyI18n: Record<Languages, I18nProperties> = 
     version: "Fée très maline",
     text: [
       {
-        title: "JE PEUX UTILISER CECI",
+        title: "Je peux utiliser ceci",
         description:
           "Chaque fois que l'un de vos objets est banni, vous pouvez le placer dans votre réserve d'encre, face cachée et épuisé.",
       },
@@ -39,7 +39,7 @@ export const tinkerBellVeryCleverFairyI18n: Record<Languages, I18nProperties> = 
     version: "Fata Molto in Gamba",
     text: [
       {
-        title: "POSSO USARLO IO",
+        title: "Posso Usarlo Io",
         description:
           "Ogni volta che uno dei tuoi oggetti viene esiliato, puoi aggiungere quella carta al tuo calamaio, a faccia in giù e impegnata.",
       },

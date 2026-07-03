@@ -1,13 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { goSoloAbility } from "@tcg/cyberpunk-types";
 
-export const spoilerRoycePsychoOnTheEdge = {
+export const spoilerRoycePsychoOnTheEdge = defineCyberpunkCard({
   id: "9e70c24e-f523-4cba-b70e-161793cd1a27",
-  externalId: "cyberpunk:royce-psycho-on-the-edge",
   slug: "royce-psycho-on-the-edge",
-  name: "Royce",
-  subname: "Psycho on the Edge",
-  displayName: "Royce - Psycho on the Edge",
   rulesText: "GO SOLO During your turn, this Legend has +2 power for each equipped Gear.",
+  subname: "Psycho on the Edge",
+  name: "Royce",
+  displayName: "Royce - Psycho on the Edge",
+  canonicalId: "royce-psycho-on-the-edge",
   color: "red",
   classifications: ["Ganger", "Maelstrom"],
   set: {
@@ -15,36 +17,18 @@ export const spoilerRoycePsychoOnTheEdge = {
     name: "Spoiler Set",
   },
   printNumber: "131",
-  printings: [
-    {
-      id: "def02aa2-5dcb-4bc1-a187-df6207373e6f",
-      collectorNumber: "131",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "def02aa2-5dcb-4bc1-a187-df6207373e6f",
   artist: "Pandart Studio",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/131.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
   keywords: ["goSolo"],
   type: "legend",
   cost: 6,
   power: 6,
   abilities: [
-    {
-      kind: "keyword",
-      text: "GO SOLO",
-      keyword: "goSolo",
-      source: {
-        selector: "self",
-      },
-      effects: [],
-    },
+    goSoloAbility(),
     {
       kind: "static",
       text: "During your turn, this Legend has +2 power for each equipped Gear.",
@@ -80,5 +64,4 @@ export const spoilerRoycePsychoOnTheEdge = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies LegendCardDefinition;

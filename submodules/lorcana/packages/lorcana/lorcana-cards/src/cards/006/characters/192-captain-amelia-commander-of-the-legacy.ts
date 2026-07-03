@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { captainAmeliaCommanderOfTheLegacyI18n } from "./192-captain-amelia-commander-of-the-legacy.i18n";
 
 export const captainAmeliaCommanderOfTheLegacy: CharacterCard = {
-  id: "2tR",
+  id: "rR8",
   canonicalId: "ci_OsQ",
+  slug: "lorcana-ci_OsQ",
+  printings: [
+    {
+      id: "set6-192",
+      artId: "set6-192",
+      setCode: "set6",
+      collectorNumber: "192",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-192"],
   cardType: "character",
   name: "Captain Amelia",
@@ -20,7 +31,7 @@ export const captainAmeliaCommanderOfTheLegacy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_eb10018264004dc59f9bf0f31295d757",
-    tcgPlayer: 592014,
+    tcgPlayer: "592014",
   },
   text: [
     {

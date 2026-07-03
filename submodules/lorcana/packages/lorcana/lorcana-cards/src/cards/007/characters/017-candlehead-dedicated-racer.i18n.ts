@@ -17,7 +17,7 @@ export const candleheadDedicatedRacerI18n: Record<Languages, I18nProperties> = {
     version: "Engagierte Rennfahrerin",
     text: [
       {
-        title: "GEWINNEN IST NICHT ALLES",
+        title: "Gewinnen ist nicht alles",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -28,7 +28,7 @@ export const candleheadDedicatedRacerI18n: Record<Languages, I18nProperties> = {
     version: "Pilote passionnée",
     text: [
       {
-        title: "LA VICTOIRE NE FAIT PAS TOUT",
+        title: "La victoire ne fait pas tout",
         description:
           "Lorsque ce personnage est banni, vous pouvez choisir un personnage et lui retirer jusqu'à 2 dommages.",
       },
@@ -39,7 +39,7 @@ export const candleheadDedicatedRacerI18n: Record<Languages, I18nProperties> = {
     version: "Pilota Altruista",
     text: [
       {
-        title: "VINCERE NON È TUTTO",
+        title: "Vincere non è Tutto",
         description:
           "Quando questo personaggio viene esiliato, puoi rimuovere fino a 2 danni da un personaggio a tua scelta.",
       },

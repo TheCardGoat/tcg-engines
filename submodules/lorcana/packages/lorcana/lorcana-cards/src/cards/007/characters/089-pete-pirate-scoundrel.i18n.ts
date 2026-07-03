@@ -16,7 +16,7 @@ export const petePirateScoundrelI18n: Record<Languages, I18nProperties> = {
     version: "Piraten-Schurke",
     text: [
       {
-        title: "STEHLEN UND PLÜNDERN",
+        title: "Stehlen und Plündern",
         description:
           "Jedes Mal, wenn du eine Aktion ausspielst, die kein Lied ist, darfst du einen Gegenstand deiner Wahl verbannen.",
       },
@@ -27,7 +27,7 @@ export const petePirateScoundrelI18n: Record<Languages, I18nProperties> = {
     version: "Crapule de pirate",
     text: [
       {
-        title: "VOLER ET PILLER",
+        title: "Voler et piller",
         description:
           "Chaque fois que vous jouez une action qui n'est pas une chanson, vous pouvez choisir un objet et le bannir.",
       },
@@ -38,7 +38,7 @@ export const petePirateScoundrelI18n: Record<Languages, I18nProperties> = {
     version: "Canaglia Pirata",
     text: [
       {
-        title: "SGRAFFIGNARE E SACCHEGGIARE",
+        title: "Sgraffignare e Saccheggiare",
         description:
           "Ogni volta che giochi un'azione che non è una canzone, puoi esiliare un oggetto a tua scelta.",
       },

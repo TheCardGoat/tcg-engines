@@ -6,14 +6,17 @@ export const gd03Jupitris123: BaseCard = {
   type: "base",
   traits: ["titans", "jupitris", "warship"],
   id: "GD03-123",
-  externalId: "gundam:gd03-123",
-  slug: "jupitris-gd03-123",
+  canonicalId: "GD03-123",
+  externalIds: { bandai: "gundam:gd03-123" },
+  slug: "jupitris/gd03-123",
   displayName: "Jupitris",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-123",
   printings: [
     {
       id: "GD03-123",
+      artId: "GD03-123",
+      setCode: "GD03",
       collectorNumber: "GD03-123",
       cardNumber: "GD03-123",
       set: {
@@ -28,6 +31,7 @@ export const gd03Jupitris123: BaseCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-123"],
   selectedPrintingId: "GD03-123",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-123.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-123.webp?260424",

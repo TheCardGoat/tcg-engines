@@ -227,7 +227,8 @@ export interface ParsedCardIdentifier {
   setNumber: number | null;
   language: string;
   /**
-   * Promo sheet denominator (e.g. "P3" for "43/P3 EN 12"). When set, totalCards is not a set size.
+   * Promo sheet denominator (e.g. "P3" for "43/P3 EN 12" or "PD1" for "3/PD1 EN 13").
+   * When set, totalCards is not a set size.
    */
   promoSheetCode?: string;
 }
@@ -244,8 +245,8 @@ export function parseCardIdentifier(identifier: string): ParsedCardIdentifier | 
     };
   }
 
-  // Promo / challenge sheet: "43/P3 EN 12" (denominator is a sheet code, not set size)
-  const promo = identifier.match(/^(\d+)\/(P\d+)\s+(\w+)(?:\s+(\d+))?$/i);
+  // Promo / challenge sheet: "43/P3 EN 12" or "3/PD1 EN 13" (denominator is a sheet code).
+  const promo = identifier.match(/^(\d+)\/([A-Z]+\d+)\s+(\w+)(?:\s+(\d+))?$/i);
   if (promo) {
     return {
       cardNumber: Number.parseInt(promo[1], 10),

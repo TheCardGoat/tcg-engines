@@ -15,9 +15,9 @@ export const chemPurseI18n: Record<Languages, I18nProperties> = {
     name: "Chemie-Tasche",
     text: [
       {
-        title: "JETZT KOMMT DAS BESTE",
+        title: "Jetzt kommt das Beste",
         description:
-          "Jedes Mal, wenn du mithilfe von Gestaltwandel eine Flutgestalt ausspielst, erhält jene in diesem Zug +4.",
+          "Jedes Mal, wenn du mithilfe von <Gestaltwandel> eine Flutgestalt ausspielst, erhält jene in diesem Zug +4 {S}.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const chemPurseI18n: Record<Languages, I18nProperties> = {
     name: "Nano-sac",
     text: [
       {
-        title: "ET T'AS ENCORE RIEN VU",
+        title: "Et t'as encore rien vu",
         description:
-          "Chaque fois que vous jouez un personnage en utilisant sa capacité Alter, il gagne +4 pour le reste du tour.",
+          "Chaque fois que vous jouez un personnage en utilisant sa capacité <Alter>, il gagne +4 {S} pour le reste du tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const chemPurseI18n: Record<Languages, I18nProperties> = {
     name: "Borsetta Chimica",
     text: [
       {
-        title: "ORA ARRIVA IL MEGLIO",
+        title: "Ora Arriva il Meglio",
         description:
-          "Ogni volta che giochi un personaggio, se hai usato Trasformazione per giocarlo, riceve +4 per questo turno.",
+          "Ogni volta che giochi un personaggio, se hai usato <Trasformazione> per giocarlo, riceve +4 {S} per questo turno.",
       },
     ],
   },

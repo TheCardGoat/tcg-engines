@@ -4,6 +4,7 @@ import { pathToFileURL } from "node:url";
 import { fileURLToPath } from "node:url";
 
 import {
+  deduplicateRawCardsById,
   formatGeneratedCardsModule,
   normalizeCard,
   preserveStableCardIds,
@@ -21,7 +22,11 @@ async function main() {
   const mergedSnapshot = existingSnapshot
     ? mergeCatalogSnapshots(existingSnapshot, scrapedSnapshot)
     : scrapedSnapshot;
-  const normalizedSnapshot = normalizeCatalogSnapshot(mergedSnapshot);
+  const dedupedSnapshot: ScrapedCatalogSnapshot = {
+    rawCards: deduplicateRawCardsById(mergedSnapshot.rawCards),
+    cards: mergedSnapshot.cards,
+  };
+  const normalizedSnapshot = normalizeCatalogSnapshot(dedupedSnapshot);
   const snapshot = existingSnapshot
     ? preserveStableCardIds(normalizedSnapshot, existingSnapshot)
     : normalizedSnapshot;

@@ -15,9 +15,9 @@ export const vitalisphereI18n: Record<Languages, I18nProperties> = {
     name: "Vitalisphäre",
     text: [
       {
-        title: "EXTRAKT AUS RUBIN 1,",
+        title: "Extrakt aus Rubin",
         description:
-          "Verbanne diesen Gegenstand — Ein Charakter deiner Wahl erhält in diesem Zug +2 und Rasant. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+          "1 {I}, Verbanne diesen Gegenstand — Ein Charakter deiner Wahl erhält in diesem Zug +2 {S} und <Rasant>. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const vitalisphereI18n: Record<Languages, I18nProperties> = {
     name: "Sphère de Vitalité",
     text: [
       {
-        title: "EXTRAIT DE RUBIS 1,",
+        title: "Extrait de Rubis",
         description:
-          "Bannissez cet objet — Choisissez un personnage qui gagne Charge et +2 pour le reste de ce tour.",
+          "1 {I}, Bannissez cet objet — Choisissez un personnage qui gagne <Charge> et +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const vitalisphereI18n: Record<Languages, I18nProperties> = {
     name: "Vitalisfera",
     text: [
       {
-        title: "ESTRATTO DI RUBINO 1,",
+        title: "Estratto di Rubino",
         description:
-          "esilia questo oggetto — Un personaggio a tua scelta ottiene Lesto e riceve +2 per questo turno. (Può sfidare nel turno in cui viene giocato.)",
+          "1 {I}, esilia questo oggetto — Un personaggio a tua scelta ottiene <Lesto> e riceve +2 {S} per questo turno. (Può sfidare nel turno in cui viene giocato.)",
       },
     ],
   },

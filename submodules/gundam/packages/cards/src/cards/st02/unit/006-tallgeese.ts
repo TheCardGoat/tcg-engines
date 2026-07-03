@@ -7,14 +7,17 @@ export const st02Tallgeese006: UnitCard = {
   color: "blue",
   traits: ["oz"],
   id: "ST02-006",
-  externalId: "gundam:st02-006",
-  slug: "tallgeese-st02-006",
+  canonicalId: "ST02-006",
+  externalIds: { bandai: "gundam:st02-006" },
+  slug: "tallgeese/st02-006",
   displayName: "Tallgeese",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-006",
   printings: [
     {
       id: "ST02-006",
+      artId: "ST02-006",
+      setCode: "ST02",
       collectorNumber: "ST02-006",
       cardNumber: "ST02-006",
       set: {
@@ -30,6 +33,8 @@ export const st02Tallgeese006: UnitCard = {
     },
     {
       id: "ST02-006_p1",
+      artId: "ST02-006_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-006_p1",
       cardNumber: "ST02-006",
       set: {
@@ -44,6 +49,7 @@ export const st02Tallgeese006: UnitCard = {
       productName: "Wings of Advance [ST02] Bonus Pack",
     },
   ],
+  reprints: ["ST02-006", "ST02-006_p1"],
   selectedPrintingId: "ST02-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-006.webp?260424",

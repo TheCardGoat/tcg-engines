@@ -4,6 +4,17 @@ import { potionOfMaliceI18n } from "./098-potion-of-malice.i18n";
 export const potionOfMalice: ItemCard = {
   id: "l7A",
   canonicalId: "ci_l7A",
+  slug: "lorcana-ci_l7A",
+  printings: [
+    {
+      id: "set10-098",
+      artId: "set10-098",
+      setCode: "set10",
+      collectorNumber: "98",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-098"],
   cardType: "item",
   name: "Potion of Malice",
@@ -16,7 +27,7 @@ export const potionOfMalice: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9df06512bc4c4b928c62b8d263e2bf51",
-    tcgPlayer: 658785,
+    tcgPlayer: "658785",
   },
   text: [
     {

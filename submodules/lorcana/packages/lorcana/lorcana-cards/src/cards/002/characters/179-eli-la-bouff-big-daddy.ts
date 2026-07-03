@@ -4,6 +4,17 @@ import { eliLaBouffBigDaddyI18n } from "./179-eli-la-bouff-big-daddy.i18n";
 export const eliLaBouffBigDaddy: CharacterCard = {
   id: "Mx7",
   canonicalId: "ci_Mx7",
+  slug: "lorcana-ci_Mx7",
+  printings: [
+    {
+      id: "set2-179",
+      artId: "set2-179",
+      setCode: "set2",
+      collectorNumber: "179",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-179"],
   cardType: "character",
   name: "Eli La Bouff",
@@ -21,7 +32,7 @@ export const eliLaBouffBigDaddy: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8161f9ba546e46c2850f4f97f5b623eb",
-    tcgPlayer: 525267,
+    tcgPlayer: "525267",
   },
   classifications: ["Storyborn", "Mentor"],
   i18n: eliLaBouffBigDaddyI18n,

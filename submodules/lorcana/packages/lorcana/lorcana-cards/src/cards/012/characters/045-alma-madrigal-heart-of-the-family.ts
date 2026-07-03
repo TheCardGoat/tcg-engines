@@ -4,6 +4,17 @@ import { almaMadrigalHeartOfTheFamilyI18n } from "./045-alma-madrigal-heart-of-t
 export const almaMadrigalHeartOfTheFamily: CharacterCard = {
   id: "guV",
   canonicalId: "ci_guV",
+  slug: "lorcana-ci_guV",
+  printings: [
+    {
+      id: "set12-045",
+      artId: "set12-045",
+      setCode: "set12",
+      collectorNumber: "45",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-045"],
   cardType: "character",
   name: "Alma Madrigal",
@@ -20,6 +31,7 @@ export const almaMadrigalHeartOfTheFamily: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_938c76c3d0fd41f8b0a1a4dac95f04bc",
+    tcgPlayer: "692030",
   },
   text: [
     {

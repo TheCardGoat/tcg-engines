@@ -4,6 +4,17 @@ import { mauiWhaleI18n } from "./114-maui-whale.i18n";
 export const mauiWhale: CharacterCard = {
   id: "hjF",
   canonicalId: "ci_8fJ",
+  slug: "lorcana-ci_8fJ",
+  printings: [
+    {
+      id: "set3-114",
+      artId: "set3-114",
+      setCode: "set3",
+      collectorNumber: "114",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-114", "set9-106"],
   cardType: "character",
   name: "Maui",
@@ -20,7 +31,7 @@ export const mauiWhale: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_eca6a044a1a24319948f3c2698344fad",
-    tcgPlayer: 650044,
+    tcgPlayer: "650044",
   },
   text: [
     {

@@ -9,21 +9,16 @@ export const gazellePopStarI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Gazelle",
     version: "Popstar",
-    text: [
-      {
-        title: "Singen 5",
-        description: "(Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)",
-      },
-    ],
+    text: "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)",
   },
   fr: {
     name: "Gazelle",
     version: "Pop star",
-    text: "Mélomane 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)",
+    text: "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)",
   },
   it: {
     name: "Gazelle",
     version: "Pop Star",
-    text: "Melodioso 5",
+    text: "<Melodioso> 5",
   },
 };

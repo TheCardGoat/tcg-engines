@@ -4,6 +4,17 @@ import { mushuSneakyDragonI18n } from "./082-mushu-sneaky-dragon.i18n";
 export const mushuSneakyDragon: CharacterCard = {
   id: "feU",
   canonicalId: "ci_m8p",
+  slug: "lorcana-ci_m8p",
+  printings: [
+    {
+      id: "set11-082",
+      artId: "set11-082",
+      setCode: "set11",
+      collectorNumber: "82",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-082"],
   cardType: "character",
   name: "Mushu",
@@ -20,7 +31,7 @@ export const mushuSneakyDragon: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_239773eb4b194139916d4c31bba66356",
-    tcgPlayer: 677147,
+    tcgPlayer: "677147",
   },
   text: [
     {

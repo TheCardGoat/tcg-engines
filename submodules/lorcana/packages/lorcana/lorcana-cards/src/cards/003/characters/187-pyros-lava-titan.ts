@@ -4,6 +4,17 @@ import { pyrosLavaTitanI18n } from "./187-pyros-lava-titan.i18n";
 export const pyrosLavaTitan: CharacterCard = {
   id: "jKP",
   canonicalId: "ci_jKP",
+  slug: "lorcana-ci_jKP",
+  printings: [
+    {
+      id: "set3-187",
+      artId: "set3-187",
+      setCode: "set3",
+      collectorNumber: "187",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-187"],
   cardType: "character",
   name: "Pyros",
@@ -20,7 +31,7 @@ export const pyrosLavaTitan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f68e5422b47243a1b385c562531498f4",
-    tcgPlayer: 539113,
+    tcgPlayer: "539113",
   },
   text: [
     {

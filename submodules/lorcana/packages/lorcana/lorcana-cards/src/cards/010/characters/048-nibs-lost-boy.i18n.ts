@@ -17,7 +17,7 @@ export const nibsLostBoyI18n: Record<Languages, I18nProperties> = {
     version: "Verwunschenes Kind",
     text: [
       {
-        title: "SIEH AN, WER ZURÜCK IST",
+        title: "Sieh an, wer zurück ist",
         description:
           "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand.",
       },
@@ -28,7 +28,7 @@ export const nibsLostBoyI18n: Record<Languages, I18nProperties> = {
     version: "Enfant perdu",
     text: [
       {
-        title: "DEVINE QUI EST DE RETOUR",
+        title: "Devine qui est de retour",
         description:
           "Lorsque ce personnage est banni via un défi, renvoyez cette carte dans votre main.",
       },
@@ -39,7 +39,7 @@ export const nibsLostBoyI18n: Record<Languages, I18nProperties> = {
     version: "Bimbo Sperduto",
     text: [
       {
-        title: "GUARDA CHI È TORNATO",
+        title: "Guarda Chi è Tornato",
         description:
           "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta.",
       },

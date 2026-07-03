@@ -6,14 +6,17 @@ export const exbpExBase003: BaseCard = {
   type: "base",
   traits: [],
   id: "EXBP-003",
-  externalId: "gundam:exbp-003",
-  slug: "ex-base-exbp-003",
+  canonicalId: "EXBP-003",
+  externalIds: { bandai: "gundam:exbp-003" },
+  slug: "ex-base/exbp-003",
   displayName: "EX Base",
   set: { code: "EXBP", name: "THE GUNDAM BASE POP-UP WORLD TOUR", packageId: "616901" },
   printNumber: "EXBP-003",
   printings: [
     {
       id: "EXBP-003",
+      artId: "EXBP-003",
+      setCode: "EXBP",
       collectorNumber: "EXBP-003",
       cardNumber: "EXBP-003",
       set: {
@@ -28,6 +31,7 @@ export const exbpExBase003: BaseCard = {
       productName: "THE GUNDAM BASE POP-UP WORLD TOUR",
     },
   ],
+  reprints: ["EXBP-003"],
   selectedPrintingId: "EXBP-003",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-003.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-003.webp?260424",

@@ -14,8 +14,8 @@ export const healingDecanterI18n: Record<Languages, I18nProperties> = {
     name: "Heilende Karaffe",
     text: [
       {
-        title: "ERNEUERNDE ESSENZ",
-        description: "— Entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
+        title: "Erneuernde Essenz",
+        description: "{E} — Entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const healingDecanterI18n: Record<Languages, I18nProperties> = {
     name: "Philtre de guérison",
     text: [
       {
-        title: "SOLUTION",
-        description: "RÉGÉNÉRANTE — Choisissez un personnage et retirez-lui jusqu'à 2 dommages.",
+        title: "Solution régénérante",
+        description: "{E} — Choisissez un personnage et retirez-lui jusqu'à 2 dommages.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const healingDecanterI18n: Record<Languages, I18nProperties> = {
     name: "Ampolla Curativa",
     text: [
       {
-        title: "ESSENZA DI RINNOVAMENTO",
-        description: "— Rimuovi fino a 2 danni da un personaggio a tua scelta.",
+        title: "Essenza di Rinnovamento",
+        description: "{E} — Rimuovi fino a 2 danni da un personaggio a tua scelta.",
       },
     ],
   },

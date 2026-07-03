@@ -20,12 +20,13 @@ export const mickeyMousePirateCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Pirate Captain",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)",
       },
       {
-        title: "MARINER'S MIGHT",
+        title: "Mariner's Might",
         description:
-          'Whenever this character quests, chosen Pirate character gets +2 and gains "This character takes no damage from challenges" this turn.',
+          'Whenever this character quests, chosen Pirate character gets +2 {S} and gains "This character takes no damage from challenges" this turn.',
       },
     ],
   },
@@ -34,12 +35,13 @@ export const mickeyMousePirateCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Pirate Captain",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)",
       },
       {
-        title: "MARINER'S MIGHT",
+        title: "Mariner's Might",
         description:
-          'Whenever this character quests, chosen Pirate character gets +2 and gains "This character takes no damage from challenges" this turn.',
+          'Whenever this character quests, chosen Pirate character gets +2 {S} and gains "This character takes no damage from challenges" this turn.',
       },
     ],
   },
@@ -48,12 +50,13 @@ export const mickeyMousePirateCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Pirate Captain",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)",
       },
       {
-        title: "MARINER'S MIGHT",
+        title: "Mariner's Might",
         description:
-          'Whenever this character quests, chosen Pirate character gets +2 and gains "This character takes no damage from challenges" this turn.',
+          'Whenever this character quests, chosen Pirate character gets +2 {S} and gains "This character takes no damage from challenges" this turn.',
       },
     ],
   },

@@ -6,14 +6,17 @@ export const gd03Eternal131: BaseCard = {
   type: "base",
   traits: ["triple ship alliance", "warship"],
   id: "GD03-131",
-  externalId: "gundam:gd03-131",
-  slug: "eternal-gd03-131",
+  canonicalId: "GD03-131",
+  externalIds: { bandai: "gundam:gd03-131" },
+  slug: "eternal/gd03-131",
   displayName: "Eternal",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-131",
   printings: [
     {
       id: "GD03-131",
+      artId: "GD03-131",
+      setCode: "GD03",
       collectorNumber: "GD03-131",
       cardNumber: "GD03-131",
       set: {
@@ -28,6 +31,7 @@ export const gd03Eternal131: BaseCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-131"],
   selectedPrintingId: "GD03-131",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-131.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-131.webp?260424",

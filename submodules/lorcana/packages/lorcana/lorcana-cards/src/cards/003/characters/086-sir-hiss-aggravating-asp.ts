@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { sirHissAggravatingAspI18n } from "./086-sir-hiss-aggravating-asp.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const sirHissAggravatingAsp: CharacterCard = {
   id: "O7w",
   canonicalId: "ci_O7w",
+  slug: "lorcana-ci_O7w",
+  printings: [
+    {
+      id: "set3-086",
+      artId: "set3-086",
+      setCode: "set3",
+      collectorNumber: "86",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-086"],
   cardType: "character",
   name: "Sir Hiss",
@@ -21,7 +33,7 @@ export const sirHissAggravatingAsp: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8ab16485ed264e15b2e70a3ff7d97ce0",
-    tcgPlayer: 537932,
+    tcgPlayer: "537932",
   },
   text: "Evasive",
   classifications: ["Dreamborn", "Ally"],

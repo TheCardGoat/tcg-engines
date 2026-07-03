@@ -7,14 +7,17 @@ export const gd01ShenlongGundam029: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-029",
-  externalId: "gundam:gd01-029",
-  slug: "shenlong-gundam-gd01-029",
+  canonicalId: "GD01-029",
+  externalIds: { bandai: "gundam:gd01-029" },
+  slug: "shenlong-gundam/gd01-029",
   displayName: "Shenlong Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-029",
   printings: [
     {
       id: "GD01-029",
+      artId: "GD01-029",
+      setCode: "GD01",
       collectorNumber: "GD01-029",
       cardNumber: "GD01-029",
       set: {
@@ -30,6 +33,8 @@ export const gd01ShenlongGundam029: UnitCard = {
     },
     {
       id: "GD01-029_p1",
+      artId: "GD01-029_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-029_p1",
       cardNumber: "GD01-029",
       set: {
@@ -44,6 +49,7 @@ export const gd01ShenlongGundam029: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-029", "GD01-029_p1"],
   selectedPrintingId: "GD01-029",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-029.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-029.webp?260424",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { fairyGodmotherMagicalBenefactorI18n } from "./192-fairy-godmother-magical-benefactor.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const fairyGodmotherMagicalBenefactor: CharacterCard = {
   id: "NZ3",
   canonicalId: "ci_NZ3",
+  slug: "lorcana-ci_NZ3",
+  printings: [
+    {
+      id: "set10-192",
+      artId: "set10-192",
+      setCode: "set10",
+      collectorNumber: "192",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-192"],
   cardType: "character",
   name: "Fairy Godmother",
@@ -21,7 +33,7 @@ export const fairyGodmotherMagicalBenefactor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_96d8b0484c8441f0a214eee856f60f35",
-    tcgPlayer: 659414,
+    tcgPlayer: "659414",
   },
   text: [
     {

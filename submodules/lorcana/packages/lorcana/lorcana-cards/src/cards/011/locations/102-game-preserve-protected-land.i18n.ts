@@ -17,9 +17,9 @@ export const gamePreserveProtectedLandI18n: Record<Languages, I18nProperties> = 
     version: "Geschütztes Land",
     text: [
       {
-        title: "LEICHT ZU ÜBERSEHEN",
+        title: "Leicht zu übersehen",
         description:
-          "Solange du mindestens einen Charakter mit Wendig an diesem Ort hast, erhält dieser Ort Wendig. (Nur Charaktere mit Wendig können ihn herausfordern.)",
+          "Solange du mindestens einen Charakter mit <Wendig> an diesem Ort hast, erhält dieser Ort <Wendig>. (Nur Charaktere mit Wendig können ihn herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const gamePreserveProtectedLandI18n: Record<Languages, I18nProperties> = 
     version: "Terrain protégé",
     text: [
       {
-        title: "FACILE À RATER",
+        title: "Facile à rater",
         description:
-          "Tant qu'il y a un personnage avec Insaisissable sur ce lieu, ce lieu gagne Insaisissable. (Seuls les personnages avec Insaisissable peuvent défier ce lieu.)",
+          "Tant qu'il y a un personnage avec <Insaisissable> sur ce lieu, ce lieu gagne <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ce lieu.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const gamePreserveProtectedLandI18n: Record<Languages, I18nProperties> = 
     version: "Territorio Protetto",
     text: [
       {
-        title: "FACILE NON ACCORGERSENE",
+        title: "Facile Non Accorgersene",
         description:
-          "Mentre c'è un personaggio con Sfuggente in questo luogo, questo luogo ottiene Sfuggente. (Solo personaggi con Sfuggente possono sfidarlo.)",
+          "Mentre c'è un personaggio con <Sfuggente> in questo luogo, questo luogo ottiene <Sfuggente>. (Solo personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

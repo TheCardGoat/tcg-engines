@@ -17,9 +17,9 @@ export const frecklesGoodBoyI18n: Record<Languages, I18nProperties> = {
     version: "Guter Junge",
     text: [
       {
-        title: "EINFACH NIEDLICH!",
+        title: "Einfach niedlich!",
         description:
-          "Wenn du diesen Charakter ausspielst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -1.",
+          "Wenn du diesen Charakter ausspielst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -1 {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const frecklesGoodBoyI18n: Record<Languages, I18nProperties> = {
     version: "Bon chien",
     text: [
       {
-        title: "TELLEMENT MIGNON!",
+        title: "Tellement mignon!",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -1 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -1 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const frecklesGoodBoyI18n: Record<Languages, I18nProperties> = {
     version: "Bravo Ragazzo",
     text: [
       {
-        title: "COSÌ CARINO!",
+        title: "Così Carino!",
         description:
-          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -1 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -1 {S} per questo turno.",
       },
     ],
   },

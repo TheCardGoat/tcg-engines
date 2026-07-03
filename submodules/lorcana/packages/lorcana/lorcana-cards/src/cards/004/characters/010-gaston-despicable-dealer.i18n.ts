@@ -16,9 +16,9 @@ export const gastonDespicableDealerI18n: Record<Languages, I18nProperties> = {
     version: "Verruchter Händler",
     text: [
       {
-        title: "ZWEIFELHAFTE REKRUTIERUNG",
+        title: "Zweifelhafte Rekrutierung",
         description:
-          "— Du zahlst 2 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "{E} — Du zahlst 2 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -27,8 +27,9 @@ export const gastonDespicableDealerI18n: Record<Languages, I18nProperties> = {
     version: "Odieux comploteur",
     text: [
       {
-        title: "RECRUTEMENT DOUTEUX",
-        description: "— Le prochain personnage que vous jouez durant ce tour coûte 2 de moins.",
+        title: "Recrutement douteux",
+        description:
+          "{E} — Le prochain personnage que vous jouez durant ce tour coûte 2 {I} de moins.",
       },
     ],
   },
@@ -37,8 +38,9 @@ export const gastonDespicableDealerI18n: Record<Languages, I18nProperties> = {
     version: "Spregevole Trafficante",
     text: [
       {
-        title: "RECLUTAMENTO SOSPETTO",
-        description: "— Paga 2 in meno per giocare il tuo prossimo personaggio per questo turno.",
+        title: "Reclutamento Sospetto",
+        description:
+          "{E} — Paga 2 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { meridaGiftedArcherI18n } from "./089-merida-gifted-archer.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const meridaGiftedArcher: CharacterCard = {
-  id: "wwO",
+  id: "5hR",
   canonicalId: "ci_wwO",
+  slug: "lorcana-ci_wwO",
+  printings: [
+    {
+      id: "set12-089",
+      artId: "set12-089",
+      setCode: "set12",
+      collectorNumber: "89",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-089"],
   cardType: "character",
   name: "Merida",
@@ -20,7 +32,8 @@ export const meridaGiftedArcher: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_2ba24a02308b4a9196bbe2cef9546e6b",
+    lorcast: "crd_52404c741d6e424e8a8f901408ccb11a",
+    tcgPlayer: "692235",
   },
   text: [
     {

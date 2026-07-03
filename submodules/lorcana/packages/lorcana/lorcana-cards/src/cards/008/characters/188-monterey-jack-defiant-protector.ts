@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { montereyJackDefiantProtectorI18n } from "./188-monterey-jack-defiant-protector.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const montereyJackDefiantProtector: CharacterCard = {
   id: "scr",
   canonicalId: "ci_scr",
+  slug: "lorcana-ci_scr",
+  printings: [
+    {
+      id: "set8-188",
+      artId: "set8-188",
+      setCode: "set8",
+      collectorNumber: "188",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-188"],
   cardType: "character",
   name: "Monterey Jack",
@@ -21,7 +33,7 @@ export const montereyJackDefiantProtector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c36fb1d14427405e9855584cc3303929",
-    tcgPlayer: 631474,
+    tcgPlayer: "631474",
   },
   text: "Bodyguard",
   classifications: ["Storyborn", "Ally"],

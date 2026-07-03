@@ -6,14 +6,17 @@ export const gd02Hammerhead128: BaseCard = {
   type: "base",
   traits: ["teiwaz", "warship"],
   id: "GD02-128",
-  externalId: "gundam:gd02-128",
-  slug: "hammerhead-gd02-128",
+  canonicalId: "GD02-128",
+  externalIds: { bandai: "gundam:gd02-128" },
+  slug: "hammerhead/gd02-128",
   displayName: "Hammerhead",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-128",
   printings: [
     {
       id: "GD02-128",
+      artId: "GD02-128",
+      setCode: "GD02",
       collectorNumber: "GD02-128",
       cardNumber: "GD02-128",
       set: {
@@ -28,6 +31,7 @@ export const gd02Hammerhead128: BaseCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-128"],
   selectedPrintingId: "GD02-128",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-128.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-128.webp?260424",

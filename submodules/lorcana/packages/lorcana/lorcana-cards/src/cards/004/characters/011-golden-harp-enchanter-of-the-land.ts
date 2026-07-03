@@ -4,6 +4,17 @@ import { goldenHarpEnchanterOfTheLandI18n } from "./011-golden-harp-enchanter-of
 export const goldenHarpEnchanterOfTheLand: CharacterCard = {
   id: "KkZ",
   canonicalId: "ci_KkZ",
+  slug: "lorcana-ci_KkZ",
+  printings: [
+    {
+      id: "set4-011",
+      artId: "set4-011",
+      setCode: "set4",
+      collectorNumber: "11",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-011"],
   cardType: "character",
   name: "Golden Harp",
@@ -19,7 +30,7 @@ export const goldenHarpEnchanterOfTheLand: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4047afdc24734dc081571f81815febd8",
-    tcgPlayer: 549623,
+    tcgPlayer: "549623",
   },
   text: [
     {

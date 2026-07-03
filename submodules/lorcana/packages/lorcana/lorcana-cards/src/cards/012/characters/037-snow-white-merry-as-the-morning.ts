@@ -4,6 +4,17 @@ import { snowWhiteMerryAsTheMorningI18n } from "./037-snow-white-merry-as-the-mo
 export const snowWhiteMerryAsTheMorning: CharacterCard = {
   id: "EdS",
   canonicalId: "ci_EdS",
+  slug: "lorcana-ci_EdS",
+  printings: [
+    {
+      id: "set12-037",
+      artId: "set12-037",
+      setCode: "set12",
+      collectorNumber: "37",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-037"],
   cardType: "character",
   name: "Snow White",
@@ -20,6 +31,7 @@ export const snowWhiteMerryAsTheMorning: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6253282cb5e14ec384482907b1b1aaa3",
+    tcgPlayer: "692014",
   },
   text: [
     {

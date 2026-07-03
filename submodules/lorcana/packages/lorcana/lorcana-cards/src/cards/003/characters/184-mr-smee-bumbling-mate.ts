@@ -4,6 +4,17 @@ import { mrSmeeBumblingMateI18n } from "./184-mr-smee-bumbling-mate.i18n";
 export const mrSmeeBumblingMate: CharacterCard = {
   id: "7M2",
   canonicalId: "ci_7M2",
+  slug: "lorcana-ci_7M2",
+  printings: [
+    {
+      id: "set3-184",
+      artId: "set3-184",
+      setCode: "set3",
+      collectorNumber: "184",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-184"],
   cardType: "character",
   name: "Mr. Smee",
@@ -20,7 +31,7 @@ export const mrSmeeBumblingMate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c608166f5ffb4bb195af64fb501902cb",
-    tcgPlayer: 539111,
+    tcgPlayer: "539111",
   },
   text: [
     {

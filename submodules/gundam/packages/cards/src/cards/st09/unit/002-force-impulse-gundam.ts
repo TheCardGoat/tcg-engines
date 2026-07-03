@@ -7,14 +7,17 @@ export const st09ForceImpulseGundam002: UnitCard = {
   color: "purple",
   traits: ["zaft", "minerva squad"],
   id: "ST09-002",
-  externalId: "gundam:st09-002",
-  slug: "force-impulse-gundam-st09-002",
+  canonicalId: "ST09-002",
+  externalIds: { bandai: "gundam:st09-002" },
+  slug: "force-impulse-gundam/st09-002",
   displayName: "Force Impulse Gundam",
   set: { code: "ST09", name: "Destiny Ignition [ST09]", packageId: "616009" },
   printNumber: "ST09-002",
   printings: [
     {
       id: "ST09-002",
+      artId: "ST09-002",
+      setCode: "ST09",
       collectorNumber: "ST09-002",
       cardNumber: "ST09-002",
       set: {
@@ -30,6 +33,8 @@ export const st09ForceImpulseGundam002: UnitCard = {
     },
     {
       id: "ST09-002_p1",
+      artId: "ST09-002_p1",
+      setCode: "ST09",
       collectorNumber: "ST09-002_p1",
       cardNumber: "ST09-002",
       set: {
@@ -44,6 +49,7 @@ export const st09ForceImpulseGundam002: UnitCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST09-002", "ST09-002_p1"],
   selectedPrintingId: "ST09-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st09/ST09-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST09-002.webp?260424",

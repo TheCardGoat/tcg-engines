@@ -17,14 +17,45 @@ export const makeThePotionI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Den Trank brauen",
-    text: "Wähle eine Möglickeit aus: • Verbanne einen Gegenstand deiner Wahl. • Füge einem beschädigten Charakter deiner Wahl 2 Schaden zu.",
+    text: [
+      {
+        title: "Wähle eine Möglickeit aus:",
+      },
+      {
+        title: "• Verbanne einen Gegenstand deiner Wahl.",
+      },
+      {
+        title: "• Füge einem beschädigten Charakter deiner Wahl 2 Schaden zu.",
+      },
+    ],
   },
   fr: {
     name: "Concocter la Potion",
-    text: "Choisissez entre: • Choisissez un objet et bannissez-le. • Choisissez un personnage ayant au moins un jeton Dommage et infligez-lui 2 dommages.",
+    text: [
+      {
+        title: "Choisissez entre:",
+      },
+      {
+        title: "• Choisissez un objet et bannissez-le.",
+      },
+      {
+        title:
+          "• Choisissez un personnage ayant au moins un jeton Dommage et infligez-lui 2 dommages.",
+      },
+    ],
   },
   it: {
     name: "Fare la Pozione",
-    text: "Scegli uno: • Esilia un oggetto a tua scelta. • Infliggi 2 danni a un personaggio danneggiato a tua scelta.",
+    text: [
+      {
+        title: "Scegli uno:",
+      },
+      {
+        title: "• Esilia un oggetto a tua scelta.",
+      },
+      {
+        title: "• Infliggi 2 danni a un personaggio danneggiato a tua scelta.",
+      },
+    ],
   },
 };

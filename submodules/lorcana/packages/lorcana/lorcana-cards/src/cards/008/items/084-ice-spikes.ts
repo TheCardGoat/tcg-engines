@@ -4,6 +4,17 @@ import { iceSpikesI18n } from "./084-ice-spikes.i18n";
 export const iceSpikes: ItemCard = {
   id: "zHC",
   canonicalId: "ci_zHC",
+  slug: "lorcana-ci_zHC",
+  printings: [
+    {
+      id: "set8-084",
+      artId: "set8-084",
+      setCode: "set8",
+      collectorNumber: "84",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-084"],
   cardType: "item",
   name: "Ice Spikes",
@@ -16,7 +27,7 @@ export const iceSpikes: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f045d7f21ccd4cbe8ffb41e436759221",
-    tcgPlayer: 631405,
+    tcgPlayer: "631405",
   },
   text: [
     {

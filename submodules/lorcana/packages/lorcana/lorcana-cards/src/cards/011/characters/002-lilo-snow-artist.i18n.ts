@@ -16,9 +16,9 @@ export const liloSnowArtistI18n: Record<Languages, I18nProperties> = {
     version: "Schneekünstlerin",
     text: [
       {
-        title: "KREATIVE INSPIRATION",
+        title: "Kreative Inspiration",
         description:
-          "Solange du mindestens einen Stitch-Charakter im Spiel hast, erhält dieser Charakter +1.",
+          "Solange du mindestens einen Stitch-Charakter im Spiel hast, erhält dieser Charakter +1 {L}.",
       },
     ],
   },
@@ -27,8 +27,9 @@ export const liloSnowArtistI18n: Record<Languages, I18nProperties> = {
     version: "Artiste de la neige",
     text: [
       {
-        title: "INSPIRATION CRÉATIVE",
-        description: "Tant que vous avez un personnage Stitch en jeu, ce personnage-ci gagne +1.",
+        title: "Inspiration créative",
+        description:
+          "Tant que vous avez un personnage Stitch en jeu, ce personnage-ci gagne +1 {L}.",
       },
     ],
   },
@@ -37,9 +38,9 @@ export const liloSnowArtistI18n: Record<Languages, I18nProperties> = {
     version: "Artista della Neve",
     text: [
       {
-        title: "ISPIRAZIONE CREATIVA",
+        title: "Ispirazione Creativa",
         description:
-          "Mentre hai in gioco un personaggio chiamato Stitch, questo personaggio riceve +1.",
+          "Mentre hai in gioco un personaggio chiamato Stitch, questo personaggio riceve +1 {L}.",
       },
     ],
   },

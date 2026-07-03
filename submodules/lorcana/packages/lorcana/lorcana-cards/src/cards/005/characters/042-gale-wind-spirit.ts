@@ -4,6 +4,17 @@ import { galeWindSpiritI18n } from "./042-gale-wind-spirit.i18n";
 export const galeWindSpirit: CharacterCard = {
   id: "Ds5",
   canonicalId: "ci_Ds5",
+  slug: "lorcana-ci_Ds5",
+  printings: [
+    {
+      id: "set5-042",
+      artId: "set5-042",
+      setCode: "set5",
+      collectorNumber: "42",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-042"],
   cardType: "character",
   name: "Gale",
@@ -20,7 +31,7 @@ export const galeWindSpirit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a9888f3a8e1845588922ff69068e6f78",
-    tcgPlayer: 561488,
+    tcgPlayer: "561488",
   },
   text: [
     {

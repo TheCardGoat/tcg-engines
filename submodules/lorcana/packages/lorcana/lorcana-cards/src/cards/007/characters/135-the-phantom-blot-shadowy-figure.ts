@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { thePhantomBlotShadowyFigureI18n } from "./135-the-phantom-blot-shadowy-figure.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const thePhantomBlotShadowyFigure: CharacterCard = {
   id: "jqj",
   canonicalId: "ci_jqj",
+  slug: "lorcana-ci_jqj",
+  printings: [
+    {
+      id: "set7-135",
+      artId: "set7-135",
+      setCode: "set7",
+      collectorNumber: "135",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-135"],
   cardType: "character",
   name: "The Phantom Blot",
@@ -20,7 +32,7 @@ export const thePhantomBlotShadowyFigure: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1d8717ca485141a48e480838e3667ca3",
-    tcgPlayer: 619481,
+    tcgPlayer: "619481",
   },
   text: "Rush",
   classifications: ["Storyborn", "Villain"],

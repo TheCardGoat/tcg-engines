@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { mirageSuperRecruiterI18n } from "./053-mirage-super-recruiter.i18n";
 
 export const mirageSuperRecruiter: CharacterCard = {
-  id: "fio",
+  id: "ipu",
   canonicalId: "ci_fio",
+  slug: "lorcana-ci_fio",
+  printings: [
+    {
+      id: "set12-053",
+      artId: "set12-053",
+      setCode: "set12",
+      collectorNumber: "53",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-053"],
   cardType: "character",
   name: "Mirage",
@@ -19,7 +30,8 @@ export const mirageSuperRecruiter: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_fd90534b079e4fec8d12822fedc90c9a",
+    lorcast: "crd_31ae4e3c265448b894f74dcaf1914a3a",
+    tcgPlayer: "692205",
   },
   text: [
     {

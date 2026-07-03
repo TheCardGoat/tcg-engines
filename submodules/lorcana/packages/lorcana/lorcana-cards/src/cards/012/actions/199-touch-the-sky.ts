@@ -4,6 +4,17 @@ import { touchTheSkyI18n } from "./199-touch-the-sky.i18n";
 export const touchTheSky: ActionCard = {
   id: "kgN",
   canonicalId: "ci_kgN",
+  slug: "lorcana-ci_kgN",
+  printings: [
+    {
+      id: "set12-199",
+      artId: "set12-199",
+      setCode: "set12",
+      collectorNumber: "199",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-199"],
   cardType: "action",
   name: "Touch the Sky",
@@ -14,18 +25,11 @@ export const touchTheSky: ActionCard = {
   rarity: "rare",
   cost: 2,
   inkable: true,
-
   externalIds: {
     lorcast: "crd_baeb30c2d1dd4756b259daeb2833fad4",
+    tcgPlayer: "692091",
   },
-  text: [
-    {
-      title: "Move a character of yours to a location for free.",
-    },
-    {
-      title: "Then, draw cards equal to that location's {L}.",
-    },
-  ],
+  text: "Move a character of yours to a location for free. Then, draw cards equal to that location's {L}.",
   actionSubtype: "song",
   abilities: [
     {

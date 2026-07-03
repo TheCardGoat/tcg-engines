@@ -11,7 +11,16 @@ export const beOurGuestI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "C'EST LA FÊTE",
-    text: "Regardez les 4 premières cartes de votre pioche. Vous pouvez révéler une carte personnage parmi elles et l'ajouter à votre main. Remettez les autres sous votre pioche, dans l'ordre de votre choix.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Regardez les 4 premières cartes de votre pioche. Vous pouvez révéler une carte personnage parmi elles et l'ajouter à votre main. Remettez les autres sous votre pioche, dans l'ordre de votre choix.",
+      },
+    ],
   },
   it: {
     name: "Be Our Guest",

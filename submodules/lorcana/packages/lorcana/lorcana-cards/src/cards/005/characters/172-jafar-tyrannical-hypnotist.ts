@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jafarTyrannicalHypnotistI18n } from "./172-jafar-tyrannical-hypnotist.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const jafarTyrannicalHypnotist: CharacterCard = {
   id: "4QY",
   canonicalId: "ci_4QY",
+  slug: "lorcana-ci_4QY",
+  printings: [
+    {
+      id: "set5-172",
+      artId: "set5-172",
+      setCode: "set5",
+      collectorNumber: "172",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-172"],
   cardType: "character",
   name: "Jafar",
@@ -21,7 +33,7 @@ export const jafarTyrannicalHypnotist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1ba7f7638b4a47d29957c8eef13099b8",
-    tcgPlayer: 561328,
+    tcgPlayer: "561328",
   },
   text: [
     {

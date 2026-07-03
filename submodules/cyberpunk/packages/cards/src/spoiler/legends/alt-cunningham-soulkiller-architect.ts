@@ -1,14 +1,16 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { goSoloAbility } from "@tcg/cyberpunk-types";
 
-export const spoilerAltCunninghamSoulkillerArchitect = {
+export const spoilerAltCunninghamSoulkillerArchitect = defineCyberpunkCard({
   id: "5bbc73e5-14c8-4817-8ffc-865dc0c6d068",
-  externalId: "cyberpunk:alt-cunningham-soulkiller-architect",
   slug: "alt-cunningham-soulkiller-architect",
-  name: "Alt Cunningham",
-  subname: "Soulkiller Architect",
-  displayName: "Alt Cunningham - Soulkiller Architect",
   rulesText:
     "GO SOLO When this Legend steals a Gig, you may remove this Legend from the game. If you do, choose a Program from your trash. Play it for free.",
+  subname: "Soulkiller Architect",
+  name: "Alt Cunningham",
+  displayName: "Alt Cunningham - Soulkiller Architect",
+  canonicalId: "alt-cunningham-soulkiller-architect",
   color: "blue",
   classifications: ["Merc", "Netrunner"],
   set: {
@@ -16,36 +18,18 @@ export const spoilerAltCunninghamSoulkillerArchitect = {
     name: "Spoiler Set",
   },
   printNumber: "121",
-  printings: [
-    {
-      id: "ba44e0d0-80ee-4ee1-8828-57cdb90aaa5f",
-      collectorNumber: "121",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "ba44e0d0-80ee-4ee1-8828-57cdb90aaa5f",
   artist: "Pandart Studio",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/121.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
   keywords: ["goSolo"],
   type: "legend",
   cost: 6,
   power: 4,
   abilities: [
-    {
-      kind: "keyword",
-      text: "GO SOLO",
-      keyword: "goSolo",
-      source: {
-        selector: "self",
-      },
-      effects: [],
-    },
+    goSoloAbility(),
     {
       kind: "triggered",
       text: "When this Legend steals a Gig, you may remove this Legend from the game. If you do, choose a Program from your trash. Play it for free.",
@@ -93,5 +77,4 @@ export const spoilerAltCunninghamSoulkillerArchitect = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies LegendCardDefinition;

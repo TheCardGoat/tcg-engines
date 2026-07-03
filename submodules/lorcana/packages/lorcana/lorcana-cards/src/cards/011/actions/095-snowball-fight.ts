@@ -4,6 +4,17 @@ import { snowballFightI18n } from "./095-snowball-fight.i18n";
 export const snowballFight: ActionCard = {
   id: "ucF",
   canonicalId: "ci_ucF",
+  slug: "lorcana-ci_ucF",
+  printings: [
+    {
+      id: "set11-095",
+      artId: "set11-095",
+      setCode: "set11",
+      collectorNumber: "95",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-095"],
   cardType: "action",
   name: "Snowball Fight",
@@ -16,7 +27,7 @@ export const snowballFight: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8bd23953f8744c588a3f122476f67c3c",
-    tcgPlayer: 673071,
+    tcgPlayer: "673071",
   },
   text: "Each opponent chooses and discards a card. If you have a character with Evasive in play, gain 1 lore.",
   abilities: [

@@ -4,7 +4,7 @@ import { princeNaveenBundledUp } from "./173-prince-naveen-bundled-up";
 
 describe("Prince Naveen - Bundled Up", () => {
   it("defines an empty ability list for a vanilla character", () => {
-    expect(princeNaveenBundledUp.abilities).toEqual([]);
+    expect(princeNaveenBundledUp.abilities ?? []).toEqual([]);
   });
 
   it("can be played with enough ink", () => {

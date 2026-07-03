@@ -4,6 +4,17 @@ import { mrSnoopsBetrayedPartnerI18n } from "./143-mr-snoops-betrayed-partner.i1
 export const mrSnoopsBetrayedPartner: CharacterCard = {
   id: "2lr",
   canonicalId: "ci_2lr",
+  slug: "lorcana-ci_2lr",
+  printings: [
+    {
+      id: "set8-143",
+      artId: "set8-143",
+      setCode: "set8",
+      collectorNumber: "143",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-143"],
   cardType: "character",
   name: "Mr. Snoops",
@@ -20,7 +31,7 @@ export const mrSnoopsBetrayedPartner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8010db6668ab482899edbda27487eaae",
-    tcgPlayer: 631768,
+    tcgPlayer: "631768",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { healingTouchI18n } from "./026-healing-touch.i18n";
 export const healingTouch: ActionCard = {
   id: "b5J",
   canonicalId: "ci_b5J",
+  slug: "lorcana-ci_b5J",
+  printings: [
+    {
+      id: "set5-026",
+      artId: "set5-026",
+      setCode: "set5",
+      collectorNumber: "26",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-026"],
   cardType: "action",
   name: "Healing Touch",
@@ -16,7 +27,7 @@ export const healingTouch: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_10b23643a0b146bcb95389cfb37c6133",
-    tcgPlayer: 561259,
+    tcgPlayer: "561259",
   },
   text: "Remove up to 4 damage from chosen character. Draw a card.",
   abilities: [
@@ -24,7 +35,10 @@ export const healingTouch: ActionCard = {
       effect: {
         steps: [
           {
-            amount: { type: "up-to", value: 4 },
+            amount: {
+              type: "up-to",
+              value: 4,
+            },
             target: {
               selector: "chosen",
               count: 1,

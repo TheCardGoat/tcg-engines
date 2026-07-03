@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { genieMagicalResearcherI18n } from "./049-genie-magical-researcher.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const genieMagicalResearcher: CharacterCard = {
   id: "fkH",
   canonicalId: "ci_PvV",
+  slug: "lorcana-ci_PvV",
+  printings: [
+    {
+      id: "set11-049",
+      artId: "set11-049",
+      setCode: "set11",
+      collectorNumber: "49",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-049"],
   cardType: "character",
   name: "Genie",
@@ -21,17 +33,9 @@ export const genieMagicalResearcher: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_13f9925099454b7a8fd6225381d11061",
-    tcgPlayer: 675280,
+    tcgPlayer: "675280",
   },
-  text: [
-    {
-      title: "Boost 1 {I}",
-    },
-    {
-      title: "INCREASING WISDOM",
-      description: "This character gets +1 {L} for each card under him.",
-    },
-  ],
+  text: "Boost 1 {I} INCREASING WISDOM This character gets +1 {L} for each card under him.",
   classifications: ["Storyborn", "Ally", "Whisper"],
   abilities: [
     boost(1),

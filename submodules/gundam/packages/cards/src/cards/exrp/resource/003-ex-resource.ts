@@ -6,8 +6,9 @@ export const exrpExResource003: ResourceCard = {
   type: "resource",
   traits: [],
   id: "EXRP-003",
-  externalId: "gundam:exrp-003",
-  slug: "ex-resource-exrp-003",
+  canonicalId: "EXRP-003",
+  externalIds: { bandai: "gundam:exrp-003" },
+  slug: "ex-resource/exrp-003",
   displayName: "EX Resource",
   set: {
     code: "EXRP",
@@ -18,6 +19,8 @@ export const exrpExResource003: ResourceCard = {
   printings: [
     {
       id: "EXRP-003",
+      artId: "EXRP-003",
+      setCode: "EXRP",
       collectorNumber: "EXRP-003",
       cardNumber: "EXRP-003",
       set: {
@@ -32,6 +35,7 @@ export const exrpExResource003: ResourceCard = {
       productName: "BANDAI CARD GAMES Fest 25-26 in DALLAS, other events",
     },
   ],
+  reprints: ["EXRP-003"],
   selectedPrintingId: "EXRP-003",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exrp/EXRP-003.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXRP-003.webp?260424",

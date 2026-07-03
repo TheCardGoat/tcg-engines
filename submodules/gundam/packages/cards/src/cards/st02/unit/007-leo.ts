@@ -7,14 +7,17 @@ export const st02Leo007: UnitCard = {
   color: "blue",
   traits: ["oz"],
   id: "ST02-007",
-  externalId: "gundam:st02-007",
-  slug: "leo-st02-007",
+  canonicalId: "ST02-007",
+  externalIds: { bandai: "gundam:st02-007" },
+  slug: "leo/st02-007",
   displayName: "Leo",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-007",
   printings: [
     {
       id: "ST02-007",
+      artId: "ST02-007",
+      setCode: "ST02",
       collectorNumber: "ST02-007",
       cardNumber: "ST02-007",
       set: {
@@ -30,6 +33,8 @@ export const st02Leo007: UnitCard = {
     },
     {
       id: "ST02-007_p1",
+      artId: "ST02-007_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-007_p1",
       cardNumber: "ST02-007",
       set: {
@@ -44,6 +49,7 @@ export const st02Leo007: UnitCard = {
       productName: "Wings of Advance [ST02] Bonus Pack",
     },
   ],
+  reprints: ["ST02-007", "ST02-007_p1"],
   selectedPrintingId: "ST02-007",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-007.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-007.webp?260424",

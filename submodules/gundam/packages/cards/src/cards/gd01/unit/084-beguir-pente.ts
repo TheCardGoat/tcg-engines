@@ -7,14 +7,17 @@ export const gd01BeguirPente084: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-084",
-  externalId: "gundam:gd01-084",
-  slug: "beguir-pente-gd01-084",
+  canonicalId: "GD01-084",
+  externalIds: { bandai: "gundam:gd01-084" },
+  slug: "beguir-pente/gd01-084",
   displayName: "Beguir-Pente",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-084",
   printings: [
     {
       id: "GD01-084",
+      artId: "GD01-084",
+      setCode: "GD01",
       collectorNumber: "GD01-084",
       cardNumber: "GD01-084",
       set: {
@@ -29,6 +32,7 @@ export const gd01BeguirPente084: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-084"],
   selectedPrintingId: "GD01-084",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-084.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-084.webp?260424",

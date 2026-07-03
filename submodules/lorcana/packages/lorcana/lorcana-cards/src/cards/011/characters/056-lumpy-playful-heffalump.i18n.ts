@@ -9,16 +9,16 @@ export const lumpyPlayfulHeffalumpI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Lumpi",
     version: "Verspielter Heffalump",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Lumpy",
     version: "Éfélant joueur",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Effy",
     version: "Efelante Giocoso",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

@@ -17,9 +17,9 @@ export const aliceTeaAlchemistI18n: Record<Languages, I18nProperties> = {
     version: "Tee Alchemistin",
     text: [
       {
-        title: "DAS WIRD JA IMMER ULKIGER",
+        title: "Das wird ja immer ulkiger",
         description:
-          "— Erschöpfe einen gegnerischen Charakter deiner Wahl und alle gegnerischen Charaktere mit dem gleichen Namen.",
+          "{E} — Erschöpfe einen gegnerischen Charakter deiner Wahl und alle gegnerischen Charaktere mit dem gleichen Namen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const aliceTeaAlchemistI18n: Record<Languages, I18nProperties> = {
     version: "Alchimiste théinée",
     text: [
       {
-        title: "TRÈS TRÈS CURIEUX",
+        title: "Très très curieux",
         description:
-          "— Choisissez un personnage adverse et épuisez-le, ainsi que tous les personnages adverses du même nom.",
+          "{E} — Choisissez un personnage adverse et épuisez-le, ainsi que tous les personnages adverses du même nom.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const aliceTeaAlchemistI18n: Record<Languages, I18nProperties> = {
     version: "Alchimista del Tè",
     text: [
       {
-        title: "È SEMPRE PIÙ CURIOSO",
+        title: "È Sempre Più Curioso",
         description:
-          "— Impegna un personaggio avversario a tua scelta e tutti gli altri personaggi avversari con lo stesso nome.",
+          "{E} — Impegna un personaggio avversario a tua scelta e tutti gli altri personaggi avversari con lo stesso nome.",
       },
     ],
   },

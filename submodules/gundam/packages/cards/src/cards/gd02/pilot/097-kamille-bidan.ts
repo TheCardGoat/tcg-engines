@@ -7,14 +7,17 @@ export const gd02KamilleBidan097: PilotCard = {
   color: "white",
   traits: ["aeug", "newtype"],
   id: "GD02-097",
-  externalId: "gundam:gd02-097",
-  slug: "kamille-bidan-gd02-097",
+  canonicalId: "GD02-097",
+  externalIds: { bandai: "gundam:gd02-097" },
+  slug: "kamille-bidan/gd02-097",
   displayName: "Kamille Bidan",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-097",
   printings: [
     {
       id: "GD02-097",
+      artId: "GD02-097",
+      setCode: "GD02",
       collectorNumber: "GD02-097",
       cardNumber: "GD02-097",
       set: {
@@ -30,6 +33,8 @@ export const gd02KamilleBidan097: PilotCard = {
     },
     {
       id: "GD02-097_p1",
+      artId: "GD02-097_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-097_p1",
       cardNumber: "GD02-097",
       set: {
@@ -45,6 +50,8 @@ export const gd02KamilleBidan097: PilotCard = {
     },
     {
       id: "GD02-097_p2",
+      artId: "GD02-097_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-097_p2",
       cardNumber: "GD02-097",
       set: {
@@ -59,6 +66,7 @@ export const gd02KamilleBidan097: PilotCard = {
       productName: "Newtype Challenge 2025 Mission 2",
     },
   ],
+  reprints: ["GD02-097", "GD02-097_p1", "GD02-097_p2"],
   selectedPrintingId: "GD02-097",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-097.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-097.webp?260424",

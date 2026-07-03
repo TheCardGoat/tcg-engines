@@ -4,6 +4,17 @@ import { maleficentVexedPartygoerI18n } from "./051-maleficent-vexed-partygoer.i
 export const maleficentVexedPartygoer: CharacterCard = {
   id: "3T9",
   canonicalId: "ci_3T9",
+  slug: "lorcana-ci_3T9",
+  printings: [
+    {
+      id: "set5-051",
+      artId: "set5-051",
+      setCode: "set5",
+      collectorNumber: "51",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-051"],
   cardType: "character",
   name: "Maleficent",
@@ -20,7 +31,7 @@ export const maleficentVexedPartygoer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ec332a15608840ad942e800aa7b17294",
-    tcgPlayer: 561614,
+    tcgPlayer: "561614",
   },
   text: [
     {

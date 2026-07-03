@@ -4,6 +4,17 @@ import { magicMirrorI18n } from "./066-magic-mirror.i18n";
 export const magicMirror: ItemCard = {
   id: "7cO",
   canonicalId: "ci_dDL",
+  slug: "lorcana-ci_dDL",
+  printings: [
+    {
+      id: "set1-066",
+      artId: "set1-066",
+      setCode: "set1",
+      collectorNumber: "66",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-066", "set9-065"],
   cardType: "item",
   name: "Magic Mirror",
@@ -16,7 +27,7 @@ export const magicMirror: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d0073192de544630825d3b25614fcd12",
-    tcgPlayer: 650008,
+    tcgPlayer: "650008",
   },
   text: [
     {

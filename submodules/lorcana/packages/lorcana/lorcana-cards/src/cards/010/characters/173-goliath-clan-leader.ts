@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goliathClanLeaderI18n } from "./173-goliath-clan-leader.i18n";
+
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const goliathClanLeader: CharacterCard = {
-  id: "Y3G",
+  id: "1AE",
   canonicalId: "ci_KcO",
+  slug: "lorcana-ci_KcO",
+  printings: [
+    {
+      id: "set10-173",
+      artId: "set10-173",
+      setCode: "set10",
+      collectorNumber: "173",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-173"],
   cardType: "character",
   name: "Goliath",
@@ -21,7 +33,7 @@ export const goliathClanLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8941521977e54d6fa2baaae91d13fb6e",
-    tcgPlayer: 660035,
+    tcgPlayer: "660035",
   },
   text: [
     {

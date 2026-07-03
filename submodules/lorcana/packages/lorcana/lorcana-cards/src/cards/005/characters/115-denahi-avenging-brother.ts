@@ -4,6 +4,17 @@ import { denahiAvengingBrotherI18n } from "./115-denahi-avenging-brother.i18n";
 export const denahiAvengingBrother: CharacterCard = {
   id: "UbD",
   canonicalId: "ci_UbD",
+  slug: "lorcana-ci_UbD",
+  printings: [
+    {
+      id: "set5-115",
+      artId: "set5-115",
+      setCode: "set5",
+      collectorNumber: "115",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-115"],
   cardType: "character",
   name: "Denahi",
@@ -21,7 +32,7 @@ export const denahiAvengingBrother: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_9c1f10eec0c84bd8bae7c5403a6221a7",
-    tcgPlayer: 560491,
+    tcgPlayer: "560491",
   },
   classifications: ["Storyborn"],
   i18n: denahiAvengingBrotherI18n,

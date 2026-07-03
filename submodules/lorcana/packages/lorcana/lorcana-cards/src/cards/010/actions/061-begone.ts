@@ -4,6 +4,17 @@ import { begoneI18n } from "./061-begone.i18n";
 export const begone: ActionCard = {
   id: "zPN",
   canonicalId: "ci_zPN",
+  slug: "lorcana-ci_zPN",
+  printings: [
+    {
+      id: "set10-061",
+      artId: "set10-061",
+      setCode: "set10",
+      collectorNumber: "61",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-061"],
   cardType: "action",
   name: "Begone!",
@@ -16,7 +27,7 @@ export const begone: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_34f44dc8dcef41ba9b4c4f23f9720ff6",
-    tcgPlayer: 659420,
+    tcgPlayer: "659420",
   },
   text: "Return chosen character, item, or location with cost 3 or less to their player's hand.",
   abilities: [

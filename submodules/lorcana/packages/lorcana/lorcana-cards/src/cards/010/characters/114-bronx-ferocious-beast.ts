@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { bronxFerociousBeastI18n } from "./114-bronx-ferocious-beast.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const bronxFerociousBeast: CharacterCard = {
   id: "bvy",
   canonicalId: "ci_bvy",
+  slug: "lorcana-ci_bvy",
+  printings: [
+    {
+      id: "set10-114",
+      artId: "set10-114",
+      setCode: "set10",
+      collectorNumber: "114",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-114"],
   cardType: "character",
   name: "Bronx",
@@ -22,7 +34,7 @@ export const bronxFerociousBeast: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_69fabb81a4894f389aea9207733a28c6",
-    tcgPlayer: 658328,
+    tcgPlayer: "658328",
   },
   text: [
     {

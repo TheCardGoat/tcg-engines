@@ -4,6 +4,17 @@ import { happyLivelyKnightI18n } from "./191-happy-lively-knight.i18n";
 export const happyLivelyKnight: CharacterCard = {
   id: "qmH",
   canonicalId: "ci_qmH",
+  slug: "lorcana-ci_qmH",
+  printings: [
+    {
+      id: "set5-191",
+      artId: "set5-191",
+      setCode: "set5",
+      collectorNumber: "191",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-191"],
   cardType: "character",
   name: "Happy",
@@ -20,7 +31,7 @@ export const happyLivelyKnight: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fa38166d51fb479a962761c3c17a670d",
-    tcgPlayer: 559665,
+    tcgPlayer: "559665",
   },
   text: [
     {

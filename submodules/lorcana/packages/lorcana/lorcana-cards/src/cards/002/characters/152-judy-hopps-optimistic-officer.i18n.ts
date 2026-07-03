@@ -17,7 +17,7 @@ export const judyHoppsOptimisticOfficerI18n: Record<Languages, I18nProperties> =
     version: "Optimistische Polizistin",
     text: [
       {
-        title: "NENNEN SIE MICH NICHT NIEDLICH!",
+        title: "Nennen Sie mich nicht niedlich!",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen. Wer den Gegenstand im Spiel hatte, zieht 1 Karte.",
       },
@@ -28,7 +28,7 @@ export const judyHoppsOptimisticOfficerI18n: Record<Languages, I18nProperties> =
     version: "Policière optimiste",
     text: [
       {
-        title: "ME TRAITEZ PAS DE MIGNON",
+        title: "Me traitez pas de mignon",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un objet et le bannir. Son propriétaire pioche une carte.",
       },
@@ -39,7 +39,7 @@ export const judyHoppsOptimisticOfficerI18n: Record<Languages, I18nProperties> =
     version: "Optimistic Officer",
     text: [
       {
-        title: "DON'T CALL ME CUTE",
+        title: "Don't Call Me Cute",
         description:
           "When you play this character, you may banish chosen item. Its player draws a card.",
       },

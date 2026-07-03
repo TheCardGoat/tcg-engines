@@ -7,14 +7,17 @@ export const st08Penelope007: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "ST08-007",
-  externalId: "gundam:st08-007",
-  slug: "penelope-st08-007",
+  canonicalId: "ST08-007",
+  externalIds: { bandai: "gundam:st08-007" },
+  slug: "penelope/st08-007",
   displayName: "Penelope",
   set: { code: "ST08", name: "Flash of Radiance [ST08]", packageId: "616008" },
   printNumber: "ST08-007",
   printings: [
     {
       id: "ST08-007",
+      artId: "ST08-007",
+      setCode: "ST08",
       collectorNumber: "ST08-007",
       cardNumber: "ST08-007",
       set: {
@@ -30,6 +33,8 @@ export const st08Penelope007: UnitCard = {
     },
     {
       id: "ST08-007_p1",
+      artId: "ST08-007_p1",
+      setCode: "ST08",
       collectorNumber: "ST08-007_p1",
       cardNumber: "ST08-007",
       set: {
@@ -44,6 +49,7 @@ export const st08Penelope007: UnitCard = {
       productName: "Flash of Radiance [ST08] Bonus Pack",
     },
   ],
+  reprints: ["ST08-007", "ST08-007_p1"],
   selectedPrintingId: "ST08-007",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st08/ST08-007.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST08-007.webp?260424",

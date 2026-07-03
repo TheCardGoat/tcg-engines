@@ -4,6 +4,17 @@ import { gustavTheGiantTerrorOfTheKingdomI18n } from "./173-gustav-the-giant-ter
 export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
   id: "25w",
   canonicalId: "ci_25w",
+  slug: "lorcana-ci_25w",
+  printings: [
+    {
+      id: "set3-173",
+      artId: "set3-173",
+      setCode: "set3",
+      collectorNumber: "173",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-173"],
   cardType: "character",
   name: "Gustav the Giant",
@@ -19,7 +30,7 @@ export const gustavTheGiantTerrorOfTheKingdom: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2977bf4ea525446f9f26eb7c272ed37b",
-    tcgPlayer: 539105,
+    tcgPlayer: "539105",
   },
   text: [
     {

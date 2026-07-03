@@ -1,4 +1,4 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
 import { spoilerAfterpartyAtLizzieS } from "./afterparty-at-lizzie-s.ts";
 import { spoilerCarnageAtTheColosseum } from "./carnage-at-the-colosseum.ts";
 import { spoilerChromeReverie } from "./chrome-reverie.ts";
@@ -17,4 +17,4 @@ export const spoilerPrograms = [
   spoilerChromeReverie,
   spoilerCyberpsychosis,
   spoilerPeaceOffering,
-] satisfies SpoilerCardDefinition[];
+] satisfies ProgramCardDefinition[];

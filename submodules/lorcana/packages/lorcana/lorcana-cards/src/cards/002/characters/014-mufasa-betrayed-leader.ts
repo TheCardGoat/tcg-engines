@@ -4,6 +4,17 @@ import { mufasaBetrayedLeaderI18n } from "./014-mufasa-betrayed-leader.i18n";
 export const mufasaBetrayedLeader: CharacterCard = {
   id: "dcy",
   canonicalId: "ci_dcy",
+  slug: "lorcana-ci_dcy",
+  printings: [
+    {
+      id: "set2-014",
+      artId: "set2-014",
+      setCode: "set2",
+      collectorNumber: "14",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-014"],
   cardType: "character",
   name: "Mufasa",
@@ -20,7 +31,7 @@ export const mufasaBetrayedLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_00dc125290b34527b59cec4901ec94f9",
-    tcgPlayer: 527263,
+    tcgPlayer: "527263",
   },
   text: [
     {
@@ -47,7 +58,10 @@ export const mufasaBetrayedLeader: CharacterCard = {
               max: 1,
               cost: "free",
               entersExerted: true,
-              filter: { type: "card-type", cardType: "character" },
+              filter: {
+                type: "card-type",
+                cardType: "character",
+              },
             },
             {
               zone: "deck-top",

@@ -6,14 +6,17 @@ export const st09Minerva010: BaseCard = {
   type: "base",
   traits: ["zaft", "minerva squad", "warship"],
   id: "ST09-010",
-  externalId: "gundam:st09-010",
-  slug: "minerva-st09-010",
+  canonicalId: "ST09-010",
+  externalIds: { bandai: "gundam:st09-010" },
+  slug: "minerva/st09-010",
   displayName: "Minerva",
   set: { code: "ST09", name: "Destiny Ignition [ST09]", packageId: "616009" },
   printNumber: "ST09-010",
   printings: [
     {
       id: "ST09-010",
+      artId: "ST09-010",
+      setCode: "ST09",
       collectorNumber: "ST09-010",
       cardNumber: "ST09-010",
       set: {
@@ -29,6 +32,8 @@ export const st09Minerva010: BaseCard = {
     },
     {
       id: "ST09-010_p1",
+      artId: "ST09-010_p1",
+      setCode: "ST09",
       collectorNumber: "ST09-010_p1",
       cardNumber: "ST09-010",
       set: {
@@ -43,6 +48,7 @@ export const st09Minerva010: BaseCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST09-010", "ST09-010_p1"],
   selectedPrintingId: "ST09-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st09/ST09-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST09-010.webp?260424",

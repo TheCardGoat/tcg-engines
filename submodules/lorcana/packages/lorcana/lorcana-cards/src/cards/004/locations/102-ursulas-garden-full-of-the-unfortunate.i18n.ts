@@ -16,9 +16,9 @@ export const ursulasGardenFullOfTheUnfortunateI18n: Record<Languages, I18nProper
     version: "Voll von Seelen in Not",
     text: [
       {
-        title: "DIE HOFFNUNG VERLIEREN",
+        title: "Die Hoffnung verlieren",
         description:
-          "Solange du mindestens einen erschöpften Charakter an diesem Ort hast, erhalten gegnerische Charaktere -1.",
+          "Solange du mindestens einen erschöpften Charakter an diesem Ort hast, erhalten gegnerische Charaktere -1 {L}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const ursulasGardenFullOfTheUnfortunateI18n: Record<Languages, I18nProper
     version: "Rempli d'âmes en perdition",
     text: [
       {
-        title: "ESPOIR PERDU",
+        title: "Espoir perdu",
         description:
-          "Tant que vous avez au moins un personnage épuisé sur ce lieu, les personnages adverses subissent -1.",
+          "Tant que vous avez au moins un personnage épuisé sur ce lieu, les personnages adverses subissent -1 {L}.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const ursulasGardenFullOfTheUnfortunateI18n: Record<Languages, I18nProper
     version: "Pieno di Anime Sole",
     text: [
       {
-        title: "ABBANDONARE OGNI SPERANZA",
+        title: "Abbandonare Ogni Speranza",
         description:
-          "Mentre hai un personaggio impegnato in questo luogo, i personaggi avversari ricevono -1.",
+          "Mentre hai un personaggio impegnato in questo luogo, i personaggi avversari ricevono -1 {L}.",
       },
     ],
   },

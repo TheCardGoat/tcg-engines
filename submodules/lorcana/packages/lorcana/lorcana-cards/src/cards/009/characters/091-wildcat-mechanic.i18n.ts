@@ -19,11 +19,11 @@ export const wildcatMechanicI18n: Record<Languages, I18nProperties> = {
     version: "Mechaniker",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "DEMONTIEREN",
-        description: "— Verbanne einen Gegenstand deiner Wahl.",
+        title: "Demontieren",
+        description: "{E} — Verbanne einen Gegenstand deiner Wahl.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const wildcatMechanicI18n: Record<Languages, I18nProperties> = {
     version: "Mécanicien",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "DÉSASSEMBLAGE",
-        description: "— Choisissez un objet et bannissez-le.",
+        title: "Désassemblage",
+        description: "{E} — Choisissez un objet et bannissez-le.",
       },
     ],
   },
@@ -45,11 +45,11 @@ export const wildcatMechanicI18n: Record<Languages, I18nProperties> = {
     version: "Meccanico",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "SMONTARE",
-        description: "— Esilia un oggetto a tua scelta.",
+        title: "Smontare",
+        description: "{E} — Esilia un oggetto a tua scelta.",
       },
     ],
   },

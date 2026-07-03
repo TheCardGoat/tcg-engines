@@ -9,16 +9,16 @@ export const darkwingDuckDrakeMallardI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Darkwing Duck",
     version: "Eddie Erpel",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "Myster Mask",
     version: "Albert Colvert",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Darkwing Duck",
     version: "Drake Mallard",
-    text: "Protetto",
+    text: "<Protetto>",
   },
 };

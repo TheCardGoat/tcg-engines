@@ -23,11 +23,16 @@ export const mickeyMouseMusketeerCaptainI18n: Record<Languages, I18nProperties> 
     version: "Kapitän der Musketiere",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Micky-Maus-Charaktere auszuspielen.)",
       },
       {
-        title:
-          "Beschützen, Unterstützen MUSKETIERE VEREINT Falls du Gestaltwandel benutzt hast, um diesen Charakter auszuspielen, darfst du für jeden deiner Charaktere mit Beschützen im Spiel 1 Karte ziehen.",
+        title: "<Beschützen>, <Unterstützen>",
+      },
+      {
+        title: "Musketiere vereint",
+        description:
+          "Falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, darfst du für jeden deiner Charaktere mit <Beschützen> im Spiel 1 Karte ziehen.",
       },
     ],
   },
@@ -36,11 +41,16 @@ export const mickeyMouseMusketeerCaptainI18n: Record<Languages, I18nProperties> 
     version: "Capitaine Mousquetaire",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Mickey Mouse.)",
       },
       {
-        title:
-          "Rempart, Soutien MOUSQUETAIRES UNIS Si vous jouez ce personnage en utilisant sa capacité Alter, vous pouvez piocher une carte pour chaque personnage avec Rempart que vous avez en jeu.",
+        title: "<Rempart>, <Soutien>",
+      },
+      {
+        title: "Mousquetaires Unis",
+        description:
+          "Si vous jouez ce personnage en utilisant sa capacité <Alter>, vous pouvez piocher une carte pour chaque personnage avec <Rempart> que vous avez en jeu.",
       },
     ],
   },
@@ -49,11 +59,16 @@ export const mickeyMouseMusketeerCaptainI18n: Record<Languages, I18nProperties> 
     version: "Capitano Moschettiere",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Topolino.)",
       },
       {
-        title:
-          "Guardiano, Aiutante MOSCHETTIERI UNITI Quando giochi questo personaggio, se hai usato Trasformazione per giocarlo, puoi pescare una carta per ogni personaggio con Guardiano che hai in gioco.",
+        title: "<Guardiano>, <Aiutante>",
+      },
+      {
+        title: "Moschettieri Uniti",
+        description:
+          "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, puoi pescare una carta per ogni personaggio con <Guardiano> che hai in gioco.",
       },
     ],
   },

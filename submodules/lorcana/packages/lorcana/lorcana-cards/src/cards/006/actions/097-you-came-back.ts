@@ -4,6 +4,17 @@ import { youCameBackI18n } from "./097-you-came-back.i18n";
 export const youCameBack: ActionCard = {
   id: "A1c",
   canonicalId: "ci_wY5",
+  slug: "lorcana-ci_wY5",
+  printings: [
+    {
+      id: "set6-097",
+      artId: "set6-097",
+      setCode: "set6",
+      collectorNumber: "97",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-097"],
   cardType: "action",
   name: "You Came Back",
@@ -16,7 +27,7 @@ export const youCameBack: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b29e4a26e9324724aab37e97a7738476",
-    tcgPlayer: 591998,
+    tcgPlayer: "591998",
   },
   text: "Ready chosen character.",
   abilities: [

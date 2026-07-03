@@ -19,11 +19,11 @@ export const robinsBowI18n: Record<Languages, I18nProperties> = {
     name: "Robins Bogen",
     text: [
       {
-        title: "GESCHENK DES WALDES",
-        description: "— Füge einem beschädigten Charakter oder Ort deiner Wahl 1 Schaden zu.",
+        title: "Geschenk des Waldes",
+        description: "{E} — Füge einem beschädigten Charakter oder Ort deiner Wahl 1 Schaden zu.",
       },
       {
-        title: "ICH FAND DAS EBEN GANZ LUSTIG",
+        title: "Ich fand das eben ganz lustig",
         description:
           "Jedes Mal, wenn einer deiner Robin-Hood-Charaktere erkundet, darfst du diesen Gegenstand bereit machen.",
       },
@@ -33,12 +33,12 @@ export const robinsBowI18n: Record<Languages, I18nProperties> = {
     name: "Arc de Robin",
     text: [
       {
-        title: "DON DE LA",
+        title: "Don de la forêt",
         description:
-          "FORÊT — Choisissez un personnage blessé ou un lieu endommagé et infligez-lui 1 dommage.",
+          "{E} — Choisissez un personnage blessé ou un lieu endommagé et infligez-lui 1 dommage.",
       },
       {
-        title: "UNE BOUFFONNERIE",
+        title: "Une bouffonnerie",
         description:
           "Chaque fois que l'un de vos personnages Robin des Bois est envoyé à l'aventure, vous pouvez redresser cet objet.",
       },
@@ -48,9 +48,14 @@ export const robinsBowI18n: Record<Languages, I18nProperties> = {
     name: "Arco di Robin",
     text: [
       {
-        title: "DONO DELLA FORESTA",
+        title: "Dono della Foresta",
         description:
-          "— Infliggi 1 danno a un personaggio o a un luogo già danneggiato a tua scelta. È STATA UNA SCIOCCHEZZUOLA Ogni volta che un tuo personaggio chiamato Robin Hood va all'avventura, puoi preparare questo oggetto.",
+          "{E} — Infliggi 1 danno a un personaggio o a un luogo già danneggiato a tua scelta.",
+      },
+      {
+        title: "È Stata una Sciocchezzuola",
+        description:
+          "Ogni volta che un tuo personaggio chiamato Robin Hood va all'avventura, puoi preparare questo oggetto.",
       },
     ],
   },

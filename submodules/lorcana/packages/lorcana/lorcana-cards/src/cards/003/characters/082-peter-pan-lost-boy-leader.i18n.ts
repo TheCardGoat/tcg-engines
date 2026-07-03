@@ -11,9 +11,9 @@ export const peterPanLostBoyLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Anführer der verwunschenen Kinder",
     text: [
       {
-        title: "ICH WOLLTE DIR SO GERNE ZUHÖREN",
+        title: "Ich wollte dir so gerne zuhören",
         description:
-          "Einmal pro Zug, wenn dieser Charakter zu einem Ort bewegt wird, sammelst du so viele Legenden, wie der -Wert dieses Ortes beträgt.",
+          "Einmal pro Zug, wenn dieser Charakter zu einem Ort bewegt wird, sammelst du so viele Legenden, wie der {L}-Wert dieses Ortes beträgt.",
       },
     ],
   },
@@ -22,9 +22,9 @@ export const peterPanLostBoyLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Chef des enfants perdus",
     text: [
       {
-        title: "J'ÉTAIS VENU ÉCOUTER LES HISTOIRES",
+        title: "J'étais venu écouter les histoires",
         description:
-          "Une fois par tour, lorsque ce personnage est déplacé sur un lieu, gagnez un nombre d'éclats de Lore égal à la de ce lieu.",
+          "Une fois par tour, lorsque ce personnage est déplacé sur un lieu, gagnez un nombre d'éclats de Lore égal à la {L} de ce lieu.",
       },
     ],
   },
@@ -33,9 +33,9 @@ export const peterPanLostBoyLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Leader dei Bimbi Sperduti",
     text: [
       {
-        title: "ASCOLTAVO LE TUE FIABE",
+        title: "Ascoltavo le Tue Fiabe",
         description:
-          "Una volta per turno, quando questo personaggio si sposta in un luogo, ottieni leggenda pari al di quel luogo.",
+          "Una volta per turno, quando questo personaggio si sposta in un luogo, ottieni leggenda pari al {L} di quel luogo.",
       },
     ],
   },

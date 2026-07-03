@@ -6,14 +6,17 @@ export const tParts021: UnitCard = {
   type: "unit",
   traits: ["league militaire"],
   id: "T-021",
-  externalId: "gundam:t-021",
-  slug: "parts-t-021",
+  canonicalId: "T-021",
+  externalIds: { bandai: "gundam:t-021" },
+  slug: "parts/t-021",
   displayName: "Parts",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "T-021",
   printings: [
     {
       id: "T-021",
+      artId: "T-021",
+      setCode: "GD04",
       collectorNumber: "T-021",
       cardNumber: "T-021",
       set: {
@@ -28,6 +31,7 @@ export const tParts021: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["T-021"],
   selectedPrintingId: "T-021",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-021.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-021.webp?260424",

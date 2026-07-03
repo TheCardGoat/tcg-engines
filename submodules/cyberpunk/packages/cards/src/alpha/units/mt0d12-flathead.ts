@@ -1,13 +1,14 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, condition, effect, target } from "../../helpers/builders/index.ts";
 
-export const alphaMt0d12Flathead = {
+export const alphaMt0d12Flathead = defineCyberpunkCard({
   id: "0a77db39-d894-4df5-815a-40ffeb01fa27",
-  externalId: "cyberpunk:mt0d12-flathead",
   slug: "mt0d12-flathead",
+  rulesText: "If you have 7+ * (Street Cred), this unit can't be blocked.",
   name: "MT0D12 Flathead",
   displayName: "MT0D12 Flathead",
-  rulesText: "If you have 7+ Street Cred, this unit can't be blocked.",
+  canonicalId: "mt0d12-flathead",
   color: "blue",
   classifications: ["Militech", "Drone"],
   set: {
@@ -15,23 +16,12 @@ export const alphaMt0d12Flathead = {
     name: "Alpha Kit Set",
   },
   printNumber: "α012",
-  printings: [
-    {
-      id: "1823a6ee-bff7-47b4-bc58-589ecddee538",
-      collectorNumber: "α012",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "1823a6ee-bff7-47b4-bc58-589ecddee538",
   artist: "Frederico Sabbatini",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a012.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,
   ram: 3,
-  timingTriggers: [],
-  keywords: [],
   type: "unit",
   cost: 5,
   power: 5,
@@ -50,5 +40,4 @@ export const alphaMt0d12Flathead = {
       )
       .build(),
   ],
-  reminderText: [],
-} satisfies AlphaCardDefinition;
+}) satisfies UnitCardDefinition;

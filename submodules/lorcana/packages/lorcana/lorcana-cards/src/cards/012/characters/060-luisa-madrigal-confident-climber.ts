@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { luisaMadrigalConfidentClimberI18n } from "./060-luisa-madrigal-confident-climber.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const luisaMadrigalConfidentClimber: CharacterCard = {
   id: "tct",
   canonicalId: "ci_tct",
+  slug: "lorcana-ci_tct",
+  printings: [
+    {
+      id: "set12-060",
+      artId: "set12-060",
+      setCode: "set12",
+      collectorNumber: "60",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-060"],
   cardType: "character",
   name: "Luisa Madrigal",
@@ -20,16 +32,17 @@ export const luisaMadrigalConfidentClimber: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_46ca002a8945440398b20c8e4ad6b6eb",
+    lorcast: "crd_ea1ebbf0332f4cb78f6b7a6a90d826a7",
+    tcgPlayer: "692218",
   },
   text: [
     {
       title: "Shift 3 {I}",
     },
     {
-      title: "I CAN TAKE IT",
+      title: "I CAN TAKE IT 1",
       description:
-        "1 {I} — Move up to 1 damage from chosen character of yours to this character. Then, if this character has 3 or more damage, move all damage from this character to chosen opposing character.",
+        "{I} — Move up to 1 damage from chosen character of yours to this character. Then, if this character has 3 or more damage, move all damage from this character to chosen opposing character.",
     },
   ],
   classifications: ["Floodborn", "Ally", "Madrigal"],

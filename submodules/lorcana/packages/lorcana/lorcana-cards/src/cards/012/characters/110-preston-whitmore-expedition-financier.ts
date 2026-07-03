@@ -4,6 +4,17 @@ import { prestonWhitmoreExpeditionFinancierI18n } from "./110-preston-whitmore-e
 export const prestonWhitmoreExpeditionFinancier: CharacterCard = {
   id: "D1V",
   canonicalId: "ci_D1V",
+  slug: "lorcana-ci_D1V",
+  printings: [
+    {
+      id: "set12-110",
+      artId: "set12-110",
+      setCode: "set12",
+      collectorNumber: "110",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-110"],
   cardType: "character",
   name: "Preston Whitmore",
@@ -20,6 +31,7 @@ export const prestonWhitmoreExpeditionFinancier: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1e431099236d41a1ac9a34d9923f76eb",
+    tcgPlayer: "692173",
   },
   text: [
     {

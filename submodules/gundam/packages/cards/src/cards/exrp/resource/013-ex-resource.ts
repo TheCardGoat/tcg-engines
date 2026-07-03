@@ -6,8 +6,9 @@ export const exrpExResource013: ResourceCard = {
   type: "resource",
   traits: [],
   id: "EXRP-013",
-  externalId: "gundam:exrp-013",
-  slug: "ex-resource-exrp-013",
+  canonicalId: "EXRP-013",
+  externalIds: { bandai: "gundam:exrp-013" },
+  slug: "ex-resource/exrp-013",
   displayName: "EX Resource",
   set: {
     code: "PC02A",
@@ -18,6 +19,8 @@ export const exrpExResource013: ResourceCard = {
   printings: [
     {
       id: "EXRP-013",
+      artId: "EXRP-013",
+      setCode: "PC02A",
       collectorNumber: "EXRP-013",
       cardNumber: "EXRP-013",
       set: {
@@ -33,6 +36,7 @@ export const exrpExResource013: ResourceCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam GQuuuuuuX-[PC02A]",
     },
   ],
+  reprints: ["EXRP-013"],
   selectedPrintingId: "EXRP-013",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exrp/EXRP-013.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXRP-013.webp?260424",

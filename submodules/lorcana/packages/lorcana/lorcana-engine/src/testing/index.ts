@@ -123,6 +123,7 @@ export type {
 
 import type { LorcanaCard, AbilityDefinition, KeywordAbilityDefinition } from "@tcg/lorcana-types";
 import { isCharacterCard, isLocationCard } from "@tcg/lorcana-types";
+import { hasKeyword } from "../card-utils";
 
 /**
  * Card model returned by LorcanaTestEngine.getCardModel()
@@ -351,7 +352,7 @@ export class LorcanaTestEngine {
    * Check if a card has a specific keyword ability
    */
   private hasKeywordAbility(cardDef: LorcanaCard, keyword: string): boolean {
-    return cardDef.abilities?.some((a) => a.type === "keyword" && a.keyword === keyword) ?? false;
+    return hasKeyword(cardDef, keyword);
   }
 
   /**

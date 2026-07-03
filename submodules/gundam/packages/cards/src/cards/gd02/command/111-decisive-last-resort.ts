@@ -7,14 +7,17 @@ export const gd02DecisiveLastResort111: CommandCard = {
   color: "purple",
   traits: ["-"],
   id: "GD02-111",
-  externalId: "gundam:gd02-111",
-  slug: "decisive-last-resort-gd02-111",
+  canonicalId: "GD02-111",
+  externalIds: { bandai: "gundam:gd02-111" },
+  slug: "decisive-last-resort/gd02-111",
   displayName: "Decisive Last Resort",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-111",
   printings: [
     {
       id: "GD02-111",
+      artId: "GD02-111",
+      setCode: "GD02",
       collectorNumber: "GD02-111",
       cardNumber: "GD02-111",
       set: {
@@ -29,6 +32,7 @@ export const gd02DecisiveLastResort111: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-111"],
   selectedPrintingId: "GD02-111",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-111.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-111.webp?260424",

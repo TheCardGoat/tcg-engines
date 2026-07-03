@@ -4,6 +4,17 @@ import { madamMimTrulyMarvelousI18n } from "./055-madam-mim-truly-marvelous.i18n
 export const madamMimTrulyMarvelous: CharacterCard = {
   id: "I6q",
   canonicalId: "ci_I6q",
+  slug: "lorcana-ci_I6q",
+  printings: [
+    {
+      id: "set6-055",
+      artId: "set6-055",
+      setCode: "set6",
+      collectorNumber: "55",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-055"],
   cardType: "character",
   name: "Madam Mim",
@@ -20,7 +31,7 @@ export const madamMimTrulyMarvelous: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_997d20bbd2204f4a8cd9670598d8405c",
-    tcgPlayer: 587972,
+    tcgPlayer: "587972",
   },
   text: [
     {

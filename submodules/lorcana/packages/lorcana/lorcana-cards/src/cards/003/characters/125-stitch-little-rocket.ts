@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { stitchLittleRocketI18n } from "./125-stitch-little-rocket.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const stitchLittleRocket: CharacterCard = {
   id: "1PU",
   canonicalId: "ci_1PU",
+  slug: "lorcana-ci_1PU",
+  printings: [
+    {
+      id: "set3-125",
+      artId: "set3-125",
+      setCode: "set3",
+      collectorNumber: "125",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-125"],
   cardType: "character",
   name: "Stitch",
@@ -20,8 +32,7 @@ export const stitchLittleRocket: CharacterCard = {
   lore: 1,
   inkable: false,
   externalIds: {
-    lorcast: "crd_1f0feec19b8843c8888d22c1520239ac",
-    tcgPlayer: 532522,
+    lorcast: "crd_cc036edd4af94499aec28c45e5a3b2a5",
   },
   text: "Rush",
   classifications: ["Dreamborn", "Hero", "Alien"],

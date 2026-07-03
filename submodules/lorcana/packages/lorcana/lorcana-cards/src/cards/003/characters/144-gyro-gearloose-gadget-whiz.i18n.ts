@@ -16,9 +16,8 @@ export const gyroGearlooseGadgetWhizI18n: Record<Languages, I18nProperties> = {
     version: "Technikfreak",
     text: [
       {
-        title: "VERSUCHEN SIE MEINER",
-        description:
-          "GENIALITÄT ZU FOLGEN — Lege 1 Gegenstandskarte aus deinem Ablagestapel zurück auf dein Deck.",
+        title: "Versuchen Sie meiner Genialität zu folgen",
+        description: "{E} — Lege 1 Gegenstandskarte aus deinem Ablagestapel zurück auf dein Deck.",
       },
     ],
   },
@@ -27,9 +26,9 @@ export const gyroGearlooseGadgetWhizI18n: Record<Languages, I18nProperties> = {
     version: "Génie des gadgets",
     text: [
       {
-        title: "SUIVEZ LES",
+        title: "Suivez les méandres de mon cerveau génial",
         description:
-          "MÉANDRES DE MON CERVEAU GÉNIAL — Remettez une carte Objet de votre défausse sur le dessus de votre pioche.",
+          "{E} — Remettez une carte Objet de votre défausse sur le dessus de votre pioche.",
       },
     ],
   },
@@ -38,8 +37,8 @@ export const gyroGearlooseGadgetWhizI18n: Record<Languages, I18nProperties> = {
     version: "Mago dei Gadget",
     text: [
       {
-        title: "CERCATE DI SEGUIRE LA MIA MENTE SUPERIORE",
-        description: "— Metti una carta oggetto dai tuoi scarti in cima al tuo mazzo.",
+        title: "Cercate di Seguire la Mia Mente Superiore",
+        description: "{E} — Metti una carta oggetto dai tuoi scarti in cima al tuo mazzo.",
       },
     ],
   },

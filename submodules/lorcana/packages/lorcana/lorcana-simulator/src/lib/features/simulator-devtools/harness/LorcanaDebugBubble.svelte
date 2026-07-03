@@ -1,15 +1,5 @@
 <script lang="ts">
-  import { mergeProps } from "bits-ui";
-  import ArrowLeftRightIcon from "@lucide/svelte/icons/arrow-left-right";
   import BugIcon from "@lucide/svelte/icons/bug";
-  import EyeOffIcon from "@lucide/svelte/icons/eye-off";
-  import PanelRightOpenIcon from "@lucide/svelte/icons/panel-right-open";
-  import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-  } from "$lib/design-system/primitives/dropdown-menu";
 
   interface BubbleDragState {
     pointerId: number;
@@ -24,13 +14,12 @@
     isOpen: boolean;
     wrapperElement: HTMLDivElement | null;
     onOpenPanel: () => void;
-    onSwapPlayers: () => void;
   }
 
   const DEBUG_BUBBLE_MARGIN = 16;
   const DEBUG_BUBBLE_DRAG_THRESHOLD = 5;
 
-  const { isOpen, wrapperElement, onOpenPanel, onSwapPlayers }: DebugBubbleProps = $props();
+  const { isOpen, wrapperElement, onOpenPanel }: DebugBubbleProps = $props();
 
   let bubbleElement = $state<HTMLButtonElement | null>(null);
   let bubblePosition = $state<{ x: number; y: number }>({ x: DEBUG_BUBBLE_MARGIN, y: DEBUG_BUBBLE_MARGIN });
@@ -163,6 +152,8 @@
       suppressBubbleClick = false;
       return;
     }
+
+    onOpenPanel();
   }
 
   function handleHideBubble(): void {
@@ -199,71 +190,21 @@
 </script>
 
 {#if !isBubbleHidden}
-  <DropdownMenu>
-    <DropdownMenuTrigger>
-      {#snippet child({ props })}
-        <button
-          bind:this={bubbleElement}
-          {...mergeProps(props, {
-            class: "debug-bubble",
-            "aria-label": "Open simulator debug actions",
-            style: `left: ${bubblePosition.x}px; top: ${bubblePosition.y}px;`,
-            onpointerdown: handleBubblePointerDown,
-            onpointermove: handleBubblePointerMove,
-            onpointerup: handleBubblePointerUp,
-            onpointercancel: handleBubblePointerCancel,
-            onclick: handleBubbleClick,
-          })}
-        >
-          <BugIcon class="debug-bubble__icon" />
-        </button>
-      {/snippet}
-    </DropdownMenuTrigger>
-
-    <DropdownMenuContent
-      side="left"
-      align="start"
-      sideOffset={12}
-      avoidCollisions
-      class="w-60 rounded-[18px] border-sky-300/20 bg-slate-950/95 p-2 text-slate-50 shadow-[0_22px_60px_rgba(0,0,0,0.45),0_8px_18px_rgba(11,79,173,0.2)] backdrop-blur-xl"
-    >
-      <DropdownMenuItem
-        class="grid grid-cols-[auto_1fr] items-center gap-3 rounded-[14px] px-3 py-3 data-highlighted:bg-sky-500/15"
-        disabled={isOpen}
-        onSelect={onOpenPanel}
-      >
-        <PanelRightOpenIcon class="size-4 text-sky-300" />
-        <span class="debug-menu__item-copy">
-          <span class="debug-menu__item-label">{isOpen ? "Debug panel open" : "Open debug panel"}</span>
-          <span class="debug-menu__item-hint">
-            {isOpen ? "Already visible" : "Show the inspector sidebar"}
-          </span>
-        </span>
-      </DropdownMenuItem>
-
-      <DropdownMenuItem
-        class="grid grid-cols-[auto_1fr] items-center gap-3 rounded-[14px] px-3 py-3 data-highlighted:bg-sky-500/15"
-        onSelect={onSwapPlayers}
-      >
-        <ArrowLeftRightIcon class="size-4 text-sky-300" />
-        <span class="debug-menu__item-copy">
-          <span class="debug-menu__item-label">Swap players</span>
-          <span class="debug-menu__item-hint">Toggle between player-one and player-two</span>
-        </span>
-      </DropdownMenuItem>
-
-      <DropdownMenuItem
-        class="grid grid-cols-[auto_1fr] items-center gap-3 rounded-[14px] px-3 py-3 data-highlighted:bg-sky-500/15"
-        onSelect={handleHideBubble}
-      >
-        <EyeOffIcon class="size-4 text-sky-300" />
-        <span class="debug-menu__item-copy">
-          <span class="debug-menu__item-label">Hide bubble</span>
-          <span class="debug-menu__item-hint">Dismiss until the page reloads</span>
-        </span>
-      </DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
+  <button
+    bind:this={bubbleElement}
+    class="debug-bubble"
+    aria-label={isOpen ? "Simulator debug panel open" : "Open simulator debug panel"}
+    title={isOpen ? "Debug panel open" : "Open debug panel"}
+    style={`left: ${bubblePosition.x}px; top: ${bubblePosition.y}px;`}
+    disabled={isOpen}
+    onpointerdown={handleBubblePointerDown}
+    onpointermove={handleBubblePointerMove}
+    onpointerup={handleBubblePointerUp}
+    onpointercancel={handleBubblePointerCancel}
+    onclick={handleBubbleClick}
+  >
+    <BugIcon class="debug-bubble__icon" />
+  </button>
 {/if}
 
 <style>
@@ -311,39 +252,20 @@
     cursor: grabbing;
   }
 
-  .debug-bubble__icon {
+  .debug-bubble:disabled {
+    cursor: default;
+    opacity: 0.75;
+  }
+
+  :global(.debug-bubble__icon) {
     width: 1.35rem;
     height: 1.35rem;
     filter: drop-shadow(0 1px 2px rgba(6, 34, 82, 0.35));
   }
-
-  .debug-menu__item-copy {
-    display: grid;
-    gap: 0.12rem;
-  }
-
-  .debug-menu__item-label {
-    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-    font-size: 0.9rem;
-    font-weight: 700;
-    line-height: 1.15;
-  }
-
-  .debug-menu__item-hint {
-    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-    font-size: 0.74rem;
-    line-height: 1.2;
-    color: rgba(220, 234, 255, 0.72);
-  }
-
   @media (max-width: 720px) {
     .debug-bubble {
       width: 58px;
       height: 58px;
-    }
-
-    :global([data-slot="dropdown-menu-content"]) {
-      width: 220px;
     }
   }
 </style>

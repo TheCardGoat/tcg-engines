@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mauiHalfsharkI18n } from "./124-maui-half-shark.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const mauiHalfshark: CharacterCard = {
   id: "HTB",
   canonicalId: "ci_HTB",
+  slug: "lorcana-ci_HTB",
+  printings: [
+    {
+      id: "set6-124",
+      artId: "set6-124",
+      setCode: "set6",
+      collectorNumber: "124",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-124"],
   cardType: "character",
   name: "Maui",
@@ -21,7 +33,7 @@ export const mauiHalfshark: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5123478aad6349f1a3f4500b31bc7d5e",
-    tcgPlayer: 588357,
+    tcgPlayer: "588357",
   },
   text: [
     {

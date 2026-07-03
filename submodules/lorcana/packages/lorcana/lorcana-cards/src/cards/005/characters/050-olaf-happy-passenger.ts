@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { olafHappyPassengerI18n } from "./050-olaf-happy-passenger.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const olafHappyPassenger: CharacterCard = {
-  id: "MEQ",
+  id: "ghy",
   canonicalId: "ci_8YL",
+  slug: "lorcana-ci_8YL",
+  printings: [
+    {
+      id: "set5-050",
+      artId: "set5-050",
+      setCode: "set5",
+      collectorNumber: "50",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-050"],
   cardType: "character",
   name: "Olaf",
@@ -21,7 +33,7 @@ export const olafHappyPassenger: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_19b1f802f23a4673aac60e04df0fb2ba",
-    tcgPlayer: 561994,
+    tcgPlayer: "561994",
   },
   text: [
     {

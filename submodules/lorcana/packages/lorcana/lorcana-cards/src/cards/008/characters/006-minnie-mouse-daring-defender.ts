@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMouseDaringDefenderI18n } from "./006-minnie-mouse-daring-defender.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const minnieMouseDaringDefender: CharacterCard = {
-  id: "t5R",
-  canonicalId: "ci_t5R",
+  id: "0v4",
+  canonicalId: "ci_hyd",
+  slug: "lorcana-ci_hyd",
+  printings: [
+    {
+      id: "set8-006",
+      artId: "set8-006",
+      setCode: "set8",
+      collectorNumber: "6",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-006"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -20,7 +32,7 @@ export const minnieMouseDaringDefender: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_693ec0809a974a8ba6ce2a5b3a29f209",
-    tcgPlayer: 631352,
+    tcgPlayer: "631352",
   },
   text: [
     {

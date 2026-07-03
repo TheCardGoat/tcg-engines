@@ -7,14 +7,17 @@ export const gd03GundamKyrios022: UnitCard = {
   color: "green",
   traits: ["cb", "gn drive"],
   id: "GD03-022",
-  externalId: "gundam:gd03-022",
-  slug: "gundam-kyrios-gd03-022",
+  canonicalId: "GD03-022",
+  externalIds: { bandai: "gundam:gd03-022" },
+  slug: "gundam-kyrios/gd03-022",
   displayName: "Gundam Kyrios",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-022",
   printings: [
     {
       id: "GD03-022",
+      artId: "GD03-022",
+      setCode: "GD03",
       collectorNumber: "GD03-022",
       cardNumber: "GD03-022",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamKyrios022: UnitCard = {
     },
     {
       id: "GD03-022_p1",
+      artId: "GD03-022_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-022_p1",
       cardNumber: "GD03-022",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamKyrios022: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-022", "GD03-022_p1"],
   selectedPrintingId: "GD03-022",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-022.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-022.webp?260424",

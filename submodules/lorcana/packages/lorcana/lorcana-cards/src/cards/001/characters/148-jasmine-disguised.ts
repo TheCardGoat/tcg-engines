@@ -4,6 +4,17 @@ import { jasmineDisguisedI18n } from "./148-jasmine-disguised.i18n";
 export const jasmineDisguised: CharacterCard = {
   id: "crg",
   canonicalId: "ci_crg",
+  slug: "lorcana-ci_crg",
+  printings: [
+    {
+      id: "set1-148",
+      artId: "set1-148",
+      setCode: "set1",
+      collectorNumber: "148",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-148"],
   cardType: "character",
   name: "Jasmine",
@@ -21,7 +32,7 @@ export const jasmineDisguised: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_c401f199cd7046b4838589db368f2391",
-    tcgPlayer: 508851,
+    tcgPlayer: "508851",
   },
   classifications: ["Storyborn", "Princess"],
   i18n: jasmineDisguisedI18n,

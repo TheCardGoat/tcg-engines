@@ -4,6 +4,17 @@ import { morphSpaceGooI18n } from "./081-morph-space-goo.i18n";
 export const morphSpaceGoo: CharacterCard = {
   id: "f1i",
   canonicalId: "ci_LwP",
+  slug: "lorcana-ci_LwP",
+  printings: [
+    {
+      id: "set3-081",
+      artId: "set3-081",
+      setCode: "set3",
+      collectorNumber: "81",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-081"],
   cardType: "character",
   name: "Morph",
@@ -20,7 +31,7 @@ export const morphSpaceGoo: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2e1d43823fc642549ba92787523ce17f",
-    tcgPlayer: 539163,
+    tcgPlayer: "539163",
   },
   text: [
     {

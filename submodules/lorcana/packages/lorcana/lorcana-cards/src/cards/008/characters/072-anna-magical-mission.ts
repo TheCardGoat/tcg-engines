@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { annaMagicalMissionI18n } from "./072-anna-magical-mission.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { support } from "../../../helpers/abilities/support";
 
 export const annaMagicalMission: CharacterCard = {
   id: "7E5",
   canonicalId: "ci_7E5",
+  slug: "lorcana-ci_7E5",
+  printings: [
+    {
+      id: "set8-072",
+      artId: "set8-072",
+      setCode: "set8",
+      collectorNumber: "72",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-072"],
   cardType: "character",
   name: "Anna",
@@ -22,7 +34,7 @@ export const annaMagicalMission: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ae35ed50c6954dab9925888b61a657f2",
-    tcgPlayer: 631399,
+    tcgPlayer: "631399",
   },
   text: [
     {

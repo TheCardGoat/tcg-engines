@@ -4,6 +4,17 @@ import { peterPanSearchingFarAndWideI18n } from "./081-peter-pan-searching-far-a
 export const peterPanSearchingFarAndWide: CharacterCard = {
   id: "h96",
   canonicalId: "ci_h96",
+  slug: "lorcana-ci_h96",
+  printings: [
+    {
+      id: "set12-081",
+      artId: "set12-081",
+      setCode: "set12",
+      collectorNumber: "81",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-081"],
   cardType: "character",
   name: "Peter Pan",
@@ -21,6 +32,7 @@ export const peterPanSearchingFarAndWide: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_d6cd900ff0684586bbcb200553e6cd9a",
+    tcgPlayer: "692040",
   },
   classifications: ["Dreamborn", "Hero"],
   i18n: peterPanSearchingFarAndWideI18n,

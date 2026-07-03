@@ -20,12 +20,12 @@ export const jiminyCricketLevelheadedAndWiseI18n: Record<Languages, I18nProperti
     version: "Besonnen und weise",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "GENUG IST GENUG",
+        title: "Genug ist Genug",
         description:
-          "Solange dieser Charakter erschöpft ist, kommen gegnerische Charaktere mit Rasant erschöpft ins Spiel.",
+          "Solange dieser Charakter erschöpft ist, kommen gegnerische Charaktere mit <Rasant> erschöpft ins Spiel.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const jiminyCricketLevelheadedAndWiseI18n: Record<Languages, I18nProperti
     version: "Consciencieux et sage",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "TROP C'EST TROP",
+        title: "Trop c'est trop",
         description:
-          "Tant que ce personnage est épuisé, les personnages adverses avec Charge entrent en jeu épuisés.",
+          "Tant que ce personnage est épuisé, les personnages adverses avec <Charge> entrent en jeu épuisés.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const jiminyCricketLevelheadedAndWiseI18n: Record<Languages, I18nProperti
     version: "Equilibrato e Saggio",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "QUELLO CHE",
+        title: "Quello che è Troppo è Troppo",
         description:
-          "È TROPPO È TROPPO Mentre questo personaggio è impegnato, i personaggi avversari con Lesto entrano in gioco impegnati.",
+          "Mentre questo personaggio è impegnato, i personaggi avversari con <Lesto> entrano in gioco impegnati.",
       },
     ],
   },

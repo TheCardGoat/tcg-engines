@@ -1,0 +1,71 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op05SaintCharlos084I18n } from "./084-saint-charlos.i18n.ts";
+
+export const op05SaintCharlos084: CharacterCard = {
+  id: "OP05-084",
+  canonicalId: "OP05-084",
+  slug: "saint-charlos/op05-084",
+  name: "Saint Charlos",
+  printings: [
+    {
+      id: "OP05-084",
+      artId: "OP05-084",
+      setCode: "OP05",
+      collectorNumber: "084",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP05-084.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["black"],
+  rarity: "C",
+  setId: "OP05",
+  cost: 3,
+  power: 0,
+  counter: 1000,
+  traits: ["Celestial Dragons"],
+  attribute: "ranged",
+  effect:
+    "[Your Turn] If the only Characters on your field are [Celestial Dragons] type Characters, give all of your opponent's Characters -4 cost.",
+  effects: {
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "turn",
+            value: "your",
+          },
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "character",
+            comparison: "eq",
+            value: 0,
+            filters: [
+              {
+                filter: "trait",
+                value: "Celestial Dragons",
+                negate: true,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+            },
+            value: -4,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op05SaintCharlos084I18n,
+};

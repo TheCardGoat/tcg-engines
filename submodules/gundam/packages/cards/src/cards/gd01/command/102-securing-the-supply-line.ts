@@ -7,14 +7,17 @@ export const gd01SecuringTheSupplyLine102: CommandCard = {
   color: "blue",
   traits: ["-"],
   id: "GD01-102",
-  externalId: "gundam:gd01-102",
-  slug: "securing-the-supply-line-gd01-102",
+  canonicalId: "GD01-102",
+  externalIds: { bandai: "gundam:gd01-102" },
+  slug: "securing-the-supply-line/gd01-102",
   displayName: "Securing the Supply Line",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-102",
   printings: [
     {
       id: "GD01-102",
+      artId: "GD01-102",
+      setCode: "GD01",
       collectorNumber: "GD01-102",
       cardNumber: "GD01-102",
       set: {
@@ -29,6 +32,7 @@ export const gd01SecuringTheSupplyLine102: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-102"],
   selectedPrintingId: "GD01-102",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-102.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-102.webp?260424",

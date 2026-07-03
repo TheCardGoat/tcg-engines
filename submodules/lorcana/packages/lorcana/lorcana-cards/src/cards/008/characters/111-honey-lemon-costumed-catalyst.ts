@@ -4,6 +4,17 @@ import { honeyLemonCostumedCatalystI18n } from "./111-honey-lemon-costumed-catal
 export const honeyLemonCostumedCatalyst: CharacterCard = {
   id: "MDv",
   canonicalId: "ci_MDv",
+  slug: "lorcana-ci_MDv",
+  printings: [
+    {
+      id: "set8-111",
+      artId: "set8-111",
+      setCode: "set8",
+      collectorNumber: "111",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-111"],
   cardType: "character",
   name: "Honey Lemon",
@@ -20,7 +31,7 @@ export const honeyLemonCostumedCatalyst: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_68a30037a4074eed8e5d0924b542cec9",
-    tcgPlayer: 631421,
+    tcgPlayer: "631421",
   },
   text: [
     {

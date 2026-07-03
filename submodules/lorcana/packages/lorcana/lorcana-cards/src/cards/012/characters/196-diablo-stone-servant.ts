@@ -4,6 +4,17 @@ import { diabloStoneServantI18n } from "./196-diablo-stone-servant.i18n";
 export const diabloStoneServant: CharacterCard = {
   id: "1XC",
   canonicalId: "ci_1XC",
+  slug: "lorcana-ci_1XC",
+  printings: [
+    {
+      id: "set12-196",
+      artId: "set12-196",
+      setCode: "set12",
+      collectorNumber: "196",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-196"],
   cardType: "character",
   name: "Diablo",
@@ -20,6 +31,7 @@ export const diabloStoneServant: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3b6a0713a14849bd9a660f147308111d",
+    tcgPlayer: "692085",
   },
   text: [
     {

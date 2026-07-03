@@ -4,6 +4,17 @@ import { jafarAspiringRulerI18n } from "./190-jafar-aspiring-ruler.i18n";
 export const jafarAspiringRuler: CharacterCard = {
   id: "Fg9",
   canonicalId: "ci_Fg9",
+  slug: "lorcana-ci_Fg9",
+  printings: [
+    {
+      id: "set7-190",
+      artId: "set7-190",
+      setCode: "set7",
+      collectorNumber: "190",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-190"],
   cardType: "character",
   name: "Jafar",
@@ -20,7 +31,7 @@ export const jafarAspiringRuler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_61da3f5c01564ae386af3de304e910af",
-    tcgPlayer: 618177,
+    tcgPlayer: "618177",
   },
   text: [
     {

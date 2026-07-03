@@ -4,6 +4,17 @@ import { forestDuelI18n } from "./077-forest-duel.i18n";
 export const forestDuel: ActionCard = {
   id: "zpF",
   canonicalId: "ci_zpF",
+  slug: "lorcana-ci_zpF",
+  printings: [
+    {
+      id: "set8-077",
+      artId: "set8-077",
+      setCode: "set8",
+      collectorNumber: "77",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-077"],
   cardType: "action",
   name: "Forest Duel",
@@ -16,7 +27,7 @@ export const forestDuel: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_79eeecfdd20849aaade7d29646fed146",
-    tcgPlayer: 631343,
+    tcgPlayer: "631343",
   },
   text: 'Your characters gain Challenger +2 and "When this character is banished in a challenge, return this card to your hand" this turn. (They get +2 {S} while challenging.)',
   abilities: [

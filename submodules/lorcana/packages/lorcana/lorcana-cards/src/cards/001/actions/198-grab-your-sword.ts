@@ -4,6 +4,17 @@ import { grabYourSwordI18n } from "./198-grab-your-sword.i18n";
 export const grabYourSword: ActionCard = {
   id: "Sc6",
   canonicalId: "ci_Sc6",
+  slug: "lorcana-ci_Sc6",
+  printings: [
+    {
+      id: "set1-198",
+      artId: "set1-198",
+      setCode: "set1",
+      collectorNumber: "198",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-198"],
   cardType: "action",
   name: "Grab Your Sword",
@@ -16,7 +27,7 @@ export const grabYourSword: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_48cd856a0632489c916bc354a3090cb2",
-    tcgPlayer: 503469,
+    tcgPlayer: "503469",
   },
   text: "Deal 2 damage to each opposing character.",
   actionSubtype: "song",

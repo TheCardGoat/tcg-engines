@@ -4,6 +4,17 @@ import { honestJohnNotThatHonestI18n } from "./109-honest-john-not-that-honest.i
 export const honestJohnNotThatHonest: CharacterCard = {
   id: "3zO",
   canonicalId: "ci_3zO",
+  slug: "lorcana-ci_3zO",
+  printings: [
+    {
+      id: "set2-109",
+      artId: "set2-109",
+      setCode: "set2",
+      collectorNumber: "109",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-109"],
   cardType: "character",
   name: "Honest John",
@@ -20,7 +31,7 @@ export const honestJohnNotThatHonest: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_834655aa7bc54dd0b1bdf69ce343359d",
-    tcgPlayer: 527275,
+    tcgPlayer: "527275",
   },
   text: [
     {

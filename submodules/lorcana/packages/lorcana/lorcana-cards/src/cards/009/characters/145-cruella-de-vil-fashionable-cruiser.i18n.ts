@@ -17,9 +17,9 @@ export const cruellaDeVilFashionableCruiserI18n: Record<Languages, I18nPropertie
     version: "Modische Cruiserin",
     text: [
       {
-        title: "MACHT GEFÄLLIGST WEITER!",
+        title: "Macht gefälligst weiter!",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const cruellaDeVilFashionableCruiserI18n: Record<Languages, I18nPropertie
     version: "Collection croisière",
     text: [
       {
-        title: "ALLEZ, EN ROUTE",
+        title: "Allez, en route",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier les personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier les personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const cruellaDeVilFashionableCruiserI18n: Record<Languages, I18nPropertie
     version: "Fashionable Cruiser",
     text: [
       {
-        title: "NOW GET GOING",
+        title: "Now Get Going",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "During your turn, this character gains <Evasive>. (They can challenge characters with Evasive.)",
       },
     ],
   },

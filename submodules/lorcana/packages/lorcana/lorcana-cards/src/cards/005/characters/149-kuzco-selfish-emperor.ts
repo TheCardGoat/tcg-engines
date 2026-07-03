@@ -4,6 +4,17 @@ import { kuzcoSelfishEmperorI18n } from "./149-kuzco-selfish-emperor.i18n";
 export const kuzcoSelfishEmperor: CharacterCard = {
   id: "9lb",
   canonicalId: "ci_9lb",
+  slug: "lorcana-ci_9lb",
+  printings: [
+    {
+      id: "set5-149",
+      artId: "set5-149",
+      setCode: "set5",
+      collectorNumber: "149",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-149"],
   cardType: "character",
   name: "Kuzco",
@@ -20,7 +31,7 @@ export const kuzcoSelfishEmperor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b66ac79061b848eba1c927989cc2fd37",
-    tcgPlayer: 561164,
+    tcgPlayer: "561164",
   },
   text: [
     {

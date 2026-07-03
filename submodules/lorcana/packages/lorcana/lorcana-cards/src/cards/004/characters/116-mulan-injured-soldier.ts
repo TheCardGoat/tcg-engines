@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { mulanInjuredSoldierI18n } from "./116-mulan-injured-soldier.i18n";
 
 export const mulanInjuredSoldier: CharacterCard = {
-  id: "sfy",
+  id: "bCk",
   canonicalId: "ci_Z2S",
+  slug: "lorcana-ci_Z2S",
+  printings: [
+    {
+      id: "set4-116",
+      artId: "set4-116",
+      setCode: "set4",
+      collectorNumber: "116",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-116", "set9-125"],
   cardType: "character",
   name: "Mulan",
@@ -20,7 +31,7 @@ export const mulanInjuredSoldier: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2acf4a3090844ac6a8e091f806c28aed",
-    tcgPlayer: 650060,
+    tcgPlayer: "650060",
   },
   text: [
     {

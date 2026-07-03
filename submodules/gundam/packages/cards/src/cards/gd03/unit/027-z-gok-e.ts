@@ -7,14 +7,17 @@ export const gd03ZGokE027: UnitCard = {
   color: "green",
   traits: ["zeon", "cyclops team"],
   id: "GD03-027",
-  externalId: "gundam:gd03-027",
-  slug: "z-gok-e-gd03-027",
+  canonicalId: "GD03-027",
+  externalIds: { bandai: "gundam:gd03-027" },
+  slug: "z-gok-e/gd03-027",
   displayName: "Z’Gok E",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-027",
   printings: [
     {
       id: "GD03-027",
+      artId: "GD03-027",
+      setCode: "GD03",
       collectorNumber: "GD03-027",
       cardNumber: "GD03-027",
       set: {
@@ -30,6 +33,8 @@ export const gd03ZGokE027: UnitCard = {
     },
     {
       id: "GD03-027_p1",
+      artId: "GD03-027_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-027_p1",
       cardNumber: "GD03-027",
       set: {
@@ -44,6 +49,7 @@ export const gd03ZGokE027: UnitCard = {
       productName: "WORLD CHAMPIONSHIPS 26-27 Participation Pack 26-27 Vol.1",
     },
   ],
+  reprints: ["GD03-027", "GD03-027_p1"],
   selectedPrintingId: "GD03-027",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-027.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-027.webp?260424",

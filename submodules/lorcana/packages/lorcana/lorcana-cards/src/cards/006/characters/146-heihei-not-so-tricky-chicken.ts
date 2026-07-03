@@ -4,6 +4,17 @@ import { heiheiNotsotrickyChickenI18n } from "./146-heihei-not-so-tricky-chicken
 export const heiheiNotsotrickyChicken: CharacterCard = {
   id: "jj9",
   canonicalId: "ci_jj9",
+  slug: "lorcana-ci_jj9",
+  printings: [
+    {
+      id: "set6-146",
+      artId: "set6-146",
+      setCode: "set6",
+      collectorNumber: "146",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-146"],
   cardType: "character",
   name: "Heihei",
@@ -20,7 +31,7 @@ export const heiheiNotsotrickyChicken: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e4908765126742488bab30dd0beb2c12",
-    tcgPlayer: 588363,
+    tcgPlayer: "588363",
   },
   text: [
     {
@@ -52,7 +63,9 @@ export const heiheiNotsotrickyChicken: CharacterCard = {
           {
             duration: "next-turn",
             restriction: "cant-ready",
-            target: { ref: "previous-target" },
+            target: {
+              ref: "previous-target",
+            },
             type: "restriction",
           },
         ],

@@ -17,7 +17,7 @@ export const annaTrustingSisterI18n: Record<Languages, I18nProperties> = {
     version: "Vertrauensvolle Schwester",
     text: [
       {
-        title: "WIR KÖNNEN DAS GEMEINSAM SCHAFFEN",
+        title: "Wir können das gemeinsam schaffen",
         description:
           "Wenn du diesen Charakter ausspielst und einen Elsa-Charakter im Spiel hast, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const annaTrustingSisterI18n: Record<Languages, I18nProperties> = {
     version: "Sœur confiante",
     text: [
       {
-        title: "ENSEMBLE, NOUS POUVONS Y PARVENIR",
+        title: "Ensemble, nous pouvons y parvenir",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un personnage nommé Elsa en jeu, vous pouvez placer la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const annaTrustingSisterI18n: Record<Languages, I18nProperties> = {
     version: "Sorella Fiduciosa",
     text: [
       {
-        title: "INSIEME POSSIAMO FARCELA",
+        title: "Insieme Possiamo Farcela",
         description:
           "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Elsa, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },

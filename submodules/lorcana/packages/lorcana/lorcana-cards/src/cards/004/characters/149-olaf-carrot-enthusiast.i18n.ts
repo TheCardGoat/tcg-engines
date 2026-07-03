@@ -22,12 +22,12 @@ export const olafCarrotEnthusiastI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Gestaltwandel: Wirf 1 Gegenstandskarte ab (Du kannst 1 Gegenstandskarte abwerfen, um diesen Charakter auf einen deiner Olaf-Charaktere auszuspielen.)",
+          "<Gestaltwandel: Wirf 1 Gegenstandskarte ab> (Du kannst 1 Gegenstandskarte abwerfen, um diesen Charakter auf einen deiner Olaf-Charaktere auszuspielen.)",
       },
       {
-        title: "KAROTTEN ÜBERALL!",
+        title: "Karotten überall!",
         description:
-          "Jedes Mal, wenn er erkundet, erhalten deine anderen Charaktere in diesem Zug + in Höhe der dieses Charakters.",
+          "Jedes Mal, wenn er erkundet, erhalten deine anderen Charaktere in diesem Zug +{S} in Höhe der {S} dieses Charakters.",
       },
     ],
   },
@@ -37,12 +37,12 @@ export const olafCarrotEnthusiastI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Alter: Défaussez une carte Objet (Vous pouvez défausser une carte Objet pour jouer ce personnage sur l'un de vos personnages Olaf.)",
+          "<Alter: Défaussez une carte Objet> (Vous pouvez défausser une carte Objet pour jouer ce personnage sur l'un de vos personnages Olaf.)",
       },
       {
-        title: "DES CAROTTES PARTOUT!",
+        title: "Des carottes partout!",
         description:
-          "Chaque fois que vous envoyez ce personnage à l'aventure, ajoutez sa à la de vos autres personnages pour le reste de ce tour.",
+          "Chaque fois que vous envoyez ce personnage à l'aventure, ajoutez sa {S} à la {S} de vos autres personnages pour le reste de ce tour.",
       },
     ],
   },
@@ -52,12 +52,12 @@ export const olafCarrotEnthusiastI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Trasformazione: Scarta una carta oggetto (Puoi scartare una carta oggetto per giocare questa carta sopra a uno dei tuoi personaggi chiamato Olaf.)",
+          "<Trasformazione: Scarta una carta oggetto> (Puoi scartare una carta oggetto per giocare questa carta sopra a uno dei tuoi personaggi chiamato Olaf.)",
       },
       {
-        title: "CAROTE OVUNQUE!",
+        title: "Carote Ovunque!",
         description:
-          "Ogni volta che questo personaggio va all'avventura, ognuno dei tuoi altri personaggi riceve + pari alla di questo personaggio per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, ognuno dei tuoi altri personaggi riceve +{S} pari alla {S} di questo personaggio per questo turno.",
       },
     ],
   },

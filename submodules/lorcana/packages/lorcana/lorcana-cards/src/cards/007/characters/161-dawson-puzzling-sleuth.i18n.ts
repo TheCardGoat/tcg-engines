@@ -17,7 +17,7 @@ export const dawsonPuzzlingSleuthI18n: Record<Languages, I18nProperties> = {
     version: "Grübelnder Detektiv",
     text: [
       {
-        title: "SEI VERNÜNFTIG",
+        title: "Sei vernünftig",
         description:
           "Einmal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, schaue dir die oberste Karte deines Decks an. Lege sie anschließend entweder auf dein Deck oder darunter.",
       },
@@ -28,7 +28,7 @@ export const dawsonPuzzlingSleuthI18n: Record<Languages, I18nProperties> = {
     version: "Détective énigmatique",
     text: [
       {
-        title: "FAIRE PREUVE DE DISCERNEMENT",
+        title: "Faire preuve de discernement",
         description:
           "Une seule fois durant votre tour, lorsqu'une carte est placée dans votre réserve d'encre, regardez la carte du dessus de votre pioche. Remettez-la soit sur le dessus de votre pioche, soit en dessous.",
       },
@@ -39,7 +39,7 @@ export const dawsonPuzzlingSleuthI18n: Record<Languages, I18nProperties> = {
     version: "Investigatore Perplesso",
     text: [
       {
-        title: "SIA RAGIONEVOLE",
+        title: "Sia Ragionevole",
         description:
           "Una volta durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, guarda la prima carta del tuo mazzo. Puoi metterla in cima o in fondo al tuo mazzo.",
       },

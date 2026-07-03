@@ -4,6 +4,17 @@ import { rescueRangersSubmarineMobileHeadquartersI18n } from "./169-rescue-range
 export const rescueRangersSubmarineMobileHeadquarters: LocationCard = {
   id: "DyS",
   canonicalId: "ci_DyS",
+  slug: "lorcana-ci_DyS",
+  printings: [
+    {
+      id: "set6-169",
+      artId: "set6-169",
+      setCode: "set6",
+      collectorNumber: "169",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-169"],
   cardType: "location",
   name: "Rescue Rangers Submarine",
@@ -20,7 +31,7 @@ export const rescueRangersSubmarineMobileHeadquarters: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d6deefa8519c46a39b105b62d7b857f4",
-    tcgPlayer: 586641,
+    tcgPlayer: "586641",
   },
   text: [
     {

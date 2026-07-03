@@ -4,6 +4,17 @@ import { royalGuardOctopusSoldierI18n } from "./052-royal-guard-octopus-soldier.
 export const royalGuardOctopusSoldier: CharacterCard = {
   id: "z2N",
   canonicalId: "ci_z2N",
+  slug: "lorcana-ci_z2N",
+  printings: [
+    {
+      id: "set8-052",
+      artId: "set8-052",
+      setCode: "set8",
+      collectorNumber: "52",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-052"],
   cardType: "character",
   name: "Royal Guard",
@@ -20,7 +31,7 @@ export const royalGuardOctopusSoldier: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5251999627264dabb73043f14e7b7b25",
-    tcgPlayer: 631386,
+    tcgPlayer: "631386",
   },
   text: [
     {

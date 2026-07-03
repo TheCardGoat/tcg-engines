@@ -4,6 +4,17 @@ import { theLibraryAGiftForBelleI18n } from "./068-the-library-a-gift-for-belle.
 export const theLibraryAGiftForBelle: LocationCard = {
   id: "7im",
   canonicalId: "ci_7im",
+  slug: "lorcana-ci_7im",
+  printings: [
+    {
+      id: "set5-068",
+      artId: "set5-068",
+      setCode: "set5",
+      collectorNumber: "68",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-068"],
   cardType: "location",
   name: "The Library",
@@ -20,12 +31,12 @@ export const theLibraryAGiftForBelle: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cbca0a75a1f9430baae6cf1528a421c4",
-    tcgPlayer: 561302,
+    tcgPlayer: "561302",
   },
   text: [
     {
-      title: "LOST IN A BOOK",
-      description: "Whenever a character is banished while here, you may draw a card.",
+      title: "LOST IN",
+      description: "A BOOK Whenever a character is banished while here, you may draw a card.",
     },
   ],
   abilities: [

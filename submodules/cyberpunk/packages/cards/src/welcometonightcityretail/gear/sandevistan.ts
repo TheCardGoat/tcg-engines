@@ -1,13 +1,15 @@
-import type { WelcomeToNightCityRetailCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts";
 
-export const welcomeToNightCityRetailSandevistan = {
+export const welcomeToNightCityRetailSandevistan = defineCyberpunkCard({
   id: "55153b49-c3a7-4208-a47b-0a91fa7e3b5c",
-  externalId: "cb-sandevistan",
   slug: "sandevistan",
-  name: "Sandevistan",
-  displayName: "Sandevistan",
   rulesText:
     "(Equip to a friendly Unit or face-up Legend.)\nAt the end of your turn, ready this Unit or Legend.",
+  name: "Sandevistan",
+  displayName: "Sandevistan",
+  canonicalId: "sandevistan",
   color: "green",
   classifications: ["Cyberware"],
   set: {
@@ -15,52 +17,23 @@ export const welcomeToNightCityRetailSandevistan = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "095",
-  printings: [
-    {
-      id: "97de62e2-3fea-4324-8367-87d1f1d674ed",
-      collectorNumber: "095",
-      setCode: "welcometonightcityretail",
-      rarity: "Uncommon",
-    },
-    {
-      id: "f0de2baf-27a9-426e-89cf-68abaceec507",
-      collectorNumber: "β095",
-      setCode: "welcometonightcitybeta",
-      rarity: "Uncommon",
-    },
-    {
-      id: "a4684963-6c44-4e6e-9466-56d987f86112",
-      collectorNumber: "019",
-      setCode: "embracingpowerretailstarterdeck",
-      rarity: "Uncommon",
-    },
-    {
-      id: "e1a14bfa-cd87-4fa9-bfe8-207abb4545c4",
-      collectorNumber: "β019",
-      setCode: "embracingpowerbetastarterdeck",
-      rarity: "Uncommon",
-    },
-  ],
-  selectedPrintingId: "97de62e2-3fea-4324-8367-87d1f1d674ed",
   artist: "CD Projekt Red",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/095.webp",
   rarity: "Uncommon",
   legality: "legal",
   hasSellTag: true,
   ram: 3,
-  timingTriggers: [],
-  keywords: [],
   type: "gear",
   cost: 3,
   power: 2,
   abilities: [
-    {
-      kind: "static",
-      text: "At the end of your turn, ready this Unit or Legend.",
-      effects: [],
-    },
+    AbilityBuilder.triggered()
+      .text("At the end of your turn, ready this Unit or Legend.")
+      .onTurnEnded({ player: "friendly" })
+      .source(target.host())
+      .effect(effect.ready({ target: target.host() }))
+      .build(),
   ],
-  reminderText: [],
   attachment: {
     text: "Equip to a unit or face-up legend.",
     target: {
@@ -71,4 +44,4 @@ export const welcomeToNightCityRetailSandevistan = {
       face: "faceUp",
     },
   },
-} satisfies WelcomeToNightCityRetailCardDefinition;
+}) satisfies GearCardDefinition;

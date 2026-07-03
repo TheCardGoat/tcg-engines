@@ -6,14 +6,17 @@ export const exbpExBase005: BaseCard = {
   type: "base",
   traits: [],
   id: "EXBP-005",
-  externalId: "gundam:exbp-005",
-  slug: "ex-base-exbp-005",
+  canonicalId: "EXBP-005",
+  externalIds: { bandai: "gundam:exbp-005" },
+  slug: "ex-base/exbp-005",
   displayName: "EX Base",
   set: { code: "EXBP", name: "BANDAI CARD GAMES Fest 25-26", packageId: "616901" },
   printNumber: "EXBP-005",
   printings: [
     {
       id: "EXBP-005",
+      artId: "EXBP-005",
+      setCode: "EXBP",
       collectorNumber: "EXBP-005",
       cardNumber: "EXBP-005",
       set: {
@@ -28,6 +31,7 @@ export const exbpExBase005: BaseCard = {
       productName: "BANDAI CARD GAMES Fest 25-26",
     },
   ],
+  reprints: ["EXBP-005"],
   selectedPrintingId: "EXBP-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-005.webp?260424",

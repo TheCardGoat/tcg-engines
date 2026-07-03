@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { tianaRestaurantOwnerI18n } from "./016-tiana-restaurant-owner.i18n";
 
 export const tianaRestaurantOwner: CharacterCard = {
-  id: "Mvh",
+  id: "IGi",
   canonicalId: "ci_1Oj",
+  slug: "lorcana-ci_1Oj",
+  printings: [
+    {
+      id: "set6-016",
+      artId: "set6-016",
+      setCode: "set6",
+      collectorNumber: "16",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-016"],
   cardType: "character",
   name: "Tiana",
@@ -20,7 +31,7 @@ export const tianaRestaurantOwner: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4dfb12a1e5844317a783074a548bc8c7",
-    tcgPlayer: 592031,
+    tcgPlayer: "592031",
   },
   text: [
     {
@@ -70,7 +81,11 @@ export const tianaRestaurantOwner: CharacterCard = {
           query: {
             selector: "all",
             reference: "source",
-            filters: [{ type: "exerted" }],
+            filters: [
+              {
+                type: "exerted",
+              },
+            ],
           },
           comparison: {
             operator: "gte",

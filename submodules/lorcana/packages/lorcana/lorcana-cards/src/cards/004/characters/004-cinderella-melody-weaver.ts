@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { cinderellaMelodyWeaverI18n } from "./004-cinderella-melody-weaver.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const cinderellaMelodyWeaver: CharacterCard = {
   id: "Qug",
   canonicalId: "ci_rND",
+  slug: "lorcana-ci_rND",
+  printings: [
+    {
+      id: "set4-004",
+      artId: "set4-004",
+      setCode: "set4",
+      collectorNumber: "4",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-004"],
   cardType: "character",
   name: "Cinderella",
@@ -21,7 +33,7 @@ export const cinderellaMelodyWeaver: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_eaf7db4a652b47939bddb0db4c9030e9",
-    tcgPlayer: 550544,
+    tcgPlayer: "550544",
   },
   text: [
     {

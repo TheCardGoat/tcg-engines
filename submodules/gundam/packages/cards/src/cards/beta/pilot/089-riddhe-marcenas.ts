@@ -7,14 +7,17 @@ export const betaRiddheMarcenas089: PilotCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-089_p1",
-  externalId: "gundam:gd01-089_p1",
-  slug: "riddhe-marcenas-gd01-089-p1",
+  canonicalId: "GD01-089",
+  externalIds: { bandai: "gundam:gd01-089_p1" },
+  slug: "riddhe-marcenas/gd01-089",
   displayName: "Riddhe Marcenas",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-089_p1",
   printings: [
     {
       id: "GD01-089",
+      artId: "GD01-089",
+      setCode: "GD01",
       collectorNumber: "GD01-089",
       cardNumber: "GD01-089",
       set: {
@@ -30,6 +33,8 @@ export const betaRiddheMarcenas089: PilotCard = {
     },
     {
       id: "GD01-089_p1",
+      artId: "GD01-089_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-089_p1",
       cardNumber: "GD01-089",
       set: {
@@ -44,6 +49,7 @@ export const betaRiddheMarcenas089: PilotCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-089", "GD01-089_p1"],
   selectedPrintingId: "GD01-089_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-089_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-089_p1.webp?260424",

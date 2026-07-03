@@ -7,14 +7,17 @@ export const gd01FreedomGundam065: UnitCard = {
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD01-065",
-  externalId: "gundam:gd01-065",
-  slug: "freedom-gundam-gd01-065",
+  canonicalId: "GD01-065",
+  externalIds: { bandai: "gundam:gd01-065" },
+  slug: "freedom-gundam/gd01-065",
   displayName: "Freedom Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-065",
   printings: [
     {
       id: "GD01-065",
+      artId: "GD01-065",
+      setCode: "GD01",
       collectorNumber: "GD01-065",
       cardNumber: "GD01-065",
       set: {
@@ -30,6 +33,8 @@ export const gd01FreedomGundam065: UnitCard = {
     },
     {
       id: "GD01-065_p1",
+      artId: "GD01-065_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-065_p1",
       cardNumber: "GD01-065",
       set: {
@@ -45,6 +50,8 @@ export const gd01FreedomGundam065: UnitCard = {
     },
     {
       id: "GD01-065_p2",
+      artId: "GD01-065_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-065_p2",
       cardNumber: "GD01-065",
       set: {
@@ -59,6 +66,7 @@ export const gd01FreedomGundam065: UnitCard = {
       productName: "Newtype Challenge 2026 Mission 1",
     },
   ],
+  reprints: ["GD01-065", "GD01-065_p1", "GD01-065_p2"],
   selectedPrintingId: "GD01-065",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-065.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-065.webp?260424",

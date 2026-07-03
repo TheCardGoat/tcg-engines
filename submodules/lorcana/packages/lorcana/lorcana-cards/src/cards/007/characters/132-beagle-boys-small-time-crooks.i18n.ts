@@ -17,9 +17,9 @@ export const beagleBoysSmalltimeCrooksI18n: Record<Languages, I18nProperties> = 
     version: "Kleinkriminelle",
     text: [
       {
-        title: "MACH SCHNELLER!",
+        title: "Mach schneller!",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, wähle einen deiner Charaktere. Jener erhält in diesem Zug Rasant und Robust +1. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird. Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+          "Jedes Mal, wenn dieser Charakter erkundet, wähle einen deiner Charaktere. Jener erhält in diesem Zug <Rasant> und <Robust> +1. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird. Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const beagleBoysSmalltimeCrooksI18n: Record<Languages, I18nProperties> = 
     version: "Escrocs à la petite semaine",
     text: [
       {
-        title: "FAITES VITE!",
+        title: "Faites vite!",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez l'un de vos personnages qui gagne Charge et Résistance +1 pour le reste de ce tour. (Ce personnage peut défier le tour où il est joué. Les dommages qui lui sont infligés sont réduits de 1.)",
+          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez l'un de vos personnages qui gagne <Charge> et <Résistance> +1 pour le reste de ce tour. (Ce personnage peut défier le tour où il est joué. Les dommages qui lui sont infligés sont réduits de 1.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const beagleBoysSmalltimeCrooksI18n: Record<Languages, I18nProperties> = 
     version: "Furfanti da Quattro Soldi",
     text: [
       {
-        title: "MUOVETEVI!",
+        title: "Muovetevi!",
         description:
-          "Ogni volta che questo personaggio va all'avventura, un tuo personaggio a tua scelta ottiene Lesto e Resistere +1 per questo turno. (Può sfidare nel turno in cui viene giocato. Il danno che gli viene inflitto è ridotto di 1.)",
+          "Ogni volta che questo personaggio va all'avventura, un tuo personaggio a tua scelta ottiene <Lesto> e <Resistere> +1 per questo turno. (Può sfidare nel turno in cui viene giocato. Il danno che gli viene inflitto è ridotto di 1.)",
       },
     ],
   },

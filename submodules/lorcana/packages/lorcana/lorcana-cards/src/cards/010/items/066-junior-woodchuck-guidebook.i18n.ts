@@ -14,8 +14,8 @@ export const juniorWoodchuckGuidebookI18n: Record<Languages, I18nProperties> = {
     name: "Das schlaue Buch",
     text: [
       {
-        title: "DAS BUCH WEISS ALLES, 1,",
-        description: "Verbanne diesen Gegenstand — Ziehe 2 Karten.",
+        title: "Das Buch weiß alles",
+        description: "{E}, 1 {I}, Verbanne diesen Gegenstand — Ziehe 2 Karten.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const juniorWoodchuckGuidebookI18n: Record<Languages, I18nProperties> = {
     name: "Le Manuel des Castors Juniors",
     text: [
       {
-        title: "CE MANUEL SAIT ABSOLUMENT TOUT, 1,",
-        description: "Bannissez cet objet — Piochez 2 cartes.",
+        title: "Ce manuel sait absolument tout",
+        description: "{E}, 1 {I}, Bannissez cet objet — Piochez 2 cartes.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const juniorWoodchuckGuidebookI18n: Record<Languages, I18nProperties> = {
     name: "Manuale delle Giovani Marmotte",
     text: [
       {
-        title: "IL MANUALE SA SEMPRE TUTTO, 1,",
-        description: "esilia questo oggetto — Pesca 2 carte.",
+        title: "Il Manuale sa Sempre Tutto",
+        description: "{E}, 1 {I}, esilia questo oggetto — Pesca 2 carte.",
       },
     ],
   },

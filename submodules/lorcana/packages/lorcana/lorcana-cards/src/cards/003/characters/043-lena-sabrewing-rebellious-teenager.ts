@@ -4,6 +4,17 @@ import { lenaSabrewingRebelliousTeenagerI18n } from "./043-lena-sabrewing-rebell
 export const lenaSabrewingRebelliousTeenager: CharacterCard = {
   id: "tnp",
   canonicalId: "ci_tnp",
+  slug: "lorcana-ci_tnp",
+  printings: [
+    {
+      id: "set3-043",
+      artId: "set3-043",
+      setCode: "set3",
+      collectorNumber: "43",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-043"],
   cardType: "character",
   name: "Lena Sabrewing",
@@ -20,7 +31,7 @@ export const lenaSabrewingRebelliousTeenager: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d8f0d093ffa743e48801e90e1b98cf14",
-    tcgPlayer: 538238,
+    tcgPlayer: "538238",
   },
   text: "Rush",
   classifications: ["Storyborn", "Hero", "Sorcerer"],

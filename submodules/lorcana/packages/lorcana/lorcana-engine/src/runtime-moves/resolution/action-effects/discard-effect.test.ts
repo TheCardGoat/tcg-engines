@@ -45,6 +45,8 @@ function createTestContext(args?: {
 
   const cardsApi = {
     getDefinition: (cardId: CardInstanceId) => definitions[cardId],
+    getMeta: (cardId: CardInstanceId) =>
+      definitions[cardId] || cardIndex[cardId] ? {} : undefined,
     require: (cardId: CardInstanceId) => ({
       definition: definitions[cardId],
       meta: {},
@@ -84,6 +86,9 @@ function createTestContext(args?: {
         state: {
           playerIds: [PLAYER_ONE, PLAYER_TWO],
           currentPlayer: PLAYER_ONE,
+          status: {
+            turn: 1,
+          },
           priority: {
             holder: PLAYER_ONE,
           },
@@ -95,6 +100,7 @@ function createTestContext(args?: {
           getCards: ({ zone, playerId }: { zone: string; playerId: PlayerId }) => [
             ...(zoneCards[`${zone}:${playerId}`] ?? []),
           ],
+          getCardZone: (cardId: CardInstanceId) => cardIndex[cardId]?.zoneKey,
           getCardOwner: (cardId: string) => cardIndex[cardId]?.ownerID,
           moveCard,
         },
@@ -107,6 +113,60 @@ function createTestContext(args?: {
 }
 
 describe("discard-effect", () => {
+  it("honors typed card filter expressions when selecting discard candidates", () => {
+    const source = "source" as CardInstanceId;
+    const nonAlienCharacter = "non-alien-character" as CardInstanceId;
+    const location = "location" as CardInstanceId;
+    const { ctx, state } = createTestContext({
+      definitions: {
+        [source]: { id: "source", cardType: "action" },
+        [nonAlienCharacter]: {
+          id: "non-alien-character",
+          cardType: "character",
+          classifications: ["Storyborn", "Hero"],
+        },
+        [location]: { id: "location", cardType: "location" },
+      },
+      zoneCards: {
+        [`hand:${PLAYER_ONE}`]: [nonAlienCharacter, location],
+      },
+    });
+
+    resolveDiscardEffect(
+      ctx,
+      {
+        cardId: source,
+        cardType: "action",
+        costType: "free",
+        playerId: PLAYER_ONE,
+      },
+      {
+        type: "discard",
+        amount: 1,
+        random: true,
+        target: "CONTROLLER",
+        filter: {
+          type: "or",
+          filters: [
+            {
+              type: "and",
+              filters: [
+                { type: "card-type", value: "character" },
+                { type: "has-classification", classification: "Alien" },
+              ],
+            },
+            { type: "card-type", value: "location" },
+          ],
+        },
+      },
+      {},
+      {},
+    );
+
+    expect(state.zoneCards[`discard:${PLAYER_ONE}`]).toEqual([location]);
+    expect(state.zoneCards[`hand:${PLAYER_ONE}`]).toEqual([nonAlienCharacter]);
+  });
+
   it("discards the only valid card when random discard has a single candidate", () => {
     const source = "source" as CardInstanceId;
     const onlyCard = "only-card" as CardInstanceId;

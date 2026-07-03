@@ -4,6 +4,17 @@ import { winnieThePoohHungryBearI18n } from "./151-winnie-the-pooh-hungry-bear.i
 export const winnieThePoohHungryBear: CharacterCard = {
   id: "h5D",
   canonicalId: "ci_mZ8",
+  slug: "lorcana-ci_mZ8",
+  printings: [
+    {
+      id: "set11-151",
+      artId: "set11-151",
+      setCode: "set11",
+      collectorNumber: "151",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-151"],
   cardType: "character",
   name: "Winnie the Pooh",
@@ -20,13 +31,13 @@ export const winnieThePoohHungryBear: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5da5944a7e9240aab2d30466337643c3",
-    tcgPlayer: 677152,
+    tcgPlayer: "677152",
   },
   text: [
     {
-      title: "LOOKING FOR A MORSEL",
+      title: "LOOKING FOR",
       description:
-        "When you play this character, you may return an item card from your discard to your hand.",
+        "A MORSEL When you play this character, you may return an item card from your discard to your hand.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

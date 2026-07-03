@@ -15,9 +15,9 @@ export const theSwordReleasedI18n: Record<Languages, I18nProperties> = {
     name: "Das befreite Schwert",
     text: [
       {
-        title: "ERTEILTE MACHT",
+        title: "Erteilte Macht",
         description:
-          "Zu Beginn deines Zuges, wenn du einen Charakter mit einer höheren als die aller gegnerischen Charaktere im Spiel hast, verlieren alle gegnerischen Mitspielenden je 1 Legende und du sammlest, für jede so verlorene Legende, je 1 Legende.",
+          "Zu Beginn deines Zuges, wenn du einen Charakter mit einer höheren {S} als die {S} aller gegnerischen Charaktere im Spiel hast, verlieren alle gegnerischen Mitspielenden je 1 Legende und du sammlest, für jede so verlorene Legende, je 1 Legende.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const theSwordReleasedI18n: Record<Languages, I18nProperties> = {
     name: "L'Épée libérée",
     text: [
       {
-        title: "LA PUISSANCE EST CONFÉRÉE",
+        title: "La puissance est conférée",
         description:
-          "Au début de votre tour, si vous avez un personnage en jeu avec une plus élevée que chaque personnage adverse, chaque adversaire perd 1 éclat de Lore. Vous gagnez autant d'éclats de Lore que vos adversaires en ont perdu.",
+          "Au début de votre tour, si vous avez un personnage en jeu avec une {S} plus élevée que chaque personnage adverse, chaque adversaire perd 1 éclat de Lore. Vous gagnez autant d'éclats de Lore que vos adversaires en ont perdu.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const theSwordReleasedI18n: Record<Languages, I18nProperties> = {
     name: "La Spada Estratta",
     text: [
       {
-        title: "DESIGNATO DAL POTERE",
+        title: "Designato dal Potere",
         description:
-          "All'inizio del tuo turno, se hai in gioco un personaggio con più di ogni personaggio avversario in gioco, ogni avversario perde 1 leggenda e tu ottieni leggenda pari alla leggenda persa.",
+          "All'inizio del tuo turno, se hai in gioco un personaggio con più {S} di ogni personaggio avversario in gioco, ogni avversario perde 1 leggenda e tu ottieni leggenda pari alla leggenda persa.",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gizmoduckSuitedUpI18n } from "./105-gizmoduck-suited-up.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const gizmoduckSuitedUp: CharacterCard = {
   id: "4Oe",
   canonicalId: "ci_4Oe",
+  slug: "lorcana-ci_4Oe",
+  printings: [
+    {
+      id: "set7-105",
+      artId: "set7-105",
+      setCode: "set7",
+      collectorNumber: "105",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-105"],
   cardType: "character",
   name: "Gizmoduck",
@@ -21,7 +33,7 @@ export const gizmoduckSuitedUp: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bca7b817c7d54046bdf02f573d14d87a",
-    tcgPlayer: 619463,
+    tcgPlayer: "619463",
   },
   text: [
     {

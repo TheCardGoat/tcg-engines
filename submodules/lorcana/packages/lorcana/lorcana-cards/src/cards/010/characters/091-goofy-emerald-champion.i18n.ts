@@ -21,14 +21,14 @@ export const goofyEmeraldChampionI18n: Record<Languages, I18nProperties> = {
     version: "Emerald Champion",
     text: [
       {
-        title: "EVEN THE SCORE",
+        title: "Even the Score",
         description:
           "Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.",
       },
       {
-        title: "PROVIDE COVER",
+        title: "Provide Cover",
         description:
-          "Your other Emerald characters gain Ward. (Opponents can't choose them except to challenge.)",
+          "Your other Emerald characters gain <Ward>. (Opponents can't choose them except to challenge.)",
       },
     ],
   },
@@ -37,14 +37,14 @@ export const goofyEmeraldChampionI18n: Record<Languages, I18nProperties> = {
     version: "Emerald Champion",
     text: [
       {
-        title: "EVEN THE SCORE",
+        title: "Even the Score",
         description:
           "Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.",
       },
       {
-        title: "PROVIDE COVER",
+        title: "Provide Cover",
         description:
-          "Your other Emerald characters gain Ward. (Opponents can't choose them except to challenge.)",
+          "Your other Emerald characters gain <Ward>. (Opponents can't choose them except to challenge.)",
       },
     ],
   },
@@ -53,14 +53,14 @@ export const goofyEmeraldChampionI18n: Record<Languages, I18nProperties> = {
     version: "Emerald Champion",
     text: [
       {
-        title: "EVEN THE SCORE",
+        title: "Even the Score",
         description:
           "Whenever one of your other Emerald characters is challenged and banished, banish the challenging character.",
       },
       {
-        title: "PROVIDE COVER",
+        title: "Provide Cover",
         description:
-          "Your other Emerald characters gain Ward. (Opponents can't choose them except to challenge.)",
+          "Your other Emerald characters gain <Ward>. (Opponents can't choose them except to challenge.)",
       },
     ],
   },

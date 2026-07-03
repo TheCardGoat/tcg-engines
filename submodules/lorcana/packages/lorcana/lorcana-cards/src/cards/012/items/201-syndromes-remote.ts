@@ -4,6 +4,17 @@ import { syndromesRemoteI18n } from "./201-syndromes-remote.i18n";
 export const syndromesRemote: ItemCard = {
   id: "SQl",
   canonicalId: "ci_SQl",
+  slug: "lorcana-ci_SQl",
+  printings: [
+    {
+      id: "set12-201",
+      artId: "set12-201",
+      setCode: "set12",
+      collectorNumber: "201",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-201"],
   cardType: "item",
   name: "Syndrome's Remote",
@@ -14,13 +25,17 @@ export const syndromesRemote: ItemCard = {
   rarity: "rare",
   cost: 2,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_735ae286d20644cdb01c377869987e29",
+    tcgPlayer: "690724",
+  },
   text: [
     {
-      title: "Zero-Point Energy",
+      title: "ZERO-POINT ENERGY",
       description: "{E}, 2 {I} — Chosen character can't challenge during their next turn.",
     },
     {
-      title: "Learn From Their Losses",
+      title: "LEARN FROM THEIR LOSSES",
       description:
         "Whenever a Robot character is banished, you may banish this item to discard your hand and draw 2 cards.",
     },

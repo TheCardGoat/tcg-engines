@@ -17,9 +17,9 @@ export const mrSmeeSteadfastMateI18n: Record<Languages, I18nProperties> = {
     version: "Entschlossener Maat",
     text: [
       {
-        title: "GUTER FANG",
+        title: "Guter Fang",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const mrSmeeSteadfastMateI18n: Record<Languages, I18nProperties> = {
     version: "Matelot fidèle",
     text: [
       {
-        title: "BELLE PRISE",
+        title: "Belle prise",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier des personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const mrSmeeSteadfastMateI18n: Record<Languages, I18nProperties> = {
     version: "Leale Nostromo",
     text: [
       {
-        title: "BEL COLPO",
+        title: "Bel Colpo",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

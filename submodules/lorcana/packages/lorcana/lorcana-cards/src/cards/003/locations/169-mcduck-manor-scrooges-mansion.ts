@@ -4,6 +4,17 @@ import { mcduckManorScroogesMansionI18n } from "./169-mcduck-manor-scrooges-mans
 export const mcduckManorScroogesMansion: LocationCard = {
   id: "lTr",
   canonicalId: "ci_lTr",
+  slug: "lorcana-ci_lTr",
+  printings: [
+    {
+      id: "set3-169",
+      artId: "set3-169",
+      setCode: "set3",
+      collectorNumber: "169",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-169"],
   cardType: "location",
   name: "McDuck Manor",
@@ -21,7 +32,7 @@ export const mcduckManorScroogesMansion: LocationCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_c653c06c96ec4b699dde5bcec70e0693",
-    tcgPlayer: 539104,
+    tcgPlayer: "539104",
   },
   i18n: mcduckManorScroogesMansionI18n,
 };

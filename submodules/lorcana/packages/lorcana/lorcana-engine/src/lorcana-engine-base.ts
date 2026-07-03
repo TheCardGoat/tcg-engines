@@ -115,6 +115,7 @@ import { cloneActionResolutionInput } from "./runtime-moves/resolution/action-ef
 import type { ActionResolutionInput } from "./runtime-moves/resolution/action-effects/types";
 import { getNextBagResolver } from "./runtime-moves/effects/triggered-abilities";
 import { getActivePlayFromUnderPermissions } from "./runtime-moves/effects/play-from-under-permissions";
+import { getActivePlayFromDiscardPermissions } from "./runtime-moves/effects/play-from-discard-permissions";
 import {
   enumerateAutomatedActionsWithAdapter,
   takeAutomatedActionWithAdapter,
@@ -402,18 +403,34 @@ export abstract class LorcanaEngineBase {
   private _cachedChallengeMoveOptionsStateID: number = -1;
   private _cachedChallengeMoveOptions = new Map<CardInstanceId, MoveOption[]>();
 
+  private invalidateMoveCaches(): void {
+    this._cachedAvailableMoves = null;
+    this._cachedAvailableMovesStateID = -1;
+    this._cachedLegalMoveIds = [];
+    this._cachedLegalMoveIdsStateID = -1;
+    this._cachedChallengeAttackersStateID = -1;
+    this._cachedChallengeAttackers = [];
+    this._cachedChallengeMoveOptionsStateID = -1;
+    this._cachedChallengeMoveOptions.clear();
+  }
+
   private getPlayerZoneCardIdsForMoveOptions(
     playerId: string,
-    zone: "hand" | "play",
+    zone: "discard" | "hand" | "play",
   ): CardInstanceId[] {
     const playerBoard = this.getBoard().players[playerId];
     if (!playerBoard) {
       return [];
     }
 
-    return (zone === "hand" ? playerBoard.hand : playerBoard.play).map(
-      (id) => id as CardInstanceId,
-    );
+    const zoneCards =
+      zone === "discard"
+        ? playerBoard.discard
+        : zone === "hand"
+          ? playerBoard.hand
+          : playerBoard.play;
+
+    return zoneCards.map((id) => id as CardInstanceId);
   }
 
   private matchesDiscardSelectableCostRequirements(
@@ -599,26 +616,49 @@ export abstract class LorcanaEngineBase {
     cardDef: LorcanaCard,
   ): MoveOptionSelectableCost[] {
     const shiftRules = getShiftRules(cardDef);
-    if (!shiftRules?.discardCost) {
+    if (shiftRules?.discardCost) {
+      const handCards = this.getPlayerZoneCardIdsForMoveOptions(playerId, "hand");
+      const candidateCardIds = handCards.filter((cardId) =>
+        this.matchesDiscardSelectableCostRequirements(this.getCardDefinitionByInstanceId(cardId), {
+          discardCardType: shiftRules.discardCost?.discardCardType,
+        }),
+      );
+
+      return [
+        {
+          kind: "discardCards",
+          count: shiftRules.discardCost.discardCards,
+          candidateCardIds,
+          zone: "hand",
+          ...(shiftRules.discardCost.discardCardType
+            ? { cardType: shiftRules.discardCost.discardCardType }
+            : {}),
+        },
+      ];
+    }
+
+    const hasDeckBottomShiftAlternativeCost = cardDef.abilities?.some(
+      (ability) =>
+        ability.type === "action" &&
+        "alternativeCost" in ability &&
+        ability.alternativeCost === "put-5-character-cards-on-deck-bottom-to-shift",
+    );
+    if (!hasDeckBottomShiftAlternativeCost) {
       return [];
     }
 
-    const handCards = this.getPlayerZoneCardIdsForMoveOptions(playerId, "hand");
-    const candidateCardIds = handCards.filter((cardId) =>
-      this.matchesDiscardSelectableCostRequirements(this.getCardDefinitionByInstanceId(cardId), {
-        discardCardType: shiftRules.discardCost?.discardCardType,
-      }),
+    const discardCards = this.getPlayerZoneCardIdsForMoveOptions(playerId, "discard");
+    const candidateCardIds = discardCards.filter(
+      (cardId) => this.getCardDefinitionByInstanceId(cardId)?.cardType === "character",
     );
 
     return [
       {
-        kind: "discardCards",
-        count: shiftRules.discardCost.discardCards,
+        kind: "putOnDeckBottom",
+        count: 5,
         candidateCardIds,
-        zone: "hand",
-        ...(shiftRules.discardCost.discardCardType
-          ? { cardType: shiftRules.discardCost.discardCardType }
-          : {}),
+        zone: "discard",
+        cardType: "character",
       },
     ];
   }
@@ -629,16 +669,90 @@ export abstract class LorcanaEngineBase {
     return selectableCosts.every((cost) => cost.candidateCardIds.length >= cost.count);
   }
 
-  private canDiscoverShiftPlay(cardId: CardInstanceId, shiftTarget: CardInstanceId): boolean {
+  private canDiscoverShiftPlay(
+    cardId: CardInstanceId,
+    shiftTarget: CardInstanceId,
+    selectableCosts: readonly MoveOptionSelectableCost[] = [],
+  ): boolean {
+    return this.canDiscoverShiftPlayGroup(cardId, [shiftTarget], selectableCosts);
+  }
+
+  private canDiscoverShiftPlayGroup(
+    cardId: CardInstanceId,
+    shiftTargets: readonly CardInstanceId[],
+    selectableCosts: readonly MoveOptionSelectableCost[] = [],
+  ): boolean {
+    const [shiftTarget, ...additionalShiftTargets] = shiftTargets;
+    if (!shiftTarget) {
+      return false;
+    }
+
+    const usesDeckBottomShiftCost = selectableCosts.some((cost) => cost.kind === "putOnDeckBottom");
     const validation = this.validateMove("playCard", {
       args: {
         cardId,
         cost: "shift",
         shiftTarget,
+        ...(additionalShiftTargets.length > 0 ? { additionalShiftTargets } : {}),
+        ...(usesDeckBottomShiftCost ? { deckBottomTargets: [] } : {}),
       },
     });
 
-    return validation.valid || validation.code === "SHIFT_DISCARD_REQUIRED";
+    return (
+      validation.valid ||
+      validation.code === "SHIFT_DISCARD_REQUIRED" ||
+      (usesDeckBottomShiftCost && validation.code === "INVALID_DECK_BOTTOM_SHIFT_TARGET_COUNT")
+    );
+  }
+
+  private selectDiscoverableShiftTargetGroup(
+    cardId: CardInstanceId,
+    shiftRules: NonNullable<ReturnType<typeof getShiftRules>>,
+    shiftTargets: readonly CardInstanceId[],
+    selectableCosts: readonly MoveOptionSelectableCost[] = [],
+  ): CardInstanceId[] | null {
+    if (!shiftRules.multiShift) {
+      const target = shiftTargets.find((targetId) =>
+        this.canDiscoverShiftPlay(cardId, targetId, selectableCosts),
+      );
+      return target ? [target] : null;
+    }
+
+    const { minTargets, maxTargets } = shiftRules.multiShift;
+    const maxGroupSize = Math.min(maxTargets, shiftTargets.length);
+    if (maxGroupSize < minTargets) {
+      return null;
+    }
+
+    const selected: CardInstanceId[] = [];
+    const findGroup = (startIndex: number, targetSize: number): CardInstanceId[] | null => {
+      if (selected.length === targetSize) {
+        return this.canDiscoverShiftPlayGroup(cardId, selected, selectableCosts)
+          ? [...selected]
+          : null;
+      }
+
+      const remainingSelections = targetSize - selected.length;
+      for (let index = startIndex; index <= shiftTargets.length - remainingSelections; index += 1) {
+        selected.push(shiftTargets[index]);
+        const group = findGroup(index + 1, targetSize);
+        selected.pop();
+        if (group) {
+          return group;
+        }
+      }
+
+      return null;
+    };
+
+    for (let targetSize = minTargets; targetSize <= maxGroupSize; targetSize += 1) {
+      const group = findGroup(0, targetSize);
+      if (group) {
+        return group;
+      }
+    }
+
+    return null;
   }
 
   protected constructor(init: LorcanaBaseEngineParams) {
@@ -795,6 +909,7 @@ export abstract class LorcanaEngineBase {
         ctx,
         bagEffect.sourceId as CardInstanceId,
         "bag-decision",
+        bagEffect.resolutionInput?.eventSnapshot,
       )
     ) {
       return false;
@@ -1137,6 +1252,7 @@ export abstract class LorcanaEngineBase {
 
     const logResult = (result: CommandResult): CommandResult => {
       if (result.success) {
+        this.invalidateMoveCaches();
         const snapshot = summarizePostMoveState();
         logger.debug(
           "Move {moveId} OK player={playerId} stateID={stateID} bag={bag} pendingEffects={pendingEffects} pendingChoice={pendingChoice} turnPlayer={turnPlayer} priorityPlayer={priorityPlayer} phase={phase} step={step}",
@@ -2932,7 +3048,23 @@ export abstract class LorcanaEngineBase {
       }
     }
 
-    if (!shiftTargets.some((targetId) => this.canDiscoverShiftPlay(playableCardId, targetId))) {
+    const deckBottomShiftCosts = this.getSelectableCostsForShift(playerId, cardDef).filter(
+      (cost) => cost.kind === "putOnDeckBottom",
+    );
+    if (
+      deckBottomShiftCosts.length > 0 &&
+      this.hasSufficientSelectableCosts(deckBottomShiftCosts) &&
+      this.selectDiscoverableShiftTargetGroup(
+        playableCardId,
+        shiftRules,
+        shiftTargets,
+        deckBottomShiftCosts,
+      )
+    ) {
+      return null;
+    }
+
+    if (!this.selectDiscoverableShiftTargetGroup(playableCardId, shiftRules, shiftTargets)) {
       if (typeof shiftRules.inkCost === "number") {
         // Use the projected `shiftPlayCost` (cost-reduction-adjusted) so the
         // tooltip matches what `canDiscoverShiftPlay` → `validateMove`
@@ -3081,7 +3213,25 @@ export abstract class LorcanaEngineBase {
     switch (cost.cost) {
       case "shift": {
         const shiftTarget = this.resolveCardId(cost.shiftTarget);
-        return shiftTarget ? { ...cost, shiftTarget } : cost;
+        const additionalShiftTargets = cost.additionalShiftTargets
+          ?.map((target) => this.resolveCardId(target))
+          .filter((target): target is CardInstanceId => Boolean(target));
+        const deckBottomTargets = cost.deckBottomTargets
+          ?.map((target) => this.resolveCardId(target))
+          .filter((target): target is CardInstanceId => Boolean(target));
+        return shiftTarget
+          ? {
+              ...cost,
+              shiftTarget,
+              ...(additionalShiftTargets &&
+              additionalShiftTargets.length === cost.additionalShiftTargets?.length
+                ? { additionalShiftTargets }
+                : {}),
+              ...(deckBottomTargets && deckBottomTargets.length === cost.deckBottomTargets?.length
+                ? { deckBottomTargets }
+                : {}),
+            }
+          : cost;
       }
       case "sing": {
         const singer = this.resolveCardId(cost.singer);
@@ -4525,11 +4675,25 @@ export abstract class LorcanaEngineBase {
       }
       return false;
     })();
+    const hasPlayablePlayFromDiscardCard = (() => {
+      const currentTurn = this.getState().ctx.status.turn ?? 1;
+      const permissions = getActivePlayFromDiscardPermissions(
+        this.getState().G.playFromDiscardPermissions,
+        clientPlayerId as PlayerId,
+        currentTurn,
+      );
+      if (permissions.some((permission) => this.canPlayCard(permission.cardId))) {
+        return true;
+      }
+
+      return playerBoard.discard.some((cardId) => this.canPlayCard(cardId as CardInstanceId));
+    })();
 
     const shouldAnalyzePlayCards =
       legalMoveIds.includes("playCard") ||
       playerBoard.hand.some((cardId) => this.canPlayCard(cardId as CardInstanceId)) ||
-      hasPlayablePlayFromUnderCard;
+      hasPlayablePlayFromUnderCard ||
+      hasPlayablePlayFromDiscardCard;
     const moveIdsToAnalyze =
       shouldAnalyzePlayCards && !legalMoveIds.includes("playCard")
         ? [...legalMoveIds, "playCard"]
@@ -4549,6 +4713,42 @@ export abstract class LorcanaEngineBase {
         const playCardIds: CardInstanceId[] = [];
         const singCardIds: CardInstanceId[] = [];
         const shiftCardIds: CardInstanceId[] = [];
+        const addDiscoverableShiftCard = (id: CardInstanceId): boolean => {
+          if (shiftCardIds.includes(id)) {
+            return true;
+          }
+
+          const definition = this.getCardDefinitionByInstanceId(id);
+          if (!hasShift(definition)) {
+            return false;
+          }
+
+          const card = definition as LorcanaCard;
+          const shiftRules = getShiftRules(card);
+          if (!shiftRules || shiftRules.unsupportedReason) {
+            return false;
+          }
+
+          const selectableCosts = this.getSelectableCostsForShift(clientPlayerId, card);
+          if (!this.hasSufficientSelectableCosts(selectableCosts)) {
+            return false;
+          }
+
+          const playCandidates = playerBoard.play.map((pid) => pid as CardInstanceId);
+          const shiftTargets = resolveShiftTargetCandidates(
+            shiftRules,
+            playCandidates,
+            (cid) => this.getCardDefinitionByInstanceId(cid) as LorcanaCard,
+          );
+          if (
+            this.selectDiscoverableShiftTargetGroup(id, shiftRules, shiftTargets, selectableCosts)
+          ) {
+            shiftCardIds.push(id);
+            return true;
+          }
+
+          return false;
+        };
 
         for (const cardId of playerBoard.hand) {
           const id = cardId as CardInstanceId;
@@ -4567,27 +4767,7 @@ export abstract class LorcanaEngineBase {
           }
 
           // Check shift — need at least one valid shift target on board
-          if (hasShift(definition)) {
-            const shiftRules = getShiftRules(card);
-            if (shiftRules) {
-              const selectableCosts = this.getSelectableCostsForShift(clientPlayerId, card);
-              if (!this.hasSufficientSelectableCosts(selectableCosts)) {
-                continue;
-              }
-              const playCandidates = playerBoard.play.map((pid) => pid as CardInstanceId);
-              const shiftTargets = resolveShiftTargetCandidates(
-                shiftRules,
-                playCandidates,
-                (cid) => this.getCardDefinitionByInstanceId(cid) as LorcanaCard,
-              );
-              const hasValidShiftTarget = shiftTargets.some((targetId) =>
-                this.canDiscoverShiftPlay(id, targetId),
-              );
-              if (hasValidShiftTarget) {
-                shiftCardIds.push(id);
-              }
-            }
-          }
+          addDiscoverableShiftCard(id);
 
           // Check sing — songs can be sung by characters
           if (isSongCard(card)) {
@@ -4680,27 +4860,40 @@ export abstract class LorcanaEngineBase {
               playCardIds.push(underCardId);
             }
             // Also check if limbo cards can be shifted
-            if (!shiftCardIds.includes(underCardId)) {
-              const underDef = this.getCardDefinitionByInstanceId(underCardId);
-              if (hasShift(underDef)) {
-                const underShiftRules = getShiftRules(underDef as LorcanaCard);
-                if (underShiftRules && !underShiftRules.unsupportedReason) {
-                  const playCandidates = playerBoard.play.map((pid) => pid as CardInstanceId);
-                  const shiftTargets = resolveShiftTargetCandidates(
-                    underShiftRules,
-                    playCandidates,
-                    (cid) => this.getCardDefinitionByInstanceId(cid) as LorcanaCard,
-                  );
-                  const hasValidShiftTarget = shiftTargets.some((targetId) =>
-                    this.canDiscoverShiftPlay(underCardId, targetId),
-                  );
-                  if (hasValidShiftTarget) {
-                    shiftCardIds.push(underCardId);
-                  }
-                }
-              }
-            }
+            addDiscoverableShiftCard(underCardId);
           }
+        }
+
+        const currentTurnForDiscard = this.getState().ctx.status.turn ?? 1;
+        const discardPermissions = getActivePlayFromDiscardPermissions(
+          this.getState().G.playFromDiscardPermissions,
+          clientPlayerId as PlayerId,
+          currentTurnForDiscard,
+        );
+        for (const permission of discardPermissions) {
+          if (
+            !playCardIds.includes(permission.cardId) &&
+            this.validateMove("playCard", {
+              args: { cardId: permission.cardId, cost: "standard" },
+            }).valid
+          ) {
+            playCardIds.push(permission.cardId);
+            continue;
+          }
+          addDiscoverableShiftCard(permission.cardId);
+        }
+        for (const discardCardId of playerBoard.discard) {
+          const id = discardCardId as CardInstanceId;
+          if (
+            !playCardIds.includes(id) &&
+            this.validateMove("playCard", {
+              args: { cardId: id, cost: "standard" },
+            }).valid
+          ) {
+            playCardIds.push(id);
+            continue;
+          }
+          addDiscoverableShiftCard(id);
         }
 
         if (playCardIds.length > 0) {
@@ -5000,10 +5193,38 @@ export abstract class LorcanaEngineBase {
           playCandidates,
           (id) => this.getCardDefinitionByInstanceId(id) as LorcanaCard,
         );
+        const hasDeckBottomShiftCost = selectableCosts.some(
+          (cost) => cost.kind === "putOnDeckBottom",
+        );
+
+        if (shiftRules.multiShift) {
+          const discoverableGroup = this.selectDiscoverableShiftTargetGroup(
+            cardId,
+            shiftRules,
+            validTargets,
+            selectableCosts,
+          );
+          if (!discoverableGroup) {
+            return [];
+          }
+
+          return validTargets.map((targetId) => ({
+            kind: "card",
+            cardId: targetId,
+            ...(selectableCosts.length > 0 ? { selectableCosts } : {}),
+          }));
+        }
 
         for (const targetId of validTargets) {
+          if (hasDeckBottomShiftCost && this.canDiscoverShiftPlay(cardId, targetId)) {
+            options.push({
+              kind: "card",
+              cardId: targetId,
+            });
+          }
+
           // Validate the full shift move
-          if (this.canDiscoverShiftPlay(cardId, targetId)) {
+          if (this.canDiscoverShiftPlay(cardId, targetId, selectableCosts)) {
             options.push({
               kind: "card",
               cardId: targetId,
@@ -5173,6 +5394,12 @@ export abstract class LorcanaEngineBase {
           state: staticAbilityState,
           cardId: id,
           restriction: "cant-sing",
+          registry: songPlayRegistry,
+        }) ||
+        hasStaticCardRestriction({
+          state: staticAbilityState,
+          cardId: id,
+          restriction: "cant-sing-without-sing-together",
           registry: songPlayRegistry,
         }) ||
         this.hasTemporaryRestriction(id, "cant-sing")

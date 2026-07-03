@@ -22,6 +22,7 @@ import type {
 import type { MatchStaticResources } from "./static-resources";
 import type { PlayerId } from "../types";
 import { createCardQueryAPIForState, createEventAPI } from "./match-runtime.apis";
+import { getCardQueryRuntimeInternals } from "./card-runtime";
 import { createTimeQueryAPI, createTimeOperationsForDraft } from "./match-runtime.time-apis";
 import { createRandomAPIForDraft } from "./match-runtime.random-apis";
 import { createZoneQueryAPI } from "./match-runtime.zone-apis";
@@ -184,14 +185,18 @@ function createWriteContextBase(opts: BuildWriteContextOptions): RuntimeLifecycl
     config.deriveRuntimeCard,
     playerId,
     undefined,
-    false,
+    true,
   );
   const cardRuntimeApi = createCardRuntimeAPI(draft, cardsApi);
+  const invalidateCardViews = () => {
+    getCardQueryRuntimeInternals(cardsApi)?.invalidateCardViews();
+  };
   const random = createRandomAPIForDraft(draft);
   const zones = createZoneOperations(draft, zoneRegistry, emitGameEvent, {
     cardQuery: cardsApi,
     onUndoBarrier: undo.markBarrier,
     random: random.random,
+    onCardViewsInvalidated: invalidateCardViews,
     onCardEnteredZone: (_cardId, toZone, ownerId) => {
       if (isDiscardZoneKey(toZone)) {
         recordCardPutIntoDiscardThisTurn(

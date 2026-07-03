@@ -4,6 +4,17 @@ import { teKHeartlessI18n } from "./192-te-k-heartless.i18n";
 export const teKHeartless: CharacterCard = {
   id: "KcY",
   canonicalId: "ci_KcY",
+  slug: "lorcana-ci_KcY",
+  printings: [
+    {
+      id: "set1-192",
+      artId: "set1-192",
+      setCode: "set1",
+      collectorNumber: "192",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-192"],
   cardType: "character",
   name: "Te Kā",
@@ -20,7 +31,7 @@ export const teKHeartless: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5fa3eadb1c984d63b845035c1e227af9",
-    tcgPlayer: 508954,
+    tcgPlayer: "508954",
   },
   text: [
     {

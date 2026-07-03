@@ -4,6 +4,17 @@ import { theQueenDivinerI18n } from "./156-the-queen-diviner.i18n";
 export const theQueenDiviner: CharacterCard = {
   id: "7dm",
   canonicalId: "ci_eXi",
+  slug: "lorcana-ci_eXi",
+  printings: [
+    {
+      id: "set4-156",
+      artId: "set4-156",
+      setCode: "set4",
+      collectorNumber: "156",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-156"],
   cardType: "character",
   name: "The Queen",
@@ -20,7 +31,7 @@ export const theQueenDiviner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_20f6a0577b714cf393648a074b1f0bb2",
-    tcgPlayer: 550540,
+    tcgPlayer: "550540",
   },
   text: [
     {

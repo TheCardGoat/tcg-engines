@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { wildcatMechanicI18n } from "./092-wildcat-mechanic.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const wildcatMechanic: CharacterCard = {
   id: "m0B",
   canonicalId: "ci_8Mj",
+  slug: "lorcana-ci_8Mj",
+  printings: [
+    {
+      id: "set3-092",
+      artId: "set3-092",
+      setCode: "set3",
+      collectorNumber: "92",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-092", "set9-091"],
   cardType: "character",
   name: "Wildcat",
@@ -21,7 +33,7 @@ export const wildcatMechanic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c7a6168b43fd4c71a441f6f2e236117b",
-    tcgPlayer: 650030,
+    tcgPlayer: "650030",
   },
   text: [
     {

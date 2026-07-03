@@ -4,6 +4,17 @@ import { kodaSmallishBearI18n } from "./034-koda-smallish-bear.i18n";
 export const kodaSmallishBear: CharacterCard = {
   id: "5gA",
   canonicalId: "ci_5gA",
+  slug: "lorcana-ci_5gA",
+  printings: [
+    {
+      id: "set7-034",
+      artId: "set7-034",
+      setCode: "set7",
+      collectorNumber: "34",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-034"],
   cardType: "character",
   name: "Koda",
@@ -21,7 +32,7 @@ export const kodaSmallishBear: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_2b6ec7f6dfed481bbc57c510928c657b",
-    tcgPlayer: 618719,
+    tcgPlayer: "618719",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: kodaSmallishBearI18n,

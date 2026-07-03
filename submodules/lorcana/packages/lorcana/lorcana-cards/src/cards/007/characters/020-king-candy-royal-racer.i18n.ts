@@ -17,7 +17,7 @@ export const kingCandyRoyalRacerI18n: Record<Languages, I18nProperties> = {
     version: "Königlicher Rennfahrer",
     text: [
       {
-        title: "SÜSSE RACHE",
+        title: "Süße Rache",
         description:
           "Jedes Mal, wenn einer deiner anderen Rennfahrer verbannt wird, wählen alle gegnerischen Mitspielenden je einen ihrer Charaktere und verbannen ihn.",
       },
@@ -28,7 +28,7 @@ export const kingCandyRoyalRacerI18n: Record<Languages, I18nProperties> = {
     version: "Pilote royal",
     text: [
       {
-        title: "DOUCE REVANCHE",
+        title: "Douce revanche",
         description:
           "Chaque fois que l'un de vos autres personnages Pilote est banni, chaque adversaire choisit l'un de ses personnages et le bannit.",
       },
@@ -39,7 +39,7 @@ export const kingCandyRoyalRacerI18n: Record<Languages, I18nProperties> = {
     version: "Pilota Reale",
     text: [
       {
-        title: "DOLCE VENDETTA",
+        title: "Dolce Vendetta",
         description:
           "Ogni volta che uno dei tuoi altri personaggi Pilota viene esiliato, ogni avversario sceglie ed esilia uno dei suoi personaggi.",
       },

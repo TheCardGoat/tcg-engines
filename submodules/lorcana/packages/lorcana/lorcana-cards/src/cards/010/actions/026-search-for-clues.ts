@@ -4,6 +4,17 @@ import { searchForCluesI18n } from "./026-search-for-clues.i18n";
 export const searchForClues: ActionCard = {
   id: "imz",
   canonicalId: "ci_imz",
+  slug: "lorcana-ci_imz",
+  printings: [
+    {
+      id: "set10-026",
+      artId: "set10-026",
+      setCode: "set10",
+      collectorNumber: "26",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-026"],
   cardType: "action",
   name: "Search for Clues",
@@ -16,7 +27,7 @@ export const searchForClues: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3945ef0eb7ba41b8b1c9382bf3380579",
-    tcgPlayer: 658337,
+    tcgPlayer: "658337",
   },
   text: "The player or players with the most cards in their hands choose and discard 2 cards. If you have a Detective character in play, gain 1 lore.",
   abilities: [

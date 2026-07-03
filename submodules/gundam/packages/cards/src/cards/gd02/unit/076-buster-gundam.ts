@@ -7,14 +7,17 @@ export const gd02BusterGundam076: UnitCard = {
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD02-076",
-  externalId: "gundam:gd02-076",
-  slug: "buster-gundam-gd02-076",
+  canonicalId: "GD02-076",
+  externalIds: { bandai: "gundam:gd02-076" },
+  slug: "buster-gundam/gd02-076",
   displayName: "Buster Gundam",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-076",
   printings: [
     {
       id: "GD02-076",
+      artId: "GD02-076",
+      setCode: "GD02",
       collectorNumber: "GD02-076",
       cardNumber: "GD02-076",
       set: {
@@ -30,6 +33,8 @@ export const gd02BusterGundam076: UnitCard = {
     },
     {
       id: "GD02-076_p1",
+      artId: "GD02-076_p1",
+      setCode: "ST09",
       collectorNumber: "GD02-076_p1",
       cardNumber: "GD02-076",
       set: {
@@ -44,6 +49,7 @@ export const gd02BusterGundam076: UnitCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["GD02-076", "GD02-076_p1"],
   selectedPrintingId: "GD02-076",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-076.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-076.webp?260424",

@@ -20,10 +20,10 @@ export const madamMimPurpleDragonEnchantedI18n: Record<Languages, I18nProperties
     version: "Lila Drache",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "GEWONNEN, GEWONNEN!",
+        title: "Gewonnen, gewonnen!",
         description:
           "Wenn du diesen Charakter ausspielst, musst du ihn verbannen oder 2 deiner anderen Charaktere wählen und zurück auf deine Hand nehmen.",
       },
@@ -34,10 +34,10 @@ export const madamMimPurpleDragonEnchantedI18n: Record<Languages, I18nProperties
     version: "En dragon",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "JE L'AI EU, J'AI GAGNÉ!",
+        title: "Je l'ai eu, j'ai gagné!",
         description:
           "Lorsque vous jouez ce personnage, bannissez-le ou renvoyez 2 de vos autres personnages en jeu dans votre main.",
       },
@@ -48,10 +48,10 @@ export const madamMimPurpleDragonEnchantedI18n: Record<Languages, I18nProperties
     version: "Purple Dragon",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "I WIN, I WIN!",
+        title: "I Win, I Win!",
         description:
           "When you play this character, banish her or return another 2 chosen characters of yours to your hand.",
       },

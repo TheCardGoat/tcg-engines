@@ -7,14 +7,17 @@ export const gd02AwakenedPower110: CommandCard = {
   color: "purple",
   traits: ["-"],
   id: "GD02-110",
-  externalId: "gundam:gd02-110",
-  slug: "awakened-power-gd02-110",
+  canonicalId: "GD02-110",
+  externalIds: { bandai: "gundam:gd02-110" },
+  slug: "awakened-power/gd02-110",
   displayName: "Awakened Power",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-110",
   printings: [
     {
       id: "GD02-110",
+      artId: "GD02-110",
+      setCode: "GD02",
       collectorNumber: "GD02-110",
       cardNumber: "GD02-110",
       set: {
@@ -30,6 +33,8 @@ export const gd02AwakenedPower110: CommandCard = {
     },
     {
       id: "GD02-110_p1",
+      artId: "GD02-110_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-110_p1",
       cardNumber: "GD02-110",
       set: {
@@ -45,6 +50,8 @@ export const gd02AwakenedPower110: CommandCard = {
     },
     {
       id: "GD02-110_p2",
+      artId: "GD02-110_p2",
+      setCode: "ST09",
       collectorNumber: "GD02-110_p2",
       cardNumber: "GD02-110",
       set: {
@@ -59,6 +66,7 @@ export const gd02AwakenedPower110: CommandCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["GD02-110", "GD02-110_p1", "GD02-110_p2"],
   selectedPrintingId: "GD02-110",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-110.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-110.webp?260424",

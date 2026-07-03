@@ -4,6 +4,17 @@ import { drSaraBellumHeadOfResearchI18n } from "./152-dr-sara-bellum-head-of-res
 export const drSaraBellumHeadOfResearch: CharacterCard = {
   id: "4yx",
   canonicalId: "ci_4yx",
+  slug: "lorcana-ci_4yx",
+  printings: [
+    {
+      id: "set12-152",
+      artId: "set12-152",
+      setCode: "set12",
+      collectorNumber: "152",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-152"],
   cardType: "character",
   name: "Dr. Sara Bellum",
@@ -20,6 +31,7 @@ export const drSaraBellumHeadOfResearch: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_51c67ec5aa334b43a036c79e0bceb3b7",
+    tcgPlayer: "692067",
   },
   text: [
     {

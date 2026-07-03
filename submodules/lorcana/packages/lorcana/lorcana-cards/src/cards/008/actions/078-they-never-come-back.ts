@@ -4,6 +4,17 @@ import { theyNeverComeBackI18n } from "./078-they-never-come-back.i18n";
 export const theyNeverComeBack: ActionCard = {
   id: "Ql7",
   canonicalId: "ci_Ql7",
+  slug: "lorcana-ci_Ql7",
+  printings: [
+    {
+      id: "set8-078",
+      artId: "set8-078",
+      setCode: "set8",
+      collectorNumber: "78",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-078"],
   cardType: "action",
   name: "They Never Come Back",
@@ -16,7 +27,7 @@ export const theyNeverComeBack: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2c56f14b54074c8890e8c66d93e1d1f3",
-    tcgPlayer: 631694,
+    tcgPlayer: "631694",
   },
   text: "Up to 2 chosen characters can't ready at the start of their next turn. Draw a card.",
   abilities: [

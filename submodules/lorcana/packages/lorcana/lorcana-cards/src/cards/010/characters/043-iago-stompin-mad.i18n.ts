@@ -9,16 +9,16 @@ export const iagoStompinMadI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Jago",
     version: "Rasend vor Wut",
-    text: "Herausfordern +5",
+    text: "<Herausfordern> +5 (Während dieser Charakter herausfordert, erhält er +5 {S}.)",
   },
   fr: {
     name: "Iago",
     version: "Piétine de rage",
-    text: "Offensif +5",
+    text: "<Offensif> +5",
   },
   it: {
     name: "Iago",
     version: "Furioso",
-    text: "Sfidante +5",
+    text: "<Sfidante> +5",
   },
 };

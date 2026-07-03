@@ -4,6 +4,17 @@ import { outOfOrderI18n } from "./148-out-of-order.i18n";
 export const outOfOrder: ActionCard = {
   id: "ljS",
   canonicalId: "ci_ljS",
+  slug: "lorcana-ci_ljS",
+  printings: [
+    {
+      id: "set7-148",
+      artId: "set7-148",
+      setCode: "set7",
+      collectorNumber: "148",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-148"],
   cardType: "action",
   name: "Out of Order",
@@ -16,7 +27,7 @@ export const outOfOrder: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0b939927deb64ca8a8ddde773f6cc340",
-    tcgPlayer: 619491,
+    tcgPlayer: "619491",
   },
   text: "Banish chosen character.",
   abilities: [

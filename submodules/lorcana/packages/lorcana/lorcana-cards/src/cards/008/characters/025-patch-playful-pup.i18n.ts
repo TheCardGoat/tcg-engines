@@ -19,12 +19,12 @@ export const patchPlayfulPupI18n: Record<Languages, I18nProperties> = {
     version: "Verspielter Welpe",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "WELPENBELLEN",
+        title: "Welpenbellen",
         description:
-          "Solange du mindestens einen weiteren Welpen im Spiel hast, erhält dieser Charakter +1.",
+          "Solange du mindestens einen weiteren Welpen im Spiel hast, erhält dieser Charakter +1 {L}.",
       },
     ],
   },
@@ -33,12 +33,12 @@ export const patchPlayfulPupI18n: Record<Languages, I18nProperties> = {
     version: "Chiot joueur",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "ABOIEMENTS DE CHIOT",
+        title: "Aboiements de chiot",
         description:
-          "Tant que vous avez un autre personnage Chiot en jeu, ce personnage-ci gagne +1.",
+          "Tant que vous avez un autre personnage Chiot en jeu, ce personnage-ci gagne +1 {L}.",
       },
     ],
   },
@@ -47,12 +47,12 @@ export const patchPlayfulPupI18n: Record<Languages, I18nProperties> = {
     version: "Cucciolo Giocherellone",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "LATRATO DEI CUCCIOLI",
+        title: "Latrato dei Cuccioli",
         description:
-          "Mentre hai in gioco un altro personaggio Cucciolo, questo personaggio riceve +1.",
+          "Mentre hai in gioco un altro personaggio Cucciolo, questo personaggio riceve +1 {L}.",
       },
     ],
   },

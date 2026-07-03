@@ -16,9 +16,9 @@ export const grammaTalaConnectedToNatureI18n: Record<Languages, I18nProperties> 
     version: "Naturverbunden",
     text: [
       {
-        title: "DAS GESCHENK DER AHNEN",
+        title: "Das Geschenk der Ahnen",
         description:
-          "Für jede Karte in deinem Tintenvorrat zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jede Karte in deinem Tintenvorrat zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const grammaTalaConnectedToNatureI18n: Record<Languages, I18nProperties> 
     version: "En communion avec la nature",
     text: [
       {
-        title: "DON DES ANCIENS",
+        title: "Don des anciens",
         description:
-          "Jouer ce personnage vous coûte 1 de moins pour chaque carte dans votre réserve d'encre.",
+          "Jouer ce personnage vous coûte 1 {I} de moins pour chaque carte dans votre réserve d'encre.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const grammaTalaConnectedToNatureI18n: Record<Languages, I18nProperties> 
     version: "Connessa con la Natura",
     text: [
       {
-        title: "DONO DEGLI ANTENATI",
+        title: "Dono degli Antenati",
         description:
-          "Per ogni carta nel tuo calamaio, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni carta nel tuo calamaio, paga 1 {I} in meno per giocare questo personaggio.",
       },
     ],
   },

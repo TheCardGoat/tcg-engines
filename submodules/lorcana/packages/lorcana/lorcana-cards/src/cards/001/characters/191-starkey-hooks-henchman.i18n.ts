@@ -6,8 +6,8 @@ export const starkeyHooksHenchmanI18n: Record<Languages, I18nProperties> = {
     version: "Hook’s Henchman",
     text: [
       {
-        title: "AYE AYE, CAPTAIN",
-        description: "While you have a Captain character in play, this character gets +1.",
+        title: "Aye Aye, Captain",
+        description: "While you have a Captain character in play, this character gets +1 {L}.",
       },
     ],
   },
@@ -16,9 +16,9 @@ export const starkeyHooksHenchmanI18n: Record<Languages, I18nProperties> = {
     version: "Hooks Handlanger",
     text: [
       {
-        title: "AYE, AYE, KÄPT'N",
+        title: "Aye, Aye, Käpt'n",
         description:
-          "Dieser Charakter erhält +1, solange du mindestens eine Kapitänin oder einen Kapitän im Spiel hast.",
+          "Dieser Charakter erhält +1 {L}, solange du mindestens eine Kapitänin oder einen Kapitän im Spiel hast.",
       },
     ],
   },
@@ -29,7 +29,7 @@ export const starkeyHooksHenchmanI18n: Record<Languages, I18nProperties> = {
       {
         title: "OUI, CAPITAINE",
         description:
-          "Ce personnage a +1 tant que vous avez au moins un personnage Capitaine en jeu.",
+          "Ce personnage a +1 {L} tant que vous avez au moins un personnage Capitaine en jeu.",
       },
     ],
   },
@@ -38,8 +38,8 @@ export const starkeyHooksHenchmanI18n: Record<Languages, I18nProperties> = {
     version: "Hook’s Henchman",
     text: [
       {
-        title: "AYE AYE, CAPTAIN",
-        description: "While you have a Captain character in play, this character gets +1.",
+        title: "Aye Aye, Captain",
+        description: "While you have a Captain character in play, this character gets +1 {L}.",
       },
     ],
   },

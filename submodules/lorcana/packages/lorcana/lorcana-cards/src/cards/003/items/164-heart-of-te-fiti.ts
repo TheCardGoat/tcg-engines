@@ -4,6 +4,17 @@ import { heartOfTeFitiI18n } from "./164-heart-of-te-fiti.i18n";
 export const heartOfTeFiti: ItemCard = {
   id: "L25",
   canonicalId: "ci_bK7",
+  slug: "lorcana-ci_bK7",
+  printings: [
+    {
+      id: "set3-164",
+      artId: "set3-164",
+      setCode: "set3",
+      collectorNumber: "164",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-164", "set9-168"],
   cardType: "item",
   name: "Heart of Te Fiti",
@@ -16,7 +27,7 @@ export const heartOfTeFiti: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_81cea9b9222c496a8de13d5eb3215ab2",
-    tcgPlayer: 650102,
+    tcgPlayer: "650102",
   },
   text: [
     {

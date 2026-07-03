@@ -16,7 +16,7 @@ export const princeAchmedRivalSuitorI18n: Record<Languages, I18nProperties> = {
     version: "Rivalisierender Verehrer",
     text: [
       {
-        title: "UNERWÜNSCHTER ANTRAG",
+        title: "Unerwünschter Antrag",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du eine Prinzessin deiner Wahl erschöpfen.",
       },
@@ -27,7 +27,7 @@ export const princeAchmedRivalSuitorI18n: Record<Languages, I18nProperties> = {
     version: "Soupirant rival",
     text: [
       {
-        title: "PROPOSITION INDÉSIRABLE",
+        title: "Proposition indésirable",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage Princesse et l'épuiser.",
       },
@@ -38,7 +38,7 @@ export const princeAchmedRivalSuitorI18n: Record<Languages, I18nProperties> = {
     version: "Pretendente Rivale",
     text: [
       {
-        title: "PROPOSTA NON DESIDERATA",
+        title: "Proposta non Desiderata",
         description:
           "Quando giochi questo personaggio, puoi impegnare un personaggio Principessa a tua scelta.",
       },

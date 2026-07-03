@@ -4,6 +4,17 @@ import { chiefBogoCommandingOfficerI18n } from "./018-chief-bogo-commanding-offi
 export const chiefBogoCommandingOfficer: CharacterCard = {
   id: "2pp",
   canonicalId: "ci_2pp",
+  slug: "lorcana-ci_2pp",
+  printings: [
+    {
+      id: "set8-018",
+      artId: "set8-018",
+      setCode: "set8",
+      collectorNumber: "18",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-018"],
   cardType: "character",
   name: "Chief Bogo",
@@ -20,7 +31,7 @@ export const chiefBogoCommandingOfficer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cafa13413b754a96b2ac5df738bd0b89",
-    tcgPlayer: 631362,
+    tcgPlayer: "631362",
   },
   text: [
     {
@@ -47,8 +58,15 @@ export const chiefBogoCommandingOfficer: CharacterCard = {
               max: 1,
               cost: "free",
               filters: [
-                { type: "card-type", cardType: "character" },
-                { type: "cost", comparison: "lte", value: 5 },
+                {
+                  type: "card-type",
+                  cardType: "character",
+                },
+                {
+                  type: "cost",
+                  comparison: "lte",
+                  value: 5,
+                },
               ],
             },
             {

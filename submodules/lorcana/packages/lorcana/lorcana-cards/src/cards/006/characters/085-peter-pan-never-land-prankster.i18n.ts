@@ -10,9 +10,9 @@ export const peterPanNeverLandPranksterI18n: Record<Languages, I18nProperties> =
         description: "This character enters play exerted.",
       },
       {
-        title: "CAN'T TAKE A JOKE?",
+        title: "CAN'T TAKE",
         description:
-          "While this character is exerted, each opposing player can't gain lore unless one of their characters has challenged this turn.",
+          "A JOKE? While this character is exerted, each opposing player can't gain lore unless one of their characters has challenged this turn.",
       },
     ],
   },
@@ -21,11 +21,11 @@ export const peterPanNeverLandPranksterI18n: Record<Languages, I18nProperties> =
     version: "Spaßvogel von Nimmerland",
     text: [
       {
-        title: "SIEH HARMLOS AUS",
+        title: "Sieh harmlos aus",
         description: "Dieser Charakter kommt erschöpft ins Spiel.",
       },
       {
-        title: "VERSTEHST DU KEINEN SPASS?",
+        title: "Verstehst du keinen Spaß?",
         description:
           "Solange dieser Charakter erschöpft ist, können gegnerische Mitspielende keine Legenden sammeln, außer einer ihrer Charaktere hat in diesem Zug herausgefordert.",
       },
@@ -36,11 +36,11 @@ export const peterPanNeverLandPranksterI18n: Record<Languages, I18nProperties> =
     version: "Farceur du Pays Imaginaire",
     text: [
       {
-        title: "L'AIR INNOCENT",
+        title: "L'air innocent",
         description: "Ce personnage arrive en jeu épuisé.",
       },
       {
-        title: "C'EST JUSTE UNE BLAGUE",
+        title: "C'est juste une blague",
         description:
           "Tant que ce personnage est épuisé, les adversaires ne peuvent pas gagner d'éclats de Lore à moins que l'un de leurs personnages ait défié ce tour-ci.",
       },
@@ -51,11 +51,11 @@ export const peterPanNeverLandPranksterI18n: Record<Languages, I18nProperties> =
     version: "Burlone dell'Isola Che Non C'è",
     text: [
       {
-        title: "ASPETTO INNOCENTE",
+        title: "Aspetto Innocente",
         description: "Questo personaggio entra in gioco impegnato.",
       },
       {
-        title: "NON SAI STARE AGLI SCHERZI?",
+        title: "Non Sai Stare agli Scherzi?",
         description:
           "Mentre questo personaggio è impegnato, ogni giocatore avversario non può ottenere leggenda a meno che uno dei suoi personaggi non abbia sfidato in questo turno.",
       },

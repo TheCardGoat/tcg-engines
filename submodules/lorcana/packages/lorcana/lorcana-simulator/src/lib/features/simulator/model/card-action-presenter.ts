@@ -1,4 +1,4 @@
-import type { PlayCardDisabledReason } from "@tcg/lorcana-engine";
+import type { MoveOptionSelectableCost, PlayCardDisabledReason } from "@tcg/lorcana-engine";
 import { m } from "$lib/i18n/messages.js";
 import { formatPlayCardDisabledReason } from "@/features/simulator/model/play-card-disabled-reason-i18n.js";
 import type {
@@ -166,27 +166,81 @@ function getPlayActionDetail(
   return undefined;
 }
 
+function getSelectableCost(
+  move: ExecutableMoveEntry,
+  kind: "putOnDeckBottom",
+): MoveOptionSelectableCost | null {
+  return move.presentation.kind === "targeted"
+    ? (move.presentation.selectableCosts?.find((cost) => cost.kind === kind) ?? null)
+    : null;
+}
+
+function hasSelectableCost(move: ExecutableMoveEntry, kind: "putOnDeckBottom"): boolean {
+  return getSelectableCost(move, kind) !== null;
+}
+
+function getDeckBottomShiftActionLabel(card: LorcanaCardSnapshot): string {
+  const matchingAbility = card.textEntries?.find((entry) => {
+    const text = `${entry.title} ${entry.description ?? ""}`.toLowerCase();
+    return (
+      !entry.title.toLowerCase().includes("shift") &&
+      text.includes("bottom of your deck") &&
+      text.includes("shift")
+    );
+  });
+
+  return matchingAbility?.title?.trim() || "Free Shift";
+}
+
+function getDeckBottomShiftActionDetail(move: ExecutableMoveEntry): string {
+  const cost = getSelectableCost(move, "putOnDeckBottom");
+  const count = cost?.count ?? 5;
+  const noun =
+    cost?.cardType === "character"
+      ? count === 1
+        ? "character"
+        : "characters"
+      : count === 1
+        ? "card"
+        : "cards";
+
+  return `Put ${count} ${noun} on deck bottom`;
+}
+
 function buildEnabledCategoryAction(
   card: LorcanaCardSnapshot,
   categoryId: CardActionCategoryId,
   moves: ExecutableMoveEntry[],
 ): CardActionView {
   const costType = (moves[0]?.params as { cost?: string })?.cost;
+  const isDeckBottomShiftCost =
+    categoryId === "shift-card" &&
+    moves.length > 0 &&
+    moves.every((move) => hasSelectableCost(move, "putOnDeckBottom"));
   const isAlternativeCost =
-    costType === "sacrifice" || costType === "exert-items" || costType === "put-on-deck-bottom";
-  const label =
-    categoryId === "quest" && typeof card.loreValue === "number"
+    costType === "sacrifice" ||
+    costType === "exert-items" ||
+    costType === "put-on-deck-bottom" ||
+    isDeckBottomShiftCost;
+  const label = isDeckBottomShiftCost
+    ? getDeckBottomShiftActionLabel(card)
+    : categoryId === "quest" && typeof card.loreValue === "number"
       ? `${m["sim.actions.label.quest"]({})} for ${card.loreValue} lore`
       : (moves[0]?.presentation.categoryLabel ?? categoryId);
-  const detail =
-    categoryId === "play-card" || categoryId === "shift-card"
+  const detail = isDeckBottomShiftCost
+    ? getDeckBottomShiftActionDetail(moves[0]!)
+    : categoryId === "play-card" || categoryId === "shift-card"
       ? getPlayActionDetail(card, moves[0]!)
       : undefined;
   const interaction =
     categoryId === "challenge" || categoryId === "move-to-location"
       ? "expand-on-click"
       : "execute-or-select";
-  const idSuffix = isAlternativeCost ? `:${costType}` : "";
+  const idSuffix = isDeckBottomShiftCost
+    ? ":put-on-deck-bottom"
+    : isAlternativeCost
+      ? `:${costType}`
+      : "";
 
   return {
     id: `${categoryId}:${card.cardId}${idSuffix}`,
@@ -346,7 +400,7 @@ export function buildCardActionViews(options: {
     const moves = groupedMoves.get(categoryId) ?? [];
 
     if (moves.length > 0) {
-      // Split alternative cost play-card moves into separate action chips
+      // Split alternative cost moves into separate action chips.
       if (categoryId === "play-card") {
         const standardMoves = moves.filter((move) => {
           const cost = (move.params as { cost?: unknown }).cost;
@@ -365,13 +419,28 @@ export function buildCardActionViews(options: {
         if (standardMoves.length === 0 && alternativeCostMoves.length === 0) {
           actions.push(buildEnabledCategoryAction(card, categoryId, moves));
         }
+      } else if (categoryId === "shift-card") {
+        const deckBottomMoves = moves.filter((move) => hasSelectableCost(move, "putOnDeckBottom"));
+        const standardMoves = moves.filter((move) => !hasSelectableCost(move, "putOnDeckBottom"));
+        if (standardMoves.length > 0) {
+          actions.push(buildEnabledCategoryAction(card, categoryId, standardMoves));
+        }
+        if (deckBottomMoves.length > 0) {
+          actions.push(buildEnabledCategoryAction(card, categoryId, deckBottomMoves));
+        }
+        if (standardMoves.length === 0 && deckBottomMoves.length === 0) {
+          actions.push(buildEnabledCategoryAction(card, categoryId, moves));
+        }
       } else {
         actions.push(buildEnabledCategoryAction(card, categoryId, moves));
       }
       continue;
     }
 
-    if (categoryId === "play-card" && (card.zoneId === "hand" || card.zoneId === "limbo")) {
+    if (
+      categoryId === "play-card" &&
+      (card.zoneId === "hand" || card.zoneId === "limbo" || card.zoneId === "discard")
+    ) {
       const reasonText = resolveBlockedReason(
         card.cardId,
         disabledReasonAccessors?.getStandardPlayDisabledReason,

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { moanaIslandExplorerI18n } from "./134-moana-island-explorer.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const moanaIslandExplorer: CharacterCard = {
   id: "Roi",
   canonicalId: "ci_Roi",
+  slug: "lorcana-ci_Roi",
+  printings: [
+    {
+      id: "set7-134",
+      artId: "set7-134",
+      setCode: "set7",
+      collectorNumber: "134",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-134"],
   cardType: "character",
   name: "Moana",
@@ -21,7 +33,7 @@ export const moanaIslandExplorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_da7a7db2845c4262be680a8a5b03c027",
-    tcgPlayer: 619480,
+    tcgPlayer: "619480",
   },
   text: [
     {

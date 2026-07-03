@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princeNaveenVigilantFirstMateI18n } from "./009-prince-naveen-vigilant-first-mate.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const princeNaveenVigilantFirstMate: CharacterCard = {
   id: "rPA",
   canonicalId: "ci_rPA",
+  slug: "lorcana-ci_rPA",
+  printings: [
+    {
+      id: "set6-009",
+      artId: "set6-009",
+      setCode: "set6",
+      collectorNumber: "9",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-009"],
   cardType: "character",
   name: "Prince Naveen",
@@ -22,7 +34,7 @@ export const princeNaveenVigilantFirstMate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_39972f3e75a3417488662b70443b3164",
-    tcgPlayer: 592016,
+    tcgPlayer: "592016",
   },
   text: [
     {

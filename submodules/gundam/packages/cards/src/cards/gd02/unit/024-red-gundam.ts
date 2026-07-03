@@ -7,14 +7,17 @@ export const gd02RedGundam024: UnitCard = {
   color: "green",
   traits: ["clan"],
   id: "GD02-024",
-  externalId: "gundam:gd02-024",
-  slug: "red-gundam-gd02-024",
+  canonicalId: "GD02-024",
+  externalIds: { bandai: "gundam:gd02-024" },
+  slug: "red-gundam/gd02-024",
   displayName: "Red Gundam",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-024",
   printings: [
     {
       id: "GD02-024",
+      artId: "GD02-024",
+      setCode: "GD02",
       collectorNumber: "GD02-024",
       cardNumber: "GD02-024",
       set: {
@@ -30,6 +33,8 @@ export const gd02RedGundam024: UnitCard = {
     },
     {
       id: "GD02-024_p1",
+      artId: "GD02-024_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-024_p1",
       cardNumber: "GD02-024",
       set: {
@@ -44,6 +49,7 @@ export const gd02RedGundam024: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-024", "GD02-024_p1"],
   selectedPrintingId: "GD02-024",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-024.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-024.webp?260424",

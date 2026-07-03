@@ -137,6 +137,9 @@
     showZoneCounters={controller.playerSettings.showZoneCounters}
     onToggleShowZoneCounters={controller.playerSettings
       .handleShowZoneCountersToggle}
+    priorityNudgeEnabled={controller.playerSettings.priorityNudgeEnabled}
+    onTogglePriorityNudgeEnabled={controller.playerSettings
+      .handlePriorityNudgeEnabledToggle}
     selectedPlaymat={controller.playerSettings.selectedPlaymat}
     selectedCardBack={controller.playerSettings.selectedCardBack}
     onPlaymatChange={controller.playerSettings.handlePlaymatChange}

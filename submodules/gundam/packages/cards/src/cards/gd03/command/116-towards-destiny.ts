@@ -7,14 +7,17 @@ export const gd03TowardsDestiny116: CommandCard = {
   color: "purple",
   traits: [],
   id: "GD03-116",
-  externalId: "gundam:gd03-116",
-  slug: "towards-destiny-gd03-116",
+  canonicalId: "GD03-116",
+  externalIds: { bandai: "gundam:gd03-116" },
+  slug: "towards-destiny/gd03-116",
   displayName: "Towards Destiny",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-116",
   printings: [
     {
       id: "GD03-116",
+      artId: "GD03-116",
+      setCode: "GD03",
       collectorNumber: "GD03-116",
       cardNumber: "GD03-116",
       set: {
@@ -29,6 +32,7 @@ export const gd03TowardsDestiny116: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-116"],
   selectedPrintingId: "GD03-116",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-116.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-116.webp?260424",

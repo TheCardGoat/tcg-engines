@@ -4,6 +4,17 @@ import { flynnRiderConfidentVagabondI18n } from "./081-flynn-rider-confident-vag
 export const flynnRiderConfidentVagabond: CharacterCard = {
   id: "Svn",
   canonicalId: "ci_Svn",
+  slug: "lorcana-ci_Svn",
+  printings: [
+    {
+      id: "set2-081",
+      artId: "set2-081",
+      setCode: "set2",
+      collectorNumber: "81",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-081"],
   cardType: "character",
   name: "Flynn Rider",
@@ -21,7 +32,7 @@ export const flynnRiderConfidentVagabond: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_e6055fbcee8a4a03a980c5e2e3a2cff9",
-    tcgPlayer: 517453,
+    tcgPlayer: "517453",
   },
   classifications: ["Storyborn", "Hero", "Prince"],
   i18n: flynnRiderConfidentVagabondI18n,

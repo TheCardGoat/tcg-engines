@@ -22,15 +22,16 @@ export const cogsworthGrandfatherClockI18n: Record<Languages, I18nProperties> = 
     version: "Standuhr",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Von-Unruh-Charaktere auszuspielen.)",
       },
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "ENTSCHLEUNIGEN",
+        title: "Entschleunigen",
         description:
-          "Deine anderen Charaktere erhalten Robust +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine anderen Charaktere erhalten <Robust> +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -39,14 +40,15 @@ export const cogsworthGrandfatherClockI18n: Record<Languages, I18nProperties> = 
     version: "Grand-père Horloge",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Big Ben.)",
       },
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "REPOSÉ",
-        description: "Vos autres personnages gagnent Résistance +1.",
+        title: "Reposé",
+        description: "Vos autres personnages gagnent <Résistance> +1.",
       },
     ],
   },
@@ -55,14 +57,16 @@ export const cogsworthGrandfatherClockI18n: Record<Languages, I18nProperties> = 
     version: "Grandfather Clock",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Cogsworth.)",
       },
       {
-        title: "Ward",
+        title: "<Ward> (Opponents can't choose this character except to challenge.)",
       },
       {
-        title: "UNWIND",
-        description: "Your other characters gain Resist +1 (Damage dealt to them is reduced by 1.)",
+        title: "Unwind",
+        description:
+          "Your other characters gain <Resist> +1 (Damage dealt to them is reduced by 1.)",
       },
     ],
   },

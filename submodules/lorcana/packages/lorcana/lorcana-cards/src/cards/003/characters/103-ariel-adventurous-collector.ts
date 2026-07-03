@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { arielAdventurousCollectorI18n } from "./103-ariel-adventurous-collector.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const arielAdventurousCollector: CharacterCard = {
   id: "pA8",
   canonicalId: "ci_6BB",
+  slug: "lorcana-ci_6BB",
+  printings: [
+    {
+      id: "set3-103",
+      artId: "set3-103",
+      setCode: "set3",
+      collectorNumber: "103",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-103", "set9-107"],
   cardType: "character",
   name: "Ariel",
@@ -21,7 +33,7 @@ export const arielAdventurousCollector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e6a1d03334964fb78033020d86a5f502",
-    tcgPlayer: 651123,
+    tcgPlayer: "651123",
   },
   text: [
     {

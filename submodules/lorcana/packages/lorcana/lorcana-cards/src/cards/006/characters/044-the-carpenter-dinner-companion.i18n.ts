@@ -16,7 +16,7 @@ export const theCarpenterDinnerCompanionI18n: Record<Languages, I18nProperties> 
     version: "Tischnachbar",
     text: [
       {
-        title: "ICH KRIEG DICH!",
+        title: "Ich krieg dich!",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du einen Charakter deiner Wahl erschöpfen.",
       },
@@ -27,7 +27,7 @@ export const theCarpenterDinnerCompanionI18n: Record<Languages, I18nProperties> 
     version: "Compagnon de table",
     text: [
       {
-        title: "JE T'AURAI!",
+        title: "Je t'aurai!",
         description:
           "Lorsque ce personnage est banni, vous pouvez choisir un personnage et l'épuiser.",
       },
@@ -38,7 +38,7 @@ export const theCarpenterDinnerCompanionI18n: Record<Languages, I18nProperties> 
     version: "Commensale",
     text: [
       {
-        title: "TI PRENDERÒ",
+        title: "Ti Prenderò",
         description:
           "Quando questo personaggio viene esiliato, puoi impegnare un personaggio a tua scelta.",
       },

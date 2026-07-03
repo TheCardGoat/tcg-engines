@@ -6,6 +6,7 @@ import { createCardPlayed, createTestContext, PLAYER_ONE } from "../../../../tes
 import { resolveRemoveDamageEffect } from "../remove-damage-effect";
 
 const TGT = "tgt" as CardInstanceId;
+const OTHER = "other" as CardInstanceId;
 
 function readDamage(ctx: PlayCardExecutionContext, id: CardInstanceId): number | undefined {
   const card = ctx.cards.get(id);
@@ -47,5 +48,41 @@ describe("remove-damage", () => {
     );
 
     expect(readDamage(ctx, TGT)).toBe(0);
+  });
+
+  it("spends an aggregate remove-damage amount across selected targets in order", () => {
+    const ctx = createTestContext({
+      zoneCards: { "play:player-one": [TGT, OTHER] },
+      definitions: {
+        tgt: { id: "tgt", cardType: "character" },
+        other: { id: "other", cardType: "character" },
+      },
+      cardMeta: {
+        tgt: { damage: 3 },
+        other: { damage: 3 },
+      },
+    });
+    const effect: RemoveDamageEffect = {
+      type: "remove-damage",
+      amount: { type: "up-to", value: 4 },
+      distribution: "aggregate",
+    };
+
+    resolveRemoveDamageEffect(
+      ctx,
+      createCardPlayed({ cardId: "src", playerId: PLAYER_ONE }),
+      effect,
+      {
+        targets: [TGT, OTHER],
+        amountByTarget: {
+          [TGT]: 4,
+          [OTHER]: 4,
+        } as Record<CardInstanceId, number>,
+        selectedAmount: 4,
+      },
+    );
+
+    expect(readDamage(ctx, TGT)).toBe(0);
+    expect(readDamage(ctx, OTHER)).toBe(2);
   });
 });

@@ -88,6 +88,7 @@ export default defineConfig(async ({ mode }) => {
         "@tcg/lorcana-cards/cards/010",
         "@tcg/lorcana-cards/cards/011",
         "@tcg/lorcana-cards/cards/012",
+        "@tcg/lorcana-cards/cards/013",
         "@tcg/lorcana-cards/deck-list-resolver",
       ],
     },

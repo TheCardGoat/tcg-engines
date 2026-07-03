@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { turboRoyalHackI18n } from "./106-turbo-royal-hack.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const turboRoyalHack: CharacterCard = {
   id: "42e",
   canonicalId: "ci_42e",
+  slug: "lorcana-ci_42e",
+  printings: [
+    {
+      id: "set5-106",
+      artId: "set5-106",
+      setCode: "set5",
+      collectorNumber: "106",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-106"],
   cardType: "character",
   name: "Turbo",
@@ -21,7 +33,7 @@ export const turboRoyalHack: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c53a525669114b578666906f5adff421",
-    tcgPlayer: 555260,
+    tcgPlayer: "555260",
   },
   text: [
     {

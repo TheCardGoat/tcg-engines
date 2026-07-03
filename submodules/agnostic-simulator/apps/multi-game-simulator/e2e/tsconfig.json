@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "noEmit": true,
-    "types": ["node"],
+    "types": ["node", "@types/bun"],
     "paths": {
       "@cyberpunk/*": ["../src/games/cyberpunk/*"],
       "@e2e/*": ["./*"],

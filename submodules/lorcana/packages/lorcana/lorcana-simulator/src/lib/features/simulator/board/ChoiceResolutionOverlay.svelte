@@ -222,12 +222,18 @@ onMount(() => {
               onpointerleave={() => handleCardPreviewLeave(sourceCard)}
               onclick={() => handleOpenGlobalPreview(sourceCard)}
             >
-              <CardImage
-                set={sourceCard.set ?? ""}
-                number={sourceCard.cardNumber ?? 0}
-                crop="art_and_name"
-                alt={sourceCard.label}
-              />
+              {#if !sourceCard.isMasked}
+                {@const imageSet = sourceCard.imageSet ?? sourceCard.set}
+                {@const imageCardNumber = sourceCard.imageCardNumber ?? sourceCard.cardNumber}
+                {#if imageSet && imageCardNumber}
+                  <CardImage
+                    set={imageSet}
+                    number={imageCardNumber}
+                    crop="art_and_name"
+                    alt={sourceCard.label}
+                  />
+                {/if}
+              {/if}
             </button>
             <button
               type="button"
@@ -271,12 +277,18 @@ onMount(() => {
         onkeydown={(e) => (e.key === "Enter" || e.key === " ") && handleOpenGlobalPreview(targetCard!)}
         title={targetCard.label}
       >
-        <CardImage
-          set={targetCard.set ?? ""}
-          number={targetCard.cardNumber ?? 0}
-          crop="art_and_name"
-          alt={targetCard.label}
-        />
+        {#if !targetCard.isMasked}
+          {@const imageSet = targetCard.imageSet ?? targetCard.set}
+          {@const imageCardNumber = targetCard.imageCardNumber ?? targetCard.cardNumber}
+          {#if imageSet && imageCardNumber}
+            <CardImage
+              set={imageSet}
+              number={imageCardNumber}
+              crop="art_and_name"
+              alt={targetCard.label}
+            />
+          {/if}
+        {/if}
       </div>
       <button
         type="button"

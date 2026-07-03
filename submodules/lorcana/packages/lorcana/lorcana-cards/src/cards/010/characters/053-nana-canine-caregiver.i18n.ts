@@ -17,7 +17,7 @@ export const nanaCanineCaregiverI18n: Record<Languages, I18nProperties> = {
     version: "Betreuungshündin",
     text: [
       {
-        title: "HILFREICHE INSTINKTE",
+        title: "Hilfreiche Instinkte",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du eine Karte von deiner Hand auswählen und abwerfen, um einen Charakter deiner Wahl, der 2 oder weniger kostet, auf die zugehörige Hand zurückzuschicken.",
       },
@@ -28,7 +28,7 @@ export const nanaCanineCaregiverI18n: Record<Languages, I18nProperties> = {
     version: "Nourrice canine",
     text: [
       {
-        title: "INSTINCTS DE SECOURS",
+        title: "Instincts de secours",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez défausser une carte pour choisir un personnage coûtant 2 ou moins et le renvoyer dans la main de son propriétaire.",
       },
@@ -39,7 +39,7 @@ export const nanaCanineCaregiverI18n: Record<Languages, I18nProperties> = {
     version: "Balia Canina",
     text: [
       {
-        title: "ISTINTI COLLABORATIVI",
+        title: "Istinti Collaborativi",
         description:
           "Quando giochi questo personaggio, puoi scegliere e scartare una carta per far riprendere in mano al suo giocatore un personaggio a tua scelta con costo 2 o inferiore.",
       },

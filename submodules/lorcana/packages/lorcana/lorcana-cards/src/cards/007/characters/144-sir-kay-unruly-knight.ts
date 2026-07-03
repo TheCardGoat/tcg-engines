@@ -4,6 +4,17 @@ import { sirKayUnrulyKnightI18n } from "./144-sir-kay-unruly-knight.i18n";
 export const sirKayUnrulyKnight: CharacterCard = {
   id: "1bB",
   canonicalId: "ci_1bB",
+  slug: "lorcana-ci_1bB",
+  printings: [
+    {
+      id: "set7-144",
+      artId: "set7-144",
+      setCode: "set7",
+      collectorNumber: "144",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-144"],
   cardType: "character",
   name: "Sir Kay",
@@ -21,7 +32,7 @@ export const sirKayUnrulyKnight: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_ff5d1835b81b400cac7373fb6310ca6a",
-    tcgPlayer: 619488,
+    tcgPlayer: "619488",
   },
   classifications: ["Storyborn", "Knight"],
   i18n: sirKayUnrulyKnightI18n,

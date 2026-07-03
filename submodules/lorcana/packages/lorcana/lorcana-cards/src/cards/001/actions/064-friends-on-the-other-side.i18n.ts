@@ -11,10 +11,26 @@ export const friendsOnTheOtherSideI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "MES AMIS DE L'AU-DELÀ",
-    text: "Piochez 2 cartes.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Piochez 2 cartes.",
+      },
+    ],
   },
   it: {
     name: "Gli Amici nell'Aldilà",
-    text: "(Un personaggio con costo 3 o superiore può per cantare questa canzone gratis.) Pesca 2 carte.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Pesca 2 carte.",
+      },
+    ],
   },
 };

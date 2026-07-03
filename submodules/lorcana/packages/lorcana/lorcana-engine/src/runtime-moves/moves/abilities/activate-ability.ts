@@ -27,6 +27,7 @@ import {
   emitTriggeredLorcanaEvent,
   flushTriggeredEventsToBag,
   queueTriggeredEvent,
+  snapshotTriggeredCandidatesForCard,
 } from "../../effects/triggered-abilities";
 import { emitBeChosenEvents } from "../../effects/be-chosen";
 import { recordBanishedCharacterThisTurn } from "../../state/turn-metrics";
@@ -894,6 +895,22 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
     const cardMeta = (ctx.cards.require(cardId).meta ?? {}) as LorcanaCardMeta;
     const cost = ability.cost ?? {};
 
+    const usesPerTurn = getUsesPerTurn(ability);
+    if (usesPerTurn !== undefined) {
+      const currentTurn = ctx.framework.state.status.turn ?? 1;
+      const usageCount = getAbilityUsageCount(
+        cardMeta,
+        ability.id ?? `ability-${abilityIndex}`,
+        currentTurn,
+      );
+      if (usageCount >= usesPerTurn) {
+        return createFailure(
+          "Ability has already been used the maximum times this turn",
+          "ABILITY_USES_EXHAUSTED",
+        );
+      }
+    }
+
     const exertCharacterCostValidation = validateExertCharacterCostSelections(
       ctx,
       currentPlayer,
@@ -945,22 +962,6 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
     );
     if (!costValidation.valid) {
       return costValidation;
-    }
-
-    const usesPerTurn = getUsesPerTurn(ability);
-    if (usesPerTurn !== undefined) {
-      const currentTurn = ctx.framework.state.status.turn ?? 1;
-      const usageCount = getAbilityUsageCount(
-        cardMeta,
-        ability.id ?? `ability-${abilityIndex}`,
-        currentTurn,
-      );
-      if (usageCount >= usesPerTurn) {
-        return createFailure(
-          "Ability has already been used the maximum times this turn",
-          "ABILITY_USES_EXHAUSTED",
-        );
-      }
     }
 
     const slots = analyzeActivateAbilityEffectResolutionSlots(
@@ -1079,6 +1080,7 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
         {
           cardId: exertedCardId,
           source: ability.name ?? ability.text ?? "activated ability",
+          zone: ctx.framework.zones.getCardZone(exertedCardId)?.split(":")[0],
         },
         {
           event: "exert",
@@ -1092,6 +1094,10 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
     if (discardCostCards.length > 0) {
       const triggerBatchKey = discardCostCards.join("|");
       for (const discardCardId of discardCostCards) {
+        const triggerCandidates = snapshotTriggeredCandidatesForCard(
+          ctx,
+          discardCardId as CardInstanceId,
+        );
         ctx.framework.zones.moveCard(discardCardId, {
           zone: "discard",
           playerId: currentPlayer,
@@ -1105,6 +1111,7 @@ export const activateAbility: LorcanaMoveDefinition<"activateAbility"> = {
             triggerAmount: discardCostCards.length,
             triggerBatchKey,
           },
+          triggerCandidates,
         });
       }
     }

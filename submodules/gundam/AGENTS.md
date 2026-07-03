@@ -8,10 +8,11 @@ Production entry points:
 - Platform pages: `https://tcg.online/gundam/*`
 - Mounted simulator: `https://tcg.online/gundam/simulator`
 
-Before rules-facing work, read `.agents/skills/gundam-tcg-rules.md` and keep
-its glossary in context. Use `.agents/skills/gundam-rules.md` as the bundled
-comprehensive rules reference and `.agents/skills/gundam-test-generation.md`
-when adding focused behavior tests.
+Before rules-facing work, load
+`.agents/skills/gundam-tcg-rules/references/glossary.md`, then
+`.agents/skills/gundam-tcg-rules/SKILL.md`. Keep the glossary in context and
+use the skill index before opening the comprehensive rules. Use
+`.agents/skills/gundam-test-generation.md` when adding focused behavior tests.
 
 Platform runtime or shared simulator exposure should map Gundam concepts
 through `../agnostic-simulator` contracts/adapters. Keep Gundam rules, cards,
@@ -44,9 +45,9 @@ engine semantics, and glossary-native wording inside this submodule.
 
 ## Agent Backpressure Gates
 
-Use the root `/backpressured` command for long-running Gundam work. Read the
-rules skill before rules-facing edits and keep the local architecture docs in
-scope for package-boundary decisions.
+Use the root `/backpressured` command for long-running Gundam work. Load the
+Gundam rules glossary and skill before rules-facing edits, and keep the local
+architecture docs in scope for package-boundary decisions.
 
 - Card data behavior: add or update the sibling card/engine fixture before
   changing broad primitives.

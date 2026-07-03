@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mirabelMadrigalHopefulDreamerI18n } from "./013-mirabel-madrigal-hopeful-dreamer.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { singer } from "../../../helpers/abilities/singer";
 
 export const mirabelMadrigalHopefulDreamer: CharacterCard = {
   id: "sOB",
   canonicalId: "ci_sOB",
+  slug: "lorcana-ci_sOB",
+  printings: [
+    {
+      id: "set7-013",
+      artId: "set7-013",
+      setCode: "set7",
+      collectorNumber: "13",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-013"],
   cardType: "character",
   name: "Mirabel Madrigal",
@@ -22,16 +34,9 @@ export const mirabelMadrigalHopefulDreamer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_039fcd98eaf7444ea45cea5da181f1c8",
-    tcgPlayer: 618323,
+    tcgPlayer: "618323",
   },
-  text: [
-    {
-      title: "Evasive",
-    },
-    {
-      title: "Singer 5",
-    },
-  ],
+  text: "Evasive Singer 5",
   classifications: ["Storyborn", "Hero", "Madrigal"],
   abilities: [evasive, singer(5)],
   i18n: mirabelMadrigalHopefulDreamerI18n,

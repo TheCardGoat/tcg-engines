@@ -4,6 +4,17 @@ import { naniStageManagerI18n } from "./020-nani-stage-manager.i18n";
 export const naniStageManager: CharacterCard = {
   id: "dBq",
   canonicalId: "ci_dBq",
+  slug: "lorcana-ci_dBq",
+  printings: [
+    {
+      id: "set11-020",
+      artId: "set11-020",
+      setCode: "set11",
+      collectorNumber: "20",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-020"],
   cardType: "character",
   name: "Nani",
@@ -20,7 +31,7 @@ export const naniStageManager: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_20232422b3314d02b054a923d610d81d",
-    tcgPlayer: 674829,
+    tcgPlayer: "674829",
   },
   text: [
     {

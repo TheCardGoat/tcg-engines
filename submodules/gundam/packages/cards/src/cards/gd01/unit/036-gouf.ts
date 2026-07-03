@@ -7,14 +7,17 @@ export const gd01Gouf036: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-036",
-  externalId: "gundam:gd01-036",
-  slug: "gouf-gd01-036",
+  canonicalId: "GD01-036",
+  externalIds: { bandai: "gundam:gd01-036" },
+  slug: "gouf/gd01-036",
   displayName: "Gouf",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-036",
   printings: [
     {
       id: "GD01-036",
+      artId: "GD01-036",
+      setCode: "GD01",
       collectorNumber: "GD01-036",
       cardNumber: "GD01-036",
       set: {
@@ -29,6 +32,7 @@ export const gd01Gouf036: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-036"],
   selectedPrintingId: "GD01-036",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-036.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-036.webp?260424",

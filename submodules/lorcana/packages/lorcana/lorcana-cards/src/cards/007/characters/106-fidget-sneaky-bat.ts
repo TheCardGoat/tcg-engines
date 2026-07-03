@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { fidgetSneakyBatI18n } from "./106-fidget-sneaky-bat.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const fidgetSneakyBat: CharacterCard = {
   id: "xmE",
   canonicalId: "ci_xmE",
+  slug: "lorcana-ci_xmE",
+  printings: [
+    {
+      id: "set7-106",
+      artId: "set7-106",
+      setCode: "set7",
+      collectorNumber: "106",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-106"],
   cardType: "character",
   name: "Fidget",
@@ -21,7 +33,7 @@ export const fidgetSneakyBat: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0306993b7adb4a52afb9ff31aea3a9b1",
-    tcgPlayer: 619464,
+    tcgPlayer: "619464",
   },
   text: [
     {

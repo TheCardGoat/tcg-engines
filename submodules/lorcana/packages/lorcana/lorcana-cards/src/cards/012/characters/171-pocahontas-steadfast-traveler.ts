@@ -3,7 +3,18 @@ import { pocahontasSteadfastTravelerI18n } from "./171-pocahontas-steadfast-trav
 
 export const pocahontasSteadfastTraveler: CharacterCard = {
   id: "5Da",
-  canonicalId: "ci_5Da",
+  canonicalId: "ci_iIv",
+  slug: "lorcana-ci_iIv",
+  printings: [
+    {
+      id: "set12-171",
+      artId: "set12-171",
+      setCode: "set12",
+      collectorNumber: "171",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-171"],
   cardType: "character",
   name: "Pocahontas",
@@ -19,7 +30,8 @@ export const pocahontasSteadfastTraveler: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_65471535e336408d9a1f465798307df2",
+    lorcast: "crd_5b512fbc3a31425eb70175752010d69c",
+    tcgPlayer: "692215",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { wendyDarlingTalentedSailorI18n } from "./023-wendy-darling-talented-sai
 export const wendyDarlingTalentedSailor: CharacterCard = {
   id: "cDB",
   canonicalId: "ci_cDB",
+  slug: "lorcana-ci_cDB",
+  printings: [
+    {
+      id: "set3-023",
+      artId: "set3-023",
+      setCode: "set3",
+      collectorNumber: "23",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-023"],
   cardType: "character",
   name: "Wendy Darling",
@@ -21,7 +32,7 @@ export const wendyDarlingTalentedSailor: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_e989edbf82194e8e9f4bd73426377d57",
-    tcgPlayer: 538380,
+    tcgPlayer: "538380",
   },
   classifications: ["Dreamborn", "Hero"],
   i18n: wendyDarlingTalentedSailorI18n,

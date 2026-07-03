@@ -7,14 +7,17 @@ export const gd03GrazeEin073: UnitCard = {
   color: "white",
   traits: ["gjallarhorn"],
   id: "GD03-073",
-  externalId: "gundam:gd03-073",
-  slug: "graze-ein-gd03-073",
+  canonicalId: "GD03-073",
+  externalIds: { bandai: "gundam:gd03-073" },
+  slug: "graze-ein/gd03-073",
   displayName: "Graze Ein",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-073",
   printings: [
     {
       id: "GD03-073",
+      artId: "GD03-073",
+      setCode: "GD03",
       collectorNumber: "GD03-073",
       cardNumber: "GD03-073",
       set: {
@@ -30,6 +33,8 @@ export const gd03GrazeEin073: UnitCard = {
     },
     {
       id: "GD03-073_p1",
+      artId: "GD03-073_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-073_p1",
       cardNumber: "GD03-073",
       set: {
@@ -44,6 +49,7 @@ export const gd03GrazeEin073: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-073", "GD03-073_p1"],
   selectedPrintingId: "GD03-073",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-073.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-073.webp?260424",

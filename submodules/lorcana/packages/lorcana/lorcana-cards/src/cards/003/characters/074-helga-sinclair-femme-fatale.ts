@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { helgaSinclairFemmeFataleI18n } from "./074-helga-sinclair-femme-fatale.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const helgaSinclairFemmeFatale: CharacterCard = {
   id: "akr",
   canonicalId: "ci_akr",
+  slug: "lorcana-ci_akr",
+  printings: [
+    {
+      id: "set3-074",
+      artId: "set3-074",
+      setCode: "set3",
+      collectorNumber: "74",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-074"],
   cardType: "character",
   name: "Helga Sinclair",
@@ -21,7 +33,7 @@ export const helgaSinclairFemmeFatale: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_bd43b98b4db44fc49f0aea4790ad393a",
-    tcgPlayer: 537764,
+    tcgPlayer: "537764",
   },
   text: [
     {

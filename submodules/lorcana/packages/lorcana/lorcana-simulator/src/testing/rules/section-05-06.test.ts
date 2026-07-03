@@ -14,7 +14,9 @@ import { motunuiIslandParadise } from "@tcg/lorcana-cards/cards/009";
 
 const playedThisTurnAbilityLocation: LocationCard = {
   id: "section-05-06-played-this-turn-ability-location",
+  printings: [{ id: "section-05-06-played-this-turn-ability-location", artId: "section-05-06-played-this-turn-ability-location", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
   canonicalId: "ci_section-05-06-played-this-turn-ability-location",
+  slug: "lorcana-ci_section-05-06-played-this-turn-ability-location",
   cardType: "location",
   name: "Training Yard",
   version: "Open Field",

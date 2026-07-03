@@ -7,14 +7,17 @@ export const gd02GuncannonGq052: UnitCard = {
   color: "red",
   traits: ["earth federation"],
   id: "GD02-052",
-  externalId: "gundam:gd02-052",
-  slug: "guncannon-gq-gd02-052",
+  canonicalId: "GD02-052",
+  externalIds: { bandai: "gundam:gd02-052" },
+  slug: "guncannon-gq/gd02-052",
   displayName: "Guncannon (GQ)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-052",
   printings: [
     {
       id: "GD02-052",
+      artId: "GD02-052",
+      setCode: "GD02",
       collectorNumber: "GD02-052",
       cardNumber: "GD02-052",
       set: {
@@ -29,6 +32,7 @@ export const gd02GuncannonGq052: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-052"],
   selectedPrintingId: "GD02-052",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-052.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-052.webp?260424",

@@ -4,6 +4,17 @@ import { inkGeyserI18n } from "./119-ink-geyser.i18n";
 export const inkGeyser: ActionCard = {
   id: "NRZ",
   canonicalId: "ci_NRZ",
+  slug: "lorcana-ci_NRZ",
+  printings: [
+    {
+      id: "set7-119",
+      artId: "set7-119",
+      setCode: "set7",
+      collectorNumber: "119",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-119"],
   cardType: "action",
   name: "Ink Geyser",
@@ -16,7 +27,7 @@ export const inkGeyser: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1043af1f4d454d8d83c4a85a75e1ad05",
-    tcgPlayer: 618175,
+    tcgPlayer: "618175",
   },
   text: "Each player exerts all the cards in their inkwell. Then each player with more than 3 cards in their inkwell returns cards at random from their inkwell to their hand until they have 3 cards in their inkwell.",
   abilities: [

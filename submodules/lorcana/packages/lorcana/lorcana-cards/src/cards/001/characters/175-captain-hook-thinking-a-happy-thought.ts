@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { captainHookThinkingAHappyThoughtI18n } from "./175-captain-hook-thinking-a-happy-thought.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const captainHookThinkingAHappyThought: CharacterCard = {
   id: "3Ri",
   canonicalId: "ci_3Ri",
+  slug: "lorcana-ci_3Ri",
+  printings: [
+    {
+      id: "set1-175",
+      artId: "set1-175",
+      setCode: "set1",
+      collectorNumber: "175",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-175"],
   cardType: "character",
   name: "Captain Hook",
@@ -22,7 +34,7 @@ export const captainHookThinkingAHappyThought: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_217eb0feed8b46fea1b5dc6c0b2b9e12",
-    tcgPlayer: 507505,
+    tcgPlayer: "507505",
   },
   text: [
     {

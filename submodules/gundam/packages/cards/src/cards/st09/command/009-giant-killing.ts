@@ -7,14 +7,17 @@ export const st09GiantKilling009: CommandCard = {
   color: "purple",
   traits: [],
   id: "ST09-009",
-  externalId: "gundam:st09-009",
-  slug: "giant-killing-st09-009",
+  canonicalId: "ST09-009",
+  externalIds: { bandai: "gundam:st09-009" },
+  slug: "giant-killing/st09-009",
   displayName: "Giant Killing",
   set: { code: "ST09", name: "Destiny Ignition [ST09]", packageId: "616009" },
   printNumber: "ST09-009",
   printings: [
     {
       id: "ST09-009",
+      artId: "ST09-009",
+      setCode: "ST09",
       collectorNumber: "ST09-009",
       cardNumber: "ST09-009",
       set: {
@@ -30,6 +33,8 @@ export const st09GiantKilling009: CommandCard = {
     },
     {
       id: "ST09-009_p1",
+      artId: "ST09-009_p1",
+      setCode: "ST09",
       collectorNumber: "ST09-009_p1",
       cardNumber: "ST09-009",
       set: {
@@ -44,6 +49,7 @@ export const st09GiantKilling009: CommandCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST09-009", "ST09-009_p1"],
   selectedPrintingId: "ST09-009",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st09/ST09-009.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST09-009.webp?260424",

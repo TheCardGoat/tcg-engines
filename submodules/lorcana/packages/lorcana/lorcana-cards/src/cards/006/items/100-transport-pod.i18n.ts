@@ -5,9 +5,9 @@ export const transportPodI18n: Record<Languages, I18nProperties> = {
     name: "Transport Pod",
     text: [
       {
-        title: "GIVE 'EM A SHOW",
+        title: "GIVE 'EM",
         description:
-          "At the start of your turn, you may move a character of yours to a location for free.",
+          "A SHOW At the start of your turn, you may move a character of yours to a location for free.",
       },
     ],
   },
@@ -15,7 +15,7 @@ export const transportPodI18n: Record<Languages, I18nProperties> = {
     name: "Transportkapsel",
     text: [
       {
-        title: "JETZT BEKOMMEN SIE IHRE SHOW",
+        title: "Jetzt bekommen sie ihre Show",
         description:
           "Zu Beginn deines Zuges, darfst du einen deiner Charaktere wählen und ihn kostenlos zu einem Ort bewegen.",
       },
@@ -25,7 +25,7 @@ export const transportPodI18n: Record<Languages, I18nProperties> = {
     name: "Module de transport",
     text: [
       {
-        title: "ILS MÉRITENT UNE DÉMONSTRATION",
+        title: "Ils méritent une démonstration",
         description:
           "Au début de votre tour, vous pouvez déplacer gratuitement l'un de vos personnages sur un lieu.",
       },
@@ -35,7 +35,7 @@ export const transportPodI18n: Record<Languages, I18nProperties> = {
     name: "Capsula di Trasporto",
     text: [
       {
-        title: "UN BELLO SPETTACOLO",
+        title: "Un Bello Spettacolo",
         description:
           "All'inizio del tuo turno, puoi spostare un tuo personaggio in un luogo, gratis.",
       },

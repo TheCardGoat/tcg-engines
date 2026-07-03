@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theMusesProclaimersOfHeroesI18n } from "./090-the-muses-proclaimers-of-heroes.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const theMusesProclaimersOfHeroes: CharacterCard = {
   id: "BQW",
   canonicalId: "ci_BQW",
+  slug: "lorcana-ci_BQW",
+  printings: [
+    {
+      id: "set4-090",
+      artId: "set4-090",
+      setCode: "set4",
+      collectorNumber: "90",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-090"],
   cardType: "character",
   name: "The Muses",
@@ -21,7 +33,7 @@ export const theMusesProclaimersOfHeroes: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_12e044565cad4dea9a798105ec0df2f2",
-    tcgPlayer: 547727,
+    tcgPlayer: "547727",
   },
   text: [
     {

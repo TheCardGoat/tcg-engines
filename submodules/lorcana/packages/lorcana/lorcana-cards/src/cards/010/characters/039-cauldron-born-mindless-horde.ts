@@ -4,6 +4,17 @@ import { cauldronBornMindlessHordeI18n } from "./039-cauldron-born-mindless-hord
 export const cauldronBornMindlessHorde: CharacterCard = {
   id: "Fjd",
   canonicalId: "ci_Fjd",
+  slug: "lorcana-ci_Fjd",
+  printings: [
+    {
+      id: "set10-039",
+      artId: "set10-039",
+      setCode: "set10",
+      collectorNumber: "39",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-039"],
   cardType: "character",
   name: "Cauldron Born",
@@ -21,7 +32,7 @@ export const cauldronBornMindlessHorde: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_3675f8f0ce8e461e8bd1e3f89a63d590",
-    tcgPlayer: 659446,
+    tcgPlayer: "659446",
   },
   classifications: ["Storyborn"],
   i18n: cauldronBornMindlessHordeI18n,

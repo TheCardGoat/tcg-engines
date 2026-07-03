@@ -4,6 +4,17 @@ import { daleFriendInNeedI18n } from "./007-dale-friend-in-need.i18n";
 export const daleFriendInNeed: CharacterCard = {
   id: "y2t",
   canonicalId: "ci_y2t",
+  slug: "lorcana-ci_y2t",
+  printings: [
+    {
+      id: "set6-007",
+      artId: "set6-007",
+      setCode: "set6",
+      collectorNumber: "7",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-007"],
   cardType: "character",
   name: "Dale",
@@ -20,7 +31,7 @@ export const daleFriendInNeed: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_166f05d54db54c06813b6dbb7693255d",
-    tcgPlayer: 578168,
+    tcgPlayer: "578168",
   },
   text: [
     {

@@ -17,9 +17,9 @@ export const honeyLemonCostumedCatalystI18n: Record<Languages, I18nProperties> =
     version: "Kostümierter Katalysator",
     text: [
       {
-        title: "ZIEHEN WIR ES DURCH!",
+        title: "Ziehen wir es durch!",
         description:
-          "Jedes Mal, wenn du mithilfe von Gestaltwandel eine Flutgestalt ausspielst, darfst du einen Charakter deiner Wahl zurück auf die zugehörige Hand schicken.",
+          "Jedes Mal, wenn du mithilfe von <Gestaltwandel> eine Flutgestalt ausspielst, darfst du einen Charakter deiner Wahl zurück auf die zugehörige Hand schicken.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const honeyLemonCostumedCatalystI18n: Record<Languages, I18nProperties> =
     version: "Catalyseuse costumée",
     text: [
       {
-        title: "C'EST PARTI!",
+        title: "C'est parti!",
         description:
-          "Chaque fois que vous jouez un personnage Floodborn en utilisant sa capacité Alter, vous pouvez choisir un personnage et le renvoyer dans la main de son propriétaire.",
+          "Chaque fois que vous jouez un personnage Floodborn en utilisant sa capacité <Alter>, vous pouvez choisir un personnage et le renvoyer dans la main de son propriétaire.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const honeyLemonCostumedCatalystI18n: Record<Languages, I18nProperties> =
     version: "Catalizzatrice in Costume",
     text: [
       {
-        title: "DIAMOCI DENTRO!",
+        title: "Diamoci Dentro!",
         description:
-          "Ogni volta che giochi un personaggio Imbevuto, se hai usato Trasformazione per giocarlo, puoi far riprendere in mano al suo giocatore un personaggio a tua scelta.",
+          "Ogni volta che giochi un personaggio Imbevuto, se hai usato <Trasformazione> per giocarlo, puoi far riprendere in mano al suo giocatore un personaggio a tua scelta.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { mamaOdieMysticalMavenI18n } from "./151-mama-odie-mystical-maven.i18n";
 export const mamaOdieMysticalMaven: CharacterCard = {
   id: "0qj",
   canonicalId: "ci_Ul4",
+  slug: "lorcana-ci_Ul4",
+  printings: [
+    {
+      id: "set3-151",
+      artId: "set3-151",
+      setCode: "set3",
+      collectorNumber: "151",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-151", "set9-152"],
   cardType: "character",
   name: "Mama Odie",
@@ -20,7 +31,7 @@ export const mamaOdieMysticalMaven: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_901fa7746b2745bc84aa4c7c6fddbbc7",
-    tcgPlayer: 650087,
+    tcgPlayer: "650087",
   },
   text: [
     {

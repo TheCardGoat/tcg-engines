@@ -4,6 +4,17 @@ import { aladdinBraveRescuerI18n } from "./171-aladdin-brave-rescuer.i18n";
 export const aladdinBraveRescuer: CharacterCard = {
   id: "KQ7",
   canonicalId: "ci_KQ7",
+  slug: "lorcana-ci_KQ7",
+  printings: [
+    {
+      id: "set4-171",
+      artId: "set4-171",
+      setCode: "set4",
+      collectorNumber: "171",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-171"],
   cardType: "character",
   name: "Aladdin",
@@ -20,13 +31,12 @@ export const aladdinBraveRescuer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2e7bad8041bf496fad79f3ad42a4fd89",
-    tcgPlayer: 547768,
+    tcgPlayer: "547768",
   },
   text: [
     {
-      title: "Shift: Discard a location card",
-      description:
-        "(You may discard a location card to play this on top of one of your characters named Aladdin.)",
+      title:
+        "Shift: Discard a location card (You may discard a location card to play this on top of one of your characters named Aladdin.)",
     },
     {
       title: "CRASHING THROUGH",

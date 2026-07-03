@@ -7,14 +7,17 @@ export const gd02GundamPharact078: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "GD02-078",
-  externalId: "gundam:gd02-078",
-  slug: "gundam-pharact-gd02-078",
+  canonicalId: "GD02-078",
+  externalIds: { bandai: "gundam:gd02-078" },
+  slug: "gundam-pharact/gd02-078",
   displayName: "Gundam Pharact",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-078",
   printings: [
     {
       id: "GD02-078",
+      artId: "GD02-078",
+      setCode: "GD02",
       collectorNumber: "GD02-078",
       cardNumber: "GD02-078",
       set: {
@@ -29,6 +32,7 @@ export const gd02GundamPharact078: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-078"],
   selectedPrintingId: "GD02-078",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-078.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-078.webp?260424",

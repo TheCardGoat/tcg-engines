@@ -4,6 +4,17 @@ import { nakomaWaitingOutTheStormI18n } from "./006-nakoma-waiting-out-the-storm
 export const nakomaWaitingOutTheStorm: CharacterCard = {
   id: "FhP",
   canonicalId: "ci_FhP",
+  slug: "lorcana-ci_FhP",
+  printings: [
+    {
+      id: "set11-006",
+      artId: "set11-006",
+      setCode: "set11",
+      collectorNumber: "6",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-006"],
   cardType: "character",
   name: "Nakoma",
@@ -21,7 +32,7 @@ export const nakomaWaitingOutTheStorm: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_1bd5bf1817684e57a918f2fdc04b4e3a",
-    tcgPlayer: 674319,
+    tcgPlayer: "674319",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: nakomaWaitingOutTheStormI18n,

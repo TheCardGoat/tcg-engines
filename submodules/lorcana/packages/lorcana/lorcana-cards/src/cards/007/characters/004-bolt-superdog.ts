@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { boltSuperdogI18n } from "./004-bolt-superdog.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const boltSuperdog: CharacterCard = {
-  id: "xfP",
+  id: "xya",
   canonicalId: "ci_qlj",
+  slug: "lorcana-ci_qlj",
+  printings: [
+    {
+      id: "set7-004",
+      artId: "set7-004",
+      setCode: "set7",
+      collectorNumber: "4",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-004"],
   cardType: "character",
   name: "Bolt",
@@ -20,8 +32,8 @@ export const boltSuperdog: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_e8863a1965284a3bad897ee8614d2866",
-    tcgPlayer: 619735,
+    lorcast: "crd_1c25fe2340004c5b9c9166ec33e1779f",
+    tcgPlayer: "634262",
   },
   text: [
     {

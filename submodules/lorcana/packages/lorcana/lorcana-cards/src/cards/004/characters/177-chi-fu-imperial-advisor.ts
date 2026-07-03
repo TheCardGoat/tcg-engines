@@ -4,6 +4,17 @@ import { chifuImperialAdvisorI18n } from "./177-chi-fu-imperial-advisor.i18n";
 export const chifuImperialAdvisor: CharacterCard = {
   id: "XGm",
   canonicalId: "ci_XGm",
+  slug: "lorcana-ci_XGm",
+  printings: [
+    {
+      id: "set4-177",
+      artId: "set4-177",
+      setCode: "set4",
+      collectorNumber: "177",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-177"],
   cardType: "character",
   name: "Chi-Fu",
@@ -20,7 +31,7 @@ export const chifuImperialAdvisor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6d38ee3cce1e48ae9a8e945734ab950f",
-    tcgPlayer: 548193,
+    tcgPlayer: "548193",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { magicBroomTheBigSweeperI18n } from "./046-magic-broom-the-big-sweeper.i
 export const magicBroomTheBigSweeper: CharacterCard = {
   id: "W8m",
   canonicalId: "ci_W8m",
+  slug: "lorcana-ci_W8m",
+  printings: [
+    {
+      id: "set3-046",
+      artId: "set3-046",
+      setCode: "set3",
+      collectorNumber: "46",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-046"],
   cardType: "character",
   name: "Magic Broom",
@@ -20,7 +31,7 @@ export const magicBroomTheBigSweeper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5bb1d62852d74227a37ae937c075eef0",
-    tcgPlayer: 539071,
+    tcgPlayer: "539071",
   },
   text: [
     {

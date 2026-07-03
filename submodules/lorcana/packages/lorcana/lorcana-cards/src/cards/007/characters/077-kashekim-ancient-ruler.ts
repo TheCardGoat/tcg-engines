@@ -4,6 +4,17 @@ import { kashekimAncientRulerI18n } from "./077-kashekim-ancient-ruler.i18n";
 export const kashekimAncientRuler: CharacterCard = {
   id: "COQ",
   canonicalId: "ci_K5D",
+  slug: "lorcana-ci_K5D",
+  printings: [
+    {
+      id: "set7-077",
+      artId: "set7-077",
+      setCode: "set7",
+      collectorNumber: "77",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-077"],
   cardType: "character",
   name: "Kashekim",
@@ -21,7 +32,7 @@ export const kashekimAncientRuler: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_0c0360dcefeb4a60bec287543d586f28",
-    tcgPlayer: 618268,
+    tcgPlayer: "618268",
   },
   classifications: ["Storyborn", "King"],
   i18n: kashekimAncientRulerI18n,

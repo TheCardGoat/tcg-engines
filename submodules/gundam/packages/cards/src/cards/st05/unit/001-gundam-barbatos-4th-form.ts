@@ -7,14 +7,17 @@ export const st05GundamBarbatos4thForm001: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "ST05-001",
-  externalId: "gundam:st05-001",
-  slug: "gundam-barbatos-4th-form-st05-001",
+  canonicalId: "ST05-001",
+  externalIds: { bandai: "gundam:st05-001" },
+  slug: "gundam-barbatos-4th-form/st05-001",
   displayName: "Gundam Barbatos 4th Form",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-001",
   printings: [
     {
       id: "ST05-001",
+      artId: "ST05-001",
+      setCode: "ST05",
       collectorNumber: "ST05-001",
       cardNumber: "ST05-001",
       set: {
@@ -30,6 +33,8 @@ export const st05GundamBarbatos4thForm001: UnitCard = {
     },
     {
       id: "ST05-001_p1",
+      artId: "ST05-001_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-001_p1",
       cardNumber: "ST05-001",
       set: {
@@ -45,6 +50,8 @@ export const st05GundamBarbatos4thForm001: UnitCard = {
     },
     {
       id: "ST05-001_p2",
+      artId: "ST05-001_p2",
+      setCode: "PC01A",
       collectorNumber: "ST05-001_p2",
       cardNumber: "ST05-001",
       set: {
@@ -60,6 +67,7 @@ export const st05GundamBarbatos4thForm001: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam IRON-BLOODED ORPHANS-[PC01A]",
     },
   ],
+  reprints: ["ST05-001", "ST05-001_p1", "ST05-001_p2"],
   selectedPrintingId: "ST05-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-001.webp?260424",

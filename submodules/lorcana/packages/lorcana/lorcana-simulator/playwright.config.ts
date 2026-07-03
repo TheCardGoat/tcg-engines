@@ -10,7 +10,7 @@ export default defineConfig({
   retries: isCi ? 2 : 0,
   reporter: [["html", { open: "never" }], ["list"]],
   webServer: {
-    command: "bunx --bun vite dev --host 127.0.0.1 --port 5174",
+    command: "vp dev --host 127.0.0.1 --port 5174",
     url: "http://127.0.0.1:5174",
     reuseExistingServer: true,
     timeout: 120_000,

@@ -4,6 +4,17 @@ import { mrsIncredibleSuperStretchyI18n } from "./049-mrs-incredible-super-stret
 export const mrsIncredibleSuperStretchy: CharacterCard = {
   id: "QuL",
   canonicalId: "ci_QuL",
+  slug: "lorcana-ci_QuL",
+  printings: [
+    {
+      id: "set12-049",
+      artId: "set12-049",
+      setCode: "set12",
+      collectorNumber: "49",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-049"],
   cardType: "character",
   name: "Mrs. Incredible",
@@ -20,6 +31,7 @@ export const mrsIncredibleSuperStretchy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a7974610679d43d190ee370d23d6e0b3",
+    tcgPlayer: "678237",
   },
   text: [
     {

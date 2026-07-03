@@ -20,12 +20,12 @@ export const minnieMouseMrsCratchitI18n: Record<Languages, I18nProperties> = {
     version: "Frau Cratchit",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "DIE LIEBE EINER MUTTER",
+        title: "Die Liebe einer Mutter",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit Stärken legen. Wenn du dies tust, ziehe 1 Karte.",
+          "Wenn du diesen Charakter ausspielst, darfst du die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit <Stärken> legen. Wenn du dies tust, ziehe 1 Karte.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const minnieMouseMrsCratchitI18n: Record<Languages, I18nProperties> = {
     version: "Mme Cratchit",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "L'AMOUR D'UNE MÈRE",
+        title: "L'amour d'une mère",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez placer la carte du dessus de votre pioche, face cachée, sous l'un de vos personnages ou de vos lieux avec Boost. Si vous le faites, piochez une carte.",
+          "Lorsque vous jouez ce personnage, vous pouvez placer la carte du dessus de votre pioche, face cachée, sous l'un de vos personnages ou de vos lieux avec <Boost>. Si vous le faites, piochez une carte.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const minnieMouseMrsCratchitI18n: Record<Languages, I18nProperties> = {
     version: "Signora Cratchit",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "L'AMORE DI UNA MADRE",
+        title: "L'Amore di una Madre",
         description:
-          "Quando giochi questo personaggio, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con Potenziamento. Se lo fai, pesca una carta.",
+          "Quando giochi questo personaggio, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con <Potenziamento>. Se lo fai, pesca una carta.",
       },
     ],
   },

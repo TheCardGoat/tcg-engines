@@ -1,10 +1,21 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { gigiBestInSnowI18n } from "./189-gigi-best-in-snow.i18n";
 import { alert } from "../../../helpers/abilities/alert";
+import { gigiBestInSnowI18n } from "./189-gigi-best-in-snow.i18n";
 
 export const gigiBestInSnow: CharacterCard = {
   id: "keA",
   canonicalId: "ci_keA",
+  slug: "lorcana-ci_keA",
+  printings: [
+    {
+      id: "set11-189",
+      artId: "set11-189",
+      setCode: "set11",
+      collectorNumber: "189",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-189"],
   cardType: "character",
   name: "Gigi",
@@ -21,7 +32,7 @@ export const gigiBestInSnow: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a1e3f0b6249140fcbab13e33ef76fba8",
-    tcgPlayer: 676243,
+    tcgPlayer: "676243",
   },
   text: [
     {

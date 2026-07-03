@@ -6,9 +6,9 @@ export const ursulaDeceiverOfAllI18n: Record<Languages, I18nProperties> = {
     version: "Deceiver of All",
     text: [
       {
-        title: "WHAT A DEAL",
+        title: "WHAT",
         description:
-          "Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.",
+          "A DEAL Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const ursulaDeceiverOfAllI18n: Record<Languages, I18nProperties> = {
     version: "Täuscht alle",
     text: [
       {
-        title: "WAS FÜR EIN DEAL",
+        title: "Was für ein Deal",
         description:
           "Jedes Mal, wenn dieser Charakter ein Lied singt, darfst du dieses Lied erneut von deinem Ablagestapel kostenlos ausspielen. Lege es danach unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const ursulaDeceiverOfAllI18n: Record<Languages, I18nProperties> = {
     version: "La plus perfide de toutes",
     text: [
       {
-        title: "QUEL CONTRAT",
+        title: "Quel contrat",
         description:
           "Chaque fois que ce personnage chante une chanson, vous pouvez rejouer cette chanson gratuitement depuis votre défausse, puis la remettre sous votre pioche.",
       },
@@ -39,7 +39,7 @@ export const ursulaDeceiverOfAllI18n: Record<Languages, I18nProperties> = {
     version: "Ingannatrice di Tutti",
     text: [
       {
-        title: "CHE AFFARE",
+        title: "Che Affare",
         description:
           "Ogni volta che questo personaggio canta una canzone, puoi giocare nuovamente quella canzone dagli scarti gratis, poi mettila in fondo al tuo mazzo.",
       },

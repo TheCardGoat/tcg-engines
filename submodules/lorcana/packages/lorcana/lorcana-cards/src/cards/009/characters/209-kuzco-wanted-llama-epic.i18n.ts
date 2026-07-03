@@ -6,8 +6,8 @@ export const kuzcoWantedLlamaEpicI18n: Record<Languages, I18nProperties> = {
     version: "Wanted Llama",
     text: [
       {
-        title: "OK, WHERE AM I?",
-        description: "When this character is banished, you may draw a card.",
+        title: "OK, WHERE AM",
+        description: "I? When this character is banished, you may draw a card.",
       },
     ],
   },
@@ -16,7 +16,7 @@ export const kuzcoWantedLlamaEpicI18n: Record<Languages, I18nProperties> = {
     version: "Gesuchtes Lama",
     text: [
       {
-        title: "ALSO, WO BIN ICH?",
+        title: "Also, wo bin ich?",
         description: "Wenn dieser Charakter verbannt wird, darfst du 1 Karte ziehen.",
       },
     ],
@@ -26,7 +26,7 @@ export const kuzcoWantedLlamaEpicI18n: Record<Languages, I18nProperties> = {
     version: "Lama recherché",
     text: [
       {
-        title: "BON, ALORS, J'SUIS OÙ?",
+        title: "Bon, alors, j'suis où?",
         description: "Lorsque ce personnage est banni, vous pouvez piocher une carte.",
       },
     ],
@@ -36,7 +36,7 @@ export const kuzcoWantedLlamaEpicI18n: Record<Languages, I18nProperties> = {
     version: "Wanted Llama",
     text: [
       {
-        title: "OK, WHERE AM I?",
+        title: "Ok, Where am I?",
         description: "When this character is banished, you may draw a card.",
       },
     ],

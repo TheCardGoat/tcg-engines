@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theSultanRoyalApparitionI18n } from "./073-the-sultan-royal-apparition.i18n";
+
 import { vanish } from "../../../helpers/abilities/vanish";
 
 export const theSultanRoyalApparition: CharacterCard = {
   id: "m6L",
   canonicalId: "ci_m6L",
+  slug: "lorcana-ci_m6L",
+  printings: [
+    {
+      id: "set8-073",
+      artId: "set8-073",
+      setCode: "set8",
+      collectorNumber: "73",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-073"],
   cardType: "character",
   name: "The Sultan",
@@ -21,7 +33,7 @@ export const theSultanRoyalApparition: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_34f916796e6844d081bdebaa3f7df182",
-    tcgPlayer: 633425,
+    tcgPlayer: "633425",
   },
   text: [
     {

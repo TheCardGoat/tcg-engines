@@ -6,14 +6,17 @@ export const st04Archangel015: BaseCard = {
   type: "base",
   traits: ["earth alliance", "warship"],
   id: "ST04-015",
-  externalId: "gundam:st04-015",
-  slug: "archangel-st04-015",
+  canonicalId: "ST04-015",
+  externalIds: { bandai: "gundam:st04-015" },
+  slug: "archangel/st04-015",
   displayName: "Archangel",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-015",
   printings: [
     {
       id: "ST04-015",
+      artId: "ST04-015",
+      setCode: "ST04",
       collectorNumber: "ST04-015",
       cardNumber: "ST04-015",
       set: {
@@ -29,6 +32,8 @@ export const st04Archangel015: BaseCard = {
     },
     {
       id: "ST04-015_p1",
+      artId: "ST04-015_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-015_p1",
       cardNumber: "ST04-015",
       set: {
@@ -44,6 +49,8 @@ export const st04Archangel015: BaseCard = {
     },
     {
       id: "ST04-015_p2",
+      artId: "ST04-015_p2",
+      setCode: "BETA",
       collectorNumber: "ST04-015_p2",
       cardNumber: "ST04-015",
       set: {
@@ -59,6 +66,8 @@ export const st04Archangel015: BaseCard = {
     },
     {
       id: "ST04-015_p3",
+      artId: "ST04-015_p3",
+      setCode: "ST09",
       collectorNumber: "ST04-015_p3",
       cardNumber: "ST04-015",
       set: {
@@ -74,6 +83,8 @@ export const st04Archangel015: BaseCard = {
     },
     {
       id: "ST04-015_p4",
+      artId: "ST04-015_p4",
+      setCode: "ST04",
       collectorNumber: "ST04-015_p4",
       cardNumber: "ST04-015",
       set: {
@@ -89,6 +100,8 @@ export const st04Archangel015: BaseCard = {
     },
     {
       id: "ST04-015_p5",
+      artId: "ST04-015_p5",
+      setCode: "ST04",
       collectorNumber: "ST04-015_p5",
       cardNumber: "ST04-015",
       set: {
@@ -103,6 +116,7 @@ export const st04Archangel015: BaseCard = {
       productName: "Store Tournament Winner Pack 04",
     },
   ],
+  reprints: ["ST04-015", "ST04-015_p1", "ST04-015_p2", "ST04-015_p3", "ST04-015_p4", "ST04-015_p5"],
   selectedPrintingId: "ST04-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-015.webp?260424",

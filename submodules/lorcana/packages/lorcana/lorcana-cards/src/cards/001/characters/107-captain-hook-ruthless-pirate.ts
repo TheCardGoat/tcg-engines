@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { captainHookRuthlessPirateI18n } from "./107-captain-hook-ruthless-pirate.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const captainHookRuthlessPirate: CharacterCard = {
   id: "eM3",
   canonicalId: "ci_eM3",
+  slug: "lorcana-ci_eM3",
+  printings: [
+    {
+      id: "set1-107",
+      artId: "set1-107",
+      setCode: "set1",
+      collectorNumber: "107",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-107"],
   cardType: "character",
   name: "Captain Hook",
@@ -21,7 +33,7 @@ export const captainHookRuthlessPirate: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6b3ab2c893c34e5989908e451259e1b1",
-    tcgPlayer: 508624,
+    tcgPlayer: "508624",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const st06RedGundam006: UnitCard = {
   color: "green",
   traits: ["clan"],
   id: "ST06-006",
-  externalId: "gundam:st06-006",
-  slug: "red-gundam-st06-006",
+  canonicalId: "ST06-006",
+  externalIds: { bandai: "gundam:st06-006" },
+  slug: "red-gundam/st06-006",
   displayName: "Red Gundam",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-006",
   printings: [
     {
       id: "ST06-006",
+      artId: "ST06-006",
+      setCode: "ST06",
       collectorNumber: "ST06-006",
       cardNumber: "ST06-006",
       set: {
@@ -30,6 +33,8 @@ export const st06RedGundam006: UnitCard = {
     },
     {
       id: "ST06-006_p1",
+      artId: "ST06-006_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-006_p1",
       cardNumber: "ST06-006",
       set: {
@@ -45,6 +50,8 @@ export const st06RedGundam006: UnitCard = {
     },
     {
       id: "ST06-006_p2",
+      artId: "ST06-006_p2",
+      setCode: "ST06",
       collectorNumber: "ST06-006_p2",
       cardNumber: "ST06-006",
       set: {
@@ -59,6 +66,7 @@ export const st06RedGundam006: UnitCard = {
       productName: "Boost Kit 01",
     },
   ],
+  reprints: ["ST06-006", "ST06-006_p1", "ST06-006_p2"],
   selectedPrintingId: "ST06-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-006.webp?260424",

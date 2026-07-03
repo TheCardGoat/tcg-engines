@@ -7,14 +7,17 @@ export const gd03LookOfDetermination114: CommandCard = {
   color: "purple",
   traits: [],
   id: "GD03-114",
-  externalId: "gundam:gd03-114",
-  slug: "look-of-determination-gd03-114",
+  canonicalId: "GD03-114",
+  externalIds: { bandai: "gundam:gd03-114" },
+  slug: "look-of-determination/gd03-114",
   displayName: "Look of Determination",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-114",
   printings: [
     {
       id: "GD03-114",
+      artId: "GD03-114",
+      setCode: "GD03",
       collectorNumber: "GD03-114",
       cardNumber: "GD03-114",
       set: {
@@ -30,6 +33,8 @@ export const gd03LookOfDetermination114: CommandCard = {
     },
     {
       id: "GD03-114_p1",
+      artId: "GD03-114_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-114_p1",
       cardNumber: "GD03-114",
       set: {
@@ -45,6 +50,8 @@ export const gd03LookOfDetermination114: CommandCard = {
     },
     {
       id: "GD03-114_p2",
+      artId: "GD03-114_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-114_p2",
       cardNumber: "GD03-114",
       set: {
@@ -59,6 +66,7 @@ export const gd03LookOfDetermination114: CommandCard = {
       productName: "Newtype Challenge 2026 Mission 2",
     },
   ],
+  reprints: ["GD03-114", "GD03-114_p1", "GD03-114_p2"],
   selectedPrintingId: "GD03-114",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-114.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-114.webp?260424",

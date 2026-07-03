@@ -16,8 +16,8 @@ export const hadesHotheadedRulerI18n: Record<Languages, I18nProperties> = {
     version: "Hitzköpfiger Herrscher",
     text: [
       {
-        title: "DIE TITANEN RUFEN",
-        description: "— Mache alle deine Titanen bereit.",
+        title: "Die Titanen rufen",
+        description: "{E} — Mache alle deine Titanen bereit.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const hadesHotheadedRulerI18n: Record<Languages, I18nProperties> = {
     version: "Souverain enflammé",
     text: [
       {
-        title: "APPEL DES TITANS",
-        description: "— Redressez vos personnages Titan.",
+        title: "Appel des Titans",
+        description: "{E} — Redressez vos personnages Titan.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const hadesHotheadedRulerI18n: Record<Languages, I18nProperties> = {
     version: "Governante Irascibile",
     text: [
       {
-        title: "RICHIAMARE I TITANI",
-        description: "— Prepara i tuoi personaggi Titano.",
+        title: "Richiamare i Titani",
+        description: "{E} — Prepara i tuoi personaggi Titano.",
       },
     ],
   },

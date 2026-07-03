@@ -4,6 +4,17 @@ import { pocahontasFindingTheWayI18n } from "./008-pocahontas-finding-the-way.i1
 export const pocahontasFindingTheWay: CharacterCard = {
   id: "3Q8",
   canonicalId: "ci_3Q8",
+  slug: "lorcana-ci_3Q8",
+  printings: [
+    {
+      id: "set11-008",
+      artId: "set11-008",
+      setCode: "set11",
+      collectorNumber: "8",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-008"],
   cardType: "character",
   name: "Pocahontas",
@@ -20,7 +31,7 @@ export const pocahontasFindingTheWay: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_aa9b3ea05aa64ee9aa09783eb6ca425c",
-    tcgPlayer: 674822,
+    tcgPlayer: "674822",
   },
   text: [
     {

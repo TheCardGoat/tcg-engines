@@ -16,9 +16,9 @@ export const chipFriendIndeedI18n: Record<Languages, I18nProperties> = {
     version: "Freund in der Tat",
     text: [
       {
-        title: "CHAPS PARTNER",
+        title: "Chaps Partner",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +1.",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const chipFriendIndeedI18n: Record<Languages, I18nProperties> = {
     version: "Ami dont on a besoin",
     text: [
       {
-        title: "PARTENAIRE DE TAC",
+        title: "Partenaire de Tac",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +1 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const chipFriendIndeedI18n: Record<Languages, I18nProperties> = {
     version: "Amico al Bisogno",
     text: [
       {
-        title: "PARTNER DI CIOP",
+        title: "Partner di Ciop",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta riceve +1 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta riceve +1 {L} per questo turno.",
       },
     ],
   },

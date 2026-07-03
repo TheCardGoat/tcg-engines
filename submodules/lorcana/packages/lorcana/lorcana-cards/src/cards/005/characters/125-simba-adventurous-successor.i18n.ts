@@ -16,9 +16,9 @@ export const simbaAdventurousSuccessorI18n: Record<Languages, I18nProperties> = 
     version: "Abenteuerlustiger Nachwuchs",
     text: [
       {
-        title: "ICH LACHE DIR INS GESICHT",
+        title: "Ich lache dir ins Gesicht",
         description:
-          "Wenn du diesen Charakter ausspielst, gib einem Charakter deiner Wahl in diesem Zug +2.",
+          "Wenn du diesen Charakter ausspielst, gib einem Charakter deiner Wahl in diesem Zug +2 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const simbaAdventurousSuccessorI18n: Record<Languages, I18nProperties> = 
     version: "Successeur aventureux",
     text: [
       {
-        title: "JE ME RIS DU DANGER",
+        title: "Je me ris du danger",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const simbaAdventurousSuccessorI18n: Record<Languages, I18nProperties> = 
     version: "Successore Avventuroso",
     text: [
       {
-        title: "IO RIDO IN FACCIA AL PERICOLO",
+        title: "Io Rido in Faccia al Pericolo",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta riceve +2 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta riceve +2 {S} per questo turno.",
       },
     ],
   },

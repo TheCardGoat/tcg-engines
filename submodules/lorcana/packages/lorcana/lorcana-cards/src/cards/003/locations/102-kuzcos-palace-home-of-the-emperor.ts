@@ -4,6 +4,17 @@ import { kuzcosPalaceHomeOfTheEmperorI18n } from "./102-kuzcos-palace-home-of-th
 export const kuzcosPalaceHomeOfTheEmperor: LocationCard = {
   id: "wbE",
   canonicalId: "ci_vRE",
+  slug: "lorcana-ci_vRE",
+  printings: [
+    {
+      id: "set3-102",
+      artId: "set3-102",
+      setCode: "set3",
+      collectorNumber: "102",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-102"],
   cardType: "location",
   name: "Kuzco's Palace",
@@ -20,7 +31,7 @@ export const kuzcosPalaceHomeOfTheEmperor: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a1af7dad15b64d31a696f7bbb49bfe92",
-    tcgPlayer: 539165,
+    tcgPlayer: "539165",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { noiAcrobaticBabyI18n } from "./119-noi-acrobatic-baby.i18n";
 export const noiAcrobaticBaby: CharacterCard = {
   id: "9pN",
   canonicalId: "ci_9pN",
+  slug: "lorcana-ci_9pN",
+  printings: [
+    {
+      id: "set4-119",
+      artId: "set4-119",
+      setCode: "set4",
+      collectorNumber: "119",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-119"],
   cardType: "character",
   name: "Noi",
@@ -20,7 +31,7 @@ export const noiAcrobaticBaby: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_eb12e8151688469f9b259778c64812ca",
-    tcgPlayer: 550596,
+    tcgPlayer: "550596",
   },
   text: [
     {

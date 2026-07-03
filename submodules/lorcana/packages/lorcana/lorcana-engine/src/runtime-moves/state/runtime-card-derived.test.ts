@@ -262,6 +262,66 @@ describe("runtime-card-derived", () => {
     expect(derived.playCost).toBe(5);
   });
 
+  it("applies pending cost reductions only to the matching play method and card name", () => {
+    const card: LorcanaCard = {
+      ...createMockCharacter({
+        id: "named-shift-derived-character",
+        name: "Shifted Hero",
+        cost: 6,
+        strength: 4,
+        willpower: 5,
+        lore: 2,
+      }),
+      abilities: [
+        {
+          id: "named-shift-derived-character-shift",
+          type: "keyword",
+          keyword: "Shift",
+          text: "Shift 4",
+          cost: { ink: 4 },
+        },
+      ],
+    };
+    const state = buildState();
+    state.G.turnMetadata.pendingCostReductionsByPlayer[PLAYER_ONE] = [
+      {
+        amount: 1,
+        cardType: "character",
+        cardName: "Shifted Hero",
+        playMethod: "shift",
+        expiresAtTurn: state.ctx.status.turn ?? 1,
+        consumeOnUse: true,
+      },
+      {
+        amount: 2,
+        cardType: "character",
+        cardName: "Other Hero",
+        playMethod: "shift",
+        expiresAtTurn: state.ctx.status.turn ?? 1,
+        consumeOnUse: true,
+      },
+      {
+        amount: 3,
+        cardType: "character",
+        cardName: "Shifted Hero",
+        playMethod: "standard",
+        expiresAtTurn: state.ctx.status.turn ?? 1,
+        consumeOnUse: true,
+      },
+    ];
+    const runtimeCard = buildRuntimeCard(card);
+    const derived = deriveLorcana(createLorcanaRuntimeCardDeriver(EMPTY_REGISTRY), {
+      cardId: runtimeCard.instanceId,
+      card: runtimeCard,
+      actorPlayerId: PLAYER_ONE,
+      state,
+      staticResources: buildStaticResources(card),
+    });
+
+    expect(derived.shiftPlayCost).toBe(3);
+    expect(derived.playCost).toBe(3);
+  });
+
   it("applies active continuous modifiers to character strength and willpower", () => {
     const card = createMockCharacter({
       id: "stat-character-with-modifiers",
@@ -322,7 +382,9 @@ describe("runtime-card-derived", () => {
   it("returns willpower for locations with valid willpower", () => {
     const locationCard: LocationCard = {
       id: "location-with-willpower",
+      printings: [{ id: "location-with-willpower", artId: "location-with-willpower", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
       canonicalId: "ci_location-with-willpower",
+      slug: "lorcana-ci_location-with-willpower",
       cardType: "location",
       name: "Test Location",
       cost: 3,
@@ -353,7 +415,9 @@ describe("runtime-card-derived", () => {
   it("applies location willpower modifiers and clamps at zero", () => {
     const locationCard: LocationCard = {
       id: "location-with-modifier",
+      printings: [{ id: "location-with-modifier", artId: "location-with-modifier", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
       canonicalId: "ci_location-with-modifier",
+      slug: "lorcana-ci_location-with-modifier",
       cardType: "location",
       name: "Modifier Location",
       cost: 3,
@@ -409,7 +473,9 @@ describe("runtime-card-derived", () => {
     // Create a location-like card with missing willpower (simulating edge case)
     const locationNoWillpower = {
       id: "location-no-willpower",
+      printings: [{ id: "location-no-willpower", artId: "location-no-willpower", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
       canonicalId: "ci_location-no-willpower",
+      slug: "lorcana-ci_location-no-willpower",
       cardType: "location",
       name: "Broken Location",
       cost: 2,
@@ -440,7 +506,9 @@ describe("runtime-card-derived", () => {
   it("returns 0 strength and willpower for non-character, non-location cards", () => {
     const actionCard: LorcanaCard = {
       id: "action-card",
+      printings: [{ id: "action-card", artId: "action-card", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
       canonicalId: "ci_action-card",
+      slug: "lorcana-ci_action-card",
       cardType: "action",
       name: "Test Action",
       cost: 2,

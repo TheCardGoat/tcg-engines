@@ -20,12 +20,13 @@ export const magicBroomBrigadeCommanderI18n: Record<Languages, I18nProperties> =
     version: "Marschmeister",
     text: [
       {
-        title: "Robust +1",
+        title:
+          "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
       {
-        title: "ARMEE VON BESEN",
+        title: "Armee von Besen",
         description:
-          "Dieser Charakter erhält +2 für jeden weiteren Zauberbesen-Charakter, den du im Spiel hast.",
+          "Dieser Charakter erhält +2 {S} für jeden weiteren Zauberbesen-Charakter, den du im Spiel hast.",
       },
     ],
   },
@@ -34,12 +35,12 @@ export const magicBroomBrigadeCommanderI18n: Record<Languages, I18nProperties> =
     version: "Commandant de brigade",
     text: [
       {
-        title: "Résistance +1",
+        title: "<Résistance> +1",
       },
       {
-        title: "ARMÉE DE BALAIS",
+        title: "Armée de balais",
         description:
-          "Ce personnage gagne +2 pour chaque autre personnage Balais magiques que vous avez en jeu.",
+          "Ce personnage gagne +2 {S} pour chaque autre personnage Balais magiques que vous avez en jeu.",
       },
     ],
   },
@@ -48,12 +49,12 @@ export const magicBroomBrigadeCommanderI18n: Record<Languages, I18nProperties> =
     version: "Capitano di Brigata",
     text: [
       {
-        title: "Resistere +1",
+        title: "<Resistere> +1",
       },
       {
-        title: "ARMATA DI SCOPE",
+        title: "Armata di Scope",
         description:
-          "Questo personaggio riceve +2 per ogni altro personaggio chiamato Scopa Magica che hai in gioco.",
+          "Questo personaggio riceve +2 {S} per ogni altro personaggio chiamato Scopa Magica che hai in gioco.",
       },
     ],
   },

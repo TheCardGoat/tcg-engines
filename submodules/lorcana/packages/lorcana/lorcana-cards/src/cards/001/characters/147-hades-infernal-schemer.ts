@@ -4,6 +4,17 @@ import { hadesInfernalSchemerI18n } from "./147-hades-infernal-schemer.i18n";
 export const hadesInfernalSchemer: CharacterCard = {
   id: "iRC",
   canonicalId: "ci_nzC",
+  slug: "lorcana-ci_nzC",
+  printings: [
+    {
+      id: "set1-147",
+      artId: "set1-147",
+      setCode: "set1",
+      collectorNumber: "147",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-147", "set9-151"],
   cardType: "character",
   name: "Hades",
@@ -20,13 +31,13 @@ export const hadesInfernalSchemer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_050ae6da90154532905911c8c2569802",
-    tcgPlayer: 651117,
+    tcgPlayer: "651117",
   },
   text: [
     {
-      title: "IS THERE A DOWNSIDE TO THIS?",
+      title: "IS THERE",
       description:
-        "When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
+        "A DOWNSIDE TO THIS? When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
     },
   ],
   classifications: ["Dreamborn", "Villain", "Deity"],

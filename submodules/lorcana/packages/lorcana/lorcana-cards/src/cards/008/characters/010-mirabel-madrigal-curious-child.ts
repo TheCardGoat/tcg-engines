@@ -4,6 +4,17 @@ import { mirabelMadrigalCuriousChildI18n } from "./010-mirabel-madrigal-curious-
 export const mirabelMadrigalCuriousChild: CharacterCard = {
   id: "hyF",
   canonicalId: "ci_hyF",
+  slug: "lorcana-ci_hyF",
+  printings: [
+    {
+      id: "set8-010",
+      artId: "set8-010",
+      setCode: "set8",
+      collectorNumber: "10",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-010"],
   cardType: "character",
   name: "Mirabel Madrigal",
@@ -20,13 +31,13 @@ export const mirabelMadrigalCuriousChild: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c58b2d33655f4541baec11fcf639b1c5",
-    tcgPlayer: 631354,
+    tcgPlayer: "631354",
   },
   text: [
     {
-      title: "YOU ARE A WONDER",
+      title: "YOU ARE",
       description:
-        "When you play this character, you may reveal a song card in your hand to gain 1 lore.",
+        "A WONDER When you play this character, you may reveal a song card in your hand to gain 1 lore.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Madrigal"],
@@ -49,7 +60,9 @@ export const mirabelMadrigalCuriousChild: CharacterCard = {
             },
             {
               type: "conditional",
-              condition: { type: "if-you-do" },
+              condition: {
+                type: "if-you-do",
+              },
               then: {
                 type: "sequence",
                 steps: [

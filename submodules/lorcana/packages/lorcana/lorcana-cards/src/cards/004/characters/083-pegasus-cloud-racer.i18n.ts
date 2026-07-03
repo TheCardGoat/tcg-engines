@@ -23,15 +23,16 @@ export const pegasusCloudRacerI18n: Record<Languages, I18nProperties> = {
     version: "Wolkenflitzer",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Pegasus-Charaktere auszuspielen.)",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "SPRING AUF!",
+        title: "Spring auf!",
         description:
-          "Falls du Gestaltwandel benutzt hast, um diesen Charakter auszuspielen, erhalten deine Charaktere bis zu Beginn deines nächsten Zuges Wendig.",
+          "Falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, erhalten deine Charaktere bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -40,15 +41,16 @@ export const pegasusCloudRacerI18n: Record<Languages, I18nProperties> = {
     version: "Fait la course aux nuages",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Pégase.)",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "EN SELLE!",
+        title: "En selle!",
         description:
-          "Si vous jouez ce personnage en utilisant sa capacité Alter, vos personnages gagnent Insaisissable jusqu'au début de votre prochain tour.",
+          "Si vous jouez ce personnage en utilisant sa capacité <Alter>, vos personnages gagnent <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -57,15 +59,16 @@ export const pegasusCloudRacerI18n: Record<Languages, I18nProperties> = {
     version: "Calcanuvole",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Pegaso.)",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "SALTA SU!",
+        title: "Salta su!",
         description:
-          "Quando giochi questo personaggio, se hai usato Trasformazione per giocarlo, i tuoi personaggi ottengono Sfuggente fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, i tuoi personaggi ottengono <Sfuggente> fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { philoctetesTrainerOfHeroesI18n } from "./156-philoctetes-trainer-of-heroes.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const philoctetesTrainerOfHeroes: CharacterCard = {
   id: "BXf",
   canonicalId: "ci_BXf",
+  slug: "lorcana-ci_BXf",
+  printings: [
+    {
+      id: "set1-156",
+      artId: "set1-156",
+      setCode: "set1",
+      collectorNumber: "156",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-156"],
   cardType: "character",
   name: "Philoctetes",
@@ -21,7 +33,7 @@ export const philoctetesTrainerOfHeroes: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3d8ce215614244a483a06d6ecf99c2e2",
-    tcgPlayer: 508875,
+    tcgPlayer: "508875",
   },
   text: "Support",
   classifications: ["Storyborn", "Mentor"],

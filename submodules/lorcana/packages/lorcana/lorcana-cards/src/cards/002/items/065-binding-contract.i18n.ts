@@ -14,8 +14,8 @@ export const bindingContractI18n: Record<Languages, I18nProperties> = {
     name: "Verbindlicher Vertrag",
     text: [
       {
-        title: "IN ALLE EWIGKEIT,",
-        description: "einen deiner Charaktere — Erschöpfe einen Charakter deiner Wahl.",
+        title: "In alle Ewigkeit",
+        description: "{E}, {E} einen deiner Charaktere — Erschöpfe einen Charakter deiner Wahl.",
       },
     ],
   },
@@ -23,9 +23,8 @@ export const bindingContractI18n: Record<Languages, I18nProperties> = {
     name: "Contrat irrévocable",
     text: [
       {
-        title: "POUR TOUTE",
-        description:
-          "L'ÉTERNITÉ, l'un de vos personnages — Choisissez un personnage et épuisez-le.",
+        title: "Pour toute l'éternité",
+        description: "{E}, {E} l'un de vos personnages — Choisissez un personnage et épuisez-le.",
       },
     ],
   },
@@ -33,8 +32,8 @@ export const bindingContractI18n: Record<Languages, I18nProperties> = {
     name: "Binding Contract",
     text: [
       {
-        title: "FOR ALL ETERNITY,",
-        description: "one of your characters — Exert chosen character.",
+        title: "For All Eternity",
+        description: "{E}, {E} one of your characters — Exert chosen character.",
       },
     ],
   },

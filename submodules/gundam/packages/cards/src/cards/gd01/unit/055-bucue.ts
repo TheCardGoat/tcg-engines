@@ -7,14 +7,17 @@ export const gd01Bucue055: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD01-055",
-  externalId: "gundam:gd01-055",
-  slug: "bucue-gd01-055",
+  canonicalId: "GD01-055",
+  externalIds: { bandai: "gundam:gd01-055" },
+  slug: "bucue/gd01-055",
   displayName: "BuCUE",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-055",
   printings: [
     {
       id: "GD01-055",
+      artId: "GD01-055",
+      setCode: "GD01",
       collectorNumber: "GD01-055",
       cardNumber: "GD01-055",
       set: {
@@ -29,6 +32,7 @@ export const gd01Bucue055: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-055"],
   selectedPrintingId: "GD01-055",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-055.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-055.webp?260424",

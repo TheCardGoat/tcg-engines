@@ -19,11 +19,12 @@ export const minnieMouseDaringDefenderI18n: Record<Languages, I18nProperties> = 
     version: "Wagemutige Beschützerin",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "WAHRE TAPFERKEIT",
-        description: "Dieser Charakter erhält +1 für jeden Schaden auf ihm.",
+        title: "Wahre Tapferkeit",
+        description: "Dieser Charakter erhält +1 {S} für jeden Schaden auf ihm.",
       },
     ],
   },
@@ -32,11 +33,12 @@ export const minnieMouseDaringDefenderI18n: Record<Languages, I18nProperties> = 
     version: "Défenseuse hardie",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "BRAVOURE VÉRITABLE",
-        description: "Ce personnage gagne +1 pour chaque dommage sur lui.",
+        title: "Bravoure véritable",
+        description: "Ce personnage gagne +1 {S} pour chaque dommage sur lui.",
       },
     ],
   },
@@ -45,11 +47,11 @@ export const minnieMouseDaringDefenderI18n: Record<Languages, I18nProperties> = 
     version: "Difenditrice Coraggiosa",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "VERO VALORE",
-        description: "Questo personaggio riceve +1 per ogni singolo danno su di esso.",
+        title: "Vero Valore",
+        description: "Questo personaggio riceve +1 {S} per ogni singolo danno su di esso.",
       },
     ],
   },

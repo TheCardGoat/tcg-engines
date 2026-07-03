@@ -12,6 +12,8 @@ type CardTypeLike = {
   cardType?: string;
 };
 
+type CountController = "you" | "opponent";
+
 export function isCountEffect(effect: unknown): effect is CountEffect {
   return (
     typeof effect === "object" &&
@@ -45,6 +47,40 @@ export function resolveCountEffect(
       const definition = ctx.cards.getDefinition(cardId) as InkedCardLike | undefined;
       for (const inkType of definition?.inkType ?? []) {
         distinctInkTypes.add(inkType);
+      }
+    }
+
+    resolutionInput.eventSnapshot.triggerAmount = distinctInkTypes.size * multiplier;
+    markLastEffectPerformed(resolutionInput.eventSnapshot, distinctInkTypes.size > 0);
+    return;
+  }
+
+  if (effect.what === "distinct-character-ink-types") {
+    const controller = effect.controller === "opponent" ? "opponent" : ("you" satisfies CountController);
+    const sourceController =
+      ctx.framework.zones.getCardController(_cardPlayed.cardId) ?? _cardPlayed.playerId;
+    const playerIds =
+      controller === "you"
+        ? [sourceController]
+        : ctx.framework.state.playerIds.filter((playerId) => playerId !== sourceController);
+    const distinctInkTypes = new Set<InkType>();
+
+    for (const playerId of playerIds) {
+      const cardIds = ctx.framework.zones.getCards({
+        zone: "play",
+        playerId,
+      }) as CardInstanceId[];
+      for (const cardId of cardIds) {
+        const definition = ctx.cards.getDefinition(cardId) as
+          | (InkedCardLike & CardTypeLike)
+          | undefined;
+        if (definition?.cardType !== "character") {
+          continue;
+        }
+
+        for (const inkType of definition.inkType ?? []) {
+          distinctInkTypes.add(inkType);
+        }
       }
     }
 

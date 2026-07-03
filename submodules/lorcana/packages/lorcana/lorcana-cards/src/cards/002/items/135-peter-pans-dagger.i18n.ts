@@ -7,14 +7,14 @@ export const peterPansDaggerI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Peter Pans Dolch",
-    text: "Deine Charaktere mit Wendig erhalten +1.",
+    text: "Deine Charaktere mit <Wendig> erhalten +1 {S}.",
   },
   fr: {
     name: "Dague de Peter Pan",
-    text: "Vos personnages avec Insaisissable gagnent +1.",
+    text: "Vos personnages avec <Insaisissable> gagnent +1 {S}.",
   },
   it: {
     name: "Peter Pan's Dagger",
-    text: "Your characters with Evasive get +1.",
+    text: "Your characters with <Evasive> get +1 {S}.",
   },
 };

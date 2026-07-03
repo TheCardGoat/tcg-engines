@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { donaldDuckStruttingHisStuffI18n } from "./144-donald-duck-strutting-his-stuff.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const donaldDuckStruttingHisStuff: CharacterCard = {
   id: "fpc",
   canonicalId: "ci_fpc",
+  slug: "lorcana-ci_fpc",
+  printings: [
+    {
+      id: "set1-144",
+      artId: "set1-144",
+      setCode: "set1",
+      collectorNumber: "144",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-144"],
   cardType: "character",
   name: "Donald Duck",
@@ -20,7 +32,7 @@ export const donaldDuckStruttingHisStuff: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8d5ff9b706fd4f59b44e0ca52638a257",
-    tcgPlayer: 503358,
+    tcgPlayer: "503358",
   },
   text: "Ward",
   classifications: ["Dreamborn", "Hero", "Inventor"],

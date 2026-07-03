@@ -9,21 +9,16 @@ export const queenOfHeartsImpulsiveRulerI18n: Record<Languages, I18nProperties> 
   de: {
     name: "Die Herzkönigin",
     version: "Impulsive Herrscherin",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "La Reine de Cœur",
     version: "Souveraine impulsive",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Queen of Hearts",
     version: "Impulsive Ruler",
-    text: [
-      {
-        title: "Rush",
-        description: "(This character can challenge the turn they're played.)",
-      },
-    ],
+    text: "<Rush> (This character can challenge the turn they're played.)",
   },
 };

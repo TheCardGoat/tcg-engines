@@ -4,6 +4,17 @@ import { dinnerBellI18n } from "./134-dinner-bell.i18n";
 export const dinnerBell: ItemCard = {
   id: "kRQ",
   canonicalId: "ci_T7g",
+  slug: "lorcana-ci_T7g",
+  printings: [
+    {
+      id: "set2-134",
+      artId: "set2-134",
+      setCode: "set2",
+      collectorNumber: "134",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-134", "set9-135"],
   cardType: "item",
   name: "Dinner Bell",
@@ -16,7 +27,7 @@ export const dinnerBell: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_205f1fdf160e42a4837e5d9ca8759f45",
-    tcgPlayer: 650070,
+    tcgPlayer: "650070",
   },
   text: [
     {

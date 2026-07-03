@@ -1,15 +1,16 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts";
 import { gearAttachmentToUnitOrLegend } from "../../define.ts";
 
-export const alphaKiroshiOptics = {
+export const alphaKiroshiOptics = defineCyberpunkCard({
   id: "bf1deeaa-316b-4000-bbe5-ec7663c934c3",
-  externalId: "cyberpunk:kiroshi-optics",
   slug: "kiroshi-optics",
-  name: "Kiroshi Optics",
-  displayName: "Kiroshi Optics",
   rulesText:
     "(Equip to a unit or face-up legend.) ATTACK Look at a friendly face-down legend without revealing it.",
+  name: "Kiroshi Optics",
+  displayName: "Kiroshi Optics",
+  canonicalId: "kiroshi-optics",
   color: "yellow",
   classifications: ["Cyberware", "Implant"],
   set: {
@@ -17,15 +18,6 @@ export const alphaKiroshiOptics = {
     name: "Alpha Kit Set",
   },
   printNumber: "α026",
-  printings: [
-    {
-      id: "70b37d1b-84a9-4b79-9772-84c14b37310a",
-      collectorNumber: "α026",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "70b37d1b-84a9-4b79-9772-84c14b37310a",
   artist: "CD PROJEKT RED",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a026.webp",
   rarity: null,
@@ -33,7 +25,6 @@ export const alphaKiroshiOptics = {
   hasSellTag: true,
   ram: 1,
   timingTriggers: ["attack"],
-  keywords: [],
   type: "gear",
   cost: 1,
   power: 1,
@@ -60,6 +51,5 @@ export const alphaKiroshiOptics = {
       )
       .build(),
   ],
-  reminderText: [],
   attachment: gearAttachmentToUnitOrLegend(),
-} satisfies AlphaCardDefinition;
+}) satisfies GearCardDefinition;

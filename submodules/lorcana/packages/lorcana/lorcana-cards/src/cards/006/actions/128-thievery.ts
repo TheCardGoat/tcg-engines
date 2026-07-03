@@ -4,6 +4,17 @@ import { thieveryI18n } from "./128-thievery.i18n";
 export const thievery: ActionCard = {
   id: "C0T",
   canonicalId: "ci_C0T",
+  slug: "lorcana-ci_C0T",
+  printings: [
+    {
+      id: "set6-128",
+      artId: "set6-128",
+      setCode: "set6",
+      collectorNumber: "128",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-128"],
   cardType: "action",
   name: "Thievery",
@@ -16,7 +27,7 @@ export const thievery: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_abdee4f2746b40b48c29ea5f3da815b2",
-    tcgPlayer: 588086,
+    tcgPlayer: "588086",
   },
   text: "Chosen opponent loses 1 lore. Gain 1 lore.",
   abilities: [

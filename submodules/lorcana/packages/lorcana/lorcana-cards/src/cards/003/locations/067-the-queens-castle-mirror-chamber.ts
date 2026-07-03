@@ -4,6 +4,17 @@ import { theQueensCastleMirrorChamberI18n } from "./067-the-queens-castle-mirror
 export const theQueensCastleMirrorChamber: LocationCard = {
   id: "2mb",
   canonicalId: "ci_2mb",
+  slug: "lorcana-ci_2mb",
+  printings: [
+    {
+      id: "set3-067",
+      artId: "set3-067",
+      setCode: "set3",
+      collectorNumber: "67",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-067"],
   cardType: "location",
   name: "The Queen's Castle",
@@ -20,7 +31,7 @@ export const theQueensCastleMirrorChamber: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a4f0a9a928674b2a93d17f7c81eb09d7",
-    tcgPlayer: 538680,
+    tcgPlayer: "538680",
   },
   text: [
     {

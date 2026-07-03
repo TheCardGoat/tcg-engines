@@ -4,6 +4,17 @@ import { tadashiHamadaGiftedRoboticistI18n } from "./155-tadashi-hamada-gifted-r
 export const tadashiHamadaGiftedRoboticist: CharacterCard = {
   id: "dkB",
   canonicalId: "ci_dkB",
+  slug: "lorcana-ci_dkB",
+  printings: [
+    {
+      id: "set6-155",
+      artId: "set6-155",
+      setCode: "set6",
+      collectorNumber: "155",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-155"],
   cardType: "character",
   name: "Tadashi Hamada",
@@ -20,7 +31,7 @@ export const tadashiHamadaGiftedRoboticist: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d27f3196f81b4b17a0134b39608aefe7",
-    tcgPlayer: 588328,
+    tcgPlayer: "588328",
   },
   text: [
     {

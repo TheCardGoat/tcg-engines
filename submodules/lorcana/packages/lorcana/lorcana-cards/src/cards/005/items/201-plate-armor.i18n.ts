@@ -14,9 +14,9 @@ export const plateArmorI18n: Record<Languages, I18nProperties> = {
     name: "Plattenrüstung",
     text: [
       {
-        title: "GUTE HANDWERKSKUNST",
+        title: "Gute Handwerkskunst",
         description:
-          "— Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Robust +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
+          "{E} — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Robust> +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
       },
     ],
   },
@@ -24,9 +24,9 @@ export const plateArmorI18n: Record<Languages, I18nProperties> = {
     name: "Armure de plaques",
     text: [
       {
-        title: "D'EXCELLENTE FACTURE",
+        title: "D'excellente facture",
         description:
-          "— Choisissez un personnage qui gagne Résistance +2 jusqu'au début de votre prochain tour.",
+          "{E} — Choisissez un personnage qui gagne <Résistance> +2 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -34,9 +34,9 @@ export const plateArmorI18n: Record<Languages, I18nProperties> = {
     name: "Armatura a Piastre",
     text: [
       {
-        title: "BEN FATTA",
+        title: "Ben Fatta",
         description:
-          "— Un personaggio a tua scelta ottiene Resistere +2 fino all'inizio del tuo prossimo turno.",
+          "{E} — Un personaggio a tua scelta ottiene <Resistere> +2 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

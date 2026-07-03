@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { clarabelleLightOnHerHoovesI18n } from "./084-clarabelle-light-on-her-hooves.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const clarabelleLightOnHerHooves: CharacterCard = {
-  id: "RGJ",
+  id: "fgM",
   canonicalId: "ci_fF6",
+  slug: "lorcana-ci_fF6",
+  printings: [
+    {
+      id: "set5-084",
+      artId: "set5-084",
+      setCode: "set5",
+      collectorNumber: "84",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-084"],
   cardType: "character",
   name: "Clarabelle",
@@ -20,7 +32,7 @@ export const clarabelleLightOnHerHooves: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8dbe711cfb4541309eb32cf37fe48997",
-    tcgPlayer: 561991,
+    tcgPlayer: "561991",
   },
   text: [
     {

@@ -6,14 +6,17 @@ export const rpResource004: ResourceCard = {
   type: "resource",
   traits: [],
   id: "RP-004",
-  externalId: "gundam:rp-004",
-  slug: "resource-rp-004",
+  canonicalId: "RP-004",
+  externalIds: { bandai: "gundam:rp-004" },
+  slug: "resource/rp-004",
   displayName: "Resource",
   set: { code: "RP", name: "Anime Expo 2025, other events", packageId: "616901" },
   printNumber: "RP-004",
   printings: [
     {
       id: "RP-004",
+      artId: "RP-004",
+      setCode: "RP",
       collectorNumber: "RP-004",
       cardNumber: "RP-004",
       set: {
@@ -28,6 +31,7 @@ export const rpResource004: ResourceCard = {
       productName: "Anime Expo 2025, other events",
     },
   ],
+  reprints: ["RP-004"],
   selectedPrintingId: "RP-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-004.webp?260424",

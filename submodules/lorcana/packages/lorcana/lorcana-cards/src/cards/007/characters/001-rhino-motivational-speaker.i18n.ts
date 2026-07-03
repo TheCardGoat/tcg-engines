@@ -16,8 +16,8 @@ export const rhinoMotivationalSpeakerI18n: Record<Languages, I18nProperties> = {
     version: "Motivationsredner",
     text: [
       {
-        title: "DAS SCHICKSAL RUFT",
-        description: "Deine anderen Charaktere erhalten +2.",
+        title: "Das Schicksal ruft",
+        description: "Deine anderen Charaktere erhalten +2 {W}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const rhinoMotivationalSpeakerI18n: Record<Languages, I18nProperties> = {
     version: "Orateur motivant",
     text: [
       {
-        title: "L'APPEL DU DESTIN",
-        description: "Vos autres personnages gagnent +2.",
+        title: "L'appel du destin",
+        description: "Vos autres personnages gagnent +2 {W}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const rhinoMotivationalSpeakerI18n: Record<Languages, I18nProperties> = {
     version: "Motivatore",
     text: [
       {
-        title: "CHIAMATA DEL DESTINO I",
-        description: "tuoi altri personaggi ricevono +2.",
+        title: "Chiamata del Destino",
+        description: "I tuoi altri personaggi ricevono +2 {W}.",
       },
     ],
   },

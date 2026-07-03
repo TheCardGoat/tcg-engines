@@ -6,15 +6,15 @@ export const princeCharmingSearchingForAnswersI18n: Record<Languages, I18nProper
     version: "Searching for Answers",
   },
   de: {
-    name: "Prince Charming",
-    version: "Searching for Answers",
+    name: "Prinz Charming",
+    version: "Auf der Suche nach Antworten",
   },
   fr: {
-    name: "Prince Charming",
-    version: "Searching for Answers",
+    name: "Prince charmant",
+    version: "Cherche des réponses",
   },
   it: {
-    name: "Prince Charming",
-    version: "Searching for Answers",
+    name: "Principe Azzurro",
+    version: "In Cerca di Risposte",
   },
 };

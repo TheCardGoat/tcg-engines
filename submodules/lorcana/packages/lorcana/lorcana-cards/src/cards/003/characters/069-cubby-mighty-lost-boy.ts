@@ -4,6 +4,17 @@ import { cubbyMightyLostBoyI18n } from "./069-cubby-mighty-lost-boy.i18n";
 export const cubbyMightyLostBoy: CharacterCard = {
   id: "3Fn",
   canonicalId: "ci_3Fn",
+  slug: "lorcana-ci_3Fn",
+  printings: [
+    {
+      id: "set3-069",
+      artId: "set3-069",
+      setCode: "set3",
+      collectorNumber: "69",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-069"],
   cardType: "character",
   name: "Cubby",
@@ -20,7 +31,7 @@ export const cubbyMightyLostBoy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1406e73a81ad4687ad3e502447d21287",
-    tcgPlayer: 537945,
+    tcgPlayer: "537945",
   },
   text: [
     {

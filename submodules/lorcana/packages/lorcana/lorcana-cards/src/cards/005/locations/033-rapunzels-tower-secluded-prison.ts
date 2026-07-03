@@ -4,6 +4,17 @@ import { rapunzelsTowerSecludedPrisonI18n } from "./033-rapunzels-tower-secluded
 export const rapunzelsTowerSecludedPrison: LocationCard = {
   id: "RU5",
   canonicalId: "ci_RU5",
+  slug: "lorcana-ci_RU5",
+  printings: [
+    {
+      id: "set5-033",
+      artId: "set5-033",
+      setCode: "set5",
+      collectorNumber: "33",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-033"],
   cardType: "location",
   name: "Rapunzel's Tower",
@@ -20,7 +31,7 @@ export const rapunzelsTowerSecludedPrison: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f27b7d5ae80b49c4a1a6019138a14ace",
-    tcgPlayer: 560916,
+    tcgPlayer: "560916",
   },
   text: [
     {

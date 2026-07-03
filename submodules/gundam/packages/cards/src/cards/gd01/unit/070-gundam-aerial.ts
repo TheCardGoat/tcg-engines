@@ -7,14 +7,17 @@ export const gd01GundamAerial070: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-070",
-  externalId: "gundam:gd01-070",
-  slug: "gundam-aerial-gd01-070",
+  canonicalId: "GD01-070",
+  externalIds: { bandai: "gundam:gd01-070" },
+  slug: "gundam-aerial/gd01-070",
   displayName: "Gundam Aerial",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-070",
   printings: [
     {
       id: "GD01-070",
+      artId: "GD01-070",
+      setCode: "GD01",
       collectorNumber: "GD01-070",
       cardNumber: "GD01-070",
       set: {
@@ -30,6 +33,8 @@ export const gd01GundamAerial070: UnitCard = {
     },
     {
       id: "GD01-070_p1",
+      artId: "GD01-070_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-070_p1",
       cardNumber: "GD01-070",
       set: {
@@ -45,6 +50,8 @@ export const gd01GundamAerial070: UnitCard = {
     },
     {
       id: "GD01-070_p2",
+      artId: "GD01-070_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-070_p2",
       cardNumber: "GD01-070",
       set: {
@@ -60,6 +67,8 @@ export const gd01GundamAerial070: UnitCard = {
     },
     {
       id: "GD01-070_p3",
+      artId: "GD01-070_p3",
+      setCode: "GD01",
       collectorNumber: "GD01-070_p3",
       cardNumber: "GD01-070",
       set: {
@@ -75,6 +84,8 @@ export const gd01GundamAerial070: UnitCard = {
     },
     {
       id: "GD01-070_p4",
+      artId: "GD01-070_p4",
+      setCode: "GD01",
       collectorNumber: "GD01-070_p4",
       cardNumber: "GD01-070",
       set: {
@@ -89,6 +100,7 @@ export const gd01GundamAerial070: UnitCard = {
       productName: "Store Tournament Winner Pack 01",
     },
   ],
+  reprints: ["GD01-070", "GD01-070_p1", "GD01-070_p2", "GD01-070_p3", "GD01-070_p4"],
   selectedPrintingId: "GD01-070",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-070.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-070.webp?260424",

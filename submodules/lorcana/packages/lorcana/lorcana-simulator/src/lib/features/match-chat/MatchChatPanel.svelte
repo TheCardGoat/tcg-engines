@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MessageSquareText } from "@lucide/svelte";
+  import MessageSquareText from "@lucide/svelte/icons/message-square-text";
   import { Button } from "$lib/design-system/primitives/button";
   import { m } from "$lib/i18n/messages.js";
   import type { LorcanaPlayerSide } from "@/features/simulator/model/contracts.js";

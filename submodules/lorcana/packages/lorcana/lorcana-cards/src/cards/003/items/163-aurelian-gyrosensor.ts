@@ -4,6 +4,17 @@ import { aurelianGyrosensorI18n } from "./163-aurelian-gyrosensor.i18n";
 export const aurelianGyrosensor: ItemCard = {
   id: "kHJ",
   canonicalId: "ci_RAl",
+  slug: "lorcana-ci_RAl",
+  printings: [
+    {
+      id: "set3-163",
+      artId: "set3-163",
+      setCode: "set3",
+      collectorNumber: "163",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-163", "set9-167"],
   cardType: "item",
   name: "Aurelian Gyrosensor",
@@ -16,7 +27,7 @@ export const aurelianGyrosensor: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6e6d5ca027b34def81032f79864dc6c6",
-    tcgPlayer: 650101,
+    tcgPlayer: "650101",
   },
   text: [
     {

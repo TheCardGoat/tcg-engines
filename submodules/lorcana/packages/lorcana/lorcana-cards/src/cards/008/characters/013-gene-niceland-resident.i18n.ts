@@ -17,7 +17,7 @@ export const geneNicelandResidentI18n: Record<Languages, I18nProperties> = {
     version: "Bewohner von Niceland",
     text: [
       {
-        title: "ICH SCHÄTZE, DU HAST SIE DIR VERDIENT",
+        title: "Ich schätze, du hast sie dir verdient",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -28,7 +28,7 @@ export const geneNicelandResidentI18n: Record<Languages, I18nProperties> = {
     version: "Résident de Niceland",
     text: [
       {
-        title: "J'IMAGINE QUE TU L'AS MÉRITÉE",
+        title: "J'imagine que tu l'as méritée",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage et lui retirer jusqu'à 2 dommages.",
       },
@@ -39,7 +39,7 @@ export const geneNicelandResidentI18n: Record<Languages, I18nProperties> = {
     version: "Abitante di Belposto",
     text: [
       {
-        title: "IMMAGINO TU L'ABBIA GUADAGNATA",
+        title: "Immagino tu l'Abbia Guadagnata",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi rimuovere fino a 2 danni da un personaggio a tua scelta.",
       },

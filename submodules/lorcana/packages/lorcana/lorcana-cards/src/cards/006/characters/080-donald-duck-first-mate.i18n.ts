@@ -16,9 +16,9 @@ export const donaldDuckFirstMateI18n: Record<Languages, I18nProperties> = {
     version: "Erster Maat",
     text: [
       {
-        title: "KAPITÄN AN DECK",
+        title: "Kapitän an Deck",
         description:
-          "Solange du mindestens einen Kapitän im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens einen Kapitän im Spiel hast, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const donaldDuckFirstMateI18n: Record<Languages, I18nProperties> = {
     version: "Second",
     text: [
       {
-        title: "CAPITAINE SUR LE PONT",
+        title: "Capitaine sur le pont",
         description:
-          "Tant que vous avez un personnage Capitaine en jeu, ce personnage-ci gagne +2.",
+          "Tant que vous avez un personnage Capitaine en jeu, ce personnage-ci gagne +2 {L}.",
       },
     ],
   },
@@ -38,8 +38,9 @@ export const donaldDuckFirstMateI18n: Record<Languages, I18nProperties> = {
     version: "Primo Ufficiale",
     text: [
       {
-        title: "CAPITANO SUL PONTE",
-        description: "Mentre hai in gioco un personaggio Capitano, questo personaggio riceve +2.",
+        title: "Capitano sul Ponte",
+        description:
+          "Mentre hai in gioco un personaggio Capitano, questo personaggio riceve +2 {L}.",
       },
     ],
   },

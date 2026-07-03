@@ -17,7 +17,7 @@ export const johnSilverShipsCookI18n: Record<Languages, I18nProperties> = {
     version: "Schiffskoch",
     text: [
       {
-        title: "EIN EISENWARENLADEN",
+        title: "Ein Eisenwarenladen",
         description:
           "Wenn du diesen Charakter ausspielst, wähle einen Charakter. Er kann in seinem nächsten Zug nicht herausfordern.",
       },
@@ -28,7 +28,7 @@ export const johnSilverShipsCookI18n: Record<Languages, I18nProperties> = {
     version: "Maître-coq du vaisseau",
     text: [
       {
-        title: "BELLE QUINCAILLERIE",
+        title: "Belle quincaillerie",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage qui ne peut pas défier lors de son prochain tour.",
       },
@@ -39,7 +39,7 @@ export const johnSilverShipsCookI18n: Record<Languages, I18nProperties> = {
     version: "Cuoco di Bordo",
     text: [
       {
-        title: "STRANA FERRAGLIA",
+        title: "Strana Ferraglia",
         description:
           "Quando giochi questo personaggio, un personaggio a tua scelta non può sfidare durante il suo prossimo turno.",
       },

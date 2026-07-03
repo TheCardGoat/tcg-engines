@@ -4,6 +4,17 @@ import { chemPurseI18n } from "./119-chem-purse.i18n";
 export const chemPurse: ItemCard = {
   id: "VyL",
   canonicalId: "ci_VyL",
+  slug: "lorcana-ci_VyL",
+  printings: [
+    {
+      id: "set8-119",
+      artId: "set8-119",
+      setCode: "set8",
+      collectorNumber: "119",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-119"],
   cardType: "item",
   name: "Chem Purse",
@@ -16,7 +27,7 @@ export const chemPurse: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_537258cef9b5410fafafa47026feedf6",
-    tcgPlayer: 631428,
+    tcgPlayer: "631428",
   },
   text: [
     {

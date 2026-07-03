@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMouseMusketeerChampionI18n } from "./017-minnie-mouse-musketeer-champion.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const minnieMouseMusketeerChampion: CharacterCard = {
-  id: "Wtk",
+  id: "i9B",
   canonicalId: "ci_AWE",
+  slug: "lorcana-ci_AWE",
+  printings: [
+    {
+      id: "set4-017",
+      artId: "set4-017",
+      setCode: "set4",
+      collectorNumber: "17",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-017"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -20,7 +32,7 @@ export const minnieMouseMusketeerChampion: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b20587f1945e42d59b750f9b69cc4a6b",
-    tcgPlayer: 550537,
+    tcgPlayer: "550537",
   },
   text: [
     {

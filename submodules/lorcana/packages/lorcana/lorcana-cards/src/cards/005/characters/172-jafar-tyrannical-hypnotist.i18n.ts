@@ -19,10 +19,10 @@ export const jafarTyrannicalHypnotistI18n: Record<Languages, I18nProperties> = {
     version: "Tyrannischer Hypnosekünstler",
     text: [
       {
-        title: "Herausfordern +7",
+        title: "<Herausfordern> +7 (Während dieser Charakter herausfordert, erhält er +7 {S}.)",
       },
       {
-        title: "EINSCHÜCHTERNDER BLICK",
+        title: "Einschüchternder Blick",
         description:
           "Gegnerische Charaktere, die 4 oder weniger kosten, können nicht herausfordern.",
       },
@@ -33,10 +33,10 @@ export const jafarTyrannicalHypnotistI18n: Record<Languages, I18nProperties> = {
     version: "Hypnotiseur tyrannique",
     text: [
       {
-        title: "Offensif +7",
+        title: "<Offensif> +7",
       },
       {
-        title: "REGARD INTIMIDANT",
+        title: "Regard intimidant",
         description: "Les personnages adverses coûtant 4 ou moins ne peuvent pas défier.",
       },
     ],
@@ -46,10 +46,10 @@ export const jafarTyrannicalHypnotistI18n: Record<Languages, I18nProperties> = {
     version: "Ipnotizzatore Tirannico",
     text: [
       {
-        title: "Sfidante +7",
+        title: "<Sfidante> +7",
       },
       {
-        title: "SGUARDO INTIMIDATORIO",
+        title: "Sguardo Intimidatorio",
         description: "I personaggi avversari con costo 4 o inferiore non possono sfidare.",
       },
     ],

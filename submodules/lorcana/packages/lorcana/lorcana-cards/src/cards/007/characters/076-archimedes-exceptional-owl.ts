@@ -4,6 +4,17 @@ import { archimedesExceptionalOwlI18n } from "./076-archimedes-exceptional-owl.i
 export const archimedesExceptionalOwl: CharacterCard = {
   id: "8Al",
   canonicalId: "ci_8Al",
+  slug: "lorcana-ci_8Al",
+  printings: [
+    {
+      id: "set7-076",
+      artId: "set7-076",
+      setCode: "set7",
+      collectorNumber: "76",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-076"],
   cardType: "character",
   name: "Archimedes",
@@ -20,7 +31,7 @@ export const archimedesExceptionalOwl: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_35cac934c7154962803cd87c1d34e32a",
-    tcgPlayer: 618700,
+    tcgPlayer: "618700",
   },
   text: [
     {

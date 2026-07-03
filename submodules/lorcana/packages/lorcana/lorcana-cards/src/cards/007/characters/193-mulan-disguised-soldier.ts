@@ -3,7 +3,18 @@ import { mulanDisguisedSoldierI18n } from "./193-mulan-disguised-soldier.i18n";
 
 export const mulanDisguisedSoldier: CharacterCard = {
   id: "uh8",
-  canonicalId: "ci_uh8",
+  canonicalId: "ci_QFm",
+  slug: "lorcana-ci_QFm",
+  printings: [
+    {
+      id: "set7-193",
+      artId: "set7-193",
+      setCode: "set7",
+      collectorNumber: "193",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-193"],
   cardType: "character",
   name: "Mulan",
@@ -19,14 +30,13 @@ export const mulanDisguisedSoldier: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_9b812b75cd834563aeae274699657a59",
-    tcgPlayer: 619519,
+    lorcast: "crd_51c56768845241c9b79c30510bf3af72",
   },
   text: [
     {
-      title: "WHERE DO I SIGN IN?",
+      title: "WHERE DO",
       description:
-        "When you play this character, you may draw a card, then choose and discard a card.",
+        "I SIGN IN? When you play this character, you may draw a card, then choose and discard a card.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

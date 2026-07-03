@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { violetParrLearningNewPowersI18n } from "./048-violet-parr-learning-new-powers.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const violetParrLearningNewPowers: CharacterCard = {
   id: "YdE",
   canonicalId: "ci_YdE",
+  slug: "lorcana-ci_YdE",
+  printings: [
+    {
+      id: "set12-048",
+      artId: "set12-048",
+      setCode: "set12",
+      collectorNumber: "48",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-048"],
   cardType: "character",
   name: "Violet Parr",
@@ -21,6 +33,7 @@ export const violetParrLearningNewPowers: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_20da43997f8642f6b33d1fa04865209d",
+    tcgPlayer: "690525",
   },
   text: [
     {

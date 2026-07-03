@@ -4,6 +4,17 @@ import { gantuCaptainCrankyheadI18n } from "./189-gantu-captain-crankyhead.i18n"
 export const gantuCaptainCrankyhead: CharacterCard = {
   id: "J9q",
   canonicalId: "ci_J9q",
+  slug: "lorcana-ci_J9q",
+  printings: [
+    {
+      id: "set6-189",
+      artId: "set6-189",
+      setCode: "set6",
+      collectorNumber: "189",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-189"],
   cardType: "character",
   name: "Gantu",
@@ -21,7 +32,7 @@ export const gantuCaptainCrankyhead: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_4ab60bc408c44708b7f820348cad85c5",
-    tcgPlayer: 593004,
+    tcgPlayer: "593004",
   },
   classifications: ["Dreamborn", "Alien", "Captain"],
   i18n: gantuCaptainCrankyheadI18n,

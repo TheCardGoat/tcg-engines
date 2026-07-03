@@ -17,9 +17,9 @@ export const gastonArrogantShowoffI18n: Record<Languages, I18nProperties> = {
     version: "Arroganter Angeber",
     text: [
       {
-        title: "AUFBRECHEN",
+        title: "Aufbrechen",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du einen deiner Gegenstände verbannen, um einem Charakter deiner Wahl in diesem Zug +2 zu geben.",
+          "Wenn du diesen Charakter ausspielst, darfst du einen deiner Gegenstände verbannen, um einem Charakter deiner Wahl in diesem Zug +2 {S} zu geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const gastonArrogantShowoffI18n: Record<Languages, I18nProperties> = {
     version: "Crâneur arrogant",
     text: [
       {
-        title: "BRISER EN DEUX",
+        title: "Briser en deux",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez bannir l'un de vos objets pour choisir un personnage qui gagne +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez bannir l'un de vos objets pour choisir un personnage qui gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const gastonArrogantShowoffI18n: Record<Languages, I18nProperties> = {
     version: "Arrogante Esibizionista",
     text: [
       {
-        title: "FARE A PEZZI",
+        title: "Fare a Pezzi",
         description:
-          "Quando giochi questo personaggio, puoi esiliare uno dei tuoi oggetti per dare a un personaggio a tua scelta +2 per questo turno.",
+          "Quando giochi questo personaggio, puoi esiliare uno dei tuoi oggetti per dare a un personaggio a tua scelta +2 {S} per questo turno.",
       },
     ],
   },

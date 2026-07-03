@@ -1,5 +1,6 @@
 export { atlanticaConcertHall } from "./033-atlantica-concert-hall";
 export { theUnderworldRiverStyx } from "./034-the-underworld-river-styx";
+export { ursulasLairEyeOfTheStormP1Promo } from "./p1-035-ursulas-lair-eye-of-the-storm-promo";
 export { casaMadrigalCasita } from "./067-casa-madrigal-casita";
 export { ursulasLairEyeOfTheStorm } from "./068-ursulas-lair-eye-of-the-storm";
 export { hiddenCoveTranquilHaven } from "./101-hidden-cove-tranquil-haven";

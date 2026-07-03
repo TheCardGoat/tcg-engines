@@ -20,10 +20,11 @@ export const elsaIceMakerI18n: Record<Languages, I18nProperties> = {
     version: "Ice Maker",
     text: [
       {
-        title: "Shift 4",
+        title:
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Elsa.)",
       },
       {
-        title: "WINTER WALL",
+        title: "Winter Wall",
         description:
           "Whenever this character quests, you may exert chosen character. If you do and you have a character named Anna in play, the chosen character can't ready at the start of their next turn.",
       },
@@ -34,10 +35,11 @@ export const elsaIceMakerI18n: Record<Languages, I18nProperties> = {
     version: "Ice Maker",
     text: [
       {
-        title: "Shift 4",
+        title:
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Elsa.)",
       },
       {
-        title: "WINTER WALL",
+        title: "Winter Wall",
         description:
           "Whenever this character quests, you may exert chosen character. If you do and you have a character named Anna in play, the chosen character can't ready at the start of their next turn.",
       },
@@ -48,10 +50,11 @@ export const elsaIceMakerI18n: Record<Languages, I18nProperties> = {
     version: "Ice Maker",
     text: [
       {
-        title: "Shift 4",
+        title:
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Elsa.)",
       },
       {
-        title: "WINTER WALL",
+        title: "Winter Wall",
         description:
           "Whenever this character quests, you may exert chosen character. If you do and you have a character named Anna in play, the chosen character can't ready at the start of their next turn.",
       },

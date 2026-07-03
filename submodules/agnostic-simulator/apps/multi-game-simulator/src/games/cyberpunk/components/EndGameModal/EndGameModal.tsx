@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   IconAlertTriangle,
   IconArrowRight,
@@ -11,13 +11,12 @@ import {
   IconDownload,
   IconLoader2,
   IconMessage2,
-  IconMinus,
   IconNotebook,
   IconRefresh,
   IconTrophy,
   IconX,
 } from "@tabler/icons-react";
-import confetti from "canvas-confetti";
+import { PostGameModal } from "@tcg/simulator-ui";
 import { useEngine } from "../../engine";
 import { PLAYER_SIDE_TO_ID } from "../../engine/sides";
 import { useGameState } from "../GameBoard/gameStateContext";
@@ -68,58 +67,7 @@ const reasonsByOutcome: Readonly<
   },
 };
 
-type SectionId = "analytics" | "turns" | "notes";
 type SupportDialog = "bug" | "feedback" | null;
-
-const WIN_CONFETTI_COLORS = ["#f5e642", "#66e8ff", "#ff7e76", "#ffffff"];
-
-function fireWinConfetti(): () => void {
-  const end = Date.now() + 3 * 1000;
-  let frameId: number | null = null;
-
-  const frame = () => {
-    if (Date.now() > end) return;
-
-    void confetti({
-      angle: 60,
-      colors: WIN_CONFETTI_COLORS,
-      disableForReducedMotion: true,
-      origin: { x: 0, y: 0.5 },
-      particleCount: 2,
-      spread: 55,
-      startVelocity: 60,
-      zIndex: 9001,
-    });
-    void confetti({
-      angle: 120,
-      colors: WIN_CONFETTI_COLORS,
-      disableForReducedMotion: true,
-      origin: { x: 1, y: 0.5 },
-      particleCount: 2,
-      spread: 55,
-      startVelocity: 60,
-      zIndex: 9001,
-    });
-
-    frameId = window.requestAnimationFrame(frame);
-  };
-
-  frame();
-
-  return () => {
-    if (frameId !== null) {
-      window.cancelAnimationFrame(frameId);
-    }
-    confetti.reset();
-  };
-}
-
-function describeReason(reason: string | null, outcome: "win" | "loss" | "draw"): string {
-  if (!reason) return "Match complete.";
-  const perspective = reasonsByOutcome[reason]?.[outcome];
-  if (perspective) return perspective;
-  return neutralReasons[reason] ?? reason.replace(/_/g, " ");
-}
 
 export function EndGameModal() {
   const { gameEnded, winnerSide, winReason, turnNumber } = useGameState();
@@ -134,7 +82,6 @@ export function EndGameModal() {
     matchState,
   } = useEngine();
   const [modalState, setModalState] = useState(createInitialPostGameModalState);
-  const [activeSection, setActiveSection] = useState<SectionId>("analytics");
   const [recordLoading, setRecordLoading] = useState(false);
   const [recordError, setRecordError] = useState<string | null>(null);
   const [analyticsEnvelope, setAnalyticsEnvelope] = useState<CyberpunkAnalyticsEnvelope | null>(
@@ -152,15 +99,12 @@ export function EndGameModal() {
   const [replaySaving, setReplaySaving] = useState(false);
   const [replaySaved, setReplaySaved] = useState(false);
   const [replayStatus, setReplayStatus] = useState<string | null>(null);
-  const [celebratedFinishedGameKey, setCelebratedFinishedGameKey] = useState<string | null>(null);
   const isDeckBuilderPractice = postGameSurface === "deck-builder-practice";
   const canUseReplayStore = isReplayStoreAvailable();
   const canUseReplayActions = !isDeckBuilderPractice && Boolean(postGameContext?.gameId);
 
   const outcome: "win" | "loss" | "draw" =
     winnerSide === null ? "draw" : winnerSide === humanSide ? "win" : "loss";
-  const headline =
-    outcome === "win" ? "You win" : outcome === "loss" ? "Rival wins" : "Match ended";
   const finishedGameKey = gameEnded
     ? `${postGameContext?.gameId ?? "local"}:${matchState.ctx.stateID}:${winnerSide ?? "draw"}`
     : null;
@@ -272,29 +216,7 @@ export function EndGameModal() {
   const topCards = useMemo(() => topCardsByImpact(analytics), [analytics]);
   const viewerPlayerId = resolveViewerPlayerId(matchState.ctx.playerIds, humanSide);
 
-  useEffect(() => {
-    if (outcome !== "win" || !finishedGameKey || celebratedFinishedGameKey === finishedGameKey) {
-      return;
-    }
-
-    setCelebratedFinishedGameKey(finishedGameKey);
-    return fireWinConfetti();
-  }, [celebratedFinishedGameKey, finishedGameKey, outcome]);
-
   if (!gameEnded) return null;
-
-  if (!modalState.open) {
-    return (
-      <button
-        type="button"
-        className={classes.launcher}
-        onClick={() => setModalState((current) => openPostGameModal(current))}
-      >
-        <IconChartBar size={16} />
-        View summary
-      </button>
-    );
-  }
 
   const closeModal = () => {
     setModalState((current) => closePostGameModal(current));
@@ -394,100 +316,64 @@ export function EndGameModal() {
     }
   }
 
-  return (
-    <div
-      className={classes.overlay}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Match ended"
-      data-testid="end-game-modal"
-      data-outcome={outcome}
-      data-end-reason={winReason ?? undefined}
-      data-remote={isRemote ? "true" : "false"}
-      data-post-game-surface={postGameSurface}
-    >
-      <div className={`${classes.card} ${isDeckBuilderPractice ? classes.practiceCard : ""}`}>
-        <button
-          type="button"
-          className={classes.minimizeButton}
-          onClick={closeModal}
-          aria-label="Minimize post-game summary"
-          title="Minimize"
-        >
-          <IconMinus size={16} />
-          <span>Minimize</span>
-        </button>
-
-        <header className={classes.header}>
-          <p className={classes.eyebrow}>Match ended</p>
-          <h2 className={classes.headline} data-testid="end-game-headline">
-            {headline}
-          </h2>
-          <p className={classes.reason} data-testid="end-game-reason">
-            {describeReason(winReason, outcome)}
-          </p>
-          <div className={classes.headerStats}>
-            {isDeckBuilderPractice ? (
-              <>
-                <span>Practice</span>
-                <span>Turn {turnNumber}</span>
-              </>
-            ) : (
-              <>
-                <span>{bestOfLabel}</span>
-                <span>Game {postGameContext?.gameNumber ?? 1}</span>
-                {postGameContext?.player1Score !== undefined &&
-                  postGameContext.player2Score !== undefined && (
-                    <span>
-                      Series {postGameContext.player1Score}-{postGameContext.player2Score}
-                    </span>
-                  )}
-              </>
-            )}
-          </div>
-        </header>
-
-        {!isDeckBuilderPractice && (
-          <nav className={classes.tabs} aria-label="Post-game sections">
-            <TabButton
-              active={activeSection === "analytics"}
-              icon={<IconTrophy size={16} />}
-              label="Analytics"
-              onClick={() => setActiveSection("analytics")}
-            />
-            <TabButton
-              active={activeSection === "turns"}
-              icon={<IconChartBar size={16} />}
-              label="Turns"
-              onClick={() => setActiveSection("turns")}
-            />
-            <TabButton
-              active={activeSection === "notes"}
-              icon={<IconNotebook size={16} />}
-              label="Notes"
-              onClick={() => setActiveSection("notes")}
-            />
-          </nav>
+  const reasonText = describeReason(winReason, outcome);
+  const headerStats = isDeckBuilderPractice ? (
+    <>
+      <span>Practice</span>
+      <span>Turn {turnNumber}</span>
+    </>
+  ) : (
+    <>
+      <span>{bestOfLabel}</span>
+      <span>Game {postGameContext?.gameNumber ?? 1}</span>
+      {postGameContext?.player1Score !== undefined &&
+        postGameContext.player2Score !== undefined && (
+          <span>
+            Series {postGameContext.player1Score}-{postGameContext.player2Score}
+          </span>
         )}
+    </>
+  );
 
-        <main className={classes.body}>
-          {isDeckBuilderPractice && (
-            <PracticeSummarySection outcome={outcome} reason={describeReason(winReason, outcome)} />
-          )}
-          {!isDeckBuilderPractice && activeSection === "analytics" && (
-            <AnalyticsSection
-              analytics={analytics}
-              envelope={analyticsEnvelope}
-              loading={recordLoading}
-              error={recordError}
-              topCards={topCards}
-              viewerPlayerId={viewerPlayerId}
-            />
-          )}
-          {!isDeckBuilderPractice && activeSection === "turns" && (
-            <TurnsSection analytics={analytics} envelope={analyticsEnvelope} />
-          )}
-          {!isDeckBuilderPractice && activeSection === "notes" && (
+  const sections = isDeckBuilderPractice
+    ? [
+        {
+          id: "practice",
+          label: "Practice",
+          icon: <IconTrophy size={16} />,
+          content: <PracticeSummarySection outcome={outcome} reason={reasonText} />,
+        },
+      ]
+    : [
+        {
+          id: "analytics",
+          label: "Analytics",
+          icon: <IconTrophy size={16} />,
+          content: (
+            <>
+              <div className={classes.headerStats}>{headerStats}</div>
+              <AnalyticsSection
+                analytics={analytics}
+                envelope={analyticsEnvelope}
+                loading={recordLoading}
+                error={recordError}
+                topCards={topCards}
+                viewerPlayerId={viewerPlayerId}
+              />
+            </>
+          ),
+        },
+        {
+          id: "turns",
+          label: "Turns",
+          icon: <IconChartBar size={16} />,
+          content: <TurnsSection analytics={analytics} envelope={analyticsEnvelope} />,
+        },
+        {
+          id: "notes",
+          label: "Notes",
+          icon: <IconNotebook size={16} />,
+          content: (
             <section className={classes.panel}>
               <div className={classes.panelHeader}>
                 <div>
@@ -528,149 +414,180 @@ export function EndGameModal() {
                 </>
               )}
             </section>
-          )}
-        </main>
+          ),
+        },
+      ];
 
-        <footer className={classes.footer}>
-          <div className={classes.footerSecondary}>
-            {canUseReplayActions && (
-              <div className={classes.replayActions} aria-label="Replay actions">
-                <button
-                  type="button"
-                  className={classes.replayButton}
-                  onClick={() => void downloadReplay()}
-                  disabled={replayDownloading}
-                >
-                  {replayDownloading ? (
-                    <IconLoader2 size={15} className={classes.spin} />
-                  ) : (
-                    <IconDownload size={15} />
-                  )}
-                  Download replay
-                </button>
-                {canUseReplayStore && (
-                  <button
-                    type="button"
-                    className={classes.replayButton}
-                    onClick={() => void saveReplay()}
-                    disabled={replaySaving || replaySaved}
-                  >
-                    {replaySaved ? (
-                      <IconCheck size={15} />
-                    ) : replaySaving ? (
-                      <IconLoader2 size={15} className={classes.spin} />
-                    ) : (
-                      <IconDeviceFloppy size={15} />
-                    )}
-                    {replaySaved ? "Replay saved" : replaySaving ? "Saving replay" : "Save replay"}
-                  </button>
-                )}
-                {replayStatus && <span className={classes.replayStatus}>{replayStatus}</span>}
-              </div>
+  const actions = (
+    <>
+      {canUseReplayActions && (
+        <div className={classes.replayActions} aria-label="Replay actions">
+          <button
+            type="button"
+            className={classes.replayButton}
+            onClick={() => void downloadReplay()}
+            disabled={replayDownloading}
+          >
+            {replayDownloading ? (
+              <IconLoader2 size={15} className={classes.spin} />
+            ) : (
+              <IconDownload size={15} />
             )}
-            <div className={classes.supportActions}>
-              {!isDeckBuilderPractice && (
-                <button
-                  type="button"
-                  className={classes.supportButton}
-                  onClick={() => {
-                    setSupportDialog("bug");
-                    setSupportText("");
-                    setSupportStatus(null);
-                  }}
-                >
-                  <IconBug size={15} />
-                  Report bug
-                </button>
+            Download replay
+          </button>
+          {canUseReplayStore && (
+            <button
+              type="button"
+              className={classes.replayButton}
+              onClick={() => void saveReplay()}
+              disabled={replaySaving || replaySaved}
+            >
+              {replaySaved ? (
+                <IconCheck size={15} />
+              ) : replaySaving ? (
+                <IconLoader2 size={15} className={classes.spin} />
+              ) : (
+                <IconDeviceFloppy size={15} />
               )}
-              <button
-                type="button"
-                className={classes.supportButton}
-                onClick={() => {
-                  setSupportDialog("feedback");
-                  setSupportText("");
-                  setSupportStatus(null);
-                }}
-              >
-                <IconMessage2 size={15} />
-                Feedback
-              </button>
-            </div>
-          </div>
-
-          <div className={classes.actions}>
-            {isDeckBuilderPractice ? (
+              {replaySaved ? "Replay saved" : replaySaving ? "Saving replay" : "Save replay"}
+            </button>
+          )}
+          {replayStatus && <span className={classes.replayStatus}>{replayStatus}</span>}
+        </div>
+      )}
+      <div className={classes.supportActions}>
+        {!isDeckBuilderPractice && (
+          <button
+            type="button"
+            className={classes.supportButton}
+            onClick={() => {
+              setSupportDialog("bug");
+              setSupportText("");
+              setSupportStatus(null);
+            }}
+          >
+            <IconBug size={15} />
+            Report bug
+          </button>
+        )}
+        <button
+          type="button"
+          className={classes.supportButton}
+          onClick={() => {
+            setSupportDialog("feedback");
+            setSupportText("");
+            setSupportStatus(null);
+          }}
+        >
+          <IconMessage2 size={15} />
+          Feedback
+        </button>
+      </div>
+      <div className={classes.actions}>
+        {isDeckBuilderPractice ? (
+          <button
+            type="button"
+            className={`${classes.btn} ${classes.btnPrimary}`}
+            data-testid="end-game-start-over"
+            onClick={resetScenario}
+            disabled={!canResetScenario}
+          >
+            <IconRefresh size={16} />
+            Start over
+          </button>
+        ) : isRemote ? (
+          <>
+            {nextGameHref ? (
               <button
                 type="button"
                 className={`${classes.btn} ${classes.btnPrimary}`}
-                data-testid="end-game-start-over"
-                onClick={resetScenario}
-                disabled={!canResetScenario}
+                data-testid="end-game-next-game"
+                onClick={() => {
+                  window.location.href = nextGameHref;
+                }}
               >
-                <IconRefresh size={16} />
-                Start over
+                Go to next game
+                <IconArrowRight size={16} />
               </button>
-            ) : isRemote ? (
-              <>
-                {nextGameHref ? (
-                  <button
-                    type="button"
-                    className={`${classes.btn} ${classes.btnPrimary}`}
-                    data-testid="end-game-next-game"
-                    onClick={() => {
-                      window.location.href = nextGameHref;
-                    }}
-                  >
-                    Go to next game
-                    <IconArrowRight size={16} />
-                  </button>
-                ) : postGameContext?.matchStatus === "completed" ? (
-                  <button
-                    type="button"
-                    className={`${classes.btn} ${classes.btnPrimary}`}
-                    data-testid="end-game-lobby"
-                    onClick={() => {
-                      if (remoteReturnUrl) {
-                        window.location.href = remoteReturnUrl;
-                        return;
-                      }
-                      window.location.href = PLATFORM_MATCHMAKING_URL;
-                    }}
-                  >
-                    Back to matchmaking
-                  </button>
-                ) : (
-                  <button type="button" className={classes.btn} disabled>
-                    <IconLoader2 size={15} className={classes.spin} />
-                    Finalizing match
-                  </button>
-                )}
-              </>
+            ) : postGameContext?.matchStatus === "completed" ? (
+              <button
+                type="button"
+                className={`${classes.btn} ${classes.btnPrimary}`}
+                data-testid="end-game-lobby"
+                onClick={() => {
+                  if (remoteReturnUrl) {
+                    window.location.href = remoteReturnUrl;
+                    return;
+                  }
+                  window.location.href = PLATFORM_MATCHMAKING_URL;
+                }}
+              >
+                Back to matchmaking
+              </button>
             ) : (
-              <>
-                <button
-                  type="button"
-                  className={`${classes.btn} ${classes.btnPrimary}`}
-                  data-testid="end-game-rematch"
-                  onClick={() => {
-                    resetScenario();
-                  }}
-                  disabled={!canResetScenario}
-                >
-                  Rematch
-                </button>
-                <a
-                  className={classes.btn}
-                  data-testid="end-game-back-to-setup"
-                  href={PLATFORM_MATCHMAKING_URL}
-                >
-                  Back to matchmaking
-                </a>
-              </>
+              <button type="button" className={classes.btn} disabled>
+                <IconLoader2 size={15} className={classes.spin} />
+                Finalizing match
+              </button>
             )}
-          </div>
-        </footer>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              className={`${classes.btn} ${classes.btnPrimary}`}
+              data-testid="end-game-rematch"
+              onClick={() => {
+                resetScenario();
+              }}
+              disabled={!canResetScenario}
+            >
+              Rematch
+            </button>
+            <a
+              className={classes.btn}
+              data-testid="end-game-back-to-setup"
+              href={PLATFORM_MATCHMAKING_URL}
+            >
+              Back to matchmaking
+            </a>
+          </>
+        )}
       </div>
+    </>
+  );
+
+  if (!modalState.open) {
+    return (
+      <button
+        type="button"
+        className={classes.launcher}
+        onClick={() => setModalState((current) => openPostGameModal(current))}
+      >
+        <IconChartBar size={16} />
+        View summary
+      </button>
+    );
+  }
+
+  return (
+    <>
+      <PostGameModal
+        open={modalState.open}
+        outcome={outcome}
+        reason={reasonText}
+        returnUrl={
+          isRemote ? (remoteReturnUrl ?? PLATFORM_MATCHMAKING_URL) : PLATFORM_MATCHMAKING_URL
+        }
+        sections={sections}
+        actions={actions}
+        onClose={closeModal}
+        testId="end-game-modal"
+        dataEndReason={winReason ?? undefined}
+        dataRemote={isRemote ? "true" : "false"}
+        dataPostGameSurface={postGameSurface}
+        celebrationKey={finishedGameKey ?? undefined}
+      />
 
       {supportDialog && (
         <div className={classes.supportDialog} role="dialog" aria-modal="true">
@@ -721,33 +638,16 @@ export function EndGameModal() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
-function TabButton({
-  active,
-  icon,
-  label,
-  onClick,
-}: {
-  active: boolean;
-  icon: ReactNode;
-  label: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      className={`${classes.tabButton} ${active ? classes.tabButtonActive : ""}`}
-      onClick={onClick}
-    >
-      {icon}
-      {label}
-    </button>
-  );
+function describeReason(reason: string | null, outcome: "win" | "loss" | "draw"): string {
+  if (!reason) return "Match complete.";
+  const perspective = reasonsByOutcome[reason]?.[outcome];
+  if (perspective) return perspective;
+  return neutralReasons[reason] ?? reason.replace(/_/g, " ");
 }
-
 function PracticeSummarySection({
   outcome,
   reason,

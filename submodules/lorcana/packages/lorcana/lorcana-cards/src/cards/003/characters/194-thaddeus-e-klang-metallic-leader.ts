@@ -4,6 +4,17 @@ import { thaddeusEKlangMetallicLeaderI18n } from "./194-thaddeus-e-klang-metalli
 export const thaddeusEKlangMetallicLeader: CharacterCard = {
   id: "iyr",
   canonicalId: "ci_iyr",
+  slug: "lorcana-ci_iyr",
+  printings: [
+    {
+      id: "set3-194",
+      artId: "set3-194",
+      setCode: "set3",
+      collectorNumber: "194",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-194"],
   cardType: "character",
   name: "Thaddeus E. Klang",
@@ -20,7 +31,7 @@ export const thaddeusEKlangMetallicLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_810ae6612d094f8a89c5db907d193cf5",
-    tcgPlayer: 539116,
+    tcgPlayer: "539116",
   },
   text: [
     {

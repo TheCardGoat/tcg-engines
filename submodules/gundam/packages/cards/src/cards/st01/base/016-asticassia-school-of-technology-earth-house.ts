@@ -6,14 +6,17 @@ export const st01AsticassiaSchoolOfTechnologyEarthHouse016: BaseCard = {
   type: "base",
   traits: ["academy", "stronghold"],
   id: "ST01-016",
-  externalId: "gundam:st01-016",
-  slug: "asticassia-school-of-technology-earth-house-st01-016",
+  canonicalId: "ST01-016",
+  externalIds: { bandai: "gundam:st01-016" },
+  slug: "asticassia-school-of-technology-earth-house/st01-016",
   displayName: "Asticassia School of Technology, Earth House",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-016",
   printings: [
     {
       id: "ST01-016",
+      artId: "ST01-016",
+      setCode: "ST01",
       collectorNumber: "ST01-016",
       cardNumber: "ST01-016",
       set: {
@@ -29,6 +32,8 @@ export const st01AsticassiaSchoolOfTechnologyEarthHouse016: BaseCard = {
     },
     {
       id: "ST01-016_p1",
+      artId: "ST01-016_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-016_p1",
       cardNumber: "ST01-016",
       set: {
@@ -44,6 +49,8 @@ export const st01AsticassiaSchoolOfTechnologyEarthHouse016: BaseCard = {
     },
     {
       id: "ST01-016_p2",
+      artId: "ST01-016_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-016_p2",
       cardNumber: "ST01-016",
       set: {
@@ -58,6 +65,7 @@ export const st01AsticassiaSchoolOfTechnologyEarthHouse016: BaseCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST01-016", "ST01-016_p1", "ST01-016_p2"],
   selectedPrintingId: "ST01-016",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-016.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-016.webp?260424",

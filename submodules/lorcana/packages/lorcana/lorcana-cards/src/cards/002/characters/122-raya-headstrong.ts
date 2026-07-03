@@ -4,6 +4,17 @@ import { rayaHeadstrongI18n } from "./122-raya-headstrong.i18n";
 export const rayaHeadstrong: CharacterCard = {
   id: "8Xm",
   canonicalId: "ci_DLC",
+  slug: "lorcana-ci_DLC",
+  printings: [
+    {
+      id: "set2-122",
+      artId: "set2-122",
+      setCode: "set2",
+      collectorNumber: "122",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-122", "set9-127"],
   cardType: "character",
   name: "Raya",
@@ -20,7 +31,7 @@ export const rayaHeadstrong: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f658a42763fe4f4bbd7e0605d2fb1e2f",
-    tcgPlayer: 650062,
+    tcgPlayer: "650062",
   },
   text: [
     {

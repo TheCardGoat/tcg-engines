@@ -4,6 +4,17 @@ import { zootopiaTundratownI18n } from "./034-zootopia-tundratown.i18n";
 export const zootopiaTundratown: LocationCard = {
   id: "tpz",
   canonicalId: "ci_tpz",
+  slug: "lorcana-ci_tpz",
+  printings: [
+    {
+      id: "set11-034",
+      artId: "set11-034",
+      setCode: "set11",
+      collectorNumber: "34",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-034"],
   cardType: "location",
   name: "Zootopia",
@@ -21,7 +32,7 @@ export const zootopiaTundratown: LocationCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_7a26dcac46ba4e0291bf8bedaec4923d",
-    tcgPlayer: 674833,
+    tcgPlayer: "674833",
   },
   i18n: zootopiaTundratownI18n,
 };

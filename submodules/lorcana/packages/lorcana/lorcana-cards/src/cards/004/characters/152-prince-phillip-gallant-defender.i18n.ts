@@ -20,12 +20,13 @@ export const princePhillipGallantDefenderI18n: Record<Languages, I18nProperties>
     version: "Galanter Verteidiger",
     text: [
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "BESTE VERTEIDIGUNG",
+        title: "Beste Verteidigung",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere mit Unterstützen ausgewählt wird, erhält er in diesem Zug Robust +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+          "Jedes Mal, wenn einer deiner Charaktere mit <Unterstützen> ausgewählt wird, erhält er in diesem Zug <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const princePhillipGallantDefenderI18n: Record<Languages, I18nProperties>
     version: "Galant défenseur",
     text: [
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "MEILLEURE DÉFENSE",
+        title: "Meilleure défense",
         description:
-          "Chaque fois qu'un de vos personnages est choisi par la capacité Soutien, il gagne Résistance +1 pour le reste de ce tour.",
+          "Chaque fois qu'un de vos personnages est choisi par la capacité <Soutien>, il gagne <Résistance> +1 pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const princePhillipGallantDefenderI18n: Record<Languages, I18nProperties>
     version: "Difensore Valoroso",
     text: [
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "LA MIGLIOR DIFESA",
+        title: "La Miglior Difesa",
         description:
-          "Ogni volta che uno dei tuoi personaggi viene scelto da un Aiutante, ottiene Resistere +1 per questo turno.",
+          "Ogni volta che uno dei tuoi personaggi viene scelto da un <Aiutante>, ottiene <Resistere> +1 per questo turno.",
       },
     ],
   },

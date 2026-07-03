@@ -4,6 +4,17 @@ import { cheshireCatPerplexingFelineI18n } from "./091-cheshire-cat-perplexing-f
 export const cheshireCatPerplexingFeline: CharacterCard = {
   id: "u62",
   canonicalId: "ci_u62",
+  slug: "lorcana-ci_u62",
+  printings: [
+    {
+      id: "set7-091",
+      artId: "set7-091",
+      setCode: "set7",
+      collectorNumber: "91",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-091"],
   cardType: "character",
   name: "Cheshire Cat",
@@ -20,7 +31,7 @@ export const cheshireCatPerplexingFeline: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6bbaa412cc0d43d8a2c2913ccbf13c3c",
-    tcgPlayer: 619454,
+    tcgPlayer: "619454",
   },
   text: [
     {
@@ -42,7 +53,11 @@ export const cheshireCatPerplexingFeline: CharacterCard = {
             owner: "any",
             zones: ["play"],
             cardTypes: ["character"],
-            filters: [{ type: "damaged" }],
+            filters: [
+              {
+                type: "damaged",
+              },
+            ],
           },
           type: "deal-damage",
         },

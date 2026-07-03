@@ -6,14 +6,17 @@ export const rResource040: ResourceCard = {
   type: "resource",
   traits: [],
   id: "R-040",
-  externalId: "gundam:r-040",
-  slug: "resource-r-040",
+  canonicalId: "R-040",
+  externalIds: { bandai: "gundam:r-040" },
+  slug: "resource/r-040",
   displayName: "Resource",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "R-040",
   printings: [
     {
       id: "R-040",
+      artId: "R-040",
+      setCode: "GD04",
       collectorNumber: "R-040",
       cardNumber: "R-040",
       set: {
@@ -29,6 +32,8 @@ export const rResource040: ResourceCard = {
     },
     {
       id: "R-040_p1",
+      artId: "R-040_p1",
+      setCode: "GD04",
       collectorNumber: "R-040_p1",
       cardNumber: "R-040",
       set: {
@@ -43,6 +48,7 @@ export const rResource040: ResourceCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["R-040", "R-040_p1"],
   selectedPrintingId: "R-040",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-040.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-040.webp?260424",

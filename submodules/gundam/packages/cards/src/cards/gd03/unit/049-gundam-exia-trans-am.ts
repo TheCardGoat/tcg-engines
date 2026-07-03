@@ -7,14 +7,17 @@ export const gd03GundamExiaTransAm049: UnitCard = {
   color: "purple",
   traits: ["cb", "gn drive"],
   id: "GD03-049",
-  externalId: "gundam:gd03-049",
-  slug: "gundam-exia-trans-am-gd03-049",
+  canonicalId: "GD03-049",
+  externalIds: { bandai: "gundam:gd03-049" },
+  slug: "gundam-exia-trans-am/gd03-049",
   displayName: "Gundam Exia (Trans-Am)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-049",
   printings: [
     {
       id: "GD03-049",
+      artId: "GD03-049",
+      setCode: "GD03",
       collectorNumber: "GD03-049",
       cardNumber: "GD03-049",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamExiaTransAm049: UnitCard = {
     },
     {
       id: "GD03-049_p1",
+      artId: "GD03-049_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-049_p1",
       cardNumber: "GD03-049",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamExiaTransAm049: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-049", "GD03-049_p1"],
   selectedPrintingId: "GD03-049",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-049.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-049.webp?260424",

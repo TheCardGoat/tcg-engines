@@ -4,6 +4,17 @@ import { webbysDiaryI18n } from "./031-webbys-diary.i18n";
 export const webbysDiary: ItemCard = {
   id: "XSg",
   canonicalId: "ci_XSg",
+  slug: "lorcana-ci_XSg",
+  printings: [
+    {
+      id: "set10-031",
+      artId: "set10-031",
+      setCode: "set10",
+      collectorNumber: "31",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-031"],
   cardType: "item",
   name: "Webby's Diary",
@@ -16,7 +27,7 @@ export const webbysDiary: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_553961389abc4bd4b49cc302ee271ba8",
-    tcgPlayer: 658789,
+    tcgPlayer: "658789",
   },
   text: [
     {

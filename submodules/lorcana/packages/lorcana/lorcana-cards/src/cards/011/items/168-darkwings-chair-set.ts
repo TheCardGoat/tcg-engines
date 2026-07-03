@@ -4,6 +4,17 @@ import { darkwingsChairSetI18n } from "./168-darkwings-chair-set.i18n";
 export const darkwingsChairSet: ItemCard = {
   id: "TkX",
   canonicalId: "ci_TkX",
+  slug: "lorcana-ci_TkX",
+  printings: [
+    {
+      id: "set11-168",
+      artId: "set11-168",
+      setCode: "set11",
+      collectorNumber: "168",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-168"],
   cardType: "item",
   name: "Darkwing's Chair Set",
@@ -16,7 +27,7 @@ export const darkwingsChairSet: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2663ccb2084547c0a55220f63f46a36c",
-    tcgPlayer: 676232,
+    tcgPlayer: "676232",
   },
   text: [
     {
@@ -62,7 +73,10 @@ export const darkwingsChairSet: ItemCard = {
         banishSelf: true,
       },
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         selfReplacement: {
           condition: {
             type: "selected-target-name",

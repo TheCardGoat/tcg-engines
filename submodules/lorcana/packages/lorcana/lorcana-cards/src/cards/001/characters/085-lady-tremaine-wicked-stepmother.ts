@@ -4,6 +4,17 @@ import { ladyTremaineWickedStepmotherI18n } from "./085-lady-tremaine-wicked-ste
 export const ladyTremaineWickedStepmother: CharacterCard = {
   id: "L2F",
   canonicalId: "ci_L2F",
+  slug: "lorcana-ci_L2F",
+  printings: [
+    {
+      id: "set1-085",
+      artId: "set1-085",
+      setCode: "set1",
+      collectorNumber: "85",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-085"],
   cardType: "character",
   name: "Lady Tremaine",
@@ -20,7 +31,7 @@ export const ladyTremaineWickedStepmother: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1acda7d08eb443e9bd36798a1fd7741a",
-    tcgPlayer: 489665,
+    tcgPlayer: "489665",
   },
   text: [
     {

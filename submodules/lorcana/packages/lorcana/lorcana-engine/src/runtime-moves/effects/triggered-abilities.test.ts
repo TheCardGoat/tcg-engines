@@ -564,7 +564,9 @@ const triggeredTestLocation = createMockLocation({
 function createFloatingQuestLoreAction(id: string, name: string, amount: number): ActionCard {
   return {
     id,
+    printings: [{ id: id, artId: id, setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
     canonicalId: `ci_${id}`,
+    slug: `lorcana-ci_${id}`,
     cardType: "action",
     name,
     cost: 1,
@@ -610,7 +612,9 @@ function createFloatingQuestLoreAction(id: string, name: string, amount: number)
 function createGrantBodyguardAction(id: string, name: string): ActionCard {
   return {
     id,
+    printings: [{ id: id, artId: id, setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
     canonicalId: `ci_${id}`,
+    slug: `lorcana-ci_${id}`,
     cardType: "action",
     name,
     cost: 1,

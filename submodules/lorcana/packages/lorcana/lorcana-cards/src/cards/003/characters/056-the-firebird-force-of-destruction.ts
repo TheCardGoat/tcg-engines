@@ -4,6 +4,17 @@ import { theFirebirdForceOfDestructionI18n } from "./056-the-firebird-force-of-d
 export const theFirebirdForceOfDestruction: CharacterCard = {
   id: "RNV",
   canonicalId: "ci_RNV",
+  slug: "lorcana-ci_RNV",
+  printings: [
+    {
+      id: "set3-056",
+      artId: "set3-056",
+      setCode: "set3",
+      collectorNumber: "56",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-056"],
   cardType: "character",
   name: "The Firebird",
@@ -21,7 +32,7 @@ export const theFirebirdForceOfDestruction: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_67c15e1a10e04510a5f6c78cf9119e22",
-    tcgPlayer: 537826,
+    tcgPlayer: "537826",
   },
   classifications: ["Dreamborn", "Villain"],
   i18n: theFirebirdForceOfDestructionI18n,

@@ -18,12 +18,12 @@ export const halfHexwellCrownI18n: Record<Languages, I18nProperties> = {
     name: "Hälfte der Hexwell-Krone",
     text: [
       {
-        title: "UNERWARTETER FUND, 2",
-        description: "— Ziehe 1 Karte.",
+        title: "Unerwarteter Fund",
+        description: "{E}, 2 {I} — Ziehe 1 Karte.",
       },
       {
-        title: "GEFÄHRLICHE MACHT,",
-        description: "2, Wirf 1 Karte ab — Erschöpfe einen Charakter deiner Wahl.",
+        title: "Gefährliche Macht",
+        description: "{E}, 2 {I}, Wirf 1 Karte ab — Erschöpfe einen Charakter deiner Wahl.",
       },
     ],
   },
@@ -31,12 +31,12 @@ export const halfHexwellCrownI18n: Record<Languages, I18nProperties> = {
     name: "Moitié de la Couronne d'Hexasort",
     text: [
       {
-        title: "TROUVAILLE INATTENDUE, 2",
-        description: "— Piochez une carte.",
+        title: "Trouvaille inattendue",
+        description: "{E}, 2 {I} — Piochez une carte.",
       },
       {
-        title: "UN POUVOIR",
-        description: "PÉRILLEUX, 2, Défaussez une carte — Choisissez un personnage et épuisez-le.",
+        title: "Un pouvoir périlleux",
+        description: "{E}, 2 {I}, Défaussez une carte — Choisissez un personnage et épuisez-le.",
       },
     ],
   },
@@ -44,12 +44,12 @@ export const halfHexwellCrownI18n: Record<Languages, I18nProperties> = {
     name: "Mezza Corona Esamantica",
     text: [
       {
-        title: "UN RITROVAMENTO INASPETTATO, 2",
-        description: "— Pesca una carta.",
+        title: "Un Ritrovamento Inaspettato",
+        description: "{E}, 2 {I} — Pesca una carta.",
       },
       {
-        title: "UN POTERE RISCHIOSO, 2,",
-        description: "scarta una carta — Impegna un personaggio a tua scelta.",
+        title: "Un Potere Rischioso",
+        description: "{E}, 2 {I}, scarta una carta — Impegna un personaggio a tua scelta.",
       },
     ],
   },

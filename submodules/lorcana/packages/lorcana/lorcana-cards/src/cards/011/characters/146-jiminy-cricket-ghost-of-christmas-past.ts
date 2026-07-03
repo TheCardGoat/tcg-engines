@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jiminyCricketGhostOfChristmasPastI18n } from "./146-jiminy-cricket-ghost-of-christmas-past.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const jiminyCricketGhostOfChristmasPast: CharacterCard = {
   id: "tRd",
   canonicalId: "ci_dGY",
+  slug: "lorcana-ci_dGY",
+  printings: [
+    {
+      id: "set11-146",
+      artId: "set11-146",
+      setCode: "set11",
+      collectorNumber: "146",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-146"],
   cardType: "character",
   name: "Jiminy Cricket",
@@ -21,7 +33,7 @@ export const jiminyCricketGhostOfChristmasPast: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ea1ae83b3c414a2a838398390473ebc6",
-    tcgPlayer: 677153,
+    tcgPlayer: "677153",
   },
   text: [
     {

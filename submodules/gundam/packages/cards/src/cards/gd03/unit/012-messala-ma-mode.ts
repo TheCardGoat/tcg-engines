@@ -7,14 +7,17 @@ export const gd03MessalaMaMode012: UnitCard = {
   color: "blue",
   traits: ["titans", "jupitris"],
   id: "GD03-012",
-  externalId: "gundam:gd03-012",
-  slug: "messala-ma-mode-gd03-012",
+  canonicalId: "GD03-012",
+  externalIds: { bandai: "gundam:gd03-012" },
+  slug: "messala-ma-mode/gd03-012",
   displayName: "Messala (MA Mode)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-012",
   printings: [
     {
       id: "GD03-012",
+      artId: "GD03-012",
+      setCode: "GD03",
       collectorNumber: "GD03-012",
       cardNumber: "GD03-012",
       set: {
@@ -29,6 +32,7 @@ export const gd03MessalaMaMode012: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-012"],
   selectedPrintingId: "GD03-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-012.webp?260424",

@@ -16,9 +16,9 @@ export const mauisPlaceOfExileHiddenIslandI18n: Record<Languages, I18nProperties
     version: "Verborgene Insel",
     text: [
       {
-        title: "ISOLIERT",
+        title: "Isoliert",
         description:
-          "Charaktere an diesem Ort erhalten Robust +1. (Reduziere jeglichen Schaden, der den Charakteren zugefügt wird, um 1.)",
+          "Charaktere an diesem Ort erhalten <Robust> +1. (Reduziere jeglichen Schaden, der den Charakteren zugefügt wird, um 1.)",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const mauisPlaceOfExileHiddenIslandI18n: Record<Languages, I18nProperties
     version: "Rocher caché",
     text: [
       {
-        title: "ISOLÉ",
-        description: "Les personnages sur ce lieu gagnent Résistance +1.",
+        title: "Isolé",
+        description: "Les personnages sur ce lieu gagnent <Résistance> +1.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const mauisPlaceOfExileHiddenIslandI18n: Record<Languages, I18nProperties
     version: "Isola Nascosta",
     text: [
       {
-        title: "ISOLATA I",
-        description: "personaggi ottengono Resistere +1 mentre si trovano in questo luogo.",
+        title: "Isolata",
+        description: "I personaggi ottengono <Resistere> +1 mentre si trovano in questo luogo.",
       },
     ],
   },

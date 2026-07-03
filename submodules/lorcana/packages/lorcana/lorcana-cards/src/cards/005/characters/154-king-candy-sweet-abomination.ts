@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kingCandySweetAbominationI18n } from "./154-king-candy-sweet-abomination.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const kingCandySweetAbomination: CharacterCard = {
-  id: "reF",
+  id: "FbB",
   canonicalId: "ci_KFt",
+  slug: "lorcana-ci_KFt",
+  printings: [
+    {
+      id: "set5-154",
+      artId: "set5-154",
+      setCode: "set5",
+      collectorNumber: "154",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-154"],
   cardType: "character",
   name: "King Candy",
@@ -21,7 +33,7 @@ export const kingCandySweetAbomination: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9c2a04a39aee4b989bf2b1f18bf923ba",
-    tcgPlayer: 561995,
+    tcgPlayer: "561995",
   },
   text: [
     {

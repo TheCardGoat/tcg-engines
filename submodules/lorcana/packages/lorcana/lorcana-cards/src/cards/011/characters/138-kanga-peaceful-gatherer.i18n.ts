@@ -19,11 +19,13 @@ export const kangaPeacefulGathererI18n: Record<Languages, I18nProperties> = {
     version: "Friedliche Sammlerin",
     text: [
       {
-        title: "Stärken 2",
+        title:
+          "<Stärken> 2 {I} (Einmal während deines Zuges darfst du 2 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "ZUSÄTZLICHE HILFE",
-        description: "Solange dieser Charakter mindestens eine Karte unter sich hat, erhält er +1.",
+        title: "Zusätzliche Hilfe",
+        description:
+          "Solange dieser Charakter mindestens eine Karte unter sich hat, erhält er +1 {L}.",
       },
     ],
   },
@@ -32,11 +34,12 @@ export const kangaPeacefulGathererI18n: Record<Languages, I18nProperties> = {
     version: "Cueilleuse paisible",
     text: [
       {
-        title: "Boost 2",
+        title:
+          "<Boost> 2 {I} (Une fois durant votre tour, vous pouvez payer 2 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "PETITE AIDE EN PLUS",
-        description: "Tant qu'il y a une carte sous ce personnage, il gagne +1.",
+        title: "Petite aide en plus",
+        description: "Tant qu'il y a une carte sous ce personnage, il gagne +1 {L}.",
       },
     ],
   },
@@ -45,11 +48,12 @@ export const kangaPeacefulGathererI18n: Record<Languages, I18nProperties> = {
     version: "Raccoglitrice Serena",
     text: [
       {
-        title: "Potenziamento 2",
+        title:
+          "<Potenziamento> 2 {I} (Una volta durante il tuo turno, puoi pagare 2 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "AIUTO AGGIUNTIVO",
-        description: "Mentre c'è una carta sotto a questo personaggio, riceve +1.",
+        title: "Aiuto Aggiuntivo",
+        description: "Mentre c'è una carta sotto a questo personaggio, riceve +1 {L}.",
       },
     ],
   },

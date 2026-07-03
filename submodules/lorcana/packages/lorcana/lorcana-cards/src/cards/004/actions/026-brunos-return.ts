@@ -4,6 +4,17 @@ import { brunosReturnI18n } from "./026-brunos-return.i18n";
 export const brunosReturn: ActionCard = {
   id: "yxb",
   canonicalId: "ci_RJP",
+  slug: "lorcana-ci_RJP",
+  printings: [
+    {
+      id: "set4-026",
+      artId: "set4-026",
+      setCode: "set4",
+      collectorNumber: "26",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-026", "set9-029"],
   cardType: "action",
   name: "Bruno's Return",
@@ -16,7 +27,7 @@ export const brunosReturn: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_abc3f1da50d04f768b1181878b17f8da",
-    tcgPlayer: 649976,
+    tcgPlayer: "649976",
   },
   text: "Return a character card from your discard to your hand. Then remove up to 2 damage from chosen character.",
   abilities: [

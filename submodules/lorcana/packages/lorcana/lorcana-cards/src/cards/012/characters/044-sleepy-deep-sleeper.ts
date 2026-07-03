@@ -4,6 +4,17 @@ import { sleepyDeepSleeperI18n } from "./044-sleepy-deep-sleeper.i18n";
 export const sleepyDeepSleeper: CharacterCard = {
   id: "1Iw",
   canonicalId: "ci_1Iw",
+  slug: "lorcana-ci_1Iw",
+  printings: [
+    {
+      id: "set12-044",
+      artId: "set12-044",
+      setCode: "set12",
+      collectorNumber: "44",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-044"],
   cardType: "character",
   name: "Sleepy",
@@ -20,6 +31,7 @@ export const sleepyDeepSleeper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_74d958eba8d84933bb8d416153a757d0",
+    tcgPlayer: "692028",
   },
   text: [
     {

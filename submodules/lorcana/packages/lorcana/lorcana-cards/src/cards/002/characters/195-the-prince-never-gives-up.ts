@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { thePrinceNeverGivesUpI18n } from "./195-the-prince-never-gives-up.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { resist } from "../../../helpers/abilities/resist";
 
 export const thePrinceNeverGivesUp: CharacterCard = {
   id: "jp9",
   canonicalId: "ci_jp9",
+  slug: "lorcana-ci_jp9",
+  printings: [
+    {
+      id: "set2-195",
+      artId: "set2-195",
+      setCode: "set2",
+      collectorNumber: "195",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-195"],
   cardType: "character",
   name: "The Prince",
@@ -22,7 +34,7 @@ export const thePrinceNeverGivesUp: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9cc22e72ff234c27acb37f7d0e1f4441",
-    tcgPlayer: 517607,
+    tcgPlayer: "517607",
   },
   text: [
     {

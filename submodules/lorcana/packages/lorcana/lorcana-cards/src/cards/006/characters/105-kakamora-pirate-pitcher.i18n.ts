@@ -17,9 +17,9 @@ export const kakamoraPiratePitcherI18n: Record<Languages, I18nProperties> = {
     version: "Piraten-Werfer",
     text: [
       {
-        title: "SCHWINDELERREGENDE GESCHWINDIGKEIT",
+        title: "Schwindelerregende Geschwindigkeit",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Pirat deiner Wahl bis zu Beginn deines nächsten Zuges Wendig.",
+          "Wenn du diesen Charakter ausspielst, erhält ein Pirat deiner Wahl bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const kakamoraPiratePitcherI18n: Record<Languages, I18nProperties> = {
     version: "Lance-pirate",
     text: [
       {
-        title: "VITESSE FULGURANTE",
+        title: "Vitesse fulgurante",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage Pirate qui gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage Pirate qui gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const kakamoraPiratePitcherI18n: Record<Languages, I18nProperties> = {
     version: "Lanciatore Pirata",
     text: [
       {
-        title: "VELOCITÀ DISORIENTANTE",
+        title: "Velocità Disorientante",
         description:
-          "Quando giochi questo personaggio, un personaggio Pirata a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Quando giochi questo personaggio, un personaggio Pirata a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

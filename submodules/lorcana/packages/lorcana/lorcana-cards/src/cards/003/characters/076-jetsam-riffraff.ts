@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jetsamRiffraffI18n } from "./076-jetsam-riffraff.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const jetsamRiffraff: CharacterCard = {
   id: "j0a",
   canonicalId: "ci_j0a",
+  slug: "lorcana-ci_j0a",
+  printings: [
+    {
+      id: "set3-076",
+      artId: "set3-076",
+      setCode: "set3",
+      collectorNumber: "76",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-076"],
   cardType: "character",
   name: "Jetsam",
@@ -21,7 +33,7 @@ export const jetsamRiffraff: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d3950786da4a4d3497090ce82253a144",
-    tcgPlayer: 532928,
+    tcgPlayer: "532928",
   },
   text: [
     {

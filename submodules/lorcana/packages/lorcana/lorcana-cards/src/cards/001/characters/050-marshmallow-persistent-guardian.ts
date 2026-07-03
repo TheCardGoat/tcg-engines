@@ -4,6 +4,17 @@ import { marshmallowPersistentGuardianI18n } from "./050-marshmallow-persistent-
 export const marshmallowPersistentGuardian: CharacterCard = {
   id: "vE2",
   canonicalId: "ci_vE2",
+  slug: "lorcana-ci_vE2",
+  printings: [
+    {
+      id: "set1-050",
+      artId: "set1-050",
+      setCode: "set1",
+      collectorNumber: "50",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-050"],
   cardType: "character",
   name: "Marshmallow",
@@ -20,7 +31,7 @@ export const marshmallowPersistentGuardian: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_de3c296136f24c1a8bada1580861504c",
-    tcgPlayer: 505955,
+    tcgPlayer: "505955",
   },
   text: [
     {

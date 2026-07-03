@@ -20,12 +20,13 @@ export const littleJohnResourcefulOutlawI18n: Record<Languages, I18nProperties> 
     version: "Raffinierter Gesetzloser",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Little-John-Charaktere auszuspielen.)",
       },
       {
-        title: "DEIN GLÜCK, DU KNILCH",
+        title: "Dein Glück, du Knilch",
         description:
-          "Solange dieser Charakter erschöpft ist, erhalten deine Charaktere mit Beschützen +1 und Robust +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Solange dieser Charakter erschöpft ist, erhalten deine Charaktere mit <Beschützen> +1 {L} und <Robust> +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const littleJohnResourcefulOutlawI18n: Record<Languages, I18nProperties> 
     version: "Hors-la-loi plein de ressources",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Petit Jean.)",
       },
       {
-        title: "C'EST ÇA, GRAND CHEF",
+        title: "C'est ça, grand chef",
         description:
-          "Tant que ce personnage est épuisé, vos personnages avec Rempart gagnent +1 et Résistance +1.",
+          "Tant que ce personnage est épuisé, vos personnages avec <Rempart> gagnent +1 {L} et <Résistance> +1.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const littleJohnResourcefulOutlawI18n: Record<Languages, I18nProperties> 
     version: "Fuorilegge Intraprendente",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Little John.)",
       },
       {
-        title: "OK, BUFFONE",
+        title: "OK, Buffone",
         description:
-          "Mentre questo personaggio è impegnato, i tuoi personaggi con Guardiano ottengono Resistere +1 e ricevono +1.",
+          "Mentre questo personaggio è impegnato, i tuoi personaggi con <Guardiano> ottengono <Resistere> +1 e ricevono +1 {L}.",
       },
     ],
   },

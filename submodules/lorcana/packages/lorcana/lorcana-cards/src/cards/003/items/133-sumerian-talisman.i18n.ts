@@ -15,7 +15,7 @@ export const sumerianTalismanI18n: Record<Languages, I18nProperties> = {
     name: "Sumerischer Talisman",
     text: [
       {
-        title: "DIE QUELLE DER MAGIE",
+        title: "Die Quelle der Magie",
         description:
           "Jedes Mal, wenn einer deiner Charaktere in deinem Zug durch eine Herausforderung verbannt wird, darfst du 1 Karte ziehen.",
       },
@@ -25,7 +25,7 @@ export const sumerianTalismanI18n: Record<Languages, I18nProperties> = {
     name: "Talisman sumérien",
     text: [
       {
-        title: "SOURCE DE MAGIE",
+        title: "Source de magie",
         description:
           "Chaque fois que l'un de vos personnages est banni via un défi durant votre tour, vous pouvez piocher une carte.",
       },
@@ -35,7 +35,7 @@ export const sumerianTalismanI18n: Record<Languages, I18nProperties> = {
     name: "Talismano Sumero",
     text: [
       {
-        title: "FONTE DI MAGIA",
+        title: "Fonte di Magia",
         description:
           "Durante il tuo turno, ogni volta che uno dei tuoi personaggi viene esiliato in una sfida, puoi pescare una carta.",
       },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jafarDreadnoughtI18n } from "./183-jafar-dreadnought.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const jafarDreadnought: CharacterCard = {
   id: "OLg",
   canonicalId: "ci_OLg",
+  slug: "lorcana-ci_OLg",
+  printings: [
+    {
+      id: "set2-183",
+      artId: "set2-183",
+      setCode: "set2",
+      collectorNumber: "183",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-183"],
   cardType: "character",
   name: "Jafar",
@@ -21,7 +33,7 @@ export const jafarDreadnought: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_89090f037609469eaa214e72bc12d218",
-    tcgPlayer: 527180,
+    tcgPlayer: "527180",
   },
   text: [
     {

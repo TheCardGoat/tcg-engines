@@ -7,14 +7,17 @@ export const gd01Kshatriya051: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-051",
-  externalId: "gundam:gd01-051",
-  slug: "kshatriya-gd01-051",
+  canonicalId: "GD01-051",
+  externalIds: { bandai: "gundam:gd01-051" },
+  slug: "kshatriya/gd01-051",
   displayName: "Kshatriya",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-051",
   printings: [
     {
       id: "GD01-051",
+      artId: "GD01-051",
+      setCode: "GD01",
       collectorNumber: "GD01-051",
       cardNumber: "GD01-051",
       set: {
@@ -30,6 +33,8 @@ export const gd01Kshatriya051: UnitCard = {
     },
     {
       id: "GD01-051_p1",
+      artId: "GD01-051_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-051_p1",
       cardNumber: "GD01-051",
       set: {
@@ -45,6 +50,8 @@ export const gd01Kshatriya051: UnitCard = {
     },
     {
       id: "GD01-051_p2",
+      artId: "GD01-051_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-051_p2",
       cardNumber: "GD01-051",
       set: {
@@ -59,6 +66,7 @@ export const gd01Kshatriya051: UnitCard = {
       productName: "Store Tournament Winner Pack 01",
     },
   ],
+  reprints: ["GD01-051", "GD01-051_p1", "GD01-051_p2"],
   selectedPrintingId: "GD01-051",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-051.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-051.webp?260424",

@@ -17,9 +17,9 @@ export const hiroHamadaRoboticsProdigyI18n: Record<Languages, I18nProperties> = 
     version: "Wunderkind der Robotik",
     text: [
       {
-        title: "COOLE ERFINDUNGEN, 2",
+        title: "Coole Erfindungen",
         description:
-          "— Durchsuche dein Deck nach einer Gegenstandskarte oder einer Roboter-Charakterkarte und zeige diese allen Mitspielenden. Mische danach dein Deck und lege die gewählte Karte als oberste Karte auf dein Deck.",
+          "{E}, 2 {I} — Durchsuche dein Deck nach einer Gegenstandskarte oder einer Roboter-Charakterkarte und zeige diese allen Mitspielenden. Mische danach dein Deck und lege die gewählte Karte als oberste Karte auf dein Deck.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const hiroHamadaRoboticsProdigyI18n: Record<Languages, I18nProperties> = 
     version: "Prodige de la robotique",
     text: [
       {
-        title: "À LA POINTE DE LA TECHNOLOGIE,",
+        title: "À la pointe de la technologie",
         description:
-          "2 — Cherchez un personnage Robot ou un objet dans votre pioche et révélez cette carte à tous les joueurs. Mélangez votre pioche et placez cette carte au-dessus.",
+          "{E}, 2 {I} — Cherchez un personnage Robot ou un objet dans votre pioche et révélez cette carte à tous les joueurs. Mélangez votre pioche et placez cette carte au-dessus.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const hiroHamadaRoboticsProdigyI18n: Record<Languages, I18nProperties> = 
     version: "Prodigio della Robotica",
     text: [
       {
-        title: "TECNOLOGIE FAVOLOSE, 2",
+        title: "Tecnologie Favolose",
         description:
-          "— Cerca nel tuo mazzo una carta oggetto o una carta personaggio Robot e rivelala a tutti i giocatori. Rimescola il tuo mazzo e metti quella carta in cima ad esso.",
+          "{E}, 2 {I} — Cerca nel tuo mazzo una carta oggetto o una carta personaggio Robot e rivelala a tutti i giocatori. Rimescola il tuo mazzo e metti quella carta in cima ad esso.",
       },
     ],
   },

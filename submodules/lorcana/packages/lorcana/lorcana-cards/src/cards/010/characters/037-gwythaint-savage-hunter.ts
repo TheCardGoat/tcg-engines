@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { evasive } from "../../../helpers/abilities/evasive";
 import { gwythaintSavageHunterI18n } from "./037-gwythaint-savage-hunter.i18n";
+
+import { evasive } from "../../../helpers/abilities/evasive";
 
 export const gwythaintSavageHunter: CharacterCard = {
   id: "t21",
   canonicalId: "ci_t21",
+  slug: "lorcana-ci_t21",
+  printings: [
+    {
+      id: "set10-037",
+      artId: "set10-037",
+      setCode: "set10",
+      collectorNumber: "37",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-037"],
   cardType: "character",
   name: "Gwythaint",
@@ -21,7 +33,7 @@ export const gwythaintSavageHunter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_69ea9fcabac1418eae3f2dc3a51254bf",
-    tcgPlayer: 658292,
+    tcgPlayer: "658292",
   },
   text: [
     {

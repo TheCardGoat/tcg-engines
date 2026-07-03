@@ -58,6 +58,9 @@ export function resolveBanishEffect(
     }
 
     const targetMeta = ctx.cards.require(targetId).meta ?? {};
+    const cardsUnderIdsBeforeBanish = Array.isArray(targetMeta.cardsUnder)
+      ? ([...targetMeta.cardsUnder] as CardInstanceId[])
+      : [];
     const cardsUnderCountBeforeBanish = Array.isArray(targetMeta.cardsUnder)
       ? targetMeta.cardsUnder.length
       : 0;
@@ -111,6 +114,12 @@ export function resolveBanishEffect(
     }
     resolvedInput.eventSnapshot.cardsUnderCountBeforeBanish =
       (resolvedInput.eventSnapshot.cardsUnderCountBeforeBanish ?? 0) + cardsUnderCountBeforeBanish;
+    if (cardsUnderIdsBeforeBanish.length > 0) {
+      resolvedInput.eventSnapshot.cardsUnderIdsBeforeBanish = [
+        ...(resolvedInput.eventSnapshot.cardsUnderIdsBeforeBanish ?? []),
+        ...cardsUnderIdsBeforeBanish,
+      ];
+    }
     if (typeof strengthBeforeBanish === "number" && Number.isFinite(strengthBeforeBanish)) {
       resolvedInput.eventSnapshot.strengthBeforeBanish =
         (resolvedInput.eventSnapshot.strengthBeforeBanish ?? 0) + strengthBeforeBanish;
@@ -158,6 +167,7 @@ export function resolveBanishEffect(
         triggerCandidates,
         eventSnapshot: {
           cardsUnderCountBeforeBanish,
+          cardsUnderIdsBeforeBanish,
           strengthBeforeBanish,
           classificationsBeforeBanish,
           keywordsBeforeBanish,

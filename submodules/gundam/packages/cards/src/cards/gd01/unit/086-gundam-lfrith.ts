@@ -7,14 +7,17 @@ export const gd01GundamLfrith086: UnitCard = {
   color: "white",
   traits: ["vanadis institute"],
   id: "GD01-086",
-  externalId: "gundam:gd01-086",
-  slug: "gundam-lfrith-gd01-086",
+  canonicalId: "GD01-086",
+  externalIds: { bandai: "gundam:gd01-086" },
+  slug: "gundam-lfrith/gd01-086",
   displayName: "Gundam Lfrith",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-086",
   printings: [
     {
       id: "GD01-086",
+      artId: "GD01-086",
+      setCode: "GD01",
       collectorNumber: "GD01-086",
       cardNumber: "GD01-086",
       set: {
@@ -30,6 +33,8 @@ export const gd01GundamLfrith086: UnitCard = {
     },
     {
       id: "GD01-086_p1",
+      artId: "GD01-086_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-086_p1",
       cardNumber: "GD01-086",
       set: {
@@ -45,6 +50,8 @@ export const gd01GundamLfrith086: UnitCard = {
     },
     {
       id: "GD01-086_p2",
+      artId: "GD01-086_p2",
+      setCode: "EVX05",
       collectorNumber: "GD01-086_p2",
       cardNumber: "GD01-086",
       set: {
@@ -59,6 +66,7 @@ export const gd01GundamLfrith086: UnitCard = {
       productName: "Premium Card Collection [EVX05]",
     },
   ],
+  reprints: ["GD01-086", "GD01-086_p1", "GD01-086_p2"],
   selectedPrintingId: "GD01-086",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-086.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-086.webp?260424",

@@ -20,10 +20,10 @@ export const rafikiMysticalFighterI18n: Record<Languages, I18nProperties> = {
     version: "Mystischer Kämpfer",
     text: [
       {
-        title: "Herausfordern +3",
+        title: "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
       },
       {
-        title: "URALTE KENNTNISSE",
+        title: "Uralte Kenntnisse",
         description:
           "Dieser Charakter erhält keinen Schaden durch Herausforderungen, während er eine Hyäne herausfordert.",
       },
@@ -34,10 +34,10 @@ export const rafikiMysticalFighterI18n: Record<Languages, I18nProperties> = {
     version: "Combattant mystique",
     text: [
       {
-        title: "Offensif +3",
+        title: "<Offensif> +3",
       },
       {
-        title: "TALENT ANCESTRAL",
+        title: "Talent Ancestral",
         description:
           "Lorsque ce personnage défie un personnage Hyène, il ne subit aucun dommage pour ce défi.",
       },
@@ -48,10 +48,10 @@ export const rafikiMysticalFighterI18n: Record<Languages, I18nProperties> = {
     version: "Combattente Mistico",
     text: [
       {
-        title: "Sfidante +3",
+        title: "<Sfidante> +3",
       },
       {
-        title: "ANTICHE ABILITÀ",
+        title: "Antiche Abilità",
         description:
           "Ogni volta che sfida un personaggio Iena, questo personaggio non subisce danni dalla sfida.",
       },

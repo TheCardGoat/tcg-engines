@@ -7,14 +7,17 @@ export const st04StrikerPack012: CommandCard = {
   color: "white",
   traits: ["-"],
   id: "ST04-012",
-  externalId: "gundam:st04-012",
-  slug: "striker-pack-st04-012",
+  canonicalId: "ST04-012",
+  externalIds: { bandai: "gundam:st04-012" },
+  slug: "striker-pack/st04-012",
   displayName: "Striker Pack",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-012",
   printings: [
     {
       id: "ST04-012",
+      artId: "ST04-012",
+      setCode: "ST04",
       collectorNumber: "ST04-012",
       cardNumber: "ST04-012",
       set: {
@@ -30,6 +33,8 @@ export const st04StrikerPack012: CommandCard = {
     },
     {
       id: "ST04-012_p1",
+      artId: "ST04-012_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-012_p1",
       cardNumber: "ST04-012",
       set: {
@@ -44,6 +49,7 @@ export const st04StrikerPack012: CommandCard = {
       productName: "SEED Strike [ST04] Bonus Pack",
     },
   ],
+  reprints: ["ST04-012", "ST04-012_p1"],
   selectedPrintingId: "ST04-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-012.webp?260424",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kronkLaidBackI18n } from "./063-kronk-laid-back.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const kronkLaidBack: CharacterCard = {
-  id: "5gf",
-  canonicalId: "ci_5gf",
+  id: "9A8",
+  canonicalId: "ci_cMj",
+  slug: "lorcana-ci_cMj",
+  printings: [
+    {
+      id: "set7-063",
+      artId: "set7-063",
+      setCode: "set7",
+      collectorNumber: "63",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-063"],
   cardType: "character",
   name: "Kronk",
@@ -21,7 +33,7 @@ export const kronkLaidBack: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_10a145c920e14c17b01173d348247d95",
-    tcgPlayer: 619441,
+    tcgPlayer: "619441",
   },
   text: [
     {

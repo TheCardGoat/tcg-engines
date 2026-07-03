@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { rush } from "../../../helpers/abilities/rush";
 import { hermesHarriedMessengerI18n } from "./112-hermes-harried-messenger.i18n";
+
+import { rush } from "../../../helpers/abilities/rush";
 
 export const hermesHarriedMessenger: CharacterCard = {
   id: "RlF",
   canonicalId: "ci_RlF",
+  slug: "lorcana-ci_RlF",
+  printings: [
+    {
+      id: "set10-112",
+      artId: "set10-112",
+      setCode: "set10",
+      collectorNumber: "112",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-112"],
   cardType: "character",
   name: "Hermes",
@@ -21,7 +33,7 @@ export const hermesHarriedMessenger: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_54dc293b739a4ed0afb598fa0484eaf6",
-    tcgPlayer: 658878,
+    tcgPlayer: "658878",
   },
   text: "Rush",
   classifications: ["Storyborn", "Deity"],

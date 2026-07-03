@@ -4,6 +4,17 @@ import { nessusRiverGuardianI18n } from "./118-nessus-river-guardian.i18n";
 export const nessusRiverGuardian: CharacterCard = {
   id: "u1p",
   canonicalId: "ci_u1p",
+  slug: "lorcana-ci_u1p",
+  printings: [
+    {
+      id: "set4-118",
+      artId: "set4-118",
+      setCode: "set4",
+      collectorNumber: "118",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-118"],
   cardType: "character",
   name: "Nessus",
@@ -21,7 +32,7 @@ export const nessusRiverGuardian: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8ae1e6ad39e04645b85489774efd1418",
-    tcgPlayer: 550595,
+    tcgPlayer: "550595",
   },
   classifications: ["Storyborn", "Villain"],
   i18n: nessusRiverGuardianI18n,

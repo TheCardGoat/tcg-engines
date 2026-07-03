@@ -4,6 +4,17 @@ import { fragileAsAFlowerI18n } from "./065-fragile-as-a-flower.i18n";
 export const fragileAsAFlower: ActionCard = {
   id: "Bll",
   canonicalId: "ci_Bll",
+  slug: "lorcana-ci_Bll",
+  printings: [
+    {
+      id: "set10-065",
+      artId: "set10-065",
+      setCode: "set10",
+      collectorNumber: "65",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-065"],
   cardType: "action",
   name: "Fragile as a Flower",
@@ -16,7 +27,7 @@ export const fragileAsAFlower: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_84584c67578c4843a7aa845642566259",
-    tcgPlayer: 659418,
+    tcgPlayer: "659418",
   },
   text: "Draw a card. Exert chosen character with cost 2 or less. They can't ready at the start of their next turn.",
   actionSubtype: "song",

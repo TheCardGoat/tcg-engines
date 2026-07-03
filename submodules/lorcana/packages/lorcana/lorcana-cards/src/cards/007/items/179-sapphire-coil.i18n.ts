@@ -15,9 +15,9 @@ export const sapphireCoilI18n: Record<Languages, I18nProperties> = {
     name: "Saphir-Reif",
     text: [
       {
-        title: "STRAHLENDER GLANZ",
+        title: "Strahlender Glanz",
         description:
-          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du einem Charakter deiner Wahl in diesem Zug -2 geben.",
+          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du einem Charakter deiner Wahl in diesem Zug -2 {S} geben.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const sapphireCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spirale de Saphir",
     text: [
       {
-        title: "ÉCLAT LUSTRÉ",
+        title: "Éclat lustré",
         description:
-          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, vous pouvez choisir un personnage qui subit -2 pour le reste de ce tour.",
+          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, vous pouvez choisir un personnage qui subit -2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const sapphireCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spira di Zaffiro",
     text: [
       {
-        title: "SPLENDORE LUCENTE",
+        title: "Splendore Lucente",
         description:
-          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi dare -2 a un personaggio a tua scelta per questo turno.",
+          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi dare -2 {S} a un personaggio a tua scelta per questo turno.",
       },
     ],
   },

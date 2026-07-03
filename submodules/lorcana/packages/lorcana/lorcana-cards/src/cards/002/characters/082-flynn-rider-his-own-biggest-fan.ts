@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { flynnRiderHisOwnBiggestFanI18n } from "./082-flynn-rider-his-own-biggest-fan.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const flynnRiderHisOwnBiggestFan: CharacterCard = {
   id: "Q7q",
   canonicalId: "ci_Q7q",
+  slug: "lorcana-ci_Q7q",
+  printings: [
+    {
+      id: "set2-082",
+      artId: "set2-082",
+      setCode: "set2",
+      collectorNumber: "82",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-082"],
   cardType: "character",
   name: "Flynn Rider",
@@ -22,7 +34,7 @@ export const flynnRiderHisOwnBiggestFan: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ce8e3338542f433193eaf3a3737ba1c4",
-    tcgPlayer: 527178,
+    tcgPlayer: "527178",
   },
   text: [
     {

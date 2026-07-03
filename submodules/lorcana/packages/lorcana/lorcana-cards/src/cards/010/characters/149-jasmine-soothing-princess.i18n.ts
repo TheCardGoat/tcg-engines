@@ -20,10 +20,11 @@ export const jasmineSoothingPrincessI18n: Record<Languages, I18nProperties> = {
     version: "Beruhigende Prinzessin",
     text: [
       {
-        title: "Stärken 2",
+        title:
+          "<Stärken> 2 {I} (Einmal während deines Zuges darfst du 2 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "AUFMUNTERNDE AURA",
+        title: "Aufmunternde Aura",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, falls er mindestens eine Karte unter sich hat, entferne bis zu 3 Schaden von jedem deiner Charaktere.",
       },
@@ -34,10 +35,11 @@ export const jasmineSoothingPrincessI18n: Record<Languages, I18nProperties> = {
     version: "Princesse apaisante",
     text: [
       {
-        title: "Boost 2",
+        title:
+          "<Boost> 2 {I} (Une fois durant votre tour, vous pouvez payer 2 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "AURA REVIGORANTE",
+        title: "Aura revigorante",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, s'il y a une carte sous lui, retirez jusqu'à 3 dommages de chacun de vos personnages.",
       },
@@ -48,10 +50,11 @@ export const jasmineSoothingPrincessI18n: Record<Languages, I18nProperties> = {
     version: "Principessa Confortante",
     text: [
       {
-        title: "Potenziamento 2",
+        title:
+          "<Potenziamento> 2 {I} (Una volta durante il tuo turno, puoi pagare 2 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "AURA INCORAGGIANTE",
+        title: "Aura Incoraggiante",
         description:
           "Ogni volta che questo personaggio va all'avventura, se c'è una carta sotto di esso, rimuovi fino a 3 danni da ogni tuo personaggio.",
       },

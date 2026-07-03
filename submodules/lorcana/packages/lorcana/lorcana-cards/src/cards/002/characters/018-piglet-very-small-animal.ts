@@ -4,6 +4,17 @@ import { pigletVerySmallAnimalI18n } from "./018-piglet-very-small-animal.i18n";
 export const pigletVerySmallAnimal: CharacterCard = {
   id: "sVL",
   canonicalId: "ci_sVL",
+  slug: "lorcana-ci_sVL",
+  printings: [
+    {
+      id: "set2-018",
+      artId: "set2-018",
+      setCode: "set2",
+      collectorNumber: "18",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-018"],
   cardType: "character",
   name: "Piglet",
@@ -21,7 +32,7 @@ export const pigletVerySmallAnimal: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_9eba1ff8237f48d9aa89b725e90e2fb4",
-    tcgPlayer: 527720,
+    tcgPlayer: "527720",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: pigletVerySmallAnimalI18n,

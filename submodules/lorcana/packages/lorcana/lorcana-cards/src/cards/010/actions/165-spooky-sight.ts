@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { spookySightI18n } from "./165-spooky-sight.i18n";
 
 export const spookySight: ActionCard = {
-  id: "b2t",
+  id: "Oys",
   canonicalId: "ci_5Hw",
+  slug: "lorcana-ci_5Hw",
+  printings: [
+    {
+      id: "set10-165",
+      artId: "set10-165",
+      setCode: "set10",
+      collectorNumber: "165",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-165"],
   cardType: "action",
   name: "Spooky Sight",
@@ -15,7 +26,7 @@ export const spookySight: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9a1fff8a9426484ebc7fae9cb8605572",
-    tcgPlayer: 660011,
+    tcgPlayer: "660011",
   },
   text: "Put all characters with cost 3 or less into their players' inkwells facedown and exerted.",
   abilities: [

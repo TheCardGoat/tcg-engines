@@ -16,7 +16,7 @@ export const kodaTalkativeCubI18n: Record<Languages, I18nProperties> = {
     version: "Redseliges Jungtier",
     text: [
       {
-        title: "SAG'S ALLEN",
+        title: "Sag's allen",
         description: "Du kannst im Zug einer gegnerischen Person keine Legenden verlieren.",
       },
     ],
@@ -26,7 +26,7 @@ export const kodaTalkativeCubI18n: Record<Languages, I18nProperties> = {
     version: "Ourson bavard",
     text: [
       {
-        title: "DITES À MES AMIS",
+        title: "Dites à mes amis",
         description:
           "Durant le tour de vos adversaires, vous ne pouvez pas perdre d'éclats de Lore.",
       },
@@ -37,7 +37,7 @@ export const kodaTalkativeCubI18n: Record<Languages, I18nProperties> = {
     version: "Cucciolo Chiacchierone",
     text: [
       {
-        title: "IL MIO CAMMINO MI PORTA VIA",
+        title: "Il Mio Cammino mi Porta Via",
         description: "Durante il turno degli avversari, non puoi perdere leggenda.",
       },
     ],

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { naniCaringSisterI18n } from "./019-nani-caring-sister.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const naniCaringSister: CharacterCard = {
   id: "eOi",
   canonicalId: "ci_eOi",
+  slug: "lorcana-ci_eOi",
+  printings: [
+    {
+      id: "set6-019",
+      artId: "set6-019",
+      setCode: "set6",
+      collectorNumber: "19",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-019"],
   cardType: "character",
   name: "Nani",
@@ -21,7 +33,7 @@ export const naniCaringSister: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_43a7721fdfb145f8a5216c85da2c77ec",
-    tcgPlayer: 592005,
+    tcgPlayer: "592005",
   },
   text: [
     {

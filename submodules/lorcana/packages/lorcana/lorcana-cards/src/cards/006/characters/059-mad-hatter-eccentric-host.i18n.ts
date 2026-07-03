@@ -17,7 +17,7 @@ export const madHatterEccentricHostI18n: Record<Languages, I18nProperties> = {
     version: "Exzentrischer Gastgeber",
     text: [
       {
-        title: "JETZT SEHEN WIR MAL REIN",
+        title: "Jetzt sehen wir mal rein",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du dir die oberste Karte vom Deck einer ausgewählten mitspielenden Person ansehen. Lege die gewählte Karte als oberste Karte auf das zugehörige Deck oder den Ablagestapel.",
       },
@@ -28,7 +28,7 @@ export const madHatterEccentricHostI18n: Record<Languages, I18nProperties> = {
     version: "Hôte excentrique",
     text: [
       {
-        title: "NOUS ALLONS ARRANGER ÇA",
+        title: "Nous allons arranger ça",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un joueur et regarder la carte du dessus de sa pioche. Replacez-la sur sa pioche ou placez-la dans sa défausse.",
       },
@@ -39,7 +39,7 @@ export const madHatterEccentricHostI18n: Record<Languages, I18nProperties> = {
     version: "Ospite Eccentrico",
     text: [
       {
-        title: "BISOGNA GUARDARE DENTRO",
+        title: "Bisogna Guardare Dentro",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi guardare la prima carta del mazzo di un giocatore a tua scelta. Mettila in cima al suo mazzo, o nei suoi scarti.",
       },

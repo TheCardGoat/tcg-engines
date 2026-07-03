@@ -4,6 +4,17 @@ import { kanineKrunchiesI18n } from "./043-kanine-krunchies.i18n";
 export const kanineKrunchies: ItemCard = {
   id: "3jC",
   canonicalId: "ci_3jC",
+  slug: "lorcana-ci_3jC",
+  printings: [
+    {
+      id: "set7-043",
+      artId: "set7-043",
+      setCode: "set7",
+      collectorNumber: "43",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-043"],
   cardType: "item",
   name: "Kanine Krunchies",
@@ -16,12 +27,12 @@ export const kanineKrunchies: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f5583cd014c542abbfcdf83fb1d2feb6",
-    tcgPlayer: 618246,
+    tcgPlayer: "618246",
   },
   text: [
     {
-      title: "YOU CAN BE A CHAMPION, TOO",
-      description: "Your Puppy characters get +1 {W}.",
+      title: "YOU CAN BE",
+      description: "A CHAMPION, TOO Your Puppy characters get +1 {W}.",
     },
   ],
   abilities: [

@@ -136,6 +136,8 @@ export type TargetReference =
   | "trigger-destination"
   | "selected-first"
   | "selected-all"
+  | "attacker"
+  | "defender"
   | "revealed-first"
   | "revealed-all"
   | "chosen-or-source"
@@ -660,6 +662,7 @@ export type CardFilter =
   | HasKeywordFilter
   | HasClassificationFilter
   | HasNameFilter
+  | CardTypeFilter
   // Numeric
   | CostComparisonFilter
   | StrengthComparisonFilter

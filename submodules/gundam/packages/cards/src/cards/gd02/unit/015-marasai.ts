@@ -7,14 +7,17 @@ export const gd02Marasai015: UnitCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD02-015",
-  externalId: "gundam:gd02-015",
-  slug: "marasai-gd02-015",
+  canonicalId: "GD02-015",
+  externalIds: { bandai: "gundam:gd02-015" },
+  slug: "marasai/gd02-015",
   displayName: "Marasai",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-015",
   printings: [
     {
       id: "GD02-015",
+      artId: "GD02-015",
+      setCode: "GD02",
       collectorNumber: "GD02-015",
       cardNumber: "GD02-015",
       set: {
@@ -29,6 +32,7 @@ export const gd02Marasai015: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-015"],
   selectedPrintingId: "GD02-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-015.webp?260424",

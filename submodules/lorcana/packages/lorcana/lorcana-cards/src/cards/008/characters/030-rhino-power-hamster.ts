@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rhinoPowerHamsterI18n } from "./030-rhino-power-hamster.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const rhinoPowerHamster: CharacterCard = {
   id: "I1B",
   canonicalId: "ci_I1B",
+  slug: "lorcana-ci_I1B",
+  printings: [
+    {
+      id: "set8-030",
+      artId: "set8-030",
+      setCode: "set8",
+      collectorNumber: "30",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-030"],
   cardType: "character",
   name: "Rhino",
@@ -21,7 +33,7 @@ export const rhinoPowerHamster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b7d241314eca4aa2b268c00cd4dde064",
-    tcgPlayer: 631700,
+    tcgPlayer: "631700",
   },
   text: [
     {

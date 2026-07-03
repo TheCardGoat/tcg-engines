@@ -7,14 +7,17 @@ export const gd03Rouei067: UnitCard = {
   color: "purple",
   traits: ["teiwaz", "tekkadan"],
   id: "GD03-067",
-  externalId: "gundam:gd03-067",
-  slug: "rouei-gd03-067",
+  canonicalId: "GD03-067",
+  externalIds: { bandai: "gundam:gd03-067" },
+  slug: "rouei/gd03-067",
   displayName: "Rouei",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-067",
   printings: [
     {
       id: "GD03-067",
+      artId: "GD03-067",
+      setCode: "GD03",
       collectorNumber: "GD03-067",
       cardNumber: "GD03-067",
       set: {
@@ -29,6 +32,7 @@ export const gd03Rouei067: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-067"],
   selectedPrintingId: "GD03-067",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-067.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-067.webp?260424",

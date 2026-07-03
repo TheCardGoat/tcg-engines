@@ -3,6 +3,7 @@ export { lastStand } from "./029-last-stand";
 export { paintingTheRosesRed } from "./030-painting-the-roses-red";
 export { worldsGreatestCriminalMind } from "./031-worlds-greatest-criminal-mind";
 export { zeroToHero } from "./032-zero-to-hero";
+export { fourDozenEggsP1Promo } from "./p1-033-four-dozen-eggs-promo";
 export { gruesomeAndGrim } from "./062-gruesome-and-grim";
 export { imStuck } from "./063-im-stuck";
 export { legendOfTheSwordInTheStone } from "./064-legend-of-the-sword-in-the-stone";

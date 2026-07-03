@@ -14,7 +14,7 @@
     ProfileDeckSummary,
     ProfileMatchmakingContext,
   } from '../api/player-context-api.js';
-  import type { QueueCardView } from './matchmaking-lobby.constants.js';
+  import { queueFormatLabelKey, type QueueCardView } from './matchmaking-lobby.constants.js';
   import { Badge } from '$lib/design-system/primitives/badge';
   import { getInkSymbolUrl } from '@/features/simulator/model/asset-urls.js';
   import { LORCANA_INK_NAMES } from '@/features/simulator/model/lorcana-colors.js';
@@ -142,6 +142,10 @@
 
   function stopCardSelection(event: MouseEvent): void {
     event.stopPropagation();
+  }
+
+  function formatLabel(format: QueueStatsFormat): string {
+    return m[queueFormatLabelKey(format)]({});
   }
 </script>
 
@@ -525,11 +529,7 @@
               {/if}
               <p class="mt-0.5 text-xs text-slate-300">
                 {m['sim.matchmaking.matchmaking.queueSummary']({
-                  format: m[
-                    activeQueueFormat === 'infinity'
-                      ? 'sim.matchmaking.matchmaking.formats.infinity'
-                      : 'sim.matchmaking.matchmaking.formats.ccROF'
-                  ]({}),
+                  format: formatLabel(activeQueueFormat),
                   mode:
                     activeQueueMode === '1'
                       ? m['sim.matchmaking.matchmaking.tabs.bo1']({})
@@ -630,7 +630,7 @@
               <button
                 type="button"
                 class="absolute inset-0 z-10 cursor-pointer rounded-2xl disabled:cursor-not-allowed"
-                aria-label={`Select ${m[card.definition.labelKey]({})} ${selectedMatchType} queue`}
+                aria-label={`Select ${formatLabel(card.definition.format)} ${selectedMatchType} queue`}
                 aria-pressed={card.isSelected}
                 disabled={selectionDisabled}
                 onclick={() => onSelectQueueFormat(card.definition.format)}
@@ -645,7 +645,7 @@
               <div class="pointer-events-none relative z-20 flex h-full flex-col gap-3">
                 <div class="flex items-start justify-between gap-3">
                   <p class="text-base font-semibold leading-snug text-white">
-                    {m[card.definition.labelKey]({})} · {selectedQueueMode === '1'
+                    {formatLabel(card.definition.format)} · {selectedQueueMode === '1'
                       ? m['sim.matchmaking.matchmaking.tabs.bo1']({})
                       : m['sim.matchmaking.matchmaking.tabs.bo3']({})}
                   </p>
@@ -653,6 +653,8 @@
                   <!-- Format icon — purely decorative -->
                   {#if card.definition.format === 'infinity'}
                     <InfinityIcon class="size-8 shrink-0 text-sky-300/50" aria-hidden="true" />
+                  {:else if card.definition.format === 'attack-of-the-vine'}
+                    <Swords class="size-8 shrink-0 text-emerald-300/50" aria-hidden="true" />
                   {:else}
                     <Layers class="size-8 shrink-0 text-amber-300/50" aria-hidden="true" />
                   {/if}
@@ -676,7 +678,7 @@
                       class="border border-white/15 bg-slate-950/98 px-2.5 py-1.5 text-xs text-slate-100 shadow-xl"
                     >
                       {m['sim.matchmaking.queue.deckNotLegalForFormat']({
-                        format: m[card.definition.labelKey]({}),
+                        format: formatLabel(card.definition.format),
                       })}
                     </Tooltip.Content>
                   </Tooltip.Root>
@@ -953,10 +955,7 @@
               </p>
               <p class="mt-0.5 text-xs text-amber-200/70">
                 {m['sim.matchmaking.queue.deckNotLegalBannerDescription']({
-                  format:
-                    activeQueueFormat === 'infinity'
-                      ? m['sim.matchmaking.matchmaking.formats.infinity']({})
-                      : m['sim.matchmaking.matchmaking.formats.ccROF']({}),
+                  format: formatLabel(activeQueueFormat),
                 })}
               </p>
             </div>

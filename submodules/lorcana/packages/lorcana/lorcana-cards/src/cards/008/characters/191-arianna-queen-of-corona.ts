@@ -4,6 +4,17 @@ import { ariannaQueenOfCoronaI18n } from "./191-arianna-queen-of-corona.i18n";
 export const ariannaQueenOfCorona: CharacterCard = {
   id: "vpw",
   canonicalId: "ci_vpw",
+  slug: "lorcana-ci_vpw",
+  printings: [
+    {
+      id: "set8-191",
+      artId: "set8-191",
+      setCode: "set8",
+      collectorNumber: "191",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-191"],
   cardType: "character",
   name: "Arianna",
@@ -21,7 +32,7 @@ export const ariannaQueenOfCorona: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_1168e8040a86449695383ef10c9daa2e",
-    tcgPlayer: 631475,
+    tcgPlayer: "631475",
   },
   classifications: ["Storyborn", "Queen"],
   i18n: ariannaQueenOfCoronaI18n,

@@ -4,6 +4,17 @@ import { wreckitRalphHamHandsI18n } from "./190-wreck-it-ralph-ham-hands.i18n";
 export const wreckitRalphHamHands: CharacterCard = {
   id: "39T",
   canonicalId: "ci_IDQ",
+  slug: "lorcana-ci_IDQ",
+  printings: [
+    {
+      id: "set6-190",
+      artId: "set6-190",
+      setCode: "set6",
+      collectorNumber: "190",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-190"],
   cardType: "character",
   name: "Wreck-It Ralph",
@@ -20,7 +31,7 @@ export const wreckitRalphHamHands: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_98e2f67c2ee14092be9f89b31f20db4e",
-    tcgPlayer: 590822,
+    tcgPlayer: "590822",
   },
   text: [
     {

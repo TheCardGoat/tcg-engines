@@ -4,6 +4,17 @@ import { motunuiIslandParadiseI18n } from "./170-motunui-island-paradise.i18n";
 export const motunuiIslandParadise: LocationCard = {
   id: "32z",
   canonicalId: "ci_foY",
+  slug: "lorcana-ci_foY",
+  printings: [
+    {
+      id: "set3-170",
+      artId: "set3-170",
+      setCode: "set3",
+      collectorNumber: "170",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-170", "set9-170"],
   cardType: "location",
   name: "Motunui",
@@ -20,7 +31,7 @@ export const motunuiIslandParadise: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fc47f435832f4356ab419cf268febdb2",
-    tcgPlayer: 650104,
+    tcgPlayer: "650104",
   },
   text: [
     {

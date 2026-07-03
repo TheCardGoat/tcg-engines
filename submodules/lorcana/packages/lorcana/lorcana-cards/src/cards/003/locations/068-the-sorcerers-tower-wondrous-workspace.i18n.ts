@@ -20,12 +20,12 @@ export const theSorcerersTowerWondrousWorkspaceI18n: Record<Languages, I18nPrope
     version: "Wunderbarer Arbeitsraum",
     text: [
       {
-        title: "BESENKAMMER",
+        title: "Besenkammer",
         description: "Deine Zauberbesen-Charaktere können sich kostenlos zu diesem Ort bewegen.",
       },
       {
-        title: "MAGISCHE FÄHIGKEITEN",
-        description: "Charaktere an diesem Ort erhalten +1.",
+        title: "Magische Fähigkeiten",
+        description: "Charaktere an diesem Ort erhalten +1 {L}.",
       },
     ],
   },
@@ -34,13 +34,13 @@ export const theSorcerersTowerWondrousWorkspaceI18n: Record<Languages, I18nPrope
     version: "Atelier merveilleux",
     text: [
       {
-        title: "PLACARD À BALAIS",
+        title: "Placard à balais",
         description:
           "Vous pouvez déplacer gratuitement vos personnages Balais Magiques sur ce lieu.",
       },
       {
-        title: "POUVOIR MAGIQUE",
-        description: "Les personnages sur ce lieu gagnent +1.",
+        title: "Pouvoir magique",
+        description: "Les personnages sur ce lieu gagnent +1 {L}.",
       },
     ],
   },
@@ -49,13 +49,13 @@ export const theSorcerersTowerWondrousWorkspaceI18n: Record<Languages, I18nPrope
     version: "Laboratorio Meraviglioso",
     text: [
       {
-        title: "RIPOSTIGLIO DELLE SCOPE I",
+        title: "Ripostiglio delle Scope",
         description:
-          "tuoi personaggi chiamati Scopa Magica possono spostarsi in questo luogo gratis.",
+          "I tuoi personaggi chiamati Scopa Magica possono spostarsi in questo luogo gratis.",
       },
       {
-        title: "POTERE MAGICO I",
-        description: "personaggi ricevono +1 mentre si trovano in questo luogo.",
+        title: "Potere Magico",
+        description: "I personaggi ricevono +1 {L} mentre si trovano in questo luogo.",
       },
     ],
   },

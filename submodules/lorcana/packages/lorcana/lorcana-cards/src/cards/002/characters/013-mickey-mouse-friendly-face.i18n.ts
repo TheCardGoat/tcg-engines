@@ -17,9 +17,9 @@ export const mickeyMouseFriendlyFaceI18n: Record<Languages, I18nProperties> = {
     version: "Freundliches Gesicht",
     text: [
       {
-        title: "SCHÖN, DASS DU DA BIST!",
+        title: "Schön, dass du da bist!",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 3 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 3 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const mickeyMouseFriendlyFaceI18n: Record<Languages, I18nProperties> = {
     version: "Visage amical",
     text: [
       {
-        title: "BIENVENUE DANS MA MAISON",
+        title: "Bienvenue dans ma maison",
         description:
-          "Lorsque ce personnage est envoyé à l'aventure, le prochain personnage que vous jouez durant ce tour vous coûte 3 de moins.",
+          "Lorsque ce personnage est envoyé à l'aventure, le prochain personnage que vous jouez durant ce tour vous coûte 3 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const mickeyMouseFriendlyFaceI18n: Record<Languages, I18nProperties> = {
     version: "Friendly Face",
     text: [
       {
-        title: "GLAD YOU'RE HERE!",
+        title: "Glad You're Here!",
         description:
-          "Whenever this character quests, you pay 3 less for the next character you play this turn.",
+          "Whenever this character quests, you pay 3 {I} less for the next character you play this turn.",
       },
     ],
   },

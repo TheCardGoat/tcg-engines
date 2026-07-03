@@ -4,6 +4,17 @@ import { safeAndSoundI18n } from "./030-safe-and-sound.i18n";
 export const safeAndSound: ActionCard = {
   id: "JNT",
   canonicalId: "ci_JNT",
+  slug: "lorcana-ci_JNT",
+  printings: [
+    {
+      id: "set6-030",
+      artId: "set6-030",
+      setCode: "set6",
+      collectorNumber: "30",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-030"],
   cardType: "action",
   name: "Safe and Sound",
@@ -16,7 +27,7 @@ export const safeAndSound: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cf72db3ded534d7086fb4ead70250f95",
-    tcgPlayer: 593041,
+    tcgPlayer: "593041",
   },
   text: "Chosen character of yours can't be challenged until the start of your next turn.",
   abilities: [

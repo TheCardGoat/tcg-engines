@@ -7,14 +7,17 @@ export const st04Moebius004: UnitCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "ST04-004",
-  externalId: "gundam:st04-004",
-  slug: "moebius-st04-004",
+  canonicalId: "ST04-004",
+  externalIds: { bandai: "gundam:st04-004" },
+  slug: "moebius/st04-004",
   displayName: "Moebius",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-004",
   printings: [
     {
       id: "ST04-004",
+      artId: "ST04-004",
+      setCode: "ST04",
       collectorNumber: "ST04-004",
       cardNumber: "ST04-004",
       set: {
@@ -30,6 +33,8 @@ export const st04Moebius004: UnitCard = {
     },
     {
       id: "ST04-004_p1",
+      artId: "ST04-004_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-004_p1",
       cardNumber: "ST04-004",
       set: {
@@ -44,6 +49,7 @@ export const st04Moebius004: UnitCard = {
       productName: "SEED Strike [ST04] Bonus Pack",
     },
   ],
+  reprints: ["ST04-004", "ST04-004_p1"],
   selectedPrintingId: "ST04-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-004.webp?260424",

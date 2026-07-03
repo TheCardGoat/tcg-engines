@@ -7,14 +7,17 @@ export const gd04GundamVirtue047: UnitCard = {
   color: "red",
   traits: ["cb", "gn drive"],
   id: "GD04-047",
-  externalId: "gundam:gd04-047",
-  slug: "gundam-virtue-gd04-047",
+  canonicalId: "GD04-047",
+  externalIds: { bandai: "gundam:gd04-047" },
+  slug: "gundam-virtue/gd04-047",
   displayName: "Gundam Virtue",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-047",
   printings: [
     {
       id: "GD04-047",
+      artId: "GD04-047",
+      setCode: "GD04",
       collectorNumber: "GD04-047",
       cardNumber: "GD04-047",
       set: {
@@ -29,6 +32,7 @@ export const gd04GundamVirtue047: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-047"],
   selectedPrintingId: "GD04-047",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-047.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-047.webp?260424",

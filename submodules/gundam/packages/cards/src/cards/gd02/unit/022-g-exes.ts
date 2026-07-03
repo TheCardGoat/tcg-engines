@@ -7,14 +7,17 @@ export const gd02GExes022: UnitCard = {
   color: "green",
   traits: ["earth federation"],
   id: "GD02-022",
-  externalId: "gundam:gd02-022",
-  slug: "g-exes-gd02-022",
+  canonicalId: "GD02-022",
+  externalIds: { bandai: "gundam:gd02-022" },
+  slug: "g-exes/gd02-022",
   displayName: "G-Exes",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-022",
   printings: [
     {
       id: "GD02-022",
+      artId: "GD02-022",
+      setCode: "GD02",
       collectorNumber: "GD02-022",
       cardNumber: "GD02-022",
       set: {
@@ -29,6 +32,7 @@ export const gd02GExes022: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-022"],
   selectedPrintingId: "GD02-022",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-022.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-022.webp?260424",

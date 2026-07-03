@@ -6,14 +6,17 @@ export const exbExBase001: BaseCard = {
   type: "base",
   traits: [],
   id: "EXB-001",
-  externalId: "gundam:exb-001",
-  slug: "ex-base-exb-001",
+  canonicalId: "EXB-001",
+  externalIds: { bandai: "gundam:exb-001" },
+  slug: "ex-base/exb-001",
   displayName: "EX Base",
   set: { code: "EXB", name: "Basic Cards" },
   printNumber: "EXB-001",
   printings: [
     {
       id: "EXB-001",
+      artId: "EXB-001",
+      setCode: "EXB",
       collectorNumber: "EXB-001",
       cardNumber: "EXB-001",
       set: {
@@ -28,6 +31,8 @@ export const exbExBase001: BaseCard = {
     },
     {
       id: "EXB-001_p1",
+      artId: "EXB-001_p1",
+      setCode: "EXB",
       collectorNumber: "EXB-001_p1",
       cardNumber: "EXB-001",
       set: {
@@ -42,6 +47,8 @@ export const exbExBase001: BaseCard = {
     },
     {
       id: "EXB-001_p2",
+      artId: "EXB-001_p2",
+      setCode: "EXB",
       collectorNumber: "EXB-001_p2",
       cardNumber: "EXB-001",
       set: {
@@ -56,6 +63,8 @@ export const exbExBase001: BaseCard = {
     },
     {
       id: "EXB-001_p3",
+      artId: "EXB-001_p3",
+      setCode: "EXB",
       collectorNumber: "EXB-001_p3",
       cardNumber: "EXB-001",
       set: {
@@ -70,6 +79,8 @@ export const exbExBase001: BaseCard = {
     },
     {
       id: "EXB-001_p4",
+      artId: "EXB-001_p4",
+      setCode: "EXB",
       collectorNumber: "EXB-001_p4",
       cardNumber: "EXB-001",
       set: {
@@ -84,6 +95,8 @@ export const exbExBase001: BaseCard = {
     },
     {
       id: "EXB-001_p5",
+      artId: "EXB-001_p5",
+      setCode: "BETA",
       collectorNumber: "EXB-001_p5",
       cardNumber: "EXB-001",
       set: {
@@ -99,6 +112,8 @@ export const exbExBase001: BaseCard = {
     },
     {
       id: "EXB-001_p6",
+      artId: "EXB-001_p6",
+      setCode: "EXB",
       collectorNumber: "EXB-001_p6",
       cardNumber: "EXB-001",
       set: {
@@ -112,6 +127,15 @@ export const exbExBase001: BaseCard = {
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXB-001_p6.webp?260424",
       productName: "Included in Booster Packs",
     },
+  ],
+  reprints: [
+    "EXB-001",
+    "EXB-001_p1",
+    "EXB-001_p2",
+    "EXB-001_p3",
+    "EXB-001_p4",
+    "EXB-001_p5",
+    "EXB-001_p6",
   ],
   selectedPrintingId: "EXB-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exb/EXB-001.webp",

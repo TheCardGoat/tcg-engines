@@ -17,9 +17,9 @@ export const stitchNaughtyExperimentI18n: Record<Languages, I18nProperties> = {
     version: "Freches Experiment",
     text: [
       {
-        title: "TRAU DICH!",
+        title: "Trau dich!",
         description:
-          "— Ein gegnerischer Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+          "{E} — Ein gegnerischer Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const stitchNaughtyExperimentI18n: Record<Languages, I18nProperties> = {
     version: "Expérience taquine",
     text: [
       {
-        title: "T'OSERAS JAMAIS!",
+        title: "T'oseras jamais!",
         description:
-          "— Choisissez un personnage adverse qui gagne Combattant jusqu'au début de votre prochain tour.",
+          "{E} — Choisissez un personnage adverse qui gagne <Combattant> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const stitchNaughtyExperimentI18n: Record<Languages, I18nProperties> = {
     version: "Esperimento Impertinente",
     text: [
       {
-        title: "TI SFIDO!",
+        title: "Ti Sfido!",
         description:
-          "— Un personaggio avversario a tua scelta ottiene Attaccabrighe fino all'inizio del tuo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+          "{E} — Un personaggio avversario a tua scelta ottiene <Attaccabrighe> fino all'inizio del tuo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
       },
     ],
   },

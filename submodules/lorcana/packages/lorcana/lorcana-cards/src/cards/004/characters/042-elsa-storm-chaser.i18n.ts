@@ -17,9 +17,9 @@ export const elsaStormChaserI18n: Record<Languages, I18nProperties> = {
     version: "Sturmjägerin",
     text: [
       {
-        title: "STÜRMISCHE ZEITEN",
+        title: "Stürmische Zeiten",
         description:
-          "— Ein Charakter deiner Wahl erhält in diesem Zug Herausfordern +2 und Rasant. (Während der Charakter herausfordert, erhält er +2. Er kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+          "{E} — Ein Charakter deiner Wahl erhält in diesem Zug <Herausfordern> +2 und <Rasant>. (Während der Charakter herausfordert, erhält er +2 {S}. Er kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const elsaStormChaserI18n: Record<Languages, I18nProperties> = {
     version: "Chasseuse d'orage",
     text: [
       {
-        title: "TEMPÊTE",
+        title: "Tempête",
         description:
-          "— Choisissez un personnage qui gagne Offensif +2 et Charge pour le reste de ce tour. (Lorsqu'il défie, ce personnage gagne +2. Ce personnage peut défier le tour où il est joué.)",
+          "{E} — Choisissez un personnage qui gagne <Offensif> +2 et <Charge> pour le reste de ce tour. (Lorsqu'il défie, ce personnage gagne +2 {S}. Ce personnage peut défier le tour où il est joué.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const elsaStormChaserI18n: Record<Languages, I18nProperties> = {
     version: "Cacciatrice di Tempeste",
     text: [
       {
-        title: "TEMPESTA",
+        title: "Tempesta",
         description:
-          "— Un personaggio a tua scelta ottiene Sfidante +2 e Lesto per questo turno. (Riceve +2 mentre sta sfidando. Può sfidare nel turno in cui viene giocato.)",
+          "{E} — Un personaggio a tua scelta ottiene <Sfidante> +2 e <Lesto> per questo turno. (Riceve +2 {S} mentre sta sfidando. Può sfidare nel turno in cui viene giocato.)",
       },
     ],
   },

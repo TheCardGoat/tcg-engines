@@ -17,7 +17,7 @@ export const elsasIcePalacePlaceOfSolitudeI18n: Record<Languages, I18nProperties
     version: "Place of Solitude",
     text: [
       {
-        title: "ETERNAL WINTER",
+        title: "Eternal Winter",
         description:
           "When you play this location, choose an exerted character. While this location is in play, that character can't ready at the start of their turn.",
       },
@@ -28,7 +28,7 @@ export const elsasIcePalacePlaceOfSolitudeI18n: Record<Languages, I18nProperties
     version: "Place of Solitude",
     text: [
       {
-        title: "ETERNAL WINTER",
+        title: "Eternal Winter",
         description:
           "When you play this location, choose an exerted character. While this location is in play, that character can't ready at the start of their turn.",
       },
@@ -39,7 +39,7 @@ export const elsasIcePalacePlaceOfSolitudeI18n: Record<Languages, I18nProperties
     version: "Place of Solitude",
     text: [
       {
-        title: "ETERNAL WINTER",
+        title: "Eternal Winter",
         description:
           "When you play this location, choose an exerted character. While this location is in play, that character can't ready at the start of their turn.",
       },

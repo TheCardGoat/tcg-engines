@@ -7,14 +7,17 @@ export const gd03FieldDirective103: CommandCard = {
   color: "blue",
   traits: [],
   id: "GD03-103",
-  externalId: "gundam:gd03-103",
-  slug: "field-directive-gd03-103",
+  canonicalId: "GD03-103",
+  externalIds: { bandai: "gundam:gd03-103" },
+  slug: "field-directive/gd03-103",
   displayName: "Field Directive",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-103",
   printings: [
     {
       id: "GD03-103",
+      artId: "GD03-103",
+      setCode: "GD03",
       collectorNumber: "GD03-103",
       cardNumber: "GD03-103",
       set: {
@@ -29,6 +32,7 @@ export const gd03FieldDirective103: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-103"],
   selectedPrintingId: "GD03-103",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-103.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-103.webp?260424",

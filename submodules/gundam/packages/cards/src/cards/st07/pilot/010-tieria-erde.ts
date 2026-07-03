@@ -7,14 +7,17 @@ export const st07TieriaErde010: PilotCard = {
   color: "purple",
   traits: ["cb", "innovade"],
   id: "ST07-010",
-  externalId: "gundam:st07-010",
-  slug: "tieria-erde-st07-010",
+  canonicalId: "ST07-010",
+  externalIds: { bandai: "gundam:st07-010" },
+  slug: "tieria-erde/st07-010",
   displayName: "Tieria Erde",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-010",
   printings: [
     {
       id: "ST07-010",
+      artId: "ST07-010",
+      setCode: "ST07",
       collectorNumber: "ST07-010",
       cardNumber: "ST07-010",
       set: {
@@ -30,6 +33,8 @@ export const st07TieriaErde010: PilotCard = {
     },
     {
       id: "ST07-010_p1",
+      artId: "ST07-010_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-010_p1",
       cardNumber: "ST07-010",
       set: {
@@ -45,6 +50,8 @@ export const st07TieriaErde010: PilotCard = {
     },
     {
       id: "ST07-010_p2",
+      artId: "ST07-010_p2",
+      setCode: "ST07",
       collectorNumber: "ST07-010_p2",
       cardNumber: "ST07-010",
       set: {
@@ -60,6 +67,8 @@ export const st07TieriaErde010: PilotCard = {
     },
     {
       id: "ST07-010_p3",
+      artId: "ST07-010_p3",
+      setCode: "ST07",
       collectorNumber: "ST07-010_p3",
       cardNumber: "ST07-010",
       set: {
@@ -74,6 +83,7 @@ export const st07TieriaErde010: PilotCard = {
       productName: "Store Tournament Winner Pack 03",
     },
   ],
+  reprints: ["ST07-010", "ST07-010_p1", "ST07-010_p2", "ST07-010_p3"],
   selectedPrintingId: "ST07-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-010.webp?260424",

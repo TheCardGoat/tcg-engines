@@ -11,10 +11,28 @@ export const teethAndAmbitionsI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Votre roi vous invite à la fête",
-    text: "Choisissez l'un de vos personnages et infligez-lui 2 dommages pour infliger 2 dommages à un autre personnage au choix.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez l'un de vos personnages et infligez-lui 2 dommages pour infliger 2 dommages à un autre personnage au choix.",
+      },
+    ],
   },
   it: {
     name: "Affiliamo le Zanne",
-    text: "(Un personaggio con costo 2 o superiore può per cantare questa canzone gratis.) Infliggi 2 danni a un tuo personaggio a tua scelta per infliggere 2 danni a un altro personaggio a tua scelta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Infliggi 2 danni a un tuo personaggio a tua scelta per infliggere 2 danni a un altro personaggio a tua scelta.",
+      },
+    ],
   },
 };

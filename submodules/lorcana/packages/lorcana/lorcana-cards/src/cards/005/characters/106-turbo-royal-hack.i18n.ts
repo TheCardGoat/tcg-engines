@@ -19,10 +19,10 @@ export const turboRoyalHackI18n: Record<Languages, I18nProperties> = {
     version: "Königlicher Hack",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "SPRUNG INS SPIEL",
+        title: "Sprung ins Spiel",
         description:
           "Du kannst einen King-Candy-Charakter mit der Gestaltwandel-Fähigkeit auf diesen Charakter ausspielen.",
       },
@@ -33,12 +33,12 @@ export const turboRoyalHackI18n: Record<Languages, I18nProperties> = {
     version: "Hack royal",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "SAUT DE JEU",
+        title: "Saut de jeu",
         description:
-          "Lorsque vous utilisez une capacité Alter, ce personnage peut aussi être considéré comme un personnage nommé Sa Sucrerie.",
+          "Lorsque vous utilisez une capacité <Alter>, ce personnage peut aussi être considéré comme un personnage nommé Sa Sucrerie.",
       },
     ],
   },
@@ -47,12 +47,12 @@ export const turboRoyalHackI18n: Record<Languages, I18nProperties> = {
     version: "Impostore Regale",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "SCAMBIOGIOCHISTA",
+        title: "Scambiogiochista",
         description:
-          "Questo personaggio conta come se si chiamasse anche Re Candito per Trasformazione.",
+          "Questo personaggio conta come se si chiamasse anche Re Candito per <Trasformazione>.",
       },
     ],
   },

@@ -20,10 +20,10 @@ export const princeJohnGreediestOfAllI18n: Record<Languages, I18nProperties> = {
     version: "Der Gierigste",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "ICH VERURTEILE DICH",
+        title: "Ich verurteile dich",
         description:
           "Jedes Mal, wenn gegnerische Mitspielende Handkarten abwerfen, darfst du für jede abgeworfene Karte 1 Karte ziehen.",
       },
@@ -34,10 +34,10 @@ export const princeJohnGreediestOfAllI18n: Record<Languages, I18nProperties> = {
     version: "Le plus cupide de tous",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "JE TE CONDAMNE",
+        title: "Je te condamne",
         description:
           "Chaque fois qu'un adversaire défausse au moins une carte, vous pouvez piocher autant de cartes.",
       },
@@ -48,10 +48,10 @@ export const princeJohnGreediestOfAllI18n: Record<Languages, I18nProperties> = {
     version: "Greediest of All",
     text: [
       {
-        title: "Ward",
+        title: "<Ward> (Opponents can't choose this character except to challenge.)",
       },
       {
-        title: "I SENTENCE YOU",
+        title: "I Sentence You",
         description:
           "Whenever your opponent discards 1 or more cards, you may draw a card for each card discarded.",
       },

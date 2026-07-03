@@ -4,6 +4,17 @@ import { merlinCleverClairvoyantI18n } from "./067-merlin-clever-clairvoyant.i18
 export const merlinCleverClairvoyant: CharacterCard = {
   id: "qhP",
   canonicalId: "ci_qhP",
+  slug: "lorcana-ci_qhP",
+  printings: [
+    {
+      id: "set7-067",
+      artId: "set7-067",
+      setCode: "set7",
+      collectorNumber: "67",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-067"],
   cardType: "character",
   name: "Merlin",
@@ -20,7 +31,7 @@ export const merlinCleverClairvoyant: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1acf47f176fd481791f5e79e900fefe6",
-    tcgPlayer: 618318,
+    tcgPlayer: "618318",
   },
   text: [
     {
@@ -45,11 +56,18 @@ export const merlinCleverClairvoyant: CharacterCard = {
             target: "CONTROLLER",
             routes: [
               {
-                condition: { type: "revealed-matches-named" },
-                destination: { zone: "inkwell", exerted: true },
+                condition: {
+                  type: "revealed-matches-named",
+                },
+                destination: {
+                  zone: "inkwell",
+                  exerted: true,
+                },
               },
             ],
-            fallback: { zone: "deck-top" },
+            fallback: {
+              zone: "deck-top",
+            },
           },
         ],
         type: "sequence",

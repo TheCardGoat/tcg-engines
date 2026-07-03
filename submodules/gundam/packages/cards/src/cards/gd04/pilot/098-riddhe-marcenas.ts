@@ -7,14 +7,17 @@ export const gd04RiddheMarcenas098: PilotCard = {
   color: "white",
   traits: ["earth federation", "newtype"],
   id: "GD04-098",
-  externalId: "gundam:gd04-098",
-  slug: "riddhe-marcenas-gd04-098",
+  canonicalId: "GD04-098",
+  externalIds: { bandai: "gundam:gd04-098" },
+  slug: "riddhe-marcenas/gd04-098",
   displayName: "Riddhe Marcenas",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-098",
   printings: [
     {
       id: "GD04-098",
+      artId: "GD04-098",
+      setCode: "GD04",
       collectorNumber: "GD04-098",
       cardNumber: "GD04-098",
       set: {
@@ -29,6 +32,7 @@ export const gd04RiddheMarcenas098: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-098"],
   selectedPrintingId: "GD04-098",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-098.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-098.webp?260424",

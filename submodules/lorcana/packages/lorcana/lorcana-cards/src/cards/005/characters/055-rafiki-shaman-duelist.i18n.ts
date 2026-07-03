@@ -20,12 +20,12 @@ export const rafikiShamanDuelistI18n: Record<Languages, I18nProperties> = {
     version: "Schamanischer Duellant",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "ÜBERRASCHENDE FÄHIGKEITEN",
+        title: "Überraschende Fähigkeiten",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält er in diesem Zug Herausfordern +4. (Während dieser Charakter herausfordert, erhält er +4).",
+          "Wenn du diesen Charakter ausspielst, erhält er in diesem Zug <Herausfordern> +4. (Während dieser Charakter herausfordert, erhält er +4 {S}).",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const rafikiShamanDuelistI18n: Record<Languages, I18nProperties> = {
     version: "Chamane duelliste",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "PRENDRE PAR SURPRISE",
+        title: "Prendre par surprise",
         description:
-          "Lorsque vous jouez ce personnage, il gagne Offensif +4 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, il gagne <Offensif> +4 pour le reste de ce tour.",
       },
     ],
   },
@@ -48,11 +48,12 @@ export const rafikiShamanDuelistI18n: Record<Languages, I18nProperties> = {
     version: "Sciamano Duellante",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "ABILITÀ SORPRENDENTE",
-        description: "Quando giochi questo personaggio, ottiene Sfidante +4 per questo turno.",
+        title: "Abilità Sorprendente",
+        description:
+          "Quando giochi questo personaggio, ottiene <Sfidante> +4 per questo turno. (Riceve +4 {S} mentre sta sfidando.)",
       },
     ],
   },

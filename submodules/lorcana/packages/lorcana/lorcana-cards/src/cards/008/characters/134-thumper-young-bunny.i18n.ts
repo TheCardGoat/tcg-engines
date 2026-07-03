@@ -16,8 +16,8 @@ export const thumperYoungBunnyI18n: Record<Languages, I18nProperties> = {
     version: "Junges Häschen",
     text: [
       {
-        title: "DAS SCHAFFST DU DOCH!",
-        description: "— Gib einem Charakter deiner Wahl in diesem Zug +3.",
+        title: "Das schaffst du doch!",
+        description: "{E} — Gib einem Charakter deiner Wahl in diesem Zug +3 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const thumperYoungBunnyI18n: Record<Languages, I18nProperties> = {
     version: "Lapereau",
     text: [
       {
-        title: "TU PEUX LE FAIRE!",
-        description: "— Choisissez un personnage qui gagne +3 pour le reste de ce tour.",
+        title: "Tu peux le faire!",
+        description: "{E} — Choisissez un personnage qui gagne +3 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const thumperYoungBunnyI18n: Record<Languages, I18nProperties> = {
     version: "Giovane Coniglio",
     text: [
       {
-        title: "TU HAI LE GAMBE LUNGHE!",
-        description: "— Un personaggio a tua scelta riceve +3 per questo turno.",
+        title: "Tu Hai le Gambe Lunghe!",
+        description: "{E} — Un personaggio a tua scelta riceve +3 {S} per questo turno.",
       },
     ],
   },

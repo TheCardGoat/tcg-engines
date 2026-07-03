@@ -20,14 +20,14 @@ export const recoveredPageI18n: Record<Languages, I18nProperties> = {
     name: "Wiedergefundene Seite",
     text: [
       {
-        title: "WAS NOCH KOMMEN WIRD",
+        title: "Was noch kommen wird",
         description:
           "Wenn du diesen Gegenstand ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Charakterkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
       {
-        title: "GEFLÜSTERTE MACHT",
+        title: "Geflüsterte Macht",
         description:
-          "1, Verbanne diesen Gegenstand — Lege die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit Stärken.",
+          "1 {I}, Verbanne diesen Gegenstand — Lege die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit <Stärken>.",
       },
     ],
   },
@@ -35,14 +35,14 @@ export const recoveredPageI18n: Record<Languages, I18nProperties> = {
     name: "Page retrouvée",
     text: [
       {
-        title: "CE QUI NOUS ATTEND",
+        title: "Ce qui nous attend",
         description:
           "Lorsque vous jouez cet objet, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
       {
-        title: "LUEUR DE PUISSANCE 1,",
+        title: "Lueur de puissance",
         description:
-          "bannissez cet objet — Placez la carte du dessus de votre pioche face cachée sous l'un de vos personnages ou lieux ayant Boost.",
+          "1 {I}, bannissez cet objet — Placez la carte du dessus de votre pioche face cachée sous l'un de vos personnages ou lieux ayant <Boost>.",
       },
     ],
   },
@@ -50,14 +50,14 @@ export const recoveredPageI18n: Record<Languages, I18nProperties> = {
     name: "Pagina Recuperata",
     text: [
       {
-        title: "COSA SUCCEDERÀ",
+        title: "Cosa Succederà",
         description:
           "Quando giochi questo oggetto, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },
       {
-        title: "POTERE SUSSURRATO 1,",
+        title: "Potere Sussurrato",
         description:
-          "esilia questo oggetto — Metti la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con Potenziamento.",
+          "1 {I}, esilia questo oggetto — Metti la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con <Potenziamento>.",
       },
     ],
   },

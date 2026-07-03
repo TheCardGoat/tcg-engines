@@ -7,14 +7,17 @@ export const gd02Byarlant004: UnitCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD02-004",
-  externalId: "gundam:gd02-004",
-  slug: "byarlant-gd02-004",
+  canonicalId: "GD02-004",
+  externalIds: { bandai: "gundam:gd02-004" },
+  slug: "byarlant/gd02-004",
   displayName: "Byarlant",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-004",
   printings: [
     {
       id: "GD02-004",
+      artId: "GD02-004",
+      setCode: "GD02",
       collectorNumber: "GD02-004",
       cardNumber: "GD02-004",
       set: {
@@ -29,6 +32,7 @@ export const gd02Byarlant004: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-004"],
   selectedPrintingId: "GD02-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-004.webp?260424",

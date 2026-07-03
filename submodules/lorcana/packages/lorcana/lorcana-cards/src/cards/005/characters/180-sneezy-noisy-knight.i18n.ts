@@ -17,9 +17,9 @@ export const sneezyNoisyKnightI18n: Record<Languages, I18nProperties> = {
     version: "Ritter der Geräusche",
     text: [
       {
-        title: "GEGENWIND",
+        title: "Gegenwind",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Ritter deiner Wahl in diesem Zug Herausfordern +2. (Während der Charakter herausfordert, erhält er +2.)",
+          "Wenn du diesen Charakter ausspielst, erhält ein Ritter deiner Wahl in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const sneezyNoisyKnightI18n: Record<Languages, I18nProperties> = {
     version: "Chevalier bruyant",
     text: [
       {
-        title: "VENT CONTRAIRE",
+        title: "Vent contraire",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage Chevalier qui gagne Offensif +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage Chevalier qui gagne <Offensif> +2 pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const sneezyNoisyKnightI18n: Record<Languages, I18nProperties> = {
     version: "Cavaliere Rumoroso",
     text: [
       {
-        title: "VENTO CONTRARIO",
+        title: "Vento Contrario",
         description:
-          "Quando giochi questo personaggio, un personaggio Cavaliere a tua scelta ottiene Sfidante +2 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio Cavaliere a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { madamMimRhinoI18n } from "./069-madam-mim-rhino.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const madamMimRhino: CharacterCard = {
   id: "buu",
   canonicalId: "ci_buu",
+  slug: "lorcana-ci_buu",
+  printings: [
+    {
+      id: "set8-069",
+      artId: "set8-069",
+      setCode: "set8",
+      collectorNumber: "69",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-069"],
   cardType: "character",
   name: "Madam Mim",
@@ -21,7 +33,7 @@ export const madamMimRhino: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5af1ae1121a447af9a275e5b2c6cf71f",
-    tcgPlayer: 631396,
+    tcgPlayer: "631396",
   },
   text: [
     {

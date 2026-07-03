@@ -6,8 +6,8 @@ export const merlinGoatI18n: Record<Languages, I18nProperties> = {
     version: "Goat",
     text: [
       {
-        title: "HERE I COME!",
-        description: "When you play this character and when he leaves play, gain 1 lore.",
+        title: "HERE",
+        description: "I COME! When you play this character and when he leaves play, gain 1 lore.",
       },
     ],
   },
@@ -16,7 +16,7 @@ export const merlinGoatI18n: Record<Languages, I18nProperties> = {
     version: "Ziege",
     text: [
       {
-        title: "JETZT KOMME ICH!",
+        title: "Jetzt komme ich!",
         description:
           "Wenn du diesen Charakter ausspielst und wenn er das Spiel verlässt, sammelst du 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const merlinGoatI18n: Record<Languages, I18nProperties> = {
     version: "En chèvre",
     text: [
       {
-        title: "ATTENTION, J'ARRIVE!",
+        title: "Attention, j'arrive!",
         description:
           "Lorsque vous jouez ce personnage et lorsqu'il quitte la zone de jeu, gagnez 1 éclat de Lore.",
       },
@@ -38,7 +38,7 @@ export const merlinGoatI18n: Record<Languages, I18nProperties> = {
     version: "Goat",
     text: [
       {
-        title: "HERE I COME!",
+        title: "Here I Come!",
         description: "When you play this character and when he leaves play, gain 1 lore.",
       },
     ],

@@ -19,12 +19,12 @@ export const genieOfTheLampI18n: Record<Languages, I18nProperties> = {
     version: "Aus der Wunderlampe",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "JETZT WIRD GEZAUBERT",
+        title: "Jetzt wird gezaubert",
         description:
-          "Solange dieser Charakter erschöpft ist, erhalten deine anderen Charaktere +2.",
+          "Solange dieser Charakter erschöpft ist, erhalten deine anderen Charaktere +2 {S}.",
       },
     ],
   },
@@ -33,11 +33,11 @@ export const genieOfTheLampI18n: Record<Languages, I18nProperties> = {
     version: "de la Lampe",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "ALORS FAISONS UN PEU DE MAGIE",
-        description: "Tant que ce personnage est épuisé, vos autres personnages gagnent +2.",
+        title: "Alors faisons un peu de magie",
+        description: "Tant que ce personnage est épuisé, vos autres personnages gagnent +2 {S}.",
       },
     ],
   },
@@ -46,11 +46,12 @@ export const genieOfTheLampI18n: Record<Languages, I18nProperties> = {
     version: "Della Lampada",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "SOTTO CON LA MAGIA",
-        description: "Mentre questo personaggio è impegnato, i tuoi altri personaggi ricevono +2.",
+        title: "Sotto con la Magia",
+        description:
+          "Mentre questo personaggio è impegnato, i tuoi altri personaggi ricevono +2 {S}.",
       },
     ],
   },

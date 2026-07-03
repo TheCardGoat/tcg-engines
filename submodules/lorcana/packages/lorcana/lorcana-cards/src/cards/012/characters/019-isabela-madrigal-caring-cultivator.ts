@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { isabelaMadrigalCaringCultivatorI18n } from "./019-isabela-madrigal-caring-cultivator.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const isabelaMadrigalCaringCultivator: CharacterCard = {
-  id: "MoR",
+  id: "E5L",
   canonicalId: "ci_MoR",
+  slug: "lorcana-ci_MoR",
+  printings: [
+    {
+      id: "set12-019",
+      artId: "set12-019",
+      setCode: "set12",
+      collectorNumber: "19",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-019"],
   cardType: "character",
   name: "Isabela Madrigal",
@@ -21,6 +33,7 @@ export const isabelaMadrigalCaringCultivator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_68c6733378304dca8d2adb4b1c993433",
+    tcgPlayer: "692089",
   },
   text: [
     {

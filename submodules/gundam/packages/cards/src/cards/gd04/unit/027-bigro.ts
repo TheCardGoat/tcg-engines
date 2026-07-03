@@ -7,14 +7,17 @@ export const gd04Bigro027: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD04-027",
-  externalId: "gundam:gd04-027",
-  slug: "bigro-gd04-027",
+  canonicalId: "GD04-027",
+  externalIds: { bandai: "gundam:gd04-027" },
+  slug: "bigro/gd04-027",
   displayName: "Bigro",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-027",
   printings: [
     {
       id: "GD04-027",
+      artId: "GD04-027",
+      setCode: "GD04",
       collectorNumber: "GD04-027",
       cardNumber: "GD04-027",
       set: {
@@ -29,6 +32,7 @@ export const gd04Bigro027: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-027"],
   selectedPrintingId: "GD04-027",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-027.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-027.webp?260424",

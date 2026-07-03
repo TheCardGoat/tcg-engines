@@ -21,13 +21,13 @@ export const faZhouMulansFatherI18n: Record<Languages, I18nProperties> = {
     version: "Mulans Vater",
     text: [
       {
-        title: "KRIEGSVERLETZUNGEN",
+        title: "Kriegsverletzungen",
         description: "Dieser Charakter kann nicht herausfordern.",
       },
       {
-        title: "FAMILIENOBERHAUPT",
+        title: "Familienoberhaupt",
         description:
-          "— Mache einen Mulan-Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
+          "{E} — Mache einen Mulan-Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const faZhouMulansFatherI18n: Record<Languages, I18nProperties> = {
     version: "Père de Mulan",
     text: [
       {
-        title: "BLESSURE DE GUERRE",
+        title: "Blessure de guerre",
         description: "Ce personnage ne peut pas défier.",
       },
       {
-        title: "CHEF DE FAMILLE",
+        title: "Chef de famille",
         description:
-          "— Choisissez un personnage Mulan et redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+          "{E} — Choisissez un personnage Mulan et redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const faZhouMulansFatherI18n: Record<Languages, I18nProperties> = {
     version: "Padre di Mulan",
     text: [
       {
-        title: "FERITA DI GUERRA",
+        title: "Ferita di Guerra",
         description: "Questo personaggio non può sfidare.",
       },
       {
-        title: "CAPOFAMIGLIA",
+        title: "Capofamiglia",
         description:
-          "— Prepara un personaggio a tua scelta chiamato Mulan. Non può andare all'avventura per il resto di questo turno.",
+          "{E} — Prepara un personaggio a tua scelta chiamato Mulan. Non può andare all'avventura per il resto di questo turno.",
       },
     ],
   },

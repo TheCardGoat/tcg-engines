@@ -7,14 +7,32 @@ export const akoodEtEmutiI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Akood et Emuti",
-    text: "Du zahlst 2 weniger für den nächsten Charakter, den du in diesem Zug ausspielst. Ziehe 1 Karte.",
+    text: "Du zahlst 2 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst. Ziehe 1 Karte.",
   },
   fr: {
     name: "Akood et Emuti",
-    text: "Le prochain personnage que vous jouez ce tour-ci vous coûte 2 de moins. Piochez une carte.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Le prochain personnage que vous jouez ce tour-ci vous coûte 2 {I} de moins. Piochez une carte.",
+      },
+    ],
   },
   it: {
     name: "Akood et Emuti",
-    text: "(Un personaggio con costo 3 o superiore può per cantare questa canzone gratis.) Paga 2 in meno per giocare il tuo prossimo personaggio per questo turno. Pesca una carta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Paga 2 {I} in meno per giocare il tuo prossimo personaggio per questo turno. Pesca una carta.",
+      },
+    ],
   },
 };

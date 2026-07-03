@@ -4,6 +4,17 @@ import { beastsCastleWinterGardensI18n } from "./136-beasts-castle-winter-garden
 export const beastsCastleWinterGardens: LocationCard = {
   id: "xnX",
   canonicalId: "ci_xnX",
+  slug: "lorcana-ci_xnX",
+  printings: [
+    {
+      id: "set11-136",
+      artId: "set11-136",
+      setCode: "set11",
+      collectorNumber: "136",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-136"],
   cardType: "location",
   name: "Beast's Castle",
@@ -20,7 +31,7 @@ export const beastsCastleWinterGardens: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5f6b06befa5143649062b5ac4414d7ba",
-    tcgPlayer: 675513,
+    tcgPlayer: "675513",
   },
   text: [
     {

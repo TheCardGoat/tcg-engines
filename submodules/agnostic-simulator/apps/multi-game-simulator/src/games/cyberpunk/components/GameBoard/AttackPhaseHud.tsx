@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useAttackSelection } from "./useAttackSelection";
-import { useCardPreview } from "./CardPreviewContext";
+import { useCardPreview } from "../CardPreview/CardPreviewContext";
 import { useCardView, type ZoneCardView } from "../../engine/zoneViews";
 import { PLAYER_SIDE_TO_ID, useEngine, type MoveLogEntry } from "../../engine";
 import {

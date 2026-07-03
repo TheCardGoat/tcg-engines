@@ -17,8 +17,9 @@ function coreFormat(overrides?: Partial<LorcanaFormat>): LorcanaFormat {
   return {
     id: "core-constructed",
     label: "Core Constructed",
-    allowedSets: ["SSK", "AZS", "ARC", "ROJ", "FAB", "WIW"] as LorcanaSetCode[],
+    allowedSets: ["SSK", "AZS", "ARC", "ROJ", "FAB", "WIW", "WSP", "WUN"] as LorcanaSetCode[],
     requiredRotationState: "CoreConstructed",
+    excludedSets: ["013"] as LorcanaSetCode[],
     ...overrides,
   };
 }
@@ -58,10 +59,331 @@ function buildLookup(
 // ---------------------------------------------------------------------------
 
 describe("validateDeckForFormat", () => {
+  describe("structured details", () => {
+    it("reports too few cards with counts", () => {
+      const lookup = buildLookup({ amber: card("amber") });
+      const result = validateDeckForFormat(
+        [{ cardId: "amber", quantity: 2 }],
+        lookup,
+        coreFormat({ minDeckSize: 3 }),
+      );
+      const rule = result.rules.find((r) => r.kind === "DECK_SIZE");
+
+      expect(rule?.passed).toBe(false);
+      expect(rule?.details).toEqual({ type: "DECK_SIZE", count: 2, minimum: 3 });
+    });
+
+    it("reports too many ink types with the offending inks", () => {
+      const lookup = buildLookup({
+        amber: card("amber", { inkTypes: ["amber"] }),
+        ruby: card("ruby", { inkTypes: ["ruby"] }),
+        steel: card("steel", { inkTypes: ["steel"] }),
+      });
+      const result = validateDeckForFormat(
+        deck([
+          { id: "amber", qty: 1 },
+          { id: "ruby", qty: 1 },
+          { id: "steel", qty: 1 },
+        ]),
+        lookup,
+        coreFormat({ minDeckSize: 3 }),
+      );
+      const rule = result.rules.find((r) => r.kind === "INK_TYPES");
+
+      expect(rule?.passed).toBe(false);
+      expect(rule?.details).toEqual({
+        type: "INK_TYPES",
+        inkTypes: ["amber", "ruby", "steel"],
+        maximum: 2,
+      });
+    });
+
+    it("reports too many copies with card ids and copy limits", () => {
+      const lookup = buildLookup({
+        stitch: card("stitch", { fullName: "Stitch - Alien Dancer" }),
+      });
+      const result = validateDeckForFormat(
+        [{ cardId: "stitch", quantity: 5 }],
+        lookup,
+        coreFormat({ minDeckSize: 5 }),
+      );
+      const rule = result.rules.find((r) => r.kind === "CARD_QUANTITY");
+
+      expect(rule?.passed).toBe(false);
+      expect(rule?.details).toEqual({
+        type: "CARD_QUANTITY",
+        cards: [
+          {
+            publicId: "stitch",
+            fullName: "Stitch - Alien Dancer",
+            sets: ["SSK"],
+            quantity: 5,
+            maximum: 4,
+          },
+        ],
+      });
+    });
+
+    it("reports cards outside the Attack of the Vine legality window", () => {
+      const lookup = buildLookup({
+        roj: card("roj", {
+          fullName: "Mickey Mouse - Brave Little Tailor",
+          sets: ["ROJ"] as LorcanaSetCode[],
+        }),
+        fab: card("fab", { sets: ["FAB"] as LorcanaSetCode[] }),
+      });
+      const result = validateDeckForFormat(
+        [
+          { cardId: "roj", quantity: 4 },
+          { cardId: "fab", quantity: 56 },
+        ],
+        lookup,
+        LORCANA_FORMATS["attack-of-the-vine"],
+      );
+      const rule = result.rules.find((r) => r.kind === "CARD_SET");
+
+      expect(rule?.passed).toBe(false);
+      expect(rule?.details).toEqual({
+        type: "CARD_SET",
+        formatLabel: "Attack of the Vine",
+        cards: [
+          {
+            publicId: "roj",
+            fullName: "Mickey Mouse - Brave Little Tailor",
+            sets: ["ROJ"],
+            quantity: 4,
+          },
+        ],
+      });
+    });
+
+    it("reports banned cards with card ids", () => {
+      const lookup = buildLookup({
+        hiram: card("hiram", { fullName: "Hiram Flaversham - Toymaker" }),
+        legal: card("legal"),
+      });
+      const result = validateDeckForFormat(
+        [
+          { cardId: "hiram", quantity: 4 },
+          { cardId: "legal", quantity: 56 },
+        ],
+        lookup,
+        coreFormat({ bannedCardIds: ["hiram"] }),
+      );
+      const rule = result.rules.find((r) => r.kind === "BANNED_CARD");
+
+      expect(rule?.passed).toBe(false);
+      expect(rule?.details).toEqual({
+        type: "BANNED_CARD",
+        formatLabel: "Core Constructed",
+        cards: [
+          {
+            publicId: "hiram",
+            fullName: "Hiram Flaversham - Toymaker",
+            sets: ["SSK"],
+            quantity: 4,
+          },
+        ],
+      });
+    });
+
+    it("reports required set failures", () => {
+      const lookup = buildLookup({
+        fab: card("fab", { sets: ["FAB"] as LorcanaSetCode[] }),
+      });
+      const result = validateDeckForFormat(
+        [{ cardId: "fab", quantity: 60 }],
+        lookup,
+        {
+          ...LORCANA_FORMATS["attack-of-the-vine"],
+          requiresAnySet: ["013"] as LorcanaSetCode[],
+        },
+      );
+      const rule = result.rules.find((r) => r.kind === "REQUIRES_ANY_SET");
+
+      expect(rule?.passed).toBe(false);
+      expect(rule?.details).toEqual({
+        type: "REQUIRES_ANY_SET",
+        requiredSets: ["013"],
+      });
+    });
+  });
+
+  describe("INK_TYPES rule", () => {
+    it("ignores other Hunny character ink types when Christopher Robin grants that deck construction rule", () => {
+      const lookup = buildLookup({
+        christopher: card("christopher", {
+          fullName: "Christopher Robin - Hunny Sage",
+          inkTypes: ["amethyst", "sapphire"],
+          cardType: "character",
+          classifications: ["Dreamborn", "Hero", "Hunny"],
+          deckConstructionRules: [
+            {
+              type: "ignore-ink-types",
+              filter: { cardType: "character", classification: "Hunny" },
+              excludeSourceCard: true,
+            },
+          ],
+        }),
+        rubyHunny: card("rubyHunny", {
+          inkTypes: ["ruby"],
+          cardType: "character",
+          classifications: ["Dreamborn", "Hunny"],
+        }),
+        emeraldHunny: card("emeraldHunny", {
+          inkTypes: ["emerald"],
+          cardType: "character",
+          classifications: ["Storyborn", "Hunny"],
+        }),
+      });
+      const result = validateDeckForFormat(
+        deck([
+          { id: "christopher", qty: 1 },
+          { id: "rubyHunny", qty: 1 },
+          { id: "emeraldHunny", qty: 1 },
+        ]),
+        lookup,
+        coreFormat({ minDeckSize: 3 }),
+      );
+      const inkRule = result.rules.find((r) => r.kind === "INK_TYPES");
+      expect(inkRule?.passed).toBe(true);
+      expect(inkRule?.message).toContain("Deck uses 2 ink type(s)");
+    });
+
+    it("counts Hunny character ink types normally without Christopher Robin's rule", () => {
+      const lookup = buildLookup({
+        sapphire: card("sapphire", {
+          inkTypes: ["sapphire"],
+          cardType: "character",
+        }),
+        rubyHunny: card("rubyHunny", {
+          inkTypes: ["ruby"],
+          cardType: "character",
+          classifications: ["Dreamborn", "Hunny"],
+        }),
+        emeraldHunny: card("emeraldHunny", {
+          inkTypes: ["emerald"],
+          cardType: "character",
+          classifications: ["Storyborn", "Hunny"],
+        }),
+      });
+      const result = validateDeckForFormat(
+        deck([
+          { id: "sapphire", qty: 1 },
+          { id: "rubyHunny", qty: 1 },
+          { id: "emeraldHunny", qty: 1 },
+        ]),
+        lookup,
+        coreFormat({ minDeckSize: 3 }),
+      );
+      const inkRule = result.rules.find((r) => r.kind === "INK_TYPES");
+      expect(inkRule?.passed).toBe(false);
+      expect(inkRule?.message).toContain("sapphire, ruby, emerald");
+    });
+
+    it("still counts non-Hunny character ink types with Christopher Robin in the deck", () => {
+      const lookup = buildLookup({
+        christopher: card("christopher", {
+          inkTypes: ["amethyst", "sapphire"],
+          cardType: "character",
+          classifications: ["Dreamborn", "Hero", "Hunny"],
+          deckConstructionRules: [
+            {
+              type: "ignore-ink-types",
+              filter: { cardType: "character", classification: "Hunny" },
+              excludeSourceCard: true,
+            },
+          ],
+        }),
+        rubyNonHunny: card("rubyNonHunny", {
+          inkTypes: ["ruby"],
+          cardType: "character",
+          classifications: ["Storyborn", "Ally"],
+        }),
+      });
+      const result = validateDeckForFormat(
+        deck([
+          { id: "christopher", qty: 1 },
+          { id: "rubyNonHunny", qty: 1 },
+        ]),
+        lookup,
+        coreFormat({ minDeckSize: 2 }),
+      );
+      const inkRule = result.rules.find((r) => r.kind === "INK_TYPES");
+      expect(inkRule?.passed).toBe(false);
+      expect(inkRule?.message).toContain("amethyst, sapphire, ruby");
+    });
+
+    it("still counts Hunny non-character ink types with Christopher Robin in the deck", () => {
+      const lookup = buildLookup({
+        christopher: card("christopher", {
+          inkTypes: ["amethyst", "sapphire"],
+          cardType: "character",
+          classifications: ["Dreamborn", "Hero", "Hunny"],
+          deckConstructionRules: [
+            {
+              type: "ignore-ink-types",
+              filter: { cardType: "character", classification: "Hunny" },
+              excludeSourceCard: true,
+            },
+          ],
+        }),
+        rubyHunnyItem: card("rubyHunnyItem", {
+          inkTypes: ["ruby"],
+          cardType: "item",
+          classifications: ["Hunny"],
+        }),
+      });
+      const result = validateDeckForFormat(
+        deck([
+          { id: "christopher", qty: 1 },
+          { id: "rubyHunnyItem", qty: 1 },
+        ]),
+        lookup,
+        coreFormat({ minDeckSize: 2 }),
+      );
+      const inkRule = result.rules.find((r) => r.kind === "INK_TYPES");
+      expect(inkRule?.passed).toBe(false);
+      expect(inkRule?.message).toContain("amethyst, sapphire, ruby");
+    });
+
+    it("still counts Christopher Robin's own ink types", () => {
+      const lookup = buildLookup({
+        christopher: card("christopher", {
+          inkTypes: ["amethyst", "sapphire"],
+          cardType: "character",
+          classifications: ["Dreamborn", "Hero", "Hunny"],
+          deckConstructionRules: [
+            {
+              type: "ignore-ink-types",
+              filter: { cardType: "character", classification: "Hunny" },
+              excludeSourceCard: true,
+            },
+          ],
+        }),
+        amberCard: card("amberCard", {
+          inkTypes: ["amber"],
+          cardType: "character",
+        }),
+      });
+      const result = validateDeckForFormat(
+        deck([
+          { id: "christopher", qty: 1 },
+          { id: "amberCard", qty: 1 },
+        ]),
+        lookup,
+        coreFormat({ minDeckSize: 2 }),
+      );
+      const inkRule = result.rules.find((r) => r.kind === "INK_TYPES");
+      expect(inkRule?.passed).toBe(false);
+      expect(inkRule?.message).toContain("amethyst, sapphire, amber");
+    });
+  });
+
   describe("CARD_SET rule", () => {
     it("passes when card has printing in an allowed set", () => {
       const lookup = buildLookup({
-        a: card("a", { sets: ["SSK"] as LorcanaSetCode[] }),
+        a: card("a", { sets: ["FAB"] as LorcanaSetCode[] }),
       });
       const result = validateDeckForFormat(deck([{ id: "a", qty: 60 }]), lookup, coreFormat());
       const setRule = result.rules.find((r) => r.kind === "CARD_SET");
@@ -275,36 +597,151 @@ describe("validateDeckForFormat", () => {
       expect(LORCANA_FORMATS["archazias-island"].requiredRotationState).toBeUndefined();
     });
 
-    it("infinity includes WUN in allowedSets", () => {
+    it("infinity excludes Set 13 during early access", () => {
       expect(LORCANA_FORMATS.infinity.allowedSets).toContain("WUN");
+      expect(LORCANA_FORMATS.infinity.allowedSets).not.toContain("013");
     });
 
-    it("core-constructed includes WUN in allowedSets", () => {
+    it("core-constructed keeps the pre-Set 13 rotation window during early access", () => {
+      expect(LORCANA_FORMATS["core-constructed"].allowedSets).toEqual([
+        "SSK",
+        "AZS",
+        "ARC",
+        "ROJ",
+        "FAB",
+        "WIW",
+        "WSP",
+        "WUN",
+      ]);
+      expect(LORCANA_FORMATS["core-constructed"].allowedSets).toContain("ROJ");
       expect(LORCANA_FORMATS["core-constructed"].allowedSets).toContain("WUN");
-      expect(LORCANA_FORMATS["core-constructed"].excludedSets ?? []).not.toContain("WUN");
+      expect(LORCANA_FORMATS["core-constructed"].allowedSets).not.toContain("013");
+      expect(LORCANA_FORMATS["core-constructed"].excludedSets).toEqual(["013"]);
     });
 
-    it("a WUN-only card is legal in infinity and core-constructed", () => {
+    it("Set 13 cards are legal only in the early-access queue during early access", () => {
       const lookup = buildLookup({
         wun: card("wun", {
           sets: ["WUN"] as LorcanaSetCode[],
           rotationStates: ["CoreConstructed"],
         }),
-        ssk: card("ssk", {
-          sets: ["SSK"] as LorcanaSetCode[],
+        atv: card("atv", {
+          sets: ["013"] as LorcanaSetCode[],
           rotationStates: ["CoreConstructed"],
         }),
       });
       const deckCards: DeckCard[] = [
         { cardId: "wun", quantity: 4 },
-        { cardId: "ssk", quantity: 56 },
+        { cardId: "atv", quantity: 56 },
       ];
 
       const infinity = validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS.infinity);
-      expect(infinity.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(true);
+      expect(infinity.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(false);
 
       const cc = validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS["core-constructed"]);
-      expect(cc.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(true);
+      expect(cc.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(false);
+
+      const earlyAccess = validateDeckForFormat(
+        deckCards,
+        lookup,
+        LORCANA_FORMATS["attack-of-the-vine"],
+      );
+      expect(earlyAccess.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(true);
+    });
+
+    it("core-constructed still accepts Set 5-8 cards before the Set 13 rotation", () => {
+      const lookup = buildLookup({
+        roj: card("roj", {
+          sets: ["ROJ"] as LorcanaSetCode[],
+          rotationStates: ["CoreConstructed"],
+        }),
+        fab: card("fab", {
+          sets: ["FAB"] as LorcanaSetCode[],
+          rotationStates: ["CoreConstructed"],
+        }),
+      });
+      const deckCards: DeckCard[] = [
+        { cardId: "roj", quantity: 4 },
+        { cardId: "fab", quantity: 56 },
+      ];
+
+      const result = validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS["core-constructed"]);
+      const setRule = result.rules.find((r) => r.kind === "CARD_SET");
+
+      expect(setRule?.passed).toBe(true);
+    });
+
+    it("core-constructed accepts older printings when the canonical card also has a current legal printing", () => {
+      const lookup = buildLookup({
+        reprint: card("reprint", {
+          sets: ["TFC", "ROJ"] as LorcanaSetCode[],
+          rotationStates: ["CoreConstructed"],
+        }),
+        fab: card("fab", {
+          sets: ["FAB"] as LorcanaSetCode[],
+          rotationStates: ["CoreConstructed"],
+        }),
+      });
+      const deckCards: DeckCard[] = [
+        { cardId: "reprint", quantity: 4 },
+        { cardId: "fab", quantity: 56 },
+      ];
+
+      const result = validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS["core-constructed"]);
+
+      expect(result.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(true);
+    });
+
+    it("attack-of-the-vine validates the new rotation window plus Set 13", () => {
+      const lookup = buildLookup(
+        Object.fromEntries([
+          ...Array.from({ length: 4 }, (_, index) => [
+            `fab-${index}`,
+            card(`fab-${index}`, { sets: ["FAB"] as LorcanaSetCode[] }),
+          ]),
+          ...Array.from({ length: 4 }, (_, index) => [
+            `wiw-${index}`,
+            card(`wiw-${index}`, { sets: ["WIW"] as LorcanaSetCode[] }),
+          ]),
+          ...Array.from({ length: 4 }, (_, index) => [
+            `wsp-${index}`,
+            card(`wsp-${index}`, { sets: ["WSP"] as LorcanaSetCode[] }),
+          ]),
+          ...Array.from({ length: 4 }, (_, index) => [
+            `wun-${index}`,
+            card(`wun-${index}`, { sets: ["WUN"] as LorcanaSetCode[] }),
+          ]),
+          ...Array.from({ length: 4 }, (_, index) => [
+            `atv-${index}`,
+            card(`atv-${index}`, { sets: ["013"] as LorcanaSetCode[] }),
+          ]),
+          ["roj", card("roj", { sets: ["ROJ"] as LorcanaSetCode[] })],
+        ]),
+      );
+
+      const earlyAccessDeck = validateDeckForFormat(
+        ["fab", "wiw", "wsp", "wun", "atv"].flatMap((set) =>
+          Array.from({ length: 3 }, (_, index) => ({ cardId: `${set}-${index}`, quantity: 4 })),
+        ),
+        lookup,
+        LORCANA_FORMATS["attack-of-the-vine"],
+      );
+      expect(earlyAccessDeck.valid).toBe(true);
+
+      const oldWindowDeck = validateDeckForFormat(
+        [
+          ...["fab", "wiw", "wsp", "wun"].flatMap((set) =>
+            Array.from({ length: 3 }, (_, index) => ({ cardId: `${set}-${index}`, quantity: 4 })),
+          ),
+          { cardId: "roj", quantity: 4 },
+          { cardId: "fab-3", quantity: 4 },
+          { cardId: "wiw-3", quantity: 4 },
+        ],
+        lookup,
+        LORCANA_FORMATS["attack-of-the-vine"],
+      );
+      expect(oldWindowDeck.valid).toBe(false);
+      expect(oldWindowDeck.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(false);
     });
   });
 });

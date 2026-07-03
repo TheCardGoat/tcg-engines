@@ -16,9 +16,9 @@ export const megaraPullingTheStringsI18n: Record<Languages, I18nProperties> = {
     version: "Hält die Fäden in der Hand",
     text: [
       {
-        title: "WUNDERKNABE",
+        title: "Wunderknabe",
         description:
-          "Wenn du diesen Charakter ausspielst, gib einem Charakter deiner Wahl in diesem Zug +2.",
+          "Wenn du diesen Charakter ausspielst, gib einem Charakter deiner Wahl in diesem Zug +2 {S}.",
       },
     ],
   },
@@ -29,7 +29,7 @@ export const megaraPullingTheStringsI18n: Record<Languages, I18nProperties> = {
       {
         title: "SUPER-MÂLE",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,8 +38,8 @@ export const megaraPullingTheStringsI18n: Record<Languages, I18nProperties> = {
     version: "Pulling the Strings",
     text: [
       {
-        title: "WONDER BOY",
-        description: "When you play this character, chosen character gets +2 this turn.",
+        title: "Wonder Boy",
+        description: "When you play this character, chosen character gets +2 {S} this turn.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { snowWhiteFairheartedI18n } from "./183-snow-white-fair-hearted.i18n";
 export const snowWhiteFairhearted: CharacterCard = {
   id: "45E",
   canonicalId: "ci_Z93",
+  slug: "lorcana-ci_Z93",
+  printings: [
+    {
+      id: "set5-183",
+      artId: "set5-183",
+      setCode: "set5",
+      collectorNumber: "183",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-183"],
   cardType: "character",
   name: "Snow White",
@@ -20,7 +31,7 @@ export const snowWhiteFairhearted: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_222e3894d8c04d2899b047a97912b5c6",
-    tcgPlayer: 562007,
+    tcgPlayer: "562007",
   },
   text: [
     {

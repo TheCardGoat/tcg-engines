@@ -4,6 +4,17 @@ import { yokaiProfessorCallaghanI18n } from "./158-yokai-professor-callaghan.i18
 export const yokaiProfessorCallaghan: CharacterCard = {
   id: "sac",
   canonicalId: "ci_sac",
+  slug: "lorcana-ci_sac",
+  printings: [
+    {
+      id: "set6-158",
+      artId: "set6-158",
+      setCode: "set6",
+      collectorNumber: "158",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-158"],
   cardType: "character",
   name: "Yokai",
@@ -21,7 +32,7 @@ export const yokaiProfessorCallaghan: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_fbf237baa9744eb19ca3d4e6c280d587",
-    tcgPlayer: 587973,
+    tcgPlayer: "587973",
   },
   classifications: ["Storyborn", "Villain", "Inventor"],
   i18n: yokaiProfessorCallaghanI18n,

@@ -4,6 +4,17 @@ import { safetyRopeI18n } from "./033-safety-rope.i18n";
 export const safetyRope: ItemCard = {
   id: "m5E",
   canonicalId: "ci_m5E",
+  slug: "lorcana-ci_m5E",
+  printings: [
+    {
+      id: "set12-033",
+      artId: "set12-033",
+      setCode: "set12",
+      collectorNumber: "33",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-033"],
   cardType: "item",
   name: "Safety Rope",
@@ -16,6 +27,7 @@ export const safetyRope: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4405683c633a4d20843d6dc55a9a04d9",
+    tcgPlayer: "690709",
   },
   text: [
     {

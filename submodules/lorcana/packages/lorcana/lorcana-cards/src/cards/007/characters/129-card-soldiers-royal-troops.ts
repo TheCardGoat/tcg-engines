@@ -4,6 +4,17 @@ import { cardSoldiersRoyalTroopsI18n } from "./129-card-soldiers-royal-troops.i1
 export const cardSoldiersRoyalTroops: CharacterCard = {
   id: "HaH",
   canonicalId: "ci_HaH",
+  slug: "lorcana-ci_HaH",
+  printings: [
+    {
+      id: "set7-129",
+      artId: "set7-129",
+      setCode: "set7",
+      collectorNumber: "129",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-129"],
   cardType: "character",
   name: "Card Soldiers",
@@ -20,7 +31,7 @@ export const cardSoldiersRoyalTroops: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ae70cf678a1f47fe9082e2b769fe2a3c",
-    tcgPlayer: 618707,
+    tcgPlayer: "618707",
   },
   text: [
     {

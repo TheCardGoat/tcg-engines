@@ -4,6 +4,17 @@ import { nalaFierceFriendI18n } from "./186-nala-fierce-friend.i18n";
 export const nalaFierceFriend: CharacterCard = {
   id: "LbB",
   canonicalId: "ci_LbB",
+  slug: "lorcana-ci_LbB",
+  printings: [
+    {
+      id: "set3-186",
+      artId: "set3-186",
+      setCode: "set3",
+      collectorNumber: "186",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-186"],
   cardType: "character",
   name: "Nala",
@@ -21,7 +32,7 @@ export const nalaFierceFriend: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_03d8f4376dce4de989d8ba11a0d65ceb",
-    tcgPlayer: 538013,
+    tcgPlayer: "538013",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: nalaFierceFriendI18n,

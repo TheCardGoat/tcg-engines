@@ -7,14 +7,17 @@ export const st03Sinanju001: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "ST03-001",
-  externalId: "gundam:st03-001",
-  slug: "sinanju-st03-001",
+  canonicalId: "ST03-001",
+  externalIds: { bandai: "gundam:st03-001" },
+  slug: "sinanju/st03-001",
   displayName: "Sinanju",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-001",
   printings: [
     {
       id: "ST03-001",
+      artId: "ST03-001",
+      setCode: "ST03",
       collectorNumber: "ST03-001",
       cardNumber: "ST03-001",
       set: {
@@ -30,6 +33,8 @@ export const st03Sinanju001: UnitCard = {
     },
     {
       id: "ST03-001_p1",
+      artId: "ST03-001_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-001_p1",
       cardNumber: "ST03-001",
       set: {
@@ -44,6 +49,7 @@ export const st03Sinanju001: UnitCard = {
       productName: "Zeon's Rush [ST03] Bonus Pack",
     },
   ],
+  reprints: ["ST03-001", "ST03-001_p1"],
   selectedPrintingId: "ST03-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-001.webp?260424",

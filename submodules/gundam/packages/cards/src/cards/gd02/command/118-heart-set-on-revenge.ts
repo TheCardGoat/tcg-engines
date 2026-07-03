@@ -7,14 +7,17 @@ export const gd02HeartSetOnRevenge118: CommandCard = {
   color: "white",
   traits: ["gjallarhorn"],
   id: "GD02-118",
-  externalId: "gundam:gd02-118",
-  slug: "heart-set-on-revenge-gd02-118",
+  canonicalId: "GD02-118",
+  externalIds: { bandai: "gundam:gd02-118" },
+  slug: "heart-set-on-revenge/gd02-118",
   displayName: "Heart Set on Revenge",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-118",
   printings: [
     {
       id: "GD02-118",
+      artId: "GD02-118",
+      setCode: "GD02",
       collectorNumber: "GD02-118",
       cardNumber: "GD02-118",
       set: {
@@ -29,6 +32,7 @@ export const gd02HeartSetOnRevenge118: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-118"],
   selectedPrintingId: "GD02-118",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-118.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-118.webp?260424",

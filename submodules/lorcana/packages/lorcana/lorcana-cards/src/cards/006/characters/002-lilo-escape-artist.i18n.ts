@@ -17,7 +17,7 @@ export const liloEscapeArtistI18n: Record<Languages, I18nProperties> = {
     version: "Entfesslungskünstlerin",
     text: [
       {
-        title: "KEIN ORT, AN DEM ICH LIEBER BIN",
+        title: "Kein Ort, an dem ich lieber bin",
         description:
           "Zu Beginn deines Zuges, wenn diese Karte in deinem Ablagestapel ist, darfst du sie erschöpft ausspielen.",
       },
@@ -28,7 +28,7 @@ export const liloEscapeArtistI18n: Record<Languages, I18nProperties> = {
     version: "Reine de l’évasion",
     text: [
       {
-        title: "PAS D'AUTRE ENDROIT OÙ JE PRÉFÉRERAIS ÊTRE",
+        title: "Pas d'autre endroit où je préférerais être",
         description:
           "Au début de votre tour, si cette carte est dans votre défausse, vous pouvez la jouer et elle entre en jeu épuisée.",
       },
@@ -39,7 +39,7 @@ export const liloEscapeArtistI18n: Record<Languages, I18nProperties> = {
     version: "Artista della Fuga",
     text: [
       {
-        title: "NON C'È POSTO MIGLIORE",
+        title: "Non c'è posto migliore",
         description:
           "All'inizio del tuo turno, se questa carta si trova nei tuoi scarti, puoi giocarla ed entra in gioco impegnata.",
       },

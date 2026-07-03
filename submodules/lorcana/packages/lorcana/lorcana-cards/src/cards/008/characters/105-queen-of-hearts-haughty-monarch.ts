@@ -4,6 +4,17 @@ import { queenOfHeartsHaughtyMonarchI18n } from "./105-queen-of-hearts-haughty-m
 export const queenOfHeartsHaughtyMonarch: CharacterCard = {
   id: "OAZ",
   canonicalId: "ci_OAZ",
+  slug: "lorcana-ci_OAZ",
+  printings: [
+    {
+      id: "set8-105",
+      artId: "set8-105",
+      setCode: "set8",
+      collectorNumber: "105",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-105"],
   cardType: "character",
   name: "Queen of Hearts",
@@ -20,7 +31,7 @@ export const queenOfHeartsHaughtyMonarch: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f941ecb827224dc5ae1054314c084d0f",
-    tcgPlayer: 631688,
+    tcgPlayer: "631688",
   },
   text: [
     {

@@ -19,11 +19,11 @@ export const madamMimTinyAdversaryI18n: Record<Languages, I18nProperties> = {
     version: "Winzige Widersacherin",
     text: [
       {
-        title: "Herausfordern +1",
+        title: "<Herausfordern> +1 (Während dieser Charakter herausfordert, erhält er +1 {S}.)",
       },
       {
-        title: "SIMSALARIMBIM",
-        description: "Deine anderen Charaktere erhalten Herausfordern +1.",
+        title: "Simsalarimbim",
+        description: "Deine anderen Charaktere erhalten <Herausfordern> +1.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const madamMimTinyAdversaryI18n: Record<Languages, I18nProperties> = {
     version: "Minuscule adversaire",
     text: [
       {
-        title: "Offensif +1",
+        title: "<Offensif> +1",
       },
       {
-        title: "ZIM ZABBERIM BIM",
-        description: "Vos autres personnages gagnent Offensif +1.",
+        title: "Zim Zabberim Bim",
+        description: "Vos autres personnages gagnent <Offensif> +1.",
       },
     ],
   },
@@ -45,11 +45,11 @@ export const madamMimTinyAdversaryI18n: Record<Languages, I18nProperties> = {
     version: "Minuscola Avversaria",
     text: [
       {
-        title: "Sfidante +1",
+        title: "<Sfidante> +1",
       },
       {
-        title: "ZUM PARAPIM PIM",
-        description: "I tuoi altri personaggi ottengono Sfidante +1.",
+        title: "Zum Parapim Pim",
+        description: "I tuoi altri personaggi ottengono <Sfidante> +1.",
       },
     ],
   },

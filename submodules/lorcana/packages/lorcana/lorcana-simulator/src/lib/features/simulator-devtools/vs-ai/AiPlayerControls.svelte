@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { Bot, CircleHelp, SkipForward, ArrowLeftRight } from "@lucide/svelte";
+  import ArrowLeftRight from "@lucide/svelte/icons/arrow-left-right";
+  import Bot from "@lucide/svelte/icons/bot";
+  import CircleHelp from "@lucide/svelte/icons/circle-help";
+  import SkipForward from "@lucide/svelte/icons/skip-forward";
   import { AUTOMATED_ACTION_STRATEGIES } from "@tcg/lorcana-engine";
   import type { AiControllableOrchestrator } from "./context.js";
   import type { AiSpeed } from "./types.js";

@@ -4,6 +4,17 @@ import { agnarrKingOfArendelleI18n } from "./114-agnarr-king-of-arendelle.i18n";
 export const agnarrKingOfArendelle: CharacterCard = {
   id: "8bt",
   canonicalId: "ci_8bt",
+  slug: "lorcana-ci_8bt",
+  printings: [
+    {
+      id: "set11-114",
+      artId: "set11-114",
+      setCode: "set11",
+      collectorNumber: "114",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-114"],
   cardType: "character",
   name: "Agnarr",
@@ -20,7 +31,7 @@ export const agnarrKingOfArendelle: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9315eb79ba14485fa0ecc0b6dcabd054",
-    tcgPlayer: 675500,
+    tcgPlayer: "675500",
   },
   text: [
     {

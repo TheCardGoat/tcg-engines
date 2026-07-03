@@ -4,6 +4,17 @@ import { sisuUnitingDragonI18n } from "./054-sisu-uniting-dragon.i18n";
 export const sisuUnitingDragon: CharacterCard = {
   id: "gRx",
   canonicalId: "ci_gRx",
+  slug: "lorcana-ci_gRx",
+  printings: [
+    {
+      id: "set6-054",
+      artId: "set6-054",
+      setCode: "set6",
+      collectorNumber: "54",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-054"],
   cardType: "character",
   name: "Sisu",
@@ -20,7 +31,7 @@ export const sisuUnitingDragon: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d84325bc9e814a69b6789f424c3a1eb8",
-    tcgPlayer: 591978,
+    tcgPlayer: "591978",
   },
   text: [
     {
@@ -42,8 +53,14 @@ export const sisuUnitingDragon: CharacterCard = {
             min: 0,
             max: 1,
             filters: [
-              { type: "card-type", cardType: "character" },
-              { type: "has-classification", classification: "Dragon" },
+              {
+                type: "card-type",
+                cardType: "character",
+              },
+              {
+                type: "has-classification",
+                classification: "Dragon",
+              },
             ],
           },
           {

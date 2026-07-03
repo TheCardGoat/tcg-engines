@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { elisaMazaTransformedGargoyleI18n } from "./112-elisa-maza-transformed-gargoyle.i18n";
+
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const elisaMazaTransformedGargoyle: CharacterCard = {
   id: "HGB",
-  canonicalId: "ci_HGB",
+  canonicalId: "ci_KtZ",
+  slug: "lorcana-ci_KtZ",
+  printings: [
+    {
+      id: "set11-112",
+      artId: "set11-112",
+      setCode: "set11",
+      collectorNumber: "112",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-112"],
   cardType: "character",
   name: "Elisa Maza",
@@ -21,7 +33,7 @@ export const elisaMazaTransformedGargoyle: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8d6d9d233b644d8d88baf2a34751328b",
-    tcgPlayer: 673350,
+    tcgPlayer: "673350",
   },
   text: [
     {

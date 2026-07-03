@@ -6,8 +6,8 @@ export const mickeyMouseStalwartExplorerI18n: Record<Languages, I18nProperties> 
     version: "Stalwart Explorer",
     text: [
       {
-        title: "LET'S TAKE A LOOK",
-        description: "This character gets +1 {S} for each location you have in play.",
+        title: "LET'S TAKE",
+        description: "A LOOK This character gets +1 {S} for each location you have in play.",
       },
     ],
   },
@@ -16,8 +16,8 @@ export const mickeyMouseStalwartExplorerI18n: Record<Languages, I18nProperties> 
     version: "Unerschütterlicher Entdecker",
     text: [
       {
-        title: "SCHAUEN WIR UNS DAS MAL AN",
-        description: "Dieser Charakter erhält +1 für jeden Ort, den du im Spiel hast.",
+        title: "Schauen wir uns das mal an",
+        description: "Dieser Charakter erhält +1 {S} für jeden Ort, den du im Spiel hast.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const mickeyMouseStalwartExplorerI18n: Record<Languages, I18nProperties> 
     version: "Vaillant explorateur",
     text: [
       {
-        title: "ALLONS JETER UN ŒIL",
-        description: "Ce personnage gagne +1 pour chaque lieu que vous avez en jeu.",
+        title: "Allons jeter un œil",
+        description: "Ce personnage gagne +1 {S} pour chaque lieu que vous avez en jeu.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const mickeyMouseStalwartExplorerI18n: Record<Languages, I18nProperties> 
     version: "Prode Esploratore",
     text: [
       {
-        title: "DIAMO UN'OCCHIATA",
-        description: "Questo personaggio riceve +1 per ogni luogo che hai in gioco.",
+        title: "Diamo un'Occhiata",
+        description: "Questo personaggio riceve +1 {S} per ogni luogo che hai in gioco.",
       },
     ],
   },

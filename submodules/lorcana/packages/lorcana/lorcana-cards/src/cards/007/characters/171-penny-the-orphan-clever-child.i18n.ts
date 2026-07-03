@@ -16,9 +16,9 @@ export const pennyTheOrphanCleverChildI18n: Record<Languages, I18nProperties> = 
     version: "Kluges Kind",
     text: [
       {
-        title: "DIE FLASCHE WAR KLASSE!",
+        title: "Die Flasche war klasse!",
         description:
-          "Solange du mindestens einen Helden im Spiel hast, erhält dieser Charakter Behütet.",
+          "Solange du mindestens einen Helden im Spiel hast, erhält dieser Charakter <Behütet>.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const pennyTheOrphanCleverChildI18n: Record<Languages, I18nProperties> = 
     version: "Enfant intelligente",
     text: [
       {
-        title: "NOTRE BOUTEILLE A RÉUSSI!",
+        title: "Notre bouteille a réussi!",
         description:
-          "Tant que vous avez un personnage Héros en jeu, ce personnage-ci gagne Hors d'atteinte.",
+          "Tant que vous avez un personnage Héros en jeu, ce personnage-ci gagne <Hors d'atteinte>.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const pennyTheOrphanCleverChildI18n: Record<Languages, I18nProperties> = 
     version: "Bambina Intelligente",
     text: [
       {
-        title: "LA BOTTIGLIA HA FUNZIONATO!",
+        title: "La Bottiglia Ha Funzionato!",
         description:
-          "Mentre hai in gioco un personaggio Eroe, questo personaggio ottiene Protetto. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+          "Mentre hai in gioco un personaggio Eroe, questo personaggio ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
       },
     ],
   },

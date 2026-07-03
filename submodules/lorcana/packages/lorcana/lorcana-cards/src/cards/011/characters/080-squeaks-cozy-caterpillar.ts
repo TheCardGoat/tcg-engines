@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { squeaksCozyCaterpillarI18n } from "./080-squeaks-cozy-caterpillar.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const squeaksCozyCaterpillar: CharacterCard = {
   id: "5ok",
   canonicalId: "ci_5ok",
+  slug: "lorcana-ci_5ok",
+  printings: [
+    {
+      id: "set11-080",
+      artId: "set11-080",
+      setCode: "set11",
+      collectorNumber: "80",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-080"],
   cardType: "character",
   name: "Squeaks",
@@ -21,7 +33,7 @@ export const squeaksCozyCaterpillar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c583ec314a73469d890da787bcb08426",
-    tcgPlayer: 676200,
+    tcgPlayer: "676200",
   },
   text: "Evasive",
   classifications: ["Storyborn"],

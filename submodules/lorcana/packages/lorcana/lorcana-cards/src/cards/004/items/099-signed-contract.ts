@@ -4,6 +4,17 @@ import { signedContractI18n } from "./099-signed-contract.i18n";
 export const signedContract: ItemCard = {
   id: "hYT",
   canonicalId: "ci_yKQ",
+  slug: "lorcana-ci_yKQ",
+  printings: [
+    {
+      id: "set4-099",
+      artId: "set4-099",
+      setCode: "set4",
+      collectorNumber: "99",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-099", "set9-101"],
   cardType: "item",
   name: "Signed Contract",
@@ -16,7 +27,7 @@ export const signedContract: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ebe4a26a2312422db81dc2b43198f159",
-    tcgPlayer: 650039,
+    tcgPlayer: "650039",
   },
   text: [
     {

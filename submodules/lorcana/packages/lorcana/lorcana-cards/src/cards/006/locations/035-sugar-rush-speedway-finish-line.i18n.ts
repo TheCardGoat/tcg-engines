@@ -17,7 +17,7 @@ export const sugarRushSpeedwayFinishLineI18n: Record<Languages, I18nProperties> 
     version: "Ziellinie",
     text: [
       {
-        title: "FAHR'S NACH HAUSE, KLEINE!",
+        title: "Fahr's nach Hause, Kleine!",
         description:
           "Wenn einer deiner Charaktere von einem Ort an diesen Ort bewegt wird, kannst du diesen Ort verbannen, um 3 Legenden zu sammeln und 3 Karten zu ziehen.",
       },
@@ -28,7 +28,7 @@ export const sugarRushSpeedwayFinishLineI18n: Record<Languages, I18nProperties> 
     version: "Ligne d’arrivée",
     text: [
       {
-        title: "ELLE EST POUR TOI, PETITE!",
+        title: "Elle est pour toi, petite!",
         description:
           "Lorsque vous déplacez un personnage d'un lieu sur celui-ci, vous pouvez bannir ce lieu-ci pour gagner 3 éclats de Lore et piocher 3 cartes.",
       },
@@ -39,7 +39,7 @@ export const sugarRushSpeedwayFinishLineI18n: Record<Languages, I18nProperties> 
     version: "Traguardo",
     text: [
       {
-        title: "LI HAI FATTI FUORI TUTTI!",
+        title: "Li Hai Fatti Fuori Tutti!",
         description:
           "Quando sposti un personaggio in questo luogo da un altro luogo, puoi esiliare questo luogo per ottenere 3 leggenda e pescare 3 carte.",
       },

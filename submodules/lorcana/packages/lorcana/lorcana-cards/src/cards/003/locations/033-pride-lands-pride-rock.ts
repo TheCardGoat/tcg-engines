@@ -4,6 +4,17 @@ import { prideLandsPrideRockI18n } from "./033-pride-lands-pride-rock.i18n";
 export const prideLandsPrideRock: LocationCard = {
   id: "se2",
   canonicalId: "ci_udL",
+  slug: "lorcana-ci_udL",
+  printings: [
+    {
+      id: "set3-033",
+      artId: "set3-033",
+      setCode: "set3",
+      collectorNumber: "33",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-033"],
   cardType: "location",
   name: "Pride Lands",
@@ -20,7 +31,7 @@ export const prideLandsPrideRock: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_bbb647e1cbe3487baa2ad65b27a999ba",
-    tcgPlayer: 539157,
+    tcgPlayer: "539157",
   },
   text: [
     {

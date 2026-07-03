@@ -4,6 +4,17 @@ import { johnSilverFerociousFriendI18n } from "./109-john-silver-ferocious-frien
 export const johnSilverFerociousFriend: CharacterCard = {
   id: "J7B",
   canonicalId: "ci_J7B",
+  slug: "lorcana-ci_J7B",
+  printings: [
+    {
+      id: "set6-109",
+      artId: "set6-109",
+      setCode: "set6",
+      collectorNumber: "109",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-109"],
   cardType: "character",
   name: "John Silver",
@@ -20,7 +31,7 @@ export const johnSilverFerociousFriend: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6c12ae52fc6c4244b1f638ff2102bf59",
-    tcgPlayer: 591121,
+    tcgPlayer: "591121",
   },
   text: [
     {
@@ -56,12 +67,16 @@ export const johnSilverFerociousFriend: CharacterCard = {
                 steps: [
                   {
                     type: "ready",
-                    target: { ref: "previous-target" },
+                    target: {
+                      ref: "previous-target",
+                    },
                   },
                   {
                     duration: "this-turn",
                     restriction: "cant-quest",
-                    target: { ref: "previous-target" },
+                    target: {
+                      ref: "previous-target",
+                    },
                     type: "restriction",
                   },
                 ],

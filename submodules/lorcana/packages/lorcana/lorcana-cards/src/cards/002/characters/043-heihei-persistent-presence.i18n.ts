@@ -17,7 +17,7 @@ export const heiheiPersistentPresenceI18n: Record<Languages, I18nProperties> = {
     version: "Wiederkehrende Erscheinung",
     text: [
       {
-        title: "ER IST ZURÜCK!",
+        title: "Er ist zurück!",
         description:
           "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand.",
       },
@@ -28,7 +28,7 @@ export const heiheiPersistentPresenceI18n: Record<Languages, I18nProperties> = {
     version: "Volatile tenace",
     text: [
       {
-        title: "IL EST DE RETOUR",
+        title: "Il est de retour",
         description: "Lorsque ce personnage est banni via un défi, renvoyez-le dans votre main.",
       },
     ],
@@ -38,7 +38,7 @@ export const heiheiPersistentPresenceI18n: Record<Languages, I18nProperties> = {
     version: "Presenza Persistente",
     text: [
       {
-        title: "È TORNATO!",
+        title: "È tornato!",
         description:
           "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta.",
       },

@@ -7,14 +7,17 @@ export const gd04GundamThroneDrei041: UnitCard = {
   color: "red",
   traits: ["cb", "trinity"],
   id: "GD04-041",
-  externalId: "gundam:gd04-041",
-  slug: "gundam-throne-drei-gd04-041",
+  canonicalId: "GD04-041",
+  externalIds: { bandai: "gundam:gd04-041" },
+  slug: "gundam-throne-drei/gd04-041",
   displayName: "Gundam Throne Drei",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-041",
   printings: [
     {
       id: "GD04-041",
+      artId: "GD04-041",
+      setCode: "GD04",
       collectorNumber: "GD04-041",
       cardNumber: "GD04-041",
       set: {
@@ -29,6 +32,7 @@ export const gd04GundamThroneDrei041: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-041"],
   selectedPrintingId: "GD04-041",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-041.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-041.webp?260424",

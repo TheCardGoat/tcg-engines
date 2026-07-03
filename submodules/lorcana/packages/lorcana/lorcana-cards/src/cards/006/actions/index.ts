@@ -1,3 +1,4 @@
+export { rescueRangersAwayP2Challenge } from "./p2-010-rescue-rangers-away-challenge";
 export { goodJob } from "./027-good-job";
 export { iWontGiveIn } from "./028-i-wont-give-in";
 export { rescueRangersAway } from "./029-rescue-rangers-away";

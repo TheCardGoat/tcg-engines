@@ -4,6 +4,17 @@ import { minnieMouseQuickthinkingInventorI18n } from "./152-minnie-mouse-quick-t
 export const minnieMouseQuickthinkingInventor: CharacterCard = {
   id: "JJ3",
   canonicalId: "ci_JJ3",
+  slug: "lorcana-ci_JJ3",
+  printings: [
+    {
+      id: "set5-152",
+      artId: "set5-152",
+      setCode: "set5",
+      collectorNumber: "152",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-152"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -19,7 +30,7 @@ export const minnieMouseQuickthinkingInventor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a5dbf42b10974a1d96749b32de706c58",
-    tcgPlayer: 561649,
+    tcgPlayer: "561649",
   },
   text: [
     {

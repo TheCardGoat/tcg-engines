@@ -6,9 +6,9 @@ export const winnieThePoohHungryBearEpicI18n: Record<Languages, I18nProperties> 
     version: "Hungry Bear",
     text: [
       {
-        title: "LOOKING FOR A MORSEL",
+        title: "LOOKING FOR",
         description:
-          "When you play this character, you may return an item card from your discard to your hand.",
+          "A MORSEL When you play this character, you may return an item card from your discard to your hand.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const winnieThePoohHungryBearEpicI18n: Record<Languages, I18nProperties> 
     version: "Hungriger Bär",
     text: [
       {
-        title: "AUF DER SUCHE NACH EINEM HÄPPCHEN",
+        title: "Auf der Suche nach einem Häppchen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
@@ -28,7 +28,7 @@ export const winnieThePoohHungryBearEpicI18n: Record<Languages, I18nProperties> 
     version: "Ours affamé",
     text: [
       {
-        title: "CHERCHER DE QUOI GRIGNOTER",
+        title: "Chercher de quoi grignoter",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez renvoyer dans votre main une carte Objet de votre défausse.",
       },
@@ -39,7 +39,7 @@ export const winnieThePoohHungryBearEpicI18n: Record<Languages, I18nProperties> 
     version: "Orso Affamato",
     text: [
       {
-        title: "IN CERCA DI UNA GOCCIA",
+        title: "In Cerca di una Goccia",
         description:
           "Quando giochi questo personaggio, puoi riprendere in mano una carta oggetto dai tuoi scarti.",
       },

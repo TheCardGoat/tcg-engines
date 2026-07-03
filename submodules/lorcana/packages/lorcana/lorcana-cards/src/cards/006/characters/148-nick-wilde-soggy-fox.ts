@@ -4,6 +4,17 @@ import { nickWildeSoggyFoxI18n } from "./148-nick-wilde-soggy-fox.i18n";
 export const nickWildeSoggyFox: CharacterCard = {
   id: "ZEt",
   canonicalId: "ci_ZEt",
+  slug: "lorcana-ci_ZEt",
+  printings: [
+    {
+      id: "set6-148",
+      artId: "set6-148",
+      setCode: "set6",
+      collectorNumber: "148",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-148"],
   cardType: "character",
   name: "Nick Wilde",
@@ -20,13 +31,13 @@ export const nickWildeSoggyFox: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cbd38ca5b3b04da382b8aa2b3da66adb",
-    tcgPlayer: 579927,
+    tcgPlayer: "579927",
   },
   text: [
     {
-      title: "NICE TO HAVE A PARTNER",
+      title: "NICE TO HAVE",
       description:
-        "While you have another character with Support in play, this character gets +2 {S}.",
+        "A PARTNER While you have another character with Support in play, this character gets +2 {S}.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

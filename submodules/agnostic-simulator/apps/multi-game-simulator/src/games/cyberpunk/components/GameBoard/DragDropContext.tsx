@@ -26,7 +26,7 @@ import {
 } from "react";
 import { Card } from "./Card";
 import type { CardDragSource, CardDropEvent, DropTarget } from "../../engine";
-import { useCardPreview } from "./CardPreviewContext";
+import { useCardPreview } from "../CardPreview/CardPreviewContext";
 import classes from "./DragDrop.module.css";
 
 export type { CardDragSource, CardDropEvent, DropTarget };

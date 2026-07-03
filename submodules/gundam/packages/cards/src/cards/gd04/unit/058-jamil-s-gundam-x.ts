@@ -7,14 +7,17 @@ export const gd04JamilSGundamX058: UnitCard = {
   color: "purple",
   traits: ["old une"],
   id: "GD04-058",
-  externalId: "gundam:gd04-058",
-  slug: "jamil-s-gundam-x-gd04-058",
+  canonicalId: "GD04-058",
+  externalIds: { bandai: "gundam:gd04-058" },
+  slug: "jamil-s-gundam-x/gd04-058",
   displayName: "Jamil's Gundam X",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-058",
   printings: [
     {
       id: "GD04-058",
+      artId: "GD04-058",
+      setCode: "GD04",
       collectorNumber: "GD04-058",
       cardNumber: "GD04-058",
       set: {
@@ -29,6 +32,7 @@ export const gd04JamilSGundamX058: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-058"],
   selectedPrintingId: "GD04-058",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-058.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-058.webp?260424",

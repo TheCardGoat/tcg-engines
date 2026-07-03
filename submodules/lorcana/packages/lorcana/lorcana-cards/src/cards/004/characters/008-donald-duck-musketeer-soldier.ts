@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { donaldDuckMusketeerSoldierI18n } from "./008-donald-duck-musketeer-soldier.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const donaldDuckMusketeerSoldier: CharacterCard = {
   id: "1Pa",
   canonicalId: "ci_1Pa",
+  slug: "lorcana-ci_1Pa",
+  printings: [
+    {
+      id: "set4-008",
+      artId: "set4-008",
+      setCode: "set4",
+      collectorNumber: "8",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-008"],
   cardType: "character",
   name: "Donald Duck",
@@ -20,7 +32,7 @@ export const donaldDuckMusketeerSoldier: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dd1edbb4a44c4017a3aabb30184c0888",
-    tcgPlayer: 550556,
+    tcgPlayer: "550556",
   },
   text: [
     {

@@ -18,10 +18,11 @@ export const ladyKluckProtectiveConfidantI18n: Record<Languages, I18nProperties>
     version: "Beschützende Vertraute",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
     ],
   },
@@ -30,10 +31,11 @@ export const ladyKluckProtectiveConfidantI18n: Record<Languages, I18nProperties>
     version: "Confidente protectrice",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
     ],
   },
@@ -42,10 +44,10 @@ export const ladyKluckProtectiveConfidantI18n: Record<Languages, I18nProperties>
     version: "Confidente Protettiva",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
     ],
   },

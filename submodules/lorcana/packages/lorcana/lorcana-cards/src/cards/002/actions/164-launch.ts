@@ -4,6 +4,17 @@ import { launchI18n } from "./164-launch.i18n";
 export const launch: ActionCard = {
   id: "Ysg",
   canonicalId: "ci_Ysg",
+  slug: "lorcana-ci_Ysg",
+  printings: [
+    {
+      id: "set2-164",
+      artId: "set2-164",
+      setCode: "set2",
+      collectorNumber: "164",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-164"],
   cardType: "action",
   name: "Launch",
@@ -16,7 +27,7 @@ export const launch: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_93883c73ea3d4c269ed099da7f77414b",
-    tcgPlayer: 527624,
+    tcgPlayer: "527624",
   },
   text: "Banish chosen item of yours to deal 5 damage to chosen character.",
   abilities: [

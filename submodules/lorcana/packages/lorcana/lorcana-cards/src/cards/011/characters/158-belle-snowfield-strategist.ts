@@ -4,6 +4,17 @@ import { belleSnowfieldStrategistI18n } from "./158-belle-snowfield-strategist.i
 export const belleSnowfieldStrategist: CharacterCard = {
   id: "u0b",
   canonicalId: "ci_byy",
+  slug: "lorcana-ci_byy",
+  printings: [
+    {
+      id: "set11-158",
+      artId: "set11-158",
+      setCode: "set11",
+      collectorNumber: "158",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-158"],
   cardType: "character",
   name: "Belle",
@@ -20,7 +31,7 @@ export const belleSnowfieldStrategist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9652fdf2822645ee91302352c74c9d6a",
-    tcgPlayer: 677167,
+    tcgPlayer: "677167",
   },
   text: [
     {

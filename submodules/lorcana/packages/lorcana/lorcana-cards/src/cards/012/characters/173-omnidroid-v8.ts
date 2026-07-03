@@ -4,6 +4,17 @@ import { omnidroidV8I18n } from "./173-omnidroid-v8.i18n";
 export const omnidroidV8: CharacterCard = {
   id: "IRb",
   canonicalId: "ci_IRb",
+  slug: "lorcana-ci_IRb",
+  printings: [
+    {
+      id: "set12-173",
+      artId: "set12-173",
+      setCode: "set12",
+      collectorNumber: "173",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-173"],
   cardType: "character",
   name: "Omnidroid",
@@ -21,6 +32,7 @@ export const omnidroidV8: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_533ffe972f704ee58ab086b350627fe7",
+    tcgPlayer: "692192",
   },
   classifications: ["Storyborn", "Robot"],
   i18n: omnidroidV8I18n,

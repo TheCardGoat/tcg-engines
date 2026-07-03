@@ -4,6 +4,17 @@ import { jafarPowerhungryVizierI18n } from "./193-jafar-power-hungry-vizier.i18n
 export const jafarPowerhungryVizier: CharacterCard = {
   id: "QV3",
   canonicalId: "ci_QV3",
+  slug: "lorcana-ci_QV3",
+  printings: [
+    {
+      id: "set6-193",
+      artId: "set6-193",
+      setCode: "set6",
+      collectorNumber: "193",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-193"],
   cardType: "character",
   name: "Jafar",
@@ -20,7 +31,7 @@ export const jafarPowerhungryVizier: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b3029d9bf3ee4b7c8bf5cd2403f0b2f5",
-    tcgPlayer: 591118,
+    tcgPlayer: "591118",
   },
   text: [
     {

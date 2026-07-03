@@ -17,7 +17,7 @@ export const kenaiProtectiveBrotherI18n: Record<Languages, I18nProperties> = {
     version: "Beschützender Bruder",
     text: [
       {
-        title: "ER BRAUCHT MICH",
+        title: "Er braucht mich",
         description:
           "Am Ende deines Zuges, falls dieser Charakter erschöpft ist, darfst du einen deiner anderen Charaktere wählen. Mache ihn bereit und entferne jeglichen Schaden von ihm.",
       },
@@ -28,9 +28,9 @@ export const kenaiProtectiveBrotherI18n: Record<Languages, I18nProperties> = {
     version: "Frère protecteur",
     text: [
       {
-        title: "IL A BESOIN DE MOI À",
+        title: "Il a besoin de moi",
         description:
-          "la fin de votre tour, si ce personnage est épuisé, vous pouvez choisir un autre de vos personnages. Redressez-le et retirez-lui tous ses dommages.",
+          "À la fin de votre tour, si ce personnage est épuisé, vous pouvez choisir un autre de vos personnages. Redressez-le et retirez-lui tous ses dommages.",
       },
     ],
   },
@@ -39,7 +39,7 @@ export const kenaiProtectiveBrotherI18n: Record<Languages, I18nProperties> = {
     version: "Fratello Protettivo",
     text: [
       {
-        title: "HA BISOGNO DI ME",
+        title: "Ha Bisogno di Me",
         description:
           "Alla fine del tuo turno, se questo personaggio è impegnato, puoi preparare un tuo altro personaggio a tua scelta e rimuovere tutti i danni da esso.",
       },

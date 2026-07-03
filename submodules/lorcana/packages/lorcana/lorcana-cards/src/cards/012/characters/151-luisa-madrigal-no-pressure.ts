@@ -4,6 +4,17 @@ import { luisaMadrigalNoPressureI18n } from "./151-luisa-madrigal-no-pressure.i1
 export const luisaMadrigalNoPressure: CharacterCard = {
   id: "bZm",
   canonicalId: "ci_bZm",
+  slug: "lorcana-ci_bZm",
+  printings: [
+    {
+      id: "set12-151",
+      artId: "set12-151",
+      setCode: "set12",
+      collectorNumber: "151",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-151"],
   cardType: "character",
   name: "Luisa Madrigal",
@@ -20,6 +31,7 @@ export const luisaMadrigalNoPressure: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bf1a00bfa25345b8abe1f0d008935e39",
+    tcgPlayer: "692184",
   },
   text: [
     {

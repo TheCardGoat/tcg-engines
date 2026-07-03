@@ -15,9 +15,9 @@ export const scrumpI18n: Record<Languages, I18nProperties> = {
     name: "Schrulle",
     text: [
       {
-        title: "DIE HAB ICH SELBST",
+        title: "Die hab ich selbst genäht",
         description:
-          "GENÄHT einen deiner Charaktere — Gib einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2.",
+          "{E} einen deiner Charaktere — Gib einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 {S}.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const scrumpI18n: Record<Languages, I18nProperties> = {
     name: "Souillon",
     text: [
       {
-        title: "C'EST MOI QUI L'AI FAITE",
+        title: "C'est moi qui l'ai faite",
         description:
-          "l'un de vos personnages — Choisissez un personnage qui subit -2 jusqu'au début de votre prochain tour.",
+          "{E} l'un de vos personnages — Choisissez un personnage qui subit -2 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const scrumpI18n: Record<Languages, I18nProperties> = {
     name: "Scrump",
     text: [
       {
-        title: "L'HO FATTA IO",
+        title: "L'Ho Fatta Io",
         description:
-          "uno dei tuoi personaggi — Un personaggio a tua scelta riceve -2 fino all'inizio del tuo prossimo turno.",
+          "{E} uno dei tuoi personaggi — Un personaggio a tua scelta riceve -2 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

@@ -21,14 +21,14 @@ export const naniHeistMastermindI18n: Record<Languages, I18nProperties> = {
     version: "Diebisches Superhirn",
     text: [
       {
-        title: "HALTE DICH AN DEN PLAN",
+        title: "Halte dich an den Plan",
         description:
-          "— Ein anderer Charakter deiner Wahl erhält in diesem Zug Robust +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
+          "{E} — Ein anderer Charakter deiner Wahl erhält in diesem Zug <Robust> +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
       },
       {
-        title: "ES LIEGT AN DIR, LILO",
+        title: "Es liegt an dir, Lilo",
         description:
-          "Deine Lilo-Charaktere erhalten Unterstützen. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "Deine Lilo-Charaktere erhalten <Unterstützen>. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
     ],
   },
@@ -37,9 +37,14 @@ export const naniHeistMastermindI18n: Record<Languages, I18nProperties> = {
     version: "Cerveau du vol",
     text: [
       {
-        title: "S'EN TENIR AU PLAN",
+        title: "S'en tenir au plan",
         description:
-          "— Choisissez un autre personnage qui gagne Résistance +2 pour le reste de ce tour. À TOI DE JOUER, LILO Vos personnages nommés Lilo gagnent Soutien. (Lorsque ces personnages sont envoyés à l'aventure, vous pouvez ajouter leur à celle d'un autre personnage au choix pour le reste de ce tour.)",
+          "{E} — Choisissez un autre personnage qui gagne <Résistance> +2 pour le reste de ce tour.",
+      },
+      {
+        title: "À toi de jouer, Lilo",
+        description:
+          "Vos personnages nommés Lilo gagnent <Soutien>. (Lorsque ces personnages sont envoyés à l'aventure, vous pouvez ajouter leur {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
     ],
   },
@@ -48,9 +53,14 @@ export const naniHeistMastermindI18n: Record<Languages, I18nProperties> = {
     version: "Ideatrice del Colpo",
     text: [
       {
-        title: "ATTIENITI AL PIANO",
+        title: "Attieniti al Piano",
         description:
-          "— Un altro personaggio a tua scelta ottiene Resistere +2 per questo turno. TOCCA A TE, LILO I tuoi personaggi chiamati Lilo ottengono Aiutante. (Ogni volta che vanno all'avventura, puoi aggiungere la loro alla di un altro personaggio a tua scelta per questo turno.)",
+          "{E} — Un altro personaggio a tua scelta ottiene <Resistere> +2 per questo turno.",
+      },
+      {
+        title: "Tocca a Te, Lilo",
+        description:
+          "I tuoi personaggi chiamati Lilo ottengono <Aiutante>. (Ogni volta che vanno all'avventura, puoi aggiungere la loro {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
     ],
   },

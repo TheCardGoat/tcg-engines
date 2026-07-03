@@ -4,6 +4,17 @@ import { onYourFeetNowI18n } from "./130-on-your-feet-now.i18n";
 export const onYourFeetNow: ActionCard = {
   id: "luq",
   canonicalId: "ci_luq",
+  slug: "lorcana-ci_luq",
+  printings: [
+    {
+      id: "set3-130",
+      artId: "set3-130",
+      setCode: "set3",
+      collectorNumber: "130",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-130"],
   cardType: "action",
   name: "On Your Feet! Now!",
@@ -16,7 +27,7 @@ export const onYourFeetNow: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d42f3cca7b9c46a988d81347b0a4ba8b",
-    tcgPlayer: 539093,
+    tcgPlayer: "539093",
   },
   text: "Ready all your characters and deal 1 damage to each of them. They can't quest for the rest of this turn.",
   abilities: [

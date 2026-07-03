@@ -43,10 +43,14 @@ const REQUIRED_FIELDS: Record<Effect["effect"], readonly string[]> = {
   ifYouDo: ["doEffect", "ifEffects"],
   delayed: ["timing", "effects"],
   defeatAtEndOfTurnIfAttacks: ["target"],
+  preventNextRivalFightDefeat: ["duration"],
   copyGigValue: ["source", "target"],
   forEachFriendlyGigPair: ["effects"],
   callLegend: ["player", "target"],
   grantCostModifier: ["player", "appliesTo", "modifier", "duration"],
+  rerollGig: ["target"],
+  revealTopCardType: ["player", "cardTypes"],
+  revealTopCardAndModifyPowerByCost: ["player", "target", "duration"],
 };
 
 const KNOWN_EFFECTS = new Set(Object.keys(REQUIRED_FIELDS));

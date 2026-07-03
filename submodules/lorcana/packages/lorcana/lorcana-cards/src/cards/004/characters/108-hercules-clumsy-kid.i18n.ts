@@ -9,21 +9,16 @@ export const herculesClumsyKidI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Hercules",
     version: "Tollpatschiges Kind",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Hercule",
     version: "Gamin maladroit",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Ercole",
     version: "Ragazzino Impacciato",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

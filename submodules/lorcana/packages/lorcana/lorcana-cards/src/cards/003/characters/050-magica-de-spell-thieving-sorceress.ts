@@ -4,6 +4,17 @@ import { magicaDeSpellThievingSorceressI18n } from "./050-magica-de-spell-thievi
 export const magicaDeSpellThievingSorceress: CharacterCard = {
   id: "iq5",
   canonicalId: "ci_iq5",
+  slug: "lorcana-ci_iq5",
+  printings: [
+    {
+      id: "set3-050",
+      artId: "set3-050",
+      setCode: "set3",
+      collectorNumber: "50",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-050"],
   cardType: "character",
   name: "Magica De Spell",
@@ -20,7 +31,7 @@ export const magicaDeSpellThievingSorceress: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_177102be31464591b1637a5b9b2b5aca",
-    tcgPlayer: 538255,
+    tcgPlayer: "538255",
   },
   text: [
     {

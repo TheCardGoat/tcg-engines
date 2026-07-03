@@ -21,9 +21,15 @@ export const baymaxsHealthcareChipI18n: Record<Languages, I18nProperties> = {
     name: "Baymax' Gesundheitschip",
     text: [
       {
-        title: "10.000 MEDIZINISCHE VERFAHREN",
-        description:
-          "— Wähle eine Möglichkeit aus: • Entferne bis zu 1 Schaden von einem Charakter deiner Wahl. • Wenn du mindestens einen Roboter im Spiel hast, entferne bis zu 3 Schaden von einem Charakter deiner Wahl.",
+        title: "10.000 medizinische Verfahren",
+        description: "{E} — Wähle eine Möglichkeit aus:",
+      },
+      {
+        title: "• Entferne bis zu 1 Schaden von einem Charakter deiner Wahl.",
+      },
+      {
+        title:
+          "• Wenn du mindestens einen Roboter im Spiel hast, entferne bis zu 3 Schaden von einem Charakter deiner Wahl.",
       },
     ],
   },
@@ -31,12 +37,15 @@ export const baymaxsHealthcareChipI18n: Record<Languages, I18nProperties> = {
     name: "Puce de soins de Baymax",
     text: [
       {
-        title: "10 000",
+        title: "10 000 procédures médicales",
+        description: "{E} — Choisissez entre:",
       },
       {
-        title: "PROCÉDURES MÉDICALES",
-        description:
-          "— Choisissez entre: • Choisissez un personnage et retirez-lui jusqu'à 1 dommage. • Si vous avez un personnage Robot en jeu, choisissez un personnage et retirez-lui jusqu'à 3 dommages.",
+        title: "• Choisissez un personnage et retirez-lui jusqu'à 1 dommage.",
+      },
+      {
+        title:
+          "• Si vous avez un personnage Robot en jeu, choisissez un personnage et retirez-lui jusqu'à 3 dommages.",
       },
     ],
   },
@@ -44,9 +53,15 @@ export const baymaxsHealthcareChipI18n: Record<Languages, I18nProperties> = {
     name: "Microchip Sanitario di Baymax",
     text: [
       {
-        title: "10.000 PROCEDURE MEDICHE",
-        description:
-          "— Scegli uno: • Rimuovi fino a 1 danno da un personaggio a tua scelta. • Se hai in gioco un personaggio Robot, rimuovi fino a 3 danni da un personaggio a tua scelta.",
+        title: "10.000 Procedure Mediche",
+        description: "{E} — Scegli uno:",
+      },
+      {
+        title: "• Rimuovi fino a 1 danno da un personaggio a tua scelta.",
+      },
+      {
+        title:
+          "• Se hai in gioco un personaggio Robot, rimuovi fino a 3 danni da un personaggio a tua scelta.",
       },
     ],
   },

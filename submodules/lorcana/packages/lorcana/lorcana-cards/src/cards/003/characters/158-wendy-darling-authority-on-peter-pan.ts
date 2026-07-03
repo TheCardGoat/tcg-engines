@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { wendyDarlingAuthorityOnPeterPanI18n } from "./158-wendy-darling-authority-on-peter-pan.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 import { ward } from "../../../helpers/abilities/ward";
 
 export const wendyDarlingAuthorityOnPeterPan: CharacterCard = {
   id: "DdB",
   canonicalId: "ci_DdB",
+  slug: "lorcana-ci_DdB",
+  printings: [
+    {
+      id: "set3-158",
+      artId: "set3-158",
+      setCode: "set3",
+      collectorNumber: "158",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-158"],
   cardType: "character",
   name: "Wendy Darling",
@@ -22,7 +34,7 @@ export const wendyDarlingAuthorityOnPeterPan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_43915110e8b94147baf492d89356e0ca",
-    tcgPlayer: 531826,
+    tcgPlayer: "531826",
   },
   text: [
     {

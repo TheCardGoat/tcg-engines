@@ -20,10 +20,11 @@ export const jasmineSteadyStrategistI18n: Record<Languages, I18nProperties> = {
     version: "Unermüdliche Strategin",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Jasmin-Charaktere auszuspielen.)",
       },
       {
-        title: "STETS AM PLANEN",
+        title: "Stets am Planen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Verbündeten-Charakterkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -34,12 +35,13 @@ export const jasmineSteadyStrategistI18n: Record<Languages, I18nProperties> = {
     version: "Stratège fiable",
     text: [
       {
-        title: "Alter 2",
+        title:
+          "<Alter> 2 (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages Jasmine.)",
       },
       {
-        title: "TOUJOURS",
+        title: "Toujours à planifier",
         description:
-          "À PLANIFIER Chaque fois que ce personnage est envoyé à l'aventure, regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage Allié et la placer dans votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage Allié et la placer dans votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const jasmineSteadyStrategistI18n: Record<Languages, I18nProperties> = {
     version: "Stratega Sicura",
     text: [
       {
-        title: "Trasformazione 2",
+        title:
+          "<Trasformazione> 2 (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Jasmine.)",
       },
       {
-        title: "SEMPRE",
+        title: "Sempre a Pianificare",
         description:
-          "A PIANIFICARE Ogni volta che questo personaggio va all'avventura, guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio Alleato e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+          "Ogni volta che questo personaggio va all'avventura, guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio Alleato e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },
     ],
   },

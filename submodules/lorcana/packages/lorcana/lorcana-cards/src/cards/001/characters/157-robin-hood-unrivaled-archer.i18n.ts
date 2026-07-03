@@ -22,14 +22,14 @@ export const robinHoodUnrivaledArcherI18n: Record<Languages, I18nProperties> = {
     version: "Unrivaled Archer",
     text: [
       {
-        title: "FEED THE POOR",
+        title: "Feed the Poor",
         description:
           "When you play this character, if an opponent has more cards in their hand than you, draw a card.",
       },
       {
-        title: "GOOD SHOT",
+        title: "Good Shot",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "During your turn, this character gains <Evasive>. (They can challenge characters with Evasive.)",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const robinHoodUnrivaledArcherI18n: Record<Languages, I18nProperties> = {
     version: "Unrivaled Archer",
     text: [
       {
-        title: "FEED THE POOR",
+        title: "Feed the Poor",
         description:
           "When you play this character, if an opponent has more cards in their hand than you, draw a card.",
       },
       {
-        title: "GOOD SHOT",
+        title: "Good Shot",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "During your turn, this character gains <Evasive>. (They can challenge characters with Evasive.)",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const robinHoodUnrivaledArcherI18n: Record<Languages, I18nProperties> = {
     version: "Unrivaled Archer",
     text: [
       {
-        title: "FEED THE POOR",
+        title: "Feed the Poor",
         description:
           "When you play this character, if an opponent has more cards in their hand than you, draw a card.",
       },
       {
-        title: "GOOD SHOT",
+        title: "Good Shot",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "During your turn, this character gains <Evasive>. (They can challenge characters with Evasive.)",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { boltDownButNotOutI18n } from "./029-bolt-down-but-not-out.i18n";
 export const boltDownButNotOut: CharacterCard = {
   id: "9Ny",
   canonicalId: "ci_9Ny",
+  slug: "lorcana-ci_9Ny",
+  printings: [
+    {
+      id: "set8-029",
+      artId: "set8-029",
+      setCode: "set8",
+      collectorNumber: "29",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-029"],
   cardType: "character",
   name: "Bolt",
@@ -20,7 +31,7 @@ export const boltDownButNotOut: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2571eeb8c4914f82863610ee7c92535a",
-    tcgPlayer: 631371,
+    tcgPlayer: "631371",
   },
   text: [
     {

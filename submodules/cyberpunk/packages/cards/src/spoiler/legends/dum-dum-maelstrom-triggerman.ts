@@ -1,14 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerDumDumMaelstromTriggerman = {
+export const spoilerDumDumMaelstromTriggerman = defineCyberpunkCard({
   id: "15e5c60e-56c4-4a1a-a7cf-f208c5ffbee8",
-  externalId: "cyberpunk:dum-dum-maelstrom-triggerman",
   slug: "dum-dum-maelstrom-triggerman",
-  name: "Dum Dum",
-  subname: "Maelstrom Triggerman",
-  displayName: "Dum Dum - Maelstrom Triggerman",
   rulesText:
     "CALL You may defeat a friendly Gear. If you do, draw 4 cards. Otherwise, draw 1 card.",
+  subname: "Maelstrom Triggerman",
+  name: "Dum Dum",
+  displayName: "Dum Dum - Maelstrom Triggerman",
+  canonicalId: "dum-dum-maelstrom-triggerman",
   color: "yellow",
   classifications: ["Ganger", "Maelstrom"],
   set: {
@@ -16,15 +17,6 @@ export const spoilerDumDumMaelstromTriggerman = {
     name: "Spoiler Set",
   },
   printNumber: "133",
-  printings: [
-    {
-      id: "fabf7f53-bf0e-4ddf-90ca-e0165ac7b99c",
-      collectorNumber: "133",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "fabf7f53-bf0e-4ddf-90ca-e0165ac7b99c",
   artist: "Pandart Studio",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/133.webp",
   rarity: null,
@@ -32,7 +24,6 @@ export const spoilerDumDumMaelstromTriggerman = {
   hasSellTag: true,
   ram: 2,
   timingTriggers: ["call"],
-  keywords: [],
   type: "legend",
   cost: null,
   power: null,
@@ -77,5 +68,4 @@ export const spoilerDumDumMaelstromTriggerman = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies LegendCardDefinition;

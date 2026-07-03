@@ -7,14 +7,17 @@ export const st04StrikeGundam002: UnitCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "ST04-002",
-  externalId: "gundam:st04-002",
-  slug: "strike-gundam-st04-002",
+  canonicalId: "ST04-002",
+  externalIds: { bandai: "gundam:st04-002" },
+  slug: "strike-gundam/st04-002",
   displayName: "Strike Gundam",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-002",
   printings: [
     {
       id: "ST04-002",
+      artId: "ST04-002",
+      setCode: "ST04",
       collectorNumber: "ST04-002",
       cardNumber: "ST04-002",
       set: {
@@ -30,6 +33,8 @@ export const st04StrikeGundam002: UnitCard = {
     },
     {
       id: "ST04-002_p1",
+      artId: "ST04-002_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-002_p1",
       cardNumber: "ST04-002",
       set: {
@@ -45,6 +50,8 @@ export const st04StrikeGundam002: UnitCard = {
     },
     {
       id: "ST04-002_p2",
+      artId: "ST04-002_p2",
+      setCode: "BETA",
       collectorNumber: "ST04-002_p2",
       cardNumber: "ST04-002",
       set: {
@@ -60,6 +67,8 @@ export const st04StrikeGundam002: UnitCard = {
     },
     {
       id: "ST04-002_p3",
+      artId: "ST04-002_p3",
+      setCode: "ST04",
       collectorNumber: "ST04-002_p3",
       cardNumber: "ST04-002",
       set: {
@@ -75,6 +84,8 @@ export const st04StrikeGundam002: UnitCard = {
     },
     {
       id: "ST04-002_p4",
+      artId: "ST04-002_p4",
+      setCode: "ST09",
       collectorNumber: "ST04-002_p4",
       cardNumber: "ST04-002",
       set: {
@@ -89,6 +100,7 @@ export const st04StrikeGundam002: UnitCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST04-002", "ST04-002_p1", "ST04-002_p2", "ST04-002_p3", "ST04-002_p4"],
   selectedPrintingId: "ST04-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-002.webp?260424",

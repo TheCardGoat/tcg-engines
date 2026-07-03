@@ -17,7 +17,7 @@ export const jafarHighSultanOfLorcanaI18n: Record<Languages, I18nProperties> = {
     version: "Hoher Sultan von Lorcana",
     text: [
       {
-        title: "DUNKLE MACHT",
+        title: "Dunkle Macht",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab. Wenn du so eine Illusions-Charakterkarte abgeworfen hast, darfst du sie kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const jafarHighSultanOfLorcanaI18n: Record<Languages, I18nProperties> = {
     version: "Grand Sultan de Lorcana",
     text: [
       {
-        title: "POUVOIR DES TÉNÈBRES",
+        title: "Pouvoir des ténèbres",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez piocher une carte, puis défausser une carte. Si vous défaussez une carte Personnage Illusion de cette manière, vous pouvez la jouer gratuitement.",
       },
@@ -39,7 +39,7 @@ export const jafarHighSultanOfLorcanaI18n: Record<Languages, I18nProperties> = {
     version: "Sommo Sultano di Lorcana",
     text: [
       {
-        title: "POTERE OSCURO",
+        title: "Potere Oscuro",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi pescare una carta, poi scegli e scarta una carta. Se hai scartato una carta personaggio Illusione in questo modo, puoi giocare quel personaggio gratis.",
       },

@@ -4,6 +4,17 @@ import { chiefTuiProudOfMotunuiI18n } from "./171-chief-tui-proud-of-motunui.i18
 export const chiefTuiProudOfMotunui: CharacterCard = {
   id: "a46",
   canonicalId: "ci_a46",
+  slug: "lorcana-ci_a46",
+  printings: [
+    {
+      id: "set3-171",
+      artId: "set3-171",
+      setCode: "set3",
+      collectorNumber: "171",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-171"],
   cardType: "character",
   name: "Chief Tui",
@@ -21,7 +32,7 @@ export const chiefTuiProudOfMotunui: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_5646a42f0a98475ba7c07e55f7cb47df",
-    tcgPlayer: 538328,
+    tcgPlayer: "538328",
   },
   classifications: ["Storyborn", "Mentor", "King"],
   i18n: chiefTuiProudOfMotunuiI18n,

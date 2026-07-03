@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { hueySavvyNephewI18n } from "./145-huey-savvy-nephew.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const hueySavvyNephew: CharacterCard = {
   id: "iYO",
   canonicalId: "ci_Qsl",
+  slug: "lorcana-ci_Qsl",
+  printings: [
+    {
+      id: "set3-145",
+      artId: "set3-145",
+      setCode: "set3",
+      collectorNumber: "145",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-145", "set9-138"],
   cardType: "character",
   name: "Huey",
@@ -21,7 +33,7 @@ export const hueySavvyNephew: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5008e2e0ceb04bb9878d2590c92b32ee",
-    tcgPlayer: 650073,
+    tcgPlayer: "650073",
   },
   text: [
     {

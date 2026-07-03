@@ -1,8 +1,12 @@
 import type { CardInstanceId, PlayerId, RuntimeValidationResult } from "#core";
-import type { KeywordAbilityDefinition, LorcanaCardDefinition } from "@tcg/lorcana-types";
+import type {
+  KeywordAbilityDefinition,
+  LorcanaCardDefinition,
+  ShiftKeywordAbility,
+} from "@tcg/lorcana-types";
 import { isShiftKeywordAbility, isValueKeywordAbility } from "@tcg/lorcana-types";
 import type { LorcanaCardMeta } from "../../types";
-import { cardHasName, hasMimicry } from "../../card-utils";
+import { cardHasName, hasAdvancedMimicry, hasMimicry } from "../../card-utils";
 import { getActiveStatModifierTotal } from "../effects/continuous-effects";
 import {
   evaluateStaticCondition,
@@ -33,6 +37,14 @@ export interface ShiftRules {
   discardCost?: ShiftDiscardCost;
   rawLabel?: string;
   targetMode: ShiftTargetMode;
+  temporaryShift?: boolean;
+  multiShift?: {
+    targetNames: string[];
+    minTargets: number;
+    maxTargets: number;
+    requireDistinctNames?: boolean;
+    requireEachTargetName?: boolean;
+  };
   unsupportedReason?: string;
 }
 
@@ -43,10 +55,12 @@ type BasicCostValidationContext = {
       getCards: (zone: { zone: string; playerId: string }) => string[];
     };
     cards: {
+      getMeta?: (cardId: string) => LorcanaCardMeta | undefined;
       require: (cardId: string) => { meta?: LorcanaCardMeta };
     };
   };
   cards: {
+    getMeta?: (cardId: string) => LorcanaCardMeta | undefined;
     require: (cardId: string) => { meta?: LorcanaCardMeta };
   };
   playerId: PlayerId;
@@ -155,14 +169,14 @@ function extractShiftTextParts(
 
 function getShiftKeyword(
   cardDef: LorcanaCardDefinition | undefined,
-): KeywordAbilityDefinition | undefined {
+): (KeywordAbilityDefinition & ShiftKeywordAbility) | undefined {
   if (!cardDef || !Array.isArray(cardDef.abilities)) {
     return undefined;
   }
 
   return cardDef.abilities.find(
-    (ability): ability is KeywordAbilityDefinition =>
-      ability.type === "keyword" && ability.keyword === "Shift",
+    (ability): ability is KeywordAbilityDefinition & ShiftKeywordAbility =>
+      ability.type === "keyword" && isShiftKeywordAbility(ability),
   );
 }
 
@@ -319,7 +333,7 @@ function resolveShiftTargetMode(
   shiftKeyword: KeywordAbilityDefinition | undefined,
   shiftLabel: string | undefined,
 ): ShiftTargetMode {
-  // Explicit shiftTarget from keyword data takes priority over text parsing.
+  // Explicit shift target data takes priority over text parsing.
   // Text-based parsing can produce false positives (e.g., "gains Shift 0"
   // misinterpreted as classification "gains"), so structured data wins.
   if (
@@ -329,6 +343,18 @@ function resolveShiftTargetMode(
     shiftKeyword.shiftTarget.trim().length > 0
   ) {
     return { type: "name", name: shiftKeyword.shiftTarget.trim() };
+  }
+
+  if (
+    shiftKeyword &&
+    isShiftKeywordAbility(shiftKeyword) &&
+    typeof shiftKeyword.shiftClassification === "string" &&
+    shiftKeyword.shiftClassification.trim().length > 0
+  ) {
+    return {
+      type: "classification",
+      classification: shiftKeyword.shiftClassification.trim(),
+    };
   }
 
   const fromLabel = parseShiftModeFromLabel(shiftLabel);
@@ -424,6 +450,7 @@ export function getAvailableInk(
         getCards: (zone: { zone: string; playerId: string }) => string[];
       };
       cards: {
+        getMeta?: (cardId: string) => LorcanaCardMeta | undefined;
         require: (cardId: string) => { meta?: LorcanaCardMeta };
       };
     };
@@ -434,7 +461,8 @@ export function getAvailableInk(
     zone: "inkwell",
     playerId,
   }) as string[];
-  return cards.filter((id) => state.framework.cards.require(id).meta?.state !== "exerted").length;
+  return cards.filter((id) => readCostCardMeta(state.framework.cards, id)?.state !== "exerted")
+    .length;
 }
 
 /** Exert ready inkwell cards in zone order to pay ink costs. */
@@ -453,7 +481,7 @@ export function spendInk(
     if (paidWith.length >= amount) {
       break;
     }
-    if (ctx.cards.require(cardId).meta?.state === "exerted") {
+    if (readCostCardMeta(ctx.cards, cardId)?.state === "exerted") {
       continue;
     }
     ctx.cards.patchMeta(cardId, { state: "exerted" });
@@ -622,6 +650,8 @@ export function getShiftRules(cardDef: LorcanaCardDefinition | undefined): Shift
     inkCost,
     discardCost,
     rawLabel: fallbackLabel,
+    temporaryShift: shiftKeyword?.temporaryShift === true,
+    multiShift: shiftKeyword?.multiShift,
     unsupportedReason,
     targetMode: resolveShiftTargetMode(cardDef, shiftKeyword, fallbackLabel),
   };
@@ -636,13 +666,30 @@ export function resolveShiftTargetCandidates(
     return [];
   }
 
+  const advancedMimicryTargets = candidates.filter((cardId) => {
+    const candidate = getCardDefinition(cardId);
+    return candidate?.cardType === "character" && hasAdvancedMimicry(candidate);
+  });
+
+  if (shiftRules.multiShift) {
+    const targetNames = shiftRules.multiShift.targetNames;
+    const multiShiftTargets = candidates.filter((cardId) => {
+      const candidate = getCardDefinition(cardId);
+      if (candidate?.cardType !== "character") {
+        return false;
+      }
+      return targetNames.some((targetName) => cardHasName(candidate, targetName));
+    });
+    return [...new Set([...advancedMimicryTargets, ...multiShiftTargets])];
+  }
+
   if (shiftRules.targetMode.type === "universal") {
     return [...candidates];
   }
 
   if (shiftRules.targetMode.type === "classification") {
     const { classification } = shiftRules.targetMode;
-    return candidates.filter((cardId) => {
+    const classificationTargets = candidates.filter((cardId) => {
       const candidate = getCardDefinition(cardId);
       if (candidate?.cardType !== "character") {
         return false;
@@ -653,11 +700,12 @@ export function resolveShiftTargetCandidates(
         ) ?? false
       );
     });
+    return [...new Set([...advancedMimicryTargets, ...classificationTargets])];
   }
 
   const { name } = shiftRules.targetMode;
   const targetNames = resolveShiftTargetNames(name);
-  return candidates.filter((cardId) => {
+  const nameTargets = candidates.filter((cardId) => {
     const candidate = getCardDefinition(cardId);
     if (candidate?.cardType !== "character") {
       return false;
@@ -668,6 +716,7 @@ export function resolveShiftTargetCandidates(
     }
     return targetNames.some((targetName) => cardHasName(candidate, targetName));
   });
+  return [...new Set([...advancedMimicryTargets, ...nameTargets])];
 }
 
 export function isReadyAndNotDrying(meta: LorcanaCardMeta | undefined): boolean {
@@ -734,6 +783,16 @@ function normalizeInkCost(ink: number | undefined): number {
   return typeof ink === "number" && Number.isFinite(ink) && ink > 0 ? ink : 0;
 }
 
+function readCostCardMeta(
+  cards: {
+    getMeta?: (cardId: string) => LorcanaCardMeta | undefined;
+    require: (cardId: string) => { meta?: LorcanaCardMeta };
+  },
+  cardId: string,
+): LorcanaCardMeta | undefined {
+  return cards.getMeta?.(cardId) ?? cards.require(cardId).meta;
+}
+
 function normalizeExertSubject(subject: string | undefined): string {
   return subject && subject.trim().length > 0 ? subject : "Card";
 }
@@ -764,7 +823,7 @@ function validateExertCardCost(
   exertCard: ExertCostCard,
 ): BasicCostValidationResult {
   const validation = validateExertCost(
-    ctx.cards.require(exertCard.cardId).meta,
+    readCostCardMeta(ctx.cards, exertCard.cardId),
     exertCard.cardType,
   );
   if (validation.valid) {

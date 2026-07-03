@@ -55,4 +55,34 @@ describe("target-query", () => {
       ),
     ).toBe(false);
   });
+
+  it("filters action cards down to songs", () => {
+    const condition: Condition = {
+      type: "target-query",
+      query: {
+        selector: "all",
+        owner: "you",
+        zones: ["discard"],
+        cardType: "action",
+        filters: [{ type: "is-song" }],
+      },
+      comparison: { operator: "gte", value: 1 },
+    };
+    const cardPlayed = createCardPlayed({ cardId: "src", playerId: PLAYER_ONE });
+    const songCtx = createTestContext({
+      zoneCards: { "discard:player-one": ["song-action"] },
+      definitions: {
+        "song-action": { id: "song-action", cardType: "action", actionSubtype: "song" },
+      },
+    });
+    const nonSongCtx = createTestContext({
+      zoneCards: { "discard:player-one": ["regular-action"] },
+      definitions: {
+        "regular-action": { id: "regular-action", cardType: "action" },
+      },
+    });
+
+    expect(evaluateActionCondition(condition, songCtx, cardPlayed, {})).toBe(true);
+    expect(evaluateActionCondition(condition, nonSongCtx, cardPlayed, {})).toBe(false);
+  });
 });

@@ -180,14 +180,18 @@
           </Dialog.Close>
 
           <div class="preview-content" class:preview-content--rotated={shouldRotatePreview}>
-            {#if previewCard?.set && previewCard?.cardNumber}
-              <CardImage
-                set={previewCard.set}
-                number={previewCard.cardNumber}
-                crop="full"
-                alt={previewCard.label ?? "Card preview"}
-                class="w-full h-full object-cover rounded-lg"
-              />
+            {#if previewCard && !previewCard.isMasked}
+              {@const imageSet = previewCard.imageSet ?? previewCard.set}
+              {@const imageCardNumber = previewCard.imageCardNumber ?? previewCard.cardNumber}
+              {#if imageSet && imageCardNumber}
+                <CardImage
+                  set={imageSet}
+                  number={imageCardNumber}
+                  crop="full"
+                  alt={previewCard.label ?? "Card preview"}
+                  class="w-full h-full object-cover rounded-lg"
+                />
+              {/if}
             {/if}
           </div>
         </Dialog.Content>
@@ -247,14 +251,18 @@
       </button>
 
       <div class="preview-content" class:preview-content--rotated={shouldRotatePreview}>
-        {#if previewCard?.set && previewCard?.cardNumber}
-          <CardImage
-            set={previewCard.set}
-            number={previewCard.cardNumber}
-            crop="full"
-            alt={previewCard.label ?? "Card preview"}
-            class="w-full h-full object-cover rounded-lg"
-          />
+        {#if previewCard && !previewCard.isMasked}
+          {@const imageSet = previewCard.imageSet ?? previewCard.set}
+          {@const imageCardNumber = previewCard.imageCardNumber ?? previewCard.cardNumber}
+          {#if imageSet && imageCardNumber}
+            <CardImage
+              set={imageSet}
+              number={imageCardNumber}
+              crop="full"
+              alt={previewCard.label ?? "Card preview"}
+              class="w-full h-full object-cover rounded-lg"
+            />
+          {/if}
         {/if}
       </div>
     </div>

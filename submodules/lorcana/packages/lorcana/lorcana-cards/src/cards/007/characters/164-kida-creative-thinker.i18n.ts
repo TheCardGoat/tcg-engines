@@ -20,12 +20,12 @@ export const kidaCreativeThinkerI18n: Record<Languages, I18nProperties> = {
     version: "Kreative Denkerin",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "DER",
+        title: "Der Schlüssel zum Rätsel",
         description:
-          "SCHLÜSSEL ZUM RÄTSEL — Schaue dir die obersten 2 Karten deines Decks an. Lege eine davon verdeckt und erschöpft in deinen Tintenvorrat und die andere zurück auf dein Deck.",
+          "{E} — Schaue dir die obersten 2 Karten deines Decks an. Lege eine davon verdeckt und erschöpft in deinen Tintenvorrat und die andere zurück auf dein Deck.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const kidaCreativeThinkerI18n: Record<Languages, I18nProperties> = {
     version: "Penseuse créative",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "CLÉ DE L'ÉNIGME",
+        title: "Clé de l'énigme",
         description:
-          "— Regardez les 2 premières cartes de votre pioche. Placez-en une dans votre réserve d'encre, face cachée et épuisée, et l'autre sur votre pioche.",
+          "{E} — Regardez les 2 premières cartes de votre pioche. Placez-en une dans votre réserve d'encre, face cachée et épuisée, et l'autre sur votre pioche.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const kidaCreativeThinkerI18n: Record<Languages, I18nProperties> = {
     version: "Pensatrice Creativa",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "CHIAVE DELL'ENIGMA",
+        title: "Chiave dell'Enigma",
         description:
-          "— Guarda le prime 2 carte del tuo mazzo. Aggiungine una al tuo calamaio, a faccia in giù e impegnata, e metti l'altra in cima al tuo mazzo.",
+          "{E} — Guarda le prime 2 carte del tuo mazzo. Aggiungine una al tuo calamaio, a faccia in giù e impegnata, e metti l'altra in cima al tuo mazzo.",
       },
     ],
   },

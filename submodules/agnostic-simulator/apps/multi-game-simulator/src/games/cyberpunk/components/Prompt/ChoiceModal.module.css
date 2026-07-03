@@ -406,29 +406,6 @@
   color: #fff;
 }
 
-.emptySelectionPrimary {
-  border-color: #f5e642;
-  background: #f5e642;
-  color: #07090c;
-  font-weight: 800;
-  box-shadow: 0 0 12px rgb(245 230 66 / 28%);
-}
-
-.emptySelectionPrimary:hover {
-  border-color: #fff27a;
-  background: #fff27a;
-  color: #07090c;
-  box-shadow: 0 0 18px rgb(245 230 66 / 38%);
-}
-
-.emptySelectionPrimary:focus-visible {
-  outline: none;
-  border-color: #fff27a;
-  box-shadow:
-    0 0 0 2px rgb(245 230 66 / 28%),
-    0 0 18px rgb(245 230 66 / 38%);
-}
-
 .placeholder {
   font-size: 11px;
   background: rgb(255 255 255 / 4%);

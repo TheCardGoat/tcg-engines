@@ -4,6 +4,17 @@ import { gadgetsGogglesI18n } from "./168-gadgets-goggles.i18n";
 export const gadgetsGoggles: ItemCard = {
   id: "rir",
   canonicalId: "ci_rir",
+  slug: "lorcana-ci_rir",
+  printings: [
+    {
+      id: "set12-168",
+      artId: "set12-168",
+      setCode: "set12",
+      collectorNumber: "168",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-168"],
   cardType: "item",
   name: "Gadget's Goggles",
@@ -16,6 +27,7 @@ export const gadgetsGoggles: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c73f177d87004136ab148a91b23a1308",
+    tcgPlayer: "692075",
   },
   text: [
     {

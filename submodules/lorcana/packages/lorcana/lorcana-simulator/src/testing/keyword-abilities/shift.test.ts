@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { PLAYER_ONE, LorcanaMultiplayerTestEngine } from "@tcg/lorcana-engine/testing";
 import {
+  dragonFire,
   fireTheCannons,
   liloMakingAWish,
   mickeyMouseTrueFriend,
@@ -99,8 +100,8 @@ describe("Shift - Shift N (You may pay N {I} to play this on top of one of your 
 
   it("When a shifted stack leaves play, all cards go to the same zone", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
-      hand: [mickeyMouseBraveLittlePrince, fireTheCannons],
-      inkwell: 6,
+      hand: [mickeyMouseBraveLittlePrince, dragonFire],
+      inkwell: 5 + dragonFire.cost,
       play: [mickeyMouseTrueFriend],
     });
 
@@ -112,8 +113,8 @@ describe("Shift - Shift N (You may pay N {I} to play this on top of one of your 
     ).toBe(true);
 
     expect(
-      testEngine.asPlayerOne().playCard(fireTheCannons, {
-        targets: [mickeyMouseBraveLittlePrince],
+      testEngine.asPlayerOne().playCard(dragonFire, {
+        targets: [testEngine.findCardInstanceId(mickeyMouseBraveLittlePrince, "play", PLAYER_ONE)],
       }).success,
     ).toBe(true);
 

@@ -22,14 +22,14 @@ export const minnieMouseSweetheartPrincessI18n: Record<Languages, I18nProperties
     version: "Geliebte Prinzessin",
     text: [
       {
-        title: "KÖNIGLICHE GUNST",
+        title: "Königliche Gunst",
         description:
-          "Deine Micky-Maus-Charaktere erhalten Unterstützen. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "Deine Micky-Maus-Charaktere erhalten <Unterstützen>. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "MACH'S GUT, JETZT",
+        title: "Mach's gut, jetzt",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen erschöpften Charakter deiner Wahl mit 5 oder mehr verbannen.",
+          "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen erschöpften Charakter deiner Wahl mit 5 oder mehr {S} verbannen.",
       },
     ],
   },
@@ -38,13 +38,13 @@ export const minnieMouseSweetheartPrincessI18n: Record<Languages, I18nProperties
     version: "Adorable princesse",
     text: [
       {
-        title: "FAVEUR ROYALE",
-        description: "Vos personnages nommés Mickey Mouse gagnent Soutien.",
+        title: "Faveur royale",
+        description: "Vos personnages nommés Mickey Mouse gagnent <Soutien>.",
       },
       {
-        title: "ALLEZ, AU REVOIR!",
+        title: "Allez, au revoir!",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage épuisé ayant 5 ou plus et le bannir.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage épuisé ayant 5 {S} ou plus et le bannir.",
       },
     ],
   },
@@ -53,13 +53,13 @@ export const minnieMouseSweetheartPrincessI18n: Record<Languages, I18nProperties
     version: "Dolce Principessa",
     text: [
       {
-        title: "FAVORE REALE I",
-        description: "tuoi personaggi chiamati Topolino ottengono Aiutante.",
+        title: "Favore Reale",
+        description: "I tuoi personaggi chiamati Topolino ottengono <Aiutante>.",
       },
       {
-        title: "ADDIO, PER ORA",
+        title: "Addio, per Ora",
         description:
-          "Ogni volta che questo personaggio va all'avventura, puoi esiliare un personaggio impegnato a tua scelta con 5 o superiore.",
+          "Ogni volta che questo personaggio va all'avventura, puoi esiliare un personaggio impegnato a tua scelta con 5 {S} o superiore.",
       },
     ],
   },

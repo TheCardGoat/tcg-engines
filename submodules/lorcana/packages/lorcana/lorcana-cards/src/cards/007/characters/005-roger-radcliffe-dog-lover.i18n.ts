@@ -17,7 +17,7 @@ export const rogerRadcliffeDogLoverI18n: Record<Languages, I18nProperties> = {
     version: "Hundeliebhaber",
     text: [
       {
-        title: "SO IST'S FEIN",
+        title: "So ist's fein",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du bis zu 1 Schaden von jedem deiner Welpen entfernen.",
       },
@@ -28,7 +28,7 @@ export const rogerRadcliffeDogLoverI18n: Record<Languages, I18nProperties> = {
     version: "Passionné de chiens",
     text: [
       {
-        title: "ET VOILÀ, C'EST FAIT",
+        title: "Et voilà, c'est fait",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez retirer jusqu'à 1 dommage de chacun de vos personnages Chiot.",
       },
@@ -39,7 +39,7 @@ export const rogerRadcliffeDogLoverI18n: Record<Languages, I18nProperties> = {
     version: "Amante dei Cani",
     text: [
       {
-        title: "ECCO QUA",
+        title: "Ecco qua",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi rimuovere fino a 1 danno da ogni tuo personaggio Cucciolo.",
       },

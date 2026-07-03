@@ -4,6 +4,17 @@ import { galacticCouncilChamberCourtroomI18n } from "./204-galactic-council-cham
 export const galacticCouncilChamberCourtroom: LocationCard = {
   id: "WjQ",
   canonicalId: "ci_WjQ",
+  slug: "lorcana-ci_WjQ",
+  printings: [
+    {
+      id: "set6-204",
+      artId: "set6-204",
+      setCode: "set6",
+      collectorNumber: "204",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-204"],
   cardType: "location",
   name: "Galactic Council Chamber",
@@ -20,7 +31,7 @@ export const galacticCouncilChamberCourtroom: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_25d8f80f68574d38869b7853d737e8e2",
-    tcgPlayer: 578235,
+    tcgPlayer: "578235",
   },
   text: [
     {

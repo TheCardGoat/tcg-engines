@@ -7,14 +7,17 @@ export const gd01YzakJule094: PilotCard = {
   color: "red",
   traits: ["zaft", "coordinator"],
   id: "GD01-094",
-  externalId: "gundam:gd01-094",
-  slug: "yzak-jule-gd01-094",
+  canonicalId: "GD01-094",
+  externalIds: { bandai: "gundam:gd01-094" },
+  slug: "yzak-jule/gd01-094",
   displayName: "Yzak Jule",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-094",
   printings: [
     {
       id: "GD01-094",
+      artId: "GD01-094",
+      setCode: "GD01",
       collectorNumber: "GD01-094",
       cardNumber: "GD01-094",
       set: {
@@ -29,6 +32,7 @@ export const gd01YzakJule094: PilotCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-094"],
   selectedPrintingId: "GD01-094",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-094.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-094.webp?260424",

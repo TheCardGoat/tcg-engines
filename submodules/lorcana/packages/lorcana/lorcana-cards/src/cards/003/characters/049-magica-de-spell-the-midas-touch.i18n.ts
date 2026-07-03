@@ -20,10 +20,11 @@ export const magicaDeSpellTheMidasTouchI18n: Record<Languages, I18nProperties> =
     version: "Der Midas-Effekt",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Gundel-Gaukeley-Charaktere auszuspielen.)",
       },
       {
-        title: "ALLES MEINS",
+        title: "Alles meins",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, sammle so viele Legenden, wie die Kosten eines deiner Gegenstände im Spiel betragen.",
       },
@@ -34,12 +35,13 @@ export const magicaDeSpellTheMidasTouchI18n: Record<Languages, I18nProperties> =
     version: "Toucher de Midas",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Miss Tick.)",
       },
       {
-        title: "TOUT EST",
+        title: "Tout est à moi",
         description:
-          "À MOI Chaque fois que ce personnage est envoyé à l'aventure, gagnez un nombre d'éclats de Lore égal au coût d'un de vos objets en jeu.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, gagnez un nombre d'éclats de Lore égal au coût d'un de vos objets en jeu.",
       },
     ],
   },
@@ -48,10 +50,11 @@ export const magicaDeSpellTheMidasTouchI18n: Record<Languages, I18nProperties> =
     version: "Il Tocco di Mida",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Amelia.)",
       },
       {
-        title: "TUTTA MIA",
+        title: "Tutta Mia",
         description:
           "Ogni volta che questo personaggio va all'avventura, ottieni leggenda pari al costo di uno dei tuoi oggetti in gioco.",
       },

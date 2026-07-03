@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { peterPansShadowNotSewnOnI18n } from "./055-peter-pans-shadow-not-sewn-on.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { rush } from "../../../helpers/abilities/rush";
 
 export const peterPansShadowNotSewnOn: CharacterCard = {
   id: "qvr",
   canonicalId: "ci_5eN",
+  slug: "lorcana-ci_5eN",
+  printings: [
+    {
+      id: "set2-055",
+      artId: "set2-055",
+      setCode: "set2",
+      collectorNumber: "55",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-055", "set9-042"],
   cardType: "character",
   name: "Peter Pan's Shadow",
@@ -22,7 +34,7 @@ export const peterPansShadowNotSewnOn: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_929d3fa7c5324a1dbc9ebc1d93bbee6d",
-    tcgPlayer: 649989,
+    tcgPlayer: "649989",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { merlinIntellectualVisionaryI18n } from "./159-merlin-intellectual-visionary.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const merlinIntellectualVisionary: CharacterCard = {
   id: "ngW",
   canonicalId: "ci_ngW",
+  slug: "lorcana-ci_ngW",
+  printings: [
+    {
+      id: "set5-159",
+      artId: "set5-159",
+      setCode: "set5",
+      collectorNumber: "159",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-159"],
   cardType: "character",
   name: "Merlin",
@@ -21,7 +33,7 @@ export const merlinIntellectualVisionary: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_0a8dca5feb454968a2d13e5917127c45",
-    tcgPlayer: 555272,
+    tcgPlayer: "555272",
   },
   text: [
     {

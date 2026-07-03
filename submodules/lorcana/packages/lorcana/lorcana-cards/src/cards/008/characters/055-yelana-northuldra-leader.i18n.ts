@@ -17,9 +17,9 @@ export const yelanaNorthuldraLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Anführerin der Northuldra",
     text: [
       {
-        title: "WIR VERTRAUEN NUR AUF DIE NATUR",
+        title: "Wir vertrauen nur auf die Natur",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Herausfordern +2. (Während der Charakter herausfordert, erhält er +2).",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}).",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const yelanaNorthuldraLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Cheffe des Northuldra",
     text: [
       {
-        title: "NOUS N'AVONS CONFIANCE QU'EN LA NATURE",
+        title: "Nous n'avons confiance qu'en la nature",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne Offensif +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Offensif> +2 pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const yelanaNorthuldraLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Capo dei Northuldri",
     text: [
       {
-        title: "CI FIDIAMO SOLO DELLA NATURA",
+        title: "Ci Fidiamo Solo della Natura",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene Sfidante +2 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
       },
     ],
   },

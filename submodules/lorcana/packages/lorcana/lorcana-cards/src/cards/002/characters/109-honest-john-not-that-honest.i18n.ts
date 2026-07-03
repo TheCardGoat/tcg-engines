@@ -16,7 +16,7 @@ export const honestJohnNotThatHonestI18n: Record<Languages, I18nProperties> = {
     version: "Nicht sehr ehrenwert",
     text: [
       {
-        title: "GEMACHTE LEUTE",
+        title: "Gemachte Leute",
         description:
           "Jedes Mal, wenn du eine Flutgestalt ausspielst, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const honestJohnNotThatHonestI18n: Record<Languages, I18nProperties> = {
     version: "Porte bien son nom",
     text: [
       {
-        title: "LA BELLE VIE",
+        title: "La belle vie",
         description:
           "Chaque fois que vous jouez un personnage Floodborn, chaque adversaire perd 1 éclat de Lore.",
       },
@@ -38,7 +38,7 @@ export const honestJohnNotThatHonestI18n: Record<Languages, I18nProperties> = {
     version: "Not That Honest",
     text: [
       {
-        title: "EASY STREET",
+        title: "Easy Street",
         description: "Whenever you play a Floodborn character, each opponent loses 1 lore.",
       },
     ],

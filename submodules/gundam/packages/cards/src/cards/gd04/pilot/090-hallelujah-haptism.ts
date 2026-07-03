@@ -7,14 +7,17 @@ export const gd04HallelujahHaptism090: PilotCard = {
   color: "red",
   traits: ["cb", "super soldier"],
   id: "GD04-090",
-  externalId: "gundam:gd04-090",
-  slug: "hallelujah-haptism-gd04-090",
+  canonicalId: "GD04-090",
+  externalIds: { bandai: "gundam:gd04-090" },
+  slug: "hallelujah-haptism/gd04-090",
   displayName: "Hallelujah Haptism",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-090",
   printings: [
     {
       id: "GD04-090",
+      artId: "GD04-090",
+      setCode: "GD04",
       collectorNumber: "GD04-090",
       cardNumber: "GD04-090",
       set: {
@@ -29,6 +32,7 @@ export const gd04HallelujahHaptism090: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-090"],
   selectedPrintingId: "GD04-090",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-090.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-090.webp?260424",

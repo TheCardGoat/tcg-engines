@@ -6,8 +6,9 @@ export const rpResource020: ResourceCard = {
   type: "resource",
   traits: [],
   id: "RP-020",
-  externalId: "gundam:rp-020",
-  slug: "resource-rp-020",
+  canonicalId: "RP-020",
+  externalIds: { bandai: "gundam:rp-020" },
+  slug: "resource/rp-020",
   displayName: "Resource",
   set: {
     code: "EVX-01",
@@ -18,6 +19,8 @@ export const rpResource020: ResourceCard = {
   printings: [
     {
       id: "RP-020",
+      artId: "RP-020",
+      setCode: "EVX-01",
       collectorNumber: "RP-020",
       cardNumber: "RP-020",
       set: {
@@ -32,6 +35,7 @@ export const rpResource020: ResourceCard = {
       productName: "Accessory and Card Set 01 FIRST COMBAT [EVX-01]",
     },
   ],
+  reprints: ["RP-020"],
   selectedPrintingId: "RP-020",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-020.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-020.webp?260424",

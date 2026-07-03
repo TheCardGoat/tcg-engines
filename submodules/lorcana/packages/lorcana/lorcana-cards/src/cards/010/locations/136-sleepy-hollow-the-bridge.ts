@@ -4,6 +4,17 @@ import { sleepyHollowTheBridgeI18n } from "./136-sleepy-hollow-the-bridge.i18n";
 export const sleepyHollowTheBridge: LocationCard = {
   id: "eWQ",
   canonicalId: "ci_eWQ",
+  slug: "lorcana-ci_eWQ",
+  printings: [
+    {
+      id: "set10-136",
+      artId: "set10-136",
+      setCode: "set10",
+      collectorNumber: "136",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-136"],
   cardType: "location",
   name: "Sleepy Hollow",
@@ -20,7 +31,7 @@ export const sleepyHollowTheBridge: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_98339be4f48249779fb2ae2de3e9b757",
-    tcgPlayer: 660018,
+    tcgPlayer: "660018",
   },
   text: [
     {

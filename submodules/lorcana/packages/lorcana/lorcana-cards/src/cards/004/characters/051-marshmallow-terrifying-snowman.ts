@@ -4,6 +4,17 @@ import { marshmallowTerrifyingSnowmanI18n } from "./051-marshmallow-terrifying-s
 export const marshmallowTerrifyingSnowman: CharacterCard = {
   id: "cKU",
   canonicalId: "ci_cKU",
+  slug: "lorcana-ci_cKU",
+  printings: [
+    {
+      id: "set4-051",
+      artId: "set4-051",
+      setCode: "set4",
+      collectorNumber: "51",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-051"],
   cardType: "character",
   name: "Marshmallow",
@@ -20,7 +31,7 @@ export const marshmallowTerrifyingSnowman: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4539b94483584e5591a52ff5f95348ae",
-    tcgPlayer: 549442,
+    tcgPlayer: "549442",
   },
   text: [
     {

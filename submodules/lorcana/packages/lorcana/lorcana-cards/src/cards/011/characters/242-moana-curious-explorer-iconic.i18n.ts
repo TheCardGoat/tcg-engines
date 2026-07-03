@@ -16,7 +16,7 @@ export const moanaCuriousExplorerIconicI18n: Record<Languages, I18nProperties> =
     version: "Neugierige Entdeckerin",
     text: [
       {
-        title: "DAS ERBE DER AHNEN",
+        title: "Das Erbe der Ahnen",
         description: "Du kannst Karten aus deinem Ablagestapel tinten.",
       },
     ],
@@ -26,7 +26,7 @@ export const moanaCuriousExplorerIconicI18n: Record<Languages, I18nProperties> =
     version: "Exploratrice curieuse",
     text: [
       {
-        title: "HÉRITAGE ANCESTRAL",
+        title: "Héritage ancestral",
         description: "Vous pouvez encrer les cartes depuis votre défausse.",
       },
     ],
@@ -36,7 +36,7 @@ export const moanaCuriousExplorerIconicI18n: Record<Languages, I18nProperties> =
     version: "Esploratrice Curiosa",
     text: [
       {
-        title: "EREDITÀ ANCESTRALE",
+        title: "Eredità Ancestrale",
         description: "Puoi inchiostrare carte dai tuoi scarti.",
       },
     ],

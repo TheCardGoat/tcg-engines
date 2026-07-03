@@ -17,9 +17,9 @@ export const captainAmeliaFirstInCommandI18n: Record<Languages, I18nProperties> 
     version: "Erste Offizierin",
     text: [
       {
-        title: "DISZIPLIN",
+        title: "Disziplin",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const captainAmeliaFirstInCommandI18n: Record<Languages, I18nProperties> 
     version: "Commande le vaisseau",
     text: [
       {
-        title: "DISCIPLINE",
+        title: "Discipline",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier les personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier les personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const captainAmeliaFirstInCommandI18n: Record<Languages, I18nProperties> 
     version: "Prima in Comando",
     text: [
       {
-        title: "DISCIPLINA",
+        title: "Disciplina",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

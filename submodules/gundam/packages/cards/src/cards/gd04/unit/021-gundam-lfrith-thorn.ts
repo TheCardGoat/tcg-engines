@@ -7,14 +7,17 @@ export const gd04GundamLfrithThorn021: UnitCard = {
   color: "green",
   traits: ["dawn of fold", "academy"],
   id: "GD04-021",
-  externalId: "gundam:gd04-021",
-  slug: "gundam-lfrith-thorn-gd04-021",
+  canonicalId: "GD04-021",
+  externalIds: { bandai: "gundam:gd04-021" },
+  slug: "gundam-lfrith-thorn/gd04-021",
   displayName: "Gundam Lfrith Thorn",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-021",
   printings: [
     {
       id: "GD04-021",
+      artId: "GD04-021",
+      setCode: "GD04",
       collectorNumber: "GD04-021",
       cardNumber: "GD04-021",
       set: {
@@ -30,6 +33,8 @@ export const gd04GundamLfrithThorn021: UnitCard = {
     },
     {
       id: "GD04-021_p1",
+      artId: "GD04-021_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-021_p1",
       cardNumber: "GD04-021",
       set: {
@@ -44,6 +49,7 @@ export const gd04GundamLfrithThorn021: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-021", "GD04-021_p1"],
   selectedPrintingId: "GD04-021",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-021.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-021.webp?260424",

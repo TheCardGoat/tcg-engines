@@ -191,11 +191,63 @@ function getCanonicalTypeName(cardType: CardType): string {
   return typeNames[cardType];
 }
 
+const RAW_ABILITIES_PLACEHOLDER = "__RAW_ABILITIES_PLACEHOLDER__";
+
+interface ExistingAbilitySource {
+  abilities?: unknown[];
+  source?: string;
+  imports: string[];
+  typeImports: string[];
+  prelude?: string;
+}
+
+function extractAbilityImports(content: string): string[] {
+  return content.split("\n").filter((line) => {
+    if (!line.startsWith("import ")) return false;
+    if (line.includes("@tcg/lorcana-types")) return false;
+    if (line.includes(".i18n")) return false;
+    return true;
+  });
+}
+
+function extractAbilityTypeImports(content: string, generatedTypeName: string): string[] {
+  const typeNames = new Set<string>();
+  for (const line of content.split("\n")) {
+    if (!line.startsWith("import type ") || !line.includes("@tcg/lorcana-types")) continue;
+    const match = line.match(/\{([^}]+)\}/);
+    if (!match?.[1]) continue;
+    for (const part of match[1].split(",")) {
+      const typeName = part.trim();
+      if (!typeName || typeName === generatedTypeName) continue;
+      typeNames.add(typeName);
+    }
+  }
+
+  return [...typeNames].sort();
+}
+
+function extractAbilityPrelude(content: string): string | undefined {
+  const exportIndex = content.indexOf("export const ");
+  if (exportIndex === -1) return undefined;
+
+  let lastImportEnd = 0;
+  const importLineRe = /^import .+;$/gm;
+  for (const match of content.matchAll(importLineRe)) {
+    lastImportEnd = (match.index ?? 0) + match[0].length;
+  }
+
+  const prelude = content.slice(lastImportEnd, exportIndex).trim();
+  return prelude.length > 0 ? prelude : undefined;
+}
+
 /**
- * Extract the abilities array from existing card file content so we can preserve it (do not touch).
- * Returns undefined if no abilities key or parse fails.
+ * Extract the abilities array from existing card file content so we can preserve it.
+ * Helper-based implementations are preserved as raw TypeScript source.
  */
-function extractAbilitiesFromExistingFile(content: string): unknown[] | undefined {
+function extractAbilitiesFromExistingFile(
+  content: string,
+  generatedTypeName: string,
+): ExistingAbilitySource | undefined {
   const abilitiesKey = "abilities:";
   const idx = content.indexOf(abilitiesKey);
   if (idx === -1) return undefined;
@@ -209,11 +261,17 @@ function extractAbilitiesFromExistingFile(content: string): unknown[] | undefine
       depth--;
       if (depth === 0) {
         const slice = content.slice(bracketStart, i + 1);
+        const imports = extractAbilityImports(content);
+        const typeImports = extractAbilityTypeImports(content, generatedTypeName);
+        const prelude = extractAbilityPrelude(content);
         try {
           const parsed = new Function("return " + slice)() as unknown;
-          return Array.isArray(parsed) ? parsed : undefined;
+          if (!Array.isArray(parsed)) return undefined;
+
+          const abilities = parsed.filter((ability) => ability != null);
+          return abilities.length > 0 ? { abilities, imports, typeImports, prelude } : undefined;
         } catch {
-          return undefined;
+          return { source: slice, imports, typeImports, prelude };
         }
       }
     }
@@ -229,6 +287,8 @@ function extractAbilitiesFromExistingFile(content: string): unknown[] | undefine
 export const CARD_PROPERTY_ORDER = [
   "id",
   "canonicalId",
+  "slug",
+  "printings",
   "reprints",
   "cardType",
   "name",
@@ -279,6 +339,10 @@ function deriveCardCopyLimit(rulesText?: string): number | "no-limit" | undefine
   return undefined;
 }
 
+function deriveArtId(printing: CardPrinting, canonicalId: string): string {
+  return printing.specialRarity ? `${canonicalId}-${printing.specialRarity}` : printing.id;
+}
+
 /**
  * Convert canonical card to LorcanaCard format with deterministic property order.
  * Order: id, canonicalId, reprints, then rest; i18n last.
@@ -316,6 +380,19 @@ export function convertToLorcanaCard(
   const values: Record<string, unknown> = {};
   values.id = card.id;
   values.canonicalId = compliantCanonicalId;
+  values.slug = `lorcana-${compliantCanonicalId}`;
+  if (firstPrinting) {
+    values.printings = [
+      {
+        id: firstPrinting.id,
+        artId: deriveArtId(firstPrinting, compliantCanonicalId),
+        setCode: firstPrinting.set,
+        collectorNumber: String(firstPrinting.cardNumber),
+        rarity: firstPrinting.specialRarity ?? firstPrinting.rarity,
+        imageUrl: "",
+      },
+    ];
+  }
   if (reprintIds !== undefined && reprintIds.length > 0) {
     values.reprints = reprintIds;
   }
@@ -402,10 +479,13 @@ export function generateCardFileContent(
   i18nImportFileName?: string,
   firstPrinting?: CardPrinting,
   setFolderName?: string,
-  existingAbilities?: unknown[],
+  existingAbilitySource?: ExistingAbilitySource,
   reprintIds?: string[],
 ): string {
   const typeName = getCanonicalTypeName(card.cardType);
+  const existingAbilities =
+    existingAbilitySource?.abilities ??
+    (existingAbilitySource?.source ? [RAW_ABILITIES_PLACEHOLDER] : undefined);
   const lorcanaCard = convertToLorcanaCard(
     card,
     firstPrinting,
@@ -425,11 +505,32 @@ export function generateCardFileContent(
 
   // Replace the quoted i18n reference with unquoted identifier
   cardJson = cardJson.replace(`i18n: "${exportName}I18n"`, `i18n: ${exportName}I18n`);
+  if (existingAbilitySource?.source) {
+    cardJson = cardJson.replace(
+      `abilities: [\n    "${RAW_ABILITIES_PLACEHOLDER}"\n  ]`,
+      `abilities: ${existingAbilitySource.source}`,
+    );
+  }
 
   const i18nModuleName = i18nImportFileName ?? exportName;
+  const abilityImports =
+    existingAbilitySource?.source && existingAbilitySource.imports.length > 0
+      ? `\n${existingAbilitySource.imports.join("\n")}`
+      : "";
+  const abilityTypeImports =
+    existingAbilitySource?.source && existingAbilitySource.typeImports.length > 0
+      ? `\nimport type { ${existingAbilitySource.typeImports.join(", ")} } from "@tcg/lorcana-types";`
+      : "";
+  const abilityPrelude =
+    existingAbilitySource?.source && existingAbilitySource.prelude
+      ? `\n\n${existingAbilitySource.prelude}`
+      : "";
 
   return `import type { ${typeName} } from "@tcg/lorcana-types";
 import { ${exportName}I18n } from "./${i18nModuleName}.i18n";
+${abilityTypeImports}
+${abilityImports}
+${abilityPrelude}
 
 export const ${exportName}: ${typeName} = ${cardJson};
 `;
@@ -445,11 +546,24 @@ export function generateCardTypeIndexContent(
     return "// No cards in this category\n";
   }
 
+  const exportNameCounts = cards.reduce<Record<string, number>>((counts, { exportName }) => {
+    counts[exportName] = (counts[exportName] ?? 0) + 1;
+    return counts;
+  }, {});
+
   const exports = cards
-    .map(
-      ({ fileName, exportName }) =>
-        `export { ${exportName} } from "./${fileName.replace(".ts", "")}";`,
-    )
+    .map(({ fileName, exportName }) => {
+      const moduleName = fileName.replace(".ts", "");
+      if (exportNameCounts[exportName] === 1) {
+        return `export { ${exportName} } from "./${moduleName}";`;
+      }
+
+      const aliasSuffix = moduleName
+        .split("-")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join("");
+      return `export { ${exportName} as ${exportName}${aliasSuffix} } from "./${moduleName}";`;
+    })
     .join("\n");
 
   return `${exports}\n`;
@@ -718,8 +832,8 @@ export function isCanonicalLocation(card: CanonicalCard): card is CanonicalLocat
 `;
 }
 
-/** Card file name pattern: 3-digit number, hyphen, kebab-name, .ts (not .test.ts) */
-const CARD_FILE_PATTERN = /^\d{3}-.+\.ts$/;
+/** Card file name pattern: optional promo sheet prefix, 3-digit number, hyphen, kebab-name, .ts. */
+const CARD_FILE_PATTERN = /^(?:[a-z]+\d+-)?\d{3}-.+\.ts$/;
 
 /**
  * Remove orphan card files in a type directory.
@@ -1093,7 +1207,7 @@ export function generateCardFiles(
   const organized = organizeCardsForFileGeneration(canonicalCards, setMapping, printings);
   const existingAbilitySourcesByCanonicalId = new Map<
     string,
-    { abilities: unknown[]; exportName: string; filePath: string }
+    { source: ExistingAbilitySource; exportName: string; filePath: string }
   >();
 
   for (const [setFolderName, cardTypeMap] of organized) {
@@ -1108,14 +1222,17 @@ export function generateCardFiles(
         }
 
         const existingContent = fs.readFileSync(filePath, "utf-8");
-        const extractedAbilities = extractAbilitiesFromExistingFile(existingContent);
+        const extractedAbilities = extractAbilitiesFromExistingFile(
+          existingContent,
+          getCanonicalTypeName(cardInfo.card.cardType),
+        );
         if (
           extractedAbilities &&
-          extractedAbilities.length > 0 &&
+          (extractedAbilities.abilities?.length || extractedAbilities.source) &&
           !existingAbilitySourcesByCanonicalId.has(cardInfo.card.canonicalId)
         ) {
           existingAbilitySourcesByCanonicalId.set(cardInfo.card.canonicalId, {
-            abilities: extractedAbilities,
+            source: extractedAbilities,
             exportName: cardInfo.exportName,
             filePath,
           });
@@ -1154,15 +1271,18 @@ export function generateCardFiles(
         const i18nFilePath = filePath.replace(".ts", ".i18n.ts");
         const printing = printings[cardInfo.printingId];
         const reprintIds = printingIdsByCanonicalId.get(cardInfo.card.canonicalId);
-        let existingAbilities: unknown[] | undefined;
+        let existingAbilities: ExistingAbilitySource | undefined;
         if (fs.existsSync(filePath)) {
           const existingContent = fs.readFileSync(filePath, "utf-8");
-          existingAbilities = extractAbilitiesFromExistingFile(existingContent);
+          existingAbilities = extractAbilitiesFromExistingFile(
+            existingContent,
+            getCanonicalTypeName(cardInfo.card.cardType),
+          );
         }
         const sharedAbilitySource = existingAbilitySourcesByCanonicalId.get(
           cardInfo.card.canonicalId,
         );
-        existingAbilities ??= sharedAbilitySource?.abilities;
+        existingAbilities ??= sharedAbilitySource?.source;
 
         // Generate i18n file
         const i18nContent = generateI18nFileContent(cardInfo.exportName, cardInfo.card.i18n);

@@ -20,10 +20,10 @@ export const negaduckPublicEnemyNumberOneEnchantedI18n: Record<Languages, I18nPr
     version: "Bösewicht Nummer Eins",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title: "<Gestaltwandel> 3 {I}",
       },
       {
-        title: "LANGFINGER",
+        title: "Langfinger",
         description:
           "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, verlieren alle gegnerischen Mitspielenden je 1 Legende und du sammelst 1 Legende.",
       },
@@ -34,10 +34,10 @@ export const negaduckPublicEnemyNumberOneEnchantedI18n: Record<Languages, I18nPr
     version: "Ennemi public numéro un",
     text: [
       {
-        title: "Alter 3",
+        title: "<Alter> 3 {I}",
       },
       {
-        title: "CLEPTOMANE",
+        title: "Cleptomane",
         description:
           "Chaque fois que ce personnage en défie un autre, chaque adversaire perd 1 éclat de Lore et vous gagnez 1 éclat de Lore.",
       },
@@ -48,10 +48,10 @@ export const negaduckPublicEnemyNumberOneEnchantedI18n: Record<Languages, I18nPr
     version: "Nemico Pubblico Numero Uno",
     text: [
       {
-        title: "Trasformazione 3",
+        title: "<Trasformazione> 3 {I}",
       },
       {
-        title: "MANI LUNGHE",
+        title: "Mani Lunghe",
         description:
           "Ogni volta che questo personaggio sfida un altro personaggio, ogni avversario perde 1 leggenda e tu ottieni 1 leggenda.",
       },

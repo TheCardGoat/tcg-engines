@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { liShangSolemnSonI18n } from "./175-li-shang-solemn-son.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const liShangSolemnSon: CharacterCard = {
   id: "e25",
   canonicalId: "ci_e25",
+  slug: "lorcana-ci_e25",
+  printings: [
+    {
+      id: "set11-175",
+      artId: "set11-175",
+      setCode: "set11",
+      collectorNumber: "175",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-175"],
   cardType: "character",
   name: "Li Shang",
@@ -21,7 +33,7 @@ export const liShangSolemnSon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b63df19a6a2e47edb0325ce080a7ac04",
-    tcgPlayer: 676237,
+    tcgPlayer: "676237",
   },
   text: "Challenger +2",
   classifications: ["Storyborn", "Hero", "Captain"],

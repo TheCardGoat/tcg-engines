@@ -4,6 +4,17 @@ import { aladdinHeroicOutlawI18n } from "./104-aladdin-heroic-outlaw.i18n";
 export const aladdinHeroicOutlaw: CharacterCard = {
   id: "D7K",
   canonicalId: "ci_wrC",
+  slug: "lorcana-ci_wrC",
+  printings: [
+    {
+      id: "set1-104",
+      artId: "set1-104",
+      setCode: "set1",
+      collectorNumber: "104",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-104"],
   cardType: "character",
   name: "Aladdin",
@@ -20,7 +31,7 @@ export const aladdinHeroicOutlaw: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7c621010e3e6471d9916eee4bcd0b11d",
-    tcgPlayer: 510157,
+    tcgPlayer: "510157",
   },
   text: [
     {

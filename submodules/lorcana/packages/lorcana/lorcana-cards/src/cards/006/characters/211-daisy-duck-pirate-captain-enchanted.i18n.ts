@@ -17,7 +17,7 @@ export const daisyDuckPirateCaptainEnchantedI18n: Record<Languages, I18nProperti
     version: "Pirate Captain",
     text: [
       {
-        title: "DISTANT SHORES",
+        title: "Distant Shores",
         description:
           "Whenever one of your Pirate characters quests while at a location, draw a card.",
       },
@@ -28,7 +28,7 @@ export const daisyDuckPirateCaptainEnchantedI18n: Record<Languages, I18nProperti
     version: "Pirate Captain",
     text: [
       {
-        title: "DISTANT SHORES",
+        title: "Distant Shores",
         description:
           "Whenever one of your Pirate characters quests while at a location, draw a card.",
       },
@@ -39,7 +39,7 @@ export const daisyDuckPirateCaptainEnchantedI18n: Record<Languages, I18nProperti
     version: "Pirate Captain",
     text: [
       {
-        title: "DISTANT SHORES",
+        title: "Distant Shores",
         description:
           "Whenever one of your Pirate characters quests while at a location, draw a card.",
       },

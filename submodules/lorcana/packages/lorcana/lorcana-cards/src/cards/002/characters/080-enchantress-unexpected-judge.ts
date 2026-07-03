@@ -4,6 +4,17 @@ import { enchantressUnexpectedJudgeI18n } from "./080-enchantress-unexpected-jud
 export const enchantressUnexpectedJudge: CharacterCard = {
   id: "q7w",
   canonicalId: "ci_pH4",
+  slug: "lorcana-ci_pH4",
+  printings: [
+    {
+      id: "set2-080",
+      artId: "set2-080",
+      setCode: "set2",
+      collectorNumber: "80",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-080", "set9-081"],
   cardType: "character",
   name: "Enchantress",
@@ -20,7 +31,7 @@ export const enchantressUnexpectedJudge: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_140b8662d4f1474e8c39019b0bfbd3f3",
-    tcgPlayer: 650021,
+    tcgPlayer: "650021",
   },
   text: [
     {

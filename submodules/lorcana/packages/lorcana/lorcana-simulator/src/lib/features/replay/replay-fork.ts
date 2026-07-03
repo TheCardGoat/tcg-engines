@@ -78,6 +78,7 @@ export function forkReplayToLocalGame(input: ForkReplayInput): ForkReplayResult 
   // Create engine with the replay's card instances, load the state, then connect clients.
   const testEngine = new LorcanaMultiplayerTestEngine(
     {
+      capturePatches: false,
       seed: remapped.state.ctx.random.seed,
       staticResources,
       timeControl: { mode: "dynamic", config: DEFAULT_DYNAMIC_CLOCK_CONFIG },

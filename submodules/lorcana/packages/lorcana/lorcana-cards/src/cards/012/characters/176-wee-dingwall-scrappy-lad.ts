@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { weeDingwallScrappyLadI18n } from "./176-wee-dingwall-scrappy-lad.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const weeDingwallScrappyLad: CharacterCard = {
   id: "jMG",
   canonicalId: "ci_jMG",
+  slug: "lorcana-ci_jMG",
+  printings: [
+    {
+      id: "set12-176",
+      artId: "set12-176",
+      setCode: "set12",
+      collectorNumber: "176",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-176"],
   cardType: "character",
   name: "Wee Dingwall",
@@ -21,6 +33,7 @@ export const weeDingwallScrappyLad: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1fe95db14cce4c10b58cd4293dce1bb9",
+    tcgPlayer: "692076",
   },
   text: "Challenger +2",
   classifications: ["Storyborn", "Ally"],

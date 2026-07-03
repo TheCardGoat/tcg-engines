@@ -7,14 +7,17 @@ export const gd01GFighter009: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-009",
-  externalId: "gundam:gd01-009",
-  slug: "g-fighter-gd01-009",
+  canonicalId: "GD01-009",
+  externalIds: { bandai: "gundam:gd01-009" },
+  slug: "g-fighter/gd01-009",
   displayName: "G-Fighter",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-009",
   printings: [
     {
       id: "GD01-009",
+      artId: "GD01-009",
+      setCode: "GD01",
       collectorNumber: "GD01-009",
       cardNumber: "GD01-009",
       set: {
@@ -30,6 +33,8 @@ export const gd01GFighter009: UnitCard = {
     },
     {
       id: "GD01-009_p1",
+      artId: "GD01-009_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-009_p1",
       cardNumber: "GD01-009",
       set: {
@@ -44,6 +49,7 @@ export const gd01GFighter009: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-009", "GD01-009_p1"],
   selectedPrintingId: "GD01-009",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-009.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-009.webp?260424",

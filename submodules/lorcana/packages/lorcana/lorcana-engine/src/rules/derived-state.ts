@@ -141,6 +141,22 @@ function matchesStaticAbilityTarget(
   });
 }
 
+function isPlayerTarget(payload: unknown): boolean {
+  if (typeof payload === "string") {
+    return payload === "CONTROLLER" || payload === "OPPONENT" || payload === "EACH_PLAYER";
+  }
+
+  return (
+    typeof payload === "object" &&
+    payload !== null &&
+    "selector" in payload &&
+    (payload as { selector?: unknown }).selector !== undefined &&
+    !("cardType" in payload) &&
+    !("cardTypes" in payload) &&
+    !("zones" in payload)
+  );
+}
+
 function resolveStaticVariableAmount(
   args: Omit<Parameters<typeof _resolveStaticVariableAmount>[0], "state"> & {
     state: DerivedStateContext;
@@ -231,6 +247,7 @@ function createProjectionAmountContext(args: {
   const { state, getDefinitionByInstanceId } = args;
 
   return {
+    disableFilterRegistry: true,
     G: {
       lore: {},
       turnMetadata: state.G?.turnMetadata,
@@ -254,6 +271,13 @@ function createProjectionAmountContext(args: {
           (state.ctx.zones?.private?.zoneCards?.[`${zone}:${playerId}`] ?? []) as CardInstanceId[],
         getCardCount: ({ zone, playerId }: { zone: string; playerId: PlayerId }) =>
           (state.ctx.zones?.private?.zoneCards?.[`${zone}:${playerId}`] ?? []).length,
+        getCardOwner: (cardId: CardInstanceId) =>
+          state.ctx.zones?.private?.cardIndex?.[cardId]?.ownerID,
+        getCardController: (cardId: CardInstanceId) =>
+          state.ctx.zones?.private?.cardIndex?.[cardId]?.controllerID ??
+          state.ctx.zones?.private?.cardIndex?.[cardId]?.ownerID,
+        getCardZone: (cardId: CardInstanceId) =>
+          state.ctx.zones?.private?.cardIndex?.[cardId]?.zoneKey,
       },
     },
   };
@@ -810,6 +834,8 @@ export type PendingCostReduction = {
     | ("character" | "item" | "location" | "action" | "song")[]
     | readonly ("character" | "item" | "location" | "action" | "song")[];
   classification?: Classification | Classification[] | readonly Classification[];
+  cardName?: string;
+  playMethod?: "shift" | "standard" | "either";
   expiresAtTurn: number;
   consumeOnUse: boolean;
 };
@@ -905,11 +931,20 @@ function getStaticCostReductionAmount(args: {
   state: DerivedStateContext;
   playerId: PlayerId;
   definition: LorcanaCardDefinition;
+  shiftTargetId?: CardInstanceId;
   getDefinitionByInstanceId: (cardId: CardInstanceId) => LorcanaCardDefinition | undefined;
   playMethod?: "shift" | "standard" | "either";
   registry: StaticEffectRegistry;
 }): number {
-  const { state, playerId, definition, getDefinitionByInstanceId, playMethod, registry } = args;
+  const {
+    state,
+    playerId,
+    definition,
+    shiftTargetId,
+    getDefinitionByInstanceId,
+    playMethod,
+    registry,
+  } = args;
 
   const effects = registryEffectsForPlayer(registry, playerId, "cost-reduction");
   let total = 0;
@@ -922,6 +957,7 @@ function getStaticCostReductionAmount(args: {
       classification?: unknown;
       cardName?: string;
       playMethod?: string;
+      target?: unknown;
     };
     const effectPlayMethod = payload.playMethod;
     // "either" on the cost-reduction effect itself is a wildcard that matches both shift and standard.
@@ -946,6 +982,22 @@ function getStaticCostReductionAmount(args: {
     )
       continue;
     if (payload.cardName && !matchesCostReductionName(definition, payload.cardName)) continue;
+    if (
+      payload.target !== undefined &&
+      !isPlayerTarget(payload.target) &&
+      (playMethod !== "shift" ||
+        !shiftTargetId ||
+        !matchesStaticAbilityTarget({
+          state,
+          target: payload.target,
+          sourceId: e.sourceId,
+          targetCardId: shiftTargetId,
+          controllerId: e.sourceControllerId,
+          getDefinitionByInstanceId,
+        }))
+    ) {
+      continue;
+    }
 
     const rawAmount = payload.rawAmount;
     const rawReduction = payload.rawReduction;
@@ -1019,6 +1071,7 @@ export function getAppliedCostReductions(args: {
   actorPlayerId?: PlayerId;
   getDefinitionByInstanceId: (cardId: CardInstanceId) => LorcanaCardDefinition | undefined;
   playMethod?: "shift" | "standard";
+  shiftTargetId?: CardInstanceId;
   registry: StaticEffectRegistry | undefined;
 }): CostReductionApplication {
   const {
@@ -1030,6 +1083,7 @@ export function getAppliedCostReductions(args: {
     actorPlayerId,
     getDefinitionByInstanceId,
     playMethod,
+    shiftTargetId,
     registry,
   } = args;
 
@@ -1045,6 +1099,7 @@ export function getAppliedCostReductions(args: {
 
   const currentTurn = state.ctx.status?.turn ?? 1;
   const pendingReductions = getPendingCostReductions(state, actorPlayerId);
+  const normalizedPlayMethod = playMethod ?? "standard";
   let pendingAmount = 0;
   const consumeIndexes: number[] = [];
 
@@ -1058,6 +1113,16 @@ export function getAppliedCostReductions(args: {
     if (!matchesCostReductionClassification(definition, reduction.classification)) {
       return;
     }
+    if (!matchesCostReductionName(definition, reduction.cardName)) {
+      return;
+    }
+    if (
+      reduction.playMethod !== undefined &&
+      reduction.playMethod !== "either" &&
+      normalizedPlayMethod !== reduction.playMethod
+    ) {
+      return;
+    }
     pendingAmount += reduction.amount;
     if (reduction.consumeOnUse) {
       consumeIndexes.push(index);
@@ -1069,6 +1134,7 @@ export function getAppliedCostReductions(args: {
         state,
         playerId: actorPlayerId,
         definition,
+        shiftTargetId,
         getDefinitionByInstanceId,
         playMethod,
         registry,

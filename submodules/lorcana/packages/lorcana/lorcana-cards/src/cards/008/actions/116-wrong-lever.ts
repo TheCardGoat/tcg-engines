@@ -4,6 +4,17 @@ import { wrongLeverI18n } from "./116-wrong-lever.i18n";
 export const wrongLever: ActionCard = {
   id: "NXU",
   canonicalId: "ci_M7a",
+  slug: "lorcana-ci_M7a",
+  printings: [
+    {
+      id: "set8-116",
+      artId: "set8-116",
+      setCode: "set8",
+      collectorNumber: "116",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-116"],
   cardType: "action",
   name: "Wrong Lever!",
@@ -16,7 +27,7 @@ export const wrongLever: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a209d31e37bc44e78b2f56cf474bde5d",
-    tcgPlayer: 631988,
+    tcgPlayer: "631988",
   },
   text: "Choose one:\n- Return chosen character to their player's hand.\n- Put a Pull the Lever! card from your discard pile on the bottom of your deck to put chosen character on the bottom of their owner's deck.",
   abilities: [

@@ -5,7 +5,7 @@ import {
   resolveSeriesDestination,
   type LiveMatchContext,
   type LiveMatchOverview,
-} from "./matchContext";
+} from "./matchContext.js";
 
 const basename = "/cyberpunk/simulator/";
 

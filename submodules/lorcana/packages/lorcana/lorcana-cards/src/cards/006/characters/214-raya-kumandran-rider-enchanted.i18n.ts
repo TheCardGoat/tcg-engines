@@ -17,7 +17,7 @@ export const rayaKumandranRiderEnchantedI18n: Record<Languages, I18nProperties> 
     version: "Reiterin aus Kumandra",
     text: [
       {
-        title: "AUF GEHT'S, WIR SCHAFFEN DAS",
+        title: "Auf geht's, wir schaffen das",
         description:
           "Einmal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du einen deiner anderen Charaktere wählen und bereit machen. Er kann in diesem Zug nicht mehr erkunden.",
       },
@@ -28,7 +28,7 @@ export const rayaKumandranRiderEnchantedI18n: Record<Languages, I18nProperties> 
     version: "Chevaucheuse de Kumandra",
     text: [
       {
-        title: "ALLEZ, C'EST PARTI",
+        title: "Allez, c'est parti",
         description:
           "Une fois durant votre tour, lorsqu'une carte est placée dans votre réserve d'encre, vous pouvez choisir un autre de vos personnages et le redresser. Ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
@@ -39,7 +39,7 @@ export const rayaKumandranRiderEnchantedI18n: Record<Languages, I18nProperties> 
     version: "Cavallerizza di Kumandra",
     text: [
       {
-        title: "ANDIAMO, FACCIAMOLO",
+        title: "Andiamo, Facciamolo",
         description:
           "Una volta durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi preparare un tuo altro personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno.",
       },

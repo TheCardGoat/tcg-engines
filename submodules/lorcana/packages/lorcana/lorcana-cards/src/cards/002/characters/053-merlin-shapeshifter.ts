@@ -4,6 +4,17 @@ import { merlinShapeshifterI18n } from "./053-merlin-shapeshifter.i18n";
 export const merlinShapeshifter: CharacterCard = {
   id: "ijy",
   canonicalId: "ci_ijy",
+  slug: "lorcana-ci_ijy",
+  printings: [
+    {
+      id: "set2-053",
+      artId: "set2-053",
+      setCode: "set2",
+      collectorNumber: "53",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-053"],
   cardType: "character",
   name: "Merlin",
@@ -20,7 +31,7 @@ export const merlinShapeshifter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_05560bab5aba45cd8cd838e0d3597cce",
-    tcgPlayer: 516329,
+    tcgPlayer: "516329",
   },
   text: [
     {

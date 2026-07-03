@@ -17,7 +17,7 @@ export const minnieMouseCompassionateFriendI18n: Record<Languages, I18nPropertie
     version: "Mitfühlende Freundin",
     text: [
       {
-        title: "FLICKT SIE WIEDER ZUSAMMEN",
+        title: "Flickt sie wieder zusammen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -28,7 +28,7 @@ export const minnieMouseCompassionateFriendI18n: Record<Languages, I18nPropertie
     version: "Amie compatissante",
     text: [
       {
-        title: "UN PETIT REMÈDE!",
+        title: "Un petit remède!",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage et lui retirer jusqu'à 2 dommages.",
       },
@@ -39,7 +39,7 @@ export const minnieMouseCompassionateFriendI18n: Record<Languages, I18nPropertie
     version: "Amica Caritatevole",
     text: [
       {
-        title: "RATTOPPARLI",
+        title: "Rattopparli",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi rimuovere fino a 2 danni da un personaggio a tua scelta.",
       },

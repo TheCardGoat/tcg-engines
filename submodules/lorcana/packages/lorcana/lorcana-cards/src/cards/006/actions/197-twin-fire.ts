@@ -4,6 +4,17 @@ import { twinFireI18n } from "./197-twin-fire.i18n";
 export const twinFire: ActionCard = {
   id: "Vmz",
   canonicalId: "ci_Vmz",
+  slug: "lorcana-ci_Vmz",
+  printings: [
+    {
+      id: "set6-197",
+      artId: "set6-197",
+      setCode: "set6",
+      collectorNumber: "197",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-197"],
   cardType: "action",
   name: "Twin Fire",
@@ -16,7 +27,7 @@ export const twinFire: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_7f56bbeab3ce4593beb4feea23724b82",
-    tcgPlayer: 591992,
+    tcgPlayer: "591992",
   },
   text: "Deal 2 damage to chosen character. Then, you may choose and discard a card to deal 2 damage to another chosen character.",
   abilities: [

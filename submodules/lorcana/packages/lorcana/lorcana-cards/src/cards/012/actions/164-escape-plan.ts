@@ -4,6 +4,17 @@ import { escapePlanI18n } from "./164-escape-plan.i18n";
 export const escapePlan: ActionCard = {
   id: "6F2",
   canonicalId: "ci_6F2",
+  slug: "lorcana-ci_6F2",
+  printings: [
+    {
+      id: "set12-164",
+      artId: "set12-164",
+      setCode: "set12",
+      collectorNumber: "164",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-164"],
   cardType: "action",
   name: "Escape Plan",
@@ -14,9 +25,9 @@ export const escapePlan: ActionCard = {
   rarity: "rare",
   cost: 5,
   inkable: false,
-
   externalIds: {
     lorcast: "crd_85de0815b3344000a8f380b6ceefc07e",
+    tcgPlayer: "692072",
   },
   text: [
     {

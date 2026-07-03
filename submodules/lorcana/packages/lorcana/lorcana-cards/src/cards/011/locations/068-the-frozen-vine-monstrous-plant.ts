@@ -4,6 +4,17 @@ import { theFrozenVineMonstrousPlantI18n } from "./068-the-frozen-vine-monstrous
 export const theFrozenVineMonstrousPlant: LocationCard = {
   id: "siR",
   canonicalId: "ci_5Ub",
+  slug: "lorcana-ci_5Ub",
+  printings: [
+    {
+      id: "set11-068",
+      artId: "set11-068",
+      setCode: "set11",
+      collectorNumber: "68",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-068"],
   cardType: "location",
   name: "The Frozen Vine",
@@ -20,7 +31,7 @@ export const theFrozenVineMonstrousPlant: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_27d46247102c480c8b2ce98be8bb15f5",
-    tcgPlayer: 673308,
+    tcgPlayer: "673308",
   },
   text: [
     {

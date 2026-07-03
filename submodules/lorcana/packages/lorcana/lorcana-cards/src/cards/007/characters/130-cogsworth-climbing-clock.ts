@@ -4,6 +4,17 @@ import { cogsworthClimbingClockI18n } from "./130-cogsworth-climbing-clock.i18n"
 export const cogsworthClimbingClock: CharacterCard = {
   id: "ATx",
   canonicalId: "ci_ATx",
+  slug: "lorcana-ci_ATx",
+  printings: [
+    {
+      id: "set7-130",
+      artId: "set7-130",
+      setCode: "set7",
+      collectorNumber: "130",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-130"],
   cardType: "character",
   name: "Cogsworth",
@@ -20,7 +31,7 @@ export const cogsworthClimbingClock: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7e99e5b9bd2747d29e6393aff2685158",
-    tcgPlayer: 619477,
+    tcgPlayer: "619477",
   },
   text: [
     {

@@ -4,21 +4,41 @@ export const ratCaponeRodentGangsterI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Rat Capone",
     version: "Rodent Gangster",
-    text: "\\SHADAAP!\\ While this character has no damage, he gets +3 {S}.",
+    text: [
+      {
+        title: "SHADAAP!",
+        description: "While this character has no damage, he gets +3 {S}.",
+      },
+    ],
   },
   de: {
     name: "Rat Capone",
-    version: "Rodent Gangster",
-    text: "\\SHADAAP!\\ While this character has no damage, he gets +3 {S}.",
+    version: "Nagetier-Gangster",
+    text: [
+      {
+        title: "SCHWEIG!",
+        description: "Solange dieser Charakter unbeschädigt ist, erhält er +3 {S}.",
+      },
+    ],
   },
   fr: {
     name: "Rat Capone",
-    version: "Rodent Gangster",
-    text: "\\SHADAAP!\\ While this character has no damage, he gets +3 {S}.",
+    version: "Rongeur Gangster",
+    text: [
+      {
+        title: "Tais-toi!",
+        description: "Tant que ce personnage n'a aucun dommage sur lui, il gagne +3 {S}.",
+      },
+    ],
   },
   it: {
-    name: "Rat Capone",
-    version: "Rodent Gangster",
-    text: "\\SHADAAP!\\ While this character has no damage, he gets +3 {S}.",
+    name: "Topo Capone",
+    version: "Gangster Roditore",
+    text: [
+      {
+        title: "ZITTOOO!",
+        description: "Mentre questo personaggio non ha danno, riceve +3 {S}.",
+      },
+    ],
   },
 };

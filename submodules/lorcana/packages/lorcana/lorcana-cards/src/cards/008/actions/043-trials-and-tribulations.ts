@@ -4,6 +4,17 @@ import { trialsAndTribulationsI18n } from "./043-trials-and-tribulations.i18n";
 export const trialsAndTribulations: ActionCard = {
   id: "yHH",
   canonicalId: "ci_yHH",
+  slug: "lorcana-ci_yHH",
+  printings: [
+    {
+      id: "set8-043",
+      artId: "set8-043",
+      setCode: "set8",
+      collectorNumber: "43",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-043"],
   cardType: "action",
   name: "Trials and Tribulations",
@@ -16,7 +27,7 @@ export const trialsAndTribulations: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0194ae6591894265a420ae3e50f6a355",
-    tcgPlayer: 631381,
+    tcgPlayer: "631381",
   },
   text: "Chosen character gets -4 {S} until the start of your next turn.",
   actionSubtype: "song",

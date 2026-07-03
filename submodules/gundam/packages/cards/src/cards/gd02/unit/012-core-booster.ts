@@ -7,14 +7,17 @@ export const gd02CoreBooster012: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD02-012",
-  externalId: "gundam:gd02-012",
-  slug: "core-booster-gd02-012",
+  canonicalId: "GD02-012",
+  externalIds: { bandai: "gundam:gd02-012" },
+  slug: "core-booster/gd02-012",
   displayName: "Core Booster",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-012",
   printings: [
     {
       id: "GD02-012",
+      artId: "GD02-012",
+      setCode: "GD02",
       collectorNumber: "GD02-012",
       cardNumber: "GD02-012",
       set: {
@@ -29,6 +32,7 @@ export const gd02CoreBooster012: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-012"],
   selectedPrintingId: "GD02-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-012.webp?260424",

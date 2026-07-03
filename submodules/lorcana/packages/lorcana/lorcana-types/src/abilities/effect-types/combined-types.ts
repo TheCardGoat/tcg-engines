@@ -65,6 +65,7 @@ import type {
   LoseKeywordEffect,
   ModifyStatEffect,
   NameACardEffect,
+  PlayFromDiscardEffect,
   PropertyModificationEffect,
   PutOnTopEffect,
   RevealUntilMatchEffect,
@@ -79,6 +80,7 @@ import type {
   WinConditionEffect,
 } from "./modifier-effects";
 import type {
+  EnablePlayFromDiscardEffect,
   EnablePlayFromUnderEffect,
   GrantAbilitiesWhileHereEffect,
   MoveCostReductionEffect,
@@ -132,6 +134,7 @@ export type Effect =
   | MoveCardsFromUnderEffect
   // Play Card
   | PlayCardEffect
+  | EnablePlayFromDiscardEffect
   | EnablePlayFromUnderEffect
   // Location Movement
   | MoveToLocationEffect
@@ -273,6 +276,7 @@ export type StaticEffect =
   | PropertyModificationEffect
   | GrantHandInkabilityEffect
   | GrantDiscardInkabilityEffect
+  | PlayFromDiscardEffect
   // Self play conditions
   | SelfPlayConditionEffect
   // Ability suppression
@@ -412,7 +416,7 @@ export interface PutCardUnderEffect {
  */
 export interface PayCostEffect {
   type: "pay-cost";
-  cost?: { ink?: number; exert?: boolean };
+  cost?: { ink?: number; exert?: boolean; millTopDeck?: number };
   effect?: Effect;
 }
 

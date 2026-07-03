@@ -6,14 +6,17 @@ export const rpResource001: ResourceCard = {
   type: "resource",
   traits: [],
   id: "RP-001",
-  externalId: "gundam:rp-001",
-  slug: "resource-rp-001",
+  canonicalId: "RP-001",
+  externalIds: { bandai: "gundam:rp-001" },
+  slug: "resource/rp-001",
   displayName: "Resource",
   set: { code: "RP", name: "Edition Beta BANDAI TCG+ Store Trial Event", packageId: "616901" },
   printNumber: "RP-001",
   printings: [
     {
       id: "RP-001",
+      artId: "RP-001",
+      setCode: "RP",
       collectorNumber: "RP-001",
       cardNumber: "RP-001",
       set: {
@@ -28,6 +31,7 @@ export const rpResource001: ResourceCard = {
       productName: "Edition Beta BANDAI TCG+ Store Trial Event",
     },
   ],
+  reprints: ["RP-001"],
   selectedPrintingId: "RP-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-001.webp?260424",

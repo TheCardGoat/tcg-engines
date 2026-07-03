@@ -4,6 +4,17 @@ import { scarabI18n } from "./083-scarab.i18n";
 export const scarab: ItemCard = {
   id: "wF1",
   canonicalId: "ci_wF1",
+  slug: "lorcana-ci_wF1",
+  printings: [
+    {
+      id: "set8-083",
+      artId: "set8-083",
+      setCode: "set8",
+      collectorNumber: "83",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-083"],
   cardType: "item",
   name: "Scarab",
@@ -16,7 +27,7 @@ export const scarab: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ae421dc6240c4060ae788fa48c5aa487",
-    tcgPlayer: 631404,
+    tcgPlayer: "631404",
   },
   text: [
     {

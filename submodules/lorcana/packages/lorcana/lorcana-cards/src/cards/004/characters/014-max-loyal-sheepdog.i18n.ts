@@ -17,9 +17,9 @@ export const maxLoyalSheepdogI18n: Record<Languages, I18nProperties> = {
     version: "Loyaler Hirtenhund",
     text: [
       {
-        title: "NA, KOMM HER, JUNGE!",
+        title: "Na, komm her, Junge!",
         description:
-          "Wenn du einen Prinz-Eric-Charakter im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Wenn du einen Prinz-Eric-Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const maxLoyalSheepdogI18n: Record<Languages, I18nProperties> = {
     version: "Chien de berger fidèle",
     text: [
       {
-        title: "VIENS, MON CHIEN",
+        title: "Viens, mon chien",
         description:
-          "Si vous avez un personnage Prince Eric en jeu, jouer ce personnage coûte 1 de moins.",
+          "Si vous avez un personnage Prince Eric en jeu, jouer ce personnage coûte 1 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const maxLoyalSheepdogI18n: Record<Languages, I18nProperties> = {
     version: "Fedele Cane Pastore",
     text: [
       {
-        title: "QUI BELLO",
+        title: "Qui Bello",
         description:
-          "Se hai in gioco un personaggio chiamato Principe Eric, paga 1 in meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio chiamato Principe Eric, paga 1 {I} in meno per giocare questo personaggio.",
       },
     ],
   },

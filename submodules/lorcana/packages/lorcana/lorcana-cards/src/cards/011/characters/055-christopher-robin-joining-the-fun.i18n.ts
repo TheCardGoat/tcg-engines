@@ -17,9 +17,9 @@ export const christopherRobinJoiningTheFunI18n: Record<Languages, I18nProperties
     version: "Mit Spaß bei der Sache",
     text: [
       {
-        title: "UNDERDOG",
+        title: "Underdog",
         description:
-          "Falls dies dein erster Zug ist und du das Spiel nicht begonnen hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Falls dies dein erster Zug ist und du das Spiel nicht begonnen hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const christopherRobinJoiningTheFunI18n: Record<Languages, I18nProperties
     version: "Se joint à la bataille",
     text: [
       {
-        title: "OUTSIDER",
+        title: "Outsider",
         description:
-          "Jouer ce personnage vous coûte 1 de moins si c'est votre premier tour et que vous n'êtes pas le premier joueur.",
+          "Jouer ce personnage vous coûte 1 {I} de moins si c'est votre premier tour et que vous n'êtes pas le premier joueur.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const christopherRobinJoiningTheFunI18n: Record<Languages, I18nProperties
     version: "Che Si Unisce al Divertimento",
     text: [
       {
-        title: "SFAVORITO",
+        title: "Sfavorito",
         description:
-          "Se questo è il tuo primo turno e non sei il primo giocatore, paga 1 in meno per giocare questo personaggio.",
+          "Se questo è il tuo primo turno e non sei il primo giocatore, paga 1 {I} in meno per giocare questo personaggio.",
       },
     ],
   },

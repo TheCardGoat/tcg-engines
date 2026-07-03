@@ -20,10 +20,11 @@ export const bagheeraGuardianJaguarI18n: Record<Languages, I18nProperties> = {
     version: "Wächter-Jaguar",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "DU MUSST JETZT TAPFER SEIN",
+        title: "Du musst jetzt tapfer sein",
         description:
           "Wenn dieser Charakter im Zug einer gegnerischen Person verbannt wird, füge jedem gegnerischen Charakter 2 Schaden zu.",
       },
@@ -34,10 +35,11 @@ export const bagheeraGuardianJaguarI18n: Record<Languages, I18nProperties> = {
     version: "Gardien félin",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "IL FAUT QUE TU SOIS BRAVE",
+        title: "Il faut que tu sois brave",
         description:
           "Lorsque ce personnage est banni durant le tour d'un adversaire, infligez 2 dommages à chaque personnage adverse.",
       },
@@ -48,10 +50,10 @@ export const bagheeraGuardianJaguarI18n: Record<Languages, I18nProperties> = {
     version: "Giaguaro Protettore",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "DEVI ESSERE CORAGGIOSO",
+        title: "Devi Essere Coraggioso",
         description:
           "Durante il turno di un avversario, quando questo personaggio viene esiliato, infliggi 2 danni a ogni personaggio avversario.",
       },

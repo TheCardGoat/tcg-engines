@@ -4,6 +4,17 @@ import { fangmeyerIcyOfficerI18n } from "./010-fangmeyer-icy-officer.i18n";
 export const fangmeyerIcyOfficer: CharacterCard = {
   id: "pOQ",
   canonicalId: "ci_pOQ",
+  slug: "lorcana-ci_pOQ",
+  printings: [
+    {
+      id: "set11-010",
+      artId: "set11-010",
+      setCode: "set11",
+      collectorNumber: "10",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-010"],
   cardType: "character",
   name: "Fangmeyer",
@@ -20,7 +31,7 @@ export const fangmeyerIcyOfficer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f3392db6475445bbb5ad6f608dc86c4b",
-    tcgPlayer: 674827,
+    tcgPlayer: "674827",
   },
   text: [
     {

@@ -15,9 +15,9 @@ export const pixieDustI18n: Record<Languages, I18nProperties> = {
     name: "Feenglanz",
     text: [
       {
-        title: "MUT UND VERTRAUEN, 2",
+        title: "Mut und Vertrauen",
         description:
-          "— Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Herausfordern +2 und Wendig. (Während der Charakter herausfordert, erhält er +2. Nur Charaktere mit Wendig können den Charakter herausfordern.)",
+          "{E}, 2 {I} — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Herausfordern> +2 und <Wendig>. (Während der Charakter herausfordert, erhält er +2 {S}. Nur Charaktere mit Wendig können den Charakter herausfordern.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const pixieDustI18n: Record<Languages, I18nProperties> = {
     name: "Poussière de fée",
     text: [
       {
-        title: "Y CROIRE DUR COMME FER, 2",
+        title: "Y croire dur comme fer",
         description:
-          "— Choisissez un personnage qui gagne Offensif +2 et Insaisissable jusqu'au début de votre prochain tour. (Lorsqu'il défie, ce personnage gagne +2. Seuls les personnages avec Insaisissable peuvent défier ce personnage.)",
+          "{E}, 2 {I} — Choisissez un personnage qui gagne <Offensif> +2 et <Insaisissable> jusqu'au début de votre prochain tour. (Lorsqu'il défie, ce personnage gagne +2 {S}. Seuls les personnages avec Insaisissable peuvent défier ce personnage.)",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const pixieDustI18n: Record<Languages, I18nProperties> = {
     name: "Polvere di Fata",
     text: [
       {
-        title: "UN PO' DI FANTASIA, 2",
+        title: "Un Po' Di Fantasia",
         description:
-          "— Un personaggio a tua scelta ottiene Sfidante +2 e Sfuggente fino all'inizio del tuo prossimo turno. (Riceve +2 mentre sta sfidando. Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "{E}, 2 {I} — Un personaggio a tua scelta ottiene <Sfidante> +2 e <Sfuggente> fino all'inizio del tuo prossimo turno. (Riceve +2 {S} mentre sta sfidando. Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

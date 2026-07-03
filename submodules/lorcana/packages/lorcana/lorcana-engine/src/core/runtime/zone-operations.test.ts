@@ -289,6 +289,26 @@ describe("Zone Operations", () => {
       expect(newState.ctx.zones.private.zoneCards.hand).toEqual(["moved-card"]);
       expect(newState.ctx.zones.private.zoneCards.deck).not.toContain("moved-card");
     });
+
+    it("should draw from the bottom when requested", () => {
+      const state = createTestState();
+
+      const newState = create(state, (draft) => {
+        const ops = createZoneOperations(draft);
+        const drawn = ops.drawCards({
+          from: { zone: "deck", playerId: "p1" },
+          to: { zone: "hand", playerId: "p1" },
+          count: 2,
+          position: "bottom",
+        });
+
+        expect(drawn).toEqual(["card-1", "card-2"]);
+      });
+
+      expect(newState.ctx.zones.private.zoneCards.hand).toEqual(["card-1", "card-2"]);
+      expect(newState.ctx.zones.private.zoneCards.deck).not.toContain("card-1");
+      expect(newState.ctx.zones.private.zoneCards.deck).not.toContain("card-2");
+    });
   });
 
   describe("drawSpecificCard", () => {

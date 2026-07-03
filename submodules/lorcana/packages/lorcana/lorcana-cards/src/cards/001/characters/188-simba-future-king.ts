@@ -4,6 +4,17 @@ import { simbaFutureKingI18n } from "./188-simba-future-king.i18n";
 export const simbaFutureKing: CharacterCard = {
   id: "dTm",
   canonicalId: "ci_dTm",
+  slug: "lorcana-ci_dTm",
+  printings: [
+    {
+      id: "set1-188",
+      artId: "set1-188",
+      setCode: "set1",
+      collectorNumber: "188",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-188"],
   cardType: "character",
   name: "Simba",
@@ -20,7 +31,7 @@ export const simbaFutureKing: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9f35462bf6cc430f89c193d85507ea73",
-    tcgPlayer: 502536,
+    tcgPlayer: "502536",
   },
   text: [
     {

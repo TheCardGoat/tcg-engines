@@ -4,6 +4,17 @@ import { hadesDoubleDealerI18n } from "./074-hades-double-dealer.i18n";
 export const hadesDoubleDealer: CharacterCard = {
   id: "V9W",
   canonicalId: "ci_V9W",
+  slug: "lorcana-ci_V9W",
+  printings: [
+    {
+      id: "set4-074",
+      artId: "set4-074",
+      setCode: "set4",
+      collectorNumber: "74",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-074"],
   cardType: "character",
   name: "Hades",
@@ -20,7 +31,7 @@ export const hadesDoubleDealer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_56206ef4f9ec4b82afc4a656d41e5ba4",
-    tcgPlayer: 550575,
+    tcgPlayer: "550575",
   },
   text: [
     {

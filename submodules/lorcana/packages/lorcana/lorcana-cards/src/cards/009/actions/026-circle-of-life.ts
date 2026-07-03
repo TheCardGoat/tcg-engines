@@ -4,6 +4,17 @@ import { circleOfLifeI18n } from "./026-circle-of-life.i18n";
 export const circleOfLife: ActionCard = {
   id: "SRg",
   canonicalId: "ci_gzm",
+  slug: "lorcana-ci_gzm",
+  printings: [
+    {
+      id: "set9-026",
+      artId: "set9-026",
+      setCode: "set9",
+      collectorNumber: "26",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-026"],
   cardType: "action",
   name: "Circle of Life",
@@ -16,7 +27,7 @@ export const circleOfLife: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ee377c93c09341fe808b8582cbded0f2",
-    tcgPlayer: 649230,
+    tcgPlayer: "649230",
   },
   text: [
     {

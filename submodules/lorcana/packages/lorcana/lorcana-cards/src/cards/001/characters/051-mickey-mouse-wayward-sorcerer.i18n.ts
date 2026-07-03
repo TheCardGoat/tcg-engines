@@ -21,11 +21,11 @@ export const mickeyMouseWaywardSorcererI18n: Record<Languages, I18nProperties> =
     version: "Eigenwilliger Zauberer",
     text: [
       {
-        title: "LEBENDIGE BESEN",
-        description: "Du zahlst 1 weniger, um Besen auszuspielen.",
+        title: "Lebendige Besen",
+        description: "Du zahlst 1 {I} weniger, um Besen auszuspielen.",
       },
       {
-        title: "UNERMÜDLICHE ARBEITER",
+        title: "Unermüdliche Arbeiter",
         description:
           "Jedes Mal, wenn einer deiner Besen durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen.",
       },
@@ -37,7 +37,7 @@ export const mickeyMouseWaywardSorcererI18n: Record<Languages, I18nProperties> =
     text: [
       {
         title: "ANIMER LES BALAIS",
-        description: "Les personnages Balai vous coûtent 1 de moins à jouer.",
+        description: "Les personnages Balai vous coûtent 1 {I} de moins à jouer.",
       },
       {
         title: "TRAVAILLEUR INFATIGABLE",
@@ -51,11 +51,11 @@ export const mickeyMouseWaywardSorcererI18n: Record<Languages, I18nProperties> =
     version: "Wayward Sorcerer",
     text: [
       {
-        title: "ANIMATE BROOM",
-        description: "You pay 1 less to play Broom characters.",
+        title: "Animate Broom",
+        description: "You pay 1 {I} less to play Broom characters.",
       },
       {
-        title: "CEASELESS WORKER",
+        title: "Ceaseless Worker",
         description:
           "Whenever one of your Broom characters is banished in a challenge, you may return that card to your hand.",
       },

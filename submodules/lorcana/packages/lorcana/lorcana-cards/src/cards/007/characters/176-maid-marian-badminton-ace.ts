@@ -4,6 +4,17 @@ import { maidMarianBadmintonAceI18n } from "./176-maid-marian-badminton-ace.i18n
 export const maidMarianBadmintonAce: CharacterCard = {
   id: "II0",
   canonicalId: "ci_II0",
+  slug: "lorcana-ci_II0",
+  printings: [
+    {
+      id: "set7-176",
+      artId: "set7-176",
+      setCode: "set7",
+      collectorNumber: "176",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-176"],
   cardType: "character",
   name: "Maid Marian",
@@ -12,7 +23,7 @@ export const maidMarianBadmintonAce: CharacterCard = {
   franchise: "Robin Hood",
   set: "007",
   cardNumber: 176,
-  rarity: "super_rare",
+  rarity: "common",
   cost: 4,
   strength: 3,
   willpower: 3,
@@ -20,13 +31,13 @@ export const maidMarianBadmintonAce: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1a7dadb10b334375b5b5b4eca2cce42c",
-    tcgPlayer: 619508,
+    tcgPlayer: "619508",
   },
   text: [
     {
       title: "GOOD SHOT",
       description:
-        "During an opponent's turn, whenever one of your Ally characters takes damage, deal 1 damage to chosen opposing character.",
+        "During an opponent's turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.",
     },
     {
       title: "FAIR PLAY",
@@ -48,7 +59,12 @@ export const maidMarianBadmintonAce: CharacterCard = {
           cardType: "character",
           classification: "Ally",
         },
-        restrictions: [{ type: "during-turn", whose: "opponent" }],
+        restrictions: [
+          {
+            type: "during-turn",
+            whose: "opponent",
+          },
+        ],
       },
       effect: {
         type: "deal-damage",
@@ -78,7 +94,12 @@ export const maidMarianBadmintonAce: CharacterCard = {
           selector: "all",
           zones: ["play"],
           filter: [
-            { type: "attribute", attribute: "name", comparison: "equals", value: "Lady Kluck" },
+            {
+              type: "attribute",
+              attribute: "name",
+              comparison: "equals",
+              value: "Lady Kluck",
+            },
           ],
         },
       },

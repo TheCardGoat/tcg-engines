@@ -128,6 +128,10 @@ export class LorcanaBoardPresenter {
     return this.#game.boardAnimationPlaceholders();
   }
 
+  get boardAnimationCardIds(): ReadonlySet<string> {
+    return this.#game.boardAnimationCardIds();
+  }
+
   get inFlightCardIds(): ReadonlySet<string> {
     return this.#game.inFlightCardIds();
   }
@@ -259,6 +263,17 @@ export class LorcanaBoardPresenter {
         return { ...snapshot, isFromUnder: true } as LorcanaCardSnapshot;
       })
       .filter((card): card is LorcanaCardSnapshot => card !== null);
+  }
+
+  getPlayableFromDiscardCards(playerSide: LorcanaPlayerSide): LorcanaCardSnapshot[] {
+    if (!this.boardSnapshot) {
+      return [];
+    }
+
+    const playableCardIds = new Set(this.playableHandCardIds);
+    return this.getZoneCards(playerSide, "discard")
+      .filter((card) => playableCardIds.has(card.cardId))
+      .map((card) => ({ ...card, isFromDiscard: true }));
   }
 
   getPlayerSummary(playerSide: LorcanaPlayerSide): LorcanaPlayerSummary | null {

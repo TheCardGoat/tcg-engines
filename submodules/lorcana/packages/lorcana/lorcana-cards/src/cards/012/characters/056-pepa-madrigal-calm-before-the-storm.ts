@@ -4,6 +4,17 @@ import { pepaMadrigalCalmBeforeTheStormI18n } from "./056-pepa-madrigal-calm-bef
 export const pepaMadrigalCalmBeforeTheStorm: CharacterCard = {
   id: "LJg",
   canonicalId: "ci_LJg",
+  slug: "lorcana-ci_LJg",
+  printings: [
+    {
+      id: "set12-056",
+      artId: "set12-056",
+      setCode: "set12",
+      collectorNumber: "56",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-056"],
   cardType: "character",
   name: "Pepa Madrigal",
@@ -20,6 +31,7 @@ export const pepaMadrigalCalmBeforeTheStorm: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c86ece1b256b431cbc0591173b5fe042",
+    tcgPlayer: "692160",
   },
   text: [
     {

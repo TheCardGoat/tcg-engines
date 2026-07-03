@@ -7,14 +7,17 @@ export const gd04GrahamSUnionFlagCustomGnFlag071: UnitCard = {
   color: "white",
   traits: ["un"],
   id: "GD04-071",
-  externalId: "gundam:gd04-071",
-  slug: "graham-s-union-flag-custom-gn-flag-gd04-071",
+  canonicalId: "GD04-071",
+  externalIds: { bandai: "gundam:gd04-071" },
+  slug: "graham-s-union-flag-custom-ii-gn-flag/gd04-071",
   displayName: "Graham's Union Flag Custom Ⅱ (GN Flag)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-071",
   printings: [
     {
       id: "GD04-071",
+      artId: "GD04-071",
+      setCode: "GD04",
       collectorNumber: "GD04-071",
       cardNumber: "GD04-071",
       set: {
@@ -30,6 +33,8 @@ export const gd04GrahamSUnionFlagCustomGnFlag071: UnitCard = {
     },
     {
       id: "GD04-071_p1",
+      artId: "GD04-071_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-071_p1",
       cardNumber: "GD04-071",
       set: {
@@ -44,6 +49,7 @@ export const gd04GrahamSUnionFlagCustomGnFlag071: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-071", "GD04-071_p1"],
   selectedPrintingId: "GD04-071",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-071.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-071.webp?260424",

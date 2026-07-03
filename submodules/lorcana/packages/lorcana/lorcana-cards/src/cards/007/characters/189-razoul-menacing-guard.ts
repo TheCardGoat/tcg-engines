@@ -4,6 +4,17 @@ import { razoulMenacingGuardI18n } from "./189-razoul-menacing-guard.i18n";
 export const razoulMenacingGuard: CharacterCard = {
   id: "ez3",
   canonicalId: "ci_ez3",
+  slug: "lorcana-ci_ez3",
+  printings: [
+    {
+      id: "set7-189",
+      artId: "set7-189",
+      setCode: "set7",
+      collectorNumber: "189",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-189"],
   cardType: "character",
   name: "Razoul",
@@ -20,7 +31,7 @@ export const razoulMenacingGuard: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_96a1de9a610e4a3e9dd061cc349d5870",
-    tcgPlayer: 619516,
+    tcgPlayer: "619516",
   },
   text: [
     {

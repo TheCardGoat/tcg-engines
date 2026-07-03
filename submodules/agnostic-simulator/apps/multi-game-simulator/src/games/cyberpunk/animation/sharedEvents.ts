@@ -2,8 +2,8 @@ import type { CardZone } from "@tcg/cyberpunk-types";
 import type { SimulatorAnimationEvent } from "@tcg/simulator-ui";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 
-import { PLAYER_SIDE_TO_ID, type Side } from "../engine";
 import { cyberpunkCardZoneToSimulatorZone } from "../engine/projectSimulator";
+import { PLAYER_SIDE_TO_ID, type Side } from "../engine";
 import type { AnimationScript, AnimationStep } from "./types";
 
 export interface CyberpunkSharedAnimationContext {

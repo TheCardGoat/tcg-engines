@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { flynnRiderSpectralScoundrelI18n } from "./081-flynn-rider-spectral-scoundrel.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const flynnRiderSpectralScoundrel: CharacterCard = {
   id: "Gbt",
   canonicalId: "ci_Gbt",
+  slug: "lorcana-ci_Gbt",
+  printings: [
+    {
+      id: "set10-081",
+      artId: "set10-081",
+      setCode: "set10",
+      collectorNumber: "81",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-081"],
   cardType: "character",
   name: "Flynn Rider",
@@ -21,7 +33,7 @@ export const flynnRiderSpectralScoundrel: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e24a3ebbac57485091abad86f0e5064f",
-    tcgPlayer: 659452,
+    tcgPlayer: "659452",
   },
   text: [
     {

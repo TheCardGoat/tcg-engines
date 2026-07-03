@@ -6,27 +6,29 @@ export const letItGoI18n: Record<Languages, I18nProperties> = {
     text: "Put chosen character into their player's inkwell facedown and exerted.",
   },
   de: {
-    name: "Let It Go",
+    name: "Let it Go",
     text: [
       {
-        title: "(A",
-        description:
-          "character with cost 5 or more can to sing this song for free.) Put chosen character into their player's inkwell facedown and exerted.",
+        title: "(A character with cost 5 or more can {E} to sing this song for free.)",
+      },
+      {
+        title: "Put chosen character into their player's inkwell facedown and exerted.",
       },
     ],
   },
   fr: {
-    name: "Let It Go",
+    name: "Let it Go",
     text: [
       {
-        title: "(A",
-        description:
-          "character with cost 5 or more can to sing this song for free.) Put chosen character into their player's inkwell facedown and exerted.",
+        title: "(A character with cost 5 or more can {E} to sing this song for free.)",
+      },
+      {
+        title: "Put chosen character into their player's inkwell facedown and exerted.",
       },
     ],
   },
   it: {
-    name: "Let It Go",
+    name: "Let it Go",
     text: "Put chosen character into their player's inkwell facedown and exerted.",
   },
 };

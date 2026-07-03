@@ -17,9 +17,9 @@ export const rooLittleHelperI18n: Record<Languages, I18nProperties> = {
     version: "Kleiner Helfer",
     text: [
       {
-        title: "SPRING HINEIN",
+        title: "Spring hinein",
         description:
-          "— Lege diesen Charakter verdeckt unter einen deiner Charaktere oder Orte mit Stärken.",
+          "{E} — Lege diesen Charakter verdeckt unter einen deiner Charaktere oder Orte mit <Stärken>.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const rooLittleHelperI18n: Record<Languages, I18nProperties> = {
     version: "Petit coup de main",
     text: [
       {
-        title: "GRIMPE DANS LA POCHE",
+        title: "Grimpe dans la poche",
         description:
-          "— Placez ce personnage, face cachée, sous l'un de vos personnages ou de vos lieux avec Boost.",
+          "{E} — Placez ce personnage, face cachée, sous l'un de vos personnages ou de vos lieux avec <Boost>.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const rooLittleHelperI18n: Record<Languages, I18nProperties> = {
     version: "Piccolo Aiutante",
     text: [
       {
-        title: "SALTARE DENTRO",
+        title: "Saltare Dentro",
         description:
-          "— Metti questo personaggio a faccia in giù sotto a uno dei tuoi personaggi o luoghi con Potenziamento.",
+          "{E} — Metti questo personaggio a faccia in giù sotto a uno dei tuoi personaggi o luoghi con <Potenziamento>.",
       },
     ],
   },

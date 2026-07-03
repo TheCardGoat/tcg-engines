@@ -173,6 +173,8 @@ export function runResolver(
         choice,
         ctx,
       );
+    case "chooseCardType":
+      return pick(overrides?.chooseCardType, defaultChoiceResolvers.chooseCardType)(choice, ctx);
     case "gainGig":
       return pick(overrides?.gainGig, defaultChoiceResolvers.gainGig)(choice, ctx);
     default:

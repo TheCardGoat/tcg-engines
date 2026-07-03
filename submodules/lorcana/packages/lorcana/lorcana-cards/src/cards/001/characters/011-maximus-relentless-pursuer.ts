@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { maximusRelentlessPursuerI18n } from "./011-maximus-relentless-pursuer.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const maximusRelentlessPursuer: CharacterCard = {
   id: "bqd",
   canonicalId: "ci_bqd",
+  slug: "lorcana-ci_bqd",
+  printings: [
+    {
+      id: "set1-011",
+      artId: "set1-011",
+      setCode: "set1",
+      collectorNumber: "11",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-011"],
   cardType: "character",
   name: "Maximus",
@@ -21,7 +33,7 @@ export const maximusRelentlessPursuer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dbc44ab9437a44568efdf23b37f3f278",
-    tcgPlayer: 494101,
+    tcgPlayer: "494101",
   },
   text: [
     {

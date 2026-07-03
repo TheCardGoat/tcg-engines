@@ -16,9 +16,9 @@ export const donaldDuckSleepwalkerI18n: Record<Languages, I18nProperties> = {
     version: "Schlafwandler",
     text: [
       {
-        title: "AUFSCHRECKEN",
+        title: "Aufschrecken",
         description:
-          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter in diesem Zug +2.",
+          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter in diesem Zug +2 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const donaldDuckSleepwalkerI18n: Record<Languages, I18nProperties> = {
     version: "Somnambule",
     text: [
       {
-        title: "RÉVEIL EN SURSAUT",
+        title: "Réveil en sursaut",
         description:
-          "Chaque fois que vous jouez une carte Action, ce personnage gagne +2 pour le reste de ce tour.",
+          "Chaque fois que vous jouez une carte Action, ce personnage gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,8 +38,8 @@ export const donaldDuckSleepwalkerI18n: Record<Languages, I18nProperties> = {
     version: "Sleepwalker",
     text: [
       {
-        title: "STARTLED AWAKE",
-        description: "Whenever you play an action, this character gets +2 this turn.",
+        title: "Startled Awake",
+        description: "Whenever you play an action, this character gets +2 {S} this turn.",
       },
     ],
   },

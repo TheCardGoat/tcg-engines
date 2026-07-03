@@ -4,6 +4,17 @@ import { lyleTiberiusRourkeCrystallizedMercenaryI18n } from "./140-lyle-tiberius
 export const lyleTiberiusRourkeCrystallizedMercenary: CharacterCard = {
   id: "AnC",
   canonicalId: "ci_AnC",
+  slug: "lorcana-ci_AnC",
+  printings: [
+    {
+      id: "set7-140",
+      artId: "set7-140",
+      setCode: "set7",
+      collectorNumber: "140",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-140"],
   cardType: "character",
   name: "Lyle Tiberius Rourke",
@@ -20,7 +31,7 @@ export const lyleTiberiusRourkeCrystallizedMercenary: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4ba6dbe9f2674bb880ec26795a4663c6",
-    tcgPlayer: 619485,
+    tcgPlayer: "619485",
   },
   text: [
     {
@@ -50,7 +61,15 @@ export const lyleTiberiusRourkeCrystallizedMercenary: CharacterCard = {
         event: "ink",
         on: "CONTROLLER",
         timing: "whenever",
-        restrictions: [{ type: "once-per-turn" }, { type: "during-turn", whose: "your" }],
+        restrictions: [
+          {
+            type: "once-per-turn",
+          },
+          {
+            type: "during-turn",
+            whose: "your",
+          },
+        ],
       },
       type: "triggered",
     },

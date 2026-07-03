@@ -7,14 +7,17 @@ export const gd02AllRangeAttack107: CommandCard = {
   color: "red",
   traits: ["-"],
   id: "GD02-107",
-  externalId: "gundam:gd02-107",
-  slug: "all-range-attack-gd02-107",
+  canonicalId: "GD02-107",
+  externalIds: { bandai: "gundam:gd02-107" },
+  slug: "all-range-attack/gd02-107",
   displayName: "All-Range Attack",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-107",
   printings: [
     {
       id: "GD02-107",
+      artId: "GD02-107",
+      setCode: "GD02",
       collectorNumber: "GD02-107",
       cardNumber: "GD02-107",
       set: {
@@ -30,6 +33,8 @@ export const gd02AllRangeAttack107: CommandCard = {
     },
     {
       id: "GD02-107_p1",
+      artId: "GD02-107_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-107_p1",
       cardNumber: "GD02-107",
       set: {
@@ -45,6 +50,8 @@ export const gd02AllRangeAttack107: CommandCard = {
     },
     {
       id: "GD02-107_p2",
+      artId: "GD02-107_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-107_p2",
       cardNumber: "GD02-107",
       set: {
@@ -59,6 +66,7 @@ export const gd02AllRangeAttack107: CommandCard = {
       productName: "Newtype Challenge 2025 Mission 3",
     },
   ],
+  reprints: ["GD02-107", "GD02-107_p1", "GD02-107_p2"],
   selectedPrintingId: "GD02-107",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-107.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-107.webp?260424",

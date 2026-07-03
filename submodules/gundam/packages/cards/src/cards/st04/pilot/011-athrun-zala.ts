@@ -7,14 +7,17 @@ export const st04AthrunZala011: PilotCard = {
   color: "red",
   traits: ["zaft", "coordinator"],
   id: "ST04-011",
-  externalId: "gundam:st04-011",
-  slug: "athrun-zala-st04-011",
+  canonicalId: "ST04-011",
+  externalIds: { bandai: "gundam:st04-011" },
+  slug: "athrun-zala/st04-011",
   displayName: "Athrun Zala",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-011",
   printings: [
     {
       id: "ST04-011",
+      artId: "ST04-011",
+      setCode: "ST04",
       collectorNumber: "ST04-011",
       cardNumber: "ST04-011",
       set: {
@@ -30,6 +33,8 @@ export const st04AthrunZala011: PilotCard = {
     },
     {
       id: "ST04-011_p1",
+      artId: "ST04-011_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-011_p1",
       cardNumber: "ST04-011",
       set: {
@@ -45,6 +50,8 @@ export const st04AthrunZala011: PilotCard = {
     },
     {
       id: "ST04-011_p2",
+      artId: "ST04-011_p2",
+      setCode: "ST04",
       collectorNumber: "ST04-011_p2",
       cardNumber: "ST04-011",
       set: {
@@ -60,6 +67,8 @@ export const st04AthrunZala011: PilotCard = {
     },
     {
       id: "ST04-011_p3",
+      artId: "ST04-011_p3",
+      setCode: "ST04",
       collectorNumber: "ST04-011_p3",
       cardNumber: "ST04-011",
       set: {
@@ -75,6 +84,8 @@ export const st04AthrunZala011: PilotCard = {
     },
     {
       id: "ST04-011_p4",
+      artId: "ST04-011_p4",
+      setCode: "ST09",
       collectorNumber: "ST04-011_p4",
       cardNumber: "ST04-011",
       set: {
@@ -89,6 +100,7 @@ export const st04AthrunZala011: PilotCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST04-011", "ST04-011_p1", "ST04-011_p2", "ST04-011_p3", "ST04-011_p4"],
   selectedPrintingId: "ST04-011",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-011.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-011.webp?260424",

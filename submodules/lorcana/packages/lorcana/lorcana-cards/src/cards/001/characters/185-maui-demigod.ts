@@ -3,8 +3,19 @@ import { mauiDemigodI18n } from "./185-maui-demigod.i18n";
 
 export const mauiDemigod: CharacterCard = {
   id: "nM3",
-  canonicalId: "ci_nM3",
-  reprints: ["set1-185"],
+  canonicalId: "ci_mg0",
+  slug: "lorcana-ci_mg0",
+  printings: [
+    {
+      id: "set1-185",
+      artId: "set1-185",
+      setCode: "set1",
+      collectorNumber: "185",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set1-p1-023", "set1-185"],
   cardType: "character",
   name: "Maui",
   version: "Demigod",
@@ -21,7 +32,7 @@ export const mauiDemigod: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_d32d5f07d1274a6ebcf0e8e437155768",
-    tcgPlayer: 502018,
+    tcgPlayer: "502018",
   },
   classifications: ["Storyborn", "Hero", "Deity"],
   i18n: mauiDemigodI18n,

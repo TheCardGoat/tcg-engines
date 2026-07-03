@@ -4,6 +4,17 @@ import { herculesYoungRescuerI18n } from "./123-hercules-young-rescuer.i18n";
 export const herculesYoungRescuer: CharacterCard = {
   id: "osI",
   canonicalId: "ci_osI",
+  slug: "lorcana-ci_osI",
+  printings: [
+    {
+      id: "set12-123",
+      artId: "set12-123",
+      setCode: "set12",
+      collectorNumber: "123",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-123"],
   cardType: "character",
   name: "Hercules",
@@ -18,9 +29,13 @@ export const herculesYoungRescuer: CharacterCard = {
   willpower: 1,
   lore: 1,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_f3c83bbcb8b9497d84c5a04aa767c0fb",
+    tcgPlayer: "692175",
+  },
   text: [
     {
-      title: "Heroic Sacrifice",
+      title: "HEROIC SACRIFICE",
       description:
         "When you play this character, you may discard your hand. If you do, return a card from your discard to your hand.",
     },

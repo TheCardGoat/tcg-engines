@@ -18,10 +18,10 @@ export const diabloSpitefulRavenI18n: Record<Languages, I18nProperties> = {
     version: "Boshafter Rabe",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "Herausfordern +2",
+        title: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
       },
     ],
   },
@@ -30,10 +30,10 @@ export const diabloSpitefulRavenI18n: Record<Languages, I18nProperties> = {
     version: "Corbeau malveillant",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "Offensif +2",
+        title: "<Offensif> +2",
       },
     ],
   },
@@ -42,10 +42,10 @@ export const diabloSpitefulRavenI18n: Record<Languages, I18nProperties> = {
     version: "Corvo Malevolo",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "Sfidante +2",
+        title: "<Sfidante> +2",
       },
     ],
   },

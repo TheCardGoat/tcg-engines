@@ -1,12 +1,24 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { cinderellaStoutheartedI18n } from "./177-cinderella-stouthearted.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const cinderellaStouthearted: CharacterCard = {
   id: "T3C",
   canonicalId: "ci_T3C",
-  reprints: ["set2-177"],
+  slug: "lorcana-ci_T3C",
+  printings: [
+    {
+      id: "set2-177",
+      artId: "set2-177",
+      setCode: "set2",
+      collectorNumber: "177",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set2-d23-002", "set2-177"],
   cardType: "character",
   name: "Cinderella",
   version: "Stouthearted",
@@ -22,7 +34,7 @@ export const cinderellaStouthearted: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8de3ae21bca6455bb44da9803af19ea8",
-    tcgPlayer: 559533,
+    tcgPlayer: "559533",
   },
   text: [
     {

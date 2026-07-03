@@ -21,12 +21,12 @@ export const scroogeMcduckResourcefulMiserI18n: Record<Languages, I18nProperties
     version: "Einfallsreicher Geizhals",
     text: [
       {
-        title: "SETZE ES SINNVOLL EIN",
+        title: "Setze es sinnvoll ein",
         description:
           "Du darfst 4 deiner Gegenstände erschöpfen, um diesen Charakter kostenlos auszuspielen.",
       },
       {
-        title: "VERMÖGENSJÄGER",
+        title: "Vermögensjäger",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -37,11 +37,11 @@ export const scroogeMcduckResourcefulMiserI18n: Record<Languages, I18nProperties
     version: "Avare plein de ressources",
     text: [
       {
-        title: "METTRE À PROFIT",
+        title: "Mettre à profit",
         description: "Vous pouvez épuiser 4 de vos objets pour jouer ce personnage gratuitement.",
       },
       {
-        title: "CHASSEUR DE TRÉSOR",
+        title: "Chasseur de trésor",
         description:
           "Lorsque vous jouez ce personnage, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Objet parmi elles et la mettre dans votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -52,11 +52,11 @@ export const scroogeMcduckResourcefulMiserI18n: Record<Languages, I18nProperties
     version: "Taccagno Intraprendente",
     text: [
       {
-        title: "FARNE BUON USO",
+        title: "Farne Buon Uso",
         description: "Puoi impegnare 4 tuoi oggetti per giocare questo personaggio gratis.",
       },
       {
-        title: "CACCIATORE DI TESORI",
+        title: "Cacciatore di Tesori",
         description:
           "Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

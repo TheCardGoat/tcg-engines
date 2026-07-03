@@ -7,14 +7,17 @@ export const gd01DeltaPlus006: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-006",
-  externalId: "gundam:gd01-006",
-  slug: "delta-plus-gd01-006",
+  canonicalId: "GD01-006",
+  externalIds: { bandai: "gundam:gd01-006" },
+  slug: "delta-plus/gd01-006",
   displayName: "Delta Plus",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-006",
   printings: [
     {
       id: "GD01-006",
+      artId: "GD01-006",
+      setCode: "GD01",
       collectorNumber: "GD01-006",
       cardNumber: "GD01-006",
       set: {
@@ -30,6 +33,8 @@ export const gd01DeltaPlus006: UnitCard = {
     },
     {
       id: "GD01-006_p1",
+      artId: "GD01-006_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-006_p1",
       cardNumber: "GD01-006",
       set: {
@@ -44,6 +49,7 @@ export const gd01DeltaPlus006: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-006", "GD01-006_p1"],
   selectedPrintingId: "GD01-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-006.webp?260424",

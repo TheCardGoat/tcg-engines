@@ -4,6 +4,17 @@ import { akoodEtEmutiI18n } from "./029-akood-et-emuti.i18n";
 export const akoodEtEmuti: ActionCard = {
   id: "Y3X",
   canonicalId: "ci_Y3X",
+  slug: "lorcana-ci_Y3X",
+  printings: [
+    {
+      id: "set11-029",
+      artId: "set11-029",
+      setCode: "set11",
+      collectorNumber: "29",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-029"],
   cardType: "action",
   name: "Akood et Emuti",
@@ -16,7 +27,7 @@ export const akoodEtEmuti: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ff15d454e2f84f89a64bf17216e0b5f4",
-    tcgPlayer: 674689,
+    tcgPlayer: "674689",
   },
   text: "You pay 2 {I} less for the next character you play this turn. Draw a card.",
   actionSubtype: "song",

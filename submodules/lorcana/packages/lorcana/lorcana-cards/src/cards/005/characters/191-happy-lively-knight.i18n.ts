@@ -17,9 +17,9 @@ export const happyLivelyKnightI18n: Record<Languages, I18nProperties> = {
     version: "Ritter der Lebensfreude",
     text: [
       {
-        title: "GESCHWINDIGKEITSSCHUB",
+        title: "Geschwindigkeitsschub",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const happyLivelyKnightI18n: Record<Languages, I18nProperties> = {
     version: "Chevalier guilleret",
     text: [
       {
-        title: "RAPIDE COMME L'ÉCLAIR",
+        title: "Rapide comme l'éclair",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier des personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const happyLivelyKnightI18n: Record<Languages, I18nProperties> = {
     version: "Cavaliere Allegro",
     text: [
       {
-        title: "SCATTO VELOCE",
+        title: "Scatto Veloce",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

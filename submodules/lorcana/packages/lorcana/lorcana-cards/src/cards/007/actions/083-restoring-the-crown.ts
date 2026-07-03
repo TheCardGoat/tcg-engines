@@ -4,6 +4,17 @@ import { restoringTheCrownI18n } from "./083-restoring-the-crown.i18n";
 export const restoringTheCrown: ActionCard = {
   id: "X4B",
   canonicalId: "ci_X4B",
+  slug: "lorcana-ci_X4B",
+  printings: [
+    {
+      id: "set7-083",
+      artId: "set7-083",
+      setCode: "set7",
+      collectorNumber: "83",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-083"],
   cardType: "action",
   name: "Restoring the Crown",
@@ -16,7 +27,7 @@ export const restoringTheCrown: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_73e72e4fa154400f892e295a0eaffb40",
-    tcgPlayer: 619450,
+    tcgPlayer: "619450",
   },
   text: "Exert all opposing characters. Whenever one of your characters banishes another character in a challenge this turn, gain 2 lore.",
   abilities: [

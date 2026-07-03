@@ -4,6 +4,17 @@ import { arielSonicWarriorI18n } from "./175-ariel-sonic-warrior.i18n";
 export const arielSonicWarrior: CharacterCard = {
   id: "S0Z",
   canonicalId: "ci_8ZB",
+  slug: "lorcana-ci_8ZB",
+  printings: [
+    {
+      id: "set4-175",
+      artId: "set4-175",
+      setCode: "set4",
+      collectorNumber: "175",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-175", "set9-195"],
   cardType: "character",
   name: "Ariel",
@@ -20,7 +31,7 @@ export const arielSonicWarrior: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8744600f576e484fa2e93cec672eba2f",
-    tcgPlayer: 650128,
+    tcgPlayer: "650128",
   },
   text: [
     {

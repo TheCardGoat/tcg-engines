@@ -7,14 +7,17 @@ export const st09FreedomGundam004: UnitCard = {
   color: "white",
   traits: ["orb"],
   id: "ST09-004",
-  externalId: "gundam:st09-004",
-  slug: "freedom-gundam-st09-004",
+  canonicalId: "ST09-004",
+  externalIds: { bandai: "gundam:st09-004" },
+  slug: "freedom-gundam/st09-004",
   displayName: "Freedom Gundam",
   set: { code: "ST09", name: "Destiny Ignition [ST09]", packageId: "616009" },
   printNumber: "ST09-004",
   printings: [
     {
       id: "ST09-004",
+      artId: "ST09-004",
+      setCode: "ST09",
       collectorNumber: "ST09-004",
       cardNumber: "ST09-004",
       set: {
@@ -30,6 +33,8 @@ export const st09FreedomGundam004: UnitCard = {
     },
     {
       id: "ST09-004_p1",
+      artId: "ST09-004_p1",
+      setCode: "ST09",
       collectorNumber: "ST09-004_p1",
       cardNumber: "ST09-004",
       set: {
@@ -44,6 +49,7 @@ export const st09FreedomGundam004: UnitCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST09-004", "ST09-004_p1"],
   selectedPrintingId: "ST09-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st09/ST09-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST09-004.webp?260424",

@@ -4,6 +4,17 @@ import { bashfulAdoringKnightI18n } from "./189-bashful-adoring-knight.i18n";
 export const bashfulAdoringKnight: CharacterCard = {
   id: "bvY",
   canonicalId: "ci_bvY",
+  slug: "lorcana-ci_bvY",
+  printings: [
+    {
+      id: "set5-189",
+      artId: "set5-189",
+      setCode: "set5",
+      collectorNumber: "189",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-189"],
   cardType: "character",
   name: "Bashful",
@@ -20,7 +31,7 @@ export const bashfulAdoringKnight: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f2e3f60f19eb409eaccc1a8dc10f8ebd",
-    tcgPlayer: 559662,
+    tcgPlayer: "559662",
   },
   text: [
     {

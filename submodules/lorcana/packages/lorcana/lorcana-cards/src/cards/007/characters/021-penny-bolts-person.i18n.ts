@@ -17,9 +17,9 @@ export const pennyBoltsPersonI18n: Record<Languages, I18nProperties> = {
     version: "Bolts Frauchen",
     text: [
       {
-        title: "EWIGE LOYALITÄT",
+        title: "Ewige Loyalität",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen. Er erhält bis zu Beginn deines nächsten Zuges Robust +1. (Reduziere jeglichen Schaden, der jenem Charakter zugefügt wird, um 1.)",
+          "Wenn du diesen Charakter ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen. Er erhält bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der jenem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const pennyBoltsPersonI18n: Record<Languages, I18nProperties> = {
     version: "Maîtresse de Volt",
     text: [
       {
-        title: "FIDÉLITÉ À TOUTE ÉPREUVE",
+        title: "Fidélité à toute épreuve",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage. Retirez-lui jusqu'à 2 dommages et il gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage. Retirez-lui jusqu'à 2 dommages et il gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const pennyBoltsPersonI18n: Record<Languages, I18nProperties> = {
     version: "Umana di Bolt",
     text: [
       {
-        title: "LEALTÀ INCROLLABILE",
+        title: "Lealtà Incrollabile",
         description:
-          "Quando giochi questo personaggio, puoi rimuovere fino a 2 danni da un personaggio a tua scelta e questo ottiene Resistere +1 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, puoi rimuovere fino a 2 danni da un personaggio a tua scelta e questo ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

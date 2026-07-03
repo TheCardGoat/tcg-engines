@@ -1,17 +1,10 @@
 const DEFAULT_PLAYER_ZONE_WIDTH = 960;
-const HAND_TARGET_WIDTH_RATIO = 0.58;
-const READABLE_HAND_TARGET_WIDTH_RATIO = 0.68;
-const MIN_CENTER_STEP_RATIO = 0.42;
-const READABLE_MIN_CENTER_STEP_RATIO = 0.58;
+const HAND_TARGET_WIDTH_RATIO = 0.52;
+const MIN_CENTER_STEP_RATIO = 0.34;
 const MAX_CENTER_STEP_RATIO = 0.96;
 const MIN_PLAYER_CARD_WIDTH = 78;
 const MAX_PLAYER_CARD_WIDTH = 96;
 const PLAYER_CARD_WIDTH_RATIO = 0.054;
-const DEFAULT_MAX_ANGLE = 11;
-const READABLE_MAX_ANGLE = 7;
-const DEFAULT_EDGE_DROP = 18;
-const READABLE_EDGE_DROP = 10;
-const READABLE_HAND_MAX_SIZE = 6;
 
 interface Layout {
   angle: number;
@@ -48,19 +41,15 @@ export function computePlayerHandLayout(
     return { cards: [{ angle: 0, x: 0, y: 0 }], cardWidth };
   }
 
-  const readableHand = n <= READABLE_HAND_MAX_SIZE;
-  const targetWidth =
-    safeZoneWidth * (readableHand ? READABLE_HAND_TARGET_WIDTH_RATIO : HAND_TARGET_WIDTH_RATIO);
+  const targetWidth = safeZoneWidth * HAND_TARGET_WIDTH_RATIO;
   const preferredStep = (targetWidth - cardWidth) / (n - 1);
   const step = clamp(
     preferredStep,
-    cardWidth * (readableHand ? READABLE_MIN_CENTER_STEP_RATIO : MIN_CENTER_STEP_RATIO),
+    cardWidth * MIN_CENTER_STEP_RATIO,
     cardWidth * MAX_CENTER_STEP_RATIO,
   );
   const span = step * (n - 1);
   const halfSpan = span / 2;
-  const maxAngle = readableHand ? READABLE_MAX_ANGLE : DEFAULT_MAX_ANGLE;
-  const edgeDrop = readableHand ? READABLE_EDGE_DROP : DEFAULT_EDGE_DROP;
 
   return {
     cardWidth,
@@ -68,9 +57,9 @@ export function computePlayerHandLayout(
       const x = i * step - halfSpan;
       const normalized = halfSpan > 0 ? x / halfSpan : 0;
       return {
-        angle: normalized * maxAngle,
+        angle: normalized * 12,
         x,
-        y: Math.abs(normalized) ** 2 * edgeDrop,
+        y: Math.abs(normalized) ** 2 * 22,
       };
     }),
   };

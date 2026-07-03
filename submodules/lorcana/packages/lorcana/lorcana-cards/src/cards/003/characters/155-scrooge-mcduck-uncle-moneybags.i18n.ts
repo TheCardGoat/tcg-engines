@@ -17,9 +17,9 @@ export const scroogeMcduckUncleMoneybagsI18n: Record<Languages, I18nProperties> 
     version: "Uncle Moneybags",
     text: [
       {
-        title: "TREASURE FINDER",
+        title: "Treasure Finder",
         description:
-          "Whenever this character quests, you pay 1 less for the next item you play this turn.",
+          "Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const scroogeMcduckUncleMoneybagsI18n: Record<Languages, I18nProperties> 
     version: "Uncle Moneybags",
     text: [
       {
-        title: "TREASURE FINDER",
+        title: "Treasure Finder",
         description:
-          "Whenever this character quests, you pay 1 less for the next item you play this turn.",
+          "Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const scroogeMcduckUncleMoneybagsI18n: Record<Languages, I18nProperties> 
     version: "Uncle Moneybags",
     text: [
       {
-        title: "TREASURE FINDER",
+        title: "Treasure Finder",
         description:
-          "Whenever this character quests, you pay 1 less for the next item you play this turn.",
+          "Whenever this character quests, you pay 1 {I} less for the next item you play this turn.",
       },
     ],
   },

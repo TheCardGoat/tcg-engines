@@ -16,7 +16,7 @@ export const casaMadrigalCasitaI18n: Record<Languages, I18nProperties> = {
     version: "Casita",
     text: [
       {
-        title: "UNSER ZUHAUSE",
+        title: "Unser Zuhause",
         description:
           "Zu Beginn deines Zuges, wenn du mindestens einen Charakter an diesem Ort hast, sammelst du 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const casaMadrigalCasitaI18n: Record<Languages, I18nProperties> = {
     version: "Casita",
     text: [
       {
-        title: "NOTRE MAISON",
+        title: "Notre Maison",
         description:
           "Au début de votre tour, si vous avez un personnage sur ce lieu, gagnez 1 éclat de Lore.",
       },
@@ -38,7 +38,7 @@ export const casaMadrigalCasitaI18n: Record<Languages, I18nProperties> = {
     version: "Casita",
     text: [
       {
-        title: "CASA NOSTRA",
+        title: "Casa Nostra",
         description:
           "All'inizio del tuo turno, se hai un personaggio in questo luogo, ottieni 1 leggenda.",
       },

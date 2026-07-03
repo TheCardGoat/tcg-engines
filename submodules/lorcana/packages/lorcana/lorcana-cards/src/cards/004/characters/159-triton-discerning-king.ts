@@ -4,6 +4,17 @@ import { tritonDiscerningKingI18n } from "./159-triton-discerning-king.i18n";
 export const tritonDiscerningKing: CharacterCard = {
   id: "nit",
   canonicalId: "ci_nit",
+  slug: "lorcana-ci_nit",
+  printings: [
+    {
+      id: "set4-159",
+      artId: "set4-159",
+      setCode: "set4",
+      collectorNumber: "159",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-159"],
   cardType: "character",
   name: "Triton",
@@ -20,7 +31,7 @@ export const tritonDiscerningKing: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a2ef85d2f5774b6d910349770f5db42e",
-    tcgPlayer: 549621,
+    tcgPlayer: "549621",
   },
   text: [
     {

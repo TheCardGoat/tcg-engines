@@ -16,7 +16,7 @@ export const copperHoundPupI18n: Record<Languages, I18nProperties> = {
     version: "Jagdhund-Welpe",
     text: [
       {
-        title: "HAB DICH",
+        title: "Hab dich",
         description:
           "Wenn du diesen Charakter ausspielst, zeigt eine gegnerische Person deiner Wahl alle Handkarten für alle sichtbar vor.",
       },
@@ -27,7 +27,7 @@ export const copperHoundPupI18n: Record<Languages, I18nProperties> = {
     version: "Chiot de chasse",
     text: [
       {
-        title: "J'T'AI TROUVÉ",
+        title: "J't'ai trouvé",
         description: "Lorsque vous jouez ce personnage, choisissez un joueur qui révèle sa main.",
       },
     ],
@@ -37,7 +37,7 @@ export const copperHoundPupI18n: Record<Languages, I18nProperties> = {
     version: "Cucciolo di Segugio",
     text: [
       {
-        title: "TROVATO!",
+        title: "Trovato!",
         description:
           "Quando giochi questo personaggio, un giocatore a tua scelta rivela la sua mano.",
       },

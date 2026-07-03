@@ -20,10 +20,10 @@ export const pinocchioStringsAttachedI18n: Record<Languages, I18nProperties> = {
     version: "An Fäden geknüpft",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "ICH MUSS GANZ LEISE SEIN",
+        title: "Ich muss ganz leise sein",
         description:
           "Einmal während deines Zuges, wenn du diesen Charakter bereit machst, darfst du 1 Karte ziehen.",
       },
@@ -34,10 +34,10 @@ export const pinocchioStringsAttachedI18n: Record<Languages, I18nProperties> = {
     version: "Avec des liens",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "NE FAISONS PAS UN BRUIT",
+        title: "Ne faisons pas un bruit",
         description:
           "Une fois durant votre tour, lorsque vous redressez ce personnage, vous pouvez piocher une carte.",
       },
@@ -48,10 +48,10 @@ export const pinocchioStringsAttachedI18n: Record<Languages, I18nProperties> = {
     version: "Strings Attached",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "GOT TO KEEP REAL QUIET",
+        title: "Got to Keep Real Quiet",
         description:
           "Once during your turn, whenever you ready this character, you may draw a card.",
       },

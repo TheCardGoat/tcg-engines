@@ -4,6 +4,17 @@ import { hiroHamadaFutureChampionI18n } from "./090-hiro-hamada-future-champion.
 export const hiroHamadaFutureChampion: CharacterCard = {
   id: "K5C",
   canonicalId: "ci_K5C",
+  slug: "lorcana-ci_K5C",
+  printings: [
+    {
+      id: "set7-090",
+      artId: "set7-090",
+      setCode: "set7",
+      collectorNumber: "90",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-090"],
   cardType: "character",
   name: "Hiro Hamada",
@@ -20,7 +31,7 @@ export const hiroHamadaFutureChampion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_82584b5e3b2e4d319077b9c8021cb066",
-    tcgPlayer: 618250,
+    tcgPlayer: "618250",
   },
   text: [
     {

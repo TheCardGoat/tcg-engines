@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailZetatechFaceplate = {
+export const welcomeToNightCityRetailZetatechFaceplate = defineCyberpunkCard({
   id: "eead1bba-f247-423e-a4f5-b330945887b0",
-  externalId: "cb-zetatech-faceplate",
   slug: "zetatech-faceplate",
-  name: "Zetatech Faceplate",
-  displayName: "Zetatech Faceplate",
   rulesText:
     "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+  name: "Zetatech Faceplate",
+  displayName: "Zetatech Faceplate",
+  canonicalId: "zetatech-faceplate",
   color: "yellow",
   classifications: ["Cyberware", "Zetatech"],
   set: {
@@ -15,41 +16,12 @@ export const welcomeToNightCityRetailZetatechFaceplate = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "064",
-  printings: [
-    {
-      id: "79cdc9a5-d94d-4df4-9f88-aa02fb0357b3",
-      collectorNumber: "064",
-      setCode: "welcometonightcityretail",
-      rarity: "Uncommon",
-    },
-    {
-      id: "25077971-70cc-4524-b7cf-cd8258abc28c",
-      collectorNumber: "β064",
-      setCode: "welcometonightcitybeta",
-      rarity: "Uncommon",
-    },
-    {
-      id: "26b755e4-b754-48fc-b89b-ba8ce670d43b",
-      collectorNumber: "009",
-      setCode: "theheistretailstarterdeck",
-      rarity: "Uncommon",
-    },
-    {
-      id: "e38dee5b-9f4a-4323-a18f-aff42256b158",
-      collectorNumber: "β009",
-      setCode: "theheistbetastarterdeck",
-      rarity: "Uncommon",
-    },
-  ],
-  selectedPrintingId: "79cdc9a5-d94d-4df4-9f88-aa02fb0357b3",
   artist: "ADIA",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/064.webp",
   rarity: "Uncommon",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "gear",
   cost: 2,
   power: 2,
@@ -110,7 +82,6 @@ export const welcomeToNightCityRetailZetatechFaceplate = {
       ],
     },
   ],
-  reminderText: [],
   attachment: {
     text: "Equip to a unit or face-up legend.",
     target: {
@@ -121,4 +92,4 @@ export const welcomeToNightCityRetailZetatechFaceplate = {
       face: "faceUp",
     },
   },
-} satisfies StructuredCardDefinition;
+}) satisfies GearCardDefinition;

@@ -4,6 +4,17 @@ import { maleficentSinisterVisitorI18n } from "./150-maleficent-sinister-visitor
 export const maleficentSinisterVisitor: CharacterCard = {
   id: "LcD",
   canonicalId: "ci_LcD",
+  slug: "lorcana-ci_LcD",
+  printings: [
+    {
+      id: "set1-150",
+      artId: "set1-150",
+      setCode: "set1",
+      collectorNumber: "150",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-150"],
   cardType: "character",
   name: "Maleficent",
@@ -21,7 +32,7 @@ export const maleficentSinisterVisitor: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_071ac28029b947ea8bf6b77d287ff401",
-    tcgPlayer: 493493,
+    tcgPlayer: "493493",
   },
   classifications: ["Storyborn", "Villain", "Sorcerer"],
   i18n: maleficentSinisterVisitorI18n,

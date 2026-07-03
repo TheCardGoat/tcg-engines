@@ -17,9 +17,9 @@ export const nalaRompingInTheSnowI18n: Record<Languages, I18nProperties> = {
     version: "Tollt im Schnee",
     text: [
       {
-        title: "VERSPIELTES RUTSCHEN",
+        title: "Verspieltes Rutschen",
         description:
-          "Wenn du diesen Charakter ausspielst, wähle einen deiner Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges Wendig.",
+          "Wenn du diesen Charakter ausspielst, wähle einen deiner Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const nalaRompingInTheSnowI18n: Record<Languages, I18nProperties> = {
     version: "Gambade dans la neige",
     text: [
       {
-        title: "GLISSADE AMUSANTE",
+        title: "Glissade amusante",
         description:
-          "Lorsque vous jouez ce personnage, choisissez l'un de vos personnages qui gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez l'un de vos personnages qui gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const nalaRompingInTheSnowI18n: Record<Languages, I18nProperties> = {
     version: "Che Gioca nella Neve",
     text: [
       {
-        title: "SCIVOLATA GIOCOSA",
+        title: "Scivolata Giocosa",
         description:
-          "Quando giochi questo personaggio, un tuo personaggio a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Quando giochi questo personaggio, un tuo personaggio a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

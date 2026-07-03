@@ -4,6 +4,17 @@ import { mrSmeeEfficientCaptainI18n } from "./107-mr-smee-efficient-captain.i18n
 export const mrSmeeEfficientCaptain: CharacterCard = {
   id: "Y7a",
   canonicalId: "ci_Y7a",
+  slug: "lorcana-ci_Y7a",
+  printings: [
+    {
+      id: "set7-107",
+      artId: "set7-107",
+      setCode: "set7",
+      collectorNumber: "107",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-107"],
   cardType: "character",
   name: "Mr. Smee",
@@ -20,7 +31,7 @@ export const mrSmeeEfficientCaptain: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_0cea7c1e74014adeb7fc3a59ddce500f",
-    tcgPlayer: 618140,
+    tcgPlayer: "618140",
   },
   text: [
     {
@@ -41,7 +52,12 @@ export const mrSmeeEfficientCaptain: CharacterCard = {
             owner: "any",
             zones: ["play"],
             cardTypes: ["character"],
-            filter: [{ type: "has-classification", classification: "Pirate" }],
+            filter: [
+              {
+                type: "has-classification",
+                classification: "Pirate",
+              },
+            ],
           },
           type: "ready",
         },

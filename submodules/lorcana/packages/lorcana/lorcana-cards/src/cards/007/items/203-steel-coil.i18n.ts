@@ -15,7 +15,7 @@ export const steelCoilI18n: Record<Languages, I18nProperties> = {
     name: "Stahl-Reif",
     text: [
       {
-        title: "METALLISCHER FLUSS",
+        title: "Metallischer Fluss",
         description:
           "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
@@ -25,7 +25,7 @@ export const steelCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spirale d’acier",
     text: [
       {
-        title: "FLUIDE MÉTALLIQUE",
+        title: "Fluide métallique",
         description:
           "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, vous pouvez piocher une carte puis en défausser une.",
       },
@@ -35,7 +35,7 @@ export const steelCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spira d'Acciaio",
     text: [
       {
-        title: "FLUSSO METALLICO",
+        title: "Flusso Metallico",
         description:
           "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi pescare una carta, poi scegli e scarta una carta.",
       },

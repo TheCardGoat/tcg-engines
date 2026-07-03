@@ -4,6 +4,17 @@ import { ursulasCauldronI18n } from "./067-ursulas-cauldron.i18n";
 export const ursulasCauldron: ItemCard = {
   id: "5L3",
   canonicalId: "ci_5L3",
+  slug: "lorcana-ci_5L3",
+  printings: [
+    {
+      id: "set1-067",
+      artId: "set1-067",
+      setCode: "set1",
+      collectorNumber: "67",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-067"],
   cardType: "item",
   name: "Ursula’s Cauldron",
@@ -16,13 +27,13 @@ export const ursulasCauldron: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9548bea5e69544d5b3e488e97d33065c",
-    tcgPlayer: 507851,
+    tcgPlayer: "507851",
   },
   text: [
     {
-      title: "PEER INTO THE DEPTHS",
+      title: "Peer Into the Depths",
       description:
-        "— Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+        "{E} — Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
     },
   ],
   abilities: [

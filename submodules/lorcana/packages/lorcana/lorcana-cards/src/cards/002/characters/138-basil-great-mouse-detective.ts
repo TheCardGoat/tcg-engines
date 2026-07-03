@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { basilGreatMouseDetectiveI18n } from "./138-basil-great-mouse-detective.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const basilGreatMouseDetective: CharacterCard = {
   id: "rNe",
   canonicalId: "ci_rNe",
+  slug: "lorcana-ci_rNe",
+  printings: [
+    {
+      id: "set2-138",
+      artId: "set2-138",
+      setCode: "set2",
+      collectorNumber: "138",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-138"],
   cardType: "character",
   name: "Basil",
@@ -21,16 +33,16 @@ export const basilGreatMouseDetective: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ebdef6b29bb74afaa3e5efea83fe89c7",
-    tcgPlayer: 525232,
+    tcgPlayer: "525232",
   },
   text: [
     {
       title: "Shift 5",
     },
     {
-      title: "THERE'S ALWAYS A CHANCE",
+      title: "THERE'S ALWAYS",
       description:
-        "If you used Shift to play this character, you may draw 2 cards when he enters play.",
+        "A CHANCE If you used Shift to play this character, you may draw 2 cards when he enters play.",
     },
   ],
   classifications: ["Floodborn", "Hero", "Detective"],

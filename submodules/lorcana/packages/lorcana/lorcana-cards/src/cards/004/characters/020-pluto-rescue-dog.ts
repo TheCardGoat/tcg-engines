@@ -4,6 +4,17 @@ import { plutoRescueDogI18n } from "./020-pluto-rescue-dog.i18n";
 export const plutoRescueDog: CharacterCard = {
   id: "vP8",
   canonicalId: "ci_hkQ",
+  slug: "lorcana-ci_hkQ",
+  printings: [
+    {
+      id: "set4-020",
+      artId: "set4-020",
+      setCode: "set4",
+      collectorNumber: "20",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-020", "set9-016"],
   cardType: "character",
   name: "Pluto",
@@ -19,7 +30,7 @@ export const plutoRescueDog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e16de0af3ca24eaa9e6570598920d9e8",
-    tcgPlayer: 649964,
+    tcgPlayer: "649964",
   },
   text: [
     {
@@ -34,7 +45,10 @@ export const plutoRescueDog: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 3 },
+          amount: {
+            type: "up-to",
+            value: 3,
+          },
           target: {
             selector: "chosen",
             count: 1,

@@ -4,6 +4,17 @@ import { reflectionI18n } from "./065-reflection.i18n";
 export const reflection: ActionCard = {
   id: "wVZ",
   canonicalId: "ci_wVZ",
+  slug: "lorcana-ci_wVZ",
+  printings: [
+    {
+      id: "set1-065",
+      artId: "set1-065",
+      setCode: "set1",
+      collectorNumber: "65",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-065"],
   cardType: "action",
   name: "Reflection",
@@ -16,7 +27,7 @@ export const reflection: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2edd696f67314cde96ae6ff8f6661033",
-    tcgPlayer: 506113,
+    tcgPlayer: "506113",
   },
   text: "Look at the top 3 cards of your deck. Put them back on the top of your deck in any order.",
   actionSubtype: "song",

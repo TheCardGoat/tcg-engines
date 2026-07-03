@@ -21,14 +21,14 @@ export const minnieMouseStorytellerI18n: Record<Languages, I18nProperties> = {
     version: "Geschichtenerzählerin",
     text: [
       {
-        title: "VERSAMMELN",
+        title: "Versammeln",
         description:
-          "Jedes Mal, wenn du einen Charakter ausspielst, erhält dieser Charakter in diesem Zug +1.",
+          "Jedes Mal, wenn du einen Charakter ausspielst, erhält dieser Charakter in diesem Zug +1 {L}.",
       },
       {
-        title: "NUR NOCH EINS",
+        title: "Nur noch eins",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, verliert ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges so viel, wie dieser Charakter hat.",
+          "Jedes Mal, wenn dieser Charakter erkundet, verliert ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges so viel {S}, wie dieser Charakter {L} hat.",
       },
     ],
   },
@@ -37,14 +37,14 @@ export const minnieMouseStorytellerI18n: Record<Languages, I18nProperties> = {
     version: "Conteuse",
     text: [
       {
-        title: "APPROCHEZ-VOUS",
+        title: "Approchez-vous",
         description:
-          "Chaque fois que vous jouez un personnage, ce personnage-ci gagne +1 pour le reste de ce tour.",
+          "Chaque fois que vous jouez un personnage, ce personnage-ci gagne +1 {L} pour le reste de ce tour.",
       },
       {
-        title: "JUSTE UNE DERNIÈRE!",
+        title: "Juste une dernière!",
         description:
-          "Chaque fois que ce personnage part à l'aventure, choisissez un personnage adverse qui perd autant de que le de ce personnage-ci jusqu'au début de votre prochain tour.",
+          "Chaque fois que ce personnage part à l'aventure, choisissez un personnage adverse qui perd autant de {S} que le {L} de ce personnage-ci jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -53,14 +53,14 @@ export const minnieMouseStorytellerI18n: Record<Languages, I18nProperties> = {
     version: "Narratrice",
     text: [
       {
-        title: "AVVICINATEVI",
+        title: "Avvicinatevi",
         description:
-          "Ogni volta che giochi un personaggio, questo personaggio riceve +1 per questo turno.",
+          "Ogni volta che giochi un personaggio, questo personaggio riceve +1 {L} per questo turno.",
       },
       {
-        title: "ANCORA UNA",
+        title: "Ancora Una",
         description:
-          "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta perde pari al di questo personaggio fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta perde {S} pari al {L} di questo personaggio fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

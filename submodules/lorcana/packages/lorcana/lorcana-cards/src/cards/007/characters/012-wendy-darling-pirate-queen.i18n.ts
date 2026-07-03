@@ -20,10 +20,10 @@ export const wendyDarlingPirateQueenI18n: Record<Languages, I18nProperties> = {
     version: "Piratenkönigin",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "ERZÄHL KEINE MÄRCHEN",
+        title: "Erzähl keine Märchen",
         description:
           "Jedes Mal, wenn einer deiner anderen Charaktere verbannt wird, darfst du jeglichen Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -34,10 +34,10 @@ export const wendyDarlingPirateQueenI18n: Record<Languages, I18nProperties> = {
     version: "Reine Pirate",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "NE RACONTE PAS D'HISTOIRES",
+        title: "Ne raconte pas d'histoires",
         description:
           "Chaque fois que l'un de vos autres personnages est banni, vous pouvez choisir un personnage et lui retirer tous ses dommages.",
       },
@@ -48,11 +48,12 @@ export const wendyDarlingPirateQueenI18n: Record<Languages, I18nProperties> = {
     version: "Regina Pirata",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title:
-          "I MORTI NON PARLANO Ogni volta che uno dei tuoi altri personaggi viene esiliato, puoi rimuovere tutti i danni da un personaggio a tua scelta.",
+        title: "I Morti non Parlano",
+        description:
+          "Ogni volta che uno dei tuoi altri personaggi viene esiliato, puoi rimuovere tutti i danni da un personaggio a tua scelta.",
       },
     ],
   },

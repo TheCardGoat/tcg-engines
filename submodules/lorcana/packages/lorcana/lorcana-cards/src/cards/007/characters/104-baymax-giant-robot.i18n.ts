@@ -21,14 +21,13 @@ export const baymaxGiantRobotI18n: Record<Languages, I18nProperties> = {
     version: "Riesiger Roboter",
     text: [
       {
-        title: "Universal-Gestaltwandel 4",
-        description:
-          "(Du kannst 4 zahlen, um diesen Charakter auf irgendeinen deiner Charaktere auszuspielen.)",
+        title:
+          "<Universal-Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf irgendeinen deiner Charaktere auszuspielen.)",
       },
       {
-        title: "FUNKTIONALITÄT VERBESSERT",
+        title: "Funktionalität verbessert",
         description:
-          "Wenn du diesen Charakter mithilfe von Gestaltwandel ausspielst, entferne jeglichen Schaden von ihm.",
+          "Wenn du diesen Charakter mithilfe von <Gestaltwandel> ausspielst, entferne jeglichen Schaden von ihm.",
       },
     ],
   },
@@ -38,12 +37,12 @@ export const baymaxGiantRobotI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Alter universel 4 (Vous pouvez payer 4 pour jouer ce personnage sur n'importe lequel de vos personnages.)",
+          "<Alter universel> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur n'importe lequel de vos personnages.)",
       },
       {
-        title: "FONCTIONNALITÉ AMÉLIORÉE",
+        title: "Fonctionnalité améliorée",
         description:
-          "Si vous jouez ce personnage en utilisant sa capacité Alter, retirez tous les dommages présents sur lui.",
+          "Si vous jouez ce personnage en utilisant sa capacité <Alter>, retirez tous les dommages présents sur lui.",
       },
     ],
   },
@@ -52,14 +51,13 @@ export const baymaxGiantRobotI18n: Record<Languages, I18nProperties> = {
     version: "Robot Gigante",
     text: [
       {
-        title: "Trasformazione Universale 4",
-        description:
-          "(Puoi pagare 4 per giocare questa carta sopra a uno qualsiasi dei tuoi personaggi.)",
+        title:
+          "<Trasformazione Universale> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno qualsiasi dei tuoi personaggi.)",
       },
       {
-        title: "FUNZIONALITÀ POTENZIATA",
+        title: "Funzionalità Potenziata",
         description:
-          "Quando giochi questo personaggio, se hai usato Trasformazione per giocarlo, rimuovi tutti i danni da esso.",
+          "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, rimuovi tutti i danni da esso.",
       },
     ],
   },

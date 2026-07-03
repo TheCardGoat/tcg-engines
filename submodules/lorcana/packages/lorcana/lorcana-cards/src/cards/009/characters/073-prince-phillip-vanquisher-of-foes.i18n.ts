@@ -22,13 +22,14 @@ export const princePhillipVanquisherOfFoesI18n: Record<Languages, I18nProperties
     version: "Bezwinger der Feinde",
     text: [
       {
-        title: "Gestaltwandel 6",
+        title:
+          "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Prinz-Phillip-Charaktere auszuspielen.)",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "SCHICKE VERDERBEN",
+        title: "Schicke Verderben",
         description:
           "Wenn du diesen Charakter ausspielst, verbanne alle gegnerischen beschädigten Charaktere.",
       },
@@ -39,13 +40,14 @@ export const princePhillipVanquisherOfFoesI18n: Record<Languages, I18nProperties
     version: "Pourfendeur d'ennemis",
     text: [
       {
-        title: "Alter 6",
+        title:
+          "<Alter> 6 (Vous pouvez payer 6 {I} pour jouer ce personnage sur l'un de vos personnages Prince Philippe.)",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "FRAPPE AU CŒUR",
+        title: "Frappe au cœur",
         description:
           "Lorsque vous jouez ce personnage, bannissez tous les personnages adverses ayant au moins un jeton Dommage.",
       },
@@ -56,13 +58,14 @@ export const princePhillipVanquisherOfFoesI18n: Record<Languages, I18nProperties
     version: "Distruttore di Nemici",
     text: [
       {
-        title: "Trasformazione 6",
+        title:
+          "<Trasformazione> 6 (Puoi pagare 6 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Principe Filippo.)",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "SPADA MAGICA",
+        title: "Spada Magica",
         description:
           "Quando giochi questo personaggio, esilia tutti i personaggi avversari danneggiati.",
       },

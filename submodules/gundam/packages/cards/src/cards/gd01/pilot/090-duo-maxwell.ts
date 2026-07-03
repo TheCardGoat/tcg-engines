@@ -7,14 +7,17 @@ export const gd01DuoMaxwell090: PilotCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-090",
-  externalId: "gundam:gd01-090",
-  slug: "duo-maxwell-gd01-090",
+  canonicalId: "GD01-090",
+  externalIds: { bandai: "gundam:gd01-090" },
+  slug: "duo-maxwell/gd01-090",
   displayName: "Duo Maxwell",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-090",
   printings: [
     {
       id: "GD01-090",
+      artId: "GD01-090",
+      setCode: "GD01",
       collectorNumber: "GD01-090",
       cardNumber: "GD01-090",
       set: {
@@ -30,6 +33,8 @@ export const gd01DuoMaxwell090: PilotCard = {
     },
     {
       id: "GD01-090_p1",
+      artId: "GD01-090_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-090_p1",
       cardNumber: "GD01-090",
       set: {
@@ -45,6 +50,8 @@ export const gd01DuoMaxwell090: PilotCard = {
     },
     {
       id: "GD01-090_p2",
+      artId: "GD01-090_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-090_p2",
       cardNumber: "GD01-090",
       set: {
@@ -60,6 +67,8 @@ export const gd01DuoMaxwell090: PilotCard = {
     },
     {
       id: "GD01-090_p3",
+      artId: "GD01-090_p3",
+      setCode: "GD01",
       collectorNumber: "GD01-090_p3",
       cardNumber: "GD01-090",
       set: {
@@ -74,6 +83,7 @@ export const gd01DuoMaxwell090: PilotCard = {
       productName: "Store Tournament Winner Pack 01",
     },
   ],
+  reprints: ["GD01-090", "GD01-090_p1", "GD01-090_p2", "GD01-090_p3"],
   selectedPrintingId: "GD01-090",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-090.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-090.webp?260424",

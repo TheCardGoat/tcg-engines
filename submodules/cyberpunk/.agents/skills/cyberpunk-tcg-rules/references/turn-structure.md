@@ -23,7 +23,7 @@
 Resolve these steps in order:
 
 1. Ready every spent card.
-2. Draw 1 card. Do not impose a maximum hand size.
+2. Draw 1 card. If you are required to draw but have no cards left in your deck, your rival immediately wins. Do not impose a maximum hand size.
 3. Take 1 die from the fixer area, roll it to set its value, then place it in the Gig area.
 
 Additional constraints:
@@ -37,8 +37,8 @@ Additional constraints:
 Allow these actions in any order:
 
 - Sell for Eddies once per turn. The sold card must have the Sell Tag (`€$`) in hand. Reveal it, then place it face-down in the Eddies area. A sold card only pays 1 Eddie per turn when spent, no matter how much it costs in your hand.
-- Call a Legend once per turn by spending 1 Eddie. Flip a random face-down Legend without peeking first. Resolve any `CALL` trigger immediately.
-- Play cards by spending Eddies equal to the printed cost. Let any Legend pay 1 Eddie whether the Legend is face-up or face-down. Resolve any `PLAY` trigger as soon as the cost is paid.
+- Call a Legend once during your main phase by spending 1 Eddie. Flip a random face-down Legend without peeking first. Resolve any `CALL` trigger immediately.
+- Play cards by spending Eddies equal to the printed cost. Let any Legend pay 1 `€$` whether the Legend is face-up or face-down. Legends spent this way are not Eddies. Resolve any `PLAY` trigger as soon as the cost is paid.
 
 Remember:
 
@@ -61,14 +61,16 @@ Do not allow attacks against ready rival Units.
 ### Attack sequence
 
 1. Offensive step: spend the attacking Unit and resolve any `ATTACK` trigger.
-2. Defensive step: allow the defender to call a Legend, activate `QUICK` effects, or redirect the attack to a ready `BLOCKER`.
-3. Resolution step:
+2. Target step: declare either a spent rival Unit or the rival Gig area as the target.
+3. Defensive step: allow the defender to call a Legend, activate `QUICK` effects, or redirect the attack to a ready `BLOCKER`.
+4. Resolution step:
    - If attacking a spent Unit, compare total power. The higher total defeats the lower total. If totals match, both are defeated. Move defeated Units and any attached Gear to the trash, then resolve any `DEFEATED` effects.
    - If attacking the rival directly and the attack still connects, steal Gig Dice from the rival.
 
 ### Direct attack theft
 
-- Steal 1 Gig by default.
+- Steal 0 Gigs at 0 power.
+- Steal 1 Gig at 1-9 power.
 - Steal 2 total Gigs at 10 power.
 - Steal 3 total Gigs at 20 power.
 - Continue adding 1 Gig for each additional full 10 power.
@@ -82,4 +84,4 @@ Remember:
 
 - Win by starting your turn with at least 7 Gig Dice already in your Gig area.
 - Enter overtime after the last player's 7th turn. In overtime, the instant a player has the majority of Gig Dice, that player wins.
-- Lose immediately when your deck reaches 0 cards.
+- Lose immediately if you are required to draw a card but have no cards left in your deck.

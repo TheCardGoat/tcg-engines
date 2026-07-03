@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { iagoGiantSpectralParrotI18n } from "./049-iago-giant-spectral-parrot.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { vanish } from "../../../helpers/abilities/vanish";
 
 export const iagoGiantSpectralParrot: CharacterCard = {
   id: "vao",
   canonicalId: "ci_vao",
+  slug: "lorcana-ci_vao",
+  printings: [
+    {
+      id: "set7-049",
+      artId: "set7-049",
+      setCode: "set7",
+      collectorNumber: "49",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-049"],
   cardType: "character",
   name: "Iago",
@@ -22,7 +34,7 @@ export const iagoGiantSpectralParrot: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9510a7439adc4dc5b1f444e37334a32e",
-    tcgPlayer: 618171,
+    tcgPlayer: "618171",
   },
   text: [
     {

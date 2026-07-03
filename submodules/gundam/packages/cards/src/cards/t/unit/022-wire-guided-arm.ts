@@ -6,14 +6,17 @@ export const tWireGuidedArm022: UnitCard = {
   type: "unit",
   traits: ["zeon"],
   id: "T-022",
-  externalId: "gundam:t-022",
-  slug: "wire-guided-arm-t-022",
+  canonicalId: "T-022",
+  externalIds: { bandai: "gundam:t-022" },
+  slug: "wire-guided-arm/t-022",
   displayName: "Wire-Guided Arm",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "T-022",
   printings: [
     {
       id: "T-022",
+      artId: "T-022",
+      setCode: "GD04",
       collectorNumber: "T-022",
       cardNumber: "T-022",
       set: {
@@ -28,6 +31,7 @@ export const tWireGuidedArm022: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["T-022"],
   selectedPrintingId: "T-022",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-022.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-022.webp?260424",

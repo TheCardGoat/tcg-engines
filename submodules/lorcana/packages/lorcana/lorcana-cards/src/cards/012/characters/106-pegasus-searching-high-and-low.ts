@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { pegasusSearchingHighAndLowI18n } from "./106-pegasus-searching-high-and-low.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const pegasusSearchingHighAndLow: CharacterCard = {
   id: "t4R",
   canonicalId: "ci_t4R",
+  slug: "lorcana-ci_t4R",
+  printings: [
+    {
+      id: "set12-106",
+      artId: "set12-106",
+      setCode: "set12",
+      collectorNumber: "106",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-106"],
   cardType: "character",
   name: "Pegasus",
@@ -21,6 +33,7 @@ export const pegasusSearchingHighAndLow: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0a746213099d4c5eaf9ea5bf5926a411",
+    tcgPlayer: "692050",
   },
   text: "Evasive",
   classifications: ["Dreamborn", "Ally"],

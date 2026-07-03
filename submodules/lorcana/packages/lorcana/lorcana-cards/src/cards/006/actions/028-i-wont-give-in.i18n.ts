@@ -11,10 +11,27 @@ export const iWontGiveInI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "I Won't Give In",
-    text: "Renvoyez une carte Personnage ayant un coût de 2 ou moins de votre défausse dans votre main.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Renvoyez une carte Personnage ayant un coût de 2 ou moins de votre défausse dans votre main.",
+      },
+    ],
   },
   it: {
     name: "I Won't Give In",
-    text: "(Un personaggio con costo 2 o superiore può per cantare questa canzone gratis.) Riprendi in mano una carta personaggio con costo 2 o inferiore dai tuoi scarti.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Riprendi in mano una carta personaggio con costo 2 o inferiore dai tuoi scarti.",
+      },
+    ],
   },
 };

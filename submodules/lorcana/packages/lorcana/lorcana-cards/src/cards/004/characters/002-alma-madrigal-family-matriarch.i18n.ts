@@ -17,7 +17,7 @@ export const almaMadrigalFamilyMatriarchI18n: Record<Languages, I18nProperties> 
     version: "Familienoberhaupt",
     text: [
       {
-        title: "SETZT EUCH BITTE",
+        title: "Setzt euch bitte",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du dein Deck nach einem Madrigal durchsuchen und diesen allen Mitspielenden zeigen. Mische danach dein Deck und lege die gewählte Karte als oberste Karte auf dein Deck.",
       },
@@ -28,7 +28,7 @@ export const almaMadrigalFamilyMatriarchI18n: Record<Languages, I18nProperties> 
     version: "Matriarche de la famille",
     text: [
       {
-        title: "À TABLE",
+        title: "À table",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez chercher un personnage Madrigal dans votre deck. Si vous le faites, révélez-le, mélangez votre deck puis placez ce personnage au-dessus de votre deck.",
       },
@@ -39,7 +39,7 @@ export const almaMadrigalFamilyMatriarchI18n: Record<Languages, I18nProperties> 
     version: "Matriarca della Famiglia",
     text: [
       {
-        title: "TUTTI A TAVOLA",
+        title: "Tutti a Tavola",
         description:
           "Quando giochi questo personaggio, puoi cercare un personaggio Madrigal nel tuo mazzo e rivelare quella carta a tutti i giocatori. Rimescola il tuo mazzo e metti quella carta in cima ad esso.",
       },

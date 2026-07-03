@@ -20,11 +20,11 @@ export const instituteOfTechnologyPrestigiousUniversityI18n: Record<Languages, I
     version: "Renommierte Universität",
     text: [
       {
-        title: "WILLKOMMEN IM LABOR",
-        description: "Erfinder an diesem Ort erhalten +1.",
+        title: "Willkommen im Labor",
+        description: "Erfinder an diesem Ort erhalten +1 {W}.",
       },
       {
-        title: "WIR ÜBERWINDEN DIE GRENZEN",
+        title: "Wir Überwinden die Grenzen",
         description:
           "Zu Beginn deines Zuges, wenn du mindestens einen Charakter an diesem Ort hast, sammelst du 1 Legende.",
       },
@@ -35,11 +35,11 @@ export const instituteOfTechnologyPrestigiousUniversityI18n: Record<Languages, I
     version: "Prestigieuse faculté",
     text: [
       {
-        title: "BIENVENUE AU LABO DES INTELLOS",
-        description: "Les personnages Inventeur sur ce lieu gagnent +1.",
+        title: "Bienvenue au labo des intellos",
+        description: "Les personnages Inventeur sur ce lieu gagnent +1 {W}.",
       },
       {
-        title: "REPOUSSONS LES LIMITES",
+        title: "Repoussons les limites",
         description:
           "Au début de votre tour, si vous avez un personnage sur ce lieu, gagnez 1 éclat de Lore.",
       },
@@ -50,11 +50,11 @@ export const instituteOfTechnologyPrestigiousUniversityI18n: Record<Languages, I
     version: "Università Prestigiosa",
     text: [
       {
-        title: "BENVENUTO AL LABORATORIO I",
-        description: "personaggi Inventore ricevono +1 mentre si trovano in questo luogo.",
+        title: "Benvenuto al Laboratorio",
+        description: "I personaggi Inventore ricevono +1 {W} mentre si trovano in questo luogo.",
       },
       {
-        title: "AVANGUARDIA DELLA ROBOTICA",
+        title: "Avanguardia della Robotica",
         description:
           "All'inizio del tuo turno, se hai un personaggio in questo luogo, ottieni 1 leggenda.",
       },

@@ -7,14 +7,17 @@ export const gd04OverwhelmingPressure109: CommandCard = {
   color: "red",
   traits: [],
   id: "GD04-109",
-  externalId: "gundam:gd04-109",
-  slug: "overwhelming-pressure-gd04-109",
+  canonicalId: "GD04-109",
+  externalIds: { bandai: "gundam:gd04-109" },
+  slug: "overwhelming-pressure/gd04-109",
   displayName: "Overwhelming Pressure",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-109",
   printings: [
     {
       id: "GD04-109",
+      artId: "GD04-109",
+      setCode: "GD04",
       collectorNumber: "GD04-109",
       cardNumber: "GD04-109",
       set: {
@@ -29,6 +32,7 @@ export const gd04OverwhelmingPressure109: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-109"],
   selectedPrintingId: "GD04-109",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-109.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-109.webp?260424",

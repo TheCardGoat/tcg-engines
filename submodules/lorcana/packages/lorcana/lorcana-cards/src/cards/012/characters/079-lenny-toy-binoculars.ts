@@ -3,7 +3,18 @@ import { lennyToyBinocularsI18n } from "./079-lenny-toy-binoculars.i18n";
 
 export const lennyToyBinoculars: CharacterCard = {
   id: "egA",
-  canonicalId: "ci_egA",
+  canonicalId: "ci_dp1",
+  slug: "lorcana-ci_dp1",
+  printings: [
+    {
+      id: "set12-079",
+      artId: "set12-079",
+      setCode: "set12",
+      collectorNumber: "79",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-079"],
   cardType: "character",
   name: "Lenny",
@@ -20,6 +31,7 @@ export const lennyToyBinoculars: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_58a1ca8c3c3c4dfa9deebc214c49e4b1",
+    tcgPlayer: "690535",
   },
   text: [
     {

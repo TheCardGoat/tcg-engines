@@ -7,14 +7,17 @@ export const gd03DinnCommanderType047: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD03-047",
-  externalId: "gundam:gd03-047",
-  slug: "dinn-commander-type-gd03-047",
+  canonicalId: "GD03-047",
+  externalIds: { bandai: "gundam:gd03-047" },
+  slug: "dinn-commander-type/gd03-047",
   displayName: "DINN (Commander Type)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-047",
   printings: [
     {
       id: "GD03-047",
+      artId: "GD03-047",
+      setCode: "GD03",
       collectorNumber: "GD03-047",
       cardNumber: "GD03-047",
       set: {
@@ -29,6 +32,7 @@ export const gd03DinnCommanderType047: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-047"],
   selectedPrintingId: "GD03-047",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-047.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-047.webp?260424",

@@ -4,6 +4,17 @@ import { meridasBowI18n } from "./101-meridas-bow.i18n";
 export const meridasBow: ItemCard = {
   id: "yLr",
   canonicalId: "ci_yLr",
+  slug: "lorcana-ci_yLr",
+  printings: [
+    {
+      id: "set12-101",
+      artId: "set12-101",
+      setCode: "set12",
+      collectorNumber: "101",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-101"],
   cardType: "item",
   name: "Merida's Bow",
@@ -16,6 +27,7 @@ export const meridasBow: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_46e904b0b1d54c4f89dff2256895bf26",
+    tcgPlayer: "690539",
   },
   text: [
     {

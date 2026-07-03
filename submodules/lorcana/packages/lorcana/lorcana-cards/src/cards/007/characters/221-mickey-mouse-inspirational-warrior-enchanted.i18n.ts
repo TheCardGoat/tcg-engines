@@ -17,7 +17,7 @@ export const mickeyMouseInspirationalWarriorEnchantedI18n: Record<Languages, I18
     version: "Inspirierender Krieger",
     text: [
       {
-        title: "MITREISSENDER GEIST",
+        title: "Mitreissender Geist",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du einen Charakter kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const mickeyMouseInspirationalWarriorEnchantedI18n: Record<Languages, I18
     version: "Combattant exaltant",
     text: [
       {
-        title: "INSPIRE LES FOULES",
+        title: "Inspire les foules",
         description:
           "Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, vous pouvez jouer un personnage gratuitement.",
       },
@@ -39,7 +39,7 @@ export const mickeyMouseInspirationalWarriorEnchantedI18n: Record<Languages, I18
     version: "Guerriero Ispiratore",
     text: [
       {
-        title: "SCUOTERE L'ANIMO",
+        title: "Scuotere l'Animo",
         description:
           "Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, puoi giocare un personaggio gratis.",
       },

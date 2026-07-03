@@ -19,10 +19,10 @@ export const maxGoofRockinTeenI18n: Record<Languages, I18nProperties> = {
     version: "Rockiger Teenie",
     text: [
       {
-        title: "Singen 5",
+        title: "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)",
       },
       {
-        title: "ICH MÖCHTE EINFACH ZU HAUSE BLEIBEN",
+        title: "Ich möchte einfach zu Hause bleiben",
         description: "Dieser Charakter kann nicht zu Orten bewegt werden.",
       },
     ],
@@ -32,11 +32,12 @@ export const maxGoofRockinTeenI18n: Record<Languages, I18nProperties> = {
     version: "Ado qui rock",
     text: [
       {
-        title: "Mélomane 5",
+        title:
+          "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)",
       },
       {
-        title: "JE VEUX JUSTE RESTER",
-        description: "À LA MAISON Ce personnage ne peut pas être déplacé sur un lieu.",
+        title: "Je veux juste rester à la maison",
+        description: "Ce personnage ne peut pas être déplacé sur un lieu.",
       },
     ],
   },
@@ -45,11 +46,11 @@ export const maxGoofRockinTeenI18n: Record<Languages, I18nProperties> = {
     version: "Adolescente che Spacca",
     text: [
       {
-        title: "Melodioso 5",
+        title: "<Melodioso> 5",
       },
       {
-        title: "VOGLIO SOLO RESTARE",
-        description: "A CASA Questo personaggio non può spostarsi nei luoghi.",
+        title: "Voglio Solo Restare a Casa",
+        description: "Questo personaggio non può spostarsi nei luoghi.",
       },
     ],
   },

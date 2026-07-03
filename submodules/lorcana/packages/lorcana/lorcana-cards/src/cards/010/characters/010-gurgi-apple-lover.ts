@@ -4,6 +4,17 @@ import { gurgiAppleLoverI18n } from "./010-gurgi-apple-lover.i18n";
 export const gurgiAppleLover: CharacterCard = {
   id: "KY3",
   canonicalId: "ci_KY3",
+  slug: "lorcana-ci_KY3",
+  printings: [
+    {
+      id: "set10-010",
+      artId: "set10-010",
+      setCode: "set10",
+      collectorNumber: "10",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-010"],
   cardType: "character",
   name: "Gurgi",
@@ -20,7 +31,7 @@ export const gurgiAppleLover: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9b85042e33b2405e923af72d271b377e",
-    tcgPlayer: 658290,
+    tcgPlayer: "658290",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const gurgiAppleLover: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           target: {
             selector: "chosen",
             count: 1,

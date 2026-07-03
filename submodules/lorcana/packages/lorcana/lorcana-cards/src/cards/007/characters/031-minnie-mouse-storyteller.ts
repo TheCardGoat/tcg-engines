@@ -4,6 +4,17 @@ import { minnieMouseStorytellerI18n } from "./031-minnie-mouse-storyteller.i18n"
 export const minnieMouseStoryteller: CharacterCard = {
   id: "hMA",
   canonicalId: "ci_hMA",
+  slug: "lorcana-ci_hMA",
+  printings: [
+    {
+      id: "set7-031",
+      artId: "set7-031",
+      setCode: "set7",
+      collectorNumber: "31",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-031"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -19,7 +30,7 @@ export const minnieMouseStoryteller: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9e82c244c06f495eb4de6ae7915cd575",
-    tcgPlayer: 619424,
+    tcgPlayer: "619424",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd01BusterGundam046: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD01-046",
-  externalId: "gundam:gd01-046",
-  slug: "buster-gundam-gd01-046",
+  canonicalId: "GD01-046",
+  externalIds: { bandai: "gundam:gd01-046" },
+  slug: "buster-gundam/gd01-046",
   displayName: "Buster Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-046",
   printings: [
     {
       id: "GD01-046",
+      artId: "GD01-046",
+      setCode: "GD01",
       collectorNumber: "GD01-046",
       cardNumber: "GD01-046",
       set: {
@@ -30,6 +33,8 @@ export const gd01BusterGundam046: UnitCard = {
     },
     {
       id: "GD01-046_p1",
+      artId: "GD01-046_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-046_p1",
       cardNumber: "GD01-046",
       set: {
@@ -44,6 +49,7 @@ export const gd01BusterGundam046: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-046", "GD01-046_p1"],
   selectedPrintingId: "GD01-046",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-046.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-046.webp?260424",

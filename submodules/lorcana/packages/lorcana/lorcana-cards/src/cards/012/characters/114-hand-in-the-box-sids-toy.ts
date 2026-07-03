@@ -4,6 +4,17 @@ import { handintheboxSidsToyI18n } from "./114-hand-in-the-box-sids-toy.i18n";
 export const handintheboxSidsToy: CharacterCard = {
   id: "LbY",
   canonicalId: "ci_LbY",
+  slug: "lorcana-ci_LbY",
+  printings: [
+    {
+      id: "set12-114",
+      artId: "set12-114",
+      setCode: "set12",
+      collectorNumber: "114",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-114"],
   cardType: "character",
   name: "Hand-in-the-Box",
@@ -20,6 +31,7 @@ export const handintheboxSidsToy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_309b96e0cc0f4a40a3a7b381b2823e0d",
+    tcgPlayer: "690541",
   },
   text: [
     {

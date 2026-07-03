@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { teKTheBurningOneI18n } from "./126-te-k-the-burning-one.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 
 export const teKTheBurningOne: CharacterCard = {
   id: "Zd7",
   canonicalId: "ci_Zd7",
+  slug: "lorcana-ci_Zd7",
+  printings: [
+    {
+      id: "set1-126",
+      artId: "set1-126",
+      setCode: "set1",
+      collectorNumber: "126",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-126"],
   cardType: "character",
   name: "Te Kā",
@@ -21,7 +33,7 @@ export const teKTheBurningOne: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e70380b0a938449cb7e2b433737ec824",
-    tcgPlayer: 508803,
+    tcgPlayer: "508803",
   },
   text: "Reckless",
   classifications: ["Storyborn", "Villain", "Deity"],

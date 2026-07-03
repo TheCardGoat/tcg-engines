@@ -1,13 +1,14 @@
 <script lang="ts">
-  import LorcanaCard from "@/design-system/simulator/cards/LorcanaCard.svelte";
   import { useLorcanaBoardPresenter } from "@/features/simulator/context/game-context.svelte.js";
-  import type { ResolvedActionAnimation } from "@/features/simulator/animations/action-animations.js";
+  import {
+    ACTION_CARD_STAGE_WIDTH,
+    getActionCardStageRect,
+    type ResolvedActionAnimation,
+  } from "@/features/simulator/animations/action-animations.js";
   import type { LorcanaCardSnapshot } from "@/features/simulator/model/contracts.js";
   import type { BoardLocalRect } from "@/features/simulator/animations/board-move-animations.js";
   import { m } from "$lib/i18n/messages.js";
-
-  const ACTION_CARD_WIDTH = 122;
-  const ACTION_CARD_HEIGHT = 171;
+  import ActionCardStage from "./ActionCardStage.svelte";
 
   interface Rect {
     x: number;
@@ -49,21 +50,7 @@
   }
 
   function castRect(): Rect {
-    const x = clamp(layerWidth * 0.16 - ACTION_CARD_WIDTH / 2, 24, layerWidth - ACTION_CARD_WIDTH - 24);
-    const y = clamp(layerHeight * 0.52 - ACTION_CARD_HEIGHT / 2, 24, layerHeight - ACTION_CARD_HEIGHT - 24);
-
-    return {
-      x,
-      y,
-      width: ACTION_CARD_WIDTH,
-      height: ACTION_CARD_HEIGHT,
-      centerX: x + ACTION_CARD_WIDTH / 2,
-      centerY: y + ACTION_CARD_HEIGHT / 2,
-    };
-  }
-
-  function clamp(value: number, min: number, max: number): number {
-    return Math.max(min, Math.min(max, value));
+    return getActionCardStageRect(layerWidth, layerHeight);
   }
 
   function actionCardStyle(animation: ResolvedActionAnimation): string {
@@ -72,7 +59,7 @@
     const fromX = source ? source.centerX - rect.centerX : 0;
     const fromY = source ? source.centerY - rect.centerY : 0;
     const fromScale = source
-      ? clamp(source.width / ACTION_CARD_WIDTH, 0.38, 0.86)
+      ? Math.max(0.38, Math.min(source.width / ACTION_CARD_STAGE_WIDTH, 0.86))
       : 1;
 
     return [
@@ -175,21 +162,11 @@
         {/each}
       </svg>
 
-      <div class="action-card-stage" style={actionCardStyle(animation)}>
-        {#each [getActionCard(animation)] as actionCard}
-          {#if actionCard}
-            <LorcanaCard
-              card={actionCard}
-              size="small"
-              isExerted={false}
-              showHoverCard={false}
-              clickOpensHover={false}
-            />
-          {:else}
-            <div class="action-card-placeholder"></div>
-          {/if}
-        {/each}
-      </div>
+      <ActionCardStage
+        card={getActionCard(animation)}
+        variant="cast"
+        style={actionCardStyle(animation)}
+      />
 
       {#each animation.targets as target, index (`${animation.id}:target:${target.cardId}:${index}`)}
         {#if target.targetRect}
@@ -232,37 +209,6 @@
 
   .action-cast {
     animation: action-cast-lifecycle var(--duration, 1000ms) cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  .action-card-stage {
-    position: absolute;
-    display: grid;
-    place-items: center;
-    transform-origin: center;
-    filter: drop-shadow(0 22px 26px rgba(2, 6, 23, 0.55));
-    animation: action-card-stage var(--duration, 1000ms) cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  .action-card-stage::before {
-    content: "";
-    position: absolute;
-    inset: -12px;
-    z-index: -1;
-    border: 1px solid rgba(253, 230, 138, 0.32);
-    border-radius: 12px;
-    background: radial-gradient(circle at 50% 40%, rgba(251, 191, 36, 0.28), transparent 64%);
-    box-shadow:
-      0 0 28px rgba(245, 158, 11, 0.36),
-      inset 0 0 24px rgba(253, 230, 138, 0.12);
-    animation: action-card-aura var(--duration, 1000ms) ease both;
-  }
-
-  .action-card-placeholder {
-    width: 122px;
-    height: 171px;
-    border: 1px solid rgba(253, 230, 138, 0.2);
-    border-radius: 8px;
-    background: rgba(15, 23, 42, 0.7);
   }
 
   .action-beam-shadow,
@@ -363,41 +309,6 @@
     9%,
     86% {
       opacity: 1;
-    }
-  }
-
-  @keyframes action-card-stage {
-    0% {
-      opacity: 0;
-      transform: translate3d(var(--from-x), var(--from-y), 0) scale(var(--from-scale));
-    }
-    18% {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-    76% {
-      opacity: 1;
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: translate3d(-18px, 18px, 0) scale(0.86);
-    }
-  }
-
-  @keyframes action-card-aura {
-    0% {
-      opacity: 0;
-      transform: scale(0.86);
-    }
-    22%,
-    74% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(1.08);
     }
   }
 
@@ -503,8 +414,6 @@
 
   @media (prefers-reduced-motion: reduce) {
     .action-cast,
-    .action-card-stage,
-    .action-card-stage::before,
     .action-beam-shadow,
     .action-beam,
     .action-beam-spark,

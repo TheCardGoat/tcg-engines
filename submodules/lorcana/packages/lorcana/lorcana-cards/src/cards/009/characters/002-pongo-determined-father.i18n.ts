@@ -17,9 +17,9 @@ export const pongoDeterminedFatherI18n: Record<Languages, I18nProperties> = {
     version: "Entschlossener Vater",
     text: [
       {
-        title: "DÄMMERUNGSBELLEN",
+        title: "Dämmerungsbellen",
         description:
-          "Einmal pro Zug, darfst du 2 bezahlen, um die oberste Karte deines Decks aufzudecken. Falls sie eine Charakterkarte ist, nimm sie auf deine Hand. Falls nicht, lege sie unter dein Deck.",
+          "Einmal pro Zug, darfst du 2 {I} bezahlen, um die oberste Karte deines Decks aufzudecken. Falls sie eine Charakterkarte ist, nimm sie auf deine Hand. Falls nicht, lege sie unter dein Deck.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const pongoDeterminedFatherI18n: Record<Languages, I18nProperties> = {
     version: "Père persévérant",
     text: [
       {
-        title: "ABOIEMENT DU SOIR",
+        title: "Aboiement du soir",
         description:
-          "Une fois par tour, vous pouvez payer 2 pour révéler la première carte de votre pioche. S'il s'agit d'une carte Personnage, ajoutez-la à votre main. Sinon, remettez-la sous votre pioche.",
+          "Une fois par tour, vous pouvez payer 2 {I} pour révéler la première carte de votre pioche. S'il s'agit d'une carte Personnage, ajoutez-la à votre main. Sinon, remettez-la sous votre pioche.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const pongoDeterminedFatherI18n: Record<Languages, I18nProperties> = {
     version: "Padre Determinato",
     text: [
       {
-        title: "TELEGRAFO DEL CREPUSCOLO",
+        title: "Telegrafo del Crepuscolo",
         description:
-          "Una volta per turno, puoi pagare 2 per rivelare la prima carta del tuo mazzo. Se è una carta personaggio, aggiungila alla tua mano. Altrimenti, mettila in fondo al tuo mazzo.",
+          "Una volta per turno, puoi pagare 2 {I} per rivelare la prima carta del tuo mazzo. Se è una carta personaggio, aggiungila alla tua mano. Altrimenti, mettila in fondo al tuo mazzo.",
       },
     ],
   },

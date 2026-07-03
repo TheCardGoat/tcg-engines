@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { thunderboltWonderDogI18n } from "./023-thunderbolt-wonder-dog.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const thunderboltWonderDog: CharacterCard = {
   id: "xjz",
   canonicalId: "ci_xjz",
+  slug: "lorcana-ci_xjz",
+  printings: [
+    {
+      id: "set7-023",
+      artId: "set7-023",
+      setCode: "set7",
+      collectorNumber: "23",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-023"],
   cardType: "character",
   name: "Thunderbolt",
@@ -21,7 +33,7 @@ export const thunderboltWonderDog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5a0a0d8b44824cf3b19fd61fc940df4a",
-    tcgPlayer: 619418,
+    tcgPlayer: "619418",
   },
   text: [
     {

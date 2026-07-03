@@ -10,7 +10,7 @@
   "scripts": {
     "check-types": "tsc --noEmit",
     "start": "bun ./src/cli.ts",
-    "test": "bun test tests"
+    "test": "vp test run"
   },
   "dependencies": {
     "@tcg/cyberpunk-cards": "workspace:*",

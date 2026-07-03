@@ -40,10 +40,11 @@ describe("Jackie Welles - Pour One Out For Me (Retail) jsdom happy path", () => 
       // d4 starts at 2, decreases to 1 (min for d4).
       await pom.expectGigValue(gig.id, 1);
       await pom.expectEddies(CYBERPUNK_P1, 2);
-      // Hand: Floor It remains after playing Dying Night.
-      await pom.expectHandSize(CYBERPUNK_P1, 1);
+      // Hand: Floor It remains after playing Dying Night, plus 1 draw from
+      // Jackie's "If it becomes a min Gig, draw 1" (gig reached min d4 value).
+      await pom.expectHandSize(CYBERPUNK_P1, 2);
       await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, host.instanceId, 1);
-      expectEqual("Jackie deck without draw", await pom.getDeckSize(CYBERPUNK_P1), 38);
+      expectEqual("Jackie deck after draw", await pom.getDeckSize(CYBERPUNK_P1), 37);
       await pom.expectStructuralState();
     } finally {
       view.unmount();

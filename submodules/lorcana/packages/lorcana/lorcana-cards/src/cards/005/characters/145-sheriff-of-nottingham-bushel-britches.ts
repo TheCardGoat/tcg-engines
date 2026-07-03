@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { sheriffOfNottinghamBushelBritchesI18n } from "./145-sheriff-of-nottingham-bushel-britches.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const sheriffOfNottinghamBushelBritches: CharacterCard = {
   id: "ROz",
   canonicalId: "ci_ROz",
+  slug: "lorcana-ci_ROz",
+  printings: [
+    {
+      id: "set5-145",
+      artId: "set5-145",
+      setCode: "set5",
+      collectorNumber: "145",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-145"],
   cardType: "character",
   name: "Sheriff of Nottingham",
@@ -21,7 +33,7 @@ export const sheriffOfNottinghamBushelBritches: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f13c7ff8caa0471c9cea95ac9d2177c2",
-    tcgPlayer: 561968,
+    tcgPlayer: "561968",
   },
   text: [
     {

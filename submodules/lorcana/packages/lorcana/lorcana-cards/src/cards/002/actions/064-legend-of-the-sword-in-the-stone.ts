@@ -4,6 +4,17 @@ import { legendOfTheSwordInTheStoneI18n } from "./064-legend-of-the-sword-in-the
 export const legendOfTheSwordInTheStone: ActionCard = {
   id: "Sw8",
   canonicalId: "ci_Sw8",
+  slug: "lorcana-ci_Sw8",
+  printings: [
+    {
+      id: "set2-064",
+      artId: "set2-064",
+      setCode: "set2",
+      collectorNumber: "64",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-064"],
   cardType: "action",
   name: "Legend of the Sword in the Stone",
@@ -16,7 +27,7 @@ export const legendOfTheSwordInTheStone: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d4eaff075b2b41659976e71933d2c3e4",
-    tcgPlayer: 526302,
+    tcgPlayer: "526302",
   },
   text: "Chosen character gains Challenger +3 this turn. (They get +3 {S} while challenging.)",
   actionSubtype: "song",

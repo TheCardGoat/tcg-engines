@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { helgaSinclairToughAsNailsI18n } from "./183-helga-sinclair-tough-as-nails.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const helgaSinclairToughAsNails: CharacterCard = {
   id: "lpp",
   canonicalId: "ci_lpp",
+  slug: "lorcana-ci_lpp",
+  printings: [
+    {
+      id: "set7-183",
+      artId: "set7-183",
+      setCode: "set7",
+      collectorNumber: "183",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-183"],
   cardType: "character",
   name: "Helga Sinclair",
@@ -21,7 +33,7 @@ export const helgaSinclairToughAsNails: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ba65ec4007544e7ba265690e8e823312",
-    tcgPlayer: 619511,
+    tcgPlayer: "619511",
   },
   text: [
     {

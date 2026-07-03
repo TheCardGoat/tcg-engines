@@ -111,6 +111,65 @@ describe("CardHoverCardContent", () => {
     expect(enabledActionChipIndex).toBeLessThan(unavailableActionChipIndex);
   });
 
+  it("renders an activated text entry as a button when the move option label matches", () => {
+    const activateAction: CardActionView = {
+      id: "activate-ability:angel-1",
+      cardId: "angel-1",
+      categoryId: "activate-ability",
+      label: "Activate Ability",
+      interaction: "execute-or-select",
+      enabled: true,
+      moves: [
+        {
+          id: "activateAbility:angel-1:0",
+          label: "Angel - Experiment 624: UNTOUCHABLE",
+          moveId: "activateAbility",
+          params: { cardId: "angel-1", abilityIndex: 0 },
+          presentation: {
+            kind: "targeted",
+            categoryId: "activate-ability",
+            categoryLabel: "Activate Ability",
+            optionLabel: "Angel - Experiment 624: GOOD AIM",
+          },
+        },
+      ],
+    };
+
+    const { body } = render(CardHoverCardContentTestHost, {
+      props: {
+        card: createCardSnapshot({
+          cardId: "angel-1",
+          cardType: "character",
+          label: "Angel - Experiment 624",
+          strength: 3,
+          baseStrength: 3,
+          willpower: 3,
+          baseWillpower: 3,
+          loreValue: 1,
+          baseLoreValue: 1,
+          textEntries: [
+            {
+              title: "UNTOUCHABLE",
+              description: "While you have no cards in your hand, this character gains Resist +2.",
+            },
+            {
+              title: "GOOD AIM",
+              description:
+                "Once during your turn, you may choose and discard a card to deal 2 damage to chosen character.",
+            },
+          ],
+        }),
+        actions: [activateAction],
+      },
+    });
+
+    expect(body).toContain("rules-entry--inline-ability");
+    expect(body).toContain(">GOOD AIM<");
+    expect(body).toContain("Once during your turn");
+    expect(body).toContain("Use");
+    expect(body).not.toContain('>UNTOUCHABLE</span><span class="ability-use-chip"');
+  });
+
   it("renders discard-cost Shift entries as keyword rows", () => {
     const { body } = render(CardHoverCardContentTestHost, {
       props: {
@@ -137,5 +196,31 @@ describe("CardHoverCardContent", () => {
 
     expect(body).toContain("rules-entry--keyword");
     expect(body).toContain("Shift: Discard a song card");
+  });
+
+  it("renders angle-bracketed rules text as bold italic keyword text", () => {
+    const { body } = render(CardHoverCardContentTestHost, {
+      props: {
+        card: createCardSnapshot({
+          cardType: "character",
+          label: "Megavolt - Electrical Menace",
+          strength: 1,
+          baseStrength: 1,
+          willpower: 4,
+          baseWillpower: 4,
+          textEntries: [
+            {
+              title: "FORCE FIELD",
+              description:
+                "While you have no cards in your hand, this character gains <Resist> +2.",
+            },
+          ],
+        }),
+      },
+    });
+
+    expect(body).toContain('<strong class="inline-keyword');
+    expect(body).toContain(">Resist</strong>");
+    expect(body).not.toContain("&lt;Resist&gt;");
   });
 });

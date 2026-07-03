@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { isabelaMadrigalGoldenChildI18n } from "./045-isabela-madrigal-golden-child.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const isabelaMadrigalGoldenChild: CharacterCard = {
   id: "Kq0",
   canonicalId: "ci_Kq0",
+  slug: "lorcana-ci_Kq0",
+  printings: [
+    {
+      id: "set4-045",
+      artId: "set4-045",
+      setCode: "set4",
+      collectorNumber: "45",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-045"],
   cardType: "character",
   name: "Isabela Madrigal",
@@ -21,7 +33,7 @@ export const isabelaMadrigalGoldenChild: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_21cddbd22cb445fbb3b810abe4ecbaf6",
-    tcgPlayer: 548204,
+    tcgPlayer: "548204",
   },
   text: [
     {

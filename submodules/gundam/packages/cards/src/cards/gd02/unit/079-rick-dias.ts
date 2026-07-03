@@ -7,14 +7,17 @@ export const gd02RickDias079: UnitCard = {
   color: "white",
   traits: ["aeug"],
   id: "GD02-079",
-  externalId: "gundam:gd02-079",
-  slug: "rick-dias-gd02-079",
+  canonicalId: "GD02-079",
+  externalIds: { bandai: "gundam:gd02-079" },
+  slug: "rick-dias/gd02-079",
   displayName: "Rick Dias",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-079",
   printings: [
     {
       id: "GD02-079",
+      artId: "GD02-079",
+      setCode: "GD02",
       collectorNumber: "GD02-079",
       cardNumber: "GD02-079",
       set: {
@@ -29,6 +32,7 @@ export const gd02RickDias079: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-079"],
   selectedPrintingId: "GD02-079",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-079.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-079.webp?260424",

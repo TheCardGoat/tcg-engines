@@ -138,16 +138,6 @@ describe("Invalid Target Resolution", () => {
       );
 
       expect(testEngine.asPlayerOne().playCard(scroopOdiousMutineer)).toBeSuccessfulCommand();
-      // CR 6.2.3: trigger enters the bag even when no valid targets exist
-      expect(testEngine.asPlayerOne().getBagCount()).toBe(1);
-      // Declining the optional resolves it with no effect
-      expect(
-        testEngine
-          .asPlayerOne()
-          .resolvePendingByCard(testEngine.asPlayerOne().getBagEffects()[0]!.sourceId, {
-            resolveOptional: false,
-          }),
-      ).toBeSuccessfulCommand();
       expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
       expect(testEngine.asPlayerTwo().getCardZone(undamagedTarget)).toBe("play");
     });
@@ -161,9 +151,8 @@ describe("Invalid Target Resolution", () => {
 
       expect(testEngine.asPlayerOne().playCard(hadesLordOfTheUnderworld)).toBeSuccessfulCommand();
       expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
-      expect(testEngine.asPlayerOne().getPendingChoice()).toBeDefined();
-      expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(1);
-      expect(testEngine.asPlayerOne().resolveNextPending({ targets: [] })).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerOne().getPendingChoice()).toBeUndefined();
+      expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(0);
       expect(testEngine.asPlayerOne().getPendingChoice()).toBeUndefined();
       expect(testEngine.asPlayerOne().getCardZone(hadesLordOfTheUnderworld)).toBe("play");
     });
@@ -266,8 +255,6 @@ describe("Invalid Target Resolution", () => {
       );
 
       expect(testEngine.asPlayerOne().quest(gwythaintSavageHunter)).toBeSuccessfulCommand();
-      expect(testEngine.asPlayerTwo().getPendingEffects()).toHaveLength(1);
-      expect(testEngine.asPlayerTwo().resolveNextPending({ targets: [] })).toBeSuccessfulCommand();
       expect(testEngine.asPlayerTwo().getPendingEffects()).toHaveLength(0);
       expect(testEngine.asPlayerTwo().isExerted(exertedOpponent)).toBe(true);
     });

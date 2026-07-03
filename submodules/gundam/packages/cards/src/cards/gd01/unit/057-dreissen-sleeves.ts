@@ -7,14 +7,17 @@ export const gd01DreissenSleeves057: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-057",
-  externalId: "gundam:gd01-057",
-  slug: "dreissen-sleeves-gd01-057",
+  canonicalId: "GD01-057",
+  externalIds: { bandai: "gundam:gd01-057" },
+  slug: "dreissen-sleeves/gd01-057",
   displayName: "Dreissen (Sleeves)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-057",
   printings: [
     {
       id: "GD01-057",
+      artId: "GD01-057",
+      setCode: "GD01",
       collectorNumber: "GD01-057",
       cardNumber: "GD01-057",
       set: {
@@ -29,6 +32,7 @@ export const gd01DreissenSleeves057: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-057"],
   selectedPrintingId: "GD01-057",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-057.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-057.webp?260424",

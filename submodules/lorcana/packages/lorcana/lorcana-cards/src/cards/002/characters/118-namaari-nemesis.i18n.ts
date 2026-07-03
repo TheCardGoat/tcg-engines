@@ -16,8 +16,8 @@ export const namaariNemesisI18n: Record<Languages, I18nProperties> = {
     version: "Erzfeindin",
     text: [
       {
-        title: "BRINGEN WIR'S ZU ENDE,",
-        description: "Verbanne diesen Charakter — Verbanne einen Charakter deiner Wahl.",
+        title: "Bringen wir's zu Ende",
+        description: "{E}, Verbanne diesen Charakter — Verbanne einen Charakter deiner Wahl.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const namaariNemesisI18n: Record<Languages, I18nProperties> = {
     version: "Némésis",
     text: [
       {
-        title: "ÇA NE DEVRAIT PAS ÊTRE LONG,",
-        description: "Bannissez ce personnage — Choisissez un personnage et bannissez-le.",
+        title: "Ça ne devrait pas être long",
+        description: "{E}, Bannissez ce personnage — Choisissez un personnage et bannissez-le.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const namaariNemesisI18n: Record<Languages, I18nProperties> = {
     version: "Nemesis",
     text: [
       {
-        title: "THIS SHOULDN'T TAKE LONG,",
-        description: "Banish this character — Banish chosen character.",
+        title: "This Shouldn't Take Long",
+        description: "{E}, Banish this character — Banish chosen character.",
       },
     ],
   },

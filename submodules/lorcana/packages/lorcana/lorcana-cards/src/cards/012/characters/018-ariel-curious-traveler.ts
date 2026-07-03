@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { arielCuriousTravelerI18n } from "./018-ariel-curious-traveler.i18n";
 
 export const arielCuriousTraveler: CharacterCard = {
-  id: "BW6",
+  id: "W4V",
   canonicalId: "ci_BW6",
+  slug: "lorcana-ci_BW6",
+  printings: [
+    {
+      id: "set12-018",
+      artId: "set12-018",
+      setCode: "set12",
+      collectorNumber: "18",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-018"],
   cardType: "character",
   name: "Ariel",
@@ -20,6 +31,7 @@ export const arielCuriousTraveler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1a1e041109e6448c889803fb5be588d9",
+    tcgPlayer: "690519",
   },
   text: [
     {

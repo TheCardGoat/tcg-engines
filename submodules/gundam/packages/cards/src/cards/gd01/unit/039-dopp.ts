@@ -7,14 +7,17 @@ export const gd01Dopp039: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-039",
-  externalId: "gundam:gd01-039",
-  slug: "dopp-gd01-039",
+  canonicalId: "GD01-039",
+  externalIds: { bandai: "gundam:gd01-039" },
+  slug: "dopp/gd01-039",
   displayName: "Dopp",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-039",
   printings: [
     {
       id: "GD01-039",
+      artId: "GD01-039",
+      setCode: "GD01",
       collectorNumber: "GD01-039",
       cardNumber: "GD01-039",
       set: {
@@ -29,6 +32,7 @@ export const gd01Dopp039: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-039"],
   selectedPrintingId: "GD01-039",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-039.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-039.webp?260424",

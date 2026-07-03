@@ -16,9 +16,9 @@ export const lumiereNimbleCandelabraI18n: Record<Languages, I18nProperties> = {
     version: "Flinker Kerzenleuchter",
     text: [
       {
-        title: "MIT SCHNELLEN SCHRITTEN",
+        title: "Mit schnellen Schritten",
         description:
-          "Solange du mindestens eine Gegenstandskarte in deinem Ablagestapel hast, erhält dieser Charakter Wendig.",
+          "Solange du mindestens eine Gegenstandskarte in deinem Ablagestapel hast, erhält dieser Charakter <Wendig>.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const lumiereNimbleCandelabraI18n: Record<Languages, I18nProperties> = {
     version: "Candelabre agile",
     text: [
       {
-        title: "DÉMARCHE RAPIDE",
+        title: "Démarche rapide",
         description:
-          "Tant que vous avez une carte Objet dans votre défausse, ce personnage gagne Insaisissable.",
+          "Tant que vous avez une carte Objet dans votre défausse, ce personnage gagne <Insaisissable>.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const lumiereNimbleCandelabraI18n: Record<Languages, I18nProperties> = {
     version: "Agile Candelabro",
     text: [
       {
-        title: "PASSO RAPIDO",
+        title: "Passo Rapido",
         description:
-          "Mentre hai una carta oggetto nei tuoi scarti, questo personaggio ottiene Sfuggente. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Mentre hai una carta oggetto nei tuoi scarti, questo personaggio ottiene <Sfuggente>. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

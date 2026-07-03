@@ -17,7 +17,7 @@ export const buckySquirrelSqueakTutorI18n: Record<Languages, I18nProperties> = {
     version: "Squirrel Squeak Tutor",
     text: [
       {
-        title: "SQUEAK",
+        title: "Squeak",
         description:
           "Whenever you play a Floodborn character, each opponent chooses and discards a card.",
       },
@@ -28,7 +28,7 @@ export const buckySquirrelSqueakTutorI18n: Record<Languages, I18nProperties> = {
     version: "Squirrel Squeak Tutor",
     text: [
       {
-        title: "SQUEAK",
+        title: "Squeak",
         description:
           "Whenever you play a Floodborn character, each opponent chooses and discards a card.",
       },
@@ -39,7 +39,7 @@ export const buckySquirrelSqueakTutorI18n: Record<Languages, I18nProperties> = {
     version: "Squirrel Squeak Tutor",
     text: [
       {
-        title: "SQUEAK",
+        title: "Squeak",
         description:
           "Whenever you play a Floodborn character, each opponent chooses and discards a card.",
       },

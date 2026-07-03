@@ -7,14 +7,17 @@ export const gd01RiddheMarcenas089: PilotCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-089",
-  externalId: "gundam:gd01-089",
-  slug: "riddhe-marcenas-gd01-089",
+  canonicalId: "GD01-089",
+  externalIds: { bandai: "gundam:gd01-089" },
+  slug: "riddhe-marcenas/gd01-089",
   displayName: "Riddhe Marcenas",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-089",
   printings: [
     {
       id: "GD01-089",
+      artId: "GD01-089",
+      setCode: "GD01",
       collectorNumber: "GD01-089",
       cardNumber: "GD01-089",
       set: {
@@ -30,6 +33,8 @@ export const gd01RiddheMarcenas089: PilotCard = {
     },
     {
       id: "GD01-089_p1",
+      artId: "GD01-089_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-089_p1",
       cardNumber: "GD01-089",
       set: {
@@ -44,6 +49,7 @@ export const gd01RiddheMarcenas089: PilotCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-089", "GD01-089_p1"],
   selectedPrintingId: "GD01-089",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-089.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-089.webp?260424",

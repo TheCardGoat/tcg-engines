@@ -2,8 +2,19 @@ import type { LocationCard } from "@tcg/lorcana-types";
 import { arielsGrottoASecretPlaceI18n } from "./169-ariels-grotto-a-secret-place.i18n";
 
 export const arielsGrottoASecretPlace: LocationCard = {
-  id: "v0p",
+  id: "OoJ",
   canonicalId: "ci_9tr",
+  slug: "lorcana-ci_9tr",
+  printings: [
+    {
+      id: "set4-169",
+      artId: "set4-169",
+      setCode: "set4",
+      collectorNumber: "169",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-169"],
   cardType: "location",
   name: "Ariel’s Grotto",
@@ -20,7 +31,7 @@ export const arielsGrottoASecretPlace: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_79195cfde0ae4948894c37bef02d9e6f",
-    tcgPlayer: 550719,
+    tcgPlayer: "550719",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd02GundamAirmaster059: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD02-059",
-  externalId: "gundam:gd02-059",
-  slug: "gundam-airmaster-gd02-059",
+  canonicalId: "GD02-059",
+  externalIds: { bandai: "gundam:gd02-059" },
+  slug: "gundam-airmaster/gd02-059",
   displayName: "Gundam Airmaster",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-059",
   printings: [
     {
       id: "GD02-059",
+      artId: "GD02-059",
+      setCode: "GD02",
       collectorNumber: "GD02-059",
       cardNumber: "GD02-059",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamAirmaster059: UnitCard = {
     },
     {
       id: "GD02-059_p1",
+      artId: "GD02-059_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-059_p1",
       cardNumber: "GD02-059",
       set: {
@@ -44,6 +49,7 @@ export const gd02GundamAirmaster059: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-059", "GD02-059_p1"],
   selectedPrintingId: "GD02-059",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-059.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-059.webp?260424",

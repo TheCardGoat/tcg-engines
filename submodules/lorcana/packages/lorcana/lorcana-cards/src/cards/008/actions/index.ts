@@ -1,3 +1,4 @@
+export { pullTheLeverP2Challenge } from "./p2-031-pull-the-lever-challenge";
 export { candyDrift } from "./039-candy-drift";
 export { shesYourPerson } from "./040-shes-your-person";
 export { onlySoMuchRoom } from "./041-only-so-much-room";

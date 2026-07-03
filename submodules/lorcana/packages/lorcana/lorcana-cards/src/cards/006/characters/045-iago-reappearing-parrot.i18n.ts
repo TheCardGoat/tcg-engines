@@ -17,7 +17,7 @@ export const iagoReappearingParrotI18n: Record<Languages, I18nProperties> = {
     version: "Wiederauftauchender Papagei",
     text: [
       {
-        title: "RATE MAL",
+        title: "Rate mal",
         description:
           "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand.",
       },
@@ -28,7 +28,7 @@ export const iagoReappearingParrotI18n: Record<Languages, I18nProperties> = {
     version: "Perroquet tenace",
     text: [
       {
-        title: "DEVINE QUI C'EST",
+        title: "Devine qui c'est",
         description: "Lorsque ce personnage est banni via un défi, renvoyez-le dans votre main.",
       },
     ],
@@ -38,7 +38,7 @@ export const iagoReappearingParrotI18n: Record<Languages, I18nProperties> = {
     version: "Pappagallo Ricomparso",
     text: [
       {
-        title: "INDOVINA CHI C'È",
+        title: "Indovina Chi C'È",
         description:
           "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta.",
       },

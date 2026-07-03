@@ -37,7 +37,9 @@ function createMockActionCard(params: {
 }): ActionCard {
   return {
     id: params.id,
+    printings: [{ id: params.id, artId: params.id, setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
     canonicalId: `ci_${params.id}`,
+    slug: `lorcana-ci_${params.id}`,
     cardType: "action",
     name: params.name,
     cost: params.cost,

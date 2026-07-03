@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { magicBroomBrigadeCommanderI18n } from "./186-magic-broom-brigade-commander.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const magicBroomBrigadeCommander: CharacterCard = {
   id: "g7O",
   canonicalId: "ci_g7O",
+  slug: "lorcana-ci_g7O",
+  printings: [
+    {
+      id: "set4-186",
+      artId: "set4-186",
+      setCode: "set4",
+      collectorNumber: "186",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-186"],
   cardType: "character",
   name: "Magic Broom",
@@ -21,7 +33,7 @@ export const magicBroomBrigadeCommander: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_989cc7ce93b04fae9388328e9f46d840",
-    tcgPlayer: 550618,
+    tcgPlayer: "550618",
   },
   text: [
     {

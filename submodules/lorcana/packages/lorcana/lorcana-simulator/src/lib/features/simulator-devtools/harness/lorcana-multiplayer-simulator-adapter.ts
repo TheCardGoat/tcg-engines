@@ -14,14 +14,7 @@ import {
   type LorcanaMatchState,
   type LorcanaProjectedBoardView,
 } from "@tcg/lorcana-engine";
-import {
-  cardsAuxKv,
-  getLocalizedCardSync,
-  loadLocalization,
-  resolveSimulatorCardLocale,
-  type LocalizationData,
-  type SupportedLocale,
-} from "@tcg/lorcana-cards/data";
+import type { LocalizationData, SupportedLocale } from "@tcg/lorcana-cards/data";
 import {
   type BrowserTransportConfig,
   LorcanaMultiplayerTestEngine,
@@ -57,6 +50,23 @@ const OWNER_BY_SIDE = {
   playerOne: PLAYER_ONE,
   playerTwo: PLAYER_TWO,
 } as const;
+
+const CARD_LOCALE_BY_SIMULATOR_LOCALE: Record<LorcanaSimulatorLocale, SupportedLocale> = {
+  en: "en",
+  es: "en",
+  de: "de",
+  it: "it",
+  "pt-br": "en",
+};
+
+type LorcanaCardsDataModule = typeof import("@tcg/lorcana-cards/data");
+
+let lorcanaCardsDataModulePromise: Promise<LorcanaCardsDataModule> | null = null;
+
+function loadLorcanaCardsDataModule(): Promise<LorcanaCardsDataModule> {
+  lorcanaCardsDataModulePromise ??= import("@tcg/lorcana-cards/data");
+  return lorcanaCardsDataModulePromise;
+}
 
 export function selectFallbackMoveLogWindow<T>(
   fallbackMoveLogs: readonly T[],
@@ -183,6 +193,7 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
   #locale: LorcanaSimulatorLocale = "en";
   #cardLocale: SupportedLocale = "en";
   #cardLocalization: LocalizationData | null = null;
+  #cardData: LorcanaCardsDataModule | null = null;
   #localizationRequestId = 0;
   #localeRevision = 0;
   #renderRevision = 0;
@@ -204,6 +215,7 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
       fixture.playerTwo,
       {
         browserTransport: normalizeBrowserTransportConfig(browserTransport),
+        capturePatches: false,
         seed: fixture.seed ?? "simulator-default",
         skipPreGame: fixture.skipPreGame ?? true,
         validateSync: false,
@@ -219,6 +231,7 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
     this.#engine = engine;
     this.#stateUpdateView = options.stateUpdateView ?? "all";
     this.#subscribeToEngineRenderUpdates();
+    this.#loadCardDataForLocale(this.#locale);
   }
 
   setLocale(locale: LorcanaSimulatorLocale): void {
@@ -226,24 +239,27 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
       return;
     }
 
-    const resolution = resolveSimulatorCardLocale(locale);
+    const cardLocale = CARD_LOCALE_BY_SIMULATOR_LOCALE[locale] ?? "en";
 
     this.#locale = locale;
-    this.#cardLocale = resolution.cardLocale;
+    this.#cardLocale = cardLocale;
     this.#cardLocalization = null;
     this.#localizationRequestId += 1;
     this.#bumpLocaleRevision();
+    this.#loadCardDataForLocale(locale);
+  }
 
-    if (resolution.cardLocale === "en") {
-      return;
-    }
-
+  #loadCardDataForLocale(locale: LorcanaSimulatorLocale): void {
+    const cardLocale = CARD_LOCALE_BY_SIMULATOR_LOCALE[locale] ?? "en";
     const requestId = this.#localizationRequestId;
-    void loadLocalization(resolution.cardLocale)
-      .then((localizationData) => {
+    void loadLorcanaCardsDataModule()
+      .then(async (cardData) => {
+        const localizationData =
+          cardLocale === "en" ? null : await cardData.loadLocalization(cardLocale);
         if (requestId !== this.#localizationRequestId) {
           return;
         }
+        this.#cardData = cardData;
         this.#cardLocalization = localizationData;
         this.#bumpLocaleRevision();
       })
@@ -505,7 +521,7 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
       return null;
     }
 
-    return cardsAuxKv.printingIdToShortId[definitionId] ?? null;
+    return this.#cardData?.cardsAuxKv.printingIdToShortId[definitionId] ?? null;
   }
 
   #resolveLocalizationEntry(shortId: string) {
@@ -516,6 +532,11 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
     const direct = this.#cardLocalization[shortId];
     if (direct) {
       return direct;
+    }
+
+    const cardsAuxKv = this.#cardData?.cardsAuxKv;
+    if (!cardsAuxKv) {
+      return undefined;
     }
 
     const canonicalId = cardsAuxKv.canonicalIdByShortId[shortId];
@@ -539,7 +560,11 @@ export class LorcanaMultiplayerSimulatorAdapter implements LorcanaSimulatorReadM
       return null;
     }
 
-    const localizedCard = getLocalizedCardSync(shortId, this.#cardLocale, this.#cardLocalization);
+    const localizedCard = this.#cardData?.getLocalizedCardSync(
+      shortId,
+      this.#cardLocale,
+      this.#cardLocalization,
+    );
     if (!localizedCard) {
       return null;
     }

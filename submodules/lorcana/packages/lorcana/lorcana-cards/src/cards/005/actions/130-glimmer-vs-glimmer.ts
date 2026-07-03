@@ -4,6 +4,17 @@ import { glimmerVsGlimmerI18n } from "./130-glimmer-vs-glimmer.i18n";
 export const glimmerVsGlimmer: ActionCard = {
   id: "xCq",
   canonicalId: "ci_xCq",
+  slug: "lorcana-ci_xCq",
+  printings: [
+    {
+      id: "set5-130",
+      artId: "set5-130",
+      setCode: "set5",
+      collectorNumber: "130",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-130"],
   cardType: "action",
   name: "Glimmer vs Glimmer",
@@ -16,7 +27,7 @@ export const glimmerVsGlimmer: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_00e4569178e847649514f979474839fe",
-    tcgPlayer: 560548,
+    tcgPlayer: "560548",
   },
   text: "Banish chosen character of yours to banish chosen character.",
   abilities: [

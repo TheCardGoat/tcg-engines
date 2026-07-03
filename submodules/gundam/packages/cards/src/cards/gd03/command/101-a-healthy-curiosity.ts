@@ -7,14 +7,17 @@ export const gd03AHealthyCuriosity101: CommandCard = {
   color: "blue",
   traits: [],
   id: "GD03-101",
-  externalId: "gundam:gd03-101",
-  slug: "a-healthy-curiosity-gd03-101",
+  canonicalId: "GD03-101",
+  externalIds: { bandai: "gundam:gd03-101" },
+  slug: "a-healthy-curiosity/gd03-101",
   displayName: "A Healthy Curiosity",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-101",
   printings: [
     {
       id: "GD03-101",
+      artId: "GD03-101",
+      setCode: "GD03",
       collectorNumber: "GD03-101",
       cardNumber: "GD03-101",
       set: {
@@ -30,6 +33,8 @@ export const gd03AHealthyCuriosity101: CommandCard = {
     },
     {
       id: "GD03-101_p1",
+      artId: "GD03-101_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-101_p1",
       cardNumber: "GD03-101",
       set: {
@@ -44,6 +49,7 @@ export const gd03AHealthyCuriosity101: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-101", "GD03-101_p1"],
   selectedPrintingId: "GD03-101",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-101.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-101.webp?260424",

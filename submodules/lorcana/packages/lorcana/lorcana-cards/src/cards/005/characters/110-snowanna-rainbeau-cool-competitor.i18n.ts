@@ -9,21 +9,16 @@ export const snowannaRainbeauCoolCompetitorI18n: Record<Languages, I18nPropertie
   de: {
     name: "Snowanna Rainbeau",
     version: "Coole Konkurrenz",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Ninou Gatine",
     version: "Compétitrice glacée",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Snowanna Rainbeau",
     version: "Avversaria Glaciale",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

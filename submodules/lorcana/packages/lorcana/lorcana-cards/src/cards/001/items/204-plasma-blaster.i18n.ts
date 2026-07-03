@@ -14,8 +14,8 @@ export const plasmaBlasterI18n: Record<Languages, I18nProperties> = {
     name: "Plasma-Kanone",
     text: [
       {
-        title: "SCHNELLFEUER, 2",
-        description: "— Füge einem Charakter deiner Wahl 1 Schaden zu.",
+        title: "Schnellfeuer",
+        description: "{E}, 2 {I} — Füge einem Charakter deiner Wahl 1 Schaden zu.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const plasmaBlasterI18n: Record<Languages, I18nProperties> = {
     name: "PISTOLET À PLASMA",
     text: [
       {
-        title: "TIR RAPIDE, 2",
-        description: "— Choisissez un personnage et infligez-lui 1 dommage.",
+        title: "TIR RAPIDE",
+        description: "{E}, 2 {I} — Choisissez un personnage et infligez-lui 1 dommage.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const plasmaBlasterI18n: Record<Languages, I18nProperties> = {
     name: "Plasma Blaster",
     text: [
       {
-        title: "QUICK SHOT, 2",
-        description: "— Deal 1 damage to chosen character.",
+        title: "Quick Shot",
+        description: "{E}, 2 {I} — Deal 1 damage to chosen character.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const gd01GundamHeavyarms034: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-034",
-  externalId: "gundam:gd01-034",
-  slug: "gundam-heavyarms-gd01-034",
+  canonicalId: "GD01-034",
+  externalIds: { bandai: "gundam:gd01-034" },
+  slug: "gundam-heavyarms/gd01-034",
   displayName: "Gundam Heavyarms",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-034",
   printings: [
     {
       id: "GD01-034",
+      artId: "GD01-034",
+      setCode: "GD01",
       collectorNumber: "GD01-034",
       cardNumber: "GD01-034",
       set: {
@@ -30,6 +33,8 @@ export const gd01GundamHeavyarms034: UnitCard = {
     },
     {
       id: "GD01-034_p1",
+      artId: "GD01-034_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-034_p1",
       cardNumber: "GD01-034",
       set: {
@@ -44,6 +49,7 @@ export const gd01GundamHeavyarms034: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-034", "GD01-034_p1"],
   selectedPrintingId: "GD01-034",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-034.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-034.webp?260424",

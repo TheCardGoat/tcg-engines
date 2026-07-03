@@ -6,14 +6,17 @@ export const st01Resource001: ResourceCard = {
   type: "resource",
   traits: ["-"],
   id: "R-001",
-  externalId: "gundam:r-001",
-  slug: "resource-r-001",
+  canonicalId: "R-001",
+  externalIds: { bandai: "gundam:r-001" },
+  slug: "resource/r-001",
   displayName: "resource",
   set: { code: "R", name: "Basic Cards" },
   printNumber: "R-001",
   printings: [
     {
       id: "R-001",
+      artId: "R-001",
+      setCode: "R",
       collectorNumber: "R-001",
       cardNumber: "R-001",
       set: {
@@ -28,6 +31,8 @@ export const st01Resource001: ResourceCard = {
     },
     {
       id: "R-001_p1",
+      artId: "R-001_p1",
+      setCode: "R",
       collectorNumber: "R-001_p1",
       cardNumber: "R-001",
       set: {
@@ -42,6 +47,8 @@ export const st01Resource001: ResourceCard = {
     },
     {
       id: "R-001_p2",
+      artId: "R-001_p2",
+      setCode: "R",
       collectorNumber: "R-001_p2",
       cardNumber: "R-001",
       set: {
@@ -56,6 +63,8 @@ export const st01Resource001: ResourceCard = {
     },
     {
       id: "R-001_p3",
+      artId: "R-001_p3",
+      setCode: "R",
       collectorNumber: "R-001_p3",
       cardNumber: "R-001",
       set: {
@@ -70,6 +79,8 @@ export const st01Resource001: ResourceCard = {
     },
     {
       id: "R-001_p4",
+      artId: "R-001_p4",
+      setCode: "BETA",
       collectorNumber: "R-001_p4",
       cardNumber: "R-001",
       set: {
@@ -85,6 +96,8 @@ export const st01Resource001: ResourceCard = {
     },
     {
       id: "R-001_p5",
+      artId: "R-001_p5",
+      setCode: "BETA",
       collectorNumber: "R-001_p5",
       cardNumber: "R-001",
       set: {
@@ -100,6 +113,8 @@ export const st01Resource001: ResourceCard = {
     },
     {
       id: "R-001_p6",
+      artId: "R-001_p6",
+      setCode: "R",
       collectorNumber: "R-001_p6",
       cardNumber: "R-001",
       set: {
@@ -114,6 +129,7 @@ export const st01Resource001: ResourceCard = {
       productName: "Included in Starter Decks",
     },
   ],
+  reprints: ["R-001", "R-001_p1", "R-001_p2", "R-001_p3", "R-001_p4", "R-001_p5", "R-001_p6"],
   selectedPrintingId: "R-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-001.webp",
   sourceImageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-001.webp",

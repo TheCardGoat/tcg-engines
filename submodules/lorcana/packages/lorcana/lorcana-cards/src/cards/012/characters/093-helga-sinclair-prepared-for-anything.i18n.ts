@@ -6,7 +6,7 @@ export const helgaSinclairPreparedForAnythingI18n: Record<Languages, I18nPropert
     version: "Prepared for Anything",
     text: [
       {
-        title: "Combat Training",
+        title: "COMBAT TRAINING",
         description:
           "Whenever this character quests, deal 1 damage to chosen opposing character. If 2 or more cards were put into your discard this turn, deal 2 damage instead.",
       },

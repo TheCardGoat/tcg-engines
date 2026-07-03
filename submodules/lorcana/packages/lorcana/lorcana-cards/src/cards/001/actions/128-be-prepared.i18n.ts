@@ -11,7 +11,15 @@ export const bePreparedI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "SOYEZ PRÊTES !",
-    text: "Bannissez tous les personnages.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 7 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Bannissez tous les personnages.",
+      },
+    ],
   },
   it: {
     name: "Be Prepared",

@@ -17,9 +17,9 @@ export const grandmotherFaSpiritedElderI18n: Record<Languages, I18nProperties> =
     version: "Weise Älteste",
     text: [
       {
-        title: "ICH HABE ALL DAS GLÜCK, DAS WIR BRAUCHEN",
+        title: "Ich habe all das Glück, das wir brauchen",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen deiner Charaktere wählen und jenem in diesem Zug +2 geben.",
+          "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen deiner Charaktere wählen und jenem in diesem Zug +2 {S} geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const grandmotherFaSpiritedElderI18n: Record<Languages, I18nProperties> =
     version: "Ancienne pleine d'entrain",
     text: [
       {
-        title: "J'AI TOUTE LA CHANCE QU'IL NOUS FAUT",
+        title: "J'ai toute la chance qu'il nous faut",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir l'un de vos personnages qui gagne +2 pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir l'un de vos personnages qui gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const grandmotherFaSpiritedElderI18n: Record<Languages, I18nProperties> =
     version: "Anziana Vivace",
     text: [
       {
-        title: "HO TUTTA LA FORTUNA CHE CI SERVE",
+        title: "Ho Tutta la Fortuna che ci Serve",
         description:
-          "Ogni volta che questo personaggio va all'avventura, puoi dare +2 a un tuo personaggio a tua scelta per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, puoi dare +2 {S} a un tuo personaggio a tua scelta per questo turno.",
       },
     ],
   },

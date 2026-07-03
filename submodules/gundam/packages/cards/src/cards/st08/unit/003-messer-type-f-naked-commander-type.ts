@@ -7,14 +7,17 @@ export const st08MesserTypeFNakedCommanderType003: UnitCard = {
   color: "red",
   traits: ["mafty"],
   id: "ST08-003",
-  externalId: "gundam:st08-003",
-  slug: "messer-type-f-naked-commander-type-st08-003",
+  canonicalId: "ST08-003",
+  externalIds: { bandai: "gundam:st08-003" },
+  slug: "messer-type-f-naked-commander-type/st08-003",
   displayName: "Messer (Type-F Naked) (Commander Type)",
   set: { code: "ST08", name: "Flash of Radiance [ST08]", packageId: "616008" },
   printNumber: "ST08-003",
   printings: [
     {
       id: "ST08-003",
+      artId: "ST08-003",
+      setCode: "ST08",
       collectorNumber: "ST08-003",
       cardNumber: "ST08-003",
       set: {
@@ -30,6 +33,8 @@ export const st08MesserTypeFNakedCommanderType003: UnitCard = {
     },
     {
       id: "ST08-003_p1",
+      artId: "ST08-003_p1",
+      setCode: "ST08",
       collectorNumber: "ST08-003_p1",
       cardNumber: "ST08-003",
       set: {
@@ -44,6 +49,7 @@ export const st08MesserTypeFNakedCommanderType003: UnitCard = {
       productName: "Flash of Radiance [ST08] Bonus Pack",
     },
   ],
+  reprints: ["ST08-003", "ST08-003_p1"],
   selectedPrintingId: "ST08-003",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st08/ST08-003.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST08-003.webp?260424",

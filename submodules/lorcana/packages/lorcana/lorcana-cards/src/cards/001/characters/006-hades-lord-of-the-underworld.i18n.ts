@@ -17,7 +17,7 @@ export const hadesLordOfTheUnderworldI18n: Record<Languages, I18nProperties> = {
     version: "Herrscher der Unterwelt",
     text: [
       {
-        title: "FLUSS DES TODES",
+        title: "Fluss des Todes",
         description:
           "Wenn du diesen Charakter ausspielst, nimm 1 Charakterkarte aus deinem Ablagestapel zurück auf deine Hand.",
       },
@@ -39,7 +39,7 @@ export const hadesLordOfTheUnderworldI18n: Record<Languages, I18nProperties> = {
     version: "Signore dell'Oltretomba",
     text: [
       {
-        title: "POZZO DELLE ANIME",
+        title: "Pozzo delle Anime",
         description:
           "Quando giochi questo personaggio, riprendi in mano una carta personaggio dai tuoi scarti.",
       },

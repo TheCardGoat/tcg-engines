@@ -15,7 +15,7 @@ export const musketeerTabardI18n: Record<Languages, I18nProperties> = {
     name: "Wappenrock der Musketiere",
     text: [
       {
-        title: "ALLE FÜR EINEN UND EINER FÜR ALLE",
+        title: "Alle für Einen und Einer für Alle",
         description:
           "Jedes Mal, wenn einer deiner Charaktere mit Beschützen verbannt wird, darfst du 1 Karte ziehen.",
       },
@@ -35,9 +35,9 @@ export const musketeerTabardI18n: Record<Languages, I18nProperties> = {
     name: "Musketeer Tabard",
     text: [
       {
-        title: "ALL FOR ONE AND ONE FOR ALL",
+        title: "All For One and One For All",
         description:
-          "Whenever one of your characters with Bodyguard is banished, you may draw a card.",
+          "Whenever one of your characters with <Bodyguard> is banished, you may draw a card.",
       },
     ],
   },

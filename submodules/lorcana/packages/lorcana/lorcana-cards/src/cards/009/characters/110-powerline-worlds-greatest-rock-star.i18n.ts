@@ -23,13 +23,14 @@ export const powerlineWorldsGreatestRockStarI18n: Record<Languages, I18nProperti
     version: "Größter Rockstar der Welt",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Powerline-Charaktere auszuspielen.)",
       },
       {
-        title: "Singen 9",
+        title: "<Singen> 9",
       },
       {
-        title: "MASH-UP",
+        title: "Mash-up",
         description:
           "Einmal während deines Zuges, wenn dieser Charakter ein Lied singt, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Liedkarte daraus, die 9 oder weniger kostet, aufdecken und kostenlos ausspielen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -40,13 +41,13 @@ export const powerlineWorldsGreatestRockStarI18n: Record<Languages, I18nProperti
     version: "La plus grande rockstar de la planète",
     text: [
       {
-        title: "Alter 4",
+        title: "<Alter> 4 {I}",
       },
       {
-        title: "Mélomane 9",
+        title: "<Mélomane> 9",
       },
       {
-        title: "MASH-UP",
+        title: "Mash-up",
         description:
           "Une fois durant votre tour, lorsque ce personnage chante une chanson, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler parmi elles une carte Chanson coûtant 9 ou moins et la jouer gratuitement. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -57,13 +58,14 @@ export const powerlineWorldsGreatestRockStarI18n: Record<Languages, I18nProperti
     version: "La Più Grande Rock Star del Mondo",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Powerline.)",
       },
       {
-        title: "Melodioso 9",
+        title: "<Melodioso> 9",
       },
       {
-        title: "MASH-UP",
+        title: "Mash-Up",
         description:
           "Una volta durante il tuo turno, ogni volta che questo personaggio canta una canzone, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta canzone con costo 9 o inferiore e giocarla gratis. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

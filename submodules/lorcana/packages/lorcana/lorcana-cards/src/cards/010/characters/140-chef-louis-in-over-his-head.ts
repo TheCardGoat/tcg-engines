@@ -4,6 +4,17 @@ import { chefLouisInOverHisHeadI18n } from "./140-chef-louis-in-over-his-head.i1
 export const chefLouisInOverHisHead: CharacterCard = {
   id: "3Pj",
   canonicalId: "ci_3Pj",
+  slug: "lorcana-ci_3Pj",
+  printings: [
+    {
+      id: "set10-140",
+      artId: "set10-140",
+      setCode: "set10",
+      collectorNumber: "140",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-140"],
   cardType: "character",
   name: "Chef Louis",
@@ -21,7 +32,7 @@ export const chefLouisInOverHisHead: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_9e590e6d47e9422fa521110e41e48cd1",
-    tcgPlayer: 659460,
+    tcgPlayer: "659460",
   },
   classifications: ["Storyborn"],
   i18n: chefLouisInOverHisHeadI18n,

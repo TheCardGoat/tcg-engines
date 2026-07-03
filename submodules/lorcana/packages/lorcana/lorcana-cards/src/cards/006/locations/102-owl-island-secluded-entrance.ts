@@ -4,6 +4,17 @@ import { owlIslandSecludedEntranceI18n } from "./102-owl-island-secluded-entranc
 export const owlIslandSecludedEntrance: LocationCard = {
   id: "nw9",
   canonicalId: "ci_nw9",
+  slug: "lorcana-ci_nw9",
+  printings: [
+    {
+      id: "set6-102",
+      artId: "set6-102",
+      setCode: "set6",
+      collectorNumber: "102",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-102"],
   cardType: "location",
   name: "Owl Island",
@@ -20,7 +31,7 @@ export const owlIslandSecludedEntrance: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2f052175c77d4035b1e261bf1675aee8",
-    tcgPlayer: 593034,
+    tcgPlayer: "593034",
   },
   text: [
     {

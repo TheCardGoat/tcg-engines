@@ -4,6 +4,17 @@ import { chipFriendIndeedI18n } from "./006-chip-friend-indeed.i18n";
 export const chipFriendIndeed: CharacterCard = {
   id: "CN5",
   canonicalId: "ci_CN5",
+  slug: "lorcana-ci_CN5",
+  printings: [
+    {
+      id: "set6-006",
+      artId: "set6-006",
+      setCode: "set6",
+      collectorNumber: "6",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-006"],
   cardType: "character",
   name: "Chip",
@@ -20,7 +31,7 @@ export const chipFriendIndeed: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a3462450711a4425947830aa8a6039bf",
-    tcgPlayer: 578167,
+    tcgPlayer: "578167",
   },
   text: [
     {

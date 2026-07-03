@@ -21,13 +21,13 @@ export const prideLandsPrideRockI18n: Record<Languages, I18nProperties> = {
     version: "Königsfelsen",
     text: [
       {
-        title: "WIR SIND ALLE EINS",
-        description: "Charaktere an diesem Ort erhalten +2.",
+        title: "Wir sind alle eins",
+        description: "Charaktere an diesem Ort erhalten +2 {W}.",
       },
       {
-        title: "ZUHAUSE DER LÖWEN",
+        title: "Zuhause der Löwen",
         description:
-          "Wenn du mindestens einen Prinz oder einen König an diesem Ort hast, zahlst du 1 weniger, um Charaktere auszuspielen.",
+          "Wenn du mindestens einen Prinz oder einen König an diesem Ort hast, zahlst du 1 {I} weniger, um Charaktere auszuspielen.",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const prideLandsPrideRockI18n: Record<Languages, I18nProperties> = {
     version: "Le rocher des lions",
     text: [
       {
-        title: "C'EST COMME LES MAILLONS D'UNE CHAÎNE",
-        description: "Les personnages sur ce lieu gagnent +2.",
+        title: "C'est comme les maillons d'une chaîne",
+        description: "Les personnages sur ce lieu gagnent +2 {W}.",
       },
       {
-        title: "DEMEURE DES LIONS",
+        title: "Demeure des Lions",
         description:
-          "Si un personnage Prince ou Roi se trouve sur ce lieu, jouer des personnages vous coûte 1 de moins.",
+          "Si un personnage Prince ou Roi se trouve sur ce lieu, jouer des personnages vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const prideLandsPrideRockI18n: Record<Languages, I18nProperties> = {
     version: "La Rupe dei Re",
     text: [
       {
-        title: "SIAMO TUTTI COLLEGATI I",
-        description: "personaggi ricevono +2 mentre si trovano in questo luogo.",
+        title: "Siamo Tutti Collegati",
+        description: "I personaggi ricevono +2 {W} mentre si trovano in questo luogo.",
       },
       {
-        title: "CASA DEL LEONE",
+        title: "Casa del Leone",
         description:
-          "Se un personaggio Principe o Re si trova in questo luogo, paga 1 in meno per giocare i personaggi.",
+          "Se un personaggio Principe o Re si trova in questo luogo, paga 1 {I} in meno per giocare i personaggi.",
       },
     ],
   },

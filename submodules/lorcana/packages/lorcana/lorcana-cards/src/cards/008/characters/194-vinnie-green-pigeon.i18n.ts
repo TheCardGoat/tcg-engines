@@ -17,7 +17,7 @@ export const vinnieGreenPigeonI18n: Record<Languages, I18nProperties> = {
     version: "Grüne Taube",
     text: [
       {
-        title: "LEHRSAME ERFAHRUNG",
+        title: "Lehrsame Erfahrung",
         description:
           "Jedes Mal, wenn einer deiner anderen Charaktere im Zug einer gegnerischen Person verbannt wird, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const vinnieGreenPigeonI18n: Record<Languages, I18nProperties> = {
     version: "Pigeon vert",
     text: [
       {
-        title: "EXPÉRIENCE ENRICHISSANTE",
+        title: "Expérience enrichissante",
         description:
           "Durant le tour de vos adversaires, chaque fois qu'un autre de vos personnages est banni, gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const vinnieGreenPigeonI18n: Record<Languages, I18nProperties> = {
     version: "Piccione Verde",
     text: [
       {
-        title: "ESPERIENZA FORMATIVA",
+        title: "Esperienza Formativa",
         description:
           "Durante il turno di un avversario, ogni volta che un tuo altro personaggio viene esiliato, ottieni 1 leggenda.",
       },

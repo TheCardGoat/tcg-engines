@@ -6,14 +6,17 @@ export const gd03RiboColony124: BaseCard = {
   type: "base",
   traits: ["earth federation", "stronghold"],
   id: "GD03-124",
-  externalId: "gundam:gd03-124",
-  slug: "ribo-colony-gd03-124",
+  canonicalId: "GD03-124",
+  externalIds: { bandai: "gundam:gd03-124" },
+  slug: "ribo-colony/gd03-124",
   displayName: "Ribo Colony",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-124",
   printings: [
     {
       id: "GD03-124",
+      artId: "GD03-124",
+      setCode: "GD03",
       collectorNumber: "GD03-124",
       cardNumber: "GD03-124",
       set: {
@@ -28,6 +31,7 @@ export const gd03RiboColony124: BaseCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-124"],
   selectedPrintingId: "GD03-124",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-124.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-124.webp?260424",

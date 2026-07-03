@@ -4,6 +4,17 @@ import { adorabeezleWinterpopIceRocketRacerI18n } from "./116-adorabeezle-winter
 export const adorabeezleWinterpopIceRocketRacer: CharacterCard = {
   id: "cN0",
   canonicalId: "ci_cN0",
+  slug: "lorcana-ci_cN0",
+  printings: [
+    {
+      id: "set6-116",
+      artId: "set6-116",
+      setCode: "set6",
+      collectorNumber: "116",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-116"],
   cardType: "character",
   name: "Adorabeezle Winterpop",
@@ -20,7 +31,7 @@ export const adorabeezleWinterpopIceRocketRacer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7873f8596eef4066bc23325ceeedcfd8",
-    tcgPlayer: 583721,
+    tcgPlayer: "583721",
   },
   text: [
     {

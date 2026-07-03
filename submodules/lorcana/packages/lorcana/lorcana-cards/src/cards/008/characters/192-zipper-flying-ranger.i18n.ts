@@ -22,14 +22,14 @@ export const zipperFlyingRangerI18n: Record<Languages, I18nProperties> = {
     version: "Fliegender Ritter des Rechts",
     text: [
       {
-        title: "BESTE KUMPEL",
+        title: "Beste Kumpel",
         description:
-          "Wenn du einen Samson-Charakter im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Wenn du einen Samson-Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "GESCHWINDIGKEITSSCHUB",
+        title: "Geschwindigkeitsschub",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const zipperFlyingRangerI18n: Record<Languages, I18nProperties> = {
     version: "Ranger volant",
     text: [
       {
-        title: "MEILLEURS COPAINS",
+        title: "Meilleurs copains",
         description:
-          "Jouer ce personnage vous coûte 1 de moins si vous avez un personnage Jack le Costaud en jeu.",
+          "Jouer ce personnage vous coûte 1 {I} de moins si vous avez un personnage Jack le Costaud en jeu.",
       },
       {
-        title: "ACCÉLÉRATION",
+        title: "Accélération",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier des personnages avec Insaisissable.)",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const zipperFlyingRangerI18n: Record<Languages, I18nProperties> = {
     version: "Agente Speciale Volante",
     text: [
       {
-        title: "AMICI DEL CUORE",
+        title: "Amici del Cuore",
         description:
-          "Se hai in gioco un personaggio chiamato Monterey Jack, paga 1 in meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio chiamato Monterey Jack, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "SCATTO VELOCE",
+        title: "Scatto Veloce",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

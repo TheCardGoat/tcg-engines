@@ -52,6 +52,24 @@
   --cp-signal-frost-rgb: 213 245 255;
   --cp-signal-neutral-rgb: 180 191 200;
 
+  /* ── Game-agnostic simulator-ui aliases ────────────────────────────── */
+  --simulator-accent-rgb: var(--cp-signal-yellow-rgb);
+  --simulator-cyan-rgb: var(--cp-signal-cyan-rgb);
+  --simulator-magenta-rgb: var(--cp-signal-magenta-rgb);
+  --simulator-error-rgb: var(--cp-signal-rose-rgb);
+  --simulator-success-rgb: var(--cp-signal-green-rgb);
+  --simulator-neutral-rgb: var(--cp-signal-neutral-rgb);
+  --simulator-surface: var(--cp-sidebar-panel);
+  --simulator-surface-strong: var(--cp-sidebar-surface-strong);
+  --simulator-popover-bg: var(--cp-sidebar-bg);
+  --simulator-text: var(--cp-fg);
+  --simulator-text-secondary: var(--cp-fg-secondary);
+  --simulator-text-strong: var(--cp-sidebar-text);
+  --simulator-muted: var(--cp-sidebar-muted);
+  --simulator-faint: var(--cp-sidebar-faint);
+  --simulator-panel: var(--cp-panel);
+  --simulator-border: var(--cp-border-subtle);
+
   /* ── Card faction colors ───────────────────────────────────────────── */
   --cp-card-red: #ef4444;
   --cp-card-yellow: #fcee0a;

@@ -4,6 +4,17 @@ import { robinHoodChampionOfSherwoodI18n } from "./190-robin-hood-champion-of-sh
 export const robinHoodChampionOfSherwood: CharacterCard = {
   id: "4OB",
   canonicalId: "ci_HOf",
+  slug: "lorcana-ci_HOf",
+  printings: [
+    {
+      id: "set3-190",
+      artId: "set3-190",
+      setCode: "set3",
+      collectorNumber: "190",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-190", "set9-177"],
   cardType: "character",
   name: "Robin Hood",
@@ -20,7 +31,7 @@ export const robinHoodChampionOfSherwood: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2bf47bf7bc7f46afa6d39e40f0dc86e7",
-    tcgPlayer: 650110,
+    tcgPlayer: "650110",
   },
   text: [
     {

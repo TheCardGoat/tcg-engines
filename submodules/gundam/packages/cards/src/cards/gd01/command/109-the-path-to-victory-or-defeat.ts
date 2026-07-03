@@ -7,14 +7,17 @@ export const gd01ThePathToVictoryOrDefeat109: CommandCard = {
   color: "green",
   traits: ["-"],
   id: "GD01-109",
-  externalId: "gundam:gd01-109",
-  slug: "the-path-to-victory-or-defeat-gd01-109",
+  canonicalId: "GD01-109",
+  externalIds: { bandai: "gundam:gd01-109" },
+  slug: "the-path-to-victory-or-defeat/gd01-109",
   displayName: "The Path to Victory or Defeat",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-109",
   printings: [
     {
       id: "GD01-109",
+      artId: "GD01-109",
+      setCode: "GD01",
       collectorNumber: "GD01-109",
       cardNumber: "GD01-109",
       set: {
@@ -29,6 +32,7 @@ export const gd01ThePathToVictoryOrDefeat109: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-109"],
   selectedPrintingId: "GD01-109",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-109.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-109.webp?260424",

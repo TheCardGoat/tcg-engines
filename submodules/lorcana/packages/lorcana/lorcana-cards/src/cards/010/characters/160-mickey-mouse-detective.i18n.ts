@@ -6,9 +6,9 @@ export const mickeyMouseDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Detective",
     text: [
       {
-        title: "GET A CLUE",
+        title: "GET",
         description:
-          "When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
+          "A CLUE When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const mickeyMouseDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Detective",
     text: [
       {
-        title: "GET A CLUE",
+        title: "Get a Clue",
         description:
           "When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
       },
@@ -28,7 +28,7 @@ export const mickeyMouseDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Detective",
     text: [
       {
-        title: "GET A CLUE",
+        title: "Get a Clue",
         description:
           "When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
       },
@@ -39,7 +39,7 @@ export const mickeyMouseDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Detective",
     text: [
       {
-        title: "GET A CLUE",
+        title: "Get a Clue",
         description:
           "When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
       },

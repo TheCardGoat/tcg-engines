@@ -4,6 +4,17 @@ import { chipTeamPlayerI18n } from "./027-chip-team-player.i18n";
 export const chipTeamPlayer: CharacterCard = {
   id: "Xfn",
   canonicalId: "ci_Xfn",
+  slug: "lorcana-ci_Xfn",
+  printings: [
+    {
+      id: "set12-027",
+      artId: "set12-027",
+      setCode: "set12",
+      collectorNumber: "27",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-027"],
   cardType: "character",
   name: "Chip",
@@ -20,6 +31,7 @@ export const chipTeamPlayer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_81be5ee0001a4e908712f662cccff814",
+    tcgPlayer: "692012",
   },
   text: [
     {

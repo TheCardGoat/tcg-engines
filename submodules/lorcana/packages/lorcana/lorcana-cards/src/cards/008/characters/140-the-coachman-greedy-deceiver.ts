@@ -4,6 +4,17 @@ import { theCoachmanGreedyDeceiverI18n } from "./140-the-coachman-greedy-deceive
 export const theCoachmanGreedyDeceiver: CharacterCard = {
   id: "4S2",
   canonicalId: "ci_4S2",
+  slug: "lorcana-ci_4S2",
+  printings: [
+    {
+      id: "set8-140",
+      artId: "set8-140",
+      setCode: "set8",
+      collectorNumber: "140",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-140"],
   cardType: "character",
   name: "The Coachman",
@@ -20,7 +31,7 @@ export const theCoachmanGreedyDeceiver: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_be9dcbe9a9fa41a1986ff7c26818f092",
-    tcgPlayer: 631441,
+    tcgPlayer: "631441",
   },
   text: [
     {

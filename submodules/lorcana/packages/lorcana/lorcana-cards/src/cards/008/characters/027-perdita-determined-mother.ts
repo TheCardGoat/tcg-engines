@@ -1,10 +1,24 @@
-import type { AllMatchingCharacterQuery, CharacterCard } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types";
 import { perditaDeterminedMotherI18n } from "./027-perdita-determined-mother.i18n";
+
+import type { AllMatchingCharacterQuery } from "@tcg/lorcana-types";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const perditaDeterminedMother: CharacterCard = {
-  id: "5tQ",
+  id: "95T",
   canonicalId: "ci_Q1m",
+  slug: "lorcana-ci_Q1m",
+  printings: [
+    {
+      id: "set8-027",
+      artId: "set8-027",
+      setCode: "set8",
+      collectorNumber: "27",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-027"],
   cardType: "character",
   name: "Perdita",
@@ -21,7 +35,7 @@ export const perditaDeterminedMother: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_db4137ebc57046a3ba7736adbdb01d44",
-    tcgPlayer: 632686,
+    tcgPlayer: "632686",
   },
   text: [
     {

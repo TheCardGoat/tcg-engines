@@ -19,10 +19,11 @@ export const mickeyMouseGiantMouseI18n: Record<Languages, I18nProperties> = {
     version: "Riesige Maus",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "DER GRÖSSTE STAR VON ALLEN",
+        title: "Der größte Star von allen",
         description:
           "Wenn dieser Charakter verbannt wird, füge jedem gegnerischen Charakter 5 Schaden zu.",
       },
@@ -33,10 +34,11 @@ export const mickeyMouseGiantMouseI18n: Record<Languages, I18nProperties> = {
     version: "Souris géante",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "LA PLUS GRANDE STAR DE TOUS LES TEMPS",
+        title: "La plus grande star de tous les temps",
         description:
           "Lorsque ce personnage est banni, infligez 5 dommages à chaque personnage adverse.",
       },
@@ -47,10 +49,10 @@ export const mickeyMouseGiantMouseI18n: Record<Languages, I18nProperties> = {
     version: "Topo Gigante",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "LA PIÙ GRANDE STAR DI SEMPRE",
+        title: "La Più Grande Star di Sempre",
         description:
           "Quando questo personaggio viene esiliato, infliggi 5 danni a ogni personaggio avversario.",
       },

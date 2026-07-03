@@ -17,9 +17,9 @@ export const motherGothelConceitedManipulatorI18n: Record<Languages, I18nPropert
     version: "Arglistige Manipulatorin",
     text: [
       {
-        title: "MUTTER WEISS MEHR",
+        title: "Mutter weiß mehr",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du 3 bezahlen, um einen Charakter deiner Wahl auf die zugehörige Hand zurückzuschicken.",
+          "Wenn du diesen Charakter ausspielst, darfst du 3 {I} bezahlen, um einen Charakter deiner Wahl auf die zugehörige Hand zurückzuschicken.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const motherGothelConceitedManipulatorI18n: Record<Languages, I18nPropert
     version: "Manipulatrice vaniteuse",
     text: [
       {
-        title: "ÉCOUTE TA MÈRE",
+        title: "Écoute ta mère",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez payer 3 pour choisir un personnage et le renvoyer dans la main de son propriétaire.",
+          "Lorsque vous jouez ce personnage, vous pouvez payer 3 {I} pour choisir un personnage et le renvoyer dans la main de son propriétaire.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const motherGothelConceitedManipulatorI18n: Record<Languages, I18nPropert
     version: "Manipolatrice Presuntuosa",
     text: [
       {
-        title: "RESTA CON ME",
+        title: "Resta con Me",
         description:
-          "Quando giochi questo personaggio, puoi pagare 3 per far riprendere in mano al suo giocatore un personaggio a tua scelta.",
+          "Quando giochi questo personaggio, puoi pagare 3 {I} per far riprendere in mano al suo giocatore un personaggio a tua scelta.",
       },
     ],
   },

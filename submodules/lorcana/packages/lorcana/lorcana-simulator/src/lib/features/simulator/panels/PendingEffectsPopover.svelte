@@ -1,14 +1,12 @@
 <script lang="ts">
-  import {
-    ArrowDownToLine,
-    ArrowUpToLine,
-    ChevronDown,
-    ChevronUp,
-    Crosshair,
-    Expand,
-    Minus,
-    Shrink,
-  } from '@lucide/svelte';
+  import ArrowDownToLine from '@lucide/svelte/icons/arrow-down-to-line';
+  import ArrowUpToLine from '@lucide/svelte/icons/arrow-up-to-line';
+  import ChevronDown from '@lucide/svelte/icons/chevron-down';
+  import ChevronUp from '@lucide/svelte/icons/chevron-up';
+  import Crosshair from '@lucide/svelte/icons/crosshair';
+  import Expand from '@lucide/svelte/icons/expand';
+  import Minus from '@lucide/svelte/icons/minus';
+  import Shrink from '@lucide/svelte/icons/shrink';
 
   import CardImage from '@/design-system/simulator/cards/CardImage.svelte';
   import CardLogToken from '@/features/simulator/panels/CardLogToken.svelte';
@@ -625,24 +623,28 @@
                 onfocusout={() => handleCardPreviewLeave(item.card)}
               >
                 <div class="effect-card__media">
-                  {#if item.card?.set && item.card.cardNumber}
-                    <button
-                      type="button"
-                      class="card-frame card-frame-button"
-                      onclick={() => handleOpenGlobalPreview(item.card)}
-                      aria-label={`Open full card preview for ${item.title}`}
-                      title="Open full card preview"
-                    >
-                      <CardImage
-                        set={item.card.set}
-                        number={item.card.cardNumber}
-                        crop="art_only"
-                        alt={item.title}
-                      />
-                      <span class="card-preview-handle" aria-hidden="true">
-                        <Expand size={12} strokeWidth={2.1} />
-                      </span>
-                    </button>
+                  {#if item.card && !item.card.isMasked}
+                    {@const imageSet = item.card.imageSet ?? item.card.set}
+                    {@const imageCardNumber = item.card.imageCardNumber ?? item.card.cardNumber}
+                    {#if imageSet && imageCardNumber}
+                      <button
+                        type="button"
+                        class="card-frame card-frame-button"
+                        onclick={() => handleOpenGlobalPreview(item.card)}
+                        aria-label={`Open full card preview for ${item.title}`}
+                        title="Open full card preview"
+                      >
+                        <CardImage
+                          set={imageSet}
+                          number={imageCardNumber}
+                          crop="art_only"
+                          alt={item.title}
+                        />
+                        <span class="card-preview-handle" aria-hidden="true">
+                          <Expand size={12} strokeWidth={2.1} />
+                        </span>
+                      </button>
+                    {/if}
                   {/if}
                 </div>
 

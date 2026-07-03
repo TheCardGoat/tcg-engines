@@ -4,6 +4,17 @@ import { dinkyHasTheBrainsI18n } from "./078-dinky-has-the-brains.i18n";
 export const dinkyHasTheBrains: CharacterCard = {
   id: "m5J",
   canonicalId: "ci_m5J",
+  slug: "lorcana-ci_m5J",
+  printings: [
+    {
+      id: "set11-078",
+      artId: "set11-078",
+      setCode: "set11",
+      collectorNumber: "78",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-078"],
   cardType: "character",
   name: "Dinky",
@@ -20,7 +31,7 @@ export const dinkyHasTheBrains: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0fc3d71d5b8e4fb08b5c9108cbd3e28a",
-    tcgPlayer: 676199,
+    tcgPlayer: "676199",
   },
   text: [
     {

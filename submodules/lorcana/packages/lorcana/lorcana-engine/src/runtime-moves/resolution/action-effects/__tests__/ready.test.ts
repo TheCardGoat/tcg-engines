@@ -46,4 +46,22 @@ describe("ready", () => {
 
     expect(readState(ctx, TGT)).toBe("exerted");
   });
+
+  it("can ready the trigger subject from the event snapshot", () => {
+    const ctx = createTestContext({
+      zoneCards: { "play:player-one": [TGT] },
+      definitions: { tgt: { id: "tgt", cardType: "character" } },
+      cardMeta: { tgt: { state: "exerted" } },
+    });
+    const effect = {
+      type: "ready",
+      target: { ref: "trigger-subject" },
+    } as unknown as ReadyEffect;
+
+    resolveReadyEffect(ctx, createCardPlayed({ cardId: "src", playerId: PLAYER_ONE }), effect, {
+      eventSnapshot: { subjectCardId: TGT },
+    });
+
+    expect(readState(ctx, TGT)).toBe("ready");
+  });
 });

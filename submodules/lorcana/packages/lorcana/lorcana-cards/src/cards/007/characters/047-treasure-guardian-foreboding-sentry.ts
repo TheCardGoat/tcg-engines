@@ -4,6 +4,17 @@ import { treasureGuardianForebodingSentryI18n } from "./047-treasure-guardian-fo
 export const treasureGuardianForebodingSentry: CharacterCard = {
   id: "1bI",
   canonicalId: "ci_1bI",
+  slug: "lorcana-ci_1bI",
+  printings: [
+    {
+      id: "set7-047",
+      artId: "set7-047",
+      setCode: "set7",
+      collectorNumber: "47",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-047"],
   cardType: "character",
   name: "Treasure Guardian",
@@ -20,7 +31,7 @@ export const treasureGuardianForebodingSentry: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dde4814ef611454ca907668ed03b2027",
-    tcgPlayer: 619431,
+    tcgPlayer: "619431",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { witchesOfMorvaOrdduOrwenAndOrgochI18n } from "./057-witches-of-morva-or
 export const witchesOfMorvaOrdduOrwenAndOrgoch: CharacterCard = {
   id: "JTw",
   canonicalId: "ci_JTw",
+  slug: "lorcana-ci_JTw",
+  printings: [
+    {
+      id: "set11-057",
+      artId: "set11-057",
+      setCode: "set11",
+      collectorNumber: "57",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-057"],
   cardType: "character",
   name: "Witches of Morva",
@@ -20,13 +31,13 @@ export const witchesOfMorvaOrdduOrwenAndOrgoch: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5c24d2a781524b8fa28b72a0dddd91c5",
-    tcgPlayer: 675295,
+    tcgPlayer: "675295",
   },
   text: [
     {
-      title: "QUITE A BARGAIN",
+      title: "QUITE",
       description:
-        "When you play this character, you may return another chosen character of yours to your hand. If you do, gain 1 lore.",
+        "A BARGAIN When you play this character, you may return another chosen character of yours to your hand. If you do, gain 1 lore.",
     },
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],

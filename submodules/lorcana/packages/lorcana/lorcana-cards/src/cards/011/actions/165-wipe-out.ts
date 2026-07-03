@@ -4,6 +4,17 @@ import { wipeOutI18n } from "./165-wipe-out.i18n";
 export const wipeOut: ActionCard = {
   id: "5P4",
   canonicalId: "ci_5P4",
+  slug: "lorcana-ci_5P4",
+  printings: [
+    {
+      id: "set11-165",
+      artId: "set11-165",
+      setCode: "set11",
+      collectorNumber: "165",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-165"],
   cardType: "action",
   name: "Wipe Out!",
@@ -16,7 +27,7 @@ export const wipeOut: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0d28e0cfc9ea44d4a568fa034fc67dbd",
-    tcgPlayer: 676229,
+    tcgPlayer: "676229",
   },
   text: "Put chosen character with Bodyguard or item into their player's inkwell facedown and exerted.",
   abilities: [

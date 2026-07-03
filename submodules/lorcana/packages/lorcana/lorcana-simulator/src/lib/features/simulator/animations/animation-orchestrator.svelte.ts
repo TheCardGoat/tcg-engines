@@ -163,13 +163,6 @@ export class AnimationOrchestrator {
     if (batch.playerEffects.length > 0) {
       this.#callbacks.firePlayerEffectAnimations(batch.playerEffects);
     }
-
-    // Pre-populate in-flight set with card IDs from board moves that will be
-    // animated — even before anchor resolution — so zone components can hide
-    // these cards from their destination zones immediately.
-    if (batch.boardMoves.length > 0) {
-      this.#updateInFlightFromBoardMoves(batch.boardMoves);
-    }
   }
 
   /**
@@ -297,14 +290,6 @@ export class AnimationOrchestrator {
       this.#placeholders = [];
       this.#callbacks.queueBoardAnimations(boardMoves);
     }, maxCauseDuration + CAUSE_PHASE_BUFFER_MS);
-  }
-
-  #updateInFlightFromBoardMoves(animations: QueuedBoardMoveAnimation[]): void {
-    const ids = new Set(this.#inFlightCardIds);
-    for (const anim of animations) {
-      ids.add(anim.card.cardId);
-    }
-    this.#inFlightCardIds = ids;
   }
 
   #updateInFlightFromResolvedBoardMoves(animations: ResolvedBoardMoveAnimation[]): void {

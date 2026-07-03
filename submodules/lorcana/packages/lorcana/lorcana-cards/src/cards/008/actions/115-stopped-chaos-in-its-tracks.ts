@@ -4,6 +4,17 @@ import { stoppedChaosInItsTracksI18n } from "./115-stopped-chaos-in-its-tracks.i
 export const stoppedChaosInItsTracks: ActionCard = {
   id: "1ft",
   canonicalId: "ci_1ft",
+  slug: "lorcana-ci_1ft",
+  printings: [
+    {
+      id: "set8-115",
+      artId: "set8-115",
+      setCode: "set8",
+      collectorNumber: "115",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-115"],
   cardType: "action",
   name: "Stopped Chaos in Its Tracks",
@@ -16,7 +27,7 @@ export const stoppedChaosInItsTracks: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_655c8f27d9fa48ce9e7ff33c0bf4f6c8",
-    tcgPlayer: 631424,
+    tcgPlayer: "631424",
   },
   text: [
     {

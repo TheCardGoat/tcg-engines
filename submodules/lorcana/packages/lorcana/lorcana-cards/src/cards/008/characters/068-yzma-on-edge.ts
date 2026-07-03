@@ -4,6 +4,17 @@ import { yzmaOnEdgeI18n } from "./068-yzma-on-edge.i18n";
 export const yzmaOnEdge: CharacterCard = {
   id: "GYU",
   canonicalId: "ci_GYU",
+  slug: "lorcana-ci_GYU",
+  printings: [
+    {
+      id: "set8-068",
+      artId: "set8-068",
+      setCode: "set8",
+      collectorNumber: "68",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-068"],
   cardType: "character",
   name: "Yzma",
@@ -20,7 +31,7 @@ export const yzmaOnEdge: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b19fb19a289f4cf5a223278de7b2b2e0",
-    tcgPlayer: 631681,
+    tcgPlayer: "631681",
   },
   text: [
     {

@@ -17,9 +17,9 @@ export const grewngeCannonExpertI18n: Record<Languages, I18nProperties> = {
     version: "Kanonenspezialist",
     text: [
       {
-        title: "SCHNELLFEUER",
+        title: "Schnellfeuer",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 weniger für die nächste Aktion, die du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 {I} weniger für die nächste Aktion, die du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const grewngeCannonExpertI18n: Record<Languages, I18nProperties> = {
     version: "Expert en canon",
     text: [
       {
-        title: "FEU NOURRI",
+        title: "Feu nourri",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, la prochaine action que vous jouez ce tour-ci vous coûte 1 de moins.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, la prochaine action que vous jouez ce tour-ci vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const grewngeCannonExpertI18n: Record<Languages, I18nProperties> = {
     version: "Esperto di Cannoni",
     text: [
       {
-        title: "FUOCO RAPIDO",
+        title: "Fuoco Rapido",
         description:
-          "Ogni volta che questo personaggio va all'avventura, paga 1 in meno per giocare la tua prossima azione per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, paga 1 {I} in meno per giocare la tua prossima azione per questo turno.",
       },
     ],
   },

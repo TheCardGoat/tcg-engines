@@ -9,16 +9,16 @@ export const heathcliffStoicButlerI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Heathcliff",
     version: "Aristokratischer Butler",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "Heathcliff",
     version: "Majordome stoïque",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Heathcliff",
     version: "Stoico Maggiordomo",
-    text: "Protetto",
+    text: "<Protetto>",
   },
 };

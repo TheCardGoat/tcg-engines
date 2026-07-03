@@ -4,6 +4,17 @@ import { salvageOperationI18n } from "./165-salvage-operation.i18n";
 export const salvageOperation: ActionCard = {
   id: "SfW",
   canonicalId: "ci_SfW",
+  slug: "lorcana-ci_SfW",
+  printings: [
+    {
+      id: "set12-165",
+      artId: "set12-165",
+      setCode: "set12",
+      collectorNumber: "165",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-165"],
   cardType: "action",
   name: "Salvage Operation",
@@ -14,9 +25,9 @@ export const salvageOperation: ActionCard = {
   rarity: "uncommon",
   cost: 2,
   inkable: true,
-
   externalIds: {
     lorcast: "crd_63707e5a57c94a458792bd9ae218a839",
+    tcgPlayer: "692073",
   },
   text: "Return an item card from your discard to your hand. If you have a character with 4 {W} or more in play, gain 1 lore.",
   abilities: [

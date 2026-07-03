@@ -4,6 +4,17 @@ import { imStuckI18n } from "./063-im-stuck.i18n";
 export const imStuck: ActionCard = {
   id: "HjB",
   canonicalId: "ci_KhI",
+  slug: "lorcana-ci_KhI",
+  printings: [
+    {
+      id: "set2-063",
+      artId: "set2-063",
+      setCode: "set2",
+      collectorNumber: "63",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-063", "set9-063"],
   cardType: "action",
   name: "I'm Stuck!",
@@ -16,7 +27,7 @@ export const imStuck: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8dedb2a4e41e48039aea2bca6938d28f",
-    tcgPlayer: 650007,
+    tcgPlayer: "650007",
   },
   text: "Chosen exerted character can't ready at the start of their next turn.",
   abilities: [

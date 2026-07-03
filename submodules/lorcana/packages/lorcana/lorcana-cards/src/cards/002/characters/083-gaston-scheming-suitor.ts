@@ -4,6 +4,17 @@ import { gastonSchemingSuitorI18n } from "./083-gaston-scheming-suitor.i18n";
 export const gastonSchemingSuitor: CharacterCard = {
   id: "yh1",
   canonicalId: "ci_yh1",
+  slug: "lorcana-ci_yh1",
+  printings: [
+    {
+      id: "set2-083",
+      artId: "set2-083",
+      setCode: "set2",
+      collectorNumber: "83",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-083"],
   cardType: "character",
   name: "Gaston",
@@ -20,7 +31,7 @@ export const gastonSchemingSuitor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4cb55532004549e59945436fd57a62b7",
-    tcgPlayer: 527746,
+    tcgPlayer: "527746",
   },
   text: [
     {

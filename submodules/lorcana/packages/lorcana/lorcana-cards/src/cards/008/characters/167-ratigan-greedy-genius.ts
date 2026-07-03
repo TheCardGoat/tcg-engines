@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { ratiganGreedyGeniusI18n } from "./167-ratigan-greedy-genius.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const ratiganGreedyGenius: CharacterCard = {
   id: "Ca0",
   canonicalId: "ci_Ca0",
+  slug: "lorcana-ci_Ca0",
+  printings: [
+    {
+      id: "set8-167",
+      artId: "set8-167",
+      setCode: "set8",
+      collectorNumber: "167",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-167"],
   cardType: "character",
   name: "Ratigan",
@@ -21,7 +33,7 @@ export const ratiganGreedyGenius: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6119229219f04cdaa2650c87645a1bf4",
-    tcgPlayer: 631464,
+    tcgPlayer: "631464",
   },
   text: [
     {

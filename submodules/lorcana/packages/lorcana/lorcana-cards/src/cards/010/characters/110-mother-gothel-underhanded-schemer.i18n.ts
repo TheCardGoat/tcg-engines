@@ -16,9 +16,9 @@ export const motherGothelUnderhandedSchemerI18n: Record<Languages, I18nPropertie
     version: "Hinterhältige Intrigantin",
     text: [
       {
-        title: "IRGENDJEMAND MUSS JA WAS DAVON HABEN",
+        title: "Irgendjemand muss ja was davon haben",
         description:
-          "Solange in diesem Zug ein Charakter verbannt wurde, erhält dieser Charakter +2.",
+          "Solange in diesem Zug ein Charakter verbannt wurde, erhält dieser Charakter +2 {S}.",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const motherGothelUnderhandedSchemerI18n: Record<Languages, I18nPropertie
     version: "Fourbe conspiratrice",
     text: [
       {
-        title: "QUELQU'UN DOIT BIEN SE SERVIR DE ÇA",
-        description: "Si un personnage a été banni ce tour-ci, ce personnage-ci gagne +2.",
+        title: "Quelqu'un doit bien se servir de ça",
+        description: "Si un personnage a été banni ce tour-ci, ce personnage-ci gagne +2 {S}.",
       },
     ],
   },
@@ -37,9 +37,9 @@ export const motherGothelUnderhandedSchemerI18n: Record<Languages, I18nPropertie
     version: "Subdola Cospiratrice",
     text: [
       {
-        title: "QUALCUNO DOVRÀ PURE USARLO",
+        title: "Qualcuno Dovrà Pure Usarlo",
         description:
-          "Se un personaggio è stato esiliato in questo turno, questo personaggio riceve +2.",
+          "Se un personaggio è stato esiliato in questo turno, questo personaggio riceve +2 {S}.",
       },
     ],
   },

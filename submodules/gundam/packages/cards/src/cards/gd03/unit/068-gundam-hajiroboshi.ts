@@ -7,14 +7,17 @@ export const gd03GundamHajiroboshi068: UnitCard = {
   color: "purple",
   traits: ["civilian", "gundam frame"],
   id: "GD03-068",
-  externalId: "gundam:gd03-068",
-  slug: "gundam-hajiroboshi-gd03-068",
+  canonicalId: "GD03-068",
+  externalIds: { bandai: "gundam:gd03-068" },
+  slug: "gundam-hajiroboshi/gd03-068",
   displayName: "Gundam Hajiroboshi",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-068",
   printings: [
     {
       id: "GD03-068",
+      artId: "GD03-068",
+      setCode: "GD03",
       collectorNumber: "GD03-068",
       cardNumber: "GD03-068",
       set: {
@@ -29,6 +32,7 @@ export const gd03GundamHajiroboshi068: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-068"],
   selectedPrintingId: "GD03-068",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-068.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-068.webp?260424",

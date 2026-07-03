@@ -6,9 +6,9 @@ export const theMatchmakerUnforgivingExpertI18n: Record<Languages, I18nPropertie
     version: "Unforgiving Expert",
     text: [
       {
-        title: "YOU ARE A DISGRACE!",
+        title: "YOU ARE",
         description:
-          "Whenever this character challenges another character, each opponent loses 1 lore.",
+          "A DISGRACE! Whenever this character challenges another character, each opponent loses 1 lore.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const theMatchmakerUnforgivingExpertI18n: Record<Languages, I18nPropertie
     version: "Kompromisslose Expertin",
     text: [
       {
-        title: "DU BIST EINE SCHANDE!",
+        title: "Du bist eine Schande!",
         description:
           "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const theMatchmakerUnforgivingExpertI18n: Record<Languages, I18nPropertie
     version: "Experte impitoyable",
     text: [
       {
-        title: "TU DEVRAIS AVOIR HONTE!",
+        title: "Tu devrais avoir honte!",
         description:
           "Chaque fois que ce personnage en défie un autre, chaque adversaire perd 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const theMatchmakerUnforgivingExpertI18n: Record<Languages, I18nPropertie
     version: "Esperta Inflessibile",
     text: [
       {
-        title: "SEI UNA DISGRAZIA!",
+        title: "Sei una Disgrazia!",
         description:
           "Ogni volta che questo personaggio sfida un altro personaggio, ogni avversario perde 1 leggenda.",
       },

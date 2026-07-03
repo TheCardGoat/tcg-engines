@@ -4,6 +4,17 @@ import { olafFriendlySnowmanI18n } from "./052-olaf-friendly-snowman.i18n";
 export const olafFriendlySnowman: CharacterCard = {
   id: "ch3",
   canonicalId: "ci_fZN",
+  slug: "lorcana-ci_fZN",
+  printings: [
+    {
+      id: "set1-052",
+      artId: "set1-052",
+      setCode: "set1",
+      collectorNumber: "52",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-052", "set9-055"],
   cardType: "character",
   name: "Olaf",
@@ -21,7 +32,7 @@ export const olafFriendlySnowman: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_e00da6aac653437aba64ee3268fc29b8",
-    tcgPlayer: 649999,
+    tcgPlayer: "649999",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: olafFriendlySnowmanI18n,

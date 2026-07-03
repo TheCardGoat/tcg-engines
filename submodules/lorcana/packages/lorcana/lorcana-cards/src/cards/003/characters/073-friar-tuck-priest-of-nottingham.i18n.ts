@@ -17,7 +17,7 @@ export const friarTuckPriestOfNottinghamI18n: Record<Languages, I18nProperties> 
     version: "Pfarrer von Nottingham",
     text: [
       {
-        title: "DU DIEBISCHER SCHURKE",
+        title: "Du diebischer Schurke",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle Mitspielenden (auch du), mit den meisten Karten auf der Hand, je 1 Karte aus ihrer Hand und werfen sie ab.",
       },
@@ -28,7 +28,7 @@ export const friarTuckPriestOfNottinghamI18n: Record<Languages, I18nProperties> 
     version: "Prêtre de Nottingham",
     text: [
       {
-        title: "IMMONDE COQUIN",
+        title: "Immonde coquin",
         description:
           "Lorsque vous jouez ce personnage, le joueur ou les joueurs ayant le plus de cartes en main choisissent une carte et la défaussent.",
       },
@@ -39,7 +39,7 @@ export const friarTuckPriestOfNottinghamI18n: Record<Languages, I18nProperties> 
     version: "Sacerdote di Nottingham",
     text: [
       {
-        title: "BRUTTA CANAGLIA DI UN LADRO",
+        title: "Brutta Canaglia di un Ladro",
         description:
           "Quando giochi questo personaggio, il giocatore o i giocatori con più carte in mano ne sceglie una e la scarta.",
       },

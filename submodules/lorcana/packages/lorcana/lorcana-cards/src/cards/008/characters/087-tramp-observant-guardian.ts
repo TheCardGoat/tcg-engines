@@ -4,6 +4,17 @@ import { trampObservantGuardianI18n } from "./087-tramp-observant-guardian.i18n"
 export const trampObservantGuardian: CharacterCard = {
   id: "I98",
   canonicalId: "ci_I98",
+  slug: "lorcana-ci_I98",
+  printings: [
+    {
+      id: "set8-087",
+      artId: "set8-087",
+      setCode: "set8",
+      collectorNumber: "87",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-087"],
   cardType: "character",
   name: "Tramp",
@@ -20,13 +31,13 @@ export const trampObservantGuardian: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_adb73493071d4f3a909f089ae63cc0c8",
-    tcgPlayer: 631408,
+    tcgPlayer: "631408",
   },
   text: [
     {
-      title: "HOW DO I GET IN?",
+      title: "HOW DO",
       description:
-        "When you play this character, chosen character gains Ward until the start of your next turn.",
+        "I GET IN? When you play this character, chosen character gains Ward until the start of your next turn.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

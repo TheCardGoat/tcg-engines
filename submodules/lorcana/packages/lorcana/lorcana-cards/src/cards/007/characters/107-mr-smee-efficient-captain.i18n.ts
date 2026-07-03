@@ -17,7 +17,7 @@ export const mrSmeeEfficientCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Effizienter Kapitän",
     text: [
       {
-        title: "HERAUF MIT DEN LEUTEN",
+        title: "Herauf mit den Leuten",
         description:
           "Jedes Mal, wenn du eine Aktion ausspielst, die kein Lied ist, darfst du einen Piraten deiner Wahl bereit machen.",
       },
@@ -28,7 +28,7 @@ export const mrSmeeEfficientCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Capitaine efficace",
     text: [
       {
-        title: "TOUS LES HOMMES SUR LE PONT",
+        title: "Tous les hommes sur le pont",
         description:
           "Chaque fois que vous jouez une action qui n'est pas une chanson, vous pouvez choisir un personnage Pirate et le redresser.",
       },
@@ -39,7 +39,7 @@ export const mrSmeeEfficientCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Capitano Efficiente",
     text: [
       {
-        title: "RADUNA LA CIURMA",
+        title: "Raduna la Ciurma",
         description:
           "Ogni volta che giochi un'azione che non è una canzone, puoi preparare un personaggio Pirata a tua scelta.",
       },

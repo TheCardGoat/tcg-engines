@@ -4,6 +4,17 @@ import { kristoffsLuteI18n } from "./133-kristoffs-lute.i18n";
 export const kristoffsLute: ItemCard = {
   id: "NgK",
   canonicalId: "ci_NgK",
+  slug: "lorcana-ci_NgK",
+  printings: [
+    {
+      id: "set11-133",
+      artId: "set11-133",
+      setCode: "set11",
+      collectorNumber: "133",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-133"],
   cardType: "item",
   name: "Kristoff's Lute",
@@ -16,7 +27,7 @@ export const kristoffsLute: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ec94f5c4a31b40c99f5b421ac7dd3acf",
-    tcgPlayer: 675510,
+    tcgPlayer: "675510",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { evasive } from "../../../helpers/abilities/evasive";
 import { shereKhanFearsomeTigerI18n } from "./088-shere-khan-fearsome-tiger.i18n";
+
+import { evasive } from "../../../helpers/abilities/evasive";
 
 export const shereKhanFearsomeTiger: CharacterCard = {
   id: "oaJ",
   canonicalId: "ci_oaJ",
+  slug: "lorcana-ci_oaJ",
+  printings: [
+    {
+      id: "set10-088",
+      artId: "set10-088",
+      setCode: "set10",
+      collectorNumber: "88",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-088"],
   cardType: "character",
   name: "Shere Khan",
@@ -21,7 +33,7 @@ export const shereKhanFearsomeTiger: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3a25fa761fb34e3d96aacc65d82eb2af",
-    tcgPlayer: 659623,
+    tcgPlayer: "659623",
   },
   text: [
     {

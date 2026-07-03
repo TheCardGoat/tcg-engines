@@ -4,6 +4,17 @@ import { pachaVillageLeaderI18n } from "./190-pacha-village-leader.i18n";
 export const pachaVillageLeader: CharacterCard = {
   id: "SED",
   canonicalId: "ci_SED",
+  slug: "lorcana-ci_SED",
+  printings: [
+    {
+      id: "set2-190",
+      artId: "set2-190",
+      setCode: "set2",
+      collectorNumber: "190",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-190"],
   cardType: "character",
   name: "Pacha",
@@ -21,7 +32,7 @@ export const pachaVillageLeader: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_4baaef6e190c46e4b03966728f10034a",
-    tcgPlayer: 527778,
+    tcgPlayer: "527778",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: pachaVillageLeaderI18n,

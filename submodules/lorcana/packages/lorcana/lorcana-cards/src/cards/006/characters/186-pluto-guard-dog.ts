@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { plutoGuardDogI18n } from "./186-pluto-guard-dog.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const plutoGuardDog: CharacterCard = {
   id: "mEY",
   canonicalId: "ci_mEY",
+  slug: "lorcana-ci_mEY",
+  printings: [
+    {
+      id: "set6-186",
+      artId: "set6-186",
+      setCode: "set6",
+      collectorNumber: "186",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-186"],
   cardType: "character",
   name: "Pluto",
@@ -20,7 +32,7 @@ export const plutoGuardDog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0b42ad3a223046c0a3807f04c58a552e",
-    tcgPlayer: 593037,
+    tcgPlayer: "593037",
   },
   text: [
     {

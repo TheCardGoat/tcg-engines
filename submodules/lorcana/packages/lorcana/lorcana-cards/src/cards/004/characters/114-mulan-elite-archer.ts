@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mulanEliteArcherI18n } from "./114-mulan-elite-archer.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const mulanEliteArcher: CharacterCard = {
   id: "4gd",
   canonicalId: "ci_9XN",
+  slug: "lorcana-ci_9XN",
+  printings: [
+    {
+      id: "set4-114",
+      artId: "set4-114",
+      setCode: "set4",
+      collectorNumber: "114",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-114", "set9-126"],
   cardType: "character",
   name: "Mulan",
@@ -21,7 +33,7 @@ export const mulanEliteArcher: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_44fe3bead4bf40f79163468a4fd647e5",
-    tcgPlayer: 650061,
+    tcgPlayer: "650061",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { arielEtherealVoiceI18n } from "./017-ariel-ethereal-voice.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const arielEtherealVoice: CharacterCard = {
   id: "Mni",
   canonicalId: "ci_izM",
+  slug: "lorcana-ci_izM",
+  printings: [
+    {
+      id: "set10-017",
+      artId: "set10-017",
+      setCode: "set10",
+      collectorNumber: "17",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-017"],
   cardType: "character",
   name: "Ariel",
@@ -21,7 +33,7 @@ export const arielEtherealVoice: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5b53a4c5b3854ab0ba71dd388aaa0d9f",
-    tcgPlayer: 657885,
+    tcgPlayer: "657885",
   },
   text: [
     {

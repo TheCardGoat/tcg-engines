@@ -4,6 +4,17 @@ import { taffytaMuttonfudgeRuthlessRivalI18n } from "./103-taffyta-muttonfudge-r
 export const taffytaMuttonfudgeRuthlessRival: CharacterCard = {
   id: "arh",
   canonicalId: "ci_arh",
+  slug: "lorcana-ci_arh",
+  printings: [
+    {
+      id: "set5-103",
+      artId: "set5-103",
+      setCode: "set5",
+      collectorNumber: "103",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-103"],
   cardType: "character",
   name: "Taffyta Muttonfudge",
@@ -21,7 +32,7 @@ export const taffytaMuttonfudgeRuthlessRival: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_47393fa4b8714ffbb182701c995d4998",
-    tcgPlayer: 555252,
+    tcgPlayer: "555252",
   },
   classifications: ["Storyborn", "Ally", "Racer"],
   i18n: taffytaMuttonfudgeRuthlessRivalI18n,

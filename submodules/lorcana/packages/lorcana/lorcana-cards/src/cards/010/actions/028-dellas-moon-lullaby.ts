@@ -4,6 +4,17 @@ import { dellasMoonLullabyI18n } from "./028-dellas-moon-lullaby.i18n";
 export const dellasMoonLullaby: ActionCard = {
   id: "VOg",
   canonicalId: "ci_VOg",
+  slug: "lorcana-ci_VOg",
+  printings: [
+    {
+      id: "set10-028",
+      artId: "set10-028",
+      setCode: "set10",
+      collectorNumber: "28",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-028"],
   cardType: "action",
   name: "Della's Moon Lullaby",
@@ -16,7 +27,7 @@ export const dellasMoonLullaby: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ebc01607e02e4421b658f6fbe90a97ca",
-    tcgPlayer: 658444,
+    tcgPlayer: "658444",
   },
   text: "Chosen opposing character gets -2 {S} until the start of your next turn. Draw a card.",
   actionSubtype: "song",

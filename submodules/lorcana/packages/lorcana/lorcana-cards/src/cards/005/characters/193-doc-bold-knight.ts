@@ -4,6 +4,17 @@ import { docBoldKnightI18n } from "./193-doc-bold-knight.i18n";
 export const docBoldKnight: CharacterCard = {
   id: "qUy",
   canonicalId: "ci_qUy",
+  slug: "lorcana-ci_qUy",
+  printings: [
+    {
+      id: "set5-193",
+      artId: "set5-193",
+      setCode: "set5",
+      collectorNumber: "193",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-193"],
   cardType: "character",
   name: "Doc",
@@ -20,7 +31,7 @@ export const docBoldKnight: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_663b3bcaa1df4b48ad139248ef5a5208",
-    tcgPlayer: 559668,
+    tcgPlayer: "559668",
   },
   text: [
     {

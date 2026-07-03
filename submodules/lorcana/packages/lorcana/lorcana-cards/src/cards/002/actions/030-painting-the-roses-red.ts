@@ -4,6 +4,17 @@ import { paintingTheRosesRedI18n } from "./030-painting-the-roses-red.i18n";
 export const paintingTheRosesRed: ActionCard = {
   id: "jP1",
   canonicalId: "ci_jP1",
+  slug: "lorcana-ci_jP1",
+  printings: [
+    {
+      id: "set2-030",
+      artId: "set2-030",
+      setCode: "set2",
+      collectorNumber: "30",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-030"],
   cardType: "action",
   name: "Painting the Roses Red",
@@ -16,7 +27,7 @@ export const paintingTheRosesRed: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5ed0be30062e4fa9a32f4edb4e53c47c",
-    tcgPlayer: 527240,
+    tcgPlayer: "527240",
   },
   text: "Up to 2 chosen characters get -1 {S} this turn. Draw a card.",
   actionSubtype: "song",

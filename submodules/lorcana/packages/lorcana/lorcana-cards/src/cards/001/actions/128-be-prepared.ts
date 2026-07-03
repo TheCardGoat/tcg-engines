@@ -4,6 +4,17 @@ import { bePreparedI18n } from "./128-be-prepared.i18n";
 export const bePrepared: ActionCard = {
   id: "4Sx",
   canonicalId: "ci_4Sx",
+  slug: "lorcana-ci_4Sx",
+  printings: [
+    {
+      id: "set1-128",
+      artId: "set1-128",
+      setCode: "set1",
+      collectorNumber: "128",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-128"],
   cardType: "action",
   name: "Be Prepared",
@@ -16,7 +27,7 @@ export const bePrepared: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a7c6d3aa2de6462f8d205d70a8fcc54f",
-    tcgPlayer: 506077,
+    tcgPlayer: "506077",
   },
   text: "Banish all characters.",
   actionSubtype: "song",

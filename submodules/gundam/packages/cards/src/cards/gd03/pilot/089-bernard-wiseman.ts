@@ -7,14 +7,17 @@ export const gd03BernardWiseman089: PilotCard = {
   color: "green",
   traits: ["zeon", "cyclops team"],
   id: "GD03-089",
-  externalId: "gundam:gd03-089",
-  slug: "bernard-wiseman-gd03-089",
+  canonicalId: "GD03-089",
+  externalIds: { bandai: "gundam:gd03-089" },
+  slug: "bernard-wiseman/gd03-089",
   displayName: "Bernard Wiseman",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-089",
   printings: [
     {
       id: "GD03-089",
+      artId: "GD03-089",
+      setCode: "GD03",
       collectorNumber: "GD03-089",
       cardNumber: "GD03-089",
       set: {
@@ -30,6 +33,8 @@ export const gd03BernardWiseman089: PilotCard = {
     },
     {
       id: "GD03-089_p1",
+      artId: "GD03-089_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-089_p1",
       cardNumber: "GD03-089",
       set: {
@@ -44,6 +49,7 @@ export const gd03BernardWiseman089: PilotCard = {
       productName: "Booster Pack Steel Requiem [GD03] Release Event",
     },
   ],
+  reprints: ["GD03-089", "GD03-089_p1"],
   selectedPrintingId: "GD03-089",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-089.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-089.webp?260424",

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { liShangNewlyPromotedI18n } from "./133-li-shang-newly-promoted.i18n";
 
 export const liShangNewlyPromoted: CharacterCard = {
-  id: "8NZ",
-  canonicalId: "ci_8NZ",
+  id: "3kp",
+  canonicalId: "ci_7wy",
+  slug: "lorcana-ci_7wy",
+  printings: [
+    {
+      id: "set7-133",
+      artId: "set7-133",
+      setCode: "set7",
+      collectorNumber: "133",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-133"],
   cardType: "character",
   name: "Li Shang",
@@ -20,7 +31,7 @@ export const liShangNewlyPromoted: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_82fe7f4aeec649bbba476dddb838a620",
-    tcgPlayer: 619479,
+    tcgPlayer: "619479",
   },
   text: [
     {

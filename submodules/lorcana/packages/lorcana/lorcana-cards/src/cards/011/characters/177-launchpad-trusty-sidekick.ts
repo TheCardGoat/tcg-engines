@@ -4,6 +4,17 @@ import { launchpadTrustySidekickI18n } from "./177-launchpad-trusty-sidekick.i18
 export const launchpadTrustySidekick: CharacterCard = {
   id: "RLN",
   canonicalId: "ci_RLN",
+  slug: "lorcana-ci_RLN",
+  printings: [
+    {
+      id: "set11-177",
+      artId: "set11-177",
+      setCode: "set11",
+      collectorNumber: "177",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-177"],
   cardType: "character",
   name: "Launchpad",
@@ -20,7 +31,7 @@ export const launchpadTrustySidekick: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5dd9c7a6d0ca4d4e9b0891adf35e1a99",
-    tcgPlayer: 658219,
+    tcgPlayer: "658219",
   },
   text: [
     {

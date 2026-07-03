@@ -4,6 +4,17 @@ import { brunoMadrigalSinglemindedI18n } from "./051-bruno-madrigal-single-minde
 export const brunoMadrigalSingleminded: CharacterCard = {
   id: "qZd",
   canonicalId: "ci_qZd",
+  slug: "lorcana-ci_qZd",
+  printings: [
+    {
+      id: "set8-051",
+      artId: "set8-051",
+      setCode: "set8",
+      collectorNumber: "51",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-051"],
   cardType: "character",
   name: "Bruno Madrigal",
@@ -20,7 +31,7 @@ export const brunoMadrigalSingleminded: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8aa3ca8ac51847e2987d4798c5ddb893",
-    tcgPlayer: 631385,
+    tcgPlayer: "631385",
   },
   text: [
     {

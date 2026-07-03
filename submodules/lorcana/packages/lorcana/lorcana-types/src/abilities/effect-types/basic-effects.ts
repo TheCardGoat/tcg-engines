@@ -66,6 +66,8 @@ export interface DrawEffect {
   type: "draw";
   amount?: AmountExpr;
   target?: PlayerTarget | LorcanaPlayerTarget;
+  /** Draw from the top of deck by default; use "bottom" for effects that say so. */
+  source?: "deck" | "deck-bottom";
 }
 
 /**
@@ -120,6 +122,8 @@ export interface DealDamageEffect {
   target?: CharacterTarget | LocationTarget;
   /** Which player chooses the target when the effect uses chosen targeting */
   chosenBy?: "you" | "opponent";
+  /** True when printed text says this damage cannot be reduced by Resist. */
+  ignoreResist?: boolean;
   selfReplacement?: NumericSelfReplacement;
 }
 
@@ -145,6 +149,8 @@ export interface RemoveDamageEffect {
   type: "remove-damage";
   amount?: AmountExpr;
   target?: CharacterTarget | LocationTarget;
+  /** Use "aggregate" for "remove up to N damage total" across multiple targets. */
+  distribution?: "aggregate" | "per-target";
   selfReplacement?: NumericSelfReplacement;
   /** Ready each character that had damage removed */
   thenReady?: boolean;

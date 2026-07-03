@@ -45,6 +45,7 @@
     "check": "bun run format && bun run lint && bun run check-types"
   },
   "dependencies": {
+    "@tcg/card-model": "link:../../../../agnostic-simulator/packages/card-model",
     "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {

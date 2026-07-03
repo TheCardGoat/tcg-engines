@@ -265,8 +265,24 @@ export function handleDeployTokenAction(
           },
         ]
       : [];
+    const tokenCardNumber = printed?.cardNumber ?? tokenId;
     const definition: UnitCard = {
-      cardNumber: printed?.cardNumber ?? tokenId,
+      cardNumber: tokenCardNumber,
+      canonicalId: tokenCardNumber.replace(/[-_]p\d+$/i, ""),
+      slug: `token-${tokenCardNumber.toLowerCase()}`,
+      printings: [
+        {
+          id: tokenCardNumber,
+          artId: tokenCardNumber.replace(/[-_]p\d+$/i, ""),
+          setCode: printed?.set?.code ?? "TOKEN",
+          collectorNumber: tokenCardNumber,
+          cardNumber: tokenCardNumber,
+          set: printed?.set ?? { code: "TOKEN", name: "Token" },
+          rarity: "common",
+          finish: "standard",
+          imageUrl: printed?.imageUrl ?? "",
+        },
+      ],
       color: printed?.color,
       name: tokenSpec.name,
       type: "unit",

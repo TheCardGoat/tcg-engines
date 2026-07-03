@@ -17,9 +17,9 @@ export const marieFavoredKittenI18n: Record<Languages, I18nProperties> = {
     version: "Bevorzugtes Kätzchen",
     text: [
       {
-        title: "ICH WERD'S DIR ZEIGEN",
+        title: "Ich werd's dir zeigen",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, darfst du einem Charakter deiner Wahl in diesem Zug -2 geben.",
+          "Jedes Mal, wenn dieser Charakter erkundet, darfst du einem Charakter deiner Wahl in diesem Zug -2 {S} geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const marieFavoredKittenI18n: Record<Languages, I18nProperties> = {
     version: "Chatonne privilégiée",
     text: [
       {
-        title: "JE VAIS TE FAIRE VOIR",
+        title: "Je vais te faire voir",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage qui subit -2 pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage qui subit -2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const marieFavoredKittenI18n: Record<Languages, I18nProperties> = {
     version: "Gattina Prediletta",
     text: [
       {
-        title: "TI FACCIO VEDERE IO",
+        title: "Ti Faccio Vedere Io",
         description:
-          "Ogni volta che questo personaggio va all'avventura, puoi dare -2 a un personaggio a tua scelta per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, puoi dare -2 {S} a un personaggio a tua scelta per questo turno.",
       },
     ],
   },

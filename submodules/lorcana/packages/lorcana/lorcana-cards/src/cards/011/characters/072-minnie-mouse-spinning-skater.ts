@@ -4,6 +4,17 @@ import { minnieMouseSpinningSkaterI18n } from "./072-minnie-mouse-spinning-skate
 export const minnieMouseSpinningSkater: CharacterCard = {
   id: "f22",
   canonicalId: "ci_f22",
+  slug: "lorcana-ci_f22",
+  printings: [
+    {
+      id: "set11-072",
+      artId: "set11-072",
+      setCode: "set11",
+      collectorNumber: "72",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-072"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -20,7 +31,7 @@ export const minnieMouseSpinningSkater: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8db0f3b74ec145c39cb0ec2413c48c75",
-    tcgPlayer: 673430,
+    tcgPlayer: "673430",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: minnieMouseSpinningSkaterI18n,

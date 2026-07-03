@@ -4,6 +4,17 @@ import { bambiLittlePrinceI18n } from "./063-bambi-little-prince.i18n";
 export const bambiLittlePrince: CharacterCard = {
   id: "WmT",
   canonicalId: "ci_eD3",
+  slug: "lorcana-ci_eD3",
+  printings: [
+    {
+      id: "set8-063",
+      artId: "set8-063",
+      setCode: "set8",
+      collectorNumber: "63",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-063"],
   cardType: "character",
   name: "Bambi",
@@ -20,7 +31,7 @@ export const bambiLittlePrince: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6527615670294d2a8a23873bc964cec0",
-    tcgPlayer: 633099,
+    tcgPlayer: "633099",
   },
   text: [
     {

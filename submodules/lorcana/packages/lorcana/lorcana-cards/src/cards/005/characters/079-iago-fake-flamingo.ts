@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { iagoFakeFlamingoI18n } from "./079-iago-fake-flamingo.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const iagoFakeFlamingo: CharacterCard = {
   id: "Lbm",
   canonicalId: "ci_Lbm",
+  slug: "lorcana-ci_Lbm",
+  printings: [
+    {
+      id: "set5-079",
+      artId: "set5-079",
+      setCode: "set5",
+      collectorNumber: "79",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-079"],
   cardType: "character",
   name: "Iago",
@@ -21,7 +33,7 @@ export const iagoFakeFlamingo: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a7aa78d2d3044e7ea94529cb078fced2",
-    tcgPlayer: 559625,
+    tcgPlayer: "559625",
   },
   text: [
     {

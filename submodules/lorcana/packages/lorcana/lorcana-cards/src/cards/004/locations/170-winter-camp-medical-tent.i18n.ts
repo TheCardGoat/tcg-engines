@@ -17,7 +17,7 @@ export const winterCampMedicalTentI18n: Record<Languages, I18nProperties> = {
     version: "Sanitätszelt",
     text: [
       {
-        title: "DEN VERWUNDETEN HELFEN",
+        title: "Den Verwundeten helfen",
         description:
           "Jedes Mal, wenn einer deiner Charaktere an diesem Ort erkundet, entferne bis zu 2 Schaden von ihm. Wenn es ein Held oder eine Heldin ist, entferne stattdessen bis zu 4 Schaden.",
       },
@@ -28,7 +28,7 @@ export const winterCampMedicalTentI18n: Record<Languages, I18nProperties> = {
     version: "Tente médicale",
     text: [
       {
-        title: "ASSISTANCE AUX BLESSÉS",
+        title: "Assistance aux blessés",
         description:
           "Chaque fois qu'un personnage sur ce lieu est envoyé à l'aventure, retirez-lui jusqu'à 2 jetons Dommage. Si c'est un personnage Héros, retirez-lui jusqu'à 4 jetons Dommage à la place.",
       },
@@ -39,7 +39,7 @@ export const winterCampMedicalTentI18n: Record<Languages, I18nProperties> = {
     version: "Tenda Medica",
     text: [
       {
-        title: "AIUTARE I FERITI",
+        title: "Aiutare i Feriti",
         description:
           "Ogni volta che un personaggio va all'avventura mentre si trova in questo luogo, rimuovi fino a 2 danni da quel personaggio. Se è un personaggio Eroe, rimuovi invece fino a 4 danni.",
       },

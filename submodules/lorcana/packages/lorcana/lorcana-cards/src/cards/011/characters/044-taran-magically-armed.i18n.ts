@@ -20,10 +20,10 @@ export const taranMagicallyArmedI18n: Record<Languages, I18nProperties> = {
     version: "Magisch bewaffnet",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "SCHWÄCHE DEN KESSEL",
+        title: "Schwäche den Kessel",
         description:
           "Wenn du diesen Charakter ausspielst, lege bis zu 2 Karten aus einem Ablagestapel deiner Wahl in beliebiger Reihenfolge unter das zugehörige Deck.",
       },
@@ -34,10 +34,10 @@ export const taranMagicallyArmedI18n: Record<Languages, I18nProperties> = {
     version: "Magiquement armé",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "AFFAIBLIR LE CHAUDRON",
+        title: "Affaiblir le chaudron",
         description:
           "Lorsque vous jouez ce personnage, choisissez un joueur et placez jusqu'à 2 cartes de sa défausse sous sa pioche, dans l'ordre de votre choix.",
       },
@@ -48,10 +48,10 @@ export const taranMagicallyArmedI18n: Record<Languages, I18nProperties> = {
     version: "Armato Magicamente",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "INDEBOLIRE LA PENTOLA",
+        title: "Indebolire la Pentola",
         description:
           "Quando giochi questo personaggio, metti fino a 2 carte dagli scarti di un giocatore a tua scelta in fondo al suo mazzo in qualsiasi ordine.",
       },

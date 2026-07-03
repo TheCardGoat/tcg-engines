@@ -16,7 +16,7 @@ export const stabbingtonBrotherWithAPatchI18n: Record<Languages, I18nProperties>
     version: "Mit Augenklappe",
     text: [
       {
-        title: "VERBRECHEN DER GELEGENHEIT",
+        title: "Verbrechen der Gelegenheit",
         description:
           "Wenn du diesen Charakter ausspielst, verliert eine gegnerische Person deiner Wahl 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const stabbingtonBrotherWithAPatchI18n: Record<Languages, I18nProperties>
     version: "Celui avec un cache-œil",
     text: [
       {
-        title: "OPPORTUNITÉ CRAPULEUSE",
+        title: "Opportunité crapuleuse",
         description:
           "Lorsque vous jouez ce personnage, choisissez un adversaire qui perd 1 éclat de Lore.",
       },
@@ -38,7 +38,7 @@ export const stabbingtonBrotherWithAPatchI18n: Record<Languages, I18nProperties>
     version: "Con la Benda",
     text: [
       {
-        title: "L'OCCASIONE FA L'UOMO LADRO",
+        title: "L'Occasione Fa l'Uomo Ladro",
         description:
           "Quando giochi questo personaggio, un avversario a tua scelta perde 1 leggenda.",
       },

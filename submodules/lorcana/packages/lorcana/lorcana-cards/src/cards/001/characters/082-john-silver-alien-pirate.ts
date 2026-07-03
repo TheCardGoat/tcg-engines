@@ -4,6 +4,17 @@ import { johnSilverAlienPirateI18n } from "./082-john-silver-alien-pirate.i18n";
 export const johnSilverAlienPirate: CharacterCard = {
   id: "n4l",
   canonicalId: "ci_Jdb",
+  slug: "lorcana-ci_Jdb",
+  printings: [
+    {
+      id: "set1-082",
+      artId: "set1-082",
+      setCode: "set1",
+      collectorNumber: "82",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-082", "set9-089"],
   cardType: "character",
   name: "John Silver",
@@ -20,7 +31,7 @@ export const johnSilverAlienPirate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e775c2ea351d4c3ca09630ade10092de",
-    tcgPlayer: 647668,
+    tcgPlayer: "647668",
   },
   text: [
     {

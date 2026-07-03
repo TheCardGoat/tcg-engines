@@ -19,12 +19,13 @@ export const robinHoodSneakySleuthI18n: Record<Languages, I18nProperties> = {
     version: "Raffinierter Spion",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Robin-Hood-Charaktere auszuspielen.)",
       },
       {
-        title: "SCHLAUER PLAN",
+        title: "Schlauer Plan",
         description:
-          "Dieser Charakter erhält +1 für jeden beschädigten Charakter aller gegnerischen Mitspielenden im Spiel.",
+          "Dieser Charakter erhält +1 {L} für jeden beschädigten Charakter aller gegnerischen Mitspielenden im Spiel.",
       },
     ],
   },
@@ -33,12 +34,13 @@ export const robinHoodSneakySleuthI18n: Record<Languages, I18nProperties> = {
     version: "Limier furtif",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Robin des Bois.)",
       },
       {
-        title: "UN PLAN BRILLANT",
+        title: "Un plan brillant",
         description:
-          "Ce personnage gagne +1 pour chaque personnage adverse ayant au moins un dommage sur lui.",
+          "Ce personnage gagne +1 {L} pour chaque personnage adverse ayant au moins un dommage sur lui.",
       },
     ],
   },
@@ -47,12 +49,13 @@ export const robinHoodSneakySleuthI18n: Record<Languages, I18nProperties> = {
     version: "Segugio Furtivo",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Robin Hood.)",
       },
       {
-        title: "PIANO ASTUTO",
+        title: "Piano Astuto",
         description:
-          "Questo personaggio riceve +1 per ogni personaggio avversario danneggiato in gioco.",
+          "Questo personaggio riceve +1 {L} per ogni personaggio avversario danneggiato in gioco.",
       },
     ],
   },

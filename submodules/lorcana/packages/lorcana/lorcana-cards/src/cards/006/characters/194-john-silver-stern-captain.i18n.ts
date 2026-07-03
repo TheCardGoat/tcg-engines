@@ -22,13 +22,15 @@ export const johnSilverSternCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Strenger Kapitän",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner John-Silver-Charaktere auszuspielen.)",
       },
       {
-        title: "Robust +2",
+        title:
+          "<Robust> +2 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
       },
       {
-        title: "SITZ NICHT EINFACH HERUM!",
+        title: "Sitz nicht einfach herum!",
         description:
           "Zu Beginn deines Zuges, füge jedem gegnerischen bereiten Charakter 1 Schaden zu.",
       },
@@ -39,13 +41,14 @@ export const johnSilverSternCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Capitaine sévère",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages John Silver.)",
       },
       {
-        title: "Résistance +2",
+        title: "<Résistance> +2",
       },
       {
-        title: "NE RESTE PAS PLANTÉ LÀ!",
+        title: "Ne reste pas planté là!",
         description:
           "Au début de votre tour, infligez 1 dommage à chaque personnage adverse redressé.",
       },
@@ -56,13 +59,14 @@ export const johnSilverSternCaptainI18n: Record<Languages, I18nProperties> = {
     version: "Capitano Severo",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato John Silver.)",
       },
       {
-        title: "Resistere +2",
+        title: "<Resistere> +2",
       },
       {
-        title: "NON STARTENE LÌ IMPALATO!",
+        title: "Non Startene Lì Impalato!",
         description:
           "All'inizio del tuo turno, infliggi 1 danno a ogni personaggio avversario preparato.",
       },

@@ -4,6 +4,17 @@ import { merryweatherGoodFairyI18n } from "./076-merryweather-good-fairy.i18n";
 export const merryweatherGoodFairy: CharacterCard = {
   id: "463",
   canonicalId: "ci_463",
+  slug: "lorcana-ci_463",
+  printings: [
+    {
+      id: "set5-076",
+      artId: "set5-076",
+      setCode: "set5",
+      collectorNumber: "76",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-076"],
   cardType: "character",
   name: "Merryweather",
@@ -20,7 +31,7 @@ export const merryweatherGoodFairy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c6e74eb559f2406fbea088388759a259",
-    tcgPlayer: 559737,
+    tcgPlayer: "559737",
   },
   text: [
     {

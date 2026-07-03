@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { woodyWaitingForAFriendI18n } from "./003-woody-waiting-for-a-friend.i18n";
 
 export const woodyWaitingForAFriend: CharacterCard = {
-  id: "Zfj",
+  id: "RHn",
   canonicalId: "ci_Zfj",
+  slug: "lorcana-ci_Zfj",
+  printings: [
+    {
+      id: "set12-003",
+      artId: "set12-003",
+      setCode: "set12",
+      collectorNumber: "3",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-003"],
   cardType: "character",
   name: "Woody",
@@ -20,7 +31,8 @@ export const woodyWaitingForAFriend: CharacterCard = {
   inkable: true,
   vanilla: true,
   externalIds: {
-    lorcast: "crd_ff8566269f8e44b2ae13abb3a79a27dd",
+    lorcast: "crd_2eb1fa4c7ab0498b8d4cfcd28f56a8cf",
+    tcgPlayer: "692203",
   },
   classifications: ["Storyborn", "Hero", "Toy"],
   i18n: woodyWaitingForAFriendI18n,

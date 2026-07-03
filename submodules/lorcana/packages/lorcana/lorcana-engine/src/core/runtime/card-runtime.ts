@@ -89,6 +89,7 @@ export interface CardQueryRuntimeInternals {
   staticResources: MatchStaticResources;
   runtimeCardCache?: StateScopedValueCache<unknown>;
   cacheViews: boolean;
+  invalidateCardViews: () => void;
 }
 
 export function getCardQueryRuntimeInternals(
@@ -120,19 +121,32 @@ export function createCardQueryAPI(
   // _stateID ensures any future caller that reuses an API across a state mutation
   // observes fresh values instead of stale projections.
   const cardViewCache = new Map<CardInstanceId, RuntimeView>();
-  let cardViewCacheStateID: number | undefined;
+  let cardViewCacheStateKey: string | undefined;
 
-  const readCurrentStateID = (): number | undefined => {
+  const readCurrentStateKey = (): string | undefined => {
     const candidate = (state.ctx as { _stateID?: unknown })._stateID;
-    return typeof candidate === "number" && Number.isFinite(candidate) ? candidate : undefined;
+    const stateID =
+      typeof candidate === "number" && Number.isFinite(candidate) ? candidate : undefined;
+    const staticEffectsVersion = (state.G as { staticEffectsVersion?: unknown })
+      .staticEffectsVersion;
+    return `${stateID ?? "unknown"}:${
+      typeof staticEffectsVersion === "number" && Number.isFinite(staticEffectsVersion)
+        ? staticEffectsVersion
+        : "unknown"
+    }`;
+  };
+
+  const invalidateCardViews = (): void => {
+    cardViewCache.clear();
+    cardViewCacheStateKey = undefined;
   };
 
   const buildCardView = (cardId: CardInstanceId): RuntimeView => {
     if (cacheViews) {
-      const currentStateID = readCurrentStateID();
-      if (currentStateID !== cardViewCacheStateID) {
+      const currentStateKey = readCurrentStateKey();
+      if (currentStateKey !== cardViewCacheStateKey) {
         cardViewCache.clear();
-        cardViewCacheStateID = currentStateID;
+        cardViewCacheStateKey = currentStateKey;
       }
       const cached = cardViewCache.get(cardId);
       if (cached) {
@@ -405,6 +419,7 @@ export function createCardQueryAPI(
     staticResources,
     runtimeCardCache: options.runtimeCardCache,
     cacheViews,
+    invalidateCardViews,
   };
 
   return api;

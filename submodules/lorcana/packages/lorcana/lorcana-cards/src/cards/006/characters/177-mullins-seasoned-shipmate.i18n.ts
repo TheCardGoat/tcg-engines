@@ -17,9 +17,9 @@ export const mullinsSeasonedShipmateI18n: Record<Languages, I18nProperties> = {
     version: "Erfahrener Schiffskamerad",
     text: [
       {
-        title: "EINORDNEN",
+        title: "Einordnen",
         description:
-          "Solange du mindestens einen Herr-Smee-Charakter im Spiel hast, erhält dieser Charakter Robust +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+          "Solange du mindestens einen Herr-Smee-Charakter im Spiel hast, erhält dieser Charakter <Robust> +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const mullinsSeasonedShipmateI18n: Record<Languages, I18nProperties> = {
     version: "Membre d’équipage chevronné",
     text: [
       {
-        title: "RENTRER DANS LE RANG",
+        title: "Rentrer dans le rang",
         description:
-          "Tant que vous avez un personnage Monsieur Mouche en jeu, ce personnage-ci gagne Résistance +1.",
+          "Tant que vous avez un personnage Monsieur Mouche en jeu, ce personnage-ci gagne <Résistance> +1.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const mullinsSeasonedShipmateI18n: Record<Languages, I18nProperties> = {
     version: "Marinaio Esperto",
     text: [
       {
-        title: "METTERSI IN RIGA",
+        title: "Mettersi in Riga",
         description:
-          "Mentre hai in gioco un personaggio chiamato Spugna, questo personaggio ottiene Resistere +1.",
+          "Mentre hai in gioco un personaggio chiamato Spugna, questo personaggio ottiene <Resistere> +1.",
       },
     ],
   },

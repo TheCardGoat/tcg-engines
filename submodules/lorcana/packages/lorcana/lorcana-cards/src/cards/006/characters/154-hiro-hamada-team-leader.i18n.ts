@@ -21,14 +21,14 @@ export const hiroHamadaTeamLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Teamleiter",
     text: [
       {
-        title: "ICH MUSS JEDEN EINZELNEN VON EUCH UPGRADEN",
+        title: "Ich muss jeden Einzelnen von euch upgraden",
         description:
-          "Deine anderen Erfinder erhalten Robust +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine anderen Erfinder erhalten <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
       {
-        title: "FORME DIE ZUKUNFT 2",
+        title: "Forme die Zukunft",
         description:
-          "— Schaue dir die oberste Karte deines Decks an. Lege sie anschließend entweder auf dein Deck oder darunter.",
+          "2 {I} — Schaue dir die oberste Karte deines Decks an. Lege sie anschließend entweder auf dein Deck oder darunter.",
       },
     ],
   },
@@ -37,13 +37,13 @@ export const hiroHamadaTeamLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Leader de l’équipe",
     text: [
       {
-        title: "JE VAIS TOUS VOUS METTRE",
-        description: "À JOUR Vos autres personnages Inventeur gagnent Résistance +1.",
+        title: "Je vais tous vous mettre à jour",
+        description: "Vos autres personnages Inventeur gagnent <Résistance> +1.",
       },
       {
-        title: "FAÇONNER L'AVENIR",
+        title: "Façonner l'avenir",
         description:
-          "2 — Regardez la carte du dessus de votre pioche. Remettez-la soit sur le dessus de votre pioche, soit en dessous.",
+          "2 {I} — Regardez la carte du dessus de votre pioche. Remettez-la soit sur le dessus de votre pioche, soit en dessous.",
       },
     ],
   },
@@ -52,13 +52,13 @@ export const hiroHamadaTeamLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Capo del Team",
     text: [
       {
-        title: "AVRETE TUTTI BISOGNO DI UN UPGRADE",
-        description: "I tuoi altri personaggi Inventore ottengono Resistere +1.",
+        title: "Avrete Tutti Bisogno di un Upgrade",
+        description: "I tuoi altri personaggi Inventore ottengono <Resistere> +1.",
       },
       {
-        title: "PLASMARE IL FUTURO 2",
+        title: "Plasmare il Futuro",
         description:
-          "— Guarda la prima carta del tuo mazzo. Mettila in cima o in fondo al tuo mazzo.",
+          "2 {I} — Guarda la prima carta del tuo mazzo. Mettila in cima o in fondo al tuo mazzo.",
       },
     ],
   },

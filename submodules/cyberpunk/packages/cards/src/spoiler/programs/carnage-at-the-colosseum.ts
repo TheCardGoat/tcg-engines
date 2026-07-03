@@ -1,13 +1,14 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerCarnageAtTheColosseum = {
+export const spoilerCarnageAtTheColosseum = defineCyberpunkCard({
   id: "bd0ecde8-2aec-44cb-a11a-fb81bc34827a",
-  externalId: "cyberpunk:carnage-at-the-colosseum",
   slug: "carnage-at-the-colosseum",
-  name: "Carnage At The Colosseum",
-  displayName: "Carnage At The Colosseum",
   rulesText:
     "Play this Program for -1 €$ for each friendly Gig with 8+ value, to a minimum of 1 €$. Defeat a rival Unit with less power than a friendly Unit.",
+  name: "Carnage At The Colosseum",
+  displayName: "Carnage At The Colosseum",
+  canonicalId: "carnage-at-the-colosseum",
   color: "red",
   classifications: ["Braindance", "Extreme"],
   set: {
@@ -15,15 +16,6 @@ export const spoilerCarnageAtTheColosseum = {
     name: "Spoiler Set",
   },
   printNumber: "030",
-  printings: [
-    {
-      id: "c63be6e4-f51d-42b5-beed-d9842d349a0f",
-      collectorNumber: "030",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "c63be6e4-f51d-42b5-beed-d9842d349a0f",
   artist: "Matías Bergara",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/030.webp",
   rarity: null,
@@ -31,7 +23,6 @@ export const spoilerCarnageAtTheColosseum = {
   hasSellTag: true,
   ram: 3,
   timingTriggers: ["play"],
-  keywords: [],
   type: "program",
   cost: 6,
   power: null,
@@ -81,4 +72,4 @@ export const spoilerCarnageAtTheColosseum = {
     },
     min: 1,
   },
-} satisfies SpoilerCardDefinition;
+}) satisfies ProgramCardDefinition;

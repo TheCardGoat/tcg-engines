@@ -4,6 +4,17 @@ import { jamesRoleModelI18n } from "./150-james-role-model.i18n";
 export const jamesRoleModel: CharacterCard = {
   id: "OCC",
   canonicalId: "ci_OCC",
+  slug: "lorcana-ci_OCC",
+  printings: [
+    {
+      id: "set2-150",
+      artId: "set2-150",
+      setCode: "set2",
+      collectorNumber: "150",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-150"],
   cardType: "character",
   name: "James",
@@ -20,7 +31,7 @@ export const jamesRoleModel: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_648eda5b1ace49e1abf842cce776399d",
-    tcgPlayer: 527764,
+    tcgPlayer: "527764",
   },
   text: [
     {

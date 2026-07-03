@@ -7,14 +7,17 @@ export const gd01UnicornGundamDestroyMode002: UnitCard = {
   color: "blue",
   traits: ["civilian"],
   id: "GD01-002",
-  externalId: "gundam:gd01-002",
-  slug: "unicorn-gundam-destroy-mode-gd01-002",
+  canonicalId: "GD01-002",
+  externalIds: { bandai: "gundam:gd01-002" },
+  slug: "unicorn-gundam-destroy-mode/gd01-002",
   displayName: "Unicorn Gundam (Destroy Mode)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-002",
   printings: [
     {
       id: "GD01-002",
+      artId: "GD01-002",
+      setCode: "GD01",
       collectorNumber: "GD01-002",
       cardNumber: "GD01-002",
       set: {
@@ -30,6 +33,8 @@ export const gd01UnicornGundamDestroyMode002: UnitCard = {
     },
     {
       id: "GD01-002_p1",
+      artId: "GD01-002_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-002_p1",
       cardNumber: "GD01-002",
       set: {
@@ -45,6 +50,8 @@ export const gd01UnicornGundamDestroyMode002: UnitCard = {
     },
     {
       id: "GD01-002_p2",
+      artId: "GD01-002_p2",
+      setCode: "GD04",
       collectorNumber: "GD01-002_p2",
       cardNumber: "GD01-002",
       set: {
@@ -59,6 +66,7 @@ export const gd01UnicornGundamDestroyMode002: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD01-002", "GD01-002_p1", "GD01-002_p2"],
   selectedPrintingId: "GD01-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-002.webp?260424",

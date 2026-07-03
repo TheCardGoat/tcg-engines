@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { dashParrLavaRunnerI18n } from "./061-dash-parr-lava-runner.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const dashParrLavaRunner: CharacterCard = {
-  id: "vhe",
-  canonicalId: "ci_vhe",
+  id: "ZmD",
+  canonicalId: "ci_W3N",
+  slug: "lorcana-ci_W3N",
+  printings: [
+    {
+      id: "set12-061",
+      artId: "set12-061",
+      setCode: "set12",
+      collectorNumber: "61",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-061"],
   cardType: "character",
   name: "Dash Parr",
@@ -21,6 +33,7 @@ export const dashParrLavaRunner: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cdc217218de441d8b92b3ea9c8041cab",
+    tcgPlayer: "690529",
   },
   text: [
     {

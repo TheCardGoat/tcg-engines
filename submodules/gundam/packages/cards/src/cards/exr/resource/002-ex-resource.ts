@@ -6,14 +6,17 @@ export const exrExResource002: ResourceCard = {
   type: "resource",
   traits: [],
   id: "EXR-002",
-  externalId: "gundam:exr-002",
-  slug: "ex-resource-exr-002",
+  canonicalId: "EXR-002",
+  externalIds: { bandai: "gundam:exr-002" },
+  slug: "ex-resource/exr-002",
   displayName: "EX Resource",
   set: { code: "ST09", name: "Destiny Ignition [ST09]", packageId: "616009" },
   printNumber: "EXR-002",
   printings: [
     {
       id: "EXR-002",
+      artId: "EXR-002",
+      setCode: "ST09",
       collectorNumber: "EXR-002",
       cardNumber: "EXR-002",
       set: {
@@ -29,6 +32,8 @@ export const exrExResource002: ResourceCard = {
     },
     {
       id: "EXR-002_p1",
+      artId: "EXR-002_p1",
+      setCode: "ST09",
       collectorNumber: "EXR-002_p1",
       cardNumber: "EXR-002",
       set: {
@@ -43,6 +48,7 @@ export const exrExResource002: ResourceCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["EXR-002", "EXR-002_p1"],
   selectedPrintingId: "EXR-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exr/EXR-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXR-002.webp?260424",

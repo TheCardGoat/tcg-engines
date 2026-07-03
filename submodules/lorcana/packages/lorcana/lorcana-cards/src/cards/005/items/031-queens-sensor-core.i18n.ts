@@ -20,14 +20,14 @@ export const queensSensorCoreI18n: Record<Languages, I18nProperties> = {
     name: "Sensorkern der Königin",
     text: [
       {
-        title: "SYMBOL DES ADELS",
+        title: "Symbol des Adels",
         description:
           "Zu Beginn deines Zuges, wenn du mindestens eine Prinzessin oder eine Königin im Spiel hast, sammelst du 1 Legende.",
       },
       {
-        title: "KÖNIGLICHE SUCHE,",
+        title: "Königliche Suche",
         description:
-          "2 — Decke die oberste Karte deines Decks auf. Falls es eine Prinzessin oder eine Königin-Charakterkarte ist, darfst du diese auf deine Hand nehmen. Falls nicht, lege sie zurück auf dein Deck.",
+          "{E}, 2 {I} — Decke die oberste Karte deines Decks auf. Falls es eine Prinzessin oder eine Königin-Charakterkarte ist, darfst du diese auf deine Hand nehmen. Falls nicht, lege sie zurück auf dein Deck.",
       },
     ],
   },
@@ -35,14 +35,14 @@ export const queensSensorCoreI18n: Record<Languages, I18nProperties> = {
     name: "Cœur du détecteur de la Reine",
     text: [
       {
-        title: "SYMBOLE DE NOBLESSE",
+        title: "Symbole de noblesse",
         description:
           "Au début de votre tour, si vous avez un personnage Princesse ou Reine en jeu, gagnez 1 éclat de Lore.",
       },
       {
-        title: "RECHERCHE ROYALE, 2",
+        title: "Recherche royale",
         description:
-          "— Révélez la première carte de votre pioche. S'il s'agit d'une carte Personnage Princesse ou Reine, vous pouvez la prendre en main. Sinon, replacez-la sur votre pioche.",
+          "{E}, 2 {I} — Révélez la première carte de votre pioche. S'il s'agit d'une carte Personnage Princesse ou Reine, vous pouvez la prendre en main. Sinon, replacez-la sur votre pioche.",
       },
     ],
   },
@@ -50,14 +50,14 @@ export const queensSensorCoreI18n: Record<Languages, I18nProperties> = {
     name: "Nucleo Rivelatore della Regina",
     text: [
       {
-        title: "SIMBOLO DI NOBILTÀ",
+        title: "Simbolo di Nobiltà",
         description:
           "All'inizio del tuo turno, se hai in gioco un personaggio Principessa o Regina, ottieni 1 leggenda.",
       },
       {
-        title: "RICERCA REGALE, 2",
+        title: "Ricerca Regale",
         description:
-          "— Rivela la prima carta del tuo mazzo. Se è una carta personaggio Principessa o Regina, puoi aggiungerla alla tua mano. Altrimenti, mettila in cima al tuo mazzo.",
+          "{E}, 2 {I} — Rivela la prima carta del tuo mazzo. Se è una carta personaggio Principessa o Regina, puoi aggiungerla alla tua mano. Altrimenti, mettila in cima al tuo mazzo.",
       },
     ],
   },

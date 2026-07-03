@@ -4,6 +4,17 @@ import { megaraPullingTheStringsI18n } from "./087-megara-pulling-the-strings.i1
 export const megaraPullingTheStrings: CharacterCard = {
   id: "M9e",
   canonicalId: "ci_QjA",
+  slug: "lorcana-ci_QjA",
+  printings: [
+    {
+      id: "set1-087",
+      artId: "set1-087",
+      setCode: "set1",
+      collectorNumber: "87",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-087", "set9-079"],
   cardType: "character",
   name: "Megara",
@@ -20,7 +31,7 @@ export const megaraPullingTheStrings: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bac12540d0734d2080c8cac9d19265d7",
-    tcgPlayer: 650019,
+    tcgPlayer: "650019",
   },
   text: [
     {

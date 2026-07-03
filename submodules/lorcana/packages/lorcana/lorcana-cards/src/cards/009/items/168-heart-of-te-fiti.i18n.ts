@@ -15,9 +15,9 @@ export const heartOfTeFitiI18n: Record<Languages, I18nProperties> = {
     name: "Herz von Te Fiti",
     text: [
       {
-        title: "LEBEN ERSCHAFFEN, 2",
+        title: "Leben erschaffen",
         description:
-          "— Lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat.",
+          "{E}, 2 {I} — Lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const heartOfTeFitiI18n: Record<Languages, I18nProperties> = {
     name: "Le cœur de Te Fiti",
     text: [
       {
-        title: "ENGENDRER LA VIE, 2",
+        title: "Engendrer la vie",
         description:
-          "— Placez la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
+          "{E}, 2 {I} — Placez la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const heartOfTeFitiI18n: Record<Languages, I18nProperties> = {
     name: "Cuore di Te Fiti",
     text: [
       {
-        title: "CREARE LA VITA, 2",
+        title: "Creare la Vita",
         description:
-          "— Aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
+          "{E}, 2 {I} — Aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },
     ],
   },

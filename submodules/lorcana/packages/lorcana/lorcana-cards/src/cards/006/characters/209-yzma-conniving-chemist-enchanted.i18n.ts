@@ -17,9 +17,9 @@ export const yzmaConnivingChemistEnchantedI18n: Record<Languages, I18nProperties
     version: "Hinterhältige Chemikerin",
     text: [
       {
-        title: "FÜHL DIE MACHT",
+        title: "Fühl die Macht",
         description:
-          "— Wenn du weniger als 3 Karten auf deiner Hand hast, ziehe so viele Karten, bis du 3 Karten auf deiner Hand hast.",
+          "{E} — Wenn du weniger als 3 Karten auf deiner Hand hast, ziehe so viele Karten, bis du 3 Karten auf deiner Hand hast.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const yzmaConnivingChemistEnchantedI18n: Record<Languages, I18nProperties
     version: "Chimiste sournoise",
     text: [
       {
-        title: "SENS LA PUISSANCE",
+        title: "Sens la puissance",
         description:
-          "— Si vous avez moins de 3 cartes en main, piochez jusqu'à avoir 3 cartes en main.",
+          "{E} — Si vous avez moins de 3 cartes en main, piochez jusqu'à avoir 3 cartes en main.",
       },
     ],
   },
@@ -39,8 +39,8 @@ export const yzmaConnivingChemistEnchantedI18n: Record<Languages, I18nProperties
     version: "Subdola Chimica",
     text: [
       {
-        title: "AVVERTI IL NERO POTERE",
-        description: "— Se hai meno di 3 carte in mano, pesca finché non hai 3 carte in mano.",
+        title: "Avverti il Nero Potere",
+        description: "{E} — Se hai meno di 3 carte in mano, pesca finché non hai 3 carte in mano.",
       },
     ],
   },

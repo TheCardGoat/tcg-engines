@@ -6,7 +6,7 @@ export const kidaGuardianOfThePathI18n: Record<Languages, I18nProperties> = {
     version: "Guardian of the Path",
     text: [
       {
-        title: "Natural Defense",
+        title: "NATURAL DEFENSE",
         description:
           "When you play this character, chosen opposing character gets -2 {S} this turn.",
       },

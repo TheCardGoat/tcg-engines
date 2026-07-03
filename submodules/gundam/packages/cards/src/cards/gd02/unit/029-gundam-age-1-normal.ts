@@ -7,14 +7,17 @@ export const gd02GundamAge1Normal029: UnitCard = {
   color: "green",
   traits: ["earth federation", "age system"],
   id: "GD02-029",
-  externalId: "gundam:gd02-029",
-  slug: "gundam-age-1-normal-gd02-029",
+  canonicalId: "GD02-029",
+  externalIds: { bandai: "gundam:gd02-029" },
+  slug: "gundam-age-1-normal/gd02-029",
   displayName: "Gundam AGE-1 Normal",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-029",
   printings: [
     {
       id: "GD02-029",
+      artId: "GD02-029",
+      setCode: "GD02",
       collectorNumber: "GD02-029",
       cardNumber: "GD02-029",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamAge1Normal029: UnitCard = {
     },
     {
       id: "GD02-029_p1",
+      artId: "GD02-029_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-029_p1",
       cardNumber: "GD02-029",
       set: {
@@ -45,6 +50,8 @@ export const gd02GundamAge1Normal029: UnitCard = {
     },
     {
       id: "GD02-029_p2",
+      artId: "GD02-029_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-029_p2",
       cardNumber: "GD02-029",
       set: {
@@ -60,6 +67,8 @@ export const gd02GundamAge1Normal029: UnitCard = {
     },
     {
       id: "GD02-029_p3",
+      artId: "GD02-029_p3",
+      setCode: "GD02",
       collectorNumber: "GD02-029_p3",
       cardNumber: "GD02-029",
       set: {
@@ -74,6 +83,7 @@ export const gd02GundamAge1Normal029: UnitCard = {
       productName: "Booster Release Event",
     },
   ],
+  reprints: ["GD02-029", "GD02-029_p1", "GD02-029_p2", "GD02-029_p3"],
   selectedPrintingId: "GD02-029",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-029.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-029.webp?260424",

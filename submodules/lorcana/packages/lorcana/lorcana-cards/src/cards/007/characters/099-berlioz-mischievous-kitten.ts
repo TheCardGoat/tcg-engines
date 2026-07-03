@@ -4,6 +4,17 @@ import { berliozMischievousKittenI18n } from "./099-berlioz-mischievous-kitten.i
 export const berliozMischievousKitten: CharacterCard = {
   id: "J54",
   canonicalId: "ci_J54",
+  slug: "lorcana-ci_J54",
+  printings: [
+    {
+      id: "set7-099",
+      artId: "set7-099",
+      setCode: "set7",
+      collectorNumber: "99",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-099"],
   cardType: "character",
   name: "Berlioz",
@@ -21,7 +32,7 @@ export const berliozMischievousKitten: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8a7ba766a9614ec2b66cd1cb1dc10a3e",
-    tcgPlayer: 618148,
+    tcgPlayer: "618148",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: berliozMischievousKittenI18n,

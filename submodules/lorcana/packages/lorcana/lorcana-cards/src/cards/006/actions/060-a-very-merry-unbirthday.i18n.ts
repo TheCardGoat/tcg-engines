@@ -11,10 +11,26 @@ export const aVeryMerryUnbirthdayI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Un Joyeux non-anniversaire",
-    text: "Chaque adversaire place les 2 cartes du dessus de sa pioche dans sa défausse.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 1 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Chaque adversaire place les 2 cartes du dessus de sa pioche dans sa défausse.",
+      },
+    ],
   },
   it: {
     name: "Un Buon Non Compleanno",
-    text: "(Un personaggio con costo 1 o superiore può per cantare questa canzone gratis.) Ogni avversario mette le prime 2 carte del suo mazzo nei suoi scarti.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 1 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Ogni avversario mette le prime 2 carte del suo mazzo nei suoi scarti.",
+      },
+    ],
   },
 };

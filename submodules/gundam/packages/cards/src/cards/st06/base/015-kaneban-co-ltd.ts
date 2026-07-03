@@ -6,14 +6,17 @@ export const st06KanebanCoLtd015: BaseCard = {
   type: "base",
   traits: ["clan", "stronghold"],
   id: "ST06-015",
-  externalId: "gundam:st06-015",
-  slug: "kaneban-co-ltd-st06-015",
+  canonicalId: "ST06-015",
+  externalIds: { bandai: "gundam:st06-015" },
+  slug: "kaneban-co-ltd/st06-015",
   displayName: "Kaneban Co., Ltd.",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-015",
   printings: [
     {
       id: "ST06-015",
+      artId: "ST06-015",
+      setCode: "ST06",
       collectorNumber: "ST06-015",
       cardNumber: "ST06-015",
       set: {
@@ -29,6 +32,8 @@ export const st06KanebanCoLtd015: BaseCard = {
     },
     {
       id: "ST06-015_p1",
+      artId: "ST06-015_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-015_p1",
       cardNumber: "ST06-015",
       set: {
@@ -43,6 +48,7 @@ export const st06KanebanCoLtd015: BaseCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST06-015", "ST06-015_p1"],
   selectedPrintingId: "ST06-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-015.webp?260424",

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { maxGoofChartTopperI18n } from "./077-max-goof-chart-topper.i18n";
 
 export const maxGoofChartTopper: CharacterCard = {
-  id: "47m",
+  id: "sHr",
   canonicalId: "ci_DrO",
+  slug: "lorcana-ci_DrO",
+  printings: [
+    {
+      id: "set9-077",
+      artId: "set9-077",
+      setCode: "set9",
+      collectorNumber: "77",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-077"],
   cardType: "character",
   name: "Max Goof",
@@ -20,7 +31,7 @@ export const maxGoofChartTopper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b5087f60fdf4442686a00fb4243fcf48",
-    tcgPlayer: 651113,
+    tcgPlayer: "651113",
   },
   text: [
     {

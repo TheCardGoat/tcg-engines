@@ -16,7 +16,7 @@ export const madHatterGraciousHostI18n: Record<Languages, I18nProperties> = {
     version: "Generöser Gastgeber",
     text: [
       {
-        title: "TEE-PARTY",
+        title: "Tee-Party",
         description:
           "Jedes Mal, wenn dieser Charakter herausgefordert wird, darfst du 1 Karte ziehen.",
       },
@@ -37,7 +37,7 @@ export const madHatterGraciousHostI18n: Record<Languages, I18nProperties> = {
     version: "Gracious Host",
     text: [
       {
-        title: "TEA PARTY",
+        title: "Tea Party",
         description: "Whenever this character is challenged, you may draw a card.",
       },
     ],

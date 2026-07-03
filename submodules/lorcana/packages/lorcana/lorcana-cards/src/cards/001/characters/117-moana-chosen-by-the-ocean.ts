@@ -4,6 +4,17 @@ import { moanaChosenByTheOceanI18n } from "./117-moana-chosen-by-the-ocean.i18n"
 export const moanaChosenByTheOcean: CharacterCard = {
   id: "c4p",
   canonicalId: "ci_c4p",
+  slug: "lorcana-ci_c4p",
+  printings: [
+    {
+      id: "set1-117",
+      artId: "set1-117",
+      setCode: "set1",
+      collectorNumber: "117",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-117"],
   cardType: "character",
   name: "Moana",
@@ -20,7 +31,7 @@ export const moanaChosenByTheOcean: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_49b96ca319434f588d5d36b30597c832",
-    tcgPlayer: 508786,
+    tcgPlayer: "508786",
   },
   text: [
     {
@@ -40,8 +51,12 @@ export const moanaChosenByTheOcean: CharacterCard = {
             owner: "any",
             zones: ["play"],
             cardTypes: ["character"],
-            // We must clear diacritics
-            filter: [{ type: "has-name", name: "Te Ka" }],
+            filter: [
+              {
+                type: "has-name",
+                name: "Te Ka",
+              },
+            ],
           },
           type: "banish",
         },

@@ -4,6 +4,17 @@ import { aPiratesLifeI18n } from "./128-a-pirates-life.i18n";
 export const aPiratesLife: ActionCard = {
   id: "k7r",
   canonicalId: "ci_rfx",
+  slug: "lorcana-ci_rfx",
+  printings: [
+    {
+      id: "set4-128",
+      artId: "set4-128",
+      setCode: "set4",
+      collectorNumber: "128",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-128", "set9-132"],
   cardType: "action",
   name: "A Pirate’s Life",
@@ -16,13 +27,12 @@ export const aPiratesLife: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_480463cc9e3f4f7b9cb1c96a83d69544",
-    tcgPlayer: 650067,
+    tcgPlayer: "650067",
   },
   text: [
     {
-      title: "Sing Together 6",
-      description:
-        "(Any number of your or your teammates' characters with total cost 6 or more may {E} to sing this song for free.)",
+      title:
+        "<Sing Together> 6 (Any number of your or your teammates' characters with total cost 6 or more may {E} to sing this song for free.)",
     },
     {
       title: "Each opponent loses 2 lore. You gain 2 lore.",

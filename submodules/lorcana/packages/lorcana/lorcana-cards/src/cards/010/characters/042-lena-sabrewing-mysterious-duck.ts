@@ -4,6 +4,17 @@ import { lenaSabrewingMysteriousDuckI18n } from "./042-lena-sabrewing-mysterious
 export const lenaSabrewingMysteriousDuck: CharacterCard = {
   id: "9B6",
   canonicalId: "ci_9B6",
+  slug: "lorcana-ci_9B6",
+  printings: [
+    {
+      id: "set10-042",
+      artId: "set10-042",
+      setCode: "set10",
+      collectorNumber: "42",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-042"],
   cardType: "character",
   name: "Lena Sabrewing",
@@ -20,7 +31,7 @@ export const lenaSabrewingMysteriousDuck: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_041e41c6ea3349e6a3734dd749f9543e",
-    tcgPlayer: 658457,
+    tcgPlayer: "658457",
   },
   text: [
     {

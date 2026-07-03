@@ -4,6 +4,17 @@ import { sisuDivineWaterDragonI18n } from "./159-sisu-divine-water-dragon.i18n";
 export const sisuDivineWaterDragon: CharacterCard = {
   id: "GZk",
   canonicalId: "ci_mTe",
+  slug: "lorcana-ci_mTe",
+  printings: [
+    {
+      id: "set2-159",
+      artId: "set2-159",
+      setCode: "set2",
+      collectorNumber: "159",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-159"],
   cardType: "character",
   name: "Sisu",
@@ -20,7 +31,7 @@ export const sisuDivineWaterDragon: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f9edf9a591974716b2d7f02764f93737",
-    tcgPlayer: 528112,
+    tcgPlayer: "528112",
   },
   text: [
     {

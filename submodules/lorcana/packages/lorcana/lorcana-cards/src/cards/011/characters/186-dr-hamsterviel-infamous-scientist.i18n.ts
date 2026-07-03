@@ -22,12 +22,12 @@ export const drHamstervielInfamousScientistI18n: Record<Languages, I18nPropertie
     version: "Berüchtigter Wissenschaftler",
     text: [
       {
-        title: "KONTROLLIERTE VARIABLEN",
+        title: "Kontrollierte Variablen",
         description:
-          "Für jede Alien-Charakterkarte in deinem Ablagestapel zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jede Alien-Charakterkarte in deinem Ablagestapel zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "VERBLÜFFEND",
+        title: "Verblüffend",
         description:
           "Wenn du diesen Charakter ausspielst, wähle einen gegnerischen Charakter. Er kann in seinem nächsten Zug nicht herausfordern.",
       },
@@ -38,12 +38,12 @@ export const drHamstervielInfamousScientistI18n: Record<Languages, I18nPropertie
     version: "Infâme scientifique",
     text: [
       {
-        title: "VARIABLES CONTRÔLÉES",
+        title: "Variables contrôlées",
         description:
-          "Jouer ce personnage vous coûte 1 de moins pour chaque carte Personnage Alien dans votre défausse.",
+          "Jouer ce personnage vous coûte 1 {I} de moins pour chaque carte Personnage Alien dans votre défausse.",
       },
       {
-        title: "ÉBAHI",
+        title: "Ébahi",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui ne peut pas défier durant son prochain tour.",
       },
@@ -54,12 +54,12 @@ export const drHamstervielInfamousScientistI18n: Record<Languages, I18nPropertie
     version: "Famigerato Scienziato",
     text: [
       {
-        title: "VARIABILI CONTROLLATE",
+        title: "Variabili Controllate",
         description:
-          "Per ogni carta personaggio Alieno nei tuoi scarti, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni carta personaggio Alieno nei tuoi scarti, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "STUPEFATTO",
+        title: "Stupefatto",
         description:
           "Quando giochi questo personaggio, un personaggio avversario a tua scelta non può sfidare durante il suo prossimo turno.",
       },

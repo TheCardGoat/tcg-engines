@@ -17,9 +17,9 @@ export const sugarRushSpeedwayStartingLineI18n: Record<Languages, I18nProperties
     version: "Startlinie",
     text: [
       {
-        title: "AUF DIE PLÄTZE!",
+        title: "Auf die Plätze!",
         description:
-          "Einmal pro Zug, darfst du einen Charakter deiner Wahl an diesem Ort und ihm 1 Schaden zufügen, um ihn kostenlos zu einem anderen Ort zu bewegen.",
+          "Einmal pro Zug, darfst du einen Charakter deiner Wahl an diesem Ort {E} und ihm 1 Schaden zufügen, um ihn kostenlos zu einem anderen Ort zu bewegen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const sugarRushSpeedwayStartingLineI18n: Record<Languages, I18nProperties
     version: "Ligne de départ",
     text: [
       {
-        title: "À VOS MARQUES!",
+        title: "À vos marques!",
         description:
-          "Une fois par tour, vous pouvez choisir et un personnage sur ce lieu et lui infliger 1 dommage pour le déplacer gratuitement vers un autre lieu.",
+          "Une fois par tour, vous pouvez choisir et {E} un personnage sur ce lieu et lui infliger 1 dommage pour le déplacer gratuitement vers un autre lieu.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const sugarRushSpeedwayStartingLineI18n: Record<Languages, I18nProperties
     version: "Linea di Partenza",
     text: [
       {
-        title: "AI VOSTRI POSTI!",
+        title: "Ai Vostri Posti!",
         description:
-          "Una volta per turno, puoi un personaggio a tua scelta in questo luogo e infliggergli 1 danno per spostarlo in un altro luogo gratis.",
+          "Una volta per turno, puoi {E} un personaggio a tua scelta in questo luogo e infliggergli 1 danno per spostarlo in un altro luogo gratis.",
       },
     ],
   },

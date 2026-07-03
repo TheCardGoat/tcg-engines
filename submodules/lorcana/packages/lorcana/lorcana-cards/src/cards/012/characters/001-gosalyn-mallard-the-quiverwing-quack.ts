@@ -4,6 +4,17 @@ import { gosalynMallardTheQuiverwingQuackI18n } from "./001-gosalyn-mallard-the-
 export const gosalynMallardTheQuiverwingQuack: CharacterCard = {
   id: "oEU",
   canonicalId: "ci_oEU",
+  slug: "lorcana-ci_oEU",
+  printings: [
+    {
+      id: "set12-001",
+      artId: "set12-001",
+      setCode: "set12",
+      collectorNumber: "1",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-001"],
   cardType: "character",
   name: "Gosalyn Mallard",
@@ -20,6 +31,7 @@ export const gosalynMallardTheQuiverwingQuack: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1755646d14394fc69c64fcae17bf5f44",
+    tcgPlayer: "692146",
   },
   text: [
     {

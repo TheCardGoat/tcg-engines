@@ -1,3 +1,4 @@
+export { elsasIcePalacePlaceOfSolitudeC1Challenge } from "./c1-007-elsas-ice-palace-place-of-solitude-challenge";
 export { rapunzelsTowerSecludedPrison } from "./033-rapunzels-tower-secluded-prison";
 export { prideLandsJungleOasis } from "./034-pride-lands-jungle-oasis";
 export { elsasIcePalacePlaceOfSolitude } from "./067-elsas-ice-palace-place-of-solitude";

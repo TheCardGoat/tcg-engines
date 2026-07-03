@@ -21,9 +21,9 @@ Treat the official gameplay guide at `https://cyberpunktcg.com/gameplay-guide` a
 ## Hard Constraints
 
 - Let card text override base rules when they conflict.
-- Win by starting your turn with at least 7 Gig Dice in your Gig area.
+- Win by starting your turn with at least 7 Gig Dice in your Gig area, before taking a new die from the fixer area.
 - Enter overtime after the last player's 7th turn. In overtime, win immediately when you hold the majority of Gig Dice.
-- Lose immediately when your deck reaches 0 cards.
+- Lose immediately if you are required to draw a card but have no cards left in your deck.
 - At the start of each turn, resolve these steps in order: ready all spent cards, draw 1 card, then gain a Gig.
 - Take exactly one die from the fixer area each turn. Leave the `d20` for last.
 - Count each die as one Gig regardless of its face value. Use die values only when an effect cares about Street Cred.
@@ -32,17 +32,18 @@ Treat the official gameplay guide at `https://cyberpunktcg.com/gameplay-guide` a
 - Prevent Units from attacking on the turn they enter the field unless an effect explicitly overrides that rule, such as `ADRENALINE` or `GO SOLO`.
 - Allow attacks only against spent rival Units or the rival directly. Do not allow attacks against ready Units.
 - Resolve each Unit's attack completely before declaring the next attack.
-- Steal 1 Gig on a successful direct attack, plus 1 additional Gig for every full 10 power on the attacking Unit.
+- On a successful direct attack, steal 0 Gigs at 0 power; otherwise steal 1 Gig plus 1 additional Gig for every full 10 power on the attacking Unit.
 - Convert a redirected direct attack into a fight. Do not steal any Gigs if a `BLOCKER` or another effect redirects or stops that direct attack.
 - Start Legends face-down in random order. Allow a Legend to pay 1 Eddie whether it is face-up or face-down.
-- Allow calling a Legend for 1 Eddie once per turn in the main phase, and once per turn in a defensive step during the rival's attack.
+- Allow calling a Legend for 1 Eddie once during your main phase on your turn, or once as a reaction when a rival Unit attacks.
 - The player going first spends their 2 leftmost Legends and doesn't ready them on their first turn.
 
 ## Glossary
 
 - `Spend / spent`: Turn a card sideways. A spent card cannot be spent again until it is readied. Eddies and Legends spend to pay costs. Units spend when they attack.
 - `Ready`: Turn a card upright. Only ready Units can attack. Ready Units cannot be attacked.
-- `Eddies`: Currency used to play cards. Pay a card's printed cost by spending that many Eddies.
+- `Eddies`: Face-down sold cards in the Eddies area. Pay card play and effect costs by spending Eddies; card text using `€$` can also be paid with Legends, but Legends are not Eddies.
+- `Cost`: Number in the top left corner of a card. Spend Eddies equal to that cost to play the card. Legends can also be spent as 1 `€$` each.
 - `Sell`: Once per turn, reveal a card with the Sell Tag (`€$`) from your hand and place it face-down in the Eddies area. A sold card pays only 1 Eddie per turn when spent, no matter how much it costs in your hand.
 - `Gig`: One die in a Gig area. Count dice, not die values, for winning.
 - `Street Cred`: Sum of the face values of the dice in your Gig area.
@@ -50,13 +51,13 @@ Treat the official gameplay guide at `https://cyberpunktcg.com/gameplay-guide` a
 - `Gig area`: Area that holds your claimed Gigs, including stolen ones. Check this area for the win condition and Street Cred.
 - `Field`: Area for Units and combat.
 - `Legend`: Crew leader card. Start face-down in a random order. Spend it for 1 Eddie while face-down or face-up. Gain its broader effects only when it is face-up unless the card says otherwise.
-- `Call a Legend`: Spend 1 Eddie to flip one face-down Legend face-up without peeking first. Do this once per turn in your main phase or once per turn in a defensive step.
+- `Call a Legend`: Spend 1 Eddie to flip one face-down Legend face-up without peeking first. Do this once during your main phase on your turn, or once as a reaction when a rival Unit attacks.
 - `Unit`: Crew member that attacks rival Units or the rival. Prevent it from attacking on the turn it is played unless an effect overrides that restriction.
 - `Lag`: Condition that all Units enter the field with. It lasts until the end of the turn. Units with Lag can't attack or activate self-spend effects.
 - `Program`: One-shot effect. Resolve it, then discard it.
 - `Gear`: Attachment for a friendly Unit or Legend. When the card moves to a different area, all equipped Gear goes with it.
 - `Play trigger`: Effect that happens as soon as you pay the card's cost.
-- `Attack trigger`: Effect that happens when the Unit attacks, before the fight or steal resolves.
+- `Attack trigger`: Effect that happens when the Unit attacks, before target declaration, rival reactions, and the fight or steal resolution.
 - `Call trigger`: Effect that happens when you flip this Legend face-up through Call a Legend.
 - `Defeated trigger`: Effect that happens when this Unit is defeated.
 - `BLOCKER`: Keyword that lets a ready Unit spend to redirect a rival's attack to itself.
@@ -64,6 +65,9 @@ Treat the official gameplay guide at `https://cyberpunktcg.com/gameplay-guide` a
 - `ADRENALINE`: Keyword that lets a Unit attack the turn it's played.
 - `QUICK`: Keyword that lets you also activate this effect (or play this Program) as a reaction when a rival Unit attacks.
 - `RAM`: Deckbuilding limit set by your three Legends. Match each card color against the total RAM of your Legends in that color.
+- `Power`: Number in the bottom-right corner of a Unit, used while attacking. Fights compare power, and direct attacks steal extra Gigs for every full 10 power.
+- `Bottom-deck`: Put cards at the bottom of your deck in any order.
+- `Trash`: Keyword meaning to put the top card of your deck into your trash area. If a number is specified, trash that many cards.
 
 ## Source
 

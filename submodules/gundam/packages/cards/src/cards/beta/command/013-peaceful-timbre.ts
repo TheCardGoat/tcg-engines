@@ -7,14 +7,17 @@ export const betaPeacefulTimbre013: CommandCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "ST02-013_p2",
-  externalId: "gundam:st02-013_p2",
-  slug: "peaceful-timbre-st02-013-p2",
+  canonicalId: "ST02-013",
+  externalIds: { bandai: "gundam:st02-013_p2" },
+  slug: "peaceful-timbre/st02-013",
   displayName: "Peaceful Timbre",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "ST02-013_p2",
   printings: [
     {
       id: "ST02-013",
+      artId: "ST02-013",
+      setCode: "ST02",
       collectorNumber: "ST02-013",
       cardNumber: "ST02-013",
       set: {
@@ -30,6 +33,8 @@ export const betaPeacefulTimbre013: CommandCard = {
     },
     {
       id: "ST02-013_p1",
+      artId: "ST02-013_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-013_p1",
       cardNumber: "ST02-013",
       set: {
@@ -45,6 +50,8 @@ export const betaPeacefulTimbre013: CommandCard = {
     },
     {
       id: "ST02-013_p2",
+      artId: "ST02-013_p2",
+      setCode: "BETA",
       collectorNumber: "ST02-013_p2",
       cardNumber: "ST02-013",
       set: {
@@ -59,6 +66,7 @@ export const betaPeacefulTimbre013: CommandCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST02-013", "ST02-013_p1", "ST02-013_p2"],
   selectedPrintingId: "ST02-013_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST02-013_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-013_p2.webp?260424",

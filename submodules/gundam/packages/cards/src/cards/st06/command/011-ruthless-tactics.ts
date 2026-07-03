@@ -7,14 +7,17 @@ export const st06RuthlessTactics011: CommandCard = {
   color: "red",
   traits: ["clan"],
   id: "ST06-011",
-  externalId: "gundam:st06-011",
-  slug: "ruthless-tactics-st06-011",
+  canonicalId: "ST06-011",
+  externalIds: { bandai: "gundam:st06-011" },
+  slug: "ruthless-tactics/st06-011",
   displayName: "Ruthless Tactics",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-011",
   printings: [
     {
       id: "ST06-011",
+      artId: "ST06-011",
+      setCode: "ST06",
       collectorNumber: "ST06-011",
       cardNumber: "ST06-011",
       set: {
@@ -30,6 +33,8 @@ export const st06RuthlessTactics011: CommandCard = {
     },
     {
       id: "ST06-011_p1",
+      artId: "ST06-011_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-011_p1",
       cardNumber: "ST06-011",
       set: {
@@ -44,6 +49,7 @@ export const st06RuthlessTactics011: CommandCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST06-011", "ST06-011_p1"],
   selectedPrintingId: "ST06-011",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-011.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-011.webp?260424",

@@ -4,6 +4,17 @@ import { drFacilierRemarkableGentlemanI18n } from "./039-dr-facilier-remarkable-
 export const drFacilierRemarkableGentleman: CharacterCard = {
   id: "BMe",
   canonicalId: "ci_BMe",
+  slug: "lorcana-ci_BMe",
+  printings: [
+    {
+      id: "set1-039",
+      artId: "set1-039",
+      setCode: "set1",
+      collectorNumber: "39",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-039"],
   cardType: "character",
   name: "Dr. Facilier",
@@ -20,7 +31,7 @@ export const drFacilierRemarkableGentleman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7c6dbcfcfb90484c9e7d5f28cee46687",
-    tcgPlayer: 508727,
+    tcgPlayer: "508727",
   },
   text: [
     {

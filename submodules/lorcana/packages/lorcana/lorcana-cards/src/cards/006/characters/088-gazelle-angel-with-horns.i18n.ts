@@ -6,9 +6,9 @@ export const gazelleAngelWithHornsI18n: Record<Languages, I18nProperties> = {
     version: "Angel with Horns",
     text: [
       {
-        title: "YOU ARE A REALLY HOT DANCER",
+        title: "YOU ARE",
         description:
-          "When you play this character, chosen character gains Evasive until the start of your next turn.",
+          "A REALLY HOT DANCER When you play this character, chosen character gains Evasive until the start of your next turn.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const gazelleAngelWithHornsI18n: Record<Languages, I18nProperties> = {
     version: "Engel mit Hörnern",
     text: [
       {
-        title: "DU BIST EIN RICHTIG HEISSER TÄNZER",
+        title: "Du bist ein richtig heißer Tänzer",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges Wendig.",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const gazelleAngelWithHornsI18n: Record<Languages, I18nProperties> = {
     version: "Ange avec des cornes",
     text: [
       {
-        title: "VOUS SAVEZ BOUGER",
+        title: "Vous savez bouger",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const gazelleAngelWithHornsI18n: Record<Languages, I18nProperties> = {
     version: "Angelo con le Corna",
     text: [
       {
-        title: "SEI UN GRAN BALLERINO",
+        title: "Sei un Gran Ballerino",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

@@ -17,9 +17,9 @@ export const bromBonesBurlyBullyI18n: Record<Languages, I18nProperties> = {
     version: "Stämmiger Raufbold",
     text: [
       {
-        title: "GROB UND UNGESTÜM",
+        title: "Grob und ungestüm",
         description:
-          "Jedes Mal, wenn dieser Charakter einen Charakter mit 2 oder weniger herausfordert, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
+          "Jedes Mal, wenn dieser Charakter einen Charakter mit 2 oder weniger {S} herausfordert, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const bromBonesBurlyBullyI18n: Record<Languages, I18nProperties> = {
     version: "Solide gaillard",
     text: [
       {
-        title: "RUDOYER",
+        title: "Rudoyer",
         description:
-          "Chaque fois que ce personnage défie un personnage ayant 2 ou moins, chaque adversaire perd 1 éclat de Lore.",
+          "Chaque fois que ce personnage défie un personnage ayant 2 {S} ou moins, chaque adversaire perd 1 éclat de Lore.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const bromBonesBurlyBullyI18n: Record<Languages, I18nProperties> = {
     version: "Robusto Bullo",
     text: [
       {
-        title: "ZUFFA",
+        title: "Zuffa",
         description:
-          "Ogni volta che questo personaggio sfida un personaggio con 2 o inferiore, ogni avversario perde 1 leggenda.",
+          "Ogni volta che questo personaggio sfida un personaggio con 2 {S} o inferiore, ogni avversario perde 1 leggenda.",
       },
     ],
   },

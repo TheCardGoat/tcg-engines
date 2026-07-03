@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { abuIllusoryPachydermI18n } from "./050-abu-illusory-pachyderm.i18n";
+
 import { vanish } from "../../../helpers/abilities/vanish";
 
 export const abuIllusoryPachyderm: CharacterCard = {
   id: "Ath",
   canonicalId: "ci_Ath",
+  slug: "lorcana-ci_Ath",
+  printings: [
+    {
+      id: "set8-050",
+      artId: "set8-050",
+      setCode: "set8",
+      collectorNumber: "50",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-050"],
   cardType: "character",
   name: "Abu",
@@ -21,7 +33,7 @@ export const abuIllusoryPachyderm: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_befc74dca10e458ba4a71a1f4ac05e7e",
-    tcgPlayer: 631384,
+    tcgPlayer: "631384",
   },
   text: [
     {

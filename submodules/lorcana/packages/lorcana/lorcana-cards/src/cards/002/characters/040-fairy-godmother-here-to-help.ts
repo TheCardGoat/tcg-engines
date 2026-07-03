@@ -4,6 +4,17 @@ import { fairyGodmotherHereToHelpI18n } from "./040-fairy-godmother-here-to-help
 export const fairyGodmotherHereToHelp: CharacterCard = {
   id: "yFu",
   canonicalId: "ci_yFu",
+  slug: "lorcana-ci_yFu",
+  printings: [
+    {
+      id: "set2-040",
+      artId: "set2-040",
+      setCode: "set2",
+      collectorNumber: "40",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-040"],
   cardType: "character",
   name: "Fairy Godmother",
@@ -21,7 +32,7 @@ export const fairyGodmotherHereToHelp: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_28f00cdb65fe48deb2f97ff979670b4b",
-    tcgPlayer: 527733,
+    tcgPlayer: "527733",
   },
   classifications: ["Storyborn", "Ally", "Fairy"],
   i18n: fairyGodmotherHereToHelpI18n,

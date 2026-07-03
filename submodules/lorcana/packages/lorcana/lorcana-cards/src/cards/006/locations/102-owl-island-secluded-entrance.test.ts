@@ -34,7 +34,18 @@ const residentTwo = createMockCharacter({
 
 const firstAction: ActionCard = {
   id: "owl-island-first-action",
+  printings: [
+    {
+      id: "owl-island-first-action",
+      artId: "owl-island-first-action",
+      setCode: "TST",
+      collectorNumber: "1",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   canonicalId: "ci_owl_island_first_action",
+  slug: "lorcana-ci_owl_island_first_action",
   cardType: "action",
   name: "First Action",
   i18n: firstActionI18n,
@@ -49,7 +60,18 @@ const firstAction: ActionCard = {
 
 const secondAction: ActionCard = {
   id: "owl-island-second-action",
+  printings: [
+    {
+      id: "owl-island-second-action",
+      artId: "owl-island-second-action",
+      setCode: "TST",
+      collectorNumber: "1",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   canonicalId: "ci_owl_island_second_action",
+  slug: "lorcana-ci_owl_island_second_action",
   cardType: "action",
   name: "Second Action",
   i18n: secondActionI18n,

@@ -4,6 +4,17 @@ import { motherGothelVainSorceressI18n } from "./064-mother-gothel-vain-sorceres
 export const motherGothelVainSorceress: CharacterCard = {
   id: "6jS",
   canonicalId: "ci_6jS",
+  slug: "lorcana-ci_6jS",
+  printings: [
+    {
+      id: "set7-064",
+      artId: "set7-064",
+      setCode: "set7",
+      collectorNumber: "64",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-064"],
   cardType: "character",
   name: "Mother Gothel",
@@ -20,7 +31,7 @@ export const motherGothelVainSorceress: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3c674103cf444a0b948e0b8be6a0e0e4",
-    tcgPlayer: 619442,
+    tcgPlayer: "619442",
   },
   text: [
     {

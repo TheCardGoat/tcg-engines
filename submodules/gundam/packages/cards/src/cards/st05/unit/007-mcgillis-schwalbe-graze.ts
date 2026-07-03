@@ -7,14 +7,17 @@ export const st05McgillisSchwalbeGraze007: UnitCard = {
   color: "white",
   traits: ["gjallarhorn"],
   id: "ST05-007",
-  externalId: "gundam:st05-007",
-  slug: "mcgillis-schwalbe-graze-st05-007",
+  canonicalId: "ST05-007",
+  externalIds: { bandai: "gundam:st05-007" },
+  slug: "mcgillis-schwalbe-graze/st05-007",
   displayName: "McGillis' Schwalbe Graze",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-007",
   printings: [
     {
       id: "ST05-007",
+      artId: "ST05-007",
+      setCode: "ST05",
       collectorNumber: "ST05-007",
       cardNumber: "ST05-007",
       set: {
@@ -30,6 +33,8 @@ export const st05McgillisSchwalbeGraze007: UnitCard = {
     },
     {
       id: "ST05-007_p1",
+      artId: "ST05-007_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-007_p1",
       cardNumber: "ST05-007",
       set: {
@@ -45,6 +50,8 @@ export const st05McgillisSchwalbeGraze007: UnitCard = {
     },
     {
       id: "ST05-007_p2",
+      artId: "ST05-007_p2",
+      setCode: "PC01A",
       collectorNumber: "ST05-007_p2",
       cardNumber: "ST05-007",
       set: {
@@ -60,6 +67,7 @@ export const st05McgillisSchwalbeGraze007: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam IRON-BLOODED ORPHANS-[PC01A]",
     },
   ],
+  reprints: ["ST05-007", "ST05-007_p1", "ST05-007_p2"],
   selectedPrintingId: "ST05-007",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-007.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-007.webp?260424",

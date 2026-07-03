@@ -4,6 +4,17 @@ import { cogsworthIlluminaryWatchmanI18n } from "./037-cogsworth-illuminary-watc
 export const cogsworthIlluminaryWatchman: CharacterCard = {
   id: "Usw",
   canonicalId: "ci_Usw",
+  slug: "lorcana-ci_Usw",
+  printings: [
+    {
+      id: "set5-037",
+      artId: "set5-037",
+      setCode: "set5",
+      collectorNumber: "37",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-037"],
   cardType: "character",
   name: "Cogsworth",
@@ -20,7 +31,7 @@ export const cogsworthIlluminaryWatchman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5004569c2e0246e8bc9014bc00c21cd1",
-    tcgPlayer: 561610,
+    tcgPlayer: "561610",
   },
   text: [
     {

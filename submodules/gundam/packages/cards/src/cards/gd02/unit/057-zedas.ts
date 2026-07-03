@@ -7,14 +7,17 @@ export const gd02Zedas057: UnitCard = {
   color: "purple",
   traits: ["ue", "vagan"],
   id: "GD02-057",
-  externalId: "gundam:gd02-057",
-  slug: "zedas-gd02-057",
+  canonicalId: "GD02-057",
+  externalIds: { bandai: "gundam:gd02-057" },
+  slug: "zedas/gd02-057",
   displayName: "Zedas",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-057",
   printings: [
     {
       id: "GD02-057",
+      artId: "GD02-057",
+      setCode: "GD02",
       collectorNumber: "GD02-057",
       cardNumber: "GD02-057",
       set: {
@@ -29,6 +32,7 @@ export const gd02Zedas057: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-057"],
   selectedPrintingId: "GD02-057",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-057.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-057.webp?260424",

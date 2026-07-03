@@ -4,6 +4,17 @@ import { diabloObedientRavenI18n } from "./049-diablo-obedient-raven.i18n";
 export const diabloObedientRaven: CharacterCard = {
   id: "kjK",
   canonicalId: "ci_kjK",
+  slug: "lorcana-ci_kjK",
+  printings: [
+    {
+      id: "set6-049",
+      artId: "set6-049",
+      setCode: "set6",
+      collectorNumber: "49",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-049"],
   cardType: "character",
   name: "Diablo",
@@ -20,7 +31,7 @@ export const diabloObedientRaven: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1419caf47da54560bbafd279ca6cfc4b",
-    tcgPlayer: 588337,
+    tcgPlayer: "588337",
   },
   text: [
     {

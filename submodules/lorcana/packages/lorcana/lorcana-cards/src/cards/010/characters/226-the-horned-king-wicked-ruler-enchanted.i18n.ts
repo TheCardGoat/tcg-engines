@@ -20,10 +20,11 @@ export const theHornedKingWickedRulerEnchantedI18n: Record<Languages, I18nProper
     version: "Boshafter Herrscher",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 {I} (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Der-gehörnte-König-Charaktere auszuspielen.)",
       },
       {
-        title: "STEHT AUF!",
+        title: "Steht auf!",
         description:
           "Jedes Mal, wenn einer deiner anderen Charaktere durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen. Wähle danach eine Karte aus deiner Hand und wirf sie ab.",
       },
@@ -34,10 +35,10 @@ export const theHornedKingWickedRulerEnchantedI18n: Record<Languages, I18nProper
     version: "Monarque maléfique",
     text: [
       {
-        title: "Alter 2",
+        title: "<Alter> 2 {I}",
       },
       {
-        title: "LEVEZ-VOUS!",
+        title: "Levez-vous!",
         description:
           "Chaque fois que l'un de vos autres personnages est banni via un défi, vous pouvez le renvoyer dans votre main, puis défausser une carte.",
       },
@@ -48,10 +49,10 @@ export const theHornedKingWickedRulerEnchantedI18n: Record<Languages, I18nProper
     version: "Sovrano Malvagio",
     text: [
       {
-        title: "Trasformazione 2",
+        title: "<Trasformazione> 2 {I}",
       },
       {
-        title: "LEVATEVI!",
+        title: "Levatevi!",
         description:
           "Ogni volta che uno dei tuoi altri personaggi viene esiliato in una sfida, puoi riprendere in mano quella carta, poi scegli e scarta una carta.",
       },

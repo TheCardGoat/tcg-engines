@@ -17,7 +17,7 @@ export const geppettoSkilledCraftsmanI18n: Record<Languages, I18nProperties> = {
     version: "Geschickter Handwerker",
     text: [
       {
-        title: "DIE SUCHE NACH INSPIRATION",
+        title: "Die Suche nach Inspiration",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du beliebig viele Gegenstandskarten von deiner Hand auswählen und abwerfen, um für jede so abgeworfene Karte 1 Legende zu sammeln.",
       },
@@ -28,7 +28,7 @@ export const geppettoSkilledCraftsmanI18n: Record<Languages, I18nProperties> = {
     version: "Artisan chevronné",
     text: [
       {
-        title: "À LA RECHERCHE D'INSPIRATION",
+        title: "À la recherche d'inspiration",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez défausser autant de cartes Objet que vous le souhaitez. Gagnez 1 éclat de Lore pour chaque carte Objet défaussée de cette façon.",
       },
@@ -39,7 +39,7 @@ export const geppettoSkilledCraftsmanI18n: Record<Languages, I18nProperties> = {
     version: "Abile Artigiano",
     text: [
       {
-        title: "IN CERCA DI ISPIRAZIONE",
+        title: "In Cerca di Ispirazione",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi scegliere e scartare un qualsiasi numero di carte oggetto per ottenere 1 leggenda per ogni carta oggetto scartata in questo modo.",
       },

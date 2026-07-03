@@ -17,7 +17,7 @@ export const jafarPowerhungryVizierI18n: Record<Languages, I18nProperties> = {
     version: "Machthungriger Wesir",
     text: [
       {
-        title: "IHR BEKOMMT SCHON, WAS EUCH ZUSTEHT",
+        title: "Ihr bekommt schon, was Euch zusteht",
         description:
           "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, füge einem Charakter deiner Wahl 1 Schaden zu.",
       },
@@ -28,7 +28,7 @@ export const jafarPowerhungryVizierI18n: Record<Languages, I18nProperties> = {
     version: "Vizir avide de pouvoir",
     text: [
       {
-        title: "TU SERAS PAYÉ LE MOMENT VENU",
+        title: "Tu seras payé le moment venu",
         description:
           "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage et infligez-lui 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const jafarPowerhungryVizierI18n: Record<Languages, I18nProperties> = {
     version: "Visir Assetato di Potere",
     text: [
       {
-        title: "AVRAI QUELLO CHE TI MERITI",
+        title: "Avrai Quello Che Ti Meriti",
         description:
           "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, infliggi 1 danno a un personaggio a tua scelta.",
       },

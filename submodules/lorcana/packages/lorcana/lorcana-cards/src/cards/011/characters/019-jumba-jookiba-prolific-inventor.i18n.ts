@@ -22,12 +22,12 @@ export const jumbaJookibaProlificInventorI18n: Record<Languages, I18nProperties>
     version: "Erfolgreicher Erfinder",
     text: [
       {
-        title: "EINLADENDE MENGE",
+        title: "Einladende Menge",
         description:
-          "Für jeden deiner Charaktere im Spiel zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jeden deiner Charaktere im Spiel zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "ICH HELFE",
+        title: "Ich helfe",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du jeglichen Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -38,12 +38,12 @@ export const jumbaJookibaProlificInventorI18n: Record<Languages, I18nProperties>
     version: "Inventeur prolifique",
     text: [
       {
-        title: "FOULE ACCUEILLANTE",
+        title: "Foule accueillante",
         description:
-          "Jouer ce personnage vous coûte 1 de moins pour chaque personnage que vous avez en jeu.",
+          "Jouer ce personnage vous coûte 1 {I} de moins pour chaque personnage que vous avez en jeu.",
       },
       {
-        title: "J'APPORTE MON AIDE",
+        title: "J'apporte mon aide",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage et lui retirer tous ses dommages.",
       },
@@ -54,12 +54,12 @@ export const jumbaJookibaProlificInventorI18n: Record<Languages, I18nProperties>
     version: "Inventore Prolifico",
     text: [
       {
-        title: "GRUPPO ACCOGLIENTE",
+        title: "Gruppo Accogliente",
         description:
-          "Per ogni personaggio che hai in gioco, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni personaggio che hai in gioco, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "STO AIUTANDO",
+        title: "Sto Aiutando",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi rimuovere tutti i danni da un personaggio a tua scelta.",
       },

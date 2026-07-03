@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { daisyDuckSpotlessFoodfighterI18n } from "./111-daisy-duck-spotless-food-fighter.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const daisyDuckSpotlessFoodfighter: CharacterCard = {
   id: "wsY",
   canonicalId: "ci_wsY",
+  slug: "lorcana-ci_wsY",
+  printings: [
+    {
+      id: "set5-111",
+      artId: "set5-111",
+      setCode: "set5",
+      collectorNumber: "111",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-111"],
   cardType: "character",
   name: "Daisy Duck",
@@ -20,7 +32,7 @@ export const daisyDuckSpotlessFoodfighter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bfe946722b9545b996eac2d8d5e13dfd",
-    tcgPlayer: 561482,
+    tcgPlayer: "561482",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Hero"],

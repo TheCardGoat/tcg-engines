@@ -6,15 +6,15 @@ export const fatCatsClubSeedyHeadquartersI18n: Record<Languages, I18nProperties>
     version: "Seedy Headquarters",
   },
   de: {
-    name: "Fat Cat's Club",
-    version: "Seedy Headquarters",
+    name: "Al Katzones Club",
+    version: "Zwielichtiges Hauptquartier",
   },
   fr: {
-    name: "Fat Cat's Club",
-    version: "Seedy Headquarters",
+    name: "Club de Catox",
+    version: "Repaire malfamé",
   },
   it: {
-    name: "Fat Cat's Club",
-    version: "Seedy Headquarters",
+    name: "Club di Gattolardo",
+    version: "Losco Quartier Generale",
   },
 };

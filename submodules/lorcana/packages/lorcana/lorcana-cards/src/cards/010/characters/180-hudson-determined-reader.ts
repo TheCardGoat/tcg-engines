@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { hudsonDeterminedReaderI18n } from "./180-hudson-determined-reader.i18n";
+
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const hudsonDeterminedReader: CharacterCard = {
   id: "4NX",
   canonicalId: "ci_4NX",
+  slug: "lorcana-ci_4NX",
+  printings: [
+    {
+      id: "set10-180",
+      artId: "set10-180",
+      setCode: "set10",
+      collectorNumber: "180",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-180"],
   cardType: "character",
   name: "Hudson",
@@ -21,7 +33,7 @@ export const hudsonDeterminedReader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_02e6e99d68464f9894c940f686132741",
-    tcgPlayer: 658746,
+    tcgPlayer: "658746",
   },
   text: [
     {

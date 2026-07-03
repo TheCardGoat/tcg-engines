@@ -4,6 +4,17 @@ import { rayaFierceProtectorI18n } from "./121-raya-fierce-protector.i18n";
 export const rayaFierceProtector: CharacterCard = {
   id: "l0K",
   canonicalId: "ci_l0K",
+  slug: "lorcana-ci_l0K",
+  printings: [
+    {
+      id: "set4-121",
+      artId: "set4-121",
+      setCode: "set4",
+      collectorNumber: "121",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-121"],
   cardType: "character",
   name: "Raya",
@@ -20,7 +31,7 @@ export const rayaFierceProtector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e79d0ba09f4342b5a7a3ffe96ebef508",
-    tcgPlayer: 550598,
+    tcgPlayer: "550598",
   },
   text: [
     {

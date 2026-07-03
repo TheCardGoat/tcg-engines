@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { wasabiAlwaysPreparedI18n } from "./158-wasabi-always-prepared.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const wasabiAlwaysPrepared: CharacterCard = {
   id: "PYV",
   canonicalId: "ci_PYV",
+  slug: "lorcana-ci_PYV",
+  printings: [
+    {
+      id: "set8-158",
+      artId: "set8-158",
+      setCode: "set8",
+      collectorNumber: "158",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-158"],
   cardType: "character",
   name: "Wasabi",
@@ -21,7 +33,7 @@ export const wasabiAlwaysPrepared: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d23689ec2d064f2c957ff6751e0a3c38",
-    tcgPlayer: 631456,
+    tcgPlayer: "631456",
   },
   text: "Support",
   classifications: ["Storyborn", "Hero", "Inventor"],

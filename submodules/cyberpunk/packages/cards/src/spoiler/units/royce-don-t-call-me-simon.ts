@@ -1,14 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerRoyceDonTCallMeSimon = {
+export const spoilerRoyceDonTCallMeSimon = defineCyberpunkCard({
   id: "960d1a34-9451-4d5d-a47f-a33bb2578b4b",
-  externalId: "cyberpunk:royce-don-t-call-me-simon",
   slug: "royce-don-t-call-me-simon",
-  name: "Royce",
-  subname: "Don't Call Me Simon",
-  displayName: "Royce - Don't Call Me Simon",
   rulesText:
     "PLAY Defeat a rival Unit with power 2 or less. If you have more ☆ (Street Cred) than a Rival, defeat a rival Unit with power 3 or less instead.",
+  subname: "Don't Call Me Simon",
+  name: "Royce",
+  displayName: "Royce - Don't Call Me Simon",
+  canonicalId: "royce-don-t-call-me-simon",
   color: "red",
   classifications: ["Ganger", "Maelstrom"],
   set: {
@@ -16,15 +17,6 @@ export const spoilerRoyceDonTCallMeSimon = {
     name: "Spoiler Set",
   },
   printNumber: "016",
-  printings: [
-    {
-      id: "396f1873-b2f0-47f0-abda-f9d9e0c20bb5",
-      collectorNumber: "016",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "396f1873-b2f0-47f0-abda-f9d9e0c20bb5",
   artist: "Mooncolony",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/016.webp",
   rarity: null,
@@ -32,7 +24,6 @@ export const spoilerRoyceDonTCallMeSimon = {
   hasSellTag: false,
   ram: 2,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 5,
   power: 4,
@@ -96,5 +87,4 @@ export const spoilerRoyceDonTCallMeSimon = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

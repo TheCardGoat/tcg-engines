@@ -20,12 +20,12 @@ export const blessedBagpipesI18n: Record<Languages, I18nProperties> = {
     name: "Heiliger Dudelsack",
     text: [
       {
-        title: "DUCK-ERBSTÜCK",
+        title: "Duck-Erbstück",
         description:
-          "Wenn du diesen Gegenstand ausspielst, darfst du die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit Stärken legen.",
+          "Wenn du diesen Gegenstand ausspielst, darfst du die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit <Stärken> legen.",
       },
       {
-        title: "SCHLACHTHYMNE",
+        title: "Schlachthymne",
         description:
           "Jedes Mal, wenn einer deiner Charaktere oder Orte, der eine Karte unter sich hat, herausgefordert wird, sammelst du 1 Legende.",
       },
@@ -35,12 +35,12 @@ export const blessedBagpipesI18n: Record<Languages, I18nProperties> = {
     name: "Cornemuse bénie",
     text: [
       {
-        title: "HÉRITAGE DES MAC PICSOU",
+        title: "Héritage des Mac Picsou",
         description:
-          "Lorsque vous jouez cet objet, vous pouvez placer la carte du dessus de votre pioche sous l'un de vos personnages ou de vos lieux ayant Boost.",
+          "Lorsque vous jouez cet objet, vous pouvez placer la carte du dessus de votre pioche sous l'un de vos personnages ou de vos lieux ayant <Boost>.",
       },
       {
-        title: "MUSIQUE DE BATAILLE",
+        title: "Musique de bataille",
         description:
           "Chaque fois que l'un de vos personnages ou de vos lieux avec une carte sous lui est défié, vous gagnez 1 éclat de Lore.",
       },
@@ -50,12 +50,12 @@ export const blessedBagpipesI18n: Record<Languages, I18nProperties> = {
     name: "Cornamusa Fortunata",
     text: [
       {
-        title: "CIMELIO DE' PAPERONI",
+        title: "Cimelio de' Paperoni",
         description:
-          "Quando giochi questo oggetto, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con Potenziamento.",
+          "Quando giochi questo oggetto, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con <Potenziamento>.",
       },
       {
-        title: "MARCIA DA GUERRA",
+        title: "Marcia da Guerra",
         description:
           "Ogni volta che uno dei tuoi personaggi o luoghi con una carta sotto di sé viene sfidato, ottieni 1 leggenda.",
       },

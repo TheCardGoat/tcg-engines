@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mulanSoldierInTrainingI18n } from "./117-mulan-soldier-in-training.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const mulanSoldierInTraining: CharacterCard = {
   id: "d6s",
   canonicalId: "ci_d6s",
+  slug: "lorcana-ci_d6s",
+  printings: [
+    {
+      id: "set2-117",
+      artId: "set2-117",
+      setCode: "set2",
+      collectorNumber: "117",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-117"],
   cardType: "character",
   name: "Mulan",
@@ -21,7 +33,7 @@ export const mulanSoldierInTraining: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ddd89c441cdd4795907313f38e85c1e7",
-    tcgPlayer: 518786,
+    tcgPlayer: "518786",
   },
   text: "Rush",
   classifications: ["Storyborn", "Hero", "Princess"],

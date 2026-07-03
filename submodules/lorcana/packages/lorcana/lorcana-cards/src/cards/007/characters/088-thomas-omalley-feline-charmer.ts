@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { thomasOmalleyFelineCharmerI18n } from "./088-thomas-omalley-feline-charmer.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const thomasOmalleyFelineCharmer: CharacterCard = {
   id: "Gg5",
   canonicalId: "ci_Gg5",
+  slug: "lorcana-ci_Gg5",
+  printings: [
+    {
+      id: "set7-088",
+      artId: "set7-088",
+      setCode: "set7",
+      collectorNumber: "88",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-088"],
   cardType: "character",
   name: "Thomas O'Malley",
@@ -21,7 +33,7 @@ export const thomasOmalleyFelineCharmer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_48128e1a036e499a9822cb5bf2be18de",
-    tcgPlayer: 618147,
+    tcgPlayer: "618147",
   },
   text: "Ward",
   classifications: ["Storyborn", "Hero"],

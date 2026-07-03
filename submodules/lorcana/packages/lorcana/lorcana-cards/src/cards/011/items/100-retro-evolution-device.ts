@@ -4,6 +4,17 @@ import { retroEvolutionDeviceI18n } from "./100-retro-evolution-device.i18n";
 export const retroEvolutionDevice: ItemCard = {
   id: "WNZ",
   canonicalId: "ci_WNZ",
+  slug: "lorcana-ci_WNZ",
+  printings: [
+    {
+      id: "set11-100",
+      artId: "set11-100",
+      setCode: "set11",
+      collectorNumber: "100",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-100"],
   cardType: "item",
   name: "Retro Evolution Device",
@@ -16,7 +27,7 @@ export const retroEvolutionDevice: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a7afac820f8249d9896e3cc693fe0094",
-    tcgPlayer: 675393,
+    tcgPlayer: "675393",
   },
   text: [
     {

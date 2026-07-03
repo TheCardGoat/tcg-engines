@@ -7,14 +7,17 @@ export const st06SchoolgirlAndSmuggler012: CommandCard = {
   color: "green",
   traits: ["-"],
   id: "ST06-012",
-  externalId: "gundam:st06-012",
-  slug: "schoolgirl-and-smuggler-st06-012",
+  canonicalId: "ST06-012",
+  externalIds: { bandai: "gundam:st06-012" },
+  slug: "schoolgirl-and-smuggler/st06-012",
   displayName: "Schoolgirl and Smuggler",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-012",
   printings: [
     {
       id: "ST06-012",
+      artId: "ST06-012",
+      setCode: "ST06",
       collectorNumber: "ST06-012",
       cardNumber: "ST06-012",
       set: {
@@ -30,6 +33,8 @@ export const st06SchoolgirlAndSmuggler012: CommandCard = {
     },
     {
       id: "ST06-012_p1",
+      artId: "ST06-012_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-012_p1",
       cardNumber: "ST06-012",
       set: {
@@ -44,6 +49,7 @@ export const st06SchoolgirlAndSmuggler012: CommandCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST06-012", "ST06-012_p1"],
   selectedPrintingId: "ST06-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-012.webp?260424",

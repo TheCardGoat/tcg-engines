@@ -17,7 +17,7 @@ export const bernardBrandnewAgentI18n: Record<Languages, I18nProperties> = {
     version: "Frischgebackener Agent",
     text: [
       {
-        title: "ICH SCHAU MICH MAL EIN BISSCHEN UM",
+        title: "Ich schau mich mal ein bisschen um",
         description:
           "Am Ende deines Zuges, wenn dieser Charakter erschöpft ist, darfst du einen deiner anderen Charaktere wählen und bereit machen.",
       },
@@ -28,9 +28,9 @@ export const bernardBrandnewAgentI18n: Record<Languages, I18nProperties> = {
     version: "Tout nouvel agent",
     text: [
       {
-        title: "JE VAIS VOIR CE QU'IL EN EST À",
+        title: "Je vais voir ce qu'il en est",
         description:
-          "la fin de votre tour, si ce personnage est épuisé, vous pouvez choisir et redresser l'un de vos autres personnages.",
+          "À la fin de votre tour, si ce personnage est épuisé, vous pouvez choisir et redresser l'un de vos autres personnages.",
       },
     ],
   },
@@ -39,7 +39,7 @@ export const bernardBrandnewAgentI18n: Record<Languages, I18nProperties> = {
     version: "Agente Novello",
     text: [
       {
-        title: "VADO A ISPEZIONARE",
+        title: "Vado a Ispezionare",
         description:
           "Alla fine del tuo turno, se questo personaggio è impegnato, puoi preparare uno dei tuoi altri personaggi a tua scelta.",
       },

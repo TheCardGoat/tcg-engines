@@ -23,7 +23,9 @@ function createMockActionCard(params: {
 }): ActionCard {
   return {
     id: params.id,
+    printings: [{ id: params.id, artId: params.id, setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
     canonicalId: `ci_${params.id}`,
+    slug: `lorcana-ci_${params.id}`,
     cardType: "action",
     name: params.name,
     cost: params.cost,
@@ -389,6 +391,109 @@ describe("canPlayCard — Shift with discard-only cost (no ink available)", () =
     });
 
     expect(engine.asPlayerOne().canPlayCard(devotedHeraldLike)).toBe(false);
+  });
+});
+
+describe("deck-bottom shift alternative costs", () => {
+  const shiftBase = createMockCharacter({
+    id: "deck-bottom-shift-base",
+    name: "Shift Base",
+    cost: 2,
+  });
+
+  const deckBottomShiftCharacter = createMockCharacter({
+    id: "deck-bottom-shift-character",
+    name: "Shift Base",
+    version: "Deck Bottom Shifter",
+    cost: 7,
+    abilities: [
+      {
+        id: "deck-bottom-shift-keyword",
+        keyword: "Shift",
+        type: "keyword",
+        shiftTarget: "Shift Base",
+        cost: { ink: 5 },
+        text: "Shift 5",
+      },
+      {
+        id: "deck-bottom-shift-alternative-cost",
+        type: "action",
+        alternativeCost: "put-5-character-cards-on-deck-bottom-to-shift",
+        text: "You may put 5 character cards from your discard on the bottom of your deck to shift this character for free.",
+        effect: {
+          type: "optional",
+          chooser: "CONTROLLER",
+          effect: {
+            type: "put-on-bottom",
+            target: {
+              selector: "chosen",
+              count: 5,
+              owner: "you",
+              zones: ["discard"],
+              cardTypes: ["character"],
+            },
+          },
+        },
+      },
+    ],
+  });
+
+  const discardCharacters = Array.from({ length: 5 }, (_, index) =>
+    createMockCharacter({
+      id: `deck-bottom-shift-discard-${index + 1}`,
+      name: `Deck Bottom Shift Discard ${index + 1}`,
+      cost: 1,
+    }),
+  );
+
+  it("shifts for free by putting five character cards from discard on the bottom of the deck", () => {
+    const engine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [deckBottomShiftCharacter],
+      play: [shiftBase],
+      discard: discardCharacters,
+      inkwell: 0,
+      deck: 2,
+    });
+    const shiftTarget = engine.findCardInstanceId(shiftBase, "play", PLAYER_ONE);
+    const deckBottomTargets = discardCharacters.map((card) =>
+      engine.findCardInstanceId(card, "discard", PLAYER_ONE),
+    );
+
+    expect(
+      engine.asPlayerOne().playCard(deckBottomShiftCharacter, {
+        cost: { cost: "shift", shiftTarget, deckBottomTargets },
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(engine.asPlayerOne().getCardZone(deckBottomShiftCharacter)).toBe("play");
+    for (const discardCharacter of discardCharacters) {
+      expect(engine.asPlayerOne().getCardZone(discardCharacter)).toBe("deck");
+    }
+  });
+
+  it("rejects the deck-bottom shift alternative cost unless exactly five cards are selected", () => {
+    const engine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [deckBottomShiftCharacter],
+      play: [shiftBase],
+      discard: discardCharacters,
+      inkwell: 0,
+      deck: 2,
+    });
+    const shiftTarget = engine.findCardInstanceId(shiftBase, "play", PLAYER_ONE);
+    const deckBottomTargets = discardCharacters
+      .slice(0, 4)
+      .map((card) => engine.findCardInstanceId(card, "discard", PLAYER_ONE));
+
+    expect(
+      engine.asPlayerOne().playCard(deckBottomShiftCharacter, {
+        cost: { cost: "shift", shiftTarget, deckBottomTargets },
+      }),
+    ).toEqual(
+      expect.objectContaining({
+        success: false,
+        errorCode: "INVALID_DECK_BOTTOM_SHIFT_TARGET_COUNT",
+      }),
+    );
   });
 });
 

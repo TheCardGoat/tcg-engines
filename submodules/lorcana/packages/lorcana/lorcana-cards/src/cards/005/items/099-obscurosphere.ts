@@ -4,6 +4,17 @@ import { obscurosphereI18n } from "./099-obscurosphere.i18n";
 export const obscurosphere: ItemCard = {
   id: "1rv",
   canonicalId: "ci_1rv",
+  slug: "lorcana-ci_1rv",
+  printings: [
+    {
+      id: "set5-099",
+      artId: "set5-099",
+      setCode: "set5",
+      collectorNumber: "99",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-099"],
   cardType: "item",
   name: "Obscurosphere",
@@ -16,7 +27,7 @@ export const obscurosphere: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_20513d1b0b8947e7b18e967292e9fb23",
-    tcgPlayer: 561171,
+    tcgPlayer: "561171",
   },
   text: [
     {

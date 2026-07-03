@@ -16,7 +16,7 @@ export const baymaxLowBatteryI18n: Record<Languages, I18nProperties> = {
     version: "Niedriger Akkustand",
     text: [
       {
-        title: "SCHHHHH",
+        title: "Schhhhh",
         description: "Dieser Charakter kommt erschöpft ins Spiel.",
       },
     ],
@@ -26,7 +26,7 @@ export const baymaxLowBatteryI18n: Record<Languages, I18nProperties> = {
     version: "Batterie faible",
     text: [
       {
-        title: "PSSSHH",
+        title: "Pssshh",
         description: "Ce personnage entre en jeu épuisé.",
       },
     ],
@@ -36,7 +36,7 @@ export const baymaxLowBatteryI18n: Record<Languages, I18nProperties> = {
     version: "Batteria Scarica",
     text: [
       {
-        title: "SHHHHH",
+        title: "Shhhhh",
         description: "Questo personaggio entra in gioco impegnato.",
       },
     ],

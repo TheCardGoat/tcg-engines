@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { captainHookThePirateKingI18n } from "./109-captain-hook-the-pirate-king.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const captainHookThePirateKing: CharacterCard = {
   id: "3AG",
   canonicalId: "ci_dkw",
+  slug: "lorcana-ci_dkw",
+  printings: [
+    {
+      id: "set8-109",
+      artId: "set8-109",
+      setCode: "set8",
+      collectorNumber: "109",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-109"],
   cardType: "character",
   name: "Captain Hook",
@@ -21,7 +33,7 @@ export const captainHookThePirateKing: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0a53330fb9424adcab9e92d04aa428a0",
-    tcgPlayer: 632251,
+    tcgPlayer: "632251",
   },
   text: [
     {
@@ -30,7 +42,7 @@ export const captainHookThePirateKing: CharacterCard = {
     {
       title: "GIVE 'EM ALL YOU GOT!",
       description:
-        "Once during your turn, whenever an opposing character takes damage, your Pirate characters get +2 {S} and gain Resist +2 this turn.",
+        "Once during your turn, whenever an opposing character is damaged, your Pirate characters get +2 {S} and gain Resist +2 this turn.",
     },
   ],
   classifications: ["Floodborn", "Villain", "King", "Pirate", "Captain"],

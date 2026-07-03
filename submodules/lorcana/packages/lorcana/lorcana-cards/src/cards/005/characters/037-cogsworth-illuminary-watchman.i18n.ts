@@ -17,9 +17,9 @@ export const cogsworthIlluminaryWatchmanI18n: Record<Languages, I18nProperties> 
     version: "Uhralter Wächter des Illuminariums",
     text: [
       {
-        title: "ZEIT, SICH ZU BEWEGEN!",
+        title: "Zeit, sich zu bewegen!",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Rasant. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug <Rasant>. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const cogsworthIlluminaryWatchmanI18n: Record<Languages, I18nProperties> 
     version: "Gardien de l'Illuminarium",
     text: [
       {
-        title: "IL FAUT ARRÊTER ÇA!",
+        title: "Il faut arrêter ça!",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne Charge pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Charge> pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const cogsworthIlluminaryWatchmanI18n: Record<Languages, I18nProperties> 
     version: "Sentinella dell'Illuminarium",
     text: [
       {
-        title: "È ORA DI MUOVERSI!",
+        title: "È ora di Muoversi!",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene Lesto per questo turno. (Può sfidare nel turno in cui viene giocato.)",
+          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)",
       },
     ],
   },

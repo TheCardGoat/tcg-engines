@@ -4,6 +4,17 @@ import { sarabiProtectingThePrideI18n } from "./012-sarabi-protecting-the-pride.
 export const sarabiProtectingThePride: CharacterCard = {
   id: "EYo",
   canonicalId: "ci_EYo",
+  slug: "lorcana-ci_EYo",
+  printings: [
+    {
+      id: "set11-012",
+      artId: "set11-012",
+      setCode: "set11",
+      collectorNumber: "12",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-012"],
   cardType: "character",
   name: "Sarabi",
@@ -20,7 +31,7 @@ export const sarabiProtectingThePride: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7820a5ea1cc44b97b4b5aeb89fc1882a",
-    tcgPlayer: 676187,
+    tcgPlayer: "676187",
   },
   text: [
     {

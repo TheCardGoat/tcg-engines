@@ -2,7 +2,7 @@ import type { I18nProperties, Languages } from "@tcg/lorcana-types";
 
 export const cantHoldItBackAnymoreEnchantedI18n: Record<Languages, I18nProperties> = {
   en: {
-    name: "Can't Hold it Back Anymore",
+    name: "Can't Hold It Back Anymore",
     text: "Exert chosen opposing character. Move all damage counters from all other characters to that character.",
   },
   de: {

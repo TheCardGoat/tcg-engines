@@ -4,6 +4,17 @@ import { annaSoothingSisterI18n } from "./050-anna-soothing-sister.i18n";
 export const annaSoothingSister: CharacterCard = {
   id: "5xM",
   canonicalId: "ci_SGl",
+  slug: "lorcana-ci_SGl",
+  printings: [
+    {
+      id: "set11-050",
+      artId: "set11-050",
+      setCode: "set11",
+      collectorNumber: "50",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-050"],
   cardType: "character",
   name: "Anna",
@@ -20,7 +31,7 @@ export const annaSoothingSister: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_862f8b58a6e247cd865509856286449e",
-    tcgPlayer: 677160,
+    tcgPlayer: "677160",
   },
   text: [
     {
@@ -82,13 +93,17 @@ export const annaSoothingSister: CharacterCard = {
               type: "gain-lore",
               amount: {
                 type: "lore-value-of",
-                target: { ref: "previous-target" },
+                target: {
+                  ref: "previous-target",
+                },
               },
               target: "CONTROLLER",
             },
             {
               type: "put-on-bottom",
-              target: { ref: "previous-target" },
+              target: {
+                ref: "previous-target",
+              },
             },
           ],
         },

@@ -4,6 +4,17 @@ import { whiteRabbitRoyalHeraldI18n } from "./043-white-rabbit-royal-herald.i18n
 export const whiteRabbitRoyalHerald: CharacterCard = {
   id: "QPW",
   canonicalId: "ci_QPW",
+  slug: "lorcana-ci_QPW",
+  printings: [
+    {
+      id: "set5-043",
+      artId: "set5-043",
+      setCode: "set5",
+      collectorNumber: "43",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-043"],
   cardType: "character",
   name: "White Rabbit",
@@ -21,7 +32,7 @@ export const whiteRabbitRoyalHerald: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_3cc55696a89340ceb63f0ad739644c17",
-    tcgPlayer: 561166,
+    tcgPlayer: "561166",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: whiteRabbitRoyalHeraldI18n,

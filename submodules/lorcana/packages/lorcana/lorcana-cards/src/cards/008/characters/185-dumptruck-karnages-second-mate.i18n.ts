@@ -16,7 +16,7 @@ export const dumptruckKarnagesSecondMateI18n: Record<Languages, I18nProperties> 
     version: "Kanailles Zweiter Offizier",
     text: [
       {
-        title: "LASS MICH MAL RAN",
+        title: "Lass mich mal ran",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.",
       },
@@ -27,7 +27,7 @@ export const dumptruckKarnagesSecondMateI18n: Record<Languages, I18nProperties> 
     version: "Contremaître de Don Carnage",
     text: [
       {
-        title: "LAISSE-LES MOI",
+        title: "Laisse-les moi",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui infliger 1 dommage.",
       },
@@ -38,7 +38,7 @@ export const dumptruckKarnagesSecondMateI18n: Record<Languages, I18nProperties> 
     version: "Secondo in Comando di Massacre",
     text: [
       {
-        title: "LASCIALI A ME",
+        title: "Lasciali a Me",
         description:
           "Quando giochi questo personaggio, puoi infliggere 1 danno a un personaggio a tua scelta.",
       },

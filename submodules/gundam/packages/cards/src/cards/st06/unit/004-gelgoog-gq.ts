@@ -7,14 +7,17 @@ export const st06GelgoogGq004: UnitCard = {
   color: "red",
   traits: ["zeon"],
   id: "ST06-004",
-  externalId: "gundam:st06-004",
-  slug: "gelgoog-gq-st06-004",
+  canonicalId: "ST06-004",
+  externalIds: { bandai: "gundam:st06-004" },
+  slug: "gelgoog-gq/st06-004",
   displayName: "Gelgoog (GQ)",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-004",
   printings: [
     {
       id: "ST06-004",
+      artId: "ST06-004",
+      setCode: "ST06",
       collectorNumber: "ST06-004",
       cardNumber: "ST06-004",
       set: {
@@ -30,6 +33,8 @@ export const st06GelgoogGq004: UnitCard = {
     },
     {
       id: "ST06-004_p1",
+      artId: "ST06-004_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-004_p1",
       cardNumber: "ST06-004",
       set: {
@@ -44,6 +49,7 @@ export const st06GelgoogGq004: UnitCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST06-004", "ST06-004_p1"],
   selectedPrintingId: "ST06-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-004.webp?260424",

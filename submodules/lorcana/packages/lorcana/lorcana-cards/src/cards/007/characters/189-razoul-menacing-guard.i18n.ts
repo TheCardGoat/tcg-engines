@@ -17,7 +17,7 @@ export const razoulMenacingGuardI18n: Record<Languages, I18nProperties> = {
     version: "Bedrohliche Wache",
     text: [
       {
-        title: "ICH HABE STRIKTE ANWEISUNGEN VON DSCHAFAR",
+        title: "Ich habe strikte Anweisungen von Dschafar",
         description:
           "Wenn du diesen Charakter ausspielst, falls du einen Dschafar-Charakter im Spiel hast, darfst du einen Gegenstand deiner Wahl verbannen.",
       },
@@ -28,7 +28,7 @@ export const razoulMenacingGuardI18n: Record<Languages, I18nProperties> = {
     version: "Garde menaçant",
     text: [
       {
-        title: "JE NE REÇOIS MES ORDRES QUE DE JAFAR",
+        title: "Je ne reçois mes ordres que de Jafar",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un personnage Jafar en jeu, vous pouvez choisir un objet et le bannir.",
       },
@@ -39,7 +39,7 @@ export const razoulMenacingGuardI18n: Record<Languages, I18nProperties> = {
     version: "Guardia Minacciosa",
     text: [
       {
-        title: "L'ORDINE MI È STATO DATO DA JAFAR",
+        title: "L'Ordine Mi È Stato Dato da Jafar",
         description:
           "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Jafar, puoi esiliare un oggetto a tua scelta.",
       },

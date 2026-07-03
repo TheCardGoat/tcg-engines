@@ -17,7 +17,7 @@ export const magicaDeSpellCruelSorceressI18n: Record<Languages, I18nProperties> 
     version: "Grausame Hexe",
     text: [
       {
-        title: "MIT DER MACHT SPIELEN",
+        title: "Mit der Macht spielen",
         description:
           "Wenn du im Zug einer gegnerischen Person 1 oder mehr Karten abwerfen müsstest, musst du keine Karten abwerfen.",
       },
@@ -28,7 +28,7 @@ export const magicaDeSpellCruelSorceressI18n: Record<Languages, I18nProperties> 
     version: "Cruelle sorcière",
     text: [
       {
-        title: "JOUER AVEC LE FEU",
+        title: "Jouer avec le feu",
         description:
           "Durant le tour de vos adversaires, si un effet devait vous faire défausser une ou plusieurs cartes de votre main, vous n'en défaussez aucune.",
       },
@@ -39,7 +39,7 @@ export const magicaDeSpellCruelSorceressI18n: Record<Languages, I18nProperties> 
     version: "Crudele Incantatrice",
     text: [
       {
-        title: "GIOCARE CON IL POTERE",
+        title: "Giocare con il Potere",
         description:
           "Durante il turno degli avversari, se un effetto ti farebbe scartare una o più carte dalla tua mano, non scartarne.",
       },

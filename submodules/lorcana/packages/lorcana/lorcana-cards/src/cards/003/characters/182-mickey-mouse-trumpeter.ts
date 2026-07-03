@@ -4,6 +4,17 @@ import { mickeyMouseTrumpeterI18n } from "./182-mickey-mouse-trumpeter.i18n";
 export const mickeyMouseTrumpeter: CharacterCard = {
   id: "hh8",
   canonicalId: "ci_gBS",
+  slug: "lorcana-ci_gBS",
+  printings: [
+    {
+      id: "set3-182",
+      artId: "set3-182",
+      setCode: "set3",
+      collectorNumber: "182",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-182", "set9-172"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseTrumpeter: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_631c3f90c74b4c0cabded03d2b07f85b",
-    tcgPlayer: 650106,
+    tcgPlayer: "650106",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { energyBlastI18n } from "./131-energy-blast.i18n";
 export const energyBlast: ActionCard = {
   id: "uDQ",
   canonicalId: "ci_uDQ",
+  slug: "lorcana-ci_uDQ",
+  printings: [
+    {
+      id: "set6-131",
+      artId: "set6-131",
+      setCode: "set6",
+      collectorNumber: "131",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-131"],
   cardType: "action",
   name: "Energy Blast",
@@ -16,7 +27,7 @@ export const energyBlast: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d65c18ee25cd417bbb2c14e01f2a69a5",
-    tcgPlayer: 591982,
+    tcgPlayer: "591982",
   },
   text: "Banish chosen character. Draw a card.",
   abilities: [

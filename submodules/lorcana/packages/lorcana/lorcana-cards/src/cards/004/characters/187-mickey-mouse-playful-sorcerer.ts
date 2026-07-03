@@ -1,12 +1,24 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMousePlayfulSorcererI18n } from "./187-mickey-mouse-playful-sorcerer.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const mickeyMousePlayfulSorcerer: CharacterCard = {
   id: "QEb",
-  canonicalId: "ci_mJq",
-  reprints: ["set4-187"],
+  canonicalId: "ci_QEb",
+  slug: "lorcana-ci_QEb",
+  printings: [
+    {
+      id: "set4-187",
+      artId: "set4-187",
+      setCode: "set4",
+      collectorNumber: "187",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set4-d23-007", "set4-187"],
   cardType: "character",
   name: "Mickey Mouse",
   version: "Playful Sorcerer",
@@ -21,8 +33,7 @@ export const mickeyMousePlayfulSorcerer: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_bd9957831e61475fa527ff77c2976f40",
-    tcgPlayer: 544485,
+    lorcast: "crd_db6db54405ff449ba819ed521fae7df0",
   },
   text: [
     {

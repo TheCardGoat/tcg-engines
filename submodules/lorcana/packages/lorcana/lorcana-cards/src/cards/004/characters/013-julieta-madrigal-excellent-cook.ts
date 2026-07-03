@@ -4,6 +4,17 @@ import { julietaMadrigalExcellentCookI18n } from "./013-julieta-madrigal-excelle
 export const julietaMadrigalExcellentCook: CharacterCard = {
   id: "8gG",
   canonicalId: "ci_YPQ",
+  slug: "lorcana-ci_YPQ",
+  printings: [
+    {
+      id: "set4-013",
+      artId: "set4-013",
+      setCode: "set4",
+      collectorNumber: "13",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-013", "set9-018"],
   cardType: "character",
   name: "Julieta Madrigal",
@@ -20,7 +31,7 @@ export const julietaMadrigalExcellentCook: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e0516a7bb03e48249017bd27b84a9d92",
-    tcgPlayer: 649966,
+    tcgPlayer: "649966",
   },
   text: [
     {
@@ -40,7 +51,10 @@ export const julietaMadrigalExcellentCook: CharacterCard = {
             chooser: "CONTROLLER",
             effect: {
               type: "remove-damage",
-              amount: { type: "up-to", value: 2 },
+              amount: {
+                type: "up-to",
+                value: 2,
+              },
               target: {
                 selector: "chosen",
                 count: 1,

@@ -62,12 +62,14 @@ export const CONDITION_VARIANT_TYPES = [
   "opponent-has-damaged-character",
   "or",
   "play-context",
+  "played-card-has-keyword",
   "put-card-under-any-this-turn",
   "put-card-under-self-this-turn",
   "resource-count",
   "returned-card-has-classification",
   "returned-card-is-named",
   "returned-card-is-princess",
+  "revealed-has-classification",
   "revealed-is-card-type",
   "revealed-is-character-named",
   "revealed-matches-chosen-name",
@@ -807,6 +809,16 @@ function evaluateResourceCountCondition(
             total + ctx.framework.zones.getCards({ zone: "inkwell", playerId }).length,
           0,
         );
+      case "ready-cards-in-inkwell":
+        return playerIds.reduce((total, playerId) => {
+          const inkwellCards = ctx.framework.zones.getCards({ zone: "inkwell", playerId });
+          return (
+            total +
+            inkwellCards.filter(
+              (cardId) => ctx.cards.require(cardId as CardInstanceId).meta?.state !== "exerted",
+            ).length
+          );
+        }, 0);
       case "cards-in-discard":
         return playerIds.reduce(
           (total, playerId) =>
@@ -934,6 +946,23 @@ export function evaluateCondition(
         ctx.cardPlayed,
         ctx.resolutionInput?.eventSnapshot,
       );
+
+    case "played-card-has-keyword": {
+      const playedCardId =
+        ctx.resolutionInput?.eventSnapshot?.triggerSourceCardId ?? ctx.cardPlayed?.cardId;
+      if (!playedCardId) {
+        return false;
+      }
+      const playedCardDef = ctx.cards.getDefinition(playedCardId);
+      const keyword = condition.keyword.toLocaleLowerCase();
+      return (playedCardDef?.abilities ?? []).some(
+        (ability) =>
+          typeof ability === "object" &&
+          ability !== null &&
+          "keyword" in ability &&
+          String((ability as { keyword?: unknown }).keyword).toLocaleLowerCase() === keyword,
+      );
+    }
 
     case "used-shift":
       return (
@@ -1179,6 +1208,25 @@ export function evaluateCondition(
         return false;
       }
       return cardHasName(revealedDef, expectedName);
+    }
+
+    case "revealed-has-classification": {
+      const revealedCardId = ctx.resolutionInput?.eventSnapshot?.revealedCardIds?.[0] as
+        | CardInstanceId
+        | undefined;
+      if (!revealedCardId) {
+        return false;
+      }
+      const revealedDef = ctx.cards.getDefinition(revealedCardId);
+      const expectedClassification =
+        "classification" in condition ? condition.classification : undefined;
+      if (!revealedDef || typeof expectedClassification !== "string") {
+        return false;
+      }
+      return (revealedDef.classifications ?? []).some(
+        (classification) =>
+          classification.toLocaleLowerCase() === expectedClassification.toLocaleLowerCase(),
+      );
     }
 
     case "is-exerted":

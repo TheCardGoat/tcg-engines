@@ -16,7 +16,7 @@ export const launchpadExceptionalPilotI18n: Record<Languages, I18nProperties> = 
     version: "Außergewöhnlicher Pilot",
     text: [
       {
-        title: "NICHT AUF DER KARTE",
+        title: "Nicht auf der Karte",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Ort deiner Wahl verbannen.",
       },
@@ -27,7 +27,7 @@ export const launchpadExceptionalPilotI18n: Record<Languages, I18nProperties> = 
     version: "Pilote d'exception",
     text: [
       {
-        title: "PAS SUR LA CARTE",
+        title: "Pas sur la carte",
         description: "Lorsque vous jouez ce personnage, vous pouvez choisir un lieu et le bannir.",
       },
     ],
@@ -37,7 +37,7 @@ export const launchpadExceptionalPilotI18n: Record<Languages, I18nProperties> = 
     version: "Pilota Eccezionale",
     text: [
       {
-        title: "OLTRE LA MAPPA",
+        title: "Oltre la Mappa",
         description: "Quando giochi questo personaggio, puoi esiliare un luogo a tua scelta.",
       },
     ],

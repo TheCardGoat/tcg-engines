@@ -4,6 +4,17 @@ import { nutsyVultureHenchmanI18n } from "./118-nutsy-vulture-henchman.i18n";
 export const nutsyVultureHenchman: CharacterCard = {
   id: "RJ7",
   canonicalId: "ci_RJ7",
+  slug: "lorcana-ci_RJ7",
+  printings: [
+    {
+      id: "set3-118",
+      artId: "set3-118",
+      setCode: "set3",
+      collectorNumber: "118",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-118"],
   cardType: "character",
   name: "Nutsy",
@@ -21,7 +32,7 @@ export const nutsyVultureHenchman: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_d9f88c1c25a1490f9cac1cef82b51219",
-    tcgPlayer: 537940,
+    tcgPlayer: "537940",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: nutsyVultureHenchmanI18n,

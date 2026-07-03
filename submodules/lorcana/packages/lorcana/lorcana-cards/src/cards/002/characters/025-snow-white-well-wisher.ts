@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { snowWhiteWellWisherI18n } from "./025-snow-white-well-wisher.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const snowWhiteWellWisher: CharacterCard = {
-  id: "iql",
+  id: "qiq",
   canonicalId: "ci_IGd",
+  slug: "lorcana-ci_IGd",
+  printings: [
+    {
+      id: "set2-025",
+      artId: "set2-025",
+      setCode: "set2",
+      collectorNumber: "25",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-025"],
   cardType: "character",
   name: "Snow White",
@@ -21,7 +33,7 @@ export const snowWhiteWellWisher: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e97e4b9894fe4c9798b0d925092d3eea",
-    tcgPlayer: 527799,
+    tcgPlayer: "527799",
   },
   text: [
     {

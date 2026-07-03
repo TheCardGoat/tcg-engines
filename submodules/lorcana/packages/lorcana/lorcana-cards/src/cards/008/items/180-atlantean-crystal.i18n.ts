@@ -15,9 +15,9 @@ export const atlanteanCrystalI18n: Record<Languages, I18nProperties> = {
     name: "Atlantischer Kristall",
     text: [
       {
-        title: "SCHÜTZENDES LICHT,",
+        title: "Schützendes Licht",
         description:
-          "2 — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Robust +2 und Unterstützen. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2. Jedes Mal, wenn der Charakter erkundet, darfst du seine in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "{E}, 2 {I} — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Robust> +2 und <Unterstützen>. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2. Jedes Mal, wenn der Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const atlanteanCrystalI18n: Record<Languages, I18nProperties> = {
     name: "Cristal atlante",
     text: [
       {
-        title: "LUMIÈRE PROTECTRICE,",
+        title: "Lumière protectrice",
         description:
-          "2 — Choisissez un personnage qui gagne Résistance +2 et Soutien jusqu'au début de votre prochain tour. (Les dommages qui lui sont infligés sont réduits de 2. Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez ajouter sa à celle d'un autre personnage au choix pour le reste de ce tour.)",
+          "{E}, 2 {I} — Choisissez un personnage qui gagne <Résistance> +2 et <Soutien> jusqu'au début de votre prochain tour. (Les dommages qui lui sont infligés sont réduits de 2. Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const atlanteanCrystalI18n: Record<Languages, I18nProperties> = {
     name: "Cristallo Atlantidese",
     text: [
       {
-        title: "LUCE PROTETTIVA, 2",
+        title: "Luce Protettiva",
         description:
-          "— Un personaggio a tua scelta ottiene Resistere +2 e Aiutante fino all'inizio del tuo prossimo turno. (Il danno che gli viene inflitto è ridotto di 2. Ogni volta che va all'avventura, puoi aggiungere la sua alla di un altro personaggio a tua scelta per questo turno.)",
+          "{E}, 2 {I} — Un personaggio a tua scelta ottiene <Resistere> +2 e <Aiutante> fino all'inizio del tuo prossimo turno. (Il danno che gli viene inflitto è ridotto di 2. Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
     ],
   },

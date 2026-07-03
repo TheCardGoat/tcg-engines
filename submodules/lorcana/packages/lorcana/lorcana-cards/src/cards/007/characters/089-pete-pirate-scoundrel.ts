@@ -4,6 +4,17 @@ import { petePirateScoundrelI18n } from "./089-pete-pirate-scoundrel.i18n";
 export const petePirateScoundrel: CharacterCard = {
   id: "4mp",
   canonicalId: "ci_4mp",
+  slug: "lorcana-ci_4mp",
+  printings: [
+    {
+      id: "set7-089",
+      artId: "set7-089",
+      setCode: "set7",
+      collectorNumber: "89",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-089"],
   cardType: "character",
   name: "Pete",
@@ -19,7 +30,7 @@ export const petePirateScoundrel: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6ff1b412a0b3492ea86308a9f41842b8",
-    tcgPlayer: 618703,
+    tcgPlayer: "618703",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { theNephewsPiggyBankI18n } from "./044-the-nephews-piggy-bank.i18n";
 export const theNephewsPiggyBank: ItemCard = {
   id: "N2m",
   canonicalId: "ci_N2m",
+  slug: "lorcana-ci_N2m",
+  printings: [
+    {
+      id: "set8-044",
+      artId: "set8-044",
+      setCode: "set8",
+      collectorNumber: "44",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-044"],
   cardType: "item",
   name: "The Nephews' Piggy Bank",
@@ -15,7 +26,7 @@ export const theNephewsPiggyBank: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_69db4cb0362b4673aeee6d9dea53f23f",
-    tcgPlayer: 631335,
+    tcgPlayer: "631335",
   },
   text: [
     {

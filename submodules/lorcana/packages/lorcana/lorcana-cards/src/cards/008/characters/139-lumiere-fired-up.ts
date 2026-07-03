@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { lumiereFiredUpI18n } from "./139-lumiere-fired-up.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const lumiereFiredUp: CharacterCard = {
   id: "Q3Y",
   canonicalId: "ci_Q3Y",
+  slug: "lorcana-ci_Q3Y",
+  printings: [
+    {
+      id: "set8-139",
+      artId: "set8-139",
+      setCode: "set8",
+      collectorNumber: "139",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-139"],
   cardType: "character",
   name: "Lumiere",
@@ -14,7 +26,7 @@ export const lumiereFiredUp: CharacterCard = {
   franchise: "Beauty and the Beast",
   set: "008",
   cardNumber: 139,
-  rarity: "super_rare",
+  rarity: "common",
   cost: 5,
   strength: 4,
   willpower: 3,
@@ -22,14 +34,14 @@ export const lumiereFiredUp: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_29af9e5b5190472eaa2fb7e637fa3050",
-    tcgPlayer: 631689,
+    tcgPlayer: "631689",
   },
   text: [
     {
       title: "Shift 3",
     },
     {
-      title: "Evasive",
+      title: "Evasive, Ward",
     },
     {
       title: "SACREBLEU!:",

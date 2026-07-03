@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '$lib/components/ui/card';
-	import { Package } from '@lucide/svelte';
+	import Package from '@lucide/svelte/icons/package';
 
 	interface Props {
 		title?: string;

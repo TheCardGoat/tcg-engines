@@ -16,7 +16,7 @@ export const dalmatianPuppyTailWaggerI18n: Record<Languages, I18nProperties> = {
     version: "Schwanzwedler",
     text: [
       {
-        title: "WO KOMMEN DIE DENN ALLE HER?",
+        title: "Wo kommen die denn alle her?",
         description: "Dein Deck darf Dalmatiner Welpe — Schwanzwedler bis zu 99-mal enthalten.",
       },
     ],
@@ -26,7 +26,7 @@ export const dalmatianPuppyTailWaggerI18n: Record<Languages, I18nProperties> = {
     version: "Frétille de joie",
     text: [
       {
-        title: "D'OÙ SORTENT-ILS, ENFIN?",
+        title: "D'où sortent-ils, enfin?",
         description:
           "Vous pouvez avoir jusqu'à 99 copies de Chiot dalmatien — Frétille de joie dans votre deck.",
       },
@@ -37,7 +37,7 @@ export const dalmatianPuppyTailWaggerI18n: Record<Languages, I18nProperties> = {
     version: "Scodinzolante",
     text: [
       {
-        title: "DA DOVE VERRANNO?",
+        title: "Da Dove Verranno?",
         description:
           "Puoi avere fino a 99 copie di Cucciolo di Dalmata — Scodinzolante nel tuo mazzo.",
       },

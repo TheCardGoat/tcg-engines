@@ -6,7 +6,7 @@ export const sneezyStartlinglyLoudI18n: Record<Languages, I18nProperties> = {
     version: "Startlingly Loud",
     text: [
       {
-        title: "Gesundheit",
+        title: "GESUNDHEIT",
         description: "When you play this character, chosen character gets +1 {L} this turn.",
       },
     ],

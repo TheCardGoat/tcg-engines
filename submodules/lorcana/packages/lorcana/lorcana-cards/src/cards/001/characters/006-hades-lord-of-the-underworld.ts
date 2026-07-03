@@ -4,6 +4,17 @@ import { hadesLordOfTheUnderworldI18n } from "./006-hades-lord-of-the-underworld
 export const hadesLordOfTheUnderworld: CharacterCard = {
   id: "gvD",
   canonicalId: "ci_gvD",
+  slug: "lorcana-ci_gvD",
+  printings: [
+    {
+      id: "set1-006",
+      artId: "set1-006",
+      setCode: "set1",
+      collectorNumber: "6",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-006"],
   cardType: "character",
   name: "Hades",
@@ -20,7 +31,7 @@ export const hadesLordOfTheUnderworld: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4c9f441611314185a25b1fca893f6643",
-    tcgPlayer: 493480,
+    tcgPlayer: "493480",
   },
   text: [
     {

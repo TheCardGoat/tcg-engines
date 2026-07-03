@@ -4,6 +4,17 @@ import { educationOrEliminationI18n } from "./097-education-or-elimination.i18n"
 export const educationOrElimination: ActionCard = {
   id: "y2L",
   canonicalId: "ci_y2L",
+  slug: "lorcana-ci_y2L",
+  printings: [
+    {
+      id: "set11-097",
+      artId: "set11-097",
+      setCode: "set11",
+      collectorNumber: "97",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-097"],
   cardType: "action",
   name: "Education or Elimination",
@@ -16,7 +27,7 @@ export const educationOrElimination: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_69c74f5a7fcb431290622e2321e786fe",
-    tcgPlayer: 676208,
+    tcgPlayer: "676208",
   },
   text: [
     {

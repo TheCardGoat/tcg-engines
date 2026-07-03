@@ -4,6 +4,17 @@ import { madameMedusaDeceivingPartnerI18n } from "./047-madame-medusa-deceiving-
 export const madameMedusaDeceivingPartner: CharacterCard = {
   id: "9f8",
   canonicalId: "ci_9f8",
+  slug: "lorcana-ci_9f8",
+  printings: [
+    {
+      id: "set8-047",
+      artId: "set8-047",
+      setCode: "set8",
+      collectorNumber: "47",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-047"],
   cardType: "character",
   name: "Madame Medusa",
@@ -20,7 +31,7 @@ export const madameMedusaDeceivingPartner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c25b03f0800041229325ec211c5e132c",
-    tcgPlayer: 631382,
+    tcgPlayer: "631382",
   },
   text: [
     {

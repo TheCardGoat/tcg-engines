@@ -4,6 +4,17 @@ import { rajahRoyalProtectorI18n } from "./192-rajah-royal-protector.i18n";
 export const rajahRoyalProtector: CharacterCard = {
   id: "SUh",
   canonicalId: "ci_SUh",
+  slug: "lorcana-ci_SUh",
+  printings: [
+    {
+      id: "set4-192",
+      artId: "set4-192",
+      setCode: "set4",
+      collectorNumber: "192",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-192"],
   cardType: "character",
   name: "Rajah",
@@ -20,7 +31,7 @@ export const rajahRoyalProtector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dbc5f2c9f1cc41ebb7b6ba6c9133a942",
-    tcgPlayer: 547779,
+    tcgPlayer: "547779",
   },
   text: [
     {

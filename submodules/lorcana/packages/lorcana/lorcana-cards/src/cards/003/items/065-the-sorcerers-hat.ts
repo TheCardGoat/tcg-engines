@@ -2,8 +2,19 @@ import type { ItemCard } from "@tcg/lorcana-types";
 import { theSorcerersHatI18n } from "./065-the-sorcerers-hat.i18n";
 
 export const theSorcerersHat: ItemCard = {
-  id: "geu",
+  id: "2fQ",
   canonicalId: "ci_4Wb",
+  slug: "lorcana-ci_4Wb",
+  printings: [
+    {
+      id: "set3-065",
+      artId: "set3-065",
+      setCode: "set3",
+      collectorNumber: "65",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-065"],
   cardType: "item",
   name: "The Sorcerer's Hat",
@@ -16,7 +27,7 @@ export const theSorcerersHat: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5a2ba6e63b07496d96a17d2565b2a1db",
-    tcgPlayer: 539162,
+    tcgPlayer: "539162",
   },
   text: [
     {
@@ -46,11 +57,17 @@ export const theSorcerersHat: ItemCard = {
             target: "CONTROLLER",
             routes: [
               {
-                condition: { type: "revealed-matches-named" },
-                destination: { zone: "hand" },
+                condition: {
+                  type: "revealed-matches-named",
+                },
+                destination: {
+                  zone: "hand",
+                },
               },
             ],
-            fallback: { zone: "deck-top" },
+            fallback: {
+              zone: "deck-top",
+            },
           },
         ],
       },

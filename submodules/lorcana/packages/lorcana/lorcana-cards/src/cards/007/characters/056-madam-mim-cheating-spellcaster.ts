@@ -4,6 +4,17 @@ import { madamMimCheatingSpellcasterI18n } from "./056-madam-mim-cheating-spellc
 export const madamMimCheatingSpellcaster: CharacterCard = {
   id: "UyZ",
   canonicalId: "ci_UyZ",
+  slug: "lorcana-ci_UyZ",
+  printings: [
+    {
+      id: "set7-056",
+      artId: "set7-056",
+      setCode: "set7",
+      collectorNumber: "56",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-056"],
   cardType: "character",
   name: "Madam Mim",
@@ -20,7 +31,7 @@ export const madamMimCheatingSpellcaster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e1f18adb01e14dbd97be31ad052d642d",
-    tcgPlayer: 619435,
+    tcgPlayer: "619435",
   },
   text: [
     {

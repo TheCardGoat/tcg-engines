@@ -6,10 +6,10 @@ export const jetsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
     version: "Ursula’s Spy",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive>",
       },
       {
-        title: "SINISTER SLITHER",
+        title: "Sinister Slither",
         description: "Your characters named Flotsam gain Evasive.",
       },
     ],
@@ -17,22 +17,14 @@ export const jetsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Meerschaum",
     version: "Ursulas Spion",
-    text: [
-      {
-        title: "Wendig",
-      },
-      {
-        title: "FIES UND GLITSCHIG",
-        description: "Deine Abschaum-Charaktere erhalten Wendig.",
-      },
-    ],
+    text: "<Wendig> \\Fies und Glitschig\\ Deine Abschaum-Charaktere erhalten Wendig.",
   },
   fr: {
     name: "JETSAM",
     version: "Espion d'Ursula",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
         title: "SINISTRE ONDULATION",
@@ -45,10 +37,10 @@ export const jetsamUrsulasSpyI18n: Record<Languages, I18nProperties> = {
     version: "Ursula’s Spy",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "SINISTER SLITHER",
+        title: "Sinister Slither",
         description: "Your characters named Flotsam gain Evasive.",
       },
     ],

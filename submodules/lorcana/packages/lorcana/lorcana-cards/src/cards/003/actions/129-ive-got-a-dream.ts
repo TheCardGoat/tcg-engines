@@ -4,6 +4,17 @@ import { iveGotADreamI18n } from "./129-ive-got-a-dream.i18n";
 export const iveGotADream: ActionCard = {
   id: "aTe",
   canonicalId: "ci_aTe",
+  slug: "lorcana-ci_aTe",
+  printings: [
+    {
+      id: "set3-129",
+      artId: "set3-129",
+      setCode: "set3",
+      collectorNumber: "129",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-129"],
   cardType: "action",
   name: "I've Got a Dream",
@@ -16,7 +27,7 @@ export const iveGotADream: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_980a374d3ce34527868e0f78b48f63c6",
-    tcgPlayer: 531825,
+    tcgPlayer: "531825",
   },
   text: "Ready chosen character of yours at a location. They can't quest for the rest of this turn. Gain lore equal to that location's {L}.",
   actionSubtype: "song",

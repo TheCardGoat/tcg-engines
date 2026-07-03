@@ -11,7 +11,15 @@ export const suddenChillI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "CRUELLE DIABLESSE",
-    text: "Chaque adversaire choisit et défausse une carte de sa main.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Chaque adversaire choisit et défausse une carte de sa main.",
+      },
+    ],
   },
   it: {
     name: "Sudden Chill",

@@ -61,6 +61,11 @@ export interface EngineAdapter {
   readonly pendingChoice: () => GundamPendingChoice | undefined;
   readonly moveHistory: () => readonly MoveHistoryEntry[];
   /**
+   * True for views that intentionally receive unstripped structured move logs
+   * and may reveal private-field payloads, such as bot-vs-bot spectators.
+   */
+  readonly revealsPrivateMoveLogFields?: boolean;
+  /**
    * Running list of game-log entries accumulated from every successful
    * `executeCommand` / `undo`, filtered by viewer visibility. Each entry
    * is tagged with the turn it landed in.

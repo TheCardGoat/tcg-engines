@@ -7,14 +7,17 @@ export const st05MikazukiAugus010: PilotCard = {
   color: "purple",
   traits: ["tekkadan", "alaya-vijnana"],
   id: "ST05-010",
-  externalId: "gundam:st05-010",
-  slug: "mikazuki-augus-st05-010",
+  canonicalId: "ST05-010",
+  externalIds: { bandai: "gundam:st05-010" },
+  slug: "mikazuki-augus/st05-010",
   displayName: "Mikazuki Augus",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-010",
   printings: [
     {
       id: "ST05-010",
+      artId: "ST05-010",
+      setCode: "ST05",
       collectorNumber: "ST05-010",
       cardNumber: "ST05-010",
       set: {
@@ -30,6 +33,8 @@ export const st05MikazukiAugus010: PilotCard = {
     },
     {
       id: "ST05-010_p1",
+      artId: "ST05-010_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-010_p1",
       cardNumber: "ST05-010",
       set: {
@@ -45,6 +50,8 @@ export const st05MikazukiAugus010: PilotCard = {
     },
     {
       id: "ST05-010_p2",
+      artId: "ST05-010_p2",
+      setCode: "ST05",
       collectorNumber: "ST05-010_p2",
       cardNumber: "ST05-010",
       set: {
@@ -60,6 +67,8 @@ export const st05MikazukiAugus010: PilotCard = {
     },
     {
       id: "ST05-010_p3",
+      artId: "ST05-010_p3",
+      setCode: "GD03",
       collectorNumber: "ST05-010_p3",
       cardNumber: "ST05-010",
       set: {
@@ -74,6 +83,7 @@ export const st05MikazukiAugus010: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["ST05-010", "ST05-010_p1", "ST05-010_p2", "ST05-010_p3"],
   selectedPrintingId: "ST05-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-010.webp?260424",

@@ -6,7 +6,7 @@ import {
   validateCyberpunkDeck,
   type CyberpunkDeckValidationCard,
   type CyberpunkDeckValidationEntry,
-} from "./deck-validation";
+} from "./deck-validation.js";
 
 describe("validateCyberpunkDeck", () => {
   it("accepts a deck with three unique Legends, 40-50 main deck cards, copy limits, and RAM coverage", () => {
@@ -74,6 +74,25 @@ describe("validateCyberpunkDeck", () => {
     expect(result.legendCount).toBe(3);
     expect(result.mainDeckCount).toBe(CYBERPUNK_MAIN_DECK_MIN);
   });
+
+  it("treats null RAM as zero for deck validation", () => {
+    const result = validateCyberpunkDeck({
+      legends: [
+        entry(card("legend-1", "Goro", "Legend", "Green", null)),
+        entry(card("legend-2", "Saburo", "Legend", "Green", 2)),
+        entry(card("legend-3", "Yorinobu", "Legend", "Red", 2)),
+      ],
+      mainDeck: [
+        ...Array.from({ length: CYBERPUNK_MAIN_DECK_MIN - 1 }, (_, index) =>
+          entry(card(`unit-${index}`, `Unit ${index}`, "Unit", "Green", 1)),
+        ),
+        entry(card("unit-null-ram", "No RAM Card", "Unit", "Green", null)),
+      ],
+    });
+
+    expect(result.ramBudget.get("Green")).toBe(2);
+    expect(result.issues.some((issue) => issue.code === "ram-limit")).toBe(false);
+  });
 });
 
 function card(
@@ -81,7 +100,7 @@ function card(
   name: string,
   type: string,
   color: string,
-  ram: number,
+  ram: number | null,
 ): CyberpunkDeckValidationCard {
   return {
     id,

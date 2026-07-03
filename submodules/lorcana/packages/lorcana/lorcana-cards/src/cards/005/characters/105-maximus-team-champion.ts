@@ -4,6 +4,17 @@ import { maximusTeamChampionI18n } from "./105-maximus-team-champion.i18n";
 export const maximusTeamChampion: CharacterCard = {
   id: "kDj",
   canonicalId: "ci_kDj",
+  slug: "lorcana-ci_kDj",
+  printings: [
+    {
+      id: "set5-105",
+      artId: "set5-105",
+      setCode: "set5",
+      collectorNumber: "105",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-105"],
   cardType: "character",
   name: "Maximus",
@@ -20,7 +31,7 @@ export const maximusTeamChampion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a583e1fe8f2144a7bbc320e966734055",
-    tcgPlayer: 561961,
+    tcgPlayer: "561961",
   },
   text: [
     {
@@ -55,7 +66,10 @@ export const maximusTeamChampion: CharacterCard = {
             },
           ],
         },
-        comparison: { operator: "gte", value: 1 },
+        comparison: {
+          operator: "gte",
+          value: 1,
+        },
       },
       effect: {
         type: "conditional",
@@ -74,7 +88,10 @@ export const maximusTeamChampion: CharacterCard = {
               },
             ],
           },
-          comparison: { operator: "gte", value: 1 },
+          comparison: {
+            operator: "gte",
+            value: 1,
+          },
         },
         then: {
           type: "gain-lore",

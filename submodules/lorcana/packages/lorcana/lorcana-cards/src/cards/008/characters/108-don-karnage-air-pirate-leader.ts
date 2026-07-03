@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { donKarnageAirPirateLeaderI18n } from "./108-don-karnage-air-pirate-leader.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const donKarnageAirPirateLeader: CharacterCard = {
   id: "lub",
   canonicalId: "ci_lub",
+  slug: "lorcana-ci_lub",
+  printings: [
+    {
+      id: "set8-108",
+      artId: "set8-108",
+      setCode: "set8",
+      collectorNumber: "108",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-108"],
   cardType: "character",
   name: "Don Karnage",
@@ -21,7 +33,7 @@ export const donKarnageAirPirateLeader: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_618a43c6b78446dbb31c8637116fafb7",
-    tcgPlayer: 631419,
+    tcgPlayer: "631419",
   },
   text: [
     {

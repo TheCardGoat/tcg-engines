@@ -3,7 +3,18 @@ import { flotsamJetsamEntanglingEelsI18n } from "./044-flotsam-jetsam-entangling
 
 export const flotsamJetsamEntanglingEels: CharacterCard = {
   id: "Eq7",
-  canonicalId: "ci_Eq7",
+  canonicalId: "ci_Lt9",
+  slug: "lorcana-ci_Lt9",
+  printings: [
+    {
+      id: "set4-044",
+      artId: "set4-044",
+      setCode: "set4",
+      collectorNumber: "44",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-044"],
   cardType: "character",
   name: "Flotsam & Jetsam",
@@ -20,13 +31,12 @@ export const flotsamJetsamEntanglingEels: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2eb85540f12446e38d0eef16937315eb",
-    tcgPlayer: 547764,
+    tcgPlayer: "547764",
   },
   text: [
     {
-      title: "Shift: Discard 2 cards ",
-      description:
-        "(You may discard 2 cards to play this on top of one of your characters named Flotsam or Jetsam.)",
+      title:
+        "Shift: Discard 2 cards (You may discard 2 cards to play this on top of one of your characters named Flotsam or Jetsam.)",
     },
     {
       title: "(This character counts as being named both Flotsam and Jetsam.)",

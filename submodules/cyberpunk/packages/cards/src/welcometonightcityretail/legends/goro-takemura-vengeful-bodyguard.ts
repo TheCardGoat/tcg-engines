@@ -1,13 +1,15 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { quickAbility } from "@tcg/cyberpunk-types";
 
-export const welcomeToNightCityRetailGoroTakemuraVengefulBodyguard = {
+export const welcomeToNightCityRetailGoroTakemuraVengefulBodyguard = defineCyberpunkCard({
   id: "424c9c0f-cc01-40ec-8404-75957985c7f8",
-  externalId: "cb-goro-takemura-vengeful-bodyguard",
   slug: "goro-takemura-vengeful-bodyguard",
+  rulesText:
+    "{Quick} 1 €$, {Spend} Give a friendly Unit with cost 4 or less {Blocker} this turn. If you control a value-pair of Gigs, also give it +1 power this turn.\nWhen a friendly Unit uses {Blocker}, you may discard 1. If you do, draw 1.",
   name: "Goro Takemura — Vengeful Bodyguard",
   displayName: "Goro Takemura — Vengeful Bodyguard",
-  rulesText:
-    "[QUICK] 1 €$, [Spend Icon:] Give a friendly Unit with cost 4 or less [BLOCKER] this turn. If you control a value-pair of Gigs, also give it +1 power this turn.\nWhen a friendly Unit uses [BLOCKER], you may discard 1. If you do, draw 1.",
+  canonicalId: "goro-takemura-vengeful-bodyguard",
   color: "green",
   classifications: ["Arasaka", "Corpo"],
   set: {
@@ -15,42 +17,18 @@ export const welcomeToNightCityRetailGoroTakemuraVengefulBodyguard = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "071",
-  printings: [
-    {
-      id: "0f6e52f0-511f-4ae9-a380-5e718b26e58a",
-      collectorNumber: "071",
-      setCode: "welcometonightcityretail",
-      rarity: "Rare",
-    },
-    {
-      id: "5f3c905b-0834-46a2-be33-ea46e59d4c7f",
-      collectorNumber: "β071",
-      setCode: "welcometonightcitybeta",
-      rarity: "Rare",
-    },
-  ],
-  selectedPrintingId: "0f6e52f0-511f-4ae9-a380-5e718b26e58a",
   artist: "Daniel Valaisis",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/071.webp",
   rarity: "Rare",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
   keywords: ["quick"],
   type: "legend",
   cost: null,
   power: null,
   abilities: [
-    {
-      kind: "keyword",
-      text: "QUICK",
-      keyword: "quick",
-      source: {
-        selector: "self",
-      },
-      effects: [],
-    },
+    quickAbility(),
     {
       kind: "triggered",
       text: "1 €$, SPEND Give a friendly Unit with cost 4 or less BLOCKER this turn. If you control a value-pair of Gigs, also give it +1 power this turn.",
@@ -155,5 +133,4 @@ export const welcomeToNightCityRetailGoroTakemuraVengefulBodyguard = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies LegendCardDefinition;

@@ -4,6 +4,17 @@ import { iWontGiveInI18n } from "./028-i-wont-give-in.i18n";
 export const iWontGiveIn: ActionCard = {
   id: "j2a",
   canonicalId: "ci_j2a",
+  slug: "lorcana-ci_j2a",
+  printings: [
+    {
+      id: "set6-028",
+      artId: "set6-028",
+      setCode: "set6",
+      collectorNumber: "28",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-028"],
   cardType: "action",
   name: "I Won't Give In",
@@ -16,7 +27,7 @@ export const iWontGiveIn: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_128b29d2aef043efb62b2fb63189c4ca",
-    tcgPlayer: 588087,
+    tcgPlayer: "588087",
   },
   text: "Return a character card with cost 2 or less from your discard to your hand.",
   actionSubtype: "song",

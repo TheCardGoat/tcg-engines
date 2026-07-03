@@ -4,6 +4,17 @@ import { mothersNecklaceI18n } from "./065-mothers-necklace.i18n";
 export const mothersNecklace: ItemCard = {
   id: "3F4",
   canonicalId: "ci_3F4",
+  slug: "lorcana-ci_3F4",
+  printings: [
+    {
+      id: "set11-065",
+      artId: "set11-065",
+      setCode: "set11",
+      collectorNumber: "65",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-065"],
   cardType: "item",
   name: "Mother's Necklace",
@@ -16,7 +27,7 @@ export const mothersNecklace: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f91b39cb2d4a47f984e9e5114216e75b",
-    tcgPlayer: 675300,
+    tcgPlayer: "675300",
   },
   text: [
     {

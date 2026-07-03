@@ -4,6 +4,17 @@ import { tukTukCuriousPartnerI18n } from "./161-tuk-tuk-curious-partner.i18n";
 export const tukTukCuriousPartner: CharacterCard = {
   id: "DHE",
   canonicalId: "ci_DHE",
+  slug: "lorcana-ci_DHE",
+  printings: [
+    {
+      id: "set4-161",
+      artId: "set4-161",
+      setCode: "set4",
+      collectorNumber: "161",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-161"],
   cardType: "character",
   name: "Tuk Tuk",
@@ -21,7 +32,7 @@ export const tukTukCuriousPartner: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_835ae01a69684fe7af625817ecb51341",
-    tcgPlayer: 550613,
+    tcgPlayer: "550613",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: tukTukCuriousPartnerI18n,

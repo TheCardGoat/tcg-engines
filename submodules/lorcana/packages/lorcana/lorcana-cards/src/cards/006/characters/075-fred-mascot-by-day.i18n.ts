@@ -16,7 +16,7 @@ export const fredMascotByDayI18n: Record<Languages, I18nProperties> = {
     version: "Maskottchen am Tag",
     text: [
       {
-        title: "WIE COOL IST DAS DENN?",
+        title: "Wie cool ist das denn?",
         description:
           "Jedes Mal, wenn dieser Charakter herausgefordert wird, sammelst du 2 Legenden.",
       },
@@ -27,7 +27,7 @@ export const fredMascotByDayI18n: Record<Languages, I18nProperties> = {
     version: "Mascotte la journée",
     text: [
       {
-        title: "C'EST PAS GÉNIAL?",
+        title: "C'est pas génial?",
         description: "Chaque fois que ce personnage est défié, gagnez 2 éclats de Lore.",
       },
     ],
@@ -37,7 +37,7 @@ export const fredMascotByDayI18n: Record<Languages, I18nProperties> = {
     version: "Mascotte di Giorno",
     text: [
       {
-        title: "NON È FICO?",
+        title: "Non È Fico?",
         description: "Ogni volta che questo personaggio viene sfidato, ottieni 2 leggenda.",
       },
     ],

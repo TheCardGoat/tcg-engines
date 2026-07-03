@@ -17,23 +17,14 @@ export const tinkerBellMostHelpfulI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Naseweis",
     version: "Stets hilfsbereit",
-    text: [
-      {
-        title: "Wendig",
-      },
-      {
-        title: "FEENGLANZ",
-        description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Wendig.",
-      },
-    ],
+    text: "<Wendig> \\Feenglanz\\ Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Wendig.",
   },
   fr: {
     name: "LA FÉE CLOCHETTE",
     version: "La plus serviable",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
         title: "POUSSIÈRE DE FÉE",
@@ -47,11 +38,11 @@ export const tinkerBellMostHelpfulI18n: Record<Languages, I18nProperties> = {
     version: "Most Helpful",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "PIXIE DUST",
-        description: "When you play this character, chosen character gains Evasive this turn.",
+        title: "Pixie Dust",
+        description: "When you play this character, chosen character gains <Evasive> this turn.",
       },
     ],
   },

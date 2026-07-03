@@ -6,10 +6,10 @@ export const isabelaMadrigalSuchALovelyVoiceEpicI18n: Record<Languages, I18nProp
     version: "Such a Lovely Voice",
     text: [
       {
-        title: "<Singer> 5",
+        title: "Singer 5",
       },
       {
-        title: "New Motif",
+        title: "NEW MOTIF",
         description:
           "When you play this character, if you removed 1 or more damage from one of your characters this turn, gain 1 lore.",
       },

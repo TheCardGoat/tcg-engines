@@ -17,7 +17,7 @@ export const diabloFaithfulPetI18n: Record<Languages, I18nProperties> = {
     version: "Treues Haustier",
     text: [
       {
-        title: "SUCHE NACH AURORA",
+        title: "Suche nach Aurora",
         description:
           "Jedes Mal, wenn du einen Malefiz-Charakter ausspielst, darfst du dir die oberste Karte deines Decks anschauen. Lege sie anschließend entweder auf dein Deck oder darunter.",
       },
@@ -28,7 +28,7 @@ export const diabloFaithfulPetI18n: Record<Languages, I18nProperties> = {
     version: "Animal de compagnie fidèle",
     text: [
       {
-        title: "À LA RECHERCHE D'AURORE",
+        title: "À la recherche d'Aurore",
         description:
           "Chaque fois que vous jouez un personnage Maléfique, vous pouvez regarder la première carte de votre pioche. Remettez-la soit sur le dessus de votre pioche, soit en dessous.",
       },
@@ -39,7 +39,7 @@ export const diabloFaithfulPetI18n: Record<Languages, I18nProperties> = {
     version: "Famiglio Fedele",
     text: [
       {
-        title: "IN CERCA DI AURORA",
+        title: "In Cerca di Aurora",
         description:
           "Ogni volta che giochi un personaggio chiamato Malefica, puoi guardare la prima carta del tuo mazzo. Mettila in cima o in fondo al tuo mazzo.",
       },

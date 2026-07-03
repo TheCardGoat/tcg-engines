@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { willieTheGiantGhostOfChristmasPresentI18n } from "./126-willie-the-giant-ghost-of-christmas-present.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const willieTheGiantGhostOfChristmasPresent: CharacterCard = {
   id: "4Qt",
   canonicalId: "ci_4Qt",
+  slug: "lorcana-ci_4Qt",
+  printings: [
+    {
+      id: "set11-126",
+      artId: "set11-126",
+      setCode: "set11",
+      collectorNumber: "126",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-126"],
   cardType: "character",
   name: "Willie the Giant",
@@ -21,7 +33,7 @@ export const willieTheGiantGhostOfChristmasPresent: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f472ec7c6a294a6498f3788b189472c4",
-    tcgPlayer: 670270,
+    tcgPlayer: "670270",
   },
   text: [
     {

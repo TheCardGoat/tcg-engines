@@ -7,14 +7,44 @@ export const hotPotatoI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Heiss und Fettig",
-    text: "Wähle eine Möglichkeit aus: • Füge einem Charakter deiner Wahl 2 Schaden zu. • Verbanne einen Gegenstand deiner Wahl.",
+    text: [
+      {
+        title: "Wähle eine Möglichkeit aus:",
+      },
+      {
+        title: "• Füge einem Charakter deiner Wahl 2 Schaden zu.",
+      },
+      {
+        title: "• Verbanne einen Gegenstand deiner Wahl.",
+      },
+    ],
   },
   fr: {
     name: "Patate chaude",
-    text: "Choisissez entre: • Choisissez un personnage et infligez-lui 2 dommages. • Choisissez un objet et bannissez-le.",
+    text: [
+      {
+        title: "Choisissez entre:",
+      },
+      {
+        title: "• Choisissez un personnage et infligez-lui 2 dommages.",
+      },
+      {
+        title: "• Choisissez un objet et bannissez-le.",
+      },
+    ],
   },
   it: {
     name: "Patata Bollente",
-    text: "Scegli uno: • Infliggi 2 danni a un personaggio a tua scelta. • Esilia un oggetto a tua scelta.",
+    text: [
+      {
+        title: "Scegli uno:",
+      },
+      {
+        title: "• Infliggi 2 danni a un personaggio a tua scelta.",
+      },
+      {
+        title: "• Esilia un oggetto a tua scelta.",
+      },
+    ],
   },
 };

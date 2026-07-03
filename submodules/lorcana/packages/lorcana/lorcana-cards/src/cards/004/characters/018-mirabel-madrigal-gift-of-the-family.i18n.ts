@@ -20,12 +20,13 @@ export const mirabelMadrigalGiftOfTheFamilyI18n: Record<Languages, I18nPropertie
     version: "Gabe der Familie",
     text: [
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "RETTUNG DES WUNDERS",
+        title: "Rettung des Wunders",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Madrigal in diesem Zug +1.",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Madrigal in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const mirabelMadrigalGiftOfTheFamilyI18n: Record<Languages, I18nPropertie
     version: "Don de la famille",
     text: [
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "SAUVER LE MIRACLE",
+        title: "Sauver le Miracle",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages Madrigal gagnent +1 pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages Madrigal gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const mirabelMadrigalGiftOfTheFamilyI18n: Record<Languages, I18nPropertie
     version: "Dono della Famiglia",
     text: [
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "SALVARE IL MIRACOLO",
+        title: "Salvare il Miracolo",
         description:
-          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi Madrigal ricevono +1 per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi Madrigal ricevono +1 {L} per questo turno.",
       },
     ],
   },

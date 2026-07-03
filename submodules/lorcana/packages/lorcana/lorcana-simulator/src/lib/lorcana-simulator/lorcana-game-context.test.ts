@@ -2,6 +2,7 @@ import { describe, expect, it } from "bun:test";
 import {
   type CardInstanceId,
   type ChallengePreviewResult,
+  type CommandResult,
   type LorcanaEngineBase,
   type LorcanaProjectedBoardView,
   createEmptyMatchStaticResources,
@@ -22,6 +23,7 @@ interface TestEngine {
   getState: () => { ctx: { _stateID: number } };
   getStateID: () => number;
   getClientPlayerId: () => string | undefined;
+  dispatch: (moveId: string, playerId: string, params: Record<string, unknown>) => CommandResult;
   enumerateMoves: () => string[];
   getCachedLegalMoveIds: () => string[];
   canUndo?: (playerId?: string) => boolean;
@@ -172,6 +174,25 @@ function createChallengeBoard(stateID: number): LorcanaProjectedBoardView {
   };
 }
 
+function createCommandSuccess(stateID = 1): CommandResult {
+  return {
+    success: true,
+    stateID,
+    state: createBoard(stateID) as unknown as CommandResult extends { state: infer State }
+      ? State
+      : never,
+    patches: [],
+    gameEvents: [],
+    processedCommand: {
+      commandID: `test-command-${stateID}`,
+      move: "test",
+    },
+    animations: [],
+    undoable: false,
+    moveLogs: [],
+  };
+}
+
 function createEngine(options?: {
   board?: LorcanaProjectedBoardView;
   moveLogEntries?: MoveLogEntrySnapshot[];
@@ -179,6 +200,7 @@ function createEngine(options?: {
   getAvailableMoves?: () => Array<{ moveId: string; selectableCardIds: string[] }>;
   getMoveOptions?: () => Array<{ kind: "card"; cardId: CardInstanceId }>;
   validateMove?: () => { valid: boolean };
+  dispatch?: (moveId: string, playerId: string, params: Record<string, unknown>) => CommandResult;
 }): MutableTestEngine {
   let board = options?.board ?? createBoard(1);
   let moveLogEntries = options?.moveLogEntries ?? [];
@@ -196,6 +218,8 @@ function createEngine(options?: {
     getState: () => ({ ctx: { _stateID: board.stateID } }),
     getStateID: () => board.stateID,
     getClientPlayerId: () => "player_one",
+    dispatch: (moveId, playerId, params) =>
+      options?.dispatch?.(moveId, playerId, params) ?? createCommandSuccess(board.stateID),
     enumerateMoves: () => {
       callCounts.enumerateMoves += 1;
       return options?.enumerateMoves?.() ?? [];
@@ -283,7 +307,7 @@ describe("lorcana game context", () => {
     expect(context.boardSnapshot()?.stateID).toBe(11);
   });
 
-  it("does not recompute derived moves when read-model revision changes without a state change", () => {
+  it("refreshes derived available moves when the read model emits a state update", () => {
     const engine = createEngine({ board: createBoard(10) });
     let notifyRef: { notify: (() => void) | null } = { notify: null };
     new LorcanaGameContext(toEngine(engine), {
@@ -302,7 +326,87 @@ describe("lorcana game context", () => {
     notifyRef.notify?.();
 
     expect(engine.callCounts.enumerateMoves).toBe(0);
-    expect(engine.callCounts.getAvailableMoves).toBe(1);
+    expect(engine.callCounts.getAvailableMoves).toBe(2);
+  });
+
+  it("defers optimistic move dispatch until after a paint boundary", async () => {
+    const globalWithFrames = globalThis as typeof globalThis & {
+      requestAnimationFrame?: (callback: FrameRequestCallback) => number;
+      cancelAnimationFrame?: (handle: number) => void;
+    };
+    const originalRequestAnimationFrame = globalWithFrames.requestAnimationFrame;
+    const originalCancelAnimationFrame = globalWithFrames.cancelAnimationFrame;
+    const frameCallbacks = new Map<number, FrameRequestCallback>();
+    let nextFrameId = 1;
+    let dispatchCount = 0;
+
+    globalWithFrames.requestAnimationFrame = (callback) => {
+      const frameId = nextFrameId;
+      nextFrameId += 1;
+      frameCallbacks.set(frameId, callback);
+      return frameId;
+    };
+    globalWithFrames.cancelAnimationFrame = (frameId) => {
+      frameCallbacks.delete(frameId);
+    };
+
+    const runNextFrame = (): void => {
+      const nextFrame = frameCallbacks.entries().next().value;
+      if (!nextFrame) {
+        throw new Error("Expected a scheduled animation frame.");
+      }
+      const [frameId, callback] = nextFrame;
+      frameCallbacks.delete(frameId);
+      callback(Date.now());
+    };
+
+    const engine = createEngine({
+      dispatch: () => {
+        dispatchCount += 1;
+        return createCommandSuccess();
+      },
+    });
+    const context = new LorcanaGameContext(toEngine(engine));
+
+    try {
+      const success = context.executeMove(
+        "playCard",
+        { cardId: "optimistic-card", cost: "standard" },
+        {
+          deferForOptimisticPaint: true,
+          optimisticCardId: "optimistic-card",
+        },
+      );
+
+      expect(success).toBe(true);
+      expect(context.inFlightCardIds().has("optimistic-card")).toBe(true);
+      expect(dispatchCount).toBe(0);
+
+      await new Promise((resolve) => setTimeout(resolve, 40));
+
+      expect(dispatchCount).toBe(0);
+      expect(frameCallbacks.size).toBe(1);
+
+      runNextFrame();
+      expect(dispatchCount).toBe(0);
+      expect(frameCallbacks.size).toBe(1);
+
+      runNextFrame();
+      expect(dispatchCount).toBe(1);
+      expect(context.inFlightCardIds().has("optimistic-card")).toBe(false);
+    } finally {
+      context.destroy();
+      if (originalRequestAnimationFrame) {
+        globalWithFrames.requestAnimationFrame = originalRequestAnimationFrame;
+      } else {
+        Reflect.deleteProperty(globalWithFrames, "requestAnimationFrame");
+      }
+      if (originalCancelAnimationFrame) {
+        globalWithFrames.cancelAnimationFrame = originalCancelAnimationFrame;
+      } else {
+        Reflect.deleteProperty(globalWithFrames, "cancelAnimationFrame");
+      }
+    }
   });
 
   it("reuses cached challenge target state when reselecting the same attacker in the same state", () => {

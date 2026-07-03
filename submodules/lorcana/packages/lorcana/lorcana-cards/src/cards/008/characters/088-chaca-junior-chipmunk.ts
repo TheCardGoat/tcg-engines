@@ -4,6 +4,17 @@ import { chacaJuniorChipmunkI18n } from "./088-chaca-junior-chipmunk.i18n";
 export const chacaJuniorChipmunk: CharacterCard = {
   id: "Vx6",
   canonicalId: "ci_Vx6",
+  slug: "lorcana-ci_Vx6",
+  printings: [
+    {
+      id: "set8-088",
+      artId: "set8-088",
+      setCode: "set8",
+      collectorNumber: "88",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-088"],
   cardType: "character",
   name: "Chaca",
@@ -20,7 +31,7 @@ export const chacaJuniorChipmunk: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4be229ca7b79419896cf9bea3c11ee66",
-    tcgPlayer: 631409,
+    tcgPlayer: "631409",
   },
   text: [
     {

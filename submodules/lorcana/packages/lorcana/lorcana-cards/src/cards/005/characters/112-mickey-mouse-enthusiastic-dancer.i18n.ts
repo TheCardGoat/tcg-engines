@@ -17,9 +17,9 @@ export const mickeyMouseEnthusiasticDancerI18n: Record<Languages, I18nProperties
     version: "Enthusiastischer Tänzer",
     text: [
       {
-        title: "PERFEKTE PARTNER",
+        title: "Perfekte Partner",
         description:
-          "Solange du mindestens einen Minnie-Maus-Charakter im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens einen Minnie-Maus-Charakter im Spiel hast, erhält dieser Charakter +2 {S}.",
       },
     ],
   },
@@ -28,8 +28,8 @@ export const mickeyMouseEnthusiasticDancerI18n: Record<Languages, I18nProperties
     version: "Danseur enthousiaste",
     text: [
       {
-        title: "CAVALIERS PARFAITS",
-        description: "Tant que vous avez un personnage Minnie en jeu, ce personnage gagne +2.",
+        title: "Cavaliers parfaits",
+        description: "Tant que vous avez un personnage Minnie en jeu, ce personnage gagne +2 {S}.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const mickeyMouseEnthusiasticDancerI18n: Record<Languages, I18nProperties
     version: "Ballerino Entusiasta",
     text: [
       {
-        title: "PARTNER PERFETTI",
+        title: "Partner Perfetti",
         description:
-          "Mentre hai in gioco un personaggio chiamato Minni, questo personaggio riceve +2.",
+          "Mentre hai in gioco un personaggio chiamato Minni, questo personaggio riceve +2 {S}.",
       },
     ],
   },

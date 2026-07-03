@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { fixitFelixJrTrustyBuilderI18n } from "./010-fix-it-felix-jr-trusty-builder.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const fixitFelixJrTrustyBuilder: CharacterCard = {
   id: "pKi",
   canonicalId: "ci_pKi",
+  slug: "lorcana-ci_pKi",
+  printings: [
+    {
+      id: "set5-010",
+      artId: "set5-010",
+      setCode: "set5",
+      collectorNumber: "10",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-010"],
   cardType: "character",
   name: "Fix-It Felix, Jr.",
@@ -21,7 +33,7 @@ export const fixitFelixJrTrustyBuilder: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e300981771704026815250b876ae28be",
-    tcgPlayer: 559769,
+    tcgPlayer: "559769",
   },
   text: "Bodyguard",
   classifications: ["Storyborn", "Hero"],

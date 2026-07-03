@@ -4,6 +4,17 @@ import { hypnoticDeductionI18n } from "./094-hypnotic-deduction.i18n";
 export const hypnoticDeduction: ActionCard = {
   id: "LLg",
   canonicalId: "ci_LLg",
+  slug: "lorcana-ci_LLg",
+  printings: [
+    {
+      id: "set5-094",
+      artId: "set5-094",
+      setCode: "set5",
+      collectorNumber: "94",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-094"],
   cardType: "action",
   name: "Hypnotic Deduction",
@@ -16,7 +27,7 @@ export const hypnoticDeduction: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b467180bb50b4da59a6b99725ad7fa84",
-    tcgPlayer: 561346,
+    tcgPlayer: "561346",
   },
   text: "Draw 3 cards, then put 2 cards from your hand on the top of your deck in any order.",
   abilities: [

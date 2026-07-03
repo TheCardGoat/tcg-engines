@@ -19,13 +19,13 @@ export const familyFishingPoleI18n: Record<Languages, I18nProperties> = {
     name: "Angelrute der Familie",
     text: [
       {
-        title: "PASS GUT AUF",
+        title: "Pass gut auf",
         description: "Dieser Gegenstand kommt erschöpft ins Spiel.",
       },
       {
-        title: "DER PERFEKTE WURF, 1,",
+        title: "Der perfekte Wurf",
         description:
-          "Verbanne diesen Gegenstand — Wähle einen deiner erschöpften Charaktere und nimm ihn zurück auf deine Hand, um 2 Legenden zu sammeln.",
+          "{E}, 1 {I}, Verbanne diesen Gegenstand — Wähle einen deiner erschöpften Charaktere und nimm ihn zurück auf deine Hand, um 2 Legenden zu sammeln.",
       },
     ],
   },
@@ -33,13 +33,13 @@ export const familyFishingPoleI18n: Record<Languages, I18nProperties> = {
     name: "Canne à pêche familiale",
     text: [
       {
-        title: "OBSERVE ATTENTIVEMENT",
+        title: "Observe attentivement",
         description: "Cet objet arrive en jeu épuisé.",
       },
       {
-        title: "LE PARFAIT LANCER, 1,",
+        title: "Le parfait lancer",
         description:
-          "bannissez cet objet — Choisissez l'un de vos personnages épuisés et renvoyez-le dans votre main pour gagner 2 éclats de Lore.",
+          "{E}, 1 {I}, bannissez cet objet — Choisissez l'un de vos personnages épuisés et renvoyez-le dans votre main pour gagner 2 éclats de Lore.",
       },
     ],
   },
@@ -47,13 +47,13 @@ export const familyFishingPoleI18n: Record<Languages, I18nProperties> = {
     name: "Canna da Pesca di Famiglia",
     text: [
       {
-        title: "OSSERVA ATTENTAMENTE",
+        title: "Osserva Attentamente",
         description: "Questo oggetto entra in gioco impegnato.",
       },
       {
-        title: "LA TECNICA DEL GRANDE LANCIO, 1,",
+        title: "La Tecnica del Grande Lancio",
         description:
-          "esilia questo oggetto — Riprendi in mano un tuo personaggio impegnato a tua scelta per ottenere 2 leggenda.",
+          "{E}, 1 {I}, esilia questo oggetto — Riprendi in mano un tuo personaggio impegnato a tua scelta per ottenere 2 leggenda.",
       },
     ],
   },

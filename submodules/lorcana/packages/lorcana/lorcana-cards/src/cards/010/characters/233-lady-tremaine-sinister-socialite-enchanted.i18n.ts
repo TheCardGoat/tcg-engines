@@ -20,10 +20,11 @@ export const ladyTremaineSinisterSocialiteEnchantedI18n: Record<Languages, I18nP
     version: "Unheilbringende Prominenz",
     text: [
       {
-        title: "Stärken 2",
+        title:
+          "<Stärken> 2 {I} (Einmal während deines Zuges darfst du 2 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "ZWECKMÄSSIGE INTRIGEN",
+        title: "Zweckmäßige Intrigen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, falls du in diesem Zug mindestens eine Karte unter diesen Charakter gelegt hast, darfst du eine Aktionskarte von deinem Ablagestapel, die 5 oder weniger kostet, kostenlos ausspielen. Lege sie danach unter dein Deck.",
       },
@@ -34,10 +35,10 @@ export const ladyTremaineSinisterSocialiteEnchantedI18n: Record<Languages, I18nP
     version: "Mondaine sinistre",
     text: [
       {
-        title: "Boost 2",
+        title: "<Boost> 2 {I}",
       },
       {
-        title: "PLANS OPPORTUNISTES",
+        title: "Plans opportunistes",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, si vous avez placé une carte sous lui ce tour-ci, vous pouvez jouer gratuitement une action coûtant 5 ou moins de votre défausse. Placez-la ensuite sous votre pioche.",
       },
@@ -48,10 +49,10 @@ export const ladyTremaineSinisterSocialiteEnchantedI18n: Record<Languages, I18nP
     version: "Nobildonna Sinistra",
     text: [
       {
-        title: "Potenziamento 2",
+        title: "<Potenziamento> 2 {I}",
       },
       {
-        title: "COMPLOTTI VANTAGGIOSI",
+        title: "Complotti Vantaggiosi",
         description:
           "Ogni volta che questo personaggio va all'avventura, se hai messo una carta sotto di esso in questo turno, puoi giocare un'azione con costo 5 o inferiore dai tuoi scarti gratis, poi metti quella carta azione in fondo al tuo mazzo invece che nei tuoi scarti.",
       },

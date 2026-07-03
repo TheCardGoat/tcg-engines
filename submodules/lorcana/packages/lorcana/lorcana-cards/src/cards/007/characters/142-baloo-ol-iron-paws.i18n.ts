@@ -6,8 +6,8 @@ export const balooOlIronPawsI18n: Record<Languages, I18nProperties> = {
     version: "Ol' Iron Paws",
     text: [
       {
-        title: "FIGHT LIKE A BEAR",
-        description: "Your characters with 7 {S} or more can't be dealt damage.",
+        title: "FIGHT LIKE",
+        description: "A BEAR Your characters with 7 {S} or more can't be dealt damage.",
       },
     ],
   },
@@ -16,8 +16,8 @@ export const balooOlIronPawsI18n: Record<Languages, I18nProperties> = {
     version: "Alter Box-Komiker",
     text: [
       {
-        title: "WIE MAN ALS BÄR KÄMPFT",
-        description: "Deinen Charakteren mit 7 oder mehr kann kein Schaden zugefügt werden.",
+        title: "Wie man als Bär kämpft",
+        description: "Deinen Charakteren mit 7 oder mehr {S} kann kein Schaden zugefügt werden.",
       },
     ],
   },
@@ -26,9 +26,9 @@ export const balooOlIronPawsI18n: Record<Languages, I18nProperties> = {
     version: "Griffes d’acier",
     text: [
       {
-        title: "COMMENT SE BATTENT LES OURS",
+        title: "Comment se battent les ours",
         description:
-          "Vos personnages avec une de 7 ou plus ne peuvent se voir infliger aucun dommage.",
+          "Vos personnages avec une {S} de 7 ou plus ne peuvent se voir infliger aucun dommage.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const balooOlIronPawsI18n: Record<Languages, I18nProperties> = {
     version: "Vecchio Artigli di Ferro",
     text: [
       {
-        title: "BATTERTI COME UN ORSO I",
-        description: "tuoi personaggi con 7 o superiore non possono subire danni.",
+        title: "Batterti Come un Orso",
+        description: "I tuoi personaggi con 7 {S} o superiore non possono subire danni.",
       },
     ],
   },

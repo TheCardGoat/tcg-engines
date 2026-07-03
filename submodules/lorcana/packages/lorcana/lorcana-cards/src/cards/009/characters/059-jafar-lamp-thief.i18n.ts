@@ -17,7 +17,7 @@ export const jafarLampThiefI18n: Record<Languages, I18nProperties> = {
     version: "Lampendieb",
     text: [
       {
-        title: "ICH BIN JETZT DEIN MEISTER",
+        title: "Ich bin jetzt dein Meister",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 2 Karten deines Decks an. Lege 1 davon auf dein Deck und die andere darunter.",
       },
@@ -28,7 +28,7 @@ export const jafarLampThiefI18n: Record<Languages, I18nProperties> = {
     version: "Voleur de lampe",
     text: [
       {
-        title: "JE SUIS TON MAÎTRE, À PRÉSENT",
+        title: "Je suis ton maître, à présent",
         description:
           "Lorsque vous jouez ce personnage, regardez les 2 premières cartes de votre pioche. Remettez l'une d'elles sur le dessus de votre pioche et l'autre en dessous.",
       },
@@ -39,7 +39,7 @@ export const jafarLampThiefI18n: Record<Languages, I18nProperties> = {
     version: "Ladro della Lampada",
     text: [
       {
-        title: "SONO IO IL TUO PADRONE ADESSO",
+        title: "Sono Io il Tuo Padrone Adesso",
         description:
           "Quando giochi questo personaggio, guarda le prime 2 carte del tuo mazzo. Mettine una in cima al tuo mazzo e l'altra in fondo.",
       },

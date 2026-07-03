@@ -4,6 +4,17 @@ import { wildcatsWrenchI18n } from "./031-wildcats-wrench.i18n";
 export const wildcatsWrench: ItemCard = {
   id: "vtL",
   canonicalId: "ci_vtL",
+  slug: "lorcana-ci_vtL",
+  printings: [
+    {
+      id: "set3-031",
+      artId: "set3-031",
+      setCode: "set3",
+      collectorNumber: "31",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-031"],
   cardType: "item",
   name: "Wildcat's Wrench",
@@ -16,7 +27,7 @@ export const wildcatsWrench: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e46266028977431da15b820d9f665664",
-    tcgPlayer: 538229,
+    tcgPlayer: "538229",
   },
   text: [
     {
@@ -30,7 +41,10 @@ export const wildcatsWrench: ItemCard = {
         exert: true,
       },
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         target: {
           cardTypes: ["location"],
           count: 1,

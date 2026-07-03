@@ -4,6 +4,17 @@ import { cybugInvasiveEnemyI18n } from "./127-cy-bug-invasive-enemy.i18n";
 export const cybugInvasiveEnemy: CharacterCard = {
   id: "084",
   canonicalId: "ci_084",
+  slug: "lorcana-ci_084",
+  printings: [
+    {
+      id: "set7-127",
+      artId: "set7-127",
+      setCode: "set7",
+      collectorNumber: "127",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-127"],
   cardType: "character",
   name: "Cy-Bug",
@@ -20,7 +31,7 @@ export const cybugInvasiveEnemy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b9cf5f433cd840c295d3b74c39583ee1",
-    tcgPlayer: 619475,
+    tcgPlayer: "619475",
   },
   text: [
     {

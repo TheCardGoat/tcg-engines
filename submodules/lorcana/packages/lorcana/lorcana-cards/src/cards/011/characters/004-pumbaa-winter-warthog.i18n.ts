@@ -16,7 +16,7 @@ export const pumbaaWinterWarthogI18n: Record<Languages, I18nProperties> = {
     version: "Winter-Warzenschwein",
     text: [
       {
-        title: "DIE DINGE AUFRÜTTELN",
+        title: "Die Dinge aufrütteln",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle gegnerischen Mitspielenden je 1 Karte aus ihrer Hand und werfen sie ab.",
       },
@@ -27,7 +27,7 @@ export const pumbaaWinterWarthogI18n: Record<Languages, I18nProperties> = {
     version: "Phacochère hivernal",
     text: [
       {
-        title: "SECOUEZ LES CHOSES",
+        title: "Secouez les choses",
         description: "Lorsque vous jouez ce personnage, chaque adversaire défausse une carte.",
       },
     ],
@@ -37,7 +37,7 @@ export const pumbaaWinterWarthogI18n: Record<Languages, I18nProperties> = {
     version: "Facocero Invernale",
     text: [
       {
-        title: "DARE UNA SCOSSA",
+        title: "Dare una Scossa",
         description:
           "Quando giochi questo personaggio, ogni avversario sceglie e scarta una carta.",
       },

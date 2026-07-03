@@ -11,10 +11,28 @@ export const itCallsMeI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Il m'appelle",
-    text: "Piochez une carte. Choisissez ensuite jusqu'à 3 cartes de la défausse d'un adversaire, puis remettez-les dans sa pioche et remélangez-la.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 1 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Piochez une carte. Choisissez ensuite jusqu'à 3 cartes de la défausse d'un adversaire, puis remettez-les dans sa pioche et remélangez-la.",
+      },
+    ],
   },
   it: {
     name: "Per Nome",
-    text: "(Un personaggio con costo 1 o superiore può per giocare questa canzone gratis.) Pesca una carta. Dopodiché, scegli fino a 3 carte dagli scarti di un avversario a tua scelta e rimescolale nel suo mazzo.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 1 o superiore può {E} per giocare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Pesca una carta. Dopodiché, scegli fino a 3 carte dagli scarti di un avversario a tua scelta e rimescolale nel suo mazzo.",
+      },
+    ],
   },
 };

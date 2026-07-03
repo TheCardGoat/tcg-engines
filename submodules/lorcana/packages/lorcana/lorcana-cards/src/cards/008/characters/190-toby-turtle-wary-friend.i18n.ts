@@ -16,9 +16,9 @@ export const tobyTurtleWaryFriendI18n: Record<Languages, I18nProperties> = {
     version: "Vorsichtiger Freund",
     text: [
       {
-        title: "HARTE SCHALE",
+        title: "Harte Schale",
         description:
-          "Solange dieser Charakter erschöpft ist, erhält er Robust +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+          "Solange dieser Charakter erschöpft ist, erhält er <Robust> +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const tobyTurtleWaryFriendI18n: Record<Languages, I18nProperties> = {
     version: "Ami prudent",
     text: [
       {
-        title: "CARAPACE SOLIDE",
-        description: "Tant que ce personnage est épuisé, il gagne Résistance +1.",
+        title: "Carapace solide",
+        description: "Tant que ce personnage est épuisé, il gagne <Résistance> +1.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const tobyTurtleWaryFriendI18n: Record<Languages, I18nProperties> = {
     version: "Amico Prudente",
     text: [
       {
-        title: "GUSCIO DURO",
-        description: "Mentre questo personaggio è impegnato, ottiene Resistere +1.",
+        title: "Guscio Duro",
+        description: "Mentre questo personaggio è impegnato, ottiene <Resistere> +1.",
       },
     ],
   },

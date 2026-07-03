@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { pinocchioOnTheRunI18n } from "./057-pinocchio-on-the-run.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const pinocchioOnTheRun: CharacterCard = {
   id: "e9v",
   canonicalId: "ci_e9v",
+  slug: "lorcana-ci_e9v",
+  printings: [
+    {
+      id: "set2-057",
+      artId: "set2-057",
+      setCode: "set2",
+      collectorNumber: "57",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-057"],
   cardType: "character",
   name: "Pinocchio",
@@ -21,7 +33,7 @@ export const pinocchioOnTheRun: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a3bfa4a999c04a9ea29d4877f877474e",
-    tcgPlayer: 527626,
+    tcgPlayer: "527626",
   },
   text: [
     {

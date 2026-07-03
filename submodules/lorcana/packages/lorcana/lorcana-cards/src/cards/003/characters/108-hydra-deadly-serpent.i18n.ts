@@ -8,7 +8,7 @@ export const hydraDeadlySerpentI18n: Record<Languages, I18nProperties> = {
       {
         title: "WATCH THE TEETH",
         description:
-          "Whenever this character takes damage, deal that much damage to chosen opposing character.",
+          "Whenever this character is dealt damage, deal that much damage to chosen opposing character.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const hydraDeadlySerpentI18n: Record<Languages, I18nProperties> = {
     version: "Tödliche Schlange",
     text: [
       {
-        title: "VORSICHT ZÄHNE!",
+        title: "Vorsicht Zähne!",
         description:
-          "Jedes Mal, wenn diesem Charakter Schaden zugefügt wird, füge einem gegnerischen Charakter deiner Wahl genauso viel Schaden zu.",
+          "Jedes Mal, wenn dieser Charakter Schaden erhält, füge einem gegnerischen Charakter deiner Wahl genauso viel Schaden zu.",
       },
     ],
   },
@@ -28,7 +28,7 @@ export const hydraDeadlySerpentI18n: Record<Languages, I18nProperties> = {
     version: "Serpent mortel",
     text: [
       {
-        title: "ATTENTION AUX DENTS",
+        title: "Attention aux dents",
         description:
           "Chaque fois que ce personnage subit des dommages, choisissez un personnage adverse et infligez-lui le même nombre de dommages.",
       },
@@ -39,7 +39,7 @@ export const hydraDeadlySerpentI18n: Record<Languages, I18nProperties> = {
     version: "Serpente Letale",
     text: [
       {
-        title: "ATTENTO AI DENTI",
+        title: "Attento ai Denti",
         description:
           "Ogni volta che questo personaggio subisce danno, infliggine lo stesso ammontare a un personaggio avversario a tua scelta.",
       },

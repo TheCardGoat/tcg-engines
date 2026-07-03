@@ -16,7 +16,7 @@ export const mushuSneakyDragonEpicI18n: Record<Languages, I18nProperties> = {
     version: "Listiger Drache",
     text: [
       {
-        title: "ÜBERRASCHUNG AUS SCHNEE",
+        title: "Überraschung aus Schnee",
         description:
           "Wenn du diesen Charakter ausspielst, füge einem Charakter deiner Wahl 2 Schaden zu.",
       },
@@ -27,7 +27,7 @@ export const mushuSneakyDragonEpicI18n: Record<Languages, I18nProperties> = {
     version: "Dragon malicieux",
     text: [
       {
-        title: "SURPRISE ENNEIGÉE",
+        title: "Surprise enneigée",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage et infligez-lui 2 dommages.",
       },
@@ -38,7 +38,7 @@ export const mushuSneakyDragonEpicI18n: Record<Languages, I18nProperties> = {
     version: "Drago Furbetto",
     text: [
       {
-        title: "SORPRESA NEVOSA",
+        title: "Sorpresa Nevosa",
         description:
           "Quando giochi questo personaggio, infliggi 2 danni a un personaggio a tua scelta.",
       },

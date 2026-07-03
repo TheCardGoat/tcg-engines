@@ -4,6 +4,17 @@ import { bellwetherMasterManipulatorI18n } from "./082-bellwether-master-manipul
 export const bellwetherMasterManipulator: CharacterCard = {
   id: "bgf",
   canonicalId: "ci_bgf",
+  slug: "lorcana-ci_bgf",
+  printings: [
+    {
+      id: "set10-082",
+      artId: "set10-082",
+      setCode: "set10",
+      collectorNumber: "82",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-082"],
   cardType: "character",
   name: "Bellwether",
@@ -20,7 +31,7 @@ export const bellwetherMasterManipulator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5c98a0c3b0924e90bb20d53354594c02",
-    tcgPlayer: 658342,
+    tcgPlayer: "658342",
   },
   text: [
     {

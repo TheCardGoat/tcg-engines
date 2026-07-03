@@ -16,7 +16,7 @@ export const treasureGuardianProtectorOfTheCaveI18n: Record<Languages, I18nPrope
     version: "Wächter der Höhle",
     text: [
       {
-        title: "WER STÖRT MICH IN MEINEM SCHLUMMER?",
+        title: "Wer stört mich in meinem Schlummer?",
         description:
           "Dieser Charakter kann nicht herausfordern oder erkunden, außer er ist an einem Ort.",
       },
@@ -27,7 +27,7 @@ export const treasureGuardianProtectorOfTheCaveI18n: Record<Languages, I18nPrope
     version: "Protecteur de la Caverne",
     text: [
       {
-        title: "QUI DONC VIENT TROUBLER MON REPOS?",
+        title: "Qui donc vient troubler mon repos?",
         description:
           "Ce personnage ne peut ni défier, ni être envoyé à l'aventure à moins qu'il ne soit présent sur un lieu.",
       },
@@ -38,7 +38,7 @@ export const treasureGuardianProtectorOfTheCaveI18n: Record<Languages, I18nPrope
     version: "Protettore della Caverna",
     text: [
       {
-        title: "CHI OSA DISTURBARE IL MIO RIPOSO?",
+        title: "Chi Osa Disturbare il Mio Riposo?",
         description:
           "Questo personaggio non può sfidare o andare all'avventura a meno che non si trovi in un luogo.",
       },

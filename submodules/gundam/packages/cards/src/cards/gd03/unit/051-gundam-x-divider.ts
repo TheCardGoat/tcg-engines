@@ -7,14 +7,17 @@ export const gd03GundamXDivider051: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD03-051",
-  externalId: "gundam:gd03-051",
-  slug: "gundam-x-divider-gd03-051",
+  canonicalId: "GD03-051",
+  externalIds: { bandai: "gundam:gd03-051" },
+  slug: "gundam-x-divider/gd03-051",
   displayName: "Gundam X Divider",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-051",
   printings: [
     {
       id: "GD03-051",
+      artId: "GD03-051",
+      setCode: "GD03",
       collectorNumber: "GD03-051",
       cardNumber: "GD03-051",
       set: {
@@ -29,6 +32,7 @@ export const gd03GundamXDivider051: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-051"],
   selectedPrintingId: "GD03-051",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-051.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-051.webp?260424",

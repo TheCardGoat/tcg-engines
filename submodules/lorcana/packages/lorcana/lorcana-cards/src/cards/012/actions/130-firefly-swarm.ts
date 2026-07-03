@@ -4,6 +4,17 @@ import { fireflySwarmI18n } from "./130-firefly-swarm.i18n";
 export const fireflySwarm: ActionCard = {
   id: "q1z",
   canonicalId: "ci_q1z",
+  slug: "lorcana-ci_q1z",
+  printings: [
+    {
+      id: "set12-130",
+      artId: "set12-130",
+      setCode: "set12",
+      collectorNumber: "130",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-130"],
   cardType: "action",
   name: "Firefly Swarm",
@@ -16,6 +27,7 @@ export const fireflySwarm: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cf31223643444ceab69c0a9fddd46f22",
+    tcgPlayer: "690548",
   },
   text: [
     {

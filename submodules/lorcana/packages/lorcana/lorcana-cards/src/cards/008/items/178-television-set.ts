@@ -4,6 +4,17 @@ import { televisionSetI18n } from "./178-television-set.i18n";
 export const televisionSet: ItemCard = {
   id: "I9h",
   canonicalId: "ci_I9h",
+  slug: "lorcana-ci_I9h",
+  printings: [
+    {
+      id: "set8-178",
+      artId: "set8-178",
+      setCode: "set8",
+      collectorNumber: "178",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-178"],
   cardType: "item",
   name: "Television Set",
@@ -16,7 +27,7 @@ export const televisionSet: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_133af5231e8e4e3798381e8a03b4ae09",
-    tcgPlayer: 631686,
+    tcgPlayer: "631686",
   },
   text: [
     {
@@ -42,8 +53,14 @@ export const televisionSet: ItemCard = {
             min: 0,
             max: 1,
             filters: [
-              { type: "card-type", cardType: "character" },
-              { type: "has-classification", classification: "Puppy" },
+              {
+                type: "card-type",
+                cardType: "character",
+              },
+              {
+                type: "has-classification",
+                classification: "Puppy",
+              },
             ],
           },
           {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { luisaMadrigalMagicallyStrongOneI18n } from "./047-luisa-madrigal-magically-strong-one.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
   id: "MWD",
   canonicalId: "ci_tVH",
+  slug: "lorcana-ci_tVH",
+  printings: [
+    {
+      id: "set4-047",
+      artId: "set4-047",
+      setCode: "set4",
+      collectorNumber: "47",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-047", "set9-058"],
   cardType: "character",
   name: "Luisa Madrigal",
@@ -21,7 +33,7 @@ export const luisaMadrigalMagicallyStrongOne: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4ce57ce9f6484fd386b2add4847b5dc8",
-    tcgPlayer: 650002,
+    tcgPlayer: "650002",
   },
   text: "Rush",
   classifications: ["Storyborn", "Ally", "Madrigal"],

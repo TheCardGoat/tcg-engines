@@ -4,6 +4,17 @@ import { marieFavoredKittenI18n } from "./166-marie-favored-kitten.i18n";
 export const marieFavoredKitten: CharacterCard = {
   id: "44g",
   canonicalId: "ci_44g",
+  slug: "lorcana-ci_44g",
+  printings: [
+    {
+      id: "set7-166",
+      artId: "set7-166",
+      setCode: "set7",
+      collectorNumber: "166",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-166"],
   cardType: "character",
   name: "Marie",
@@ -20,7 +31,7 @@ export const marieFavoredKitten: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4022fcc6593a41dfb1f50cc003acd15c",
-    tcgPlayer: 618156,
+    tcgPlayer: "618156",
   },
   text: [
     {

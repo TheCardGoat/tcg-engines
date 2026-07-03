@@ -16,8 +16,9 @@ export const yokaiIntellectualSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Intellektueller Intrigant",
     text: [
       {
-        title: "ERNEUERN",
-        description: "Du zahlst 1 weniger, um Charaktere mithilfe von Gestaltwandel auszuspielen.",
+        title: "Erneuern",
+        description:
+          "Du zahlst 1 {I} weniger, um Charaktere mithilfe von <Gestaltwandel> auszuspielen.",
       },
     ],
   },
@@ -26,8 +27,8 @@ export const yokaiIntellectualSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Comploteur érudit",
     text: [
       {
-        title: "INNOVER",
-        description: "Jouer des personnages via leur capacité Alter vous coûte 1 de moins.",
+        title: "Innover",
+        description: "Jouer des personnages via leur capacité <Alter> vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -36,9 +37,9 @@ export const yokaiIntellectualSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Cospiratore Intellettuale",
     text: [
       {
-        title: "INNOVARE",
+        title: "Innovare",
         description:
-          "Paga 1 in meno per giocare i personaggi usando la loro abilità Trasformazione.",
+          "Paga 1 {I} in meno per giocare i personaggi usando la loro abilità <Trasformazione>.",
       },
     ],
   },

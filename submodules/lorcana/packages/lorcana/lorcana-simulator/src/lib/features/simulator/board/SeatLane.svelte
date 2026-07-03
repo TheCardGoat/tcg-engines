@@ -272,10 +272,10 @@ function confirmPendingAction(): void {
                         aria-label={effectCard.label}
                         {...props}
                       >
-                        {#if effectCard.set && effectCard.cardNumber && !effectCard.isMasked}
+                        {#if (effectCard.imageSet ?? effectCard.set) && (effectCard.imageCardNumber ?? effectCard.cardNumber) && !effectCard.isMasked}
                           <CardImage
-                            set={effectCard.set}
-                            number={effectCard.cardNumber}
+                            set={effectCard.imageSet ?? effectCard.set ?? ""}
+                            number={effectCard.imageCardNumber ?? effectCard.cardNumber ?? 0}
                             crop="art_only"
                             alt={effectCard.label}
                             class="seat-effect-card__image"
@@ -425,10 +425,10 @@ function confirmPendingAction(): void {
                         aria-label={effectCard.label}
                         {...props}
                       >
-                        {#if effectCard.set && effectCard.cardNumber && !effectCard.isMasked}
+                        {#if (effectCard.imageSet ?? effectCard.set) && (effectCard.imageCardNumber ?? effectCard.cardNumber) && !effectCard.isMasked}
                           <CardImage
-                            set={effectCard.set}
-                            number={effectCard.cardNumber}
+                            set={effectCard.imageSet ?? effectCard.set ?? ""}
+                            number={effectCard.imageCardNumber ?? effectCard.cardNumber ?? 0}
                             crop="art_only"
                             alt={effectCard.label}
                             class="seat-effect-card__image"

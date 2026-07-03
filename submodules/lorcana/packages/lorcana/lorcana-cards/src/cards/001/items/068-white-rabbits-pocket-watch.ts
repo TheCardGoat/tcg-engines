@@ -4,6 +4,17 @@ import { whiteRabbitsPocketWatchI18n } from "./068-white-rabbits-pocket-watch.i1
 export const whiteRabbitsPocketWatch: ItemCard = {
   id: "H4U",
   canonicalId: "ci_lFD",
+  slug: "lorcana-ci_lFD",
+  printings: [
+    {
+      id: "set1-068",
+      artId: "set1-068",
+      setCode: "set1",
+      collectorNumber: "68",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-068", "set9-066"],
   cardType: "item",
   name: "White Rabbit’s Pocket Watch",
@@ -16,13 +27,13 @@ export const whiteRabbitsPocketWatch: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d483668415d54d07861f290ceebc0c38",
-    tcgPlayer: 650009,
+    tcgPlayer: "650009",
   },
   text: [
     {
-      title: "I'M LATE!, 1",
+      title: "I'm Late!",
       description:
-        "— Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
+        "{E}, 1 {I} — Chosen character gains <Rush> this turn. (They can challenge the turn they're played.)",
     },
   ],
   abilities: [

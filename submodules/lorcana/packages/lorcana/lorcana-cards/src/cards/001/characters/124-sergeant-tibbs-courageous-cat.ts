@@ -4,6 +4,17 @@ import { sergeantTibbsCourageousCatI18n } from "./124-sergeant-tibbs-courageous-
 export const sergeantTibbsCourageousCat: CharacterCard = {
   id: "Dn2",
   canonicalId: "ci_VLR",
+  slug: "lorcana-ci_VLR",
+  printings: [
+    {
+      id: "set1-124",
+      artId: "set1-124",
+      setCode: "set1",
+      collectorNumber: "124",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-124", "set9-128"],
   cardType: "character",
   name: "Sergeant Tibbs",
@@ -21,7 +32,7 @@ export const sergeantTibbsCourageousCat: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_d86fe241e2434bc49ee61f5516366f08",
-    tcgPlayer: 650063,
+    tcgPlayer: "650063",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: sergeantTibbsCourageousCatI18n,

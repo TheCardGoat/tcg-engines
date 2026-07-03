@@ -14,8 +14,8 @@ export const sunglassesI18n: Record<Languages, I18nProperties> = {
     name: "Sonnenbrille",
     text: [
       {
-        title: "SPIONAGETECHNIK",
-        description: "— Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
+        title: "Spionagetechnik",
+        description: "{E} — Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const sunglassesI18n: Record<Languages, I18nProperties> = {
     name: "Lunettes de soleil",
     text: [
       {
-        title: "ESPIONNAGE",
-        description: "— Piochez une carte, puis défaussez une carte.",
+        title: "Espionnage",
+        description: "{E} — Piochez une carte, puis défaussez une carte.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const sunglassesI18n: Record<Languages, I18nProperties> = {
     name: "Occhiali da Sole",
     text: [
       {
-        title: "GADGET DA SPIONAGGIO",
-        description: "— Pesca una carta, poi scegli e scarta una carta.",
+        title: "Gadget da Spionaggio",
+        description: "{E} — Pesca una carta, poi scegli e scarta una carta.",
       },
     ],
   },

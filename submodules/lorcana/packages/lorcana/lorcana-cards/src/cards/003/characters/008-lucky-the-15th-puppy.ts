@@ -4,6 +4,17 @@ import { luckyThe15thPuppyI18n } from "./008-lucky-the-15th-puppy.i18n";
 export const luckyThe15thPuppy: CharacterCard = {
   id: "nH3",
   canonicalId: "ci_nH3",
+  slug: "lorcana-ci_nH3",
+  printings: [
+    {
+      id: "set3-008",
+      artId: "set3-008",
+      setCode: "set3",
+      collectorNumber: "8",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-008"],
   cardType: "character",
   name: "Lucky",
@@ -20,7 +31,7 @@ export const luckyThe15thPuppy: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_885f1f8ac17a447fa3c9f7b668fa8663",
-    tcgPlayer: 538354,
+    tcgPlayer: "538354",
   },
   text: [
     {

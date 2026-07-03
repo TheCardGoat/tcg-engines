@@ -4,6 +4,17 @@ import { theTerrorThatFlapsInTheNightI18n } from "./197-the-terror-that-flaps-in
 export const theTerrorThatFlapsInTheNight: ActionCard = {
   id: "Jrb",
   canonicalId: "ci_Jrb",
+  slug: "lorcana-ci_Jrb",
+  printings: [
+    {
+      id: "set11-197",
+      artId: "set11-197",
+      setCode: "set11",
+      collectorNumber: "197",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-197"],
   cardType: "action",
   name: "The Terror That Flaps in the Night",
@@ -16,7 +27,7 @@ export const theTerrorThatFlapsInTheNight: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e615766ea0d647aba10803d596d3adb7",
-    tcgPlayer: 677141,
+    tcgPlayer: "677141",
   },
   text: "Deal 2 damage to chosen opposing character. If you have a character named Darkwing Duck in play, deal 3 damage instead.",
   abilities: [

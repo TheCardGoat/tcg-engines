@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { nickWildeSlyFoxI18n } from "./150-nick-wilde-sly-fox.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const nickWildeSlyFox: CharacterCard = {
   id: "2oi",
   canonicalId: "ci_2oi",
+  slug: "lorcana-ci_2oi",
+  printings: [
+    {
+      id: "set6-150",
+      artId: "set6-150",
+      setCode: "set6",
+      collectorNumber: "150",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-150"],
   cardType: "character",
   name: "Nick Wilde",
@@ -21,7 +33,7 @@ export const nickWildeSlyFox: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_48304fa82c024098bf755ea123884358",
-    tcgPlayer: 591133,
+    tcgPlayer: "591133",
   },
   text: [
     {

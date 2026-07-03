@@ -17,9 +17,9 @@ export const sneezyVeryAllergicI18n: Record<Languages, I18nProperties> = {
     version: "Äußerst allergisch",
     text: [
       {
-        title: "HATSCHI!",
+        title: "Hatschi!",
         description:
-          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn du einen anderen der Sieben Zwerge ausspielst, darfst du einem Charakter deiner Wahl in diesem Zug -1 geben.",
+          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn du einen anderen der Sieben Zwerge ausspielst, darfst du einem Charakter deiner Wahl in diesem Zug -1 {S} geben.",
       },
     ],
   },
@@ -28,15 +28,15 @@ export const sneezyVeryAllergicI18n: Record<Languages, I18nProperties> = {
     version: "Très allergique",
     text: [
       {
-        title: "AAA...TCHOUM!",
+        title: "Aaa...tchoum!",
         description:
-          "Lorsque vous jouez ce personnage ou un autre personnage Sept Nains, choisissez un personnage qui subit -1 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage ou un autre personnage Sept Nains, choisissez un personnage qui subit -1 {S} pour le reste de ce tour.",
       },
     ],
   },
   it: {
     name: "Sneezy",
     version: "Very Allergic",
-    text: "Ah-choo!\\ Whenever you play this character or another Seven Dwarfs character, you may give chosen character -1 this turn.",
+    text: "Ah-choo!\\ Whenever you play this character or another Seven Dwarfs character, you may give chosen character -1 {S} this turn.",
   },
 };

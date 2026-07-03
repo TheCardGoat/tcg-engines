@@ -7,14 +7,17 @@ export const gd02MouarSDetermination102: CommandCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD02-102",
-  externalId: "gundam:gd02-102",
-  slug: "mouar-s-determination-gd02-102",
+  canonicalId: "GD02-102",
+  externalIds: { bandai: "gundam:gd02-102" },
+  slug: "mouar-s-determination/gd02-102",
   displayName: "Mouar’s Determination",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-102",
   printings: [
     {
       id: "GD02-102",
+      artId: "GD02-102",
+      setCode: "GD02",
       collectorNumber: "GD02-102",
       cardNumber: "GD02-102",
       set: {
@@ -29,6 +32,7 @@ export const gd02MouarSDetermination102: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-102"],
   selectedPrintingId: "GD02-102",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-102.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-102.webp?260424",

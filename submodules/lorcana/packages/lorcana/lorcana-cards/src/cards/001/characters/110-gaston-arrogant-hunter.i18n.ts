@@ -9,31 +9,16 @@ export const gastonArrogantHunterI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Gaston",
     version: "Arrogant Hunter",
-    text: [
-      {
-        title: "Reckless",
-        description: "(This character can't quest and must challenge each turn if able.)",
-      },
-    ],
+    text: "<Reckless> (This character can't quest and must challenge each turn if able.)",
   },
   fr: {
     name: "Gaston",
     version: "Arrogant Hunter",
-    text: [
-      {
-        title: "Reckless",
-        description: "(This character can't quest and must challenge each turn if able.)",
-      },
-    ],
+    text: "<Reckless> (This character can't quest and must challenge each turn if able.)",
   },
   it: {
     name: "Gaston",
     version: "Arrogant Hunter",
-    text: [
-      {
-        title: "Reckless",
-        description: "(This character can't quest and must challenge each turn if able.)",
-      },
-    ],
+    text: "<Reckless> (This character can't quest and must challenge each turn if able.)",
   },
 };

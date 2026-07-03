@@ -20,12 +20,12 @@ export const moanaIslandExplorerI18n: Record<Languages, I18nProperties> = {
     version: "Erforscherin von Inseln",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "ABENTEUERGEIST",
+        title: "Abenteuergeist",
         description:
-          "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, wähle einen deiner anderen Charaktere. Jener erhält in diesem Zug +3.",
+          "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, wähle einen deiner anderen Charaktere. Jener erhält in diesem Zug +3 {S}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const moanaIslandExplorerI18n: Record<Languages, I18nProperties> = {
     version: "Exploratrice d'île",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "ESPRIT D'AVENTURE",
+        title: "Esprit d'aventure",
         description:
-          "Chaque fois que ce personnage en défie un autre, choisissez un autre de vos personnages qui gagne +3 pour le reste de ce tour.",
+          "Chaque fois que ce personnage en défie un autre, choisissez un autre de vos personnages qui gagne +3 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const moanaIslandExplorerI18n: Record<Languages, I18nProperties> = {
     version: "Esploratrice dell'Isola",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "SPIRITO AVVENTUROSO",
+        title: "Spirito Avventuroso",
         description:
-          "Ogni volta che questo personaggio sfida un altro personaggio, un tuo altro personaggio a tua scelta riceve +3 per questo turno.",
+          "Ogni volta che questo personaggio sfida un altro personaggio, un tuo altro personaggio a tua scelta riceve +3 {S} per questo turno.",
       },
     ],
   },

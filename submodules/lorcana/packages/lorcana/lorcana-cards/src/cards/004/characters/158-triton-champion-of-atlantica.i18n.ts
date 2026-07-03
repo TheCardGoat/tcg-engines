@@ -19,11 +19,12 @@ export const tritonChampionOfAtlanticaI18n: Record<Languages, I18nProperties> = 
     version: "Herrscher von Atlantica",
     text: [
       {
-        title: "Gestaltwandel 6",
+        title:
+          "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Triton-Charaktere auszuspielen.)",
       },
       {
-        title: "EINDRUCKSVOLLE ERSCHEINUNG",
-        description: "Gegnerische Charaktere erhalten -1 für jeden Ort, den du im Spiel hast.",
+        title: "Eindrucksvolle Erscheinung",
+        description: "Gegnerische Charaktere erhalten -1 {S} für jeden Ort, den du im Spiel hast.",
       },
     ],
   },
@@ -32,11 +33,13 @@ export const tritonChampionOfAtlanticaI18n: Record<Languages, I18nProperties> = 
     version: "Champion d'Atlantica",
     text: [
       {
-        title: "Alter 6",
+        title:
+          "<Alter> 6 (Vous pouvez payer 6 {I} pour jouer ce personnage sur l'un de vos personnages Triton.)",
       },
       {
-        title: "PRÉSENCE IMPOSANTE",
-        description: "Les personnages adverses subissent -1 pour chaque lieu que vous avez en jeu.",
+        title: "Présence imposante",
+        description:
+          "Les personnages adverses subissent -1 {S} pour chaque lieu que vous avez en jeu.",
       },
     ],
   },
@@ -45,11 +48,12 @@ export const tritonChampionOfAtlanticaI18n: Record<Languages, I18nProperties> = 
     version: "Campione di Atlantica",
     text: [
       {
-        title: "Trasformazione 6",
+        title:
+          "<Trasformazione> 6 (Puoi pagare 6 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Tritone.)",
       },
       {
-        title: "PRESENZA IMPONENTE",
-        description: "I personaggi avversari ricevono -1 per ogni luogo che hai in gioco.",
+        title: "Presenza Imponente",
+        description: "I personaggi avversari ricevono -1 {S} per ogni luogo che hai in gioco.",
       },
     ],
   },

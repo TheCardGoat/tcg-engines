@@ -4,6 +4,17 @@ import { anastasiaBossyStepsisterI18n } from "./113-anastasia-bossy-stepsister.i
 export const anastasiaBossyStepsister: CharacterCard = {
   id: "zB6",
   canonicalId: "ci_zB6",
+  slug: "lorcana-ci_zB6",
+  printings: [
+    {
+      id: "set7-113",
+      artId: "set7-113",
+      setCode: "set7",
+      collectorNumber: "113",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-113"],
   cardType: "character",
   name: "Anastasia",
@@ -20,13 +31,13 @@ export const anastasiaBossyStepsister: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_17faea698cdc496d81f840310128074b",
-    tcgPlayer: 619467,
+    tcgPlayer: "619467",
   },
   text: [
     {
-      title: "OH, I HATE THIS!",
+      title: "OH,",
       description:
-        "Whenever this character is challenged, the challenging player chooses and discards a card.",
+        "I HATE THIS! Whenever this character is challenged, the challenging player chooses and discards a card.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

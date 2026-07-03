@@ -11,10 +11,28 @@ export const allIsFoundI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "La berceuse d'Ahtohallan",
-    text: "Placez jusqu'à 2 cartes de votre défausse dans votre réserve d'encre, face cachée et épuisées.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Placez jusqu'à 2 cartes de votre défausse dans votre réserve d'encre, face cachée et épuisées.",
+      },
+    ],
   },
   it: {
     name: "Un Rifugio Ha Trovato",
-    text: "(Un personaggio con costo 5 o superiore può per cantare questa canzone gratis.) Aggiungi fino a 2 carte dai tuoi scarti al tuo calamaio, a faccia in giù e impegnate.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Aggiungi fino a 2 carte dai tuoi scarti al tuo calamaio, a faccia in giù e impegnate.",
+      },
+    ],
   },
 };

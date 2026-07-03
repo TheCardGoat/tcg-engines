@@ -19,12 +19,13 @@ export const sheriffOfNottinghamBushelBritchesI18n: Record<Languages, I18nProper
     version: "Der alte Geldsack",
     text: [
       {
-        title: "SCHON DAS KLEINSTE BISSCHEN HILFT",
+        title: "Schon das kleinste Bisschen hilft",
         description:
-          "Für jeden Gegenstand den du im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jeden Gegenstand den du im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
     ],
   },
@@ -33,11 +34,13 @@ export const sheriffOfNottinghamBushelBritchesI18n: Record<Languages, I18nProper
     version: "Immonde personnage",
     text: [
       {
-        title:
-          "Y A PAS DE P'TITES PIÈCES Jouer ce personnage vous coûte 1 de moins pour chaque objet que vous avez en jeu.",
+        title: "Y a pas de p'tites pièces",
+        description:
+          "Jouer ce personnage vous coûte 1 {I} de moins pour chaque objet que vous avez en jeu.",
       },
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
     ],
   },
@@ -46,12 +49,13 @@ export const sheriffOfNottinghamBushelBritchesI18n: Record<Languages, I18nProper
     version: "Vecchio Bracalone",
     text: [
       {
-        title: "TUTTO FA, ANCHE SE",
+        title: "Tutto Fa, Anche Se È Poco",
         description:
-          "È POCO Per ogni oggetto che hai in gioco, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni oggetto che hai in gioco, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
     ],
   },

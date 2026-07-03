@@ -20,10 +20,11 @@ export const calhounCourageousRescuerI18n: Record<Languages, I18nProperties> = {
     version: "Mutige Retterin",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Sergeant-Calhoun-Charaktere auszuspielen.)",
       },
       {
-        title: "ZURÜCK ZU DEN STARTPOSITIONEN!",
+        title: "Zurück zu den Startpositionen!",
         description:
           "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, darfst du eine Rennfahrer-Charakterkarte aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
@@ -34,10 +35,11 @@ export const calhounCourageousRescuerI18n: Record<Languages, I18nProperties> = {
     version: "Sauveteuse pleine de courage",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Calhoun.)",
       },
       {
-        title: "REPRENEZ VOTRE POSITION DE DÉPART!",
+        title: "Reprenez votre position de départ!",
         description:
           "Chaque fois que ce personnage en défie un autre, vous pouvez renvoyer une carte Pilote de votre défausse dans votre main.",
       },
@@ -48,10 +50,11 @@ export const calhounCourageousRescuerI18n: Record<Languages, I18nProperties> = {
     version: "Soccorritrice Coraggiosa",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Calhoun.)",
       },
       {
-        title: "IN POSIZIONE DI PARTENZA!",
+        title: "In Posizione di Partenza!",
         description:
           "Ogni volta che questo personaggio sfida un altro personaggio, puoi riprendere in mano una carta personaggio Pilota dai tuoi scarti.",
       },

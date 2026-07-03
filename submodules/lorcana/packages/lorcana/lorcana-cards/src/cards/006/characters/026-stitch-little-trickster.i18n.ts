@@ -16,8 +16,8 @@ export const stitchLittleTricksterI18n: Record<Languages, I18nProperties> = {
     version: "Kleiner Scherzbold",
     text: [
       {
-        title: "HELFENDE HAND 1",
-        description: "— Dieser Charakter erhält in diesem Zug +1.",
+        title: "Helfende Hand",
+        description: "1 {I} — Dieser Charakter erhält in diesem Zug +1 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const stitchLittleTricksterI18n: Record<Languages, I18nProperties> = {
     version: "Petit farceur",
     text: [
       {
-        title: "BESOIN D'UN COUP DE MAIN? 1",
-        description: "— Ce personnage gagne +1 pour le reste du tour.",
+        title: "Besoin d'un coup de main?",
+        description: "1 {I} — Ce personnage gagne +1 {S} pour le reste du tour.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const stitchLittleTricksterI18n: Record<Languages, I18nProperties> = {
     version: "Piccolo Imbroglione",
     text: [
       {
-        title: "SERVE UNA MANO? 1",
-        description: "— Questo personaggio riceve +1 per questo turno.",
+        title: "Serve una Mano?",
+        description: "1 {I} — Questo personaggio riceve +1 {S} per questo turno.",
       },
     ],
   },

@@ -16,9 +16,9 @@ export const bellesHouseMauricesWorkshopEnchantedI18n: Record<Languages, I18nPro
     version: "Maurices Werkstatt",
     text: [
       {
-        title: "LABORATORIUM",
+        title: "Laboratorium",
         description:
-          "Solange du mindestens einen Charakter an diesem Ort hast, zahlst du 1 weniger, um Gegenstände auszuspielen.",
+          "Solange du mindestens einen Charakter an diesem Ort hast, zahlst du 1 {I} weniger, um Gegenstände auszuspielen.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const bellesHouseMauricesWorkshopEnchantedI18n: Record<Languages, I18nPro
     version: "Atelier de Maurice",
     text: [
       {
-        title: "LABORATOIRE",
+        title: "Laboratoire",
         description:
-          "Tant que vous avez au moins un personnage sur ce lieu, les objets vous coûtent 1 de moins.",
+          "Tant que vous avez au moins un personnage sur ce lieu, les objets vous coûtent 1 {I} de moins.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const bellesHouseMauricesWorkshopEnchantedI18n: Record<Languages, I18nPro
     version: "Officina di Maurice",
     text: [
       {
-        title: "LABORATORIO",
+        title: "Laboratorio",
         description:
-          "Mentre hai uno o più personaggi in questo luogo, paga 1 in meno per giocare gli oggetti.",
+          "Mentre hai uno o più personaggi in questo luogo, paga 1 {I} in meno per giocare gli oggetti.",
       },
     ],
   },

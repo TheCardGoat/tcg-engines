@@ -2,8 +2,19 @@ import type { ItemCard } from "@tcg/lorcana-types";
 import { halfHexwellCrownI18n } from "./065-half-hexwell-crown.i18n";
 
 export const halfHexwellCrown: ItemCard = {
-  id: "UGD",
+  id: "Rbn",
   canonicalId: "ci_o4o",
+  slug: "lorcana-ci_o4o",
+  printings: [
+    {
+      id: "set5-065",
+      artId: "set5-065",
+      setCode: "set5",
+      collectorNumber: "65",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-065"],
   cardType: "item",
   name: "Half Hexwell Crown",
@@ -16,7 +27,7 @@ export const halfHexwellCrown: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cbd6fc9596f14329af2f0c237a7be6a2",
-    tcgPlayer: 557538,
+    tcgPlayer: "557538",
   },
   text: [
     {

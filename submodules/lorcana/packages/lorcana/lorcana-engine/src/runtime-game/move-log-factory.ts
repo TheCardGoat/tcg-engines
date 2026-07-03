@@ -42,6 +42,8 @@ type BagLogInput = {
   status: ResolveBagStatus;
   cancelReason?: "no-valid-targets" | "condition-not-met" | "restriction";
   targets?: Array<CardInstanceId | PlayerId>;
+  effectType?: "play-card";
+  sourceZone?: "discard";
   lookedAtInkwell?: LookedAtInkwellDetail;
 };
 
@@ -123,12 +125,84 @@ function buildVisibleMoveLog(
   }
 
   const moveLog = convertProjectedEntry(actionEntry, timestamp, outcomes, playerId);
+  if (moveLog) {
+    appendSecondaryProjectedMessages(moveLog, moveLogEntries, actionEntry);
+  }
   const lookedAtInkwell = extractLookAtInkwellDetail(moveLogEntries);
   if (moveLog?.moveType === "resolveBag" && lookedAtInkwell) {
     appendLookedAtInkwellMessages(moveLog, moveLog.playerId, lookedAtInkwell);
   }
 
   return moveLog;
+}
+
+function appendSecondaryProjectedMessages(
+  visible: MoveLog,
+  moveLogEntries: readonly ProjectedLogEntry[],
+  primaryEntry: ProjectedLogEntry,
+): void {
+  const revealEntries: Array<{
+    type:
+      | "lorcana.effect.resolve.revealTopCard"
+      | "lorcana.effect.resolve.revealTopCard.autoBottom";
+    values: {
+      playerId: PlayerId;
+      targetPlayerId: PlayerId;
+      revealedCardId: CardInstanceId;
+    };
+  }> = [];
+  for (const entry of moveLogEntries) {
+    if (entry === primaryEntry) {
+      continue;
+    }
+
+    const typedEntry = entry.typedEntry;
+    if (!typedEntry) {
+      continue;
+    }
+
+    if (
+      typedEntry.type !== "lorcana.effect.resolve.revealTopCard" &&
+      typedEntry.type !== "lorcana.effect.resolve.revealTopCard.autoBottom"
+    ) {
+      continue;
+    }
+
+    const values = typedEntry.values;
+    revealEntries.push({
+      type: typedEntry.type,
+      values: {
+        playerId: values.playerId as PlayerId,
+        targetPlayerId: (values.targetPlayerId ?? values.playerId) as PlayerId,
+        revealedCardId: values.revealedCardId as CardInstanceId,
+      },
+    });
+  }
+
+  const autoBottomRevealKeys = new Set(
+    revealEntries
+      .filter((entry) => entry.type === "lorcana.effect.resolve.revealTopCard.autoBottom")
+      .map((entry) => revealEntryKey(entry.values)),
+  );
+  const messages = revealEntries
+    .filter(
+      (entry) =>
+        entry.type === "lorcana.effect.resolve.revealTopCard.autoBottom" ||
+        !autoBottomRevealKeys.has(revealEntryKey(entry.values)),
+    )
+    .map((entry) => createLogMessage(entry.type, entry.values));
+
+  if (messages.length > 0) {
+    visible.public.splice(1, 0, ...messages);
+  }
+}
+
+function revealEntryKey(values: {
+  playerId: PlayerId;
+  targetPlayerId: PlayerId;
+  revealedCardId: CardInstanceId;
+}): string {
+  return `${values.playerId}:${values.targetPlayerId}:${values.revealedCardId}`;
 }
 
 function extractLookAtInkwellDetail(
@@ -255,6 +329,7 @@ const ACTION_LOG_MESSAGE_KEYS = {
   "lorcana.effect.lookAtInkwell": true,
   "lorcana.effect.lookAtInkwell.detail": true,
   "lorcana.move.playCard": true,
+  "lorcana.move.playCard.fromDiscard": true,
   "lorcana.move.playCard.shift": true,
   "lorcana.move.playCard.sing": true,
   "lorcana.move.quest": true,
@@ -487,6 +562,16 @@ function convertProjectedEntry(
     case "lorcana.move.playCard": {
       const visible = createVisibleMoveLog("playCard", playerId, timestamp);
       pushPublic(visible, "lorcana.move.playCard", {
+        playerId,
+        cardId: v.cardId as CardInstanceId,
+      });
+      appendOutcomeMessages(visible, playerId, outcomes);
+      return visible;
+    }
+
+    case "lorcana.move.playCard.fromDiscard": {
+      const visible = createVisibleMoveLog("playCard", playerId, timestamp);
+      pushPublic(visible, "lorcana.move.playCard.fromDiscard", {
         playerId,
         cardId: v.cardId as CardInstanceId,
       });
@@ -968,16 +1053,17 @@ function appendOutcomeMessages(
     );
   }
 
-  if (outcomes.loreChanged) {
+  const loreChanges = outcomes.loreChanges ?? (outcomes.loreChanged ? [outcomes.loreChanged] : []);
+  for (const loreChanged of loreChanges) {
     visible.public.push(
-      outcomes.loreChanged.operation === "add"
+      loreChanged.operation === "add"
         ? createLogMessage("lorcana.outcome.loreGained", {
-            playerId: outcomes.loreChanged.playerId,
-            amount: outcomes.loreChanged.amount,
+            playerId: loreChanged.playerId,
+            amount: loreChanged.amount,
           })
         : createLogMessage("lorcana.outcome.loreLost", {
-            playerId: outcomes.loreChanged.playerId,
-            amount: outcomes.loreChanged.amount,
+            playerId: loreChanged.playerId,
+            amount: loreChanged.amount,
           }),
     );
   }
@@ -988,10 +1074,18 @@ function appendOutcomeMessages(
     );
   }
 
+  for (const entry of outcomes.inkwellCardsExerted ?? []) {
+    visible.public.push(createLogMessage("lorcana.outcome.inkwellCardsExerted", entry));
+  }
+
   for (const cardId of outcomes.cardsReadied ?? []) {
     visible.public.push(
       createLogMessage("lorcana.outcome.cardReadied", { playerId: actorPlayerId, cardId }),
     );
+  }
+
+  for (const entry of outcomes.inkwellCardsReadied ?? []) {
+    visible.public.push(createLogMessage("lorcana.outcome.inkwellCardsReadied", entry));
   }
 
   if (outcomes.cardsMilled) {
@@ -1053,10 +1147,14 @@ function appendResolveBagMessages(visible: MoveLog, moveLog: BagLogInput): void 
                 ...commonValues,
                 abilityName: moveLog.abilityName,
                 targets,
+                ...(moveLog.effectType ? { effectType: moveLog.effectType } : {}),
+                ...(moveLog.sourceZone ? { sourceZone: moveLog.sourceZone } : {}),
               })
             : createLogMessage("lorcana.bag.resolve.completed.targets", {
                 ...commonValues,
                 targets,
+                ...(moveLog.effectType ? { effectType: moveLog.effectType } : {}),
+                ...(moveLog.sourceZone ? { sourceZone: moveLog.sourceZone } : {}),
               }),
         );
       } else {
@@ -1330,6 +1428,8 @@ function buildResolveBagMoveLog(
     status,
     cancelReason: v.cause as BagLogInput["cancelReason"],
     targets: ownerOnlyViewer ? undefined : targets,
+    effectType: v.effectType === "play-card" ? "play-card" : undefined,
+    sourceZone: v.sourceZone === "discard" ? "discard" : undefined,
   });
   appendOutcomeMessages(visible, playerId, outcomes);
   return visible;

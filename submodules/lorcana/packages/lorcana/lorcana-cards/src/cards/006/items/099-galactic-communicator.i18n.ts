@@ -15,9 +15,9 @@ export const galacticCommunicatorI18n: Record<Languages, I18nProperties> = {
     name: "Galaktischer Kommunikator",
     text: [
       {
-        title: "RESSOURCENZUTEILUNG 1,",
+        title: "Ressourcenzuteilung",
         description:
-          "Verbanne diesen Gegenstand — Schicke einen Charakter deiner Wahl mit 2 oder weniger auf die zugehörige Hand zurück.",
+          "1 {I}, Verbanne diesen Gegenstand — Schicke einen Charakter deiner Wahl mit 2 oder weniger {S} auf die zugehörige Hand zurück.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const galacticCommunicatorI18n: Record<Languages, I18nProperties> = {
     name: "Communicateur galactique",
     text: [
       {
-        title: "ALLOCATION DES RESSOURCES 1,",
+        title: "Allocation des ressources",
         description:
-          "bannissez cet objet — Renvoyez dans la main de son propriétaire un personnage avec une de 2 ou moins.",
+          "1 {I}, bannissez cet objet — Renvoyez dans la main de son propriétaire un personnage avec une {S} de 2 ou moins.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const galacticCommunicatorI18n: Record<Languages, I18nProperties> = {
     name: "Comunicatore Galattico",
     text: [
       {
-        title: "INVIO DI RISORSE 1,",
+        title: "Invio di Risorse",
         description:
-          "esilia questo oggetto — Fai riprendere in mano al suo giocatore un personaggio a tua scelta con 2 o inferiore.",
+          "1 {I}, esilia questo oggetto — Fai riprendere in mano al suo giocatore un personaggio a tua scelta con 2 {S} o inferiore.",
       },
     ],
   },

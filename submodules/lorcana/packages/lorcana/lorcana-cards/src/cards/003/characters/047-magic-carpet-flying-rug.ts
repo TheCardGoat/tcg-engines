@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { magicCarpetFlyingRugI18n } from "./047-magic-carpet-flying-rug.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const magicCarpetFlyingRug: CharacterCard = {
   id: "oLg",
   canonicalId: "ci_oLg",
+  slug: "lorcana-ci_oLg",
+  printings: [
+    {
+      id: "set3-047",
+      artId: "set3-047",
+      setCode: "set3",
+      collectorNumber: "47",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-047"],
   cardType: "character",
   name: "Magic Carpet",
@@ -21,7 +33,7 @@ export const magicCarpetFlyingRug: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_308bd5ecd73f4d26af79fb786fab2eea",
-    tcgPlayer: 539072,
+    tcgPlayer: "539072",
   },
   text: [
     {

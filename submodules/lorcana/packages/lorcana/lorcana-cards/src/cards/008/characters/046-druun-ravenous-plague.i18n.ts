@@ -9,16 +9,16 @@ export const druunRavenousPlagueI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Druun",
     version: "Gefräßige Plage",
-    text: "Herausfordern +4",
+    text: "<Herausfordern> +4 (Während dieser Charakter herausfordert, erhält er +4 {S}.)",
   },
   fr: {
     name: "Druun",
     version: "Fléau vorace",
-    text: "Offensif +4",
+    text: "<Offensif> +4",
   },
   it: {
     name: "Druun",
     version: "Flagello Famelico",
-    text: "Sfidante +4",
+    text: "<Sfidante> +4",
   },
 };

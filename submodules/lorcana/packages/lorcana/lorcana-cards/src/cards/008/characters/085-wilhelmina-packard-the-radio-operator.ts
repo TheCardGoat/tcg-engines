@@ -4,6 +4,17 @@ import { wilhelminaPackardTheRadioOperatorI18n } from "./085-wilhelmina-packard-
 export const wilhelminaPackardTheRadioOperator: CharacterCard = {
   id: "qK6",
   canonicalId: "ci_qK6",
+  slug: "lorcana-ci_qK6",
+  printings: [
+    {
+      id: "set8-085",
+      artId: "set8-085",
+      setCode: "set8",
+      collectorNumber: "85",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-085"],
   cardType: "character",
   name: "Wilhelmina Packard",
@@ -21,7 +32,7 @@ export const wilhelminaPackardTheRadioOperator: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_c20ae400ed1e4439be69f940428832fd",
-    tcgPlayer: 631406,
+    tcgPlayer: "631406",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: wilhelminaPackardTheRadioOperatorI18n,

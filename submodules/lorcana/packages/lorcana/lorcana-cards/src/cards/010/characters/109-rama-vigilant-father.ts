@@ -4,6 +4,17 @@ import { ramaVigilantFatherI18n } from "./109-rama-vigilant-father.i18n";
 export const ramaVigilantFather: CharacterCard = {
   id: "Y2X",
   canonicalId: "ci_Y2X",
+  slug: "lorcana-ci_Y2X",
+  printings: [
+    {
+      id: "set10-109",
+      artId: "set10-109",
+      setCode: "set10",
+      collectorNumber: "109",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-109"],
   cardType: "character",
   name: "Rama",
@@ -20,7 +31,7 @@ export const ramaVigilantFather: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_869c25119c0747c7a1de1cdbfff70eb0",
-    tcgPlayer: 659600,
+    tcgPlayer: "659600",
   },
   text: [
     {

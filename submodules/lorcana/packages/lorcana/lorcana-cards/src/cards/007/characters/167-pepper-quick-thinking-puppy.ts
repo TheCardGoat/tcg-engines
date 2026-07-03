@@ -4,6 +4,17 @@ import { pepperQuickthinkingPuppyI18n } from "./167-pepper-quick-thinking-puppy.
 export const pepperQuickthinkingPuppy: CharacterCard = {
   id: "C36",
   canonicalId: "ci_C36",
+  slug: "lorcana-ci_C36",
+  printings: [
+    {
+      id: "set7-167",
+      artId: "set7-167",
+      setCode: "set7",
+      collectorNumber: "167",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-167"],
   cardType: "character",
   name: "Pepper",
@@ -20,7 +31,7 @@ export const pepperQuickthinkingPuppy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_eddf6a4eb7af4098997b5e91e4a763e7",
-    tcgPlayer: 618249,
+    tcgPlayer: "618249",
   },
   text: [
     {
@@ -37,7 +48,9 @@ export const pepperQuickthinkingPuppy: CharacterCard = {
         effect: {
           exerted: true,
           facedown: true,
-          source: { reference: "trigger-subject" },
+          source: {
+            reference: "trigger-subject",
+          },
           target: "CONTROLLER",
           type: "put-into-inkwell",
         },

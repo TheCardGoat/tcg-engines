@@ -4,6 +4,17 @@ import { mulanFreeSpiritI18n } from "./015-mulan-free-spirit.i18n";
 export const mulanFreeSpirit: CharacterCard = {
   id: "8GL",
   canonicalId: "ci_Dqt",
+  slug: "lorcana-ci_Dqt",
+  printings: [
+    {
+      id: "set2-015",
+      artId: "set2-015",
+      setCode: "set2",
+      collectorNumber: "15",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-015", "set9-010"],
   cardType: "character",
   name: "Mulan",
@@ -20,7 +31,7 @@ export const mulanFreeSpirit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a931864a0b0e42c7852e9609ea84914f",
-    tcgPlayer: 649959,
+    tcgPlayer: "649959",
   },
   text: "Support",
   classifications: ["Dreamborn", "Hero", "Princess"],

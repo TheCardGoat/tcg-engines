@@ -10,6 +10,7 @@
     onSendThinking?: () => void;
     onPassTurn?: () => void;
     onDismiss?: () => void;
+    onDisable?: () => void;
   }
 
   let {
@@ -17,6 +18,7 @@
     onSendThinking,
     onPassTurn,
     onDismiss,
+    onDisable,
   }: PriorityNudgeProps = $props();
 </script>
 
@@ -41,8 +43,12 @@
         {m["sim.priorityNudge.thinking"]({})}
       </Button>
 
-      <Button variant="outline" class="priority-nudge__button" onclick={() => onDismiss?.()}>
-        {m["sim.priorityNudge.close"]({})}
+<!--      <Button variant="outline" class="priority-nudge__button" onclick={() => onDismiss?.()}>-->
+<!--        {m["sim.priorityNudge.close"]({})}-->
+<!--      </Button>-->
+
+      <Button variant="outline" class="priority-nudge__button priority-nudge__button--quiet" onclick={() => onDisable?.()}>
+        {m["sim.priorityNudge.disable"]({})}
       </Button>
     </div>
   </div>
@@ -147,6 +153,10 @@
     border-color: rgba(250, 204, 21, 0.64);
     background: linear-gradient(180deg, rgba(180, 83, 9, 0.9), rgba(120, 53, 15, 0.96));
     color: #fff7ed;
+  }
+
+  :global(.priority-nudge__button--quiet) {
+    color: rgba(226, 232, 240, 0.78);
   }
 
   .priority-nudge__dismiss {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { littleJohnRobinsPalI18n } from "./179-little-john-robins-pal.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const littleJohnRobinsPal: CharacterCard = {
   id: "9Mk",
   canonicalId: "ci_9Mk",
+  slug: "lorcana-ci_9Mk",
+  printings: [
+    {
+      id: "set3-179",
+      artId: "set3-179",
+      setCode: "set3",
+      collectorNumber: "179",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-179"],
   cardType: "character",
   name: "Little John",
@@ -21,7 +33,7 @@ export const littleJohnRobinsPal: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_95f558d0b08e47cf9c92c57a7719f874",
-    tcgPlayer: 539108,
+    tcgPlayer: "539108",
   },
   text: [
     {

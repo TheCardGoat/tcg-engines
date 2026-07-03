@@ -6,14 +6,17 @@ export const gd03Downes130: BaseCard = {
   type: "base",
   traits: ["vagan", "stronghold"],
   id: "GD03-130",
-  externalId: "gundam:gd03-130",
-  slug: "downes-gd03-130",
+  canonicalId: "GD03-130",
+  externalIds: { bandai: "gundam:gd03-130" },
+  slug: "downes/gd03-130",
   displayName: "Downes",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-130",
   printings: [
     {
       id: "GD03-130",
+      artId: "GD03-130",
+      setCode: "GD03",
       collectorNumber: "GD03-130",
       cardNumber: "GD03-130",
       set: {
@@ -28,6 +31,7 @@ export const gd03Downes130: BaseCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-130"],
   selectedPrintingId: "GD03-130",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-130.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-130.webp?260424",

@@ -4,6 +4,17 @@ import { winnieThePoohHavingAThinkI18n } from "./161-winnie-the-pooh-having-a-th
 export const winnieThePoohHavingAThink: CharacterCard = {
   id: "ZKc",
   canonicalId: "ci_nqc",
+  slug: "lorcana-ci_nqc",
+  printings: [
+    {
+      id: "set2-161",
+      artId: "set2-161",
+      setCode: "set2",
+      collectorNumber: "161",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-161", "set9-159"],
   cardType: "character",
   name: "Winnie the Pooh",
@@ -20,7 +31,7 @@ export const winnieThePoohHavingAThink: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bf5d82370e8e4900a9e7b05d502470df",
-    tcgPlayer: 650094,
+    tcgPlayer: "650094",
   },
   text: [
     {

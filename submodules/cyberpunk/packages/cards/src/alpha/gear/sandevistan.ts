@@ -1,15 +1,16 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts";
 import { gearAttachmentToUnitOrLegend } from "../../define.ts";
 
-export const alphaSandevistan = {
+export const alphaSandevistan = defineCyberpunkCard({
   id: "db4140f6-415c-4d67-b4a6-1ce28a0a8719",
-  externalId: "cyberpunk:sandevistan",
   slug: "sandevistan",
-  name: "Sandevistan",
-  displayName: "Sandevistan",
   rulesText:
     "(Equip to a unit or face-up legend.) PLAY This unit can attack spent units this turn.",
+  name: "Sandevistan",
+  displayName: "Sandevistan",
+  canonicalId: "sandevistan",
   color: "green",
   classifications: ["Cyberware"],
   set: {
@@ -17,15 +18,6 @@ export const alphaSandevistan = {
     name: "Alpha Kit Set",
   },
   printNumber: "α024",
-  printings: [
-    {
-      id: "37a6293e-df23-47b5-9d4a-235038004b39",
-      collectorNumber: "α024",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "37a6293e-df23-47b5-9d4a-235038004b39",
   artist: "CD PROJEKT RED",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a024.webp",
   rarity: null,
@@ -33,7 +25,6 @@ export const alphaSandevistan = {
   hasSellTag: true,
   ram: 4,
   timingTriggers: ["play"],
-  keywords: [],
   type: "gear",
   cost: 3,
   power: 3,
@@ -51,6 +42,5 @@ export const alphaSandevistan = {
       )
       .build(),
   ],
-  reminderText: [],
   attachment: gearAttachmentToUnitOrLegend(),
-} satisfies AlphaCardDefinition;
+}) satisfies GearCardDefinition;

@@ -20,10 +20,11 @@ export const nickWildePersistentInvestigatorEnchantedI18n: Record<Languages, I18
     version: "Hartnäckiger Ermittler",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Nick-Wilde-Charaktere auszuspielen.)",
       },
       {
-        title: "FALL ABGESCHLOSSEN",
+        title: "Fall abgeschlossen",
         description:
           "Jedes Mal während deines Zuges, wenn einer deiner Detektive durch eine Herausforderung einen anderen Charakter verbannt, ziehe 1 Karte.",
       },
@@ -34,10 +35,10 @@ export const nickWildePersistentInvestigatorEnchantedI18n: Record<Languages, I18
     version: "Investigateur tenace",
     text: [
       {
-        title: "Alter 3",
+        title: "<Alter> 3 {I}",
       },
       {
-        title: "AFFAIRE CLASSÉE",
+        title: "Affaire classée",
         description:
           "Durant votre tour, chaque fois que l'un de vos personnages Détective bannit un autre personnage via un défi, piochez une carte.",
       },
@@ -48,10 +49,10 @@ export const nickWildePersistentInvestigatorEnchantedI18n: Record<Languages, I18
     version: "Investigatore Ostinato",
     text: [
       {
-        title: "Trasformazione 3",
+        title: "<Trasformazione> 3 {I}",
       },
       {
-        title: "CASO RISOLTO",
+        title: "Caso Risolto",
         description:
           "Durante il tuo turno, ogni volta che uno dei tuoi personaggi Detective esilia un altro personaggio in una sfida, pesca una carta.",
       },

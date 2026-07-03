@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { magicBroomSwiftCleanerI18n } from "./045-magic-broom-swift-cleaner.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const magicBroomSwiftCleaner: CharacterCard = {
   id: "sUV",
   canonicalId: "ci_sUV",
+  slug: "lorcana-ci_sUV",
+  printings: [
+    {
+      id: "set3-045",
+      artId: "set3-045",
+      setCode: "set3",
+      collectorNumber: "45",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-045"],
   cardType: "character",
   name: "Magic Broom",
@@ -21,7 +33,7 @@ export const magicBroomSwiftCleaner: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9b1e3b67709f41c58130599854495ff5",
-    tcgPlayer: 539070,
+    tcgPlayer: "539070",
   },
   text: [
     {

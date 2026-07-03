@@ -7,14 +7,17 @@ export const gd01Kshatriya044: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-044",
-  externalId: "gundam:gd01-044",
-  slug: "kshatriya-gd01-044",
+  canonicalId: "GD01-044",
+  externalIds: { bandai: "gundam:gd01-044" },
+  slug: "kshatriya/gd01-044",
   displayName: "Kshatriya",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-044",
   printings: [
     {
       id: "GD01-044",
+      artId: "GD01-044",
+      setCode: "GD01",
       collectorNumber: "GD01-044",
       cardNumber: "GD01-044",
       set: {
@@ -30,6 +33,8 @@ export const gd01Kshatriya044: UnitCard = {
     },
     {
       id: "GD01-044_p1",
+      artId: "GD01-044_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-044_p1",
       cardNumber: "GD01-044",
       set: {
@@ -44,6 +49,7 @@ export const gd01Kshatriya044: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-044", "GD01-044_p1"],
   selectedPrintingId: "GD01-044",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-044.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-044.webp?260424",

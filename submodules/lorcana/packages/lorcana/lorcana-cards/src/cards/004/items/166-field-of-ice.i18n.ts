@@ -15,9 +15,9 @@ export const fieldOfIceI18n: Record<Languages, I18nProperties> = {
     name: "Eisfläche",
     text: [
       {
-        title: "EISIGE VERTEIDIGUNG",
+        title: "Eisige Verteidigung",
         description:
-          "Jedes Mal, wenn du einen Charakter ausspielst, erhält er bis zu Beginn deines nächsten Zuges Robust +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+          "Jedes Mal, wenn du einen Charakter ausspielst, erhält er bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const fieldOfIceI18n: Record<Languages, I18nProperties> = {
     name: "Champ de Glace",
     text: [
       {
-        title: "DÉFENSE GLACÉE",
+        title: "Défense glacée",
         description:
-          "Chaque fois que vous jouez un personnage, il gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "Chaque fois que vous jouez un personnage, il gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const fieldOfIceI18n: Record<Languages, I18nProperties> = {
     name: "Distesa di Ghiaccio",
     text: [
       {
-        title: "DIFESA GLACIALE",
+        title: "Difesa Glaciale",
         description:
-          "Ogni volta che giochi un personaggio, ottiene Resistere +1 fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che giochi un personaggio, ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

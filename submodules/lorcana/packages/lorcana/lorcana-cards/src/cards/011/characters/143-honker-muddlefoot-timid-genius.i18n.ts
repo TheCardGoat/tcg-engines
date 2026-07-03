@@ -16,9 +16,9 @@ export const honkerMuddlefootTimidGeniusI18n: Record<Languages, I18nProperties> 
     version: "Schüchternes Genie",
     text: [
       {
-        title: "SEID VORSICHTIG!",
+        title: "Seid vorsichtig!",
         description:
-          "Deine Darkwing-Duck-Charaktere erhalten Robust +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine Darkwing-Duck-Charaktere erhalten <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const honkerMuddlefootTimidGeniusI18n: Record<Languages, I18nProperties> 
     version: "Génie timide",
     text: [
       {
-        title: "FAIS ATTENTION!",
-        description: "Vos personnages Myster Mask gagnent Résistance +1.",
+        title: "Fais attention!",
+        description: "Vos personnages Myster Mask gagnent <Résistance> +1.",
       },
     ],
   },
@@ -37,11 +37,8 @@ export const honkerMuddlefootTimidGeniusI18n: Record<Languages, I18nProperties> 
     version: "Timido Genio",
     text: [
       {
-        title: "STAI ATTENTO!",
-      },
-      {
-        title: "I",
-        description: "tuoi personaggi chiamati Darkwing Duck ottengono Resistere +1.",
+        title: "Stai Attento!",
+        description: "I tuoi personaggi chiamati Darkwing Duck ottengono <Resistere> +1.",
       },
     ],
   },

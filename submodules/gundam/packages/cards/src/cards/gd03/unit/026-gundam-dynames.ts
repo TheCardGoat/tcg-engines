@@ -7,14 +7,17 @@ export const gd03GundamDynames026: UnitCard = {
   color: "green",
   traits: ["cb", "gn drive"],
   id: "GD03-026",
-  externalId: "gundam:gd03-026",
-  slug: "gundam-dynames-gd03-026",
+  canonicalId: "GD03-026",
+  externalIds: { bandai: "gundam:gd03-026" },
+  slug: "gundam-dynames/gd03-026",
   displayName: "Gundam Dynames",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-026",
   printings: [
     {
       id: "GD03-026",
+      artId: "GD03-026",
+      setCode: "GD03",
       collectorNumber: "GD03-026",
       cardNumber: "GD03-026",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamDynames026: UnitCard = {
     },
     {
       id: "GD03-026_p1",
+      artId: "GD03-026_p1",
+      setCode: "GD04",
       collectorNumber: "GD03-026_p1",
       cardNumber: "GD03-026",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamDynames026: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD03-026", "GD03-026_p1"],
   selectedPrintingId: "GD03-026",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-026.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-026.webp?260424",

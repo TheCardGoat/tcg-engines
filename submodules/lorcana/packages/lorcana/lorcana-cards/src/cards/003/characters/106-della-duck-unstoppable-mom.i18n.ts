@@ -9,16 +9,16 @@ export const dellaDuckUnstoppableMomI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Della Duck",
     version: "Unaufhaltsame Mutter",
-    text: "Impulsiv",
+    text: "<Impulsiv>",
   },
   fr: {
     name: "Della Duck",
     version: "Mère inarrêtable",
-    text: "Combattant",
+    text: "<Combattant>",
   },
   it: {
     name: "Della Duck",
     version: "Mamma Inarrestabile",
-    text: "Attaccabrighe",
+    text: "<Attaccabrighe>",
   },
 };

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { clarabelleNewsReporterI18n } from "./153-clarabelle-news-reporter.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const clarabelleNewsReporter: CharacterCard = {
   id: "ykh",
   canonicalId: "ci_ykh",
+  slug: "lorcana-ci_ykh",
+  printings: [
+    {
+      id: "set7-153",
+      artId: "set7-153",
+      setCode: "set7",
+      collectorNumber: "153",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-153"],
   cardType: "character",
   name: "Clarabelle",
@@ -20,7 +32,7 @@ export const clarabelleNewsReporter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0ae6751e22074e8fb6bfe871c4f44f3e",
-    tcgPlayer: 618711,
+    tcgPlayer: "618711",
   },
   text: [
     {

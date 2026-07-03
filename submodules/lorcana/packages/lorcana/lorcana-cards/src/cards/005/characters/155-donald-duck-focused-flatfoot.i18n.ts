@@ -17,7 +17,7 @@ export const donaldDuckFocusedFlatfootI18n: Record<Languages, I18nProperties> = 
     version: "Konzentrierter Plattfuß",
     text: [
       {
-        title: "GEHEIMNISVOLLES RÄTSEL",
+        title: "Geheimnisvolles Rätsel",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const donaldDuckFocusedFlatfootI18n: Record<Languages, I18nProperties> = 
     version: "Pied-plat concentré",
     text: [
       {
-        title: "MYSTÈRE MYSTIFIANT",
+        title: "Mystère mystifiant",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const donaldDuckFocusedFlatfootI18n: Record<Languages, I18nProperties> = 
     version: "Piedipiatti Concentrato",
     text: [
       {
-        title: "MISTERO SCONCERTANTE",
+        title: "Mistero Sconcertante",
         description:
           "Quando giochi questo personaggio, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },

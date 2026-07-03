@@ -9,16 +9,16 @@ export const markowskiSpaceTrooperI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Markowski",
     version: "Soldat im All",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Markowski",
     version: "Soldat de l'espace",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Markowski",
     version: "Soldato Spaziale",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

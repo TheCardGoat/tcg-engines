@@ -17,7 +17,7 @@ export const ursulaSeaWitchI18n: Record<Languages, I18nProperties> = {
     version: "Seehexe",
     text: [
       {
-        title: "ZU SPÄT!",
+        title: "Zu spät!",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, wähle einen gegnerischen Charakter. Er wird zu Beginn seines nächsten Zuges nicht bereit gemacht.",
       },
@@ -28,7 +28,7 @@ export const ursulaSeaWitchI18n: Record<Languages, I18nProperties> = {
     version: "Sorcière des mers",
     text: [
       {
-        title: "TROP TARD",
+        title: "Trop tard",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage adverse qui ne pourra pas être redressé au début de son prochain tour.",
       },
@@ -39,7 +39,7 @@ export const ursulaSeaWitchI18n: Record<Languages, I18nProperties> = {
     version: "Strega del Mare",
     text: [
       {
-        title: "ORMAI È TROPPO TARDI",
+        title: "Ormai È Troppo Tardi",
         description:
           "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta non si può preparare all'inizio del suo prossimo turno.",
       },

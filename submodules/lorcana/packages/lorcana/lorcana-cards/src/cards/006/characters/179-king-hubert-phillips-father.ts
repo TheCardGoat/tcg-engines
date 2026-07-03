@@ -4,6 +4,17 @@ import { kingHubertPhillipsFatherI18n } from "./179-king-hubert-phillips-father.
 export const kingHubertPhillipsFather: CharacterCard = {
   id: "k5F",
   canonicalId: "ci_wnt",
+  slug: "lorcana-ci_wnt",
+  printings: [
+    {
+      id: "set6-179",
+      artId: "set6-179",
+      setCode: "set6",
+      collectorNumber: "179",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-179"],
   cardType: "character",
   name: "King Hubert",
@@ -21,7 +32,7 @@ export const kingHubertPhillipsFather: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_d9abb9a8a381433486a5da9e3173de4b",
-    tcgPlayer: 587756,
+    tcgPlayer: "587756",
   },
   classifications: ["Storyborn", "Mentor", "King"],
   i18n: kingHubertPhillipsFatherI18n,

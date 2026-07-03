@@ -7,14 +7,17 @@ export const gd04DestinyGundam050: UnitCard = {
   color: "purple",
   traits: ["zaft", "minerva squad"],
   id: "GD04-050",
-  externalId: "gundam:gd04-050",
-  slug: "destiny-gundam-gd04-050",
+  canonicalId: "GD04-050",
+  externalIds: { bandai: "gundam:gd04-050" },
+  slug: "destiny-gundam/gd04-050",
   displayName: "Destiny Gundam",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-050",
   printings: [
     {
       id: "GD04-050",
+      artId: "GD04-050",
+      setCode: "GD04",
       collectorNumber: "GD04-050",
       cardNumber: "GD04-050",
       set: {
@@ -30,6 +33,8 @@ export const gd04DestinyGundam050: UnitCard = {
     },
     {
       id: "GD04-050_p1",
+      artId: "GD04-050_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-050_p1",
       cardNumber: "GD04-050",
       set: {
@@ -45,6 +50,8 @@ export const gd04DestinyGundam050: UnitCard = {
     },
     {
       id: "GD04-050_p2",
+      artId: "GD04-050_p2",
+      setCode: "GD04",
       collectorNumber: "GD04-050_p2",
       cardNumber: "GD04-050",
       set: {
@@ -59,6 +66,7 @@ export const gd04DestinyGundam050: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-050", "GD04-050_p1", "GD04-050_p2"],
   selectedPrintingId: "GD04-050",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-050.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-050.webp?260424",

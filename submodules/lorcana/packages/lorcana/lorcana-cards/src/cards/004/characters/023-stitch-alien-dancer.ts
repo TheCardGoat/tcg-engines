@@ -4,6 +4,17 @@ import { stitchAlienDancerI18n } from "./023-stitch-alien-dancer.i18n";
 export const stitchAlienDancer: CharacterCard = {
   id: "nA2",
   canonicalId: "ci_xxV",
+  slug: "lorcana-ci_xxV",
+  printings: [
+    {
+      id: "set4-023",
+      artId: "set4-023",
+      setCode: "set4",
+      collectorNumber: "23",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-023", "set9-009"],
   cardType: "character",
   name: "Stitch",
@@ -21,7 +32,7 @@ export const stitchAlienDancer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_6ccc388f32064927a08d9914aad4bc8f",
-    tcgPlayer: 650143,
+    tcgPlayer: "650143",
   },
   classifications: ["Storyborn", "Hero", "Alien"],
   i18n: stitchAlienDancerI18n,

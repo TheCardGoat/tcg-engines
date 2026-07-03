@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { daisyDuckPirateCaptainI18n } from "./081-daisy-duck-pirate-captain.i18n";
 
 export const daisyDuckPirateCaptain: CharacterCard = {
-  id: "dpv",
-  canonicalId: "ci_Ad0",
+  id: "sgl",
+  canonicalId: "ci_k0g",
+  slug: "lorcana-ci_k0g",
+  printings: [
+    {
+      id: "set6-081",
+      artId: "set6-081",
+      setCode: "set6",
+      collectorNumber: "81",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-081"],
   cardType: "character",
   name: "Daisy Duck",
@@ -18,8 +29,8 @@ export const daisyDuckPirateCaptain: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_21bfac43fba64c06ab62139f3befd6c1",
-    tcgPlayer: 592040,
+    lorcast: "crd_7e220169e537453cbda6b634acf7af4d",
+    tcgPlayer: "650213",
   },
   text: [
     {

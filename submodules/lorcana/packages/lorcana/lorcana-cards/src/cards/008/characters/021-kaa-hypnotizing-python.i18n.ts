@@ -17,9 +17,9 @@ export const kaaHypnotizingPythonI18n: Record<Languages, I18nProperties> = {
     version: "Hypnotisierende Python",
     text: [
       {
-        title: "SCHAU MIR IN DIE AUGEN",
+        title: "Schau mir in die Augen",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 und Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 {S} und <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const kaaHypnotizingPythonI18n: Record<Languages, I18nProperties> = {
     version: "Python hypnotiseur",
     text: [
       {
-        title: "REGARDE-MOI DANS LES YEUX",
+        title: "Regarde-moi dans les yeux",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage adverse qui subit -2 et qui gagne Combattant jusqu'au début de votre prochain tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage adverse qui subit -2 {S} et qui gagne <Combattant> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const kaaHypnotizingPythonI18n: Record<Languages, I18nProperties> = {
     version: "Pitone Ipnotico",
     text: [
       {
-        title: "GUARDAMI NEGLI OCCHI",
+        title: "Guardami negli Occhi",
         description:
-          "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta riceve -2 e ottiene Attaccabrighe fino all'inizio del tuo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+          "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta riceve -2 {S} e ottiene <Attaccabrighe> fino all'inizio del tuo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
       },
     ],
   },

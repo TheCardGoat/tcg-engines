@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { littleJohnImpermanentOutlawI18n } from "./092-little-john-impermanent-outlaw.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const littleJohnImpermanentOutlaw: CharacterCard = {
   id: "eD4",
   canonicalId: "ci_eD4",
+  slug: "lorcana-ci_eD4",
+  printings: [
+    {
+      id: "set10-092",
+      artId: "set10-092",
+      setCode: "set10",
+      collectorNumber: "92",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-092"],
   cardType: "character",
   name: "Little John",
@@ -21,7 +33,7 @@ export const littleJohnImpermanentOutlaw: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b3668f2df08949359912fa775c750a52",
-    tcgPlayer: 659413,
+    tcgPlayer: "659413",
   },
   text: [
     {

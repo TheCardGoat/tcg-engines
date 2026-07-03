@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { jackjackParrIncrediblePotentialI18n } from "./121-jack-jack-parr-incredible-potential.i18n";
 
 export const jackjackParrIncrediblePotential: CharacterCard = {
-  id: "rvl",
+  id: "kCm",
   canonicalId: "ci_rvl",
+  slug: "lorcana-ci_rvl",
+  printings: [
+    {
+      id: "set12-121",
+      artId: "set12-121",
+      setCode: "set12",
+      collectorNumber: "121",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-121"],
   cardType: "character",
   name: "Jack-Jack Parr",
@@ -20,15 +31,13 @@ export const jackjackParrIncrediblePotential: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_519eea38258c49ca9b1eab9981d74544",
+    tcgPlayer: "692223",
   },
   text: [
     {
       title: "WEIRD THINGS ARE HAPPENING",
       description:
-        "At the start of your turn, you may put the top card of your deck into your discard.",
-    },
-    {
-      title: "If its card type is:",
+        "At the start of your turn, you may put the top card of your deck into your discard. If its card type is:",
     },
     {
       title: "• character, this character gets +2 {S} this turn.",
@@ -60,8 +69,13 @@ export const jackjackParrIncrediblePotential: CharacterCard = {
           target: "CONTROLLER",
           routes: [
             {
-              condition: { type: "revealed-is-card-type", cardType: "character" },
-              destination: { zone: "discard" },
+              condition: {
+                type: "revealed-is-card-type",
+                cardType: "character",
+              },
+              destination: {
+                zone: "discard",
+              },
               sideEffects: [
                 {
                   type: "modify-stat",
@@ -73,8 +87,13 @@ export const jackjackParrIncrediblePotential: CharacterCard = {
               ],
             },
             {
-              condition: { type: "revealed-is-card-type", cardType: ["action", "item"] },
-              destination: { zone: "discard" },
+              condition: {
+                type: "revealed-is-card-type",
+                cardType: ["action", "item"],
+              },
+              destination: {
+                zone: "discard",
+              },
               sideEffects: [
                 {
                   type: "modify-stat",
@@ -86,8 +105,13 @@ export const jackjackParrIncrediblePotential: CharacterCard = {
               ],
             },
             {
-              condition: { type: "revealed-is-card-type", cardType: "location" },
-              destination: { zone: "discard" },
+              condition: {
+                type: "revealed-is-card-type",
+                cardType: "location",
+              },
+              destination: {
+                zone: "discard",
+              },
               sideEffects: [
                 {
                   type: "banish",
@@ -102,7 +126,9 @@ export const jackjackParrIncrediblePotential: CharacterCard = {
               ],
             },
           ],
-          fallback: { zone: "discard" },
+          fallback: {
+            zone: "discard",
+          },
         },
       },
     },

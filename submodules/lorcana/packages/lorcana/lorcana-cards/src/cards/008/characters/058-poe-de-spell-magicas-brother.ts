@@ -4,6 +4,17 @@ import { poeDeSpellMagicasBrotherI18n } from "./058-poe-de-spell-magicas-brother
 export const poeDeSpellMagicasBrother: CharacterCard = {
   id: "J4k",
   canonicalId: "ci_J4k",
+  slug: "lorcana-ci_J4k",
+  printings: [
+    {
+      id: "set8-058",
+      artId: "set8-058",
+      setCode: "set8",
+      collectorNumber: "58",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-058"],
   cardType: "character",
   name: "Poe De Spell",
@@ -21,7 +32,7 @@ export const poeDeSpellMagicasBrother: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_75c10c12f3394d92a6e2d4806474dd62",
-    tcgPlayer: 631389,
+    tcgPlayer: "631389",
   },
   classifications: ["Storyborn", "Ally", "Sorcerer"],
   i18n: poeDeSpellMagicasBrotherI18n,

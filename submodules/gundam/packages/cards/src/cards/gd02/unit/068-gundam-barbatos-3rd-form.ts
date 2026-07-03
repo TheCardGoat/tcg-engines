@@ -7,14 +7,17 @@ export const gd02GundamBarbatos3rdForm068: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "GD02-068",
-  externalId: "gundam:gd02-068",
-  slug: "gundam-barbatos-3rd-form-gd02-068",
+  canonicalId: "GD02-068",
+  externalIds: { bandai: "gundam:gd02-068" },
+  slug: "gundam-barbatos-3rd-form/gd02-068",
   displayName: "Gundam Barbatos 3rd Form",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-068",
   printings: [
     {
       id: "GD02-068",
+      artId: "GD02-068",
+      setCode: "GD02",
       collectorNumber: "GD02-068",
       cardNumber: "GD02-068",
       set: {
@@ -29,6 +32,7 @@ export const gd02GundamBarbatos3rdForm068: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-068"],
   selectedPrintingId: "GD02-068",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-068.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-068.webp?260424",

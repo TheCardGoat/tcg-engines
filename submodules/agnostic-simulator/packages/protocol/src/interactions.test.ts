@@ -16,7 +16,7 @@ import {
   type InteractionAction,
   type InteractionInput,
   type InteractionSubmissionValidationIssueCode,
-} from "./interactions";
+} from "./interactions.js";
 
 const actorId = "player_one";
 

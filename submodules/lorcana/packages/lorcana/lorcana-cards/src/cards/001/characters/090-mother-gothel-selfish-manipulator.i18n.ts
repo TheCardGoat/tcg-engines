@@ -16,7 +16,7 @@ export const motherGothelSelfishManipulatorI18n: Record<Languages, I18nPropertie
     version: "Selbstsüchtige Strippenzieherin",
     text: [
       {
-        title: "MACH KEIN DRAMA, BLEIB BEI MAMA",
+        title: "Mach kein Drama, bleib bei Mama",
         description:
           "Solange dieser Charakter erschöpft ist, können gegnerische Charaktere nicht erkunden.",
       },
@@ -38,7 +38,7 @@ export const motherGothelSelfishManipulatorI18n: Record<Languages, I18nPropertie
     version: "Selfish Manipulator",
     text: [
       {
-        title: "SKIP THE DRAMA, STAY WITH MAMA",
+        title: "Skip the Drama, Stay With Mama",
         description: "While this character is exerted, opposing characters can't quest.",
       },
     ],

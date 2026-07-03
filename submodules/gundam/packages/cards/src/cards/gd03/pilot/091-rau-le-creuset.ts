@@ -7,14 +7,17 @@ export const gd03RauLeCreuset091: PilotCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD03-091",
-  externalId: "gundam:gd03-091",
-  slug: "rau-le-creuset-gd03-091",
+  canonicalId: "GD03-091",
+  externalIds: { bandai: "gundam:gd03-091" },
+  slug: "rau-le-creuset/gd03-091",
   displayName: "Rau Le Creuset",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-091",
   printings: [
     {
       id: "GD03-091",
+      artId: "GD03-091",
+      setCode: "GD03",
       collectorNumber: "GD03-091",
       cardNumber: "GD03-091",
       set: {
@@ -30,6 +33,8 @@ export const gd03RauLeCreuset091: PilotCard = {
     },
     {
       id: "GD03-091_p1",
+      artId: "GD03-091_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-091_p1",
       cardNumber: "GD03-091",
       set: {
@@ -44,6 +49,7 @@ export const gd03RauLeCreuset091: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-091", "GD03-091_p1"],
   selectedPrintingId: "GD03-091",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-091.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-091.webp?260424",

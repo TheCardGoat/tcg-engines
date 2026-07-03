@@ -19,11 +19,13 @@ export const naniCaringSisterI18n: Record<Languages, I18nProperties> = {
     version: "Fürsorgliche Schwester",
     text: [
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "ES TUT MIR SO LEID 2",
-        description: "— Gib einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -1.",
+        title: "Es tut mir so Leid",
+        description:
+          "2 {I} — Gib einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -1 {S}.",
       },
     ],
   },
@@ -32,12 +34,13 @@ export const naniCaringSisterI18n: Record<Languages, I18nProperties> = {
     version: "Sœur bienveillante",
     text: [
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "JE SUIS",
+        title: "Je suis sincèrement désolée",
         description:
-          "SINCÈREMENT DÉSOLÉE 2 — Choisissez un personnage qui subit -1 jusqu'au début de votre prochain tour.",
+          "2 {I} — Choisissez un personnage qui subit -1 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -46,12 +49,13 @@ export const naniCaringSisterI18n: Record<Languages, I18nProperties> = {
     version: "Sorella Premurosa",
     text: [
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "MI DISPIACE MOLTO 2",
+        title: "Mi Dispiace Molto",
         description:
-          "— Un personaggio a tua scelta riceve -1 fino all'inizio del tuo prossimo turno.",
+          "2 {I} — Un personaggio a tua scelta riceve -1 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

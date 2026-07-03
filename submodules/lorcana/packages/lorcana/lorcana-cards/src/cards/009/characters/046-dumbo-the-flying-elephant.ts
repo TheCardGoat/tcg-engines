@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { dumboTheFlyingElephantI18n } from "./046-dumbo-the-flying-elephant.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const dumboTheFlyingElephant: CharacterCard = {
   id: "nnC",
-  canonicalId: "ci_nnC",
+  canonicalId: "ci_Lu3",
+  slug: "lorcana-ci_Lu3",
+  printings: [
+    {
+      id: "set9-046",
+      artId: "set9-046",
+      setCode: "set9",
+      collectorNumber: "46",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-046"],
   cardType: "character",
   name: "Dumbo",
@@ -21,7 +33,7 @@ export const dumboTheFlyingElephant: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1c42d9e976d0414099a145227b83b08c",
-    tcgPlayer: 647679,
+    tcgPlayer: "647679",
   },
   text: [
     {

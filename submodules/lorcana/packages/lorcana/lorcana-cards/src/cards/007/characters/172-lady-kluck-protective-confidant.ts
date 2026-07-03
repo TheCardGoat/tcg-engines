@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { ladyKluckProtectiveConfidantI18n } from "./172-lady-kluck-protective-confidant.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { ward } from "../../../helpers/abilities/ward";
 
 export const ladyKluckProtectiveConfidant: CharacterCard = {
   id: "wEk",
   canonicalId: "ci_wEk",
+  slug: "lorcana-ci_wEk",
+  printings: [
+    {
+      id: "set7-172",
+      artId: "set7-172",
+      setCode: "set7",
+      collectorNumber: "172",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-172"],
   cardType: "character",
   name: "Lady Kluck",
@@ -22,7 +34,7 @@ export const ladyKluckProtectiveConfidant: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e8dd905ba7294b62a44a49ab52a3860a",
-    tcgPlayer: 618146,
+    tcgPlayer: "618146",
   },
   text: [
     {

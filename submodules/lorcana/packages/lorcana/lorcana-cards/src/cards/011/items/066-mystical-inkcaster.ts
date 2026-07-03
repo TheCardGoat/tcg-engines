@@ -4,6 +4,17 @@ import { mysticalInkcasterI18n } from "./066-mystical-inkcaster.i18n";
 export const mysticalInkcaster: ItemCard = {
   id: "YMG",
   canonicalId: "ci_YMG",
+  slug: "lorcana-ci_YMG",
+  printings: [
+    {
+      id: "set11-066",
+      artId: "set11-066",
+      setCode: "set11",
+      collectorNumber: "66",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-066"],
   cardType: "item",
   name: "Mystical Inkcaster",
@@ -16,7 +27,7 @@ export const mysticalInkcaster: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3d8ed3e3edf846c7b5dc9cc034436b8e",
-    tcgPlayer: 675301,
+    tcgPlayer: "675301",
   },
   text: [
     {

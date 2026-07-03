@@ -4,6 +4,17 @@ import { shesYourPersonI18n } from "./040-shes-your-person.i18n";
 export const shesYourPerson: ActionCard = {
   id: "znP",
   canonicalId: "ci_znP",
+  slug: "lorcana-ci_znP",
+  printings: [
+    {
+      id: "set8-040",
+      artId: "set8-040",
+      setCode: "set8",
+      collectorNumber: "40",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-040"],
   cardType: "action",
   name: "She's Your Person",
@@ -16,7 +27,7 @@ export const shesYourPerson: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_45f97fb5ff014a158519e81b63e644c5",
-    tcgPlayer: 631378,
+    tcgPlayer: "631378",
   },
   text: "Choose one:\n- Remove up to 3 damage from chosen character.\n- Remove up to 3 damage from each of your characters with Bodyguard.",
   abilities: [
@@ -28,12 +39,18 @@ export const shesYourPerson: ActionCard = {
         options: [
           {
             type: "remove-damage",
-            amount: { type: "up-to", value: 3 },
+            amount: {
+              type: "up-to",
+              value: 3,
+            },
             target: "CHOSEN_CHARACTER",
           },
           {
             type: "remove-damage",
-            amount: { type: "up-to", value: 3 },
+            amount: {
+              type: "up-to",
+              value: 3,
+            },
             target: {
               selector: "all",
               count: "all",

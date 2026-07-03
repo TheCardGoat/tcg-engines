@@ -4,6 +4,17 @@ import { hesATrampI18n } from "./117-hes-a-tramp.i18n";
 export const hesATramp: ActionCard = {
   id: "9Uj",
   canonicalId: "ci_9Uj",
+  slug: "lorcana-ci_9Uj",
+  printings: [
+    {
+      id: "set7-117",
+      artId: "set7-117",
+      setCode: "set7",
+      collectorNumber: "117",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-117"],
   cardType: "action",
   name: "He's a Tramp",
@@ -16,7 +27,7 @@ export const hesATramp: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_81b8d1f9be6542e0902b77e4ab51fae0",
-    tcgPlayer: 618165,
+    tcgPlayer: "618165",
   },
   text: "Chosen character gets +1 {S} this turn for each character you have in play.",
   actionSubtype: "song",

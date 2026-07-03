@@ -4,6 +4,17 @@ import { dontLetTheFrostbiteBiteI18n } from "./129-dont-let-the-frostbite-bite.i
 export const dontLetTheFrostbiteBite: ActionCard = {
   id: "2Hu",
   canonicalId: "ci_2Hu",
+  slug: "lorcana-ci_2Hu",
+  printings: [
+    {
+      id: "set5-129",
+      artId: "set5-129",
+      setCode: "set5",
+      collectorNumber: "129",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-129"],
   cardType: "action",
   name: "Don't Let the Frostbite Bite",
@@ -16,7 +27,7 @@ export const dontLetTheFrostbiteBite: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0f1a48118a4d4952864c66eec69808cf",
-    tcgPlayer: 560524,
+    tcgPlayer: "560524",
   },
   text: "Ready all your characters. They can't quest for the rest of this turn.",
   actionSubtype: "song",

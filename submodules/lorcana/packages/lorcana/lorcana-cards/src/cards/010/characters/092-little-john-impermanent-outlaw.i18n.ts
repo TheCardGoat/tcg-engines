@@ -19,10 +19,11 @@ export const littleJohnImpermanentOutlawI18n: Record<Languages, I18nProperties> 
     version: "Vorübergehend Geächteter",
     text: [
       {
-        title: "Stärken 3",
+        title:
+          "<Stärken> 3 {I} (Einmal während deines Zuges darfst du 3 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "BEREIT, ZU RANDALIEREN",
+        title: "Bereit, zu randalieren",
         description:
           "Jedes Mal, wenn du eine Karte unter diesen Charakter legst, mache ihn bereit.",
       },
@@ -33,12 +34,12 @@ export const littleJohnImpermanentOutlawI18n: Record<Languages, I18nProperties> 
     version: "Hors-la-loi éphémère",
     text: [
       {
-        title: "Boost 3",
+        title:
+          "<Boost> 3 {I} (Une fois durant votre tour, vous pouvez payer 3 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "PRÊT",
-        description:
-          "À LA CASTAGNE Chaque fois qu'une carte est placée sous ce personnage, redressez-le.",
+        title: "Prêt à la castagne",
+        description: "Chaque fois qu'une carte est placée sous ce personnage, redressez-le.",
       },
     ],
   },
@@ -47,10 +48,11 @@ export const littleJohnImpermanentOutlawI18n: Record<Languages, I18nProperties> 
     version: "Fuorilegge Fugace",
     text: [
       {
-        title: "Potenziamento 3",
+        title:
+          "<Potenziamento> 3 {I} (Una volta durante il tuo turno, puoi pagare 3 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "PRONTO ALLA LOTTA",
+        title: "Pronto alla Lotta",
         description: "Ogni volta che metti una carta sotto a questo personaggio, preparalo.",
       },
     ],

@@ -4,6 +4,17 @@ import { magicaDeSpellAmbitiousWitchI18n } from "./048-magica-de-spell-ambitious
 export const magicaDeSpellAmbitiousWitch: CharacterCard = {
   id: "xwX",
   canonicalId: "ci_xwX",
+  slug: "lorcana-ci_xwX",
+  printings: [
+    {
+      id: "set3-048",
+      artId: "set3-048",
+      setCode: "set3",
+      collectorNumber: "48",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-048"],
   cardType: "character",
   name: "Magica De Spell",
@@ -21,7 +32,7 @@ export const magicaDeSpellAmbitiousWitch: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_1613e74208754e64b862c2a8b28add19",
-    tcgPlayer: 538257,
+    tcgPlayer: "538257",
   },
   classifications: ["Storyborn", "Villain", "Sorcerer"],
   i18n: magicaDeSpellAmbitiousWitchI18n,

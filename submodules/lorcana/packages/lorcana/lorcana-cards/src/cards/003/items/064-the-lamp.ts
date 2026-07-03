@@ -4,6 +4,17 @@ import { theLampI18n } from "./064-the-lamp.i18n";
 export const theLamp: ItemCard = {
   id: "gxn",
   canonicalId: "ci_gxn",
+  slug: "lorcana-ci_gxn",
+  printings: [
+    {
+      id: "set3-064",
+      artId: "set3-064",
+      setCode: "set3",
+      collectorNumber: "64",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-064"],
   cardType: "item",
   name: "The Lamp",
@@ -16,7 +27,7 @@ export const theLamp: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5008b128a011481396f80e0c9c5424bc",
-    tcgPlayer: 539079,
+    tcgPlayer: "539079",
   },
   text: [
     {

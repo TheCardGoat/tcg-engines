@@ -4,6 +4,17 @@ import { theIslandOfNomanisanSyndromesHeadquartersI18n } from "./204-the-island-
 export const theIslandOfNomanisanSyndromesHeadquarters: LocationCard = {
   id: "mXi",
   canonicalId: "ci_mXi",
+  slug: "lorcana-ci_mXi",
+  printings: [
+    {
+      id: "set12-204",
+      artId: "set12-204",
+      setCode: "set12",
+      collectorNumber: "204",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-204"],
   cardType: "location",
   name: "The Island of Nomanisan",
@@ -20,6 +31,7 @@ export const theIslandOfNomanisanSyndromesHeadquarters: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0970bfa5f6e24f108baff292de83fcb5",
+    tcgPlayer: "692202",
   },
   text: [
     {

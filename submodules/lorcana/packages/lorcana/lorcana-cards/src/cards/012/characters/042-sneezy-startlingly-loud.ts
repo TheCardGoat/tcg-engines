@@ -4,6 +4,17 @@ import { sneezyStartlinglyLoudI18n } from "./042-sneezy-startlingly-loud.i18n";
 export const sneezyStartlinglyLoud: CharacterCard = {
   id: "Z17",
   canonicalId: "ci_Z17",
+  slug: "lorcana-ci_Z17",
+  printings: [
+    {
+      id: "set12-042",
+      artId: "set12-042",
+      setCode: "set12",
+      collectorNumber: "42",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-042"],
   cardType: "character",
   name: "Sneezy",
@@ -20,6 +31,7 @@ export const sneezyStartlinglyLoud: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_157e8d9b9f8745f2addc02e485dd2050",
+    tcgPlayer: "692024",
   },
   text: [
     {

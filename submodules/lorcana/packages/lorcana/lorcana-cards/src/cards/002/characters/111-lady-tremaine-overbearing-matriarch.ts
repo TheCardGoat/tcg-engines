@@ -4,6 +4,17 @@ import { ladyTremaineOverbearingMatriarchI18n } from "./111-lady-tremaine-overbe
 export const ladyTremaineOverbearingMatriarch: CharacterCard = {
   id: "B8N",
   canonicalId: "ci_B8N",
+  slug: "lorcana-ci_B8N",
+  printings: [
+    {
+      id: "set2-111",
+      artId: "set2-111",
+      setCode: "set2",
+      collectorNumber: "111",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-111"],
   cardType: "character",
   name: "Lady Tremaine",
@@ -20,7 +31,7 @@ export const ladyTremaineOverbearingMatriarch: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5c953b299f3b4de08ff77ddd3b041270",
-    tcgPlayer: 522698,
+    tcgPlayer: "522698",
   },
   text: [
     {
@@ -36,9 +47,15 @@ export const ladyTremaineOverbearingMatriarch: CharacterCard = {
         type: "for-each-opponent",
         condition: {
           type: "comparison",
-          left: { type: "lore", controller: "opponent" },
+          left: {
+            type: "lore",
+            controller: "opponent",
+          },
           comparison: "greater",
-          right: { type: "lore", controller: "you" },
+          right: {
+            type: "lore",
+            controller: "you",
+          },
         },
         effect: {
           type: "lose-lore",

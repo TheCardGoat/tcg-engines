@@ -6,7 +6,7 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "resolveJsonModule": true,
-    "types": ["node"],
+    "types": ["node", "@types/bun"],
     "strict": true,
     "noUnusedLocals": true,
     "declaration": true,

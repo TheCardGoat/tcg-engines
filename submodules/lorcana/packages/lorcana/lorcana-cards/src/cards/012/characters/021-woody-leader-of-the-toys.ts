@@ -4,6 +4,17 @@ import { woodyLeaderOfTheToysI18n } from "./021-woody-leader-of-the-toys.i18n";
 export const woodyLeaderOfTheToys: CharacterCard = {
   id: "sCi",
   canonicalId: "ci_sCi",
+  slug: "lorcana-ci_sCi",
+  printings: [
+    {
+      id: "set12-021",
+      artId: "set12-021",
+      setCode: "set12",
+      collectorNumber: "21",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-021"],
   cardType: "character",
   name: "Woody",
@@ -20,6 +31,7 @@ export const woodyLeaderOfTheToys: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_752b3ac3ef5a4ce6833d0dbe46f1f671",
+    tcgPlayer: "690205",
   },
   text: [
     {

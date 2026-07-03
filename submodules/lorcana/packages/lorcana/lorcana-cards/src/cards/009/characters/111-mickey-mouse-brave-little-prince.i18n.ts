@@ -23,15 +23,15 @@ export const mickeyMouseBraveLittlePrinceI18n: Record<Languages, I18nProperties>
     version: "Tapferer Kleiner Prinz",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title: "<Gestaltwandel> 5 {I}",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "KRÖNENDER ABSCHLUSS",
+        title: "Krönender Abschluss",
         description:
-          "Solange dieser Charakter mindestens eine Karte unter sich hat, erhält er +3, +3 und +3.",
+          "Solange dieser Charakter mindestens eine Karte unter sich hat, erhält er +3 {S}, +3 {W} und +3 {L}.",
       },
     ],
   },
@@ -40,14 +40,15 @@ export const mickeyMouseBraveLittlePrinceI18n: Record<Languages, I18nProperties>
     version: "Brave petit prince",
     text: [
       {
-        title: "Alter 5",
+        title: "<Alter> 5 {I}",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "COURONNÉ DE GLOIRE",
-        description: "Tant que ce personnage a une carte sous lui, il gagne +3, +3 et +3.",
+        title: "Couronné de gloire",
+        description:
+          "Tant que ce personnage a une carte sous lui, il gagne +3 {S}, +3 {W} et +3 {L}.",
       },
     ],
   },
@@ -56,14 +57,15 @@ export const mickeyMouseBraveLittlePrinceI18n: Record<Languages, I18nProperties>
     version: "Eroico Principe",
     text: [
       {
-        title: "Trasformazione 5",
+        title: "<Trasformazione> 5 {I}",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "IMPRESA CORONATA",
-        description: "Mentre questo personaggio ha una carta sotto di sé, riceve +3, +3 e +3.",
+        title: "Impresa Coronata",
+        description:
+          "Mentre questo personaggio ha una carta sotto di sé, riceve +3 {S}, +3 {W} e +3 {L}.",
       },
     ],
   },

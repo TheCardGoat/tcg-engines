@@ -4,6 +4,17 @@ import { liloMakingAWishI18n } from "./009-lilo-making-a-wish.i18n";
 export const liloMakingAWish: CharacterCard = {
   id: "Svq",
   canonicalId: "ci_Svq",
+  slug: "lorcana-ci_Svq",
+  printings: [
+    {
+      id: "set1-009",
+      artId: "set1-009",
+      setCode: "set1",
+      collectorNumber: "9",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-009"],
   cardType: "character",
   name: "Lilo",
@@ -21,7 +32,7 @@ export const liloMakingAWish: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_0ccbea0b8fd54779939f56e1fcc3769a",
-    tcgPlayer: 503315,
+    tcgPlayer: "503315",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: liloMakingAWishI18n,

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vite-plus/test";
 import type { PersistedReplayData } from "../src/fetch.ts";
 import { extractTurn } from "../src/turn-extractor.ts";
 

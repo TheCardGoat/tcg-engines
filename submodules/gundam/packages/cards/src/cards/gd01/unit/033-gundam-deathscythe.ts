@@ -7,14 +7,17 @@ export const gd01GundamDeathscythe033: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-033",
-  externalId: "gundam:gd01-033",
-  slug: "gundam-deathscythe-gd01-033",
+  canonicalId: "GD01-033",
+  externalIds: { bandai: "gundam:gd01-033" },
+  slug: "gundam-deathscythe/gd01-033",
   displayName: "Gundam Deathscythe",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-033",
   printings: [
     {
       id: "GD01-033",
+      artId: "GD01-033",
+      setCode: "GD01",
       collectorNumber: "GD01-033",
       cardNumber: "GD01-033",
       set: {
@@ -29,6 +32,7 @@ export const gd01GundamDeathscythe033: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-033"],
   selectedPrintingId: "GD01-033",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-033.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-033.webp?260424",

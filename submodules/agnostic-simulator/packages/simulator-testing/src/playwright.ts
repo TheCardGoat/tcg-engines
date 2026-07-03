@@ -10,6 +10,7 @@ export interface PlaywrightLocatorLike {
   first(): PlaywrightLocatorLike;
   count(): Promise<number>;
   click(options?: { force?: boolean }): Promise<void>;
+  dispatchEvent(type: string): Promise<void>;
   getAttribute(name: string): Promise<string | null>;
   textContent(): Promise<string | null>;
   isVisible(): Promise<boolean>;
@@ -92,6 +93,10 @@ class PlaywrightDomElement implements SimulatorDomElement {
 
   async click(options: SimulatorClickOptions = {}): Promise<void> {
     await this.locatorRef.click({ force: options.force });
+  }
+
+  async clickJs(): Promise<void> {
+    await this.locatorRef.dispatchEvent("click");
   }
 
   getAttribute(name: string): Promise<string | null> {

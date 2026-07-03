@@ -16,7 +16,7 @@ export const transformedChefCastleStoveI18n: Record<Languages, I18nProperties> =
     version: "Schloss-Ofen",
     text: [
       {
-        title: "EIN KULINARISCHES MEISTERWERK",
+        title: "Ein kulinarisches Meisterwerk",
         description:
           "Wenn du diesen Charakter ausspielst, entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
       },
@@ -27,7 +27,7 @@ export const transformedChefCastleStoveI18n: Record<Languages, I18nProperties> =
     version: "Poêle du château",
     text: [
       {
-        title: "MIJOTER DES PETITS PLATS",
+        title: "Mijoter des petits plats",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage et retirez-lui jusqu'à 2 jetons Dommage.",
       },
@@ -38,7 +38,7 @@ export const transformedChefCastleStoveI18n: Record<Languages, I18nProperties> =
     version: "Fuochista del Castello",
     text: [
       {
-        title: "UN CAPOLAVORO DI CULINARIA",
+        title: "Un Capolavoro di Culinaria",
         description:
           "Quando giochi questo personaggio, rimuovi fino a 2 danni da un personaggio a tua scelta.",
       },

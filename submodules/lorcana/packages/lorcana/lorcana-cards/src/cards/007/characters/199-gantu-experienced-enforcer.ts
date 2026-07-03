@@ -4,6 +4,17 @@ import { gantuExperiencedEnforcerI18n } from "./199-gantu-experienced-enforcer.i
 export const gantuExperiencedEnforcer: CharacterCard = {
   id: "HlC",
   canonicalId: "ci_HlC",
+  slug: "lorcana-ci_HlC",
+  printings: [
+    {
+      id: "set7-199",
+      artId: "set7-199",
+      setCode: "set7",
+      collectorNumber: "199",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-199"],
   cardType: "character",
   name: "Gantu",
@@ -20,7 +31,7 @@ export const gantuExperiencedEnforcer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9cc5e63998164343909390b767c6d3ae",
-    tcgPlayer: 618733,
+    tcgPlayer: "618733",
   },
   text: [
     {

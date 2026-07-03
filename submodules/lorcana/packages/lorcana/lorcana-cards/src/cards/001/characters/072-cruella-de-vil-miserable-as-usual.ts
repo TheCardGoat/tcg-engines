@@ -4,6 +4,17 @@ import { cruellaDeVilMiserableAsUsualI18n } from "./072-cruella-de-vil-miserable
 export const cruellaDeVilMiserableAsUsual: CharacterCard = {
   id: "UCh",
   canonicalId: "ci_UCh",
+  slug: "lorcana-ci_UCh",
+  printings: [
+    {
+      id: "set1-072",
+      artId: "set1-072",
+      setCode: "set1",
+      collectorNumber: "72",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-072"],
   cardType: "character",
   name: "Cruella De Vil",
@@ -20,7 +31,7 @@ export const cruellaDeVilMiserableAsUsual: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a3a886b05f4149c695ffbd5e5b9a049f",
-    tcgPlayer: 492703,
+    tcgPlayer: "492703",
   },
   text: [
     {

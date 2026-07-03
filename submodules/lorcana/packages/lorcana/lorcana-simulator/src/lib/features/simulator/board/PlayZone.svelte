@@ -66,16 +66,33 @@
   const sidebar = useLorcanaSidebarPresenter();
   const simulatorCardContext = useSimulatorCardContext();
   const dnd = useLorcanaSimulatorDndContext();
-  const inFlightCardIds = $derived(board.inFlightCardIds);
+  const boardAnimationCardIds = $derived(board.boardAnimationCardIds);
   const cards = $derived.by(() =>
     board
       .getZoneCards(playerSide, zoneId)
       .filter((card) => !card.cardType || !excludeCardTypes.includes(card.cardType))
-      .filter((card) => !inFlightCardIds.has(card.cardId)),
   );
   const playEntries = $derived.by<OrderedPlayZoneEntry[]>(() =>
     buildOrderedPlayZoneEntries(cards, seat),
   );
+  const actionPlayableCardIds = $derived.by(() => {
+    const playableIds = new Set<string>();
+    for (const card of cards) {
+      if (sidebar.getCardActionHighlightState(card).playable) {
+        playableIds.add(card.cardId);
+      }
+    }
+    return playableIds;
+  });
+  const actionActivatableCardIds = $derived.by(() => {
+    const activatableIds = new Set<string>();
+    for (const card of cards) {
+      if (sidebar.getCardActionHighlightState(card).activatable) {
+        activatableIds.add(card.cardId);
+      }
+    }
+    return activatableIds;
+  });
   const isMasked = $derived(board.isZoneMasked(playerSide, zoneId));
   const challengeMode = $derived(
     sidebar.actionSelectionSession?.categoryId === "challenge" &&
@@ -94,6 +111,10 @@
     isPlayZoneLocationEntryDirectSelectionMode(sidebar.actionSelectionSession),
   );
 
+  function isCardInFlight(cardId: string): boolean {
+    return boardAnimationCardIds.has(cardId);
+  }
+
   function handleDirectCardSelection(selectedCard: LorcanaCardSnapshot, event: MouseEvent): boolean {
     if (
       isPlayZoneLocationEntryResolutionSelectionMode(
@@ -106,12 +127,30 @@
       return true;
     }
 
-    return handlePlayZoneLocationEntryDirectSelection({
+    const directSelectionHandled = handlePlayZoneLocationEntryDirectSelection({
       card: selectedCard,
       event,
       directSelectionMode: isDirectSelectionMode,
       onSelect: (nextCard) => sidebar.handleActionSessionCardSelection(nextCard),
     });
+
+    if (directSelectionHandled) {
+      return true;
+    }
+
+    if (sidebar.actionSelectionSession || sidebar.resolutionSelectionSession) {
+      return false;
+    }
+
+    const abilityAction = sidebar
+      .getCardActionViews(selectedCard)
+      .find((action) => action.categoryId === "activate-ability" && action.enabled);
+    if (!abilityAction) {
+      return false;
+    }
+
+    event.stopPropagation();
+    return sidebar.handleCardActionClick(abilityAction);
   }
 
   const showZoneCounters = $derived(board.showZoneCounters);
@@ -139,6 +178,8 @@
   data-player-seat={seat}
   data-player-side={playerSide}
   data-zone-id={zoneId}
+  data-action-playable-card-ids={[...actionPlayableCardIds].join(",")}
+  data-action-activatable-card-ids={[...actionActivatableCardIds].join(",")}
   data-board-anchor-id={createZoneAnchorId(playerSide, zoneId)}
   role="region"
   aria-label={m["sim.playZone.aria"]({ label: zoneLabel, player: playerLabel })}
@@ -172,11 +213,13 @@
                 />
               {:else}
                 {@const actionState = sidebar.getActionSessionCardState(entry.card.cardId)}
+                {@const isActionPlayable = actionPlayableCardIds.has(entry.card.cardId)}
                 {@const draggable = createOptionalDraggable({ card: entry.card })}
                 {@const ownCharDropState = dnd.getOwnCharacterDropState(entry.card.cardId)}
                 <div
                   class="card-slot"
                   class:card-slot--dragging={dnd.draggedCardId === entry.card.cardId}
+                  class:card-slot--in-flight={isCardInFlight(entry.card.cardId)}
                   class:card-slot--shift-target={ownCharDropState !== "none" && dnd.isShiftDragActive}
                   class:card-slot--shift-target-hovered={ownCharDropState === "valid" && dnd.isShiftDragActive}
                   class:card-slot--sing-target={ownCharDropState !== "none" && dnd.isSingDragActive}
@@ -214,7 +257,7 @@
                           simulatorCardContext.previewCard?.cardId === entry.card.cardId
                         }
                         isMasked={isMasked}
-                        isPlayable={actionState.isSelectable}
+                        isPlayable={actionState.isSelectable || isActionPlayable}
                         isValidTarget={actionState.isSelectable}
                         isInvalidTarget={actionState.isInvalidTarget}
                         isBanishedPreview={sidebar.getChallengePreviewCardState(entry.card.cardId).wouldBeBanished}
@@ -449,6 +492,11 @@
 
   .card-slot--dragging {
     opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .card-slot--in-flight {
+    visibility: hidden;
     pointer-events: none;
   }
 

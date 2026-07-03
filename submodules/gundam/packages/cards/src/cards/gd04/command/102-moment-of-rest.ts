@@ -7,14 +7,17 @@ export const gd04MomentOfRest102: CommandCard = {
   color: "blue",
   traits: [],
   id: "GD04-102",
-  externalId: "gundam:gd04-102",
-  slug: "moment-of-rest-gd04-102",
+  canonicalId: "GD04-102",
+  externalIds: { bandai: "gundam:gd04-102" },
+  slug: "moment-of-rest/gd04-102",
   displayName: "Moment of Rest",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-102",
   printings: [
     {
       id: "GD04-102",
+      artId: "GD04-102",
+      setCode: "GD04",
       collectorNumber: "GD04-102",
       cardNumber: "GD04-102",
       set: {
@@ -30,6 +33,8 @@ export const gd04MomentOfRest102: CommandCard = {
     },
     {
       id: "GD04-102_p1",
+      artId: "GD04-102_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-102_p1",
       cardNumber: "GD04-102",
       set: {
@@ -44,6 +49,7 @@ export const gd04MomentOfRest102: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-102", "GD04-102_p1"],
   selectedPrintingId: "GD04-102",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-102.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-102.webp?260424",

@@ -4,6 +4,17 @@ import { honeyLemonChemistryWhizI18n } from "./169-honey-lemon-chemistry-whiz.i1
 export const honeyLemonChemistryWhiz: CharacterCard = {
   id: "20p",
   canonicalId: "ci_20p",
+  slug: "lorcana-ci_20p",
+  printings: [
+    {
+      id: "set7-169",
+      artId: "set7-169",
+      setCode: "set7",
+      collectorNumber: "169",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-169"],
   cardType: "character",
   name: "Honey Lemon",
@@ -20,7 +31,7 @@ export const honeyLemonChemistryWhiz: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_78044308d04647f5ac60546f4d320292",
-    tcgPlayer: 619503,
+    tcgPlayer: "619503",
   },
   text: [
     {
@@ -51,7 +62,10 @@ export const honeyLemonChemistryWhiz: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           target: {
             selector: "chosen",
             count: 1,

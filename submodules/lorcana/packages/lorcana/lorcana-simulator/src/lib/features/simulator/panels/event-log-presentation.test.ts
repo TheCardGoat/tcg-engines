@@ -3,6 +3,7 @@ import {
   type CardInstanceId,
   type LegacyFlatMoveLog,
   type LorcanaLogMessageKey,
+  type MoveLog,
   type PlayerId,
 } from "@tcg/lorcana-engine";
 import type { ChatMessage, ChatPresetKey } from "@tcg/shared";
@@ -124,6 +125,11 @@ const FORMAT_CASES = {
     moveId: "playCard",
     values: { playerId: "player_one", cardId: "card-primary" },
     expected: "Played Ariel - On Human Legs.",
+  },
+  "lorcana.move.playCard.fromDiscard": {
+    moveId: "playCard",
+    values: { playerId: "player_one", cardId: "card-primary" },
+    expected: "Played Ariel - On Human Legs from discard.",
   },
   "lorcana.move.quest": {
     moveId: "quest",
@@ -361,7 +367,8 @@ const FORMAT_CASES = {
   "lorcana.bag.resolve.cancelled": {
     moveId: "resolveBag",
     values: { playerId: "player_one", sourceId: "card-primary", cause: "no-valid-targets" },
-    expected: "Effect from Ariel - On Human Legs cancelled (no-valid-targets).",
+    expected:
+      "Effect from Ariel - On Human Legs was not resolved because there were no valid targets.",
   },
   "lorcana.bag.resolve.cancelled.named": {
     moveId: "resolveBag",
@@ -371,12 +378,14 @@ const FORMAT_CASES = {
       abilityName: "Rush",
       cause: "no-valid-targets",
     },
-    expected: "Rush from Ariel - On Human Legs cancelled (no-valid-targets).",
+    expected:
+      "Rush from Ariel - On Human Legs was not resolved because there were no valid targets.",
   },
   "lorcana.effect.cancelled": {
     moveId: "resolveEffect",
     values: { playerId: "player_one", sourceCardId: "card-primary", cause: "no-valid-targets" },
-    expected: "Effect from Ariel - On Human Legs cancelled (no-valid-targets).",
+    expected:
+      "Effect from Ariel - On Human Legs was not resolved because there were no valid targets.",
   },
   "lorcana.outcome.combatDamage": {
     moveId: "challenge",
@@ -464,10 +473,20 @@ const FORMAT_CASES = {
     values: { playerId: "player_one", cardId: "card-primary" },
     expected: "Ariel - On Human Legs was exerted.",
   },
+  "lorcana.outcome.inkwellCardsExerted": {
+    moveId: "resolveEffect",
+    values: { playerId: "player_one", amount: 3 },
+    expected: "You exerted 3 card(s) in the inkwell.",
+  },
   "lorcana.outcome.cardReadied": {
     moveId: "resolveEffect",
     values: { playerId: "player_one", cardId: "card-primary" },
     expected: "Ariel - On Human Legs was readied.",
+  },
+  "lorcana.outcome.inkwellCardsReadied": {
+    moveId: "resolveEffect",
+    values: { playerId: "player_one", amount: 2 },
+    expected: "You readied 2 card(s) in the inkwell.",
   },
   "lorcana.outcome.cardsMilled": {
     moveId: "resolveEffect",
@@ -652,6 +671,81 @@ describe("event log presentation", () => {
     });
   }
 
+  it("formats bag play-card-from-discard resolutions as played from discard", () => {
+    const entry = createLogEntry("Mother Gothel resolves from discard", {
+      actorSide: "playerOne",
+      moveId: "resolveBag",
+      typedLogEntry: {
+        moveType: "resolveBag",
+        playerId: "player_one" as PlayerId,
+        timestamp: 123,
+        public: [
+          {
+            key: "lorcana.bag.resolve.completed.targets.named",
+            values: {
+              playerId: "player_one" as PlayerId,
+              sourceId: "card-primary" as CardInstanceId,
+              abilityName: "MUMMY'S BACK",
+              targets: ["card-primary" as CardInstanceId],
+              effectType: "play-card",
+              sourceZone: "discard",
+            },
+          },
+        ],
+      } satisfies MoveLog,
+      playerId: "player_one",
+      turnNumber: 7,
+    });
+
+    expect(flattenRowText(entry)).toBe(
+      "Resolved MUMMY'S BACK from Ariel - On Human Legs, playing Ariel - On Human Legs from discard.",
+    );
+  });
+
+  it("formats Prophetic Vision's miss branch with the revealed card and lore consequences", () => {
+    const playerOneId = "player_one" as PlayerId;
+    const playerTwoId = "player_two" as PlayerId;
+    const propheticVisionId = "card-primary" as CardInstanceId;
+    const revealedCardId = "card-secondary" as CardInstanceId;
+    const entry = createLogEntry("Prophetic Vision miss", {
+      actorSide: "playerOne",
+      moveId: "playCard",
+      typedLogEntry: {
+        moveType: "playCard",
+        playerId: playerOneId,
+        timestamp: 123,
+        public: [
+          {
+            key: "lorcana.move.playCard",
+            values: { playerId: playerOneId, cardId: propheticVisionId },
+          },
+          {
+            key: "lorcana.effect.resolve.revealTopCard.autoBottom",
+            values: {
+              playerId: playerOneId,
+              targetPlayerId: playerOneId,
+              revealedCardId,
+            },
+          },
+          {
+            key: "lorcana.outcome.loreLost",
+            values: { playerId: playerTwoId, amount: 1 },
+          },
+          {
+            key: "lorcana.outcome.loreGained",
+            values: { playerId: playerOneId, amount: 1 },
+          },
+        ],
+      } satisfies MoveLog,
+      playerId: playerOneId,
+      turnNumber: 7,
+    });
+
+    expect(flattenRowText(entry)).toBe(
+      "Played Ariel - On Human Legs. Revealed Mickey Mouse - Detective — put on the bottom of your deck. Opponent lost 1 lore. You gained 1 lore.",
+    );
+  });
+
   it("filters rows to the last two exact turn groups", () => {
     const entries = [
       createLogEntry("Turn 1", { id: "t1", turnNumber: 1 }),
@@ -701,6 +795,17 @@ describe("event log presentation", () => {
     );
 
     expect(flattenRowText(entry)).toBe("Played Ariel - On Human Legs.");
+    const cardSegment = formatEventLogBody(
+      entry,
+      "playerOne",
+      undefined,
+      createTestResolver(),
+    ).segments.find((segment) => segment.kind === "card");
+    expect(cardSegment).toMatchObject({
+      cardId: primaryCardId,
+      fallbackLabel: "Ariel - On Human Legs",
+      fallbackInkType: ["sapphire"],
+    });
   });
 
   it("formats typed play-card target selections by naming the play effect", () => {
@@ -987,6 +1092,30 @@ describe("event log presentation", () => {
 
     expect(flattenRowText(entry)).toBe(
       "Resolved STEADY AIM from Ariel - On Human Legs, dealing 2 damage to Mickey Mouse - Detective.",
+    );
+  });
+
+  it("formats flat persisted bag-resolution logs with grouped inkwell exert outcomes", () => {
+    const playerOneId = "player_one" as PlayerId;
+    const primaryCardId = "card-primary" as CardInstanceId;
+    const entry = createFlatEntry(
+      {
+        type: "resolveBag",
+        playerId: playerOneId,
+        timestamp: 123,
+        sourceCardId: primaryCardId,
+        abilityName: "FEARSOME GLARE",
+        status: "completed",
+        resolution: { kind: "noInput" },
+        outcomes: {
+          inkwellCardsExerted: [{ playerId: playerOneId, amount: 37 }],
+        },
+      },
+      { moveId: "resolveBag" },
+    );
+
+    expect(flattenRowText(entry)).toBe(
+      "Resolved FEARSOME GLARE from Ariel - On Human Legs. You exerted 37 card(s) in the inkwell.",
     );
   });
 

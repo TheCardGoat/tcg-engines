@@ -7,14 +7,17 @@ export const gd03DaughtressFlyer044: UnitCard = {
   color: "red",
   traits: ["new une"],
   id: "GD03-044",
-  externalId: "gundam:gd03-044",
-  slug: "daughtress-flyer-gd03-044",
+  canonicalId: "GD03-044",
+  externalIds: { bandai: "gundam:gd03-044" },
+  slug: "daughtress-flyer/gd03-044",
   displayName: "Daughtress Flyer",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-044",
   printings: [
     {
       id: "GD03-044",
+      artId: "GD03-044",
+      setCode: "GD03",
       collectorNumber: "GD03-044",
       cardNumber: "GD03-044",
       set: {
@@ -29,6 +32,7 @@ export const gd03DaughtressFlyer044: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-044"],
   selectedPrintingId: "GD03-044",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-044.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-044.webp?260424",

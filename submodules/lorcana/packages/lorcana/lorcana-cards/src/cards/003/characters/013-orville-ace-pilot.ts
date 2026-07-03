@@ -4,6 +4,17 @@ import { orvilleAcePilotI18n } from "./013-orville-ace-pilot.i18n";
 export const orvilleAcePilot: CharacterCard = {
   id: "Rcs",
   canonicalId: "ci_Rcs",
+  slug: "lorcana-ci_Rcs",
+  printings: [
+    {
+      id: "set3-013",
+      artId: "set3-013",
+      setCode: "set3",
+      collectorNumber: "13",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-013"],
   cardType: "character",
   name: "Orville",
@@ -21,7 +32,7 @@ export const orvilleAcePilot: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_07dfc12012794405ad72a71f1a738c5d",
-    tcgPlayer: 539065,
+    tcgPlayer: "539065",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: orvilleAcePilotI18n,

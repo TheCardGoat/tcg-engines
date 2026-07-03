@@ -4,6 +4,17 @@ import { mickeyMouseBobCratchitI18n } from "./159-mickey-mouse-bob-cratchit.i18n
 export const mickeyMouseBobCratchit: CharacterCard = {
   id: "Dfc",
   canonicalId: "ci_mnC",
+  slug: "lorcana-ci_mnC",
+  printings: [
+    {
+      id: "set11-159",
+      artId: "set11-159",
+      setCode: "set11",
+      collectorNumber: "159",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-159"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -20,7 +31,7 @@ export const mickeyMouseBobCratchit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7379a15083914913b21c37d59e503c0c",
-    tcgPlayer: 677154,
+    tcgPlayer: "677154",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { peterPanLostBoyLeaderI18n } from "./082-peter-pan-lost-boy-leader.i18n"
 export const peterPanLostBoyLeader: CharacterCard = {
   id: "ous",
   canonicalId: "ci_ous",
+  slug: "lorcana-ci_ous",
+  printings: [
+    {
+      id: "set3-082",
+      artId: "set3-082",
+      setCode: "set3",
+      collectorNumber: "82",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-082"],
   cardType: "character",
   name: "Peter Pan",
@@ -20,7 +31,7 @@ export const peterPanLostBoyLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d4d29339b89f4a0aaeeb42f533e6fbbc",
-    tcgPlayer: 531823,
+    tcgPlayer: "531823",
   },
   text: "I CAME TO LISTEN TO THE STORIES Once per turn, when this character moves to a location, gain lore equal to that location's {L}.",
   classifications: ["Dreamborn", "Hero"],
@@ -34,7 +45,11 @@ export const peterPanLostBoyLeader: CharacterCard = {
         event: "move",
         on: "SELF",
         timing: "whenever",
-        restrictions: [{ type: "once-per-turn" }],
+        restrictions: [
+          {
+            type: "once-per-turn",
+          },
+        ],
       },
       effect: {
         type: "gain-lore",

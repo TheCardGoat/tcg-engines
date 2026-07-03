@@ -7,14 +7,17 @@ export const gd02GinnLongRangeReconnaissanceType045: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD02-045",
-  externalId: "gundam:gd02-045",
-  slug: "ginn-long-range-reconnaissance-type-gd02-045",
+  canonicalId: "GD02-045",
+  externalIds: { bandai: "gundam:gd02-045" },
+  slug: "ginn-long-range-reconnaissance-type/gd02-045",
   displayName: "GINN Long-Range Reconnaissance Type",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-045",
   printings: [
     {
       id: "GD02-045",
+      artId: "GD02-045",
+      setCode: "GD02",
       collectorNumber: "GD02-045",
       cardNumber: "GD02-045",
       set: {
@@ -29,6 +32,7 @@ export const gd02GinnLongRangeReconnaissanceType045: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-045"],
   selectedPrintingId: "GD02-045",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-045.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-045.webp?260424",

@@ -17,9 +17,9 @@ export const emilyQuackfasterLevelheadedLibrarianI18n: Record<Languages, I18nPro
     version: "Besonnene Bibliothekarin",
     text: [
       {
-        title: "EMPFOHLENE LEKTÜRE",
+        title: "Empfohlene Lektüre",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit Stärken legen.",
+          "Wenn du diesen Charakter ausspielst, darfst du die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit <Stärken> legen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const emilyQuackfasterLevelheadedLibrarianI18n: Record<Languages, I18nPro
     version: "Bibliothécaire raisonnée",
     text: [
       {
-        title: "LECTURE RECOMMANDÉE",
+        title: "Lecture recommandée",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez placer la carte du dessus de votre pioche, face cachée, sous l'un de vos personnages ou de vos lieux ayant Boost.",
+          "Lorsque vous jouez ce personnage, vous pouvez placer la carte du dessus de votre pioche, face cachée, sous l'un de vos personnages ou de vos lieux ayant <Boost>.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const emilyQuackfasterLevelheadedLibrarianI18n: Record<Languages, I18nPro
     version: "Bibliotecaria Scrupolosa",
     text: [
       {
-        title: "CONSIGLI DI LETTURA",
+        title: "Consigli di Lettura",
         description:
-          "Quando giochi questo personaggio, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con Potenziamento.",
+          "Quando giochi questo personaggio, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con <Potenziamento>.",
       },
     ],
   },

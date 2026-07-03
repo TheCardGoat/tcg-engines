@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { secondStarToTheRightI18n } from "./061-second-star-to-the-right.i18n";
 
 export const secondStarToTheRight: ActionCard = {
-  id: "v0N",
+  id: "BPg",
   canonicalId: "ci_oGQ",
+  slug: "lorcana-ci_oGQ",
+  printings: [
+    {
+      id: "set4-061",
+      artId: "set4-061",
+      setCode: "set4",
+      collectorNumber: "61",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-061", "set9-060"],
   cardType: "action",
   name: "Second Star to the Right",
@@ -16,7 +27,7 @@ export const secondStarToTheRight: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_07d43fd911d2476caa9c4aa982d29405",
-    tcgPlayer: 650004,
+    tcgPlayer: "650004",
   },
   text: [
     {

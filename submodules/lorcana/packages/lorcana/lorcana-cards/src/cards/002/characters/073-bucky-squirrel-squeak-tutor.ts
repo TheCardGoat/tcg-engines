@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { buckySquirrelSqueakTutorI18n } from "./073-bucky-squirrel-squeak-tutor.i18n";
 
 export const buckySquirrelSqueakTutor: CharacterCard = {
-  id: "IGz",
-  canonicalId: "ci_IGz",
+  id: "U2v",
+  canonicalId: "ci_q4H",
+  slug: "lorcana-ci_q4H",
+  printings: [
+    {
+      id: "set2-073",
+      artId: "set2-073",
+      setCode: "set2",
+      collectorNumber: "73",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-073"],
   cardType: "character",
   name: "Bucky",
@@ -20,7 +31,7 @@ export const buckySquirrelSqueakTutor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b577553c749f4093b477e1ade7e52a2b",
-    tcgPlayer: 519506,
+    tcgPlayer: "519506",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { waterHasMemoryI18n } from "./177-water-has-memory.i18n";
 export const waterHasMemory: ActionCard = {
   id: "mVr",
   canonicalId: "ci_mVr",
+  slug: "lorcana-ci_mVr",
+  printings: [
+    {
+      id: "set7-177",
+      artId: "set7-177",
+      setCode: "set7",
+      collectorNumber: "177",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-177"],
   cardType: "action",
   name: "Water Has Memory",
@@ -16,7 +27,7 @@ export const waterHasMemory: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_63c20a20927a4cb1b67736648b2867c8",
-    tcgPlayer: 618722,
+    tcgPlayer: "618722",
   },
   text: "Look at the top 4 cards of chosen player's deck. Put one on the top of their deck and the rest on the bottom of their deck in any order.",
   abilities: [

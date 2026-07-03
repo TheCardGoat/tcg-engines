@@ -16,8 +16,8 @@ export const lingImperialSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Soldat des Kaisers",
     text: [
       {
-        title: "VOLLER TATENDRANG",
-        description: "Deine anderen Heldinnen und Helden erhalten +1.",
+        title: "Voller Tatendrang",
+        description: "Deine anderen Heldinnen und Helden erhalten +1 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const lingImperialSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Soldat Impérial",
     text: [
       {
-        title: "PLEIN DE COURAGE",
-        description: "Vos personnages Héros gagnent +1.",
+        title: "Plein de courage",
+        description: "Vos personnages Héros gagnent +1 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const lingImperialSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Soldato Imperiale",
     text: [
       {
-        title: "PIENO DI SPIRITO I",
-        description: "tuoi personaggi Eroe ricevono +1.",
+        title: "Pieno di Spirito",
+        description: "I tuoi personaggi Eroe ricevono +1 {S}.",
       },
     ],
   },

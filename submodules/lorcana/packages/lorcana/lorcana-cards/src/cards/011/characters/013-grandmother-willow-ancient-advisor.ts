@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { grandmotherWillowAncientAdvisorI18n } from "./013-grandmother-willow-ancient-advisor.i18n";
 
 export const grandmotherWillowAncientAdvisor: CharacterCard = {
-  id: "bN7",
+  id: "tbC",
   canonicalId: "ci_Qej",
+  slug: "lorcana-ci_Qej",
+  printings: [
+    {
+      id: "set11-013",
+      artId: "set11-013",
+      setCode: "set11",
+      collectorNumber: "13",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-013"],
   cardType: "character",
   name: "Grandmother Willow",
@@ -20,7 +31,7 @@ export const grandmotherWillowAncientAdvisor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d8dddac12b0749ba9c6510af447895bd",
-    tcgPlayer: 677143,
+    tcgPlayer: "677143",
   },
   text: [
     {

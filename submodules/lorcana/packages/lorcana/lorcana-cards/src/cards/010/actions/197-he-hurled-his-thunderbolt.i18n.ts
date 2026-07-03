@@ -7,14 +7,32 @@ export const heHurledHisThunderboltI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Mit einem Blitz allein",
-    text: "Füge einem Charakter deiner Wahl 4 Schaden zu. Deine Gottheiten erhalten in diesem Zug Herausfordern +2. (Während sie herausfordern, erhalten sie +2.)",
+    text: "Füge einem Charakter deiner Wahl 4 Schaden zu. Deine Gottheiten erhalten in diesem Zug <Herausfordern> +2. (Während sie herausfordern, erhalten sie +2 {S}.)",
   },
   fr: {
     name: "Foudroyant d'un éclair",
-    text: "Choisissez un personnage et infligez-lui 4 dommages. Vos personnages Dieu gagnent Offensif +2 pour le reste de ce tour. (Lorsqu'ils défient, ces personnages gagnent +2.)",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage et infligez-lui 4 dommages. Vos personnages Dieu gagnent <Offensif> +2 pour le reste de ce tour. (Lorsqu'ils défient, ces personnages gagnent +2 {S}.)",
+      },
+    ],
   },
   it: {
     name: "Con i suoi Fulmini",
-    text: "(Un personaggio con costo 4 o superiore può per cantare questa canzone gratis.) Infliggi 4 danni a un personaggio a tua scelta. I tuoi personaggi Divinità ottengono Sfidante +2 per questo turno. (Ricevono +2 mentre stanno sfidando.)",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Infliggi 4 danni a un personaggio a tua scelta. I tuoi personaggi Divinità ottengono <Sfidante> +2 per questo turno. (Ricevono +2 {S} mentre stanno sfidando.)",
+      },
+    ],
   },
 };

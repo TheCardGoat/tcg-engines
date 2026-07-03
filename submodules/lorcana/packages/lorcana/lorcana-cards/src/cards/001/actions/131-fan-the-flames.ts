@@ -4,6 +4,17 @@ import { fanTheFlamesI18n } from "./131-fan-the-flames.i18n";
 export const fanTheFlames: ActionCard = {
   id: "iMK",
   canonicalId: "ci_iMK",
+  slug: "lorcana-ci_iMK",
+  printings: [
+    {
+      id: "set1-131",
+      artId: "set1-131",
+      setCode: "set1",
+      collectorNumber: "131",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-131"],
   cardType: "action",
   name: "Fan the Flames",
@@ -16,7 +27,7 @@ export const fanTheFlames: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0df4378c1d3d40409014b2502a9926b1",
-    tcgPlayer: 505992,
+    tcgPlayer: "505992",
   },
   text: "Ready chosen character. They can't quest for the rest of this turn.",
   abilities: [

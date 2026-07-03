@@ -4,6 +4,17 @@ import { razoulPalaceGuardI18n } from "./188-razoul-palace-guard.i18n";
 export const razoulPalaceGuard: CharacterCard = {
   id: "Lj2",
   canonicalId: "ci_Lj2",
+  slug: "lorcana-ci_Lj2",
+  printings: [
+    {
+      id: "set3-188",
+      artId: "set3-188",
+      setCode: "set3",
+      collectorNumber: "188",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-188"],
   cardType: "character",
   name: "Razoul",
@@ -20,7 +31,7 @@ export const razoulPalaceGuard: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_35f95b92c0ce4e8e85eef87a3edbeb29",
-    tcgPlayer: 539114,
+    tcgPlayer: "539114",
   },
   text: [
     {

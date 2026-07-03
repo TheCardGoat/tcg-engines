@@ -4,6 +4,17 @@ import { belleInventiveEngineerI18n } from "./141-belle-inventive-engineer.i18n"
 export const belleInventiveEngineer: CharacterCard = {
   id: "O4F",
   canonicalId: "ci_xtR",
+  slug: "lorcana-ci_xtR",
+  printings: [
+    {
+      id: "set1-141",
+      artId: "set1-141",
+      setCode: "set1",
+      collectorNumber: "141",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-141", "set9-156"],
   cardType: "character",
   name: "Belle",
@@ -20,7 +31,7 @@ export const belleInventiveEngineer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b77ec6c391cd4ccaa1b1e01ca897502d",
-    tcgPlayer: 650091,
+    tcgPlayer: "650091",
   },
   text: [
     {

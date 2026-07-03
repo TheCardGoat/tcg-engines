@@ -7,14 +7,17 @@ export const gd03ZedasR059: UnitCard = {
   color: "purple",
   traits: ["vagan"],
   id: "GD03-059",
-  externalId: "gundam:gd03-059",
-  slug: "zedas-r-gd03-059",
+  canonicalId: "GD03-059",
+  externalIds: { bandai: "gundam:gd03-059" },
+  slug: "zedas-r/gd03-059",
   displayName: "Zedas R",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-059",
   printings: [
     {
       id: "GD03-059",
+      artId: "GD03-059",
+      setCode: "GD03",
       collectorNumber: "GD03-059",
       cardNumber: "GD03-059",
       set: {
@@ -29,6 +32,7 @@ export const gd03ZedasR059: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-059"],
   selectedPrintingId: "GD03-059",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-059.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-059.webp?260424",

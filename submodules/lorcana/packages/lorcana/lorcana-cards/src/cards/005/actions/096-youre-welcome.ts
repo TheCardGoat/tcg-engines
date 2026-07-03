@@ -4,6 +4,17 @@ import { youreWelcomeI18n } from "./096-youre-welcome.i18n";
 export const youreWelcome: ActionCard = {
   id: "roA",
   canonicalId: "ci_IPh",
+  slug: "lorcana-ci_IPh",
+  printings: [
+    {
+      id: "set5-096",
+      artId: "set5-096",
+      setCode: "set5",
+      collectorNumber: "96",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-096"],
   cardType: "action",
   name: "You're Welcome",
@@ -16,7 +27,7 @@ export const youreWelcome: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f799b47b4b894912a8d83942d0fa4d22",
-    tcgPlayer: 561983,
+    tcgPlayer: "561983",
   },
   text: "Shuffle chosen character, item, or location into their player's deck. That player draws 2 cards.",
   actionSubtype: "song",

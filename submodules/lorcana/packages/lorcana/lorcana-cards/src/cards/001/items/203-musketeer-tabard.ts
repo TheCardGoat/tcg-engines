@@ -4,6 +4,17 @@ import { musketeerTabardI18n } from "./203-musketeer-tabard.i18n";
 export const musketeerTabard: ItemCard = {
   id: "Srb",
   canonicalId: "ci_Srb",
+  slug: "lorcana-ci_Srb",
+  printings: [
+    {
+      id: "set1-203",
+      artId: "set1-203",
+      setCode: "set1",
+      collectorNumber: "203",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-203"],
   cardType: "item",
   name: "Musketeer Tabard",
@@ -15,7 +26,7 @@ export const musketeerTabard: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_540aa5414bc94516a563bab640ced601",
-    tcgPlayer: 505951,
+    tcgPlayer: "505951",
   },
   text: [
     {

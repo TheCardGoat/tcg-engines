@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gizmoduckDuckburgDefenderI18n } from "./193-gizmoduck-duckburg-defender.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const gizmoduckDuckburgDefender: CharacterCard = {
   id: "9Qc",
   canonicalId: "ci_9Qc",
+  slug: "lorcana-ci_9Qc",
+  printings: [
+    {
+      id: "set12-193",
+      artId: "set12-193",
+      setCode: "set12",
+      collectorNumber: "193",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-193"],
   cardType: "character",
   name: "Gizmoduck",
@@ -21,6 +33,7 @@ export const gizmoduckDuckburgDefender: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3828962996af456097d02272026b2b06",
+    tcgPlayer: "692084",
   },
   text: [
     {
@@ -29,7 +42,7 @@ export const gizmoduckDuckburgDefender: CharacterCard = {
     {
       title: "FAIL-SAFE",
       description:
-        "{} While you have no cards in your hand, opponents can't play actions with cost 4 or more.",
+        "While you have no cards in your hand, opponents can't play actions with cost 4 or more.",
     },
   ],
   classifications: ["Dreamborn", "Super", "Hero", "Inventor"],

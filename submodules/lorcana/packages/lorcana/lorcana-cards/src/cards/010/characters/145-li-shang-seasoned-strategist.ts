@@ -4,6 +4,17 @@ import { liShangSeasonedStrategistI18n } from "./145-li-shang-seasoned-strategis
 export const liShangSeasonedStrategist: CharacterCard = {
   id: "1HE",
   canonicalId: "ci_1HE",
+  slug: "lorcana-ci_1HE",
+  printings: [
+    {
+      id: "set10-145",
+      artId: "set10-145",
+      setCode: "set10",
+      collectorNumber: "145",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-145"],
   cardType: "character",
   name: "Li Shang",
@@ -21,7 +32,7 @@ export const liShangSeasonedStrategist: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_b8e31f6f54ad44749dc441c7547ab686",
-    tcgPlayer: 660002,
+    tcgPlayer: "660002",
   },
   classifications: ["Storyborn", "Hero", "Captain"],
   i18n: liShangSeasonedStrategistI18n,

@@ -1,12 +1,13 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailMamanBrigitteSpiritOfDeath = {
+export const welcomeToNightCityRetailMamanBrigitteSpiritOfDeath = defineCyberpunkCard({
   id: "5380dea3-4d21-445b-af02-487b45d40395",
-  externalId: "cb-maman-brigitte-spirit-of-death",
   slug: "maman-brigitte-spirit-of-death",
+  rulesText: "{Play} You may discard 2 Programs. If you do, bottom-deck a rival unequipped Unit.",
   name: "Maman Brigitte — Spirit of Death",
   displayName: "Maman Brigitte — Spirit of Death",
-  rulesText: "[PLAY] You may discard 2 Programs. If you do, bottom-deck an unequipped rival Unit.",
+  canonicalId: "maman-brigitte-spirit-of-death",
   color: "blue",
   classifications: ["Mystic", "Netrunner", "Voodoo Boys"],
   set: {
@@ -14,21 +15,6 @@ export const welcomeToNightCityRetailMamanBrigitteSpiritOfDeath = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "118",
-  printings: [
-    {
-      id: "8a7131eb-e1dd-46d6-84f6-2de315aee975",
-      collectorNumber: "118",
-      setCode: "welcometonightcityretail",
-      rarity: "Uncommon",
-    },
-    {
-      id: "220bef49-2e98-4bc6-b023-5bb8f492b29b",
-      collectorNumber: "β118",
-      setCode: "welcometonightcitybeta",
-      rarity: "Uncommon",
-    },
-  ],
-  selectedPrintingId: "8a7131eb-e1dd-46d6-84f6-2de315aee975",
   artist: "TOPDOG Entertainment",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/118.webp",
   rarity: "Uncommon",
@@ -36,7 +22,6 @@ export const welcomeToNightCityRetailMamanBrigitteSpiritOfDeath = {
   hasSellTag: false,
   ram: 4,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 5,
   power: 3,
@@ -87,5 +72,4 @@ export const welcomeToNightCityRetailMamanBrigitteSpiritOfDeath = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies UnitCardDefinition;

@@ -7,14 +7,17 @@ export const gd01StealthStratagem116: CommandCard = {
   color: "red",
   traits: ["zaft", "coordinator"],
   id: "GD01-116",
-  externalId: "gundam:gd01-116",
-  slug: "stealth-stratagem-gd01-116",
+  canonicalId: "GD01-116",
+  externalIds: { bandai: "gundam:gd01-116" },
+  slug: "stealth-stratagem/gd01-116",
   displayName: "Stealth Stratagem",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-116",
   printings: [
     {
       id: "GD01-116",
+      artId: "GD01-116",
+      setCode: "GD01",
       collectorNumber: "GD01-116",
       cardNumber: "GD01-116",
       set: {
@@ -29,6 +32,7 @@ export const gd01StealthStratagem116: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-116"],
   selectedPrintingId: "GD01-116",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-116.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-116.webp?260424",

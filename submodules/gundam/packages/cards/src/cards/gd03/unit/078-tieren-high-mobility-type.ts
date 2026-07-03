@@ -7,14 +7,17 @@ export const gd03TierenHighMobilityType078: UnitCard = {
   color: "white",
   traits: ["superpower bloc"],
   id: "GD03-078",
-  externalId: "gundam:gd03-078",
-  slug: "tieren-high-mobility-type-gd03-078",
+  canonicalId: "GD03-078",
+  externalIds: { bandai: "gundam:gd03-078" },
+  slug: "tieren-high-mobility-type/gd03-078",
   displayName: "Tieren High Mobility Type",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-078",
   printings: [
     {
       id: "GD03-078",
+      artId: "GD03-078",
+      setCode: "GD03",
       collectorNumber: "GD03-078",
       cardNumber: "GD03-078",
       set: {
@@ -29,6 +32,7 @@ export const gd03TierenHighMobilityType078: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-078"],
   selectedPrintingId: "GD03-078",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-078.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-078.webp?260424",

@@ -6,14 +6,17 @@ export const betaSide7124: BaseCard = {
   type: "base",
   traits: ["earth federation", "stronghold"],
   id: "GD01-124_p1",
-  externalId: "gundam:gd01-124_p1",
-  slug: "side-7-gd01-124-p1",
+  canonicalId: "GD01-124",
+  externalIds: { bandai: "gundam:gd01-124_p1" },
+  slug: "side-7/gd01-124",
   displayName: "Side 7",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-124_p1",
   printings: [
     {
       id: "GD01-124",
+      artId: "GD01-124",
+      setCode: "GD01",
       collectorNumber: "GD01-124",
       cardNumber: "GD01-124",
       set: {
@@ -29,6 +32,8 @@ export const betaSide7124: BaseCard = {
     },
     {
       id: "GD01-124_p1",
+      artId: "GD01-124_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-124_p1",
       cardNumber: "GD01-124",
       set: {
@@ -43,6 +48,7 @@ export const betaSide7124: BaseCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-124", "GD01-124_p1"],
   selectedPrintingId: "GD01-124_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-124_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-124_p1.webp?260424",

@@ -4,6 +4,17 @@ import { rufusOrphanageCatI18n } from "./153-rufus-orphanage-cat.i18n";
 export const rufusOrphanageCat: CharacterCard = {
   id: "Lpq",
   canonicalId: "ci_Lpq",
+  slug: "lorcana-ci_Lpq",
+  printings: [
+    {
+      id: "set3-153",
+      artId: "set3-153",
+      setCode: "set3",
+      collectorNumber: "153",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-153"],
   cardType: "character",
   name: "Rufus",
@@ -20,7 +31,7 @@ export const rufusOrphanageCat: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c914737245874c918af51cac073d6d36",
-    tcgPlayer: 539100,
+    tcgPlayer: "539100",
   },
   text: [
     {

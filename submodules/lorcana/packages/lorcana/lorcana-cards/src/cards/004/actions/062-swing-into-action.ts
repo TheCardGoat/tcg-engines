@@ -4,6 +4,17 @@ import { swingIntoActionI18n } from "./062-swing-into-action.i18n";
 export const swingIntoAction: ActionCard = {
   id: "bPM",
   canonicalId: "ci_bPM",
+  slug: "lorcana-ci_bPM",
+  printings: [
+    {
+      id: "set4-062",
+      artId: "set4-062",
+      setCode: "set4",
+      collectorNumber: "62",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-062"],
   cardType: "action",
   name: "Swing into Action",
@@ -16,7 +27,7 @@ export const swingIntoAction: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_388773c70283456b87414157b1eebd98",
-    tcgPlayer: 550571,
+    tcgPlayer: "550571",
   },
   text: "Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
   abilities: [

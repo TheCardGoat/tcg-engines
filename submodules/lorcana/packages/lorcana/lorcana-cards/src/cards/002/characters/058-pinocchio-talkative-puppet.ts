@@ -3,7 +3,18 @@ import { pinocchioTalkativePuppetI18n } from "./058-pinocchio-talkative-puppet.i
 
 export const pinocchioTalkativePuppet: CharacterCard = {
   id: "nsa",
-  canonicalId: "ci_nsa",
+  canonicalId: "ci_RgG",
+  slug: "lorcana-ci_RgG",
+  printings: [
+    {
+      id: "set2-058",
+      artId: "set2-058",
+      setCode: "set2",
+      collectorNumber: "58",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-058"],
   cardType: "character",
   name: "Pinocchio",
@@ -20,7 +31,7 @@ export const pinocchioTalkativePuppet: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_526769983dde47589d6ddf5cd4e74caa",
-    tcgPlayer: 525086,
+    tcgPlayer: "525086",
   },
   text: [
     {

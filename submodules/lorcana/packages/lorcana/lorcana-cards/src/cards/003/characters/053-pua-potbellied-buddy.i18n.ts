@@ -16,7 +16,7 @@ export const puaPotbelliedBuddyI18n: Record<Languages, I18nProperties> = {
     version: "Hängebauch-Freund",
     text: [
       {
-        title: "IMMER DABEI",
+        title: "Immer dabei",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du diese Karte in dein Deck mischen.",
       },
@@ -27,7 +27,7 @@ export const puaPotbelliedBuddyI18n: Record<Languages, I18nProperties> = {
     version: "Compagnon bedonnant",
     text: [
       {
-        title: "TOUJOURS À TES CÔTÉS",
+        title: "Toujours à tes côtés",
         description:
           "Lorsque ce personnage est banni, vous pouvez le remélanger dans votre pioche.",
       },
@@ -38,7 +38,7 @@ export const puaPotbelliedBuddyI18n: Record<Languages, I18nProperties> = {
     version: "Amico Panciuto",
     text: [
       {
-        title: "SEMPRE PRESENTE",
+        title: "Sempre Presente",
         description:
           "Quando questo personaggio viene esiliato, puoi rimescolare questa carta nel tuo mazzo.",
       },

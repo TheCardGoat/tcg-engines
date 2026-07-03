@@ -4,6 +4,17 @@ import { trampStreetsmartDogI18n } from "./010-tramp-street-smart-dog.i18n";
 export const trampStreetsmartDog: CharacterCard = {
   id: "52C",
   canonicalId: "ci_52C",
+  slug: "lorcana-ci_52C",
+  printings: [
+    {
+      id: "set7-010",
+      artId: "set7-010",
+      setCode: "set7",
+      collectorNumber: "10",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-010"],
   cardType: "character",
   name: "Tramp",
@@ -20,13 +31,13 @@ export const trampStreetsmartDog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8d473335c16245e684e466b7a745ec89",
-    tcgPlayer: 619412,
+    tcgPlayer: "619412",
   },
   text: [
     {
-      title: "NOW IT'S A PARTY",
+      title: "NOW IT'S",
       description:
-        "For each character you have in play, you pay 1 {I} less to play this character.",
+        "A PARTY For each character you have in play, you pay 1 {I} less to play this character.",
     },
     {
       title: "HOW'S PICKINGS?",

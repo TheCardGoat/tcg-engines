@@ -102,10 +102,12 @@ export class MatchRuntime {
     command: CommandEnvelope;
     playerId: PlayerId;
     moveLogCount: number;
+    gameLogCount: number;
   }[] = [];
   public undoBarriers: string[] = [];
   public moveHistory: MoveHistoryEntry[] = [];
   public moveLogHistory: GundamMoveLog[] = [];
+  public gameLogHistory: { readonly entry: GameLogEntry; readonly turnNumber: number }[] = [];
 
   private eventCounter = 0;
   private logCounter = 0;
@@ -156,6 +158,7 @@ export class MatchRuntime {
     this.undoBarriers = [];
     this.moveHistory = [];
     this.moveLogHistory = [];
+    this.gameLogHistory = [];
     this.eventCounter = 0;
     this.logCounter = 0;
   }
@@ -188,10 +191,12 @@ export class MatchRuntime {
         command: CommandEnvelope;
         playerId: PlayerId;
         moveLogCount?: number;
+        gameLogCount?: number;
       }[];
       undoBarriers?: readonly string[];
       moveHistory?: readonly MoveHistoryEntry[];
       moveLogHistory?: readonly GundamMoveLog[];
+      gameLogHistory?: readonly { readonly entry: GameLogEntry; readonly turnNumber: number }[];
       eventCounter?: number;
       logCounter?: number;
       silent?: boolean;
@@ -200,11 +205,16 @@ export class MatchRuntime {
     this.state = state;
     this.commandHistory = options.commandHistory ? [...options.commandHistory] : [];
     this.undoStack = options.undoStack
-      ? options.undoStack.map((e) => ({ ...e, moveLogCount: e.moveLogCount ?? 0 }))
+      ? options.undoStack.map((e) => ({
+          ...e,
+          moveLogCount: e.moveLogCount ?? 0,
+          gameLogCount: e.gameLogCount ?? 0,
+        }))
       : [];
     this.undoBarriers = options.undoBarriers ? [...options.undoBarriers] : [];
     this.moveHistory = options.moveHistory ? [...options.moveHistory] : [];
     this.moveLogHistory = options.moveLogHistory ? [...options.moveLogHistory] : [];
+    this.gameLogHistory = options.gameLogHistory ? [...options.gameLogHistory] : [];
     this.eventCounter = options.eventCounter ?? 0;
     this.logCounter = options.logCounter ?? 0;
     if (!options.silent) {
@@ -355,6 +365,7 @@ export class MatchRuntime {
           command: envelope,
           playerId,
           moveLogCount: taggedMoveLogs.length,
+          gameLogCount: logEntries.length,
         });
       } else {
         this.undoStack = [];
@@ -383,6 +394,10 @@ export class MatchRuntime {
         step: nextState.ctx.status.step,
       });
       this.moveLogHistory.push(...taggedMoveLogs);
+      const turnNumber = nextState.ctx.status.turn;
+      for (const entry of logEntries) {
+        this.gameLogHistory.push({ entry, turnNumber });
+      }
       this.state = nextState;
 
       this.notifyGameEvents(gameEvents);
@@ -582,6 +597,10 @@ export class MatchRuntime {
 
     this.state = nextState;
     this.undoStack = [];
+    const turnNumber = nextState.ctx.status.turn;
+    for (const entry of logEntries) {
+      this.gameLogHistory.push({ entry, turnNumber });
+    }
 
     this.notifyGameEvents(gameEvents);
     this.notifyStateUpdate();
@@ -604,6 +623,9 @@ export class MatchRuntime {
     this.moveHistory.pop();
     if (entry.moveLogCount > 0) {
       this.moveLogHistory.splice(-entry.moveLogCount, entry.moveLogCount);
+    }
+    if (entry.gameLogCount > 0) {
+      this.gameLogHistory.splice(-entry.gameLogCount, entry.gameLogCount);
     }
 
     this.notifyStateUpdate();
@@ -631,6 +653,7 @@ export class MatchRuntime {
     this.commandHistory = [];
     this.moveHistory = [];
     this.moveLogHistory = [];
+    this.gameLogHistory = [];
   }
 
   // ── Accessors ──────────────────────────────────────────────────────────
@@ -649,6 +672,10 @@ export class MatchRuntime {
 
   getMoveLogHistory(): readonly GundamMoveLog[] {
     return this.moveLogHistory;
+  }
+
+  getGameLogHistory(): readonly { readonly entry: GameLogEntry; readonly turnNumber: number }[] {
+    return this.gameLogHistory;
   }
 
   /**

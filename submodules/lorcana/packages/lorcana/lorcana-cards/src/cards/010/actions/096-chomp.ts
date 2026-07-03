@@ -4,6 +4,17 @@ import { chompI18n } from "./096-chomp.i18n";
 export const chomp: ActionCard = {
   id: "vgW",
   canonicalId: "ci_vgW",
+  slug: "lorcana-ci_vgW",
+  printings: [
+    {
+      id: "set10-096",
+      artId: "set10-096",
+      setCode: "set10",
+      collectorNumber: "96",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-096"],
   cardType: "action",
   name: "Chomp!",
@@ -15,7 +26,7 @@ export const chomp: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1b74cd74b69f4a369ce0a8af4cb21e10",
-    tcgPlayer: 659187,
+    tcgPlayer: "659187",
   },
   text: "Deal 2 damage to chosen damaged character.",
   abilities: [

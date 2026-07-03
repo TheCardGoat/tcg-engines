@@ -7,14 +7,17 @@ export const gd04GundamDynamesGnFullShield029: UnitCard = {
   color: "green",
   traits: ["cb", "gn drive"],
   id: "GD04-029",
-  externalId: "gundam:gd04-029",
-  slug: "gundam-dynames-gn-full-shield-gd04-029",
+  canonicalId: "GD04-029",
+  externalIds: { bandai: "gundam:gd04-029" },
+  slug: "gundam-dynames-gn-full-shield/gd04-029",
   displayName: "Gundam Dynames (GN Full Shield)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-029",
   printings: [
     {
       id: "GD04-029",
+      artId: "GD04-029",
+      setCode: "GD04",
       collectorNumber: "GD04-029",
       cardNumber: "GD04-029",
       set: {
@@ -29,6 +32,7 @@ export const gd04GundamDynamesGnFullShield029: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-029"],
   selectedPrintingId: "GD04-029",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-029.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-029.webp?260424",

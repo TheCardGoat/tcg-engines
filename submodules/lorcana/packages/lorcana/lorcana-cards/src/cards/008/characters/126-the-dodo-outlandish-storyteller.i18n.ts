@@ -16,8 +16,8 @@ export const theDodoOutlandishStorytellerI18n: Record<Languages, I18nProperties>
     version: "Schräger Geschichtenerzähler",
     text: [
       {
-        title: "EINE ÄUSSERST FATALE SITUATION",
-        description: "Dieser Charakter erhält für jeden Schaden auf ihm +1.",
+        title: "Eine äußerst fatale Situation",
+        description: "Dieser Charakter erhält für jeden Schaden auf ihm +1 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const theDodoOutlandishStorytellerI18n: Record<Languages, I18nProperties>
     version: "Conteur saugrenu",
     text: [
       {
-        title: "C'EST UNE SITUATION EXTRAORDINAIRE",
-        description: "Ce personnage a +1 pour chaque dommage sur lui.",
+        title: "C'est une situation extraordinaire",
+        description: "Ce personnage a +1 {S} pour chaque dommage sur lui.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const theDodoOutlandishStorytellerI18n: Record<Languages, I18nProperties>
     version: "Narratore Stravagante",
     text: [
       {
-        title: "STRAORDINARIA SITUAZIONE",
-        description: "Questo personaggio riceve +1 per ogni singolo danno su di esso.",
+        title: "Straordinaria Situazione",
+        description: "Questo personaggio riceve +1 {S} per ogni singolo danno su di esso.",
       },
     ],
   },

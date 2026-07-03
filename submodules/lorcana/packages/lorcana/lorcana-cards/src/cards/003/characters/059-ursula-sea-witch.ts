@@ -4,6 +4,17 @@ import { ursulaSeaWitchI18n } from "./059-ursula-sea-witch.i18n";
 export const ursulaSeaWitch: CharacterCard = {
   id: "14O",
   canonicalId: "ci_1J4",
+  slug: "lorcana-ci_1J4",
+  printings: [
+    {
+      id: "set3-059",
+      artId: "set3-059",
+      setCode: "set3",
+      collectorNumber: "59",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-059", "set9-037"],
   cardType: "character",
   name: "Ursula",
@@ -20,7 +31,7 @@ export const ursulaSeaWitch: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_48ccbae93afd4032a54bf09f03f6a0c2",
-    tcgPlayer: 650145,
+    tcgPlayer: "650145",
   },
   text: [
     {

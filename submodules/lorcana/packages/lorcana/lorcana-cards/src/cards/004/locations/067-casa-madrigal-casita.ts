@@ -4,6 +4,17 @@ import { casaMadrigalCasitaI18n } from "./067-casa-madrigal-casita.i18n";
 export const casaMadrigalCasita: LocationCard = {
   id: "oye",
   canonicalId: "ci_Onk",
+  slug: "lorcana-ci_Onk",
+  printings: [
+    {
+      id: "set4-067",
+      artId: "set4-067",
+      setCode: "set4",
+      collectorNumber: "67",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-067", "set9-068"],
   cardType: "location",
   name: "Casa Madrigal",
@@ -20,7 +31,7 @@ export const casaMadrigalCasita: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3badd6eb64ca49b18e7ee2cefea06b46",
-    tcgPlayer: 650010,
+    tcgPlayer: "650010",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { ghostlyTaleI18n } from "./132-ghostly-tale.i18n";
 export const ghostlyTale: ActionCard = {
   id: "nOf",
   canonicalId: "ci_nOf",
+  slug: "lorcana-ci_nOf",
+  printings: [
+    {
+      id: "set10-132",
+      artId: "set10-132",
+      setCode: "set10",
+      collectorNumber: "132",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-132"],
   cardType: "action",
   name: "Ghostly Tale",
@@ -16,7 +27,7 @@ export const ghostlyTale: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7724545f54ee47aaadb5ea5aee9cd92e",
-    tcgPlayer: 660016,
+    tcgPlayer: "660016",
   },
   text: "Exert all opposing characters with 2 {S} or less.",
   abilities: [

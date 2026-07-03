@@ -6,15 +6,15 @@ export const cardAdvantageI18n: Record<Languages, I18nProperties> = {
     text: "If an opposing character was banished in a challenge this turn, draw 2 cards.",
   },
   de: {
-    name: "Card Advantage",
-    text: "If an opposing character was banished in a challenge this turn, draw 2 cards.",
+    name: "Kartenvorteil",
+    text: "Falls in diesem Zug ein gegnerischer Charakter durch eine Herausforderung verbannt wurde, ziehe 2 Karten.",
   },
   fr: {
-    name: "Card Advantage",
-    text: "If an opposing character was banished in a challenge this turn, draw 2 cards.",
+    name: "Cartes bonus",
+    text: "Si un personnage adverse a été banni via un défi ce tour-ci, piochez 2 cartes.",
   },
   it: {
-    name: "Card Advantage",
-    text: "If an opposing character was banished in a challenge this turn, draw 2 cards.",
+    name: "Vantaggio di Carte",
+    text: "Se un personaggio avversario è stato esiliato in una sfida in questo turno, pesca 2 carte.",
   },
 };

@@ -4,6 +4,17 @@ import { lyleTiberiusRourkeAdventurerForHireI18n } from "./087-lyle-tiberius-rou
 export const lyleTiberiusRourkeAdventurerForHire: CharacterCard = {
   id: "UV1",
   canonicalId: "ci_UV1",
+  slug: "lorcana-ci_UV1",
+  printings: [
+    {
+      id: "set12-087",
+      artId: "set12-087",
+      setCode: "set12",
+      collectorNumber: "87",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-087"],
   cardType: "character",
   name: "Lyle Tiberius Rourke",
@@ -20,6 +31,7 @@ export const lyleTiberiusRourkeAdventurerForHire: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9008a5fe3cdb46d9861b2b4477b81280",
+    tcgPlayer: "692043",
   },
   text: [
     {

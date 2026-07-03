@@ -4,6 +4,17 @@ import { chipTheTeacupGentleSoulI18n } from "./037-chip-the-teacup-gentle-soul.i
 export const chipTheTeacupGentleSoul: CharacterCard = {
   id: "8TZ",
   canonicalId: "ci_8TZ",
+  slug: "lorcana-ci_8TZ",
+  printings: [
+    {
+      id: "set2-037",
+      artId: "set2-037",
+      setCode: "set2",
+      collectorNumber: "37",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-037"],
   cardType: "character",
   name: "Chip the Teacup",
@@ -21,7 +32,7 @@ export const chipTheTeacupGentleSoul: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_a385d4bd2e5543609f40f170f17a6a55",
-    tcgPlayer: 525108,
+    tcgPlayer: "525108",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: chipTheTeacupGentleSoulI18n,

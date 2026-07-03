@@ -7,14 +7,17 @@ export const betaMaganac005: UnitCard = {
   color: "green",
   traits: ["maganac corps"],
   id: "ST02-005_p2",
-  externalId: "gundam:st02-005_p2",
-  slug: "maganac-st02-005-p2",
+  canonicalId: "ST02-005",
+  externalIds: { bandai: "gundam:st02-005_p2" },
+  slug: "maganac/st02-005",
   displayName: "Maganac",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "ST02-005_p2",
   printings: [
     {
       id: "ST02-005",
+      artId: "ST02-005",
+      setCode: "ST02",
       collectorNumber: "ST02-005",
       cardNumber: "ST02-005",
       set: {
@@ -30,6 +33,8 @@ export const betaMaganac005: UnitCard = {
     },
     {
       id: "ST02-005_p1",
+      artId: "ST02-005_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-005_p1",
       cardNumber: "ST02-005",
       set: {
@@ -45,6 +50,8 @@ export const betaMaganac005: UnitCard = {
     },
     {
       id: "ST02-005_p2",
+      artId: "ST02-005_p2",
+      setCode: "BETA",
       collectorNumber: "ST02-005_p2",
       cardNumber: "ST02-005",
       set: {
@@ -59,6 +66,7 @@ export const betaMaganac005: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST02-005", "ST02-005_p1", "ST02-005_p2"],
   selectedPrintingId: "ST02-005_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST02-005_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-005_p2.webp?260424",

@@ -4,6 +4,17 @@ import { eudoraAccomplishedSeamstressI18n } from "./007-eudora-accomplished-seam
 export const eudoraAccomplishedSeamstress: CharacterCard = {
   id: "3Gy",
   canonicalId: "ci_3Gy",
+  slug: "lorcana-ci_3Gy",
+  printings: [
+    {
+      id: "set2-007",
+      artId: "set2-007",
+      setCode: "set2",
+      collectorNumber: "7",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-007"],
   cardType: "character",
   name: "Eudora",
@@ -21,7 +32,7 @@ export const eudoraAccomplishedSeamstress: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_1c8429d7ddbe4e4895be3442a801c039",
-    tcgPlayer: 527710,
+    tcgPlayer: "527710",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: eudoraAccomplishedSeamstressI18n,

@@ -4,6 +4,17 @@ import { jasmineRebelliousPrincessI18n } from "./106-jasmine-rebellious-princess
 export const jasmineRebelliousPrincess: CharacterCard = {
   id: "5EC",
   canonicalId: "ci_5EC",
+  slug: "lorcana-ci_5EC",
+  printings: [
+    {
+      id: "set6-106",
+      artId: "set6-106",
+      setCode: "set6",
+      collectorNumber: "106",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-106"],
   cardType: "character",
   name: "Jasmine",
@@ -20,7 +31,7 @@ export const jasmineRebelliousPrincess: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e093d909d79f4dd5baaccae93139c95b",
-    tcgPlayer: 588101,
+    tcgPlayer: "588101",
   },
   text: [
     {

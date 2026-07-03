@@ -7,14 +7,17 @@ export const gd02OrgaCrotAndShani087: PilotCard = {
   color: "blue",
   traits: ["earth alliance", "biological cpu"],
   id: "GD02-087",
-  externalId: "gundam:gd02-087",
-  slug: "orga-crot-and-shani-gd02-087",
+  canonicalId: "GD02-087",
+  externalIds: { bandai: "gundam:gd02-087" },
+  slug: "orga-crot-and-shani/gd02-087",
   displayName: "Orga, Crot, and Shani",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-087",
   printings: [
     {
       id: "GD02-087",
+      artId: "GD02-087",
+      setCode: "GD02",
       collectorNumber: "GD02-087",
       cardNumber: "GD02-087",
       set: {
@@ -29,6 +32,7 @@ export const gd02OrgaCrotAndShani087: PilotCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-087"],
   selectedPrintingId: "GD02-087",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-087.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-087.webp?260424",

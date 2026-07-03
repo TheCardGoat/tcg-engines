@@ -14,8 +14,9 @@ export const fishboneQuillI18n: Record<Languages, I18nProperties> = {
     name: "Fischgrätenfeder",
     text: [
       {
-        title: "UNTERSCHREIB DIE ROLLE, LOS!",
-        description: "— Lege 1 beliebige Karte aus deiner Hand verdeckt in deinen Tintenvorrat.",
+        title: "Unterschreib die Rolle, los!",
+        description:
+          "{E} — Lege 1 beliebige Karte aus deiner Hand verdeckt in deinen Tintenvorrat.",
       },
     ],
   },
@@ -24,7 +25,8 @@ export const fishboneQuillI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "SIGNE!",
-        description: "— Placez une carte de votre main dans votre réserve d'encre, face cachée.",
+        description:
+          "{E} — Placez une carte de votre main dans votre réserve d'encre, face cachée.",
       },
     ],
   },
@@ -32,8 +34,8 @@ export const fishboneQuillI18n: Record<Languages, I18nProperties> = {
     name: "Fishbone Quill",
     text: [
       {
-        title: "GO AHEAD AND SIGN",
-        description: "— Put any card from your hand into your inkwell facedown.",
+        title: "Go Ahead and Sign",
+        description: "{E} — Put any card from your hand into your inkwell facedown.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const gd03HyGogg024: UnitCard = {
   color: "green",
   traits: ["zeon", "cyclops team"],
   id: "GD03-024",
-  externalId: "gundam:gd03-024",
-  slug: "hy-gogg-gd03-024",
+  canonicalId: "GD03-024",
+  externalIds: { bandai: "gundam:gd03-024" },
+  slug: "hy-gogg/gd03-024",
   displayName: "Hy-Gogg",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-024",
   printings: [
     {
       id: "GD03-024",
+      artId: "GD03-024",
+      setCode: "GD03",
       collectorNumber: "GD03-024",
       cardNumber: "GD03-024",
       set: {
@@ -29,6 +32,7 @@ export const gd03HyGogg024: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-024"],
   selectedPrintingId: "GD03-024",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-024.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-024.webp?260424",

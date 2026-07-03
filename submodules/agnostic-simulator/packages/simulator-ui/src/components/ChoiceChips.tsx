@@ -43,6 +43,8 @@ export function ChoiceChips({ options, selectedIds, multi = false, onSelect }: C
           )}
           onClick={() => toggleOption(option.id)}
           aria-pressed={selectedIds.includes(option.id)}
+          data-testid={`choice-chip:${option.id}`}
+          data-option-id={option.id}
         >
           {option.label}
         </button>

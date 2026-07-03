@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { peteBadGuyI18n } from "./088-pete-bad-guy.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const peteBadGuy: CharacterCard = {
   id: "2R8",
   canonicalId: "ci_rio",
+  slug: "lorcana-ci_rio",
+  printings: [
+    {
+      id: "set2-088",
+      artId: "set2-088",
+      setCode: "set2",
+      collectorNumber: "88",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-088"],
   cardType: "character",
   name: "Pete",
@@ -20,7 +32,7 @@ export const peteBadGuy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_67714955a33e4508913f44b8ccb08e5c",
-    tcgPlayer: 528108,
+    tcgPlayer: "528108",
   },
   text: [
     {

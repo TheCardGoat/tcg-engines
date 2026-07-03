@@ -7,14 +7,17 @@ export const gd02ItSNameIsRyuseiGo114: CommandCard = {
   color: "purple",
   traits: ["tekkadan", "alaya-vijnana"],
   id: "GD02-114",
-  externalId: "gundam:gd02-114",
-  slug: "it-s-name-is-ryusei-go-gd02-114",
+  canonicalId: "GD02-114",
+  externalIds: { bandai: "gundam:gd02-114" },
+  slug: "it-s-name-is-ryusei-go/gd02-114",
   displayName: "It's Name is Ryusei-Go",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-114",
   printings: [
     {
       id: "GD02-114",
+      artId: "GD02-114",
+      setCode: "GD02",
       collectorNumber: "GD02-114",
       cardNumber: "GD02-114",
       set: {
@@ -29,6 +32,7 @@ export const gd02ItSNameIsRyuseiGo114: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-114"],
   selectedPrintingId: "GD02-114",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-114.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-114.webp?260424",

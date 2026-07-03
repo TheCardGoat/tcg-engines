@@ -4,6 +4,17 @@ import { quickPatchI18n } from "./027-quick-patch.i18n";
 export const quickPatch: ActionCard = {
   id: "Wq8",
   canonicalId: "ci_Wq8",
+  slug: "lorcana-ci_Wq8",
+  printings: [
+    {
+      id: "set3-027",
+      artId: "set3-027",
+      setCode: "set3",
+      collectorNumber: "27",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-027"],
   cardType: "action",
   name: "Quick Patch",
@@ -16,7 +27,7 @@ export const quickPatch: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5364fdf0cf144ac38d2d7c824f8cc72f",
-    tcgPlayer: 538310,
+    tcgPlayer: "538310",
   },
   text: "Remove up to 3 damage from chosen location.",
   abilities: [
@@ -24,7 +35,10 @@ export const quickPatch: ActionCard = {
       type: "action",
       effect: {
         type: "remove-damage",
-        amount: { type: "up-to", value: 3 },
+        amount: {
+          type: "up-to",
+          value: 3,
+        },
         target: {
           cardTypes: ["location"],
           count: 1,

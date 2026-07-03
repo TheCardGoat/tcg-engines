@@ -9,7 +9,10 @@
   import LorcanaCard from "@/design-system/simulator/cards/LorcanaCard.svelte";
   import { ZONE_IMAGE_FORMATS } from "@/design-system/simulator/cards/card-image-format.js";
   import HotkeyCardBadge from "@/features/simulator/hotkeys/HotkeyCardBadge.svelte";
-  import { useLorcanaSidebarPresenter } from "@/features/simulator/context/game-context.svelte.js";
+  import {
+    useLorcanaBoardPresenter,
+    useLorcanaSidebarPresenter,
+  } from "@/features/simulator/context/game-context.svelte.js";
   import { useSimulatorCardContext } from "@/features/simulator/context/simulator-card-context.svelte.js";
   import { useLorcanaSimulatorDndContext } from "@/features/simulator/context/simulator-dnd-context.svelte.js";
   import {
@@ -43,7 +46,10 @@
   const sidebar = useLorcanaSidebarPresenter();
   const simulatorCardContext = useSimulatorCardContext();
   const dnd = useLorcanaSimulatorDndContext();
+  const board = useLorcanaBoardPresenter();
+  const boardAnimationCardIds = $derived(board.boardAnimationCardIds);
   const locationDropState = $derived(dnd.getLocationDropState(location.cardId));
+  const clusterCards = $derived([location, ...occupants]);
   const isDirectSelectionMode = $derived(
     isPlayZoneLocationEntryDirectSelectionMode(sidebar.actionSelectionSession),
   );
@@ -54,6 +60,25 @@
     );
   }
   const locationActionState = $derived(sidebar.getActionSessionCardState(location.cardId));
+  const actionPlayableCardIds = $derived.by(() => {
+    const playableIds = new Set<string>();
+    for (const card of clusterCards) {
+      if (sidebar.getCardActionHighlightState(card).playable) {
+        playableIds.add(card.cardId);
+      }
+    }
+    return playableIds;
+  });
+  const actionActivatableCardIds = $derived.by(() => {
+    const activatableIds = new Set<string>();
+    for (const card of clusterCards) {
+      if (sidebar.getCardActionHighlightState(card).activatable) {
+        activatableIds.add(card.cardId);
+      }
+    }
+    return activatableIds;
+  });
+  const locationActionPlayable = $derived(actionPlayableCardIds.has(location.cardId));
   const occupantCountLabel = $derived(
     occupants.length === 1 ? "1 here" : `${occupants.length} here`,
   );
@@ -71,12 +96,30 @@
       return true;
     }
 
-    return handlePlayZoneLocationEntryDirectSelection({
+    const directSelectionHandled = handlePlayZoneLocationEntryDirectSelection({
       card: selectedCard,
       event,
       directSelectionMode: isDirectSelectionMode,
       onSelect: (nextCard) => sidebar.handleActionSessionCardSelection(nextCard),
     });
+
+    if (directSelectionHandled) {
+      return true;
+    }
+
+    if (sidebar.actionSelectionSession || sidebar.resolutionSelectionSession) {
+      return false;
+    }
+
+    const abilityAction = sidebar
+      .getCardActionViews(selectedCard)
+      .find((action) => action.categoryId === "activate-ability" && action.enabled);
+    if (!abilityAction) {
+      return false;
+    }
+
+    event.stopPropagation();
+    return sidebar.handleCardActionClick(abilityAction);
   }
 </script>
 
@@ -88,6 +131,8 @@
   data-player-id={location.ownerId}
   data-zone-id={location.zoneId}
   data-location-cluster-id={location.cardId}
+  data-action-playable-card-ids={[...actionPlayableCardIds].join(",")}
+  data-action-activatable-card-ids={[...actionActivatableCardIds].join(",")}
   aria-label={clusterLabel}
   style={`--location-occupant-slots: ${occupantSlots};`}
 >
@@ -122,7 +167,7 @@
             simulatorCardContext.previewCard?.cardId === location.cardId
           }
           {isMasked}
-          isPlayable={locationActionState.isSelectable}
+          isPlayable={locationActionState.isSelectable || locationActionPlayable}
           isValidTarget={locationActionState.isSelectable}
           isInvalidTarget={locationActionState.isInvalidTarget}
           isBanishedPreview={sidebar.getChallengePreviewCardState(location.cardId).wouldBeBanished}
@@ -149,8 +194,10 @@
       <div class="location-cluster__occupants">
         {#each occupants as occupant (occupant.cardId)}
           {@const actionState = sidebar.getActionSessionCardState(occupant.cardId)}
+          {@const isActionPlayable = actionPlayableCardIds.has(occupant.cardId)}
           <div
             class="location-cluster__slot location-cluster__slot--occupant"
+            class:location-cluster__slot--in-flight={boardAnimationCardIds.has(occupant.cardId)}
             data-card-id={occupant.cardId}
             data-player-seat={seat}
             data-player-side={playerSide}
@@ -179,7 +226,7 @@
                   simulatorCardContext.previewCard?.cardId === occupant.cardId
                 }
                 {isMasked}
-                isPlayable={actionState.isSelectable}
+                isPlayable={actionState.isSelectable || isActionPlayable}
                 isValidTarget={actionState.isSelectable}
                 isInvalidTarget={actionState.isInvalidTarget}
                 isBanishedPreview={sidebar.getChallengePreviewCardState(occupant.cardId).wouldBeBanished}
@@ -269,6 +316,11 @@
     transition: transform 140ms ease;
   }
 
+  .location-cluster__slot--in-flight {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
   /* Fan / overlap. Each occupant after the first uses a margin-left clamped
      between the natural gap (no overlap when cards fit) and a max overlap
      that always leaves ~45% of every card visible — enough to recognise
@@ -326,8 +378,8 @@
 
   .location-cluster__rail-label {
     position: absolute;
-    top: 0.28rem;
-    left: 0.32rem;
+    top: 0.12rem;
+    right: 0.12rem;
     z-index: 4;
     display: inline-flex;
     max-width: calc(100% - 0.64rem);

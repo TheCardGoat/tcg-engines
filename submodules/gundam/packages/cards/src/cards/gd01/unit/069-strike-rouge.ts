@@ -7,14 +7,17 @@ export const gd01StrikeRouge069: UnitCard = {
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD01-069",
-  externalId: "gundam:gd01-069",
-  slug: "strike-rouge-gd01-069",
+  canonicalId: "GD01-069",
+  externalIds: { bandai: "gundam:gd01-069" },
+  slug: "strike-rouge/gd01-069",
   displayName: "Strike Rouge",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-069",
   printings: [
     {
       id: "GD01-069",
+      artId: "GD01-069",
+      setCode: "GD01",
       collectorNumber: "GD01-069",
       cardNumber: "GD01-069",
       set: {
@@ -30,6 +33,8 @@ export const gd01StrikeRouge069: UnitCard = {
     },
     {
       id: "GD01-069_p1",
+      artId: "GD01-069_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-069_p1",
       cardNumber: "GD01-069",
       set: {
@@ -44,6 +49,7 @@ export const gd01StrikeRouge069: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-069", "GD01-069_p1"],
   selectedPrintingId: "GD01-069",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-069.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-069.webp?260424",

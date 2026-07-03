@@ -7,14 +7,17 @@ export const gd02QuattroBajeena098: PilotCard = {
   color: "white",
   traits: ["aeug", "newtype"],
   id: "GD02-098",
-  externalId: "gundam:gd02-098",
-  slug: "quattro-bajeena-gd02-098",
+  canonicalId: "GD02-098",
+  externalIds: { bandai: "gundam:gd02-098" },
+  slug: "quattro-bajeena/gd02-098",
   displayName: "Quattro Bajeena",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-098",
   printings: [
     {
       id: "GD02-098",
+      artId: "GD02-098",
+      setCode: "GD02",
       collectorNumber: "GD02-098",
       cardNumber: "GD02-098",
       set: {
@@ -30,6 +33,8 @@ export const gd02QuattroBajeena098: PilotCard = {
     },
     {
       id: "GD02-098_p1",
+      artId: "GD02-098_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-098_p1",
       cardNumber: "GD02-098",
       set: {
@@ -45,6 +50,8 @@ export const gd02QuattroBajeena098: PilotCard = {
     },
     {
       id: "GD02-098_p2",
+      artId: "GD02-098_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-098_p2",
       cardNumber: "GD02-098",
       set: {
@@ -59,6 +66,7 @@ export const gd02QuattroBajeena098: PilotCard = {
       productName: "Store Tournament Winner Pack 02",
     },
   ],
+  reprints: ["GD02-098", "GD02-098_p1", "GD02-098_p2"],
   selectedPrintingId: "GD02-098",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-098.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-098.webp?260424",

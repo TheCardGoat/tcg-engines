@@ -4,6 +4,17 @@ import { sleepyNoddingOffI18n } from "./021-sleepy-nodding-off.i18n";
 export const sleepyNoddingOff: CharacterCard = {
   id: "42K",
   canonicalId: "ci_42K",
+  slug: "lorcana-ci_42K",
+  printings: [
+    {
+      id: "set2-021",
+      artId: "set2-021",
+      setCode: "set2",
+      collectorNumber: "21",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-021"],
   cardType: "character",
   name: "Sleepy",
@@ -20,7 +31,7 @@ export const sleepyNoddingOff: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_02c9d135c9774d4ca1cd3a70c62cd9f1",
-    tcgPlayer: 526366,
+    tcgPlayer: "526366",
   },
   text: [
     {

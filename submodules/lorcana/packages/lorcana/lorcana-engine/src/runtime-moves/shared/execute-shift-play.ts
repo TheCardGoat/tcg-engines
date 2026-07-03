@@ -1,7 +1,11 @@
 import type { CardInstanceId, PlayerId } from "#core";
 import type { LorcanaCardDefinition } from "@tcg/lorcana-types";
 import type { PlayCardExecutionContext } from "../resolution/action-effects/types";
-import { attachShiftStack, moveCardOutOfPlayWithStack } from "../state/shift-stack";
+import {
+  attachAdditionalShiftTarget,
+  attachShiftStack,
+  moveCardOutOfPlayWithStack,
+} from "../state/shift-stack";
 import { retargetContinuousEffects } from "../effects/continuous-effects";
 import { getEntersWithDamageAmount } from "../resolution/action-effects/play-card-effect";
 import { createProjectionState, getEffectiveWillpower } from "../../rules/derived-state";
@@ -16,6 +20,8 @@ import { getKeywordsBeforeBanish } from "./banish-snapshot";
 
 export interface ExecuteShiftPlayOptions {
   entersExerted?: boolean;
+  temporaryShiftReturnTurn?: number;
+  additionalShiftTargets?: CardInstanceId[];
 }
 
 /**
@@ -37,6 +43,10 @@ export function executeShiftPlay(
   const targetMeta = ctx.cards.require(shiftTarget).meta;
   attachShiftStack(ctx, cardId, shiftTarget, playerId, targetMeta);
   retargetContinuousEffects(ctx, shiftTarget, cardId);
+  for (const additionalTarget of options?.additionalShiftTargets ?? []) {
+    attachAdditionalShiftTarget(ctx, cardId, additionalTarget, playerId);
+    retargetContinuousEffects(ctx, additionalTarget, cardId);
+  }
 
   const shiftedMeta = ctx.cards.require(cardId).meta;
   const entersWithDamage = getEntersWithDamageAmount(
@@ -49,6 +59,7 @@ export function executeShiftPlay(
     damage: inheritedDamage,
     playedViaShift: true,
     playedCostType: "shift",
+    temporaryShiftReturnTurn: options?.temporaryShiftReturnTurn,
   });
 
   // GSC: if inherited damage is lethal, banish immediately before triggered

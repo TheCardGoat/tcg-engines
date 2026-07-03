@@ -4,6 +4,17 @@ import { theBitterwoodUndergroundForestI18n } from "./135-the-bitterwood-undergr
 export const theBitterwoodUndergroundForest: LocationCard = {
   id: "XY0",
   canonicalId: "ci_XY0",
+  slug: "lorcana-ci_XY0",
+  printings: [
+    {
+      id: "set10-135",
+      artId: "set10-135",
+      setCode: "set10",
+      collectorNumber: "135",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-135"],
   cardType: "location",
   name: "The Bitterwood",
@@ -20,7 +31,7 @@ export const theBitterwoodUndergroundForest: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d694639a68614bcc8d3a482c1f5c5da1",
-    tcgPlayer: 658882,
+    tcgPlayer: "658882",
   },
   text: [
     {

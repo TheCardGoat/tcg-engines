@@ -4,6 +4,17 @@ import { distractI18n } from "./159-distract.i18n";
 export const distract: ActionCard = {
   id: "qnK",
   canonicalId: "ci_ktc",
+  slug: "lorcana-ci_ktc",
+  printings: [
+    {
+      id: "set3-159",
+      artId: "set3-159",
+      setCode: "set3",
+      collectorNumber: "159",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-159", "set11-164"],
   cardType: "action",
   name: "Distract",
@@ -15,7 +26,7 @@ export const distract: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8ca0325f7667410d8b83628e02028294",
-    tcgPlayer: 676228,
+    tcgPlayer: "676228",
   },
   text: "Chosen character gets -2 {S} this turn. Draw a card.",
   abilities: [

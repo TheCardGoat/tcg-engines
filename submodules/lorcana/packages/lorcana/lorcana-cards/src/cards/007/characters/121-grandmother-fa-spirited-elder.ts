@@ -4,6 +4,17 @@ import { grandmotherFaSpiritedElderI18n } from "./121-grandmother-fa-spirited-el
 export const grandmotherFaSpiritedElder: CharacterCard = {
   id: "XL5",
   canonicalId: "ci_XL5",
+  slug: "lorcana-ci_XL5",
+  printings: [
+    {
+      id: "set7-121",
+      artId: "set7-121",
+      setCode: "set7",
+      collectorNumber: "121",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-121"],
   cardType: "character",
   name: "Grandmother Fa",
@@ -20,7 +31,7 @@ export const grandmotherFaSpiritedElder: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_466c1ad68e6040a0973b922ee491924d",
-    tcgPlayer: 619472,
+    tcgPlayer: "619472",
   },
   text: [
     {

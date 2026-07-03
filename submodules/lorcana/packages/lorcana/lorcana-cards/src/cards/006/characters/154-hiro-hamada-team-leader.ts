@@ -4,6 +4,17 @@ import { hiroHamadaTeamLeaderI18n } from "./154-hiro-hamada-team-leader.i18n";
 export const hiroHamadaTeamLeader: CharacterCard = {
   id: "Lzp",
   canonicalId: "ci_Lzp",
+  slug: "lorcana-ci_Lzp",
+  printings: [
+    {
+      id: "set6-154",
+      artId: "set6-154",
+      setCode: "set6",
+      collectorNumber: "154",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-154"],
   cardType: "character",
   name: "Hiro Hamada",
@@ -20,7 +31,7 @@ export const hiroHamadaTeamLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7115d5f5c2604ff08596a89ef6574d19",
-    tcgPlayer: 578232,
+    tcgPlayer: "578232",
   },
   text: [
     {

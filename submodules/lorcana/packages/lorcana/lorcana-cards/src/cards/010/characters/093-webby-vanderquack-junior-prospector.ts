@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { shift } from "../../../helpers/abilities/shift";
-import { ward } from "../../../helpers/abilities/ward";
 import { webbyVanderquackJuniorProspectorI18n } from "./093-webby-vanderquack-junior-prospector.i18n";
 
+import { shift } from "../../../helpers/abilities/shift";
+import { ward } from "../../../helpers/abilities/ward";
+
 export const webbyVanderquackJuniorProspector: CharacterCard = {
-  id: "s7q",
+  id: "JR6",
   canonicalId: "ci_N9X",
+  slug: "lorcana-ci_N9X",
+  printings: [
+    {
+      id: "set10-093",
+      artId: "set10-093",
+      setCode: "set10",
+      collectorNumber: "93",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-093"],
   cardType: "character",
   name: "Webby Vanderquack",
@@ -22,7 +34,7 @@ export const webbyVanderquackJuniorProspector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c607f55525894e1bbdb8121eed6bf886",
-    tcgPlayer: 660173,
+    tcgPlayer: "660173",
   },
   text: [
     {

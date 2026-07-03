@@ -20,12 +20,12 @@ export const goGoTomagoDartingDynamoI18n: Record<Languages, I18nProperties> = {
     version: "Flitzender Dynamo",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "HÖR AUF ZU FLENNEN",
+        title: "Hör auf zu flennen",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du 2 bezahlen. Wenn du dies tust, wähle einen gegnerischen Charakter und zähle den Schaden auf ihm. Sammle diese Anzahl an Legenden.",
+          "Wenn du diesen Charakter ausspielst, darfst du 2 {I} bezahlen. Wenn du dies tust, wähle einen gegnerischen Charakter und zähle den Schaden auf ihm. Sammle diese Anzahl an Legenden.",
       },
     ],
   },
@@ -34,15 +34,12 @@ export const goGoTomagoDartingDynamoI18n: Record<Languages, I18nProperties> = {
     version: "Pile survoltée",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "ARRÊTE DE PLEURNICHER.",
-      },
-      {
-        title: "SOIS UNE FEMME",
+        title: "Arrête de pleurnicher. Sois une femme",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez payer 2 pour choisir un personnage adverse et gagnez autant d'éclats de Lore qu'il y a de dommages sur lui.",
+          "Lorsque vous jouez ce personnage, vous pouvez payer 2 {I} pour choisir un personnage adverse et gagnez autant d'éclats de Lore qu'il y a de dommages sur lui.",
       },
     ],
   },
@@ -51,12 +48,12 @@ export const goGoTomagoDartingDynamoI18n: Record<Languages, I18nProperties> = {
     version: "Energica e Sfrecciante",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "BASTA FRIGNARE, FAI LA DONNA",
+        title: "Basta Frignare, Fai la Donna",
         description:
-          "Quando giochi questo personaggio, puoi pagare 2 per ottenere leggenda pari al danno presente su un personaggio avversario a tua scelta.",
+          "Quando giochi questo personaggio, puoi pagare 2 {I} per ottenere leggenda pari al danno presente su un personaggio avversario a tua scelta.",
       },
     ],
   },

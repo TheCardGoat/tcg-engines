@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { plutoDeterminedDefenderI18n } from "./017-pluto-determined-defender.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const plutoDeterminedDefender: CharacterCard = {
   id: "MU4",
   canonicalId: "ci_Iga",
+  slug: "lorcana-ci_Iga",
+  printings: [
+    {
+      id: "set3-017",
+      artId: "set3-017",
+      setCode: "set3",
+      collectorNumber: "17",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-017", "set9-014"],
   cardType: "character",
   name: "Pluto",
@@ -20,7 +32,7 @@ export const plutoDeterminedDefender: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d30e5a514aae4bd9b28d98cf45569a23",
-    tcgPlayer: 649963,
+    tcgPlayer: "649963",
   },
   text: [
     {

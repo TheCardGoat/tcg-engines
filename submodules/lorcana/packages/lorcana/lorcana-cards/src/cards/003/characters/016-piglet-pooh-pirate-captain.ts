@@ -4,6 +4,17 @@ import { pigletPoohPirateCaptainI18n } from "./016-piglet-pooh-pirate-captain.i1
 export const pigletPoohPirateCaptain: CharacterCard = {
   id: "3W0",
   canonicalId: "ci_51V",
+  slug: "lorcana-ci_51V",
+  printings: [
+    {
+      id: "set3-016",
+      artId: "set3-016",
+      setCode: "set3",
+      collectorNumber: "16",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-016"],
   cardType: "character",
   name: "Piglet",
@@ -20,7 +31,7 @@ export const pigletPoohPirateCaptain: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f478c96f7b1b45b790d74395480da563",
-    tcgPlayer: 531822,
+    tcgPlayer: "531822",
   },
   text: [
     {

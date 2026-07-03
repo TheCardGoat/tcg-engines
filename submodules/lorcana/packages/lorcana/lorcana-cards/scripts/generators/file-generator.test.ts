@@ -13,7 +13,9 @@ function createMinimalCanonicalCharacter(
 ): CanonicalCharacterCard {
   return {
     id: "abc",
+    printings: [{ id: "abc", artId: "abc", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
     canonicalId: "ci_abc",
+    slug: "lorcana-ci_abc",
     cardType: "character",
     name: "Test Character",
     version: "",

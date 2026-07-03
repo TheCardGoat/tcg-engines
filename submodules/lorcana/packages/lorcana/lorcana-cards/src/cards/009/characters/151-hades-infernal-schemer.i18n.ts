@@ -6,9 +6,9 @@ export const hadesInfernalSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Infernal Schemer",
     text: [
       {
-        title: "IS THERE A DOWNSIDE TO THIS?",
+        title: "IS THERE",
         description:
-          "When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
+          "A DOWNSIDE TO THIS? When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const hadesInfernalSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Höllischer Intrigant",
     text: [
       {
-        title: "KÖNNTE DA EIN HAKEN SEIN?",
+        title: "Könnte da ein Haken sein?",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter deiner Wahl verdeckt in den zugehörigen Tintenvorrat legen.",
       },
@@ -39,7 +39,7 @@ export const hadesInfernalSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Infernal Schemer",
     text: [
       {
-        title: "IS THERE A DOWNSIDE TO THIS?",
+        title: "Is There a Downside to This?",
         description:
           "When you play this character, you may put chosen opposing character into their player's inkwell facedown.",
       },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princePhillipRoyalExplorerI18n } from "./083-prince-phillip-royal-explorer.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const princePhillipRoyalExplorer: CharacterCard = {
   id: "ccM",
   canonicalId: "ci_ccM",
+  slug: "lorcana-ci_ccM",
+  printings: [
+    {
+      id: "set6-083",
+      artId: "set6-083",
+      setCode: "set6",
+      collectorNumber: "83",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-083"],
   cardType: "character",
   name: "Prince Phillip",
@@ -21,7 +33,7 @@ export const princePhillipRoyalExplorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_11902901f7364369970762d49a1a760d",
-    tcgPlayer: 593039,
+    tcgPlayer: "593039",
   },
   text: "Ward",
   classifications: ["Storyborn", "Hero", "Prince"],

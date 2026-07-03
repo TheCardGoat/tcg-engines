@@ -4,6 +4,17 @@ import { yzmaWithoutBeautySleepI18n } from "./061-yzma-without-beauty-sleep.i18n
 export const yzmaWithoutBeautySleep: CharacterCard = {
   id: "T45",
   canonicalId: "ci_T45",
+  slug: "lorcana-ci_T45",
+  printings: [
+    {
+      id: "set2-061",
+      artId: "set2-061",
+      setCode: "set2",
+      collectorNumber: "61",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-061"],
   cardType: "character",
   name: "Yzma",
@@ -21,7 +32,7 @@ export const yzmaWithoutBeautySleep: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_73984c4885124477b3a6a48fbe5cb2ac",
-    tcgPlayer: 527269,
+    tcgPlayer: "527269",
   },
   classifications: ["Storyborn", "Villain", "Sorcerer"],
   i18n: yzmaWithoutBeautySleepI18n,

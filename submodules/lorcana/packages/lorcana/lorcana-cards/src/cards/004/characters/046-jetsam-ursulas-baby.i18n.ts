@@ -19,11 +19,11 @@ export const jetsamUrsulasBabyI18n: Record<Languages, I18nProperties> = {
     version: 'Ursulas "Baby"',
     text: [
       {
-        title: "Herausfordern +2",
+        title: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
       },
       {
-        title: "UNHEIMLICHES DUO",
-        description: "Deine Abschaum-Charaktere erhalten Herausfordern +2.",
+        title: "Unheimliches Duo",
+        description: "Deine Abschaum-Charaktere erhalten <Herausfordern> +2.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const jetsamUrsulasBabyI18n: Record<Languages, I18nProperties> = {
     version: '"Bébé" d\'Ursula',
     text: [
       {
-        title: "Offensif +2",
+        title: "<Offensif> +2",
       },
       {
-        title: "DUO INQUIÉTANT",
-        description: "Vos personnages Flotsam gagnent Offensif +2.",
+        title: "Duo inquiétant",
+        description: "Vos personnages Flotsam gagnent <Offensif> +2.",
       },
     ],
   },
@@ -45,11 +45,11 @@ export const jetsamUrsulasBabyI18n: Record<Languages, I18nProperties> = {
     version: "“Piccino” di Ursula",
     text: [
       {
-        title: "Sfidante +2",
+        title: "<Sfidante> +2",
       },
       {
-        title: "COPPIA SINISTRA",
-        description: "I tuoi personaggi chiamati Flotsam ottengono Sfidante +2.",
+        title: "Coppia Sinistra",
+        description: "I tuoi personaggi chiamati Flotsam ottengono <Sfidante> +2.",
       },
     ],
   },

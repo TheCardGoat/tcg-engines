@@ -6,9 +6,9 @@ export const trampObservantGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Observant Guardian",
     text: [
       {
-        title: "HOW DO I GET IN?",
+        title: "HOW DO",
         description:
-          "When you play this character, chosen character gains Ward until the start of your next turn.",
+          "I GET IN? When you play this character, chosen character gains Ward until the start of your next turn.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const trampObservantGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Aufmerksamer Wächter",
     text: [
       {
-        title: "WIE KOMME ICH DA REIN?",
+        title: "Wie komme ich da rein?",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges Behütet. (Gegnerische Mitspielende können den Charakter nicht auswählen, außer um ihn herauszufordern.)",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Behütet>. (Gegnerische Mitspielende können den Charakter nicht auswählen, außer um ihn herauszufordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const trampObservantGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Gardien observateur",
     text: [
       {
-        title: "COMMENT ON Y VA?",
+        title: "Comment on y va?",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne Hors d'atteinte jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Hors d'atteinte> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const trampObservantGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Guardiano Attento",
     text: [
       {
-        title: "COME POSSO ENTRARE?",
+        title: "Come Posso Entrare?",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene Protetto fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Protetto> fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
       },
     ],
   },

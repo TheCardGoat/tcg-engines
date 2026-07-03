@@ -14,7 +14,7 @@ import {
   toLorcanaFormat,
   toSynergyForm,
   toTemplateForm,
-} from "./deck-list-normalize";
+} from "./deck-list-normalize.js";
 
 describe("toTemplateForm", () => {
   it("caps qty >= 4 to 4", () => {

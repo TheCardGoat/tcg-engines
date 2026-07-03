@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { kristoffMiningTheRuinsI18n } from "./159-kristoff-mining-the-ruins.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const kristoffMiningTheRuins: CharacterCard = {
   id: "tnP",
   canonicalId: "ci_3Xr",
+  slug: "lorcana-ci_3Xr",
+  printings: [
+    {
+      id: "set10-159",
+      artId: "set10-159",
+      setCode: "set10",
+      collectorNumber: "159",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-159"],
   cardType: "character",
   name: "Kristoff",
@@ -21,7 +33,7 @@ export const kristoffMiningTheRuins: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c74126bc80ba4d52bc7c499ba67dce25",
-    tcgPlayer: 660270,
+    tcgPlayer: "660270",
   },
   text: [
     {

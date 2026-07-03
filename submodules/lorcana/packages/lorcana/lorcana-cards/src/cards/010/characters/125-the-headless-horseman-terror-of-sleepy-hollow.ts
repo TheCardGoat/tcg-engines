@@ -4,6 +4,17 @@ import { theHeadlessHorsemanTerrorOfSleepyHollowI18n } from "./125-the-headless-
 export const theHeadlessHorsemanTerrorOfSleepyHollow: CharacterCard = {
   id: "nGJ",
   canonicalId: "ci_3XX",
+  slug: "lorcana-ci_3XX",
+  printings: [
+    {
+      id: "set10-125",
+      artId: "set10-125",
+      setCode: "set10",
+      collectorNumber: "125",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-125"],
   cardType: "character",
   name: "The Headless Horseman",
@@ -20,7 +31,7 @@ export const theHeadlessHorsemanTerrorOfSleepyHollow: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c2a0cc56159841db921d13a52589d13a",
-    tcgPlayer: 660012,
+    tcgPlayer: "660012",
   },
   text: [
     {

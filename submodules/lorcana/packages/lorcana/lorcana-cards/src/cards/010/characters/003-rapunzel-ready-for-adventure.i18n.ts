@@ -20,12 +20,13 @@ export const rapunzelReadyForAdventureI18n: Record<Languages, I18nProperties> = 
     version: "Bereit für Abenteuer",
     text: [
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "AKT DER FREUNDLICHKEIT",
+        title: "Akt der Freundlichkeit",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere für Unterstützen ausgewählt wird, erhält er bis zu Beginn deines nächsten Zuges das nächste Mal, wenn er Schaden erhalten würde, stattdessen keinen Schaden.",
+          "Jedes Mal, wenn einer deiner Charaktere für <Unterstützen> ausgewählt wird, erhält er bis zu Beginn deines nächsten Zuges das nächste Mal, wenn er Schaden erhalten würde, stattdessen keinen Schaden.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const rapunzelReadyForAdventureI18n: Record<Languages, I18nProperties> = 
     version: "Parée pour l'aventure",
     text: [
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "GESTE ALTRUISTE",
+        title: "Geste altruiste",
         description:
-          "Chaque fois que l'un de vos personnages est choisi par la capacité Soutien, jusqu'au début de votre prochain tour, la prochaine fois que ce personnage-là devrait subir des dommages, il n'en subit aucun à la place.",
+          "Chaque fois que l'un de vos personnages est choisi par la capacité <Soutien>, jusqu'au début de votre prochain tour, la prochaine fois que ce personnage-là devrait subir des dommages, il n'en subit aucun à la place.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const rapunzelReadyForAdventureI18n: Record<Languages, I18nProperties> = 
     version: "Pronta per l'Avventura",
     text: [
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "GESTO DI BONTÀ",
+        title: "Gesto di Bontà",
         description:
-          "Ogni volta che uno dei tuoi personaggi viene scelto per Aiutante, fino all'inizio del tuo prossimo turno, la prossima volta che subirebbe danni invece non subisce danni.",
+          "Ogni volta che uno dei tuoi personaggi viene scelto per <Aiutante>, fino all'inizio del tuo prossimo turno, la prossima volta che subirebbe danni invece non subisce danni.",
       },
     ],
   },

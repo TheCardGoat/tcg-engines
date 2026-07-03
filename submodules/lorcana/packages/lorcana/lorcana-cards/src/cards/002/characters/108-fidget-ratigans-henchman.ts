@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { fidgetRatigansHenchmanI18n } from "./108-fidget-ratigans-henchman.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const fidgetRatigansHenchman: CharacterCard = {
   id: "HKW",
   canonicalId: "ci_HKW",
+  slug: "lorcana-ci_HKW",
+  printings: [
+    {
+      id: "set2-108",
+      artId: "set2-108",
+      setCode: "set2",
+      collectorNumber: "108",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-108"],
   cardType: "character",
   name: "Fidget",
@@ -21,7 +33,7 @@ export const fidgetRatigansHenchman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0883cd88c2404f829929be8755b3d865",
-    tcgPlayer: 527274,
+    tcgPlayer: "527274",
   },
   text: "Evasive",
   classifications: ["Dreamborn", "Ally"],

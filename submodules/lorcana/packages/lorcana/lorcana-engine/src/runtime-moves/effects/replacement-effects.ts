@@ -38,6 +38,14 @@ function getPrintedAbilityEventKinds(
 ): ReplacementEvent["kind"][] {
   if (ability.replaces === "lose-lore" && ability.replacement === "prevent") return ["lose-lore"];
   if (ability.replaces === "discard" && ability.replacement === "prevent") return ["discard"];
+  const registrationKind = ability.replacement as ReplacementRegistrationKind | undefined;
+  if (
+    registrationKind &&
+    typeof registrationKind === "object" &&
+    registrationKind.type === "zone-destination"
+  ) {
+    return [...registrationKind.eventKinds];
+  }
   const abilityKind = ability.replacement as ReplacementAbilityKind | undefined;
   if (!abilityKind || typeof abilityKind !== "object") return [];
   if (abilityKind.type === "prevent-remove-damage") return ["remove-damage"];
@@ -68,7 +76,10 @@ function buildPrintedReplacementIndexFresh(
   ctx: ReplacementContext,
 ): Map<string, PrintedReplacementEntry[]> {
   const index = new Map<string, PrintedReplacementEntry[]>();
-  for (const playerId of ctx.framework.state.playerIds) {
+  const playerIds = Array.isArray(ctx.framework.state.playerIds)
+    ? ctx.framework.state.playerIds
+    : [];
+  for (const playerId of playerIds) {
     for (const rawCardId of ctx.framework.zones.getCards({ zone: "play", playerId })) {
       const cardId = rawCardId as CardInstanceId;
       const definition = ctx.cards.getDefinition(cardId) as
@@ -192,6 +203,8 @@ export type ReplacementEvent =
       fromZone: string;
       toZone: string;
       position?: "top" | "bottom";
+      replacementState?: "ready" | "exerted";
+      replacementPublicFaceState?: "faceUp" | "faceDown";
     }
   | {
       kind: "discard";
@@ -309,6 +322,10 @@ function resolveRegisteredTargetId(
       return resolutionInput.eventSnapshot?.chosenCardId as CardInstanceId | undefined;
     case "trigger-subject":
       return resolutionInput.triggerContext?.subjectCardId;
+    case "attacker":
+      return resolutionInput.eventSnapshot?.attackerId as CardInstanceId | undefined;
+    case "defender":
+      return resolutionInput.eventSnapshot?.defenderId as CardInstanceId | undefined;
     default:
       return undefined;
   }
@@ -446,6 +463,50 @@ function createPrintedReplacementCandidate(
       id: `${sourceId}:${abilityKey}:prevent-discard`,
       applicationKey: `${sourceId}:${abilityKey}:prevent-discard`,
       apply: (currentEvent) => ({ ...currentEvent, prevented: true }),
+      consume: () => undefined,
+    };
+  }
+
+  const registrationKind = ability.replacement as ReplacementRegistrationKind | undefined;
+  if (
+    registrationKind &&
+    typeof registrationKind === "object" &&
+    registrationKind.type === "zone-destination"
+  ) {
+    if (event.kind !== "zone-change" || event.toZone !== registrationKind.toZone) {
+      return undefined;
+    }
+    if (registrationKind.targetRef !== "source" || event.cardId !== sourceId) {
+      return undefined;
+    }
+    if (
+      Array.isArray(registrationKind.fromZones) &&
+      registrationKind.fromZones.length > 0 &&
+      !registrationKind.fromZones.includes(event.fromZone)
+    ) {
+      return undefined;
+    }
+    if (
+      ability.condition &&
+      !evaluateCondition(
+        ability.condition,
+        buildReplacementConditionContext(ctx, controllerId, sourceId),
+      )
+    ) {
+      return undefined;
+    }
+
+    const abilityKey = ability.id ?? "replacement";
+    return {
+      id: `${sourceId}:${abilityKey}:zone-destination`,
+      applicationKey: registrationKind.applicationKey ?? `${sourceId}:${abilityKey}:zone-destination`,
+      apply: (currentEvent) => ({
+        ...currentEvent,
+        toZone: registrationKind.replacementZone,
+        position: registrationKind.replacementPosition,
+        replacementState: registrationKind.replacementState,
+        replacementPublicFaceState: registrationKind.replacementPublicFaceState,
+      }),
       consume: () => undefined,
     };
   }
@@ -629,6 +690,8 @@ function createRegisteredReplacementCandidate(
         ...currentEvent,
         toZone: replacement.replacementZone,
         position: replacement.replacementPosition,
+        replacementState: replacement.replacementState,
+        replacementPublicFaceState: replacement.replacementPublicFaceState,
       }),
       consume: () => {
         if (replacement.consumeOnApply !== false) {

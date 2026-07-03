@@ -7,14 +7,17 @@ export const gd01DuoSLeo042: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-042",
-  externalId: "gundam:gd01-042",
-  slug: "duo-s-leo-gd01-042",
+  canonicalId: "GD01-042",
+  externalIds: { bandai: "gundam:gd01-042" },
+  slug: "duo-s-leo/gd01-042",
   displayName: "Duo's Leo",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-042",
   printings: [
     {
       id: "GD01-042",
+      artId: "GD01-042",
+      setCode: "GD01",
       collectorNumber: "GD01-042",
       cardNumber: "GD01-042",
       set: {
@@ -29,6 +32,7 @@ export const gd01DuoSLeo042: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-042"],
   selectedPrintingId: "GD01-042",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-042.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-042.webp?260424",

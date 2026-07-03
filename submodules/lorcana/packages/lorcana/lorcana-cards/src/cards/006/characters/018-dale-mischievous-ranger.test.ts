@@ -83,5 +83,33 @@ describe("Dale - Mischievous Ranger", () => {
       });
       expect(testEngine.asPlayerTwo().getCardStrength(chosenCharacter)).toBe(baseStrength);
     });
+
+    it("does not partially pay the mill cost with fewer than 3 cards in deck", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          hand: [daleMischievousRanger],
+          inkwell: daleMischievousRanger.cost,
+          deck: 2,
+        },
+        {
+          play: [chosenCharacter],
+          deck: 3,
+        },
+      );
+
+      const baseStrength = testEngine.asPlayerTwo().getCardStrength(chosenCharacter);
+
+      expect(testEngine.asPlayerOne().playCard(daleMischievousRanger)).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
+      expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(0);
+
+      expect(testEngine.asPlayerOne().getZonesCardCount()).toMatchObject({
+        deck: 2,
+        discard: 0,
+        hand: 0,
+        play: 1,
+      });
+      expect(testEngine.asPlayerTwo().getCardStrength(chosenCharacter)).toBe(baseStrength);
+    });
   });
 });

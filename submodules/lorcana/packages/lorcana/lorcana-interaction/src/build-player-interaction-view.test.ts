@@ -1007,6 +1007,55 @@ describe("buildPlayerInteractionView", () => {
         },
       });
     });
+
+    it("allows an optional include-self move prompt to cancel or submit the source only", () => {
+      const view = buildPlayerInteractionView(
+        withPendingPrompt(
+          moveToLocationContext({
+            currentSelection: { targets: [LOCATION_A] },
+            originatesFromOptional: true,
+            autoResolvedSlots: ["subject"],
+            cardCandidateIds: [TARGET_A],
+            minSelections: 0,
+            maxSelections: 1,
+            declaredMaxSelections: 1,
+            targetDsl: [
+              {
+                selector: "chosen",
+                count: { upTo: 1 },
+                owner: "you",
+                zones: ["play"],
+                cardTypes: ["character"],
+                excludeSelf: true,
+              },
+            ],
+          }),
+        ),
+        PLAYER_ONE,
+      );
+
+      expect(view.activePrompt?.slots?.[0]).toMatchObject({
+        key: "subject",
+        targetCardId: SOURCE_CARD,
+        autoResolved: true,
+        locked: true,
+      });
+      expect(view.activePrompt?.slots?.[1]).toMatchObject({
+        key: "location",
+        targetCardId: LOCATION_A,
+        locked: true,
+      });
+      expect(view.submission.canCancel).toBe(true);
+      expect(view.submission.cancelPayload).toEqual({ resolveOptional: false });
+      expect(view.submission.canSubmit).toBe(true);
+      expect(view.submission.submitPayload).toEqual({
+        targets: {
+          kind: "move-to-location",
+          subject: [SOURCE_CARD],
+          location: [LOCATION_A],
+        },
+      });
+    });
   });
 
   describe("scry-selection", () => {

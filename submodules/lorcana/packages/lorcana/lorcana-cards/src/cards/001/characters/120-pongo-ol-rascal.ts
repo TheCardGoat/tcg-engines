@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { pongoOlRascalI18n } from "./120-pongo-ol-rascal.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const pongoOlRascal: CharacterCard = {
   id: "Sa8",
   canonicalId: "ci_Sa8",
+  slug: "lorcana-ci_Sa8",
+  printings: [
+    {
+      id: "set1-120",
+      artId: "set1-120",
+      setCode: "set1",
+      collectorNumber: "120",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-120"],
   cardType: "character",
   name: "Pongo",
@@ -21,9 +33,9 @@ export const pongoOlRascal: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e17a4efa1eaf47e2aefdcf3b98d4f03c",
-    tcgPlayer: 503321,
+    tcgPlayer: "503321",
   },
-  text: "Evasive",
+  text: "<Evasive>",
   classifications: ["Storyborn", "Hero"],
   abilities: [evasive],
   i18n: pongoOlRascalI18n,

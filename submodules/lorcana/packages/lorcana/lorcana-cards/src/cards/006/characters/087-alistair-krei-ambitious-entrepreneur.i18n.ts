@@ -17,7 +17,7 @@ export const alistairKreiAmbitiousEntrepreneurI18n: Record<Languages, I18nProper
     version: "Ehrgeiziger Unternehmer",
     text: [
       {
-        title: "EIN AUGE FÜR TECHNIK",
+        title: "Ein Auge für Technik",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens eine gegnerische Person einen Gegenstand im Spiel hat, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const alistairKreiAmbitiousEntrepreneurI18n: Record<Languages, I18nProper
     version: "Entrepreneur ambitieux",
     text: [
       {
-        title: "L'ŒIL POUR LA TECHNOLOGIE",
+        title: "L'œil pour la technologie",
         description:
           "Lorsque vous jouez ce personnage, si un adversaire a un objet en jeu, vous gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const alistairKreiAmbitiousEntrepreneurI18n: Record<Languages, I18nProper
     version: "Imprenditore Ambizioso",
     text: [
       {
-        title: "OCCHIO PER LA TECNOLOGIA",
+        title: "Occhio per la Tecnologia",
         description:
           "Quando giochi questo personaggio, se un avversario ha in gioco un oggetto, ottieni 1 leggenda.",
       },

@@ -7,14 +7,17 @@ export const gd04VDashGundam006: UnitCard = {
   color: "blue",
   traits: ["league militaire", "victory type"],
   id: "GD04-006",
-  externalId: "gundam:gd04-006",
-  slug: "v-dash-gundam-gd04-006",
+  canonicalId: "GD04-006",
+  externalIds: { bandai: "gundam:gd04-006" },
+  slug: "v-dash-gundam/gd04-006",
   displayName: "V-Dash Gundam",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-006",
   printings: [
     {
       id: "GD04-006",
+      artId: "GD04-006",
+      setCode: "GD04",
       collectorNumber: "GD04-006",
       cardNumber: "GD04-006",
       set: {
@@ -30,6 +33,8 @@ export const gd04VDashGundam006: UnitCard = {
     },
     {
       id: "GD04-006_p1",
+      artId: "GD04-006_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-006_p1",
       cardNumber: "GD04-006",
       set: {
@@ -44,6 +49,7 @@ export const gd04VDashGundam006: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-006", "GD04-006_p1"],
   selectedPrintingId: "GD04-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-006.webp?260424",

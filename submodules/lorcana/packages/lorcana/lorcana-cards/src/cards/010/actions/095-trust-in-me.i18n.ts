@@ -7,14 +7,54 @@ export const trustInMeI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Hör auf mich",
-    text: "Wähle eine Möglichkeit aus: • Gib allen gegnerischen Charakteren bis zu Beginn deines nächsten Zuges -1. • Alle gegnerischen Mitspielenden wählen je 2 Karten aus ihrer Hand und werfen sie ab.",
+    text: [
+      {
+        title: "Wähle eine Möglichkeit aus:",
+      },
+      {
+        title: "• Gib allen gegnerischen Charakteren bis zu Beginn deines nächsten Zuges -1 {L}.",
+      },
+      {
+        title:
+          "• Alle gegnerischen Mitspielenden wählen je 2 Karten aus ihrer Hand und werfen sie ab.",
+      },
+    ],
   },
   fr: {
     name: "Aie confiance",
-    text: "Choisissez entre: • Chaque personnage adverse subit -1 jusqu'au début de votre prochain tour. • Chaque adversaire défausse 2 cartes.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 6 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Choisissez entre:",
+      },
+      {
+        title: "• Chaque personnage adverse subit -1 {L} jusqu'au début de votre prochain tour.",
+      },
+      {
+        title: "• Chaque adversaire défausse 2 cartes.",
+      },
+    ],
   },
   it: {
     name: "Spera in Me",
-    text: "(Un personaggio con costo 6 o superiore può per cantare questa canzone gratis.) Scegli uno: • Ogni personaggio avversario riceve -1 fino all'inizio del tuo prossimo turno. • Ogni avversario sceglie e scarta 2 carte.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 6 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Scegli uno:",
+      },
+      {
+        title:
+          "• Ogni personaggio avversario riceve -1 {L} fino all'inizio del tuo prossimo turno.",
+      },
+      {
+        title: "• Ogni avversario sceglie e scarta 2 carte.",
+      },
+    ],
   },
 };

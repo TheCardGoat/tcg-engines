@@ -4,6 +4,17 @@ import { cogsworthMajordomoI18n } from "./005-cogsworth-majordomo.i18n";
 export const cogsworthMajordomo: CharacterCard = {
   id: "94i",
   canonicalId: "ci_94i",
+  slug: "lorcana-ci_94i",
+  printings: [
+    {
+      id: "set4-005",
+      artId: "set4-005",
+      setCode: "set4",
+      collectorNumber: "5",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-005"],
   cardType: "character",
   name: "Cogsworth",
@@ -20,7 +31,7 @@ export const cogsworthMajordomo: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a0934af0f0b04689914f8e20d868c1af",
-    tcgPlayer: 550554,
+    tcgPlayer: "550554",
   },
   text: [
     {

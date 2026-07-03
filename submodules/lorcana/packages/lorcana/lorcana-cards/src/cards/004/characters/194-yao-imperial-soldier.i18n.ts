@@ -9,16 +9,16 @@ export const yaoImperialSoldierI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Yao",
     version: "Soldat des Kaisers",
-    text: "Herausfordern +2",
+    text: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
   },
   fr: {
     name: "Yao",
     version: "Soldat Impérial",
-    text: "Offensif +2",
+    text: "<Offensif> +2",
   },
   it: {
     name: "Yao",
     version: "Soldato Imperiale",
-    text: "Sfidante +2",
+    text: "<Sfidante> +2",
   },
 };

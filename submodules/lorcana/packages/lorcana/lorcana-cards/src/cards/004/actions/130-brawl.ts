@@ -4,6 +4,17 @@ import { brawlI18n } from "./130-brawl.i18n";
 export const brawl: ActionCard = {
   id: "eF8",
   canonicalId: "ci_eF8",
+  slug: "lorcana-ci_eF8",
+  printings: [
+    {
+      id: "set4-130",
+      artId: "set4-130",
+      setCode: "set4",
+      collectorNumber: "130",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-130"],
   cardType: "action",
   name: "Brawl",
@@ -16,7 +27,7 @@ export const brawl: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_be06b6df39cd46c2a192ae1be15fb42c",
-    tcgPlayer: 547776,
+    tcgPlayer: "547776",
   },
   text: "Banish chosen character with 2 {S} or less.",
   abilities: [

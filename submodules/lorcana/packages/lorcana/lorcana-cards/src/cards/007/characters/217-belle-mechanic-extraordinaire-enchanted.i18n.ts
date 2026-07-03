@@ -25,15 +25,15 @@ export const belleMechanicExtraordinaireEnchantedI18n: Record<Languages, I18nPro
     version: "Mechanikerin der Extraklasse",
     text: [
       {
-        title: "Gestaltwandel 7",
+        title: "<Gestaltwandel> 7",
       },
       {
-        title: "BERGUNG",
+        title: "Bergung",
         description:
-          "Die Gestaltwandel-Kosten dieses Charakters reduzieren sich für jede Gegenstandskarte in deinem Ablagestapel um 1.",
+          "Die <Gestaltwandel>-Kosten dieses Charakters reduzieren sich für jede Gegenstandskarte in deinem Ablagestapel um 1 {I}.",
       },
       {
-        title: "WIEDERVERWENDUNG",
+        title: "Wiederverwendung",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du bis zu 3 Gegenstandskarten aus deinem Ablagestapel unter dein Deck legen, um für jede so bewegte Karte 1 Legende zu sammeln.",
       },
@@ -44,15 +44,15 @@ export const belleMechanicExtraordinaireEnchantedI18n: Record<Languages, I18nPro
     version: "Mécanicienne extraordinaire",
     text: [
       {
-        title: "Alter 7",
+        title: "<Alter> 7",
       },
       {
-        title: "RÉCUPÉRATION",
+        title: "Récupération",
         description:
-          "Jouer ce personnage en utilisant sa capacité Alter vous coûte 1 de moins pour chaque carte Objet dans votre défausse.",
+          "Jouer ce personnage en utilisant sa capacité <Alter> vous coûte 1 {I} de moins pour chaque carte Objet dans votre défausse.",
       },
       {
-        title: "RECYCLAGE",
+        title: "Recyclage",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez placer jusqu'à 3 cartes Objet de votre défausse sous votre pioche pour gagner 1 éclat de Lore par carte placée ainsi.",
       },
@@ -63,15 +63,15 @@ export const belleMechanicExtraordinaireEnchantedI18n: Record<Languages, I18nPro
     version: "Meccanica Straordinaria",
     text: [
       {
-        title: "Trasformazione 7",
+        title: "<Trasformazione> 7",
       },
       {
-        title: "RECUPERARE",
+        title: "Recuperare",
         description:
-          "Per ogni carta oggetto nei tuoi scarti, paga 1 in meno per giocare questo personaggio usando la sua abilità Trasformazione.",
+          "Per ogni carta oggetto nei tuoi scarti, paga 1 {I} in meno per giocare questo personaggio usando la sua abilità <Trasformazione>.",
       },
       {
-        title: "CONVERTIRE",
+        title: "Convertire",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi mettere fino a 3 carte oggetto dai tuoi scarti in fondo al tuo mazzo per ottenere 1 leggenda per ogni carta oggetto spostata in questo modo.",
       },

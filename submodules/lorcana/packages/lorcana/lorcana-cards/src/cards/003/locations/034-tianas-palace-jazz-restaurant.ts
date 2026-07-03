@@ -4,6 +4,17 @@ import { tianasPalaceJazzRestaurantI18n } from "./034-tianas-palace-jazz-restaur
 export const tianasPalaceJazzRestaurant: LocationCard = {
   id: "MoB",
   canonicalId: "ci_MoB",
+  slug: "lorcana-ci_MoB",
+  printings: [
+    {
+      id: "set3-034",
+      artId: "set3-034",
+      setCode: "set3",
+      collectorNumber: "34",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-034"],
   cardType: "location",
   name: "Tiana's Palace",
@@ -20,7 +31,7 @@ export const tianasPalaceJazzRestaurant: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ed1ca708595f44a49f40680e20635ff5",
-    tcgPlayer: 537408,
+    tcgPlayer: "537408",
   },
   text: [
     {

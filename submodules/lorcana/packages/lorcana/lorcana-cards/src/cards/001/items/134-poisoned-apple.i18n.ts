@@ -15,9 +15,9 @@ export const poisonedAppleI18n: Record<Languages, I18nProperties> = {
     name: "Vergifteter Apfel",
     text: [
       {
-        title: "BEISS MAL AB... 1,",
+        title: "Beiß mal ab...",
         description:
-          "Verbanne diesen Gegenstand — erschöpfe einen Charakter deiner Wahl. Wenn du eine Prinzessin wählst, verbanne sie stattdessen.",
+          "1 {I}, Verbanne diesen Gegenstand — erschöpfe einen Charakter deiner Wahl. Wenn du eine Prinzessin wählst, verbanne sie stattdessen.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const poisonedAppleI18n: Record<Languages, I18nProperties> = {
     name: "POMME EMPOISONNÉE",
     text: [
       {
-        title: "CROQUE... 1,",
+        title: "CROQUE...",
         description:
-          "Bannissez cet objet — Choisissez un personnage et épuisez-le. Si c'est une Princesse, bannissez-la à la place.",
+          "1 {I}, Bannissez cet objet — Choisissez un personnage et épuisez-le. Si c'est une Princesse, bannissez-la à la place.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const poisonedAppleI18n: Record<Languages, I18nProperties> = {
     name: "Poisoned Apple",
     text: [
       {
-        title: "TAKE A BITE... 1,",
+        title: "Take a Bite...",
         description:
-          "Banish this item — Exert chosen character. If a Princess character is chosen, banish her instead.",
+          "1 {I}, Banish this item — Exert chosen character. If a Princess character is chosen, banish her instead.",
       },
     ],
   },

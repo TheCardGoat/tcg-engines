@@ -4,6 +4,17 @@ import { fortisphereI18n } from "./200-fortisphere.i18n";
 export const fortisphere: ItemCard = {
   id: "PSk",
   canonicalId: "ci_PSk",
+  slug: "lorcana-ci_PSk",
+  printings: [
+    {
+      id: "set4-200",
+      artId: "set4-200",
+      setCode: "set4",
+      collectorNumber: "200",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-200"],
   cardType: "item",
   name: "Fortisphere",
@@ -16,7 +27,7 @@ export const fortisphere: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5359fd5a9e4f43568d3419a2cd737640",
-    tcgPlayer: 550626,
+    tcgPlayer: "550626",
   },
   text: [
     {

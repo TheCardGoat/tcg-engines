@@ -1,6 +1,6 @@
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
-import { resolveRegressionFixtureForTestRoute } from "@/features/simulator-devtools/routes/test-routes.js";
+import { resolveRegressionFixtureForTestRoute } from "@/features/simulator-devtools/routes/regression-test-routes.js";
 
 export const ssr = false;
 

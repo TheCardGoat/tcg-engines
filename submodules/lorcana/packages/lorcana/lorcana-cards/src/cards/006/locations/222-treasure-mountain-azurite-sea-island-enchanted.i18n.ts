@@ -17,7 +17,7 @@ export const treasureMountainAzuriteSeaIslandEnchantedI18n: Record<Languages, I1
     version: "Insel im Azurblauen Meer",
     text: [
       {
-        title: "GEHEIMWAFFE",
+        title: "Geheimwaffe",
         description:
           "Zu Beginn deines Zuges, zähle deine Charaktere an diesem Ort. Füge einem Charakter oder einem Ort deiner Wahl dieselbe Anzahl Schaden zu.",
       },
@@ -28,7 +28,7 @@ export const treasureMountainAzuriteSeaIslandEnchantedI18n: Record<Languages, I1
     version: "Île de la mer Azurite",
     text: [
       {
-        title: "ARME SECRÈTE",
+        title: "Arme secrète",
         description:
           "Au début de votre tour, choisissez un personnage ou un lieu et infligez-lui autant de dommages qu'il y a de personnages sur ce lieu.",
       },
@@ -39,7 +39,7 @@ export const treasureMountainAzuriteSeaIslandEnchantedI18n: Record<Languages, I1
     version: "Isola del Mare di Azzurrite",
     text: [
       {
-        title: "ARMA SEGRETA",
+        title: "Arma Segreta",
         description:
           "All'inizio del tuo turno, infliggi danno a un personaggio o a un luogo a tua scelta pari al numero di personaggi in questo luogo.",
       },

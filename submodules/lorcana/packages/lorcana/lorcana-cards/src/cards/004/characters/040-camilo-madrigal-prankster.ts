@@ -4,6 +4,17 @@ import { camiloMadrigalPranksterI18n } from "./040-camilo-madrigal-prankster.i18
 export const camiloMadrigalPrankster: CharacterCard = {
   id: "I0K",
   canonicalId: "ci_GAc",
+  slug: "lorcana-ci_GAc",
+  printings: [
+    {
+      id: "set4-040",
+      artId: "set4-040",
+      setCode: "set4",
+      collectorNumber: "40",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-040", "set9-052"],
   cardType: "character",
   name: "Camilo Madrigal",
@@ -20,7 +31,7 @@ export const camiloMadrigalPrankster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b07f766507574745ae00ade904bd2558",
-    tcgPlayer: 649996,
+    tcgPlayer: "649996",
   },
   text: [
     {

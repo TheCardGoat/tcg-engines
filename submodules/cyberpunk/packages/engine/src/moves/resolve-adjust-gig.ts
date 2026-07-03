@@ -3,6 +3,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseTargetPendingChoice } from "../types/match-state.ts";
 import { DIE_MAX_VALUES } from "../types/gig-die.ts";
 import { resumeCurrentTrigger } from "../ability-executor.ts";
+import { resumeSuspendedEndTurn } from "./pass-phase.ts";
 
 export interface ResolveAdjustGigInput extends MoveInput {
   args: {
@@ -103,5 +104,6 @@ export const resolveAdjustGigMove: MoveDefinition<ResolveAdjustGigInput> = {
       playerId,
     });
     resumeCurrentTrigger(state, operations);
+    resumeSuspendedEndTurn(state, operations);
   },
 };

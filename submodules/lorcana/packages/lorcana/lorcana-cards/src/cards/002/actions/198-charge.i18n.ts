@@ -7,14 +7,14 @@ export const chargeI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Zum Angriff!",
-    text: "Ein Charakter deiner Wahl erhält in diesem Zug Herausfordern +2 und Robust +2. (Während der Charakter herausfordert, erhält er +2. Reduziere jeglichen Schaden, der ihm zugefügt wird, um 2.)",
+    text: "Ein Charakter deiner Wahl erhält in diesem Zug <Herausfordern> +2 und <Robust> +2. (Während der Charakter herausfordert, erhält er +2 {S}. Reduziere jeglichen Schaden, der ihm zugefügt wird, um 2.)",
   },
   fr: {
     name: "Fonce !",
-    text: "Choisissez un personnage, il gagne Offensif +2 et Résistance +2 pour le reste de ce tour. (Lorsqu'il défie, ce personnage gagne +2. Les dommages qui lui sont infligés sont réduits de 2.)",
+    text: "Choisissez un personnage, il gagne <Offensif> +2 et <Résistance> +2 pour le reste de ce tour. (Lorsqu'il défie, ce personnage gagne +2 {S}. Les dommages qui lui sont infligés sont réduits de 2.)",
   },
   it: {
     name: "Carica!",
-    text: "Un personaggio a tua scelta ottiene Sfidante +2 e Resistere +2 per questo turno. (Riceve +2 mentre sta sfidando. Il danno che gli viene inflitto è ridotto di 2.)",
+    text: "Un personaggio a tua scelta ottiene <Sfidante> +2 e <Resistere> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando. Il danno che gli viene inflitto è ridotto di 2.)",
   },
 };

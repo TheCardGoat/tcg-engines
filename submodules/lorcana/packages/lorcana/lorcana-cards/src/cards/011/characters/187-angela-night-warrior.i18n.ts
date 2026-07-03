@@ -21,12 +21,12 @@ export const angelaNightWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Kriegerin der Nacht",
     text: [
       {
-        title: "SCHATTENHAFTE MACHT",
+        title: "Schattenhafte Macht",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges Herausfordern +2 und Robust +2 geben. (Während der Charakter herausfordert, erhält er +2. Reduziere jeglichen Schaden, der ihm zugefügt wird, um 2.)",
+          "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Herausfordern> +2 und <Robust> +2 geben. (Während der Charakter herausfordert, erhält er +2 {S}. Reduziere jeglichen Schaden, der ihm zugefügt wird, um 2.)",
       },
       {
-        title: "EWIGE NACHT",
+        title: "Ewige Nacht",
         description: 'Deine Gargoyles verlieren ihre "Am Tage aus Stein"-Fähigkeit.',
       },
     ],
@@ -36,12 +36,12 @@ export const angelaNightWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerrière de la nuit",
     text: [
       {
-        title: "PUISSANCE DE L'OMBRE",
+        title: "Puissance de l'ombre",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage qui gagne Offensif +2 et Résistance +2 jusqu'au début de votre prochain tour. (Lorsqu'il défie, ce personnage gagne +2. Les dommages qui lui sont infligés sont réduits de 2.)",
+          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage qui gagne <Offensif> +2 et <Résistance> +2 jusqu'au début de votre prochain tour. (Lorsqu'il défie, ce personnage gagne +2 {S}. Les dommages qui lui sont infligés sont réduits de 2.)",
       },
       {
-        title: "NUIT ÉTERNELLE",
+        title: "Nuit éternelle",
         description: "Vos personnages Gargouille perdent la capacité Statue le jour.",
       },
     ],
@@ -51,13 +51,13 @@ export const angelaNightWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerriera Notturna",
     text: [
       {
-        title: "POTERE DELL'OMBRA",
+        title: "Potere dell'Ombra",
         description:
-          "Quando giochi questo personaggio, puoi dare Sfidante +2 e Resistere +2 a un personaggio a tua scelta fino all'inizio del tuo prossimo turno. (Riceve +2 mentre sta sfidando. Il danno che gli viene inflitto è ridotto di 2.)",
+          "Quando giochi questo personaggio, puoi dare <Sfidante> +2 e <Resistere> +2 a un personaggio a tua scelta fino all'inizio del tuo prossimo turno. (Riceve +2 {S} mentre sta sfidando. Il danno che gli viene inflitto è ridotto di 2.)",
       },
       {
-        title: "NOTTE ETERNA I",
-        description: "tuoi personaggi Gargoyle perdono l'abilità Statue di Giorno.",
+        title: "Notte Eterna",
+        description: "I tuoi personaggi Gargoyle perdono l'abilità Statue di Giorno.",
       },
     ],
   },

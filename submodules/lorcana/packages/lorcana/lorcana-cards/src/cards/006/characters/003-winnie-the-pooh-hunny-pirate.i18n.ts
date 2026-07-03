@@ -20,12 +20,13 @@ export const winnieThePoohHunnyPirateI18n: Record<Languages, I18nProperties> = {
     version: "Honigpirat",
     text: [
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "WIR SIND PIRATEN, SIEHST DU?",
+        title: "Wir sind Piraten, siehst du?",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 weniger für den nächsten Piraten, den du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 {I} weniger für den nächsten Piraten, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const winnieThePoohHunnyPirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirate miel sabords",
     text: [
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "ON EST DES PIRATES, VOUS VOYEZ",
+        title: "On est des pirates, vous voyez",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, le prochain personnage Pirate que vous jouez ce tour-ci coûte 1 de moins.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, le prochain personnage Pirate que vous jouez ce tour-ci coûte 1 {I} de moins.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const winnieThePoohHunnyPirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirata del Miele",
     text: [
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "SIAMO DEI PIRATI, SAI?",
+        title: "Siamo dei Pirati, Sai?",
         description:
-          "Ogni volta che questo personaggio va all'avventura, paga 1 in meno per giocare il tuo prossimo personaggio Pirata per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, paga 1 {I} in meno per giocare il tuo prossimo personaggio Pirata per questo turno.",
       },
     ],
   },

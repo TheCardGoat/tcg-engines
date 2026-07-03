@@ -4,6 +4,17 @@ import { hideAwayI18n } from "./163-hide-away.i18n";
 export const hideAway: ActionCard = {
   id: "QYp",
   canonicalId: "ci_QYp",
+  slug: "lorcana-ci_QYp",
+  printings: [
+    {
+      id: "set5-163",
+      artId: "set5-163",
+      setCode: "set5",
+      collectorNumber: "163",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-163"],
   cardType: "action",
   name: "Hide Away",
@@ -16,7 +27,7 @@ export const hideAway: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_46aa903866b2477f8601a1cb5a8f56b9",
-    tcgPlayer: 561653,
+    tcgPlayer: "561653",
   },
   text: "Put chosen item or location into its player's inkwell facedown and exerted.",
   abilities: [

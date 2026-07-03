@@ -4,6 +4,17 @@ import { genieExcitedShipbuilderI18n } from "./038-genie-excited-shipbuilder.i18
 export const genieExcitedShipbuilder: CharacterCard = {
   id: "nk3",
   canonicalId: "ci_nk3",
+  slug: "lorcana-ci_nk3",
+  printings: [
+    {
+      id: "set6-038",
+      artId: "set6-038",
+      setCode: "set6",
+      collectorNumber: "38",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-038"],
   cardType: "character",
   name: "Genie",
@@ -21,7 +32,7 @@ export const genieExcitedShipbuilder: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8a0ce27bd434498ba454be0571e58c5b",
-    tcgPlayer: 593006,
+    tcgPlayer: "593006",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: genieExcitedShipbuilderI18n,

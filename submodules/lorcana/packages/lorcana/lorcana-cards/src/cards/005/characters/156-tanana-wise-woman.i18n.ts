@@ -17,7 +17,7 @@ export const tananaWiseWomanI18n: Record<Languages, I18nProperties> = {
     version: "Weise Frau",
     text: [
       {
-        title: "DEINE BRÜDER BEDÜRFEN DEINER FÜHRUNG",
+        title: "Deine Brüder bedürfen deiner Führung",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du bis zu 1 Schaden von einem Charakter oder Ort deiner Wahl entfernen.",
       },
@@ -28,7 +28,7 @@ export const tananaWiseWomanI18n: Record<Languages, I18nProperties> = {
     version: "Femme avisée",
     text: [
       {
-        title: "TES FRÈRES ONT BESOIN D'ÊTRE GUIDÉS",
+        title: "Tes frères ont besoin d'être guidés",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage ou un lieu et lui retirer jusqu'à 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const tananaWiseWomanI18n: Record<Languages, I18nProperties> = {
     version: "Saggia Donna",
     text: [
       {
-        title: "I TUOI FRATELLI HANNO BISOGNO DELLA TUA GUIDA",
+        title: "I Tuoi Fratelli Hanno Bisogno della tua Guida",
         description:
           "Quando giochi questo personaggio, puoi rimuovere fino a 1 danno da un personaggio o da un luogo a tua scelta.",
       },

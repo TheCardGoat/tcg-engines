@@ -11,10 +11,28 @@ export const keepTheAncientWaysI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Garde le feu millénaire",
-    text: "Les adversaires ne peuvent pas jouer d'action ni d'objet jusqu'au début de votre prochain tour.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Les adversaires ne peuvent pas jouer d'action ni d'objet jusqu'au début de votre prochain tour.",
+      },
+    ],
   },
   it: {
     name: "Guidaci e Resta con Noi",
-    text: "(Un personaggio con costo 2 o superiore può per cantare questa canzone gratis.) Gli avversari non possono giocare azioni o oggetti fino all'inizio del tuo prossimo turno.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Gli avversari non possono giocare azioni o oggetti fino all'inizio del tuo prossimo turno.",
+      },
+    ],
   },
 };

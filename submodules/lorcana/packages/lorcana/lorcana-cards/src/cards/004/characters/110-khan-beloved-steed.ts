@@ -4,6 +4,17 @@ import { khanBelovedSteedI18n } from "./110-khan-beloved-steed.i18n";
 export const khanBelovedSteed: CharacterCard = {
   id: "CdR",
   canonicalId: "ci_CdR",
+  slug: "lorcana-ci_CdR",
+  printings: [
+    {
+      id: "set4-110",
+      artId: "set4-110",
+      setCode: "set4",
+      collectorNumber: "110",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-110"],
   cardType: "character",
   name: "Khan",
@@ -21,7 +32,7 @@ export const khanBelovedSteed: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_de5bf1478737423d8469d662e40a89d0",
-    tcgPlayer: 547780,
+    tcgPlayer: "547780",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: khanBelovedSteedI18n,

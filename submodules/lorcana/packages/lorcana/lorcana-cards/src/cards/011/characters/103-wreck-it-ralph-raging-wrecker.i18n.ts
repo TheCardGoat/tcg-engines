@@ -24,16 +24,17 @@ export const wreckitRalphRagingWreckerI18n: Record<Languages, I18nProperties> = 
     version: "Rasender Zerstörer",
     text: [
       {
-        title: "Stärken 1",
+        title:
+          "<Stärken> 1 {I} (Einmal während deines Zuges darfst du 1 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "ANGESTACHELT",
-        description: "Dieser Charakter erhält für jede Karte unter ihm +1.",
+        title: "Angestachelt",
+        description: "Dieser Charakter erhält für jede Karte unter ihm +1 {S}.",
       },
       {
-        title: "WER KOMMT MIT MIR?",
+        title: "Wer kommt mit mir?",
         description:
-          "Wenn dieser Charakter verbannt wird, verbanne alle Charaktere mit genauso viel oder weniger, wie dieser Charakter im Spiel hatte.",
+          "Wenn dieser Charakter verbannt wird, verbanne alle Charaktere mit genauso viel oder weniger {S}, wie dieser Charakter {S} im Spiel hatte.",
       },
     ],
   },
@@ -42,16 +43,17 @@ export const wreckitRalphRagingWreckerI18n: Record<Languages, I18nProperties> = 
     version: "Démolisseur déchaîné",
     text: [
       {
-        title: "Boost 1",
+        title:
+          "<Boost> 1 {I} (Une fois durant votre tour, vous pouvez payer 1 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "POWER UP",
-        description: "Ce personnage gagne +1 pour chaque carte sous lui.",
+        title: "Power up",
+        description: "Ce personnage gagne +1 {S} pour chaque carte sous lui.",
       },
       {
-        title: "QUI VIENT AVEC MOI?",
+        title: "Qui vient avec moi?",
         description:
-          "Lorsque ce personnage est banni, bannissez tous les personnages ayant une inférieure ou égale à la qu'il avait en jeu.",
+          "Lorsque ce personnage est banni, bannissez tous les personnages ayant une {S} inférieure ou égale à la {S} qu'il avait en jeu.",
       },
     ],
   },
@@ -60,16 +62,17 @@ export const wreckitRalphRagingWreckerI18n: Record<Languages, I18nProperties> = 
     version: "Spaccatore Impetuoso",
     text: [
       {
-        title: "Potenziamento 1",
+        title:
+          "<Potenziamento> 1 {I} (Una volta durante il tuo turno, puoi pagare 1 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "CARICATO",
-        description: "Questo personaggio riceve +1 per ogni carta sotto di sé.",
+        title: "Caricato",
+        description: "Questo personaggio riceve +1 {S} per ogni carta sotto di sé.",
       },
       {
-        title: "CHI VIENE CON ME?",
+        title: "Chi Viene con Me?",
         description:
-          "Quando questo personaggio viene esiliato, esilia tutti i personaggi con uguale o inferiore alla che aveva in gioco.",
+          "Quando questo personaggio viene esiliato, esilia tutti i personaggi con {S} uguale o inferiore alla {S} che aveva in gioco.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { ratigansPartySeedyBackRoomI18n } from "./136-ratigans-party-seedy-back-
 export const ratigansPartySeedyBackRoom: LocationCard = {
   id: "kAJ",
   canonicalId: "ci_dzD",
+  slug: "lorcana-ci_dzD",
+  printings: [
+    {
+      id: "set5-136",
+      artId: "set5-136",
+      setCode: "set5",
+      collectorNumber: "136",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-136"],
   cardType: "location",
   name: "Ratigan's Party",
@@ -20,7 +31,7 @@ export const ratigansPartySeedyBackRoom: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4690391667a14f42a7df8ef76771703d",
-    tcgPlayer: 562000,
+    tcgPlayer: "562000",
   },
   text: [
     {

@@ -6,14 +6,17 @@ export const gd02Resource019: ResourceCard = {
   type: "resource",
   traits: ["-"],
   id: "R-019",
-  externalId: "gundam:r-019",
-  slug: "resource-r-019",
+  canonicalId: "R-019",
+  externalIds: { bandai: "gundam:r-019" },
+  slug: "resource/r-019",
   displayName: "resource",
   set: { code: "GD02", name: "-", packageId: "616102" },
   printNumber: "R-019",
   printings: [
     {
       id: "R-019",
+      artId: "R-019",
+      setCode: "GD02",
       collectorNumber: "R-019",
       cardNumber: "R-019",
       set: {
@@ -28,6 +31,8 @@ export const gd02Resource019: ResourceCard = {
     },
     {
       id: "R-019_p1",
+      artId: "R-019_p1",
+      setCode: "GD02",
       collectorNumber: "R-019_p1",
       cardNumber: "R-019",
       set: {
@@ -41,6 +46,7 @@ export const gd02Resource019: ResourceCard = {
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-019_p1.webp?260424",
     },
   ],
+  reprints: ["R-019", "R-019_p1"],
   selectedPrintingId: "R-019",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/R-019.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-019.webp?260424",

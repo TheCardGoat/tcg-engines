@@ -3,8 +3,19 @@ import { madHatterUnrulyEccentricI18n } from "./094-mad-hatter-unruly-eccentric.
 
 export const madHatterUnrulyEccentric: CharacterCard = {
   id: "RyL",
-  canonicalId: "ci_6gF",
-  reprints: ["set7-094"],
+  canonicalId: "ci_RyL",
+  slug: "lorcana-ci_RyL",
+  printings: [
+    {
+      id: "set7-094",
+      artId: "set7-094",
+      setCode: "set7",
+      collectorNumber: "94",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set7-d23-016", "set7-094"],
   cardType: "character",
   name: "Mad Hatter",
   version: "Unruly Eccentric",
@@ -20,7 +31,7 @@ export const madHatterUnrulyEccentric: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6826d906dfc147e89f475f146034e75f",
-    tcgPlayer: 619741,
+    tcgPlayer: "619741",
   },
   text: [
     {
@@ -48,7 +59,11 @@ export const madHatterUnrulyEccentric: CharacterCard = {
         timing: "whenever",
         on: "ANY_CHARACTER",
         attacker: {
-          filters: [{ type: "damaged" }],
+          filters: [
+            {
+              type: "damaged",
+            },
+          ],
         },
       },
       type: "triggered",

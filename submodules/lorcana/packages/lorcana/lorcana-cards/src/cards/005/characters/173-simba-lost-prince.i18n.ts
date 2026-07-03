@@ -17,7 +17,7 @@ export const simbaLostPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Verschollener Prinz",
     text: [
       {
-        title: "DER VERGANGENHEIT STELLEN",
+        title: "Der Vergangenheit stellen",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const simbaLostPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Prince perdu",
     text: [
       {
-        title: "FAIRE FACE À MON PASSÉ",
+        title: "Faire face à mon passé",
         description:
           "Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const simbaLostPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Principe Smarrito",
     text: [
       {
-        title: "AFFRONTARE IL PASSATO",
+        title: "Affrontare il Passato",
         description:
           "Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, puoi pescare una carta.",
       },

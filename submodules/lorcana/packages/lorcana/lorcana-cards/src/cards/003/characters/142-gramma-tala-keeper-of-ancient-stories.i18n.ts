@@ -17,7 +17,7 @@ export const grammaTalaKeeperOfAncientStoriesI18n: Record<Languages, I18nPropert
     version: "Bewahrerin der alten Geschichten",
     text: [
       {
-        title: "ES GAB NICHTS ALS DEN OZEAN",
+        title: "Es gab nichts als den Ozean",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 2 Karten deines Decks an. Du darfst 1 davon auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const grammaTalaKeeperOfAncientStoriesI18n: Record<Languages, I18nPropert
     version: "Gardienne des histoires ancestrales",
     text: [
       {
-        title: "IL N'Y AVAIT QUE L'OCÉAN",
+        title: "Il n'y avait que l'océan",
         description:
           "Lorsque vous jouez ce personnage, regardez les 2 premières cartes de votre pioche. Vous pouvez en ajouter 1 à votre main. Remettez le reste sous votre pioche.",
       },
@@ -39,7 +39,7 @@ export const grammaTalaKeeperOfAncientStoriesI18n: Record<Languages, I18nPropert
     version: "Custode delle Antiche Storie",
     text: [
       {
-        title: "C'ERA SOLO L'OCEANO",
+        title: "C'Era Solo l'Oceano",
         description:
           "Quando giochi questo personaggio, guarda le prime 2 carte del tuo mazzo. Puoi aggiungerne una alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { jafarNewlyCrownedI18n } from "./051-jafar-newly-crowned.i18n";
 
 export const jafarNewlyCrowned: CharacterCard = {
-  id: "ilP",
+  id: "t70",
   canonicalId: "ci_zaZ",
+  slug: "lorcana-ci_zaZ",
+  printings: [
+    {
+      id: "set7-051",
+      artId: "set7-051",
+      setCode: "set7",
+      collectorNumber: "51",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-051"],
   cardType: "character",
   name: "Jafar",
@@ -20,7 +31,7 @@ export const jafarNewlyCrowned: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1cda76d2cbe84ccda25bd2dc1b21844b",
-    tcgPlayer: 619738,
+    tcgPlayer: "619738",
   },
   text: [
     {

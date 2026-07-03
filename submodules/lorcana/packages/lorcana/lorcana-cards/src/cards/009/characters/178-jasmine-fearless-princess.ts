@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { jasmineFearlessPrincessI18n } from "./178-jasmine-fearless-princess.i18n";
 
 export const jasmineFearlessPrincess: CharacterCard = {
-  id: "RUI",
+  id: "3rs",
   canonicalId: "ci_TLB",
+  slug: "lorcana-ci_TLB",
+  printings: [
+    {
+      id: "set9-178",
+      artId: "set9-178",
+      setCode: "set9",
+      collectorNumber: "178",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-178"],
   cardType: "character",
   name: "Jasmine",
@@ -20,7 +31,7 @@ export const jasmineFearlessPrincess: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7e0b8f2e97fc4d6ca8badbb552024f58",
-    tcgPlayer: 651114,
+    tcgPlayer: "651114",
   },
   text: [
     {

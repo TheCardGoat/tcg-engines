@@ -16,8 +16,8 @@ export const lawrenceJealousManservantI18n: Record<Languages, I18nProperties> = 
     version: "Neidischer Hausdiener",
     text: [
       {
-        title: "VERGELTUNG",
-        description: "Solange dieser Charakter unbeschädigt ist, erhält er +4.",
+        title: "Vergeltung",
+        description: "Solange dieser Charakter unbeschädigt ist, erhält er +4 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const lawrenceJealousManservantI18n: Record<Languages, I18nProperties> = 
     version: "Valet jaloux",
     text: [
       {
-        title: "REVANCHE",
-        description: "Tant que ce personnage n'a aucun jeton Dommage sur lui, il gagne +4.",
+        title: "Revanche",
+        description: "Tant que ce personnage n'a aucun jeton Dommage sur lui, il gagne +4 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const lawrenceJealousManservantI18n: Record<Languages, I18nProperties> = 
     version: "Jealous Manservant",
     text: [
       {
-        title: "PAYBACK",
-        description: "While this character has no damage, he gets +4.",
+        title: "Payback",
+        description: "While this character has no damage, he gets +4 {S}.",
       },
     ],
   },

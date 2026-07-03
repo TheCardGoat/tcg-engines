@@ -4,6 +4,17 @@ import { iagoLoudmouthedParrotI18n } from "./080-iago-loud-mouthed-parrot.i18n";
 export const iagoLoudmouthedParrot: CharacterCard = {
   id: "4Om",
   canonicalId: "ci_4Om",
+  slug: "lorcana-ci_4Om",
+  printings: [
+    {
+      id: "set1-080",
+      artId: "set1-080",
+      setCode: "set1",
+      collectorNumber: "80",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-080"],
   cardType: "character",
   name: "Iago",
@@ -20,7 +31,7 @@ export const iagoLoudmouthedParrot: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fb67b53a2df44bff96ca7fff2d607437",
-    tcgPlayer: 497207,
+    tcgPlayer: "497207",
   },
   text: [
     {

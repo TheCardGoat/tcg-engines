@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { todNimbleFoxI18n } from "./072-tod-nimble-fox.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const todNimbleFox: CharacterCard = {
   id: "fT3",
   canonicalId: "ci_fT3",
+  slug: "lorcana-ci_fT3",
+  printings: [
+    {
+      id: "set12-072",
+      artId: "set12-072",
+      setCode: "set12",
+      collectorNumber: "72",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-072"],
   cardType: "character",
   name: "Tod",
@@ -21,6 +33,7 @@ export const todNimbleFox: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b328d3d5de43456ba31bd637c44a24a8",
+    tcgPlayer: "690712",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Hero"],

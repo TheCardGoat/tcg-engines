@@ -28,7 +28,12 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
         id as string,
       );
       if (rules.includes("cantAttack")) return false;
-      if (card.meta.playedThisTurn && !rules.includes("adrenaline")) return false;
+      if (
+        card.meta.playedThisTurn &&
+        !rules.includes("adrenaline") &&
+        !rules.includes("canAttackRivalOnPlayedTurn")
+      )
+        return false;
       const def = defOf(card);
       return def.type === "unit" || def.keywords.includes("goSolo");
     });
@@ -56,7 +61,10 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
         state as import("../types/match-state.ts").MatchState,
         attackerId,
       );
-      if (!attackerRules.includes("adrenaline")) {
+      if (
+        !attackerRules.includes("adrenaline") &&
+        !attackerRules.includes("canAttackRivalOnPlayedTurn")
+      ) {
         return {
           valid: false,
           error: "Can't attack on turn played",

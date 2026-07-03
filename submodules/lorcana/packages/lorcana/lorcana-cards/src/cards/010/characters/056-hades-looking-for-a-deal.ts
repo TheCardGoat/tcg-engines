@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { hadesLookingForADealI18n } from "./056-hades-looking-for-a-deal.i18n";
 
 export const hadesLookingForADeal: CharacterCard = {
-  id: "bDq",
+  id: "ON6",
   canonicalId: "ci_yoK",
+  slug: "lorcana-ci_yoK",
+  printings: [
+    {
+      id: "set10-056",
+      artId: "set10-056",
+      setCode: "set10",
+      collectorNumber: "56",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-056"],
   cardType: "character",
   name: "Hades",
@@ -20,7 +31,7 @@ export const hadesLookingForADeal: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4656262d1cbc478aab92978dc7729663",
-    tcgPlayer: 657889,
+    tcgPlayer: "657889",
   },
   text: [
     {

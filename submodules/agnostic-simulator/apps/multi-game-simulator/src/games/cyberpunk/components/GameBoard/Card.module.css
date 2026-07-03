@@ -6,7 +6,7 @@
 .stack {
   position: relative;
   height: 100%;
-  aspect-ratio: 744 / 1039;
+  aspect-ratio: 5 / 7;
   cursor: grab;
   transition:
     filter 180ms,
@@ -834,27 +834,6 @@
   pointer-events: auto;
 }
 
-.powerBadge[data-combat-role] {
-  left: 50%;
-  right: auto;
-  top: -8px;
-  bottom: auto;
-  z-index: 195;
-  max-width: none;
-  transform: translate(-50%, -50%);
-}
-
-.stack:has(.tappedUnit) > .powerBadge[data-combat-role] {
-  left: calc(100% + 8px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.stack:has(.tappedUnit) > .powerBadge[data-combat-role="attacker"] {
-  left: -8px;
-  transform: translate(-100%, -50%);
-}
-
 .powerLabel {
   min-width: 0;
   overflow: hidden;
@@ -1000,6 +979,62 @@
   .powerSource {
     font-size: 12px;
   }
+}
+
+.combatDamageBadge {
+  position: absolute;
+  left: 50%;
+  top: -8px;
+  z-index: 195;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 42px;
+  padding: 3px 6px 2px;
+  border: 1px solid rgb(255 61 94 / 82%);
+  background: linear-gradient(90deg, rgb(255 61 94 / 26%), transparent), rgb(7 9 12 / 94%);
+  box-shadow:
+    0 0 0 1px rgb(7 9 12 / 82%) inset,
+    0 0 14px rgb(255 61 94 / 58%);
+  color: #fff8a8;
+  font-family: Rajdhani, sans-serif;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+}
+
+.stack:has(.tappedUnit) .combatDamageBadge {
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.stack:has(.tappedUnit) .combatDamageBadge[data-combat-role="attacker"] {
+  left: -8px;
+  transform: translate(-100%, -50%);
+}
+
+.combatDamageBadge[data-combat-role="defender"] {
+  border-color: rgb(245 230 66 / 82%);
+  background: linear-gradient(90deg, rgb(245 230 66 / 22%), transparent), rgb(7 9 12 / 94%);
+  box-shadow:
+    0 0 0 1px rgb(7 9 12 / 82%) inset,
+    0 0 14px rgb(245 230 66 / 48%);
+}
+
+.combatDamageBadge span {
+  color: rgb(235 248 255 / 78%);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.combatDamageBadge strong {
+  color: #fff8a8;
+  font-size: 16px;
+  letter-spacing: 0;
+  text-shadow: 0 0 8px rgb(245 230 66 / 54%);
 }
 
 .actionMenu {

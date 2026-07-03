@@ -4,6 +4,17 @@ import { weveGotCompanyI18n } from "./147-weve-got-company.i18n";
 export const weveGotCompany: ActionCard = {
   id: "JKW",
   canonicalId: "ci_JKW",
+  slug: "lorcana-ci_JKW",
+  printings: [
+    {
+      id: "set7-147",
+      artId: "set7-147",
+      setCode: "set7",
+      collectorNumber: "147",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-147"],
   cardType: "action",
   name: "We've Got Company!",
@@ -16,7 +27,7 @@ export const weveGotCompany: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_696163f5674e45ddb49ab917a6d91180",
-    tcgPlayer: 619490,
+    tcgPlayer: "619490",
   },
   text: "Ready all your characters. They gain Reckless this turn. (They can't quest and must challenge if able.)",
   abilities: [

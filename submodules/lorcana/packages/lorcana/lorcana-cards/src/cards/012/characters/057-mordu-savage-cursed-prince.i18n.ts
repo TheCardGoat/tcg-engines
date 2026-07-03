@@ -6,11 +6,11 @@ export const morduSavageCursedPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Savage Cursed Prince",
     text: [
       {
-        title: "Ferocious Roar",
+        title: "FEROCIOUS ROAR",
         description: "When you play this character, exert all your characters not named Mor'du.",
       },
       {
-        title: "Rooted by Fear",
+        title: "ROOTED BY FEAR",
         description: "Your characters not named Mor'du can't ready at the start of your turn.",
       },
     ],

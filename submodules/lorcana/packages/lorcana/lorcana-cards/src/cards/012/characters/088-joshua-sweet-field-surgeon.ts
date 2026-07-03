@@ -4,6 +4,17 @@ import { joshuaSweetFieldSurgeonI18n } from "./088-joshua-sweet-field-surgeon.i1
 export const joshuaSweetFieldSurgeon: CharacterCard = {
   id: "zGi",
   canonicalId: "ci_zGi",
+  slug: "lorcana-ci_zGi",
+  printings: [
+    {
+      id: "set12-088",
+      artId: "set12-088",
+      setCode: "set12",
+      collectorNumber: "88",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-088"],
   cardType: "character",
   name: "Joshua Sweet",
@@ -20,6 +31,7 @@ export const joshuaSweetFieldSurgeon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fd42305369ea44619d7dc7af6eb418a9",
+    tcgPlayer: "692044",
   },
   text: [
     {

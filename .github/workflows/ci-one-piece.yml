@@ -7,14 +7,14 @@ on:
       - ".github/workflows/ci-one-piece.yml"
       - ".bun-version"
       - "package.json"
-      - "submodules/one-piece-simulator/**"
+      - "submodules/one-piece/**"
   pull_request:
     branches: [main]
     paths:
       - ".github/workflows/ci-one-piece.yml"
       - ".bun-version"
       - "package.json"
-      - "submodules/one-piece-simulator/**"
+      - "submodules/one-piece/**"
   workflow_dispatch:
 
 concurrency:
@@ -54,9 +54,9 @@ jobs:
           cache: true
 
       - name: Install One Piece dependencies
-        working-directory: submodules/one-piece-simulator
+        working-directory: submodules/one-piece
         run: vp install --frozen-lockfile
 
       - name: Run One Piece full CI
-        working-directory: submodules/one-piece-simulator
+        working-directory: submodules/one-piece
         run: pnpm run ci-check-full

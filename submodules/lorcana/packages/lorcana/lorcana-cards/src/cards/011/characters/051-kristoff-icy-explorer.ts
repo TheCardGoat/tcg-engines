@@ -4,6 +4,17 @@ import { kristoffIcyExplorerI18n } from "./051-kristoff-icy-explorer.i18n";
 export const kristoffIcyExplorer: CharacterCard = {
   id: "rkl",
   canonicalId: "ci_rkl",
+  slug: "lorcana-ci_rkl",
+  printings: [
+    {
+      id: "set11-051",
+      artId: "set11-051",
+      setCode: "set11",
+      collectorNumber: "51",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-051"],
   cardType: "character",
   name: "Kristoff",
@@ -20,7 +31,7 @@ export const kristoffIcyExplorer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_094f62fcb6094af1922921881eddf3f6",
-    tcgPlayer: 675381,
+    tcgPlayer: "675381",
   },
   text: [
     {
@@ -76,7 +87,15 @@ export const kristoffIcyExplorer: CharacterCard = {
         event: "leave-discard",
         on: "CONTROLLER",
         timing: "whenever",
-        restrictions: [{ type: "once-per-turn" }, { type: "during-turn", whose: "your" }],
+        restrictions: [
+          {
+            type: "once-per-turn",
+          },
+          {
+            type: "during-turn",
+            whose: "your",
+          },
+        ],
       },
       type: "triggered",
       text: "STROKE OF LUCK Once during your turn, whenever a card leaves your discard, draw a card.",

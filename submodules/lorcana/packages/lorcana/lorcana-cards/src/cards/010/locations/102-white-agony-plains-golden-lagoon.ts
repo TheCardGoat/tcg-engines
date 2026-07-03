@@ -4,6 +4,17 @@ import { whiteAgonyPlainsGoldenLagoonI18n } from "./102-white-agony-plains-golde
 export const whiteAgonyPlainsGoldenLagoon: LocationCard = {
   id: "4XD",
   canonicalId: "ci_4XD",
+  slug: "lorcana-ci_4XD",
+  printings: [
+    {
+      id: "set10-102",
+      artId: "set10-102",
+      setCode: "set10",
+      collectorNumber: "102",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-102"],
   cardType: "location",
   name: "White Agony Plains",
@@ -20,7 +31,7 @@ export const whiteAgonyPlainsGoldenLagoon: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4296f5bd9774451e920827cc374b8981",
-    tcgPlayer: 660040,
+    tcgPlayer: "660040",
   },
   text: [
     {

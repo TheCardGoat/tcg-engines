@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { powerlineWorldsGreatestRockStarI18n } from "./110-powerline-worlds-greatest-rock-star.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { singer } from "../../../helpers/abilities/singer";
 
 export const powerlineWorldsGreatestRockStar: CharacterCard = {
   id: "PmB",
   canonicalId: "ci_O1h",
+  slug: "lorcana-ci_O1h",
+  printings: [
+    {
+      id: "set9-110",
+      artId: "set9-110",
+      setCode: "set9",
+      collectorNumber: "110",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-110"],
   cardType: "character",
   name: "Powerline",
@@ -22,7 +34,7 @@ export const powerlineWorldsGreatestRockStar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_be9c85638bda44878c44cf4cc7e7cfb0",
-    tcgPlayer: 649231,
+    tcgPlayer: "649231",
   },
   text: [
     {

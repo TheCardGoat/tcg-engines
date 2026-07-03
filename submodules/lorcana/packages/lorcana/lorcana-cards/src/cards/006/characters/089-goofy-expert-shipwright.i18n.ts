@@ -20,12 +20,12 @@ export const goofyExpertShipwrightI18n: Record<Languages, I18nProperties> = {
     version: "Expert Shipwright",
     text: [
       {
-        title: "Ward",
+        title: "<Ward> (Opponents can't choose this character except to challenge.)",
       },
       {
-        title: "CLEVER DESIGN",
+        title: "Clever Design",
         description:
-          "Whenever this character quests, chosen character gains Ward until the start of your next turn.",
+          "Whenever this character quests, chosen character gains <Ward> until the start of your next turn.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const goofyExpertShipwrightI18n: Record<Languages, I18nProperties> = {
     version: "Expert Shipwright",
     text: [
       {
-        title: "Ward",
+        title: "<Ward> (Opponents can't choose this character except to challenge.)",
       },
       {
-        title: "CLEVER DESIGN",
+        title: "Clever Design",
         description:
-          "Whenever this character quests, chosen character gains Ward until the start of your next turn.",
+          "Whenever this character quests, chosen character gains <Ward> until the start of your next turn.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const goofyExpertShipwrightI18n: Record<Languages, I18nProperties> = {
     version: "Expert Shipwright",
     text: [
       {
-        title: "Ward",
+        title: "<Ward> (Opponents can't choose this character except to challenge.)",
       },
       {
-        title: "CLEVER DESIGN",
+        title: "Clever Design",
         description:
-          "Whenever this character quests, chosen character gains Ward until the start of your next turn.",
+          "Whenever this character quests, chosen character gains <Ward> until the start of your next turn.",
       },
     ],
   },

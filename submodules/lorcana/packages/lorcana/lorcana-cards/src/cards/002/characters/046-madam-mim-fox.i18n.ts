@@ -20,12 +20,12 @@ export const madamMimFoxI18n: Record<Languages, I18nProperties> = {
     version: "Fuchs",
     text: [
       {
-        title: "DEM HASEN NACHJAGEN",
+        title: "Dem Hasen nachjagen",
         description:
           "Wenn du diesen Charakter ausspielst, musst du ihn verbannen oder einen deiner anderen Charaktere wählen und zurück auf deine Hand nehmen.",
       },
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
     ],
   },
@@ -34,11 +34,12 @@ export const madamMimFoxI18n: Record<Languages, I18nProperties> = {
     version: "En renard",
     text: [
       {
-        title:
-          "À LA POURSUITE DU LAPIN Lorsque vous jouez ce personnage, bannissez-le ou renvoyez l'un de vos autres personnages en jeu dans votre main.",
+        title: "À la poursuite du lapin",
+        description:
+          "Lorsque vous jouez ce personnage, bannissez-le ou renvoyez l'un de vos autres personnages en jeu dans votre main.",
       },
       {
-        title: "Charge",
+        title: "<Charge>",
       },
     ],
   },
@@ -47,12 +48,12 @@ export const madamMimFoxI18n: Record<Languages, I18nProperties> = {
     version: "Volpe",
     text: [
       {
-        title: "INSEGUIRE IL CONIGLIO",
+        title: "Inseguire il Coniglio",
         description:
           "Quando giochi questo personaggio, esilialo o riprendi in mano un tuo altro personaggio a tua scelta.",
       },
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
     ],
   },

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { liloCausingAnUproarI18n } from "./137-lilo-causing-an-uproar.i18n";
 
 export const liloCausingAnUproar: CharacterCard = {
-  id: "44Y",
+  id: "RpU",
   canonicalId: "ci_U6V",
+  slug: "lorcana-ci_U6V",
+  printings: [
+    {
+      id: "set8-137",
+      artId: "set8-137",
+      setCode: "set8",
+      collectorNumber: "137",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-137"],
   cardType: "character",
   name: "Lilo",
@@ -20,7 +31,7 @@ export const liloCausingAnUproar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_95167fa28eb2442c8d04fc67d2db7fa7",
-    tcgPlayer: 632684,
+    tcgPlayer: "632684",
   },
   text: [
     {

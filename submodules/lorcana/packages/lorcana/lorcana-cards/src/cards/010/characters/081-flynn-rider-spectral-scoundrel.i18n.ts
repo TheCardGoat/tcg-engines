@@ -22,12 +22,13 @@ export const flynnRiderSpectralScoundrelI18n: Record<Languages, I18nProperties> 
     version: "Geisterhafter Schurke",
     text: [
       {
-        title: "Stärken 2",
+        title:
+          "<Stärken> 2 {I} (Einmal während deines Zuges darfst du 2 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "DAS NEHME ICH",
+        title: "Das nehme ich",
         description:
-          "Solange dieser Charakter mindestens eine Karte unter sich hat, erhält er +2 und +1.",
+          "Solange dieser Charakter mindestens eine Karte unter sich hat, erhält er +2 {S} und +1 {L}.",
       },
     ],
   },
@@ -36,11 +37,12 @@ export const flynnRiderSpectralScoundrelI18n: Record<Languages, I18nProperties> 
     version: "Crapule spectrale",
     text: [
       {
-        title: "Boost 2",
+        title:
+          "<Boost> 2 {I} (Une fois durant votre tour, vous pouvez payer 2 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "JE VAIS PRENDRE ÇA",
-        description: "Tant qu'il y a une carte sous ce personnage, il gagne +2 et +1.",
+        title: "Je vais prendre ça",
+        description: "Tant qu'il y a une carte sous ce personnage, il gagne +2 {S} et +1 {L}.",
       },
     ],
   },
@@ -49,13 +51,13 @@ export const flynnRiderSpectralScoundrelI18n: Record<Languages, I18nProperties> 
     version: "Furfante Spettrale",
     text: [
       {
-        title: "Potenziamento 2",
-        description:
-          "(Una volta durante il tuo turno, puoi pagare 2 per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
+        title:
+          "<Potenziamento> 2 {I} (Una volta durante il tuo turno, puoi pagare 2 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "QUESTA LA PRENDO IO",
-        description: "Mentre c'è una carta sotto a questo personaggio, questo riceve +2 e +1.",
+        title: "Questa La Prendo Io",
+        description:
+          "Mentre c'è una carta sotto a questo personaggio, questo riceve +2 {S} e +1 {L}.",
       },
     ],
   },

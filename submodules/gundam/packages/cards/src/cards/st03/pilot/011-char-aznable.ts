@@ -7,14 +7,17 @@ export const st03CharAznable011: PilotCard = {
   color: "green",
   traits: ["zeon", "newtype"],
   id: "ST03-011",
-  externalId: "gundam:st03-011",
-  slug: "char-aznable-st03-011",
+  canonicalId: "ST03-011",
+  externalIds: { bandai: "gundam:st03-011" },
+  slug: "char-aznable/st03-011",
   displayName: "Char Aznable",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-011",
   printings: [
     {
       id: "ST03-011",
+      artId: "ST03-011",
+      setCode: "ST03",
       collectorNumber: "ST03-011",
       cardNumber: "ST03-011",
       set: {
@@ -30,6 +33,8 @@ export const st03CharAznable011: PilotCard = {
     },
     {
       id: "ST03-011_p1",
+      artId: "ST03-011_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-011_p1",
       cardNumber: "ST03-011",
       set: {
@@ -45,6 +50,8 @@ export const st03CharAznable011: PilotCard = {
     },
     {
       id: "ST03-011_p2",
+      artId: "ST03-011_p2",
+      setCode: "BETA",
       collectorNumber: "ST03-011_p2",
       cardNumber: "ST03-011",
       set: {
@@ -60,6 +67,8 @@ export const st03CharAznable011: PilotCard = {
     },
     {
       id: "ST03-011_p3",
+      artId: "ST03-011_p3",
+      setCode: "BETA",
       collectorNumber: "ST03-011_p3",
       cardNumber: "ST03-011",
       set: {
@@ -74,6 +83,7 @@ export const st03CharAznable011: PilotCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST03-011", "ST03-011_p1", "ST03-011_p2", "ST03-011_p3"],
   selectedPrintingId: "ST03-011",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-011.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-011.webp?260424",

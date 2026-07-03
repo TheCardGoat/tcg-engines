@@ -17,9 +17,9 @@ export const chipRangerLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Anführer der Ritter des Rechts",
     text: [
       {
-        title: "DER WERT DER FREUNDSCHAFT",
+        title: "Der Wert der Freundschaft",
         description:
-          "Solange du mindestens einen Chap-Charakter im Spiel hast, erhält dieser Charakter Unterstützen. (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "Solange du mindestens einen Chap-Charakter im Spiel hast, erhält dieser Charakter <Unterstützen>. (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
     ],
   },
@@ -28,8 +28,9 @@ export const chipRangerLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Chef des Rangers",
     text: [
       {
-        title: "L'IMPORTANCE DE L'AMITIÉ",
-        description: "Tant que vous avez un personnage Tac en jeu, ce personnage-ci gagne Soutien.",
+        title: "L'importance de l'amitié",
+        description:
+          "Tant que vous avez un personnage Tac en jeu, ce personnage-ci gagne <Soutien>. (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
     ],
   },
@@ -38,9 +39,9 @@ export const chipRangerLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Leader degli Agenti Speciali",
     text: [
       {
-        title: "IL VALORE DELL'AMICIZIA",
+        title: "Il Valore dell'Amicizia",
         description:
-          "Mentre hai in gioco un personaggio chiamato Ciop, questo personaggio ottiene Aiutante. (Ogni volta che va all'avventura, puoi aggiungere la sua alla di un altro personaggio a tua scelta per questo turno.)",
+          "Mentre hai in gioco un personaggio chiamato Ciop, questo personaggio ottiene <Aiutante>. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
     ],
   },

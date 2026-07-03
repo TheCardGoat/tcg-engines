@@ -7,14 +7,17 @@ export const gd04GundamExia064: UnitCard = {
   color: "purple",
   traits: ["cb", "gn drive"],
   id: "GD04-064",
-  externalId: "gundam:gd04-064",
-  slug: "gundam-exia-gd04-064",
+  canonicalId: "GD04-064",
+  externalIds: { bandai: "gundam:gd04-064" },
+  slug: "gundam-exia/gd04-064",
   displayName: "Gundam Exia",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-064",
   printings: [
     {
       id: "GD04-064",
+      artId: "GD04-064",
+      setCode: "GD04",
       collectorNumber: "GD04-064",
       cardNumber: "GD04-064",
       set: {
@@ -29,6 +32,7 @@ export const gd04GundamExia064: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-064"],
   selectedPrintingId: "GD04-064",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-064.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-064.webp?260424",

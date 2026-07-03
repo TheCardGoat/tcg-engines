@@ -16,7 +16,7 @@ export const beastWoundedI18n: Record<Languages, I18nProperties> = {
     version: "Verwundet",
     text: [
       {
-        title: "DAS TUT WEH!",
+        title: "Das tut weh!",
         description: "Dieser Charakter kommt mit 4 Schaden auf ihm ins Spiel.",
       },
     ],
@@ -26,7 +26,7 @@ export const beastWoundedI18n: Record<Languages, I18nProperties> = {
     version: "Blessée",
     text: [
       {
-        title: "MAIS ÇA FAIT MAL!",
+        title: "Mais ça fait mal!",
         description: "Ce personnage entre en jeu avec 4 jetons Dommage.",
       },
     ],
@@ -36,7 +36,7 @@ export const beastWoundedI18n: Record<Languages, I18nProperties> = {
     version: "Ferita",
     text: [
       {
-        title: "FA MALE!",
+        title: "Fa Male!",
         description: "Questo personaggio entra in gioco con 4 danni.",
       },
     ],

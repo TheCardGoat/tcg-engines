@@ -7,14 +7,17 @@ export const gd03KshatriyaBesserung005: UnitCard = {
   color: "blue",
   traits: ["neo zeon"],
   id: "GD03-005",
-  externalId: "gundam:gd03-005",
-  slug: "kshatriya-besserung-gd03-005",
+  canonicalId: "GD03-005",
+  externalIds: { bandai: "gundam:gd03-005" },
+  slug: "kshatriya-besserung/gd03-005",
   displayName: "Kshatriya Besserung",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-005",
   printings: [
     {
       id: "GD03-005",
+      artId: "GD03-005",
+      setCode: "GD03",
       collectorNumber: "GD03-005",
       cardNumber: "GD03-005",
       set: {
@@ -29,6 +32,7 @@ export const gd03KshatriyaBesserung005: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-005"],
   selectedPrintingId: "GD03-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-005.webp?260424",

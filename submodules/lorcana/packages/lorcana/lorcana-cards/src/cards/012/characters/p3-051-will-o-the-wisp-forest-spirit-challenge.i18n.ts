@@ -4,21 +4,45 @@ export const willOTheWispForestSpiritP3ChallengeI18n: Record<Languages, I18nProp
   en: {
     name: "Will o' the Wisp",
     version: "Forest Spirit",
-    text: "\\Come On Out\\ When this character is banished in a challenge, you may return this card to your hand.",
+    text: [
+      {
+        title: "COME ON OUT",
+        description:
+          "When this character is banished in a challenge, you may return this card to your hand.",
+      },
+    ],
   },
   de: {
-    name: "Will o' the Wisp",
-    version: "Forest Spirit",
-    text: "\\Come On Out\\ When this character is banished in a challenge, you may return this card to your hand.",
+    name: "Irrlicht",
+    version: "Waldgeist",
+    text: [
+      {
+        title: "Komm heraus",
+        description:
+          "Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du diese Karte zurück auf deine Hand nehmen.",
+      },
+    ],
   },
   fr: {
-    name: "Will o' the Wisp",
-    version: "Forest Spirit",
-    text: "\\Come On Out\\ When this character is banished in a challenge, you may return this card to your hand.",
+    name: "Feux follets",
+    version: "Esprit de la forêt",
+    text: [
+      {
+        title: "Montrez-vous",
+        description:
+          "Lorsque ce personnage est banni via un défi, vous pouvez renvoyer cette carte dans votre main.",
+      },
+    ],
   },
   it: {
-    name: "Will o' the Wisp",
-    version: "Forest Spirit",
-    text: "\\Come On Out\\ When this character is banished in a challenge, you may return this card to your hand.",
+    name: "Fuoco Fatuo",
+    version: "Spirito della Foresta",
+    text: [
+      {
+        title: "Venite Fuori",
+        description:
+          "Quando questo personaggio viene esiliato in una sfida, puoi riprendere in mano questa carta.",
+      },
+    ],
   },
 };

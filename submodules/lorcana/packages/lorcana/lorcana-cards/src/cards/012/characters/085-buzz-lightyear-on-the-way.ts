@@ -4,6 +4,17 @@ import { buzzLightyearOnTheWayI18n } from "./085-buzz-lightyear-on-the-way.i18n"
 export const buzzLightyearOnTheWay: CharacterCard = {
   id: "xen",
   canonicalId: "ci_xen",
+  slug: "lorcana-ci_xen",
+  printings: [
+    {
+      id: "set12-085",
+      artId: "set12-085",
+      setCode: "set12",
+      collectorNumber: "85",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-085"],
   cardType: "character",
   name: "Buzz Lightyear",
@@ -20,6 +31,7 @@ export const buzzLightyearOnTheWay: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e2c38bf30c48489f914581f55acd67fb",
+    tcgPlayer: "678236",
   },
   text: [
     {

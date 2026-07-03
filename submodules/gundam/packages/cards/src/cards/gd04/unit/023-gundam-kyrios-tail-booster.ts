@@ -7,14 +7,17 @@ export const gd04GundamKyriosTailBooster023: UnitCard = {
   color: "green",
   traits: ["cb", "gn drive"],
   id: "GD04-023",
-  externalId: "gundam:gd04-023",
-  slug: "gundam-kyrios-tail-booster-gd04-023",
+  canonicalId: "GD04-023",
+  externalIds: { bandai: "gundam:gd04-023" },
+  slug: "gundam-kyrios-tail-booster/gd04-023",
   displayName: "Gundam Kyrios (Tail Booster)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-023",
   printings: [
     {
       id: "GD04-023",
+      artId: "GD04-023",
+      setCode: "GD04",
       collectorNumber: "GD04-023",
       cardNumber: "GD04-023",
       set: {
@@ -29,6 +32,7 @@ export const gd04GundamKyriosTailBooster023: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-023"],
   selectedPrintingId: "GD04-023",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-023.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-023.webp?260424",

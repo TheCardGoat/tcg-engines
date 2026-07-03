@@ -4,6 +4,17 @@ import { belleBookwormI18n } from "./071-belle-bookworm.i18n";
 export const belleBookworm: CharacterCard = {
   id: "cql",
   canonicalId: "ci_cql",
+  slug: "lorcana-ci_cql",
+  printings: [
+    {
+      id: "set2-071",
+      artId: "set2-071",
+      setCode: "set2",
+      collectorNumber: "71",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-071"],
   cardType: "character",
   name: "Belle",
@@ -20,7 +31,7 @@ export const belleBookworm: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1379d064484a4269bc01c74fd935c221",
-    tcgPlayer: 525246,
+    tcgPlayer: "525246",
   },
   text: [
     {

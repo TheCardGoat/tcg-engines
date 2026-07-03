@@ -7,14 +7,17 @@ export const gd03ProvidenceGundam033: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD03-033",
-  externalId: "gundam:gd03-033",
-  slug: "providence-gundam-gd03-033",
+  canonicalId: "GD03-033",
+  externalIds: { bandai: "gundam:gd03-033" },
+  slug: "providence-gundam/gd03-033",
   displayName: "Providence Gundam",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-033",
   printings: [
     {
       id: "GD03-033",
+      artId: "GD03-033",
+      setCode: "GD03",
       collectorNumber: "GD03-033",
       cardNumber: "GD03-033",
       set: {
@@ -30,6 +33,8 @@ export const gd03ProvidenceGundam033: UnitCard = {
     },
     {
       id: "GD03-033_p1",
+      artId: "GD03-033_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-033_p1",
       cardNumber: "GD03-033",
       set: {
@@ -44,6 +49,7 @@ export const gd03ProvidenceGundam033: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-033", "GD03-033_p1"],
   selectedPrintingId: "GD03-033",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-033.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-033.webp?260424",

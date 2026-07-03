@@ -4,6 +4,17 @@ import { greatStoneDragonI18n } from "./167-great-stone-dragon.i18n";
 export const greatStoneDragon: ItemCard = {
   id: "BvX",
   canonicalId: "ci_BvX",
+  slug: "lorcana-ci_BvX",
+  printings: [
+    {
+      id: "set4-167",
+      artId: "set4-167",
+      setCode: "set4",
+      collectorNumber: "167",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-167"],
   cardType: "item",
   name: "Great Stone Dragon",
@@ -16,7 +27,7 @@ export const greatStoneDragon: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_11587e02677148c28e30eeaa164a2569",
-    tcgPlayer: 549341,
+    tcgPlayer: "549341",
   },
   text: [
     {

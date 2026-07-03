@@ -15,9 +15,9 @@ export const imperialProclamationI18n: Record<Languages, I18nProperties> = {
     name: "Kaiserliche Bekanntmachung",
     text: [
       {
-        title: "RUF AN DIE FRONT",
+        title: "Ruf an die Front",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere einen anderen Charakter herausfordert, zahlst du 1 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn einer deiner Charaktere einen anderen Charakter herausfordert, zahlst du 1 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const imperialProclamationI18n: Record<Languages, I18nProperties> = {
     name: "Décret Impérial",
     text: [
       {
-        title: "APPELÉ AU FRONT",
+        title: "Appelé au front",
         description:
-          "Chaque fois que l'un de vos personnages en défie un autre, le prochain personnage que vous jouez durant ce tour coûte 1 de moins.",
+          "Chaque fois que l'un de vos personnages en défie un autre, le prochain personnage que vous jouez durant ce tour coûte 1 {I} de moins.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const imperialProclamationI18n: Record<Languages, I18nProperties> = {
     name: "Proclama Imperiale",
     text: [
       {
-        title: "CHIAMATA ALLE ARMI",
+        title: "Chiamata alle Armi",
         description:
-          "Ogni volta che uno dei tuoi personaggi sfida un altro personaggio, paga 1 in meno per giocare il tuo prossimo personaggio per questo turno.",
+          "Ogni volta che uno dei tuoi personaggi sfida un altro personaggio, paga 1 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

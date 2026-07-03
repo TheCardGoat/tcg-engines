@@ -13,14 +13,24 @@ export const circleOfLifeI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Der ewige Kreis",
-    text: "Gemeinsam singen 8 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 8 oder mehr kosten,, damit sie dieses Lied kostenlos singen.) Spiele eine Charakterkarte kostenlos aus deinem Ablagestapel aus.",
+    text: [
+      {
+        title:
+          "<Gemeinsam singen> 8 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 8 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)",
+      },
+      {
+        title: "Spiele eine Charakterkarte kostenlos aus deinem Ablagestapel aus.",
+      },
+    ],
   },
   fr: {
     name: "L'histoire de la vie",
     text: [
       {
-        title: "À",
-        description: "l'unisson 8 Jouez gratuitement un personnage de votre défausse.",
+        title: "<À l'unisson> 8",
+      },
+      {
+        title: "Jouez gratuitement un personnage de votre défausse.",
       },
     ],
   },
@@ -28,9 +38,11 @@ export const circleOfLifeI18n: Record<Languages, I18nProperties> = {
     name: "Il Cerchio della Vita",
     text: [
       {
-        title: "Cantare Insieme 8",
-        description:
-          "(Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 8 o superiore può per cantare questa canzone gratis.) Gioca un personaggio dai tuoi scarti gratis.",
+        title:
+          "<Cantare Insieme> 8 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 8 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Gioca un personaggio dai tuoi scarti gratis.",
       },
     ],
   },

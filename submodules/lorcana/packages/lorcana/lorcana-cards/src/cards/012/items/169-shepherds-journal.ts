@@ -4,6 +4,17 @@ import { shepherdsJournalI18n } from "./169-shepherds-journal.i18n";
 export const shepherdsJournal: ItemCard = {
   id: "zo6",
   canonicalId: "ci_zo6",
+  slug: "lorcana-ci_zo6",
+  printings: [
+    {
+      id: "set12-169",
+      artId: "set12-169",
+      setCode: "set12",
+      collectorNumber: "169",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-169"],
   cardType: "item",
   name: "Shepherd's Journal",
@@ -16,6 +27,7 @@ export const shepherdsJournal: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5459a4d694d44a97bf71319a8ab35a32",
+    tcgPlayer: "690719",
   },
   text: [
     {

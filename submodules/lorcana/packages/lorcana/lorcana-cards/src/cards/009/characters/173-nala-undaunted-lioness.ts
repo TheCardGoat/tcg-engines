@@ -4,6 +4,17 @@ import { nalaUndauntedLionessI18n } from "./173-nala-undaunted-lioness.i18n";
 export const nalaUndauntedLioness: CharacterCard = {
   id: "XTr",
   canonicalId: "ci_XTr",
+  slug: "lorcana-ci_XTr",
+  printings: [
+    {
+      id: "set9-173",
+      artId: "set9-173",
+      setCode: "set9",
+      collectorNumber: "173",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-173"],
   cardType: "character",
   name: "Nala",
@@ -20,7 +31,7 @@ export const nalaUndauntedLioness: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_11287d0d009b455ba9cde545d4f98c5b",
-    tcgPlayer: 650107,
+    tcgPlayer: "650107",
   },
   text: [
     {

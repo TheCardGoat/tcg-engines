@@ -16,9 +16,9 @@ export const clarabelleClumsyGuestI18n: Record<Languages, I18nProperties> = {
     version: "Tollpatschiger Gast",
     text: [
       {
-        title: "BUTTERFINGER",
+        title: "Butterfinger",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du 2 bezahlen, um einen Gegenstand deiner Wahl zu verbannen.",
+          "Wenn du diesen Charakter ausspielst, darfst du 2 {I} bezahlen, um einen Gegenstand deiner Wahl zu verbannen.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const clarabelleClumsyGuestI18n: Record<Languages, I18nProperties> = {
     version: "Invitée maladroite",
     text: [
       {
-        title: "DEUX MAINS GAUCHES",
+        title: "Deux mains gauches",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez payer 2 pour choisir un objet et le bannir.",
+          "Lorsque vous jouez ce personnage, vous pouvez payer 2 {I} pour choisir un objet et le bannir.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const clarabelleClumsyGuestI18n: Record<Languages, I18nProperties> = {
     version: "Ospite Pasticciona",
     text: [
       {
-        title: "MANI DI PASTA FROLLA",
+        title: "Mani di Pasta Frolla",
         description:
-          "Quando giochi questo personaggio, puoi pagare 2 per esiliare un oggetto a tua scelta.",
+          "Quando giochi questo personaggio, puoi pagare 2 {I} per esiliare un oggetto a tua scelta.",
       },
     ],
   },

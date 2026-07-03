@@ -7,14 +7,17 @@ export const gd03ChristinaMackenzie085: PilotCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD03-085",
-  externalId: "gundam:gd03-085",
-  slug: "christina-mackenzie-gd03-085",
+  canonicalId: "GD03-085",
+  externalIds: { bandai: "gundam:gd03-085" },
+  slug: "christina-mackenzie/gd03-085",
   displayName: "Christina Mackenzie",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-085",
   printings: [
     {
       id: "GD03-085",
+      artId: "GD03-085",
+      setCode: "GD03",
       collectorNumber: "GD03-085",
       cardNumber: "GD03-085",
       set: {
@@ -29,6 +32,7 @@ export const gd03ChristinaMackenzie085: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-085"],
   selectedPrintingId: "GD03-085",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-085.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-085.webp?260424",

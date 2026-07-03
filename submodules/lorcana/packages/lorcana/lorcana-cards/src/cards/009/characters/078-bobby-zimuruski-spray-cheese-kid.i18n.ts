@@ -17,7 +17,7 @@ export const bobbyZimuruskiSprayCheeseKidI18n: Record<Languages, I18nProperties>
     version: "Sprühkäse-Kind",
     text: [
       {
-        title: "SO KÄSIG",
+        title: "So käsig",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
@@ -28,7 +28,7 @@ export const bobbyZimuruskiSprayCheeseKidI18n: Record<Languages, I18nProperties>
     version: "Fan de fromage en spray",
     text: [
       {
-        title: "ULTRA COULANT",
+        title: "Ultra coulant",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez piocher une carte, puis défausser une carte.",
       },
@@ -39,7 +39,7 @@ export const bobbyZimuruskiSprayCheeseKidI18n: Record<Languages, I18nProperties>
     version: "Ragazzo del Gorgonzola Spray",
     text: [
       {
-        title: "GORGONZOLESCO",
+        title: "Gorgonzolesco",
         description:
           "Quando giochi questo personaggio, puoi pescare una carta, poi scegli e scarta una carta.",
       },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rafikiShamanDuelistI18n } from "./055-rafiki-shaman-duelist.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const rafikiShamanDuelist: CharacterCard = {
   id: "q4q",
   canonicalId: "ci_q4q",
+  slug: "lorcana-ci_q4q",
+  printings: [
+    {
+      id: "set5-055",
+      artId: "set5-055",
+      setCode: "set5",
+      collectorNumber: "55",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-055"],
   cardType: "character",
   name: "Rafiki",
@@ -21,7 +33,7 @@ export const rafikiShamanDuelist: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1f76ed2f61db4a9cb5a5647c43e1ebfc",
-    tcgPlayer: 560105,
+    tcgPlayer: "560105",
   },
   text: [
     {

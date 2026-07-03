@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { megaraLiberatedOneI18n } from "./080-megara-liberated-one.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const megaraLiberatedOne: CharacterCard = {
   id: "q5j",
   canonicalId: "ci_q5j",
+  slug: "lorcana-ci_q5j",
+  printings: [
+    {
+      id: "set4-080",
+      artId: "set4-080",
+      setCode: "set4",
+      collectorNumber: "80",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-080"],
   cardType: "character",
   name: "Megara",
@@ -21,7 +33,7 @@ export const megaraLiberatedOne: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6cb1a1b4a1e447b19a2a22c63e15dec9",
-    tcgPlayer: 549622,
+    tcgPlayer: "549622",
   },
   text: [
     {

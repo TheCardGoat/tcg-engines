@@ -16,9 +16,9 @@ export const luisaMadrigalRockOfTheFamilyI18n: Record<Languages, I18nProperties>
     version: "Fels in der Brandung",
     text: [
       {
-        title: "ICH BIN STARK",
+        title: "Ich bin stark",
         description:
-          "Solange du mindestens einen weiteren Charakter im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens einen weiteren Charakter im Spiel hast, erhält dieser Charakter +2 {S}.",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const luisaMadrigalRockOfTheFamilyI18n: Record<Languages, I18nProperties>
     version: "Roc de la famille",
     text: [
       {
-        title: "JE SUIS SOLIDE",
-        description: "Tant que vous avez un autre personnage en jeu, ce personnage gagne +2.",
+        title: "Je suis solide",
+        description: "Tant que vous avez un autre personnage en jeu, ce personnage gagne +2 {S}.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const luisaMadrigalRockOfTheFamilyI18n: Record<Languages, I18nProperties>
     version: "Roccia della Famiglia",
     text: [
       {
-        title: "SONO FORTE",
-        description: "Mentre hai in gioco un altro personaggio, questo personaggio riceve +2.",
+        title: "Sono Forte",
+        description: "Mentre hai in gioco un altro personaggio, questo personaggio riceve +2 {S}.",
       },
     ],
   },

@@ -17,7 +17,7 @@ export const marshmallowPersistentGuardianI18n: Record<Languages, I18nProperties
     version: "Hartnäckiger Hüter",
     text: [
       {
-        title: "LANGLEBIG",
+        title: "Langlebig",
         description:
           "Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du diese Karte zurück auf deine Hand nehmen.",
       },
@@ -39,7 +39,7 @@ export const marshmallowPersistentGuardianI18n: Record<Languages, I18nProperties
     version: "Persistent Guardian",
     text: [
       {
-        title: "DURABLE",
+        title: "Durable",
         description:
           "When this character is banished in a challenge, you may return this card to your hand.",
       },

@@ -16,8 +16,8 @@ export const cogsworthTalkingClockI18n: Record<Languages, I18nProperties> = {
     version: "Sprechende Uhr",
     text: [
       {
-        title: "MOMENT MAL",
-        description: 'Deine Charaktere mit Impulsiv erhalten: " — Sammle 1 Legende."',
+        title: "Moment mal",
+        description: 'Deine Charaktere mit <Impulsiv> erhalten: "{E} — Sammle 1 Legende."',
       },
     ],
   },
@@ -26,8 +26,8 @@ export const cogsworthTalkingClockI18n: Record<Languages, I18nProperties> = {
     version: "Horloge parlante",
     text: [
       {
-        title: "ATTENDEZ UNE MINUTE",
-        description: 'Vos personnages avec Combattant gagnent " — Gagnez 1 éclat de Lore."',
+        title: "Attendez une minute",
+        description: 'Vos personnages avec <Combattant> gagnent "{E} — Gagnez 1 éclat de Lore."',
       },
     ],
   },
@@ -36,8 +36,8 @@ export const cogsworthTalkingClockI18n: Record<Languages, I18nProperties> = {
     version: "Orologio Parlante",
     text: [
       {
-        title: "VIENI QUI I",
-        description: 'tuoi personaggi con Attaccabrighe ottengono " — ottieni 1 leggenda."',
+        title: "Vieni Qui",
+        description: 'I tuoi personaggi con <Attaccabrighe> ottengono "{E} — ottieni 1 leggenda."',
       },
     ],
   },

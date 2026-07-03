@@ -4,6 +4,17 @@ import { fergusMcduckScroogesFatherI18n } from "./144-fergus-mcduck-scrooges-fat
 export const fergusMcduckScroogesFather: CharacterCard = {
   id: "sKm",
   canonicalId: "ci_sKm",
+  slug: "lorcana-ci_sKm",
+  printings: [
+    {
+      id: "set10-144",
+      artId: "set10-144",
+      setCode: "set10",
+      collectorNumber: "144",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-144"],
   cardType: "character",
   name: "Fergus McDuck",
@@ -20,7 +31,7 @@ export const fergusMcduckScroogesFather: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a6ad0755a1114acca877267acb719f59",
-    tcgPlayer: 659601,
+    tcgPlayer: "659601",
   },
   text: [
     {

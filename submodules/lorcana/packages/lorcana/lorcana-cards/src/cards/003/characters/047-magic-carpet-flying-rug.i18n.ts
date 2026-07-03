@@ -19,11 +19,11 @@ export const magicCarpetFlyingRugI18n: Record<Languages, I18nProperties> = {
     version: "Überflieger",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "FINDE DEN WEG",
-        description: "— Wähle einen deiner Charaktere und bewege ihn kostenlos zu einem Ort.",
+        title: "Finde den Weg",
+        description: "{E} — Wähle einen deiner Charaktere und bewege ihn kostenlos zu einem Ort.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const magicCarpetFlyingRugI18n: Record<Languages, I18nProperties> = {
     version: "Carpette magique",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "TROUVE LE CHEMIN",
-        description: "— Déplacez gratuitement l'un de vos personnages sur un lieu.",
+        title: "Trouve le chemin",
+        description: "{E} — Déplacez gratuitement l'un de vos personnages sur un lieu.",
       },
     ],
   },
@@ -45,11 +45,11 @@ export const magicCarpetFlyingRugI18n: Record<Languages, I18nProperties> = {
     version: "Scendiletto Volante",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "TROVARE LA VIA",
-        description: "— Sposta gratuitamente un tuo personaggio in un luogo a tua scelta.",
+        title: "Trovare la Via",
+        description: "{E} — Sposta gratuitamente un tuo personaggio in un luogo a tua scelta.",
       },
     ],
   },

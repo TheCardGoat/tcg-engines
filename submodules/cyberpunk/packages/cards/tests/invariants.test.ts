@@ -18,12 +18,15 @@ const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12
 const CARD_IMAGE_BASE_URL = "https://cdn.tcg.online/public/cyberpunk/cards/";
 const KNOWN_SET_CODE_VALUES: ReadonlySet<string> = new Set([
   "alpha",
+  "PRM01",
+  "arasakademodeck",
   "promo",
   "spoiler",
   "boxtoppersretail",
   "boxtoppersbeta",
   "embracingpowerbetastarterdeck",
   "embracingpowerretailstarterdeck",
+  "mercdemodeck",
   "theheistbetastarterdeck",
   "theheistretailstarterdeck",
   "welcometonightcitybeta",
@@ -146,7 +149,10 @@ function assertCompactPrintings(
   printings: readonly unknown[],
   violations: Violation[],
 ): void {
-  const omittedFields = ["imageUrl", "sourceImageUrl", "set", "finish", "artist"] as const;
+  // Normalized printings now carry the identity-model fields required by the
+  // shared `Printing` contract (`artId`, `imageUrl`); only the raw scraper
+  // printing fields below must stay absent.
+  const omittedFields = ["sourceImageUrl", "set", "finish", "artist"] as const;
   for (const [index, printing] of printings.entries()) {
     const fieldPrefix = `printings[${index}]`;
     if (!printing || typeof printing !== "object") {
@@ -161,16 +167,22 @@ function assertCompactPrintings(
 
     const record = printing as Record<string, unknown>;
     assertString(source, `${fieldPrefix}.id`, record.id, violations, { regex: UUID_REGEX });
-    assertString(source, `${fieldPrefix}.collectorNumber`, record.collectorNumber, violations);
-    assertEnum(source, `${fieldPrefix}.setCode`, record.setCode, KNOWN_SET_CODE_VALUES, violations);
-    if (record.rarity !== null && typeof record.rarity !== "string") {
+    // artId is platform-derived 1:1 with the printing id today (RFC §4/§7).
+    assertString(source, `${fieldPrefix}.artId`, record.artId, violations, { regex: UUID_REGEX });
+    if (record.artId !== record.id) {
       violations.push({
         cardSlug: source,
-        field: `${fieldPrefix}.rarity`,
-        reason: "not a string or null",
-        value: record.rarity,
+        field: `${fieldPrefix}.artId`,
+        reason: "artId must equal printing id (1:1 degenerate art tier)",
+        value: record.artId,
       });
     }
+    assertString(source, `${fieldPrefix}.collectorNumber`, record.collectorNumber, violations);
+    assertEnum(source, `${fieldPrefix}.setCode`, record.setCode, KNOWN_SET_CODE_VALUES, violations);
+    assertString(source, `${fieldPrefix}.rarity`, record.rarity, violations, { nonEmpty: false });
+    assertString(source, `${fieldPrefix}.imageUrl`, record.imageUrl, violations, {
+      startsWith: CARD_IMAGE_BASE_URL,
+    });
 
     for (const field of omittedFields) {
       if (field in record) {
@@ -178,7 +190,7 @@ function assertCompactPrintings(
           cardSlug: source,
           field: `${fieldPrefix}.${field}`,
           reason:
-            "normalized printings should only expose id, collectorNumber, setCode, and rarity",
+            "normalized printings should only expose id, artId, collectorNumber, setCode, rarity, and imageUrl",
           value: record[field],
         });
       }
@@ -206,7 +218,7 @@ describe("card record invariants", () => {
       });
       assertString(slug, "print_number", card.print_number, violations);
       assertString(slug, "artist", card.artist, violations);
-      assertNonNegativeInt(slug, "ram", card.ram, violations);
+      assertNonNegativeIntOrNull(slug, "ram", card.ram, violations);
       assertNonNegativeIntOrNull(slug, "cost", card.cost, violations);
       assertNonNegativeIntOrNull(slug, "power", card.power, violations);
       if (!Array.isArray(card.classifications)) {
@@ -226,8 +238,16 @@ describe("card record invariants", () => {
     for (const card of cards) {
       const slug = card.slug ?? "<missing slug>";
       assertString(slug, "id", card.id, violations, { regex: UUID_REGEX });
-      assertExternalId(slug, "externalId", card.externalId, violations);
       assertString(slug, "slug", card.slug, violations, { regex: SLUG_REGEX });
+      assertString(slug, "canonicalId", card.canonicalId, violations, { regex: SLUG_REGEX });
+      if (card.canonicalId !== card.slug) {
+        violations.push({
+          cardSlug: slug,
+          field: "canonicalId",
+          reason: "canonicalId must equal the merged slug (RFC §3)",
+          value: card.canonicalId,
+        });
+      }
       assertString(slug, "name", card.name, violations);
       assertString(slug, "displayName", card.displayName, violations);
       assertEnum(slug, "set.code", card.set?.code, KNOWN_SET_CODE_VALUES, violations);
@@ -248,7 +268,7 @@ describe("card record invariants", () => {
       assertCompactPrintings(slug, card.printings, violations);
       assertString(slug, "printNumber", card.printNumber, violations);
       assertString(slug, "artist", card.artist, violations);
-      assertNonNegativeInt(slug, "ram", card.ram, violations);
+      assertNonNegativeIntOrNull(slug, "ram", card.ram, violations);
       // cost/power constraints vary by card type (programs always have power: null,
       // legends may have null cost/power). Trust the discriminated-union type for
       // type-correctness; just verify shape here.
@@ -291,8 +311,8 @@ describe("card record invariants", () => {
     for (const card of structuredCards) {
       const slug = card.slug ?? "<missing slug>";
       assertString(slug, "id", card.id, violations, { regex: UUID_REGEX });
-      assertExternalId(slug, "externalId", card.externalId, violations);
       assertString(slug, "slug", card.slug, violations, { regex: SLUG_REGEX });
+      assertString(slug, "canonicalId", card.canonicalId, violations, { regex: SLUG_REGEX });
       assertEnum(slug, "set.code", card.set?.code, KNOWN_SET_CODE_VALUES, violations);
       assertEnum(slug, "color", card.color, KNOWN_COLORS, violations);
       assertEnum(slug, "type", card.type, KNOWN_CARD_TYPES, violations);
@@ -328,7 +348,7 @@ describe("card record invariants", () => {
     expect(violations).toEqual([]);
   });
 
-  it("rawCards and cards agree on primary keys (set, id, slug, externalId)", () => {
+  it("rawCards and cards agree on primary keys (set, id, slug)", () => {
     const violations: Array<{ key?: string; slug?: string; reason: string }> = [];
     expect(rawCards.length).toBe(cards.length);
     const rawBySetAndSlug = new Map(rawCards.map((c) => [`${c.set.code}:${c.slug}`, c]));
@@ -345,12 +365,9 @@ describe("card record invariants", () => {
       if (raw.id !== card.id) {
         violations.push({ key, reason: `id mismatch (${raw.id} vs ${card.id})` });
       }
-      if (raw.external_id !== card.externalId) {
-        violations.push({
-          key,
-          reason: `externalId mismatch (${raw.external_id} vs ${card.externalId})`,
-        });
-      }
+      // The slug-derived single-string externalId was dropped (RFC open Q9):
+      // raw still captures upstream `external_id`, but the normalized card no
+      // longer carries an `externalId` field, so there is nothing to compare.
     }
     expect(violations).toEqual([]);
   });

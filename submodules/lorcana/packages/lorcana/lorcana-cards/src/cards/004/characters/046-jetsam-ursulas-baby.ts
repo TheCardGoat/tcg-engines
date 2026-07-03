@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jetsamUrsulasBabyI18n } from "./046-jetsam-ursulas-baby.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const jetsamUrsulasBaby: CharacterCard = {
   id: "jZW",
   canonicalId: "ci_jZW",
+  slug: "lorcana-ci_jZW",
+  printings: [
+    {
+      id: "set4-046",
+      artId: "set4-046",
+      setCode: "set4",
+      collectorNumber: "46",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-046"],
   cardType: "character",
   name: "Jetsam",
@@ -21,7 +33,7 @@ export const jetsamUrsulasBaby: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b61f1e595b3844cdad00a05ee402457b",
-    tcgPlayer: 549468,
+    tcgPlayer: "549468",
   },
   text: [
     {

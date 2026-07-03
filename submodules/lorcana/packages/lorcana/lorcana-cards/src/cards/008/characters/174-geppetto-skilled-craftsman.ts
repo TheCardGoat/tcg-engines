@@ -4,6 +4,17 @@ import { geppettoSkilledCraftsmanI18n } from "./174-geppetto-skilled-craftsman.i
 export const geppettoSkilledCraftsman: CharacterCard = {
   id: "4JO",
   canonicalId: "ci_4JO",
+  slug: "lorcana-ci_4JO",
+  printings: [
+    {
+      id: "set8-174",
+      artId: "set8-174",
+      setCode: "set8",
+      collectorNumber: "174",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-174"],
   cardType: "character",
   name: "Geppetto",
@@ -20,7 +31,7 @@ export const geppettoSkilledCraftsman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f19b9d58f8d44e60b66d72d64c16ab09",
-    tcgPlayer: 633102,
+    tcgPlayer: "633102",
   },
   text: [
     {

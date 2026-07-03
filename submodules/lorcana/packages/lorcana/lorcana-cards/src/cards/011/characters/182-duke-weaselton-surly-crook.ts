@@ -4,6 +4,17 @@ import { dukeWeaseltonSurlyCrookI18n } from "./182-duke-weaselton-surly-crook.i1
 export const dukeWeaseltonSurlyCrook: CharacterCard = {
   id: "aK6",
   canonicalId: "ci_aK6",
+  slug: "lorcana-ci_aK6",
+  printings: [
+    {
+      id: "set11-182",
+      artId: "set11-182",
+      setCode: "set11",
+      collectorNumber: "182",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-182"],
   cardType: "character",
   name: "Duke Weaselton",
@@ -20,7 +31,7 @@ export const dukeWeaseltonSurlyCrook: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d7aa2aa9bd12495096d00d33c6f09821",
-    tcgPlayer: 676239,
+    tcgPlayer: "676239",
   },
   text: [
     {

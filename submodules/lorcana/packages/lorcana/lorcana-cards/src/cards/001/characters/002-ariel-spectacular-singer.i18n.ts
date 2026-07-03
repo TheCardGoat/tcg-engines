@@ -20,10 +20,10 @@ export const arielSpectacularSingerI18n: Record<Languages, I18nProperties> = {
     version: "Spektakuläre Sängerin",
     text: [
       {
-        title: "Singen 5",
+        title: "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)",
       },
       {
-        title: "MUSIKALISCHES DEBÜT",
+        title: "Musikalisches Debüt",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Liedkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -34,7 +34,8 @@ export const arielSpectacularSingerI18n: Record<Languages, I18nProperties> = {
     version: "Chanteuse exceptionnelle",
     text: [
       {
-        title: "Mélomane 5",
+        title:
+          "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)",
       },
       {
         title: "DÉBUTS MUSICAUX",
@@ -48,10 +49,10 @@ export const arielSpectacularSingerI18n: Record<Languages, I18nProperties> = {
     version: "Spectacular Singer",
     text: [
       {
-        title: "Singer 5",
+        title: "<Singer> 5 (This character counts as cost 5 to sing songs.)",
       },
       {
-        title: "MUSICAL DEBUT",
+        title: "Musical Debut",
         description:
           "When you play this character, look at the top 4 cards of your deck. You may reveal a song card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       },

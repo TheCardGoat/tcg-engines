@@ -1,0 +1,29 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op10Buffalo073I18n } from "./073-buffalo.i18n.ts";
+
+export const op10Buffalo073: CharacterCard = {
+  id: "OP10-073",
+  canonicalId: "OP10-073",
+  slug: "buffalo/op10-073",
+  name: "Buffalo",
+  printings: [
+    {
+      id: "OP10-073",
+      artId: "OP10-073",
+      setCode: "OP10",
+      collectorNumber: "073",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP10-073.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["purple"],
+  rarity: "C",
+  setId: "OP10",
+  cost: 4,
+  power: 6000,
+  counter: 1000,
+  traits: ["Donquixote Pirates"],
+  attribute: "strike",
+  i18n: op10Buffalo073I18n,
+};

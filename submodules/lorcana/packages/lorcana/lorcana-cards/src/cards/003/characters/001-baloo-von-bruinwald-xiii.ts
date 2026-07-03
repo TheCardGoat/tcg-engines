@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { balooVonBruinwaldXiiiI18n } from "./001-baloo-von-bruinwald-xiii.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const balooVonBruinwaldXiii: CharacterCard = {
   id: "LOs",
   canonicalId: "ci_LOs",
+  slug: "lorcana-ci_LOs",
+  printings: [
+    {
+      id: "set3-001",
+      artId: "set3-001",
+      setCode: "set3",
+      collectorNumber: "1",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-001"],
   cardType: "character",
   name: "Baloo",
@@ -21,15 +33,15 @@ export const balooVonBruinwaldXiii: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2867c1fd1a954efabc42975882f5be8c",
-    tcgPlayer: 539060,
+    tcgPlayer: "539060",
   },
   text: [
     {
       title: "Bodyguard",
     },
     {
-      title: "LET'S MAKE LIKE A TREE",
-      description: "When this character is banished, gain 2 lore.",
+      title: "LET'S MAKE LIKE",
+      description: "A TREE When this character is banished, gain 2 lore.",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

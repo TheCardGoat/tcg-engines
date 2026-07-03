@@ -99,6 +99,47 @@ function createTestContext(args?: {
 }
 
 describe("deal-damage-effect", () => {
+  it("can deal damage without applying Resist when the effect ignores Resist", () => {
+    const targetId = "target" as CardInstanceId;
+    const sourceId = "source" as CardInstanceId;
+    const ctx = createTestContext({
+      definitions: {
+        [targetId]: {
+          id: "target",
+          cardType: "character",
+          strength: 2,
+          willpower: 5,
+          abilities: [{ type: "keyword", keyword: "Resist", value: 2 }],
+        },
+      },
+      cardMeta: {
+        [targetId]: { damage: 0, state: "ready" },
+      },
+      zoneCards: {
+        [`play:${PLAYER_ONE}`]: [targetId],
+      },
+    });
+
+    resolveDealDamageEffect(
+      ctx,
+      {
+        cardId: sourceId,
+        cardType: "action",
+        costType: "free",
+        playerId: PLAYER_ONE,
+      },
+      { type: "deal-damage", amount: 2, ignoreResist: true },
+      {
+        targets: [targetId],
+        amountByTarget: {
+          [targetId]: 2,
+        },
+      },
+    );
+
+    expect(ctx.cards.require(targetId).meta.damage).toBe(2);
+  });
+
   it("reduces direct damage by temporary Resist on locations", () => {
     const locationId = "location" as CardInstanceId;
     const sourceId = "source" as CardInstanceId;

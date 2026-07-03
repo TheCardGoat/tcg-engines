@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { scroogeMcduckReformedEbenezerI18n } from "./152-scrooge-mcduck-reformed-ebenezer.i18n";
 
 export const scroogeMcduckReformedEbenezer: CharacterCard = {
-  id: "ySs",
+  id: "aNM",
   canonicalId: "ci_aqI",
+  slug: "lorcana-ci_aqI",
+  printings: [
+    {
+      id: "set11-152",
+      artId: "set11-152",
+      setCode: "set11",
+      collectorNumber: "152",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-152"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -20,7 +31,7 @@ export const scroogeMcduckReformedEbenezer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b30562a95420404b911886bcfc9e7a9c",
-    tcgPlayer: 677166,
+    tcgPlayer: "677166",
   },
   text: [
     {

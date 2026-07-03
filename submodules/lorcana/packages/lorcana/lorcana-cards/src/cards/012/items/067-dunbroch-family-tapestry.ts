@@ -2,8 +2,19 @@ import type { ItemCard } from "@tcg/lorcana-types";
 import { dunbrochFamilyTapestryI18n } from "./067-dunbroch-family-tapestry.i18n";
 
 export const dunbrochFamilyTapestry: ItemCard = {
-  id: "cRy",
+  id: "u3M",
   canonicalId: "ci_cRy",
+  slug: "lorcana-ci_cRy",
+  printings: [
+    {
+      id: "set12-067",
+      artId: "set12-067",
+      setCode: "set12",
+      collectorNumber: "67",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-067"],
   cardType: "item",
   name: "DunBroch Family Tapestry",
@@ -15,7 +26,8 @@ export const dunbrochFamilyTapestry: ItemCard = {
   cost: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_0ae670e678624f89bb7b32b275ab04cb",
+    lorcast: "crd_a8ae68af26f84535869ce0dac1f4a3de",
+    tcgPlayer: "692219",
   },
   text: [
     {

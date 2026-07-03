@@ -4,6 +4,17 @@ import { cutToTheChaseI18n } from "./129-cut-to-the-chase.i18n";
 export const cutToTheChase: ActionCard = {
   id: "VLl",
   canonicalId: "ci_VLl",
+  slug: "lorcana-ci_VLl",
+  printings: [
+    {
+      id: "set1-129",
+      artId: "set1-129",
+      setCode: "set1",
+      collectorNumber: "129",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-129"],
   cardType: "action",
   name: "Cut to the Chase",
@@ -15,7 +26,7 @@ export const cutToTheChase: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_df33509235464d18becdd63bd8ce91eb",
-    tcgPlayer: 508615,
+    tcgPlayer: "508615",
   },
   text: "Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
   abilities: [

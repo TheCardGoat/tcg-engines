@@ -3,7 +3,18 @@ import { johnSilverGreedyTreasureSeekerI18n } from "./176-john-silver-greedy-tre
 
 export const johnSilverGreedyTreasureSeeker: CharacterCard = {
   id: "5zh",
-  canonicalId: "ci_8IC",
+  canonicalId: "ci_Mum",
+  slug: "lorcana-ci_Mum",
+  printings: [
+    {
+      id: "set3-176",
+      artId: "set3-176",
+      setCode: "set3",
+      collectorNumber: "176",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-176", "set9-192"],
   cardType: "character",
   name: "John Silver",
@@ -20,7 +31,7 @@ export const johnSilverGreedyTreasureSeeker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8db5f81d06034612b857a11fc606c5d2",
-    tcgPlayer: 650125,
+    tcgPlayer: "650125",
   },
   text: [
     {

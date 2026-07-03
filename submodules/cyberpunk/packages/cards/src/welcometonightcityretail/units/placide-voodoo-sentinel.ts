@@ -1,12 +1,13 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailPlacideVoodooSentinel = {
+export const welcomeToNightCityRetailPlacideVoodooSentinel = defineCyberpunkCard({
   id: "783a9082-b79c-4b45-bf66-48728ff9b92d",
-  externalId: "cb-placide-voodoo-sentinel",
   slug: "placide-voodoo-sentinel",
+  rulesText: "{Play} {Attack} You may discard 1 Program. If you do, bottom-deck a rival Unit.",
   name: "Placide — Voodoo Sentinel",
   displayName: "Placide — Voodoo Sentinel",
-  rulesText: "[PLAY] [ATTACK] You may discard 1 Program. If you do, bottom-deck a rival Unit.",
+  canonicalId: "placide-voodoo-sentinel",
   color: "blue",
   classifications: ["Ganger", "Netrunner", "Voodoo Boys"],
   set: {
@@ -14,21 +15,6 @@ export const welcomeToNightCityRetailPlacideVoodooSentinel = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "123",
-  printings: [
-    {
-      id: "81c55c1f-362e-4ffd-8f9b-4162b298dbd5",
-      collectorNumber: "123",
-      setCode: "welcometonightcityretail",
-      rarity: "Rare",
-    },
-    {
-      id: "0ff059f8-90c3-47ef-ba3b-cd380f30f14e",
-      collectorNumber: "β123",
-      setCode: "welcometonightcitybeta",
-      rarity: "Rare",
-    },
-  ],
-  selectedPrintingId: "81c55c1f-362e-4ffd-8f9b-4162b298dbd5",
   artist: "Mooncolony",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/123.webp",
   rarity: "Rare",
@@ -36,7 +22,6 @@ export const welcomeToNightCityRetailPlacideVoodooSentinel = {
   hasSellTag: false,
   ram: 2,
   timingTriggers: ["play", "attack"],
-  keywords: [],
   type: "unit",
   cost: 8,
   power: 10,
@@ -130,5 +115,4 @@ export const welcomeToNightCityRetailPlacideVoodooSentinel = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies UnitCardDefinition;

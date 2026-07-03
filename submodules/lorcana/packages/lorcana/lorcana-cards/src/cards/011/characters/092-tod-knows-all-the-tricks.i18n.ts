@@ -23,13 +23,13 @@ export const todKnowsAllTheTricksI18n: Record<Languages, I18nProperties> = {
     version: "Kennt alle Tricks",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title: "<Gestaltwandel> 5 {I}",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "BEEINDRUCKENDE SPRÜNGE",
+        title: "Beeindruckende Sprünge",
         description:
           "Zweimal während deines Zuges, wenn dieser Charakter von einer Aktion oder einem Gegenstand ausgewählt wird, darfst du ihn bereit machen.",
       },
@@ -40,13 +40,13 @@ export const todKnowsAllTheTricksI18n: Record<Languages, I18nProperties> = {
     version: "A des trucs à lui",
     text: [
       {
-        title: "Alter 5",
+        title: "<Alter> 5 {I}",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "SAUTS IMPRESSIONNANTS",
+        title: "Sauts impressionnants",
         description:
           "Deux fois durant votre tour, lorsque ce personnage est choisi avec une action ou la capacité d'un objet, vous pouvez le redresser.",
       },
@@ -55,18 +55,6 @@ export const todKnowsAllTheTricksI18n: Record<Languages, I18nProperties> = {
   it: {
     name: "Red",
     version: "Conosce Tutti i Trucchi",
-    text: [
-      {
-        title: "Trasformazione 5",
-      },
-      {
-        title: "Sfuggente",
-      },
-      {
-        title: "SALTI ECCEZIONALI",
-        description:
-          "Due volte durante il tuo turno, ogni volta che questo personaggio viene scelto per un'azione o per l'abilità di un oggetto, puoi prepararlo.",
-      },
-    ],
+    text: "<Trasformazione> 5 {I}, <Sfuggente> Salti Eccezionali Due volte durante il tuo turno, ogni volta che questo personaggio viene scelto per un'azione o per l'abilità di un oggetto, puoi prepararlo.",
   },
 };

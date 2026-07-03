@@ -1,4 +1,4 @@
-import { LORCANA_SIMULATOR_FIXTURE_LIST } from "@/features/simulator-devtools/fixtures";
+import { LORCANA_SIMULATOR_FIXTURE_MANIFEST } from "@/features/simulator-devtools/fixtures";
 import { LORCANA_REGRESSION_FIXTURE_LIST } from "@/features/simulator-devtools/fixtures/regressions";
 import {
   buildFixtureTestRouteHref,
@@ -49,7 +49,7 @@ export const staticRouteLinks: RouteLink[] = [
   },
 ];
 
-export const generalFixtureRouteLinks: RouteLink[] = LORCANA_SIMULATOR_FIXTURE_LIST.map(
+export const generalFixtureRouteLinks: RouteLink[] = LORCANA_SIMULATOR_FIXTURE_MANIFEST.map(
   (fixture) => ({
     href: buildFixtureTestRouteHref(fixture.id),
     label: fixture.name,

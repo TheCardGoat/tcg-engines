@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { lyleTiberiusRourkeCrystallizedCommanderI18n } from "./103-lyle-tiberius-rourke-crystallized-commander.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const lyleTiberiusRourkeCrystallizedCommander: CharacterCard = {
   id: "hMm",
   canonicalId: "ci_hMm",
+  slug: "lorcana-ci_hMm",
+  printings: [
+    {
+      id: "set12-103",
+      artId: "set12-103",
+      setCode: "set12",
+      collectorNumber: "103",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-103"],
   cardType: "character",
   name: "Lyle Tiberius Rourke",
@@ -19,12 +31,16 @@ export const lyleTiberiusRourkeCrystallizedCommander: CharacterCard = {
   willpower: 4,
   lore: 2,
   inkable: false,
+  externalIds: {
+    lorcast: "crd_ab041a63b5204af49dbe1cbc49cbabe2",
+    tcgPlayer: "692210",
+  },
   text: [
     {
-      title: "<Shift> 4 {I}",
+      title: "Shift 4 {I}",
     },
     {
-      title: "Plan's Changed",
+      title: "PLAN'S CHANGED",
       description:
         "When you play this character, put the top 2 cards of your deck into your discard. Then, you may return an action card with cost 4 or less from your discard to your hand.",
     },

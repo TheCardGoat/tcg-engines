@@ -4,6 +4,17 @@ import { lumiereHotheadedCandelabraI18n } from "./112-lumiere-hotheaded-candelab
 export const lumiereHotheadedCandelabra: CharacterCard = {
   id: "3B5",
   canonicalId: "ci_3B5",
+  slug: "lorcana-ci_3B5",
+  printings: [
+    {
+      id: "set2-112",
+      artId: "set2-112",
+      setCode: "set2",
+      collectorNumber: "112",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-112"],
   cardType: "character",
   name: "Lumiere",
@@ -21,7 +32,7 @@ export const lumiereHotheadedCandelabra: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_78adb82131a54205b5ba3cef451bee00",
-    tcgPlayer: 525111,
+    tcgPlayer: "525111",
   },
   classifications: ["Dreamborn", "Ally"],
   i18n: lumiereHotheadedCandelabraI18n,

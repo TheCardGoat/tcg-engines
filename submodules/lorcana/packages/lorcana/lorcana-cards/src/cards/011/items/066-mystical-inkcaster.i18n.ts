@@ -15,9 +15,9 @@ export const mysticalInkcasterI18n: Record<Languages, I18nProperties> = {
     name: "Mystischer Tintenformer",
     text: [
       {
-        title: "BESONDERE",
+        title: "Besondere Beschwörungen",
         description:
-          "BESCHWÖRUNGEN, 3 — Spiele einen Charakter, der 5 oder weniger kostet, kostenlos aus. Er erhält Rasant. Verbanne ihn am Ende deines Zuges. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+          "{E}, 3 {I} — Spiele einen Charakter, der 5 oder weniger kostet, kostenlos aus. Er erhält <Rasant>. Verbanne ihn am Ende deines Zuges. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const mysticalInkcasterI18n: Record<Languages, I18nProperties> = {
     name: "Invocateur d’encre mystique",
     text: [
       {
-        title: "INVOCATION",
+        title: "Invocation spéciale",
         description:
-          "SPÉCIALE, 3 — Jouez gratuitement un personnage coûtant 5 ou moins. Il gagne Charge. À la fin de votre tour, bannissez-le.",
+          "{E}, 3 {I} — Jouez gratuitement un personnage coûtant 5 ou moins. Il gagne <Charge>. À la fin de votre tour, bannissez-le.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const mysticalInkcasterI18n: Record<Languages, I18nProperties> = {
     name: "Inchiostratore Mistico",
     text: [
       {
-        title: "EVOCAZIONI SPECIALI, 3",
+        title: "Evocazioni Speciali",
         description:
-          "— Gioca un personaggio con costo 5 o inferiore gratis. Ottiene Lesto. Alla fine del tuo turno, esilialo. (Può sfidare nel turno in cui viene giocato.)",
+          "{E}, 3 {I} — Gioca un personaggio con costo 5 o inferiore gratis. Ottiene <Lesto>. Alla fine del tuo turno, esilialo. (Può sfidare nel turno in cui viene giocato.)",
       },
     ],
   },

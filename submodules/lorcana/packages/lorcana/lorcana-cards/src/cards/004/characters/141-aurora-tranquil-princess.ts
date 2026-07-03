@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { auroraTranquilPrincessI18n } from "./141-aurora-tranquil-princess.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const auroraTranquilPrincess: CharacterCard = {
   id: "I2B",
   canonicalId: "ci_FEs",
+  slug: "lorcana-ci_FEs",
+  printings: [
+    {
+      id: "set4-141",
+      artId: "set4-141",
+      setCode: "set4",
+      collectorNumber: "141",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-141", "set9-154"],
   cardType: "character",
   name: "Aurora",
@@ -21,7 +33,7 @@ export const auroraTranquilPrincess: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_84ca414b157a462fa322e66c8fe9cebc",
-    tcgPlayer: 650089,
+    tcgPlayer: "650089",
   },
   text: "Ward",
   classifications: ["Dreamborn", "Hero", "Princess"],

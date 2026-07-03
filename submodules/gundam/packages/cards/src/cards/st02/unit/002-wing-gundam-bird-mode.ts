@@ -7,14 +7,17 @@ export const st02WingGundamBirdMode002: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "ST02-002",
-  externalId: "gundam:st02-002",
-  slug: "wing-gundam-bird-mode-st02-002",
+  canonicalId: "ST02-002",
+  externalIds: { bandai: "gundam:st02-002" },
+  slug: "wing-gundam-bird-mode/st02-002",
   displayName: "Wing Gundam (Bird Mode)",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-002",
   printings: [
     {
       id: "ST02-002",
+      artId: "ST02-002",
+      setCode: "ST02",
       collectorNumber: "ST02-002",
       cardNumber: "ST02-002",
       set: {
@@ -30,6 +33,8 @@ export const st02WingGundamBirdMode002: UnitCard = {
     },
     {
       id: "ST02-002_p1",
+      artId: "ST02-002_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-002_p1",
       cardNumber: "ST02-002",
       set: {
@@ -45,6 +50,8 @@ export const st02WingGundamBirdMode002: UnitCard = {
     },
     {
       id: "ST02-002_p2",
+      artId: "ST02-002_p2",
+      setCode: "BETA",
       collectorNumber: "ST02-002_p2",
       cardNumber: "ST02-002",
       set: {
@@ -60,6 +67,8 @@ export const st02WingGundamBirdMode002: UnitCard = {
     },
     {
       id: "ST02-002_p3",
+      artId: "ST02-002_p3",
+      setCode: "ST02",
       collectorNumber: "ST02-002_p3",
       cardNumber: "ST02-002",
       set: {
@@ -75,6 +84,8 @@ export const st02WingGundamBirdMode002: UnitCard = {
     },
     {
       id: "ST02-002_p4",
+      artId: "ST02-002_p4",
+      setCode: "ST02",
       collectorNumber: "ST02-002_p4",
       cardNumber: "ST02-002",
       set: {
@@ -89,6 +100,7 @@ export const st02WingGundamBirdMode002: UnitCard = {
       productName: "Store Tournament Winner Pack 01",
     },
   ],
+  reprints: ["ST02-002", "ST02-002_p1", "ST02-002_p2", "ST02-002_p3", "ST02-002_p4"],
   selectedPrintingId: "ST02-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-002.webp?260424",

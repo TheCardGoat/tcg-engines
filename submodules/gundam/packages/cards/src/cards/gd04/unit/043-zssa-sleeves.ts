@@ -7,14 +7,17 @@ export const gd04ZssaSleeves043: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD04-043",
-  externalId: "gundam:gd04-043",
-  slug: "zssa-sleeves-gd04-043",
+  canonicalId: "GD04-043",
+  externalIds: { bandai: "gundam:gd04-043" },
+  slug: "zssa-sleeves/gd04-043",
   displayName: "Zssa (Sleeves)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-043",
   printings: [
     {
       id: "GD04-043",
+      artId: "GD04-043",
+      setCode: "GD04",
       collectorNumber: "GD04-043",
       cardNumber: "GD04-043",
       set: {
@@ -29,6 +32,7 @@ export const gd04ZssaSleeves043: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-043"],
   selectedPrintingId: "GD04-043",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-043.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-043.webp?260424",

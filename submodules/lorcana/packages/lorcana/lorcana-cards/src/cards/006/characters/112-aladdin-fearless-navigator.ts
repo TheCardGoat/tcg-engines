@@ -4,6 +4,17 @@ import { aladdinFearlessNavigatorI18n } from "./112-aladdin-fearless-navigator.i
 export const aladdinFearlessNavigator: CharacterCard = {
   id: "4X3",
   canonicalId: "ci_4X3",
+  slug: "lorcana-ci_4X3",
+  printings: [
+    {
+      id: "set6-112",
+      artId: "set6-112",
+      setCode: "set6",
+      collectorNumber: "112",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-112"],
   cardType: "character",
   name: "Aladdin",
@@ -21,7 +32,7 @@ export const aladdinFearlessNavigator: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8f39dbce50c045b49ae76f290eedd29c",
-    tcgPlayer: 592998,
+    tcgPlayer: "592998",
   },
   classifications: ["Storyborn", "Hero", "Prince"],
   i18n: aladdinFearlessNavigatorI18n,

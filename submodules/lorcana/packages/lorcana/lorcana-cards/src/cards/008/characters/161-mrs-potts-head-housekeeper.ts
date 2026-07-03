@@ -4,6 +4,17 @@ import { mrsPottsHeadHousekeeperI18n } from "./161-mrs-potts-head-housekeeper.i1
 export const mrsPottsHeadHousekeeper: CharacterCard = {
   id: "XCS",
   canonicalId: "ci_XCS",
+  slug: "lorcana-ci_XCS",
+  printings: [
+    {
+      id: "set8-161",
+      artId: "set8-161",
+      setCode: "set8",
+      collectorNumber: "161",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-161"],
   cardType: "character",
   name: "Mrs. Potts",
@@ -20,7 +31,7 @@ export const mrsPottsHeadHousekeeper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_28a3d3d8855040c3a9fcb602177ff86e",
-    tcgPlayer: 631458,
+    tcgPlayer: "631458",
   },
   text: [
     {

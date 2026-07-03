@@ -4,6 +4,17 @@ import { archimedesHighlyEducatedOwlI18n } from "./036-archimedes-highly-educate
 export const archimedesHighlyEducatedOwl: CharacterCard = {
   id: "mgF",
   canonicalId: "ci_mgF",
+  slug: "lorcana-ci_mgF",
+  printings: [
+    {
+      id: "set1-036",
+      artId: "set1-036",
+      setCode: "set1",
+      collectorNumber: "36",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-036"],
   cardType: "character",
   name: "Archimedes",
@@ -21,7 +32,7 @@ export const archimedesHighlyEducatedOwl: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_f2b9a7e014e64eca88d8c9c7eee07019",
-    tcgPlayer: 501406,
+    tcgPlayer: "501406",
   },
   classifications: ["Dreamborn", "Ally"],
   i18n: archimedesHighlyEducatedOwlI18n,

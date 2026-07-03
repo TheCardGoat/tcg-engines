@@ -6,14 +6,17 @@ export const rpResource002: ResourceCard = {
   type: "resource",
   traits: [],
   id: "RP-002",
-  externalId: "gundam:rp-002",
-  slug: "resource-rp-002",
+  canonicalId: "RP-002",
+  externalIds: { bandai: "gundam:rp-002" },
+  slug: "resource/rp-002",
   displayName: "Resource",
   set: { code: "RP", name: "San Diego Comic-Con 2025", packageId: "616901" },
   printNumber: "RP-002",
   printings: [
     {
       id: "RP-002",
+      artId: "RP-002",
+      setCode: "RP",
       collectorNumber: "RP-002",
       cardNumber: "RP-002",
       set: {
@@ -28,6 +31,7 @@ export const rpResource002: ResourceCard = {
       productName: "San Diego Comic-Con 2025",
     },
   ],
+  reprints: ["RP-002"],
   selectedPrintingId: "RP-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-002.webp?260424",

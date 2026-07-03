@@ -17,7 +17,7 @@ export const merlinSquirrelI18n: Record<Languages, I18nProperties> = {
     version: "Eichhörnchen",
     text: [
       {
-        title: "GENAU HINSEHEN, BEVOR DU SPRINGST",
+        title: "Genau hinsehen, bevor du springst",
         description:
           "Wenn du diesen Charakter ausspielst und wenn er das Spiel verlässt, schaue dir die oberste Karte deines Decks an. Lege sie anschließend entweder auf dein Deck oder darunter.",
       },
@@ -28,7 +28,7 @@ export const merlinSquirrelI18n: Record<Languages, I18nProperties> = {
     version: "En écureuil",
     text: [
       {
-        title: "CALCULE TON COUP AVANT DE BONDIR",
+        title: "Calcule ton coup avant de bondir",
         description:
           "Lorsque vous jouez ce personnage et lorsqu'il quitte la zone de jeu, regardez la première carte de votre pioche. Remettez-la soit sur le dessus de votre pioche, soit en dessous.",
       },
@@ -39,7 +39,7 @@ export const merlinSquirrelI18n: Record<Languages, I18nProperties> = {
     version: "Squirrel",
     text: [
       {
-        title: "LOOK BEFORE YOU LEAP",
+        title: "Look Before You Leap",
         description:
           "When you play this character and when he leaves play, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
       },

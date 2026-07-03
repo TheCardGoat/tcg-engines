@@ -4,21 +4,44 @@ export const theQueenEvilRulerI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "The Queen",
     version: "Evil Ruler",
-    text: "UNEQUALED CRUELTY While an opposing damaged character is in play, this character gets +2 {S}.",
+    text: [
+      {
+        title: "UNEQUALED CRUELTY",
+        description: "While an opposing damaged character is in play, this character gets +2 {S}.",
+      },
+    ],
   },
   de: {
-    name: "The Queen",
-    version: "Evil Ruler",
-    text: "UNEQUALED CRUELTY While an opposing damaged character is in play, this character gets +2 {S}.",
+    name: "Die Königin",
+    version: "Böse Herrscherin",
+    text: [
+      {
+        title: "Unübertroffene Grausamkeit",
+        description:
+          "Solange ein gegnerischer beschädigter Charakter im Spiel ist, erhält dieser Charakter +2 {S}.",
+      },
+    ],
   },
   fr: {
-    name: "The Queen",
-    version: "Evil Ruler",
-    text: "UNEQUALED CRUELTY While an opposing damaged character is in play, this character gets +2 {S}.",
+    name: "La Reine",
+    version: "Souveraine malfaisante",
+    text: [
+      {
+        title: "Cruauté sans pareil",
+        description:
+          "Tant qu'un personnage adverse ayant au moins un dommage est en jeu, ce personnage-ci gagne +2 {S}.",
+      },
+    ],
   },
   it: {
-    name: "The Queen",
-    version: "Evil Ruler",
-    text: "UNEQUALED CRUELTY While an opposing damaged character is in play, this character gets +2 {S}.",
+    name: "Regina",
+    version: "Sovrana Malvagia",
+    text: [
+      {
+        title: "Crudeltà Ineguagliata",
+        description:
+          "Mentre un personaggio avversario danneggiato è in gioco, questo personaggio riceve +2 {S}.",
+      },
+    ],
   },
 };

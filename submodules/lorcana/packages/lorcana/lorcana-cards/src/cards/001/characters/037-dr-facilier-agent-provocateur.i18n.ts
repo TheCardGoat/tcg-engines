@@ -20,22 +20,15 @@ export const drFacilierAgentProvocateurI18n: Record<Languages, I18nProperties> =
   de: {
     name: "Dr. Facilier",
     version: "Agent Provocateur",
-    text: [
-      {
-        title: "Gestaltwandel 5",
-        description:
-          "(Du kannst 5 zahlen, um diesen Charakter auf einen deiner Dr.-Facilier-Charaktere auszuspielen.)IM SCHATTENREICH Jedes Mal, wenn einer deiner anderen Charaktere durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen.",
-      },
-    ],
+    text: "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Dr.-Facilier-Charaktere auszuspielen.)\\Im Schattenreich\\ Jedes Mal, wenn einer deiner anderen Charaktere durch eine Herausforderung verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen.",
   },
   fr: {
     name: "DR. FACILIER",
     version: "Agent provocateur",
     text: [
       {
-        title: "Alter 5",
-        description:
-          "(Vous pouvez payer 5 pour jouer ce personnage sur l'un de vos personnages Dr. Facilier.)",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Dr. Facilier.)",
       },
       {
         title: "VERS LES OMBRES",
@@ -49,12 +42,11 @@ export const drFacilierAgentProvocateurI18n: Record<Languages, I18nProperties> =
     version: "Agent Provocateur",
     text: [
       {
-        title: "Shift 5",
-        description:
-          "(You may pay 5 to play this on top of one of your characters named Dr. Facilier.)",
+        title:
+          "<Shift> 5 (You may pay 5 {I} to play this on top of one of your characters named Dr. Facilier.)",
       },
       {
-        title: "INTO THE SHADOWS",
+        title: "Into the Shadows",
         description:
           "Whenever one of your other characters is banished in a challenge, you may return that card to your hand.",
       },

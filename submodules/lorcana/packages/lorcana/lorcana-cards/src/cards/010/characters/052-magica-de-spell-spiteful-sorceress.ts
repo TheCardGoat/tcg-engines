@@ -4,6 +4,17 @@ import { magicaDeSpellSpitefulSorceressI18n } from "./052-magica-de-spell-spitef
 export const magicaDeSpellSpitefulSorceress: CharacterCard = {
   id: "f64",
   canonicalId: "ci_f64",
+  slug: "lorcana-ci_f64",
+  printings: [
+    {
+      id: "set10-052",
+      artId: "set10-052",
+      setCode: "set10",
+      collectorNumber: "52",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-052"],
   cardType: "character",
   name: "Magica De Spell",
@@ -20,7 +31,7 @@ export const magicaDeSpellSpitefulSorceress: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e209409eb89242b58b08601654b417dc",
-    tcgPlayer: 659458,
+    tcgPlayer: "659458",
   },
   text: [
     {

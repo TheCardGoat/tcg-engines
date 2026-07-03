@@ -20,12 +20,12 @@ export const angelSirenSingerI18n: Record<Languages, I18nProperties> = {
     version: "Sirenen-Sängerin",
     text: [
       {
-        title: "UNDERDOG",
+        title: "Underdog",
         description:
-          "Falls dies dein erster Zug ist und du das Spiel nicht begonnen hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Falls dies dein erster Zug ist und du das Spiel nicht begonnen hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "Singen 3",
+        title: "<Singen> 3 (Die Kosten dieses Charakters gelten als 3 für das Singen von Liedern.)",
       },
     ],
   },
@@ -34,12 +34,13 @@ export const angelSirenSingerI18n: Record<Languages, I18nProperties> = {
     version: "Chanteuse sirène",
     text: [
       {
-        title: "OUTSIDER",
+        title: "Outsider",
         description:
-          "Jouer ce personnage vous coûte 1 de moins si c'est votre premier tour et que vous n'êtes pas le premier joueur.",
+          "Jouer ce personnage vous coûte 1 {I} de moins si c'est votre premier tour et que vous n'êtes pas le premier joueur.",
       },
       {
-        title: "Mélomane 3",
+        title:
+          "<Mélomane> 3 (Ce personnage est considéré comme ayant un coût de 3 pour chanter des chansons.)",
       },
     ],
   },
@@ -48,12 +49,12 @@ export const angelSirenSingerI18n: Record<Languages, I18nProperties> = {
     version: "Dal Canto di Sirena",
     text: [
       {
-        title: "SFAVORITO",
+        title: "Sfavorito",
         description:
-          "Se questo è il tuo primo turno e non sei il primo giocatore, paga 1 in meno per giocare questo personaggio.",
+          "Se questo è il tuo primo turno e non sei il primo giocatore, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "Melodioso 3",
+        title: "<Melodioso> 3",
       },
     ],
   },

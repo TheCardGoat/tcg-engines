@@ -7,14 +7,17 @@ export const st04HawkOfEndymion013: CommandCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "ST04-013",
-  externalId: "gundam:st04-013",
-  slug: "hawk-of-endymion-st04-013",
+  canonicalId: "ST04-013",
+  externalIds: { bandai: "gundam:st04-013" },
+  slug: "hawk-of-endymion/st04-013",
   displayName: "Hawk of Endymion",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-013",
   printings: [
     {
       id: "ST04-013",
+      artId: "ST04-013",
+      setCode: "ST04",
       collectorNumber: "ST04-013",
       cardNumber: "ST04-013",
       set: {
@@ -30,6 +33,8 @@ export const st04HawkOfEndymion013: CommandCard = {
     },
     {
       id: "ST04-013_p1",
+      artId: "ST04-013_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-013_p1",
       cardNumber: "ST04-013",
       set: {
@@ -45,6 +50,8 @@ export const st04HawkOfEndymion013: CommandCard = {
     },
     {
       id: "ST04-013_p2",
+      artId: "ST04-013_p2",
+      setCode: "BETA",
       collectorNumber: "ST04-013_p2",
       cardNumber: "ST04-013",
       set: {
@@ -59,6 +66,7 @@ export const st04HawkOfEndymion013: CommandCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST04-013", "ST04-013_p1", "ST04-013_p2"],
   selectedPrintingId: "ST04-013",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-013.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-013.webp?260424",

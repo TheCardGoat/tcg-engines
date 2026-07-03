@@ -17,7 +17,7 @@ export const almaMadrigalAcceptingGrandmotherI18n: Record<Languages, I18nPropert
     version: "Akzeptierende Großmutter",
     text: [
       {
-        title: "DAS WUNDER, DAS SEID IHR",
+        title: "Das Wunder, das seid ihr",
         description:
           "Einmal während deines Zuges, wenn einer oder mehrere deiner Charaktere ein Lied singen, darfst du jene Charaktere bereit machen.",
       },
@@ -28,7 +28,7 @@ export const almaMadrigalAcceptingGrandmotherI18n: Record<Languages, I18nPropert
     version: "Grand-mère en rédemption",
     text: [
       {
-        title: "MON MIRACLE, C'EST VOUS",
+        title: "Mon miracle, c'est vous",
         description:
           "Une fois durant votre tour, lorsqu'un ou plusieurs de vos personnages chantent une chanson, vous pouvez redresser le ou les personnages qui viennent de chanter.",
       },
@@ -39,7 +39,7 @@ export const almaMadrigalAcceptingGrandmotherI18n: Record<Languages, I18nPropert
     version: "Nonna Accogliente",
     text: [
       {
-        title: "L'AMORE FRA DI NOI",
+        title: "L'Amore Fra di Noi",
         description:
           "Una volta durante il tuo turno, ogni volta che uno o più dei tuoi personaggi canta una canzone, puoi preparare quei personaggi.",
       },

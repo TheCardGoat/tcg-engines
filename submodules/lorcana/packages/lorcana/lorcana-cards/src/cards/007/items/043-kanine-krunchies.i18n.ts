@@ -5,8 +5,8 @@ export const kanineKrunchiesI18n: Record<Languages, I18nProperties> = {
     name: "Kanine Krunchies",
     text: [
       {
-        title: "YOU CAN BE A CHAMPION, TOO",
-        description: "Your Puppy characters get +1 {W}.",
+        title: "YOU CAN BE",
+        description: "A CHAMPION, TOO Your Puppy characters get +1 {W}.",
       },
     ],
   },
@@ -14,8 +14,8 @@ export const kanineKrunchiesI18n: Record<Languages, I18nProperties> = {
     name: "Kanine Krunchies",
     text: [
       {
-        title: "KRÄCKER FÜR DIE KLEINEN HUNDE",
-        description: "Deine Welpen erhalten +1.",
+        title: "Kräcker für die kleinen Hunde",
+        description: "Deine Welpen erhalten +1 {W}.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const kanineKrunchiesI18n: Record<Languages, I18nProperties> = {
     name: "Kanine Krunchies",
     text: [
       {
-        title: "À PLEINES DENTS",
-        description: "Vos personnages Chiot gagnent +1.",
+        title: "À pleines dents",
+        description: "Vos personnages Chiot gagnent +1 {W}.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const kanineKrunchiesI18n: Record<Languages, I18nProperties> = {
     name: "Kanine Krunchies",
     text: [
       {
-        title: "SE LO TRATTI CON AMORE I",
-        description: "tuoi personaggi Cucciolo ricevono +1.",
+        title: "Se lo tratti con amore",
+        description: "I tuoi personaggi Cucciolo ricevono +1 {W}.",
       },
     ],
   },

@@ -19,10 +19,11 @@ export const simbaSonOfMufasaI18n: Record<Languages, I18nProperties> = {
     version: "Sohn von Mufasa",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Simba-Charaktere auszuspielen.)",
       },
       {
-        title: "FURCHTERREGENDES GEBRÜLL",
+        title: "Furchterregendes Gebrüll",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand oder Ort deiner Wahl verbannen.",
       },
@@ -33,10 +34,11 @@ export const simbaSonOfMufasaI18n: Record<Languages, I18nProperties> = {
     version: "Fils de Mufasa",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Simba.)",
       },
       {
-        title: "RUGISSEMENT IMPRESSIONNANT",
+        title: "Rugissement impressionnant",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un objet ou un lieu et le bannir.",
       },
@@ -47,10 +49,11 @@ export const simbaSonOfMufasaI18n: Record<Languages, I18nProperties> = {
     version: "Figlio di Mufasa",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Simba.)",
       },
       {
-        title: "RUGGITO SPAVENTOSO",
+        title: "Ruggito Spaventoso",
         description:
           "Quando giochi questo personaggio, puoi esiliare un oggetto o un luogo a tua scelta.",
       },

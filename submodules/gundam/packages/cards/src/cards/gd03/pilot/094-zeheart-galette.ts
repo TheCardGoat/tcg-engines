@@ -7,14 +7,17 @@ export const gd03ZeheartGalette094: PilotCard = {
   color: "purple",
   traits: ["vagan", "x-rounder"],
   id: "GD03-094",
-  externalId: "gundam:gd03-094",
-  slug: "zeheart-galette-gd03-094",
+  canonicalId: "GD03-094",
+  externalIds: { bandai: "gundam:gd03-094" },
+  slug: "zeheart-galette/gd03-094",
   displayName: "Zeheart Galette",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-094",
   printings: [
     {
       id: "GD03-094",
+      artId: "GD03-094",
+      setCode: "GD03",
       collectorNumber: "GD03-094",
       cardNumber: "GD03-094",
       set: {
@@ -30,6 +33,8 @@ export const gd03ZeheartGalette094: PilotCard = {
     },
     {
       id: "GD03-094_p1",
+      artId: "GD03-094_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-094_p1",
       cardNumber: "GD03-094",
       set: {
@@ -44,6 +49,7 @@ export const gd03ZeheartGalette094: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-094", "GD03-094_p1"],
   selectedPrintingId: "GD03-094",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-094.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-094.webp?260424",

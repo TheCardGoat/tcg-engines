@@ -9,21 +9,16 @@ export const stitchLittleRocketI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Stitch",
     version: "Kleine Rakete",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Stitch",
     version: "Petite fusée",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Stitch",
     version: "Piccolo Razzo",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

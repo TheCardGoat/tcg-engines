@@ -4,6 +4,17 @@ import { honeymarenNorthuldraGuideI18n } from "./048-honeymaren-northuldra-guide
 export const honeymarenNorthuldraGuide: CharacterCard = {
   id: "7Vg",
   canonicalId: "ci_7Vg",
+  slug: "lorcana-ci_7Vg",
+  printings: [
+    {
+      id: "set7-048",
+      artId: "set7-048",
+      setCode: "set7",
+      collectorNumber: "48",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-048"],
   cardType: "character",
   name: "Honeymaren",
@@ -20,7 +31,7 @@ export const honeymarenNorthuldraGuide: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_db6704b5f5e54a799f35d46afeca395d",
-    tcgPlayer: 619432,
+    tcgPlayer: "619432",
   },
   text: [
     {

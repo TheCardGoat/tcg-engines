@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { sisuDaringVisitorI18n } from "./123-sisu-daring-visitor.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const sisuDaringVisitor: CharacterCard = {
   id: "W3s",
   canonicalId: "ci_zcv",
+  slug: "lorcana-ci_zcv",
+  printings: [
+    {
+      id: "set4-123",
+      artId: "set4-123",
+      setCode: "set4",
+      collectorNumber: "123",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-123", "set9-119"],
   cardType: "character",
   name: "Sisu",
@@ -21,7 +33,7 @@ export const sisuDaringVisitor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_76066fccc9724d34b6e7a238e52bee61",
-    tcgPlayer: 650055,
+    tcgPlayer: "650055",
   },
   text: [
     {

@@ -17,7 +17,7 @@ export const clarabelleContentedWallflowerI18n: Record<Languages, I18nProperties
     version: "Zufriedenes Mauerblümchen",
     text: [
       {
-        title: "EINEN SCHRITT HINTERHER",
+        title: "Einen Schritt hinterher",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens eine gegnerische Person mehr Karten auf der Hand hat als du, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const clarabelleContentedWallflowerI18n: Record<Languages, I18nProperties
     version: "Introvertie mais heureuse",
     text: [
       {
-        title: "JUSTE DERRIÈRE TOI",
+        title: "Juste derrière toi",
         description:
           "Lorsque vous jouez ce personnage, si un adversaire a plus de cartes en main que vous, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const clarabelleContentedWallflowerI18n: Record<Languages, I18nProperties
     version: "Timidona Soddisfatta",
     text: [
       {
-        title: "UN PASSO INDIETRO",
+        title: "Un Passo Indietro",
         description:
           "Quando giochi questo personaggio, se un avversario ha in mano più carte di te, puoi pescare una carta.",
       },

@@ -4,6 +4,17 @@ import { dawsonBasilsAssistantI18n } from "./077-dawson-basils-assistant.i18n";
 export const dawsonBasilsAssistant: CharacterCard = {
   id: "hiv",
   canonicalId: "ci_hiv",
+  slug: "lorcana-ci_hiv",
+  printings: [
+    {
+      id: "set6-077",
+      artId: "set6-077",
+      setCode: "set6",
+      collectorNumber: "77",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-077"],
   cardType: "character",
   name: "Dawson",
@@ -21,7 +32,7 @@ export const dawsonBasilsAssistant: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8c75431635854114b956328d8d30aa10",
-    tcgPlayer: 591115,
+    tcgPlayer: "591115",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: dawsonBasilsAssistantI18n,

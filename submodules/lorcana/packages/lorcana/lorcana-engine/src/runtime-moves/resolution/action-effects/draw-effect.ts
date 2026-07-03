@@ -99,6 +99,7 @@ export function resolveDrawEffect(
       from: { zone: "deck", playerId },
       to: { zone: "hand", playerId },
       count: drawAmount,
+      ...(effect.source === "deck-bottom" ? { position: "bottom" as const } : {}),
     });
     const drawnCardIds = Array.isArray(drawnCards) ? (drawnCards as CardInstanceId[]) : [];
     totalDrawn += drawnCardIds.length;

@@ -4,6 +4,17 @@ import { ratCaponeRodentGangsterI18n } from "./183-rat-capone-rodent-gangster.i1
 export const ratCaponeRodentGangster: CharacterCard = {
   id: "zSo",
   canonicalId: "ci_zSo",
+  slug: "lorcana-ci_zSo",
+  printings: [
+    {
+      id: "set12-183",
+      artId: "set12-183",
+      setCode: "set12",
+      collectorNumber: "183",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-183"],
   cardType: "character",
   name: "Rat Capone",
@@ -18,6 +29,10 @@ export const ratCaponeRodentGangster: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_dc7439b895b342b99a0c373767318f64",
+    tcgPlayer: "692196",
+  },
   text: [
     {
       title: "SHADAAP!",

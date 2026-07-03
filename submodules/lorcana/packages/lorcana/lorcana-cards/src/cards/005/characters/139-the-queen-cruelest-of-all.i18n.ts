@@ -9,16 +9,16 @@ export const theQueenCruelestOfAllI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Die Königin",
     version: "Die Grausamste von allen",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "La Reine",
     version: "La plus cruelle",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Regina",
     version: "La Più Crudele del Reame",
-    text: "Protetto",
+    text: "<Protetto>",
   },
 };

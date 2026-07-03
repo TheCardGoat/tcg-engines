@@ -16,8 +16,8 @@ export const snowWhiteUnexpectedHouseguestI18n: Record<Languages, I18nProperties
     version: "Unerwarteter Gast",
     text: [
       {
-        title: "EINEN SCHÖNEN GUTEN MORGEN",
-        description: "Du zahlst 1 weniger, um die Sieben Zwerge auszuspielen.",
+        title: "Einen schönen guten Morgen",
+        description: "Du zahlst 1 {I} weniger, um die Sieben Zwerge auszuspielen.",
       },
     ],
   },
@@ -26,14 +26,14 @@ export const snowWhiteUnexpectedHouseguestI18n: Record<Languages, I18nProperties
     version: "Invitée inattendue",
     text: [
       {
-        title: "ENCHANTÉE, MESSIEURS",
-        description: "Les personnages Sept Nains vous coûtent 1 de moins à jouer.",
+        title: "Enchantée, Messieurs",
+        description: "Les personnages Sept Nains vous coûtent 1 {I} de moins à jouer.",
       },
     ],
   },
   it: {
     name: "Snow White",
     version: "Unexpected Houseguest",
-    text: "How Do You Do?\\ You pay 1 less to play Seven Dwarfs characters.",
+    text: "How Do You Do?\\ You pay 1 {I} less to play Seven Dwarfs characters.",
   },
 };

@@ -3,7 +3,6 @@ import type { CardInstanceId } from "#core";
 import type { CardPlayedPayload } from "../../../types";
 import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
 import { normalizeSelectedTargets, resolveEffectTargets } from "../../../targeting/runtime";
-import { handleUnsupportedActionEffect } from "./unsupported-action-effect";
 import { getEffectTargetSelectionInput } from "./selection-state";
 import { emitTriggeredLorcanaEvent } from "../../effects/triggered-abilities";
 import { isGainLoreEffect, resolveGainLoreEffect } from "./gain-lore-effect";
@@ -98,10 +97,6 @@ export function resolveMoveToLocationEffect(
   );
 
   if (!locationId) {
-    handleUnsupportedActionEffect(
-      "move-to-location",
-      "move-to-location requires a selected location target",
-    );
     return;
   }
 

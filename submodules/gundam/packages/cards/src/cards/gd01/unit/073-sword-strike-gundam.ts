@@ -7,14 +7,17 @@ export const gd01SwordStrikeGundam073: UnitCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "GD01-073",
-  externalId: "gundam:gd01-073",
-  slug: "sword-strike-gundam-gd01-073",
+  canonicalId: "GD01-073",
+  externalIds: { bandai: "gundam:gd01-073" },
+  slug: "sword-strike-gundam/gd01-073",
   displayName: "Sword Strike Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-073",
   printings: [
     {
       id: "GD01-073",
+      artId: "GD01-073",
+      setCode: "GD01",
       collectorNumber: "GD01-073",
       cardNumber: "GD01-073",
       set: {
@@ -29,6 +32,7 @@ export const gd01SwordStrikeGundam073: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-073"],
   selectedPrintingId: "GD01-073",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-073.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-073.webp?260424",

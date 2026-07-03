@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { vanellopeVonSchweetzSugarRushPrincessI18n } from "./019-vanellope-von-schweetz-sugar-rush-princess.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const vanellopeVonSchweetzSugarRushPrincess: CharacterCard = {
-  id: "5Sq",
-  canonicalId: "ci_MsB",
-  reprints: ["set5-019"],
+  id: "FSG",
+  canonicalId: "ci_FSG",
+  slug: "lorcana-ci_FSG",
+  printings: [
+    {
+      id: "set5-019",
+      artId: "set5-019",
+      setCode: "set5",
+      collectorNumber: "19",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set5-d23-005", "set5-019"],
   cardType: "character",
   name: "Vanellope von Schweetz",
   version: "Sugar Rush Princess",
@@ -20,8 +32,8 @@ export const vanellopeVonSchweetzSugarRushPrincess: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_6d0b490fddd34aab828b26cb90a827d6",
-    tcgPlayer: 561992,
+    lorcast: "crd_b2e4820cbbda4610b54f3e9c00fa4576",
+    tcgPlayer: "559537",
   },
   text: [
     {

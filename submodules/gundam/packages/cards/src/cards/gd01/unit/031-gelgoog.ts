@@ -7,14 +7,17 @@ export const gd01Gelgoog031: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-031",
-  externalId: "gundam:gd01-031",
-  slug: "gelgoog-gd01-031",
+  canonicalId: "GD01-031",
+  externalIds: { bandai: "gundam:gd01-031" },
+  slug: "gelgoog/gd01-031",
   displayName: "Gelgoog",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-031",
   printings: [
     {
       id: "GD01-031",
+      artId: "GD01-031",
+      setCode: "GD01",
       collectorNumber: "GD01-031",
       cardNumber: "GD01-031",
       set: {
@@ -30,6 +33,8 @@ export const gd01Gelgoog031: UnitCard = {
     },
     {
       id: "GD01-031_p1",
+      artId: "GD01-031_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-031_p1",
       cardNumber: "GD01-031",
       set: {
@@ -44,6 +49,7 @@ export const gd01Gelgoog031: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-031", "GD01-031_p1"],
   selectedPrintingId: "GD01-031",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-031.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-031.webp?260424",

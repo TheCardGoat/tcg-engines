@@ -3,7 +3,18 @@ import { cinderellaKnightInTrainingI18n } from "./176-cinderella-knight-in-train
 
 export const cinderellaKnightInTraining: CharacterCard = {
   id: "FdD",
-  canonicalId: "ci_FdD",
+  canonicalId: "ci_Nol",
+  slug: "lorcana-ci_Nol",
+  printings: [
+    {
+      id: "set2-176",
+      artId: "set2-176",
+      setCode: "set2",
+      collectorNumber: "176",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-176"],
   cardType: "character",
   name: "Cinderella",
@@ -20,7 +31,7 @@ export const cinderellaKnightInTraining: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_be028c8d6e9144f4ac4f03b17462db1c",
-    tcgPlayer: 521726,
+    tcgPlayer: "521726",
   },
   text: [
     {

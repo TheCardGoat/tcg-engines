@@ -16,7 +16,7 @@ export const earthGiantLivingMountainI18n: Record<Languages, I18nProperties> = {
     version: "Lebendiger Berg",
     text: [
       {
-        title: "AUSGEGRABEN",
+        title: "Ausgegraben",
         description:
           "Wenn du diesen Charakter ausspielst, ziehen alle gegnerischen Mitspielenden je 1 Karte.",
       },
@@ -27,7 +27,7 @@ export const earthGiantLivingMountainI18n: Record<Languages, I18nProperties> = {
     version: "Montagne vivante",
     text: [
       {
-        title: "DÉTERRÉ",
+        title: "Déterré",
         description: "Lorsque vous jouez ce personnage, chaque adversaire pioche une carte.",
       },
     ],
@@ -37,7 +37,7 @@ export const earthGiantLivingMountainI18n: Record<Languages, I18nProperties> = {
     version: "Montagna Vivente",
     text: [
       {
-        title: "DISSOTTERRATO",
+        title: "Dissotterrato",
         description: "Quando giochi questo personaggio, ogni avversario pesca una carta.",
       },
     ],

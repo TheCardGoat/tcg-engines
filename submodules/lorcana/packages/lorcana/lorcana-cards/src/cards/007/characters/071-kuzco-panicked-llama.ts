@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kuzcoPanickedLlamaI18n } from "./071-kuzco-panicked-llama.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const kuzcoPanickedLlama: CharacterCard = {
   id: "Zdf",
   canonicalId: "ci_Zdf",
+  slug: "lorcana-ci_Zdf",
+  printings: [
+    {
+      id: "set7-071",
+      artId: "set7-071",
+      setCode: "set7",
+      collectorNumber: "71",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-071"],
   cardType: "character",
   name: "Kuzco",
@@ -21,7 +33,7 @@ export const kuzcoPanickedLlama: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4b09d3e4c16c4e0d8b579d090a021dd5",
-    tcgPlayer: 618136,
+    tcgPlayer: "618136",
   },
   text: [
     {

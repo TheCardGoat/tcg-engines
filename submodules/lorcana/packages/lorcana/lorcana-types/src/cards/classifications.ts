@@ -38,15 +38,18 @@ export const CLASSIFICATIONS = [
   "Puppy",
   "Queen",
   "Racer",
+  "Red Panda",
   "Robot",
   "Seven Dwarfs",
   "Sorcerer",
   "Storyborn",
   "Super",
+  "Team",
   "Tigger",
   "Titan",
   "Toy",
   "Villain",
+  "Vineling",
   "Whisper",
 ] as const;
 

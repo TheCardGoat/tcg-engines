@@ -4,6 +4,17 @@ import { moanaOfMotunuiI18n } from "./014-moana-of-motunui.i18n";
 export const moanaOfMotunui: CharacterCard = {
   id: "u8U",
   canonicalId: "ci_Pdi",
+  slug: "lorcana-ci_Pdi",
+  printings: [
+    {
+      id: "set1-014",
+      artId: "set1-014",
+      setCode: "set1",
+      collectorNumber: "14",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-014", "set9-020"],
   cardType: "character",
   name: "Moana",
@@ -20,7 +31,7 @@ export const moanaOfMotunui: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_612c000e0f7047659edee1e275069811",
-    tcgPlayer: 649968,
+    tcgPlayer: "649968",
   },
   text: [
     {

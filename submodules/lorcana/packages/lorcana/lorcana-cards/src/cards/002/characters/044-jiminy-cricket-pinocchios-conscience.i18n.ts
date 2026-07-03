@@ -20,10 +20,10 @@ export const jiminyCricketPinocchiosConscienceI18n: Record<Languages, I18nProper
     version: "Pinocchios Gewissen",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "DIE KLEINE INNERE STIMME",
+        title: "Die kleine innere Stimme",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen, falls du einen Pinocchio-Charakter im Spiel hast.",
       },
@@ -34,10 +34,10 @@ export const jiminyCricketPinocchiosConscienceI18n: Record<Languages, I18nProper
     version: "Conscience de Pinocchio",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "CETTE TRANQUILLE PETITE VOIX",
+        title: "Cette tranquille petite voix",
         description:
           "Si vous avez un personnage Pinocchio en jeu lorsque vous jouez cette carte, vous pouvez piocher une carte.",
       },
@@ -48,10 +48,10 @@ export const jiminyCricketPinocchiosConscienceI18n: Record<Languages, I18nProper
     version: "Pinocchio's Conscience",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "THAT STILL, SMALL VOICE",
+        title: "That Still, Small Voice",
         description:
           "When you play this character, if you have a character named Pinocchio in play, you may draw a card.",
       },

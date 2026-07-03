@@ -17,7 +17,7 @@ export const sheriffOfNottinghamCorruptOfficialI18n: Record<Languages, I18nPrope
     version: "Korrupter Beamter",
     text: [
       {
-        title: "STEUERN MÜSSEN WEH TUN",
+        title: "Steuern müssen weh tun",
         description:
           "Jedes Mal, wenn du eine Karte abwirfst, darfst du einem gegnerischen Charakter deiner Wahl 1 Schaden zufügen.",
       },
@@ -28,7 +28,7 @@ export const sheriffOfNottinghamCorruptOfficialI18n: Record<Languages, I18nPrope
     version: "Officiellement corrompu",
     text: [
       {
-        title: "LES TAXES C'EST DOULOUREUX",
+        title: "Les taxes c'est douloureux",
         description:
           "Chaque fois que vous défaussez une carte, vous pouvez choisir un personnage adverse et lui infliger 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const sheriffOfNottinghamCorruptOfficialI18n: Record<Languages, I18nPrope
     version: "Funzionario Corrotto",
     text: [
       {
-        title: "È GIUSTO CHE SIA COSÌ",
+        title: "È Giusto Che Sia Così",
         description:
           "Ogni volta che scarti una carta, puoi infliggere 1 danno a un personaggio avversario a tua scelta.",
       },

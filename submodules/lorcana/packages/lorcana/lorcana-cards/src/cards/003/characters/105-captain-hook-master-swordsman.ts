@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { captainHookMasterSwordsmanI18n } from "./105-captain-hook-master-swordsman.i18n";
 
 export const captainHookMasterSwordsman: CharacterCard = {
-  id: "ICh",
+  id: "DqE",
   canonicalId: "ci_6Vd",
+  slug: "lorcana-ci_6Vd",
+  printings: [
+    {
+      id: "set3-105",
+      artId: "set3-105",
+      setCode: "set3",
+      collectorNumber: "105",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-105"],
   cardType: "character",
   name: "Captain Hook",
@@ -20,7 +31,7 @@ export const captainHookMasterSwordsman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_266d7d17b42a44be9472057e4e6dd1b1",
-    tcgPlayer: 539166,
+    tcgPlayer: "539166",
   },
   text: [
     {

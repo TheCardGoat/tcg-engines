@@ -16,6 +16,11 @@ import type {
   SimulatorConnectionDiagnosticInput,
   SimulatorConnectionStatus,
 } from "@tcg/game-page-contract/connection-diagnostic";
+import {
+  createLiveMatchSession,
+  type LiveMatchSession,
+  type NormalizedPresenceChange,
+} from "@tcg/game-page-contract";
 import { buildInteractionSubmissionForActionId } from "@tcg/protocol";
 import {
   buildDiscordRichPresenceMatchUrl,
@@ -23,16 +28,9 @@ import {
   type DiscordAuthorizationCodeExchange,
   updateDiscordPlayingGamePresence,
 } from "@tcg/shared/discord-rich-presence";
-import {
-  openLiveGateway,
-  buildGatewaySocketIoUrl,
-  requestGatewayTicket,
-  shouldRefreshAnonymousWelcome,
-  type GatewayTicket,
-  type GatewayAuthMode,
-  type LiveGatewayMessage,
-  type LiveGatewaySocket,
-} from "../engine/live/liveGateway";
+import { buildGatewaySocketIoUrl, type LiveGatewayMessage } from "../engine/live/liveGateway";
+import type { GatewayHandle } from "@tcg/gateway-client";
+import { getGatewayManager } from "../../../lib/gateway/gateway-manager";
 import { getAuthSnapshot } from "../auth/auth-store";
 import {
   parseGatewayEvent,
@@ -83,7 +81,7 @@ import {
   type Side,
 } from "../engine";
 import { P1, P2 } from "../engine/fixtures/scenarios";
-import { BoardPage } from "./Board.page";
+import { BoardSharedPage } from "./BoardShared.page";
 import {
   matchesPendingCorrelation,
   readMessageCorrelationId,
@@ -141,7 +139,6 @@ interface RemoteAnimationPacket {
 }
 
 const REMOTE_MOVE_LOG_LIMIT = 200;
-const TICKET_REFRESH_COOLDOWN_MS = 1_500;
 
 type PushStatePayload = Parameters<ClientToServerEvents["push_state"]>[0];
 type SubmitInteractionPayload = Parameters<ClientToServerEvents["submit_interaction"]>[0];
@@ -209,16 +206,15 @@ export function LiveMatchPage() {
   const [pendingOptimisticMove, setPendingOptimisticMove] = useState<PendingOptimisticMove | null>(
     null,
   );
-  const socketRef = useRef<LiveGatewaySocket | null>(null);
+  const handleRef = useRef<GatewayHandle | null>(null);
+  const sessionRef = useRef<LiveMatchSession | null>(null);
   const latestContextRef = useRef<LiveMatchContext | null>(null);
   const gatewayJoinRef = useRef<GatewayJoinState | null>(null);
-  const gatewayJoinRetryRef = useRef<(() => void) | null>(null);
   const pendingOptimisticMoveRef = useRef<PendingOptimisticMove | null>(null);
   const submittedInteractionMessagesRef = useRef<Map<string, SubmitInteractionPayload>>(new Map());
   const seenLogKeysRef = useRef<Set<string>>(new Set());
   const seenAnimationIdsRef = useRef<Set<string>>(new Set());
   const startedAtMsRef = useRef(Date.now());
-  const lastSyncRequestAtRef = useRef<number>(0);
   const readyContext = loadState.status === "ready" ? loadState.context : null;
   const readyGameId = readyContext?.game.gameId ?? null;
   const hasReadyGameState = Boolean(readyContext?.game.state);
@@ -409,11 +405,10 @@ export function LiveMatchPage() {
       if (!handled) {
         showMoveRejectedNotification(message);
       }
-      if (needsAuthoritativeSync) {
-        socketRef.current?.emit("request_game_state_sync", {
-          gameId: message.gameId,
-          stateVersion: context.game.version,
-        });
+      if (needsAuthoritativeSync && context) {
+        // Route through the session so the dedup window shared with the
+        // heartbeat_ack / move_accepted / state_update paths applies here too.
+        sessionRef.current?.requestStateSyncIfDue(context.game.version);
       }
     },
     [rejectPendingOptimisticMove],
@@ -465,11 +460,16 @@ export function LiveMatchPage() {
     if (!readyGameId || (!hasReadyGameState && !canRunClientAuthorityPractice)) {
       return;
     }
-    let cancelled = false;
-    let socket: LiveGatewaySocket | null = null;
-    let pingInterval: number | null = null;
-    let heartbeatInterval: number | null = null;
-    let detachManagerReconnectHandlers: (() => void) | null = null;
+
+    const manager = getGatewayManager();
+    // Acquire a handle on the SHARED cyberpunk namespace socket (the root
+    // already holds one for presence). ref-count → 2; releasing this handle on
+    // unmount leaves the root socket open across navigation.
+    const handle: GatewayHandle = manager.acquire(CYBERPUNK_GAME_SLUG);
+    handleRef.current = handle;
+
+    const playerId = contextPlayerId;
+
     const recordDiagnostic = (
       patch: Partial<LiveGatewayDiagnosticState>,
       event?: Omit<ConnectionDiagnosticEvent, "at">,
@@ -478,815 +478,423 @@ export function LiveMatchPage() {
     };
 
     recordDiagnostic(
-      { status: "connecting", endpoint: createGatewayEndpointDiagnostic(), lastError: undefined },
-      { type: "ticket_request", message: "Requesting gateway credentials" },
+      {
+        status: handle.getState().status === "connected" ? "connected" : "connecting",
+        endpoint: createGatewayEndpointDiagnostic(),
+        lastError: undefined,
+      },
+      { type: "ticket_request", message: "Acquiring gateway namespace" },
     );
 
-    resolveGatewayTicket(location.search, matchId, contextPlayerId)
-      .then(({ ticket, playerId }) => {
-        if (cancelled) {
+    const joinRole: "player" | "spectator" =
+      readyContext?.game.authority === "client" && !canRunClientAuthorityPractice && !playerId
+        ? "spectator"
+        : "player";
+
+    const localSide = () => {
+      const context = latestContextRef.current;
+      return context ? localConnectionSideForContext(context, playerId) : null;
+    };
+
+    const markLocalConnection = (status: "connected" | "reconnecting" | "disconnected") => {
+      setPlayerConnections((current) => markLocalConnectionStatus(current, localSide(), status));
+    };
+
+    // The game event reducer. The session forwards EVERY server event here;
+    // the reducer owns game-state mutations, board rendering signals, and
+    // game-domain diagnostics. Session-owned concerns (presence map,
+    // heartbeat, join lifecycle) are NOT duplicated here.
+    const handleGatewayEvent = (
+      type: keyof ServerToClientEvents,
+      payload: Parameters<ServerToClientEvents[keyof ServerToClientEvents]>[0],
+    ) => {
+      if (type === "presence_change" && payload && typeof payload === "object") {
+        // The session owns the presence map and emits the normalized change
+        // via onPresenceChange (→ derivePresenceChat). The consumer only
+        // mirrors the raw change into its per-side playerConnections view
+        // (used for board rendering).
+        setPlayerConnections((current) =>
+          applyPresenceChange(current, latestContextRef.current?.game.actorIds, payload),
+        );
+      }
+      if (type === "player_drop_pending" && payload && typeof payload === "object") {
+        const record = payload as Record<string, unknown>;
+        const droppedPlayerId =
+          typeof record.droppedPlayerId === "string" ? record.droppedPlayerId : undefined;
+        const dropReason = typeof record.reason === "string" ? record.reason : "disconnect";
+        notifications.show({
+          id: `live-match:player-drop-pending:${gameId}:${droppedPlayerId}`,
+          color: "yellow",
+          title: "Opponent drop pending",
+          message:
+            dropReason === "timeout"
+              ? "Your opponent is being dropped due to timeout."
+              : "Your opponent is being dropped due to disconnect.",
+        });
+      }
+      if (type === "submit_interaction:response") {
+        handleSubmitInteractionResponse(payload);
+      }
+      if (type === "heartbeat_ack" && payload && typeof payload === "object") {
+        // heartbeat_ack isn't a LiveGatewayMessage; handle it before
+        // parseGatewayEvent returns null. The session already recorded the
+        // diagnostic; the consumer owns the version-skew reaction.
+        const context = latestContextRef.current;
+        if (!context) {
           return;
         }
-        let currentTicket: GatewayTicket = ticket;
-        let joinedSocketId: string | null = null;
-        let joinRequestInFlightSocketId: string | null = null;
-        let joinRequestInFlightAt = 0;
-        let ticketRefreshInFlight: Promise<GatewayTicket> | null = null;
-        let lastTicketRefreshAt = 0;
-        let anonymousReconnectInFlight = false;
-        let anonymousWelcomeRefreshAttempted = false;
-        const gatewayAuthMode: GatewayAuthMode =
-          ticket.ticket || ticket.authToken || playerId ? "required" : "optional";
-
-        const joinRole: "player" | "spectator" =
-          readyContext?.game.authority === "client" && !canRunClientAuthorityPractice && !playerId
-            ? "spectator"
-            : "player";
+        const record = payload as { stateVersions?: Record<string, number> };
+        const serverVersion = record.stateVersions?.[gameId];
+        if (typeof serverVersion !== "number") {
+          return;
+        }
+        const localVersion = context.game.version;
+        if (serverVersion > localVersion) {
+          session.requestStateSyncIfDue(localVersion);
+          console.info("[live-match] heartbeat_ack server ahead; requesting state sync", {
+            gameId,
+            localVersion,
+            serverVersion,
+          });
+        }
+      }
+      const message = parseGatewayEvent(type, payload);
+      if (!message) {
+        return;
+      }
+      if (message.type === "gateway_error" || message.type === "error") {
         recordDiagnostic(
           {
-            status: "connecting",
-            authModeLabel: ticket.ticket
-              ? "Authenticated (ticket)"
-              : ticket.authToken
-                ? "Authenticated (token)"
-                : "Anonymous",
+            lastError: message.message,
           },
-          {
-            type: "ticket_received",
-            message: "Gateway credentials received",
-            details: {
-              hasTicket: Boolean(ticket.ticket),
-              hasAuthToken: Boolean(ticket.authToken),
-              playerIdPresent: Boolean(playerId),
-            },
-          },
+          { type: message.type, message: message.message, details: message },
         );
-
-        const emitJoinGame = () => {
-          if (!socket?.connected) {
-            console.info("[live-match] join skipped: socket is not connected", {
-              gameId,
-              matchId,
-              joinRole,
-              playerId,
-            });
-            return;
-          }
-          const socketId = socket.id ?? "connected";
-          const joined = gatewayJoinRef.current;
-          if (
-            joinedSocketId === socketId ||
-            (joined?.gameId === gameId && joined.role === joinRole)
-          ) {
-            console.info("[live-match] join skipped: socket already joined", {
-              gameId,
-              matchId,
-              joinRole,
-              playerId,
-              socketId,
-            });
-            return;
-          }
-          if (
-            joinRequestInFlightSocketId === socketId &&
-            Date.now() - joinRequestInFlightAt < 2_000
-          ) {
-            console.info("[live-match] join skipped: join request already in flight", {
-              gameId,
-              matchId,
-              joinRole,
-              playerId,
-              socketId,
-            });
-            return;
-          }
-          joinRequestInFlightSocketId = socketId;
-          joinRequestInFlightAt = Date.now();
-          console.info("[live-match] joining gateway game", {
+        showGatewayErrorNotification(message);
+        rejectPendingOptimisticMove(message.message, message.correlationId);
+      }
+      if (message.type === "move_accepted") {
+        const pending = pendingOptimisticMoveRef.current;
+        if (
+          pending &&
+          pending.optimisticApplied &&
+          matchesPendingCorrelation(pending, message.correlationId) &&
+          typeof message.stateVersion === "number" &&
+          message.stateVersion !== pending.localOptimisticStateId
+        ) {
+          session.requestStateSyncIfDue(pending.startingVersion);
+          console.info("[live-match] move_accepted version mismatch; requesting state sync", {
             gameId,
-            matchId,
-            joinRole,
-            playerId,
-            socketId,
+            expectedVersion: pending.localOptimisticStateId,
+            acceptedVersion: message.stateVersion,
           });
-          socket.emit("join_game", {
-            gameId,
-            role: joinRole,
-            ...(joinRole === "player" && playerId ? { gameProfileId: playerId } : {}),
-            correlationId: correlationId(),
-          });
-        };
-        gatewayJoinRetryRef.current = emitJoinGame;
-
-        const localSide = () => {
-          const context = latestContextRef.current;
-          return context ? localConnectionSideForContext(context, playerId) : null;
-        };
-
-        const markLocalConnection = (status: "connected" | "reconnecting" | "disconnected") => {
-          setPlayerConnections((current) =>
-            markLocalConnectionStatus(current, localSide(), status),
-          );
-        };
-
-        const refreshGatewayTicket = async () => {
-          if (!ticketRefreshInFlight) {
-            ticketRefreshInFlight = (async () => {
-              const delayMs = Math.max(
-                0,
-                TICKET_REFRESH_COOLDOWN_MS - (Date.now() - lastTicketRefreshAt),
-              );
-              if (delayMs > 0) {
-                await sleep(delayMs);
-              }
-              const refreshed = await requestGatewayTicket(
-                playerId ? { gameSlug: CYBERPUNK_GAME_SLUG, matchId, playerId } : {},
-              );
-              currentTicket = refreshed;
-              lastTicketRefreshAt = Date.now();
-              console.info("[live-match] refreshed gateway credentials", {
-                gameId,
-                matchId,
-                hasPlayerId: Boolean(playerId),
-                hasTicket: Boolean(refreshed.ticket),
-                hasAuthToken: Boolean(refreshed.authToken),
-              });
-              return refreshed;
-            })().finally(() => {
-              ticketRefreshInFlight = null;
-            });
-          }
-          return ticketRefreshInFlight;
-        };
-
-        const reconnectWithFreshTicket = async () => {
-          if (anonymousReconnectInFlight) {
-            return;
-          }
-          anonymousReconnectInFlight = true;
-          markLocalConnection("reconnecting");
-          recordDiagnostic(
-            { status: "reconnecting" },
-            { type: "ticket_refresh", message: "Refreshing gateway credentials" },
-          );
-          try {
-            await refreshGatewayTicket();
-          } catch (error) {
-            // eslint-disable-next-line no-console
-            console.warn("[live-match] gateway ticket refresh failed", error);
-            showHttpFailureNotification(error, {
-              id: `live-match:ticket-refresh:${matchId}:${playerId ?? "session"}`,
-              title: "Could not refresh match connection",
-              fallbackMessage: "The match server rejected the reconnect request.",
-              fallbackSeverity: "warning",
-            });
-            markLocalConnection("disconnected");
-            recordDiagnostic(
-              {
-                status: "disconnected",
-                lastError: errorMessage(error),
-              },
-              {
-                type: "ticket_refresh_failed",
-                message: errorMessage(error),
-              },
-            );
-            return;
-          } finally {
-            anonymousReconnectInFlight = false;
-          }
-          if (cancelled || !socket) {
-            return;
-          }
-          console.info("[live-match] reconnecting gateway with refreshed credentials", {
-            gameId,
-            matchId,
-            hasPlayerId: Boolean(playerId),
-          });
-          joinedSocketId = null;
-          joinRequestInFlightSocketId = null;
-          joinRequestInFlightAt = 0;
-          socket.disconnect();
-          socketRef.current = socket;
-          recordDiagnostic(
-            { status: "reconnecting" },
-            { type: "socket_reconnect", message: "Reconnecting with refreshed credentials" },
-          );
-          socket.connect();
-        };
-
-        socket = openLiveGateway(currentTicket, {
-          gameSlug: CYBERPUNK_GAME_SLUG,
-          authMode: gatewayAuthMode,
-          getAuth: () => currentTicket,
-        });
-        socketRef.current = socket;
-
-        const handleReconnectAttempt = () => {
-          markLocalConnection("reconnecting");
-          recordDiagnostic(
-            { status: "reconnecting" },
-            { type: "reconnect_attempt", message: "Gateway reconnect attempt started" },
-          );
-        };
-        const handleReconnect = () => {
-          socketRef.current = socket;
-          joinedSocketId = null;
-          joinRequestInFlightSocketId = null;
-          joinRequestInFlightAt = 0;
-          markLocalConnection("connected");
-          recordDiagnostic(
-            {
-              status: "connected",
-              socketId: socket?.id ?? undefined,
-              reconnectAttempts: 0,
-              lastError: undefined,
-            },
-            { type: "reconnect", message: "Gateway manager reconnected" },
-          );
-          console.info("[live-match] gateway manager reconnected", {
-            gameId,
-            matchId,
-            socketId: socket?.id,
-          });
-          emitJoinGame();
-        };
-        const handleReconnectFailed = () => {
-          markLocalConnection("disconnected");
-          recordDiagnostic(
-            { status: "disconnected", lastError: "Socket.IO reconnect failed" },
-            { type: "reconnect_failed", message: "Gateway reconnect attempts failed" },
-          );
-        };
-        socket.io.on("reconnect_attempt", handleReconnectAttempt);
-        socket.io.on("reconnect", handleReconnect);
-        socket.io.on("reconnect_failed", handleReconnectFailed);
-        detachManagerReconnectHandlers = () => {
-          socket?.io.off("reconnect_attempt", handleReconnectAttempt);
-          socket?.io.off("reconnect", handleReconnect);
-          socket?.io.off("reconnect_failed", handleReconnectFailed);
-        };
-
-        pingInterval = window.setInterval(() => {
-          if (!socket?.connected) {
-            return;
-          }
-          const now = Date.now();
-          recordDiagnostic({ lastPingAt: new Date(now).toISOString() });
-          socket.emit("ping", { t: Date.now() });
-        }, 5_000);
-
-        heartbeatInterval = window.setInterval(() => {
-          if (!socket?.connected) {
-            return;
-          }
-          const context = latestContextRef.current;
-          socket.emit("heartbeat", {
-            game: context
-              ? {
-                  gameId,
-                  matchId,
-                  stateVersion: context.game.version,
-                }
-              : undefined,
-            activity: {
-              idle: false,
-              tabVisible: document.visibilityState !== "hidden",
-            },
-          });
-        }, 15_000);
-
-        socket.on("heartbeat_ack", (payload) => {
-          const context = latestContextRef.current;
-          if (!context) {
-            return;
-          }
-          const serverVersion = payload.stateVersions[gameId];
-          if (typeof serverVersion !== "number") {
-            return;
-          }
-          const localVersion = context.game.version;
-          if (serverVersion > localVersion) {
-            const now = Date.now();
-            if (now - lastSyncRequestAtRef.current > 2_000) {
-              lastSyncRequestAtRef.current = now;
-              socket?.emit("request_game_state_sync", {
-                gameId,
-                stateVersion: localVersion,
-              });
-              console.info("[live-match] heartbeat_ack server ahead; requesting state sync", {
-                gameId,
-                localVersion,
-                serverVersion,
-              });
-            }
-          }
-        });
-
-        socket.on("pong", (payload) => {
-          const context = latestContextRef.current;
-          const side = context ? localConnectionSideForContext(context, playerId) : null;
-          if (!side) {
-            return;
-          }
-          const now = Date.now();
-          const latencyMs = typeof payload.t === "number" ? now - payload.t : undefined;
-          recordDiagnostic(
-            {
-              status: "connected",
-              latencyMs,
-              lastPongAt:
-                typeof payload.serverTime === "string"
-                  ? payload.serverTime
-                  : new Date(now).toISOString(),
-            },
-            { type: "pong", message: "Gateway latency probe returned" },
-          );
-          setPlayerConnections((current) =>
-            recordLocalConnectionHeartbeat(current, side, now, latencyMs),
-          );
-        });
-
-        socket.on("connect", () => {
-          socketRef.current = socket;
-          joinedSocketId = null;
-          markLocalConnection("connected");
-          recordDiagnostic(
-            {
-              status: "connected",
-              socketId: socket?.id ?? undefined,
-              lastError: undefined,
-              serverInitiatedClose: false,
-            },
-            { type: "connect", message: "Gateway socket connected" },
-          );
-          console.info("[live-match] gateway socket connected", {
-            gameId,
-            matchId,
-            socketId: socket?.id,
-            joinRole,
-            playerId,
-          });
-          emitJoinGame();
-        });
-
-        socket.on("welcome", (payload) => {
-          recordDiagnostic(
-            {
-              status: "connected",
-              authenticated: Boolean(payload.authenticated),
-              authModeLabel:
-                typeof payload.authenticationMethod === "string" && payload.authenticationMethod
-                  ? `Authenticated (${payload.authenticationMethod})`
-                  : payload.authenticated
-                    ? "Authenticated"
-                    : "Anonymous",
-              connectionId:
-                typeof payload.connectionId === "string" ? payload.connectionId : undefined,
-            },
-            {
-              type: "welcome",
-              message: "Gateway welcome received",
-              details: {
-                authenticated: Boolean(payload.authenticated),
-                authenticationMethod: payload.authenticationMethod,
-                connectionId: payload.connectionId,
-              },
-            },
-          );
-          console.info("[live-match] gateway welcome", {
-            gameId,
-            matchId,
-            authenticated: Boolean(payload.authenticated),
-            authenticationMethod: payload.authenticationMethod,
-            connectionId: payload.connectionId,
-          });
-          if (payload.authenticated) {
-            anonymousWelcomeRefreshAttempted = false;
-            markLocalConnection("connected");
-            emitJoinGame();
-            return;
-          }
-          if (shouldRefreshAnonymousWelcome(gatewayAuthMode, payload)) {
-            if (!anonymousWelcomeRefreshAttempted) {
-              anonymousWelcomeRefreshAttempted = true;
-              console.warn("[live-match] gateway connected anonymously; refreshing credentials", {
-                gameId,
-                matchId,
-                connectionId: payload.connectionId,
-                hasPlayerId: Boolean(playerId),
-              });
-              void reconnectWithFreshTicket();
-              return;
-            }
-
-            const message = "Gateway returned a guest connection for a signed-in match.";
-            console.warn("[live-match] gateway anonymous auth violation", {
-              gameId,
-              matchId,
-              connectionId: payload.connectionId,
-              hasPlayerId: Boolean(playerId),
-            });
-            socket?.disconnect();
-            markLocalConnection("disconnected");
-            recordDiagnostic(
-              {
-                status: "disconnected",
-                lastError: message,
-              },
-              {
-                type: "connect_error",
-                message,
-                details: {
-                  authenticated: Boolean(payload.authenticated),
-                  authenticationMethod: payload.authenticationMethod,
-                  connectionId: payload.connectionId,
-                },
-              },
-            );
-            showServerFeedbackNotification({
-              id: `live-match:gateway-auth:${gameId}`,
-              severity: "warning",
-              title: "Connection interrupted",
-              message: "Refresh the match to restore your signed-in connection.",
-            });
-            return;
-          }
-          console.warn("[live-match] gateway connected anonymously; refreshing credentials", {
-            gameId,
-            matchId,
-            connectionId: payload.connectionId,
-            hasPlayerId: Boolean(playerId),
-          });
-          void reconnectWithFreshTicket();
-        });
-
-        const handleGatewayEvent = (
-          type: keyof ServerToClientEvents,
-          payload: Parameters<ServerToClientEvents[keyof ServerToClientEvents]>[0],
-        ) => {
-          if (type === "presence_change" && payload && typeof payload === "object") {
-            recordDiagnostic(
-              {},
-              { type: "presence_change", message: "Presence changed", details: payload },
-            );
-            setPlayerConnections((current) =>
-              applyPresenceChange(current, latestContextRef.current?.game.actorIds, payload),
-            );
-
-            const record = payload as Record<string, unknown>;
-            const changedPlayerId =
-              typeof record.playerId === "string" ? record.playerId : undefined;
-            const status =
-              record.status === "connected" || record.status === "disconnected"
-                ? record.status
-                : undefined;
-            const context = latestContextRef.current;
-            if (changedPlayerId && status && context) {
-              const localPlayerId = searchPlayerId ?? resolveLocalPlayerIdFromAuth(context);
-              const isLocalPlayer = changedPlayerId === localPlayerId;
-              if (!isLocalPlayer) {
-                const side = sideForActorId(context, changedPlayerId);
-                const identities = playerIdentitiesForContext(context);
-                let text: string | undefined;
-                if (side === "player" || side === "opponent") {
-                  const name =
-                    identities?.[side]?.displayName ?? (side === "player" ? "Player" : "Rival");
-                  text =
-                    status === "connected" ? `${name} joined the match` : `${name} left the match`;
-                } else if (status === "connected") {
-                  text = "A spectator joined watching the match";
-                }
-                if (text) {
-                  setLoadState((previous) => {
-                    if (previous.status !== "ready") {
-                      return previous;
-                    }
-                    const nextChat = mergeRemoteChatMessage(previous.chatMessages, {
-                      kind: "system",
-                      id: Date.now(),
-                      timestamp: Date.now(),
-                      text,
-                    });
-                    return { ...previous, chatMessages: nextChat };
-                  });
-                }
-              }
-            }
-          }
-          if (type === "player_drop_pending" && payload && typeof payload === "object") {
-            const record = payload as Record<string, unknown>;
-            const droppedPlayerId =
-              typeof record.droppedPlayerId === "string" ? record.droppedPlayerId : undefined;
-            const dropReason = typeof record.reason === "string" ? record.reason : "disconnect";
-            notifications.show({
-              id: `live-match:player-drop-pending:${gameId}:${droppedPlayerId}`,
-              color: "yellow",
-              title: "Opponent drop pending",
-              message:
-                dropReason === "timeout"
-                  ? "Your opponent is being dropped due to timeout."
-                  : "Your opponent is being dropped due to disconnect.",
-            });
-          }
-          if (type === "submit_interaction:response") {
-            handleSubmitInteractionResponse(payload);
-          }
-          const message = parseGatewayEvent(type, payload);
-          if (!message) {
-            return;
-          }
-          if (message.type === "gateway_error" || message.type === "error") {
-            recordDiagnostic(
-              {
-                lastError: message.message,
-              },
-              { type: message.type, message: message.message, details: message },
-            );
-            showGatewayErrorNotification(message);
-            rejectPendingOptimisticMove(message.message, message.correlationId);
-          }
-          if (message.type === "move_accepted") {
-            const pending = pendingOptimisticMoveRef.current;
-            if (
-              pending &&
-              pending.optimisticApplied &&
-              matchesPendingCorrelation(pending, message.correlationId) &&
-              typeof message.stateVersion === "number" &&
-              message.stateVersion !== pending.localOptimisticStateId
-            ) {
-              const now = Date.now();
-              if (now - lastSyncRequestAtRef.current > 2_000) {
-                lastSyncRequestAtRef.current = now;
-                socket?.emit("request_game_state_sync", {
-                  gameId,
-                  stateVersion: pending.startingVersion,
-                });
-                console.info("[live-match] move_accepted version mismatch; requesting state sync", {
-                  gameId,
-                  expectedVersion: pending.localOptimisticStateId,
-                  acceptedVersion: message.stateVersion,
-                });
-              }
-            }
-            if (shouldClearPendingAfterSubmitInteractionOk(pending, message.correlationId)) {
-              clearPendingOptimisticMove(message.correlationId);
-            }
-          }
-          if (message.type === "state_sync" && message.gameId === gameId) {
-            clearPendingOptimisticMove(undefined);
-          }
-          if (message.type === "move_rejected") {
-            handleRejectedOptimisticMove(message);
-          }
-          if (message.type === "proposal_received" && message.gameId === gameId) {
-            handleProposalReceived(message, socket);
-          }
-          if (message.type === "proposal_resolved" && message.gameId === gameId) {
-            handleProposalResolved(message);
-          }
-          if (message.type === "proposal_expired" && message.gameId === gameId) {
-            handleProposalExpired(message);
-          }
-          if (message.type === "game_joined") {
-            joinedSocketId = socket?.id ?? "connected";
-            joinRequestInFlightSocketId = null;
-            joinRequestInFlightAt = 0;
-            recordDiagnostic(
-              { status: "connected" },
-              {
-                type: "game_joined",
-                message: "Joined gateway game",
-                details: {
-                  gameId: message.gameId,
-                  role: message.role,
-                  stateVersion: message.stateVersion,
-                  socketId: socket?.id,
-                },
-              },
-            );
-            console.info("[live-match] gateway game joined", {
-              gameId: message.gameId,
-              matchId,
-              role: message.role,
-              stateVersion: message.stateVersion,
-              socketId: socket?.id,
-            });
-            const joined = { gameId: message.gameId, role: message.role, nonce: Date.now() };
-            gatewayJoinRef.current = joined;
-            setGatewayJoin(joined);
-            setPlayerConnections((current) =>
-              applyPresencePlayers(
-                current,
-                latestContextRef.current?.game.actorIds,
-                message.players,
-              ),
-            );
-          }
-          if (message.type === "request_state_sync" && message.gameId === gameId) {
-            setSyncRequestNonce((nonce) => nonce + 1);
-            const context = latestContextRef.current;
-            if (context && context.game.authority !== "client") {
-              const now = Date.now();
-              if (now - lastSyncRequestAtRef.current > 2_000) {
-                lastSyncRequestAtRef.current = now;
-                socket?.emit("request_game_state_sync", {
-                  gameId,
-                  stateVersion: context.game.version,
-                });
-                console.info("[live-match] server requested state sync; emitting request", {
-                  gameId,
-                  localVersion: context.game.version,
-                });
-              }
-            }
-          }
-          setLoadState((previous) => {
-            if (previous.status !== "ready") {
-              return previous;
-            }
-            if (message.type === "game_chat_history" && message.gameId === gameId) {
-              return {
-                ...previous,
-                chatMessages: remoteChatMessagesForContext(
-                  parseRemoteChatMessages(message.messages),
-                  previous.context,
-                ),
-              };
-            }
-            if (message.type === "chat_message" && message.gameId === gameId) {
-              const chatMessage = remoteChatMessageForContext(message.message, previous.context);
-              if (!chatMessage) {
-                return previous;
-              }
-              return {
-                ...previous,
-                chatMessages: mergeRemoteChatMessage(previous.chatMessages, chatMessage),
-              };
-            }
-            const effect = reduceLiveGatewayMessage(previous.context, message, {
-              gameId,
-              matchId,
-              search: location.search,
-            });
-            if (effect.type === "redirect") {
-              window.location.replace(effect.href);
-              return previous;
-            }
-            if (effect.type !== "state") {
-              return previous;
-            }
-            if (
-              message.type === "state_update" &&
-              typeof message.stateVersion === "number" &&
-              message.stateVersion > previous.context.game.version + 1
-            ) {
-              const now = Date.now();
-              if (now - lastSyncRequestAtRef.current > 2_000) {
-                lastSyncRequestAtRef.current = now;
-                socketRef.current?.emit("request_game_state_sync", {
-                  gameId,
-                  stateVersion: previous.context.game.version,
-                });
-                console.info(
-                  "[live-match] state_update version jump detected; requesting state sync",
-                  {
-                    gameId,
-                    previousVersion: previous.context.game.version,
-                    updateVersion: message.stateVersion,
-                  },
-                );
-              }
-            }
-            if (message.type === "state_update") {
-              const pending = pendingOptimisticMoveRef.current;
-              if (shouldClearPendingAfterAuthoritativeState(pending, message)) {
-                clearPendingOptimisticMove(
-                  readMessageCorrelationId(message) ?? pending?.correlationId,
-                );
-              }
-            }
-            const nextLogs = appendRemoteMoveLogs(
-              previous.moveLogs,
-              message,
-              effect.context,
-              seenLogKeysRef.current,
-            );
-            const nextEngineEvents = appendRemoteEngineEvents(
-              previous.engineEvents,
-              message,
-              effect.context,
-              seenAnimationIdsRef.current,
-            );
-            return {
-              status: "ready",
-              context: effect.context,
-              moveLogs: nextLogs,
-              engineEvents: nextEngineEvents,
-              chatMessages: previous.chatMessages,
-            };
-          });
-          if (message.type === "move_rejected") {
-            const attemptedMessage =
-              typeof message.correlationId === "string"
-                ? submittedInteractionMessagesRef.current.get(message.correlationId)
-                : undefined;
-            // eslint-disable-next-line no-console
-            console.warn("[live-match] move rejected", message.reason, {
-              attemptedMessage,
-              rejection: message,
-              joined: gatewayJoinRef.current,
-              socketId: socket?.id,
-            });
-            if (typeof message.correlationId === "string") {
-              submittedInteractionMessagesRef.current.delete(message.correlationId);
-            }
-          }
-        };
-
-        socket.onAny(handleGatewayEvent);
-
-        socket.on("disconnect", () => {
-          recordDiagnostic(
-            {
-              status: "reconnecting",
-              socketId: socket?.id ?? undefined,
-            },
-            { type: "disconnect", message: "Gateway socket disconnected" },
-          );
-          console.warn("[live-match] gateway socket disconnected", {
-            gameId,
-            matchId,
-            socketId: socket?.id,
-          });
-          if (socketRef.current === socket) {
-            socketRef.current = null;
-          }
-          gatewayJoinRef.current = null;
-          joinRequestInFlightSocketId = null;
-          joinRequestInFlightAt = 0;
-          markLocalConnection("reconnecting");
-          setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
-        });
-
-        socket.on("connect_error", (error) => {
-          markLocalConnection("reconnecting");
-          recordDiagnostic(
-            {
-              status: "reconnecting",
-              lastError: error.message || "Connection error",
-            },
-            { type: "connect_error", message: error.message || "Connection error" },
-          );
-          // eslint-disable-next-line no-console
-          console.warn("[live-match] gateway connection failed", error);
-          showServerFeedbackNotification({
-            id: `live-match:gateway-connection:${gameId}`,
-            severity: "warning",
-            title: "Connection interrupted",
-            message: error.message || "Trying to reconnect to the match server.",
-          });
-          if (playerId) {
-            void reconnectWithFreshTicket();
-          }
-        });
-      })
-      .catch((error) => {
-        const context = latestContextRef.current;
-        const side = context ? sideForActorId(context, searchPlayerId ?? "") : null;
-        setPlayerConnections((current) => markLocalConnectionStatus(current, side, "disconnected"));
-        recordDiagnostic(
-          {
-            status: "disconnected",
-            lastError: errorMessage(error),
-          },
-          { type: "ticket_request_failed", message: errorMessage(error) },
+        }
+        if (shouldClearPendingAfterSubmitInteractionOk(pending, message.correlationId)) {
+          clearPendingOptimisticMove(message.correlationId);
+        }
+      }
+      if (message.type === "state_sync" && message.gameId === gameId) {
+        clearPendingOptimisticMove(undefined);
+      }
+      if (message.type === "move_rejected") {
+        handleRejectedOptimisticMove(message);
+      }
+      if (message.type === "proposal_received" && message.gameId === gameId) {
+        handleProposalReceived(message, handle);
+      }
+      if (message.type === "proposal_resolved" && message.gameId === gameId) {
+        handleProposalResolved(message);
+      }
+      if (message.type === "proposal_expired" && message.gameId === gameId) {
+        handleProposalExpired(message);
+      }
+      if (message.type === "game_joined") {
+        // The session records the diagnostic and owns the join lifecycle +
+        // presence map. The consumer only keeps the gameId/role pair for the
+        // board's "client-authority joined" gate and the interaction gate.
+        const joined = { gameId: message.gameId, role: message.role, nonce: Date.now() };
+        gatewayJoinRef.current = joined;
+        setGatewayJoin(joined);
+        setPlayerConnections((current) =>
+          applyPresencePlayers(current, latestContextRef.current?.game.actorIds, message.players),
         );
+        console.info("[live-match] gateway game joined", {
+          gameId: message.gameId,
+          matchId,
+          role: message.role,
+          stateVersion: message.stateVersion,
+          socketId: handle.getState().connectionId,
+        });
+      }
+      if (message.type === "request_state_sync" && message.gameId === gameId) {
+        // The session emits `request_game_state_sync` (with dedup) for server
+        // authority. The consumer only bumps the nonce so the client-authority
+        // practice path pushes its local state.
+        setSyncRequestNonce((nonce) => nonce + 1);
+      }
+      setLoadState((previous) => {
+        if (previous.status !== "ready") {
+          return previous;
+        }
+        if (message.type === "game_chat_history" && message.gameId === gameId) {
+          return {
+            ...previous,
+            chatMessages: remoteChatMessagesForContext(
+              parseRemoteChatMessages(message.messages),
+              previous.context,
+            ),
+          };
+        }
+        if (message.type === "chat_message" && message.gameId === gameId) {
+          const chatMessage = remoteChatMessageForContext(message.message, previous.context);
+          if (!chatMessage) {
+            return previous;
+          }
+          return {
+            ...previous,
+            chatMessages: mergeRemoteChatMessage(previous.chatMessages, chatMessage),
+          };
+        }
+        const effect = reduceLiveGatewayMessage(previous.context, message, {
+          gameId,
+          matchId,
+          search: location.search,
+        });
+        if (effect.type === "redirect") {
+          window.location.replace(effect.href);
+          return previous;
+        }
+        if (effect.type !== "state") {
+          return previous;
+        }
+        if (
+          message.type === "state_update" &&
+          typeof message.stateVersion === "number" &&
+          message.stateVersion > previous.context.game.version + 1
+        ) {
+          session.requestStateSyncIfDue(previous.context.game.version);
+          console.info("[live-match] state_update version jump detected; requesting state sync", {
+            gameId,
+            previousVersion: previous.context.game.version,
+            updateVersion: message.stateVersion,
+          });
+        }
+        if (message.type === "state_update") {
+          const pending = pendingOptimisticMoveRef.current;
+          if (shouldClearPendingAfterAuthoritativeState(pending, message)) {
+            clearPendingOptimisticMove(readMessageCorrelationId(message) ?? pending?.correlationId);
+          }
+        }
+        const nextLogs = appendRemoteMoveLogs(
+          previous.moveLogs,
+          message,
+          effect.context,
+          seenLogKeysRef.current,
+        );
+        const nextEngineEvents = appendRemoteEngineEvents(
+          previous.engineEvents,
+          message,
+          effect.context,
+          seenAnimationIdsRef.current,
+        );
+        return {
+          status: "ready",
+          context: effect.context,
+          moveLogs: nextLogs,
+          engineEvents: nextEngineEvents,
+          chatMessages: previous.chatMessages,
+        };
+      });
+      if (message.type === "move_rejected") {
+        const attemptedMessage =
+          typeof message.correlationId === "string"
+            ? submittedInteractionMessagesRef.current.get(message.correlationId)
+            : undefined;
         // eslint-disable-next-line no-console
-        console.warn("[live-match] gateway ticket failed", error);
-        showHttpFailureNotification(error, {
-          id: `live-match:gateway-ticket:${gameId}`,
-          title: "Could not join match server",
-          fallbackMessage: "Refresh the match and try again.",
+        console.warn("[live-match] move rejected", message.reason, {
+          attemptedMessage,
+          rejection: message,
+          joined: gatewayJoinRef.current,
+          socketId: handle.getState().connectionId,
         });
+        if (typeof message.correlationId === "string") {
+          submittedInteractionMessagesRef.current.delete(message.correlationId);
+        }
+      }
+    };
+
+    // Localized "X joined/left the match" chat derivation. The session owns
+    // the presence map; this only produces a chat line per change.
+    const derivePresenceChat = (change: NormalizedPresenceChange) => {
+      const context = latestContextRef.current;
+      if (!context) {
+        return;
+      }
+      const localPlayerId = searchPlayerId ?? resolveLocalPlayerIdFromAuth(context);
+      if (change.playerId === localPlayerId) {
+        return;
+      }
+      const side = sideForActorId(context, change.playerId);
+      const identities = playerIdentitiesForContext(context);
+      let text: string | undefined;
+      if (side === "player" || side === "opponent") {
+        const name = identities?.[side]?.displayName ?? (side === "player" ? "Player" : "Rival");
+        text =
+          change.status === "connected" ? `${name} joined the match` : `${name} left the match`;
+      } else if (change.status === "connected") {
+        text = "A spectator joined watching the match";
+      }
+      if (text) {
+        setLoadState((previous) => {
+          if (previous.status !== "ready") {
+            return previous;
+          }
+          const nextChat = mergeRemoteChatMessage(previous.chatMessages, {
+            kind: "system",
+            id: Date.now(),
+            timestamp: Date.now(),
+            text,
+          });
+          return { ...previous, chatMessages: nextChat };
+        });
+      }
+    };
+
+    // Single session call: owns join, presence map, heartbeat, latency, and
+    // connection-state mirroring. The consumer wires its game reducer
+    // (onGameEvent), its chat derivation (onPresenceChange), and its
+    // diagnostic log (onDiagnostic).
+    const session = createLiveMatchSession({
+      handle,
+      gameId,
+      matchId,
+      resolveRole: () => joinRole,
+      resolveGameProfileId: () => playerId ?? undefined,
+      buildHeartbeatPayload: () => {
+        const context = latestContextRef.current;
+        return {
+          game: context ? { gameId, matchId, stateVersion: context.game.version } : undefined,
+          activity: {
+            idle: false,
+            tabVisible: document.visibilityState !== "hidden",
+          },
+        };
+      },
+      heartbeatIntervalMs: 15_000,
+      authority: readyContext?.game.authority,
+      onGameEvent: (event, payload) =>
+        handleGatewayEvent(
+          event,
+          payload as Parameters<ServerToClientEvents[keyof ServerToClientEvents]>[0],
+        ),
+      onPresenceChange: derivePresenceChat,
+      onDiagnostic: (event) => {
+        setGatewayDiagnostic((current) => updateGatewayDiagnostic(current, {}, event));
+      },
+    });
+
+    session.start();
+    sessionRef.current = session;
+
+    // Mirror session-owned state into React state for rendering. The session
+    // owns status/latency/auth/joined/presence; the consumer only mirrors.
+    let prevStatus: SimulatorConnectionStatus | null = null;
+    let prevAuthenticated = false;
+    let prevLatencyMs: number | null = null;
+    let lastNotifiedReconnect = false;
+
+    const unsubSessionState = session.subscribeState((s) => {
+      setGatewayDiagnostic((current) => {
+        const patch: Partial<LiveGatewayDiagnosticState> = {
+          status: s.status,
+          authenticated: s.authenticated,
+          connectionId: s.connectionId ?? undefined,
+          socketId: s.connectionId ?? undefined,
+          latencyMs: s.latencyMs ?? undefined,
+          authModeLabel: s.authenticated ? "Authenticated" : undefined,
+          // Mirror the gateway's reconnect attempt counter directly — restores
+          // the counter that Patch 4a dropped when it stopped counting events
+          // the session doesn't emit.
+          reconnectAttempts: s.reconnectAttempt,
+        };
+        // Prefer the live error string from the gateway when present; fall
+        // back to the generic terminal-state message only when disconnected
+        // without a specific error. Skipping the assignment otherwise keeps
+        // the last seen error visible (matches pre-session behavior).
+        if (s.error) {
+          patch.lastError = s.error;
+        } else if (s.status === "disconnected") {
+          patch.lastError =
+            s.authStatus === "failed"
+              ? "Gateway authentication failed."
+              : "Socket.IO reconnect failed";
+        }
+        return { ...current, ...patch };
       });
 
+      // Game-domain per-side connection mirroring for board rendering. The
+      // session doesn't know about "sides", so the consumer translates.
+      const wasReady = prevStatus === "connected" && prevAuthenticated;
+      const isReady = s.status === "connected" && s.authenticated;
+      if (!wasReady && isReady) {
+        markLocalConnection("connected");
+      } else if (s.status === "reconnecting" && prevStatus !== "reconnecting") {
+        markLocalConnection("reconnecting");
+        gatewayJoinRef.current = null;
+        setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
+      } else if (s.status === "disconnected" && prevStatus !== "disconnected") {
+        markLocalConnection("disconnected");
+        gatewayJoinRef.current = null;
+        setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
+      }
+
+      // Latency sample → per-side heartbeat recording (game-domain).
+      if (s.latencyMs !== null && s.latencyMs !== prevLatencyMs) {
+        const context = latestContextRef.current;
+        const side = context ? localConnectionSideForContext(context, playerId) : null;
+        const now = Date.now();
+        if (side) {
+          setPlayerConnections((current) =>
+            recordLocalConnectionHeartbeat(current, side, now, s.latencyMs as number),
+          );
+        }
+      }
+
+      // One-shot "Connection interrupted" notification per reconnect cycle.
+      // The session surfaces the gateway error string, so the message echoes
+      // it when available — restores the context Patch 4a regressed.
+      if (s.status === "reconnecting" && !lastNotifiedReconnect) {
+        lastNotifiedReconnect = true;
+        showServerFeedbackNotification({
+          id: `live-match:gateway-connection:${gameId}`,
+          severity: "warning",
+          title: "Connection interrupted",
+          message: s.error
+            ? `${s.error}. Trying to reconnect to the match server.`
+            : "Trying to reconnect to the match server.",
+        });
+      } else if (s.status === "connected" && prevStatus !== "connected") {
+        lastNotifiedReconnect = false;
+      }
+
+      prevStatus = s.status;
+      prevAuthenticated = s.authenticated;
+      prevLatencyMs = s.latencyMs;
+    });
+
     return () => {
-      cancelled = true;
-      if (socketRef.current === socket) {
-        socketRef.current = null;
+      session.stop();
+      unsubSessionState();
+      if (sessionRef.current === session) {
+        sessionRef.current = null;
       }
-      if (pingInterval) {
-        window.clearInterval(pingInterval);
+      if (handleRef.current === handle) {
+        handleRef.current = null;
       }
-      if (heartbeatInterval) {
-        window.clearInterval(heartbeatInterval);
-      }
-      detachManagerReconnectHandlers?.();
       gatewayJoinRef.current = null;
-      gatewayJoinRetryRef.current = null;
       setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
-      socket?.disconnect();
+      // Release only THIS handle (ref-count → 1). The root keeps the shared
+      // socket open across navigation.
+      handle.release();
     };
   }, [
     canRunClientAuthorityPractice,
@@ -1348,8 +956,8 @@ export function LiveMatchPage() {
       if (pendingOptimisticMoveRef.current) {
         return false;
       }
-      const socket = socketRef.current;
-      if (!socket?.connected) {
+      const handle = handleRef.current;
+      if (!handle || handle.getState().status !== "connected") {
         // eslint-disable-next-line no-console
         console.warn("[live-match] gateway is not open; interaction not sent", submission.actionId);
         showServerFeedbackNotification({
@@ -1367,8 +975,8 @@ export function LiveMatchPage() {
           gameId,
           joinedGameId: joined?.gameId,
           joinedRole: joined?.role,
-          socketId: socket.id,
-          socketConnected: socket.connected,
+          socketId: handle.getState().connectionId,
+          socketConnected: true,
         });
         showServerFeedbackNotification({
           id: `live-match:interaction-before-join:${gameId}`,
@@ -1376,7 +984,6 @@ export function LiveMatchPage() {
           title: "Rejoining match",
           message: "The match connection is still seating you. Try the action again in a moment.",
         });
-        gatewayJoinRetryRef.current?.();
         return false;
       }
       const gameProfileId = actorIdForSide(latestContextRef.current, side);
@@ -1422,9 +1029,9 @@ export function LiveMatchPage() {
         expectedVersion,
         gameProfileId,
         correlationId: requestCorrelationId,
-        socketId: socket.id,
+        socketId: handle.getState().connectionId,
       });
-      socket.emit("submit_interaction", message);
+      handle.emit("submit_interaction", message);
       return true;
     },
     [gameId, matchId],
@@ -1453,9 +1060,9 @@ export function LiveMatchPage() {
   );
 
   const requestRemoteUndo = useCallback(() => {
-    const socket = socketRef.current;
+    const handle = handleRef.current;
     const context = latestContextRef.current;
-    if (!socket?.connected || !context?.game.gameId) {
+    if (!handle || handle.getState().status !== "connected" || !context?.game.gameId) {
       notifications.show({
         color: "red",
         title: "Gateway unavailable",
@@ -1463,7 +1070,7 @@ export function LiveMatchPage() {
       });
       return false;
     }
-    socket.emit("proposal_send", {
+    handle.emit("proposal_send", {
       gameId: context.game.gameId,
       actionType: "undo",
     });
@@ -1477,8 +1084,8 @@ export function LiveMatchPage() {
   }, []);
 
   const sendPushState = useCallback((payload: PushStatePayload) => {
-    const socket = socketRef.current;
-    if (!socket?.connected) {
+    const handle = handleRef.current;
+    if (!handle || handle.getState().status !== "connected") {
       // eslint-disable-next-line no-console
       console.warn("[live-match] gateway is not open; state not pushed", payload.moveType);
       showServerFeedbackNotification({
@@ -1489,13 +1096,13 @@ export function LiveMatchPage() {
       });
       return;
     }
-    socket.emit("push_state", payload);
+    handle.emit("push_state", payload);
   }, []);
 
   const claimRivalDrop = useCallback(() => {
-    const socket = socketRef.current;
+    const handle = handleRef.current;
     const context = latestContextRef.current;
-    if (!socket?.connected || !context?.game.gameId) {
+    if (!handle || handle.getState().status !== "connected" || !context?.game.gameId) {
       notifications.show({
         color: "red",
         title: "Gateway unavailable",
@@ -1503,7 +1110,7 @@ export function LiveMatchPage() {
       });
       return;
     }
-    socket.emit("drop_player", {
+    handle.emit("drop_player", {
       gameId: context.game.gameId,
     });
   }, []);
@@ -1556,7 +1163,7 @@ export function LiveMatchPage() {
         ? context.match.currentGameId
         : undefined;
     return (
-      <BoardPage
+      <BoardSharedPage
         key={`${context.game.gameId}:${humanSide}`}
         scenarioId={DEFAULT_SCENARIO}
         initialEngineBuilder={liveViewerEngineBuilder}
@@ -1749,7 +1356,7 @@ function ClientAuthorityPracticeBoard({
   );
 
   return (
-    <BoardPage
+    <BoardSharedPage
       scenarioId={DEFAULT_SCENARIO}
       initialEngineBuilder={() => engineRef.current ?? createPracticeEngine(config)}
       initialAi={createPracticeAiConfig(config)}
@@ -1889,10 +1496,6 @@ function presenceDiagnosticsForContext(
       self: selfSide === side ? true : undefined,
     };
   });
-}
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
 }
 
 function playerIdentitiesForContext(context: LiveMatchContext): PlayerIdentityBySide | undefined {
@@ -2333,10 +1936,6 @@ function correlationId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => window.setTimeout(resolve, ms));
-}
-
 type GatewayErrorMessage = Extract<LiveGatewayMessage, { type: "gateway_error" | "error" }>;
 type MoveRejectedMessage = Extract<LiveGatewayMessage, { type: "move_rejected" }>;
 
@@ -2363,13 +1962,13 @@ function showMoveRejectedNotification(message: MoveRejectedMessage): void {
 
 function handleProposalReceived(
   message: Extract<LiveGatewayMessage, { type: "proposal_received" }>,
-  socket: LiveGatewaySocket | null,
+  handle: GatewayHandle | null,
 ): void {
   if (message.actionType !== "undo") {
     return;
   }
   const accepted = window.confirm("Your opponent requested to undo the last move. Approve?");
-  socket?.emit(accepted ? "proposal_accept" : "proposal_decline", {
+  handle?.emit(accepted ? "proposal_accept" : "proposal_decline", {
     gameId: message.gameId,
     actionType: "undo",
   });
@@ -2444,28 +2043,4 @@ function showServerFeedbackNotification(input: {
     title: input.title,
     message: input.message,
   });
-}
-
-async function resolveGatewayTicket(
-  search: string,
-  matchId?: string,
-  contextPlayerId?: string,
-): Promise<{ ticket: GatewayTicket; playerId?: string }> {
-  const params = new URLSearchParams(search);
-  const ticket = params.get("ticket");
-  const authToken = params.get("authToken");
-  const playerId = params.get("playerId") ?? contextPlayerId;
-  if (ticket || authToken) {
-    // Server-practice launch already minted a ticket for the synthetic quick
-    // match player. Reuse it so `/play/practice?...` can redirect straight
-    // into the live game even for anonymous users.
-    return { ticket: { ticket: ticket ?? undefined, authToken: authToken ?? undefined }, playerId };
-  }
-  return {
-    ticket: await requestGatewayTicket({
-      gameSlug: CYBERPUNK_GAME_SLUG,
-      ...(matchId && playerId ? { matchId, playerId } : {}),
-    }),
-    playerId,
-  };
 }

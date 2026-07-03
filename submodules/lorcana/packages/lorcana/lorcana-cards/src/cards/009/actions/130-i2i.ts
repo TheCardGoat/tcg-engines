@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { i2iI18n } from "./130-i2i.i18n";
 
 export const i2i: ActionCard = {
-  id: "9NO",
+  id: "C4m",
   canonicalId: "ci_buH",
+  slug: "lorcana-ci_buH",
+  printings: [
+    {
+      id: "set9-130",
+      artId: "set9-130",
+      setCode: "set9",
+      collectorNumber: "130",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-130"],
   cardType: "action",
   name: "I2I",
@@ -16,7 +27,7 @@ export const i2i: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d2d94d7cffe349d9a618f8bdb6695f29",
-    tcgPlayer: 651116,
+    tcgPlayer: "651116",
   },
   text: [
     {

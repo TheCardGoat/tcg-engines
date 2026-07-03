@@ -4,6 +4,17 @@ import { bernardBrandnewAgentI18n } from "./002-bernard-brand-new-agent.i18n";
 export const bernardBrandnewAgent: CharacterCard = {
   id: "oTM",
   canonicalId: "ci_oTM",
+  slug: "lorcana-ci_oTM",
+  printings: [
+    {
+      id: "set3-002",
+      artId: "set3-002",
+      setCode: "set3",
+      collectorNumber: "2",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-002"],
   cardType: "character",
   name: "Bernard",
@@ -20,7 +31,7 @@ export const bernardBrandnewAgent: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b00e336742ab4743850d9927c06c7c6e",
-    tcgPlayer: 537218,
+    tcgPlayer: "537218",
   },
   text: [
     {

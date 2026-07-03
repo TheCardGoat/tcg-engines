@@ -4,6 +4,17 @@ import { hiramFlavershamIntriguedInventorI18n } from "./159-hiram-flaversham-int
 export const hiramFlavershamIntriguedInventor: CharacterCard = {
   id: "yGJ",
   canonicalId: "ci_3CQ",
+  slug: "lorcana-ci_3CQ",
+  printings: [
+    {
+      id: "set6-159",
+      artId: "set6-159",
+      setCode: "set6",
+      collectorNumber: "159",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-159"],
   cardType: "character",
   name: "Hiram Flaversham",
@@ -21,7 +32,7 @@ export const hiramFlavershamIntriguedInventor: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_ac870f32bf614f27a7b0c0bdf88837fe",
-    tcgPlayer: 593013,
+    tcgPlayer: "593013",
   },
   classifications: ["Storyborn", "Ally", "Inventor"],
   i18n: hiramFlavershamIntriguedInventorI18n,

@@ -19,11 +19,11 @@ export const herculesBabyDemigodI18n: Record<Languages, I18nProperties> = {
     version: "Baby-Halbgott",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "STARK, WIE SEIN VATER 3",
-        description: "— Füge einem beschädigten Charakter deiner Wahl 1 Schaden zu.",
+        title: "Stark, wie sein Vater",
+        description: "3 {I} — Füge einem beschädigten Charakter deiner Wahl 1 Schaden zu.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const herculesBabyDemigodI18n: Record<Languages, I18nProperties> = {
     version: "Bébé demi-dieu",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "FORT COMME SON",
-        description: "PÈRE 3 — Infligez 1 dommage à un personnage ayant au moins 1 dommage.",
+        title: "Fort comme son père",
+        description: "3 {I} — Infligez 1 dommage à un personnage ayant au moins 1 dommage.",
       },
     ],
   },
@@ -45,11 +45,11 @@ export const herculesBabyDemigodI18n: Record<Languages, I18nProperties> = {
     version: "Semidio Bambino",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "FORTE, COME IL SUO",
-        description: "PAPÀ 3 — Infliggi 1 danno a un personaggio danneggiato a tua scelta.",
+        title: "Forte, Come il suo Papà",
+        description: "3 {I} — Infliggi 1 danno a un personaggio danneggiato a tua scelta.",
       },
     ],
   },

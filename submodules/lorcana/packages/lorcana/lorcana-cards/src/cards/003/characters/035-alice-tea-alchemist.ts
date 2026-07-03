@@ -4,6 +4,17 @@ import { aliceTeaAlchemistI18n } from "./035-alice-tea-alchemist.i18n";
 export const aliceTeaAlchemist: CharacterCard = {
   id: "Vs7",
   canonicalId: "ci_Vs7",
+  slug: "lorcana-ci_Vs7",
+  printings: [
+    {
+      id: "set3-035",
+      artId: "set3-035",
+      setCode: "set3",
+      collectorNumber: "35",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-035"],
   cardType: "character",
   name: "Alice",
@@ -20,7 +31,7 @@ export const aliceTeaAlchemist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_df136840866d426db031332e34942735",
-    tcgPlayer: 538729,
+    tcgPlayer: "538729",
   },
   text: [
     {

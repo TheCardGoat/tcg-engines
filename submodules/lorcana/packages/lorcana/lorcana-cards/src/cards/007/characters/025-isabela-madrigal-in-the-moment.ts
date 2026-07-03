@@ -4,6 +4,17 @@ import { isabelaMadrigalInTheMomentI18n } from "./025-isabela-madrigal-in-the-mo
 export const isabelaMadrigalInTheMoment: CharacterCard = {
   id: "pWM",
   canonicalId: "ci_pWM",
+  slug: "lorcana-ci_pWM",
+  printings: [
+    {
+      id: "set7-025",
+      artId: "set7-025",
+      setCode: "set7",
+      collectorNumber: "25",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-025"],
   cardType: "character",
   name: "Isabela Madrigal",
@@ -20,7 +31,7 @@ export const isabelaMadrigalInTheMoment: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b5348c3b5e494988a10e2adbfd366f50",
-    tcgPlayer: 619420,
+    tcgPlayer: "619420",
   },
   text: [
     {

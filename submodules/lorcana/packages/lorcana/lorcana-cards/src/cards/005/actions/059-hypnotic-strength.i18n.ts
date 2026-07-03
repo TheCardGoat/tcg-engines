@@ -7,14 +7,14 @@ export const hypnoticStrengthI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Hypnotische Kräfte",
-    text: "Ziehe 1 Karte. Ein Charakter deiner Wahl erhält in diesem Zug Herausfordern +2. (Während der Charakter herausfordert, erhält er +2.)",
+    text: "Ziehe 1 Karte. Ein Charakter deiner Wahl erhält in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}.)",
   },
   fr: {
     name: "Force hypnotique",
-    text: "Piochez une carte. Choisissez un personnage qui gagne Offensif +2 pour le reste de ce tour.",
+    text: "Piochez une carte. Choisissez un personnage qui gagne <Offensif> +2 pour le reste de ce tour.",
   },
   it: {
     name: "Forza Ipnotica",
-    text: "Pesca una carta. Un personaggio a tua scelta ottiene Sfidante +2 per questo turno.",
+    text: "Pesca una carta. Un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
   },
 };

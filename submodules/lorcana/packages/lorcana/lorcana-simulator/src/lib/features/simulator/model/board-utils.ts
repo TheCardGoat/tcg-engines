@@ -59,6 +59,12 @@ interface AuthoritativeCardStateView {
 }
 
 type LocalizedCardTextSource = string | Array<{ title: string; description?: string }>;
+type PrintingImageSource = Pick<LorcanaCardDefinition, "cardNumber" | "printings" | "set">;
+
+interface CardImageMetadata {
+  imageCardNumber?: string;
+  imageSet?: string;
+}
 
 const CARD_I18N_LOCALE_BY_UI_LOCALE: Partial<Record<string, Languages>> = {
   en: "en",
@@ -129,6 +135,43 @@ function projectCardTextEntries(
     .filter((entry): entry is LorcanaCardTextEntrySnapshot => entry !== null);
 
   return entries.length > 0 ? entries : undefined;
+}
+
+function normalizeImageSetCode(value: string | undefined): string | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  const upper = value.toUpperCase();
+  if (upper.startsWith("SET")) {
+    return upper.replace(/^SET/, "").padStart(3, "0");
+  }
+  if (/^\d+$/.test(upper)) {
+    return upper.padStart(3, "0");
+  }
+  return upper;
+}
+
+function getImageSetFromPrintingId(printingId: string | undefined): string | undefined {
+  if (!printingId) {
+    return undefined;
+  }
+
+  const match = printingId.toUpperCase().match(/-(PD\d+|P\d+|Q\d+|G\d+|C\d+|D\d+)-/);
+  return match ? normalizeImageSetCode(match[1]) : undefined;
+}
+
+function getCardImageMetadata(definition: PrintingImageSource | undefined): CardImageMetadata {
+  const primaryPrinting = definition?.printings?.[0];
+  const imageSet =
+    getImageSetFromPrintingId(primaryPrinting?.id) ??
+    normalizeImageSetCode(primaryPrinting?.setCode) ??
+    normalizeImageSetCode(definition?.set);
+  const collectorNumber = primaryPrinting?.collectorNumber ?? definition?.cardNumber;
+  const imageCardNumber =
+    collectorNumber === undefined ? undefined : String(collectorNumber).padStart(3, "0");
+
+  return { imageCardNumber, imageSet };
 }
 
 function getLocalizedChoiceOptionTexts(definition: LorcanaCardDefinition): string[] | undefined {
@@ -721,6 +764,7 @@ function buildSupplementalCardSnapshot(args: {
   const ownerSide = getSideForOwnerId(board, ownerId) ?? "playerOne";
   const zoneId = normalizeZoneId(indexEntry.zoneKey);
   const cardText = definition.text as LocalizedCardTextSource | undefined;
+  const imageMetadata = getCardImageMetadata(definition);
 
   return {
     cardId,
@@ -785,6 +829,7 @@ function buildSupplementalCardSnapshot(args: {
     facePresentation: "faceUp",
     set: definition.set,
     cardNumber: definition.cardNumber,
+    ...imageMetadata,
     rarity: normalizeRarity(definition.rarity),
   };
 }
@@ -881,6 +926,7 @@ export function buildCardSnapshotMap(
     const facePresentation = zoneId === "inkwell" ? (isMasked ? "faceDown" : "faceUp") : "faceUp";
     const cardName = getCardDisplayName(projectedCard.fullName, definition);
     const cardText = definition?.text as LocalizedCardTextSource | undefined;
+    const imageMetadata = getCardImageMetadata(definition);
     const locationCard =
       projectedCard.atLocationId !== undefined
         ? board.cards[projectedCard.atLocationId]
@@ -953,6 +999,7 @@ export function buildCardSnapshotMap(
       rarity: normalizeRarity(definition?.rarity),
       readyState,
       set: definition?.set,
+      ...imageMetadata,
       strength: definition?.cardType === "character" ? projectedCard.strength : undefined,
       temporaryRestrictions: projectedCard.temporaryRestrictions,
       grantSources: buildGrantSources(cardId, projectedCard, staticResources),

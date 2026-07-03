@@ -7,14 +7,17 @@ export const gd03GundamHajiroboshi2ndForm055: UnitCard = {
   color: "purple",
   traits: ["civilian", "gundam frame"],
   id: "GD03-055",
-  externalId: "gundam:gd03-055",
-  slug: "gundam-hajiroboshi-2nd-form-gd03-055",
+  canonicalId: "GD03-055",
+  externalIds: { bandai: "gundam:gd03-055" },
+  slug: "gundam-hajiroboshi-2nd-form/gd03-055",
   displayName: "Gundam Hajiroboshi (2nd Form)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-055",
   printings: [
     {
       id: "GD03-055",
+      artId: "GD03-055",
+      setCode: "GD03",
       collectorNumber: "GD03-055",
       cardNumber: "GD03-055",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamHajiroboshi2ndForm055: UnitCard = {
     },
     {
       id: "GD03-055_p1",
+      artId: "GD03-055_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-055_p1",
       cardNumber: "GD03-055",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamHajiroboshi2ndForm055: UnitCard = {
       productName: "WORLD CHAMPIONSHIPS 26-27 Participation Pack 26-27 Vol.1",
     },
   ],
+  reprints: ["GD03-055", "GD03-055_p1"],
   selectedPrintingId: "GD03-055",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-055.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-055.webp?260424",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { beastTragicHeroI18n } from "./173-beast-tragic-hero.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const beastTragicHero: CharacterCard = {
   id: "VVb",
   canonicalId: "ci_VVb",
+  slug: "lorcana-ci_VVb",
+  printings: [
+    {
+      id: "set2-173",
+      artId: "set2-173",
+      setCode: "set2",
+      collectorNumber: "173",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-173"],
   cardType: "character",
   name: "Beast",
@@ -21,7 +33,7 @@ export const beastTragicHero: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7ffeed1a4c364378ab7814dda3b99b73",
-    tcgPlayer: 527629,
+    tcgPlayer: "527629",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { auroraLoreGuardianI18n } from "./140-aurora-lore-guardian.i18n";
 export const auroraLoreGuardian: CharacterCard = {
   id: "k2u",
   canonicalId: "ci_k2u",
+  slug: "lorcana-ci_k2u",
+  printings: [
+    {
+      id: "set4-140",
+      artId: "set4-140",
+      setCode: "set4",
+      collectorNumber: "140",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-140"],
   cardType: "character",
   name: "Aurora",
@@ -20,7 +31,7 @@ export const auroraLoreGuardian: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f6e236483db94d5cbd74ec3d0c69f685",
-    tcgPlayer: 550605,
+    tcgPlayer: "550605",
   },
   text: [
     {

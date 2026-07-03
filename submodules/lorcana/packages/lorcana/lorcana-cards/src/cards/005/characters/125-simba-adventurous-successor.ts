@@ -4,6 +4,17 @@ import { simbaAdventurousSuccessorI18n } from "./125-simba-adventurous-successor
 export const simbaAdventurousSuccessor: CharacterCard = {
   id: "QVE",
   canonicalId: "ci_QVE",
+  slug: "lorcana-ci_QVE",
+  printings: [
+    {
+      id: "set5-125",
+      artId: "set5-125",
+      setCode: "set5",
+      collectorNumber: "125",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-125"],
   cardType: "character",
   name: "Simba",
@@ -20,7 +31,7 @@ export const simbaAdventurousSuccessor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_655a6cb32b86442e8bfc1538371dcded",
-    tcgPlayer: 560135,
+    tcgPlayer: "560135",
   },
   text: [
     {

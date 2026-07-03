@@ -7,14 +7,17 @@ export const st06FierceUnity013: CommandCard = {
   color: "green",
   traits: ["clan"],
   id: "ST06-013",
-  externalId: "gundam:st06-013",
-  slug: "fierce-unity-st06-013",
+  canonicalId: "ST06-013",
+  externalIds: { bandai: "gundam:st06-013" },
+  slug: "fierce-unity/st06-013",
   displayName: "Fierce Unity",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-013",
   printings: [
     {
       id: "ST06-013",
+      artId: "ST06-013",
+      setCode: "ST06",
       collectorNumber: "ST06-013",
       cardNumber: "ST06-013",
       set: {
@@ -30,6 +33,8 @@ export const st06FierceUnity013: CommandCard = {
     },
     {
       id: "ST06-013_p1",
+      artId: "ST06-013_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-013_p1",
       cardNumber: "ST06-013",
       set: {
@@ -44,6 +49,7 @@ export const st06FierceUnity013: CommandCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST06-013", "ST06-013_p1"],
   selectedPrintingId: "ST06-013",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-013.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-013.webp?260424",

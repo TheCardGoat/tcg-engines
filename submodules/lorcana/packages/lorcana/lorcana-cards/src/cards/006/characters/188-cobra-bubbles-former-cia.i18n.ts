@@ -19,11 +19,12 @@ export const cobraBubblesFormerCiaI18n: Record<Languages, I18nProperties> = {
     version: "Ehemaliger Mitarbeiter der CIA",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "ÜBERLEGE, WAS DAS BESTE IST",
-        description: "2 — Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
+        title: "Überlege, was das beste ist",
+        description: "2 {I} — Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
     ],
   },
@@ -32,11 +33,12 @@ export const cobraBubblesFormerCiaI18n: Record<Languages, I18nProperties> = {
     version: "Ancien agent de la CIA",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "ENVISAGER CE QU'IL Y A DE MIEUX 2",
-        description: "— Piochez une carte puis défaussez-en une.",
+        title: "Envisager ce qu'il y a de mieux",
+        description: "2 {I} — Piochez une carte puis défaussez-en une.",
       },
     ],
   },
@@ -45,11 +47,11 @@ export const cobraBubblesFormerCiaI18n: Record<Languages, I18nProperties> = {
     version: "Ex Agente CIA",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "CONSIDERARE QUELLO CHE",
-        description: "È MEGLIO 2 — Pesca una carta, poi scegli e scarta una carta.",
+        title: "Considerare quello che è meglio",
+        description: "2 {I} — Pesca una carta, poi scegli e scarta una carta.",
       },
     ],
   },

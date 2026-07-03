@@ -4,6 +4,17 @@ import { medalOfHeroesI18n } from "./165-medal-of-heroes.i18n";
 export const medalOfHeroes: ItemCard = {
   id: "tVn",
   canonicalId: "ci_tVn",
+  slug: "lorcana-ci_tVn",
+  printings: [
+    {
+      id: "set5-165",
+      artId: "set5-165",
+      setCode: "set5",
+      collectorNumber: "165",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-165"],
   cardType: "item",
   name: "Medal of Heroes",
@@ -16,7 +27,7 @@ export const medalOfHeroes: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1aea26c4e3a24196a40c9c10de33fc82",
-    tcgPlayer: 559711,
+    tcgPlayer: "559711",
   },
   text: [
     {

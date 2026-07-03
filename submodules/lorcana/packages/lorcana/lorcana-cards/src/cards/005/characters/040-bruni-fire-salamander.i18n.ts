@@ -19,10 +19,10 @@ export const bruniFireSalamanderI18n: Record<Languages, I18nProperties> = {
     version: "Feuersalamander",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "ABSCHIEDSGESCHENK",
+        title: "Abschiedsgeschenk",
         description: "Wenn dieser Charakter verbannt wird, darfst du 1 Karte ziehen.",
       },
     ],
@@ -32,10 +32,10 @@ export const bruniFireSalamanderI18n: Record<Languages, I18nProperties> = {
     version: "Salamandre de feu",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "UN CADEAU AU PASSAGE",
+        title: "Un cadeau au passage",
         description: "Lorsque ce personnage est banni, vous pouvez piocher une carte.",
       },
     ],
@@ -45,10 +45,10 @@ export const bruniFireSalamanderI18n: Record<Languages, I18nProperties> = {
     version: "Salamandra del Fuoco",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "DONO DI ADDIO",
+        title: "Dono di Addio",
         description: "Quando questo personaggio viene esiliato, puoi pescare una carta.",
       },
     ],

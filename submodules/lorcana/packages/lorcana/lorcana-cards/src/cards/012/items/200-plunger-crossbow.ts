@@ -4,6 +4,17 @@ import { plungerCrossbowI18n } from "./200-plunger-crossbow.i18n";
 export const plungerCrossbow: ItemCard = {
   id: "4pA",
   canonicalId: "ci_4pA",
+  slug: "lorcana-ci_4pA",
+  printings: [
+    {
+      id: "set12-200",
+      artId: "set12-200",
+      setCode: "set12",
+      collectorNumber: "200",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-200"],
   cardType: "item",
   name: "Plunger Crossbow",
@@ -16,6 +27,7 @@ export const plungerCrossbow: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3d1982b9cb5d4ed0bae53c2db2c92fd8",
+    tcgPlayer: "690723",
   },
   text: [
     {

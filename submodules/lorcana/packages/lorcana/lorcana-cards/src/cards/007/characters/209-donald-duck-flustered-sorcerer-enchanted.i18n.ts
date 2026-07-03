@@ -16,7 +16,7 @@ export const donaldDuckFlusteredSorcererEnchantedI18n: Record<Languages, I18nPro
     version: "Aufgeregter Zauberer",
     text: [
       {
-        title: "VERWIRREN!",
+        title: "Verwirren!",
         description: "Gegnerische Mitspielende brauchen 25 Legenden, um das Spiel zu gewinnen.",
       },
     ],
@@ -26,7 +26,7 @@ export const donaldDuckFlusteredSorcererEnchantedI18n: Record<Languages, I18nPro
     version: "Sorcier exaspéré",
     text: [
       {
-        title: "OBFUSCATION!",
+        title: "Obfuscation!",
         description: "Les adversaires ont besoin de 25 éclats de Lore pour gagner la partie.",
       },
     ],
@@ -36,7 +36,7 @@ export const donaldDuckFlusteredSorcererEnchantedI18n: Record<Languages, I18nPro
     version: "Stregone Agitato",
     text: [
       {
-        title: "OTTENEBRARE!",
+        title: "Ottenebrare!",
         description: "Gli avversari hanno bisogno di 25 leggenda per vincere la partita.",
       },
     ],

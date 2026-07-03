@@ -22,12 +22,12 @@ export const chernabogEvildoerEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Übeltäter",
     text: [
       {
-        title: "DIE MACHT DES BÖSEN",
+        title: "Die Macht des Bösen",
         description:
-          "Für jede Charakterkarte in deinem Ablagestapel zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jede Charakterkarte in deinem Ablagestapel zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "DIE GEISTER BESCHWÖREN",
+        title: "Die Geister beschwören",
         description:
           "Wenn du diesen Charakter ausspielst, mische alle Charakterkarten aus deinem Ablagestapel zurück in dein Deck.",
       },
@@ -38,12 +38,12 @@ export const chernabogEvildoerEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Répand le mal",
     text: [
       {
-        title: "LE POUVOIR DU MAL",
+        title: "Le pouvoir du Mal",
         description:
-          "Ce personnage vous coûte 1 de moins pour chaque carte Personnage dans votre défausse.",
+          "Ce personnage vous coûte 1 {I} de moins pour chaque carte Personnage dans votre défausse.",
       },
       {
-        title: "INVOCATION DES ESPRITS",
+        title: "Invocation des esprits",
         description:
           "Lorsque vous jouez ce personnage, remettez tous les personnages de votre défausse dans votre pioche, puis mélangez-la.",
       },
@@ -54,12 +54,12 @@ export const chernabogEvildoerEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Maligno",
     text: [
       {
-        title: "IL POTERE DEL MALE",
+        title: "Il Potere del Male",
         description:
-          "Per ogni carta personaggio nei tuoi scarti, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni carta personaggio nei tuoi scarti, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "EVOCARE GLI SPIRITI",
+        title: "Evocare gli Spiriti",
         description:
           "Quando giochi questo personaggio, rimescola nel tuo mazzo tutte le carte personaggio nei tuoi scarti.",
       },

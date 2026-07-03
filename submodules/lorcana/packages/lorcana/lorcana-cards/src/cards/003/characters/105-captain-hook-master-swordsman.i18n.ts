@@ -21,14 +21,14 @@ export const captainHookMasterSwordsmanI18n: Record<Languages, I18nProperties> =
     version: "Meisterhafter Schwertkämpfer",
     text: [
       {
-        title: "NEMESIS",
+        title: "Nemesis",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
       {
-        title: "MANN GEGEN MANN",
+        title: "Mann gegen Mann",
         description:
-          "Alle Peter-Pan-Charaktere verlieren Wendig und können Wendig nicht mehr erhalten.",
+          "Alle Peter-Pan-Charaktere verlieren <Wendig> und können <Wendig> nicht mehr erhalten.",
       },
     ],
   },
@@ -37,14 +37,14 @@ export const captainHookMasterSwordsmanI18n: Record<Languages, I18nProperties> =
     version: "Maître épéiste",
     text: [
       {
-        title: "NÉMÉSIS",
+        title: "Némésis",
         description:
           "Chaque fois que ce personnage en bannit un autre via un défi durant votre tour, redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
       {
-        title: "COMBAT SINGULIER",
+        title: "Combat singulier",
         description:
-          "Les personnages Peter Pan perdent Insaisissable et ne peuvent pas gagner Insaisissable.",
+          "Les personnages Peter Pan perdent <Insaisissable> et ne peuvent pas gagner <Insaisissable>.",
       },
     ],
   },
@@ -53,14 +53,14 @@ export const captainHookMasterSwordsmanI18n: Record<Languages, I18nProperties> =
     version: "Maestro Spadaccino",
     text: [
       {
-        title: "NEMESI",
+        title: "Nemesi",
         description:
           "Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, preparalo. Non può andare all'avventura per il resto di questo turno.",
       },
       {
-        title: "UOMO A UOMO I",
+        title: "Uomo a Uomo",
         description:
-          "personaggi chiamati Peter Pan perdono Sfuggente e non possono ottenere Sfuggente.",
+          "I personaggi chiamati Peter Pan perdono <Sfuggente> e non possono ottenere <Sfuggente>.",
       },
     ],
   },

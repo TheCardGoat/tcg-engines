@@ -17,7 +17,7 @@ export const teKHeartlessI18n: Record<Languages, I18nProperties> = {
     version: "Herzlos",
     text: [
       {
-        title: "SUCHE DAS HERZ",
+        title: "Suche das Herz",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 2 Legenden.",
       },
@@ -39,7 +39,7 @@ export const teKHeartlessI18n: Record<Languages, I18nProperties> = {
     version: "Heartless",
     text: [
       {
-        title: "SEEK THE HEART",
+        title: "Seek the Heart",
         description:
           "During your turn, whenever this character banishes another character in a challenge, you gain 2 lore.",
       },

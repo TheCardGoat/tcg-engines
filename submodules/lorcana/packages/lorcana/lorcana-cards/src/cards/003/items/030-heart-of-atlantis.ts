@@ -4,6 +4,17 @@ import { heartOfAtlantisI18n } from "./030-heart-of-atlantis.i18n";
 export const heartOfAtlantis: ItemCard = {
   id: "cVL",
   canonicalId: "ci_cVL",
+  slug: "lorcana-ci_cVL",
+  printings: [
+    {
+      id: "set3-030",
+      artId: "set3-030",
+      setCode: "set3",
+      collectorNumber: "30",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-030"],
   cardType: "item",
   name: "Heart of Atlantis",
@@ -16,7 +27,7 @@ export const heartOfAtlantis: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_925579c341974d16b613c348efe8df5e",
-    tcgPlayer: 536277,
+    tcgPlayer: "536277",
   },
   text: [
     {

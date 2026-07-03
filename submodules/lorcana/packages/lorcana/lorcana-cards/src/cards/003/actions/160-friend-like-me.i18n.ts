@@ -17,10 +17,28 @@ export const friendLikeMeI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Je suis ton meilleur ami",
-    text: "Chaque joueur place les 3 premières cartes de sa pioche dans sa réserve d'encre, faces cachées et épuisées.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Chaque joueur place les 3 premières cartes de sa pioche dans sa réserve d'encre, faces cachées et épuisées.",
+      },
+    ],
   },
   it: {
     name: "Un Amico Come Me",
-    text: "(Un personaggio con costo 5 o superiore può per giocare questa canzone gratis.) Ogni giocatore aggiunge le prime 3 carte del proprio mazzo al suo calamaio, a faccia in giù e impegnate.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 5 o superiore può {E} per giocare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Ogni giocatore aggiunge le prime 3 carte del proprio mazzo al suo calamaio, a faccia in giù e impegnate.",
+      },
+    ],
   },
 };

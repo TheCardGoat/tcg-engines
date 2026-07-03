@@ -20,10 +20,11 @@ export const motherGothelUnwaveringSchemerI18n: Record<Languages, I18nProperties
     version: "Unermüdliche Intrigantin",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Mutter-Gothel-Charaktere auszuspielen.)",
       },
       {
-        title: "DIE WELT IST DUNKEL",
+        title: "Die Welt ist dunkel",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle gegnerischen Mitspielenden je einen ihrer Charaktere und nehmen diesen zurück auf ihre Hand.",
       },
@@ -34,10 +35,11 @@ export const motherGothelUnwaveringSchemerI18n: Record<Languages, I18nProperties
     version: "Conspiratrice inflexible",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Mère Gothel.)",
       },
       {
-        title: '"LE MONDE EST TRISTE"',
+        title: '"Le monde est triste"',
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire choisit l'un de ses personnages et le renvoie dans sa main.",
       },
@@ -48,12 +50,13 @@ export const motherGothelUnwaveringSchemerI18n: Record<Languages, I18nProperties
     version: "Complottatrice Indefessa",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Madre Gothel.)",
       },
       {
-        title: "IL MONDO",
+        title: "Il Mondo È Oscuro",
         description:
-          "È OSCURO Quando giochi questo personaggio, ogni avversario sceglie uno dei suoi personaggi e riprende in mano quella carta.",
+          "Quando giochi questo personaggio, ogni avversario sceglie uno dei suoi personaggi e riprende in mano quella carta.",
       },
     ],
   },

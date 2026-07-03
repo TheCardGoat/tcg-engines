@@ -22,12 +22,12 @@ export const goldieOgiltCunningProspectorI18n: Record<Languages, I18nProperties>
     version: "Schlaue Schürferin",
     text: [
       {
-        title: "ANSPRUCHSERHEBERIN",
+        title: "Anspruchserheberin",
         description:
           "Wenn du diesen Charakter ausspielst, zeigt einer der gegnerischen Mitspielenden deiner Wahl alle Handkarten für alle sichtbar vor und wirft eine Ortskarte deiner Wahl ab.",
       },
       {
-        title: "GOLD SCHÜRFEN",
+        title: "Gold schürfen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 Ortskarte aus einem gegnerischen Ablagestapel unter das zugehörige Deck legen, um 1 Legende zu sammeln.",
       },
@@ -38,12 +38,12 @@ export const goldieOgiltCunningProspectorI18n: Record<Languages, I18nProperties>
     version: "Prospectrice rusée",
     text: [
       {
-        title: "PILLEUSE DE GISEMENT",
+        title: "Pilleuse de gisement",
         description:
           "Lorsque vous jouez ce personnage, choisissez un adversaire qui révèle sa main et défausse une carte Lieu de votre choix.",
       },
       {
-        title: "TROUVER UN FILON",
+        title: "Trouver un filon",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un joueur et placer une carte Lieu de sa défausse sous sa pioche pour gagner 1 éclat de Lore.",
       },
@@ -54,12 +54,12 @@ export const goldieOgiltCunningProspectorI18n: Record<Languages, I18nProperties>
     version: "Cercatrice Astuta",
     text: [
       {
-        title: "LADRA DI CONCESSIONI",
+        title: "Ladra di Concessioni",
         description:
           "Quando giochi questo personaggio, un avversario a tua scelta rivela la sua mano e scarta una carta luogo a tua scelta.",
       },
       {
-        title: "TROVARE L'ORO",
+        title: "Trovare l'Oro",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi mettere una carta luogo dagli scarti di un giocatore a tua scelta in fondo al suo mazzo per ottenere 1 leggenda.",
       },

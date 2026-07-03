@@ -4,6 +4,17 @@ import { elsaSpiritOfWinterI18n } from "./042-elsa-spirit-of-winter.i18n";
 export const elsaSpiritOfWinter: CharacterCard = {
   id: "1t0",
   canonicalId: "ci_4Pf",
+  slug: "lorcana-ci_4Pf",
+  printings: [
+    {
+      id: "set1-042",
+      artId: "set1-042",
+      setCode: "set1",
+      collectorNumber: "42",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-042", "set9-043"],
   cardType: "character",
   name: "Elsa",
@@ -20,7 +31,7 @@ export const elsaSpiritOfWinter: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_096f0a6be34a4134aaa682c768cceeec",
-    tcgPlayer: 649990,
+    tcgPlayer: "649990",
   },
   text: [
     {
@@ -63,7 +74,9 @@ export const elsaSpiritOfWinter: CharacterCard = {
             type: "restriction",
             restriction: "cant-ready",
             duration: "their-next-turn",
-            target: { ref: "selected-all" },
+            target: {
+              ref: "selected-all",
+            },
           },
         ],
       },

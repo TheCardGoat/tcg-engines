@@ -19,10 +19,11 @@ export const namaariMorningMistEnchantedI18n: Record<Languages, I18nProperties> 
     version: "Morgennebel",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "DIE KLINGE",
+        title: "Die Klinge",
         description: "Dieser Charakter kann bereite Charaktere herausfordern.",
       },
     ],
@@ -32,10 +33,11 @@ export const namaariMorningMistEnchantedI18n: Record<Languages, I18nProperties> 
     version: "Brume matinale",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il vous défie, un personnage adverse doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "LAMES",
+        title: "Lames",
         description: "Ce personnage peut défier des personnages redressés.",
       },
     ],
@@ -45,10 +47,11 @@ export const namaariMorningMistEnchantedI18n: Record<Languages, I18nProperties> 
     version: "Morning Mist",
     text: [
       {
-        title: "Bodyguard",
+        title:
+          "<Bodyguard> (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
       },
       {
-        title: "BLADES",
+        title: "Blades",
         description: "This character can challenge ready characters.",
       },
     ],

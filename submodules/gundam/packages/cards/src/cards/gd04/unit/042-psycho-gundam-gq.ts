@@ -7,14 +7,17 @@ export const gd04PsychoGundamGq042: UnitCard = {
   color: "red",
   traits: ["earth federation"],
   id: "GD04-042",
-  externalId: "gundam:gd04-042",
-  slug: "psycho-gundam-gq-gd04-042",
+  canonicalId: "GD04-042",
+  externalIds: { bandai: "gundam:gd04-042" },
+  slug: "psycho-gundam-gq/gd04-042",
   displayName: "Psycho Gundam (GQ)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-042",
   printings: [
     {
       id: "GD04-042",
+      artId: "GD04-042",
+      setCode: "GD04",
       collectorNumber: "GD04-042",
       cardNumber: "GD04-042",
       set: {
@@ -30,6 +33,8 @@ export const gd04PsychoGundamGq042: UnitCard = {
     },
     {
       id: "GD04-042_p1",
+      artId: "GD04-042_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-042_p1",
       cardNumber: "GD04-042",
       set: {
@@ -44,6 +49,7 @@ export const gd04PsychoGundamGq042: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-042", "GD04-042_p1"],
   selectedPrintingId: "GD04-042",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-042.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-042.webp?260424",

@@ -15,9 +15,9 @@ export const retrosphereI18n: Record<Languages, I18nProperties> = {
     name: "Retrosphäre",
     text: [
       {
-        title: "EXTRAKT AUS AMETHYST 2,",
+        title: "Extrakt aus Amethyst",
         description:
-          "Verbanne diesen Gegenstand — Schicke einen Charakter, Gegenstand oder Ort deiner Wahl, der 3 oder weniger kostet, auf die zugehörige Hand zurück.",
+          "2 {I}, Verbanne diesen Gegenstand — Schicke einen Charakter, Gegenstand oder Ort deiner Wahl, der 3 oder weniger kostet, auf die zugehörige Hand zurück.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const retrosphereI18n: Record<Languages, I18nProperties> = {
     name: "Rétrosphère",
     text: [
       {
-        title: "EXTRAIT",
+        title: "Extrait d'améthyste",
         description:
-          "D'AMÉTHYSTE 2, bannissez cet objet — Choisissez un personnage, un objet ou un lieu ayant un coût de 3 ou moins et renvoyez-le dans la main de son propriétaire.",
+          "2 {I}, bannissez cet objet — Choisissez un personnage, un objet ou un lieu ayant un coût de 3 ou moins et renvoyez-le dans la main de son propriétaire.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const retrosphereI18n: Record<Languages, I18nProperties> = {
     name: "Retrosfera",
     text: [
       {
-        title: "ESTRATTO DI AMETISTA 2,",
+        title: "Estratto di Ametista",
         description:
-          "esilia questo oggetto — Fai riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 3 o inferiore.",
+          "2 {I}, esilia questo oggetto — Fai riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 3 o inferiore.",
       },
     ],
   },

@@ -1,8 +1,12 @@
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
-import type { AttackState, FightResult } from "../types/match-state.ts";
-import { getEffectivePower } from "../active-effects/index.ts";
+import type { ActiveEffect, AttackState, FightResult, MatchState } from "../types/match-state.ts";
+import type { PlayerId } from "../types/branded.ts";
+import {
+  getEffectivePower,
+  getEffectiveRules,
+  markDefeatAtEndOfTurnIfAttacked,
+} from "../active-effects/index.ts";
 import { processEventTriggers } from "../ability-executor.ts";
-import { markDefeatAtEndOfTurnIfAttacked } from "../active-effects/index.ts";
 import { getDefinitionFor, tryDefOf } from "../state/lookups.ts";
 export interface ResolveAttackInput extends MoveInput {
   args: {
@@ -125,15 +129,22 @@ function removeFromGameIfGoSolo(
 }
 
 function executeDefeat(
-  state: import("../types/match-state.ts").MatchState,
-  playerId: import("../types/branded.ts").PlayerId,
+  state: MatchState,
+  playerId: PlayerId,
   operations: import("../operations/index.ts").Operations,
   attack: AttackState,
 ) {
   const result = attack.fightResult ?? "mutual";
   const defenderId = attack.defenderId;
+  const protectedCardId = consumeNextRivalFightProtection(state, operations, attack);
 
-  if ((result === "attackerWins" || result === "mutual") && defenderId) {
+  if (
+    (result === "attackerWins" || result === "mutual") &&
+    defenderId &&
+    protectedCardId !== (defenderId as string)
+  ) {
+    const hadAttachedCards =
+      (state.G.cardIndex[defenderId as string]?.meta.attachedGearIds.length ?? 0) > 0;
     operations.card.moveAttachedGear(defenderId, "trash");
     operations.zone.moveCard(defenderId, "trash", attack.rivalId);
     const event = {
@@ -141,13 +152,19 @@ function executeDefeat(
       cardId: defenderId,
       defeatedBy: attack.attackerId,
       playerId: attack.rivalId,
+      hadAttachedCards,
     };
     operations.event.emit(event);
     processEventTriggers(event, state, operations);
     removeFromGameIfGoSolo(state, defenderId);
   }
 
-  if (result === "defenderWins" || result === "mutual") {
+  if (
+    (result === "defenderWins" || result === "mutual") &&
+    protectedCardId !== (attack.attackerId as string)
+  ) {
+    const hadAttachedCards =
+      (state.G.cardIndex[attack.attackerId as string]?.meta.attachedGearIds.length ?? 0) > 0;
     operations.card.moveAttachedGear(attack.attackerId, "trash");
     operations.zone.moveCard(attack.attackerId, "trash", playerId);
     const event = {
@@ -155,6 +172,7 @@ function executeDefeat(
       cardId: attack.attackerId,
       defeatedBy: defenderId,
       playerId,
+      hadAttachedCards,
     };
     operations.event.emit(event);
     processEventTriggers(event, state, operations);
@@ -173,6 +191,34 @@ function executeDefeat(
   processEventTriggers(fightResolvedEvent, state, operations);
 
   operations.game.setAttackState(null);
+}
+
+function consumeNextRivalFightProtection(
+  state: MatchState,
+  operations: import("../operations/index.ts").Operations,
+  attack: AttackState,
+): string | undefined {
+  const defenderId = attack.defenderId;
+  if (!defenderId) return undefined;
+
+  const attacker = state.G.cardIndex[attack.attackerId as string];
+  const defender = state.G.cardIndex[defenderId as string];
+  if (!attacker || !defender) return undefined;
+
+  const protection = state.G.activeEffects.find(
+    (effect): effect is ActiveEffect & { playerId: PlayerId } =>
+      effect.kind === "preventNextRivalFightDefeat" && effect.playerId !== undefined,
+  );
+  if (!protection) return undefined;
+
+  const sourcePlayerId = protection.playerId as string;
+  const attackerIsFriendly = (attacker.controllerId as string) === sourcePlayerId;
+  const defenderIsFriendly = (defender.controllerId as string) === sourcePlayerId;
+
+  if (attackerIsFriendly || !defenderIsFriendly) return undefined;
+
+  operations.game.removeActiveEffect(protection.id);
+  return defenderId as string;
 }
 
 function executeSteal(
@@ -209,7 +255,10 @@ function executeSteal(
     return;
   }
 
-  const gigsToSteal = Math.min(getGigsStolenCount(attackerPower), opponent.gigArea.length);
+  const gigsToSteal = Math.min(
+    getGigsStolenCount(state, attack.attackerId as string, attackerPower),
+    opponent.gigArea.length,
+  );
 
   if (input.args.gigIdsToSteal === undefined && opponent.gigArea.length > gigsToSteal) {
     operations.game.setPendingChoice({
@@ -286,6 +335,18 @@ export function performGigSteal(opts: {
   });
 }
 
-function getGigsStolenCount(power: number): number {
-  return 1 + Math.floor(power / 10);
+function getGigsStolenCount(
+  state: import("../types/match-state.ts").MatchState,
+  attackerId: string,
+  power: number,
+): number {
+  // Base rule (gameplay guide): "Steal 1 Gig on a successful direct attack,
+  // plus 1 additional Gig for every full 10 power on the attacking Unit."
+  // A Unit with power 0 doesn't steal any Gigs — power must be strictly
+  // positive for the base steal to apply.
+  if (power <= 0) return 0;
+  const base = 1 + Math.floor(power / 10);
+  const rules = getEffectiveRules(state, attackerId);
+  const reduction = rules.includes("stealsOneFewerGig") ? 1 : 0;
+  return Math.max(0, base - reduction);
 }

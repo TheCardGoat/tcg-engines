@@ -4,6 +4,17 @@ import { jafarRoyalVizierI18n } from "./184-jafar-royal-vizier.i18n";
 export const jafarRoyalVizier: CharacterCard = {
   id: "uIO",
   canonicalId: "ci_9gw",
+  slug: "lorcana-ci_9gw",
+  printings: [
+    {
+      id: "set2-184",
+      artId: "set2-184",
+      setCode: "set2",
+      collectorNumber: "184",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-184", "set9-181"],
   cardType: "character",
   name: "Jafar",
@@ -20,7 +31,7 @@ export const jafarRoyalVizier: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7d0510c02fca4d878ec8a11ed836ae80",
-    tcgPlayer: 650114,
+    tcgPlayer: "650114",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { goofyDeterminedTravelerI18n } from "./189-goofy-determined-traveler.i18
 export const goofyDeterminedTraveler: CharacterCard = {
   id: "MeR",
   canonicalId: "ci_MeR",
+  slug: "lorcana-ci_MeR",
+  printings: [
+    {
+      id: "set12-189",
+      artId: "set12-189",
+      setCode: "set12",
+      collectorNumber: "189",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-189"],
   cardType: "character",
   name: "Goofy",
@@ -19,6 +30,7 @@ export const goofyDeterminedTraveler: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_72faf592ef64418b856f80140e0ac6be",
+    tcgPlayer: "692199",
   },
   text: [
     {
@@ -27,17 +39,25 @@ export const goofyDeterminedTraveler: CharacterCard = {
         "Whenever this character quests, if you played another character this turn, you may deal 1 damage to chosen character or location.",
     },
   ],
+  classifications: ["Dreamborn", "Hero"],
   abilities: [
     {
       id: "MeR-1",
       name: "FALLING ROCKS",
       type: "triggered",
-      trigger: { event: "quest", on: "SELF", timing: "whenever" },
+      trigger: {
+        event: "quest",
+        on: "SELF",
+        timing: "whenever",
+      },
       condition: {
         type: "turn-metric",
         metric: "played-character-with-classification",
         excludeSource: true,
-        comparison: { operator: "gte", value: 1 },
+        comparison: {
+          operator: "gte",
+          value: 1,
+        },
       },
       effect: {
         type: "optional",
@@ -56,6 +76,5 @@ export const goofyDeterminedTraveler: CharacterCard = {
       },
     },
   ],
-  classifications: ["Dreamborn", "Hero"],
   i18n: goofyDeterminedTravelerI18n,
 };

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { marchHareAbsurdHostI18n } from "./050-march-hare-absurd-host.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const marchHareAbsurdHost: CharacterCard = {
   id: "don",
   canonicalId: "ci_don",
+  slug: "lorcana-ci_don",
+  printings: [
+    {
+      id: "set6-050",
+      artId: "set6-050",
+      setCode: "set6",
+      collectorNumber: "50",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-050"],
   cardType: "character",
   name: "March Hare",
@@ -21,7 +33,7 @@ export const marchHareAbsurdHost: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dc31d36d626f403b871338da45d0a685",
-    tcgPlayer: 588100,
+    tcgPlayer: "588100",
   },
   text: "Rush",
   classifications: ["Storyborn"],

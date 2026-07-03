@@ -1,9 +1,10 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { BoxToppersRetailCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const boxTopperRetailYorinobuArasakaEmbracingDestruction = {
+export const boxTopperRetailYorinobuArasakaEmbracingDestruction = defineCyberpunkCard({
   id: "31fa5825-946a-4ca2-afa8-8f07b9898d6a",
-  externalId: "cb-yorinobu-arasaka-embracing-destruction",
   slug: "yorinobu-arasaka-embracing-destruction",
+  canonicalId: "yorinobu-arasaka-embracing-destruction",
   name: "Yorinobu Arasaka — Embracing Destruction",
   displayName: "Yorinobu Arasaka — Embracing Destruction",
   rulesText:
@@ -15,41 +16,12 @@ export const boxTopperRetailYorinobuArasakaEmbracingDestruction = {
     name: "Box Toppers — Retail",
   },
   printNumber: "001",
-  printings: [
-    {
-      id: "dc7bb3cf-1005-4584-ad7a-447f0ccf07bf",
-      collectorNumber: "001",
-      setCode: "boxtoppersretail",
-      rarity: "Epic",
-    },
-    {
-      id: "f70b75b5-aa2f-4c2d-b8c3-01fcb2a670ec",
-      collectorNumber: "001",
-      setCode: "embracingpowerretailstarterdeck",
-      rarity: "Epic",
-    },
-    {
-      id: "12337d92-713c-4c7c-8a16-595a7b4717f1",
-      collectorNumber: "β001",
-      setCode: "boxtoppersbeta",
-      rarity: "Epic",
-    },
-    {
-      id: "362bef23-c935-4729-a13b-dc3bc646d9b3",
-      collectorNumber: "β001",
-      setCode: "embracingpowerbetastarterdeck",
-      rarity: "Epic",
-    },
-  ],
-  selectedPrintingId: "dc7bb3cf-1005-4584-ad7a-447f0ccf07bf",
   artist: "ADIA",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/001.webp",
   rarity: "Epic",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "legend",
   cost: null,
   power: null,
@@ -97,5 +69,4 @@ export const boxTopperRetailYorinobuArasakaEmbracingDestruction = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies BoxToppersRetailCardDefinition;

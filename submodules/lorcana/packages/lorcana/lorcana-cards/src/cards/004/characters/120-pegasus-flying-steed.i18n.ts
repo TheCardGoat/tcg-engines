@@ -9,16 +9,16 @@ export const pegasusFlyingSteedI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Pegasus",
     version: "Fliegendes Ross",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Pégase",
     version: "Destrier volant",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Pegaso",
     version: "Destriero Volante",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

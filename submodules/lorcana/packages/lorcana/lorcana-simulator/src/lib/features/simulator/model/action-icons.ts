@@ -1,18 +1,16 @@
 import type { Component } from "svelte";
-import {
-  Droplets,
-  Footprints,
-  Hand,
-  MapPinned,
-  Music4,
-  OctagonX,
-  SkipForward,
-  Sparkles,
-  Swords,
-  Undo,
-  Users,
-  Zap,
-} from "@lucide/svelte";
+import Droplets from "@lucide/svelte/icons/droplets";
+import Footprints from "@lucide/svelte/icons/footprints";
+import Hand from "@lucide/svelte/icons/hand";
+import MapPinned from "@lucide/svelte/icons/map-pinned";
+import Music4 from "@lucide/svelte/icons/music-4";
+import OctagonX from "@lucide/svelte/icons/octagon-x";
+import SkipForward from "@lucide/svelte/icons/skip-forward";
+import Sparkles from "@lucide/svelte/icons/sparkles";
+import Swords from "@lucide/svelte/icons/swords";
+import Undo from "@lucide/svelte/icons/undo";
+import Users from "@lucide/svelte/icons/users";
+import Zap from "@lucide/svelte/icons/zap";
 import type {
   CardActionCategoryId,
   ExecutableMovePresentationCategoryId,

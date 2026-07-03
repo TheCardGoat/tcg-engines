@@ -15,7 +15,7 @@ export const jumboPopI18n: Record<Languages, I18nProperties> = {
     name: "Riesenpfote am Stiel",
     text: [
       {
-        title: "BITTE SEHR",
+        title: "Bitte sehr",
         description:
           "Verbanne diesen Gegenstand — Entferne bis zu 2 Schaden von jedem deiner Charaktere. Ziehe 1 Karte.",
       },
@@ -25,7 +25,7 @@ export const jumboPopI18n: Record<Languages, I18nProperties> = {
     name: "Jumbo Pop",
     text: [
       {
-        title: "C'EST POUR TOI",
+        title: "C'est pour toi",
         description:
           "Bannissez cet objet — Retirez jusqu'à 2 dommages de chacun de vos personnages. Piochez une carte.",
       },
@@ -35,7 +35,7 @@ export const jumboPopI18n: Record<Languages, I18nProperties> = {
     name: "Ghiacciolo Jumbo",
     text: [
       {
-        title: "ECCO QUA",
+        title: "Ecco Qua",
         description:
           "Esilia questo oggetto — Rimuovi fino a 2 danni da ogni tuo personaggio. Pesca una carta.",
       },

@@ -4,6 +4,17 @@ import { theSultanPlayfulMonarchI18n } from "./151-the-sultan-playful-monarch.i1
 export const theSultanPlayfulMonarch: CharacterCard = {
   id: "pU6",
   canonicalId: "ci_pU6",
+  slug: "lorcana-ci_pU6",
+  printings: [
+    {
+      id: "set10-151",
+      artId: "set10-151",
+      setCode: "set10",
+      collectorNumber: "151",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-151"],
   cardType: "character",
   name: "The Sultan",
@@ -21,7 +32,7 @@ export const theSultanPlayfulMonarch: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_cf7781eb1d414b07bdc36ec8ee7acfcf",
-    tcgPlayer: 659416,
+    tcgPlayer: "659416",
   },
   classifications: ["Storyborn", "Ally", "King"],
   i18n: theSultanPlayfulMonarchI18n,

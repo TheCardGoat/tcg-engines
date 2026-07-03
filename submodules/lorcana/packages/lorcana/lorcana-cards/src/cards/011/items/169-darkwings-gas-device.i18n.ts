@@ -15,9 +15,9 @@ export const darkwingsGasDeviceI18n: Record<Languages, I18nProperties> = {
     name: "Darkwings Gaspistole",
     text: [
       {
-        title: "BLENDENDE WOLKE, 1",
+        title: "Blendende Wolke",
         description:
-          "— Ein Charakter deiner Wahl erhält in diesem Zug -1. Falls du einen Darkwing-Duck-Charakter im Spiel hast, erhält der Charakter in diesem Zug stattdessen -2.",
+          "{E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug -1 {S}. Falls du einen Darkwing-Duck-Charakter im Spiel hast, erhält der Charakter in diesem Zug stattdessen -2 {S}.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const darkwingsGasDeviceI18n: Record<Languages, I18nProperties> = {
     name: "Appareil à gaz de Myster Mask",
     text: [
       {
-        title: "NUAGE AVEUGLANT, 1",
+        title: "Nuage aveuglant",
         description:
-          "— Choisissez un personnage qui subit -1 pour le reste de ce tour. Si vous avez un personnage Myster Mask en jeu, le personnage choisi subit -2 à la place.",
+          "{E}, 1 {I} — Choisissez un personnage qui subit -1 {S} pour le reste de ce tour. Si vous avez un personnage Myster Mask en jeu, le personnage choisi subit -2 {S} à la place.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const darkwingsGasDeviceI18n: Record<Languages, I18nProperties> = {
     name: "Apparecchio a Gas di Darkwing",
     text: [
       {
-        title: "NUVOLA ACCECANTE, 1",
+        title: "Nuvola Accecante",
         description:
-          "— Un personaggio a tua scelta riceve -1 per questo turno. Se hai in gioco un personaggio chiamato Darkwing Duck, un personaggio a tua scelta riceve invece -2 per questo turno.",
+          "{E}, 1 {I} — Un personaggio a tua scelta riceve -1 {S} per questo turno. Se hai in gioco un personaggio chiamato Darkwing Duck, un personaggio a tua scelta riceve invece -2 {S} per questo turno.",
       },
     ],
   },

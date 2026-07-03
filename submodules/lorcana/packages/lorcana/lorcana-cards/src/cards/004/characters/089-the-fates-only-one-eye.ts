@@ -4,6 +4,17 @@ import { theFatesOnlyOneEyeI18n } from "./089-the-fates-only-one-eye.i18n";
 export const theFatesOnlyOneEye: CharacterCard = {
   id: "Sh7",
   canonicalId: "ci_Sh7",
+  slug: "lorcana-ci_Sh7",
+  printings: [
+    {
+      id: "set4-089",
+      artId: "set4-089",
+      setCode: "set4",
+      collectorNumber: "89",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-089"],
   cardType: "character",
   name: "The Fates",
@@ -20,7 +31,7 @@ export const theFatesOnlyOneEye: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cd05e8e7bb5c434cba3487e6f2aaf7ed",
-    tcgPlayer: 550582,
+    tcgPlayer: "550582",
   },
   text: [
     {

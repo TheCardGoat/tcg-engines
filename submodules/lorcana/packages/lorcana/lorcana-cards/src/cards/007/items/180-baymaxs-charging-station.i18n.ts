@@ -15,9 +15,9 @@ export const baymaxsChargingStationI18n: Record<Languages, I18nProperties> = {
     name: "Baymax’ Ladestation",
     text: [
       {
-        title: "ENERGIEWANDLER",
+        title: "Energiewandler",
         description:
-          "Jedes Mal, wenn du mithilfe von Gestaltwandel eine Flutgestalt ausspielst, darfst du 1 Karte ziehen.",
+          "Jedes Mal, wenn du mithilfe von <Gestaltwandel> eine Flutgestalt ausspielst, darfst du 1 Karte ziehen.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const baymaxsChargingStationI18n: Record<Languages, I18nProperties> = {
     name: "Chargeur de Baymax",
     text: [
       {
-        title: "CONVERTISSEUR D'ÉNERGIE",
+        title: "Convertisseur d'énergie",
         description:
-          "Chaque fois que vous jouez un personnage Floodborn en utilisant sa capacité Alter, vous pouvez piocher une carte.",
+          "Chaque fois que vous jouez un personnage Floodborn en utilisant sa capacité <Alter>, vous pouvez piocher une carte.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const baymaxsChargingStationI18n: Record<Languages, I18nProperties> = {
     name: "Stazione di Ricarica di Baymax",
     text: [
       {
-        title: "CONVERTITORE DI ENERGIA",
+        title: "Convertitore di Energia",
         description:
-          "Ogni volta che giochi un personaggio Imbevuto, se hai usato Trasformazione per giocarlo, puoi pescare una carta.",
+          "Ogni volta che giochi un personaggio Imbevuto, se hai usato <Trasformazione> per giocarlo, puoi pescare una carta.",
       },
     ],
   },

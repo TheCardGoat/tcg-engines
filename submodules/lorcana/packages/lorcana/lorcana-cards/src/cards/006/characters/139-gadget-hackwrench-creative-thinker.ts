@@ -4,6 +4,17 @@ import { gadgetHackwrenchCreativeThinkerI18n } from "./139-gadget-hackwrench-cre
 export const gadgetHackwrenchCreativeThinker: CharacterCard = {
   id: "Khj",
   canonicalId: "ci_Khj",
+  slug: "lorcana-ci_Khj",
+  printings: [
+    {
+      id: "set6-139",
+      artId: "set6-139",
+      setCode: "set6",
+      collectorNumber: "139",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-139"],
   cardType: "character",
   name: "Gadget Hackwrench",
@@ -20,7 +31,7 @@ export const gadgetHackwrenchCreativeThinker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_64b2156407ef4b99a1636bf189825eaa",
-    tcgPlayer: 588152,
+    tcgPlayer: "588152",
   },
   text: [
     {

@@ -17,19 +17,40 @@ export const itMeansNoWorriesI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Die Sorgen bleiben dir immer fern",
-    text: "Gemeinsam singen 9 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 9 oder mehr kosten,, damit sie dieses Lied kostenlos singen.) Nimm bis zu 3 Charakterkarten aus deinem Ablagestapel zurück auf deine Hand. Du zahlst 2 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+    text: [
+      {
+        title:
+          "<Gemeinsam singen> 9 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 9 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)",
+      },
+      {
+        title:
+          "Nimm bis zu 3 Charakterkarten aus deinem Ablagestapel zurück auf deine Hand. Du zahlst 2 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+      },
+    ],
   },
   fr: {
     name: "Sans aucun souci",
-    text: "À l'unisson 9 (Vous pouvez n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 9 ou plus pour chanter cette chanson gratuitement.) Renvoyez dans votre main jusqu'à 3 cartes Personnage de votre défausse. Le prochain personnage que vous jouez ce tour-ci vous coûte 2 de moins.",
+    text: [
+      {
+        title:
+          "<À l'unisson> 9 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 9 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Renvoyez dans votre main jusqu'à 3 cartes Personnage de votre défausse. Le prochain personnage que vous jouez ce tour-ci vous coûte 2 {I} de moins.",
+      },
+    ],
   },
   it: {
     name: "Senza Pensieri",
     text: [
       {
-        title: "Cantare Insieme 9",
-        description:
-          "(Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 9 o superiore può per cantare questa canzone gratis.) Riprendi in mano fino a 3 carte personaggio dai tuoi scarti. Paga 2 in meno per giocare il tuo prossimo personaggio per questo turno.",
+        title:
+          "<Cantare Insieme> 9 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 9 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Riprendi in mano fino a 3 carte personaggio dai tuoi scarti. Paga 2 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

@@ -20,12 +20,12 @@ export const cinderellaMelodyWeaverI18n: Record<Languages, I18nProperties> = {
     version: "Melodien-Weberin",
     text: [
       {
-        title: "Singen 9",
+        title: "<Singen> 9 (Die Kosten dieses Charakters gelten als 9 für das Singen von Liedern.)",
       },
       {
-        title: "WUNDERSCHÖNE STIMME",
+        title: "Wunderschöne Stimme",
         description:
-          "Jedes Mal, wenn dieser Charakter ein Lied singt, erhalten deine anderen Prinzessinnen in diesem Zug +1.",
+          "Jedes Mal, wenn dieser Charakter ein Lied singt, erhalten deine anderen Prinzessinnen in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -34,12 +34,13 @@ export const cinderellaMelodyWeaverI18n: Record<Languages, I18nProperties> = {
     version: "Tisseuse de mélodies",
     text: [
       {
-        title: "Mélomane 9",
+        title:
+          "<Mélomane> 9 (Ce personnage est considéré comme ayant un coût de 9 pour chanter des chansons.)",
       },
       {
-        title: "VOIX MERVEILLEUSE",
+        title: "Voix merveilleuse",
         description:
-          "Chaque fois que ce personnage chante une chanson, vos autres personnages Princesse gagnent +1 pour le reste de ce tour.",
+          "Chaque fois que ce personnage chante une chanson, vos autres personnages Princesse gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +49,12 @@ export const cinderellaMelodyWeaverI18n: Record<Languages, I18nProperties> = {
     version: "Tessitrice di Melodie",
     text: [
       {
-        title: "Melodioso 9",
+        title: "<Melodioso> 9",
       },
       {
-        title: "VOCE BELLISSIMA",
+        title: "Voce Bellissima",
         description:
-          "Ogni volta che questo personaggio canta una canzone, i tuoi altri personaggi Principessa ricevono +1 per questo turno.",
+          "Ogni volta che questo personaggio canta una canzone, i tuoi altri personaggi Principessa ricevono +1 {L} per questo turno.",
       },
     ],
   },

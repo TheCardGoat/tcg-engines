@@ -4,6 +4,17 @@ import { kidaDiscoveringTheUnknownI18n } from "./157-kida-discovering-the-unknow
 export const kidaDiscoveringTheUnknown: CharacterCard = {
   id: "SiA",
   canonicalId: "ci_SiA",
+  slug: "lorcana-ci_SiA",
+  printings: [
+    {
+      id: "set12-157",
+      artId: "set12-157",
+      setCode: "set12",
+      collectorNumber: "157",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-157"],
   cardType: "character",
   name: "Kida",
@@ -20,6 +31,7 @@ export const kidaDiscoveringTheUnknown: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_37f859395b1f4878a5826f20394fe58e",
+    tcgPlayer: "692068",
   },
   text: [
     {

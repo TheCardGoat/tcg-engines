@@ -4,6 +4,17 @@ import { minnieMouseSweetheartPrincessI18n } from "./005-minnie-mouse-sweetheart
 export const minnieMouseSweetheartPrincess: CharacterCard = {
   id: "GO3",
   canonicalId: "ci_f4y",
+  slug: "lorcana-ci_f4y",
+  printings: [
+    {
+      id: "set9-005",
+      artId: "set9-005",
+      setCode: "set9",
+      collectorNumber: "5",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-005"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -19,7 +30,7 @@ export const minnieMouseSweetheartPrincess: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_77b92f4bb7d2460ea85b9d547cb8e72f",
-    tcgPlayer: 651106,
+    tcgPlayer: "651106",
   },
   text: [
     {

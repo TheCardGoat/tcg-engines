@@ -4,6 +4,17 @@ import { agustinMadrigalClumsyDadI18n } from "./001-agustin-madrigal-clumsy-dad.
 export const agustinMadrigalClumsyDad: CharacterCard = {
   id: "pkE",
   canonicalId: "ci_pkE",
+  slug: "lorcana-ci_pkE",
+  printings: [
+    {
+      id: "set4-001",
+      artId: "set4-001",
+      setCode: "set4",
+      collectorNumber: "1",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-001"],
   cardType: "character",
   name: "Agustin Madrigal",
@@ -21,7 +32,7 @@ export const agustinMadrigalClumsyDad: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_80c9df6d04f94ccab3df1e24619e21a3",
-    tcgPlayer: 549618,
+    tcgPlayer: "549618",
   },
   classifications: ["Storyborn", "Mentor", "Madrigal"],
   i18n: agustinMadrigalClumsyDadI18n,

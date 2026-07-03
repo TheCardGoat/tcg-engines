@@ -4,6 +4,17 @@ import { owlPirateLookoutI18n } from "./001-owl-pirate-lookout.i18n";
 export const owlPirateLookout: CharacterCard = {
   id: "6MA",
   canonicalId: "ci_6MA",
+  slug: "lorcana-ci_6MA",
+  printings: [
+    {
+      id: "set6-001",
+      artId: "set6-001",
+      setCode: "set6",
+      collectorNumber: "1",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-001"],
   cardType: "character",
   name: "Owl",
@@ -20,7 +31,7 @@ export const owlPirateLookout: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7b8a887fbfda4b869f7529f31da115f6",
-    tcgPlayer: 588072,
+    tcgPlayer: "588072",
   },
   text: [
     {
@@ -52,7 +63,12 @@ export const owlPirateLookout: CharacterCard = {
         event: "ink",
         on: "CONTROLLER",
         timing: "whenever",
-        restrictions: [{ type: "during-turn", whose: "your" }],
+        restrictions: [
+          {
+            type: "during-turn",
+            whose: "your",
+          },
+        ],
       },
       type: "triggered",
     },

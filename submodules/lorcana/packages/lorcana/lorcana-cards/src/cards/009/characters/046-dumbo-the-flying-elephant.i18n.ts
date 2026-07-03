@@ -20,12 +20,12 @@ export const dumboTheFlyingElephantI18n: Record<Languages, I18nProperties> = {
     version: "Der fliegende Elefant",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "LUFT-DUO",
+        title: "Luft-Duo",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges Wendig.",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const dumboTheFlyingElephantI18n: Record<Languages, I18nProperties> = {
     version: "L’éléphant volant",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "DUO AÉRIEN",
+        title: "Duo aérien",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const dumboTheFlyingElephantI18n: Record<Languages, I18nProperties> = {
     version: "L'Elefante Volante",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "COPPIA AEREA",
+        title: "Coppia Aerea",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

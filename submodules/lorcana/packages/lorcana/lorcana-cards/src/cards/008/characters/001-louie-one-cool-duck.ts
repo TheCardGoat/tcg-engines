@@ -4,6 +4,17 @@ import { louieOneCoolDuckI18n } from "./001-louie-one-cool-duck.i18n";
 export const louieOneCoolDuck: CharacterCard = {
   id: "s04",
   canonicalId: "ci_s04",
+  slug: "lorcana-ci_s04",
+  printings: [
+    {
+      id: "set8-001",
+      artId: "set8-001",
+      setCode: "set8",
+      collectorNumber: "1",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-001"],
   cardType: "character",
   name: "Louie",
@@ -20,7 +31,7 @@ export const louieOneCoolDuck: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3fc64a6e60ce4fcd9688de5efd25cfea",
-    tcgPlayer: 633427,
+    tcgPlayer: "633427",
   },
   text: [
     {

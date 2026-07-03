@@ -18,10 +18,11 @@ export const kitCloudkickerNavigatorI18n: Record<Languages, I18nProperties> = {
     version: "Navigator",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Kit-Wolkenflitzer-Charaktere auszuspielen.)",
       },
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
     ],
   },
@@ -30,10 +31,11 @@ export const kitCloudkickerNavigatorI18n: Record<Languages, I18nProperties> = {
     version: "Copilote",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Kit.)",
       },
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
     ],
   },
@@ -42,10 +44,11 @@ export const kitCloudkickerNavigatorI18n: Record<Languages, I18nProperties> = {
     version: "Navigatore",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Kit Nuvoletta.)",
       },
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
     ],
   },

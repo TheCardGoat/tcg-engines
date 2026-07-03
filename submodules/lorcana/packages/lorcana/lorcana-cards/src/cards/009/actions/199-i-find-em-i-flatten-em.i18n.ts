@@ -11,10 +11,26 @@ export const iFindEmIFlattenEmI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Ils cassent en deux comme je veux",
-    text: "Bannissez tous les objets.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Bannissez tous les objets.",
+      },
+    ],
   },
   it: {
     name: "Una Furia Vivente",
-    text: "(Un personaggio con costo 4 o superiore può per cantare questa canzone gratis.) Esilia tutti gli oggetti.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Esilia tutti gli oggetti.",
+      },
+    ],
   },
 };

@@ -7,14 +7,17 @@ export const gd04Borjarnon078: UnitCard = {
   color: "white",
   traits: ["militia"],
   id: "GD04-078",
-  externalId: "gundam:gd04-078",
-  slug: "borjarnon-gd04-078",
+  canonicalId: "GD04-078",
+  externalIds: { bandai: "gundam:gd04-078" },
+  slug: "borjarnon/gd04-078",
   displayName: "Borjarnon",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-078",
   printings: [
     {
       id: "GD04-078",
+      artId: "GD04-078",
+      setCode: "GD04",
       collectorNumber: "GD04-078",
       cardNumber: "GD04-078",
       set: {
@@ -29,6 +32,7 @@ export const gd04Borjarnon078: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-078"],
   selectedPrintingId: "GD04-078",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-078.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-078.webp?260424",

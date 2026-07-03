@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { getLorcanaMoveIds, isLorcanaMoveId, validateLorcanaMovePayload } from "./moves-schema";
+import { getLorcanaMoveIds, isLorcanaMoveId, validateLorcanaMovePayload } from "./moves-schema.js";
 
 describe("lorcana-agent moves-schema", () => {
   it("includes all core in-match moves", () => {

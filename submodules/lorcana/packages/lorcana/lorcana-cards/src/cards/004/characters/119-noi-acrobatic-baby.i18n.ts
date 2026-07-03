@@ -17,7 +17,7 @@ export const noiAcrobaticBabyI18n: Record<Languages, I18nProperties> = {
     version: "Akrobatisches Baby",
     text: [
       {
-        title: "RAFFINIERTE BEINARBEIT",
+        title: "Raffinierte Beinarbeit",
         description:
           "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter in diesem Zug keinen Schaden durch Herausforderungen.",
       },
@@ -28,7 +28,7 @@ export const noiAcrobaticBabyI18n: Record<Languages, I18nProperties> = {
     version: "Bébé acrobate",
     text: [
       {
-        title: "JEU DE JAMBES REMARQUABLE",
+        title: "Jeu de jambes remarquable",
         description:
           "Chaque fois que vous jouez une action, ce personnage ne subit aucun dommage lors des défis pour le reste de ce tour.",
       },
@@ -39,7 +39,7 @@ export const noiAcrobaticBabyI18n: Record<Languages, I18nProperties> = {
     version: "Bambina Acrobatica",
     text: [
       {
-        title: "ACROBAZIE",
+        title: "Acrobazie",
         description:
           "Ogni volta che giochi un'azione, questo personaggio non subisce danni dalle sfide per questo turno.",
       },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theQueenCrownOfTheCouncilI18n } from "./148-the-queen-crown-of-the-council.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const theQueenCrownOfTheCouncil: CharacterCard = {
   id: "05o",
   canonicalId: "ci_05o",
+  slug: "lorcana-ci_05o",
+  printings: [
+    {
+      id: "set5-148",
+      artId: "set5-148",
+      setCode: "set5",
+      collectorNumber: "148",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-148"],
   cardType: "character",
   name: "The Queen",
@@ -21,7 +33,7 @@ export const theQueenCrownOfTheCouncil: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_65f44d7a61bc416ebc68806cea7f39e2",
-    tcgPlayer: 561969,
+    tcgPlayer: "561969",
   },
   text: [
     {

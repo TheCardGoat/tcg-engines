@@ -4,6 +4,17 @@ import { fryingPanI18n } from "./202-frying-pan.i18n";
 export const fryingPan: ItemCard = {
   id: "HLs",
   canonicalId: "ci_HLs",
+  slug: "lorcana-ci_HLs",
+  printings: [
+    {
+      id: "set1-202",
+      artId: "set1-202",
+      setCode: "set1",
+      collectorNumber: "202",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-202"],
   cardType: "item",
   name: "Frying Pan",
@@ -16,7 +27,7 @@ export const fryingPan: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_aa294faf68c14f559c22e0e79a6c101e",
-    tcgPlayer: 492999,
+    tcgPlayer: "492999",
   },
   text: [
     {

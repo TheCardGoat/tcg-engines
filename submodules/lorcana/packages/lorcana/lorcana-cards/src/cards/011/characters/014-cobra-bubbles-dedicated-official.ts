@@ -4,6 +4,17 @@ import { cobraBubblesDedicatedOfficialI18n } from "./014-cobra-bubbles-dedicated
 export const cobraBubblesDedicatedOfficial: CharacterCard = {
   id: "gZF",
   canonicalId: "ci_gZF",
+  slug: "lorcana-ci_gZF",
+  printings: [
+    {
+      id: "set11-014",
+      artId: "set11-014",
+      setCode: "set11",
+      collectorNumber: "14",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-014"],
   cardType: "character",
   name: "Cobra Bubbles",
@@ -20,7 +31,7 @@ export const cobraBubblesDedicatedOfficial: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f3b02d0a1478421da5b8ad2dac40d1b0",
-    tcgPlayer: 675379,
+    tcgPlayer: "675379",
   },
   text: [
     {

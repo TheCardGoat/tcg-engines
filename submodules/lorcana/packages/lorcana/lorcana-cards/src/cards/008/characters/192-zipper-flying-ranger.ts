@@ -4,6 +4,17 @@ import { zipperFlyingRangerI18n } from "./192-zipper-flying-ranger.i18n";
 export const zipperFlyingRanger: CharacterCard = {
   id: "ogS",
   canonicalId: "ci_ogS",
+  slug: "lorcana-ci_ogS",
+  printings: [
+    {
+      id: "set8-192",
+      artId: "set8-192",
+      setCode: "set8",
+      collectorNumber: "192",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-192"],
   cardType: "character",
   name: "Zipper",
@@ -20,7 +31,7 @@ export const zipperFlyingRanger: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7a1795d8ea814feb8b1c6bc53a692f78",
-    tcgPlayer: 631476,
+    tcgPlayer: "631476",
   },
   text: [
     {

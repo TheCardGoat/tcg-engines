@@ -4,6 +4,17 @@ import { donaldDuckAlongForTheRideI18n } from "./178-donald-duck-along-for-the-r
 export const donaldDuckAlongForTheRide: CharacterCard = {
   id: "I70",
   canonicalId: "ci_4PF",
+  slug: "lorcana-ci_4PF",
+  printings: [
+    {
+      id: "set11-178",
+      artId: "set11-178",
+      setCode: "set11",
+      collectorNumber: "178",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-178"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckAlongForTheRide: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_197bd1d5d07843d49d892ea9536fcbed",
-    tcgPlayer: 677155,
+    tcgPlayer: "677155",
   },
   text: [
     {

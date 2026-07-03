@@ -17,9 +17,9 @@ export const jafarAspiringRulerI18n: Record<Languages, I18nProperties> = {
     version: "Aufstrebender Herrscher",
     text: [
       {
-        title: "SO IST ES BESSER",
+        title: "So ist es besser",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug Herausfordern +2. (Während der Charakter herausfordert, erhält er +2).",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}).",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const jafarAspiringRulerI18n: Record<Languages, I18nProperties> = {
     version: "Aspirant souverain",
     text: [
       {
-        title: "VOILÀ QUI EST MIEUX",
+        title: "Voilà qui est mieux",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne Offensif +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Offensif> +2 pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const jafarAspiringRulerI18n: Record<Languages, I18nProperties> = {
     version: "Aspirante Monarca",
     text: [
       {
-        title: "COSÌ VA MEGLIO",
+        title: "Così va Meglio",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene Sfidante +2 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
       },
     ],
   },

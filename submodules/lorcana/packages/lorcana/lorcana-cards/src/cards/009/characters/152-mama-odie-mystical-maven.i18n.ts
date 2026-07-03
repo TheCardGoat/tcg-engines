@@ -17,7 +17,7 @@ export const mamaOdieMysticalMavenI18n: Record<Languages, I18nProperties> = {
     version: "Mystische Macht",
     text: [
       {
-        title: "DAS WIRD GUT WERDEN",
+        title: "Das wird gut werden",
         description:
           "Jedes Mal, wenn du ein Lied ausspielst, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const mamaOdieMysticalMavenI18n: Record<Languages, I18nProperties> = {
     version: "Experte mystique",
     text: [
       {
-        title: "ÇA VA ÊTRE FABULEUX",
+        title: "Ça va être fabuleux",
         description:
           "Chaque fois que vous jouez une chanson, vous pouvez placer la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const mamaOdieMysticalMavenI18n: Record<Languages, I18nProperties> = {
     version: "Esperta Mistica",
     text: [
       {
-        title: "SARÀ BELLISSIMO",
+        title: "Sarà Bellissimo",
         description:
           "Ogni volta che giochi una canzone, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },

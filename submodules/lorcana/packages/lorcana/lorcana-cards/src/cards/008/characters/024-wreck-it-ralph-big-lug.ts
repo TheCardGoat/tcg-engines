@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { wreckitRalphBigLugI18n } from "./024-wreck-it-ralph-big-lug.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const wreckitRalphBigLug: CharacterCard = {
-  id: "WSI",
+  id: "20I",
   canonicalId: "ci_rXj",
+  slug: "lorcana-ci_rXj",
+  printings: [
+    {
+      id: "set8-024",
+      artId: "set8-024",
+      setCode: "set8",
+      collectorNumber: "24",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-024"],
   cardType: "character",
   name: "Wreck-It Ralph",
@@ -21,7 +33,7 @@ export const wreckitRalphBigLug: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5615e8aef96941acb0e5cf1cfc8988c0",
-    tcgPlayer: 632252,
+    tcgPlayer: "632252",
   },
   text: [
     {

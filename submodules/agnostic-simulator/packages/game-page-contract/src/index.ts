@@ -66,6 +66,14 @@ export {
   stringifySimulatorConnectionDiagnostic,
 } from "./connection-diagnostic.js";
 
+export type {
+  LiveMatchSession,
+  LiveMatchSessionConfig,
+  LiveMatchSessionState,
+  NormalizedPresenceChange,
+} from "./live-match-session.js";
+export { createLiveMatchSession } from "./live-match-session.js";
+
 export { decodeDeckFromUrlParam, encodeDeckToUrlParam } from "./deck-codec.js";
 
 export {

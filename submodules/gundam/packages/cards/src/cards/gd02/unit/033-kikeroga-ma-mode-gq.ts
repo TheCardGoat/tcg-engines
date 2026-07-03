@@ -7,14 +7,17 @@ export const gd02KikerogaMaModeGq033: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD02-033",
-  externalId: "gundam:gd02-033",
-  slug: "kikeroga-ma-mode-gq-gd02-033",
+  canonicalId: "GD02-033",
+  externalIds: { bandai: "gundam:gd02-033" },
+  slug: "kikeroga-ma-mode-gq/gd02-033",
   displayName: "Kikeroga (MA Mode) (GQ)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-033",
   printings: [
     {
       id: "GD02-033",
+      artId: "GD02-033",
+      setCode: "GD02",
       collectorNumber: "GD02-033",
       cardNumber: "GD02-033",
       set: {
@@ -29,6 +32,7 @@ export const gd02KikerogaMaModeGq033: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-033"],
   selectedPrintingId: "GD02-033",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-033.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-033.webp?260424",

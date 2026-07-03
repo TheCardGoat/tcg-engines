@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tukTukLivelyPartnerI18n } from "./127-tuk-tuk-lively-partner.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const tukTukLivelyPartner: CharacterCard = {
   id: "PQN",
   canonicalId: "ci_j2H",
+  slug: "lorcana-ci_j2H",
+  printings: [
+    {
+      id: "set4-127",
+      artId: "set4-127",
+      setCode: "set4",
+      collectorNumber: "127",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-127", "set9-129"],
   cardType: "character",
   name: "Tuk Tuk",
@@ -21,16 +33,16 @@ export const tukTukLivelyPartner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1f37e8ef12cb407f815ee35eb21abf61",
-    tcgPlayer: 650064,
+    tcgPlayer: "650064",
   },
   text: [
     {
       title: "Evasive",
     },
     {
-      title: "ON A ROLL",
+      title: "ON",
       description:
-        "When you play this character, you may move him and one of your other characters to the same location for free. The other character gets +2 {S} this turn.",
+        "A ROLL When you play this character, you may move him and one of your other characters to the same location for free. The other character gets +2 {S} this turn.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

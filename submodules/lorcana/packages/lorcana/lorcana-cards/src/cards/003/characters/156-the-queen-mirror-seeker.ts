@@ -4,6 +4,17 @@ import { theQueenMirrorSeekerI18n } from "./156-the-queen-mirror-seeker.i18n";
 export const theQueenMirrorSeeker: CharacterCard = {
   id: "6NN",
   canonicalId: "ci_h2q",
+  slug: "lorcana-ci_h2q",
+  printings: [
+    {
+      id: "set3-156",
+      artId: "set3-156",
+      setCode: "set3",
+      collectorNumber: "156",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-156", "set9-149"],
   cardType: "character",
   name: "The Queen",
@@ -20,7 +31,7 @@ export const theQueenMirrorSeeker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2124e542c7de4cadb69cb6e1887547ee",
-    tcgPlayer: 650154,
+    tcgPlayer: "650154",
   },
   text: [
     {

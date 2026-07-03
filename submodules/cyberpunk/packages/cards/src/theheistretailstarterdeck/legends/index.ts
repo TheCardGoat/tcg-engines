@@ -1,4 +1,4 @@
-import type { TheHeistRetailStarterDeckCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
 import { theHeistRetailStarterDeckJackieWellesPourOneOutForMe } from "./jackie-welles-pour-one-out-for-me.ts";
 import { theHeistRetailStarterDeckVCorporateExile } from "./v-corporate-exile.ts";
 import { theHeistRetailStarterDeckViktorVektorSitDownAndRelax } from "./viktor-vektor-sit-down-and-relax.ts";
@@ -11,4 +11,4 @@ export const theHeistRetailStarterDeckLegends = [
   theHeistRetailStarterDeckJackieWellesPourOneOutForMe,
   theHeistRetailStarterDeckVCorporateExile,
   theHeistRetailStarterDeckViktorVektorSitDownAndRelax,
-] satisfies TheHeistRetailStarterDeckCardDefinition[];
+] satisfies LegendCardDefinition[];

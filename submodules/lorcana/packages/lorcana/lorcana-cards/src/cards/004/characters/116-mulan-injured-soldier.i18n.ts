@@ -16,7 +16,7 @@ export const mulanInjuredSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Verwundete Soldatin",
     text: [
       {
-        title: "KRIEGSWUNDE",
+        title: "Kriegswunde",
         description: "Dieser Charakter kommt mit 2 Schaden auf ihm ins Spiel.",
       },
     ],
@@ -26,7 +26,7 @@ export const mulanInjuredSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Soldate blessée",
     text: [
       {
-        title: "BLESSURE AU COMBAT",
+        title: "Blessure au combat",
         description: "Ce personnage entre en jeu avec 2 jetons Dommage.",
       },
     ],
@@ -36,7 +36,7 @@ export const mulanInjuredSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Guerriera Ferita",
     text: [
       {
-        title: "FERITA DA COMBATTIMENTO",
+        title: "Ferita da Combattimento",
         description: "Questo personaggio entra in gioco con 2 danni.",
       },
     ],

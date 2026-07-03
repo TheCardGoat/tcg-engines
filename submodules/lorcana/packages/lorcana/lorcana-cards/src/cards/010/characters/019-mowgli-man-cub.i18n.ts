@@ -6,9 +6,9 @@ export const mowgliManCubI18n: Record<Languages, I18nProperties> = {
     version: "Man Cub",
     text: [
       {
-        title: "HAVE A BETTER LOOK",
+        title: "HAVE",
         description:
-          "When you play this character, chosen opponent reveals their hand and discards a non-character card of their choice.",
+          "A BETTER LOOK When you play this character, chosen opponent reveals their hand and discards a non-character card of their choice.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const mowgliManCubI18n: Record<Languages, I18nProperties> = {
     version: "Menschenkind",
     text: [
       {
-        title: "DAS MUSS ICH GENAU SEHEN",
+        title: "Das muss ich genau sehen",
         description:
           "Wenn du diesen Charakter ausspielst, zeigt einer der gegnerischen Mitspielenden deiner Wahl alle Handkarten für alle sichtbar vor und wirft eine Karte, die keine Charakterkarte ist, ab.",
       },
@@ -28,7 +28,7 @@ export const mowgliManCubI18n: Record<Languages, I18nProperties> = {
     version: "Petit d'Homme",
     text: [
       {
-        title: "VOIR DE PLUS PRÈS",
+        title: "Voir de plus près",
         description:
           "Lorsque vous jouez ce personnage, choisissez un adversaire qui révèle sa main et défausse une carte non-Personnage de son choix.",
       },
@@ -39,7 +39,7 @@ export const mowgliManCubI18n: Record<Languages, I18nProperties> = {
     version: "Cucciolo d'Uomo",
     text: [
       {
-        title: "GUARDARE MEGLIO",
+        title: "Guardare Meglio",
         description:
           "Quando giochi questo personaggio, un avversario a tua scelta rivela la sua mano e scarta una carta non personaggio a sua scelta.",
       },

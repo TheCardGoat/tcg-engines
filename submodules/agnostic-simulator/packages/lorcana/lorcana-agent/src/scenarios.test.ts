@@ -8,7 +8,7 @@ import {
   type AgentProvider,
 } from "@tcg/agent-core";
 import type { BotActionResult, ServerGameEngine } from "@tcg/shared/game-engine";
-import { registerLorcanaAgent } from "./register";
+import { registerLorcanaAgent } from "./register.js";
 
 /**
  * End-to-end scripted scenarios: register the real Lorcana agent into the

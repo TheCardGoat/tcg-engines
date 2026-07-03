@@ -16,8 +16,8 @@ export const painUnderworldImpI18n: Record<Languages, I18nProperties> = {
     version: "Schelm der Unterwelt",
     text: [
       {
-        title: "ICH KOMME, EURE DÜSTERE VERBROCHENHEIT",
-        description: "Solange dieser Charakter 5 oder mehr hat, erhält er +2.",
+        title: "Ich komme, eure düstere Verbrochenheit",
+        description: "Solange dieser Charakter 5 oder mehr {S} hat, erhält er +2 {L}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const painUnderworldImpI18n: Record<Languages, I18nProperties> = {
     version: "Diablotin des Enfers",
     text: [
       {
-        title: "JE VIENS, VOTRE LUGUBRE NOIRCEUR",
-        description: "Tant que ce personnage a au moins 5, il gagne +2.",
+        title: "Je viens, votre lugubre noirceur",
+        description: "Tant que ce personnage a au moins 5 {S}, il gagne +2 {L}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const painUnderworldImpI18n: Record<Languages, I18nProperties> = {
     version: "Underworld Imp",
     text: [
       {
-        title: "COMING, YOUR MOST LUGUBRIOUSNESS",
-        description: "While this character has 5 or more, he gets +2.",
+        title: "Coming, Your Most Lugubriousness",
+        description: "While this character has 5 {S} or more, he gets +2 {L}.",
       },
     ],
   },

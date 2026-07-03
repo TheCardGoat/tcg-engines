@@ -17,9 +17,9 @@ export const aladdinOnTheEdgeOfAdventureI18n: Record<Languages, I18nProperties> 
     version: "Am Rande des Abenteuers",
     text: [
       {
-        title: "FLINK AUF DEN BEINEN",
+        title: "Flink auf den Beinen",
         description:
-          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter bis zu Beginn deines nächsten Zuges Wendig.",
+          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const aladdinOnTheEdgeOfAdventureI18n: Record<Languages, I18nProperties> 
     version: "Au seuil de l’aventure",
     text: [
       {
-        title: "PRÊT À RÉAGIR",
+        title: "Prêt à réagir",
         description:
-          "Chaque fois que vous jouez une action, ce personnage gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "Chaque fois que vous jouez une action, ce personnage gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const aladdinOnTheEdgeOfAdventureI18n: Record<Languages, I18nProperties> 
     version: "Sull'Orlo dell'Avventura",
     text: [
       {
-        title: "SVELTO",
+        title: "Svelto",
         description:
-          "Ogni volta che giochi un'azione, questo personaggio ottiene Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Ogni volta che giochi un'azione, questo personaggio ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

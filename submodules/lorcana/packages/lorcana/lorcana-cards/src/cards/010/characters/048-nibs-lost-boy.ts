@@ -4,6 +4,17 @@ import { nibsLostBoyI18n } from "./048-nibs-lost-boy.i18n";
 export const nibsLostBoy: CharacterCard = {
   id: "Jxb",
   canonicalId: "ci_Jxb",
+  slug: "lorcana-ci_Jxb",
+  printings: [
+    {
+      id: "set10-048",
+      artId: "set10-048",
+      setCode: "set10",
+      collectorNumber: "48",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-048"],
   cardType: "character",
   name: "Nibs",
@@ -20,7 +31,7 @@ export const nibsLostBoy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c7e80f6c5dbe488380403f55cd22784a",
-    tcgPlayer: 658335,
+    tcgPlayer: "658335",
   },
   text: [
     {

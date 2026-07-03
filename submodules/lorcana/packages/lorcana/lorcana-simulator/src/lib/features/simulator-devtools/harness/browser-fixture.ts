@@ -9,6 +9,8 @@ import * as cards008Module from "@tcg/lorcana-cards/cards/008";
 import * as cards009Module from "@tcg/lorcana-cards/cards/009";
 import * as cards010Module from "@tcg/lorcana-cards/cards/010";
 import * as cards011Module from "@tcg/lorcana-cards/cards/011";
+import * as cards012Module from "@tcg/lorcana-cards/cards/012";
+import * as cards013Module from "@tcg/lorcana-cards/cards/013";
 import type {
   TestCardInput,
   TestFixtureCardEntry,
@@ -32,6 +34,8 @@ const { all008Cards } = cards008Module as typeof import("@tcg/lorcana-cards/card
 const { all009Cards } = cards009Module as typeof import("@tcg/lorcana-cards/cards/009");
 const { all010Cards } = cards010Module as typeof import("@tcg/lorcana-cards/cards/010");
 const { all011Cards } = cards011Module as typeof import("@tcg/lorcana-cards/cards/011");
+const { all012Cards } = cards012Module as typeof import("@tcg/lorcana-cards/cards/012");
+const { all013Cards } = cards013Module as typeof import("@tcg/lorcana-cards/cards/013");
 
 type SerializedCardUnderEntry = string | { card: string; publicFaceState?: "faceUp" | "faceDown" };
 
@@ -87,6 +91,8 @@ const ALL_LORCANA_CARDS = [
   ...all009Cards,
   ...all010Cards,
   ...all011Cards,
+  ...all012Cards,
+  ...all013Cards,
 ];
 
 const LORCANA_CARDS_BY_ID = new Map(ALL_LORCANA_CARDS.map((card) => [card.id, card]));

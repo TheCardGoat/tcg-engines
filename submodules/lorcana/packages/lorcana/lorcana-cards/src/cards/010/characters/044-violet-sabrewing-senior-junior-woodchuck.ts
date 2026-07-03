@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { evasive } from "../../../helpers/abilities/evasive";
 import { violetSabrewingSeniorJuniorWoodchuckI18n } from "./044-violet-sabrewing-senior-junior-woodchuck.i18n";
+
+import { evasive } from "../../../helpers/abilities/evasive";
 
 export const violetSabrewingSeniorJuniorWoodchuck: CharacterCard = {
   id: "erF",
   canonicalId: "ci_erF",
+  slug: "lorcana-ci_erF",
+  printings: [
+    {
+      id: "set10-044",
+      artId: "set10-044",
+      setCode: "set10",
+      collectorNumber: "44",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-044"],
   cardType: "character",
   name: "Violet Sabrewing",
@@ -21,7 +33,7 @@ export const violetSabrewingSeniorJuniorWoodchuck: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6e4756264eee4c9a8e6043984cba2c1d",
-    tcgPlayer: 658458,
+    tcgPlayer: "658458",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Ally"],

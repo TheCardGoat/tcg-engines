@@ -13,7 +13,7 @@ describe("Sergeant Tibbs - Courageous Cat (set 009)", () => {
     });
 
     expect(sergeantTibbsCourageousCat).toMatchObject({
-      id: "YfM",
+      id: "A4G",
       canonicalId: "ci_VLR",
       reprints: ["set1-124", "set9-128"],
       cardType: "character",

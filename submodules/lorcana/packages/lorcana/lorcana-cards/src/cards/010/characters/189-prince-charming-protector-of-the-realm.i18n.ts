@@ -19,10 +19,11 @@ export const princeCharmingProtectorOfTheRealmI18n: Record<Languages, I18nProper
     version: "Beschützer des Königreichs",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "BESCHÜTZERISCHE PRÄSENZ",
+        title: "Beschützerische Präsenz",
         description: "In jedem Zug kann nur ein Charakter herausfordern.",
       },
     ],
@@ -32,10 +33,11 @@ export const princeCharmingProtectorOfTheRealmI18n: Record<Languages, I18nProper
     version: "Protecteur du royaume",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "PRÉSENCE PROTECTRICE",
+        title: "Présence protectrice",
         description: "Un seul personnage peut défier chaque tour.",
       },
     ],
@@ -45,10 +47,10 @@ export const princeCharmingProtectorOfTheRealmI18n: Record<Languages, I18nProper
     version: "Protettore del Reame",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "PRESENZA PROTETTIVA",
+        title: "Presenza Protettiva",
         description: "Ogni turno, solo un personaggio può sfidare.",
       },
     ],

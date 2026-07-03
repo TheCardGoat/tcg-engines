@@ -4,6 +4,17 @@ import { wakeUpAliceI18n } from "./116-wake-up-alice.i18n";
 export const wakeUpAlice: ActionCard = {
   id: "LkF",
   canonicalId: "ci_LkF",
+  slug: "lorcana-ci_LkF",
+  printings: [
+    {
+      id: "set7-116",
+      artId: "set7-116",
+      setCode: "set7",
+      collectorNumber: "116",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-116"],
   cardType: "action",
   name: "Wake Up, Alice!",
@@ -16,7 +27,7 @@ export const wakeUpAlice: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_688f773c54e34dbf8f96096b19c1c2b9",
-    tcgPlayer: 618258,
+    tcgPlayer: "618258",
   },
   text: "Return chosen damaged character to their player's hand.",
   abilities: [

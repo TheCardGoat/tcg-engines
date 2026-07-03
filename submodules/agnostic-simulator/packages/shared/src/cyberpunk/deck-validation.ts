@@ -19,7 +19,7 @@ export interface CyberpunkDeckValidationCard {
   displayName?: string;
   type: string;
   color: string;
-  ram: number;
+  ram: number | null;
 }
 
 export interface CyberpunkDeckValidationEntry {
@@ -112,6 +112,7 @@ export function validateCyberpunkDeck(
 
   for (const entry of deck.mainDeck) {
     const quantity = totalQuantityById.get(entry.card.id) ?? 0;
+    const ram = validationRam(entry.card);
 
     if (quantity > CYBERPUNK_MAX_COPIES) {
       issues.push({
@@ -125,11 +126,11 @@ export function validateCyberpunkDeck(
     }
 
     const allowedRam = ramBudget.get(entry.card.color) ?? 0;
-    if (entry.card.ram > allowedRam) {
+    if (ram > allowedRam) {
       issues.push({
         code: "ram-limit",
         severity: "error",
-        message: `${displayName(entry.card)} needs ${entry.card.ram} ${entry.card.color} RAM; Legends provide ${allowedRam}.`,
+        message: `${displayName(entry.card)} needs ${ram} ${entry.card.color} RAM; Legends provide ${allowedRam}.`,
         cardId: entry.card.id,
         cardName: displayName(entry.card),
         color: entry.card.color,
@@ -154,10 +155,14 @@ export function getCyberpunkRamBudget(
   for (const entry of legends) {
     const quantity = Math.max(0, Math.floor(entry.quantity));
     const current = budget.get(entry.card.color) ?? 0;
-    budget.set(entry.card.color, current + entry.card.ram * quantity);
+    budget.set(entry.card.color, current + validationRam(entry.card) * quantity);
   }
 
   return budget;
+}
+
+function validationRam(card: CyberpunkDeckValidationCard): number {
+  return card.ram ?? 0;
 }
 
 function displayName(card: CyberpunkDeckValidationCard): string {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { drFacilierFortuneTellerI18n } from "./079-dr-facilier-fortune-teller.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const drFacilierFortuneTeller: CharacterCard = {
   id: "WRE",
   canonicalId: "ci_WRE",
+  slug: "lorcana-ci_WRE",
+  printings: [
+    {
+      id: "set2-079",
+      artId: "set2-079",
+      setCode: "set2",
+      collectorNumber: "79",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-079"],
   cardType: "character",
   name: "Dr. Facilier",
@@ -21,7 +33,7 @@ export const drFacilierFortuneTeller: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d544feae1c8b4accae8e8f3d185380c4",
-    tcgPlayer: 527745,
+    tcgPlayer: "527745",
   },
   text: [
     {

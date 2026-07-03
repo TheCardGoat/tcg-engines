@@ -4,6 +4,17 @@ import { mauriceUnconventionalInventorI18n } from "./138-maurice-unconventional-
 export const mauriceUnconventionalInventor: CharacterCard = {
   id: "1FE",
   canonicalId: "ci_1FE",
+  slug: "lorcana-ci_1FE",
+  printings: [
+    {
+      id: "set7-138",
+      artId: "set7-138",
+      setCode: "set7",
+      collectorNumber: "138",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-138"],
   cardType: "character",
   name: "Maurice",
@@ -20,7 +31,7 @@ export const mauriceUnconventionalInventor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a02f616f960243249461ac40a8beb36c",
-    tcgPlayer: 619483,
+    tcgPlayer: "619483",
   },
   text: [
     {
@@ -51,7 +62,9 @@ export const mauriceUnconventionalInventor: CharacterCard = {
           },
           {
             type: "conditional",
-            condition: { type: "if-you-do" },
+            condition: {
+              type: "if-you-do",
+            },
             then: {
               type: "draw",
               amount: 1,

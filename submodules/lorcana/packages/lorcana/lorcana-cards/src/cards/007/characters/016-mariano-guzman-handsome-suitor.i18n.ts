@@ -17,9 +17,9 @@ export const marianoGuzmanHandsomeSuitorI18n: Record<Languages, I18nProperties> 
     version: "Gutaussehender Verehrer",
     text: [
       {
-        title: "ICH SEHE DICH",
+        title: "Ich sehe dich",
         description:
-          "Solange du mindestens einen Dolores-Madrigal-Charakter im Spiel hast, erhält dieser Charakter +1.",
+          "Solange du mindestens einen Dolores-Madrigal-Charakter im Spiel hast, erhält dieser Charakter +1 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const marianoGuzmanHandsomeSuitorI18n: Record<Languages, I18nProperties> 
     version: "Prétendant séduisant",
     text: [
       {
-        title: "JE TE VOIS",
+        title: "Je te vois",
         description:
-          "Tant que vous avez un personnage Dolores Madrigal en jeu, ce personnage-ci gagne +1.",
+          "Tant que vous avez un personnage Dolores Madrigal en jeu, ce personnage-ci gagne +1 {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const marianoGuzmanHandsomeSuitorI18n: Record<Languages, I18nProperties> 
     version: "Bellissimo Pretendente",
     text: [
       {
-        title: "IO TI VEDO",
+        title: "Io Ti Vedo",
         description:
-          "Mentre hai in gioco un personaggio chiamato Dolores Madrigal, questo personaggio riceve +1.",
+          "Mentre hai in gioco un personaggio chiamato Dolores Madrigal, questo personaggio riceve +1 {L}.",
       },
     ],
   },

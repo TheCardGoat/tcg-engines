@@ -16,9 +16,9 @@ export const perditaOnTheLookoutI18n: Record<Languages, I18nProperties> = {
     version: "Auf der Lauer",
     text: [
       {
-        title: "HÄLT WACHE",
+        title: "Hält Wache",
         description:
-          "Solange du mindestens einen Welpen im Spiel hast, erhält dieser Charakter +1.",
+          "Solange du mindestens einen Welpen im Spiel hast, erhält dieser Charakter +1 {W}.",
       },
     ],
   },
@@ -27,8 +27,9 @@ export const perditaOnTheLookoutI18n: Record<Languages, I18nProperties> = {
     version: "Aux aguets",
     text: [
       {
-        title: "MONTER LA GARDE",
-        description: "Tant que vous avez un personnage Chiot en jeu, ce personnage-ci gagne +1.",
+        title: "Monter la garde",
+        description:
+          "Tant que vous avez un personnage Chiot en jeu, ce personnage-ci gagne +1 {W}.",
       },
     ],
   },
@@ -37,8 +38,9 @@ export const perditaOnTheLookoutI18n: Record<Languages, I18nProperties> = {
     version: "Di Vedetta",
     text: [
       {
-        title: "TENERE D'OCCHIO",
-        description: "Mentre hai in gioco un personaggio Cucciolo, questo personaggio riceve +1.",
+        title: "Tenere d'Occhio",
+        description:
+          "Mentre hai in gioco un personaggio Cucciolo, questo personaggio riceve +1 {W}.",
       },
     ],
   },

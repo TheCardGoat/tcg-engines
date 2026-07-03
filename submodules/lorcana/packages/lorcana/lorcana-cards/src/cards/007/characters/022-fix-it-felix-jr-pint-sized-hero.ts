@@ -4,6 +4,17 @@ import { fixitFelixJrPintsizedHeroI18n } from "./022-fix-it-felix-jr-pint-sized-
 export const fixitFelixJrPintsizedHero: CharacterCard = {
   id: "zSu",
   canonicalId: "ci_zSu",
+  slug: "lorcana-ci_zSu",
+  printings: [
+    {
+      id: "set7-022",
+      artId: "set7-022",
+      setCode: "set7",
+      collectorNumber: "22",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-022"],
   cardType: "character",
   name: "Fix-It Felix, Jr.",
@@ -20,7 +31,7 @@ export const fixitFelixJrPintsizedHero: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8e4e89a1b49c4ea5936be4e14cfadb46",
-    tcgPlayer: 619417,
+    tcgPlayer: "619417",
   },
   text: [
     {

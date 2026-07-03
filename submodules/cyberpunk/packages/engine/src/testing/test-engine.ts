@@ -1,5 +1,10 @@
 import { create } from "mutative";
-import type { StructuredCardDefinition, CardZone } from "@tcg/cyberpunk-types";
+import {
+  openTestSimulatorSnapshot,
+  type OpenInSimulatorOptions,
+  type OpenInSimulatorResult,
+} from "@tcg/engine-core/test-simulator";
+import type { StructuredCardDefinition, CardZone, CardType } from "@tcg/cyberpunk-types";
 import type { MatchState } from "../types/match-state.ts";
 import type {
   CommandResult,
@@ -21,6 +26,7 @@ import { asCardInstanceId } from "../types/branded.ts";
 import { LocalEngine } from "../transport/local-engine.ts";
 import { judgeAllMoves } from "../moves/judge.ts";
 import { registerMoves } from "../command/index.ts";
+import { getCardRegistry } from "../state/card-registry.ts";
 import type { CardMeta } from "../types/card-instance.ts";
 import type { FilteredMatchView } from "../view/filter.ts";
 import type { PlayerPrompt } from "../view/player-prompt.ts";
@@ -189,6 +195,20 @@ export class CyberpunkTestEngine {
 
   getState(): MatchState {
     return this.engine.getState();
+  }
+
+  openInSimulator(options: OpenInSimulatorOptions = {}): OpenInSimulatorResult {
+    return openTestSimulatorSnapshot(
+      {
+        gameSlug: "cyberpunk",
+        viewer: options.viewer ?? "p1",
+        payload: {
+          catalog: [...getCardRegistry().entries()],
+          state: this.getState(),
+        },
+      },
+      options,
+    );
   }
 
   getFilteredView(playerId: PlayerId): FilteredMatchView {
@@ -397,6 +417,22 @@ export class CyberpunkTestEngine {
     return this.exec("resolveDiscardFromHand", { args: { cardIds } }, playerId);
   }
 
+  /**
+   * Resolves a `chooseTarget / adjustGig` pending choice by setting the
+   * targeted die to `value`. Use after a card like Jackie Welles suspends with
+   * an adjustGig value choice (e.g. decrease by up to 2). `value` is the
+   * absolute face value to set, not a delta.
+   */
+  resolveAdjustGig(value: number, opts?: MoveOpts): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "adjustGig") {
+      throw new Error("No chooseTarget adjustGig pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolveAdjustGig", { args: { value } }, playerId);
+  }
+
   resolve(card: CardRef, targets: ResolveTargets, opts?: MoveOpts): CommandSuccess {
     const state = this.getState();
     const choice = state.G.turnMetadata.pendingChoice;
@@ -449,6 +485,16 @@ export class CyberpunkTestEngine {
     }
     const playerId = opts?.as ?? choice.chooserId;
     return this.exec("resolveEffectTarget", { args: { targetIds: targetIds.slice() } }, playerId);
+  }
+
+  resolveCardTypeChoice(cardType: CardType, opts?: MoveOpts): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "chooseCardType") {
+      throw new Error("No chooseCardType pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolveCardTypeChoice", { args: { cardType } }, playerId);
   }
 
   // ── Judge moves (test-only state manipulation) ─────────────────────

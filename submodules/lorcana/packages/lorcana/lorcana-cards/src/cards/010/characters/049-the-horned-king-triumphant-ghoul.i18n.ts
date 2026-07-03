@@ -17,9 +17,9 @@ export const theHornedKingTriumphantGhoulI18n: Record<Languages, I18nProperties>
     version: "Siegreicher Ghul",
     text: [
       {
-        title: "GROSSE MACHENSCHAFTEN",
+        title: "Große Machenschaften",
         description:
-          "Solange in deinem Zug 1 oder mehr Karten einen Ablagestapel verlassen haben, erhält dieser Charakter +2.",
+          "Solange in deinem Zug 1 oder mehr Karten einen Ablagestapel verlassen haben, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const theHornedKingTriumphantGhoulI18n: Record<Languages, I18nProperties>
     version: "Goule triomphante",
     text: [
       {
-        title: "MACHINATIONS GRANDIOSES",
+        title: "Machinations grandioses",
         description:
-          "Durant votre tour, si 1 carte ou plus a quitté la défausse d'un joueur ce tour-ci, ce personnage gagne +2.",
+          "Durant votre tour, si 1 carte ou plus a quitté la défausse d'un joueur ce tour-ci, ce personnage gagne +2 {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const theHornedKingTriumphantGhoulI18n: Record<Languages, I18nProperties>
     version: "Ghoul Trionfante",
     text: [
       {
-        title: "GRANDIOSI COMPLOTTI",
+        title: "Grandiosi Complotti",
         description:
-          "Durante il tuo turno, se 1 o più carte hanno lasciato gli scarti di un giocatore in questo turno, questo personaggio riceve +2.",
+          "Durante il tuo turno, se 1 o più carte hanno lasciato gli scarti di un giocatore in questo turno, questo personaggio riceve +2 {L}.",
       },
     ],
   },

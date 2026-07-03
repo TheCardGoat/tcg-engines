@@ -4,6 +4,17 @@ import { chernabogCreatureOfTheNightI18n } from "./050-chernabog-creature-of-the
 export const chernabogCreatureOfTheNight: CharacterCard = {
   id: "gAZ",
   canonicalId: "ci_gAZ",
+  slug: "lorcana-ci_gAZ",
+  printings: [
+    {
+      id: "set7-050",
+      artId: "set7-050",
+      setCode: "set7",
+      collectorNumber: "50",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-050"],
   cardType: "character",
   name: "Chernabog",
@@ -20,7 +31,7 @@ export const chernabogCreatureOfTheNight: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_557e4cc6a67e4683ab3a48a35fcf6372",
-    tcgPlayer: 619433,
+    tcgPlayer: "619433",
   },
   text: [
     {

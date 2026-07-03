@@ -7,14 +7,17 @@ export const gd01TheWitchAndTheBride117: CommandCard = {
   color: "white",
   traits: ["-"],
   id: "GD01-117",
-  externalId: "gundam:gd01-117",
-  slug: "the-witch-and-the-bride-gd01-117",
+  canonicalId: "GD01-117",
+  externalIds: { bandai: "gundam:gd01-117" },
+  slug: "the-witch-and-the-bride/gd01-117",
   displayName: "The Witch and the Bride",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-117",
   printings: [
     {
       id: "GD01-117",
+      artId: "GD01-117",
+      setCode: "GD01",
       collectorNumber: "GD01-117",
       cardNumber: "GD01-117",
       set: {
@@ -30,6 +33,8 @@ export const gd01TheWitchAndTheBride117: CommandCard = {
     },
     {
       id: "GD01-117_p1",
+      artId: "GD01-117_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-117_p1",
       cardNumber: "GD01-117",
       set: {
@@ -45,6 +50,8 @@ export const gd01TheWitchAndTheBride117: CommandCard = {
     },
     {
       id: "GD01-117_p2",
+      artId: "GD01-117_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-117_p2",
       cardNumber: "GD01-117",
       set: {
@@ -59,6 +66,7 @@ export const gd01TheWitchAndTheBride117: CommandCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-117", "GD01-117_p1", "GD01-117_p2"],
   selectedPrintingId: "GD01-117",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-117.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-117.webp?260424",

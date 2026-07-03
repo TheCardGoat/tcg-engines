@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { calhounMarineSergeantI18n } from "./191-calhoun-marine-sergeant.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const calhounMarineSergeant: CharacterCard = {
   id: "NLA",
   canonicalId: "ci_NLA",
+  slug: "lorcana-ci_NLA",
+  printings: [
+    {
+      id: "set6-191",
+      artId: "set6-191",
+      setCode: "set6",
+      collectorNumber: "191",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-191"],
   cardType: "character",
   name: "Calhoun",
@@ -21,7 +33,7 @@ export const calhounMarineSergeant: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f6c83c36dbe04bdcb19ee7bd9d0479cd",
-    tcgPlayer: 592017,
+    tcgPlayer: "592017",
   },
   text: [
     {

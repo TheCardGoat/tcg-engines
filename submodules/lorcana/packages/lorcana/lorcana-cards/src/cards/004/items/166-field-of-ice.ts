@@ -4,6 +4,17 @@ import { fieldOfIceI18n } from "./166-field-of-ice.i18n";
 export const fieldOfIce: ItemCard = {
   id: "DSK",
   canonicalId: "ci_DSK",
+  slug: "lorcana-ci_DSK",
+  printings: [
+    {
+      id: "set4-166",
+      artId: "set4-166",
+      setCode: "set4",
+      collectorNumber: "166",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-166"],
   cardType: "item",
   name: "Field of Ice",
@@ -16,7 +27,7 @@ export const fieldOfIce: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e8595996603e4e3ab8d772a573e75f5b",
-    tcgPlayer: 548594,
+    tcgPlayer: "548594",
   },
   text: [
     {

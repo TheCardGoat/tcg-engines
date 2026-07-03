@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMousePirateLookoutI18n } from "./120-minnie-mouse-pirate-lookout.i18n";
 
 export const minnieMousePirateLookout: CharacterCard = {
-  id: "D2o",
-  canonicalId: "ci_D2o",
+  id: "NGk",
+  canonicalId: "ci_HHx",
+  slug: "lorcana-ci_HHx",
+  printings: [
+    {
+      id: "set6-120",
+      artId: "set6-120",
+      setCode: "set6",
+      collectorNumber: "120",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-120"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -18,8 +29,8 @@ export const minnieMousePirateLookout: CharacterCard = {
   lore: 1,
   inkable: false,
   externalIds: {
-    lorcast: "crd_0e20ed4554c44df494fcf78ac9ce0239",
-    tcgPlayer: 593028,
+    lorcast: "crd_bbd9d2a6b1194759b18eb6e58a3c3d3e",
+    tcgPlayer: "650215",
   },
   text: [
     {

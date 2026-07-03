@@ -4,6 +4,17 @@ import { vladimirCeramicUnicornFanI18n } from "./075-vladimir-ceramic-unicorn-fa
 export const vladimirCeramicUnicornFan: CharacterCard = {
   id: "yNl",
   canonicalId: "ci_yNl",
+  slug: "lorcana-ci_yNl",
+  printings: [
+    {
+      id: "set10-075",
+      artId: "set10-075",
+      setCode: "set10",
+      collectorNumber: "75",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-075"],
   cardType: "character",
   name: "Vladimir",
@@ -20,7 +31,7 @@ export const vladimirCeramicUnicornFan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_86a728449c4a46b7862052f531d3cea4",
-    tcgPlayer: 658879,
+    tcgPlayer: "658879",
   },
   text: [
     {

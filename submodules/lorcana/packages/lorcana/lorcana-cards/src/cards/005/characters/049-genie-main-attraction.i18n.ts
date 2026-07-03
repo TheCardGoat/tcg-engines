@@ -17,7 +17,7 @@ export const genieMainAttractionI18n: Record<Languages, I18nProperties> = {
     version: "Hauptattraktion",
     text: [
       {
-        title: "SPEKTAKULÄRER ENTERTAINER",
+        title: "Spektakulärer Entertainer",
         description:
           "Solange dieser Charakter erschöpft ist, werden gegnerische Charaktere zu Beginn ihres Zuges nicht bereit gemacht.",
       },
@@ -28,7 +28,7 @@ export const genieMainAttractionI18n: Record<Languages, I18nProperties> = {
     version: "Clou du spectacle",
     text: [
       {
-        title: "ARTISTE PHÉNOMÉNAL",
+        title: "Artiste phénoménal",
         description:
           "Tant que ce personnage est épuisé, les personnages adverses ne se redressent pas au début de leur tour.",
       },
@@ -39,7 +39,7 @@ export const genieMainAttractionI18n: Record<Languages, I18nProperties> = {
     version: "Attrazione Principale",
     text: [
       {
-        title: "SHOWMAN FENOMENALE",
+        title: "Showman Fenomenale",
         description:
           "Mentre questo personaggio è impegnato, i personaggi avversari non si possono preparare all'inizio del loro turno.",
       },

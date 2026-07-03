@@ -4,6 +4,17 @@ import { maxLoyalSheepdogI18n } from "./014-max-loyal-sheepdog.i18n";
 export const maxLoyalSheepdog: CharacterCard = {
   id: "6A5",
   canonicalId: "ci_6A5",
+  slug: "lorcana-ci_6A5",
+  printings: [
+    {
+      id: "set4-014",
+      artId: "set4-014",
+      setCode: "set4",
+      collectorNumber: "14",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-014"],
   cardType: "character",
   name: "Max",
@@ -20,7 +31,7 @@ export const maxLoyalSheepdog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9002164290424cb1911b9817cf1abf95",
-    tcgPlayer: 550558,
+    tcgPlayer: "550558",
   },
   text: [
     {

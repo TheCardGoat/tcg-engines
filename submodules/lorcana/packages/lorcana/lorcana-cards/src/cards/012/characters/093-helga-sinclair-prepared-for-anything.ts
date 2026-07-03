@@ -4,6 +4,17 @@ import { helgaSinclairPreparedForAnythingI18n } from "./093-helga-sinclair-prepa
 export const helgaSinclairPreparedForAnything: CharacterCard = {
   id: "1kF",
   canonicalId: "ci_1kF",
+  slug: "lorcana-ci_1kF",
+  printings: [
+    {
+      id: "set12-093",
+      artId: "set12-093",
+      setCode: "set12",
+      collectorNumber: "93",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-093"],
   cardType: "character",
   name: "Helga Sinclair",
@@ -20,6 +31,7 @@ export const helgaSinclairPreparedForAnything: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ad9b6e3372a140178662bc5ffd0db287",
+    tcgPlayer: "692045",
   },
   text: [
     {

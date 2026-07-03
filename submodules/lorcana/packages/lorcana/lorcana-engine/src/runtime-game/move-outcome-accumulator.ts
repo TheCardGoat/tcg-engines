@@ -24,8 +24,14 @@ import type {
   LorcanaDomainEventType,
 } from "../types/domain-events";
 
+type LoreChangeOutcome = NonNullable<MoveOutcomes["loreChanged"]>;
+
 function assertNever(value: never): never {
   throw new Error(`Unhandled customType: ${String(value)}`);
+}
+
+function isInkwellZone(zone: string | undefined): boolean {
+  return zone === "inkwell" || zone?.startsWith("inkwell:") === true;
 }
 
 export class MoveOutcomeAccumulator {
@@ -34,9 +40,11 @@ export class MoveOutcomeAccumulator {
   private cardsBanished: CardInstanceId[] = [];
   private cardsDrawn: Array<{ playerId: PlayerId; amount: number; detail: CardInstanceId[] }> = [];
   private cardsDiscarded: NonNullable<MoveOutcomes["cardsDiscarded"]> = [];
-  private loreChanges: MoveOutcomes["loreChanged"][] = [];
+  private loreChanges: LoreChangeOutcome[] = [];
   private cardsExerted: CardInstanceId[] = [];
+  private inkwellCardsExerted: Array<{ playerId: PlayerId; amount: number }> = [];
   private cardsReadied: CardInstanceId[] = [];
+  private inkwellCardsReadied: Array<{ playerId: PlayerId; amount: number }> = [];
   private cardsMilled: { playerId: PlayerId; amount: number; cardIds: CardInstanceId[] } | null =
     null;
   private cardsReturnedToHand: CardInstanceId[] = [];
@@ -166,14 +174,13 @@ export class MoveOutcomeAccumulator {
       hasAny = true;
     }
 
-    // Use the last lore change (most recent). Multiple lore changes in a single
-    // move are rare; when they occur the last one represents the final state.
-    for (let i = this.loreChanges.length - 1; i >= 0; i--) {
-      if (this.loreChanges[i]) {
-        outcomes.loreChanged = this.loreChanges[i];
-        hasAny = true;
-        break;
+    if (this.loreChanges.length > 0) {
+      const lastLoreChange = this.loreChanges.at(-1);
+      outcomes.loreChanges = [...this.loreChanges];
+      if (lastLoreChange) {
+        outcomes.loreChanged = lastLoreChange;
       }
+      hasAny = true;
     }
 
     if (this.cardsExerted.length > 0) {
@@ -181,8 +188,18 @@ export class MoveOutcomeAccumulator {
       hasAny = true;
     }
 
+    if (this.inkwellCardsExerted.length > 0) {
+      outcomes.inkwellCardsExerted = this.inkwellCardsExerted.map((entry) => ({ ...entry }));
+      hasAny = true;
+    }
+
     if (this.cardsReadied.length > 0) {
       outcomes.cardsReadied = [...this.cardsReadied];
+      hasAny = true;
+    }
+
+    if (this.inkwellCardsReadied.length > 0) {
+      outcomes.inkwellCardsReadied = this.inkwellCardsReadied.map((entry) => ({ ...entry }));
       hasAny = true;
     }
 
@@ -224,7 +241,9 @@ export class MoveOutcomeAccumulator {
     this.cardsDiscarded = [];
     this.loreChanges = [];
     this.cardsExerted = [];
+    this.inkwellCardsExerted = [];
     this.cardsReadied = [];
+    this.inkwellCardsReadied = [];
     this.cardsMilled = null;
     this.cardsReturnedToHand = [];
     this.cardsMovedToZone = [];
@@ -381,6 +400,11 @@ export class MoveOutcomeAccumulator {
     if (data.source === "quest" || data.source === "challenge") return;
 
     const cardId = data.cardId as CardInstanceId;
+    if (isInkwellZone(data.zone)) {
+      this.incrementInkwellCount(this.inkwellCardsExerted, cardId, context);
+      return;
+    }
+
     this.cardsExerted.push(cardId);
   }
 
@@ -389,7 +413,30 @@ export class MoveOutcomeAccumulator {
     if (data.source === "start-of-turn" && data.zone === "inkwell") return;
 
     const cardId = data.cardId as CardInstanceId;
+    if (isInkwellZone(data.zone)) {
+      this.incrementInkwellCount(this.inkwellCardsReadied, cardId, context);
+      return;
+    }
+
     this.cardsReadied.push(cardId);
+  }
+
+  private incrementInkwellCount(
+    counts: Array<{ playerId: PlayerId; amount: number }>,
+    cardId: CardInstanceId,
+    context: LogProjectionContext,
+  ): void {
+    const ownerId = context.state.ctx.zones.private.cardIndex[cardId]?.ownerID;
+    if (!ownerId) return;
+
+    const playerId = ownerId as PlayerId;
+    const existing = counts.find((entry) => entry.playerId === playerId);
+    if (existing) {
+      existing.amount += 1;
+      return;
+    }
+
+    counts.push({ playerId, amount: 1 });
   }
 
   private accumulateCardsMilled(gameEvent: {

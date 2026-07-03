@@ -17,7 +17,7 @@ export const hansNobleScoundrelI18n: Record<Languages, I18nProperties> = {
     version: "Adeliger Halunke",
     text: [
       {
-        title: "KÖNIGLICHE PLÄNE",
+        title: "Königliche Pläne",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens eine Prinzessin oder eine Königin im Spiel ist, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const hansNobleScoundrelI18n: Record<Languages, I18nProperties> = {
     version: "Noble crapule",
     text: [
       {
-        title: "INTRIGUES ROYALES",
+        title: "Intrigues royales",
         description:
           "S'il y a un personnage Princesse ou Reine en jeu lorsque vous jouez ce personnage, gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const hansNobleScoundrelI18n: Record<Languages, I18nProperties> = {
     version: "Nobile Furfante",
     text: [
       {
-        title: "COMPLOTTI REGALI",
+        title: "Complotti Regali",
         description:
           "Quando giochi questo personaggio, se un personaggio Principessa o Regina è in gioco, ottieni 1 leggenda.",
       },

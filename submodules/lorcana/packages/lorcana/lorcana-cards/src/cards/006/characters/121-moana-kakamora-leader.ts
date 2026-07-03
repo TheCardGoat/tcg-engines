@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { moanaKakamoraLeaderI18n } from "./121-moana-kakamora-leader.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const moanaKakamoraLeader: CharacterCard = {
   id: "OXn",
   canonicalId: "ci_OXn",
+  slug: "lorcana-ci_OXn",
+  printings: [
+    {
+      id: "set6-121",
+      artId: "set6-121",
+      setCode: "set6",
+      collectorNumber: "121",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-121"],
   cardType: "character",
   name: "Moana",
@@ -21,7 +33,7 @@ export const moanaKakamoraLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ea56665b30604ff0977e95ad7442f5f5",
-    tcgPlayer: 588360,
+    tcgPlayer: "588360",
   },
   text: [
     {

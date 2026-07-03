@@ -4,6 +4,17 @@ import { blueSmokeI18n } from "./166-blue-smoke.i18n";
 export const blueSmoke: ItemCard = {
   id: "IFf",
   canonicalId: "ci_IFf",
+  slug: "lorcana-ci_IFf",
+  printings: [
+    {
+      id: "set11-166",
+      artId: "set11-166",
+      setCode: "set11",
+      collectorNumber: "166",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-166"],
   cardType: "item",
   name: "Blue Smoke",
@@ -16,7 +27,7 @@ export const blueSmoke: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9d937b1e551d47c18d97a54494378368",
-    tcgPlayer: 676230,
+    tcgPlayer: "676230",
   },
   text: [
     {

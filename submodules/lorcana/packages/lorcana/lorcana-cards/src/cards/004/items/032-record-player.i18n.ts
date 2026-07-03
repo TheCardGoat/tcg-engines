@@ -19,12 +19,12 @@ export const recordPlayerI18n: Record<Languages, I18nProperties> = {
     name: "Schallplattenspieler",
     text: [
       {
-        title: "GUCK MAL HIER!",
+        title: "Guck mal hier!",
         description:
-          "Jedes Mal, wenn du ein Lied ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2.",
+          "Jedes Mal, wenn du ein Lied ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 {S}.",
       },
       {
-        title: "HITPARADE",
+        title: "Hitparade",
         description:
           "Die Kosten deiner Stitch-Charaktere gelten als +1 für das Singen von Liedern.",
       },
@@ -34,12 +34,12 @@ export const recordPlayerI18n: Record<Languages, I18nProperties> = {
     name: "Platine disque",
     text: [
       {
-        title: "REGARDE!",
+        title: "Regarde!",
         description:
-          "Chaque fois que vous jouez une chanson, choisissez un personnage qui subit -2 jusqu'au début de votre prochain tour.",
+          "Chaque fois que vous jouez une chanson, choisissez un personnage qui subit -2 {S} jusqu'au début de votre prochain tour.",
       },
       {
-        title: "HIT PARADE",
+        title: "Hit parade",
         description:
           "Vos personnages Stitch sont considérés comme ayant un coût de +1 pour chanter des chansons.",
       },
@@ -49,14 +49,14 @@ export const recordPlayerI18n: Record<Languages, I18nProperties> = {
     name: "Giradischi",
     text: [
       {
-        title: "GUARDA QUA!",
+        title: "Guarda Qua!",
         description:
-          "Ogni volta che giochi una canzone, un personaggio a tua scelta riceve -2 fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che giochi una canzone, un personaggio a tua scelta riceve -2 {S} fino all'inizio del tuo prossimo turno.",
       },
       {
-        title: "HIT PARADE I",
+        title: "Hit Parade",
         description:
-          "tuoi personaggi chiamati Stitch contano come di costo +1 per cantare le canzoni.",
+          "I tuoi personaggi chiamati Stitch contano come di costo +1 per cantare le canzoni.",
       },
     ],
   },

@@ -6,9 +6,9 @@ export const donaldDuckGhostHunterI18n: Record<Languages, I18nProperties> = {
     version: "Ghost Hunter",
     text: [
       {
-        title: "RAISE A RUCKUS",
+        title: "RAISE",
         description:
-          "When you play this character, chosen Detective character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
+          "A RUCKUS When you play this character, chosen Detective character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const donaldDuckGhostHunterI18n: Record<Languages, I18nProperties> = {
     version: "Geisterjäger",
     text: [
       {
-        title: "EINEN AUFSTAND ANZETTELN",
+        title: "Einen Aufstand anzetteln",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Detektiv deiner Wahl in diesem Zug Herausfordern +2. (Während der Charakter herausfordert, erhält er +2.)",
+          "Wenn du diesen Charakter ausspielst, erhält ein Detektiv deiner Wahl in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const donaldDuckGhostHunterI18n: Record<Languages, I18nProperties> = {
     version: "Chasseur de fantômes",
     text: [
       {
-        title: "FAIRE DU GRABUGE",
+        title: "Faire du grabuge",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage Détective qui gagne Offensif +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage Détective qui gagne <Offensif> +2 pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const donaldDuckGhostHunterI18n: Record<Languages, I18nProperties> = {
     version: "Cacciatore di Fantasmi",
     text: [
       {
-        title: "ALZARE UN POLVERONE",
+        title: "Alzare un Polverone",
         description:
-          "Quando giochi questo personaggio, un personaggio Detective a tua scelta ottiene Sfidante +2 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio Detective a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
       },
     ],
   },

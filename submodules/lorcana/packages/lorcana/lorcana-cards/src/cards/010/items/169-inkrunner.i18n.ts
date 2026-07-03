@@ -19,13 +19,13 @@ export const inkrunnerI18n: Record<Languages, I18nProperties> = {
     name: "Tintenflügel",
     text: [
       {
-        title: "KONTROLLE VOR DEM FLUG",
+        title: "Kontrolle vor dem Flug",
         description: "Wenn du diesen Gegenstand ausspielst, ziehe 1 Karte.",
       },
       {
-        title: "BEREIT ZUM ABFLUG, 1",
+        title: "Bereit zum Abflug",
         description:
-          "— Ein Charakter deiner Wahl erhält in diesem Zug Alarmiert. (Der Charakter kann herausfordern, als hätte er Wendig.)",
+          "{E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug <Alarmiert>. (Der Charakter kann herausfordern, als hätte er Wendig.)",
       },
     ],
   },
@@ -33,9 +33,13 @@ export const inkrunnerI18n: Record<Languages, I18nProperties> = {
     name: "Encre-jet",
     text: [
       {
-        title: "PRÉPARATIFS DE VOL",
+        title: "Préparatifs de vol",
+        description: "Lorsque vous jouez cet objet, piochez une carte.",
+      },
+      {
+        title: "Paré à voler",
         description:
-          "Lorsque vous jouez cet objet, piochez une carte. PARÉ À VOLER, 1 — Choisissez un personnage qui gagne Agilité pour le reste de ce tour. (Il peut défier comme s'il avait Insaisissable.)",
+          "{E}, 1 {I} — Choisissez un personnage qui gagne <Agilité> pour le reste de ce tour. (Il peut défier comme s'il avait Insaisissable.)",
       },
     ],
   },
@@ -43,9 +47,13 @@ export const inkrunnerI18n: Record<Languages, I18nProperties> = {
     name: "Alainchiostro",
     text: [
       {
-        title: "VERIFICA PRE-VOLO",
+        title: "Verifica Pre-Volo",
+        description: "Quando giochi questo oggetto, pesca una carta.",
+      },
+      {
+        title: "Pronto a Partire",
         description:
-          "Quando giochi questo oggetto, pesca una carta. PRONTO A PARTIRE, 1 — Un personaggio a tua scelta ottiene Vigile per questo turno. (Può sfidare come se avesse Sfuggente.)",
+          "{E}, 1 {I} — Un personaggio a tua scelta ottiene <Vigile> per questo turno. (Può sfidare come se avesse Sfuggente.)",
       },
     ],
   },

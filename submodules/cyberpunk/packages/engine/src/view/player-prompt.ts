@@ -85,6 +85,7 @@ export type ChoicePrompt =
   | ChooseGigsToStealChoicePrompt
   | ChooseCardToPlayChoicePrompt
   | ChooseCardToMoveChoicePrompt
+  | ChooseCardTypeChoicePrompt
   | GainGigChoicePrompt;
 
 /**
@@ -188,6 +189,15 @@ export interface ChooseEffectChoicePrompt {
   type: "chooseEffect";
   chooserId: string;
   payload: { options: ChooseEffectPromptOption[] };
+}
+
+export interface ChooseCardTypeChoicePrompt {
+  type: "chooseCardType";
+  chooserId: string;
+  payload: {
+    cardTypes: CardType[];
+    source?: EffectSourcePrompt;
+  };
 }
 
 export interface ChooseTriggerPromptOption {
@@ -420,6 +430,7 @@ function toAvailableMove(moveId: MoveId, state: MatchState, playerId: PlayerId):
     case "resolveStealGigs":
     case "resolveTrigger":
     case "resolveEffectTarget":
+    case "resolveCardTypeChoice":
       return { moveId, inputSpec: { type: "none" } };
   }
 }
@@ -518,9 +529,17 @@ function getReadyAttackers(
           // Adrenaline units can attack both units and the rival on the played turn
           return true;
         }
+        if (rules.includes("canAttackRivalOnPlayedTurn") && opts?.excludeUnitOnlyAttackers) {
+          // These units can attack the rival directly even if another effect also lets them attack units
+          return true;
+        }
         if (rules.includes("canAttackOnPlayedTurnAgainstUnits")) {
           // These units can only attack other units, not the rival directly
           return !opts?.excludeUnitOnlyAttackers;
+        }
+        if (rules.includes("canAttackRivalOnPlayedTurn")) {
+          // These units can only attack the rival directly, not other units
+          return opts?.excludeUnitOnlyAttackers === true;
         }
         return false;
       }
@@ -761,6 +780,15 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
         },
       };
     }
+    case "chooseCardType":
+      return {
+        type: "chooseCardType",
+        chooserId,
+        payload: {
+          cardTypes: choice.payload.cardTypes,
+          source: projectEffectSource(state, choice.payload.sourceCardId as string | undefined),
+        },
+      };
     case "gainGig":
       return {
         type: "gainGig",

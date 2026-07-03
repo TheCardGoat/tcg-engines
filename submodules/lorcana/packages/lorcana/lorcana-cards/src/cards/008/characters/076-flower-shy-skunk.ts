@@ -4,6 +4,17 @@ import { flowerShySkunkI18n } from "./076-flower-shy-skunk.i18n";
 export const flowerShySkunk: CharacterCard = {
   id: "1FG",
   canonicalId: "ci_1FG",
+  slug: "lorcana-ci_1FG",
+  printings: [
+    {
+      id: "set8-076",
+      artId: "set8-076",
+      setCode: "set8",
+      collectorNumber: "76",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-076"],
   cardType: "character",
   name: "Flower",
@@ -20,7 +31,7 @@ export const flowerShySkunk: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_36e404bad05f458dad8ab8a894d0118f",
-    tcgPlayer: 631342,
+    tcgPlayer: "631342",
   },
   text: [
     {

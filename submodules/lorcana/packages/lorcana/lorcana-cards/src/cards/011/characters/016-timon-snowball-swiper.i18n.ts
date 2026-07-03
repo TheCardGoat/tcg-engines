@@ -17,7 +17,7 @@ export const timonSnowballSwiperI18n: Record<Languages, I18nProperties> = {
     version: "Schneeballschlitterer",
     text: [
       {
-        title: "DAS MUSS WEG",
+        title: "Das muss weg",
         description:
           "Wenn du diesen Charakter ausspielst, zeigt einer der gegnerischen Mitspielenden deiner Wahl alle Handkarten für alle sichtbar vor und wirft eine Karte deiner Wahl, die keine Charakterkarte ist, ab.",
       },
@@ -28,7 +28,7 @@ export const timonSnowballSwiperI18n: Record<Languages, I18nProperties> = {
     version: "Glisse avec des boules de neige",
     text: [
       {
-        title: "DÉBARRASSE-TOI DE ÇA",
+        title: "Débarrasse-toi de ça",
         description:
           "Lorsque vous jouez ce personnage, choisissez un adversaire qui révèle sa main et défausse une carte non-Personnage de votre choix.",
       },
@@ -39,7 +39,7 @@ export const timonSnowballSwiperI18n: Record<Languages, I18nProperties> = {
     version: "Rubapalle di Neve",
     text: [
       {
-        title: "SBARAZZATENE",
+        title: "Sbarazzatene",
         description:
           "Quando giochi questo personaggio, un avversario a tua scelta rivela la sua mano e scarta una carta non personaggio a tua scelta.",
       },

@@ -7,14 +7,17 @@ export const gd02Tallgeese005: UnitCard = {
   color: "blue",
   traits: ["oz"],
   id: "GD02-005",
-  externalId: "gundam:gd02-005",
-  slug: "tallgeese-gd02-005",
+  canonicalId: "GD02-005",
+  externalIds: { bandai: "gundam:gd02-005" },
+  slug: "tallgeese/gd02-005",
   displayName: "Tallgeese",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-005",
   printings: [
     {
       id: "GD02-005",
+      artId: "GD02-005",
+      setCode: "GD02",
       collectorNumber: "GD02-005",
       cardNumber: "GD02-005",
       set: {
@@ -30,6 +33,8 @@ export const gd02Tallgeese005: UnitCard = {
     },
     {
       id: "GD02-005_p1",
+      artId: "GD02-005_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-005_p1",
       cardNumber: "GD02-005",
       set: {
@@ -44,6 +49,7 @@ export const gd02Tallgeese005: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-005", "GD02-005_p1"],
   selectedPrintingId: "GD02-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-005.webp?260424",

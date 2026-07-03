@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { cruellaDeVilPerfectlyWretchedI18n } from "./145-cruella-de-vil-perfectly-wretched.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const cruellaDeVilPerfectlyWretched: CharacterCard = {
   id: "8wy",
   canonicalId: "ci_8wy",
+  slug: "lorcana-ci_8wy",
+  printings: [
+    {
+      id: "set2-145",
+      artId: "set2-145",
+      setCode: "set2",
+      collectorNumber: "145",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-145"],
   cardType: "character",
   name: "Cruella De Vil",
@@ -21,7 +33,7 @@ export const cruellaDeVilPerfectlyWretched: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1676a1863764440991d68270eaf35bcd",
-    tcgPlayer: 526869,
+    tcgPlayer: "526869",
   },
   text: [
     {

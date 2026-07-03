@@ -16,9 +16,9 @@ export const darlingDearBelovedWifeI18n: Record<Languages, I18nProperties> = {
     version: "Geliebte Ehefrau",
     text: [
       {
-        title: "WIE SÜSS",
+        title: "Wie süß",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +2.",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +2 {L}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const darlingDearBelovedWifeI18n: Record<Languages, I18nProperties> = {
     version: "Épouse bien-aimée",
     text: [
       {
-        title: "COMME C'EST MIGNON",
+        title: "Comme c'est mignon",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +2 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const darlingDearBelovedWifeI18n: Record<Languages, I18nProperties> = {
     version: "Moglie Adorata",
     text: [
       {
-        title: "CHE AMORE",
+        title: "Che Amore",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta riceve +2 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta riceve +2 {L} per questo turno.",
       },
     ],
   },

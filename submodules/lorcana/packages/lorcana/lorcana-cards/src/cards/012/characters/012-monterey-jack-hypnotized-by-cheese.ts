@@ -4,6 +4,17 @@ import { montereyJackHypnotizedByCheeseI18n } from "./012-monterey-jack-hypnotiz
 export const montereyJackHypnotizedByCheese: CharacterCard = {
   id: "rZB",
   canonicalId: "ci_rZB",
+  slug: "lorcana-ci_rZB",
+  printings: [
+    {
+      id: "set12-012",
+      artId: "set12-012",
+      setCode: "set12",
+      collectorNumber: "12",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-012"],
   cardType: "character",
   name: "Monterey Jack",
@@ -20,6 +31,7 @@ export const montereyJackHypnotizedByCheese: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_490b647e01e44f77b1413fa6fc30b023",
+    tcgPlayer: "690708",
   },
   text: [
     {

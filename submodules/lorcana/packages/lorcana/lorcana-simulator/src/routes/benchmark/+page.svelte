@@ -9,6 +9,7 @@
     boardPressureFixture.playerTwo,
     {
       browserTransport: { mode: "sync" },
+      capturePatches: false,
       skipPreGame: boardPressureFixture.skipPreGame ?? true,
       seed: boardPressureFixture.seed ?? "benchmark",
     },

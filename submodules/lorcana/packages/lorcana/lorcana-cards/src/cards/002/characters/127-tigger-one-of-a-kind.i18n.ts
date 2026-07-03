@@ -16,9 +16,9 @@ export const tiggerOneOfAKindI18n: Record<Languages, I18nProperties> = {
     version: "Einzigartig",
     text: [
       {
-        title: "VOLLER ENERGIE",
+        title: "Voller Energie",
         description:
-          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter in diesem Zug +2.",
+          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter in diesem Zug +2 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const tiggerOneOfAKindI18n: Record<Languages, I18nProperties> = {
     version: "Unique en son genre",
     text: [
       {
-        title: "ÉNERGIQUE",
+        title: "Énergique",
         description:
-          "Chaque fois que vous jouez une carte Action, ce personnage gagne +2 pour le reste de ce tour.",
+          "Chaque fois que vous jouez une carte Action, ce personnage gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,8 +38,8 @@ export const tiggerOneOfAKindI18n: Record<Languages, I18nProperties> = {
     version: "One of a Kind",
     text: [
       {
-        title: "ENERGETIC",
-        description: "Whenever you play an action, this character gets +2 this turn.",
+        title: "Energetic",
+        description: "Whenever you play an action, this character gets +2 {S} this turn.",
       },
     ],
   },

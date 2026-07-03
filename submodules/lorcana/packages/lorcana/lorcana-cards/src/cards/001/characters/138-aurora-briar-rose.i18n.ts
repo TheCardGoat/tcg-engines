@@ -16,9 +16,9 @@ export const auroraBriarRoseI18n: Record<Languages, I18nProperties> = {
     version: "Röschen",
     text: [
       {
-        title: "ENTWAFFNENDE SCHÖNHEIT",
+        title: "Entwaffnende Schönheit",
         description:
-          "Wenn du diesen Charakter ausspielst, gib einem Charakter deiner Wahl in diesem Zug -2.",
+          "Wenn du diesen Charakter ausspielst, gib einem Charakter deiner Wahl in diesem Zug -2 {S}.",
       },
     ],
   },
@@ -29,7 +29,7 @@ export const auroraBriarRoseI18n: Record<Languages, I18nProperties> = {
       {
         title: "BEAUTÉ DÉCONCERTANTE",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui subit -2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui subit -2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,8 +38,8 @@ export const auroraBriarRoseI18n: Record<Languages, I18nProperties> = {
     version: "Briar Rose",
     text: [
       {
-        title: "DISARMING BEAUTY",
-        description: "When you play this character, chosen character gets –2 this turn.",
+        title: "Disarming Beauty",
+        description: "When you play this character, chosen character gets –2 {S} this turn.",
       },
     ],
   },

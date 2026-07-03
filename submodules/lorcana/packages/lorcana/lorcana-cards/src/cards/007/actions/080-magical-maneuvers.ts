@@ -4,6 +4,17 @@ import { magicalManeuversI18n } from "./080-magical-maneuvers.i18n";
 export const magicalManeuvers: ActionCard = {
   id: "9hd",
   canonicalId: "ci_9hd",
+  slug: "lorcana-ci_9hd",
+  printings: [
+    {
+      id: "set7-080",
+      artId: "set7-080",
+      setCode: "set7",
+      collectorNumber: "80",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-080"],
   cardType: "action",
   name: "Magical Maneuvers",
@@ -16,7 +27,7 @@ export const magicalManeuvers: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a03dfd74bc3343a883df4bb71b193f0c",
-    tcgPlayer: 618702,
+    tcgPlayer: "618702",
   },
   text: "Return chosen character of yours to your hand. Exert chosen character.",
   abilities: [

@@ -17,9 +17,9 @@ export const theBitterwoodUndergroundForestI18n: Record<Languages, I18nPropertie
     version: "Unterirdischer Wald",
     text: [
       {
-        title: "RESSOURCEN SAMMELN",
+        title: "Ressourcen sammeln",
         description:
-          "Einmal während deines Zuges, wenn einer deiner Charaktere mit 5 oder mehr an diesen Ort bewegt wird, darfst du 1 Karte ziehen.",
+          "Einmal während deines Zuges, wenn einer deiner Charaktere mit 5 oder mehr {S} an diesen Ort bewegt wird, darfst du 1 Karte ziehen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const theBitterwoodUndergroundForestI18n: Record<Languages, I18nPropertie
     version: "Forêt souterraine",
     text: [
       {
-        title: "RASSEMBLER DES RESSOURCES",
+        title: "Rassembler des ressources",
         description:
-          "Une fois durant votre tour, lorsque vous déplacez sur ce lieu un personnage ayant 5 ou plus, vous pouvez piocher une carte.",
+          "Une fois durant votre tour, lorsque vous déplacez sur ce lieu un personnage ayant 5 {S} ou plus, vous pouvez piocher une carte.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const theBitterwoodUndergroundForestI18n: Record<Languages, I18nPropertie
     version: "Foresta Sotterranea",
     text: [
       {
-        title: "RACCOGLIERE RISORSE",
+        title: "Raccogliere Risorse",
         description:
-          "Una volta durante il tuo turno, ogni volta che sposti un personaggio con 5 o superiore in questo luogo, puoi pescare una carta.",
+          "Una volta durante il tuo turno, ogni volta che sposti un personaggio con 5 {S} o superiore in questo luogo, puoi pescare una carta.",
       },
     ],
   },

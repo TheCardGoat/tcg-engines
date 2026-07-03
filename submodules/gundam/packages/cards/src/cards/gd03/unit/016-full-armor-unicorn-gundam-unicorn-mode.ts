@@ -7,14 +7,17 @@ export const gd03FullArmorUnicornGundamUnicornMode016: UnitCard = {
   color: "blue",
   traits: ["civilian"],
   id: "GD03-016",
-  externalId: "gundam:gd03-016",
-  slug: "full-armor-unicorn-gundam-unicorn-mode-gd03-016",
+  canonicalId: "GD03-016",
+  externalIds: { bandai: "gundam:gd03-016" },
+  slug: "full-armor-unicorn-gundam-unicorn-mode/gd03-016",
   displayName: "Full Armor Unicorn Gundam (Unicorn Mode)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-016",
   printings: [
     {
       id: "GD03-016",
+      artId: "GD03-016",
+      setCode: "GD03",
       collectorNumber: "GD03-016",
       cardNumber: "GD03-016",
       set: {
@@ -29,6 +32,7 @@ export const gd03FullArmorUnicornGundamUnicornMode016: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-016"],
   selectedPrintingId: "GD03-016",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-016.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-016.webp?260424",

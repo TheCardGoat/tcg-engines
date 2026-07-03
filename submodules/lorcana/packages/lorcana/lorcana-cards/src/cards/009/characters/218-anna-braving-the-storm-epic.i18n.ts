@@ -16,9 +16,9 @@ export const annaBravingTheStormEpicI18n: Record<Languages, I18nProperties> = {
     version: "Dem Sturm trotzend",
     text: [
       {
-        title: "ICH BIN SO WAS VON BEREIT",
+        title: "Ich bin so was von bereit",
         description:
-          "Wenn du mindestens eine andere Heldin oder einen Held im Spiel hast, erhält dieser Charakter +1.",
+          "Wenn du mindestens eine andere Heldin oder einen Held im Spiel hast, erhält dieser Charakter +1 {L}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const annaBravingTheStormEpicI18n: Record<Languages, I18nProperties> = {
     version: "Bravant la tempête",
     text: [
       {
-        title: "JE SUIS TOUT À FAIT PRÊTE",
+        title: "Je suis tout à fait prête",
         description:
-          "Tant que vous avez un autre personnage Héros en jeu, ce personnage-ci gagne +1.",
+          "Tant que vous avez un autre personnage Héros en jeu, ce personnage-ci gagne +1 {L}.",
       },
     ],
   },
@@ -38,8 +38,8 @@ export const annaBravingTheStormEpicI18n: Record<Languages, I18nProperties> = {
     version: "Che Affronta la Tempesta",
     text: [
       {
-        title: "SONO NATA PRONTA",
-        description: "Se hai in gioco un altro personaggio Eroe, questo personaggio riceve +1.",
+        title: "Sono Nata Pronta",
+        description: "Se hai in gioco un altro personaggio Eroe, questo personaggio riceve +1 {L}.",
       },
     ],
   },

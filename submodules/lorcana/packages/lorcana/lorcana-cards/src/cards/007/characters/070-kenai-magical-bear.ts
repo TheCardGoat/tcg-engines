@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kenaiMagicalBearI18n } from "./070-kenai-magical-bear.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const kenaiMagicalBear: CharacterCard = {
   id: "7zp",
   canonicalId: "ci_7zp",
+  slug: "lorcana-ci_7zp",
+  printings: [
+    {
+      id: "set7-070",
+      artId: "set7-070",
+      setCode: "set7",
+      collectorNumber: "70",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-070"],
   cardType: "character",
   name: "Kenai",
@@ -21,7 +33,7 @@ export const kenaiMagicalBear: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b9ef052585ff4d9db2b101a61b3b9486",
-    tcgPlayer: 618326,
+    tcgPlayer: "618326",
   },
   text: [
     {

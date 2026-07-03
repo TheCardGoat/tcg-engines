@@ -4,6 +4,17 @@ import { liloRockStarI18n } from "./017-lilo-rock-star.i18n";
 export const liloRockStar: CharacterCard = {
   id: "oO4",
   canonicalId: "ci_2am",
+  slug: "lorcana-ci_2am",
+  printings: [
+    {
+      id: "set11-017",
+      artId: "set11-017",
+      setCode: "set11",
+      collectorNumber: "17",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-017"],
   cardType: "character",
   name: "Lilo",
@@ -20,7 +31,7 @@ export const liloRockStar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_41acb92e0c494214949c72c409593b50",
-    tcgPlayer: 677158,
+    tcgPlayer: "677158",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { lafayetteSleepyBassetHoundI18n } from "./132-lafayette-sleepy-basset-ho
 export const lafayetteSleepyBassetHound: CharacterCard = {
   id: "hVs",
   canonicalId: "ci_hVs",
+  slug: "lorcana-ci_hVs",
+  printings: [
+    {
+      id: "set8-132",
+      artId: "set8-132",
+      setCode: "set8",
+      collectorNumber: "132",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-132"],
   cardType: "character",
   name: "Lafayette",
@@ -21,7 +32,7 @@ export const lafayetteSleepyBassetHound: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_5ac6e3218d074de683c518bcd4d9901c",
-    tcgPlayer: 631437,
+    tcgPlayer: "631437",
   },
   classifications: ["Storyborn"],
   i18n: lafayetteSleepyBassetHoundI18n,

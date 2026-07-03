@@ -6,14 +6,17 @@ export const rpResource006: ResourceCard = {
   type: "resource",
   traits: [],
   id: "RP-006",
-  externalId: "gundam:rp-006",
-  slug: "resource-rp-006",
+  canonicalId: "RP-006",
+  externalIds: { bandai: "gundam:rp-006" },
+  slug: "resource/rp-006",
   displayName: "Resource",
   set: { code: "RP", name: "Resource pack", packageId: "616901" },
   printNumber: "RP-006",
   printings: [
     {
       id: "RP-006",
+      artId: "RP-006",
+      setCode: "RP",
       collectorNumber: "RP-006",
       cardNumber: "RP-006",
       set: {
@@ -28,6 +31,7 @@ export const rpResource006: ResourceCard = {
       productName: "Resource pack",
     },
   ],
+  reprints: ["RP-006"],
   selectedPrintingId: "RP-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-006.webp?260424",

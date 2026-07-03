@@ -7,14 +7,17 @@ export const gd04MachineDollSquad120: CommandCard = {
   color: "white",
   traits: ["militia"],
   id: "GD04-120",
-  externalId: "gundam:gd04-120",
-  slug: "machine-doll-squad-gd04-120",
+  canonicalId: "GD04-120",
+  externalIds: { bandai: "gundam:gd04-120" },
+  slug: "machine-doll-squad/gd04-120",
   displayName: "Machine Doll Squad",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-120",
   printings: [
     {
       id: "GD04-120",
+      artId: "GD04-120",
+      setCode: "GD04",
       collectorNumber: "GD04-120",
       cardNumber: "GD04-120",
       set: {
@@ -29,6 +32,7 @@ export const gd04MachineDollSquad120: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-120"],
   selectedPrintingId: "GD04-120",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-120.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-120.webp?260424",

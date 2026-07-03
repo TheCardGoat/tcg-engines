@@ -4,6 +4,17 @@ import { letTheStormRageOnI18n } from "./199-let-the-storm-rage-on.i18n";
 export const letTheStormRageOn: ActionCard = {
   id: "404",
   canonicalId: "ci_404",
+  slug: "lorcana-ci_404",
+  printings: [
+    {
+      id: "set2-199",
+      artId: "set2-199",
+      setCode: "set2",
+      collectorNumber: "199",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-199"],
   cardType: "action",
   name: "Let the Storm Rage On",
@@ -16,7 +27,7 @@ export const letTheStormRageOn: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ce1ec049b9994d6fae071a0f74886cb3",
-    tcgPlayer: 527239,
+    tcgPlayer: "527239",
   },
   text: "Deal 2 damage to chosen character. Draw a card.",
   actionSubtype: "song",

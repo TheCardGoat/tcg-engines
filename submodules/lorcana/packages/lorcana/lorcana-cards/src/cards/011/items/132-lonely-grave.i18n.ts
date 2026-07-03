@@ -15,9 +15,9 @@ export const lonelyGraveI18n: Record<Languages, I18nProperties> = {
     name: "Einsames Grab",
     text: [
       {
-        title: "UNHEIMLICHE",
+        title: "Unheimliche Präsenz",
         description:
-          "PRÄSENZ, Verbanne einen deiner Charaktere — Lege die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit Stärken.",
+          "{E}, Verbanne einen deiner Charaktere — Lege die oberste Karte deines Decks verdeckt unter einen deiner Charaktere oder Orte mit <Stärken>.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const lonelyGraveI18n: Record<Languages, I18nProperties> = {
     name: "Tombe solitaire",
     text: [
       {
-        title: "PRÉSENCE HANTANTE,",
+        title: "Présence hantante",
         description:
-          "Choisissez l'un de vos personnages et bannissez-le — Placez la carte du dessus de votre pioche, face cachée, sous l'un de vos personnages ou de vos lieux avec Boost.",
+          "{E}, Choisissez l'un de vos personnages et bannissez-le — Placez la carte du dessus de votre pioche, face cachée, sous l'un de vos personnages ou de vos lieux avec <Boost>.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const lonelyGraveI18n: Record<Languages, I18nProperties> = {
     name: "Tomba Vuota",
     text: [
       {
-        title: "PRESENZA INQUIETANTE,",
+        title: "Presenza Inquietante",
         description:
-          "esilia un tuo personaggio a tua scelta — Metti la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con Potenziamento.",
+          "{E}, esilia un tuo personaggio a tua scelta — Metti la prima carta del tuo mazzo a faccia in giù sotto a uno dei tuoi personaggi o luoghi con <Potenziamento>.",
       },
     ],
   },

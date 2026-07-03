@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { queenOfHeartsUnpredictableBullyI18n } from "./095-queen-of-hearts-unpredictable-bully.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const queenOfHeartsUnpredictableBully: CharacterCard = {
   id: "4p4",
   canonicalId: "ci_4p4",
+  slug: "lorcana-ci_4p4",
+  printings: [
+    {
+      id: "set7-095",
+      artId: "set7-095",
+      setCode: "set7",
+      collectorNumber: "95",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-095"],
   cardType: "character",
   name: "Queen of Hearts",
@@ -21,15 +33,16 @@ export const queenOfHeartsUnpredictableBully: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1a8a91c84777485892034cbc17d8359d",
-    tcgPlayer: 618320,
+    tcgPlayer: "618320",
   },
   text: [
     {
       title: "Shift 3",
     },
     {
-      title: "IF I LOSE MY TEMPER...",
-      description: "Whenever another character is played, put a damage counter on them.",
+      title: "IF",
+      description:
+        "I LOSE MY TEMPER... Whenever another character is played, put a damage counter on them.",
     },
   ],
   classifications: ["Floodborn", "Villain", "Queen"],

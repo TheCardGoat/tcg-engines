@@ -9,16 +9,16 @@ export const peterPanHighFlyerI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Peter Pan",
     version: "Überflieger",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Peter Pan",
     version: "De haute volée",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Peter Pan",
     version: "Che Vola Alto",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

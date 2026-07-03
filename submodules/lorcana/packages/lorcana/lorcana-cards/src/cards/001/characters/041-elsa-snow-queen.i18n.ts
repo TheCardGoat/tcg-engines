@@ -16,8 +16,8 @@ export const elsaSnowQueenI18n: Record<Languages, I18nProperties> = {
     version: "Snow Queen",
     text: [
       {
-        title: "FREEZE",
-        description: "— Exert chosen opposing character.",
+        title: "Freeze",
+        description: "{E} — Exert chosen opposing character.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const elsaSnowQueenI18n: Record<Languages, I18nProperties> = {
     version: "Snow Queen",
     text: [
       {
-        title: "FREEZE",
-        description: "— Exert chosen opposing character.",
+        title: "Freeze",
+        description: "{E} — Exert chosen opposing character.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const elsaSnowQueenI18n: Record<Languages, I18nProperties> = {
     version: "Snow Queen",
     text: [
       {
-        title: "FREEZE",
-        description: "— Exert chosen opposing character.",
+        title: "Freeze",
+        description: "{E} — Exert chosen opposing character.",
       },
     ],
   },

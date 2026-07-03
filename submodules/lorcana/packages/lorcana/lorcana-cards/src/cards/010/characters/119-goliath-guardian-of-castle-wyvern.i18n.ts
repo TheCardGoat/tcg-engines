@@ -21,12 +21,12 @@ export const goliathGuardianOfCastleWyvernI18n: Record<Languages, I18nProperties
     version: "Wächter von Burg Wyvern",
     text: [
       {
-        title: "ICH BITTE EUCH, SEID VORSICHTIG",
+        title: "Ich bitte euch, seid vorsichtig",
         description:
           "Jedes Mal, wenn einer deiner Gargoyles einen anderen Charakter herausfordert, sammelst du 1 Legende.",
       },
       {
-        title: "AM TAGE AUS STEIN",
+        title: "Am Tage aus Stein",
         description:
           "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
       },
@@ -37,12 +37,12 @@ export const goliathGuardianOfCastleWyvernI18n: Record<Languages, I18nProperties
     version: "Gardien du château de Wyvern",
     text: [
       {
-        title: "SOYEZ PRUDENTS, TOUS",
+        title: "Soyez prudents, tous",
         description:
           "Chaque fois que l'un de vos personnages Gargouille défie un autre personnage, gagnez 1 éclat de Lore.",
       },
       {
-        title: "STATUE LE JOUR",
+        title: "Statue le jour",
         description:
           "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
       },
@@ -53,12 +53,12 @@ export const goliathGuardianOfCastleWyvernI18n: Record<Languages, I18nProperties
     version: "Guardiano di Castello Wyvern",
     text: [
       {
-        title: "STATE ATTENTI, TUTTI QUANTI",
+        title: "State Attenti, Tutti Quanti",
         description:
           "Ogni volta che uno dei tuoi personaggi Gargoyle sfida un altro personaggio, ottieni 1 leggenda.",
       },
       {
-        title: "STATUE DI GIORNO",
+        title: "Statue di Giorno",
         description: "Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
       },
     ],

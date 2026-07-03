@@ -4,6 +4,17 @@ import { pachaTrekmateI18n } from "./102-pacha-trekmate.i18n";
 export const pachaTrekmate: CharacterCard = {
   id: "ooN",
   canonicalId: "ci_ooN",
+  slug: "lorcana-ci_ooN",
+  printings: [
+    {
+      id: "set7-102",
+      artId: "set7-102",
+      setCode: "set7",
+      collectorNumber: "102",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-102"],
   cardType: "character",
   name: "Pacha",
@@ -20,7 +31,7 @@ export const pachaTrekmate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b2930c4282b145fe8eabadae2c6567f9",
-    tcgPlayer: 619460,
+    tcgPlayer: "619460",
   },
   text: [
     {
@@ -34,9 +45,15 @@ export const pachaTrekmate: CharacterCard = {
     {
       condition: {
         type: "comparison",
-        left: { type: "cards-in-hand", controller: "you" },
+        left: {
+          type: "cards-in-hand",
+          controller: "you",
+        },
         comparison: "greater",
-        right: { type: "cards-in-hand", controller: "opponent" },
+        right: {
+          type: "cards-in-hand",
+          controller: "opponent",
+        },
       },
       effect: {
         modifier: 2,

@@ -21,14 +21,14 @@ export const davidXanatosCharismaticLeaderI18n: Record<Languages, I18nProperties
     version: "Charismatischer Anführer",
     text: [
       {
-        title: "AUS ALLEM LERNEN",
+        title: "Aus allem lernen",
         description:
           "Jedes Mal während deines Zuges, wenn einer deiner Charaktere verbannt wird, ziehe 1 Karte.",
       },
       {
-        title: "WORAUF WARTEST DU NOCH?",
+        title: "Worauf wartest du noch?",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhält ein Charakter deiner Wahl in diesem Zug Rasant. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhält ein Charakter deiner Wahl in diesem Zug <Rasant>. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
       },
     ],
   },
@@ -37,14 +37,14 @@ export const davidXanatosCharismaticLeaderI18n: Record<Languages, I18nProperties
     version: "Leader charismatique",
     text: [
       {
-        title: "TIRER DES LEÇONS DE TOUT",
+        title: "Tirer des leçons de tout",
         description:
           "Durant votre tour, chaque fois que l'un de vos personnages est banni, piochez une carte.",
       },
       {
-        title: "QU'ATTENDEZ-VOUS?",
+        title: "Qu'attendez-vous?",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage qui gagne Charge pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage qui gagne <Charge> pour le reste de ce tour.",
       },
     ],
   },
@@ -53,14 +53,14 @@ export const davidXanatosCharismaticLeaderI18n: Record<Languages, I18nProperties
     version: "Leader Carismatico",
     text: [
       {
-        title: "IMPARARE DA OGNI COSA",
+        title: "Imparare da Ogni Cosa",
         description:
           "Durante il tuo turno, ogni volta che uno dei tuoi personaggi viene esiliato, pesca una carta.",
       },
       {
-        title: "CHE COSA STAI ASPETTANDO?",
+        title: "Che Cosa Stai Aspettando?",
         description:
-          "Ogni volta che questo personaggio va all'avventura, un personaggio a tua scelta ottiene Lesto per questo turno. (Può sfidare nel turno in cui viene giocato.)",
+          "Ogni volta che questo personaggio va all'avventura, un personaggio a tua scelta ottiene <Lesto> per questo turno. (Può sfidare nel turno in cui viene giocato.)",
       },
     ],
   },

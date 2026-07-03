@@ -6,14 +6,17 @@ export const st04Vesalius016: BaseCard = {
   type: "base",
   traits: ["zaft", "warship"],
   id: "ST04-016",
-  externalId: "gundam:st04-016",
-  slug: "vesalius-st04-016",
+  canonicalId: "ST04-016",
+  externalIds: { bandai: "gundam:st04-016" },
+  slug: "vesalius/st04-016",
   displayName: "Vesalius",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-016",
   printings: [
     {
       id: "ST04-016",
+      artId: "ST04-016",
+      setCode: "ST04",
       collectorNumber: "ST04-016",
       cardNumber: "ST04-016",
       set: {
@@ -29,6 +32,8 @@ export const st04Vesalius016: BaseCard = {
     },
     {
       id: "ST04-016_p1",
+      artId: "ST04-016_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-016_p1",
       cardNumber: "ST04-016",
       set: {
@@ -44,6 +49,8 @@ export const st04Vesalius016: BaseCard = {
     },
     {
       id: "ST04-016_p2",
+      artId: "ST04-016_p2",
+      setCode: "ST09",
       collectorNumber: "ST04-016_p2",
       cardNumber: "ST04-016",
       set: {
@@ -58,6 +65,7 @@ export const st04Vesalius016: BaseCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST04-016", "ST04-016_p1", "ST04-016_p2"],
   selectedPrintingId: "ST04-016",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-016.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-016.webp?260424",

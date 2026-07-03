@@ -16,8 +16,8 @@ export const grandDukeAdvisorToTheKingI18n: Record<Languages, I18nProperties> = 
     version: "Berater des Königs",
     text: [
       {
-        title: "JA, EUER MAJESTÄT",
-        description: "Deine Prinzessinnen, Prinzen, Königinnen und Könige erhalten +1.",
+        title: "Ja, Euer Majestät",
+        description: "Deine Prinzessinnen, Prinzen, Königinnen und Könige erhalten +1 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const grandDukeAdvisorToTheKingI18n: Record<Languages, I18nProperties> = 
     version: "Conseiller du roi",
     text: [
       {
-        title: "OUI, VOTRE MAJESTÉ",
-        description: "Vos personnages Princesse, Prince, Reine et Roi gagnent +1.",
+        title: "Oui, votre majesté",
+        description: "Vos personnages Princesse, Prince, Reine et Roi gagnent +1 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const grandDukeAdvisorToTheKingI18n: Record<Languages, I18nProperties> = 
     version: "Advisor to the King",
     text: [
       {
-        title: "YES, YOUR MAJESTY",
-        description: "Your Prince, Princess, King, and Queen characters get +1.",
+        title: "Yes, Your Majesty",
+        description: "Your Prince, Princess, King, and Queen characters get +1 {S}.",
       },
     ],
   },

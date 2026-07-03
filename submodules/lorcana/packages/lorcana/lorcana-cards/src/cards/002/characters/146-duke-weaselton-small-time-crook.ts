@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { dukeWeaseltonSmalltimeCrookI18n } from "./146-duke-weaselton-small-time-crook.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const dukeWeaseltonSmalltimeCrook: CharacterCard = {
   id: "MRG",
   canonicalId: "ci_MRG",
+  slug: "lorcana-ci_MRG",
+  printings: [
+    {
+      id: "set2-146",
+      artId: "set2-146",
+      setCode: "set2",
+      collectorNumber: "146",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-146"],
   cardType: "character",
   name: "Duke Weaselton",
@@ -21,7 +33,7 @@ export const dukeWeaseltonSmalltimeCrook: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_302ea1ce0fe94e5c97360498d05eee9d",
-    tcgPlayer: 527763,
+    tcgPlayer: "527763",
   },
   text: "Ward",
   classifications: ["Storyborn"],

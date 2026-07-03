@@ -17,9 +17,9 @@ export const louieOneCoolDuckI18n: Record<Languages, I18nProperties> = {
     version: "Eine coole Ente",
     text: [
       {
-        title: "LÖST DIE FALLE AUS",
+        title: "Löst die Falle aus",
         description:
-          "Während dieser Charakter herausgefordert wird, erhält der herausfordernde Charakter -1.",
+          "Während dieser Charakter herausgefordert wird, erhält der herausfordernde Charakter -1 {S}.",
       },
     ],
   },
@@ -28,8 +28,8 @@ export const louieOneCoolDuckI18n: Record<Languages, I18nProperties> = {
     version: "Canard trop cool",
     text: [
       {
-        title: "DÉCLENCHER LE PIÈGE",
-        description: "Tant que ce personnage est défié, le personnage le défiant subit -1.",
+        title: "Déclencher le piège",
+        description: "Tant que ce personnage est défié, le personnage le défiant subit -1 {S}.",
       },
     ],
   },
@@ -38,8 +38,9 @@ export const louieOneCoolDuckI18n: Record<Languages, I18nProperties> = {
     version: "Papero Davvero Disinvolto",
     text: [
       {
-        title: "FAR SCATTARE LA TRAPPOLA",
-        description: "Mentre questo personaggio viene sfidato, il personaggio sfidante riceve -1.",
+        title: "Far Scattare la Trappola",
+        description:
+          "Mentre questo personaggio viene sfidato, il personaggio sfidante riceve -1 {S}.",
       },
     ],
   },

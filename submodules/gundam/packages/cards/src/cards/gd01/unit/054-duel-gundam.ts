@@ -7,14 +7,17 @@ export const gd01DuelGundam054: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD01-054",
-  externalId: "gundam:gd01-054",
-  slug: "duel-gundam-gd01-054",
+  canonicalId: "GD01-054",
+  externalIds: { bandai: "gundam:gd01-054" },
+  slug: "duel-gundam/gd01-054",
   displayName: "Duel Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-054",
   printings: [
     {
       id: "GD01-054",
+      artId: "GD01-054",
+      setCode: "GD01",
       collectorNumber: "GD01-054",
       cardNumber: "GD01-054",
       set: {
@@ -30,6 +33,8 @@ export const gd01DuelGundam054: UnitCard = {
     },
     {
       id: "GD01-054_p1",
+      artId: "GD01-054_p1",
+      setCode: "ST09",
       collectorNumber: "GD01-054_p1",
       cardNumber: "GD01-054",
       set: {
@@ -44,6 +49,7 @@ export const gd01DuelGundam054: UnitCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["GD01-054", "GD01-054_p1"],
   selectedPrintingId: "GD01-054",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-054.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-054.webp?260424",

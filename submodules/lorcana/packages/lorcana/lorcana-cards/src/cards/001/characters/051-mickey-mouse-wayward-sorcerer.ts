@@ -4,6 +4,17 @@ import { mickeyMouseWaywardSorcererI18n } from "./051-mickey-mouse-wayward-sorce
 export const mickeyMouseWaywardSorcerer: CharacterCard = {
   id: "iGH",
   canonicalId: "ci_cZb",
+  slug: "lorcana-ci_cZb",
+  printings: [
+    {
+      id: "set1-051",
+      artId: "set1-051",
+      setCode: "set1",
+      collectorNumber: "51",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-051"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseWaywardSorcerer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5739e1f6076840cd901a1bc283ca6e96",
-    tcgPlayer: 510154,
+    tcgPlayer: "510154",
   },
   text: [
     {

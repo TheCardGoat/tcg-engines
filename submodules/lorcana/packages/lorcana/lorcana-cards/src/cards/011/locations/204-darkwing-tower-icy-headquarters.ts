@@ -4,6 +4,17 @@ import { darkwingTowerIcyHeadquartersI18n } from "./204-darkwing-tower-icy-headq
 export const darkwingTowerIcyHeadquarters: LocationCard = {
   id: "Rs3",
   canonicalId: "ci_Rs3",
+  slug: "lorcana-ci_Rs3",
+  printings: [
+    {
+      id: "set11-204",
+      artId: "set11-204",
+      setCode: "set11",
+      collectorNumber: "204",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-204"],
   cardType: "location",
   name: "Darkwing Tower",
@@ -20,7 +31,7 @@ export const darkwingTowerIcyHeadquarters: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_22e1f1dc8f434e0a87d5335d7a6b2984",
-    tcgPlayer: 676252,
+    tcgPlayer: "676252",
   },
   text: [
     {

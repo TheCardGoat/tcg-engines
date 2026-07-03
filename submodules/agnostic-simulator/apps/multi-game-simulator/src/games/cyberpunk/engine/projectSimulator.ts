@@ -2,6 +2,7 @@ import {
   defOf,
   computeEffectiveCostDetails,
   getEffectivePower,
+  getEffectiveRules,
   type CardInstance,
   type GigDie,
   type MatchState,
@@ -120,10 +121,6 @@ export function projectSimulator({
         ? "opponent"
         : null;
 
-  // Shared fixer dice pool sits between the two sides.
-  const fixerZone = projectFixerZone(matchState, entities);
-  zones.push(fixerZone);
-
   const table: SimulatorTable = {
     status: {
       activeSeatId: activeSide
@@ -141,6 +138,7 @@ export function projectSimulator({
     interactionView: interactionViews[viewerSide],
     matchState,
     viewerSide,
+    entities,
   });
 
   const eventLog = projectEventLog(matchState, viewerSide);
@@ -216,29 +214,19 @@ function projectSideZones(input: ProjectSideZonesInput): SimulatorZone[] {
   const lookupCard = (id: string | { toString(): string }) => matchState.G.cardIndex[String(id)];
 
   // Deck: hidden count-only stack.
-  pushZone(
-    "deck",
-    "Deck",
-    "deck",
-    isViewer ? "owner" : "secret",
-    "stack",
-    [],
-    player.zones.deck.length,
-  );
+  pushZone("deck", "Deck", "deck", "secret", "stack", [], player.zones.deck.length);
 
-  // Hand: fan for viewer, empty hidden for opponent.
+  // Hand: fan for viewer, face-down cards for opponent.
   const handIds = cardIds(player.zones.hand);
-  const handEntities = isViewer
-    ? handIds
-        .map((id) => lookupCard(id))
-        .filter((c): c is CardInstance => Boolean(c))
-        .map((c) => projectCardEntity(c, matchState, viewerSide, entities))
-    : [];
+  const handEntities = handIds
+    .map((id) => lookupCard(id))
+    .filter((c): c is CardInstance => Boolean(c))
+    .map((c) => projectCardEntity(c, matchState, viewerSide, entities));
   pushZone(
     "hand",
     "Hand",
     "hand",
-    isViewer ? "owner" : "private",
+    "private",
     "fan",
     handEntities.map((e) => e.id),
     handIds.length,
@@ -262,19 +250,17 @@ function projectSideZones(input: ProjectSideZonesInput): SimulatorZone[] {
     fieldEntities.map((e) => e.id),
   );
 
-  // Legends: owner-only, leader role.
+  // Legends: owner-only, leader role; hidden backs for opponent.
   const legendIds = cardIds(player.zones.legendArea);
-  const legendEntities = isViewer
-    ? legendIds
-        .map((id) => lookupCard(id))
-        .filter((c): c is CardInstance => Boolean(c))
-        .map((c) => projectCardEntity(c, matchState, viewerSide, entities))
-    : [];
+  const legendEntities = legendIds
+    .map((id) => lookupCard(id))
+    .filter((c): c is CardInstance => Boolean(c))
+    .map((c) => projectCardEntity(c, matchState, viewerSide, entities));
   pushZone(
     "legendArea",
     "Legends",
     "leader",
-    isViewer ? "owner" : "private",
+    "private",
     "row",
     legendEntities.map((e) => e.id),
     legendIds.length,
@@ -296,22 +282,20 @@ function projectSideZones(input: ProjectSideZonesInput): SimulatorZone[] {
     trashIds.length,
   );
 
-  // Eddies: resource stack.
+  // Eddies: resource stack; hidden backs for opponent.
   const eddieIds = cardIds(player.zones.eddieArea);
-  const eddieEntities = isViewer
-    ? eddieIds
-        .map((id) => lookupCard(id))
-        .filter((c): c is CardInstance => Boolean(c))
-        .map((c) => projectCardEntity(c, matchState, viewerSide, entities))
-    : [];
+  const eddieEntities = eddieIds
+    .map((id) => lookupCard(id))
+    .filter((c): c is CardInstance => Boolean(c))
+    .map((c) => projectCardEntity(c, matchState, viewerSide, entities));
   pushZone(
     "eddieArea",
     "Eddies",
     "resource",
-    isViewer ? "owner" : "private",
+    "private",
     "stack",
     eddieEntities.map((e) => e.id),
-    eddieIds.length,
+    player.eddies,
   );
 
   // Gigs: score zone with dice entities.
@@ -330,32 +314,25 @@ function projectSideZones(input: ProjectSideZonesInput): SimulatorZone[] {
     gigDiceIds.length,
   );
 
-  return zones;
-}
-
-function projectFixerZone(matchState: MatchState, entities: SimulatorEntity[]): SimulatorZone {
-  // Fixer dice are shared objects not owned by a player. Use a neutral id.
-  const fixerIds = Object.keys(matchState.G.gigDice).filter((id) => {
-    // A die is in the fixer area if no player owns it in their gigArea.
-    const owned = Object.values(matchState.G.players).some((p) => cardIds(p.gigArea).includes(id));
-    return !owned;
-  });
-
-  const fixerEntities = fixerIds
-    .map((id) => matchState.G.gigDice[id])
+  // Fixer dice: per-player pool used to pay for actions.
+  const fixerDiceIds = cardIds(player.fixerArea);
+  const fixerEntities = fixerDiceIds
+    .map((id) => matchState.G.gigDice[String(id)])
     .filter((d): d is GigDie => Boolean(d))
-    .map((d) => projectDieEntity(d, "fixer", entities));
-
-  return {
-    id: "fixer-dice",
+    .map((d) => projectDieEntity(d, playerId, entities));
+  zones.push({
+    id: `${prefix}-fixer`,
     label: "Fixer dice",
     role: "custom",
-    visibility: "public",
+    ownerId: playerId,
+    visibility: isViewer ? "owner" : "public",
     entityIds: fixerEntities.map((e) => e.id),
-    count: fixerIds.length,
+    count: fixerDiceIds.length,
     hint: "Unrolled fixer dice",
     layoutHint: "row",
-  };
+  });
+
+  return zones;
 }
 
 function projectCardEntity(
@@ -375,8 +352,7 @@ function projectCardEntity(
   const faceDown = Boolean(instance.meta.faceDown);
   const zone = cardSide ? currentCardZoneForEntity(instance, matchState, cardSide) : null;
   const hiddenFromViewer = !isViewer && isPrivateCardZone(zone);
-  const face: SimulatorEntity["face"] =
-    hiddenFromViewer || (!isViewer && faceDown) ? "hidden" : "public";
+  const face: SimulatorEntity["face"] = faceDown || hiddenFromViewer ? "hidden" : "public";
 
   const printedPower = typeof definition.power === "number" ? definition.power : null;
   const printedCost = typeof definition.cost === "number" ? definition.cost : null;
@@ -413,12 +389,29 @@ function projectCardEntity(
   if (definition.hasSellTag) {
     overlayBadges.push({ label: "€$", color: "#fbbf24", position: "br" });
   }
+  const ruleBadges = getEffectiveRules(matchState, String(instance.instanceId))
+    .filter((rule) => rule === "blocker" || rule === "goSolo" || rule === "cantAttack")
+    .map((rule) => ({ label: rule, color: "#22d3ee", position: "tr" as const }));
+  overlayBadges.push(...ruleBadges);
 
   const states: EntityState[] = [];
   if (instance.meta.spent) states.push("rested");
   if (instance.meta.faceDown) states.push("hidden");
   if (instance.meta.attachedToId) states.push("attached");
   if (!instance.meta.spent && !instance.meta.faceDown) states.push("ready");
+
+  const dataAttributes: SimulatorEntity["dataAttributes"] = {
+    "data-spent": instance.meta.spent ? "true" : "false",
+  };
+  if (!hiddenFromViewer) {
+    if (printedPower !== null) {
+      dataAttributes["data-power"] = String(printedPower);
+    }
+    if (effectivePower !== null) {
+      dataAttributes["data-effective-power"] = String(effectivePower);
+    }
+    dataAttributes["data-gear-count"] = String(instance.meta.attachedGearIds.length);
+  }
 
   const entity: SimulatorEntity = {
     id: cardId,
@@ -434,6 +427,7 @@ function projectCardEntity(
     backImageUrl: definition.type === "legend" ? CARD_BACK_URLS.legend : CARD_BACK_URLS.default,
     frameStyle: { color: colorForCardColor(definition.color as string | undefined) },
     overlayBadges,
+    dataAttributes,
   };
 
   entities.push(entity);
@@ -441,7 +435,7 @@ function projectCardEntity(
 }
 
 function isPrivateCardZone(zone: CyberpunkCardZone | null): boolean {
-  return zone === "deck" || zone === "hand" || zone === "legendArea" || zone === "eddieArea";
+  return zone === "deck" || zone === "hand" || zone === "eddieArea";
 }
 
 export function projectEntityForCard(
@@ -473,6 +467,9 @@ function projectDieEntity(
     states: die.faceValue > 0 ? ["active"] : ["ready"],
     stats: [{ label: "Face", value: die.faceValue > 0 ? String(die.faceValue) : "-" }],
     traits: [die.dieType],
+    dataAttributes: {
+      "data-face": String(die.faceValue),
+    },
   };
 
   entities.push(entity);
@@ -512,10 +509,12 @@ function projectInteractions({
   interactionView,
   matchState,
   viewerSide,
+  entities,
 }: {
   interactionView: EngineInteractionView | undefined;
   matchState: MatchState;
   viewerSide: Side;
+  entities: SimulatorEntity[];
 }): SimulatorInteraction[] {
   if (
     !interactionView ||
@@ -526,7 +525,9 @@ function projectInteractions({
 
   return interactionView.actions
     .filter((action) => action.enabled)
-    .map((action, index) => projectInteractionAction(action, index, matchState, viewerSide))
+    .map((action, index) =>
+      projectInteractionAction(action, index, matchState, viewerSide, entities),
+    )
     .filter((interaction): interaction is SimulatorInteraction => interaction !== null);
 }
 
@@ -535,7 +536,12 @@ function projectInteractionAction(
   _index: number,
   matchState: MatchState,
   _viewerSide: Side,
+  entities: SimulatorEntity[],
 ): SimulatorInteraction | null {
+  if (action.id === "attackUnit") {
+    return projectAttackUnitInteraction(action, matchState, entities);
+  }
+
   const input = primaryInput(action);
   if (input === "unsupported") return null;
   if (!input) {
@@ -678,6 +684,79 @@ function inputAllowsOmission(input: InteractionInput): boolean {
   }
 }
 
+/**
+ * The shared InteractionPanel only supports single-target (or multi-target)
+ * entity selection. `attackUnit` is a `selectPair` move with two required
+ * entity inputs (attacker + defender), so the generic projection would drop it.
+ * Flatten it into a single-target interaction whose candidates are synthetic
+ * "pair" entities. Each pair id encodes "attackerId->defenderId"; the dispatch
+ * adapter splits it back into the two original values.
+ */
+function projectAttackUnitInteraction(
+  action: InteractionAction,
+  matchState: MatchState,
+  entities: SimulatorEntity[],
+): SimulatorInteraction | null {
+  const entityInputs = action.inputs.filter(
+    (input): input is Extract<InteractionInput, { kind: "entity-selection" }> =>
+      input.kind === "entity-selection",
+  );
+  const attackerInput = entityInputs.find((input) => input.id === "attackerId") ?? entityInputs[0];
+  const defenderInput = entityInputs.find((input) => input.id === "defenderId") ?? entityInputs[1];
+  if (!attackerInput || !defenderInput) return null;
+
+  const attackerIds = attackerInput.candidates
+    .filter((candidate) => candidate.enabled !== false)
+    .map((candidate) => String(candidate.entity.instanceId));
+  const defenderIds = defenderInput.candidates
+    .filter((candidate) => candidate.enabled !== false)
+    .map((candidate) => String(candidate.entity.instanceId));
+  if (attackerIds.length === 0 || defenderIds.length === 0) return null;
+
+  const pairEntityIds: string[] = [];
+  for (const attackerId of attackerIds) {
+    const attacker = matchState.G.cardIndex[attackerId];
+    const attackerName = attacker ? cardTitle(attacker) : attackerId;
+    for (const defenderId of defenderIds) {
+      const defender = matchState.G.cardIndex[defenderId];
+      const defenderName = defender ? cardTitle(defender) : defenderId;
+      const pairId = `${attackerId}->${defenderId}`;
+      pairEntityIds.push(pairId);
+      entities.push({
+        id: pairId,
+        title: `${attackerName} → ${defenderName}`,
+        subtitle: "Attack pair",
+        kind: "token",
+        ownerId: String(matchState.G.turnMetadata.activePlayerId),
+        face: "public",
+        states: [],
+        stats: [],
+        traits: [],
+      });
+    }
+  }
+
+  return {
+    id: action.id,
+    label: localizeText(action.text),
+    prompt: localizeText(action.text),
+    input: {
+      kind: "single-target",
+      min: 1,
+      max: 1,
+      candidateEntityIds: pairEntityIds,
+      targetZoneIds: [],
+      options: [],
+    },
+    movePreview: movePreviewFor(action),
+  };
+}
+
+function cardTitle(card: CardInstance): string {
+  const definition = defOf(card);
+  return definition.displayName ?? definition.name ?? String(card.instanceId);
+}
+
 function inputKindForEntitySelection(
   input: Extract<InteractionInput, { kind: "entity-selection" }>,
   action: InteractionAction,
@@ -811,11 +890,32 @@ function buildCyberpunkBoardLayout(seats: SimulatorSeat[]): BoardLayout {
         blocks: [
           { id: "opp-seat", kind: "seat", label: "Rival", size: "wide", seatId: opponentSeat.id },
           {
+            id: "opp-legend",
+            kind: "zone",
+            label: "Legend",
+            size: "normal",
+            zoneId: "opp-legendArea",
+          },
+          {
             id: "opp-gigs",
             kind: "zone",
             label: "Scored gigs",
             size: "wide",
             zoneId: "opp-gigArea",
+          },
+          {
+            id: "opp-field",
+            kind: "zone",
+            label: "Field and programs",
+            size: "wide",
+            zoneId: "opp-field",
+          },
+          {
+            id: "opp-eddies",
+            kind: "zone",
+            label: "Eddies",
+            size: "normal",
+            zoneId: "opp-eddieArea",
           },
           {
             id: "opp-street-cred",
@@ -824,8 +924,16 @@ function buildCyberpunkBoardLayout(seats: SimulatorSeat[]): BoardLayout {
             size: "compact",
             value: "0",
           },
+          {
+            id: "opp-fixer",
+            kind: "zone",
+            label: "Fixer dice",
+            size: "normal",
+            zoneId: "opp-fixer",
+          },
           { id: "opp-deck", kind: "stack", label: "Deck", size: "compact", zoneId: "opp-deck" },
           { id: "opp-trash", kind: "stack", label: "Trash", size: "compact", zoneId: "opp-trash" },
+          { id: "opp-hand", kind: "zone", label: "Hand", size: "full", zoneId: "opp-hand" },
         ],
       },
       {
@@ -834,13 +942,6 @@ function buildCyberpunkBoardLayout(seats: SimulatorSeat[]): BoardLayout {
         role: "shared",
         layout: { columns: 8, flow: "row", span: "full" },
         blocks: [
-          {
-            id: "fixer-dice-block",
-            kind: "zone",
-            label: "Fixer dice",
-            size: "normal",
-            zoneId: "fixer-dice",
-          },
           {
             id: "run-spotlight",
             kind: "spotlight",
@@ -858,7 +959,7 @@ function buildCyberpunkBoardLayout(seats: SimulatorSeat[]): BoardLayout {
           { id: "p-seat", kind: "seat", label: "You", size: "wide", seatId: playerSeat.id },
           {
             id: "p-legend",
-            kind: "spotlight",
+            kind: "zone",
             label: "Legend",
             size: "normal",
             zoneId: "p-legendArea",
@@ -877,6 +978,13 @@ function buildCyberpunkBoardLayout(seats: SimulatorSeat[]): BoardLayout {
             label: "Gig dice",
             size: "normal",
             zoneId: "p-gigArea",
+          },
+          {
+            id: "p-fixer",
+            kind: "zone",
+            label: "Fixer dice",
+            size: "normal",
+            zoneId: "p-fixer",
           },
           { id: "p-deck", kind: "stack", label: "Deck", size: "compact", zoneId: "p-deck" },
           { id: "p-trash", kind: "stack", label: "Trash", size: "compact", zoneId: "p-trash" },

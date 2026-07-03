@@ -4,6 +4,17 @@ import { sapphireChromiconI18n } from "./168-sapphire-chromicon.i18n";
 export const sapphireChromicon: ItemCard = {
   id: "Xd5",
   canonicalId: "ci_Xd5",
+  slug: "lorcana-ci_Xd5",
+  printings: [
+    {
+      id: "set5-168",
+      artId: "set5-168",
+      setCode: "set5",
+      collectorNumber: "168",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-168"],
   cardType: "item",
   name: "Sapphire Chromicon",
@@ -16,7 +27,7 @@ export const sapphireChromicon: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c28dceb08757469c965d2620ac1841d8",
-    tcgPlayer: 560103,
+    tcgPlayer: "560103",
   },
   text: [
     {

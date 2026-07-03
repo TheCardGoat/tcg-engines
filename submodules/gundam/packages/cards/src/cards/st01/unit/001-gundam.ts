@@ -7,14 +7,17 @@ export const st01Gundam001: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "ST01-001",
-  externalId: "gundam:st01-001",
-  slug: "gundam-st01-001",
+  canonicalId: "ST01-001",
+  externalIds: { bandai: "gundam:st01-001" },
+  slug: "gundam/st01-001",
   displayName: "Gundam",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-001",
   printings: [
     {
       id: "ST01-001",
+      artId: "ST01-001",
+      setCode: "ST01",
       collectorNumber: "ST01-001",
       cardNumber: "ST01-001",
       set: {
@@ -30,6 +33,8 @@ export const st01Gundam001: UnitCard = {
     },
     {
       id: "ST01-001_p1",
+      artId: "ST01-001_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-001_p1",
       cardNumber: "ST01-001",
       set: {
@@ -45,6 +50,8 @@ export const st01Gundam001: UnitCard = {
     },
     {
       id: "ST01-001_p2",
+      artId: "ST01-001_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-001_p2",
       cardNumber: "ST01-001",
       set: {
@@ -60,6 +67,8 @@ export const st01Gundam001: UnitCard = {
     },
     {
       id: "ST01-001_p3",
+      artId: "ST01-001_p3",
+      setCode: "BETA",
       collectorNumber: "ST01-001_p3",
       cardNumber: "ST01-001",
       set: {
@@ -75,6 +84,8 @@ export const st01Gundam001: UnitCard = {
     },
     {
       id: "ST01-001_p4",
+      artId: "ST01-001_p4",
+      setCode: "EVX05",
       collectorNumber: "ST01-001_p4",
       cardNumber: "ST01-001",
       set: {
@@ -90,6 +101,8 @@ export const st01Gundam001: UnitCard = {
     },
     {
       id: "ST01-001_p5",
+      artId: "ST01-001_p5",
+      setCode: "ST01",
       collectorNumber: "ST01-001_p5",
       cardNumber: "ST01-001",
       set: {
@@ -105,6 +118,8 @@ export const st01Gundam001: UnitCard = {
     },
     {
       id: "ST01-001_p6",
+      artId: "ST01-001_p6",
+      setCode: "ST01",
       collectorNumber: "ST01-001_p6",
       cardNumber: "ST01-001",
       set: {
@@ -120,6 +135,8 @@ export const st01Gundam001: UnitCard = {
     },
     {
       id: "ST01-001_p7",
+      artId: "ST01-001_p7",
+      setCode: "ST01",
       collectorNumber: "ST01-001_p7",
       cardNumber: "ST01-001",
       set: {
@@ -133,6 +150,16 @@ export const st01Gundam001: UnitCard = {
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-001_p7.webp?260424",
       productName: "WORLD CHAMPIONSHIPS 25-26 REGIONAL CHAMPIONSHIPS 1st Place Card",
     },
+  ],
+  reprints: [
+    "ST01-001",
+    "ST01-001_p1",
+    "ST01-001_p2",
+    "ST01-001_p3",
+    "ST01-001_p4",
+    "ST01-001_p5",
+    "ST01-001_p6",
+    "ST01-001_p7",
   ],
   selectedPrintingId: "ST01-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-001.webp",

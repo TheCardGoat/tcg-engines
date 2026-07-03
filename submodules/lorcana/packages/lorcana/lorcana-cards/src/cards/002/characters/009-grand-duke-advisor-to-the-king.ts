@@ -4,6 +4,17 @@ import { grandDukeAdvisorToTheKingI18n } from "./009-grand-duke-advisor-to-the-k
 export const grandDukeAdvisorToTheKing: CharacterCard = {
   id: "4Ol",
   canonicalId: "ci_4Ol",
+  slug: "lorcana-ci_4Ol",
+  printings: [
+    {
+      id: "set2-009",
+      artId: "set2-009",
+      setCode: "set2",
+      collectorNumber: "9",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-009"],
   cardType: "character",
   name: "Grand Duke",
@@ -20,7 +31,7 @@ export const grandDukeAdvisorToTheKing: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0b2c5d800fc14fdfacf098d74ec7ab74",
-    tcgPlayer: 522735,
+    tcgPlayer: "522735",
   },
   text: [
     {

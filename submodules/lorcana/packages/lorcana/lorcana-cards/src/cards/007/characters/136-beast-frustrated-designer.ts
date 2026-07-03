@@ -4,6 +4,17 @@ import { beastFrustratedDesignerI18n } from "./136-beast-frustrated-designer.i18
 export const beastFrustratedDesigner: CharacterCard = {
   id: "RJq",
   canonicalId: "ci_RJq",
+  slug: "lorcana-ci_RJq",
+  printings: [
+    {
+      id: "set7-136",
+      artId: "set7-136",
+      setCode: "set7",
+      collectorNumber: "136",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-136"],
   cardType: "character",
   name: "Beast",
@@ -20,7 +31,7 @@ export const beastFrustratedDesigner: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ddee28debf2d4fc7ade06acadd09d058",
-    tcgPlayer: 618145,
+    tcgPlayer: "618145",
   },
   text: [
     {

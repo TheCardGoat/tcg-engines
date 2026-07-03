@@ -6,14 +6,17 @@ export const exbpExBase002: BaseCard = {
   type: "base",
   traits: [],
   id: "EXBP-002",
-  externalId: "gundam:exbp-002",
-  slug: "ex-base-exbp-002",
+  canonicalId: "EXBP-002",
+  externalIds: { bandai: "gundam:exbp-002" },
+  slug: "ex-base/exbp-002",
   displayName: "EX Base",
   set: { code: "EXBP", name: "Official Card Case Set 01", packageId: "616901" },
   printNumber: "EXBP-002",
   printings: [
     {
       id: "EXBP-002",
+      artId: "EXBP-002",
+      setCode: "EXBP",
       collectorNumber: "EXBP-002",
       cardNumber: "EXBP-002",
       set: {
@@ -28,6 +31,7 @@ export const exbpExBase002: BaseCard = {
       productName: "Official Card Case Set 01",
     },
   ],
+  reprints: ["EXBP-002"],
   selectedPrintingId: "EXBP-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-002.webp?260424",

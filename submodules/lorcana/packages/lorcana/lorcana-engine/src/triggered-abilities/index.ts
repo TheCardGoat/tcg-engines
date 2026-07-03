@@ -516,7 +516,9 @@ function collectTriggeredCandidatesFromCard(args: {
     const nestedEffect = ability.effect.effect;
     return nestedEffect?.type === "support";
   });
-  const meta = ctx.cards.require(sourceId).meta as LorcanaCardMeta | undefined;
+  const meta = (ctx.cards.getMeta(sourceId) ?? ctx.cards.require(sourceId).meta) as
+    | LorcanaCardMeta
+    | undefined;
   const temporaryAbilityEntries = Object.entries(meta?.temporaryAbilities ?? {});
   const currentTurn = getCurrentTurn(ctx);
   // Use the full derived card projection to check for Support. The cards API now projects from
@@ -1476,6 +1478,7 @@ function evaluateTriggeredAbilityCondition(args: {
     case "has-character-with-classification":
     case "has-another-character":
     case "has-card-under":
+    case "played-card-has-keyword":
     case "put-card-under-self-this-turn":
     case "at-location":
     case "stat-threshold": {
@@ -2158,6 +2161,16 @@ export function finalizeResolutionBoundary(
             candidate.controllerId,
             ctx,
             candidate.sourceId,
+            "trigger-fire",
+            {
+              ...(event.eventSnapshot ? { ...event.eventSnapshot } : {}),
+              subjectCardId: event.subjectCardId,
+              triggerSourceCardId: event.triggerSourceCardId,
+              attackerId: event.attackerId,
+              defenderId: event.defenderId,
+              fromZone: event.fromZone,
+              toZone: event.toZone,
+            },
           )
         ) {
           continue;

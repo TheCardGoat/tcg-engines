@@ -4,6 +4,17 @@ import { copperHoundPupI18n } from "./085-copper-hound-pup.i18n";
 export const copperHoundPup: CharacterCard = {
   id: "zR1",
   canonicalId: "ci_zR1",
+  slug: "lorcana-ci_zR1",
+  printings: [
+    {
+      id: "set11-085",
+      artId: "set11-085",
+      setCode: "set11",
+      collectorNumber: "85",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-085"],
   cardType: "character",
   name: "Copper",
@@ -20,7 +31,7 @@ export const copperHoundPup: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_47915154ee494451b714c3ec1084331a",
-    tcgPlayer: 676203,
+    tcgPlayer: "676203",
   },
   text: [
     {

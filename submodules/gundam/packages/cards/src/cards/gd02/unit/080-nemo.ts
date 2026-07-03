@@ -7,14 +7,17 @@ export const gd02Nemo080: UnitCard = {
   color: "white",
   traits: ["aeug"],
   id: "GD02-080",
-  externalId: "gundam:gd02-080",
-  slug: "nemo-gd02-080",
+  canonicalId: "GD02-080",
+  externalIds: { bandai: "gundam:gd02-080" },
+  slug: "nemo/gd02-080",
   displayName: "Nemo",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-080",
   printings: [
     {
       id: "GD02-080",
+      artId: "GD02-080",
+      setCode: "GD02",
       collectorNumber: "GD02-080",
       cardNumber: "GD02-080",
       set: {
@@ -29,6 +32,7 @@ export const gd02Nemo080: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-080"],
   selectedPrintingId: "GD02-080",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-080.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-080.webp?260424",

@@ -9,16 +9,16 @@ export const donKarnagePrinceOfPiratesI18n: Record<Languages, I18nProperties> = 
   de: {
     name: "Don Kanaille",
     version: "Piratenprinz",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Don Carnage",
     version: "Prince des pirates",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Don Massacre",
     version: "Principe dei Pirati",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

@@ -7,14 +7,17 @@ export const gd01RickDom030: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-030",
-  externalId: "gundam:gd01-030",
-  slug: "rick-dom-gd01-030",
+  canonicalId: "GD01-030",
+  externalIds: { bandai: "gundam:gd01-030" },
+  slug: "rick-dom/gd01-030",
   displayName: "Rick Dom",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-030",
   printings: [
     {
       id: "GD01-030",
+      artId: "GD01-030",
+      setCode: "GD01",
       collectorNumber: "GD01-030",
       cardNumber: "GD01-030",
       set: {
@@ -30,6 +33,8 @@ export const gd01RickDom030: UnitCard = {
     },
     {
       id: "GD01-030_p1",
+      artId: "GD01-030_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-030_p1",
       cardNumber: "GD01-030",
       set: {
@@ -44,6 +49,7 @@ export const gd01RickDom030: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-030", "GD01-030_p1"],
   selectedPrintingId: "GD01-030",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-030.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-030.webp?260424",

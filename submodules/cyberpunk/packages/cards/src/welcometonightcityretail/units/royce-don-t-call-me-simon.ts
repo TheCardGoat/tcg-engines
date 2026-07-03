@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailRoyceDonTCallMeSimon = {
+export const welcomeToNightCityRetailRoyceDonTCallMeSimon = defineCyberpunkCard({
   id: "9e465b11-9743-4275-a71d-d701b059eef0",
-  externalId: "cb-royce-don-t-call-me-simon",
   slug: "royce-don-t-call-me-simon",
+  rulesText:
+    "{Play} Defeat a rival Unit with power 2 or less. If you have more ☆ (Street Cred) than a Rival, defeat a rival Unit with power 3 or less instead.",
   name: "Royce — Don't Call Me Simon",
   displayName: "Royce — Don't Call Me Simon",
-  rulesText:
-    "[PLAY] Defeat a rival Unit with power 2 or less. If you have more ☆ (Street Cred) than a Rival, defeat a rival Unit with power 3 or less instead.",
+  canonicalId: "royce-don-t-call-me-simon",
   color: "red",
   classifications: ["Ganger", "Maelstrom"],
   set: {
@@ -15,21 +16,6 @@ export const welcomeToNightCityRetailRoyceDonTCallMeSimon = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "016",
-  printings: [
-    {
-      id: "b749ce16-1b44-47d8-bce4-4fd373007a5c",
-      collectorNumber: "016",
-      setCode: "welcometonightcityretail",
-      rarity: "Uncommon",
-    },
-    {
-      id: "a4276d5e-cdf1-42cb-a6c3-8722d8c7c595",
-      collectorNumber: "β016",
-      setCode: "welcometonightcitybeta",
-      rarity: "Uncommon",
-    },
-  ],
-  selectedPrintingId: "b749ce16-1b44-47d8-bce4-4fd373007a5c",
   artist: "Mooncolony",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/016.webp",
   rarity: "Uncommon",
@@ -37,7 +23,6 @@ export const welcomeToNightCityRetailRoyceDonTCallMeSimon = {
   hasSellTag: false,
   ram: 2,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 5,
   power: 4,
@@ -101,5 +86,4 @@ export const welcomeToNightCityRetailRoyceDonTCallMeSimon = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies UnitCardDefinition;

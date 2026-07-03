@@ -16,7 +16,7 @@ export const percyPupsicleI18n: Record<Languages, I18nProperties> = {
     version: "Kalter Hund",
     text: [
       {
-        title: "EISBAD",
+        title: "Eisbad",
         description: "Dieser Charakter kann nicht herausfordern.",
       },
     ],
@@ -26,7 +26,7 @@ export const percyPupsicleI18n: Record<Languages, I18nProperties> = {
     version: "Chien givré",
     text: [
       {
-        title: "BAIN DE GLACE",
+        title: "Bain de glace",
         description: "Ce personnage ne peut pas défier.",
       },
     ],
@@ -36,7 +36,7 @@ export const percyPupsicleI18n: Record<Languages, I18nProperties> = {
     version: "Canghiacciolo",
     text: [
       {
-        title: "BAGNO DI GHIACCIO",
+        title: "Bagno di Ghiaccio",
         description: "Questo personaggio non può sfidare.",
       },
     ],

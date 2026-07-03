@@ -1,7 +1,8 @@
 # Railway Configuration for the multi-game simulator host.
 # Production traffic reaches this service through the reverse proxy:
-#   /cyberpunk/simulator -> CYBERPUNK_SIMULATOR_UPSTREAM
-#   /gundam/simulator -> CYBERPUNK_SIMULATOR_UPSTREAM
+#   /cyberpunk/simulator -> MULTI_GAME_SIMULATOR_UPSTREAM
+#   /gundam/simulator -> MULTI_GAME_SIMULATOR_UPSTREAM
+#   /one-piece/simulator -> MULTI_GAME_SIMULATOR_UPSTREAM
 #
 # The host serves multiple mounted simulator paths, so Vite assets are built
 # from /assets and routed through the same reverse-proxied service.
@@ -43,6 +44,14 @@ watchPatterns = [
   "submodules/gundam/pnpm-lock.yaml",
   "submodules/gundam/pnpm-workspace.yaml",
   "submodules/gundam/tsconfig.json",
+  "submodules/one-piece/packages/cards/**",
+  "submodules/one-piece/packages/engine/**",
+  "submodules/one-piece/packages/types/**",
+  "submodules/one-piece/packages/utils/**",
+  "submodules/one-piece/package.json",
+  "submodules/one-piece/pnpm-lock.yaml",
+  "submodules/one-piece/pnpm-workspace.yaml",
+  "submodules/one-piece/tsconfig.json",
 ]
 
 [deploy]
@@ -50,7 +59,8 @@ healthcheckPath = "/cyberpunk/simulator/"
 healthcheckTimeout = 60
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
-sleepApplication = false
+numReplicas = 1
+sleepApplication = true
 
 [deploy.teardown]
 overlapSeconds = 30

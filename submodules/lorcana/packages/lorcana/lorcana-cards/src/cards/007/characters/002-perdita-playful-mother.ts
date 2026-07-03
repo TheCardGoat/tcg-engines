@@ -4,6 +4,17 @@ import { perditaPlayfulMotherI18n } from "./002-perdita-playful-mother.i18n";
 export const perditaPlayfulMother: CharacterCard = {
   id: "uxF",
   canonicalId: "ci_uxF",
+  slug: "lorcana-ci_uxF",
+  printings: [
+    {
+      id: "set7-002",
+      artId: "set7-002",
+      setCode: "set7",
+      collectorNumber: "2",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-002"],
   cardType: "character",
   name: "Perdita",
@@ -20,7 +31,7 @@ export const perditaPlayfulMother: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9290224bc0aa4571a72a8cca9b3dc655",
-    tcgPlayer: 618213,
+    tcgPlayer: "618213",
   },
   text: [
     {

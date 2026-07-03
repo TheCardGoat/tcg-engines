@@ -4,6 +4,17 @@ import { mushuMajesticDragonI18n } from "./137-mushu-majestic-dragon.i18n";
 export const mushuMajesticDragon: CharacterCard = {
   id: "8nj",
   canonicalId: "ci_8nj",
+  slug: "lorcana-ci_8nj",
+  printings: [
+    {
+      id: "set7-137",
+      artId: "set7-137",
+      setCode: "set7",
+      collectorNumber: "137",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-137"],
   cardType: "character",
   name: "Mushu",
@@ -20,7 +31,7 @@ export const mushuMajesticDragon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5c58452a39084f28b379fdd1133ffdea",
-    tcgPlayer: 619482,
+    tcgPlayer: "619482",
   },
   text: [
     {
@@ -39,7 +50,9 @@ export const mushuMajesticDragon: CharacterCard = {
     {
       effect: {
         keyword: "Resist",
-        target: { ref: "trigger-subject" },
+        target: {
+          ref: "trigger-subject",
+        },
         type: "gain-keyword",
         value: 2,
         duration: "during-challenge",
@@ -67,7 +80,12 @@ export const mushuMajesticDragon: CharacterCard = {
         event: "banish-in-challenge",
         on: "YOUR_CHARACTERS",
         timing: "whenever",
-        restrictions: [{ type: "during-turn", whose: "your" }],
+        restrictions: [
+          {
+            type: "during-turn",
+            whose: "your",
+          },
+        ],
       },
       type: "triggered",
     },

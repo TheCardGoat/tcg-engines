@@ -4,6 +4,17 @@ import { fairyGodmotherPureHeartI18n } from "./042-fairy-godmother-pure-heart.i1
 export const fairyGodmotherPureHeart: CharacterCard = {
   id: "4li",
   canonicalId: "ci_4li",
+  slug: "lorcana-ci_4li",
+  printings: [
+    {
+      id: "set2-042",
+      artId: "set2-042",
+      setCode: "set2",
+      collectorNumber: "42",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-042"],
   cardType: "character",
   name: "Fairy Godmother",
@@ -20,7 +31,7 @@ export const fairyGodmotherPureHeart: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c35b1525a65d4eb28169ad5d88a0bc27",
-    tcgPlayer: 527735,
+    tcgPlayer: "527735",
   },
   text: [
     {

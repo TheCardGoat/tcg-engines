@@ -15,9 +15,9 @@ export const detectivesBadgeI18n: Record<Languages, I18nProperties> = {
     name: "Dienstmarke",
     text: [
       {
-        title: "SCHÜTZEN UND DIENEN,",
+        title: "Schützen und dienen",
         description:
-          "1 — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Robust +1 und die Klassifizierung Detektiv. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+          "{E}, 1 {I} — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Robust> +1 und die Klassifizierung Detektiv. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const detectivesBadgeI18n: Record<Languages, I18nProperties> = {
     name: "Badge de police",
     text: [
       {
-        title: "PROTÉGER ET SERVIR,",
+        title: "Protéger et servir",
         description:
-          "1 — Choisissez un personnage qui gagne Résistance +1 et la classification Détective jusqu'au début de votre prochain tour.",
+          "{E}, 1 {I} — Choisissez un personnage qui gagne <Résistance> +1 et la classification Détective jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const detectivesBadgeI18n: Record<Languages, I18nProperties> = {
     name: "Distintivo da Detective",
     text: [
       {
-        title: "PROTEGGERE E SERVIRE, 1",
+        title: "Proteggere e Servire",
         description:
-          "— Un personaggio a tua scelta ottiene Resistere +1 e la classificazione Detective fino all'inizio del tuo prossimo turno.",
+          "{E}, 1 {I} — Un personaggio a tua scelta ottiene <Resistere> +1 e la classificazione Detective fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

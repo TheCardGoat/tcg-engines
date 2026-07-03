@@ -7,14 +7,17 @@ export const gd04DeuxMurasame091: PilotCard = {
   color: "red",
   traits: ["earth federation", "cyber-newtype"],
   id: "GD04-091",
-  externalId: "gundam:gd04-091",
-  slug: "deux-murasame-gd04-091",
+  canonicalId: "GD04-091",
+  externalIds: { bandai: "gundam:gd04-091" },
+  slug: "deux-murasame/gd04-091",
   displayName: "Deux Murasame",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-091",
   printings: [
     {
       id: "GD04-091",
+      artId: "GD04-091",
+      setCode: "GD04",
       collectorNumber: "GD04-091",
       cardNumber: "GD04-091",
       set: {
@@ -29,6 +32,7 @@ export const gd04DeuxMurasame091: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-091"],
   selectedPrintingId: "GD04-091",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-091.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-091.webp?260424",

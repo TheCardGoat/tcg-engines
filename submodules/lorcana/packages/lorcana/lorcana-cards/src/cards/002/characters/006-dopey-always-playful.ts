@@ -4,6 +4,17 @@ import { dopeyAlwaysPlayfulI18n } from "./006-dopey-always-playful.i18n";
 export const dopeyAlwaysPlayful: CharacterCard = {
   id: "2Jv",
   canonicalId: "ci_2Jv",
+  slug: "lorcana-ci_2Jv",
+  printings: [
+    {
+      id: "set2-006",
+      artId: "set2-006",
+      setCode: "set2",
+      collectorNumber: "6",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-006"],
   cardType: "character",
   name: "Dopey",
@@ -20,7 +31,7 @@ export const dopeyAlwaysPlayful: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_45bf84f2a90e48be812c82d9c9272438",
-    tcgPlayer: 526384,
+    tcgPlayer: "526384",
   },
   text: [
     {

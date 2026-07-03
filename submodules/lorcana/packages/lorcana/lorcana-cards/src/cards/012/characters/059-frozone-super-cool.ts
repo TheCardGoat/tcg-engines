@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { frozoneSuperCoolI18n } from "./059-frozone-super-cool.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const frozoneSuperCool: CharacterCard = {
   id: "Ea1",
   canonicalId: "ci_Ea1",
+  slug: "lorcana-ci_Ea1",
+  printings: [
+    {
+      id: "set12-059",
+      artId: "set12-059",
+      setCode: "set12",
+      collectorNumber: "59",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-059"],
   cardType: "character",
   name: "Frozone",
@@ -21,6 +33,7 @@ export const frozoneSuperCool: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_aa4a880f25814ec58358ea3ad771fbb3",
+    tcgPlayer: "692090",
   },
   text: [
     {

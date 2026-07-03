@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goofyGhostOfJacobMarleyI18n } from "./083-goofy-ghost-of-jacob-marley.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const goofyGhostOfJacobMarley: CharacterCard = {
   id: "r4K",
   canonicalId: "ci_r4K",
+  slug: "lorcana-ci_r4K",
+  printings: [
+    {
+      id: "set11-083",
+      artId: "set11-083",
+      setCode: "set11",
+      collectorNumber: "83",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-083"],
   cardType: "character",
   name: "Goofy",
@@ -21,7 +33,7 @@ export const goofyGhostOfJacobMarley: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6a38f391cffc44ce8c818845eec37f01",
-    tcgPlayer: 673328,
+    tcgPlayer: "673328",
   },
   text: [
     {

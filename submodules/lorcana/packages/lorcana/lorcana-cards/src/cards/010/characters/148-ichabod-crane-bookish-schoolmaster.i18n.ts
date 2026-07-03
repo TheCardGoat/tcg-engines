@@ -17,7 +17,7 @@ export const ichabodCraneBookishSchoolmasterI18n: Record<Languages, I18nProperti
     version: "Buchgläubiger Schulmeister",
     text: [
       {
-        title: "GUT BELESEN",
+        title: "Gut belesen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, falls du in diesem Zug mindestens 1 Charakter ausgespielt hast, der 5 oder mehr kostet, lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat.",
       },
@@ -28,7 +28,7 @@ export const ichabodCraneBookishSchoolmasterI18n: Record<Languages, I18nProperti
     version: "Maître d'école bibliophile",
     text: [
       {
-        title: "LETTRÉ",
+        title: "Lettré",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, si vous avez joué un personnage coûtant 5 ou plus ce tour-ci, placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const ichabodCraneBookishSchoolmasterI18n: Record<Languages, I18nProperti
     version: "Maestro Studioso",
     text: [
       {
-        title: "ISTRUITO",
+        title: "Istruito",
         description:
           "Ogni volta che questo personaggio va all'avventura, se hai giocato un personaggio con costo 5 o superiore in questo turno, aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },

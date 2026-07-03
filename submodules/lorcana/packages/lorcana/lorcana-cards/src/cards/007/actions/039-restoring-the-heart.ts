@@ -4,6 +4,17 @@ import { restoringTheHeartI18n } from "./039-restoring-the-heart.i18n";
 export const restoringTheHeart: ActionCard = {
   id: "PpP",
   canonicalId: "ci_PpP",
+  slug: "lorcana-ci_PpP",
+  printings: [
+    {
+      id: "set7-039",
+      artId: "set7-039",
+      setCode: "set7",
+      collectorNumber: "39",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-039"],
   cardType: "action",
   name: "Restoring the Heart",
@@ -16,7 +27,7 @@ export const restoringTheHeart: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a9d9c4039f5445c582413664824aad1d",
-    tcgPlayer: 618132,
+    tcgPlayer: "618132",
   },
   text: "Remove up to 3 damage from chosen character or location. Draw a card.",
   abilities: [
@@ -24,7 +35,10 @@ export const restoringTheHeart: ActionCard = {
       effect: {
         steps: [
           {
-            amount: { type: "up-to", value: 3 },
+            amount: {
+              type: "up-to",
+              value: 3,
+            },
             target: "CHOSEN_CHARACTER_OR_LOCATION",
             type: "remove-damage",
           },

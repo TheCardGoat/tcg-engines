@@ -4,6 +4,17 @@ import { kingOfHeartsMonarchOfWonderlandI18n } from "./057-king-of-hearts-monarc
 export const kingOfHeartsMonarchOfWonderland: CharacterCard = {
   id: "350",
   canonicalId: "ci_350",
+  slug: "lorcana-ci_350",
+  printings: [
+    {
+      id: "set5-057",
+      artId: "set5-057",
+      setCode: "set5",
+      collectorNumber: "57",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-057"],
   cardType: "character",
   name: "King of Hearts",
@@ -20,7 +31,7 @@ export const kingOfHeartsMonarchOfWonderland: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_19a1d88c22204acf9412f49437e0eb00",
-    tcgPlayer: 561490,
+    tcgPlayer: "561490",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { lanternI18n } from "./033-lantern.i18n";
 export const lantern: ItemCard = {
   id: "Dig",
   canonicalId: "ci_38Q",
+  slug: "lorcana-ci_38Q",
+  printings: [
+    {
+      id: "set1-033",
+      artId: "set1-033",
+      setCode: "set1",
+      collectorNumber: "33",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-033", "set9-032"],
   cardType: "item",
   name: "Lantern",
@@ -16,7 +27,7 @@ export const lantern: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c77ef321da53426c9f7d856202152b2e",
-    tcgPlayer: 649979,
+    tcgPlayer: "649979",
   },
   text: [
     {

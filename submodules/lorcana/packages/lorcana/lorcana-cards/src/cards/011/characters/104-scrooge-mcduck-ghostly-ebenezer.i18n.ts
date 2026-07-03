@@ -19,11 +19,12 @@ export const scroogeMcduckGhostlyEbenezerI18n: Record<Languages, I18nProperties>
     version: "Geisterhafter Ebenezer",
     text: [
       {
-        title: "Stärken 1",
+        title:
+          "<Stärken> 1 {I} (Einmal während deines Zuges darfst du 1 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "MÜNZEN ZÄHLEN",
-        description: "Dieser Charakter erhält für jede Karte unter ihm +1 und +1.",
+        title: "Münzen zählen",
+        description: "Dieser Charakter erhält für jede Karte unter ihm +1 {S} und +1 {W}.",
       },
     ],
   },
@@ -32,11 +33,12 @@ export const scroogeMcduckGhostlyEbenezerI18n: Record<Languages, I18nProperties>
     version: "Ebenezer fantôme",
     text: [
       {
-        title: "Boost 1",
+        title:
+          "<Boost> 1 {I} (Une fois durant votre tour, vous pouvez payer 1 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "COMPTANT LES PIÈCES",
-        description: "Ce personnage gagne +1 et +1 pour chaque carte sous lui.",
+        title: "Comptant les pièces",
+        description: "Ce personnage gagne +1 {S} et +1 {W} pour chaque carte sous lui.",
       },
     ],
   },
@@ -45,11 +47,12 @@ export const scroogeMcduckGhostlyEbenezerI18n: Record<Languages, I18nProperties>
     version: "Ebenezer Spettrale",
     text: [
       {
-        title: "Potenziamento 1",
+        title:
+          "<Potenziamento> 1 {I} (Una volta durante il tuo turno, puoi pagare 1 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "CONTARE LE MONETE",
-        description: "Questo personaggio riceve +1 e +1 per ogni carta sotto di sé.",
+        title: "Contare le Monete",
+        description: "Questo personaggio riceve +1 {S} e +1 {W} per ogni carta sotto di sé.",
       },
     ],
   },

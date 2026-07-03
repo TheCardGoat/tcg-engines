@@ -4,6 +4,17 @@ import { magicaDeSpellShadowyAndSinisterI18n } from "./041-magica-de-spell-shado
 export const magicaDeSpellShadowyAndSinister: CharacterCard = {
   id: "EI4",
   canonicalId: "ci_EI4",
+  slug: "lorcana-ci_EI4",
+  printings: [
+    {
+      id: "set10-041",
+      artId: "set10-041",
+      setCode: "set10",
+      collectorNumber: "41",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-041"],
   cardType: "character",
   name: "Magica De Spell",
@@ -20,7 +31,7 @@ export const magicaDeSpellShadowyAndSinister: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6f5c4ee5c5ee4479be8ad253eb275033",
-    tcgPlayer: 659459,
+    tcgPlayer: "659459",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const st04TheMagicBulletOfDusk014: CommandCard = {
   color: "red",
   traits: ["zaft", "coordinator"],
   id: "ST04-014",
-  externalId: "gundam:st04-014",
-  slug: "the-magic-bullet-of-dusk-st04-014",
+  canonicalId: "ST04-014",
+  externalIds: { bandai: "gundam:st04-014" },
+  slug: "the-magic-bullet-of-dusk/st04-014",
   displayName: "The Magic Bullet of Dusk",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-014",
   printings: [
     {
       id: "ST04-014",
+      artId: "ST04-014",
+      setCode: "ST04",
       collectorNumber: "ST04-014",
       cardNumber: "ST04-014",
       set: {
@@ -30,6 +33,8 @@ export const st04TheMagicBulletOfDusk014: CommandCard = {
     },
     {
       id: "ST04-014_p1",
+      artId: "ST04-014_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-014_p1",
       cardNumber: "ST04-014",
       set: {
@@ -44,6 +49,7 @@ export const st04TheMagicBulletOfDusk014: CommandCard = {
       productName: "SEED Strike [ST04] Bonus Pack",
     },
   ],
+  reprints: ["ST04-014", "ST04-014_p1"],
   selectedPrintingId: "ST04-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-014.webp?260424",

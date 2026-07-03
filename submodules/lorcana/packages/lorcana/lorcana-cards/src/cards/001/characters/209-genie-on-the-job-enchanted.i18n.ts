@@ -20,10 +20,10 @@ export const genieOnTheJobEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Bei der Arbeit",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "VERSCHWINDEN",
+        title: "Verschwinden",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Charakter deiner Wahl zurück auf die zugehörige Hand schicken.",
       },
@@ -34,7 +34,7 @@ export const genieOnTheJobEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Fait le show",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
         title: "TU DISPARAIS",
@@ -48,10 +48,10 @@ export const genieOnTheJobEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "On the Job",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "DISAPPEAR",
+        title: "Disappear",
         description:
           "When you play this character, you may return chosen character to their player's hand.",
       },

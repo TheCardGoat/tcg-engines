@@ -4,6 +4,17 @@ import { rayaGuidanceSeekerI18n } from "./186-raya-guidance-seeker.i18n";
 export const rayaGuidanceSeeker: CharacterCard = {
   id: "dsU",
   canonicalId: "ci_dsU",
+  slug: "lorcana-ci_dsU",
+  printings: [
+    {
+      id: "set7-186",
+      artId: "set7-186",
+      setCode: "set7",
+      collectorNumber: "186",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-186"],
   cardType: "character",
   name: "Raya",
@@ -20,7 +31,7 @@ export const rayaGuidanceSeeker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0ab7da34efae4501b26ae156eb69755c",
-    tcgPlayer: 619513,
+    tcgPlayer: "619513",
   },
   text: [
     {

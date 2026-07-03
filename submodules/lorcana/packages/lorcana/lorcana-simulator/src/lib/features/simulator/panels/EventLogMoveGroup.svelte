@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Droplets } from "@lucide/svelte";
+  import Droplets from "@lucide/svelte/icons/droplets";
   import { m } from "$lib/i18n/messages.js";
   import CardLogToken from "./CardLogToken.svelte";
   import { getEventLogMarkerIcon } from "./event-log-marker-icons.js";
@@ -114,7 +114,11 @@
         <p class="min-w-0 break-words text-[0.82rem] leading-[1.45] text-slate-200">
           {#each row.segments as segment}
             {#if segment.kind === "card"}
-              <CardLogToken cardId={segment.cardId} />
+              <CardLogToken
+                cardId={segment.cardId}
+                fallbackLabel={segment.fallbackLabel}
+                fallbackInkType={segment.fallbackInkType}
+              />
             {:else if segment.kind === "player"}
               <span
                 class={`mx-[0.06rem] inline-flex items-center rounded-full border px-1.5 py-px align-baseline text-[0.68rem] font-semibold uppercase tracking-[0.12em] ${playerChipClasses(segment.tone)}`}
