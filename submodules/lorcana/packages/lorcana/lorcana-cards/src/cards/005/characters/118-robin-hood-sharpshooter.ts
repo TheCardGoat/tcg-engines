@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { robinHoodSharpshooterI18n } from "./118-robin-hood-sharpshooter.i18n";
 
 export const robinHoodSharpshooter: CharacterCard = {
-  id: "wLe",
+  id: "JO4",
   canonicalId: "ci_qwp",
+  slug: "lorcana-ci_qwp",
+  printings: [
+    {
+      id: "set5-118",
+      artId: "set5-118",
+      setCode: "set5",
+      collectorNumber: "118",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-118"],
   cardType: "character",
   name: "Robin Hood",
@@ -20,7 +31,7 @@ export const robinHoodSharpshooter: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d08869cde8294b0b9f73d0f7192e2335",
-    tcgPlayer: 561984,
+    tcgPlayer: "561984",
   },
   text: [
     {

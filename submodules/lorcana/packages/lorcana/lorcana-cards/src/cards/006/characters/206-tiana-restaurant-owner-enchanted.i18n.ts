@@ -17,9 +17,9 @@ export const tianaRestaurantOwnerEnchantedI18n: Record<Languages, I18nProperties
     version: "Restaurantbesitzerin",
     text: [
       {
-        title: "SPEZIALRESERVIERUNG",
+        title: "Spezialreservierung",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere herausgefordert wird, solange dieser Charakter erschöpft ist, erhält der herausfordernde Charakter in diesem Zug -3, falls die ihm zugehörige Person nicht 3 bezahlt.",
+          "Jedes Mal, wenn einer deiner Charaktere herausgefordert wird, solange dieser Charakter erschöpft ist, erhält der herausfordernde Charakter in diesem Zug -3 {S}, falls die ihm zugehörige Person nicht 3 {I} bezahlt.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const tianaRestaurantOwnerEnchantedI18n: Record<Languages, I18nProperties
     version: "Propriétaire de restaurant",
     text: [
       {
-        title: "RÉSERVATION SPÉCIALE",
+        title: "Réservation spéciale",
         description:
-          "Tant que ce personnage est épuisé, chaque fois que l'un de vos personnages est défié, le personnage qui défie subit -3 pour le reste de ce tour à moins que son propriétaire ne paie 3.",
+          "Tant que ce personnage est épuisé, chaque fois que l'un de vos personnages est défié, le personnage qui défie subit -3 {S} pour le reste de ce tour à moins que son propriétaire ne paie 3 {I}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const tianaRestaurantOwnerEnchantedI18n: Record<Languages, I18nProperties
     version: "Proprietaria di Ristorante",
     text: [
       {
-        title: "PRENOTAZIONE SPECIALE",
+        title: "Prenotazione Speciale",
         description:
-          "Ogni volta che un tuo personaggio viene sfidato mentre questo personaggio è impegnato, il personaggio sfidante riceve -3 per questo turno a meno che il suo giocatore non paghi 3.",
+          "Ogni volta che un tuo personaggio viene sfidato mentre questo personaggio è impegnato, il personaggio sfidante riceve -3 {S} per questo turno a meno che il suo giocatore non paghi 3 {I}.",
       },
     ],
   },

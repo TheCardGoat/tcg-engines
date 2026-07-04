@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { grammaTalaConnectedToNatureI18n } from "./148-gramma-tala-connected-to-nature.i18n";
 
 export const grammaTalaConnectedToNature: CharacterCard = {
-  id: "iSA",
-  canonicalId: "ci_iSA",
+  id: "Dg6",
+  canonicalId: "ci_s7b",
+  slug: "lorcana-ci_s7b",
+  printings: [
+    {
+      id: "set11-148",
+      artId: "set11-148",
+      setCode: "set11",
+      collectorNumber: "148",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-148"],
   cardType: "character",
   name: "Gramma Tala",
@@ -20,7 +31,7 @@ export const grammaTalaConnectedToNature: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_600ad28b57694ad2b078261118277ad2",
-    tcgPlayer: 673343,
+    tcgPlayer: "673343",
   },
   text: [
     {

@@ -7,14 +7,14 @@ export const promisingLeadI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Vielversprechender Hinweis",
-    text: "Gib einem Charakter deiner Wahl in diesem Zug +1 und Unterstützen. (Jedes Mal, wenn der Charakter erkundet, darfst du seine in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+    text: "Gib einem Charakter deiner Wahl in diesem Zug +1 {L} und <Unterstützen>. (Jedes Mal, wenn der Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
   },
   fr: {
     name: "Piste prometteuse",
-    text: "Choisissez un personnage qui gagne +1 et Soutien pour le reste de ce tour.",
+    text: "Choisissez un personnage qui gagne +1 {L} et <Soutien> pour le reste de ce tour. (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
   },
   it: {
     name: "Pista Promettente",
-    text: "Un personaggio a tua scelta riceve +1 e ottiene Aiutante per questo turno. (Ogni volta che va all'avventura, puoi aggiungere la sua alla di un altro personaggio a tua scelta per questo turno.)",
+    text: "Un personaggio a tua scelta riceve +1 {L} e ottiene <Aiutante> per questo turno. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
 };

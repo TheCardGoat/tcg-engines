@@ -16,7 +16,7 @@ export const fixitFelixJrDelightedSightseerI18n: Record<Languages, I18nPropertie
     version: "Entzückter Ausflügler",
     text: [
       {
-        title: "ACH DU MEINE GÜTE!",
+        title: "Ach du meine Güte!",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen Ort im Spiel hast, ziehe 1 Karte.",
       },
@@ -27,7 +27,7 @@ export const fixitFelixJrDelightedSightseerI18n: Record<Languages, I18nPropertie
     version: "Promeneur ravi",
     text: [
       {
-        title: "NOM D'UN PETIT BONUS!",
+        title: "Nom d'un petit bonus!",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un lieu en jeu, piochez une carte.",
       },
@@ -38,7 +38,7 @@ export const fixitFelixJrDelightedSightseerI18n: Record<Languages, I18nPropertie
     version: "Turista Deliziato",
     text: [
       {
-        title: "PER TUTTE LE LAND!",
+        title: "Per Tutte le Land!",
         description: "Quando giochi questo personaggio, se hai in gioco un luogo, pesca una carta.",
       },
     ],

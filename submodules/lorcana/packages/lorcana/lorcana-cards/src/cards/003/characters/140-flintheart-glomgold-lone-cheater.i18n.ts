@@ -17,9 +17,9 @@ export const flintheartGlomgoldLoneCheaterI18n: Record<Languages, I18nProperties
     version: "Einsamer Betrüger",
     text: [
       {
-        title: "NIEMAND WIRD ES KOMMEN SEHEN!",
+        title: "Niemand wird es kommen sehen!",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const flintheartGlomgoldLoneCheaterI18n: Record<Languages, I18nProperties
     version: "Tricheur solitaire",
     text: [
       {
-        title: "ILS NE LE VERRONT JAMAIS VENIR",
+        title: "Ils ne le verront jamais venir",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier les personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier les personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const flintheartGlomgoldLoneCheaterI18n: Record<Languages, I18nProperties
     version: "Imbroglione Solitario",
     text: [
       {
-        title: "NON SE LO ASPETTERANNO MAI!",
+        title: "Non se lo Aspetteranno Mai!",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

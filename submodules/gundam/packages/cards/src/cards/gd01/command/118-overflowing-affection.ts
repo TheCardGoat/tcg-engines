@@ -7,14 +7,17 @@ export const gd01OverflowingAffection118: CommandCard = {
   color: "white",
   traits: ["-"],
   id: "GD01-118",
-  externalId: "gundam:gd01-118",
-  slug: "overflowing-affection-gd01-118",
+  canonicalId: "GD01-118",
+  externalIds: { bandai: "gundam:gd01-118" },
+  slug: "overflowing-affection/gd01-118",
   displayName: "Overflowing Affection",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-118",
   printings: [
     {
       id: "GD01-118",
+      artId: "GD01-118",
+      setCode: "GD01",
       collectorNumber: "GD01-118",
       cardNumber: "GD01-118",
       set: {
@@ -30,6 +33,8 @@ export const gd01OverflowingAffection118: CommandCard = {
     },
     {
       id: "GD01-118_p1",
+      artId: "GD01-118_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-118_p1",
       cardNumber: "GD01-118",
       set: {
@@ -45,6 +50,8 @@ export const gd01OverflowingAffection118: CommandCard = {
     },
     {
       id: "GD01-118_p2",
+      artId: "GD01-118_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-118_p2",
       cardNumber: "GD01-118",
       set: {
@@ -60,6 +67,8 @@ export const gd01OverflowingAffection118: CommandCard = {
     },
     {
       id: "GD01-118_p3",
+      artId: "GD01-118_p3",
+      setCode: "BETA",
       collectorNumber: "GD01-118_p3",
       cardNumber: "GD01-118",
       set: {
@@ -75,6 +84,8 @@ export const gd01OverflowingAffection118: CommandCard = {
     },
     {
       id: "GD01-118_p4",
+      artId: "GD01-118_p4",
+      setCode: "GD01",
       collectorNumber: "GD01-118_p4",
       cardNumber: "GD01-118",
       set: {
@@ -90,6 +101,8 @@ export const gd01OverflowingAffection118: CommandCard = {
     },
     {
       id: "GD01-118_p5",
+      artId: "GD01-118_p5",
+      setCode: "GD03",
       collectorNumber: "GD01-118_p5",
       cardNumber: "GD01-118",
       set: {
@@ -105,6 +118,8 @@ export const gd01OverflowingAffection118: CommandCard = {
     },
     {
       id: "GD01-118_p6",
+      artId: "GD01-118_p6",
+      setCode: "ST09",
       collectorNumber: "GD01-118_p6",
       cardNumber: "GD01-118",
       set: {
@@ -118,6 +133,15 @@ export const gd01OverflowingAffection118: CommandCard = {
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p6.webp?260424",
       productName: "Destiny Ignition [ST09]",
     },
+  ],
+  reprints: [
+    "GD01-118",
+    "GD01-118_p1",
+    "GD01-118_p2",
+    "GD01-118_p3",
+    "GD01-118_p4",
+    "GD01-118_p5",
+    "GD01-118_p6",
   ],
   selectedPrintingId: "GD01-118",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-118.webp",

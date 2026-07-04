@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jimDearBelovedHusbandI18n } from "./012-jim-dear-beloved-husband.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const jimDearBelovedHusband: CharacterCard = {
   id: "3Cr",
   canonicalId: "ci_3Cr",
+  slug: "lorcana-ci_3Cr",
+  printings: [
+    {
+      id: "set8-012",
+      artId: "set8-012",
+      setCode: "set8",
+      collectorNumber: "12",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-012"],
   cardType: "character",
   name: "Jim Dear",
@@ -21,7 +33,7 @@ export const jimDearBelovedHusband: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_18b8e544b96748dc9950322a3fcb5cf8",
-    tcgPlayer: 631356,
+    tcgPlayer: "631356",
   },
   text: "Bodyguard",
   classifications: ["Storyborn", "Ally"],

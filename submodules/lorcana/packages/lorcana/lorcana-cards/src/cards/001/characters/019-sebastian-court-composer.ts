@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { sebastianCourtComposerI18n } from "./019-sebastian-court-composer.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const sebastianCourtComposer: CharacterCard = {
   id: "Xb7",
   canonicalId: "ci_Xb7",
+  slug: "lorcana-ci_Xb7",
+  printings: [
+    {
+      id: "set1-019",
+      artId: "set1-019",
+      setCode: "set1",
+      collectorNumber: "19",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-019"],
   cardType: "character",
   name: "Sebastian",
@@ -21,7 +33,7 @@ export const sebastianCourtComposer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_acaae5dbf3c341b8ad35851ac755cfd6",
-    tcgPlayer: 504540,
+    tcgPlayer: "504540",
   },
   text: "Singer 4",
   classifications: ["Storyborn", "Ally"],

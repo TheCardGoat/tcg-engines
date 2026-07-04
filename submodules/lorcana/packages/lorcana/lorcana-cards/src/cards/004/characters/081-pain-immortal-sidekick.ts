@@ -4,6 +4,17 @@ import { painImmortalSidekickI18n } from "./081-pain-immortal-sidekick.i18n";
 export const painImmortalSidekick: CharacterCard = {
   id: "eqA",
   canonicalId: "ci_eqA",
+  slug: "lorcana-ci_eqA",
+  printings: [
+    {
+      id: "set4-081",
+      artId: "set4-081",
+      setCode: "set4",
+      collectorNumber: "81",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-081"],
   cardType: "character",
   name: "Pain",
@@ -21,7 +32,7 @@ export const painImmortalSidekick: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_ca58ca94b74e4df8983b1eaecff999a3",
-    tcgPlayer: 550578,
+    tcgPlayer: "550578",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: painImmortalSidekickI18n,

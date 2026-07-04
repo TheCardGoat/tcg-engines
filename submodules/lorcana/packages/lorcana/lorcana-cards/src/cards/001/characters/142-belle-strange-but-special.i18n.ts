@@ -6,9 +6,9 @@ export const belleStrangeButSpecialI18n: Record<Languages, I18nProperties> = {
     version: "Strange but Special",
     text: [
       {
-        title: "READ A BOOK",
+        title: "READ",
         description:
-          "During your turn, you may put an additional card from your hand into your inkwell facedown.",
+          "A BOOK During your turn, you may put an additional card from your hand into your inkwell facedown.",
       },
       {
         title: "MY FAVORITE PART!",
@@ -21,13 +21,13 @@ export const belleStrangeButSpecialI18n: Record<Languages, I18nProperties> = {
     version: "Eine ganz besondere Mademoiselle",
     text: [
       {
-        title: "LIES EIN BUCH!",
+        title: "Lies ein Buch!",
         description: "Du darfst in deinem Zug 1 weitere Karte tinten.",
       },
       {
-        title: "MEIN LIEBLINGSBUCH",
+        title: "Mein Lieblingsbuch",
         description:
-          "Solange du 10 oder mehr Karten in deinem Tintenvorrat hast, erhält dieser Charakter +4.",
+          "Solange du 10 oder mehr Karten in deinem Tintenvorrat hast, erhält dieser Charakter +4 {L}.",
       },
     ],
   },
@@ -42,7 +42,7 @@ export const belleStrangeButSpecialI18n: Record<Languages, I18nProperties> = {
       {
         title: "MON PASSAGE PRÉFÉRÉ!",
         description:
-          "Tant que vous avez 10 cartes ou plus dans votre réserve d'encre, ce personnage gagne +4.",
+          "Tant que vous avez 10 cartes ou plus dans votre réserve d'encre, ce personnage gagne +4 {L}.",
       },
     ],
   },
@@ -51,12 +51,12 @@ export const belleStrangeButSpecialI18n: Record<Languages, I18nProperties> = {
     version: "Strange but Special",
     text: [
       {
-        title: "READ A BOOK",
+        title: "Read a Book",
         description: "During your turn, you may ink an additional card.",
       },
       {
-        title: "MY FAVORITE PART!",
-        description: "While you have 10 or more cards in your inkwell, this character gets +4.",
+        title: "My Favorite Part!",
+        description: "While you have 10 or more cards in your inkwell, this character gets +4 {L}.",
       },
     ],
   },

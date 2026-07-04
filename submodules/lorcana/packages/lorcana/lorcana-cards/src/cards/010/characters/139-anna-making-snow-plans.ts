@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { support } from "../../../helpers/abilities/support";
 import { annaMakingSnowPlansI18n } from "./139-anna-making-snow-plans.i18n";
+
+import { support } from "../../../helpers/abilities/support";
 
 export const annaMakingSnowPlans: CharacterCard = {
   id: "BGp",
   canonicalId: "ci_BGp",
+  slug: "lorcana-ci_BGp",
+  printings: [
+    {
+      id: "set10-139",
+      artId: "set10-139",
+      setCode: "set10",
+      collectorNumber: "139",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-139"],
   cardType: "character",
   name: "Anna",
@@ -21,7 +33,7 @@ export const annaMakingSnowPlans: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_13a02a2c79fa4493bc8a593d5fb1bd98",
-    tcgPlayer: 659424,
+    tcgPlayer: "659424",
   },
   text: "Support",
   classifications: ["Storyborn", "Hero", "Queen"],

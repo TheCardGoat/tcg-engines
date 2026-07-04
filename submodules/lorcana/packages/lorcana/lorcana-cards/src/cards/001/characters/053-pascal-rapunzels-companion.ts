@@ -4,6 +4,17 @@ import { pascalRapunzelsCompanionI18n } from "./053-pascal-rapunzels-companion.i
 export const pascalRapunzelsCompanion: CharacterCard = {
   id: "81V",
   canonicalId: "ci_81V",
+  slug: "lorcana-ci_81V",
+  printings: [
+    {
+      id: "set1-053",
+      artId: "set1-053",
+      setCode: "set1",
+      collectorNumber: "53",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-053"],
   cardType: "character",
   name: "Pascal",
@@ -20,11 +31,11 @@ export const pascalRapunzelsCompanion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_52d47bf453634824858ebdd26f42d5f6",
-    tcgPlayer: 493488,
+    tcgPlayer: "493488",
   },
   text: [
     {
-      title: "CAMOUFLAGE",
+      title: "Camouflage",
       description: "While you have another character in play, this character gains Evasive.",
     },
   ],

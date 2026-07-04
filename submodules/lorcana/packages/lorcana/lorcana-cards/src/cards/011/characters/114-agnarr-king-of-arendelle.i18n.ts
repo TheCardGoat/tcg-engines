@@ -16,9 +16,9 @@ export const agnarrKingOfArendelleI18n: Record<Languages, I18nProperties> = {
     version: "König von Arendelle",
     text: [
       {
-        title: "BESCHÜTZERINSTINKT",
+        title: "Beschützerinstinkt",
         description:
-          "Solange du mindestens eine Königin im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens eine Königin im Spiel hast, erhält dieser Charakter +2 {S}.",
       },
     ],
   },
@@ -27,8 +27,9 @@ export const agnarrKingOfArendelleI18n: Record<Languages, I18nProperties> = {
     version: "Roi d'Arendelle",
     text: [
       {
-        title: "INSTINCT PROTECTEUR",
-        description: "Tant que vous avez un personnage Reine en jeu, ce personnage-ci gagne +2.",
+        title: "Instinct protecteur",
+        description:
+          "Tant que vous avez un personnage Reine en jeu, ce personnage-ci gagne +2 {S}.",
       },
     ],
   },
@@ -37,8 +38,8 @@ export const agnarrKingOfArendelleI18n: Record<Languages, I18nProperties> = {
     version: "Re di Arendelle",
     text: [
       {
-        title: "ISTINTO PROTETTIVO",
-        description: "Mentre hai in gioco un personaggio Regina, questo personaggio riceve +2.",
+        title: "Istinto Protettivo",
+        description: "Mentre hai in gioco un personaggio Regina, questo personaggio riceve +2 {S}.",
       },
     ],
   },

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { reduceLiveGatewayMessage } from "./liveMessages";
-import type { LiveGatewayMessage } from "./liveGateway";
-import type { LiveMatchContext } from "./matchContext";
+import { reduceLiveGatewayMessage } from "./liveMessages.js";
+import type { LiveGatewayMessage } from "./liveGateway.js";
+import type { LiveMatchContext } from "./matchContext.js";
 
 describe("live gateway message reducer", () => {
   test("preserves the mounted simulator basename when match state advances to the next game", () => {

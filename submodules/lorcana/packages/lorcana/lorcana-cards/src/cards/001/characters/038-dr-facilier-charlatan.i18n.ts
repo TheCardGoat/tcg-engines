@@ -9,16 +9,16 @@ export const drFacilierCharlatanI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Dr. Facilier",
     version: "Scharlatan",
-    text: "Herausfordern +2",
+    text: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
   },
   fr: {
     name: "DR. FACILIER",
     version: "Charlatan",
-    text: "Offensif +2",
+    text: "<Offensif> +2",
   },
   it: {
     name: "Dr. Facilier",
     version: "Charlatan",
-    text: "Challenger +2 (While challenging, this character gets +2.)",
+    text: "<Challenger> +2 (While challenging, this character gets +2 {S}.)",
   },
 };

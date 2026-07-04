@@ -7,14 +7,17 @@ export const gd02PersistentAndFortudinous119: CommandCard = {
   color: "white",
   traits: ["gjallarhorn"],
   id: "GD02-119",
-  externalId: "gundam:gd02-119",
-  slug: "persistent-and-fortudinous-gd02-119",
+  canonicalId: "GD02-119",
+  externalIds: { bandai: "gundam:gd02-119" },
+  slug: "persistent-and-fortudinous/gd02-119",
   displayName: "Persistent and Fortudinous",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-119",
   printings: [
     {
       id: "GD02-119",
+      artId: "GD02-119",
+      setCode: "GD02",
       collectorNumber: "GD02-119",
       cardNumber: "GD02-119",
       set: {
@@ -29,6 +32,7 @@ export const gd02PersistentAndFortudinous119: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-119"],
   selectedPrintingId: "GD02-119",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-119.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-119.webp?260424",

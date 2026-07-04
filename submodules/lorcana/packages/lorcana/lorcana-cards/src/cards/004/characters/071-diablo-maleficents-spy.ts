@@ -4,6 +4,17 @@ import { diabloMaleficentsSpyI18n } from "./071-diablo-maleficents-spy.i18n";
 export const diabloMaleficentsSpy: CharacterCard = {
   id: "hgt",
   canonicalId: "ci_hgt",
+  slug: "lorcana-ci_hgt",
+  printings: [
+    {
+      id: "set4-071",
+      artId: "set4-071",
+      setCode: "set4",
+      collectorNumber: "71",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-071"],
   cardType: "character",
   name: "Diablo",
@@ -20,7 +31,7 @@ export const diabloMaleficentsSpy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_abd789362dc8479c8dc89e89859b6a6a",
-    tcgPlayer: 550574,
+    tcgPlayer: "550574",
   },
   text: [
     {

@@ -16,8 +16,8 @@ export const jafarKeeperOfSecretsI18n: Record<Languages, I18nProperties> = {
     version: "Hüter der Geheimnisse",
     text: [
       {
-        title: "VERSTECKTE WUNDER",
-        description: "Dieser Charakter erhält +1 für jede Karte auf deiner Hand.",
+        title: "Versteckte Wunder",
+        description: "Dieser Charakter erhält +1 {S} für jede Karte auf deiner Hand.",
       },
     ],
   },
@@ -27,7 +27,7 @@ export const jafarKeeperOfSecretsI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "MERVEILLES CACHÉES",
-        description: "La de ce personnage augmente de 1 par carte dans votre main.",
+        description: "La {S} de ce personnage augmente de 1 par carte dans votre main.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const jafarKeeperOfSecretsI18n: Record<Languages, I18nProperties> = {
     version: "Custode dei Segreti",
     text: [
       {
-        title: "MERAVIGLIE NASCOSTE",
-        description: "Questo personaggio riceve +1 per ogni carta nella tua mano.",
+        title: "Meraviglie Nascoste",
+        description: "Questo personaggio riceve +1 {S} per ogni carta nella tua mano.",
       },
     ],
   },

@@ -16,7 +16,7 @@ export const mrSnoopsBetrayedPartnerI18n: Record<Languages, I18nProperties> = {
     version: "Betrogener Partner",
     text: [
       {
-        title: "BETRÜGERISCHER GAUNER!",
+        title: "Betrügerischer Gauner!",
         description: "Wenn dieser Charakter in deinem Zug verbannt wird, darfst du 1 Karte ziehen.",
       },
     ],
@@ -26,7 +26,7 @@ export const mrSnoopsBetrayedPartnerI18n: Record<Languages, I18nProperties> = {
     version: "Partenaire trahi",
     text: [
       {
-        title: "VOUS NE M'ESCROQUEREZ PAS!",
+        title: "Vous ne m'escroquerez pas!",
         description:
           "Durant votre tour, lorsque ce personnage est banni, vous pouvez piocher une carte.",
       },
@@ -37,7 +37,7 @@ export const mrSnoopsBetrayedPartnerI18n: Record<Languages, I18nProperties> = {
     version: "Partner Tradito",
     text: [
       {
-        title: "BRUTTA LADRONA TRADITRICE",
+        title: "Brutta Ladrona Traditrice",
         description:
           "Durante il tuo turno, quando questo personaggio viene esiliato, puoi pescare una carta.",
       },

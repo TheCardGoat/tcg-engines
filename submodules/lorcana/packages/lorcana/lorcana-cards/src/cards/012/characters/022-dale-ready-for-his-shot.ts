@@ -4,6 +4,17 @@ import { daleReadyForHisShotI18n } from "./022-dale-ready-for-his-shot.i18n";
 export const daleReadyForHisShot: CharacterCard = {
   id: "vS7",
   canonicalId: "ci_vS7",
+  slug: "lorcana-ci_vS7",
+  printings: [
+    {
+      id: "set12-022",
+      artId: "set12-022",
+      setCode: "set12",
+      collectorNumber: "22",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-022"],
   cardType: "character",
   name: "Dale",
@@ -20,6 +31,7 @@ export const daleReadyForHisShot: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_66a5c1d3ac3e4e2c894c5a8604c10cc2",
+    tcgPlayer: "692152",
   },
   text: [
     {

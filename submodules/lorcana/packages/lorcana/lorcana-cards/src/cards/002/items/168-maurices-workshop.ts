@@ -4,6 +4,17 @@ import { mauricesWorkshopI18n } from "./168-maurices-workshop.i18n";
 export const mauricesWorkshop: ItemCard = {
   id: "Xlt",
   canonicalId: "ci_Xlt",
+  slug: "lorcana-ci_Xlt",
+  printings: [
+    {
+      id: "set2-168",
+      artId: "set2-168",
+      setCode: "set2",
+      collectorNumber: "168",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-168"],
   cardType: "item",
   name: "Maurice's Workshop",
@@ -16,7 +27,7 @@ export const mauricesWorkshop: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3c5cc621f8c2419aa3e82f1189fb74b0",
-    tcgPlayer: 527770,
+    tcgPlayer: "527770",
   },
   text: [
     {

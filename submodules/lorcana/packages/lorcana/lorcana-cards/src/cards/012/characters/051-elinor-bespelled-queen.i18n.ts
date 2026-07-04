@@ -4,7 +4,7 @@ export const elinorBespelledQueenI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Elinor",
     version: "Bespelled Queen",
-    text: "<Challenger> +2",
+    text: "Challenger +2",
   },
   de: {
     name: "Elinor",

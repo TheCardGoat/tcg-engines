@@ -16,9 +16,9 @@ export const billTheLizardChimneySweepI18n: Record<Languages, I18nProperties> = 
     version: "Schornsteinfeger",
     text: [
       {
-        title: "DAS SCHAFFST DU DOCH",
+        title: "Das schaffst du doch",
         description:
-          "Solange mindestens ein anderer Charakter im Spiel beschädigt ist, erhält dieser Charakter Wendig.",
+          "Solange mindestens ein anderer Charakter im Spiel beschädigt ist, erhält dieser Charakter <Wendig>.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const billTheLizardChimneySweepI18n: Record<Languages, I18nProperties> = 
     version: "Ramoneur",
     text: [
       {
-        title: "C'EST TRÈS FACILE À FAIRE",
+        title: "C'est très facile à faire",
         description:
-          "Tant qu'un autre personnage en jeu a au moins un dommage sur lui, ce personnage-ci gagne Insaisissable.",
+          "Tant qu'un autre personnage en jeu a au moins un dommage sur lui, ce personnage-ci gagne <Insaisissable>.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const billTheLizardChimneySweepI18n: Record<Languages, I18nProperties> = 
     version: "Spazzacamino",
     text: [
       {
-        title: "ROBA DA RAGAZZI",
+        title: "Roba da Ragazzi",
         description:
-          "Mentre un altro personaggio in gioco ha danno, questo personaggio ottiene Sfuggente. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Mentre un altro personaggio in gioco ha danno, questo personaggio ottiene <Sfuggente>. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

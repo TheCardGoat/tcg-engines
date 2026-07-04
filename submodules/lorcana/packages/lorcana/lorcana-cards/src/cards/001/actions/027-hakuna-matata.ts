@@ -4,6 +4,17 @@ import { hakunaMatataI18n } from "./027-hakuna-matata.i18n";
 export const hakunaMatata: ActionCard = {
   id: "2U7",
   canonicalId: "ci_2U7",
+  slug: "lorcana-ci_2U7",
+  printings: [
+    {
+      id: "set1-027",
+      artId: "set1-027",
+      setCode: "set1",
+      collectorNumber: "27",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-027"],
   cardType: "action",
   name: "Hakuna Matata",
@@ -16,7 +27,7 @@ export const hakunaMatata: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2894c74113e7436abf095fe35dde6ea8",
-    tcgPlayer: 506124,
+    tcgPlayer: "506124",
   },
   text: "Remove up to 3 damage from each of your characters.",
   actionSubtype: "song",
@@ -26,7 +37,10 @@ export const hakunaMatata: ActionCard = {
       text: "Remove up to 3 damage from each of your characters.",
       name: "Hakuna Matata",
       effect: {
-        amount: { type: "up-to", value: 3 },
+        amount: {
+          type: "up-to",
+          value: 3,
+        },
         target: {
           cardTypes: ["character"],
           count: "all",

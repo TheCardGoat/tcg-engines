@@ -9,16 +9,16 @@ export const elsaGlovesOffI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Elsa",
     version: "Ohne Handschuhe",
-    text: "Herausfordern +3",
+    text: "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
   },
   fr: {
     name: "Elsa",
     version: "Sans gants",
-    text: "Offensif +3",
+    text: "<Offensif> +3",
   },
   it: {
     name: "Elsa",
     version: "Gloves Off",
-    text: "Challenger +3 (While challenging, this character gets +3.)",
+    text: "<Challenger> +3 (While challenging, this character gets +3 {S}.)",
   },
 };

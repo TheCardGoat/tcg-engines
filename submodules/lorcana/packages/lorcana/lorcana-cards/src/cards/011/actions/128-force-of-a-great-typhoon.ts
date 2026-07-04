@@ -4,6 +4,17 @@ import { forceOfAGreatTyphoonI18n } from "./128-force-of-a-great-typhoon.i18n";
 export const forceOfAGreatTyphoon: ActionCard = {
   id: "f7h",
   canonicalId: "ci_f7h",
+  slug: "lorcana-ci_f7h",
+  printings: [
+    {
+      id: "set11-128",
+      artId: "set11-128",
+      setCode: "set11",
+      collectorNumber: "128",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-128"],
   cardType: "action",
   name: "Force of a Great Typhoon",
@@ -16,7 +27,7 @@ export const forceOfAGreatTyphoon: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dbff3559ccd647889b1fb934994a2d02",
-    tcgPlayer: 674694,
+    tcgPlayer: "674694",
   },
   text: "Chosen character gets +5 {S} this turn.",
   actionSubtype: "song",

@@ -1,13 +1,14 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerAfterpartyAtLizzieS = {
+export const spoilerAfterpartyAtLizzieS = defineCyberpunkCard({
   id: "80681ab5-9420-4967-a9c8-d9fa0f3a0cd9",
-  externalId: "cyberpunk:afterparty-at-lizzie-s",
   slug: "afterparty-at-lizzie-s",
-  name: "Afterparty at Lizzie's",
-  displayName: "Afterparty at Lizzie's",
   rulesText:
     "Adjust a rival Gig by up to ±2. Then, if a friendly Gig has the same value, draw a card.",
+  name: "Afterparty at Lizzie's",
+  displayName: "Afterparty at Lizzie's",
+  canonicalId: "afterparty-at-lizzie-s",
   color: "yellow",
   classifications: ["Braindance", "Mox"],
   set: {
@@ -15,15 +16,6 @@ export const spoilerAfterpartyAtLizzieS = {
     name: "Spoiler Set",
   },
   printNumber: "116",
-  printings: [
-    {
-      id: "cf90586d-659c-4f83-957b-6b9930cd5ca2",
-      collectorNumber: "116",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "cf90586d-659c-4f83-957b-6b9930cd5ca2",
   artist: "Alicja Użarowska",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/116.webp",
   rarity: null,
@@ -31,7 +23,6 @@ export const spoilerAfterpartyAtLizzieS = {
   hasSellTag: true,
   ram: 2,
   timingTriggers: ["play"],
-  keywords: [],
   type: "program",
   cost: 2,
   power: null,
@@ -90,4 +81,4 @@ export const spoilerAfterpartyAtLizzieS = {
     },
   ],
   reminderText: ["Discard programs after they resolve."],
-} satisfies SpoilerCardDefinition;
+}) satisfies ProgramCardDefinition;

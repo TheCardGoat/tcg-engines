@@ -22,10 +22,9 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { useCardInspect } from "./CardInspectContext";
-import type { CardPreviewDetails } from "./CardPreviewContext";
+import type { CardPreviewDetails } from "../CardPreview/CardPreviewContext";
 import { CardImage } from "./CardImage";
-import { CardNameToken } from "./CardNameToken";
-import { simEntityAnchor } from "./animationAnchors";
+import { CardNameToken } from "../CardDisplay/CardNameToken";
 import { encodeCardSourceId, encodeTargetId, useDragDrop } from "./DragDropContext";
 import { useAttackSelectionState } from "./useAttackSelection";
 import { useMoveSelection, useMoveSelectionStateForSide } from "./MoveSelectionContext";
@@ -58,6 +57,11 @@ import classes from "./Card.module.css";
 const GEAR_PEEK_PERCENT = 24;
 /** Sentinel side used when a card is rendered without engine awareness. */
 const NO_SIDE: Side = "player";
+
+function cardKindFromType(cardType: EngineCardType | undefined): "leader" | "card" {
+  return cardType === "legend" ? "leader" : "card";
+}
+
 type CardMenuAction = {
   id: CardActionHotkeyMoveId;
   label: string;
@@ -770,50 +774,6 @@ export function Card({
     power !== undefined && power !== null && hasModifiedPower
       ? `${power} printed power, ${effectivePower} current power`
       : `${effectivePower} power`;
-  const powerBadge =
-    !isHandCard && showPowerBadge ? (
-      <div
-        className={classes.powerBadge}
-        data-modified={hasPowerEffect ? "true" : "false"}
-        data-open={hasPowerEffect && powerMenuOpen ? "true" : "false"}
-        data-combat-role={combatRole ?? undefined}
-        aria-label={
-          combatRole
-            ? `${combatRole === "attacker" ? "Attacker" : "Defender"} power ${effectivePower}`
-            : powerAriaLabel
-        }
-        aria-expanded={hasPowerEffect ? powerMenuOpen : undefined}
-        tabIndex={hasPowerEffect ? 0 : undefined}
-        onClick={handlePowerClick}
-        onFocus={openPowerMenu}
-        onBlur={closePowerMenuOnBlur}
-        onPointerEnter={hasPowerEffect ? handlePowerPointerEnter : undefined}
-        onPointerLeave={hasPowerEffect ? handlePowerPointerLeave : undefined}
-        onPointerDown={stopPowerPointer}
-        onPointerUp={stopPowerPointer}
-      >
-        <span className={classes.powerLabel}>PWR</span>
-        <span className={classes.powerValue}>{effectivePower}</span>
-        {hasPowerEffect ? (
-          <div
-            className={classes.powerMenu}
-            aria-label="Power effects"
-            onClick={stopPowerMenuClick}
-          >
-            {powerEffects.map((effect) => (
-              <div key={effect.id} className={classes.powerMenuRow}>
-                <span className={classes.powerDelta}>{effect.modifierLabel}</span>
-                <CardNameToken
-                  cardId={effect.sourceCardId}
-                  fallbackName={effect.sourceName}
-                  className={classes.powerSource}
-                />
-              </div>
-            ))}
-          </div>
-        ) : null}
-      </div>
-    ) : null;
   // Action hints are idle affordances: the card can start at least one move,
   // but the player has not pressed a prompt verb yet. Selection candidates are
   // the armed-prompt state: a verb like Play/Sell is active and this card is a
@@ -830,6 +790,8 @@ export function Card({
         "data-cost": cost ?? undefined,
         "data-effective-cost": effectiveCost ?? cost ?? undefined,
         "data-power": effectivePower ?? power ?? undefined,
+        "data-effective-power": effectivePower ?? undefined,
+        "data-gear-count": gear.length,
         // Note: physical readiness lives on the outer field-unit wrapper
         // (data-ready mirrors `tapped`). The inner card intentionally does
         // not expose data-ready — interaction-permission state is already
@@ -878,11 +840,14 @@ export function Card({
         .filter(Boolean)
         .join(" ")}
       data-interaction-state={interactionState}
-      data-testid={faceDown ? "face-down-card" : "card"}
+      data-testid="card"
+      data-entity-id={cardId}
+      data-card-kind={cardKindFromType(cardType)}
       data-zone={zone}
       data-zone-index={index}
       data-side={side}
       data-face-down={faceDown ? "true" : "false"}
+      data-face={faceDown ? "hidden" : undefined}
       data-spent={tapped ? "true" : "false"}
       data-played-this-turn={playedThisTurn ? "true" : "false"}
       data-peeked={peeked ? "true" : "false"}
@@ -908,12 +873,6 @@ export function Card({
               ? "programTarget"
               : undefined
       }
-      {...simEntityAnchor({
-        entityId: !faceDown || peeked ? cardId : undefined,
-        zoneId: zone,
-        side,
-        face: faceDown && !peeked ? "hidden" : "public",
-      })}
       {...publicCardAttrs}
       style={dragStyle}
       onClick={handleClick}
@@ -998,9 +957,55 @@ export function Card({
             })}
           </div>
         ) : null}
-        {combatRole ? null : powerBadge}
+        {!isHandCard && showPowerBadge ? (
+          <div
+            className={classes.powerBadge}
+            data-modified={hasPowerEffect ? "true" : "false"}
+            data-open={hasPowerEffect && powerMenuOpen ? "true" : "false"}
+            aria-label={powerAriaLabel}
+            aria-expanded={hasPowerEffect ? powerMenuOpen : undefined}
+            tabIndex={hasPowerEffect ? 0 : undefined}
+            onClick={handlePowerClick}
+            onFocus={openPowerMenu}
+            onBlur={closePowerMenuOnBlur}
+            onPointerEnter={hasPowerEffect ? handlePowerPointerEnter : undefined}
+            onPointerLeave={hasPowerEffect ? handlePowerPointerLeave : undefined}
+            onPointerDown={stopPowerPointer}
+            onPointerUp={stopPowerPointer}
+          >
+            <span className={classes.powerLabel}>PWR</span>
+            <span className={classes.powerValue}>{effectivePower}</span>
+            {hasPowerEffect ? (
+              <div
+                className={classes.powerMenu}
+                aria-label="Power effects"
+                onClick={stopPowerMenuClick}
+              >
+                {powerEffects.map((effect) => (
+                  <div key={effect.id} className={classes.powerMenuRow}>
+                    <span className={classes.powerDelta}>{effect.modifierLabel}</span>
+                    <CardNameToken
+                      cardId={effect.sourceCardId}
+                      fallbackName={effect.sourceName}
+                      className={classes.powerSource}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
-      {combatRole ? powerBadge : null}
+      {combatRole && effectivePower !== undefined && effectivePower !== null ? (
+        <div
+          className={classes.combatDamageBadge}
+          data-combat-role={combatRole}
+          aria-label={`${combatRole === "attacker" ? "Attacker" : "Defender"} deals ${effectivePower} damage`}
+        >
+          <span>{combatRole === "attacker" ? "Deals" : "Back"}</span>
+          <strong>{effectivePower}</strong>
+        </div>
+      ) : null}
       {actionMenuAnchor
         ? createPortal(
             <CardActionMenu
@@ -1176,14 +1181,10 @@ function AttachedGear({
       data-card-id={gear.cardId}
       data-card-name={gear.name}
       data-card-type={gear.cardType}
+      data-card-kind="card"
+      data-entity-id={gear.cardId}
       data-choice-side={selectablePermission?.side}
       data-choice-type={selectablePermission?.permission.interaction.actionId}
-      {...simEntityAnchor({
-        entityId: gear.cardId,
-        zoneId: "attached-gear",
-        side,
-        face: "public",
-      })}
     >
       <CardImage
         imageUrl={gear.imageUrl}

@@ -7,14 +7,17 @@ export const gd03MikhailKaminsky090: PilotCard = {
   color: "green",
   traits: ["zeon", "cyclops team"],
   id: "GD03-090",
-  externalId: "gundam:gd03-090",
-  slug: "mikhail-kaminsky-gd03-090",
+  canonicalId: "GD03-090",
+  externalIds: { bandai: "gundam:gd03-090" },
+  slug: "mikhail-kaminsky/gd03-090",
   displayName: "Mikhail Kaminsky",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-090",
   printings: [
     {
       id: "GD03-090",
+      artId: "GD03-090",
+      setCode: "GD03",
       collectorNumber: "GD03-090",
       cardNumber: "GD03-090",
       set: {
@@ -29,6 +32,7 @@ export const gd03MikhailKaminsky090: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-090"],
   selectedPrintingId: "GD03-090",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-090.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-090.webp?260424",

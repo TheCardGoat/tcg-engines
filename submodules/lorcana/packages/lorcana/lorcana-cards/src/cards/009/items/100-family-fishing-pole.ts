@@ -4,6 +4,17 @@ import { familyFishingPoleI18n } from "./100-family-fishing-pole.i18n";
 export const familyFishingPole: ItemCard = {
   id: "jDl",
   canonicalId: "ci_jDl",
+  slug: "lorcana-ci_jDl",
+  printings: [
+    {
+      id: "set9-100",
+      artId: "set9-100",
+      setCode: "set9",
+      collectorNumber: "100",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-100"],
   cardType: "item",
   name: "Family Fishing Pole",
@@ -16,7 +27,7 @@ export const familyFishingPole: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b081887da7a445c0b0a5a1404d9102b0",
-    tcgPlayer: 650038,
+    tcgPlayer: "650038",
   },
   text: [
     {

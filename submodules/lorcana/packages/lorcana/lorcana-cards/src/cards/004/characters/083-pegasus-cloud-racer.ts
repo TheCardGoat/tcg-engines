@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { pegasusCloudRacerI18n } from "./083-pegasus-cloud-racer.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const pegasusCloudRacer: CharacterCard = {
   id: "nia",
   canonicalId: "ci_nia",
+  slug: "lorcana-ci_nia",
+  printings: [
+    {
+      id: "set4-083",
+      artId: "set4-083",
+      setCode: "set4",
+      collectorNumber: "83",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-083"],
   cardType: "character",
   name: "Pegasus",
@@ -22,7 +34,7 @@ export const pegasusCloudRacer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_618b8dca0fe24706aae51c2c75736dd9",
-    tcgPlayer: 549387,
+    tcgPlayer: "549387",
   },
   text: [
     {

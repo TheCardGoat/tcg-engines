@@ -17,9 +17,9 @@ export const lefouCakeThiefI18n: Record<Languages, I18nProperties> = {
     version: "Kuchendieb",
     text: [
       {
-        title: "ALLES",
+        title: "Alles für mich",
         description:
-          "FÜR MICH, Verbanne einen deiner Gegenstände — Eine gegnerische Person deiner Wahl verliert 1 Legende und du sammelst 1 Legende.",
+          "{E}, Verbanne einen deiner Gegenstände — Eine gegnerische Person deiner Wahl verliert 1 Legende und du sammelst 1 Legende.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const lefouCakeThiefI18n: Record<Languages, I18nProperties> = {
     version: "Voleur de gâteau",
     text: [
       {
-        title: "TOUT POUR MOI,",
+        title: "Tout pour moi",
         description:
-          "bannissez l'un de vos objets — Choisissez un adversaire qui perd 1 éclat de Lore et vous gagnez 1 éclat de Lore.",
+          "{E}, bannissez l'un de vos objets — Choisissez un adversaire qui perd 1 éclat de Lore et vous gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const lefouCakeThiefI18n: Record<Languages, I18nProperties> = {
     version: "Ladro di Torte",
     text: [
       {
-        title: "TUTTA PER ME,",
+        title: "Tutta per Me",
         description:
-          "esilia uno dei tuoi oggetti — Un avversario a tua scelta perde 1 leggenda e tu ottieni 1 leggenda.",
+          "{E}, esilia uno dei tuoi oggetti — Un avversario a tua scelta perde 1 leggenda e tu ottieni 1 leggenda.",
       },
     ],
   },

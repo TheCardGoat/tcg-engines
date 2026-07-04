@@ -4,6 +4,17 @@ import { oneLastHopeI18n } from "./197-one-last-hope.i18n";
 export const oneLastHope: ActionCard = {
   id: "hKo",
   canonicalId: "ci_qmz",
+  slug: "lorcana-ci_qmz",
+  printings: [
+    {
+      id: "set4-197",
+      artId: "set4-197",
+      setCode: "set4",
+      collectorNumber: "197",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-197", "set9-197"],
   cardType: "action",
   name: "One Last Hope",
@@ -16,7 +27,7 @@ export const oneLastHope: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ae1714b13cbc42a4a83ec36fee365526",
-    tcgPlayer: 650157,
+    tcgPlayer: "650157",
   },
   text: "Chosen character gains Resist +2 until the start of your next turn. If a Hero character is chosen, they may also challenge ready characters this turn.",
   actionSubtype: "song",

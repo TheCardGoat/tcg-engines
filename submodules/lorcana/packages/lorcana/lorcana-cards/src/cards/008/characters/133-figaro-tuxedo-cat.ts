@@ -4,6 +4,17 @@ import { figaroTuxedoCatI18n } from "./133-figaro-tuxedo-cat.i18n";
 export const figaroTuxedoCat: CharacterCard = {
   id: "Nrd",
   canonicalId: "ci_Nrd",
+  slug: "lorcana-ci_Nrd",
+  printings: [
+    {
+      id: "set8-133",
+      artId: "set8-133",
+      setCode: "set8",
+      collectorNumber: "133",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-133"],
   cardType: "character",
   name: "Figaro",
@@ -20,7 +31,7 @@ export const figaroTuxedoCat: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9da6ba4d41244f61b558bc6a63a93ec3",
-    tcgPlayer: 632714,
+    tcgPlayer: "632714",
   },
   text: [
     {

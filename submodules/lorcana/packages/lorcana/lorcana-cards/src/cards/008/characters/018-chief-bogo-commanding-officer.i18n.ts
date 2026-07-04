@@ -17,9 +17,9 @@ export const chiefBogoCommandingOfficerI18n: Record<Languages, I18nProperties> =
     version: "Befehlshaber",
     text: [
       {
-        title: "SENDET VERSTÄRKUNG",
+        title: "Sendet Verstärkung",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere mit Beschützen im Zug einer gegnerischen Person verbannt wird, darfst du die oberste Karte deines Decks aufdecken. Falls sie eine Charakterkarte ist, die 5 oder weniger kostet, darfst du sie kostenlos ausspielen. Falls nicht, lege sie zurück auf dein Deck.",
+          "Jedes Mal, wenn einer deiner Charaktere mit <Beschützen> im Zug einer gegnerischen Person verbannt wird, darfst du die oberste Karte deines Decks aufdecken. Falls sie eine Charakterkarte ist, die 5 oder weniger kostet, darfst du sie kostenlos ausspielen. Falls nicht, lege sie zurück auf dein Deck.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const chiefBogoCommandingOfficerI18n: Record<Languages, I18nProperties> =
     version: "Officier au commandement",
     text: [
       {
-        title: "ENVOI DE RENFORTS",
+        title: "Envoi de renforts",
         description:
-          "Durant le tour d'un adversaire, chaque fois que l'un de vos personnages avec Rempart est banni, vous pouvez révéler la carte du dessus de votre pioche. S'il s'agit d'une carte Personnage avec un coût de 5 ou moins, vous pouvez la jouer gratuitement. Sinon, replacez-la sur votre pioche.",
+          "Durant le tour d'un adversaire, chaque fois que l'un de vos personnages avec <Rempart> est banni, vous pouvez révéler la carte du dessus de votre pioche. S'il s'agit d'une carte Personnage avec un coût de 5 ou moins, vous pouvez la jouer gratuitement. Sinon, replacez-la sur votre pioche.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const chiefBogoCommandingOfficerI18n: Record<Languages, I18nProperties> =
     version: "Ufficiale di Comando",
     text: [
       {
-        title: "INVIARE RINFORZI",
+        title: "Inviare Rinforzi",
         description:
-          "Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi con Guardiano viene esiliato, puoi rivelare la prima carta del tuo mazzo. Se è una carta personaggio con costo 5 o inferiore, puoi giocare quel personaggio gratis. Altrimenti, rimettila in cima al tuo mazzo.",
+          "Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi con <Guardiano> viene esiliato, puoi rivelare la prima carta del tuo mazzo. Se è una carta personaggio con costo 5 o inferiore, puoi giocare quel personaggio gratis. Altrimenti, rimettila in cima al tuo mazzo.",
       },
     ],
   },

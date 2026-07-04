@@ -6,14 +6,17 @@ export const exrExResource001: ResourceCard = {
   type: "resource",
   traits: [],
   id: "EXR-001",
-  externalId: "gundam:exr-001",
-  slug: "ex-resource-exr-001",
+  canonicalId: "EXR-001",
+  externalIds: { bandai: "gundam:exr-001" },
+  slug: "ex-resource/exr-001",
   displayName: "EX Resource",
   set: { code: "EXR", name: "Basic Cards" },
   printNumber: "EXR-001",
   printings: [
     {
       id: "EXR-001",
+      artId: "EXR-001",
+      setCode: "EXR",
       collectorNumber: "EXR-001",
       cardNumber: "EXR-001",
       set: {
@@ -28,6 +31,8 @@ export const exrExResource001: ResourceCard = {
     },
     {
       id: "EXR-001_p1",
+      artId: "EXR-001_p1",
+      setCode: "EXR",
       collectorNumber: "EXR-001_p1",
       cardNumber: "EXR-001",
       set: {
@@ -42,6 +47,8 @@ export const exrExResource001: ResourceCard = {
     },
     {
       id: "EXR-001_p2",
+      artId: "EXR-001_p2",
+      setCode: "EXR",
       collectorNumber: "EXR-001_p2",
       cardNumber: "EXR-001",
       set: {
@@ -56,6 +63,8 @@ export const exrExResource001: ResourceCard = {
     },
     {
       id: "EXR-001_p3",
+      artId: "EXR-001_p3",
+      setCode: "EXR",
       collectorNumber: "EXR-001_p3",
       cardNumber: "EXR-001",
       set: {
@@ -70,6 +79,8 @@ export const exrExResource001: ResourceCard = {
     },
     {
       id: "EXR-001_p4",
+      artId: "EXR-001_p4",
+      setCode: "EXR",
       collectorNumber: "EXR-001_p4",
       cardNumber: "EXR-001",
       set: {
@@ -84,6 +95,8 @@ export const exrExResource001: ResourceCard = {
     },
     {
       id: "EXR-001_p5",
+      artId: "EXR-001_p5",
+      setCode: "BETA",
       collectorNumber: "EXR-001_p5",
       cardNumber: "EXR-001",
       set: {
@@ -99,6 +112,8 @@ export const exrExResource001: ResourceCard = {
     },
     {
       id: "EXR-001_p6",
+      artId: "EXR-001_p6",
+      setCode: "EXR",
       collectorNumber: "EXR-001_p6",
       cardNumber: "EXR-001",
       set: {
@@ -112,6 +127,15 @@ export const exrExResource001: ResourceCard = {
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXR-001_p6.webp?260424",
       productName: "Included in Booster Packs",
     },
+  ],
+  reprints: [
+    "EXR-001",
+    "EXR-001_p1",
+    "EXR-001_p2",
+    "EXR-001_p3",
+    "EXR-001_p4",
+    "EXR-001_p5",
+    "EXR-001_p6",
   ],
   selectedPrintingId: "EXR-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exr/EXR-001.webp",

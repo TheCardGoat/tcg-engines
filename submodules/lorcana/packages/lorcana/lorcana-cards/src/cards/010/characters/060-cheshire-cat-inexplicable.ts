@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { cheshireCatInexplicableI18n } from "./060-cheshire-cat-inexplicable.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const cheshireCatInexplicable: CharacterCard = {
   id: "akT",
   canonicalId: "ci_akT",
+  slug: "lorcana-ci_akT",
+  printings: [
+    {
+      id: "set10-060",
+      artId: "set10-060",
+      setCode: "set10",
+      collectorNumber: "60",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-060"],
   cardType: "character",
   name: "Cheshire Cat",
@@ -21,7 +33,7 @@ export const cheshireCatInexplicable: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_19c39ba1fb674390bbb747f8cdcaa9c3",
-    tcgPlayer: 659412,
+    tcgPlayer: "659412",
   },
   text: [
     {

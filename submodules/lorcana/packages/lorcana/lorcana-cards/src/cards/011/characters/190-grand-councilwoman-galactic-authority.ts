@@ -4,6 +4,17 @@ import { grandCouncilwomanGalacticAuthorityI18n } from "./190-grand-councilwoman
 export const grandCouncilwomanGalacticAuthority: CharacterCard = {
   id: "x6z",
   canonicalId: "ci_x6z",
+  slug: "lorcana-ci_x6z",
+  printings: [
+    {
+      id: "set11-190",
+      artId: "set11-190",
+      setCode: "set11",
+      collectorNumber: "190",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-190"],
   cardType: "character",
   name: "Grand Councilwoman",
@@ -21,9 +32,8 @@ export const grandCouncilwomanGalacticAuthority: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_a0d09a062bc54cceb56ecef2636860c3",
-    tcgPlayer: 676244,
+    tcgPlayer: "676244",
   },
   classifications: ["Dreamborn", "Alien"],
-  abilities: [],
   i18n: grandCouncilwomanGalacticAuthorityI18n,
 };

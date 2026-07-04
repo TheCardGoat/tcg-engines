@@ -4,6 +4,17 @@ import { grimorumArcanorumI18n } from "./067-grimorum-arcanorum.i18n";
 export const grimorumArcanorum: ItemCard = {
   id: "uwN",
   canonicalId: "ci_uwN",
+  slug: "lorcana-ci_uwN",
+  printings: [
+    {
+      id: "set10-067",
+      artId: "set10-067",
+      setCode: "set10",
+      collectorNumber: "67",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-067"],
   cardType: "item",
   name: "Grimorum Arcanorum",
@@ -16,7 +27,7 @@ export const grimorumArcanorum: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_026c97ceb5a740ad879cc16ffc0d6116",
-    tcgPlayer: 660360,
+    tcgPlayer: "660360",
   },
   text: [
     {

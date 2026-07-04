@@ -150,7 +150,8 @@ function isContextDependentPlayCardFilter(effect: PlayCardEffect): boolean {
       filter.maxCost !== null &&
       (filter.maxCost as { type?: unknown }).type === "chosen-card-cost") ||
     filter.excludeChosenCard === true ||
-    filter.sameNameAsChosenCard === true
+    filter.sameNameAsChosenCard === true ||
+    filter.inEventSnapshotCardsUnder === true
   ) {
     return true;
   }
@@ -169,7 +170,9 @@ function isDeterministicNameRestrictedPlayCardFilter(effect: PlayCardEffect): bo
   return (
     typeof filter?.name === "string" ||
     filter?.sameNameAsChosenCard === true ||
-    filter?.sameInstanceAsSource === true
+    filter?.sameInstanceAsSource === true ||
+    filter?.sameInstanceAsTriggerSubject === true ||
+    filter?.inEventSnapshotCardsUnder === true
   );
 }
 
@@ -407,6 +410,20 @@ function matchesPlayCardFilter(
 
   if (filter.sameInstanceAsSource === true && cardId !== cardPlayed.cardId) {
     return false;
+  }
+
+  if (
+    filter.sameInstanceAsTriggerSubject === true &&
+    cardId !== resolutionInput.eventSnapshot?.subjectCardId
+  ) {
+    return false;
+  }
+
+  if (filter.inEventSnapshotCardsUnder === true) {
+    const cardsUnderIds = resolutionInput.eventSnapshot?.cardsUnderIdsBeforeBanish;
+    if (!Array.isArray(cardsUnderIds) || !cardsUnderIds.includes(cardId)) {
+      return false;
+    }
   }
 
   if (filter.excludeChosenCard === true) {
@@ -826,6 +843,10 @@ export function resolvePlayCardEffect(
     }
 
     if (cardType === "action") {
+      if (isDiscardZoneKey(sourceZoneKey)) {
+        resolutionInput.effectType = "play-card";
+        resolutionInput.sourceZone = "discard";
+      }
       if (effect.afterPlay === "bottom-of-deck") {
         ctx.cards.patchMeta(chosenCardId, { afterPlayDestination: "bottom-of-deck" });
       }
@@ -965,6 +986,8 @@ export function resolvePlayCardEffect(
 
       ctx.framework.zones.moveCard(chosenCardId, { zone: "play", playerId });
       if (isDiscardZoneKey(sourceZoneKey)) {
+        resolutionInput.effectType = "play-card";
+        resolutionInput.sourceZone = "discard";
         recordDiscardExitThisTurn(ctx);
       }
       ctx.G.turnMetadata.cardsPlayedThisTurn.push(chosenCardId);
@@ -1017,6 +1040,8 @@ export function resolvePlayCardEffect(
       playerId,
     });
     if (isDiscardZoneKey(sourceZoneKey)) {
+      resolutionInput.effectType = "play-card";
+      resolutionInput.sourceZone = "discard";
       recordDiscardExitThisTurn(ctx);
     }
 

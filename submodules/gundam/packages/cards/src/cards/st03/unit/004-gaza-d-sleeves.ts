@@ -7,14 +7,17 @@ export const st03GazaDSleeves004: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "ST03-004",
-  externalId: "gundam:st03-004",
-  slug: "gaza-d-sleeves-st03-004",
+  canonicalId: "ST03-004",
+  externalIds: { bandai: "gundam:st03-004" },
+  slug: "gaza-d-sleeves/st03-004",
   displayName: "Gaza D (Sleeves)",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-004",
   printings: [
     {
       id: "ST03-004",
+      artId: "ST03-004",
+      setCode: "ST03",
       collectorNumber: "ST03-004",
       cardNumber: "ST03-004",
       set: {
@@ -30,6 +33,8 @@ export const st03GazaDSleeves004: UnitCard = {
     },
     {
       id: "ST03-004_p1",
+      artId: "ST03-004_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-004_p1",
       cardNumber: "ST03-004",
       set: {
@@ -44,6 +49,7 @@ export const st03GazaDSleeves004: UnitCard = {
       productName: "Zeon's Rush [ST03] Bonus Pack",
     },
   ],
+  reprints: ["ST03-004", "ST03-004_p1"],
   selectedPrintingId: "ST03-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-004.webp?260424",

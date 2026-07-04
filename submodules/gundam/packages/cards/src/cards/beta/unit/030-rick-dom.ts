@@ -7,14 +7,17 @@ export const betaRickDom030: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-030_p1",
-  externalId: "gundam:gd01-030_p1",
-  slug: "rick-dom-gd01-030-p1",
+  canonicalId: "GD01-030",
+  externalIds: { bandai: "gundam:gd01-030_p1" },
+  slug: "rick-dom/gd01-030",
   displayName: "Rick Dom",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-030_p1",
   printings: [
     {
       id: "GD01-030",
+      artId: "GD01-030",
+      setCode: "GD01",
       collectorNumber: "GD01-030",
       cardNumber: "GD01-030",
       set: {
@@ -30,6 +33,8 @@ export const betaRickDom030: UnitCard = {
     },
     {
       id: "GD01-030_p1",
+      artId: "GD01-030_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-030_p1",
       cardNumber: "GD01-030",
       set: {
@@ -44,6 +49,7 @@ export const betaRickDom030: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-030", "GD01-030_p1"],
   selectedPrintingId: "GD01-030_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-030_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-030_p1.webp?260424",

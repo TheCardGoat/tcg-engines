@@ -26,7 +26,7 @@
   "scripts": {
     "build": "vp pack",
     "dev": "vp pack --watch",
-    "test": "vp test",
+    "test": "vp test --configLoader runner",
     "check": "vp check",
     "prepublishOnly": "vp run build"
   },

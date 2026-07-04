@@ -7,14 +7,17 @@ export const st01GundamAerialPermetScoreSix006: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "ST01-006",
-  externalId: "gundam:st01-006",
-  slug: "gundam-aerial-permet-score-six-st01-006",
+  canonicalId: "ST01-006",
+  externalIds: { bandai: "gundam:st01-006" },
+  slug: "gundam-aerial-permet-score-six/st01-006",
   displayName: "Gundam Aerial (Permet Score Six)",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-006",
   printings: [
     {
       id: "ST01-006",
+      artId: "ST01-006",
+      setCode: "ST01",
       collectorNumber: "ST01-006",
       cardNumber: "ST01-006",
       set: {
@@ -30,6 +33,8 @@ export const st01GundamAerialPermetScoreSix006: UnitCard = {
     },
     {
       id: "ST01-006_p1",
+      artId: "ST01-006_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-006_p1",
       cardNumber: "ST01-006",
       set: {
@@ -44,6 +49,7 @@ export const st01GundamAerialPermetScoreSix006: UnitCard = {
       productName: "Heroic Beginnings [ST01] Bonus Pack",
     },
   ],
+  reprints: ["ST01-006", "ST01-006_p1"],
   selectedPrintingId: "ST01-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-006.webp?260424",

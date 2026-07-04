@@ -4,6 +4,17 @@ import { gloydOrangeboarFierceCompetitorI18n } from "./121-gloyd-orangeboar-fier
 export const gloydOrangeboarFierceCompetitor: CharacterCard = {
   id: "lZz",
   canonicalId: "ci_lZz",
+  slug: "lorcana-ci_lZz",
+  printings: [
+    {
+      id: "set8-121",
+      artId: "set8-121",
+      setCode: "set8",
+      collectorNumber: "121",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-121"],
   cardType: "character",
   name: "Gloyd Orangeboar",
@@ -20,7 +31,7 @@ export const gloydOrangeboarFierceCompetitor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_77abad9a7ad14dd5841c473e6639eccf",
-    tcgPlayer: 631705,
+    tcgPlayer: "631705",
   },
   text: [
     {

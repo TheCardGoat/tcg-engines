@@ -4,6 +4,17 @@ import { ratiganNefariousCriminalI18n } from "./143-ratigan-nefarious-criminal.i
 export const ratiganNefariousCriminal: CharacterCard = {
   id: "m4P",
   canonicalId: "ci_AfF",
+  slug: "lorcana-ci_AfF",
+  printings: [
+    {
+      id: "set7-143",
+      artId: "set7-143",
+      setCode: "set7",
+      collectorNumber: "143",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-143"],
   cardType: "character",
   name: "Ratigan",
@@ -20,7 +31,7 @@ export const ratiganNefariousCriminal: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c43f19388b414266aeddb6cd78f7c020",
-    tcgPlayer: 619744,
+    tcgPlayer: "619744",
   },
   text: [
     {

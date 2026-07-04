@@ -4,6 +4,17 @@ import { pigletCocoaMakerI18n } from "./147-piglet-cocoa-maker.i18n";
 export const pigletCocoaMaker: CharacterCard = {
   id: "4rc",
   canonicalId: "ci_4rc",
+  slug: "lorcana-ci_4rc",
+  printings: [
+    {
+      id: "set11-147",
+      artId: "set11-147",
+      setCode: "set11",
+      collectorNumber: "147",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-147"],
   cardType: "character",
   name: "Piglet",
@@ -20,7 +31,7 @@ export const pigletCocoaMaker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_be96288326484fd880acd268246cc300",
-    tcgPlayer: 673741,
+    tcgPlayer: "673741",
   },
   text: [
     {
@@ -46,7 +57,10 @@ export const pigletCocoaMaker: CharacterCard = {
       id: "1iy-2",
       name: "SPECIAL RECIPE",
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         target: {
           cardTypes: ["character"],
           count: "all",

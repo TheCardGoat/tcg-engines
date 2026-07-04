@@ -6,15 +6,15 @@ export const youngMacguffinSoftspokenSonI18n: Record<Languages, I18nProperties> 
     version: "Soft-Spoken Son",
   },
   de: {
-    name: "Young MacGuffin",
-    version: "Soft-Spoken Son",
+    name: "Junger MacGuffin",
+    version: "Sanftmütiger Sohn",
   },
   fr: {
-    name: "Young MacGuffin",
-    version: "Soft-Spoken Son",
+    name: "Le fils MacGuffin",
+    version: "Fils discret",
   },
   it: {
-    name: "Young MacGuffin",
-    version: "Soft-Spoken Son",
+    name: "Giovane MacGuffin",
+    version: "Figlio Pacato",
   },
 };

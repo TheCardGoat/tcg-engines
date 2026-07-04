@@ -2,14 +2,14 @@ import { describe, expect, it } from "vitest";
 import { buildCyberpunkInteractionView } from "@tcg/cyberpunk-server-adapter/interaction-protocol";
 import { INTERACTION_PROTOCOL_VERSION, type EngineInteractionView } from "@tcg/protocol";
 
-import { DEFAULT_SCENARIO, getScenario, P1, P2 } from "./fixtures/scenarios";
+import { DEFAULT_SCENARIO, getScenario, P1, P2 } from "./fixtures/scenarios.js";
 import {
   cyberpunkCardZoneToSimulatorZone,
   projectEntityForCard,
   projectSimulator,
   projectToHarnessFixture,
   type Side,
-} from "./projectSimulator";
+} from "./projectSimulator.js";
 
 function buildOpeningFixture() {
   const engine = getScenario(DEFAULT_SCENARIO).build();
@@ -84,7 +84,7 @@ describe("projectSimulator", () => {
     expect(projection.table.seats.map((s) => s.id)).toContain(projection.table.status.activeSeatId);
   });
 
-  it("keeps opponent private zones count-only for the viewer", () => {
+  it("renders opponent private zones with hidden-backed entities for the viewer", () => {
     const { matchState, interactionViews } = buildOpeningFixture();
     const projection = projectSimulator({
       matchState,
@@ -93,10 +93,23 @@ describe("projectSimulator", () => {
       humanSide: "player" as Side,
     });
 
+    const entityMap = new Map(projection.entities.map((e) => [e.id, e]));
     for (const zoneId of ["opp-hand", "opp-legendArea", "opp-eddieArea"]) {
       const zone = projection.table.zones.find((candidate) => candidate.id === zoneId);
-      expect(zone?.entityIds).toEqual([]);
+      expect(zone?.visibility).toBe("private");
       expect(zone?.count).toBeGreaterThanOrEqual(0);
+      // Hand and legend zone counts map directly to cards; eddies count is currency.
+      if (zoneId !== "opp-eddieArea" && (zone?.count ?? 0) > 0) {
+        expect(zone?.entityIds.length).toBeGreaterThan(0);
+      }
+      for (const entityId of zone?.entityIds ?? []) {
+        const entity = entityMap.get(entityId);
+        expect(entity).toBeDefined();
+        // Hand and eddie cards are always hidden from the viewer.
+        if (zoneId === "opp-hand" || zoneId === "opp-eddieArea") {
+          expect(entity?.face).toBe("hidden");
+        }
+      }
     }
   });
 
@@ -145,36 +158,36 @@ describe("projectSimulator", () => {
       status: "ready",
       actions: [
         {
-          id: "attackUnit",
+          id: "customMultiInput",
           requestId: "request-1",
-          intent: "attack",
-          text: { key: "Attack" },
+          intent: "custom",
+          text: { key: "Custom" },
           enabled: true,
           inputs: [
             {
-              id: "attackerId",
+              id: "first",
               kind: "entity-selection",
               entityKinds: ["card"],
-              role: "attacker",
-              text: { key: "Attacker" },
+              role: "source",
+              text: { key: "First" },
               min: 1,
               max: 1,
               ordered: false,
               candidates: [
-                { entity: { kind: "card", instanceId: "attacker", ownerId: P1 }, enabled: true },
+                { entity: { kind: "card", instanceId: "first", ownerId: P1 }, enabled: true },
               ],
             },
             {
-              id: "defenderId",
+              id: "second",
               kind: "entity-selection",
               entityKinds: ["card"],
-              role: "defender",
-              text: { key: "Defender" },
+              role: "target",
+              text: { key: "Second" },
               min: 1,
               max: 1,
               ordered: false,
               candidates: [
-                { entity: { kind: "card", instanceId: "defender", ownerId: P2 }, enabled: true },
+                { entity: { kind: "card", instanceId: "second", ownerId: P2 }, enabled: true },
               ],
             },
           ],

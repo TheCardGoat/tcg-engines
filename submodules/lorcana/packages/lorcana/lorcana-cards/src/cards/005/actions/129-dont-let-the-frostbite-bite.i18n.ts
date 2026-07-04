@@ -11,10 +11,28 @@ export const dontLetTheFrostbiteBiteI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Endors-toi sans peine",
-    text: "Redressez tous vos personnages. Ils ne peuvent pas être envoyés à l'aventure pour le reste de ce tour.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 7 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Redressez tous vos personnages. Ils ne peuvent pas être envoyés à l'aventure pour le reste de ce tour.",
+      },
+    ],
   },
   it: {
     name: "Tu Non Deludermi Mai",
-    text: "(Un personaggio con costo 7 o superiore può per cantare questa canzone gratis.) Prepara tutti i tuoi personaggi. Non possono andare all'avventura per il resto di questo turno.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 7 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Prepara tutti i tuoi personaggi. Non possono andare all'avventura per il resto di questo turno.",
+      },
+    ],
   },
 };

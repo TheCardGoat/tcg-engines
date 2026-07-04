@@ -4,6 +4,17 @@ import { ladyTremaineBitterlyJealousI18n } from "./115-lady-tremaine-bitterly-je
 export const ladyTremaineBitterlyJealous: CharacterCard = {
   id: "KTu",
   canonicalId: "ci_KTu",
+  slug: "lorcana-ci_KTu",
+  printings: [
+    {
+      id: "set7-115",
+      artId: "set7-115",
+      setCode: "set7",
+      collectorNumber: "115",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-115"],
   cardType: "character",
   name: "Lady Tremaine",
@@ -20,7 +31,7 @@ export const ladyTremaineBitterlyJealous: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9cb99a5eecf64cd9a96cbc780861205c",
-    tcgPlayer: 619469,
+    tcgPlayer: "619469",
   },
   text: [
     {

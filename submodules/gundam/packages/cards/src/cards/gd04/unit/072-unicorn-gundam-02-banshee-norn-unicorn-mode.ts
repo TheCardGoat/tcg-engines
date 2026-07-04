@@ -7,14 +7,17 @@ export const gd04UnicornGundam02BansheeNornUnicornMode072: UnitCard = {
   color: "white",
   traits: ["earth federation"],
   id: "GD04-072",
-  externalId: "gundam:gd04-072",
-  slug: "unicorn-gundam-02-banshee-norn-unicorn-mode-gd04-072",
+  canonicalId: "GD04-072",
+  externalIds: { bandai: "gundam:gd04-072" },
+  slug: "unicorn-gundam-02-banshee-norn-unicorn-mode/gd04-072",
   displayName: "Unicorn Gundam 02 Banshee Norn (Unicorn Mode)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-072",
   printings: [
     {
       id: "GD04-072",
+      artId: "GD04-072",
+      setCode: "GD04",
       collectorNumber: "GD04-072",
       cardNumber: "GD04-072",
       set: {
@@ -29,6 +32,7 @@ export const gd04UnicornGundam02BansheeNornUnicornMode072: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-072"],
   selectedPrintingId: "GD04-072",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-072.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-072.webp?260424",

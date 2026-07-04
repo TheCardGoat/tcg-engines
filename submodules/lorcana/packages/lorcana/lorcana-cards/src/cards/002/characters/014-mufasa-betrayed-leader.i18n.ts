@@ -17,7 +17,7 @@ export const mufasaBetrayedLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Verratener Anführer",
     text: [
       {
-        title: "EINES TAGES GEHT DIE SONNE UNTER",
+        title: "Eines Tages geht die Sonne unter",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du die oberste Karte deines Decks aufdecken. Falls sie eine Charakterkarte ist, darfst du sie kostenlos und erschöpft ausspielen. Falls nicht, lege sie zurück auf dein Deck.",
       },
@@ -28,7 +28,7 @@ export const mufasaBetrayedLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Roi trahi",
     text: [
       {
-        title: "LE SOLEIL ÉTEINDRA SUR MOI SA LUMIÈRE",
+        title: "Le soleil éteindra sur moi sa lumière",
         description:
           "Lorsque ce personnage est banni, vous pouvez révéler la première carte de votre pioche. S'il s'agit d'un personnage, vous pouvez le jouer gratuitement. Il entre en jeu épuisé. Sinon, remettez-la sur le dessus de votre pioche.",
       },
@@ -39,7 +39,7 @@ export const mufasaBetrayedLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Betrayed Leader",
     text: [
       {
-        title: "THE SUN WILL SET",
+        title: "The Sun Will Set",
         description:
           "When this character is banished, you may reveal the top card of your deck. If it's a character card, you may play that character for free and they enter play exerted. Otherwise, put it on the top of your deck.",
       },

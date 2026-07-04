@@ -4,6 +4,17 @@ import { nottinghamPrinceJohnsCastleI18n } from "./203-nottingham-prince-johns-c
 export const nottinghamPrinceJohnsCastle: LocationCard = {
   id: "cHC",
   canonicalId: "ci_cHC",
+  slug: "lorcana-ci_cHC",
+  printings: [
+    {
+      id: "set3-203",
+      artId: "set3-203",
+      setCode: "set3",
+      collectorNumber: "203",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-203"],
   cardType: "location",
   name: "Nottingham",
@@ -21,7 +32,7 @@ export const nottinghamPrinceJohnsCastle: LocationCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_398194a72dfd4e41be4b6939e4e13ee3",
-    tcgPlayer: 539118,
+    tcgPlayer: "539118",
   },
   i18n: nottinghamPrinceJohnsCastleI18n,
 };

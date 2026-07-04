@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailWraithMarauders = {
+export const welcomeToNightCityRetailWraithMarauders = defineCyberpunkCard({
   id: "67b47cff-2237-4765-86fb-9b2b3abecbb1",
-  externalId: "cb-wraith-marauders",
   slug: "wraith-marauders",
-  name: "Wraith Marauders",
-  displayName: "Wraith Marauders",
   rulesText:
     "When this Unit steals a Gig, ready another friendly Unit with power equal to the Gig's value.",
+  name: "Wraith Marauders",
+  displayName: "Wraith Marauders",
+  canonicalId: "wraith-marauders",
   color: "green",
   classifications: ["Ganger", "Nomad", "Raffen Shiv"],
   set: {
@@ -15,29 +16,12 @@ export const welcomeToNightCityRetailWraithMarauders = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "092",
-  printings: [
-    {
-      id: "0944037e-5b14-4332-b345-7935924c2125",
-      collectorNumber: "092",
-      setCode: "welcometonightcityretail",
-      rarity: "Uncommon",
-    },
-    {
-      id: "89c5ec5e-dcc1-4ce4-970d-28b0226272b1",
-      collectorNumber: "β092",
-      setCode: "welcometonightcitybeta",
-      rarity: "Uncommon",
-    },
-  ],
-  selectedPrintingId: "0944037e-5b14-4332-b345-7935924c2125",
   artist: "Daniel Valaisis",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/092.webp",
   rarity: "Uncommon",
   legality: "legal",
   hasSellTag: false,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "unit",
   cost: 5,
   power: 4,
@@ -86,5 +70,4 @@ export const welcomeToNightCityRetailWraithMarauders = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies UnitCardDefinition;

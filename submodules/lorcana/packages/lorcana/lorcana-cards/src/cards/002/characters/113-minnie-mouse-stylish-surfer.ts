@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMouseStylishSurferI18n } from "./113-minnie-mouse-stylish-surfer.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const minnieMouseStylishSurfer: CharacterCard = {
   id: "7jJ",
   canonicalId: "ci_7jJ",
+  slug: "lorcana-ci_7jJ",
+  printings: [
+    {
+      id: "set2-113",
+      artId: "set2-113",
+      setCode: "set2",
+      collectorNumber: "113",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-113"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -20,7 +32,7 @@ export const minnieMouseStylishSurfer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bce37cc08d944fb99b90fa9f6fcda16d",
-    tcgPlayer: 526358,
+    tcgPlayer: "526358",
   },
   text: "Evasive",
   classifications: ["Dreamborn", "Hero"],

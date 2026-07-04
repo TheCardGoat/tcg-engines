@@ -4,6 +4,17 @@ import { grewngeCannonExpertI18n } from "./086-grewnge-cannon-expert.i18n";
 export const grewngeCannonExpert: CharacterCard = {
   id: "QhC",
   canonicalId: "ci_QhC",
+  slug: "lorcana-ci_QhC",
+  printings: [
+    {
+      id: "set7-086",
+      artId: "set7-086",
+      setCode: "set7",
+      collectorNumber: "86",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-086"],
   cardType: "character",
   name: "Grewnge",
@@ -20,7 +31,7 @@ export const grewngeCannonExpert: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_95d2688246294e40900308cbc135856b",
-    tcgPlayer: 618259,
+    tcgPlayer: "618259",
   },
   text: [
     {

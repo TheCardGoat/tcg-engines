@@ -4,6 +4,17 @@ import { elsaFierceProtectorI18n } from "./060-elsa-fierce-protector.i18n";
 export const elsaFierceProtector: CharacterCard = {
   id: "F8U",
   canonicalId: "ci_F8U",
+  slug: "lorcana-ci_F8U",
+  printings: [
+    {
+      id: "set8-060",
+      artId: "set8-060",
+      setCode: "set8",
+      collectorNumber: "60",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-060"],
   cardType: "character",
   name: "Elsa",
@@ -20,7 +31,7 @@ export const elsaFierceProtector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a6a007b0f7ae4fa19480721bacd2b0b6",
-    tcgPlayer: 631391,
+    tcgPlayer: "631391",
   },
   text: [
     {

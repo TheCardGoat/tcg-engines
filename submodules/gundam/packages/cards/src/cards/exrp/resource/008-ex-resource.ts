@@ -6,8 +6,9 @@ export const exrpExResource008: ResourceCard = {
   type: "resource",
   traits: [],
   id: "EXRP-008",
-  externalId: "gundam:exrp-008",
-  slug: "ex-resource-exrp-008",
+  canonicalId: "EXRP-008",
+  externalIds: { bandai: "gundam:exrp-008" },
+  slug: "ex-resource/exrp-008",
   displayName: "EX Resource",
   set: {
     code: "PC01A",
@@ -18,6 +19,8 @@ export const exrpExResource008: ResourceCard = {
   printings: [
     {
       id: "EXRP-008",
+      artId: "EXRP-008",
+      setCode: "PC01A",
       collectorNumber: "EXRP-008",
       cardNumber: "EXRP-008",
       set: {
@@ -33,6 +36,7 @@ export const exrpExResource008: ResourceCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam IRON-BLOODED ORPHANS-[PC01A]",
     },
   ],
+  reprints: ["EXRP-008"],
   selectedPrintingId: "EXRP-008",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exrp/EXRP-008.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXRP-008.webp?260424",

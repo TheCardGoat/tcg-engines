@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { arielSpectacularSingerI18n } from "./002-ariel-spectacular-singer.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const arielSpectacularSinger: CharacterCard = {
   id: "Z4N",
   canonicalId: "ci_Z4N",
+  slug: "lorcana-ci_Z4N",
+  printings: [
+    {
+      id: "set1-002",
+      artId: "set1-002",
+      setCode: "set1",
+      collectorNumber: "2",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-002"],
   cardType: "character",
   name: "Ariel",
@@ -21,7 +33,7 @@ export const arielSpectacularSinger: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_be92bba983424f2f9546f237e65ce357",
-    tcgPlayer: 504451,
+    tcgPlayer: "504451",
   },
   text: [
     {

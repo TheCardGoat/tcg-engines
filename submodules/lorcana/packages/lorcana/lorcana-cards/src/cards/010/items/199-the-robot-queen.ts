@@ -4,6 +4,17 @@ import { theRobotQueenI18n } from "./199-the-robot-queen.i18n";
 export const theRobotQueen: ItemCard = {
   id: "Msu",
   canonicalId: "ci_Msu",
+  slug: "lorcana-ci_Msu",
+  printings: [
+    {
+      id: "set10-199",
+      artId: "set10-199",
+      setCode: "set10",
+      collectorNumber: "199",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-199"],
   cardType: "item",
   name: "The Robot Queen",
@@ -16,7 +27,7 @@ export const theRobotQueen: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_66f7d006b33147e3b08181ee9299e5d1",
-    tcgPlayer: 658498,
+    tcgPlayer: "658498",
   },
   text: [
     {

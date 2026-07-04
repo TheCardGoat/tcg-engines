@@ -4,6 +4,17 @@ import { stitchNaughtyExperimentI18n } from "./070-stitch-naughty-experiment.i18
 export const stitchNaughtyExperiment: CharacterCard = {
   id: "wMm",
   canonicalId: "ci_wMm",
+  slug: "lorcana-ci_wMm",
+  printings: [
+    {
+      id: "set11-070",
+      artId: "set11-070",
+      setCode: "set11",
+      collectorNumber: "70",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-070"],
   cardType: "character",
   name: "Stitch",
@@ -20,7 +31,7 @@ export const stitchNaughtyExperiment: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_38185e538f0e444bbffd676c96efd9c9",
-    tcgPlayer: 675386,
+    tcgPlayer: "675386",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { darkwingDuckDarkwarriorI18n } from "./188-darkwing-duck-darkwarrior.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const darkwingDuckDarkwarrior: CharacterCard = {
   id: "8XU",
   canonicalId: "ci_8XU",
+  slug: "lorcana-ci_8XU",
+  printings: [
+    {
+      id: "set11-188",
+      artId: "set11-188",
+      setCode: "set11",
+      collectorNumber: "188",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-188"],
   cardType: "character",
   name: "Darkwing Duck",
@@ -21,7 +33,7 @@ export const darkwingDuckDarkwarrior: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a74daac05bd643ce8913eec4fcbf2bdc",
-    tcgPlayer: 676242,
+    tcgPlayer: "676242",
   },
   text: [
     {

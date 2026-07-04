@@ -4,6 +4,17 @@ import { hasSetMyHeaaaaaaartI18n } from "./094-has-set-my-heaaaaaaart.i18n";
 export const hasSetMyHeaaaaaaart: ActionCard = {
   id: "1gW",
   canonicalId: "ci_1gW",
+  slug: "lorcana-ci_1gW",
+  printings: [
+    {
+      id: "set3-094",
+      artId: "set3-094",
+      setCode: "set3",
+      collectorNumber: "94",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-094"],
   cardType: "action",
   name: "Has Set My Heaaaaaaart . . .",
@@ -15,9 +26,16 @@ export const hasSetMyHeaaaaaaart: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_86e375807dee4e26ab3254c11e7eed00",
-    tcgPlayer: 539085,
+    tcgPlayer: "539085",
   },
-  text: "(A character with cost 2 or more can to play this song for free.) Banish chosen item.",
+  text: [
+    {
+      title: "(A character with cost 2 or more can {E} to play this song for free.)",
+    },
+    {
+      title: "Banish chosen item.",
+    },
+  ],
   actionSubtype: "song",
   abilities: [
     {

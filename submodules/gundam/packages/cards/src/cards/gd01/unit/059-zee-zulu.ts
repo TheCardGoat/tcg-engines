@@ -7,14 +7,17 @@ export const gd01ZeeZulu059: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-059",
-  externalId: "gundam:gd01-059",
-  slug: "zee-zulu-gd01-059",
+  canonicalId: "GD01-059",
+  externalIds: { bandai: "gundam:gd01-059" },
+  slug: "zee-zulu/gd01-059",
   displayName: "Zee Zulu",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-059",
   printings: [
     {
       id: "GD01-059",
+      artId: "GD01-059",
+      setCode: "GD01",
       collectorNumber: "GD01-059",
       cardNumber: "GD01-059",
       set: {
@@ -29,6 +32,7 @@ export const gd01ZeeZulu059: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-059"],
   selectedPrintingId: "GD01-059",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-059.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-059.webp?260424",

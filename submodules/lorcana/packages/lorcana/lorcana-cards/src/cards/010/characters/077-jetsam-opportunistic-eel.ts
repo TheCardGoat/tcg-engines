@@ -4,6 +4,17 @@ import { jetsamOpportunisticEelI18n } from "./077-jetsam-opportunistic-eel.i18n"
 export const jetsamOpportunisticEel: CharacterCard = {
   id: "5xx",
   canonicalId: "ci_5xx",
+  slug: "lorcana-ci_5xx",
+  printings: [
+    {
+      id: "set10-077",
+      artId: "set10-077",
+      setCode: "set10",
+      collectorNumber: "77",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-077"],
   cardType: "character",
   name: "Jetsam",
@@ -20,7 +31,7 @@ export const jetsamOpportunisticEel: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9228d591151a4ba0a1e577d19d9e38f9",
-    tcgPlayer: 659462,
+    tcgPlayer: "659462",
   },
   text: [
     {
@@ -40,7 +51,12 @@ export const jetsamOpportunisticEel: CharacterCard = {
           owner: "opponent",
           selector: "chosen",
           zones: ["play"],
-          filter: [{ type: "status", status: "damaged" }],
+          filter: [
+            {
+              type: "status",
+              status: "damaged",
+            },
+          ],
         },
         type: "deal-damage",
       },

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { stitchCarefreeSurferI18n } from "./021-stitch-carefree-surfer.i18n";
 
 export const stitchCarefreeSurfer: CharacterCard = {
-  id: "bms",
+  id: "VeF",
   canonicalId: "ci_44h",
+  slug: "lorcana-ci_44h",
+  printings: [
+    {
+      id: "set1-021",
+      artId: "set1-021",
+      setCode: "set1",
+      collectorNumber: "21",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-021", "set9-024"],
   cardType: "character",
   name: "Stitch",
@@ -20,7 +31,7 @@ export const stitchCarefreeSurfer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fdaea5bd7f31497a8284771dd57894cf",
-    tcgPlayer: 649972,
+    tcgPlayer: "649972",
   },
   text: [
     {

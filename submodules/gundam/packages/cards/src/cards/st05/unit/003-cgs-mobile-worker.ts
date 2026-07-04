@@ -7,14 +7,17 @@ export const st05CgsMobileWorker003: UnitCard = {
   color: "purple",
   traits: ["tekkadan"],
   id: "ST05-003",
-  externalId: "gundam:st05-003",
-  slug: "cgs-mobile-worker-st05-003",
+  canonicalId: "ST05-003",
+  externalIds: { bandai: "gundam:st05-003" },
+  slug: "cgs-mobile-worker/st05-003",
   displayName: "CGS Mobile Worker",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-003",
   printings: [
     {
       id: "ST05-003",
+      artId: "ST05-003",
+      setCode: "ST05",
       collectorNumber: "ST05-003",
       cardNumber: "ST05-003",
       set: {
@@ -30,6 +33,8 @@ export const st05CgsMobileWorker003: UnitCard = {
     },
     {
       id: "ST05-003_p1",
+      artId: "ST05-003_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-003_p1",
       cardNumber: "ST05-003",
       set: {
@@ -44,6 +49,7 @@ export const st05CgsMobileWorker003: UnitCard = {
       productName: "Iron Bloom [ST05] Bonus Pack",
     },
   ],
+  reprints: ["ST05-003", "ST05-003_p1"],
   selectedPrintingId: "ST05-003",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-003.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-003.webp?260424",

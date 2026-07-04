@@ -4,6 +4,17 @@ import { drizellaSpoiledStepsisterI18n } from "./085-drizella-spoiled-stepsister
 export const drizellaSpoiledStepsister: CharacterCard = {
   id: "ZR7",
   canonicalId: "ci_ZR7",
+  slug: "lorcana-ci_ZR7",
+  printings: [
+    {
+      id: "set7-085",
+      artId: "set7-085",
+      setCode: "set7",
+      collectorNumber: "85",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-085"],
   cardType: "character",
   name: "Drizella",
@@ -21,7 +32,7 @@ export const drizellaSpoiledStepsister: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_40f1a53c285d48ca863b57072d362b48",
-    tcgPlayer: 619452,
+    tcgPlayer: "619452",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: drizellaSpoiledStepsisterI18n,

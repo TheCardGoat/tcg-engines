@@ -4,6 +4,17 @@ import { kuzcoBoredRoyalI18n } from "./053-kuzco-bored-royal.i18n";
 export const kuzcoBoredRoyal: CharacterCard = {
   id: "AdI",
   canonicalId: "ci_AdI",
+  slug: "lorcana-ci_AdI",
+  printings: [
+    {
+      id: "set8-053",
+      artId: "set8-053",
+      setCode: "set8",
+      collectorNumber: "53",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-053"],
   cardType: "character",
   name: "Kuzco",
@@ -20,7 +31,7 @@ export const kuzcoBoredRoyal: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5508d787ca204fdcbba52a26d7258301",
-    tcgPlayer: 631387,
+    tcgPlayer: "631387",
   },
   text: [
     {

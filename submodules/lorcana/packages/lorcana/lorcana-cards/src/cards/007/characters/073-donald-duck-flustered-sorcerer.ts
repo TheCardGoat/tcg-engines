@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { donaldDuckFlusteredSorcererI18n } from "./073-donald-duck-flustered-sorcerer.i18n";
 
 export const donaldDuckFlusteredSorcerer: CharacterCard = {
-  id: "Vy6",
+  id: "A0g",
   canonicalId: "ci_sb1",
+  slug: "lorcana-ci_sb1",
+  printings: [
+    {
+      id: "set7-073",
+      artId: "set7-073",
+      setCode: "set7",
+      collectorNumber: "73",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-073"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckFlusteredSorcerer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ac531a6c2f3046d3adcffbd1b1e5228e",
-    tcgPlayer: 619737,
+    tcgPlayer: "619737",
   },
   text: [
     {

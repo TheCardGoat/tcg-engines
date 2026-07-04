@@ -17,7 +17,7 @@ export const pleakleyArcticNaturalistI18n: Record<Languages, I18nProperties> = {
     version: "Arktischer Naturforscher",
     text: [
       {
-        title: "LEBENSZEICHEN",
+        title: "Lebenszeichen",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen weiteren Alien im Spiel hast, ziehe 1 Karte.",
       },
@@ -28,7 +28,7 @@ export const pleakleyArcticNaturalistI18n: Record<Languages, I18nProperties> = {
     version: "Naturaliste arctique",
     text: [
       {
-        title: "SIGNES DE VIE",
+        title: "Signes de vie",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un autre personnage Alien en jeu, piochez une carte.",
       },
@@ -39,7 +39,7 @@ export const pleakleyArcticNaturalistI18n: Record<Languages, I18nProperties> = {
     version: "Naturalista Artico",
     text: [
       {
-        title: "SEGNI DI VITA",
+        title: "Segni di Vita",
         description:
           "Quando giochi questo personaggio, se hai in gioco un altro personaggio Alieno, pesca una carta.",
       },

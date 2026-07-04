@@ -4,6 +4,17 @@ import { mostEveryonesMadHereI18n } from "./151-most-everyones-mad-here.i18n";
 export const mostEveryonesMadHere: ActionCard = {
   id: "FLL",
   canonicalId: "ci_FLL",
+  slug: "lorcana-ci_FLL",
+  printings: [
+    {
+      id: "set8-151",
+      artId: "set8-151",
+      setCode: "set8",
+      collectorNumber: "151",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-151"],
   cardType: "action",
   name: "Most Everyone's Mad Here",
@@ -16,7 +27,7 @@ export const mostEveryonesMadHere: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_bc307680b7a247268c3e25f80be90450",
-    tcgPlayer: 631451,
+    tcgPlayer: "631451",
   },
   text: "Gain lore equal to the damage on chosen character, then banish them.",
   abilities: [

@@ -17,7 +17,7 @@ export const lyleTiberiusRourkeCrystallizedMercenaryI18n: Record<Languages, I18n
     version: "Kristallisierter Söldner",
     text: [
       {
-        title: "EXPLOSIV",
+        title: "Explosiv",
         description:
           "Einmal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, füge jedem Charakter 2 Schaden zu.",
       },
@@ -28,7 +28,7 @@ export const lyleTiberiusRourkeCrystallizedMercenaryI18n: Record<Languages, I18n
     version: "Mercenaire cristallisé",
     text: [
       {
-        title: "EXPLOSIF",
+        title: "Explosif",
         description:
           "Une seule fois durant votre tour, lorsqu'une carte est placée dans votre réserve d'encre, infligez 2 dommages à chaque personnage en jeu.",
       },
@@ -39,7 +39,7 @@ export const lyleTiberiusRourkeCrystallizedMercenaryI18n: Record<Languages, I18n
     version: "Mercenario Cristallizzato",
     text: [
       {
-        title: "ESPLOSIVO",
+        title: "Esplosivo",
         description:
           "Una volta durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, infliggi 2 danni a ogni personaggio in gioco.",
       },

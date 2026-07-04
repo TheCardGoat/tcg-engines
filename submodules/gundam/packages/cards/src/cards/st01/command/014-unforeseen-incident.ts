@@ -7,14 +7,17 @@ export const st01UnforeseenIncident014: CommandCard = {
   color: "white",
   traits: ["-"],
   id: "ST01-014",
-  externalId: "gundam:st01-014",
-  slug: "unforeseen-incident-st01-014",
+  canonicalId: "ST01-014",
+  externalIds: { bandai: "gundam:st01-014" },
+  slug: "unforeseen-incident/st01-014",
   displayName: "Unforeseen Incident",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-014",
   printings: [
     {
       id: "ST01-014",
+      artId: "ST01-014",
+      setCode: "ST01",
       collectorNumber: "ST01-014",
       cardNumber: "ST01-014",
       set: {
@@ -30,6 +33,8 @@ export const st01UnforeseenIncident014: CommandCard = {
     },
     {
       id: "ST01-014_p1",
+      artId: "ST01-014_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-014_p1",
       cardNumber: "ST01-014",
       set: {
@@ -45,6 +50,8 @@ export const st01UnforeseenIncident014: CommandCard = {
     },
     {
       id: "ST01-014_p2",
+      artId: "ST01-014_p2",
+      setCode: "ST01",
       collectorNumber: "ST01-014_p2",
       cardNumber: "ST01-014",
       set: {
@@ -60,6 +67,8 @@ export const st01UnforeseenIncident014: CommandCard = {
     },
     {
       id: "ST01-014_p3",
+      artId: "ST01-014_p3",
+      setCode: "ST01",
       collectorNumber: "ST01-014_p3",
       cardNumber: "ST01-014",
       set: {
@@ -75,6 +84,8 @@ export const st01UnforeseenIncident014: CommandCard = {
     },
     {
       id: "ST01-014_p4",
+      artId: "ST01-014_p4",
+      setCode: "ST05",
       collectorNumber: "ST01-014_p4",
       cardNumber: "ST01-014",
       set: {
@@ -90,6 +101,8 @@ export const st01UnforeseenIncident014: CommandCard = {
     },
     {
       id: "ST01-014_p5",
+      artId: "ST01-014_p5",
+      setCode: "ST05",
       collectorNumber: "ST01-014_p5",
       cardNumber: "ST01-014",
       set: {
@@ -105,6 +118,8 @@ export const st01UnforeseenIncident014: CommandCard = {
     },
     {
       id: "ST01-014_p6",
+      artId: "ST01-014_p6",
+      setCode: "ST09",
       collectorNumber: "ST01-014_p6",
       cardNumber: "ST01-014",
       set: {
@@ -120,6 +135,8 @@ export const st01UnforeseenIncident014: CommandCard = {
     },
     {
       id: "ST01-014_p7",
+      artId: "ST01-014_p7",
+      setCode: "ST01",
       collectorNumber: "ST01-014_p7",
       cardNumber: "ST01-014",
       set: {
@@ -133,6 +150,16 @@ export const st01UnforeseenIncident014: CommandCard = {
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p7.webp?260424",
       productName: "Events",
     },
+  ],
+  reprints: [
+    "ST01-014",
+    "ST01-014_p1",
+    "ST01-014_p2",
+    "ST01-014_p3",
+    "ST01-014_p4",
+    "ST01-014_p5",
+    "ST01-014_p6",
+    "ST01-014_p7",
   ],
   selectedPrintingId: "ST01-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-014.webp",

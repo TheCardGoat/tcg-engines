@@ -7,14 +7,17 @@ export const gd02DesilGalette096: PilotCard = {
   color: "purple",
   traits: ["vagan", "x-rounder"],
   id: "GD02-096",
-  externalId: "gundam:gd02-096",
-  slug: "desil-galette-gd02-096",
+  canonicalId: "GD02-096",
+  externalIds: { bandai: "gundam:gd02-096" },
+  slug: "desil-galette/gd02-096",
   displayName: "Desil Galette",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-096",
   printings: [
     {
       id: "GD02-096",
+      artId: "GD02-096",
+      setCode: "GD02",
       collectorNumber: "GD02-096",
       cardNumber: "GD02-096",
       set: {
@@ -30,6 +33,8 @@ export const gd02DesilGalette096: PilotCard = {
     },
     {
       id: "GD02-096_p1",
+      artId: "GD02-096_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-096_p1",
       cardNumber: "GD02-096",
       set: {
@@ -45,6 +50,8 @@ export const gd02DesilGalette096: PilotCard = {
     },
     {
       id: "GD02-096_p2",
+      artId: "GD02-096_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-096_p2",
       cardNumber: "GD02-096",
       set: {
@@ -59,6 +66,7 @@ export const gd02DesilGalette096: PilotCard = {
       productName: "Store Tournament Winner Pack 04",
     },
   ],
+  reprints: ["GD02-096", "GD02-096_p1", "GD02-096_p2"],
   selectedPrintingId: "GD02-096",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-096.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-096.webp?260424",

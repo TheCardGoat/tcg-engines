@@ -4,6 +4,17 @@ import { bounPrecociousEntrepreneurI18n } from "./104-boun-precocious-entreprene
 export const bounPrecociousEntrepreneur: CharacterCard = {
   id: "POP",
   canonicalId: "ci_POP",
+  slug: "lorcana-ci_POP",
+  printings: [
+    {
+      id: "set2-104",
+      artId: "set2-104",
+      setCode: "set2",
+      collectorNumber: "104",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-104"],
   cardType: "character",
   name: "Boun",
@@ -21,7 +32,7 @@ export const bounPrecociousEntrepreneur: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_5531bbdbce6c4d0b86a40ea6fecac853",
-    tcgPlayer: 527753,
+    tcgPlayer: "527753",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: bounPrecociousEntrepreneurI18n,

@@ -18,10 +18,10 @@ export const herculesDaringDemigodI18n: Record<Languages, I18nProperties> = {
     version: "Wagemutiger Halbgott",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "Impulsiv",
+        title: "<Impulsiv>",
       },
     ],
   },
@@ -30,10 +30,10 @@ export const herculesDaringDemigodI18n: Record<Languages, I18nProperties> = {
     version: "Demi-dieu intrépide",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "Combattant",
+        title: "<Combattant>",
       },
     ],
   },
@@ -42,10 +42,10 @@ export const herculesDaringDemigodI18n: Record<Languages, I18nProperties> = {
     version: "Audace Semidio",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "Attaccabrighe",
+        title: "<Attaccabrighe>",
       },
     ],
   },

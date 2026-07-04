@@ -4,6 +4,17 @@ import { containmentUnitI18n } from "./203-containment-unit.i18n";
 export const containmentUnit: ItemCard = {
   id: "uei",
   canonicalId: "ci_uei",
+  slug: "lorcana-ci_uei",
+  printings: [
+    {
+      id: "set11-203",
+      artId: "set11-203",
+      setCode: "set11",
+      collectorNumber: "203",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-203"],
   cardType: "item",
   name: "Containment Unit",
@@ -16,7 +27,7 @@ export const containmentUnit: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1d63cf69c7e24c3dabc4475484568e70",
-    tcgPlayer: 676251,
+    tcgPlayer: "676251",
   },
   text: [
     {

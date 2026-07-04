@@ -4,6 +4,17 @@ import { megaraCaptivatingCynicI18n } from "./079-megara-captivating-cynic.i18n"
 export const megaraCaptivatingCynic: CharacterCard = {
   id: "2qv",
   canonicalId: "ci_2qv",
+  slug: "lorcana-ci_2qv",
+  printings: [
+    {
+      id: "set4-079",
+      artId: "set4-079",
+      setCode: "set4",
+      collectorNumber: "79",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-079"],
   cardType: "character",
   name: "Megara",
@@ -20,7 +31,7 @@ export const megaraCaptivatingCynic: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_bb689737789640e98f540464691035a6",
-    tcgPlayer: 549632,
+    tcgPlayer: "549632",
   },
   text: [
     {

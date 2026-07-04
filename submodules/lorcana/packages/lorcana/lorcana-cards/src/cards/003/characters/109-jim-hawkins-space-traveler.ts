@@ -4,6 +4,17 @@ import { jimHawkinsSpaceTravelerI18n } from "./109-jim-hawkins-space-traveler.i1
 export const jimHawkinsSpaceTraveler: CharacterCard = {
   id: "emY",
   canonicalId: "ci_emY",
+  slug: "lorcana-ci_emY",
+  printings: [
+    {
+      id: "set3-109",
+      artId: "set3-109",
+      setCode: "set3",
+      collectorNumber: "109",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-109"],
   cardType: "character",
   name: "Jim Hawkins",
@@ -20,7 +31,7 @@ export const jimHawkinsSpaceTraveler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_163516a9fa684676b2bed66aa7a64a35",
-    tcgPlayer: 532660,
+    tcgPlayer: "532660",
   },
   text: [
     {

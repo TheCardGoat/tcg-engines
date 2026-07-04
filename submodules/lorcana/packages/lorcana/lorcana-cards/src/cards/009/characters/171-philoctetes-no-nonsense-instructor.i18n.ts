@@ -21,12 +21,12 @@ export const philoctetesNononsenseInstructorI18n: Record<Languages, I18nProperti
     version: "Kein Unsinns-Ausbilder",
     text: [
       {
-        title: "DU MUSST DICH KONZENTIEREN",
+        title: "Du musst dich konzentieren",
         description:
-          "Deine Heldinnen und Helden erhalten Herausfordern +1. (Während sie herausfordern, erhalten sie +1.)",
+          "Deine Heldinnen und Helden erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)",
       },
       {
-        title: "FRECHER VERKÜNDER",
+        title: "Frecher Verkünder",
         description:
           "Jedes Mal, wenn du einen Held oder eine Heldin ausspielst, sammelst du 1 Legende.",
       },
@@ -37,12 +37,12 @@ export const philoctetesNononsenseInstructorI18n: Record<Languages, I18nProperti
     version: "Instructeur direct",
     text: [
       {
-        title: "TU DOIS RESTER CONCENTRÉ",
+        title: "Tu dois rester concentré",
         description:
-          "Vos personnages Héros gagnent Offensif +1 (Lorsqu'ils défient, ces personnages gagnent +1.)",
+          "Vos personnages Héros gagnent <Offensif> +1 (Lorsqu'ils défient, ces personnages gagnent +1 {S}.)",
       },
       {
-        title: "ENTRAÎNEUR EFFRONTÉ",
+        title: "Entraîneur effronté",
         description: "Chaque fois que vous jouez un personnage Héros, gagnez 1 éclat de Lore.",
       },
     ],
@@ -52,12 +52,12 @@ export const philoctetesNononsenseInstructorI18n: Record<Languages, I18nProperti
     version: "Istruttore Pragmatico",
     text: [
       {
-        title: "DEVI RESTARE CONCENTRATO I",
+        title: "Devi Restare Concentrato",
         description:
-          "tuoi personaggi Eroe ottengono Sfidante +1. (Ricevono +1 mentre stanno sfidando.)",
+          "I tuoi personaggi Eroe ottengono <Sfidante> +1. (Ricevono +1 {S} mentre stanno sfidando.)",
       },
       {
-        title: "PROMOTORE SFACCIATO",
+        title: "Promotore Sfacciato",
         description: "Ogni volta che giochi un personaggio Eroe, ottieni 1 leggenda.",
       },
     ],

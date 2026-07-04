@@ -108,6 +108,146 @@ describe("buildMoveLog", () => {
     expect(moveLog?.public[0]?.key).toBe("lorcana.effect.resolve.revealTopCard.autoBottom");
   });
 
+  it("keeps the play-from-discard message key on a play-card log", () => {
+    const moveLog = buildMoveLog(
+      [
+        projectedEntry("lorcana.move.playCard.fromDiscard", {
+          playerId: playerOneId,
+          cardId: sourceCardId,
+        }),
+      ],
+      "playCard",
+      playerOneId,
+      123,
+    );
+
+    expect(moveLog?.public[0]).toEqual({
+      key: "lorcana.move.playCard.fromDiscard",
+      values: { playerId: playerOneId, cardId: sourceCardId },
+    });
+  });
+
+  it("groups inkwell exert outcomes by player without exposing card ids", () => {
+    const firstInkCardId = "ink-card-1" as CardInstanceId;
+    const secondInkCardId = "ink-card-2" as CardInstanceId;
+    const moveLog = buildMoveLog(
+      [
+        projectedEntry("lorcana.bag.resolve.completed.named", {
+          playerId: playerOneId,
+          sourceId: sourceCardId,
+          abilityName: "FEARSOME GLARE",
+        }),
+      ],
+      "resolveBag",
+      playerOneId,
+      123,
+      {
+        inkwellCardsExerted: [{ playerId: playerOneId, amount: 2 }],
+        cardsExerted: [targetCardId],
+      },
+    );
+
+    expect(moveLog?.public).toContainEqual({
+      key: "lorcana.outcome.inkwellCardsExerted",
+      values: { playerId: playerOneId, amount: 2 },
+    });
+    expect(moveLog?.public).not.toContainEqual({
+      key: "lorcana.outcome.cardExerted",
+      values: { playerId: playerOneId, cardId: firstInkCardId },
+    });
+    expect(moveLog?.public).not.toContainEqual({
+      key: "lorcana.outcome.cardExerted",
+      values: { playerId: playerOneId, cardId: secondInkCardId },
+    });
+  });
+
+  it("keeps secondary reveal details and all lore consequences on a play-card log", () => {
+    const moveLog = buildMoveLog(
+      [
+        projectedEntry("lorcana.move.playCard", {
+          playerId: playerOneId,
+          cardId: sourceCardId,
+        }),
+        projectedEntry("lorcana.effect.resolve.revealTopCard.autoBottom", {
+          playerId: playerOneId,
+          targetPlayerId: playerOneId,
+          revealedCardId: targetCardId,
+        }),
+      ],
+      "playCard",
+      playerOneId,
+      123,
+      {
+        loreChanges: [
+          { playerId: playerTwoId, amount: 1, operation: "remove" },
+          { playerId: playerOneId, amount: 1, operation: "add" },
+        ],
+      },
+    );
+
+    expect(moveLog?.public).toEqual([
+      {
+        key: "lorcana.move.playCard",
+        values: { playerId: playerOneId, cardId: sourceCardId },
+      },
+      {
+        key: "lorcana.effect.resolve.revealTopCard.autoBottom",
+        values: {
+          playerId: playerOneId,
+          targetPlayerId: playerOneId,
+          revealedCardId: targetCardId,
+        },
+      },
+      {
+        key: "lorcana.outcome.loreLost",
+        values: { playerId: playerTwoId, amount: 1 },
+      },
+      {
+        key: "lorcana.outcome.loreGained",
+        values: { playerId: playerOneId, amount: 1 },
+      },
+    ]);
+  });
+
+  it("prefers secondary auto-bottom reveal details over the generic reveal on a play-card log", () => {
+    const moveLog = buildMoveLog(
+      [
+        projectedEntry("lorcana.move.playCard", {
+          playerId: playerOneId,
+          cardId: sourceCardId,
+        }),
+        projectedEntry("lorcana.effect.resolve.revealTopCard", {
+          playerId: playerOneId,
+          targetPlayerId: playerOneId,
+          revealedCardId: targetCardId,
+        }),
+        projectedEntry("lorcana.effect.resolve.revealTopCard.autoBottom", {
+          playerId: playerOneId,
+          targetPlayerId: playerOneId,
+          revealedCardId: targetCardId,
+        }),
+      ],
+      "playCard",
+      playerOneId,
+      123,
+    );
+
+    expect(moveLog?.public).toEqual([
+      {
+        key: "lorcana.move.playCard",
+        values: { playerId: playerOneId, cardId: sourceCardId },
+      },
+      {
+        key: "lorcana.effect.resolve.revealTopCard.autoBottom",
+        values: {
+          playerId: playerOneId,
+          targetPlayerId: playerOneId,
+          revealedCardId: targetCardId,
+        },
+      },
+    ]);
+  });
+
   it("uses the projected cancellation cause", () => {
     const moveLog = buildMoveLog(
       [

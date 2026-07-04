@@ -4,6 +4,17 @@ import { lingSnowWarriorI18n } from "./075-ling-snow-warrior.i18n";
 export const lingSnowWarrior: CharacterCard = {
   id: "09Z",
   canonicalId: "ci_09Z",
+  slug: "lorcana-ci_09Z",
+  printings: [
+    {
+      id: "set11-075",
+      artId: "set11-075",
+      setCode: "set11",
+      collectorNumber: "75",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-075"],
   cardType: "character",
   name: "Ling",
@@ -20,7 +31,7 @@ export const lingSnowWarrior: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_00eb4b66a7f945adaa15ca341179bbf7",
-    tcgPlayer: 675389,
+    tcgPlayer: "675389",
   },
   text: [
     {

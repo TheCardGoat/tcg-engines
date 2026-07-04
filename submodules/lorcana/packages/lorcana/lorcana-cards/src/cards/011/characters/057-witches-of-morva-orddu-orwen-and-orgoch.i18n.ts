@@ -6,9 +6,9 @@ export const witchesOfMorvaOrdduOrwenAndOrgochI18n: Record<Languages, I18nProper
     version: "Orddu, Orwen, and Orgoch",
     text: [
       {
-        title: "QUITE A BARGAIN",
+        title: "QUITE",
         description:
-          "When you play this character, you may return another chosen character of yours to your hand. If you do, gain 1 lore.",
+          "A BARGAIN When you play this character, you may return another chosen character of yours to your hand. If you do, gain 1 lore.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const witchesOfMorvaOrdduOrwenAndOrgochI18n: Record<Languages, I18nProper
     version: "Orddu, Orwen und Orgoch",
     text: [
       {
-        title: "EIN GUTER TAUSCH",
+        title: "Ein guter Tausch",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen deiner anderen Charaktere wählen und zurück auf deine Hand nehmen. Wenn du dies tust, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const witchesOfMorvaOrdduOrwenAndOrgochI18n: Record<Languages, I18nProper
     version: "Grièche, Griotte et Goulue",
     text: [
       {
-        title: "QUELLE BONNE AFFAIRE",
+        title: "Quelle bonne affaire",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir l'un de vos autres personnages et le renvoyer dans votre main. Si vous le faites, gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const witchesOfMorvaOrdduOrwenAndOrgochI18n: Record<Languages, I18nProper
     version: "Orchina, Orcona e Orvina",
     text: [
       {
-        title: "UN VERO AFFARE",
+        title: "Un Vero Affare",
         description:
           "Quando giochi questo personaggio, puoi riprendere in mano un tuo altro personaggio a tua scelta. Se lo fai, ottieni 1 leggenda.",
       },

@@ -4,6 +4,17 @@ import { kakamoraPiratePitcherI18n } from "./105-kakamora-pirate-pitcher.i18n";
 export const kakamoraPiratePitcher: CharacterCard = {
   id: "AVY",
   canonicalId: "ci_AVY",
+  slug: "lorcana-ci_AVY",
+  printings: [
+    {
+      id: "set6-105",
+      artId: "set6-105",
+      setCode: "set6",
+      collectorNumber: "105",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-105"],
   cardType: "character",
   name: "Kakamora",
@@ -20,7 +31,7 @@ export const kakamoraPiratePitcher: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_46799cbfa9fd48629572bf3851c598af",
-    tcgPlayer: 588362,
+    tcgPlayer: "588362",
   },
   text: [
     {
@@ -38,7 +49,12 @@ export const kakamoraPiratePitcher: CharacterCard = {
         target: {
           cardTypes: ["character"],
           count: 1,
-          filter: [{ type: "has-classification", classification: "Pirate" }],
+          filter: [
+            {
+              type: "has-classification",
+              classification: "Pirate",
+            },
+          ],
           owner: "any",
           selector: "chosen",
           zones: ["play"],

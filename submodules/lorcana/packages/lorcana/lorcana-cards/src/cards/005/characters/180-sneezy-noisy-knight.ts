@@ -4,6 +4,17 @@ import { sneezyNoisyKnightI18n } from "./180-sneezy-noisy-knight.i18n";
 export const sneezyNoisyKnight: CharacterCard = {
   id: "O74",
   canonicalId: "ci_O74",
+  slug: "lorcana-ci_O74",
+  printings: [
+    {
+      id: "set5-180",
+      artId: "set5-180",
+      setCode: "set5",
+      collectorNumber: "180",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-180"],
   cardType: "character",
   name: "Sneezy",
@@ -20,7 +31,7 @@ export const sneezyNoisyKnight: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ea122d22ac8a430389070f2f090c05e0",
-    tcgPlayer: 559663,
+    tcgPlayer: "559663",
   },
   text: [
     {

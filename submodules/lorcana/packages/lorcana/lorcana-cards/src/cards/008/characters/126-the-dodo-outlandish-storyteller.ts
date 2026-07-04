@@ -4,6 +4,17 @@ import { theDodoOutlandishStorytellerI18n } from "./126-the-dodo-outlandish-stor
 export const theDodoOutlandishStoryteller: CharacterCard = {
   id: "Bfj",
   canonicalId: "ci_Bfj",
+  slug: "lorcana-ci_Bfj",
+  printings: [
+    {
+      id: "set8-126",
+      artId: "set8-126",
+      setCode: "set8",
+      collectorNumber: "126",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-126"],
   cardType: "character",
   name: "The Dodo",
@@ -20,7 +31,7 @@ export const theDodoOutlandishStoryteller: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_98f834b45bba4455b572aa08bcfe8715",
-    tcgPlayer: 631432,
+    tcgPlayer: "631432",
   },
   text: [
     {

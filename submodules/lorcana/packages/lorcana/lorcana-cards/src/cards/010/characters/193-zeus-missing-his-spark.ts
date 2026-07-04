@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { zeusMissingHisSparkI18n } from "./193-zeus-missing-his-spark.i18n";
 
+import { boost } from "../../../helpers/abilities/boost";
+
 export const zeusMissingHisSpark: CharacterCard = {
-  id: "s59",
-  canonicalId: "ci_s59",
+  id: "J3F",
+  canonicalId: "ci_sYz",
+  slug: "lorcana-ci_sYz",
+  printings: [
+    {
+      id: "set10-193",
+      artId: "set10-193",
+      setCode: "set10",
+      collectorNumber: "193",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-193"],
   cardType: "character",
   name: "Zeus",
@@ -21,7 +33,7 @@ export const zeusMissingHisSpark: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0e33059eee7d4f39a4082bb9b1211660",
-    tcgPlayer: 659387,
+    tcgPlayer: "659387",
   },
   text: [
     {

@@ -19,12 +19,12 @@ export const containmentUnitI18n: Record<Languages, I18nProperties> = {
     name: "Experimentkapsel",
     text: [
       {
-        title: "ENDLICH HAB ICH DICH",
+        title: "Endlich hab ich dich",
         description:
           "Wenn du diesen Gegenstand ausspielst, wähle einen Charakter. Er kann nicht mehr erkunden oder herausfordern, solange dieser Gegenstand im Spiel ist.",
       },
       {
-        title: "STROMVERSORGUNG",
+        title: "Stromversorgung",
         description:
           "Zu Beginn deines Zuges, wähle eine Karte aus deiner Hand und wirf sie ab oder verbanne diesen Gegenstand.",
       },
@@ -34,12 +34,12 @@ export const containmentUnitI18n: Record<Languages, I18nProperties> = {
     name: "Unité de confinement",
     text: [
       {
-        title: "JE T'AI ATTRAPÉ",
+        title: "Je t'ai attrapé",
         description:
           "Lorsque vous jouez cet objet, choisissez un personnage. Il ne peut pas défier ou être envoyé à l'aventure tant que cet objet est en jeu.",
       },
       {
-        title: "SOURCE D'ÉNERGIE",
+        title: "Source d'énergie",
         description: "Au début de votre tour, défaussez une carte ou bannissez cet objet.",
       },
     ],
@@ -48,12 +48,12 @@ export const containmentUnitI18n: Record<Languages, I18nProperties> = {
     name: "Unità di Contenimento",
     text: [
       {
-        title: "ADESSO TI HO PRESO",
+        title: "Adesso Ti Ho Preso",
         description:
           "Quando giochi questo oggetto, scegli un personaggio. Non può sfidare o andare all'avventura mentre questo oggetto è in gioco.",
       },
       {
-        title: "FONTE DI ENERGIA",
+        title: "Fonte di Energia",
         description: "All'inizio del tuo turno, scegli e scarta una carta o esilia questo oggetto.",
       },
     ],

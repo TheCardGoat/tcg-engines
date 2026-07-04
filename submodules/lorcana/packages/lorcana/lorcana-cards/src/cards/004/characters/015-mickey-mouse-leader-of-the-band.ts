@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMouseLeaderOfTheBandI18n } from "./015-mickey-mouse-leader-of-the-band.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const mickeyMouseLeaderOfTheBand: CharacterCard = {
   id: "HGH",
   canonicalId: "ci_HGH",
+  slug: "lorcana-ci_HGH",
+  printings: [
+    {
+      id: "set4-015",
+      artId: "set4-015",
+      setCode: "set4",
+      collectorNumber: "15",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-015"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -20,7 +32,7 @@ export const mickeyMouseLeaderOfTheBand: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_74dbff9983194285973b48e74a2c3f90",
-    tcgPlayer: 549522,
+    tcgPlayer: "549522",
   },
   text: [
     {

@@ -16,8 +16,8 @@ export const grumpyBadtemperedI18n: Record<Languages, I18nProperties> = {
     version: "Schlecht gelaunt",
     text: [
       {
-        title: "UNS STEHT UNHEIL BEVOR",
-        description: "Deine anderen Sieben Zwerge erhalten +1.",
+        title: "Uns steht Unheil bevor",
+        description: "Deine anderen Sieben Zwerge erhalten +1 {S}.",
       },
     ],
   },
@@ -26,14 +26,14 @@ export const grumpyBadtemperedI18n: Record<Languages, I18nProperties> = {
     version: "Sale caractère",
     text: [
       {
-        title: "IL Y A QUELQUE CHOSE DE LOUCHE",
-        description: "Vos autres personnages Sept Nains gagnent +1.",
+        title: "Il y a quelque chose de louche",
+        description: "Vos autres personnages Sept Nains gagnent +1 {S}.",
       },
     ],
   },
   it: {
     name: "Grumpy",
     version: "Bad-Tempered",
-    text: "There's Trouble A-Brewin'\\ Your other Seven Dwarfs characters get +1.",
+    text: "There's Trouble A-Brewin'\\ Your other Seven Dwarfs characters get +1 {S}.",
   },
 };

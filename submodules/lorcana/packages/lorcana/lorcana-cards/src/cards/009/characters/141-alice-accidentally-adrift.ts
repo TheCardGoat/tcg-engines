@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { aliceAccidentallyAdriftI18n } from "./141-alice-accidentally-adrift.i18n";
 
 export const aliceAccidentallyAdrift: CharacterCard = {
-  id: "1Rj",
-  canonicalId: "ci_hhW",
+  id: "wSb",
+  canonicalId: "ci_IoY",
+  slug: "lorcana-ci_IoY",
+  printings: [
+    {
+      id: "set9-141",
+      artId: "set9-141",
+      setCode: "set9",
+      collectorNumber: "141",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-141"],
   cardType: "character",
   name: "Alice",
@@ -20,7 +31,7 @@ export const aliceAccidentallyAdrift: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_54148f51de174f4a93a475eec138365e",
-    tcgPlayer: 647656,
+    tcgPlayer: "647656",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { judyHoppsOnTheCaseI18n } from "./137-judy-hopps-on-the-case.i18n";
 export const judyHoppsOnTheCase: CharacterCard = {
   id: "MPo",
   canonicalId: "ci_MPo",
+  slug: "lorcana-ci_MPo",
+  printings: [
+    {
+      id: "set10-137",
+      artId: "set10-137",
+      setCode: "set10",
+      collectorNumber: "137",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-137"],
   cardType: "character",
   name: "Judy Hopps",
@@ -20,7 +31,7 @@ export const judyHoppsOnTheCase: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_23a4b454b25c4c2f98c8e42664bc2394",
-    tcgPlayer: 659617,
+    tcgPlayer: "659617",
   },
   text: [
     {

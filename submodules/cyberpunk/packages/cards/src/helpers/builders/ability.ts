@@ -13,6 +13,7 @@ import type {
   GigStolenEvent,
   GigValueChangedEvent,
   TargetDSL,
+  TurnEndedEvent,
 } from "@tcg/cyberpunk-types";
 
 interface AbilityState {
@@ -151,6 +152,11 @@ export class TriggeredAbilityBuilder extends BaseAbilityBuilder<TriggeredAbility
   }
   onFightResolved(args: Omit<FightResolvedEvent, "event">): this {
     this.trig = { trigger: "event", event: { event: "fightResolved", ...args } };
+    return this;
+  }
+
+  onTurnEnded(args: Omit<TurnEndedEvent, "event">): this {
+    this.trig = { trigger: "event", event: { event: "turnEnded", ...args } };
     return this;
   }
 

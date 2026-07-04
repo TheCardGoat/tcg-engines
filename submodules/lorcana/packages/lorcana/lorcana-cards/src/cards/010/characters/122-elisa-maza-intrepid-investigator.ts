@@ -4,6 +4,17 @@ import { elisaMazaIntrepidInvestigatorI18n } from "./122-elisa-maza-intrepid-inv
 export const elisaMazaIntrepidInvestigator: CharacterCard = {
   id: "vxM",
   canonicalId: "ci_vxM",
+  slug: "lorcana-ci_vxM",
+  printings: [
+    {
+      id: "set10-122",
+      artId: "set10-122",
+      setCode: "set10",
+      collectorNumber: "122",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-122"],
   cardType: "character",
   name: "Elisa Maza",
@@ -20,7 +31,7 @@ export const elisaMazaIntrepidInvestigator: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_78d6ec7c65b746efaec6c74337bdb84d",
-    tcgPlayer: 658293,
+    tcgPlayer: "658293",
   },
   text: [
     {

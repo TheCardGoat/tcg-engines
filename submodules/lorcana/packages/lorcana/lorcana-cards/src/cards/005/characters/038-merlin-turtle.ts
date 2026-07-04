@@ -4,6 +4,17 @@ import { merlinTurtleI18n } from "./038-merlin-turtle.i18n";
 export const merlinTurtle: CharacterCard = {
   id: "Xwi",
   canonicalId: "ci_Xwi",
+  slug: "lorcana-ci_Xwi",
+  printings: [
+    {
+      id: "set5-038",
+      artId: "set5-038",
+      setCode: "set5",
+      collectorNumber: "38",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-038"],
   cardType: "character",
   name: "Merlin",
@@ -20,7 +31,7 @@ export const merlinTurtle: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_830fee590a4e49c1a54622779b4380c3",
-    tcgPlayer: 561951,
+    tcgPlayer: "561951",
   },
   text: [
     {

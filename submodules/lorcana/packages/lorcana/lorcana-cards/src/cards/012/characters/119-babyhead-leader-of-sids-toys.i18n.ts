@@ -6,12 +6,12 @@ export const babyheadLeaderOfSidsToysI18n: Record<Languages, I18nProperties> = {
     version: "Leader of Sid's Toys",
     text: [
       {
-        title: "Tighten the Bolts",
+        title: "TIGHTEN THE BOLTS",
         description:
           "Whenever you pay 2 {I} or less to play a card, chosen character gets +2 {S} this turn.",
       },
       {
-        title: "Replacement Parts",
+        title: "REPLACEMENT PARTS",
         description:
           "During your turn, whenever one of your other characters is banished, draw a card.",
       },

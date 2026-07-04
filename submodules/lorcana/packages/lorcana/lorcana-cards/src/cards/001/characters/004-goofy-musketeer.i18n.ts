@@ -20,10 +20,11 @@ export const goofyMusketeerI18n: Record<Languages, I18nProperties> = {
     version: "Musketeer",
     text: [
       {
-        title: "Bodyguard",
+        title:
+          "<Bodyguard> (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
       },
       {
-        title: "AND TWO FOR TEA!",
+        title: "And Two for Tea!",
         description:
           "When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
       },
@@ -34,10 +35,11 @@ export const goofyMusketeerI18n: Record<Languages, I18nProperties> = {
     version: "Musketeer",
     text: [
       {
-        title: "Bodyguard",
+        title:
+          "<Bodyguard> (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
       },
       {
-        title: "AND TWO FOR TEA!",
+        title: "And Two for Tea!",
         description:
           "When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
       },
@@ -48,10 +50,11 @@ export const goofyMusketeerI18n: Record<Languages, I18nProperties> = {
     version: "Musketeer",
     text: [
       {
-        title: "Bodyguard",
+        title:
+          "<Bodyguard> (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
       },
       {
-        title: "AND TWO FOR TEA!",
+        title: "And Two for Tea!",
         description:
           "When you play this character, you may remove up to 2 damage from each of your Musketeer characters.",
       },

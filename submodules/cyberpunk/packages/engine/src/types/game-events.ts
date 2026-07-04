@@ -71,6 +71,7 @@ export interface CardDefeatedEvent {
   cardId: CardInstanceId;
   defeatedBy: CardInstanceId | null;
   playerId: PlayerId;
+  hadAttachedCards?: boolean;
 }
 
 export interface CardSpentEvent {
@@ -103,6 +104,7 @@ export interface GigDieRolledEvent {
   dieId: GigDieId;
   dieType: string;
   result: number;
+  previousValue?: number;
   playerId: PlayerId;
 }
 
@@ -304,7 +306,9 @@ export type ActionLogMessageKey =
   | "effect.callLegend.free"
   | "trigger.copyGigValue"
   | "trigger.copyGigValueCapped"
-  | "trigger.delayedDefeat";
+  | "trigger.delayedDefeat"
+  | "trigger.revealTopCardType.hit"
+  | "trigger.revealTopCardType.miss";
 
 /**
  * Emitted when the engine provides a localised, human-readable summary of a

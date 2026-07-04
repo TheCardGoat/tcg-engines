@@ -4,6 +4,17 @@ import { flitReflectiveHummingbirdI18n } from "./039-flit-reflective-hummingbird
 export const flitReflectiveHummingbird: CharacterCard = {
   id: "lgw",
   canonicalId: "ci_lgw",
+  slug: "lorcana-ci_lgw",
+  printings: [
+    {
+      id: "set11-039",
+      artId: "set11-039",
+      setCode: "set11",
+      collectorNumber: "39",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-039"],
   cardType: "character",
   name: "Flit",
@@ -20,7 +31,7 @@ export const flitReflectiveHummingbird: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fcdeeb8639c74831b6c234d81ad2f476",
-    tcgPlayer: 674697,
+    tcgPlayer: "674697",
   },
   text: [
     {
@@ -46,7 +57,10 @@ export const flitReflectiveHummingbird: CharacterCard = {
         chooser: "CONTROLLER",
         effect: {
           type: "move-damage",
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           from: "CHOSEN_CHARACTER",
           to: "CHOSEN_OPPOSING_CHARACTER",
         },

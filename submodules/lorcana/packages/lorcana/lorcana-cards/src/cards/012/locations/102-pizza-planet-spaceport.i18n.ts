@@ -6,7 +6,7 @@ export const pizzaPlanetSpaceportI18n: Record<Languages, I18nProperties> = {
     version: "Spaceport",
     text: [
       {
-        title: "YOU ARE CLEARED TO ENTER",
+        title: "YOU ARE CLEAR TO ENTER",
         description: "Your Toy characters can move here for free.",
       },
       {

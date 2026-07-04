@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { yzmaConnivingChemistI18n } from "./056-yzma-conniving-chemist.i18n";
 
 export const yzmaConnivingChemist: CharacterCard = {
-  id: "5QH",
+  id: "0iA",
   canonicalId: "ci_O2Y",
+  slug: "lorcana-ci_O2Y",
+  printings: [
+    {
+      id: "set6-056",
+      artId: "set6-056",
+      setCode: "set6",
+      collectorNumber: "56",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-056"],
   cardType: "character",
   name: "Yzma",
@@ -20,7 +31,7 @@ export const yzmaConnivingChemist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b8f5f89ae4fa49e29637b1fffd9c9e4c",
-    tcgPlayer: 592013,
+    tcgPlayer: "592013",
   },
   text: [
     {

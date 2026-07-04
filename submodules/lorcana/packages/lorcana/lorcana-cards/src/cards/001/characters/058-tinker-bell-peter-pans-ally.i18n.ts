@@ -6,40 +6,31 @@ export const tinkerBellPeterPansAllyI18n: Record<Languages, I18nProperties> = {
     version: "Peter Pan’s Ally",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive>",
       },
       {
-        title: "LOYAL AND DEVOTED",
+        title: "Loyal and Devoted",
         description:
-          "Your characters named Peter Pan gain Challenger +1. (They get +1 while challenging.)",
+          "Your characters named Peter Pan gain <Challenger> +1. (They get +1 {S} while challenging.)",
       },
     ],
   },
   de: {
     name: "Naseweis",
     version: "Peter Pans Verbündete",
-    text: [
-      {
-        title: "Wendig",
-      },
-      {
-        title: "LOYAL UND HINGEBUNGSVOLL",
-        description:
-          "Deine Peter-Pan-Charaktere erhalten Herausfordern +1. (Während sie herausfordern, erhalten sie +1.)",
-      },
-    ],
+    text: "<Wendig> \\Loyal und Hingebungsvoll\\ Deine Peter-Pan-Charaktere erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)",
   },
   fr: {
     name: "LA FÉE CLOCHETTE",
     version: "Alliée de Peter Pan",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
         title: "LOYALE ET DÉVOUÉE",
         description:
-          "Vos personnages Peter Pan gagnent Offensif + 1. (Ils gagnent +1 lorsqu'ils défient.)",
+          "Vos personnages Peter Pan gagnent <Offensif> + 1. (Ils gagnent +1 {S} lorsqu'ils défient.)",
       },
     ],
   },
@@ -48,12 +39,12 @@ export const tinkerBellPeterPansAllyI18n: Record<Languages, I18nProperties> = {
     version: "Peter Pan’s Ally",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "LOYAL AND DEVOTED",
+        title: "Loyal and Devoted",
         description:
-          "Your characters named Peter Pan gain Challenger +1. (They get +1 while challenging.)",
+          "Your characters named Peter Pan gain <Challenger> +1. (They get +1 {S} while challenging.)",
       },
     ],
   },

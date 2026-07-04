@@ -4,6 +4,17 @@ import { princeCharmingHeirToTheThroneI18n } from "./157-prince-charming-heir-to
 export const princeCharmingHeirToTheThrone: CharacterCard = {
   id: "MlM",
   canonicalId: "ci_MlM",
+  slug: "lorcana-ci_MlM",
+  printings: [
+    {
+      id: "set2-157",
+      artId: "set2-157",
+      setCode: "set2",
+      collectorNumber: "157",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-157"],
   cardType: "character",
   name: "Prince Charming",
@@ -21,7 +32,7 @@ export const princeCharmingHeirToTheThrone: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_06f238177bee499eab1cf34e60e55725",
-    tcgPlayer: 522718,
+    tcgPlayer: "522718",
   },
   classifications: ["Dreamborn", "Hero", "Prince"],
   i18n: princeCharmingHeirToTheThroneI18n,

@@ -3,7 +3,18 @@ import { moanaAdventurerOfLandAndSeaI18n } from "./156-moana-adventurer-of-land-
 
 export const moanaAdventurerOfLandAndSea: CharacterCard = {
   id: "xp6",
-  canonicalId: "ci_ncl",
+  canonicalId: "ci_MeA",
+  slug: "lorcana-ci_MeA",
+  printings: [
+    {
+      id: "set7-156",
+      artId: "set7-156",
+      setCode: "set7",
+      collectorNumber: "156",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-156"],
   cardType: "character",
   name: "Moana",
@@ -21,7 +32,7 @@ export const moanaAdventurerOfLandAndSea: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_2e61b6cfa0da4f32a21cc3375e0855b1",
-    tcgPlayer: 618357,
+    tcgPlayer: "618357",
   },
   classifications: ["Storyborn", "Hero", "Princess"],
   i18n: moanaAdventurerOfLandAndSeaI18n,

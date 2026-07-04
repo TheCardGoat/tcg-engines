@@ -4,6 +4,17 @@ import { bigNoseLovesickPoetI18n } from "./070-big-nose-lovesick-poet.i18n";
 export const bigNoseLovesickPoet: CharacterCard = {
   id: "Z2b",
   canonicalId: "ci_Z2b",
+  slug: "lorcana-ci_Z2b",
+  printings: [
+    {
+      id: "set10-070",
+      artId: "set10-070",
+      setCode: "set10",
+      collectorNumber: "70",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-070"],
   cardType: "character",
   name: "Big Nose",
@@ -21,7 +32,7 @@ export const bigNoseLovesickPoet: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_204b70ea506f41b6b6c01bc04ea2b4b0",
-    tcgPlayer: 659183,
+    tcgPlayer: "659183",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: bigNoseLovesickPoetI18n,

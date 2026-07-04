@@ -17,7 +17,7 @@ export const ichabodCraneScaredOutOfHisMindI18n: Record<Languages, I18nPropertie
     version: "Zu tiefst verängstigt",
     text: [
       {
-        title: "SCHAURIGE GESCHICHTE",
+        title: "Schaurige Geschichte",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du diese Karte verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const ichabodCraneScaredOutOfHisMindI18n: Record<Languages, I18nPropertie
     version: "Saisi d'une peur bleue",
     text: [
       {
-        title: "RÉCIT EFFRAYANT",
+        title: "Récit effrayant",
         description:
           "Lorsque ce personnage est banni, vous pouvez placer cette carte dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const ichabodCraneScaredOutOfHisMindI18n: Record<Languages, I18nPropertie
     version: "Spaventato a Morte",
     text: [
       {
-        title: "RACCONTO AGGHIACCIANTE",
+        title: "Racconto Agghiacciante",
         description:
           "Quando questo personaggio viene esiliato, puoi aggiungere questa carta al tuo calamaio, a faccia in giù e impegnata.",
       },

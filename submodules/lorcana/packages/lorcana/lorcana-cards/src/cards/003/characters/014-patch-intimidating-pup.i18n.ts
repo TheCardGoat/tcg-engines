@@ -16,8 +16,9 @@ export const patchIntimidatingPupI18n: Record<Languages, I18nProperties> = {
     version: "Einschüchternder Welpe",
     text: [
       {
-        title: "BELLEN",
-        description: "— Gib einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2.",
+        title: "Bellen",
+        description:
+          "{E} — Gib einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 {S}.",
       },
     ],
   },
@@ -26,9 +27,9 @@ export const patchIntimidatingPupI18n: Record<Languages, I18nProperties> = {
     version: "Chiot intimidant",
     text: [
       {
-        title: "ABOIEMENT",
+        title: "Aboiement",
         description:
-          "— Choisissez un personnage qui subit -2 jusqu'au début de votre prochain tour.",
+          "{E} — Choisissez un personnage qui subit -2 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -37,9 +38,9 @@ export const patchIntimidatingPupI18n: Record<Languages, I18nProperties> = {
     version: "Piccolo Minaccioso",
     text: [
       {
-        title: "ABBAIARE",
+        title: "Abbaiare",
         description:
-          "— Un personaggio a tua scelta riceve -2 fino all'inizio del tuo prossimo turno.",
+          "{E} — Un personaggio a tua scelta riceve -2 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

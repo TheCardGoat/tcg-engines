@@ -4,6 +4,17 @@ import { flixMadrigalFunlovingFamilyManI18n } from "./009-flix-madrigal-fun-lovi
 export const flixMadrigalFunlovingFamilyMan: CharacterCard = {
   id: "ROB",
   canonicalId: "ci_ROB",
+  slug: "lorcana-ci_ROB",
+  printings: [
+    {
+      id: "set4-009",
+      artId: "set4-009",
+      setCode: "set4",
+      collectorNumber: "9",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-009"],
   cardType: "character",
   name: "Félix Madrigal",
@@ -21,7 +32,7 @@ export const flixMadrigalFunlovingFamilyMan: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_294d9cff39f64e0394a0af134957afc3",
-    tcgPlayer: 543896,
+    tcgPlayer: "543896",
   },
   classifications: ["Storyborn", "Ally", "Madrigal"],
   i18n: flixMadrigalFunlovingFamilyManI18n,

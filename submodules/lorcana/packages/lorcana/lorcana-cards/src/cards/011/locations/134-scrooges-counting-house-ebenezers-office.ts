@@ -1,10 +1,22 @@
 import type { LocationCard } from "@tcg/lorcana-types";
 import { scroogesCountingHouseEbenezersOfficeI18n } from "./134-scrooges-counting-house-ebenezers-office.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const scroogesCountingHouseEbenezersOffice: LocationCard = {
   id: "Qwc",
   canonicalId: "ci_Qwc",
+  slug: "lorcana-ci_Qwc",
+  printings: [
+    {
+      id: "set11-134",
+      artId: "set11-134",
+      setCode: "set11",
+      collectorNumber: "134",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-134"],
   cardType: "location",
   name: "Scrooge's Counting House",
@@ -21,7 +33,7 @@ export const scroogesCountingHouseEbenezersOffice: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_889f6b26a5a746d6a6cbe4139412855a",
-    tcgPlayer: 676216,
+    tcgPlayer: "676216",
   },
   text: [
     {

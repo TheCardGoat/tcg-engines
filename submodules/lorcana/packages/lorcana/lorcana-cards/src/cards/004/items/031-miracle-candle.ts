@@ -4,6 +4,17 @@ import { miracleCandleI18n } from "./031-miracle-candle.i18n";
 export const miracleCandle: ItemCard = {
   id: "vcN",
   canonicalId: "ci_vcN",
+  slug: "lorcana-ci_vcN",
+  printings: [
+    {
+      id: "set4-031",
+      artId: "set4-031",
+      setCode: "set4",
+      collectorNumber: "31",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-031"],
   cardType: "item",
   name: "Miracle Candle",
@@ -16,7 +27,7 @@ export const miracleCandle: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f192e99706074455884cf28efb9ee03a",
-    tcgPlayer: 549249,
+    tcgPlayer: "549249",
   },
   text: [
     {
@@ -48,7 +59,10 @@ export const miracleCandle: ItemCard = {
             },
             {
               type: "remove-damage",
-              amount: { type: "up-to", value: 2 },
+              amount: {
+                type: "up-to",
+                value: 2,
+              },
               target: {
                 selector: "chosen",
                 count: 1,

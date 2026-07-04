@@ -6,14 +6,17 @@ export const gd02Dominion121: BaseCard = {
   type: "base",
   traits: ["earth alliance", "warship"],
   id: "GD02-121",
-  externalId: "gundam:gd02-121",
-  slug: "dominion-gd02-121",
+  canonicalId: "GD02-121",
+  externalIds: { bandai: "gundam:gd02-121" },
+  slug: "dominion/gd02-121",
   displayName: "Dominion",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-121",
   printings: [
     {
       id: "GD02-121",
+      artId: "GD02-121",
+      setCode: "GD02",
       collectorNumber: "GD02-121",
       cardNumber: "GD02-121",
       set: {
@@ -28,6 +31,7 @@ export const gd02Dominion121: BaseCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-121"],
   selectedPrintingId: "GD02-121",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-121.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-121.webp?260424",

@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { ratiganPartyCrasherI18n } from "./123-ratigan-party-crasher.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const ratiganPartyCrasher: CharacterCard = {
   id: "7v2",
   canonicalId: "ci_7v2",
+  slug: "lorcana-ci_7v2",
+  printings: [
+    {
+      id: "set5-123",
+      artId: "set5-123",
+      setCode: "set5",
+      collectorNumber: "123",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-123"],
   cardType: "character",
   name: "Ratigan",
@@ -22,7 +34,7 @@ export const ratiganPartyCrasher: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e49684f046464f2fac248bd11ba54f5d",
-    tcgPlayer: 557537,
+    tcgPlayer: "557537",
   },
   text: [
     {

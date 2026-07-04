@@ -7,14 +7,17 @@ export const gd02GundamBarbatos1stForm054: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "GD02-054",
-  externalId: "gundam:gd02-054",
-  slug: "gundam-barbatos-1st-form-gd02-054",
+  canonicalId: "GD02-054",
+  externalIds: { bandai: "gundam:gd02-054" },
+  slug: "gundam-barbatos-1st-form/gd02-054",
   displayName: "Gundam Barbatos 1st Form",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-054",
   printings: [
     {
       id: "GD02-054",
+      artId: "GD02-054",
+      setCode: "GD02",
       collectorNumber: "GD02-054",
       cardNumber: "GD02-054",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamBarbatos1stForm054: UnitCard = {
     },
     {
       id: "GD02-054_p1",
+      artId: "GD02-054_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-054_p1",
       cardNumber: "GD02-054",
       set: {
@@ -45,6 +50,8 @@ export const gd02GundamBarbatos1stForm054: UnitCard = {
     },
     {
       id: "GD02-054_p2",
+      artId: "GD02-054_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-054_p2",
       cardNumber: "GD02-054",
       set: {
@@ -59,6 +66,7 @@ export const gd02GundamBarbatos1stForm054: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-054", "GD02-054_p1", "GD02-054_p2"],
   selectedPrintingId: "GD02-054",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-054.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-054.webp?260424",

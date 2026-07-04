@@ -13,7 +13,7 @@ import { merlinIntellectualVisionary } from "@tcg/lorcana-cards/cards/005";
  * and should not search when hard-cast.
  */
 describe("THE-958 — Merlin shift entry search trigger", () => {
-  it("exposes deck card candidates and chosen target DSL for the shift trigger", () => {
+  it("exposes deck card candidates after accepting the optional shift trigger", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       inkwell: 5,
       hand: [merlinIntellectualVisionary],
@@ -36,25 +36,31 @@ describe("THE-958 — Merlin shift entry search trigger", () => {
     const [bagEffect] = testEngine.asPlayerOne().getBoard().bagEffects;
     expect(bagEffect).toBeDefined();
     expect(bagEffect?.selectionContext).toMatchObject({
+      kind: "optional-selection",
+      submitField: "resolveOptional",
+    });
+
+    expect(
+      testEngine
+        .asPlayerOne()
+        .resolvePendingByCard(merlinIntellectualVisionary, { resolveOptional: true }),
+    ).toBeSuccessfulCommand();
+
+    const [pendingEffect] = testEngine.asPlayerOne().getPendingEffects();
+    expect(pendingEffect?.selectionContext).toMatchObject({
       kind: "target-selection",
       minSelections: 1,
       maxSelections: 1,
       allowedZones: ["deck"],
     });
-    if (!bagEffect?.selectionContext || bagEffect.selectionContext.kind !== "target-selection") {
-      throw new Error("Expected a target-selection bag context");
+    if (
+      !pendingEffect?.selectionContext ||
+      pendingEffect.selectionContext.kind !== "target-selection"
+    ) {
+      throw new Error("Expected a target-selection pending context");
     }
 
-    expect(bagEffect.selectionContext.cardCandidateIds.length).toBe(2);
-    expect(bagEffect.selectionContext.targetDsl).toEqual([
-      {
-        selector: "chosen",
-        count: 1,
-        owner: "you",
-        zones: ["deck"],
-        excludeSelf: false,
-      },
-    ]);
+    expect(pendingEffect.selectionContext.cardCandidateIds.length).toBe(2);
   });
 
   it("triggers deck search when Merlin is played via Shift", () => {
@@ -97,13 +103,7 @@ describe("THE-958 — Merlin shift entry search trigger", () => {
     });
 
     expect(testEngine.asPlayerOne().playCard(merlinIntellectualVisionary)).toBeSuccessfulCommand();
-    expect(testEngine.asPlayerOne().getBagCount()).toBe(1);
-
-    expect(
-      testEngine
-        .asPlayerOne()
-        .resolvePendingByCard(merlinIntellectualVisionary, { resolveOptional: true }),
-    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
 
     expect(testEngine.asPlayerOne()).toHaveZoneCounts({ hand: 0, deck: 1 });
   });

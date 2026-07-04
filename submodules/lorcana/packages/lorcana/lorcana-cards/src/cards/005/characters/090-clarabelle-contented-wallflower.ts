@@ -4,6 +4,17 @@ import { clarabelleContentedWallflowerI18n } from "./090-clarabelle-contented-wa
 export const clarabelleContentedWallflower: CharacterCard = {
   id: "gxZ",
   canonicalId: "ci_gxZ",
+  slug: "lorcana-ci_gxZ",
+  printings: [
+    {
+      id: "set5-090",
+      artId: "set5-090",
+      setCode: "set5",
+      collectorNumber: "90",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-090"],
   cardType: "character",
   name: "Clarabelle",
@@ -19,7 +30,7 @@ export const clarabelleContentedWallflower: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_12fad68b6919451cb7165478fec5aee7",
-    tcgPlayer: 559513,
+    tcgPlayer: "559513",
   },
   text: [
     {

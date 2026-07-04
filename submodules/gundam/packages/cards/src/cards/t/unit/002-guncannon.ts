@@ -6,14 +6,17 @@ export const tGuncannon002: UnitCard = {
   type: "unit",
   traits: ["white base team"],
   id: "T-002",
-  externalId: "gundam:t-002",
-  slug: "guncannon-t-002",
+  canonicalId: "T-002",
+  externalIds: { bandai: "gundam:t-002" },
+  slug: "guncannon/t-002",
   displayName: "Guncannon",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "T-002",
   printings: [
     {
       id: "T-002",
+      artId: "T-002",
+      setCode: "ST01",
       collectorNumber: "T-002",
       cardNumber: "T-002",
       set: {
@@ -29,6 +32,8 @@ export const tGuncannon002: UnitCard = {
     },
     {
       id: "T-002_p1",
+      artId: "T-002_p1",
+      setCode: "BETA",
       collectorNumber: "T-002_p1",
       cardNumber: "T-002",
       set: {
@@ -43,6 +48,7 @@ export const tGuncannon002: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["T-002", "T-002_p1"],
   selectedPrintingId: "T-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-002.webp?260424",

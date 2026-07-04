@@ -7,14 +7,17 @@ export const gd03PalaceAthene009: UnitCard = {
   color: "blue",
   traits: ["titans", "jupitris"],
   id: "GD03-009",
-  externalId: "gundam:gd03-009",
-  slug: "palace-athene-gd03-009",
+  canonicalId: "GD03-009",
+  externalIds: { bandai: "gundam:gd03-009" },
+  slug: "palace-athene/gd03-009",
   displayName: "Palace Athene",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-009",
   printings: [
     {
       id: "GD03-009",
+      artId: "GD03-009",
+      setCode: "GD03",
       collectorNumber: "GD03-009",
       cardNumber: "GD03-009",
       set: {
@@ -29,6 +32,7 @@ export const gd03PalaceAthene009: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-009"],
   selectedPrintingId: "GD03-009",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-009.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-009.webp?260424",

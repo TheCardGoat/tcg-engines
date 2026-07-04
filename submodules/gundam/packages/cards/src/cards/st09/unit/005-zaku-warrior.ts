@@ -7,14 +7,17 @@ export const st09ZakuWarrior005: UnitCard = {
   color: "purple",
   traits: ["zaft", "minerva squad"],
   id: "ST09-005",
-  externalId: "gundam:st09-005",
-  slug: "zaku-warrior-st09-005",
+  canonicalId: "ST09-005",
+  externalIds: { bandai: "gundam:st09-005" },
+  slug: "zaku-warrior/st09-005",
   displayName: "Zaku Warrior",
   set: { code: "ST09", name: "Destiny Ignition [ST09]", packageId: "616009" },
   printNumber: "ST09-005",
   printings: [
     {
       id: "ST09-005",
+      artId: "ST09-005",
+      setCode: "ST09",
       collectorNumber: "ST09-005",
       cardNumber: "ST09-005",
       set: {
@@ -30,6 +33,8 @@ export const st09ZakuWarrior005: UnitCard = {
     },
     {
       id: "ST09-005_p1",
+      artId: "ST09-005_p1",
+      setCode: "ST09",
       collectorNumber: "ST09-005_p1",
       cardNumber: "ST09-005",
       set: {
@@ -44,6 +49,7 @@ export const st09ZakuWarrior005: UnitCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST09-005", "ST09-005_p1"],
   selectedPrintingId: "ST09-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st09/ST09-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST09-005.webp?260424",

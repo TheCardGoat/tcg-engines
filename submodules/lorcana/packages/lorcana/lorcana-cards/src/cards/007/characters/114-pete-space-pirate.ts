@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { peteSpacePirateI18n } from "./114-pete-space-pirate.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const peteSpacePirate: CharacterCard = {
   id: "Ewo",
   canonicalId: "ci_Ewo",
+  slug: "lorcana-ci_Ewo",
+  printings: [
+    {
+      id: "set7-114",
+      artId: "set7-114",
+      setCode: "set7",
+      collectorNumber: "114",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-114"],
   cardType: "character",
   name: "Pete",
@@ -20,7 +32,7 @@ export const peteSpacePirate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_874601077b644699b9e61662ec1c68a8",
-    tcgPlayer: 619468,
+    tcgPlayer: "619468",
   },
   text: [
     {

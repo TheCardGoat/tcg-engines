@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rapunzelHighClimberI18n } from "./101-rapunzel-high-climber.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const rapunzelHighClimber: CharacterCard = {
-  id: "RZ1",
+  id: "so5",
   canonicalId: "ci_jRy",
+  slug: "lorcana-ci_jRy",
+  printings: [
+    {
+      id: "set8-101",
+      artId: "set8-101",
+      setCode: "set8",
+      collectorNumber: "101",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-101"],
   cardType: "character",
   name: "Rapunzel",
@@ -21,7 +33,7 @@ export const rapunzelHighClimber: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cf079ada81bd48cdb9290647f227982c",
-    tcgPlayer: 633103,
+    tcgPlayer: "633103",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { jumbaJookibaCriticalScientistI18n } from "./173-jumba-jookiba-critical-
 export const jumbaJookibaCriticalScientist: CharacterCard = {
   id: "Jir",
   canonicalId: "ci_Jir",
+  slug: "lorcana-ci_Jir",
+  printings: [
+    {
+      id: "set8-173",
+      artId: "set8-173",
+      setCode: "set8",
+      collectorNumber: "173",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-173"],
   cardType: "character",
   name: "Jumba Jookiba",
@@ -21,7 +32,7 @@ export const jumbaJookibaCriticalScientist: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_303840f357ac4b089d20984dee17a8fa",
-    tcgPlayer: 631468,
+    tcgPlayer: "631468",
   },
   classifications: ["Storyborn", "Alien", "Inventor"],
   i18n: jumbaJookibaCriticalScientistI18n,

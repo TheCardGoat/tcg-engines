@@ -20,10 +20,11 @@ export const rapunzelEtherealProtectorEpicI18n: Record<Languages, I18nProperties
     version: "Geisterhafte Beschützerin",
     text: [
       {
-        title: "Stärken 2",
+        title:
+          "<Stärken> 2 {I} (Einmal während deines Zuges darfst du 2 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "KLONK!",
+        title: "Klonk!",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, falls er mindestens eine Karte unter sich hat, wähle einen gegnerischen Charakter. Er kann bis zu Beginn deines nächsten Zuges nicht herausfordern.",
       },
@@ -34,10 +35,11 @@ export const rapunzelEtherealProtectorEpicI18n: Record<Languages, I18nProperties
     version: "Protectrice éthérée",
     text: [
       {
-        title: "Boost 2",
+        title:
+          "<Boost> 2 {I} (Une fois durant votre tour, vous pouvez payer 2 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "CHBONK!",
+        title: "Chbonk!",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, s'il y a une carte sous lui, choisissez un personnage adverse qui ne peut pas défier jusqu'au début de votre prochain tour.",
       },
@@ -45,15 +47,16 @@ export const rapunzelEtherealProtectorEpicI18n: Record<Languages, I18nProperties
   },
   it: {
     name: "Rapunzel",
-    version: "Protettrice Eterea",
+    version: "Ethereal Protector",
     text: [
       {
-        title: "Potenziamento 2",
+        title:
+          "<Boost> 2 {I} (Once during your turn, you may pay 2 {I} to put the top card of your deck facedown under this character.)",
       },
       {
-        title: "CLANG!",
+        title: "Clonk!",
         description:
-          "Ogni volta che questo personaggio va all'avventura, se c'è una carta sotto di esso, un personaggio avversario a tua scelta non può sfidare fino all'inizio del tuo prossimo turno.",
+          "Whenever this character quests, if there's a card under her, chosen opposing character can't challenge until the start of your next turn.",
       },
     ],
   },

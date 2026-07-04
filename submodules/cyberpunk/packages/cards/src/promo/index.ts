@@ -1,4 +1,4 @@
-import type { PromoCardDefinition } from "@tcg/cyberpunk-types";
+import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
 import { promoLegends } from "./legends/index.ts";
 import { promoUnits } from "./units/index.ts";
 import { promoGear } from "./gear/index.ts";
@@ -9,13 +9,13 @@ export * from "./units/index.ts";
 export * from "./gear/index.ts";
 export * from "./programs/index.ts";
 
-export const promoCards = [
+export const promoCards: StructuredCardDefinition[] = [
   ...promoLegends,
   ...promoUnits,
   ...promoGear,
   ...promoPrograms,
-] satisfies PromoCardDefinition[];
+];
 
-export function getPromoCardBySlug(slug: string): PromoCardDefinition | undefined {
+export function getPromoCardBySlug(slug: string): StructuredCardDefinition | undefined {
   return promoCards.find((card) => card.slug === slug);
 }

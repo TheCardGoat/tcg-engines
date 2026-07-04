@@ -4,6 +4,17 @@ import { graveyardOfChristmasFutureLonelyRestingPlaceI18n } from "./135-graveyar
 export const graveyardOfChristmasFutureLonelyRestingPlace: LocationCard = {
   id: "gta",
   canonicalId: "ci_gta",
+  slug: "lorcana-ci_gta",
+  printings: [
+    {
+      id: "set11-135",
+      artId: "set11-135",
+      setCode: "set11",
+      collectorNumber: "135",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-135"],
   cardType: "location",
   name: "Graveyard of Christmas Future",
@@ -20,7 +31,7 @@ export const graveyardOfChristmasFutureLonelyRestingPlace: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_648f06059c3b4f8680bc932c085d6182",
-    tcgPlayer: 672432,
+    tcgPlayer: "672432",
   },
   text: [
     {

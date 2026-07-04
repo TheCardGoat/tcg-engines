@@ -36,6 +36,8 @@ type ActionResolutionInput = {
   choiceIndex?: number;
   preventAutoResolveTriggeredEffects?: boolean;
   destinations?: { zone: string; cards: CardInstanceId | CardInstanceId[] }[];
+  effectType?: "play-card";
+  sourceZone?: "discard";
   eventSnapshot?: DynamicAmountEventSnapshot;
   triggerContext?: ReplacementTriggerContext;
   /**
@@ -69,6 +71,7 @@ type ActionEffectResolutionOptions = {
   allowPromptForExistingChosenTargets?: boolean;
   continuation?: PendingActionEffectContinuation;
   sourceAbilityIndex?: number;
+  originatesFromOptional?: boolean;
   /**
    * Activated abilities keep a pending target-selection shell even when no
    * candidates exist yet (validation / explicit bad-target rejection).

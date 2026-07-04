@@ -4,6 +4,17 @@ import { theThunderquackI18n } from "./202-the-thunderquack.i18n";
 export const theThunderquack: ItemCard = {
   id: "JXM",
   canonicalId: "ci_JXM",
+  slug: "lorcana-ci_JXM",
+  printings: [
+    {
+      id: "set11-202",
+      artId: "set11-202",
+      setCode: "set11",
+      collectorNumber: "202",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-202"],
   cardType: "item",
   name: "The Thunderquack",
@@ -16,7 +27,7 @@ export const theThunderquack: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_997f90baa0e94ea6bf9babc7ded3bc8a",
-    tcgPlayer: 676250,
+    tcgPlayer: "676250",
   },
   text: [
     {

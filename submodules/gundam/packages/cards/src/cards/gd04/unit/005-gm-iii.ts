@@ -7,14 +7,17 @@ export const gd04GmIii005: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD04-005",
-  externalId: "gundam:gd04-005",
-  slug: "gm-iii-gd04-005",
+  canonicalId: "GD04-005",
+  externalIds: { bandai: "gundam:gd04-005" },
+  slug: "gm-iii/gd04-005",
   displayName: "GM III",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-005",
   printings: [
     {
       id: "GD04-005",
+      artId: "GD04-005",
+      setCode: "GD04",
       collectorNumber: "GD04-005",
       cardNumber: "GD04-005",
       set: {
@@ -29,6 +32,7 @@ export const gd04GmIii005: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-005"],
   selectedPrintingId: "GD04-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-005.webp?260424",

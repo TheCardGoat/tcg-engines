@@ -12,7 +12,9 @@ type PlayCardCostObject =
   | {
       cost: "shift";
       shiftTarget: CardInstanceId;
+      additionalShiftTargets?: CardInstanceId[];
       discardCards?: CardInstanceId[];
+      deckBottomTargets?: CardInstanceId[];
       amount?: number;
       targets?: PlayCardMoveParams["targets"];
     }
@@ -157,7 +159,11 @@ export function normalizePlayCardCost(
         cardId,
         cost: "shift",
         shiftTarget: cost.shiftTarget,
+        ...(cost.additionalShiftTargets
+          ? { additionalShiftTargets: cost.additionalShiftTargets }
+          : {}),
         ...(cost.discardCards ? { discardCards: cost.discardCards } : {}),
+        ...(cost.deckBottomTargets ? { deckBottomTargets: cost.deckBottomTargets } : {}),
         ...actionResolutionFields,
       };
     case "sing":

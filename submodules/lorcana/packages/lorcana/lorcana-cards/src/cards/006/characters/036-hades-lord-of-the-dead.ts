@@ -4,6 +4,17 @@ import { hadesLordOfTheDeadI18n } from "./036-hades-lord-of-the-dead.i18n";
 export const hadesLordOfTheDead: CharacterCard = {
   id: "x5y",
   canonicalId: "ci_x5y",
+  slug: "lorcana-ci_x5y",
+  printings: [
+    {
+      id: "set6-036",
+      artId: "set6-036",
+      setCode: "set6",
+      collectorNumber: "36",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-036"],
   cardType: "character",
   name: "Hades",
@@ -20,7 +31,7 @@ export const hadesLordOfTheDead: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_856fe3c718b544ba808b79a6811bca02",
-    tcgPlayer: 593009,
+    tcgPlayer: "593009",
   },
   text: [
     {

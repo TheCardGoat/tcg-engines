@@ -16,8 +16,8 @@ export const magicBroomTheBigSweeperI18n: Record<Languages, I18nProperties> = {
     version: "Der große Feger",
     text: [
       {
-        title: "SAUBERER FEGER",
-        description: "Solange dieser Charakter an einem Ort ist, erhält er +2.",
+        title: "Sauberer Feger",
+        description: "Solange dieser Charakter an einem Ort ist, erhält er +2 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const magicBroomTheBigSweeperI18n: Record<Languages, I18nProperties> = {
     version: "Le grand nettoyeur",
     text: [
       {
-        title: "NETTOYEUR DE GRANDES SURFACES",
-        description: "Tant que ce personnage se trouve sur un lieu, il gagne +2.",
+        title: "Nettoyeur de grandes surfaces",
+        description: "Tant que ce personnage se trouve sur un lieu, il gagne +2 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const magicBroomTheBigSweeperI18n: Record<Languages, I18nProperties> = {
     version: "Il Grande Spazzino",
     text: [
       {
-        title: "PULIZIA PROFONDA",
-        description: "Mentre questo personaggio si trova in un luogo, riceve +2.",
+        title: "Pulizia Profonda",
+        description: "Mentre questo personaggio si trova in un luogo, riceve +2 {S}.",
       },
     ],
   },

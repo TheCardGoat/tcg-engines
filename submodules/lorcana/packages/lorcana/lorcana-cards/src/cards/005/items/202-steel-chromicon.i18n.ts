@@ -14,8 +14,8 @@ export const steelChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Stahl Chromikon",
     text: [
       {
-        title: "STAHLFARBENES LICHT",
-        description: "— Füge einem Charakter deiner Wahl 1 Schaden zu.",
+        title: "Stahlfarbenes Licht",
+        description: "{E} — Füge einem Charakter deiner Wahl 1 Schaden zu.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const steelChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Chromicône d'Acier",
     text: [
       {
-        title: "LUEUR D'ACIER",
-        description: "— Choisissez un personnage et infligez-lui 1 dommage.",
+        title: "Lueur d'acier",
+        description: "{E} — Choisissez un personnage et infligez-lui 1 dommage.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const steelChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Cromicon d'Acciaio",
     text: [
       {
-        title: "LUCE D'ACCIAIO",
-        description: "— Infliggi 1 danno a un personaggio a tua scelta.",
+        title: "Luce d'Acciaio",
+        description: "{E} — Infliggi 1 danno a un personaggio a tua scelta.",
       },
     ],
   },

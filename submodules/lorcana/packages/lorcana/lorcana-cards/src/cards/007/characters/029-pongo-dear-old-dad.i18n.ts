@@ -17,7 +17,7 @@ export const pongoDearOldDadI18n: Record<Languages, I18nProperties> = {
     version: "Guter alter Papa",
     text: [
       {
-        title: "HAB DICH, DU KLEINER RACKER",
+        title: "Hab dich, du kleiner Racker",
         description:
           "Sieh dir zu Beginn deines Zuges die Karten in deinem Tintenvorrat an. Du darfst einen Welpen daraus kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const pongoDearOldDadI18n: Record<Languages, I18nProperties> = {
     version: "Bon vieux papa",
     text: [
       {
-        title: "JE T'AI TROUVÉ, PETIT COQUIN",
+        title: "Je t'ai trouvé, petit coquin",
         description:
           "Au début de votre tour, regardez les cartes dans votre réserve d'encre. Vous pouvez jouer gratuitement un personnage Chiot s'y trouvant.",
       },
@@ -39,7 +39,7 @@ export const pongoDearOldDadI18n: Record<Languages, I18nProperties> = {
     version: "Caro Vecchio Papà",
     text: [
       {
-        title: "TI HO TROVATO, PICCOLO BIRBANTE",
+        title: "Ti ho Trovato, Piccolo Birbante",
         description:
           "All'inizio del tuo turno, guarda le carte nel tuo calamaio. Puoi giocare un personaggio Cucciolo da lì, gratis.",
       },

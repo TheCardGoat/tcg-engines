@@ -4,6 +4,17 @@ import { taurusBulbaSteerminatorI18n } from "./106-taurus-bulba-steerminator.i18
 export const taurusBulbaSteerminator: CharacterCard = {
   id: "QuQ",
   canonicalId: "ci_QuQ",
+  slug: "lorcana-ci_QuQ",
+  printings: [
+    {
+      id: "set11-106",
+      artId: "set11-106",
+      setCode: "set11",
+      collectorNumber: "106",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-106"],
   cardType: "character",
   name: "Taurus Bulba",
@@ -21,7 +32,7 @@ export const taurusBulbaSteerminator: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_85d6bd70dfe74990af90d215e5010a8d",
-    tcgPlayer: 676210,
+    tcgPlayer: "676210",
   },
   classifications: ["Storyborn", "Super", "Villain"],
   i18n: taurusBulbaSteerminatorI18n,

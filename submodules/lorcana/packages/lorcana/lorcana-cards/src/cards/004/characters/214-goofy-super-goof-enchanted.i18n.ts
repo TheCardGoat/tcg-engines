@@ -19,10 +19,10 @@ export const goofySuperGoofEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Supergoof",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "SUPER-ERDNUSS-KRÄFTE",
+        title: "Super-Erdnuss-Kräfte",
         description:
           "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, sammelst du 2 Legenden.",
       },
@@ -33,10 +33,10 @@ export const goofySuperGoofEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Super Dingo",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "POUVOIR DES SUPER CACAHUÈTES",
+        title: "Pouvoir des Super Cacahuètes",
         description: "Chaque fois que ce personnage en défie un autre, gagnez 2 éclats de Lore.",
       },
     ],
@@ -46,10 +46,10 @@ export const goofySuperGoofEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Superpippo",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "POTERE DELLE SUPER ARACHIDI",
+        title: "Potere delle Super Arachidi",
         description:
           "Ogni volta che questo personaggio sfida un altro personaggio, ottieni 2 leggenda.",
       },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { littleJohnResourcefulOutlawI18n } from "./178-little-john-resourceful-outlaw.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const littleJohnResourcefulOutlaw: CharacterCard = {
   id: "qJp",
   canonicalId: "ci_qJp",
+  slug: "lorcana-ci_qJp",
+  printings: [
+    {
+      id: "set3-178",
+      artId: "set3-178",
+      setCode: "set3",
+      collectorNumber: "178",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-178"],
   cardType: "character",
   name: "Little John",
@@ -21,7 +33,7 @@ export const littleJohnResourcefulOutlaw: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_71fd1d1099c9451393725c4afa6ca274",
-    tcgPlayer: 537943,
+    tcgPlayer: "537943",
   },
   text: [
     {

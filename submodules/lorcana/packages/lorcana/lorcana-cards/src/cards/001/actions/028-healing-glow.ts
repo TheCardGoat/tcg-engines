@@ -4,6 +4,17 @@ import { healingGlowI18n } from "./028-healing-glow.i18n";
 export const healingGlow: ActionCard = {
   id: "S50",
   canonicalId: "ci_S50",
+  slug: "lorcana-ci_S50",
+  printings: [
+    {
+      id: "set1-028",
+      artId: "set1-028",
+      setCode: "set1",
+      collectorNumber: "28",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-028"],
   cardType: "action",
   name: "Healing Glow",
@@ -16,13 +27,16 @@ export const healingGlow: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ce4f357a6aa24302ba5553eefea4930a",
-    tcgPlayer: 492713,
+    tcgPlayer: "492713",
   },
   text: "Remove up to 2 damage from chosen character.",
   abilities: [
     {
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         target: "CHOSEN_CHARACTER",
         type: "remove-damage",
       },

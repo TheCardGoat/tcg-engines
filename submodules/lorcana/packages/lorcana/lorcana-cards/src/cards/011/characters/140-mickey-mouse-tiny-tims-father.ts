@@ -4,6 +4,17 @@ import { mickeyMouseTinyTimsFatherI18n } from "./140-mickey-mouse-tiny-tims-fath
 export const mickeyMouseTinyTimsFather: CharacterCard = {
   id: "mnX",
   canonicalId: "ci_mnX",
+  slug: "lorcana-ci_mnX",
+  printings: [
+    {
+      id: "set11-140",
+      artId: "set11-140",
+      setCode: "set11",
+      collectorNumber: "140",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-140"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -21,7 +32,7 @@ export const mickeyMouseTinyTimsFather: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_9280b9713ade4c7fb2fb651ff5a2e815",
-    tcgPlayer: 676220,
+    tcgPlayer: "676220",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: mickeyMouseTinyTimsFatherI18n,

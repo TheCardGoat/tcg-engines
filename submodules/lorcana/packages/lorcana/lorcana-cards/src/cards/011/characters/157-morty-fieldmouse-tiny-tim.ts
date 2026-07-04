@@ -4,6 +4,17 @@ import { mortyFieldmouseTinyTimI18n } from "./157-morty-fieldmouse-tiny-tim.i18n
 export const mortyFieldmouseTinyTim: CharacterCard = {
   id: "KXg",
   canonicalId: "ci_KXg",
+  slug: "lorcana-ci_KXg",
+  printings: [
+    {
+      id: "set11-157",
+      artId: "set11-157",
+      setCode: "set11",
+      collectorNumber: "157",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-157"],
   cardType: "character",
   name: "Morty Fieldmouse",
@@ -20,7 +31,7 @@ export const mortyFieldmouseTinyTim: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5c9d96ae2b6248f19d3a431a93576adb",
-    tcgPlayer: 676226,
+    tcgPlayer: "676226",
   },
   text: [
     {
@@ -47,7 +58,15 @@ export const mortyFieldmouseTinyTim: CharacterCard = {
           cardType: ["character"],
           excludeSelf: true,
         },
-        restrictions: [{ type: "once-per-turn" }, { type: "during-turn", whose: "your" }],
+        restrictions: [
+          {
+            type: "once-per-turn",
+          },
+          {
+            type: "during-turn",
+            whose: "your",
+          },
+        ],
       },
       effect: {
         type: "put-under",

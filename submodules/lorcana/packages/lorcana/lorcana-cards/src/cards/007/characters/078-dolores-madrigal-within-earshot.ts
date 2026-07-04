@@ -4,6 +4,17 @@ import { doloresMadrigalWithinEarshotI18n } from "./078-dolores-madrigal-within-
 export const doloresMadrigalWithinEarshot: CharacterCard = {
   id: "9wm",
   canonicalId: "ci_9wm",
+  slug: "lorcana-ci_9wm",
+  printings: [
+    {
+      id: "set7-078",
+      artId: "set7-078",
+      setCode: "set7",
+      collectorNumber: "78",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-078"],
   cardType: "character",
   name: "Dolores Madrigal",
@@ -20,7 +31,7 @@ export const doloresMadrigalWithinEarshot: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_530a9f4cf6274b8d8293c816a38bdf61",
-    tcgPlayer: 619447,
+    tcgPlayer: "619447",
   },
   text: [
     {

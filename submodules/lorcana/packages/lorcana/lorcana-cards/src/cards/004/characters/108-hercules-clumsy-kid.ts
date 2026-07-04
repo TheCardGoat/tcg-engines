@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { herculesClumsyKidI18n } from "./108-hercules-clumsy-kid.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const herculesClumsyKid: CharacterCard = {
   id: "6ct",
   canonicalId: "ci_6ct",
+  slug: "lorcana-ci_6ct",
+  printings: [
+    {
+      id: "set4-108",
+      artId: "set4-108",
+      setCode: "set4",
+      collectorNumber: "108",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-108"],
   cardType: "character",
   name: "Hercules",
@@ -21,7 +33,7 @@ export const herculesClumsyKid: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_606b261078744cc8819ce42293651b88",
-    tcgPlayer: 547702,
+    tcgPlayer: "547702",
   },
   text: "Rush",
   classifications: ["Storyborn", "Hero", "Prince"],

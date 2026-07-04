@@ -17,9 +17,9 @@ export const scroogeMcduckMiserlyEbenezerI18n: Record<Languages, I18nProperties>
     version: "Geiziger Ebenezer",
     text: [
       {
-        title: "ALLES HUMBUG",
+        title: "Alles Humbug",
         description:
-          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du einem Charakter deiner Wahl in diesem Zug -1 geben.",
+          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du einem Charakter deiner Wahl in diesem Zug -1 {S} geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const scroogeMcduckMiserlyEbenezerI18n: Record<Languages, I18nProperties>
     version: "Ebenezer avare",
     text: [
       {
-        title: "BAH, FARIBOLES!",
+        title: "Bah, fariboles!",
         description:
-          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage qui subit -1 pour le reste de ce tour.",
+          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage qui subit -1 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const scroogeMcduckMiserlyEbenezerI18n: Record<Languages, I18nProperties>
     version: "Ebenezer Spilorcio",
     text: [
       {
-        title: "BAH, BUBBOLE",
+        title: "Bah, Bubbole",
         description:
-          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio a tua scelta riceve -1 per questo turno.",
+          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio a tua scelta riceve -1 {S} per questo turno.",
       },
     ],
   },

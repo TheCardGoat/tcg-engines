@@ -7,14 +7,17 @@ export const gd04HeineSGoufIgnited055: UnitCard = {
   color: "purple",
   traits: ["zaft", "minerva squad"],
   id: "GD04-055",
-  externalId: "gundam:gd04-055",
-  slug: "heine-s-gouf-ignited-gd04-055",
+  canonicalId: "GD04-055",
+  externalIds: { bandai: "gundam:gd04-055" },
+  slug: "heine-s-gouf-ignited/gd04-055",
   displayName: "Heine's Gouf Ignited",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-055",
   printings: [
     {
       id: "GD04-055",
+      artId: "GD04-055",
+      setCode: "GD04",
       collectorNumber: "GD04-055",
       cardNumber: "GD04-055",
       set: {
@@ -29,6 +32,7 @@ export const gd04HeineSGoufIgnited055: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-055"],
   selectedPrintingId: "GD04-055",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-055.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-055.webp?260424",

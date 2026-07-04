@@ -4,6 +4,17 @@ import { tananaWiseWomanI18n } from "./156-tanana-wise-woman.i18n";
 export const tananaWiseWoman: CharacterCard = {
   id: "PPy",
   canonicalId: "ci_PPy",
+  slug: "lorcana-ci_PPy",
+  printings: [
+    {
+      id: "set5-156",
+      artId: "set5-156",
+      setCode: "set5",
+      collectorNumber: "156",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-156"],
   cardType: "character",
   name: "Tanana",
@@ -20,7 +31,7 @@ export const tananaWiseWoman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6746b8da59f742ad83ff79efdcbe35a7",
-    tcgPlayer: 560493,
+    tcgPlayer: "560493",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const tananaWiseWoman: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           target: {
             selector: "chosen",
             count: 1,

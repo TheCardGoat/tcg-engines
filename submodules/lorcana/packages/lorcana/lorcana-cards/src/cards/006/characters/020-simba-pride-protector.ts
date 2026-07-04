@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { simbaPrideProtectorI18n } from "./020-simba-pride-protector.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const simbaPrideProtector: CharacterCard = {
-  id: "pBr",
+  id: "rdg",
   canonicalId: "ci_pBr",
+  slug: "lorcana-ci_pBr",
+  printings: [
+    {
+      id: "set6-020",
+      artId: "set6-020",
+      setCode: "set6",
+      collectorNumber: "20",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-020"],
   cardType: "character",
   name: "Simba",
@@ -20,8 +32,8 @@ export const simbaPrideProtector: CharacterCard = {
   lore: 2,
   inkable: false,
   externalIds: {
-    lorcast: "crd_a94b5e02de4a43bdba60303fffe3d20f",
-    tcgPlayer: 591991,
+    lorcast: "crd_1cf3dd6de9ac4bc6b0a1ef39f7e6085f",
+    tcgPlayer: "655963",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const st08GustavKarlType00008: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "ST08-008",
-  externalId: "gundam:st08-008",
-  slug: "gustav-karl-type-00-st08-008",
+  canonicalId: "ST08-008",
+  externalIds: { bandai: "gundam:st08-008" },
+  slug: "gustav-karl-type-00/st08-008",
   displayName: "Gustav Karl Type-00",
   set: { code: "ST08", name: "Flash of Radiance [ST08]", packageId: "616008" },
   printNumber: "ST08-008",
   printings: [
     {
       id: "ST08-008",
+      artId: "ST08-008",
+      setCode: "ST08",
       collectorNumber: "ST08-008",
       cardNumber: "ST08-008",
       set: {
@@ -30,6 +33,8 @@ export const st08GustavKarlType00008: UnitCard = {
     },
     {
       id: "ST08-008_p1",
+      artId: "ST08-008_p1",
+      setCode: "ST08",
       collectorNumber: "ST08-008_p1",
       cardNumber: "ST08-008",
       set: {
@@ -44,6 +49,7 @@ export const st08GustavKarlType00008: UnitCard = {
       productName: "Flash of Radiance [ST08] Bonus Pack",
     },
   ],
+  reprints: ["ST08-008", "ST08-008_p1"],
   selectedPrintingId: "ST08-008",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st08/ST08-008.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST08-008.webp?260424",

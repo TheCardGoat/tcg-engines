@@ -15,7 +15,7 @@ export const mauricesMachineI18n: Record<Languages, I18nProperties> = {
     name: "Maurice’ Maschine",
     text: [
       {
-        title: "ZUSAMMENBRUCH",
+        title: "Zusammenbruch",
         description:
           "Wenn dieser Gegenstand verbannt wird, darfst du 1 Gegenstandskarte, die 2 oder weniger kostet, aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
@@ -25,7 +25,7 @@ export const mauricesMachineI18n: Record<Languages, I18nProperties> = {
     name: "Machine de Maurice",
     text: [
       {
-        title: "TOMBÉE EN PANNE",
+        title: "Tombée en panne",
         description:
           "Lorsque cet objet est banni, vous pouvez renvoyer une carte Objet coûtant 2 ou moins de votre défausse dans votre main.",
       },
@@ -35,7 +35,7 @@ export const mauricesMachineI18n: Record<Languages, I18nProperties> = {
     name: "Marchingegno di Maurice",
     text: [
       {
-        title: "SMONTARE",
+        title: "Smontare",
         description:
           "Quando questo oggetto viene esiliato, puoi riprendere in mano una carta oggetto con costo 2 o inferiore dai tuoi scarti.",
       },

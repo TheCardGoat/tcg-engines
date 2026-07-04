@@ -17,7 +17,7 @@ export const rabbitIndignantPirateI18n: Record<Languages, I18nProperties> = {
     version: "Empörter Pirat",
     text: [
       {
-        title: "SEI VORSICHTIGER",
+        title: "Sei vorsichtiger",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du bis zu 1 Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -28,7 +28,7 @@ export const rabbitIndignantPirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirate indigné",
     text: [
       {
-        title: "SOIS PLUS PRUDENT",
+        title: "Sois plus prudent",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui retirer jusqu'à 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const rabbitIndignantPirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirata Indignato",
     text: [
       {
-        title: "STAI PIÙ ATTENTO",
+        title: "Stai Più Attento",
         description:
           "Quando giochi questo personaggio, puoi rimuovere fino a 1 danno da un personaggio a tua scelta.",
       },

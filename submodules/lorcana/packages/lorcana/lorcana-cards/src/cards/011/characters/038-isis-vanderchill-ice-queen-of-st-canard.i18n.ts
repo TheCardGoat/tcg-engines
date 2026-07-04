@@ -16,7 +16,7 @@ export const isisVanderchillIceQueenOfStCanardI18n: Record<Languages, I18nProper
     version: "Eisprinzessin von St. Erpelsburg",
     text: [
       {
-        title: "ABKÜHLEN",
+        title: "Abkühlen",
         description:
           "Wenn du diesen Charakter ausspielst, erschöpfe einen gegnerischen Charakter deiner Wahl.",
       },
@@ -27,7 +27,7 @@ export const isisVanderchillIceQueenOfStCanardI18n: Record<Languages, I18nProper
     version: "Reine des Glaces de Bourg-les-Canards",
     text: [
       {
-        title: "CALMEZ VOS ARDEURS",
+        title: "Calmez vos ardeurs",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage adverse et épuisez-le.",
       },
@@ -38,7 +38,7 @@ export const isisVanderchillIceQueenOfStCanardI18n: Record<Languages, I18nProper
     version: "Regina del Ghiaccio di St. Canard",
     text: [
       {
-        title: "RAFFREDDA L'ENTUSIASMO",
+        title: "Raffredda l'Entusiasmo",
         description:
           "Quando giochi questo personaggio, impegna un personaggio avversario a tua scelta.",
       },

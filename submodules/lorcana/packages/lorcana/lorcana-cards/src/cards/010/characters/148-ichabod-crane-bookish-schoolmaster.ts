@@ -4,6 +4,17 @@ import { ichabodCraneBookishSchoolmasterI18n } from "./148-ichabod-crane-bookish
 export const ichabodCraneBookishSchoolmaster: CharacterCard = {
   id: "Nus",
   canonicalId: "ci_Nus",
+  slug: "lorcana-ci_Nus",
+  printings: [
+    {
+      id: "set10-148",
+      artId: "set10-148",
+      setCode: "set10",
+      collectorNumber: "148",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-148"],
   cardType: "character",
   name: "Ichabod Crane",
@@ -20,7 +31,7 @@ export const ichabodCraneBookishSchoolmaster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_83cc465308474e60aed6b86986d57854",
-    tcgPlayer: 660019,
+    tcgPlayer: "660019",
   },
   text: [
     {

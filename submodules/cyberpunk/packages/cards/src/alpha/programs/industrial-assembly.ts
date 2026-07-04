@@ -1,13 +1,15 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, condition, effect, target } from "../../helpers/builders/index.ts";
 
-export const alphaIndustrialAssembly = {
+export const alphaIndustrialAssembly = defineCyberpunkCard({
   id: "48f31579-a32b-4c58-923c-93a2aa3b780c",
-  externalId: "cyberpunk:industrial-assembly",
   slug: "industrial-assembly",
+  rulesText:
+    "Increase a friendly gig by 4. Then, if you have 7+ * (Street Cred), draw a card. (Discard programs after they resolve.)",
   name: "Industrial Assembly",
   displayName: "Industrial Assembly",
-  rulesText: "Increase a friendly gig by 4. Then, if you have 7+ Street Cred, draw a card.",
+  canonicalId: "industrial-assembly",
   color: "red",
   classifications: ["Plan", "Arasaka"],
   set: {
@@ -15,15 +17,6 @@ export const alphaIndustrialAssembly = {
     name: "Alpha Kit Set",
   },
   printNumber: "α021",
-  printings: [
-    {
-      id: "a190e602-4297-4b39-9641-6c991cce2204",
-      collectorNumber: "α021",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "a190e602-4297-4b39-9641-6c991cce2204",
   artist: "Alexander Dudar",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a021.webp",
   rarity: null,
@@ -31,7 +24,6 @@ export const alphaIndustrialAssembly = {
   hasSellTag: true,
   ram: 1,
   timingTriggers: ["play"],
-  keywords: [],
   type: "program",
   cost: 2,
   power: null,
@@ -62,4 +54,4 @@ export const alphaIndustrialAssembly = {
       .build(),
   ],
   reminderText: ["Discard programs after they resolve."],
-} satisfies AlphaCardDefinition;
+}) satisfies ProgramCardDefinition;

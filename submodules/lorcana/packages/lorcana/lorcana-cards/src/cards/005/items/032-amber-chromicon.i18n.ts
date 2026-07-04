@@ -14,8 +14,8 @@ export const amberChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Bernstein Chromikon",
     text: [
       {
-        title: "BERNSTEINFARBENES LICHT",
-        description: "— Entferne bis zu 1 Schaden von jedem deiner Charaktere.",
+        title: "Bernsteinfarbenes Licht",
+        description: "{E} — Entferne bis zu 1 Schaden von jedem deiner Charaktere.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const amberChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Chromicône d'Ambre",
     text: [
       {
-        title: "LUEUR D'AMBRE",
-        description: "— Retirez jusqu'à 1 dommage de chacun de vos personnages.",
+        title: "Lueur d'ambre",
+        description: "{E} — Retirez jusqu'à 1 dommage de chacun de vos personnages.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const amberChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Cromicon d'Ambra",
     text: [
       {
-        title: "LUCE D'AMBRA",
-        description: "— Rimuovi fino a 1 danno da ogni tuo personaggio.",
+        title: "Luce d'Ambra",
+        description: "{E} — Rimuovi fino a 1 danno da ogni tuo personaggio.",
       },
     ],
   },

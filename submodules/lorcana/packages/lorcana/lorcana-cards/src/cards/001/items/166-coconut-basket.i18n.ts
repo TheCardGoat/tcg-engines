@@ -15,7 +15,7 @@ export const coconutBasketI18n: Record<Languages, I18nProperties> = {
     name: "Kokosnusskorb",
     text: [
       {
-        title: "DENK NUR AN DIE KOKOSNUSS",
+        title: "Denk nur an die Kokosnuss",
         description:
           "Jedes Mal, wenn du einen Charakter ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -35,7 +35,7 @@ export const coconutBasketI18n: Record<Languages, I18nProperties> = {
     name: "Coconut Basket",
     text: [
       {
-        title: "CONSIDER THE COCONUT",
+        title: "Consider the Coconut",
         description:
           "Whenever you play a character, you may remove up to 2 damage from chosen character.",
       },

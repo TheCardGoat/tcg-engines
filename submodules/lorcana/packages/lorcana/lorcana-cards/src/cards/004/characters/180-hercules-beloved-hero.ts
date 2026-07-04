@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { herculesBelovedHeroI18n } from "./180-hercules-beloved-hero.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const herculesBelovedHero: CharacterCard = {
   id: "FCJ",
   canonicalId: "ci_ZfB",
+  slug: "lorcana-ci_ZfB",
+  printings: [
+    {
+      id: "set4-180",
+      artId: "set4-180",
+      setCode: "set4",
+      collectorNumber: "180",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-180", "set9-186"],
   cardType: "character",
   name: "Hercules",
@@ -21,7 +33,7 @@ export const herculesBelovedHero: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_37be647e4dfe481996bdf2bad1909176",
-    tcgPlayer: 650119,
+    tcgPlayer: "650119",
   },
   text: [
     {

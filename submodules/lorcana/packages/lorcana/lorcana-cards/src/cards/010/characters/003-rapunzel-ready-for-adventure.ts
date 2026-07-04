@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { support } from "../../../helpers/abilities/support";
 import { rapunzelReadyForAdventureI18n } from "./003-rapunzel-ready-for-adventure.i18n";
+
+import { support } from "../../../helpers/abilities/support";
 
 export const rapunzelReadyForAdventure: CharacterCard = {
   id: "8hR",
   canonicalId: "ci_8hR",
+  slug: "lorcana-ci_8hR",
+  printings: [
+    {
+      id: "set10-003",
+      artId: "set10-003",
+      setCode: "set10",
+      collectorNumber: "3",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-003"],
   cardType: "character",
   name: "Rapunzel",
@@ -21,7 +33,7 @@ export const rapunzelReadyForAdventure: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_70ae5f21fa1347b49ee910683e34d90e",
-    tcgPlayer: 660274,
+    tcgPlayer: "660274",
   },
   text: [
     {

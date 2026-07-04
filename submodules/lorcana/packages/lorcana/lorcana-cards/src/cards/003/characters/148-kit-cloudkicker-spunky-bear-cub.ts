@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kitCloudkickerSpunkyBearCubI18n } from "./148-kit-cloudkicker-spunky-bear-cub.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const kitCloudkickerSpunkyBearCub: CharacterCard = {
   id: "0ke",
   canonicalId: "ci_0ke",
+  slug: "lorcana-ci_0ke",
+  printings: [
+    {
+      id: "set3-148",
+      artId: "set3-148",
+      setCode: "set3",
+      collectorNumber: "148",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-148"],
   cardType: "character",
   name: "Kit Cloudkicker",
@@ -21,7 +33,7 @@ export const kitCloudkickerSpunkyBearCub: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9a81433a0c2c4944a0af1b1724213f40",
-    tcgPlayer: 539098,
+    tcgPlayer: "539098",
   },
   text: "Ward",
   classifications: ["Storyborn", "Ally"],

@@ -4,6 +4,17 @@ import { auroraBriarRoseI18n } from "./138-aurora-briar-rose.i18n";
 export const auroraBriarRose: CharacterCard = {
   id: "HSP",
   canonicalId: "ci_HSP",
+  slug: "lorcana-ci_HSP",
+  printings: [
+    {
+      id: "set1-138",
+      artId: "set1-138",
+      setCode: "set1",
+      collectorNumber: "138",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-138"],
   cardType: "character",
   name: "Aurora",
@@ -20,7 +31,7 @@ export const auroraBriarRose: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ce469941c08b425484af9a8c69eb8ce1",
-    tcgPlayer: 508809,
+    tcgPlayer: "508809",
   },
   text: [
     {

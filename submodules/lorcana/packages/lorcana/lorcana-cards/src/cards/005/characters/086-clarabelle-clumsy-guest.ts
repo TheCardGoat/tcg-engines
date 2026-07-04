@@ -4,6 +4,17 @@ import { clarabelleClumsyGuestI18n } from "./086-clarabelle-clumsy-guest.i18n";
 export const clarabelleClumsyGuest: CharacterCard = {
   id: "EZO",
   canonicalId: "ci_EZO",
+  slug: "lorcana-ci_EZO",
+  printings: [
+    {
+      id: "set5-086",
+      artId: "set5-086",
+      setCode: "set5",
+      collectorNumber: "86",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-086"],
   cardType: "character",
   name: "Clarabelle",
@@ -19,7 +30,7 @@ export const clarabelleClumsyGuest: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ecb9566eb3fb4a9f9765dac205bf1b2d",
-    tcgPlayer: 561960,
+    tcgPlayer: "561960",
   },
   text: [
     {

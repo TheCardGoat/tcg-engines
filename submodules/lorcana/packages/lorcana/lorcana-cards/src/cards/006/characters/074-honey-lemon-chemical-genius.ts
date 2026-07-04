@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { honeyLemonChemicalGeniusI18n } from "./074-honey-lemon-chemical-genius.i18n";
 
 export const honeyLemonChemicalGenius: CharacterCard = {
-  id: "OgN",
-  canonicalId: "ci_OgN",
+  id: "deD",
+  canonicalId: "ci_Fwb",
+  slug: "lorcana-ci_Fwb",
+  printings: [
+    {
+      id: "set6-074",
+      artId: "set6-074",
+      setCode: "set6",
+      collectorNumber: "74",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-074"],
   cardType: "character",
   name: "Honey Lemon",
@@ -20,7 +31,7 @@ export const honeyLemonChemicalGenius: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f20b9f97af684d8e84eb6b017eabd8d5",
-    tcgPlayer: 578178,
+    tcgPlayer: "578178",
   },
   text: [
     {

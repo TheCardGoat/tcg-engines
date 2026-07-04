@@ -4,6 +4,17 @@ import { wreckitRalphHerosDutyI18n } from "./027-wreck-it-ralph-heros-duty.i18n"
 export const wreckitRalphHerosDuty: CharacterCard = {
   id: "16Q",
   canonicalId: "ci_16Q",
+  slug: "lorcana-ci_16Q",
+  printings: [
+    {
+      id: "set7-027",
+      artId: "set7-027",
+      setCode: "set7",
+      collectorNumber: "27",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-027"],
   cardType: "character",
   name: "Wreck-It Ralph",
@@ -20,7 +31,7 @@ export const wreckitRalphHerosDuty: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_98cc1ff61f704e70a88362de3d5d29a7",
-    tcgPlayer: 619421,
+    tcgPlayer: "619421",
   },
   text: [
     {

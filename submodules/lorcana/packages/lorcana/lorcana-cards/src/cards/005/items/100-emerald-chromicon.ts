@@ -4,6 +4,17 @@ import { emeraldChromiconI18n } from "./100-emerald-chromicon.i18n";
 export const emeraldChromicon: ItemCard = {
   id: "TUy",
   canonicalId: "ci_TUy",
+  slug: "lorcana-ci_TUy",
+  printings: [
+    {
+      id: "set5-100",
+      artId: "set5-100",
+      setCode: "set5",
+      collectorNumber: "100",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-100"],
   cardType: "item",
   name: "Emerald Chromicon",
@@ -16,7 +27,7 @@ export const emeraldChromicon: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_693273eeac4846a39a3539fc6ded617d",
-    tcgPlayer: 560098,
+    tcgPlayer: "560098",
   },
   text: [
     {

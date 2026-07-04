@@ -102,6 +102,9 @@ importers:
 
   packages/lorcana/lorcana-cards:
     dependencies:
+      '@tcg/card-model':
+        specifier: link:../../../../agnostic-simulator/packages/card-model
+        version: link:../../../../agnostic-simulator/packages/card-model
       '@tcg/lorcana-engine':
         specifier: workspace:*
         version: link:../lorcana-engine
@@ -190,6 +193,9 @@ importers:
       '@tcg/typescript-config':
         specifier: workspace:*
         version: link:../../typescript-config
+      '@types/bun':
+        specifier: 1.3.4
+        version: 1.3.4
       '@types/node':
         specifier: ^22.13.4
         version: 22.19.18
@@ -482,6 +488,9 @@ importers:
 
   packages/lorcana/lorcana-types:
     dependencies:
+      '@tcg/card-model':
+        specifier: link:../../../../agnostic-simulator/packages/card-model
+        version: link:../../../../agnostic-simulator/packages/card-model
       unique-names-generator:
         specifier: ^4.7.1
         version: 4.7.1

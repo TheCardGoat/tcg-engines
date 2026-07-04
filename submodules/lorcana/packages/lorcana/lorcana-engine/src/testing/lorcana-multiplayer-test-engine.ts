@@ -108,6 +108,8 @@ export interface LorcanaTestEngineConfig {
   initialView?: GameTestView;
   /** Pre-built static resources (e.g. from fromInitialStates). When not set, an empty bundle is used. */
   staticResources?: MatchStaticResources;
+  /** Disable when a simulator session only broadcasts full-state updates and does not need replay patches. */
+  capturePatches?: boolean;
   /** Time control configuration for the match. Defaults to no clock. */
   timeControl?: TimeControlConfig;
 }
@@ -167,6 +169,7 @@ export class LorcanaMultiplayerTestEngine {
       goingFirst: CANONICAL_PLAYER_ONE as PlayerId,
       cardCatalog: staticResources.cards,
       cardsMaps,
+      capturePatches: config.capturePatches,
       debugServerCommunication: debugMode,
       timeControl: config.timeControl,
     };
@@ -293,6 +296,7 @@ export class LorcanaMultiplayerTestEngine {
       startingInk: resolvedOptions.startingInk,
       initialView: resolvedOptions.initialView,
       staticResources: bundle.staticResources,
+      capturePatches: resolvedOptions.capturePatches,
       timeControl: resolvedOptions.timeControl,
     };
 

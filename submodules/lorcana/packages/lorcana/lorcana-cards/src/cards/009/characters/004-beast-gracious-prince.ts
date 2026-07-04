@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { beastGraciousPrinceI18n } from "./004-beast-gracious-prince.i18n";
 
 export const beastGraciousPrince: CharacterCard = {
-  id: "Jpj",
+  id: "anA",
   canonicalId: "ci_TjB",
+  slug: "lorcana-ci_TjB",
+  printings: [
+    {
+      id: "set9-004",
+      artId: "set9-004",
+      setCode: "set9",
+      collectorNumber: "4",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-004"],
   cardType: "character",
   name: "Beast",
@@ -20,7 +31,7 @@ export const beastGraciousPrince: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8016f590ebb344a2934d76f614fedbba",
-    tcgPlayer: 651122,
+    tcgPlayer: "651122",
   },
   text: [
     {

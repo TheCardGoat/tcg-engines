@@ -23,15 +23,16 @@ export const minnieMouseWideeyedDiverI18n: Record<Languages, I18nProperties> = {
     version: "Wide-Eyed Diver",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named Minnie Mouse.)",
       },
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "UNDERSEA ADVENTURE",
+        title: "Undersea Adventure",
         description:
-          "Whenever you play a second action in a turn, this character gets +2 this turn.",
+          "Whenever you play a second action in a turn, this character gets +2 {L} this turn.",
       },
     ],
   },
@@ -40,15 +41,16 @@ export const minnieMouseWideeyedDiverI18n: Record<Languages, I18nProperties> = {
     version: "Wide-Eyed Diver",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named Minnie Mouse.)",
       },
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "UNDERSEA ADVENTURE",
+        title: "Undersea Adventure",
         description:
-          "Whenever you play a second action in a turn, this character gets +2 this turn.",
+          "Whenever you play a second action in a turn, this character gets +2 {L} this turn.",
       },
     ],
   },
@@ -57,15 +59,16 @@ export const minnieMouseWideeyedDiverI18n: Record<Languages, I18nProperties> = {
     version: "Wide-Eyed Diver",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named Minnie Mouse.)",
       },
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "UNDERSEA ADVENTURE",
+        title: "Undersea Adventure",
         description:
-          "Whenever you play a second action in a turn, this character gets +2 this turn.",
+          "Whenever you play a second action in a turn, this character gets +2 {L} this turn.",
       },
     ],
   },

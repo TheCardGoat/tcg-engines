@@ -16,7 +16,7 @@ export const boomerHasTheBeakI18n: Record<Languages, I18nProperties> = {
     version: "Der mit dem Schnabel",
     text: [
       {
-        title: "HAB IHN GEFUNDEN!",
+        title: "Hab ihn gefunden!",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen beschädigten Charakter deiner Wahl erschöpfen.",
       },
@@ -27,7 +27,7 @@ export const boomerHasTheBeakI18n: Record<Languages, I18nProperties> = {
     version: "A le bec",
     text: [
       {
-        title: "REPÉRÉ!",
+        title: "Repéré!",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage ayant au moins un dommage et l'épuiser.",
       },
@@ -38,7 +38,7 @@ export const boomerHasTheBeakI18n: Record<Languages, I18nProperties> = {
     version: "Quello col Becco",
     text: [
       {
-        title: "L'HO TROVATO!",
+        title: "L'Ho Trovato!",
         description:
           "Quando giochi questo personaggio, puoi impegnare un personaggio danneggiato a tua scelta.",
       },

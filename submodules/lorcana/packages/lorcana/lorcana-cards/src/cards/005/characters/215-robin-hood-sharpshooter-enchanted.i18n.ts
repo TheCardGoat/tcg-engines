@@ -17,7 +17,7 @@ export const robinHoodSharpshooterEnchantedI18n: Record<Languages, I18nPropertie
     version: "Scharfschütze",
     text: [
       {
-        title: "MEIN GRÖSSTER AUFTRITT",
+        title: "Mein größter Auftritt",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Aktionskarte daraus, die 6 oder weniger kostet, aufdecken und kostenlos ausspielen. Lege die restlichen Karten auf deinen Ablagestapel.",
       },
@@ -28,7 +28,7 @@ export const robinHoodSharpshooterEnchantedI18n: Record<Languages, I18nPropertie
     version: "Tireur d'élite",
     text: [
       {
-        title: "MON PLUS MERVEILLEUX EXPLOIT",
+        title: "Mon plus merveilleux exploit",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, regardez les 4 cartes du dessus de votre pioche. Parmi ces cartes, vous pouvez révéler et jouer gratuitement une carte Action coûtant 6 ou moins. Placez le reste dans votre défausse.",
       },
@@ -39,7 +39,7 @@ export const robinHoodSharpshooterEnchantedI18n: Record<Languages, I18nPropertie
     version: "Tiratore Scelto",
     text: [
       {
-        title: "LA MIA PIÙ GRANDE INTERPRETAZIONE",
+        title: "La Mia Più Grande Interpretazione",
         description:
           "Ogni volta che questo personaggio va all'avventura, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta azione con costo 6 o inferiore e giocarla gratis. Metti il resto nei tuoi scarti.",
       },

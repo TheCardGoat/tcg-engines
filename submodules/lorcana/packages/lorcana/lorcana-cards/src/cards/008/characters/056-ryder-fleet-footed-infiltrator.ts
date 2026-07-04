@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { ryderFleetfootedInfiltratorI18n } from "./056-ryder-fleet-footed-infiltrator.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const ryderFleetfootedInfiltrator: CharacterCard = {
   id: "yNt",
   canonicalId: "ci_yNt",
+  slug: "lorcana-ci_yNt",
+  printings: [
+    {
+      id: "set8-056",
+      artId: "set8-056",
+      setCode: "set8",
+      collectorNumber: "56",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-056"],
   cardType: "character",
   name: "Ryder",
@@ -21,7 +33,7 @@ export const ryderFleetfootedInfiltrator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_83ba8c925b1d471d8f3833bdf059d6ad",
-    tcgPlayer: 631338,
+    tcgPlayer: "631338",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Ally"],

@@ -4,6 +4,17 @@ import { wreckitRalphAdmiralUnderpantsI18n } from "./021-wreck-it-ralph-admiral-
 export const wreckitRalphAdmiralUnderpants: CharacterCard = {
   id: "rui",
   canonicalId: "ci_rui",
+  slug: "lorcana-ci_rui",
+  printings: [
+    {
+      id: "set5-021",
+      artId: "set5-021",
+      setCode: "set5",
+      collectorNumber: "21",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-021"],
   cardType: "character",
   name: "Wreck-It Ralph",
@@ -20,7 +31,7 @@ export const wreckitRalphAdmiralUnderpants: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4bb6eeb124574cc6ac3695e255598cfb",
-    tcgPlayer: 559783,
+    tcgPlayer: "559783",
   },
   text: [
     {

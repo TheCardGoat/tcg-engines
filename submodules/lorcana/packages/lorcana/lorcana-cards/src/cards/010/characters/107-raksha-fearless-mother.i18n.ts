@@ -17,9 +17,9 @@ export const rakshaFearlessMotherI18n: Record<Languages, I18nProperties> = {
     version: "Furchtlose Mutter",
     text: [
       {
-        title: "AUF STREIFE",
+        title: "Auf Streife",
         description:
-          "Einmal während deines Zuges darfst du diesen Charakter für 1 weniger an einen Ort bewegen.",
+          "Einmal während deines Zuges darfst du diesen Charakter für 1 {I} weniger an einen Ort bewegen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const rakshaFearlessMotherI18n: Record<Languages, I18nProperties> = {
     version: "Mère sans peur",
     text: [
       {
-        title: "EN PATROUILLE",
+        title: "En patrouille",
         description:
-          "Une fois durant votre tour, vous pouvez payer 1 de moins pour déplacer ce personnage sur un lieu.",
+          "Une fois durant votre tour, vous pouvez payer 1 {I} de moins pour déplacer ce personnage sur un lieu.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const rakshaFearlessMotherI18n: Record<Languages, I18nProperties> = {
     version: "Madre Impavida",
     text: [
       {
-        title: "DI PATTUGLIA",
+        title: "Di Pattuglia",
         description:
-          "Una volta durante il tuo turno, puoi pagare 1 in meno per spostare questo personaggio in un luogo.",
+          "Una volta durante il tuo turno, puoi pagare 1 {I} in meno per spostare questo personaggio in un luogo.",
       },
     ],
   },

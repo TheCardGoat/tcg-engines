@@ -11,10 +11,28 @@ export const heffalumpsAndWoozlesI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Éfélants et Nouifs",
-    text: "Choisissez un personnage adverse qui ne peut pas être envoyé à l'aventure durant son prochain tour. Piochez une carte.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage adverse qui ne peut pas être envoyé à l'aventure durant son prochain tour. Piochez une carte.",
+      },
+    ],
   },
   it: {
     name: "Efelanti e Noddole",
-    text: "(Un personaggio con costo 2 o superiore può per cantare questa canzone gratis.) Un personaggio avversario a tua scelta non può andare all'avventura durante il suo prossimo turno. Pesca una carta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Un personaggio avversario a tua scelta non può andare all'avventura durante il suo prossimo turno. Pesca una carta.",
+      },
+    ],
   },
 };

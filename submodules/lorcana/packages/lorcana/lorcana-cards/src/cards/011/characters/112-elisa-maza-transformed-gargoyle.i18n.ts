@@ -20,12 +20,12 @@ export const elisaMazaTransformedGargoyleI18n: Record<Languages, I18nProperties>
     version: "Verwandelte Gargoyle",
     text: [
       {
-        title: "FÜR IMMER STARK",
+        title: "Für immer stark",
         description:
-          "Die deiner Charaktere kann nicht unter ihren aufgedruckten Wert reduziert werden.",
+          "Die {S} deiner Charaktere kann nicht unter ihren aufgedruckten Wert reduziert werden.",
       },
       {
-        title: "AM TAGE AUS STEIN",
+        title: "Am Tage aus Stein",
         description:
           "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
       },
@@ -36,12 +36,12 @@ export const elisaMazaTransformedGargoyleI18n: Record<Languages, I18nProperties>
     version: "Transformée en gargouille",
     text: [
       {
-        title: "FORTE POUR TOUJOURS",
+        title: "Forte pour toujours",
         description:
-          "La de vos personnages ne peut pas être réduite en dessous de leur valeur imprimée.",
+          "La {S} de vos personnages ne peut pas être réduite en dessous de leur valeur imprimée.",
       },
       {
-        title: "STATUE LE JOUR",
+        title: "Statue le jour",
         description:
           "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
       },
@@ -52,11 +52,12 @@ export const elisaMazaTransformedGargoyleI18n: Record<Languages, I18nProperties>
     version: "Trasformata in Gargoyle",
     text: [
       {
-        title: "FORTI PER SEMPRE",
-        description: "La dei tuoi personaggi non può essere ridotta sotto al suo valore stampato.",
+        title: "Forti Per Sempre",
+        description:
+          "La {S} dei tuoi personaggi non può essere ridotta sotto al suo valore stampato.",
       },
       {
-        title: "STATUE DI GIORNO",
+        title: "Statue Di Giorno",
         description: "Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
       },
     ],

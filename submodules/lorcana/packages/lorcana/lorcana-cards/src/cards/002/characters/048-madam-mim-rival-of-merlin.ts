@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { madamMimRivalOfMerlinI18n } from "./048-madam-mim-rival-of-merlin.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const madamMimRivalOfMerlin: CharacterCard = {
   id: "ozR",
-  canonicalId: "ci_RM2",
+  canonicalId: "ci_ozR",
+  slug: "lorcana-ci_ozR",
+  printings: [
+    {
+      id: "set2-048",
+      artId: "set2-048",
+      setCode: "set2",
+      collectorNumber: "48",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-048"],
   cardType: "character",
   name: "Madam Mim",
@@ -21,7 +33,7 @@ export const madamMimRivalOfMerlin: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_06dda85b506e4a448ce0615f07758bfa",
-    tcgPlayer: 527737,
+    tcgPlayer: "527737",
   },
   text: [
     {

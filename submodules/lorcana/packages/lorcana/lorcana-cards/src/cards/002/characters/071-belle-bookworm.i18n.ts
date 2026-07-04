@@ -16,9 +16,9 @@ export const belleBookwormI18n: Record<Languages, I18nProperties> = {
     version: "Bücherwurm",
     text: [
       {
-        title: "MANCH EINER GEBRAUCHT SEINE FANTASIE",
+        title: "Manch einer gebraucht seine Fantasie",
         description:
-          "Solange mindestens eine gegnerische Person keine Handkarten hat, erhält dieser Charakter +2.",
+          "Solange mindestens eine gegnerische Person keine Handkarten hat, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -27,8 +27,9 @@ export const belleBookwormI18n: Record<Languages, I18nProperties> = {
     version: "Rat de bibliothèque",
     text: [
       {
-        title: "UTILISEZ VOTRE IMAGINATION",
-        description: "Tant qu'un adversaire n'a plus de cartes en main, ce personnage gagne +2.",
+        title: "Utilisez votre imagination",
+        description:
+          "Tant qu'un adversaire n'a plus de cartes en main, ce personnage gagne +2 {L}.",
       },
     ],
   },
@@ -37,8 +38,8 @@ export const belleBookwormI18n: Record<Languages, I18nProperties> = {
     version: "Bookworm",
     text: [
       {
-        title: "USE YOUR IMAGINATION",
-        description: "While an opponent has no cards in their hand, this character gets +2.",
+        title: "Use Your Imagination",
+        description: "While an opponent has no cards in their hand, this character gets +2 {L}.",
       },
     ],
   },

@@ -9,16 +9,16 @@ export const daisyDuckSpotlessFoodfighterI18n: Record<Languages, I18nProperties>
   de: {
     name: "Daisy Duck",
     version: "Makellos trotz Essensschlacht",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Daisy",
     version: "Bagarreuse immaculée",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Paperina",
     version: "Combattente Senza Macchia",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

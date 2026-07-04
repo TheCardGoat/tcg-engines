@@ -4,6 +4,17 @@ import { todPlayfulKitI18n } from "./090-tod-playful-kit.i18n";
 export const todPlayfulKit: CharacterCard = {
   id: "43t",
   canonicalId: "ci_43t",
+  slug: "lorcana-ci_43t",
+  printings: [
+    {
+      id: "set11-090",
+      artId: "set11-090",
+      setCode: "set11",
+      collectorNumber: "90",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-090"],
   cardType: "character",
   name: "Tod",
@@ -20,7 +31,7 @@ export const todPlayfulKit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_da2a2175ec4d44f0b624880a24548506",
-    tcgPlayer: 673426,
+    tcgPlayer: "673426",
   },
   text: [
     {

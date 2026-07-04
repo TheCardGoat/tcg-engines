@@ -4,6 +4,17 @@ import { cruellaDeVilFashionableCruiserI18n } from "./144-cruella-de-vil-fashion
 export const cruellaDeVilFashionableCruiser: CharacterCard = {
   id: "RUT",
   canonicalId: "ci_YdA",
+  slug: "lorcana-ci_YdA",
+  printings: [
+    {
+      id: "set2-144",
+      artId: "set2-144",
+      setCode: "set2",
+      collectorNumber: "144",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-144", "set9-145"],
   cardType: "character",
   name: "Cruella De Vil",
@@ -20,7 +31,7 @@ export const cruellaDeVilFashionableCruiser: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f3478602630b4f20aed9e34d8ce4d995",
-    tcgPlayer: 650080,
+    tcgPlayer: "650080",
   },
   text: [
     {

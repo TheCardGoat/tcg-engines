@@ -17,7 +17,7 @@ export const gurgiAppleLoverI18n: Record<Languages, I18nProperties> = {
     version: "Apfelliebhaber",
     text: [
       {
-        title: "GLÜCKSTAG",
+        title: "Glückstag",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -28,7 +28,7 @@ export const gurgiAppleLoverI18n: Record<Languages, I18nProperties> = {
     version: "Mordu de pommes",
     text: [
       {
-        title: "CHANCE LUI SOURIT",
+        title: "Chance lui sourit",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui retirer jusqu'à 2 dommages.",
       },
@@ -39,7 +39,7 @@ export const gurgiAppleLoverI18n: Record<Languages, I18nProperties> = {
     version: "Amante delle Mele",
     text: [
       {
-        title: "GIORNO FORTUNATO",
+        title: "Giorno Fortunato",
         description:
           "Quando giochi questo personaggio, puoi rimuovere fino a 2 danni da un personaggio a tua scelta.",
       },

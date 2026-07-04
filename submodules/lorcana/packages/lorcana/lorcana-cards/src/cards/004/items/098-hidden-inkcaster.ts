@@ -3,7 +3,18 @@ import { hiddenInkcasterI18n } from "./098-hidden-inkcaster.i18n";
 
 export const hiddenInkcaster: ItemCard = {
   id: "RqX",
-  canonicalId: "ci_RqX",
+  canonicalId: "ci_SVb",
+  slug: "lorcana-ci_SVb",
+  printings: [
+    {
+      id: "set4-098",
+      artId: "set4-098",
+      setCode: "set4",
+      collectorNumber: "98",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-098"],
   cardType: "item",
   name: "Hidden Inkcaster",
@@ -16,7 +27,7 @@ export const hiddenInkcaster: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_8bea9b8848964337b64e2ceed5c41302",
-    tcgPlayer: 549437,
+    tcgPlayer: "549437",
   },
   text: [
     {

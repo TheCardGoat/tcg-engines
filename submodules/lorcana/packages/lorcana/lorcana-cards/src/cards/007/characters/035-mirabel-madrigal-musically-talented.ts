@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mirabelMadrigalMusicallyTalentedI18n } from "./035-mirabel-madrigal-musically-talented.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const mirabelMadrigalMusicallyTalented: CharacterCard = {
-  id: "R2x",
+  id: "pjD",
   canonicalId: "ci_X10",
+  slug: "lorcana-ci_X10",
+  printings: [
+    {
+      id: "set7-035",
+      artId: "set7-035",
+      setCode: "set7",
+      collectorNumber: "35",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-035"],
   cardType: "character",
   name: "Mirabel Madrigal",
@@ -13,7 +25,7 @@ export const mirabelMadrigalMusicallyTalented: CharacterCard = {
   franchise: "Encanto",
   set: "007",
   cardNumber: 35,
-  rarity: "super_rare",
+  rarity: "common",
   cost: 6,
   strength: 2,
   willpower: 6,
@@ -21,7 +33,7 @@ export const mirabelMadrigalMusicallyTalented: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dbecb4ca526f46ac8faa1a361f1c8bdf",
-    tcgPlayer: 619734,
+    tcgPlayer: "619734",
   },
   text: [
     {

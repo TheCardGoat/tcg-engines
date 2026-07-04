@@ -7,14 +7,17 @@ export const st02HeeroYuy010: PilotCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "ST02-010",
-  externalId: "gundam:st02-010",
-  slug: "heero-yuy-st02-010",
+  canonicalId: "ST02-010",
+  externalIds: { bandai: "gundam:st02-010" },
+  slug: "heero-yuy/st02-010",
   displayName: "Heero Yuy",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-010",
   printings: [
     {
       id: "ST02-010",
+      artId: "ST02-010",
+      setCode: "ST02",
       collectorNumber: "ST02-010",
       cardNumber: "ST02-010",
       set: {
@@ -30,6 +33,8 @@ export const st02HeeroYuy010: PilotCard = {
     },
     {
       id: "ST02-010_p1",
+      artId: "ST02-010_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-010_p1",
       cardNumber: "ST02-010",
       set: {
@@ -45,6 +50,8 @@ export const st02HeeroYuy010: PilotCard = {
     },
     {
       id: "ST02-010_p2",
+      artId: "ST02-010_p2",
+      setCode: "BETA",
       collectorNumber: "ST02-010_p2",
       cardNumber: "ST02-010",
       set: {
@@ -60,6 +67,8 @@ export const st02HeeroYuy010: PilotCard = {
     },
     {
       id: "ST02-010_p3",
+      artId: "ST02-010_p3",
+      setCode: "ST02",
       collectorNumber: "ST02-010_p3",
       cardNumber: "ST02-010",
       set: {
@@ -75,6 +84,8 @@ export const st02HeeroYuy010: PilotCard = {
     },
     {
       id: "ST02-010_p4",
+      artId: "ST02-010_p4",
+      setCode: "PB01",
       collectorNumber: "ST02-010_p4",
       cardNumber: "ST02-010",
       set: {
@@ -89,6 +100,7 @@ export const st02HeeroYuy010: PilotCard = {
       productName: "Premium Accessory Set -Mobile Suit Gundam Wing- [PB01]",
     },
   ],
+  reprints: ["ST02-010", "ST02-010_p1", "ST02-010_p2", "ST02-010_p3", "ST02-010_p4"],
   selectedPrintingId: "ST02-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-010.webp?260424",

@@ -4,6 +4,17 @@ import { johnSmithSnowTrackerI18n } from "./015-john-smith-snow-tracker.i18n";
 export const johnSmithSnowTracker: CharacterCard = {
   id: "HJJ",
   canonicalId: "ci_HJJ",
+  slug: "lorcana-ci_HJJ",
+  printings: [
+    {
+      id: "set11-015",
+      artId: "set11-015",
+      setCode: "set11",
+      collectorNumber: "15",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-015"],
   cardType: "character",
   name: "John Smith",
@@ -20,7 +31,7 @@ export const johnSmithSnowTracker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b1c578429eb547b3b5908a637c491c3e",
-    tcgPlayer: 674828,
+    tcgPlayer: "674828",
   },
   text: [
     {

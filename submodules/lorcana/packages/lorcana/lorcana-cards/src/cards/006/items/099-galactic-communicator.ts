@@ -4,6 +4,17 @@ import { galacticCommunicatorI18n } from "./099-galactic-communicator.i18n";
 export const galacticCommunicator: ItemCard = {
   id: "SR9",
   canonicalId: "ci_SR9",
+  slug: "lorcana-ci_SR9",
+  printings: [
+    {
+      id: "set6-099",
+      artId: "set6-099",
+      setCode: "set6",
+      collectorNumber: "99",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-099"],
   cardType: "item",
   name: "Galactic Communicator",
@@ -16,7 +27,7 @@ export const galacticCommunicator: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6d0654972afb4eb581136a391d3f967b",
-    tcgPlayer: 588088,
+    tcgPlayer: "588088",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { princeJohnPhonyKingI18n } from "./083-prince-john-phony-king.i18n";
 export const princeJohnPhonyKing: CharacterCard = {
   id: "UGT",
   canonicalId: "ci_UGT",
+  slug: "lorcana-ci_UGT",
+  printings: [
+    {
+      id: "set3-083",
+      artId: "set3-083",
+      setCode: "set3",
+      collectorNumber: "83",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-083"],
   cardType: "character",
   name: "Prince John",
@@ -20,7 +31,7 @@ export const princeJohnPhonyKing: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1af5228c0d75411ebc9eccf5cae1c086",
-    tcgPlayer: 539081,
+    tcgPlayer: "539081",
   },
   text: [
     {
@@ -36,9 +47,15 @@ export const princeJohnPhonyKing: CharacterCard = {
         type: "for-each-opponent",
         condition: {
           type: "comparison",
-          left: { type: "lore", controller: "opponent" },
+          left: {
+            type: "lore",
+            controller: "opponent",
+          },
           comparison: "greater",
-          right: { type: "lore", controller: "you" },
+          right: {
+            type: "lore",
+            controller: "you",
+          },
         },
         effect: {
           type: "lose-lore",

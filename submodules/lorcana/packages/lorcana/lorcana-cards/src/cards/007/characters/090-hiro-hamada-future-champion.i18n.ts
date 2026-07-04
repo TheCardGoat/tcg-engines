@@ -16,7 +16,7 @@ export const hiroHamadaFutureChampionI18n: Record<Languages, I18nProperties> = {
     version: "Zukünftiger Champion",
     text: [
       {
-        title: "UNSERE EIGENE SAGA",
+        title: "Unsere eigene Saga",
         description: "Wenn du eine Flutgestalt auf diesen Charakter ausspielst, ziehe 1 Karte.",
       },
     ],
@@ -26,7 +26,7 @@ export const hiroHamadaFutureChampionI18n: Record<Languages, I18nProperties> = {
     version: "Futur champion",
     text: [
       {
-        title: "ÉPOPÉE",
+        title: "Épopée",
         description:
           "Lorsque vous jouez un personnage Floodborn sur cette carte, piochez une carte.",
       },
@@ -37,7 +37,7 @@ export const hiroHamadaFutureChampionI18n: Record<Languages, I18nProperties> = {
     version: "Futuro Campione",
     text: [
       {
-        title: "STORIA DELLE ORIGINI",
+        title: "Storia delle Origini",
         description: "Quando giochi un personaggio Imbevuto sopra a questa carta, pesca una carta.",
       },
     ],

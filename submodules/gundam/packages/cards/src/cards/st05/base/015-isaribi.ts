@@ -6,14 +6,17 @@ export const st05Isaribi015: BaseCard = {
   type: "base",
   traits: ["tekkadan", "warship"],
   id: "ST05-015",
-  externalId: "gundam:st05-015",
-  slug: "isaribi-st05-015",
+  canonicalId: "ST05-015",
+  externalIds: { bandai: "gundam:st05-015" },
+  slug: "isaribi/st05-015",
   displayName: "Isaribi",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-015",
   printings: [
     {
       id: "ST05-015",
+      artId: "ST05-015",
+      setCode: "ST05",
       collectorNumber: "ST05-015",
       cardNumber: "ST05-015",
       set: {
@@ -29,6 +32,8 @@ export const st05Isaribi015: BaseCard = {
     },
     {
       id: "ST05-015_p1",
+      artId: "ST05-015_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-015_p1",
       cardNumber: "ST05-015",
       set: {
@@ -44,6 +49,8 @@ export const st05Isaribi015: BaseCard = {
     },
     {
       id: "ST05-015_p2",
+      artId: "ST05-015_p2",
+      setCode: "ST05",
       collectorNumber: "ST05-015_p2",
       cardNumber: "ST05-015",
       set: {
@@ -58,6 +65,7 @@ export const st05Isaribi015: BaseCard = {
       productName: "NEWTYPE CHALLENGE 2026 MISSION 3 Participation Prize",
     },
   ],
+  reprints: ["ST05-015", "ST05-015_p1", "ST05-015_p2"],
   selectedPrintingId: "ST05-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-015.webp?260424",

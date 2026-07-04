@@ -4,6 +4,17 @@ import { liloBestExplorerEverI18n } from "./174-lilo-best-explorer-ever.i18n";
 export const liloBestExplorerEver: CharacterCard = {
   id: "T3q",
   canonicalId: "ci_sRi",
+  slug: "lorcana-ci_sRi",
+  printings: [
+    {
+      id: "set9-174",
+      artId: "set9-174",
+      setCode: "set9",
+      collectorNumber: "174",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-174"],
   cardType: "character",
   name: "Lilo",
@@ -20,7 +31,7 @@ export const liloBestExplorerEver: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fbccd8fc95fa45009665824b0731c3d3",
-    tcgPlayer: 649236,
+    tcgPlayer: "649236",
   },
   text: [
     {

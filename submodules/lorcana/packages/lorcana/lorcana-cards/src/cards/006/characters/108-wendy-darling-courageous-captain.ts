@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { wendyDarlingCourageousCaptainI18n } from "./108-wendy-darling-courageous-captain.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const wendyDarlingCourageousCaptain: CharacterCard = {
   id: "AYJ",
   canonicalId: "ci_AYJ",
+  slug: "lorcana-ci_AYJ",
+  printings: [
+    {
+      id: "set6-108",
+      artId: "set6-108",
+      setCode: "set6",
+      collectorNumber: "108",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-108"],
   cardType: "character",
   name: "Wendy Darling",
@@ -21,7 +33,7 @@ export const wendyDarlingCourageousCaptain: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f0088a27ad794105a7a6858c5f32e3a8",
-    tcgPlayer: 582540,
+    tcgPlayer: "582540",
   },
   text: [
     {

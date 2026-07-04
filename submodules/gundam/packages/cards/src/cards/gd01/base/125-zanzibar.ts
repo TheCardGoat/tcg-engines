@@ -6,14 +6,17 @@ export const gd01Zanzibar125: BaseCard = {
   type: "base",
   traits: ["zeon", "warship"],
   id: "GD01-125",
-  externalId: "gundam:gd01-125",
-  slug: "zanzibar-gd01-125",
+  canonicalId: "GD01-125",
+  externalIds: { bandai: "gundam:gd01-125" },
+  slug: "zanzibar/gd01-125",
   displayName: "Zanzibar",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-125",
   printings: [
     {
       id: "GD01-125",
+      artId: "GD01-125",
+      setCode: "GD01",
       collectorNumber: "GD01-125",
       cardNumber: "GD01-125",
       set: {
@@ -28,6 +31,7 @@ export const gd01Zanzibar125: BaseCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-125"],
   selectedPrintingId: "GD01-125",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-125.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-125.webp?260424",

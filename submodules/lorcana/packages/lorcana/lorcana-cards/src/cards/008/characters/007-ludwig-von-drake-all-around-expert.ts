@@ -4,6 +4,17 @@ import { ludwigVonDrakeAllaroundExpertI18n } from "./007-ludwig-von-drake-all-ar
 export const ludwigVonDrakeAllaroundExpert: CharacterCard = {
   id: "T22",
   canonicalId: "ci_T22",
+  slug: "lorcana-ci_T22",
+  printings: [
+    {
+      id: "set8-007",
+      artId: "set8-007",
+      setCode: "set8",
+      collectorNumber: "7",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-007"],
   cardType: "character",
   name: "Ludwig Von Drake",
@@ -19,7 +30,7 @@ export const ludwigVonDrakeAllaroundExpert: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a22eb000866a46439fd736cd7a8ec535",
-    tcgPlayer: 631353,
+    tcgPlayer: "631353",
   },
   text: [
     {

@@ -16,7 +16,7 @@ export const docBoldKnightI18n: Record<Languages, I18nProperties> = {
     version: "Ritter der Kühnheit",
     text: [
       {
-        title: "DRASTISCHE MASSNAHMEN",
+        title: "Drastische Maßnahmen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du alle Karten von deiner Hand abwerfen, um 2 Karten zu ziehen.",
       },
@@ -27,7 +27,7 @@ export const docBoldKnightI18n: Record<Languages, I18nProperties> = {
     version: "Chevalier hardi",
     text: [
       {
-        title: "MESURES DRASTIQUES",
+        title: "Mesures drastiques",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez défausser votre main pour piocher 2 cartes.",
       },
@@ -38,7 +38,7 @@ export const docBoldKnightI18n: Record<Languages, I18nProperties> = {
     version: "Cavaliere Audace",
     text: [
       {
-        title: "MISURE DRASTICHE",
+        title: "Misure Drastiche",
         description:
           "Quando giochi questo personaggio, puoi scartare la tua mano per pescare 2 carte.",
       },

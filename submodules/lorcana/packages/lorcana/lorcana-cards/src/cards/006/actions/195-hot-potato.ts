@@ -4,6 +4,17 @@ import { hotPotatoI18n } from "./195-hot-potato.i18n";
 export const hotPotato: ActionCard = {
   id: "7Fa",
   canonicalId: "ci_7Fa",
+  slug: "lorcana-ci_7Fa",
+  printings: [
+    {
+      id: "set6-195",
+      artId: "set6-195",
+      setCode: "set6",
+      collectorNumber: "195",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-195"],
   cardType: "action",
   name: "Hot Potato",
@@ -16,7 +27,7 @@ export const hotPotato: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ab3a202cb90a43beac5943ac4baad67a",
-    tcgPlayer: 578234,
+    tcgPlayer: "578234",
   },
   text: "Choose one:\n- Deal 2 damage to chosen character.\n- Banish chosen item.",
   abilities: [

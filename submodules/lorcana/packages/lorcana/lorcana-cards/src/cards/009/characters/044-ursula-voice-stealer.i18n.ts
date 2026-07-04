@@ -17,7 +17,7 @@ export const ursulaVoiceStealerI18n: Record<Languages, I18nProperties> = {
     version: "Stimmendiebin",
     text: [
       {
-        title: "SING FÜR MICH",
+        title: "Sing für mich",
         description:
           "Wenn du diesen Charakter ausspielst, erschöpfe einen gegnerischen, bereiten Charakter deiner Wahl. Dann darfst du ein Lied, das maximal so viel wie der erschöpfte Charakter kostet, kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const ursulaVoiceStealerI18n: Record<Languages, I18nProperties> = {
     version: "Voleuse de voix",
     text: [
       {
-        title: "CHANTE POUR MOI",
+        title: "Chante pour moi",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage redressé adverse et épuisez-le. Ensuite, vous pouvez jouer gratuitement une chanson avec un coût égal ou inférieur au coût du personnage ainsi épuisé.",
       },
@@ -39,7 +39,7 @@ export const ursulaVoiceStealerI18n: Record<Languages, I18nProperties> = {
     version: "Ladra di Voci",
     text: [
       {
-        title: "CANTA PER ME",
+        title: "Canta per Me",
         description:
           "Quando giochi questo personaggio, impegna un personaggio avversario preparato a tua scelta. Poi, puoi giocare una canzone con costo pari o inferiore al costo del personaggio impegnato, gratis.",
       },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { heraQueenOfTheGodsI18n } from "./076-hera-queen-of-the-gods.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const heraQueenOfTheGods: CharacterCard = {
   id: "vHX",
   canonicalId: "ci_vHX",
+  slug: "lorcana-ci_vHX",
+  printings: [
+    {
+      id: "set4-076",
+      artId: "set4-076",
+      setCode: "set4",
+      collectorNumber: "76",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-076"],
   cardType: "character",
   name: "Hera",
@@ -21,7 +33,7 @@ export const heraQueenOfTheGods: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0ac3ee4c2bb043a280fa2e4f7f6505e7",
-    tcgPlayer: 549668,
+    tcgPlayer: "549668",
   },
   text: [
     {
@@ -32,8 +44,8 @@ export const heraQueenOfTheGods: CharacterCard = {
       description: "Your characters named Zeus gain Ward.",
     },
     {
-      title: "YOU'RE A TRUE HERO",
-      description: "Your characters named Hercules gain Evasive.",
+      title: "YOU'RE",
+      description: "A TRUE HERO Your characters named Hercules gain Evasive.",
     },
   ],
   classifications: ["Storyborn", "Queen", "Deity"],

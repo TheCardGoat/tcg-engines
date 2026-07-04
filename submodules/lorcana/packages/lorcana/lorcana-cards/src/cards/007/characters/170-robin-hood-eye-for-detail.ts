@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { robinHoodEyeForDetailI18n } from "./170-robin-hood-eye-for-detail.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const robinHoodEyeForDetail: CharacterCard = {
   id: "JTC",
   canonicalId: "ci_JTC",
+  slug: "lorcana-ci_JTC",
+  printings: [
+    {
+      id: "set7-170",
+      artId: "set7-170",
+      setCode: "set7",
+      collectorNumber: "170",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-170"],
   cardType: "character",
   name: "Robin Hood",
@@ -21,7 +33,7 @@ export const robinHoodEyeForDetail: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_35c7b95d00c14614857dcb98e4fb99e1",
-    tcgPlayer: 618712,
+    tcgPlayer: "618712",
   },
   text: "Support",
   classifications: ["Storyborn", "Hero"],

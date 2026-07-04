@@ -4,6 +4,17 @@ import { ursulaPowerHungryI18n } from "./059-ursula-power-hungry.i18n";
 export const ursulaPowerHungry: CharacterCard = {
   id: "O7h",
   canonicalId: "ci_O7h",
+  slug: "lorcana-ci_O7h",
+  printings: [
+    {
+      id: "set1-059",
+      artId: "set1-059",
+      setCode: "set1",
+      collectorNumber: "59",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-059"],
   cardType: "character",
   name: "Ursula",
@@ -20,7 +31,7 @@ export const ursulaPowerHungry: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2700ee961f214ad48e6284b2a8e864dc",
-    tcgPlayer: 508755,
+    tcgPlayer: "508755",
   },
   text: [
     {

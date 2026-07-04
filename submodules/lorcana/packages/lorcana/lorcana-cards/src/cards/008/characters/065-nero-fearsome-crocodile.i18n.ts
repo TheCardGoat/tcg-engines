@@ -17,9 +17,9 @@ export const neroFearsomeCrocodileI18n: Record<Languages, I18nProperties> = {
     version: "Furchteinflößendes Krokodil",
     text: [
       {
-        title: "UND GEMEIN",
+        title: "Und gemein",
         description:
-          "— Verschiebe 1 Schadensmarker von diesem Charakter zu einem gegnerischen Charakter deiner Wahl.",
+          "{E} — Verschiebe 1 Schadensmarker von diesem Charakter zu einem gegnerischen Charakter deiner Wahl.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const neroFearsomeCrocodileI18n: Record<Languages, I18nProperties> = {
     version: "Redoutable crocodile",
     text: [
       {
-        title: "ET MESQUIN",
+        title: "Et mesquin",
         description:
-          "— Déplacez 1 dommage de ce personnage-ci sur un personnage adverse de votre choix.",
+          "{E} — Déplacez 1 dommage de ce personnage-ci sur un personnage adverse de votre choix.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const neroFearsomeCrocodileI18n: Record<Languages, I18nProperties> = {
     version: "Coccodrillo Spaventoso",
     text: [
       {
-        title: "E CATTIVO",
+        title: "E Cattivo",
         description:
-          "— Sposta 1 segnalino danno da questo personaggio a un personaggio avversario a tua scelta.",
+          "{E} — Sposta 1 segnalino danno da questo personaggio a un personaggio avversario a tua scelta.",
       },
     ],
   },

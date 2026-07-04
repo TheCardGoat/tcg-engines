@@ -4,6 +4,17 @@ import { nothingToHideI18n } from "./165-nothing-to-hide.i18n";
 export const nothingToHide: ActionCard = {
   id: "VnI",
   canonicalId: "ci_VnI",
+  slug: "lorcana-ci_VnI",
+  printings: [
+    {
+      id: "set2-165",
+      artId: "set2-165",
+      setCode: "set2",
+      collectorNumber: "165",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-165"],
   cardType: "action",
   name: "Nothing to Hide",
@@ -16,7 +27,7 @@ export const nothingToHide: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e295d49c71554b108a26b197046ca47c",
-    tcgPlayer: 526744,
+    tcgPlayer: "526744",
   },
   text: "Each opponent reveals their hand. Draw a card.",
   abilities: [

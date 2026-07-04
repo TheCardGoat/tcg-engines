@@ -17,7 +17,7 @@ export const treasureGuardianForebodingSentryI18n: Record<Languages, I18nPropert
     version: "Bedrohlicher Wächter",
     text: [
       {
-        title: "UNGEHEURER SCHATZ",
+        title: "Ungeheurer Schatz",
         description:
           "Wenn du diesen Charakter ausspielst, falls du eine Illusion im Spiel hast, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const treasureGuardianForebodingSentryI18n: Record<Languages, I18nPropert
     version: "Sentinelle inquiétante",
     text: [
       {
-        title: "TRÉSOR INESTIMABLE",
+        title: "Trésor inestimable",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un personnage Illusion en jeu, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const treasureGuardianForebodingSentryI18n: Record<Languages, I18nPropert
     version: "Sentinella Profetica",
     text: [
       {
-        title: "TESORO INDICIBILE",
+        title: "Tesoro Indicibile",
         description:
           "Quando giochi questo personaggio, se hai in gioco un personaggio Illusione, puoi pescare una carta.",
       },

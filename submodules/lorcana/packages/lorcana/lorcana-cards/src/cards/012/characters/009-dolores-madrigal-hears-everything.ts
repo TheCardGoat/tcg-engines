@@ -4,6 +4,17 @@ import { doloresMadrigalHearsEverythingI18n } from "./009-dolores-madrigal-hears
 export const doloresMadrigalHearsEverything: CharacterCard = {
   id: "t3K",
   canonicalId: "ci_t3K",
+  slug: "lorcana-ci_t3K",
+  printings: [
+    {
+      id: "set12-009",
+      artId: "set12-009",
+      setCode: "set12",
+      collectorNumber: "9",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-009"],
   cardType: "character",
   name: "Dolores Madrigal",
@@ -20,6 +31,7 @@ export const doloresMadrigalHearsEverything: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_01acad281686403cabf7d98f5026bc7a",
+    tcgPlayer: "692010",
   },
   text: [
     {

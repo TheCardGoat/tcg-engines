@@ -11,10 +11,26 @@ export const treasuresUntoldI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Tous ces Secrets",
-    text: "Reprenez en main jusqu'à 2 cartes Objet de votre défausse.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 6 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Reprenez en main jusqu'à 2 cartes Objet de votre défausse.",
+      },
+    ],
   },
   it: {
     name: "Che Ricchezze",
-    text: "(Un personaggio con costo 6 o superiore può per cantare questa canzone gratis.) Riprendi in mano fino a 2 carte oggetto dai tuoi scarti.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 6 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Riprendi in mano fino a 2 carte oggetto dai tuoi scarti.",
+      },
+    ],
   },
 };

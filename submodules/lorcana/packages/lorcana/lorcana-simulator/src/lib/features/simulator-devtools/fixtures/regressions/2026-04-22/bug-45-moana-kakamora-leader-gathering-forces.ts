@@ -8,16 +8,23 @@ import {
 import { createFixture } from "../../fixture-factory.js";
 import { goofySetForAdventure, hiddenCoveTranquilHaven } from "@tcg/lorcana-cards/cards/009";
 import { leviathansLairDangerousGround, touchTheSky } from "@tcg/lorcana-cards/cards/012";
+import {
+  carlFredricksenOnTheMove,
+  colonelHathiOnTheMarch,
+  rapunzelsTowerTakenByTheVine,
+} from "@tcg/lorcana-cards/cards/013";
 
 export const bug45MoanaKakamoraLeaderGatheringForcesFixture = createFixture({
   id: "bug-45-moana-kakamora-leader-gathering-forces",
   name: "Bug 45 - Moana Kakamora Leader / GATHERING FORCES multi-character move",
   description:
-    "Moana - Kakamora Leader in hand with 3 Kakamora characters and the Flotilla Coconut Armada location in play. Playing Moana should offer a prompt to move ANY NUMBER of your characters to the same location. Reported: only 1 character slot appears but up to 5 location slots.",
+    "Moana - Kakamora Leader in hand with 3 Kakamora characters and the Flotilla Coconut Armada location in play. Playing Moana should offer a prompt to move ANY NUMBER of your characters to the same location. Reported: only 1 character slot appears but up to 5 location slots. Carl Fredricksen - On the Move is also staged with Rapunzel's Tower so the same route validates his optional play-a-location move prompt.",
   playerOne: {
-    hand: [moanaKakamoraLeader, touchTheSky],
-    inkwell: moanaKakamoraLeader.cost,
+    hand: [moanaKakamoraLeader, touchTheSky, rapunzelsTowerTakenByTheVine],
+    inkwell: moanaKakamoraLeader.cost + rapunzelsTowerTakenByTheVine.cost,
     play: [
+      colonelHathiOnTheMarch,
+      carlFredricksenOnTheMove,
       goofySetForAdventure,
       kakamoraBoardingParty,
       kakamoraLongrangeSpecialist,

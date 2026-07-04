@@ -15,6 +15,7 @@ const ANIMATION_SPEED_STORAGE_KEY = "lorcana.simulator.animationSpeed";
 const SOUND_VOLUME_STORAGE_KEY = "lorcana.simulator.soundVolume";
 const ACCESSIBLE_MOBILE_CONTROLS_STORAGE_KEY = "lorcana.simulator.accessibleMobileControls";
 const SHOW_ZONE_COUNTERS_STORAGE_KEY = "lorcana.simulator.showZoneCounters";
+const PRIORITY_NUDGE_ENABLED_STORAGE_KEY = "lorcana.simulator.priorityNudgeEnabled";
 const SELECTED_PLAYMAT_STORAGE_KEY = "lorcana.simulator.selectedPlaymat";
 const SELECTED_CARD_BACK_STORAGE_KEY = "lorcana.simulator.selectedCardBack";
 const CARD_INFO_MODE_STORAGE_KEY = "lorcana.simulator.cardInfoMode";
@@ -27,6 +28,7 @@ export const DEFAULT_PLAYER_SETTINGS = {
   soundVolume: 50,
   accessibleMobileControls: false,
   showZoneCounters: false,
+  priorityNudgeEnabled: true,
   discordPresenceEnabled: true,
   selectedPlaymat: "default",
   selectedCardBack: "default",
@@ -39,6 +41,7 @@ export const DEFAULT_PLAYER_SETTINGS = {
   soundVolume: number;
   accessibleMobileControls: boolean;
   showZoneCounters: boolean;
+  priorityNudgeEnabled: boolean;
   discordPresenceEnabled: boolean;
   selectedPlaymat: string;
   selectedCardBack: string;
@@ -54,6 +57,7 @@ export interface ServerGameplaySettings {
   soundVolume?: number;
   accessibleMobileControls?: boolean;
   showZoneCounters?: boolean;
+  priorityNudgeEnabled?: boolean;
   discordPresenceEnabled?: boolean;
   selectedLocale?: string;
   cardInfoMode?: CardInfoMode;
@@ -88,6 +92,7 @@ export class PlayerSettingsStore {
   soundVolume = $state<number>(DEFAULT_PLAYER_SETTINGS.soundVolume);
   accessibleMobileControls = $state<boolean>(DEFAULT_PLAYER_SETTINGS.accessibleMobileControls);
   showZoneCounters = $state<boolean>(DEFAULT_PLAYER_SETTINGS.showZoneCounters);
+  priorityNudgeEnabled = $state<boolean>(DEFAULT_PLAYER_SETTINGS.priorityNudgeEnabled);
   selectedPlaymat = $state(DEFAULT_PLAYER_SETTINGS.selectedPlaymat);
   selectedCardBack = $state(DEFAULT_PLAYER_SETTINGS.selectedCardBack);
   cardInfoMode = $state<CardInfoMode>(DEFAULT_PLAYER_SETTINGS.cardInfoMode);
@@ -163,6 +168,13 @@ export class PlayerSettingsStore {
       localStorage.setItem(
         SHOW_ZONE_COUNTERS_STORAGE_KEY,
         serverSettings.showZoneCounters ? "true" : "false",
+      );
+    }
+    if (serverSettings.priorityNudgeEnabled !== undefined) {
+      this.priorityNudgeEnabled = serverSettings.priorityNudgeEnabled;
+      localStorage.setItem(
+        PRIORITY_NUDGE_ENABLED_STORAGE_KEY,
+        serverSettings.priorityNudgeEnabled ? "true" : "false",
       );
     }
     if (serverSettings.cardInfoMode === "detailed" || serverSettings.cardInfoMode === "quick") {
@@ -249,6 +261,13 @@ export class PlayerSettingsStore {
       this.showZoneCounters = false;
     }
 
+    const storedPriorityNudgeEnabled = localStorage.getItem(PRIORITY_NUDGE_ENABLED_STORAGE_KEY);
+    if (storedPriorityNudgeEnabled === "true") {
+      this.priorityNudgeEnabled = true;
+    } else if (storedPriorityNudgeEnabled === "false") {
+      this.priorityNudgeEnabled = false;
+    }
+
     const storedLocale = localStorage.getItem(PLAYER_LOCALE_STORAGE_KEY);
     if (storedLocale && locales.includes(storedLocale as SupportedLocale)) {
       const nextLocale = storedLocale as SupportedLocale;
@@ -329,6 +348,12 @@ export class PlayerSettingsStore {
     this.showZoneCounters = enabled;
     localStorage.setItem(SHOW_ZONE_COUNTERS_STORAGE_KEY, enabled ? "true" : "false");
     this.#scheduleSave({ showZoneCounters: enabled });
+  };
+
+  handlePriorityNudgeEnabledToggle = (enabled: boolean): void => {
+    this.priorityNudgeEnabled = enabled;
+    localStorage.setItem(PRIORITY_NUDGE_ENABLED_STORAGE_KEY, enabled ? "true" : "false");
+    this.#scheduleSave({ priorityNudgeEnabled: enabled });
   };
 
   handlePlaymatChange = (id: string): void => {

@@ -18,13 +18,13 @@ export const hiddenInkcasterI18n: Record<Languages, I18nProperties> = {
     name: "Verborgener Tintenformer",
     text: [
       {
-        title: "FRISCHE TINTE",
+        title: "Frische Tinte",
         description: "Wenn du diesen Gegenstand ausspielst, ziehe 1 Karte.",
       },
       {
-        title: "UNERWARTETER FUND",
+        title: "Unerwarteter Fund",
         description:
-          "Behandle jede deiner Handkarten so, als würde sie um das Kosten-Sechseck zeigen.",
+          "Behandle jede deiner Handkarten so, als würde sie {C} um das Kosten-Sechseck zeigen.",
       },
     ],
   },
@@ -32,12 +32,12 @@ export const hiddenInkcasterI18n: Record<Languages, I18nProperties> = {
     name: "Invocateur d'encre caché",
     text: [
       {
-        title: "ENCRE FRAÎCHE",
+        title: "Encre fraîche",
         description: "Lorsque vous jouez cet objet, piochez une carte.",
       },
       {
-        title: "TRÉSOR INESPÉRÉ",
-        description: "Toutes les cartes de votre main sont considérées comme ayant.",
+        title: "Trésor inespéré",
+        description: "Toutes les cartes de votre main sont considérées comme ayant {C}.",
       },
     ],
   },
@@ -45,12 +45,12 @@ export const hiddenInkcasterI18n: Record<Languages, I18nProperties> = {
     name: "Inchiostratore Celato",
     text: [
       {
-        title: "INCHIOSTRO FRESCO",
+        title: "Inchiostro Fresco",
         description: "Quando giochi questo oggetto, pesca una carta.",
       },
       {
-        title: "TESORO INASPETTATO",
-        description: "Tutte le carte nella tua mano contano come se avessero.",
+        title: "Tesoro Inaspettato",
+        description: "Tutte le carte nella tua mano contano come se avessero {C}.",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tianaCelebratingPrincessI18n } from "./196-tiana-celebrating-princess.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const tianaCelebratingPrincess: CharacterCard = {
   id: "ivr",
   canonicalId: "ci_ivr",
+  slug: "lorcana-ci_ivr",
+  printings: [
+    {
+      id: "set2-196",
+      artId: "set2-196",
+      setCode: "set2",
+      collectorNumber: "196",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-196"],
   cardType: "character",
   name: "Tiana",
@@ -21,7 +33,7 @@ export const tianaCelebratingPrincess: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5879c143b9484d898408440f80e8531e",
-    tcgPlayer: 516398,
+    tcgPlayer: "516398",
   },
   text: [
     {

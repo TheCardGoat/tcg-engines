@@ -16,7 +16,7 @@ export const scarBetrayerI18n: Record<Languages, I18nProperties> = {
     version: "Verräter",
     text: [
       {
-        title: "LANG LEBE DER KÖNIG",
+        title: "Lang lebe der König",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Mufasa-Charakter deiner Wahl verbannen.",
       },
@@ -27,7 +27,7 @@ export const scarBetrayerI18n: Record<Languages, I18nProperties> = {
     version: "Traître",
     text: [
       {
-        title: "LONGUE VIE AU ROI",
+        title: "Longue vie au roi",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage Mufasa et le bannir.",
       },
@@ -38,7 +38,7 @@ export const scarBetrayerI18n: Record<Languages, I18nProperties> = {
     version: "Traditore",
     text: [
       {
-        title: "LUNGA VITA AL RE",
+        title: "Lunga Vita al Re",
         description:
           "Quando giochi questo personaggio, puoi esiliare un personaggio chiamato Mufasa a tua scelta.",
       },

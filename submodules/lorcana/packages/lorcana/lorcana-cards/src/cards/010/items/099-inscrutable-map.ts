@@ -4,6 +4,17 @@ import { inscrutableMapI18n } from "./099-inscrutable-map.i18n";
 export const inscrutableMap: ItemCard = {
   id: "EeQ",
   canonicalId: "ci_EeQ",
+  slug: "lorcana-ci_EeQ",
+  printings: [
+    {
+      id: "set10-099",
+      artId: "set10-099",
+      setCode: "set10",
+      collectorNumber: "99",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-099"],
   cardType: "item",
   name: "Inscrutable Map",
@@ -16,7 +27,7 @@ export const inscrutableMap: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9c1be117f6004fffaa9455c468395bf7",
-    tcgPlayer: 658445,
+    tcgPlayer: "658445",
   },
   text: [
     {

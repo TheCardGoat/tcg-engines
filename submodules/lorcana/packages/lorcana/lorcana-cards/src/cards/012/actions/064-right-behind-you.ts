@@ -4,6 +4,17 @@ import { rightBehindYouI18n } from "./064-right-behind-you.i18n";
 export const rightBehindYou: ActionCard = {
   id: "L0a",
   canonicalId: "ci_L0a",
+  slug: "lorcana-ci_L0a",
+  printings: [
+    {
+      id: "set12-064",
+      artId: "set12-064",
+      setCode: "set12",
+      collectorNumber: "64",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-064"],
   cardType: "action",
   name: "Right Behind You",
@@ -16,6 +27,7 @@ export const rightBehindYou: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ff9b8c01070340d5ba17656c5ef0c2bf",
+    tcgPlayer: "690530",
   },
   text: "Draw a card. If you have a Seven Dwarfs character and a Princess character in play, you may play a Seven Dwarfs character for free.",
   abilities: [

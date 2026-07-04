@@ -4,6 +4,17 @@ import { nathanielFlintNotoriousPirateI18n } from "./196-nathaniel-flint-notorio
 export const nathanielFlintNotoriousPirate: CharacterCard = {
   id: "mAf",
   canonicalId: "ci_mAf",
+  slug: "lorcana-ci_mAf",
+  printings: [
+    {
+      id: "set8-196",
+      artId: "set8-196",
+      setCode: "set8",
+      collectorNumber: "196",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-196"],
   cardType: "character",
   name: "Nathaniel Flint",
@@ -20,13 +31,13 @@ export const nathanielFlintNotoriousPirate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_06dcb232c2b84e47923c74acc1f755aa",
-    tcgPlayer: 631836,
+    tcgPlayer: "631836",
   },
   text: [
     {
       title: "PREDATORY INSTINCT",
       description:
-        "You can't play this character unless an opposing character took damage this turn.",
+        "You can't play this character unless an opposing character was damaged this turn.",
     },
   ],
   classifications: ["Storyborn", "Villain", "Alien", "Pirate", "Captain"],
@@ -39,7 +50,10 @@ export const nathanielFlintNotoriousPirate: CharacterCard = {
         type: "turn-metric",
         metric: "damaged-characters-by-owner",
         ownerScope: "opponent",
-        comparison: { operator: "gte", value: 1 },
+        comparison: {
+          operator: "gte",
+          value: 1,
+        },
       },
       id: "1ub-1",
       name: "PREDATORY INSTINCT",

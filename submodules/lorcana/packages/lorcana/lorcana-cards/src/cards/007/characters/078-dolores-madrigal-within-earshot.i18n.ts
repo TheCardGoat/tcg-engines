@@ -17,7 +17,7 @@ export const doloresMadrigalWithinEarshotI18n: Record<Languages, I18nProperties>
     version: "In Hörweite",
     text: [
       {
-        title: "ICH HÖR' DICH",
+        title: "Ich hör' dich",
         description:
           "Jedes Mal, wenn einer deiner Charaktere ein Lied singt, zeigt eine gegnerische Person deiner Wahl all ihre Handkarten für alle sichtbar vor.",
       },
@@ -28,7 +28,7 @@ export const doloresMadrigalWithinEarshotI18n: Record<Languages, I18nProperties>
     version: "À portée d’oreille",
     text: [
       {
-        title: "JE T'ENTENDS, OUI",
+        title: "Je t'entends, oui",
         description:
           "Chaque fois qu'un ou plusieurs de vos personnages chantent une chanson, choisissez un adversaire qui révèle sa main.",
       },
@@ -39,7 +39,7 @@ export const doloresMadrigalWithinEarshotI18n: Record<Languages, I18nProperties>
     version: "A Portata di Orecchio",
     text: [
       {
-        title: "TI SENTO",
+        title: "Ti Sento",
         description:
           "Ogni volta che uno dei tuoi personaggi canta una canzone, un avversario a tua scelta rivela la sua mano.",
       },

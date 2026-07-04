@@ -7,14 +7,17 @@ export const gd03GrahamAker098: PilotCard = {
   color: "white",
   traits: ["superpower bloc", "un"],
   id: "GD03-098",
-  externalId: "gundam:gd03-098",
-  slug: "graham-aker-gd03-098",
+  canonicalId: "GD03-098",
+  externalIds: { bandai: "gundam:gd03-098" },
+  slug: "graham-aker/gd03-098",
   displayName: "Graham Aker",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-098",
   printings: [
     {
       id: "GD03-098",
+      artId: "GD03-098",
+      setCode: "GD03",
       collectorNumber: "GD03-098",
       cardNumber: "GD03-098",
       set: {
@@ -30,6 +33,8 @@ export const gd03GrahamAker098: PilotCard = {
     },
     {
       id: "GD03-098_p1",
+      artId: "GD03-098_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-098_p1",
       cardNumber: "GD03-098",
       set: {
@@ -44,6 +49,7 @@ export const gd03GrahamAker098: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-098", "GD03-098_p1"],
   selectedPrintingId: "GD03-098",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-098.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-098.webp?260424",

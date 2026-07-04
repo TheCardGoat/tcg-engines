@@ -7,20 +7,14 @@ export const forestDuelI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Duell im Wald",
-    text: 'Deine Charaktere erhalten in diesem Zug: "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand" und Herausfordern +2. (Während die Charaktere herausfordern, erhalten sie +2.)',
+    text: 'Deine Charaktere erhalten in diesem Zug: "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand" und <Herausfordern> +2. (Während die Charaktere herausfordern, erhalten sie +2 {S}.)',
   },
   fr: {
     name: "Duel en Forêt",
-    text: 'Vos personnages gagnent Offensif +2 et "Lorsque ce personnage est banni via un défi, renvoyez-le dans votre main." pour le reste de ce tour. (Lorsqu\'ils défient, ces personnages gagnent +2.)',
+    text: 'Vos personnages gagnent <Offensif> +2 et "Lorsque ce personnage est banni via un défi, renvoyez-le dans votre main." pour le reste de ce tour. (Lorsqu\'ils défient, ces personnages gagnent +2 {S}.)',
   },
   it: {
     name: "Duello nella Foresta",
-    text: [
-      {
-        title: "I",
-        description:
-          'tuoi personaggi ottengono Sfidante +2 e "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta" per questo turno. (Ricevono +2 mentre stanno sfidando.)',
-      },
-    ],
+    text: 'I tuoi personaggi ottengono <Sfidante> +2 e "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta" per questo turno. (Ricevono +2 {S} mentre stanno sfidando.)',
   },
 };

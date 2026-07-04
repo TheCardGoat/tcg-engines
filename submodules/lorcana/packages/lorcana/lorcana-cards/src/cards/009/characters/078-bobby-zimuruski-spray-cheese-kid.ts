@@ -4,6 +4,17 @@ import { bobbyZimuruskiSprayCheeseKidI18n } from "./078-bobby-zimuruski-spray-ch
 export const bobbyZimuruskiSprayCheeseKid: CharacterCard = {
   id: "3V0",
   canonicalId: "ci_3V0",
+  slug: "lorcana-ci_3V0",
+  printings: [
+    {
+      id: "set9-078",
+      artId: "set9-078",
+      setCode: "set9",
+      collectorNumber: "78",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-078"],
   cardType: "character",
   name: "Bobby Zimuruski",
@@ -20,7 +31,7 @@ export const bobbyZimuruskiSprayCheeseKid: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_912d9241d6084800bd0168df05d52bc3",
-    tcgPlayer: 650018,
+    tcgPlayer: "650018",
   },
   text: [
     {

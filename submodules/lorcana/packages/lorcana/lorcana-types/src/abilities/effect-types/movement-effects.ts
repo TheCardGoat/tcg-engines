@@ -225,6 +225,16 @@ export interface EnablePlayFromUnderEffect {
   duration?: EffectDuration;
 }
 
+/**
+ * Enable playing a specific card from discard.
+ */
+export interface EnablePlayFromDiscardEffect {
+  type: "enable-play-from-discard";
+  source?: "source" | "trigger-subject";
+  cardType?: CardType | "song" | "floodborn";
+  duration?: EffectDuration;
+}
+
 // ============================================================================
 // Location Movement Effects
 // ============================================================================

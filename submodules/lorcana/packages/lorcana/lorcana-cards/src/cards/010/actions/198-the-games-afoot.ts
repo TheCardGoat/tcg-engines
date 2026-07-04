@@ -4,6 +4,17 @@ import { theGamesAfootI18n } from "./198-the-games-afoot.i18n";
 export const theGamesAfoot: ActionCard = {
   id: "FDs",
   canonicalId: "ci_FDs",
+  slug: "lorcana-ci_FDs",
+  printings: [
+    {
+      id: "set10-198",
+      artId: "set10-198",
+      setCode: "set10",
+      collectorNumber: "198",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-198"],
   cardType: "action",
   name: "The Game's Afoot!",
@@ -16,7 +27,7 @@ export const theGamesAfoot: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dcc0cd9b218f4392bcf503bf27701202",
-    tcgPlayer: 660361,
+    tcgPlayer: "660361",
   },
   text: "Move up to 2 of your characters to the same location for free. That location gains Resist +2 until the start of your next turn. (Damage dealt to it is reduced by 2.)",
   abilities: [

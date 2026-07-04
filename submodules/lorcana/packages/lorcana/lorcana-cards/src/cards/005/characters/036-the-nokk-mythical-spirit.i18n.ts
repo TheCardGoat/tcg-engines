@@ -17,7 +17,7 @@ export const theNokkMythicalSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Mystischer Geist",
     text: [
       {
-        title: "GEZEITENWECHSEL",
+        title: "Gezeitenwechsel",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du bis zu 2 Schadensmarker von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
       },
@@ -28,7 +28,7 @@ export const theNokkMythicalSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Esprit mythique",
     text: [
       {
-        title: "MARÉES CHANGEANTES",
+        title: "Marées changeantes",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et déplacer jusqu'à 2 de ses dommages sur un personnage adverse de votre choix.",
       },
@@ -39,7 +39,7 @@ export const theNokkMythicalSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Spirito Mitico",
     text: [
       {
-        title: "INVERTIRE LA MAREA",
+        title: "Invertire la Marea",
         description:
           "Quando giochi questo personaggio, puoi spostare fino a 2 segnalini danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },

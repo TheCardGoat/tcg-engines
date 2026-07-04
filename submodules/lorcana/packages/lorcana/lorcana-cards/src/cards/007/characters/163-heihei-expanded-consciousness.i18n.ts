@@ -23,13 +23,15 @@ export const heiheiExpandedConsciousnessI18n: Record<Languages, I18nProperties> 
     version: "Erweitertes Bewusstsein",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Heihei-Charaktere auszuspielen.)",
       },
       {
-        title: "Robust +1",
+        title:
+          "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
       {
-        title: "DEN GEIST BEFREIEN",
+        title: "Den Geist befreien",
         description:
           "Wenn du diesen Charakter ausspielst, lege alle Karten aus deiner Hand verdeckt und erschöpft in deinen Tintenvorrat.",
       },
@@ -40,13 +42,14 @@ export const heiheiExpandedConsciousnessI18n: Record<Languages, I18nProperties> 
     version: "Conscience élargie",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Heihei.)",
       },
       {
-        title: "Résistance +1",
+        title: "<Résistance> +1",
       },
       {
-        title: "FAITES LE VIDE DANS VOTRE ESPRIT",
+        title: "Faites le vide dans votre esprit",
         description:
           "Lorsque vous jouez ce personnage, placez toutes les cartes de votre main dans votre réserve d'encre, face cachée et épuisées.",
       },
@@ -57,13 +60,14 @@ export const heiheiExpandedConsciousnessI18n: Record<Languages, I18nProperties> 
     version: "Dalla Coscienza Ampliata",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Heihei.)",
       },
       {
-        title: "Resistere +1",
+        title: "<Resistere> +1",
       },
       {
-        title: "LIBERA LA TUA MENTE",
+        title: "Libera la Tua Mente",
         description:
           "Quando giochi questo personaggio, aggiungi tutte le carte dalla tua mano al tuo calamaio, a faccia in giù e impegnate.",
       },

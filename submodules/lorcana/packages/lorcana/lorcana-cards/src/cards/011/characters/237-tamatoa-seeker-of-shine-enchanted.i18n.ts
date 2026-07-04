@@ -23,15 +23,15 @@ export const tamatoaSeekerOfShineEnchantedI18n: Record<Languages, I18nProperties
     version: "Sucher des Glanzes",
     text: [
       {
-        title: "Stärken 2",
+        title: "<Stärken> 2 {I}",
       },
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "MACHE ES GLÄNZEND",
+        title: "Mache es Glänzend",
         description:
-          "Jedes Mal, wenn du eine Karte unter einen deiner Charaktere oder Orte legst, erhält dieser Charakter in diesem Zug +1.",
+          "Jedes Mal, wenn du eine Karte unter einen deiner Charaktere oder Orte legst, erhält dieser Charakter in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -40,33 +40,21 @@ export const tamatoaSeekerOfShineEnchantedI18n: Record<Languages, I18nProperties
     version: "Chercheur de bling-bling",
     text: [
       {
-        title: "Boost 2",
+        title: "<Boost> 2 {I}",
       },
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "TOUT CE QUI EST BRILLANT",
+        title: "Tout ce qui est brillant",
         description:
-          "Chaque fois que vous placez une carte sous l'un de vos personnages ou de vos lieux, ce personnage-ci gagne +1 pour le reste de ce tour.",
+          "Chaque fois que vous placez une carte sous l'un de vos personnages ou de vos lieux, ce personnage-ci gagne +1 {L} pour le reste de ce tour.",
       },
     ],
   },
   it: {
     name: "Tamatoa",
     version: "Cercatore di Splendore",
-    text: [
-      {
-        title: "Potenziamento 2",
-      },
-      {
-        title: "Protetto",
-      },
-      {
-        title: "DIETRO UN LUCCICHIO",
-        description:
-          "Ogni volta che metti una carta sotto a uno dei tuoi personaggi o luoghi, questo personaggio riceve +1 per questo turno.",
-      },
-    ],
+    text: "<Potenziamento> 2 {I}, <Protetto> Dietro un Luccichio Ogni volta che metti una carta sotto a uno dei tuoi personaggi o luoghi, questo personaggio riceve +1 {L} per questo turno.",
   },
 };

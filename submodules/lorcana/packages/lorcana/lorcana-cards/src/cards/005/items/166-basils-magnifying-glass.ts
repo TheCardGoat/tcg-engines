@@ -4,6 +4,17 @@ import { basilsMagnifyingGlassI18n } from "./166-basils-magnifying-glass.i18n";
 export const basilsMagnifyingGlass: ItemCard = {
   id: "Ssx",
   canonicalId: "ci_Ssx",
+  slug: "lorcana-ci_Ssx",
+  printings: [
+    {
+      id: "set5-166",
+      artId: "set5-166",
+      setCode: "set5",
+      collectorNumber: "166",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-166"],
   cardType: "item",
   name: "Basil's Magnifying Glass",
@@ -16,7 +27,7 @@ export const basilsMagnifyingGlass: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6e39ed3b74964c12a79afd63898cf58a",
-    tcgPlayer: 560629,
+    tcgPlayer: "560629",
   },
   text: [
     {

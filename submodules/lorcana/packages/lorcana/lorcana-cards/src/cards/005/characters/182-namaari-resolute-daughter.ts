@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { namaariResoluteDaughterI18n } from "./182-namaari-resolute-daughter.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const namaariResoluteDaughter: CharacterCard = {
   id: "2TR",
   canonicalId: "ci_fJp",
+  slug: "lorcana-ci_fJp",
+  printings: [
+    {
+      id: "set5-182",
+      artId: "set5-182",
+      setCode: "set5",
+      collectorNumber: "182",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-182"],
   cardType: "character",
   name: "Namaari",
@@ -21,7 +33,7 @@ export const namaariResoluteDaughter: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_7bc86960d8004c408340e121f634035b",
-    tcgPlayer: 561972,
+    tcgPlayer: "561972",
   },
   text: [
     {

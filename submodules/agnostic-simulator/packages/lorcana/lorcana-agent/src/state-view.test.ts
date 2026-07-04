@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import type { ServerGameEngine } from "@tcg/shared/game-engine";
-import { serializeLorcanaState } from "./state-view";
+import { serializeLorcanaState } from "./state-view.js";
 
 function makeMockEngine(boardOverride: Record<string, unknown>): ServerGameEngine {
   return {

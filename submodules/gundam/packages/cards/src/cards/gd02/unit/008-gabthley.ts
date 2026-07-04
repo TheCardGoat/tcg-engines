@@ -7,14 +7,17 @@ export const gd02Gabthley008: UnitCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD02-008",
-  externalId: "gundam:gd02-008",
-  slug: "gabthley-gd02-008",
+  canonicalId: "GD02-008",
+  externalIds: { bandai: "gundam:gd02-008" },
+  slug: "gabthley/gd02-008",
   displayName: "Gabthley",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-008",
   printings: [
     {
       id: "GD02-008",
+      artId: "GD02-008",
+      setCode: "GD02",
       collectorNumber: "GD02-008",
       cardNumber: "GD02-008",
       set: {
@@ -29,6 +32,7 @@ export const gd02Gabthley008: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-008"],
   selectedPrintingId: "GD02-008",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-008.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-008.webp?260424",

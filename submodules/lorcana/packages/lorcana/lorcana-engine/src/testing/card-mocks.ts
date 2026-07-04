@@ -4,6 +4,28 @@ import { type CardCatalog, createRecordCardCatalog } from "#core";
 import type { LorcanaCard } from "@tcg/lorcana-types";
 import { createCardI18n } from "../card-i18n";
 
+/** Printing element type derived from the native card shape (no extra dep). */
+type MockPrinting = LorcanaCard["printings"][number];
+
+/**
+ * A representative single printing for mock cards, derived from the mock
+ * canonical id / set / card number. Satisfies `BaseCardDefinition.printings`
+ * (RFC ADR-11); `artId` is degenerate (`artId === id`) since mocks have no
+ * alternate-art tier.
+ */
+function mockPrintings(id: string, set: string, cardNumber: number): MockPrinting[] {
+  return [
+    {
+      id,
+      artId: id,
+      setCode: set,
+      collectorNumber: String(cardNumber),
+      rarity: "common",
+      imageUrl: "",
+    },
+  ];
+}
+
 export type CreateMockCharacterParams = {
   id: string;
   name: string;
@@ -29,6 +51,8 @@ export function createMockItem(params: CreateMockItemParams): ItemCard {
   return {
     id: params.id,
     canonicalId: `ci_${params.id}`,
+    slug: `lorcana-ci_${params.id}`,
+    printings: mockPrintings(params.id, "TST", 666),
     cardType: "item",
     name: params.name,
     cost: params.cost,
@@ -54,6 +78,8 @@ export function createMockCharacter(params: CreateMockCharacterParams): Characte
   return {
     id: params.id,
     canonicalId: `ci_${params.id}`,
+    slug: `lorcana-ci_${params.id}`,
+    printings: mockPrintings(params.id, "TST", 666),
     cardType: "character",
     name: params.name,
     ...(params.version !== undefined ? { version: params.version } : {}),
@@ -76,6 +102,8 @@ export function createMockSong(params: CreateMockSongParams): ActionCard {
   return {
     id: params.id,
     canonicalId: `ci_${params.id}`,
+    slug: `lorcana-ci_${params.id}`,
+    printings: mockPrintings(params.id, "TST", 666),
     cardType: "action",
     actionSubtype: "song",
     name: params.name,
@@ -110,6 +138,8 @@ export function createMockLocation(params: CreateMockLocationParams): LocationCa
   return {
     id: params.id,
     canonicalId: `ci_${params.id}`,
+    slug: `lorcana-ci_${params.id}`,
+    printings: mockPrintings(params.id, "TST", 667),
     cardType: "location",
     name: params.name,
     cost: params.cost,
@@ -138,6 +168,8 @@ export function createMockAction(params: CreateMockActionParams): ActionCard {
   return {
     id: params.id,
     canonicalId: `ci_${params.id}`,
+    slug: `lorcana-ci_${params.id}`,
+    printings: mockPrintings(params.id, "TST", 668),
     cardType: "action",
     name: params.name,
     cost: params.cost,
@@ -162,6 +194,8 @@ export function createTestCard(id: string, name: string): CharacterCard {
   return {
     id,
     canonicalId: `ci_${id}`,
+    slug: `lorcana-ci_${id}`,
+    printings: mockPrintings(id, "001", 666),
     name,
     fullName: name,
     version: "Test",

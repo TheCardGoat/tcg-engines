@@ -4,6 +4,17 @@ import { plutoFriendlyPoochI18n } from "./018-pluto-friendly-pooch.i18n";
 export const plutoFriendlyPooch: CharacterCard = {
   id: "Dl1",
   canonicalId: "ci_jIB",
+  slug: "lorcana-ci_jIB",
+  printings: [
+    {
+      id: "set3-018",
+      artId: "set3-018",
+      setCode: "set3",
+      collectorNumber: "18",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-018", "set9-021"],
   cardType: "character",
   name: "Pluto",
@@ -19,7 +30,7 @@ export const plutoFriendlyPooch: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c042279e4692458c906cc27ec66448ab",
-    tcgPlayer: 649969,
+    tcgPlayer: "649969",
   },
   text: [
     {

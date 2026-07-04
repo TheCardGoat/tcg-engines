@@ -4,6 +4,17 @@ import { tianaTruePrincessI18n } from "./094-tiana-true-princess.i18n";
 export const tianaTruePrincess: CharacterCard = {
   id: "dRI",
   canonicalId: "ci_dRI",
+  slug: "lorcana-ci_dRI",
+  printings: [
+    {
+      id: "set2-094",
+      artId: "set2-094",
+      setCode: "set2",
+      collectorNumber: "94",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-094"],
   cardType: "character",
   name: "Tiana",
@@ -21,7 +32,7 @@ export const tianaTruePrincess: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_5403ff921bce4bbc90468b0f860dc23c",
-    tcgPlayer: 527751,
+    tcgPlayer: "527751",
   },
   classifications: ["Storyborn", "Hero", "Princess"],
   i18n: tianaTruePrincessI18n,

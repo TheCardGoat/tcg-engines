@@ -6,14 +6,17 @@ export const gd02ShujiSHideout126: BaseCard = {
   type: "base",
   traits: ["clan", "stronghold"],
   id: "GD02-126",
-  externalId: "gundam:gd02-126",
-  slug: "shuji-s-hideout-gd02-126",
+  canonicalId: "GD02-126",
+  externalIds: { bandai: "gundam:gd02-126" },
+  slug: "shuji-s-hideout/gd02-126",
   displayName: "Shuji's Hideout",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-126",
   printings: [
     {
       id: "GD02-126",
+      artId: "GD02-126",
+      setCode: "GD02",
       collectorNumber: "GD02-126",
       cardNumber: "GD02-126",
       set: {
@@ -28,6 +31,7 @@ export const gd02ShujiSHideout126: BaseCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-126"],
   selectedPrintingId: "GD02-126",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-126.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-126.webp?260424",

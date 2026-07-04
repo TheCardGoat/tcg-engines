@@ -17,9 +17,9 @@ export const bellwetherAssistantMayorI18n: Record<Languages, I18nProperties> = {
     version: "Stellvertretende Bürgermeisterin",
     text: [
       {
-        title: "ANGST FUNKTIONIERT IMMER",
+        title: "Angst funktioniert immer",
         description:
-          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält ein gegnerischer Charakter deiner Wahl in seinem nächsten Zug Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält ein gegnerischer Charakter deiner Wahl in seinem nächsten Zug <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const bellwetherAssistantMayorI18n: Record<Languages, I18nProperties> = {
     version: "Adjointe au maire",
     text: [
       {
-        title: "LA PEUR, ÇA MARCHE TOUJOURS",
+        title: "La peur, ça marche toujours",
         description:
-          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage adverse qui gagne Combattant durant son prochain tour.",
+          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage adverse qui gagne <Combattant> durant son prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const bellwetherAssistantMayorI18n: Record<Languages, I18nProperties> = {
     version: "Assistente Sindaco",
     text: [
       {
-        title: "LA PAURA FUNZIONA SEMPRE",
+        title: "La Paura Funziona Sempre",
         description:
-          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio avversario a tua scelta ottiene Attaccabrighe durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio avversario a tua scelta ottiene <Attaccabrighe> durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
       },
     ],
   },

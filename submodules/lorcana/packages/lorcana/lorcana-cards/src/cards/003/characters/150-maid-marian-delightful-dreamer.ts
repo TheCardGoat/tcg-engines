@@ -4,6 +4,17 @@ import { maidMarianDelightfulDreamerI18n } from "./150-maid-marian-delightful-dr
 export const maidMarianDelightfulDreamer: CharacterCard = {
   id: "q9a",
   canonicalId: "ci_31G",
+  slug: "lorcana-ci_31G",
+  printings: [
+    {
+      id: "set3-150",
+      artId: "set3-150",
+      setCode: "set3",
+      collectorNumber: "150",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-150", "set9-158"],
   cardType: "character",
   name: "Maid Marian",
@@ -20,7 +31,7 @@ export const maidMarianDelightfulDreamer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_73c0d376411b4b588a9de5cc5644e4bb",
-    tcgPlayer: 650093,
+    tcgPlayer: "650093",
   },
   text: [
     {

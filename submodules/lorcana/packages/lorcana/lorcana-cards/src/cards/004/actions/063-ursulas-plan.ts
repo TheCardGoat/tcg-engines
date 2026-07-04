@@ -4,6 +4,17 @@ import { ursulasPlanI18n } from "./063-ursulas-plan.i18n";
 export const ursulasPlan: ActionCard = {
   id: "SrO",
   canonicalId: "ci_SrO",
+  slug: "lorcana-ci_SrO",
+  printings: [
+    {
+      id: "set4-063",
+      artId: "set4-063",
+      setCode: "set4",
+      collectorNumber: "63",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-063"],
   cardType: "action",
   name: "Ursula’s Plan",
@@ -16,7 +27,7 @@ export const ursulasPlan: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d06befe89918438384a8d38e7acea2bd",
-    tcgPlayer: 550572,
+    tcgPlayer: "550572",
   },
   text: "Each opponent chooses and exerts one of their characters. Those characters can't ready at the start of their next turn.",
   abilities: [

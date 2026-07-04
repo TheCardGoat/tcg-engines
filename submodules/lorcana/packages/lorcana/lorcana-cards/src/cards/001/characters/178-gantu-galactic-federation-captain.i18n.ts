@@ -16,7 +16,7 @@ export const gantuGalacticFederationCaptainI18n: Record<Languages, I18nPropertie
     version: "Kapitän der Galaktischen Föderation",
     text: [
       {
-        title: "NEHMT IHN FEST!",
+        title: "Nehmt ihn fest!",
         description:
           "Charaktere, die 2 oder weniger kosten, können deine Charaktere nicht herausfordern.",
       },
@@ -37,7 +37,7 @@ export const gantuGalacticFederationCaptainI18n: Record<Languages, I18nPropertie
     version: "Galactic Federation Captain",
     text: [
       {
-        title: "UNDER ARREST",
+        title: "Under Arrest",
         description: "Characters with cost 2 or less can't challenge your characters.",
       },
     ],

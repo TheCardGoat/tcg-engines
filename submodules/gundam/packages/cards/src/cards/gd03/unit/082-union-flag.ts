@@ -7,14 +7,17 @@ export const gd03UnionFlag082: UnitCard = {
   color: "white",
   traits: ["superpower bloc"],
   id: "GD03-082",
-  externalId: "gundam:gd03-082",
-  slug: "union-flag-gd03-082",
+  canonicalId: "GD03-082",
+  externalIds: { bandai: "gundam:gd03-082" },
+  slug: "union-flag/gd03-082",
   displayName: "Union Flag",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-082",
   printings: [
     {
       id: "GD03-082",
+      artId: "GD03-082",
+      setCode: "GD03",
       collectorNumber: "GD03-082",
       cardNumber: "GD03-082",
       set: {
@@ -29,6 +32,7 @@ export const gd03UnionFlag082: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-082"],
   selectedPrintingId: "GD03-082",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-082.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-082.webp?260424",

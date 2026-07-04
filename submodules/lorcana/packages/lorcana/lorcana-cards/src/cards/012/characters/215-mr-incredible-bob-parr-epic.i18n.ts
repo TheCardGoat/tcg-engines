@@ -10,11 +10,11 @@ export const mrIncredibleBobParrEpicI18n: Record<Languages, I18nProperties> = {
     version: "Bob Parr",
   },
   fr: {
-    name: "Mr. Incredible",
+    name: "M. Indestructible",
     version: "Bob Parr",
   },
   it: {
-    name: "Mr. Incredible",
+    name: "Mr. Incredibile",
     version: "Bob Parr",
   },
 };

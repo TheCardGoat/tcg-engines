@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { hadesKingOfOlympusI18n } from "./005-hades-king-of-olympus.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const hadesKingOfOlympus: CharacterCard = {
-  id: "XhN",
+  id: "qBw",
   canonicalId: "ci_pZ2",
+  slug: "lorcana-ci_pZ2",
+  printings: [
+    {
+      id: "set1-005",
+      artId: "set1-005",
+      setCode: "set1",
+      collectorNumber: "5",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-005"],
   cardType: "character",
   name: "Hades",
@@ -21,7 +33,7 @@ export const hadesKingOfOlympus: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a9c86e6316084d76a03b32be95977091",
-    tcgPlayer: 510148,
+    tcgPlayer: "510148",
   },
   text: [
     {

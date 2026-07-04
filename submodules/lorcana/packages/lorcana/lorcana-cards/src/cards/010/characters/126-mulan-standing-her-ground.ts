@@ -4,6 +4,17 @@ import { mulanStandingHerGroundI18n } from "./126-mulan-standing-her-ground.i18n
 export const mulanStandingHerGround: CharacterCard = {
   id: "bX2",
   canonicalId: "ci_71H",
+  slug: "lorcana-ci_71H",
+  printings: [
+    {
+      id: "set10-126",
+      artId: "set10-126",
+      setCode: "set10",
+      collectorNumber: "126",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-126"],
   cardType: "character",
   name: "Mulan",
@@ -20,7 +31,7 @@ export const mulanStandingHerGround: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_082177dd6df34573a455c5f1b2ddad31",
-    tcgPlayer: 660362,
+    tcgPlayer: "660362",
   },
   text: [
     {
@@ -38,7 +49,14 @@ export const mulanStandingHerGround: CharacterCard = {
       text: "FLOWING BLADE During your turn, if you've put a card under one of your characters or locations this turn, this character takes no damage from challenges.",
       condition: {
         type: "and",
-        conditions: [{ type: "your-turn" }, { type: "put-card-under-any-this-turn" }],
+        conditions: [
+          {
+            type: "your-turn",
+          },
+          {
+            type: "put-card-under-any-this-turn",
+          },
+        ],
       },
       effect: {
         type: "grant-ability",

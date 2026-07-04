@@ -13,7 +13,7 @@ describe("Flounder - Voice of Reason (set 009)", () => {
     });
 
     expect(flounderVoiceOfReason).toMatchObject({
-      id: "e6d",
+      id: "rR9",
       canonicalId: "ci_nWw",
       reprints: ["set1-145", "set9-147"],
       cardType: "character",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tinkerBellMostHelpfulI18n } from "./093-tinker-bell-most-helpful.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const tinkerBellMostHelpful: CharacterCard = {
   id: "0Ez",
   canonicalId: "ci_yDh",
+  slug: "lorcana-ci_yDh",
+  printings: [
+    {
+      id: "set1-093",
+      artId: "set1-093",
+      setCode: "set1",
+      collectorNumber: "93",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-093", "set9-088"],
   cardType: "character",
   name: "Tinker Bell",
@@ -21,7 +33,7 @@ export const tinkerBellMostHelpful: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2cb6f3824afc43249a7d4dfcdcacbd53",
-    tcgPlayer: 650028,
+    tcgPlayer: "650028",
   },
   text: [
     {

@@ -23,13 +23,14 @@ export const mulanImperialGeneralI18n: Record<Languages, I18nProperties> = {
     version: "Kaiserliche Generalin",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Mulan-Charaktere auszuspielen.)",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "AUSSERGEWÖHNLICHE ANFÜHRERIN",
+        title: "Außergewöhnliche Anführerin",
         description:
           'Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, erhalten deine anderen Charaktere in diesem Zug "Dieser Charakter kann bereite Charaktere herausfordern".',
       },
@@ -40,13 +41,14 @@ export const mulanImperialGeneralI18n: Record<Languages, I18nProperties> = {
     version: "Générale impériale",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Mulan.)",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "MENEUSE EXCEPTIONNELLE",
+        title: "Meneuse exceptionnelle",
         description:
           'Chaque fois que ce personnage en défie un autre, vos autres personnages gagnent "Ce personnage peut défier des personnages redressés." pour le reste de ce tour.',
       },
@@ -57,13 +59,14 @@ export const mulanImperialGeneralI18n: Record<Languages, I18nProperties> = {
     version: "Generale Imperiale",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Mulan.)",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "LEADER ECCEZIONALE",
+        title: "Leader Eccezionale",
         description:
           'Ogni volta che questo personaggio sfida un altro personaggio, i tuoi altri personaggi ottengono "Questo personaggio può sfidare i personaggi preparati" per questo turno.',
       },

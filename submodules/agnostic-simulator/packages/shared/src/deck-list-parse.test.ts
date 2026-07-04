@@ -3,7 +3,7 @@
  */
 
 import { describe, expect, it } from "bun:test";
-import { parseDeckListText, parseDeckListTextWithErrors } from "./deck-list-parse";
+import { parseDeckListText, parseDeckListTextWithErrors } from "./deck-list-parse.js";
 
 describe("parseDeckListText", () => {
   it("returns empty array for empty string", () => {

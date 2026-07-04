@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { feliciaAlwaysHungryI18n } from "./107-felicia-always-hungry.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 
 export const feliciaAlwaysHungry: CharacterCard = {
   id: "Wz0",
   canonicalId: "ci_Wz0",
+  slug: "lorcana-ci_Wz0",
+  printings: [
+    {
+      id: "set2-107",
+      artId: "set2-107",
+      setCode: "set2",
+      collectorNumber: "107",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-107"],
   cardType: "character",
   name: "Felicia",
@@ -21,7 +33,7 @@ export const feliciaAlwaysHungry: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5898c1f57f914c70880a9a3fee5a4962",
-    tcgPlayer: 527755,
+    tcgPlayer: "527755",
   },
   text: "Reckless",
   classifications: ["Dreamborn", "Ally"],

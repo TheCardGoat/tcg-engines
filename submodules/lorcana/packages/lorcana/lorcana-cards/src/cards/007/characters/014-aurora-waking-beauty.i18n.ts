@@ -20,10 +20,10 @@ export const auroraWakingBeautyI18n: Record<Languages, I18nProperties> = {
     version: "Erwachte Schönheit",
     text: [
       {
-        title: "Singen 5",
+        title: "<Singen> 5 (Die Kosten dieses Charakters gelten als 5 für das Singen von Liedern.)",
       },
       {
-        title: "SÜSSE TRÄUME",
+        title: "Süsse Träume",
         description:
           "Jedes Mal, wenn du 1 oder mehr Schaden von einem Charakter entfernst, mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden oder herausfordern.",
       },
@@ -34,10 +34,11 @@ export const auroraWakingBeautyI18n: Record<Languages, I18nProperties> = {
     version: "La belle s'éveillant",
     text: [
       {
-        title: "Mélomane 5",
+        title:
+          "<Mélomane> 5 (Ce personnage est considéré comme ayant un coût de 5 pour chanter des chansons.)",
       },
       {
-        title: "BEAUX RÊVES",
+        title: "Beaux rêves",
         description:
           "Chaque fois que vous retirez au moins 1 dommage d'un personnage, redressez ce personnage-ci. Il ne peut ni partir à l'aventure ni défier pour le reste de ce tour.",
       },
@@ -48,10 +49,10 @@ export const auroraWakingBeautyI18n: Record<Languages, I18nProperties> = {
     version: "Bellezza Risvegliata",
     text: [
       {
-        title: "Melodioso 5",
+        title: "<Melodioso> 5",
       },
       {
-        title: "SOGNI D'ORO",
+        title: "Sogni d'Oro",
         description:
           "Ogni volta che rimuovi 1 o più danni da un personaggio, prepara questo personaggio. Non può andare all'avventura o sfidare per il resto di questo turno.",
       },

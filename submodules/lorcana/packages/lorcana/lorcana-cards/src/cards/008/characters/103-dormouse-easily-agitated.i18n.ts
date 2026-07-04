@@ -17,7 +17,7 @@ export const dormouseEasilyAgitatedI18n: Record<Languages, I18nProperties> = {
     version: "Leicht reizbar",
     text: [
       {
-        title: "WIRKLICH SEHR UNHÖFLICH",
+        title: "Wirklich sehr unhöflich",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Schadensmarker auf einen Charakter deiner Wahl legen.",
       },
@@ -28,7 +28,7 @@ export const dormouseEasilyAgitatedI18n: Record<Languages, I18nProperties> = {
     version: "Facilement inquiet",
     text: [
       {
-        title: "TRÈS GROSSIER",
+        title: "Très grossier",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et placer 1 dommage sur lui.",
       },
@@ -39,7 +39,7 @@ export const dormouseEasilyAgitatedI18n: Record<Languages, I18nProperties> = {
     version: "Facilmente Agitabile",
     text: [
       {
-        title: "SCORRETTISSISISSIMISSIMO",
+        title: "Scorrettissisissimissimo",
         description:
           "Quando giochi questo personaggio, puoi mettere 1 segnalino danno su un personaggio a tua scelta.",
       },

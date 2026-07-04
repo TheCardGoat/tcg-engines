@@ -10,8 +10,8 @@ import {
   NEEDS_DEDUP,
   parseEnvelope,
   serializeEnvelope,
-} from "./index";
-import { GatewayClientMessage, GatewayPingMessage } from "./schemas";
+} from "./index.js";
+import { GatewayClientMessage, GatewayPingMessage } from "./schemas.js";
 
 describe("@tcg/protocol", () => {
   describe("schemas", () => {

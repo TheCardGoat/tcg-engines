@@ -9,16 +9,16 @@ export const bigMamaCleverAndCalmingI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Big Mama",
     version: "Weise und beruhigend",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "Big Mama",
     version: "Astucieuse et apaisante",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Gran Ma'",
     version: "Arguta e Rassicurante",
-    text: "Protetto",
+    text: "<Protetto>",
   },
 };

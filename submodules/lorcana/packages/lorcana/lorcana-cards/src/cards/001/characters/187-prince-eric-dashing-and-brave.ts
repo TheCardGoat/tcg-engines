@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princeEricDashingAndBraveI18n } from "./187-prince-eric-dashing-and-brave.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const princeEricDashingAndBrave: CharacterCard = {
   id: "yeQ",
   canonicalId: "ci_Zf7",
+  slug: "lorcana-ci_Zf7",
+  printings: [
+    {
+      id: "set1-187",
+      artId: "set1-187",
+      setCode: "set1",
+      collectorNumber: "187",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-187", "set9-194"],
   cardType: "character",
   name: "Prince Eric",
@@ -21,7 +33,7 @@ export const princeEricDashingAndBrave: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_81a978c964b049f19747a98304b7f03d",
-    tcgPlayer: 650127,
+    tcgPlayer: "650127",
   },
   text: "Challenger +2",
   classifications: ["Storyborn", "Hero", "Prince"],

@@ -4,6 +4,17 @@ import { bambiPrinceOfTheForestI18n } from "./057-bambi-prince-of-the-forest.i18
 export const bambiPrinceOfTheForest: CharacterCard = {
   id: "wU9",
   canonicalId: "ci_wU9",
+  slug: "lorcana-ci_wU9",
+  printings: [
+    {
+      id: "set8-057",
+      artId: "set8-057",
+      setCode: "set8",
+      collectorNumber: "57",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-057"],
   cardType: "character",
   name: "Bambi",
@@ -21,7 +32,7 @@ export const bambiPrinceOfTheForest: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_83fb168f74ce49fa9c92000143bf3402",
-    tcgPlayer: 631339,
+    tcgPlayer: "631339",
   },
   classifications: ["Storyborn", "Hero", "Prince"],
   i18n: bambiPrinceOfTheForestI18n,

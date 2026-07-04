@@ -4,6 +4,17 @@ import { madHattersTeapotI18n } from "./066-mad-hatters-teapot.i18n";
 export const madHattersTeapot: ItemCard = {
   id: "fMK",
   canonicalId: "ci_fMK",
+  slug: "lorcana-ci_fMK",
+  printings: [
+    {
+      id: "set6-066",
+      artId: "set6-066",
+      setCode: "set6",
+      collectorNumber: "66",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-066"],
   cardType: "item",
   name: "Mad Hatter's Teapot",
@@ -16,7 +27,7 @@ export const madHattersTeapot: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_075482312a124f6585f77be3a693f63f",
-    tcgPlayer: 578175,
+    tcgPlayer: "578175",
   },
   text: [
     {

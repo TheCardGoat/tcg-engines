@@ -4,6 +4,17 @@ import { triggerNotsosharpShooterI18n } from "./126-trigger-not-so-sharp-shooter
 export const triggerNotsosharpShooter: CharacterCard = {
   id: "7rS",
   canonicalId: "ci_7rS",
+  slug: "lorcana-ci_7rS",
+  printings: [
+    {
+      id: "set3-126",
+      artId: "set3-126",
+      setCode: "set3",
+      collectorNumber: "126",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-126"],
   cardType: "character",
   name: "Trigger",
@@ -20,7 +31,7 @@ export const triggerNotsosharpShooter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_89a33b4b36de4c2a97042cd58ca0e6e5",
-    tcgPlayer: 539092,
+    tcgPlayer: "539092",
   },
   text: [
     {

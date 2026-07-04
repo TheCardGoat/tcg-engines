@@ -20,12 +20,13 @@ export const scroogeMcduckCavernProspectorI18n: Record<Languages, I18nProperties
     version: "Höhlenforscher",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Dagobert-Duck-Charaktere auszuspielen.)",
       },
       {
-        title: "SPEKULATIONEN",
+        title: "Spekulationen",
         description:
-          "Jedes Mal, wenn du einen Charakter oder Ort mit Stärken ausspielst, darfst du die oberste Karte deines Decks verdeckt unter jenen legen.",
+          "Jedes Mal, wenn du einen Charakter oder Ort mit <Stärken> ausspielst, darfst du die oberste Karte deines Decks verdeckt unter jenen legen.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const scroogeMcduckCavernProspectorI18n: Record<Languages, I18nProperties
     version: "Prospecteur de cavernes",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Balthazar Picsou.)",
       },
       {
-        title: "SPÉCULATION",
+        title: "Spéculation",
         description:
-          "Chaque fois que vous jouez un personnage ou un lieu ayant Boost, vous pouvez placer la carte du dessus de votre pioche sous la carte jouée, face cachée.",
+          "Chaque fois que vous jouez un personnage ou un lieu ayant <Boost>, vous pouvez placer la carte du dessus de votre pioche sous la carte jouée, face cachée.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const scroogeMcduckCavernProspectorI18n: Record<Languages, I18nProperties
     version: "Cercatore di Caverne",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Paperon de' Paperoni.)",
       },
       {
-        title: "SPECULAZIONE",
+        title: "Speculazione",
         description:
-          "Ogni volta che giochi un personaggio o un luogo con Potenziamento, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto di esso.",
+          "Ogni volta che giochi un personaggio o un luogo con <Potenziamento>, puoi mettere la prima carta del tuo mazzo a faccia in giù sotto di esso.",
       },
     ],
   },

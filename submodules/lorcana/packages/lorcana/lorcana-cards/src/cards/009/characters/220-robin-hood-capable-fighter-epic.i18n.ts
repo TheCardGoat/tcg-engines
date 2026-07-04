@@ -16,8 +16,8 @@ export const robinHoodCapableFighterEpicI18n: Record<Languages, I18nProperties> 
     version: "Capable Fighter",
     text: [
       {
-        title: "SKIRMISH",
-        description: "— Deal 1 damage to chosen character.",
+        title: "Skirmish",
+        description: "{E} — Deal 1 damage to chosen character.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const robinHoodCapableFighterEpicI18n: Record<Languages, I18nProperties> 
     version: "Capable Fighter",
     text: [
       {
-        title: "SKIRMISH",
-        description: "— Deal 1 damage to chosen character.",
+        title: "Skirmish",
+        description: "{E} — Deal 1 damage to chosen character.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const robinHoodCapableFighterEpicI18n: Record<Languages, I18nProperties> 
     version: "Capable Fighter",
     text: [
       {
-        title: "SKIRMISH",
-        description: "— Deal 1 damage to chosen character.",
+        title: "Skirmish",
+        description: "{E} — Deal 1 damage to chosen character.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const st07AllelujahHaptism012: PilotCard = {
   color: "green",
   traits: ["cb", "super soldier"],
   id: "ST07-012",
-  externalId: "gundam:st07-012",
-  slug: "allelujah-haptism-st07-012",
+  canonicalId: "ST07-012",
+  externalIds: { bandai: "gundam:st07-012" },
+  slug: "allelujah-haptism/st07-012",
   displayName: "Allelujah Haptism",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-012",
   printings: [
     {
       id: "ST07-012",
+      artId: "ST07-012",
+      setCode: "ST07",
       collectorNumber: "ST07-012",
       cardNumber: "ST07-012",
       set: {
@@ -30,6 +33,8 @@ export const st07AllelujahHaptism012: PilotCard = {
     },
     {
       id: "ST07-012_p1",
+      artId: "ST07-012_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-012_p1",
       cardNumber: "ST07-012",
       set: {
@@ -44,6 +49,7 @@ export const st07AllelujahHaptism012: PilotCard = {
       productName: "Celestial Drive [ST07] Bonus Pack",
     },
   ],
+  reprints: ["ST07-012", "ST07-012_p1"],
   selectedPrintingId: "ST07-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-012.webp?260424",

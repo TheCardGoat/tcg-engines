@@ -7,14 +7,17 @@ export const gd04AlSaachezSAeuEnactCustomMoraliaDevelopmentExperimentType070: Un
   color: "white",
   traits: ["superpower bloc"],
   id: "GD04-070",
-  externalId: "gundam:gd04-070",
-  slug: "al-saachez-s-aeu-enact-custom-moralia-development-experiment-type-gd04-070",
+  canonicalId: "GD04-070",
+  externalIds: { bandai: "gundam:gd04-070" },
+  slug: "al-saachez-s-aeu-enact-custom-moralia-development-experiment-type/gd04-070",
   displayName: "Al-Saachez's AEU Enact Custom Moralia Development Experiment Type",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-070",
   printings: [
     {
       id: "GD04-070",
+      artId: "GD04-070",
+      setCode: "GD04",
       collectorNumber: "GD04-070",
       cardNumber: "GD04-070",
       set: {
@@ -29,6 +32,7 @@ export const gd04AlSaachezSAeuEnactCustomMoraliaDevelopmentExperimentType070: Un
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-070"],
   selectedPrintingId: "GD04-070",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-070.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-070.webp?260424",

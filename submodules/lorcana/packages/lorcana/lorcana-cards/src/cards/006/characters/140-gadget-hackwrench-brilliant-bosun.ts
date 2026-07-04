@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gadgetHackwrenchBrilliantBosunI18n } from "./140-gadget-hackwrench-brilliant-bosun.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const gadgetHackwrenchBrilliantBosun: CharacterCard = {
-  id: "5qZ",
+  id: "9Ce",
   canonicalId: "ci_tKe",
+  slug: "lorcana-ci_tKe",
+  printings: [
+    {
+      id: "set6-140",
+      artId: "set6-140",
+      setCode: "set6",
+      collectorNumber: "140",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-140"],
   cardType: "character",
   name: "Gadget Hackwrench",
@@ -21,7 +33,7 @@ export const gadgetHackwrenchBrilliantBosun: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ae7e15af9559439ba734caac9aa567e5",
-    tcgPlayer: 592038,
+    tcgPlayer: "592038",
   },
   text: [
     {

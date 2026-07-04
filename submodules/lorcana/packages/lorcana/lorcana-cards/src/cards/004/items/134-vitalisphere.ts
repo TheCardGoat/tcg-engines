@@ -4,6 +4,17 @@ import { vitalisphereI18n } from "./134-vitalisphere.i18n";
 export const vitalisphere: ItemCard = {
   id: "WDs",
   canonicalId: "ci_WDs",
+  slug: "lorcana-ci_WDs",
+  printings: [
+    {
+      id: "set4-134",
+      artId: "set4-134",
+      setCode: "set4",
+      collectorNumber: "134",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-134"],
   cardType: "item",
   name: "Vitalisphere",
@@ -16,7 +27,7 @@ export const vitalisphere: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0377cc62eb6044bc808843bbcd39eb48",
-    tcgPlayer: 548393,
+    tcgPlayer: "548393",
   },
   text: [
     {

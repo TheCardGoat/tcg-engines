@@ -4,6 +4,17 @@ import { creeperLoyalLackeyI18n } from "./050-creeper-loyal-lackey.i18n";
 export const creeperLoyalLackey: CharacterCard = {
   id: "FR8",
   canonicalId: "ci_FR8",
+  slug: "lorcana-ci_FR8",
+  printings: [
+    {
+      id: "set10-050",
+      artId: "set10-050",
+      setCode: "set10",
+      collectorNumber: "50",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-050"],
   cardType: "character",
   name: "Creeper",
@@ -21,7 +32,7 @@ export const creeperLoyalLackey: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_872fb0e1ed4740b3bac30565ba52e9a2",
-    tcgPlayer: 659182,
+    tcgPlayer: "659182",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: creeperLoyalLackeyI18n,

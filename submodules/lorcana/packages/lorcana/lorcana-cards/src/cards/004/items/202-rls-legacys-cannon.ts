@@ -4,6 +4,17 @@ import { rlsLegacysCannonI18n } from "./202-rls-legacys-cannon.i18n";
 export const rlsLegacysCannon: ItemCard = {
   id: "gkg",
   canonicalId: "ci_gkg",
+  slug: "lorcana-ci_gkg",
+  printings: [
+    {
+      id: "set4-202",
+      artId: "set4-202",
+      setCode: "set4",
+      collectorNumber: "202",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-202"],
   cardType: "item",
   name: "RLS Legacy's Cannon",
@@ -16,7 +27,7 @@ export const rlsLegacysCannon: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d12740d7854a4ff69d2921c943454bc8",
-    tcgPlayer: 548537,
+    tcgPlayer: "548537",
   },
   text: [
     {

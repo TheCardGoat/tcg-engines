@@ -4,6 +4,17 @@ import { mowgliManCubI18n } from "./019-mowgli-man-cub.i18n";
 export const mowgliManCub: CharacterCard = {
   id: "65q",
   canonicalId: "ci_65q",
+  slug: "lorcana-ci_65q",
+  printings: [
+    {
+      id: "set10-019",
+      artId: "set10-019",
+      setCode: "set10",
+      collectorNumber: "19",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-019"],
   cardType: "character",
   name: "Mowgli",
@@ -20,13 +31,13 @@ export const mowgliManCub: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8cb497be95844e9ba41be7ed0e6aa2e2",
-    tcgPlayer: 659761,
+    tcgPlayer: "659761",
   },
   text: [
     {
-      title: "HAVE A BETTER LOOK",
+      title: "HAVE",
       description:
-        "When you play this character, chosen opponent reveals their hand and discards a non-character card of their choice.",
+        "A BETTER LOOK When you play this character, chosen opponent reveals their hand and discards a non-character card of their choice.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

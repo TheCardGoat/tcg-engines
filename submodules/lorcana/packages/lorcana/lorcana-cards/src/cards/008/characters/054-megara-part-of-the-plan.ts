@@ -4,6 +4,17 @@ import { megaraPartOfThePlanI18n } from "./054-megara-part-of-the-plan.i18n";
 export const megaraPartOfThePlan: CharacterCard = {
   id: "tg3",
   canonicalId: "ci_tg3",
+  slug: "lorcana-ci_tg3",
+  printings: [
+    {
+      id: "set8-054",
+      artId: "set8-054",
+      setCode: "set8",
+      collectorNumber: "54",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-054"],
   cardType: "character",
   name: "Megara",
@@ -20,7 +31,7 @@ export const megaraPartOfThePlan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_60f9c25e26a148c6bae493b7c7792a0f",
-    tcgPlayer: 631337,
+    tcgPlayer: "631337",
   },
   text: [
     {

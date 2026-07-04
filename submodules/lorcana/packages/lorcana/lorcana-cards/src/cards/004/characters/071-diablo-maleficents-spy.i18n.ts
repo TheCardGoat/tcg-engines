@@ -16,7 +16,7 @@ export const diabloMaleficentsSpyI18n: Record<Languages, I18nProperties> = {
     version: "Malefiz' Spion",
     text: [
       {
-        title: "SPÄHER VORAUS",
+        title: "Späher voraus",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du dir die Handkarten aller gegnerischen Mitspielenden anschauen.",
       },
@@ -27,7 +27,7 @@ export const diabloMaleficentsSpyI18n: Record<Languages, I18nProperties> = {
     version: "Espion de Maléfique",
     text: [
       {
-        title: "EN ÉCLAIREUR",
+        title: "En éclaireur",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez regarder la main de chaque adversaire.",
       },
@@ -38,7 +38,7 @@ export const diabloMaleficentsSpyI18n: Record<Languages, I18nProperties> = {
     version: "Spia di Malefica",
     text: [
       {
-        title: "AVANSCOPERTA",
+        title: "Avanscoperta",
         description: "Quando giochi questo personaggio, puoi guardare la mano di ogni avversario.",
       },
     ],

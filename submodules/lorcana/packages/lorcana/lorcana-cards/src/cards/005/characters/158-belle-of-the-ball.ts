@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { belleOfTheBallI18n } from "./158-belle-of-the-ball.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const belleOfTheBall: CharacterCard = {
   id: "rlF",
   canonicalId: "ci_rlF",
+  slug: "lorcana-ci_rlF",
+  printings: [
+    {
+      id: "set5-158",
+      artId: "set5-158",
+      setCode: "set5",
+      collectorNumber: "158",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-158"],
   cardType: "character",
   name: "Belle",
@@ -21,7 +33,7 @@ export const belleOfTheBall: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d5087e3422e74e3585a2a323b4a06ee7",
-    tcgPlayer: 561651,
+    tcgPlayer: "561651",
   },
   text: [
     {

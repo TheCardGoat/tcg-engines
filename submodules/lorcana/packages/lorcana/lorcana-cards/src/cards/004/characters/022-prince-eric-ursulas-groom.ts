@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princeEricUrsulasGroomI18n } from "./022-prince-eric-ursulas-groom.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const princeEricUrsulasGroom: CharacterCard = {
   id: "sTh",
   canonicalId: "ci_sTh",
+  slug: "lorcana-ci_sTh",
+  printings: [
+    {
+      id: "set4-022",
+      artId: "set4-022",
+      setCode: "set4",
+      collectorNumber: "22",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-022"],
   cardType: "character",
   name: "Prince Eric",
@@ -21,7 +33,7 @@ export const princeEricUrsulasGroom: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_58e889f440504f44b3283ed76f3f54a4",
-    tcgPlayer: 550561,
+    tcgPlayer: "550561",
   },
   text: [
     {

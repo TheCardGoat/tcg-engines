@@ -16,8 +16,9 @@ export const merlinsCottageTheWizardsHomeI18n: Record<Languages, I18nProperties>
     version: "Das Haus des Zauberers",
     text: [
       {
-        title: "WISSEN IST MACHT Alle Mitspielenden",
-        description: "(auch du) spielen mit der obersten Karte ihres Decks offen.",
+        title: "Wissen ist Macht",
+        description:
+          "Alle Mitspielenden (auch du) spielen mit der obersten Karte ihres Decks offen.",
       },
     ],
   },
@@ -26,7 +27,7 @@ export const merlinsCottageTheWizardsHomeI18n: Record<Languages, I18nProperties>
     version: "Foyer du sorcier",
     text: [
       {
-        title: "LE SAVOIR, C'EST LE POUVOIR",
+        title: "Le savoir, c'est le pouvoir",
         description: "Chaque joueur joue avec la carte du dessus de sa pioche révélée.",
       },
     ],
@@ -36,7 +37,7 @@ export const merlinsCottageTheWizardsHomeI18n: Record<Languages, I18nProperties>
     version: "La Casa del Mago",
     text: [
       {
-        title: "LA CONOSCENZA È POTERE",
+        title: "La Conoscenza È Potere",
         description: "Ogni giocatore gioca con la prima carta del suo mazzo a faccia in su.",
       },
     ],

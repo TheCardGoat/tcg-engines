@@ -4,6 +4,17 @@ import { suddenChillI18n } from "./098-sudden-chill.i18n";
 export const suddenChill: ActionCard = {
   id: "DDi",
   canonicalId: "ci_72X",
+  slug: "lorcana-ci_72X",
+  printings: [
+    {
+      id: "set1-098",
+      artId: "set1-098",
+      setCode: "set1",
+      collectorNumber: "98",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-098", "set9-095"],
   cardType: "action",
   name: "Sudden Chill",
@@ -16,7 +27,7 @@ export const suddenChill: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_541fd75946914a688a54b5fc5f1d966d",
-    tcgPlayer: 650033,
+    tcgPlayer: "650033",
   },
   text: "Each opponent chooses and discards a card.",
   actionSubtype: "song",

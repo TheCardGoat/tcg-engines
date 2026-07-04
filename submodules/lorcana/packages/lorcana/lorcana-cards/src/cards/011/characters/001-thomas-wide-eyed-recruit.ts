@@ -4,6 +4,17 @@ import { thomasWideeyedRecruitI18n } from "./001-thomas-wide-eyed-recruit.i18n";
 export const thomasWideeyedRecruit: CharacterCard = {
   id: "685",
   canonicalId: "ci_685",
+  slug: "lorcana-ci_685",
+  printings: [
+    {
+      id: "set11-001",
+      artId: "set11-001",
+      setCode: "set11",
+      collectorNumber: "1",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-001"],
   cardType: "character",
   name: "Thomas",
@@ -21,7 +32,7 @@ export const thomasWideeyedRecruit: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_4baf2f3e2b1a4c8da121d3a0473684c5",
-    tcgPlayer: 674816,
+    tcgPlayer: "674816",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: thomasWideeyedRecruitI18n,

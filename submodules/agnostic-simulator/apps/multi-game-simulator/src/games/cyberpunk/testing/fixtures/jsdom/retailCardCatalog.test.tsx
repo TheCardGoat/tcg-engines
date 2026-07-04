@@ -35,7 +35,7 @@ describe("retailCardCatalog fixture", () => {
     try {
       const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
 
-      expectEqual("official retail card count", retailCards.length, 57);
+      expectEqual("official retail card count", retailCards.length, 79);
       await pom.expectTrashSize(
         CYBERPUNK_P1,
         retailCards.filter((card) => card.type !== "legend").length,

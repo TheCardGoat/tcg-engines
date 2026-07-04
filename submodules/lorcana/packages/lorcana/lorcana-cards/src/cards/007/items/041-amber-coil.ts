@@ -4,6 +4,17 @@ import { amberCoilI18n } from "./041-amber-coil.i18n";
 export const amberCoil: ItemCard = {
   id: "I8y",
   canonicalId: "ci_I8y",
+  slug: "lorcana-ci_I8y",
+  printings: [
+    {
+      id: "set7-041",
+      artId: "set7-041",
+      setCode: "set7",
+      collectorNumber: "41",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-041"],
   cardType: "item",
   name: "Amber Coil",
@@ -16,7 +27,7 @@ export const amberCoil: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_928bd23c4cdb4440898accbb73aba3bf",
-    tcgPlayer: 619430,
+    tcgPlayer: "619430",
   },
   text: [
     {
@@ -30,7 +41,10 @@ export const amberCoil: ItemCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           target: {
             selector: "chosen",
             count: 1,

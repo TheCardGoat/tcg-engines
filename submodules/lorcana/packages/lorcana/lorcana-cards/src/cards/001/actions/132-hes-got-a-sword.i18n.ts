@@ -7,14 +7,14 @@ export const hesGotASwordI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Er hat ein Schwert!",
-    text: "Gib einem Charakter deiner Wahl in diesem Zug +2.",
+    text: "Gib einem Charakter deiner Wahl in diesem Zug +2 {S}.",
   },
   fr: {
     name: "IL A UN SABRE !",
-    text: "Choisissez un personnage, il gagne +2 pour le reste de ce tour.",
+    text: "Choisissez un personnage, il gagne +2 {S} pour le reste de ce tour.",
   },
   it: {
     name: "Ha una Spada!",
-    text: "Un personaggio a tua scelta riceve +2 per questo turno.",
+    text: "Un personaggio a tua scelta riceve +2 {S} per questo turno.",
   },
 };

@@ -4,6 +4,17 @@ import { moanaDeterminedExplorerI18n } from "./018-moana-determined-explorer.i18
 export const moanaDeterminedExplorer: CharacterCard = {
   id: "plr",
   canonicalId: "ci_plr",
+  slug: "lorcana-ci_plr",
+  printings: [
+    {
+      id: "set5-018",
+      artId: "set5-018",
+      setCode: "set5",
+      collectorNumber: "18",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-018"],
   cardType: "character",
   name: "Moana",
@@ -21,7 +32,7 @@ export const moanaDeterminedExplorer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_da584233ea5149dd814bd6b372e015d5",
-    tcgPlayer: 561602,
+    tcgPlayer: "561602",
   },
   classifications: ["Storyborn", "Hero", "Princess"],
   i18n: moanaDeterminedExplorerI18n,

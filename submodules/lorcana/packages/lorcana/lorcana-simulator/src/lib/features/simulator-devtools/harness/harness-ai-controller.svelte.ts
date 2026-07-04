@@ -154,9 +154,7 @@ export class HarnessAiController implements AiControllableOrchestrator {
 
   #syncMode(): void {
     const turnNumber = this.#server.getTurnNumber();
-    const { actorId } = this.#server.enumerateAutomatedActionsForCurrentActor({
-      strategy: this.#strategyOption.strategy,
-    });
+    const actorId = this.#server.getCurrentActorId();
 
     const resolution = resolveHumanVsAiMode({
       state: this.state,
@@ -252,9 +250,7 @@ export class HarnessAiController implements AiControllableOrchestrator {
       }
     }
 
-    const { actorId: nextActorId } = this.#server.enumerateAutomatedActionsForCurrentActor({
-      strategy: this.#strategyOption.strategy,
-    });
+    const nextActorId = this.#server.getCurrentActorId();
     const resolution = resolveHumanVsAiMode({
       state: this.state,
       winner: this.#server.getWinner() ?? undefined,

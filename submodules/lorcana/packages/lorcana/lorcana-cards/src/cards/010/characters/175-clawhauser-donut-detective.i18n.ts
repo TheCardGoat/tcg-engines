@@ -9,16 +9,16 @@ export const clawhauserDonutDetectiveI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Clawhauser",
     version: "Donut-Detektiv",
-    text: "Herausfordern +2",
+    text: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
   },
   fr: {
     name: "Clawhauser",
     version: "Détective à beignet",
-    text: "Offensif +2",
+    text: "<Offensif> +2",
   },
   it: {
     name: "Clawhauser",
     version: "Detective delle Ciambelle",
-    text: "Sfidante +2",
+    text: "<Sfidante> +2",
   },
 };

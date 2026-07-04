@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kangaPeacefulGathererI18n } from "./138-kanga-peaceful-gatherer.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const kangaPeacefulGatherer: CharacterCard = {
   id: "Nld",
   canonicalId: "ci_Nld",
+  slug: "lorcana-ci_Nld",
+  printings: [
+    {
+      id: "set11-138",
+      artId: "set11-138",
+      setCode: "set11",
+      collectorNumber: "138",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-138"],
   cardType: "character",
   name: "Kanga",
@@ -21,7 +33,7 @@ export const kangaPeacefulGatherer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9f1b0784cd5e4536bad1c85dabbd1943",
-    tcgPlayer: 676218,
+    tcgPlayer: "676218",
   },
   text: [
     {

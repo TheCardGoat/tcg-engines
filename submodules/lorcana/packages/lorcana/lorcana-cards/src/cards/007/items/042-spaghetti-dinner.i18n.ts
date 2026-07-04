@@ -14,9 +14,9 @@ export const spaghettiDinnerI18n: Record<Languages, I18nProperties> = {
     name: "Spaghetti-Dinner",
     text: [
       {
-        title: "GEHOBENE",
+        title: "Gehobene Küche",
         description:
-          "KÜCHE, 1 — Wenn du mindestens 2 Charaktere im Spiel hast, sammelst du 1 Legende.",
+          "{E}, 1 {I} — Wenn du mindestens 2 Charaktere im Spiel hast, sammelst du 1 Legende.",
       },
     ],
   },
@@ -24,9 +24,9 @@ export const spaghettiDinnerI18n: Record<Languages, I18nProperties> = {
     name: "Plat de spaghetti",
     text: [
       {
-        title: "CUISINE",
+        title: "Cuisine raffinée",
         description:
-          "RAFFINÉE, 1 — Si vous avez au moins 2 personnages en jeu, gagnez 1 éclat de Lore.",
+          "{E}, 1 {I} — Si vous avez au moins 2 personnages en jeu, gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -34,8 +34,8 @@ export const spaghettiDinnerI18n: Record<Languages, I18nProperties> = {
     name: "Cena di Spaghetti",
     text: [
       {
-        title: "CUCINA RAFFINATA, 1",
-        description: "— Se hai in gioco 2 o più personaggi, ottieni 1 leggenda.",
+        title: "Cucina Raffinata",
+        description: "{E}, 1 {I} — Se hai in gioco 2 o più personaggi, ottieni 1 leggenda.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const betaAShowOfResolve100: CommandCard = {
   color: "blue",
   traits: ["-"],
   id: "GD01-100_p2",
-  externalId: "gundam:gd01-100_p2",
-  slug: "a-show-of-resolve-gd01-100-p2",
+  canonicalId: "GD01-100",
+  externalIds: { bandai: "gundam:gd01-100_p2" },
+  slug: "a-show-of-resolve/gd01-100",
   displayName: "A Show of Resolve",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-100_p2",
   printings: [
     {
       id: "GD01-100",
+      artId: "GD01-100",
+      setCode: "GD01",
       collectorNumber: "GD01-100",
       cardNumber: "GD01-100",
       set: {
@@ -30,6 +33,8 @@ export const betaAShowOfResolve100: CommandCard = {
     },
     {
       id: "GD01-100_p1",
+      artId: "GD01-100_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-100_p1",
       cardNumber: "GD01-100",
       set: {
@@ -45,6 +50,8 @@ export const betaAShowOfResolve100: CommandCard = {
     },
     {
       id: "GD01-100_p2",
+      artId: "GD01-100_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-100_p2",
       cardNumber: "GD01-100",
       set: {
@@ -60,6 +67,8 @@ export const betaAShowOfResolve100: CommandCard = {
     },
     {
       id: "GD01-100_p3",
+      artId: "GD01-100_p3",
+      setCode: "BETA",
       collectorNumber: "GD01-100_p3",
       cardNumber: "GD01-100",
       set: {
@@ -75,6 +84,8 @@ export const betaAShowOfResolve100: CommandCard = {
     },
     {
       id: "GD01-100_p4",
+      artId: "GD01-100_p4",
+      setCode: "PB01",
       collectorNumber: "GD01-100_p4",
       cardNumber: "GD01-100",
       set: {
@@ -90,6 +101,8 @@ export const betaAShowOfResolve100: CommandCard = {
     },
     {
       id: "GD01-100_p5",
+      artId: "GD01-100_p5",
+      setCode: "GD03",
       collectorNumber: "GD01-100_p5",
       cardNumber: "GD01-100",
       set: {
@@ -104,6 +117,7 @@ export const betaAShowOfResolve100: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD01-100", "GD01-100_p1", "GD01-100_p2", "GD01-100_p3", "GD01-100_p4", "GD01-100_p5"],
   selectedPrintingId: "GD01-100_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-100_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-100_p2.webp?260424",

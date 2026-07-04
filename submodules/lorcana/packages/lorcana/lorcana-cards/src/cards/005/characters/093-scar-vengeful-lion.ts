@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { scarVengefulLionI18n } from "./093-scar-vengeful-lion.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const scarVengefulLion: CharacterCard = {
   id: "BSP",
   canonicalId: "ci_f3P",
+  slug: "lorcana-ci_f3P",
+  printings: [
+    {
+      id: "set5-093",
+      artId: "set5-093",
+      setCode: "set5",
+      collectorNumber: "93",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-093"],
   cardType: "character",
   name: "Scar",
@@ -21,7 +33,7 @@ export const scarVengefulLion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e382f2cee40343d7ae3faed897045a66",
-    tcgPlayer: 561980,
+    tcgPlayer: "561980",
   },
   text: [
     {

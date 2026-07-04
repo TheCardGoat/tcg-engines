@@ -16,7 +16,7 @@ export const beastRelentlessEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Unerbittlich",
     text: [
       {
-        title: "NEUER AUFSCHWUNG",
+        title: "Neuer Aufschwung",
         description:
           "Jedes Mal, wenn ein gegnerischer Charakter Schaden erhält, darfst du diesen Charakter bereit machen.",
       },
@@ -27,9 +27,9 @@ export const beastRelentlessEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Implacable",
     text: [
       {
-        title: "SECOND SOUFFLE",
+        title: "Second souffle",
         description:
-          "Chaque fois que des dommages sont infligés à un personnage adverse, vous pouvez redresser ce personnage.",
+          "Chaque fois qu'un personnage adverse subit au moins un dommage, vous pouvez redresser ce personnage.",
       },
     ],
   },
@@ -38,8 +38,8 @@ export const beastRelentlessEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Relentless",
     text: [
       {
-        title: "SECOND WIND",
-        description: "Whenever an opposing character is damaged, you may ready this character.",
+        title: "Second Wind",
+        description: "Whenever an opposing character takes damage, you may ready this character.",
       },
     ],
   },

@@ -16,8 +16,8 @@ export const naniNoWorriesI18n: Record<Languages, I18nProperties> = {
     version: "Sorglos",
     text: [
       {
-        title: "LOCKER BLEIBEN",
-        description: "Solange dieser Charakter unbeschädigt ist, erhält er +1.",
+        title: "Locker bleiben",
+        description: "Solange dieser Charakter unbeschädigt ist, erhält er +1 {L}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const naniNoWorriesI18n: Record<Languages, I18nProperties> = {
     version: "Sans tracas",
     text: [
       {
-        title: "DÉTENDS-TOI",
-        description: "Tant que ce personnage n'a aucun dommage sur lui, il gagne +1.",
+        title: "Détends-toi",
+        description: "Tant que ce personnage n'a aucun dommage sur lui, il gagne +1 {L}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const naniNoWorriesI18n: Record<Languages, I18nProperties> = {
     version: "Rilassata",
     text: [
       {
-        title: "PRENDERSELA COMODA",
-        description: "Mentre questo personaggio non ha danno, riceve +1.",
+        title: "Prendersela Comoda",
+        description: "Mentre questo personaggio non ha danno, riceve +1 {L}.",
       },
     ],
   },

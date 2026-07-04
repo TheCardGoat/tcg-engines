@@ -20,7 +20,7 @@ import {
   projectEntityForZoneViewer,
   type SimulatorAnimationEvent,
 } from "@tcg/simulator-ui";
-import { buildMountedHref } from "../router-paths";
+import { buildMountedHref } from "../routes/router-paths.ts";
 
 type ViewerSeatId = "human-seat" | "opponent-seat" | "spectator-seat";
 type PublicCardZone = "human-battlefield" | "shared-discard" | "human-hand";

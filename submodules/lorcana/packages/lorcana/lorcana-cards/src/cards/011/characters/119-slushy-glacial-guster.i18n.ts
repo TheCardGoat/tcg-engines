@@ -9,16 +9,16 @@ export const slushyGlacialGusterI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Frostie",
     version: "Eisspeier",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Blizzard",
     version: "Souffleur de bourrasque glaciale",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Ghiaccio",
     version: "Soffiatore Glaciale",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

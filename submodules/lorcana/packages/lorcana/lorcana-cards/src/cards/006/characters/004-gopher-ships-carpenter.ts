@@ -4,6 +4,17 @@ import { gopherShipsCarpenterI18n } from "./004-gopher-ships-carpenter.i18n";
 export const gopherShipsCarpenter: CharacterCard = {
   id: "y4b",
   canonicalId: "ci_y4b",
+  slug: "lorcana-ci_y4b",
+  printings: [
+    {
+      id: "set6-004",
+      artId: "set6-004",
+      setCode: "set6",
+      collectorNumber: "4",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-004"],
   cardType: "character",
   name: "Gopher",
@@ -21,7 +32,7 @@ export const gopherShipsCarpenter: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_582917ea24ef4aa4a6921fcbe55d0100",
-    tcgPlayer: 591986,
+    tcgPlayer: "591986",
   },
   classifications: ["Storyborn", "Ally", "Pirate"],
   i18n: gopherShipsCarpenterI18n,

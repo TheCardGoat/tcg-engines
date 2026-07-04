@@ -20,10 +20,11 @@ export const aladdinVigilantGuardI18n: Record<Languages, I18nProperties> = {
     version: "Wachsamer Gardist",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "SICHERER DURCHGANG",
+        title: "Sicherer Durchgang",
         description:
           "Jedes Mal, wenn einer deiner Verbündeten erkundet, darfst du bis zu 2 Schaden von diesem Charakter entfernen.",
       },
@@ -34,10 +35,11 @@ export const aladdinVigilantGuardI18n: Record<Languages, I18nProperties> = {
     version: "Protecteur vigilant",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "PASSAGE SÛR",
+        title: "Passage sûr",
         description:
           "Chaque fois que l'un de vos personnages Allié est envoyé à l'aventure, vous pouvez retirer jusqu'à 2 dommages de ce personnage-ci.",
       },
@@ -48,10 +50,10 @@ export const aladdinVigilantGuardI18n: Record<Languages, I18nProperties> = {
     version: "Guardia Vigile",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "PASSAGGIO SICURO",
+        title: "Passaggio Sicuro",
         description:
           "Ogni volta che uno dei tui personaggi Alleato va all'avventura, puoi rimuovere fino a 2 danni da questo personaggio.",
       },

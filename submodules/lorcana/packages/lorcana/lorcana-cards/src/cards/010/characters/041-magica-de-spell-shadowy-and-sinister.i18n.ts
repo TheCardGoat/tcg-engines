@@ -17,7 +17,7 @@ export const magicaDeSpellShadowyAndSinisterI18n: Record<Languages, I18nProperti
     version: "Schattenhaft und unheimlich",
     text: [
       {
-        title: "DUNKLE BESCHWÖRUNG",
+        title: "Dunkle Beschwörung",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Karte deiner Wahl aus einem Ablagestapel zurück in das zugehörige Deck mischen.",
       },
@@ -28,7 +28,7 @@ export const magicaDeSpellShadowyAndSinisterI18n: Record<Languages, I18nProperti
     version: "Ombre sinistre",
     text: [
       {
-        title: "INCANTATION TÉNÉBREUSE",
+        title: "Incantation ténébreuse",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un joueur et mélanger une carte de sa défausse dans sa pioche.",
       },
@@ -39,7 +39,7 @@ export const magicaDeSpellShadowyAndSinisterI18n: Record<Languages, I18nProperti
     version: "Tenebrosa e Sinistra",
     text: [
       {
-        title: "INCANTO OSCURO",
+        title: "Incanto Oscuro",
         description:
           "Quando giochi questo personaggio, puoi mescolare una carta dagli scarti di un giocatore a tua scelta nel suo mazzo.",
       },

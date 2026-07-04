@@ -4,6 +4,17 @@ import { swoopingStrikeI18n } from "./063-swooping-strike.i18n";
 export const swoopingStrike: ActionCard = {
   id: "uRz",
   canonicalId: "ci_uRz",
+  slug: "lorcana-ci_uRz",
+  printings: [
+    {
+      id: "set10-063",
+      artId: "set10-063",
+      setCode: "set10",
+      collectorNumber: "63",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-063"],
   cardType: "action",
   name: "Swooping Strike",
@@ -16,7 +27,7 @@ export const swoopingStrike: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c285a7ee2f8644b3a286c71d28dabaa6",
-    tcgPlayer: 659417,
+    tcgPlayer: "659417",
   },
   text: "Each opponent chooses and exerts one of their ready characters.",
   abilities: [

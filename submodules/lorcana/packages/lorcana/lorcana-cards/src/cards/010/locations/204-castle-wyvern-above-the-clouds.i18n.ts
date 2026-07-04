@@ -17,9 +17,9 @@ export const castleWyvernAboveTheCloudsI18n: Record<Languages, I18nProperties> =
     version: "Über den Wolken",
     text: [
       {
-        title: "DIE BURG VERTEIDIGEN",
+        title: "Die Burg verteidigen",
         description:
-          "Deine Charaktere an diesem Ort erhalten Herausfordern +1 und Robust +1. (Während die Charaktere herausfordern, erhalten sie +1. Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine Charaktere an diesem Ort erhalten <Herausfordern> +1 und <Robust> +1. (Während die Charaktere herausfordern, erhalten sie +1 {S}. Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const castleWyvernAboveTheCloudsI18n: Record<Languages, I18nProperties> =
     version: "Au-dessus des nuages",
     text: [
       {
-        title: "PROTÉGEZ LE CHÂTEAU",
+        title: "Protégez le château",
         description:
-          "Les personnages sur ce lieu gagnent Offensif +1 et Résistance +1. (Lorsqu'ils défient, ces personnages gagnent +1. Les dommages qui leur sont infligés sont réduits de 1.)",
+          "Les personnages sur ce lieu gagnent <Offensif> +1 et <Résistance> +1. (Lorsqu'ils défient, ces personnages gagnent +1 {S}. Les dommages qui leur sont infligés sont réduits de 1.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const castleWyvernAboveTheCloudsI18n: Record<Languages, I18nProperties> =
     version: "Sopra le Nuvole",
     text: [
       {
-        title: "PROTEGGERE QUESTO CASTELLO I",
+        title: "Proteggere Questo Castello",
         description:
-          "personaggi ottengono Sfidante +1 e Resistere +1 mentre si trovano in questo luogo. (Ricevono +1 mentre stanno sfidando. Il danno che gli viene inflitto è ridotto di 1.)",
+          "I personaggi ottengono <Sfidante> +1 e <Resistere> +1 mentre si trovano in questo luogo. (Ricevono +1 {S} mentre stanno sfidando. Il danno che gli viene inflitto è ridotto di 1.)",
       },
     ],
   },

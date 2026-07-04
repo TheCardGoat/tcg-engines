@@ -4,6 +4,17 @@ import { peterPanShadowCatcherI18n } from "./058-peter-pan-shadow-catcher.i18n";
 export const peterPanShadowCatcher: CharacterCard = {
   id: "3qg",
   canonicalId: "ci_3qg",
+  slug: "lorcana-ci_3qg",
+  printings: [
+    {
+      id: "set6-058",
+      artId: "set6-058",
+      setCode: "set6",
+      collectorNumber: "58",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-058"],
   cardType: "character",
   name: "Peter Pan",
@@ -20,7 +31,7 @@ export const peterPanShadowCatcher: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_421a2dfb847b406fb91556a8ee090423",
-    tcgPlayer: 591995,
+    tcgPlayer: "591995",
   },
   text: [
     {

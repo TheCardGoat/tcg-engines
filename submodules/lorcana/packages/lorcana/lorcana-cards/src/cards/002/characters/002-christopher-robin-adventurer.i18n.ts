@@ -17,7 +17,7 @@ export const christopherRobinAdventurerI18n: Record<Languages, I18nProperties> =
     version: "Abenteurer",
     text: [
       {
-        title: "WIR WERDEN IMMER ZUSAMMEN SEIN",
+        title: "Wir werden immer zusammen sein",
         description:
           "Jedes Mal, wenn du diesen Charakter bereit machst und mindestens 2 weitere Charaktere im Spiel hast, sammelst du 2 Legenden.",
       },
@@ -28,7 +28,7 @@ export const christopherRobinAdventurerI18n: Record<Languages, I18nProperties> =
     version: "Aventurier",
     text: [
       {
-        title: "NOUS SERONS TOUJOURS ENSEMBLE",
+        title: "Nous serons toujours ensemble",
         description:
           "Si vous avez au moins 2 autres personnages en jeu lorsque vous redressez ce personnage, gagnez 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const christopherRobinAdventurerI18n: Record<Languages, I18nProperties> =
     version: "Avventuriero",
     text: [
       {
-        title: "SAREMO SEMPRE INSIEME",
+        title: "Saremo sempre Insieme",
         description:
           "Ogni volta che prepari questo personaggio, se hai in gioco 2 o più altri personaggi, ottieni 2 leggenda.",
       },

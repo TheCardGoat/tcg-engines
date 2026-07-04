@@ -17,9 +17,9 @@ export const reubenSandwichExpertI18n: Record<Languages, I18nProperties> = {
     version: "Sandwich-Experte",
     text: [
       {
-        title: "SPEZIALMITTAGESSEN",
+        title: "Spezialmittagessen",
         description:
-          "— Entferne bis zu 2 Schaden von einem deiner Charaktere. Du zahlst für jeden Schaden, den du auf diese Weise entfernt hast, 1 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "{E} — Entferne bis zu 2 Schaden von einem deiner Charaktere. Du zahlst für jeden Schaden, den du auf diese Weise entfernt hast, 1 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const reubenSandwichExpertI18n: Record<Languages, I18nProperties> = {
     version: "Expert en sandwichs",
     text: [
       {
-        title: "SPÉCIALITÉ DU JOUR",
+        title: "Spécialité du jour",
         description:
-          "— Choisissez l'un de vos personnages et retirez-lui jusqu'à 2 dommages. Pour chaque dommage ainsi retiré, le prochain personnage que vous jouez ce tour-ci vous coûte 1 de moins.",
+          "{E} — Choisissez l'un de vos personnages et retirez-lui jusqu'à 2 dommages. Pour chaque dommage ainsi retiré, le prochain personnage que vous jouez ce tour-ci vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const reubenSandwichExpertI18n: Record<Languages, I18nProperties> = {
     version: "Esperto di Panini",
     text: [
       {
-        title: "SPECIALITÀ DEL PRANZO",
+        title: "Specialità del Pranzo",
         description:
-          "— Rimuovi fino a 2 danni da un tuo personaggio a tua scelta. Per ogni singolo danno rimosso in questo modo, paga 1 in meno per giocare il tuo prossimo personaggio per questo turno.",
+          "{E} — Rimuovi fino a 2 danni da un tuo personaggio a tua scelta. Per ogni singolo danno rimosso in questo modo, paga 1 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

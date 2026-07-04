@@ -3,7 +3,18 @@ import { robinHoodCapableFighterI18n } from "./193-robin-hood-capable-fighter.i1
 
 export const robinHoodCapableFighter: CharacterCard = {
   id: "4Zj",
-  canonicalId: "ci_YvC",
+  canonicalId: "ci_Puv",
+  slug: "lorcana-ci_Puv",
+  printings: [
+    {
+      id: "set2-193",
+      artId: "set2-193",
+      setCode: "set2",
+      collectorNumber: "193",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-193", "set9-184"],
   cardType: "character",
   name: "Robin Hood",
@@ -20,7 +31,7 @@ export const robinHoodCapableFighter: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_888f26474eba4f569f94c99251eddf06",
-    tcgPlayer: 650155,
+    tcgPlayer: "650155",
   },
   text: [
     {

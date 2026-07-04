@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { sisuEmpoweredSiblingI18n } from "./125-sisu-empowered-sibling.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const sisuEmpoweredSibling: CharacterCard = {
-  id: "A15",
+  id: "m2H",
   canonicalId: "ci_bdj",
+  slug: "lorcana-ci_bdj",
+  printings: [
+    {
+      id: "set4-125",
+      artId: "set4-125",
+      setCode: "set4",
+      collectorNumber: "125",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-125"],
   cardType: "character",
   name: "Sisu",
@@ -21,7 +33,7 @@ export const sisuEmpoweredSibling: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d0714091b2a14f478e2d7704c8eb50d8",
-    tcgPlayer: 550839,
+    tcgPlayer: "550839",
   },
   text: [
     {

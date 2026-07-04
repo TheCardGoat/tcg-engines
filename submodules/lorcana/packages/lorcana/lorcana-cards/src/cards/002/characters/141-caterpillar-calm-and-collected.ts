@@ -4,6 +4,17 @@ import { caterpillarCalmAndCollectedI18n } from "./141-caterpillar-calm-and-coll
 export const caterpillarCalmAndCollected: CharacterCard = {
   id: "NTh",
   canonicalId: "ci_NTh",
+  slug: "lorcana-ci_NTh",
+  printings: [
+    {
+      id: "set2-141",
+      artId: "set2-141",
+      setCode: "set2",
+      collectorNumber: "141",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-141"],
   cardType: "character",
   name: "Caterpillar",
@@ -21,7 +32,7 @@ export const caterpillarCalmAndCollected: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_f3402d0395ee4f5c8fe1c1f897f6e06e",
-    tcgPlayer: 527762,
+    tcgPlayer: "527762",
   },
   classifications: ["Dreamborn"],
   i18n: caterpillarCalmAndCollectedI18n,

@@ -7,14 +7,17 @@ export const gd04Zeong017: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD04-017",
-  externalId: "gundam:gd04-017",
-  slug: "zeong-gd04-017",
+  canonicalId: "GD04-017",
+  externalIds: { bandai: "gundam:gd04-017" },
+  slug: "zeong/gd04-017",
   displayName: "Zeong",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-017",
   printings: [
     {
       id: "GD04-017",
+      artId: "GD04-017",
+      setCode: "GD04",
       collectorNumber: "GD04-017",
       cardNumber: "GD04-017",
       set: {
@@ -30,6 +33,8 @@ export const gd04Zeong017: UnitCard = {
     },
     {
       id: "GD04-017_p1",
+      artId: "GD04-017_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-017_p1",
       cardNumber: "GD04-017",
       set: {
@@ -45,6 +50,8 @@ export const gd04Zeong017: UnitCard = {
     },
     {
       id: "GD04-017_p2",
+      artId: "GD04-017_p2",
+      setCode: "GD04",
       collectorNumber: "GD04-017_p2",
       cardNumber: "GD04-017",
       set: {
@@ -59,6 +66,7 @@ export const gd04Zeong017: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-017", "GD04-017_p1", "GD04-017_p2"],
   selectedPrintingId: "GD04-017",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-017.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-017.webp?260424",

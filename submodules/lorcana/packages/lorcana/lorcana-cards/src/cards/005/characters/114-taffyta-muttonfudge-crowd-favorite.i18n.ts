@@ -17,7 +17,7 @@ export const taffytaMuttonfudgeCrowdFavoriteI18n: Record<Languages, I18nProperti
     version: "Publikumsliebling",
     text: [
       {
-        title: "PUBLIKUMSMAGNET",
+        title: "Publikumsmagnet",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen Ort im Spiel hast, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const taffytaMuttonfudgeCrowdFavoriteI18n: Record<Languages, I18nProperti
     version: "La préférée du public",
     text: [
       {
-        title: "CLOU DU SPECTACLE",
+        title: "Clou du spectacle",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un lieu en jeu, chaque adversaire perd 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const taffytaMuttonfudgeCrowdFavoriteI18n: Record<Languages, I18nProperti
     version: "Favorita della Folla",
     text: [
       {
-        title: "DA APPLAUSI",
+        title: "Da Applausi",
         description:
           "Quando giochi questo personaggio, se hai in gioco un luogo, ogni avversario perde 1 leggenda.",
       },

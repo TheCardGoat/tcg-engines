@@ -37,7 +37,12 @@
 
 import type { Condition } from "./condition-types";
 import type { AbilityCost } from "./cost-types";
-import type { Effect, ReplacementAbilityKind, StaticEffect } from "./effect-types";
+import type {
+  Effect,
+  ReplacementAbilityKind,
+  ReplacementRegistrationKind,
+  StaticEffect,
+} from "./effect-types";
 import type { CharacterTarget } from "./target-types";
 import type { Trigger } from "./trigger-types";
 
@@ -159,6 +164,16 @@ export interface ValueKeywordAbility {
  * }
  * ```
  *
+ * @example Puppy Shift 2
+ * ```typescript
+ * {
+ *   type: "keyword",
+ *   keyword: "Shift",
+ *   cost: { ink: 2 },
+ *   shiftClassification: "Puppy"
+ * }
+ * ```
+ *
  * @example Shift 3 (onto any valid target)
  * ```typescript
  * { type: "keyword", keyword: "Shift", cost: { ink: 3 } }
@@ -176,6 +191,21 @@ export interface ShiftKeywordAbility {
    * If not specified, can shift onto any character with matching name
    */
   shiftTarget?: string;
+  /**
+   * Target character classification that this can shift onto
+   * Used for [Classification] Shift variants such as Puppy Shift.
+   */
+  shiftClassification?: string;
+  /** Returns only this shifted top card to hand at the end of its controller's turn. */
+  temporaryShift?: boolean;
+  /** Special team-card Shift requirements involving more than one base character. */
+  multiShift?: {
+    targetNames: string[];
+    minTargets: number;
+    maxTargets: number;
+    requireDistinctNames?: boolean;
+    requireEachTargetName?: boolean;
+  };
 }
 
 /**
@@ -185,7 +215,7 @@ export interface ShiftKeywordAbility {
  * - Simple keywords have no additional fields
  * - Parameterized keywords require `value`, allow `condition`
  * - Value keywords require `value`
- * - Shift requires `cost`, allows `shiftTarget`
+ * - Shift requires `cost`, allows `shiftTarget` or `shiftClassification`
  */
 export type KeywordAbility =
   | SimpleKeywordAbility
@@ -424,7 +454,7 @@ export interface ReplacementAbility {
   condition?: Condition;
 
   /** What happens instead */
-  replacement: Effect | "prevent" | "double" | ReplacementAbilityKind;
+  replacement: Effect | "prevent" | "double" | ReplacementAbilityKind | ReplacementRegistrationKind;
 }
 
 // ============================================================================
@@ -656,6 +686,18 @@ export function shift(cost: AbilityCost, shiftTarget?: string): ShiftKeywordAbil
   return shiftTarget
     ? { cost, keyword: "Shift", shiftTarget, type: "keyword" }
     : { cost, keyword: "Shift", type: "keyword" };
+}
+
+/**
+ * Create a [Classification] Shift ability using AbilityCost
+ *
+ * @example classificationShift({ ink: 2 }, "Puppy") - Puppy Shift 2
+ */
+export function classificationShift(
+  cost: AbilityCost,
+  shiftClassification: string,
+): ShiftKeywordAbility {
+  return { cost, keyword: "Shift", shiftClassification, type: "keyword" };
 }
 
 /**

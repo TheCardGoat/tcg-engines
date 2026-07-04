@@ -7,14 +7,17 @@ export const st05Graze009: UnitCard = {
   color: "white",
   traits: ["gjallarhorn"],
   id: "ST05-009",
-  externalId: "gundam:st05-009",
-  slug: "graze-st05-009",
+  canonicalId: "ST05-009",
+  externalIds: { bandai: "gundam:st05-009" },
+  slug: "graze/st05-009",
   displayName: "Graze",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-009",
   printings: [
     {
       id: "ST05-009",
+      artId: "ST05-009",
+      setCode: "ST05",
       collectorNumber: "ST05-009",
       cardNumber: "ST05-009",
       set: {
@@ -30,6 +33,8 @@ export const st05Graze009: UnitCard = {
     },
     {
       id: "ST05-009_p1",
+      artId: "ST05-009_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-009_p1",
       cardNumber: "ST05-009",
       set: {
@@ -44,6 +49,7 @@ export const st05Graze009: UnitCard = {
       productName: "Iron Bloom [ST05] Bonus Pack",
     },
   ],
+  reprints: ["ST05-009", "ST05-009_p1"],
   selectedPrintingId: "ST05-009",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-009.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-009.webp?260424",

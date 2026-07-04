@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kidaProtectorOfAtlantisI18n } from "./007-kida-protector-of-atlantis.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const kidaProtectorOfAtlantis: CharacterCard = {
-  id: "lw9",
+  id: "jkb",
   canonicalId: "ci_L03",
+  slug: "lorcana-ci_L03",
+  printings: [
+    {
+      id: "set3-007",
+      artId: "set3-007",
+      setCode: "set3",
+      collectorNumber: "7",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-007"],
   cardType: "character",
   name: "Kida",
@@ -21,7 +33,7 @@ export const kidaProtectorOfAtlantis: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ae42b2ab4e074f3e91c29d4ba2c3e601",
-    tcgPlayer: 539273,
+    tcgPlayer: "539273",
   },
   text: [
     {

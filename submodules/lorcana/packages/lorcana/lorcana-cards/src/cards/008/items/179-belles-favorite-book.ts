@@ -4,6 +4,17 @@ import { bellesFavoriteBookI18n } from "./179-belles-favorite-book.i18n";
 export const bellesFavoriteBook: ItemCard = {
   id: "FEr",
   canonicalId: "ci_FEr",
+  slug: "lorcana-ci_FEr",
+  printings: [
+    {
+      id: "set8-179",
+      artId: "set8-179",
+      setCode: "set8",
+      collectorNumber: "179",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-179"],
   cardType: "item",
   name: "Belle's Favorite Book",
@@ -16,7 +27,7 @@ export const bellesFavoriteBook: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_af0770252d004096b01a2056b3fe10e1",
-    tcgPlayer: 631470,
+    tcgPlayer: "631470",
   },
   text: [
     {

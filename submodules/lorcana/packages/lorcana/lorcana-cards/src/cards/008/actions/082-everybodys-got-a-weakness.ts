@@ -4,6 +4,17 @@ import { everybodysGotAWeaknessI18n } from "./082-everybodys-got-a-weakness.i18n
 export const everybodysGotAWeakness: ActionCard = {
   id: "Gps",
   canonicalId: "ci_Gps",
+  slug: "lorcana-ci_Gps",
+  printings: [
+    {
+      id: "set8-082",
+      artId: "set8-082",
+      setCode: "set8",
+      collectorNumber: "82",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-082"],
   cardType: "action",
   name: "Everybody's Got a Weakness",
@@ -16,7 +27,7 @@ export const everybodysGotAWeakness: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_af2675aaffe94ff2bf54e5635e2657d8",
-    tcgPlayer: 631832,
+    tcgPlayer: "631832",
   },
   text: "Move 1 damage counter from each damaged character you have in play to chosen opposing character. Draw a card for each damage counter moved this way.",
   abilities: [

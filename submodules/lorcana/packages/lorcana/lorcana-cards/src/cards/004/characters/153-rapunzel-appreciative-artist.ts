@@ -4,6 +4,17 @@ import { rapunzelAppreciativeArtistI18n } from "./153-rapunzel-appreciative-arti
 export const rapunzelAppreciativeArtist: CharacterCard = {
   id: "Mbz",
   canonicalId: "ci_Mbz",
+  slug: "lorcana-ci_Mbz",
+  printings: [
+    {
+      id: "set4-153",
+      artId: "set4-153",
+      setCode: "set4",
+      collectorNumber: "153",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-153"],
   cardType: "character",
   name: "Rapunzel",
@@ -19,8 +30,8 @@ export const rapunzelAppreciativeArtist: CharacterCard = {
   lore: 3,
   inkable: true,
   externalIds: {
-    lorcast: "crd_7cfbdaa5c45f4ee9a73d3359c2f206c7",
-    tcgPlayer: 543915,
+    lorcast: "crd_a057fe1c22c944a38de0a0784f7d4d5e",
+    tcgPlayer: "668574",
   },
   text: [
     {

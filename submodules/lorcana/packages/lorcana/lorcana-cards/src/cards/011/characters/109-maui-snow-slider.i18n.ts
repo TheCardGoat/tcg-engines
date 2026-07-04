@@ -9,21 +9,16 @@ export const mauiSnowSliderI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Maui",
     version: "Schneerutscher",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Maui",
     version: "Glisseur des neiges",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Maui",
     version: "Scivolatore su Neve",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

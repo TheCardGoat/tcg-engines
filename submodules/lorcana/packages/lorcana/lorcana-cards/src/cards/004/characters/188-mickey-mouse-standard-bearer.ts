@@ -4,6 +4,17 @@ import { mickeyMouseStandardBearerI18n } from "./188-mickey-mouse-standard-beare
 export const mickeyMouseStandardBearer: CharacterCard = {
   id: "IJ9",
   canonicalId: "ci_7BU",
+  slug: "lorcana-ci_7BU",
+  printings: [
+    {
+      id: "set4-188",
+      artId: "set4-188",
+      setCode: "set4",
+      collectorNumber: "188",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-188", "set9-185"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseStandardBearer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a78a6d864bae48dca06ed1dc25e75e3f",
-    tcgPlayer: 650156,
+    tcgPlayer: "650156",
   },
   text: [
     {

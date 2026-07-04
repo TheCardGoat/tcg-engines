@@ -4,6 +4,17 @@ import { viranaFangChiefI18n } from "./095-virana-fang-chief.i18n";
 export const viranaFangChief: CharacterCard = {
   id: "3ZI",
   canonicalId: "ci_N3z",
+  slug: "lorcana-ci_N3z",
+  printings: [
+    {
+      id: "set2-095",
+      artId: "set2-095",
+      setCode: "set2",
+      collectorNumber: "95",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-095", "set9-082"],
   cardType: "character",
   name: "Virana",
@@ -21,7 +32,7 @@ export const viranaFangChief: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_6b025bc8b17a487c8e3b40067851f9b9",
-    tcgPlayer: 650022,
+    tcgPlayer: "650022",
   },
   classifications: ["Storyborn", "Villain", "Queen"],
   i18n: viranaFangChiefI18n,

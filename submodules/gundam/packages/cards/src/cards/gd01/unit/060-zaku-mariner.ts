@@ -7,14 +7,17 @@ export const gd01ZakuMariner060: UnitCard = {
   color: "red",
   traits: ["zeon"],
   id: "GD01-060",
-  externalId: "gundam:gd01-060",
-  slug: "zaku-mariner-gd01-060",
+  canonicalId: "GD01-060",
+  externalIds: { bandai: "gundam:gd01-060" },
+  slug: "zaku-mariner/gd01-060",
   displayName: "Zaku Mariner",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-060",
   printings: [
     {
       id: "GD01-060",
+      artId: "GD01-060",
+      setCode: "GD01",
       collectorNumber: "GD01-060",
       cardNumber: "GD01-060",
       set: {
@@ -29,6 +32,7 @@ export const gd01ZakuMariner060: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-060"],
   selectedPrintingId: "GD01-060",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-060.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-060.webp?260424",

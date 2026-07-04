@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { evasive } from "../../../helpers/abilities/evasive";
 import { peterPanHighFlyerI18n } from "./105-peter-pan-high-flyer.i18n";
+
+import { evasive } from "../../../helpers/abilities/evasive";
 
 export const peterPanHighFlyer: CharacterCard = {
   id: "MnK",
   canonicalId: "ci_MnK",
+  slug: "lorcana-ci_MnK",
+  printings: [
+    {
+      id: "set10-105",
+      artId: "set10-105",
+      setCode: "set10",
+      collectorNumber: "105",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-105"],
   cardType: "character",
   name: "Peter Pan",
@@ -21,7 +33,7 @@ export const peterPanHighFlyer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9868e624b438444a9cdf1f4ef0878547",
-    tcgPlayer: 659189,
+    tcgPlayer: "659189",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Hero"],

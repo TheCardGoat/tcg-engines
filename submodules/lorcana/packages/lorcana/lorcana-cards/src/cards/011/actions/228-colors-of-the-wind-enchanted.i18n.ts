@@ -3,7 +3,7 @@ import type { I18nProperties, Languages } from "@tcg/lorcana-types";
 export const colorsOfTheWindEnchantedI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Colors of the Wind",
-    text: "Each player reveals the top card of their deck. Draw a card for each different ink symbol on cards revealed this way.",
+    text: "Each player reveals the top card of their deck. Draw a card for each different ink type of cards revealed this way.",
   },
   de: {
     name: "Das Farbenspiel des Winds",

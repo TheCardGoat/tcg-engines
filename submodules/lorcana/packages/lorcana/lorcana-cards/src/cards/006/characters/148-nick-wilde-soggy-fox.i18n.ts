@@ -6,9 +6,9 @@ export const nickWildeSoggyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Soggy Fox",
     text: [
       {
-        title: "NICE TO HAVE A PARTNER",
+        title: "NICE TO HAVE",
         description:
-          "While you have another character with Support in play, this character gets +2 {S}.",
+          "A PARTNER While you have another character with Support in play, this character gets +2 {S}.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const nickWildeSoggyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Durchnässter Fuchs",
     text: [
       {
-        title: "SCHÖN, EINEN PARTNER ZU HABEN",
+        title: "Schön, einen Partner zu haben",
         description:
-          "Solange du mindestens einen weiteren Charakter mit Unterstützen im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens einen weiteren Charakter mit <Unterstützen> im Spiel hast, erhält dieser Charakter +2 {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const nickWildeSoggyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Renard détrempé",
     text: [
       {
-        title: "CHOUETTE DE T'AVOIR POUR ÉQUIPIER",
+        title: "Chouette de t'avoir pour équipier",
         description:
-          "Tant qu'un autre de vos personnages en jeu a Soutien, ce personnage-ci gagne +2.",
+          "Tant qu'un autre de vos personnages en jeu a <Soutien>, ce personnage-ci gagne +2 {S}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const nickWildeSoggyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Volpe Inzuppata",
     text: [
       {
-        title: "SAREBBE BELLO SE AVESSI UN COLLEGA",
+        title: "Sarebbe Bello se Avessi un Collega",
         description:
-          "Mentre hai in gioco un altro personaggio con Aiutante, questo personaggio riceve +2.",
+          "Mentre hai in gioco un altro personaggio con <Aiutante>, questo personaggio riceve +2 {S}.",
       },
     ],
   },

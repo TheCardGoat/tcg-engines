@@ -17,9 +17,9 @@ export const fangRiverCityI18n: Record<Languages, I18nProperties> = {
     version: "Stadt am Fluss",
     text: [
       {
-        title: "VON WASSER UMGEBEN",
+        title: "Von Wasser umgeben",
         description:
-          "Charaktere an diesem Ort erhalten Behütet und Wendig. (Gegnerische Karten können die Charaktere nicht auswählen, außer um sie herauszufordern. Nur Charaktere mit Wendig können diese Charaktere herausfordern.)",
+          "Charaktere an diesem Ort erhalten <Behütet> und <Wendig>. (Gegnerische Karten können die Charaktere nicht auswählen, außer um sie herauszufordern. Nur Charaktere mit Wendig können diese Charaktere herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const fangRiverCityI18n: Record<Languages, I18nProperties> = {
     version: "Cité des rivières",
     text: [
       {
-        title: "ENCERCLÉ PAR LES EAUX",
+        title: "Encerclé par les eaux",
         description:
-          "Les personnages sur ce lieu gagnent Hors d'atteinte et Insaisissable. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi. Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
+          "Les personnages sur ce lieu gagnent <Hors d'atteinte> et <Insaisissable>. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi. Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const fangRiverCityI18n: Record<Languages, I18nProperties> = {
     version: "Città sul Fiume",
     text: [
       {
-        title: "CIRCONDATA DALL'ACQUA I",
+        title: "Circondata dall'Acqua",
         description:
-          "personaggi ottengono Protetto e Sfuggente mentre si trovano in questo luogo. (Gli avversari non possono sceglierli se non per sfidarli. Solo altri personaggi con Sfuggente possono sfidarli.)",
+          "I personaggi ottengono <Protetto> e <Sfuggente> mentre si trovano in questo luogo. (Gli avversari non possono sceglierli se non per sfidarli. Solo altri personaggi con Sfuggente possono sfidarli.)",
       },
     ],
   },

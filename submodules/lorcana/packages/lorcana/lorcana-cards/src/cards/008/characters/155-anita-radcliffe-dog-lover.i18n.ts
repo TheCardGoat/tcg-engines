@@ -17,9 +17,9 @@ export const anitaRadcliffeDogLoverI18n: Record<Languages, I18nProperties> = {
     version: "Hundeliebhaberin",
     text: [
       {
-        title: "ICH KÜMMERE MICH UM DICH",
+        title: "Ich kümmere mich um dich",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du einem Welpen deiner Wahl bis zu Beginn deines nächsten Zuges Robust +1 geben. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+          "Wenn du diesen Charakter ausspielst, darfst du einem Welpen deiner Wahl bis zu Beginn deines nächsten Zuges <Robust> +1 geben. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const anitaRadcliffeDogLoverI18n: Record<Languages, I18nProperties> = {
     version: "Passionnée de chiens",
     text: [
       {
-        title: "JE PRENDRAI SOIN DE TOI",
+        title: "Je prendrai soin de toi",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage Chiot qui gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage Chiot qui gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const anitaRadcliffeDogLoverI18n: Record<Languages, I18nProperties> = {
     version: "Amante dei Cani",
     text: [
       {
-        title: "MI PRENDERÒ CURA DI TE",
+        title: "Mi Prenderò Cura di Te",
         description:
-          "Quando giochi questo personaggio, puoi dare Resistere +1 a un personaggio Cucciolo a tua scelta fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, puoi dare <Resistere> +1 a un personaggio Cucciolo a tua scelta fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

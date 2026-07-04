@@ -619,4 +619,168 @@ describe("buildCardActionViews", () => {
     expect(altAction).toBeDefined();
     expect(altAction?.moves).toEqual([putOnDeckBottomMove]);
   });
+
+  it("splits Maleficent & Diablo's deck-bottom Shift cost into a Fools action", () => {
+    const card = createCard({
+      zoneId: "hand",
+      cardType: "character",
+      label: "Maleficent & Diablo - Evil Incarnate",
+      cost: 7,
+      playCost: 7,
+      shiftInkCost: 5,
+      textEntries: [
+        { title: "Shift 5 {I}", description: "" },
+        {
+          title: "Fools!",
+          description:
+            "You may put 5 character cards from your discard on the bottom of your deck in any order to shift this character for free.",
+        },
+      ],
+    });
+    const paidShiftMove = createMove({
+      id: "shiftCard:card-1:maleficent-target",
+      label: "Maleficent & Diablo - Evil Incarnate (Shift) -> Maleficent - Exultant Spellcaster",
+      moveId: "playCard",
+      params: {
+        cardId: card.cardId,
+        cost: "shift",
+        shiftTarget: "maleficent-target",
+        targets: ["maleficent-target"],
+      },
+      presentation: {
+        kind: "targeted",
+        categoryId: "shift-card",
+        categoryLabel: "Shift",
+        optionLabel: "Shift: 5 ink",
+      },
+    });
+    const foolsShiftMove = createMove({
+      id: "shiftCard:card-1:maleficent-target:putOnDeckBottom",
+      label: "Maleficent & Diablo - Evil Incarnate (Shift) -> Maleficent - Exultant Spellcaster",
+      moveId: "playCard",
+      params: {
+        cardId: card.cardId,
+        cost: "shift",
+        shiftTarget: "maleficent-target",
+        targets: ["maleficent-target"],
+      },
+      presentation: {
+        kind: "targeted",
+        categoryId: "shift-card",
+        categoryLabel: "Shift",
+        optionLabel: "Put 5 on Deck Bottom",
+        selectableCosts: [
+          {
+            kind: "putOnDeckBottom" as const,
+            count: 5,
+            candidateCardIds: [
+              "discard-1" as CardInstanceId,
+              "discard-2" as CardInstanceId,
+              "discard-3" as CardInstanceId,
+              "discard-4" as CardInstanceId,
+              "discard-5" as CardInstanceId,
+            ],
+            zone: "discard" as const,
+            cardType: "character",
+          },
+        ],
+      },
+    });
+    const alternateFoolsShiftMove = createMove({
+      id: "shiftCard:card-1:diablo-target:putOnDeckBottom",
+      label: "Maleficent & Diablo - Evil Incarnate (Shift) -> Diablo - Devoted Herald",
+      moveId: "playCard",
+      params: {
+        cardId: card.cardId,
+        cost: "shift",
+        shiftTarget: "diablo-target",
+        targets: ["diablo-target"],
+      },
+      presentation: {
+        kind: "targeted",
+        categoryId: "shift-card",
+        categoryLabel: "Shift",
+        optionLabel: "Put 5 on Deck Bottom",
+        selectableCosts: [
+          {
+            kind: "putOnDeckBottom" as const,
+            count: 5,
+            candidateCardIds: [
+              "discard-1" as CardInstanceId,
+              "discard-2" as CardInstanceId,
+              "discard-3" as CardInstanceId,
+              "discard-4" as CardInstanceId,
+              "discard-5" as CardInstanceId,
+            ],
+            zone: "discard" as const,
+            cardType: "character",
+          },
+        ],
+      },
+    });
+
+    const actions = buildCardActionViews({
+      card,
+      executableMoves: [paidShiftMove, foolsShiftMove, alternateFoolsShiftMove],
+      ownerSide: "playerOne",
+      challengeReadyCardIds: [],
+      movableToLocationCardIds: [],
+    });
+
+    const shiftActions = actions.filter((a) => a.categoryId === "shift-card");
+    expect(shiftActions).toEqual([
+      expect.objectContaining({
+        id: `shift-card:${card.cardId}`,
+        label: "Shift",
+        detail: "5 ink",
+        moves: [paidShiftMove],
+      }),
+      expect.objectContaining({
+        id: `shift-card:${card.cardId}:put-on-deck-bottom`,
+        label: "Fools!",
+        detail: "Put 5 characters on deck bottom",
+        moves: [foolsShiftMove, alternateFoolsShiftMove],
+      }),
+    ]);
+    expect(new Set(shiftActions.map((action) => action.id)).size).toBe(shiftActions.length);
+  });
+
+  it("shows a playable discarded card as a normal play action when the engine exposes the move", () => {
+    const card = createCard({
+      cardId: "discard-action",
+      label: "Look What You've Done",
+      zoneId: "discard",
+      cardType: "action",
+    });
+    const playMove = createMove({
+      id: "playCard:discard-action",
+      label: "Play Look What You've Done",
+      moveId: "playCard",
+      params: { cardId: card.cardId },
+      presentation: {
+        kind: "targeted",
+        categoryId: "play-card",
+        categoryLabel: "Play",
+        optionLabel: card.label,
+      },
+    });
+
+    const actions = buildCardActionViews({
+      card,
+      executableMoves: [playMove],
+      ownerSide: "playerOne",
+      challengeReadyCardIds: [],
+      movableToLocationCardIds: [],
+    });
+
+    expect(actions).toContainEqual({
+      id: `play-card:${card.cardId}`,
+      cardId: card.cardId,
+      categoryId: "play-card",
+      label: "Play",
+      interaction: "execute-or-select",
+      enabled: true,
+      moves: [playMove],
+    });
+  });
 });

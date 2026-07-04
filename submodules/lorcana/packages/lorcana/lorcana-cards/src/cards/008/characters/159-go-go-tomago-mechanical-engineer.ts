@@ -4,6 +4,17 @@ import { goGoTomagoMechanicalEngineerI18n } from "./159-go-go-tomago-mechanical-
 export const goGoTomagoMechanicalEngineer: CharacterCard = {
   id: "mVc",
   canonicalId: "ci_mVc",
+  slug: "lorcana-ci_mVc",
+  printings: [
+    {
+      id: "set8-159",
+      artId: "set8-159",
+      setCode: "set8",
+      collectorNumber: "159",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-159"],
   cardType: "character",
   name: "Go Go Tomago",
@@ -20,7 +31,7 @@ export const goGoTomagoMechanicalEngineer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bc3a96f6dcf64d1d87da6c83288a8146",
-    tcgPlayer: 631691,
+    tcgPlayer: "631691",
   },
   text: [
     {

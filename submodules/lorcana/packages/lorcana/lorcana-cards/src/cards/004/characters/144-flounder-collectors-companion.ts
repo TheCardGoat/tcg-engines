@@ -4,6 +4,17 @@ import { flounderCollectorsCompanionI18n } from "./144-flounder-collectors-compa
 export const flounderCollectorsCompanion: CharacterCard = {
   id: "xbo",
   canonicalId: "ci_xbo",
+  slug: "lorcana-ci_xbo",
+  printings: [
+    {
+      id: "set4-144",
+      artId: "set4-144",
+      setCode: "set4",
+      collectorNumber: "144",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-144"],
   cardType: "character",
   name: "Flounder",
@@ -20,16 +31,16 @@ export const flounderCollectorsCompanion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e5268062a91d46d1b89bd272a3f8c043",
-    tcgPlayer: 547687,
+    tcgPlayer: "547687",
   },
   text: [
     {
       title: "Support",
     },
     {
-      title: "I'M NOT A GUPPY",
+      title: "I'M NOT",
       description:
-        "If you have a character named Ariel in play, you pay 1 {I} less to play this character.",
+        "A GUPPY If you have a character named Ariel in play, you pay 1 {I} less to play this character.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

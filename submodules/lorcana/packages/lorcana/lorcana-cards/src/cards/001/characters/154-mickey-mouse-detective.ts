@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMouseDetectiveI18n } from "./154-mickey-mouse-detective.i18n";
 
 export const mickeyMouseDetective: CharacterCard = {
-  id: "xKp",
-  canonicalId: "ci_GYc",
+  id: "9Tz",
+  canonicalId: "ci_Ff8",
+  slug: "lorcana-ci_Ff8",
+  printings: [
+    {
+      id: "set1-154",
+      artId: "set1-154",
+      setCode: "set1",
+      collectorNumber: "154",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-154", "set10-160"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,13 +30,13 @@ export const mickeyMouseDetective: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9b6f273381924929ba2d6f6d3e990f66",
-    tcgPlayer: 659388,
+    tcgPlayer: "659388",
   },
   text: [
     {
-      title: "GET A CLUE",
+      title: "GET",
       description:
-        "When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
+        "A CLUE When you play this character, you may put the top card of your deck into your inkwell facedown and exerted.",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],

@@ -133,11 +133,16 @@ export const CardFace = memo(
         ref={ref}
         type="button"
         className={cardClass}
+        data-testid="card"
         data-card-density={density}
         data-card-kind={displayKind}
         data-card-id={entity.id}
+        data-face={isHidden ? "hidden" : "public"}
         id={`entity-${entity.id}`}
         data-entity-id={entity.id}
+        {...Object.fromEntries(
+          Object.entries(entity.dataAttributes ?? {}).filter(([, value]) => value !== undefined),
+        )}
         aria-label={ariaLabel}
         tabIndex={tabIndex}
         draggable={draggable}

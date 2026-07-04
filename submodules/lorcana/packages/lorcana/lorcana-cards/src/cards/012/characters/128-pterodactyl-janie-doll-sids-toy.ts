@@ -4,6 +4,17 @@ import { pterodactylJanieDollSidsToyI18n } from "./128-pterodactyl-janie-doll-si
 export const pterodactylJanieDollSidsToy: CharacterCard = {
   id: "7me",
   canonicalId: "ci_7me",
+  slug: "lorcana-ci_7me",
+  printings: [
+    {
+      id: "set12-128",
+      artId: "set12-128",
+      setCode: "set12",
+      collectorNumber: "128",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-128"],
   cardType: "character",
   name: "Pterodactyl Janie Doll",
@@ -20,6 +31,7 @@ export const pterodactylJanieDollSidsToy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_97451c08fce84aa7a3685f87f9b40438",
+    tcgPlayer: "690547",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { chiefBogoGazelleFanI18n } from "./011-chief-bogo-gazelle-fan.i18n";
 export const chiefBogoGazelleFan: CharacterCard = {
   id: "XdU",
   canonicalId: "ci_XdU",
+  slug: "lorcana-ci_XdU",
+  printings: [
+    {
+      id: "set6-011",
+      artId: "set6-011",
+      setCode: "set6",
+      collectorNumber: "11",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-011"],
   cardType: "character",
   name: "Chief Bogo",
@@ -20,7 +31,7 @@ export const chiefBogoGazelleFan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5976c98ec3d145c686c0c1d5042a8ca2",
-    tcgPlayer: 593000,
+    tcgPlayer: "593000",
   },
   text: [
     {

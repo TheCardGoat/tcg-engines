@@ -4,6 +4,17 @@ import { liloSnowArtistI18n } from "./002-lilo-snow-artist.i18n";
 export const liloSnowArtist: CharacterCard = {
   id: "pzM",
   canonicalId: "ci_pzM",
+  slug: "lorcana-ci_pzM",
+  printings: [
+    {
+      id: "set11-002",
+      artId: "set11-002",
+      setCode: "set11",
+      collectorNumber: "2",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-002"],
   cardType: "character",
   name: "Lilo",
@@ -20,7 +31,7 @@ export const liloSnowArtist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_df49511658c9468b9a5353f1561cc9cc",
-    tcgPlayer: 675377,
+    tcgPlayer: "675377",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { lythosRockTitanI18n } from "./180-lythos-rock-titan.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const lythosRockTitan: CharacterCard = {
   id: "Hi2",
   canonicalId: "ci_Hi2",
+  slug: "lorcana-ci_Hi2",
+  printings: [
+    {
+      id: "set3-180",
+      artId: "set3-180",
+      setCode: "set3",
+      collectorNumber: "180",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-180"],
   cardType: "character",
   name: "Lythos",
@@ -21,7 +33,7 @@ export const lythosRockTitan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_03d2c58be83e4132a95c060de2b00cbe",
-    tcgPlayer: 537620,
+    tcgPlayer: "537620",
   },
   text: [
     {

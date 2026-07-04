@@ -20,10 +20,10 @@ export const meekoSkittishScroungerI18n: Record<Languages, I18nProperties> = {
     version: "Sprunghafter Schnorrer",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "NIMMERSATT",
+        title: "Nimmersatt",
         description:
           "Am Ende deines Zuges, falls dieser Charakter erschöpft ist, wähle eine Karte aus deiner Hand und wirf sie ab oder verbanne diesen Charakter.",
       },
@@ -34,12 +34,12 @@ export const meekoSkittishScroungerI18n: Record<Languages, I18nProperties> = {
     version: "Pique-assiette craintif",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "VENTRE",
+        title: "Ventre à quatre pattes",
         description:
-          "À QUATRE PATTES À la fin de votre tour, si ce personnage est épuisé, défaussez une carte ou bannissez-le.",
+          "À la fin de votre tour, si ce personnage est épuisé, défaussez une carte ou bannissez-le.",
       },
     ],
   },
@@ -48,10 +48,10 @@ export const meekoSkittishScroungerI18n: Record<Languages, I18nProperties> = {
     version: "Scroccone Irrequieto",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "POZZO SENZA FONDO",
+        title: "Pozzo Senza Fondo",
         description:
           "Alla fine del tuo turno, se questo personaggio è impegnato, scegli e scarta una carta o esilialo.",
       },

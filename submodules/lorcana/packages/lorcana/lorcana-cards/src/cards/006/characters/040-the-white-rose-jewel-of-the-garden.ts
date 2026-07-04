@@ -4,6 +4,17 @@ import { theWhiteRoseJewelOfTheGardenI18n } from "./040-the-white-rose-jewel-of-
 export const theWhiteRoseJewelOfTheGarden: CharacterCard = {
   id: "ZnW",
   canonicalId: "ci_ZnW",
+  slug: "lorcana-ci_ZnW",
+  printings: [
+    {
+      id: "set6-040",
+      artId: "set6-040",
+      setCode: "set6",
+      collectorNumber: "40",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-040"],
   cardType: "character",
   name: "The White Rose",
@@ -20,7 +31,7 @@ export const theWhiteRoseJewelOfTheGarden: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6fbd9103624b4b8d95fec133326385c7",
-    tcgPlayer: 593043,
+    tcgPlayer: "593043",
   },
   text: [
     {

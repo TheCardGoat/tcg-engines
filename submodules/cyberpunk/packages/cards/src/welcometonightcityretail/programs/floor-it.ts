@@ -1,12 +1,14 @@
-import type { WelcomeToNightCityRetailCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { quickAbility } from "@tcg/cyberpunk-types";
 
-export const welcomeToNightCityRetailFloorIt = {
+export const welcomeToNightCityRetailFloorIt = defineCyberpunkCard({
   id: "0cd37c43-e722-48eb-91ef-4c1bd1645215",
-  externalId: "cb-floor-it",
   slug: "floor-it",
+  rulesText: "{Quick} Give a rival Unit -1 power this turn. Draw 1.",
   name: "Floor It",
   displayName: "Floor It",
-  rulesText: "{Quick} Give a rival Unit -1 power this turn. Draw 1.",
+  canonicalId: "floor-it",
   color: "blue",
   classifications: ["Merc", "Quickhack"],
   set: {
@@ -14,59 +16,52 @@ export const welcomeToNightCityRetailFloorIt = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "132",
-  printings: [
-    {
-      id: "91f9d30c-f74d-4be4-8505-52f05d309c92",
-      collectorNumber: "132",
-      setCode: "welcometonightcityretail",
-      rarity: "Common",
-    },
-    {
-      id: "859c8d1d-b715-4a9a-b7cc-96ecfe135a00",
-      collectorNumber: "β132",
-      setCode: "welcometonightcitybeta",
-      rarity: "Common",
-    },
-    {
-      id: "60255f42-3ddd-4865-9e4a-335963694be1",
-      collectorNumber: "019",
-      setCode: "theheistretailstarterdeck",
-      rarity: "Common",
-    },
-    {
-      id: "d8b28345-bcd5-4c52-b51d-3052d8b24874",
-      collectorNumber: "β019",
-      setCode: "theheistbetastarterdeck",
-      rarity: "Common",
-    },
-  ],
-  selectedPrintingId: "91f9d30c-f74d-4be4-8505-52f05d309c92",
   artist: "DOFRESH",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/132.webp",
   rarity: "Common",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
+  timingTriggers: ["play"],
   keywords: ["quick"],
   type: "program",
   cost: 1,
   power: null,
   abilities: [
+    quickAbility({ text: "Quick" }),
     {
-      kind: "keyword",
-      text: "Quick",
-      keyword: "quick",
+      kind: "triggered",
+      text: "Give a rival Unit -1 power this turn. Draw 1.",
+      trigger: {
+        trigger: "play",
+      },
       source: {
         selector: "self",
       },
-      effects: [],
-    },
-    {
-      kind: "static",
-      text: "Give a rival Unit -1 power this turn. Draw 1.",
-      effects: [],
+      effects: [
+        {
+          effect: "modifyPower",
+          target: {
+            selector: "card",
+            controller: "rival",
+            zones: ["field"],
+            cardTypes: ["unit"],
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
+            },
+          },
+          value: -1,
+          duration: "turn",
+        },
+        {
+          effect: "draw",
+          player: "friendly",
+          amount: 1,
+        },
+      ],
     },
   ],
   reminderText: ["Discard programs after they resolve."],
-} satisfies WelcomeToNightCityRetailCardDefinition;
+}) satisfies ProgramCardDefinition;

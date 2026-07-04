@@ -9,9 +9,9 @@ export const tukTukLivelyPartnerI18n: Record<Languages, I18nProperties> = {
         title: "Evasive",
       },
       {
-        title: "ON A ROLL",
+        title: "ON",
         description:
-          "When you play this character, you may move him and one of your other characters to the same location for free. The other character gets +2 {S} this turn.",
+          "A ROLL When you play this character, you may move him and one of your other characters to the same location for free. The other character gets +2 {S} this turn.",
       },
     ],
   },
@@ -20,12 +20,12 @@ export const tukTukLivelyPartnerI18n: Record<Languages, I18nProperties> = {
     version: "Lebendiger Verbündeter",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "AUFGEDREHT",
+        title: "Aufgedreht",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du ihn und einen deiner anderen Charaktere kostenlos zu dem selben Ort bewegen. Der andere Charakter erhält in diesem Zug +2.",
+          "Wenn du diesen Charakter ausspielst, darfst du ihn und einen deiner anderen Charaktere kostenlos zu dem selben Ort bewegen. Der andere Charakter erhält in diesem Zug +2 {S}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const tukTukLivelyPartnerI18n: Record<Languages, I18nProperties> = {
     version: "Partenaire percutant",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "ÇA ROULE",
+        title: "Ça roule",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez choisir un autre personnage et les déplacer tous les deux gratuitement sur un même lieu. Le personnage choisi gagne +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez choisir un autre personnage et les déplacer tous les deux gratuitement sur un même lieu. Le personnage choisi gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const tukTukLivelyPartnerI18n: Record<Languages, I18nProperties> = {
     version: "Compagno Vivace",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "ROTOLAMENTO",
+        title: "Rotolamento",
         description:
-          "Quando giochi questo personaggio, puoi spostare lui e uno dei tuoi altri personaggi in uno stesso luogo, gratis. L'altro personaggio riceve +2 per questo turno.",
+          "Quando giochi questo personaggio, puoi spostare lui e uno dei tuoi altri personaggi in uno stesso luogo, gratis. L'altro personaggio riceve +2 {S} per questo turno.",
       },
     ],
   },

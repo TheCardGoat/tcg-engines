@@ -4,6 +4,17 @@ import { jafarKeeperOfSecretsI18n } from "./044-jafar-keeper-of-secrets.i18n";
 export const jafarKeeperOfSecrets: CharacterCard = {
   id: "vm4",
   canonicalId: "ci_2bv",
+  slug: "lorcana-ci_2bv",
+  printings: [
+    {
+      id: "set1-044",
+      artId: "set1-044",
+      setCode: "set1",
+      collectorNumber: "44",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-044", "set9-038"],
   cardType: "character",
   name: "Jafar",
@@ -20,7 +31,7 @@ export const jafarKeeperOfSecrets: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2f69538767394390bc91d25fd5948a5b",
-    tcgPlayer: 649985,
+    tcgPlayer: "649985",
   },
   text: [
     {

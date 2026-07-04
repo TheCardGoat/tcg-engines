@@ -17,7 +17,7 @@ export const jasmineDesertWarriorEnchantedI18n: Record<Languages, I18nProperties
     version: "Wüstenkriegerin",
     text: [
       {
-        title: "RAFFINIERTES MANÖVER",
+        title: "Raffiniertes Manöver",
         description:
           "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er herausgefordert wird, wählen alle gegnerischen Mitspielenden je 1 Karte aus ihrer Hand und werfen sie ab.",
       },
@@ -28,7 +28,7 @@ export const jasmineDesertWarriorEnchantedI18n: Record<Languages, I18nProperties
     version: "Combattante du désert",
     text: [
       {
-        title: "MANŒUVRE ASTUCIEUSE",
+        title: "Manœuvre astucieuse",
         description:
           "Lorsque vous jouez ce personnage et à chaque fois qu'il est défié, chaque adversaire choisit une carte et la défausse.",
       },
@@ -39,7 +39,7 @@ export const jasmineDesertWarriorEnchantedI18n: Record<Languages, I18nProperties
     version: "Guerriera del Deserto",
     text: [
       {
-        title: "MANOVRA ASTUTA",
+        title: "Manovra Astuta",
         description:
           "Quando giochi questo personaggio e ogni volta che viene sfidato, ogni avversario sceglie e scarta una carta.",
       },

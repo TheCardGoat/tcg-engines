@@ -13,11 +13,10 @@ function makeLegend({
   name: string;
   slug?: string;
   color?: CardColor;
-  ram?: number;
+  ram?: number | null;
 }): CardDefinition {
   return {
     id: name,
-    externalId: `cyberpunk:${slug ?? name}`,
     slug: slug ?? name,
     name,
     displayName: displayName ?? name,
@@ -32,7 +31,7 @@ function makeLegend({
     legality: "legal",
     hasSellTag: false,
     type: "legend",
-    ram: ram ?? 2,
+    ram: ram === undefined ? 2 : ram,
     timingTriggers: [],
     keywords: [],
     cost: null,
@@ -52,11 +51,10 @@ function makeCard({
   name: string;
   slug?: string;
   color?: CardColor;
-  ram?: number;
+  ram?: number | null;
 }): CardDefinition {
   return {
     id: name,
-    externalId: `cyberpunk:${slug ?? name}`,
     slug: slug ?? name,
     name,
     displayName: displayName ?? name,
@@ -71,7 +69,7 @@ function makeCard({
     legality: "legal",
     hasSellTag: false,
     type: "unit",
-    ram: ram ?? 1,
+    ram: ram === undefined ? 1 : ram,
     timingTriggers: [],
     keywords: [],
     cost: 1,
@@ -259,6 +257,20 @@ describe("validateDeck", () => {
         makeLegend({ name: "C", slug: "c", color: "green", ram: 1 }),
       ];
       const mainDeck = makeMainDeck(40, { color: "green", ram: 5 });
+      const errors = validateDeck(legends, mainDeck);
+      expect(errors.filter((e) => e.code === "EXCEEDS_RAM_LIMIT")).toHaveLength(0);
+    });
+
+    it("treats null RAM as zero for validation", () => {
+      const legends = [
+        makeLegend({ name: "A", slug: "a", color: "green", ram: null }),
+        makeLegend({ name: "B", slug: "b", color: "green", ram: 2 }),
+        makeLegend({ name: "C", slug: "c", color: "red", ram: 2 }),
+      ];
+      const mainDeck = [
+        ...makeMainDeck(39, { color: "green", ram: 1 }),
+        makeCard({ name: "No RAM Card", slug: "no-ram-card", color: "green", ram: null }),
+      ];
       const errors = validateDeck(legends, mainDeck);
       expect(errors.filter((e) => e.code === "EXCEEDS_RAM_LIMIT")).toHaveLength(0);
     });

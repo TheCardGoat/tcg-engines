@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theQueenFairestOfAllI18n } from "./144-the-queen-fairest-of-all.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { ward } from "../../../helpers/abilities/ward";
 
 export const theQueenFairestOfAll: CharacterCard = {
   id: "Wpl",
   canonicalId: "ci_Wpl",
+  slug: "lorcana-ci_Wpl",
+  printings: [
+    {
+      id: "set5-144",
+      artId: "set5-144",
+      setCode: "set5",
+      collectorNumber: "144",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-144"],
   cardType: "character",
   name: "The Queen",
@@ -22,7 +34,7 @@ export const theQueenFairestOfAll: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cf5e4f99f9c44d91b44ba607d640173b",
-    tcgPlayer: 561967,
+    tcgPlayer: "561967",
   },
   text: [
     {

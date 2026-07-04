@@ -16,7 +16,7 @@ export const atlanticaConcertHallI18n: Record<Languages, I18nProperties> = {
     version: "Konzertsaal",
     text: [
       {
-        title: "AKUSTIK UNTER WASSER",
+        title: "Akustik unter Wasser",
         description:
           "Die Kosten von Charakteren an diesem Ort gelten als +2 für das Singen von Liedern.",
       },
@@ -27,7 +27,7 @@ export const atlanticaConcertHallI18n: Record<Languages, I18nProperties> = {
     version: "Salle de concert",
     text: [
       {
-        title: "ACOUSTIQUE SOUS-MARINE",
+        title: "Acoustique sous-marine",
         description:
           "Les personnages sur ce lieu sont considérés comme ayant un coût de +2 pour chanter des chansons.",
       },
@@ -38,9 +38,9 @@ export const atlanticaConcertHallI18n: Record<Languages, I18nProperties> = {
     version: "Sala dei Concerti",
     text: [
       {
-        title: "ACUSTICA SUBACQUEA I",
+        title: "Acustica Subacquea",
         description:
-          "personaggi contano come di costo +2 per cantare le canzoni mentre si trovano in questo luogo.",
+          "I personaggi contano come di costo +2 per cantare le canzoni mentre si trovano in questo luogo.",
       },
     ],
   },

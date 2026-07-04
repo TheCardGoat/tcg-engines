@@ -4,6 +4,17 @@ import { lordMacintoshWiryAndHighstrungI18n } from "./181-lord-macintosh-wiry-an
 export const lordMacintoshWiryAndHighstrung: CharacterCard = {
   id: "Vqf",
   canonicalId: "ci_Vqf",
+  slug: "lorcana-ci_Vqf",
+  printings: [
+    {
+      id: "set12-181",
+      artId: "set12-181",
+      setCode: "set12",
+      collectorNumber: "181",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-181"],
   cardType: "character",
   name: "Lord Macintosh",
@@ -20,6 +31,7 @@ export const lordMacintoshWiryAndHighstrung: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3f2b0324654a4a32a35a775ab667b55a",
+    tcgPlayer: "692079",
   },
   text: [
     {

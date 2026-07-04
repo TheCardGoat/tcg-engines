@@ -17,7 +17,7 @@ export const heiheiBumblingRoosterI18n: Record<Languages, I18nProperties> = {
     version: "Ungeschickter Hahn",
     text: [
       {
-        title: "DANN MÄSTEN WIR DICH MAL",
+        title: "Dann mästen wir dich mal",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens eine gegnerische Person mehr Karten in ihrem Tintenvorrat hat als du, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const heiheiBumblingRoosterI18n: Record<Languages, I18nProperties> = {
     version: "Coq empoté",
     text: [
       {
-        title: "MANGE UN PEU AVANT",
+        title: "Mange un peu avant",
         description:
           "Lorsque vous jouez ce personnage, si un adversaire possède plus de cartes que vous dans sa réserve d'encre, vous pouvez placer la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const heiheiBumblingRoosterI18n: Record<Languages, I18nProperties> = {
     version: "Gallo Imbranato",
     text: [
       {
-        title: "CERCA DI INGRASSARE UN PO'",
+        title: "Cerca di Ingrassare un Po'",
         description:
           "Quando giochi questo personaggio, se un avversario ha più carte di te nel suo calamaio, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio a faccia in giù e impegnata.",
       },

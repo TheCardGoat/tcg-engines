@@ -7,14 +7,30 @@ export const grabYourBowI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Nehmt den Pfeil",
-    text: "Verbanne bis zu 2 Charaktere deiner Wahl mit 2 oder weniger.",
+    text: "Verbanne bis zu 2 Charaktere deiner Wahl mit 2 oder weniger {S}.",
   },
   fr: {
     name: "À vos flèches",
-    text: "Choisissez jusqu'à 2 personnages ayant 2 ou moins et bannissez-les.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Choisissez jusqu'à 2 personnages ayant 2 {S} ou moins et bannissez-les.",
+      },
+    ],
   },
   it: {
     name: "Siamo Eroi",
-    text: "(Un personaggio con costo 5 o superiore può per cantare questa canzone gratis.) Esilia fino a 2 personaggi a tua scelta con 2 o inferiore.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Esilia fino a 2 personaggi a tua scelta con 2 {S} o inferiore.",
+      },
+    ],
   },
 };

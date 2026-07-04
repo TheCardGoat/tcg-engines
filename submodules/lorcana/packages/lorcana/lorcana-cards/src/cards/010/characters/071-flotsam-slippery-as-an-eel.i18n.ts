@@ -9,16 +9,16 @@ export const flotsamSlipperyAsAnEelI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Abschaum",
     version: "Glitschig wie ein Aal",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Flotsam",
     version: "Se faufile comme une anguille",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Flotsam",
     version: "Viscido Come un'Anguilla",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

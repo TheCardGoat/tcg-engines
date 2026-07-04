@@ -4,6 +4,17 @@ import { flynnRiderBreakingAndEnteringI18n } from "./102-flynn-rider-breaking-an
 export const flynnRiderBreakingAndEntering: CharacterCard = {
   id: "gxV",
   canonicalId: "ci_gxV",
+  slug: "lorcana-ci_gxV",
+  printings: [
+    {
+      id: "set8-102",
+      artId: "set8-102",
+      setCode: "set8",
+      collectorNumber: "102",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-102"],
   cardType: "character",
   name: "Flynn Rider",
@@ -20,13 +31,13 @@ export const flynnRiderBreakingAndEntering: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b41f273d5c6b4abe99a596fd14435de1",
-    tcgPlayer: 631415,
+    tcgPlayer: "631415",
   },
   text: [
     {
-      title: "THIS IS A VERY BIG DAY",
+      title: "THIS IS",
       description:
-        "Whenever this character is challenged, the challenging player may choose and discard a card. If they don't, you gain 2 lore.",
+        "A VERY BIG DAY Whenever this character is challenged, the challenging player may choose and discard a card. If they don't, you gain 2 lore.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Prince"],

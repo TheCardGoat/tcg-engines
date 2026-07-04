@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailGildedMatoN = {
+export const welcomeToNightCityRetailGildedMatoN = defineCyberpunkCard({
   id: "0901652d-99c9-46c7-9821-ca3e8208fb4d",
-  externalId: "cb-gilded-mato-n",
   slug: "gilded-mato-n",
+  rulesText:
+    "{Play} You may defeat a friendly Gear. If you do, defeat a rival Unit with cost 3 or less.",
   name: "Gilded Matón",
   displayName: "Gilded Matón",
-  rulesText:
-    "[PLAY] You may defeat a friendly Gear. If you do, defeat a rival Unit with cost 3 or less.",
+  canonicalId: "gilded-mato-n",
   color: "yellow",
   classifications: ["Ganger", "Valentino"],
   set: {
@@ -15,21 +16,6 @@ export const welcomeToNightCityRetailGildedMatoN = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "045",
-  printings: [
-    {
-      id: "846b55b4-5e12-44b6-a204-53bd8c862888",
-      collectorNumber: "045",
-      setCode: "welcometonightcityretail",
-      rarity: "Common",
-    },
-    {
-      id: "cbbcb49e-6c6f-436c-91cf-e9716f6a30af",
-      collectorNumber: "β045",
-      setCode: "welcometonightcitybeta",
-      rarity: "Common",
-    },
-  ],
-  selectedPrintingId: "846b55b4-5e12-44b6-a204-53bd8c862888",
   artist: "Josan Gonzalez (Deathburger)",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/045.webp",
   rarity: "Common",
@@ -37,7 +23,6 @@ export const welcomeToNightCityRetailGildedMatoN = {
   hasSellTag: false,
   ram: 2,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 4,
   power: 3,
@@ -84,5 +69,4 @@ export const welcomeToNightCityRetailGildedMatoN = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies UnitCardDefinition;

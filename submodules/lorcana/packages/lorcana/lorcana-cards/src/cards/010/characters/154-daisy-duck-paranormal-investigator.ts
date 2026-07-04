@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { shift } from "../../../helpers/abilities/shift";
-import { support } from "../../../helpers/abilities/support";
 import { daisyDuckParanormalInvestigatorI18n } from "./154-daisy-duck-paranormal-investigator.i18n";
 
+import { shift } from "../../../helpers/abilities/shift";
+import { support } from "../../../helpers/abilities/support";
+
 export const daisyDuckParanormalInvestigator: CharacterCard = {
-  id: "yOS",
-  canonicalId: "ci_yOS",
+  id: "4YX",
+  canonicalId: "ci_1Fj",
+  slug: "lorcana-ci_1Fj",
+  printings: [
+    {
+      id: "set10-154",
+      artId: "set10-154",
+      setCode: "set10",
+      collectorNumber: "154",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-154"],
   cardType: "character",
   name: "Daisy Duck",
@@ -21,7 +33,7 @@ export const daisyDuckParanormalInvestigator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ca1180986a264b5f815f69fb01406b4e",
-    tcgPlayer: 657886,
+    tcgPlayer: "657886",
   },
   text: [
     {

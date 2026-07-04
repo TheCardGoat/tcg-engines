@@ -7,14 +7,17 @@ export const gd03MesserTypeF02043: UnitCard = {
   color: "red",
   traits: ["mafty"],
   id: "GD03-043",
-  externalId: "gundam:gd03-043",
-  slug: "messer-type-f02-gd03-043",
+  canonicalId: "GD03-043",
+  externalIds: { bandai: "gundam:gd03-043" },
+  slug: "messer-type-f02/gd03-043",
   displayName: "Messer Type-F02",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-043",
   printings: [
     {
       id: "GD03-043",
+      artId: "GD03-043",
+      setCode: "GD03",
       collectorNumber: "GD03-043",
       cardNumber: "GD03-043",
       set: {
@@ -29,6 +32,7 @@ export const gd03MesserTypeF02043: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-043"],
   selectedPrintingId: "GD03-043",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-043.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-043.webp?260424",

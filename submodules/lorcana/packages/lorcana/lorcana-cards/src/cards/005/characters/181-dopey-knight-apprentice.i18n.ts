@@ -17,7 +17,7 @@ export const dopeyKnightApprenticeI18n: Record<Languages, I18nProperties> = {
     version: "Ritterlehrling",
     text: [
       {
-        title: "ZUSAMMEN STÄRKER",
+        title: "Zusammen stärker",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen weiteren Ritter im Spiel hast, darfst du einem Charakter oder einem Ort deiner Wahl 1 Schaden zufügen.",
       },
@@ -28,7 +28,7 @@ export const dopeyKnightApprenticeI18n: Record<Languages, I18nProperties> = {
     version: "Chevalier en herbe",
     text: [
       {
-        title: "L'UNION FAIT LA FORCE",
+        title: "L'union fait la force",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un autre personnage Chevalier en jeu, vous pouvez choisir un personnage ou un lieu et lui infliger 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const dopeyKnightApprenticeI18n: Record<Languages, I18nProperties> = {
     version: "Apprendista Cavaliere",
     text: [
       {
-        title: "PIÙ FORTI INSIEME",
+        title: "Più Forti Insieme",
         description:
           "Quando giochi questo personaggio, se hai in gioco un altro personaggio Cavaliere, puoi infliggere 1 danno a un personaggio o a un luogo a tua scelta.",
       },

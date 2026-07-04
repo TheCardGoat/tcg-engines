@@ -16,7 +16,7 @@ export const banzaiTauntingHyenaI18n: Record<Languages, I18nProperties> = {
     version: "Verhöhnende Hyäne",
     text: [
       {
-        title: "MIEZ, MIEZ, MIEZ",
+        title: "Miez, miez, miez",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen beschädigten Charakter deiner Wahl erschöpfen.",
       },
@@ -27,7 +27,7 @@ export const banzaiTauntingHyenaI18n: Record<Languages, I18nProperties> = {
     version: "Hyène railleuse",
     text: [
       {
-        title: "MINOU MINOU MINOU...",
+        title: "Minou minou minou...",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage ayant au moins un dommage sur lui et l'épuiser.",
       },
@@ -38,7 +38,7 @@ export const banzaiTauntingHyenaI18n: Record<Languages, I18nProperties> = {
     version: "Iena Sarcastica",
     text: [
       {
-        title: "VIENI MICIO, MICIO, MICIO",
+        title: "Vieni micio, micio, micio",
         description:
           "Quando giochi questo personaggio, puoi impegnare un personaggio danneggiato a tua scelta.",
       },

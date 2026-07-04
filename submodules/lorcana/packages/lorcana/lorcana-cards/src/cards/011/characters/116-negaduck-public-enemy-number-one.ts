@@ -4,6 +4,17 @@ import { negaduckPublicEnemyNumberOneI18n } from "./116-negaduck-public-enemy-nu
 export const negaduckPublicEnemyNumberOne: CharacterCard = {
   id: "iMq",
   canonicalId: "ci_bMZ",
+  slug: "lorcana-ci_bMZ",
+  printings: [
+    {
+      id: "set11-116",
+      artId: "set11-116",
+      setCode: "set11",
+      collectorNumber: "116",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-116"],
   cardType: "character",
   name: "Negaduck",
@@ -20,7 +31,7 @@ export const negaduckPublicEnemyNumberOne: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_580ca4f029554dd68409aac983fdae69",
-    tcgPlayer: 677164,
+    tcgPlayer: "677164",
   },
   text: [
     {

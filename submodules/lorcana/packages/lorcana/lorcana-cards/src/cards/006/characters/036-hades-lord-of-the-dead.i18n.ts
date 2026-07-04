@@ -17,7 +17,7 @@ export const hadesLordOfTheDeadI18n: Record<Languages, I18nProperties> = {
     version: "Herr der Unterwelt",
     text: [
       {
-        title: "SEELENSAMMLER",
+        title: "Seelensammler",
         description:
           "Jedes Mal, wenn einer deiner anderen Charaktere im Zug einer gegnerischen Person verbannt wird, sammelst du 2 Legenden.",
       },
@@ -28,7 +28,7 @@ export const hadesLordOfTheDeadI18n: Record<Languages, I18nProperties> = {
     version: "Dieu des enfers",
     text: [
       {
-        title: "COLLECTEUR D'ÂMES",
+        title: "Collecteur d'âmes",
         description:
           "Durant le tour de vos adversaires, chaque fois que l'un de vos autres personnages est banni, vous gagnez 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const hadesLordOfTheDeadI18n: Record<Languages, I18nProperties> = {
     version: "Signore dei Morti",
     text: [
       {
-        title: "COLLEZIONISTA DI ANIME",
+        title: "Collezionista di Anime",
         description:
           "Durante il turno di un avversario, ogni volta che uno dei tuoi altri personaggi viene esiliato, ottieni 2 leggenda.",
       },

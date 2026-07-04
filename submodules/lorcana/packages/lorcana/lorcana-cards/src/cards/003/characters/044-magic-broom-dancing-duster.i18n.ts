@@ -17,7 +17,7 @@ export const magicBroomDancingDusterI18n: Record<Languages, I18nProperties> = {
     version: "Tanzender Staubwedel",
     text: [
       {
-        title: "KRAFTREINIGER",
+        title: "Kraftreiniger",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen Magier oder eine Magierin im Spiel hast, darfst du einen gegnerischen Charakter deiner Wahl erschöpfen. Er wird zu Beginn seines nächsten Zuges nicht bereit gemacht.",
       },
@@ -28,7 +28,7 @@ export const magicBroomDancingDusterI18n: Record<Languages, I18nProperties> = {
     version: "Plumeau dansant",
     text: [
       {
-        title: "NETTOYAGE À FOND",
+        title: "Nettoyage à fond",
         description:
           "Si vous avez un personnage Mage en jeu lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse et l'épuiser. Il ne pourra pas être redressé au début de son prochain tour.",
       },
@@ -39,7 +39,7 @@ export const magicBroomDancingDusterI18n: Record<Languages, I18nProperties> = {
     version: "Spolverino Danzante",
     text: [
       {
-        title: "PULIZIA ENERGICA",
+        title: "Pulizia Energica",
         description:
           "Quando giochi questo personaggio, se hai un personaggio Incantatore in gioco, puoi impegnare un personaggio avversario a tua scelta. Quel personaggio non si può preparare all'inizio del suo prossimo turno.",
       },

@@ -4,6 +4,17 @@ import { miloThatchUndauntedScholarI18n } from "./145-milo-thatch-undaunted-scho
 export const miloThatchUndauntedScholar: CharacterCard = {
   id: "eBp",
   canonicalId: "ci_eBp",
+  slug: "lorcana-ci_eBp",
+  printings: [
+    {
+      id: "set7-145",
+      artId: "set7-145",
+      setCode: "set7",
+      collectorNumber: "145",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-145"],
   cardType: "character",
   name: "Milo Thatch",
@@ -20,7 +31,7 @@ export const miloThatchUndauntedScholar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_afc3f865b594418e86f60e638df7351b",
-    tcgPlayer: 619489,
+    tcgPlayer: "619489",
   },
   text: [
     {

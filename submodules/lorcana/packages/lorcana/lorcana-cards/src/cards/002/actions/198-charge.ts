@@ -4,6 +4,17 @@ import { chargeI18n } from "./198-charge.i18n";
 export const charge: ActionCard = {
   id: "FWM",
   canonicalId: "ci_FWM",
+  slug: "lorcana-ci_FWM",
+  printings: [
+    {
+      id: "set2-198",
+      artId: "set2-198",
+      setCode: "set2",
+      collectorNumber: "198",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-198"],
   cardType: "action",
   name: "Charge!",
@@ -16,7 +27,7 @@ export const charge: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7f7875c57b0f49d9a0ca569ec1037777",
-    tcgPlayer: 527639,
+    tcgPlayer: "527639",
   },
   text: "Chosen character gains Challenger +2 and Resist +2 this turn. (They get +2 {S} while challenging. Damage dealt to them is reduced by 2.)",
   abilities: [

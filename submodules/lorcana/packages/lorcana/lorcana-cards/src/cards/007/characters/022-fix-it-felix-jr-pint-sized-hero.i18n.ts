@@ -17,7 +17,7 @@ export const fixitFelixJrPintsizedHeroI18n: Record<Languages, I18nProperties> = 
     version: "Kleinwüchsiger Held",
     text: [
       {
-        title: "LOS, AN DIE ARBEIT",
+        title: "Los, an die Arbeit",
         description:
           "Jedes Mal, wenn du eine Rennfahrer-Charakterkarte aus deinem Ablagestapel zurück auf deine Hand nimmst, darfst du einen Rennfahrer deiner Wahl bereit machen. Er kann in diesem Zug nicht mehr erkunden.",
       },
@@ -28,7 +28,7 @@ export const fixitFelixJrPintsizedHeroI18n: Record<Languages, I18nProperties> = 
     version: "Héros demi-portion",
     text: [
       {
-        title: "AU TRAVAIL",
+        title: "Au travail",
         description:
           "Chaque fois que vous renvoyez une carte Pilote de votre défausse dans votre main, vous pouvez choisir un Pilote et le redresser. Ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
@@ -39,7 +39,7 @@ export const fixitFelixJrPintsizedHeroI18n: Record<Languages, I18nProperties> = 
     version: "Tappetto Eroico",
     text: [
       {
-        title: "AL LAVORO",
+        title: "Al Lavoro",
         description:
           "Ogni volta che riprendi in mano una carta personaggio Pilota dai tuoi scarti, puoi preparare un personaggio Pilota a tua scelta. Non può andare all'avventura per il resto di questo turno.",
       },

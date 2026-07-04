@@ -43,12 +43,35 @@ function* findBoundRefs(node: unknown): Generator<string> {
   for (const value of Object.values(obj)) yield* findBoundRefs(value);
 }
 
+/**
+ * Some effects publish a binding at runtime (instead of declaring it up front
+ * in `Ability.bindings`). Today `trashFromDeck.outputBinding` is the only such
+ * producer — it writes the just-trashed card ids into a named binding that a
+ * later effect reads via `{ selector: "bound", id: <outputBinding> }`. Collect
+ * those producer ids so the integrity check treats them as declared.
+ */
+function* findOutputBindingIds(node: unknown): Generator<string> {
+  if (node === null || typeof node !== "object") return;
+  if (Array.isArray(node)) {
+    for (const item of node) yield* findOutputBindingIds(item);
+    return;
+  }
+  const obj = node as Record<string, unknown>;
+  if (typeof obj["outputBinding"] === "string") {
+    yield obj["outputBinding"];
+  }
+  for (const value of Object.values(obj)) yield* findOutputBindingIds(value);
+}
+
 function collectAbilityBoundRefs(
   ability: Ability,
   cardSlug: string,
   abilityIndex: number,
 ): BoundRef[] {
-  const declaredIds = ability.bindings?.map((b) => b.id) ?? [];
+  const declaredIds = [
+    ...(ability.bindings?.map((b) => b.id) ?? []),
+    ...findOutputBindingIds(ability.effects),
+  ];
 
   const refs: BoundRef[] = [];
   for (const refId of findBoundRefs({

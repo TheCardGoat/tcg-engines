@@ -4,6 +4,17 @@ import { magicBroomBucketBrigadeI18n } from "./047-magic-broom-bucket-brigade.i1
 export const magicBroomBucketBrigade: CharacterCard = {
   id: "Ors",
   canonicalId: "ci_Ors",
+  slug: "lorcana-ci_Ors",
+  printings: [
+    {
+      id: "set1-047",
+      artId: "set1-047",
+      setCode: "set1",
+      collectorNumber: "47",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-047"],
   cardType: "character",
   name: "Magic Broom",
@@ -20,7 +31,7 @@ export const magicBroomBucketBrigade: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_95ecf1d59f004e4399a2c61e280dfd13",
-    tcgPlayer: 493477,
+    tcgPlayer: "493477",
   },
   text: [
     {

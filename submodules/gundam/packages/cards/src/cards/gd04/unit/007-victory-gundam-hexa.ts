@@ -7,14 +7,17 @@ export const gd04VictoryGundamHexa007: UnitCard = {
   color: "blue",
   traits: ["league militaire", "victory type"],
   id: "GD04-007",
-  externalId: "gundam:gd04-007",
-  slug: "victory-gundam-hexa-gd04-007",
+  canonicalId: "GD04-007",
+  externalIds: { bandai: "gundam:gd04-007" },
+  slug: "victory-gundam-hexa/gd04-007",
   displayName: "Victory Gundam Hexa",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-007",
   printings: [
     {
       id: "GD04-007",
+      artId: "GD04-007",
+      setCode: "GD04",
       collectorNumber: "GD04-007",
       cardNumber: "GD04-007",
       set: {
@@ -29,6 +32,7 @@ export const gd04VictoryGundamHexa007: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-007"],
   selectedPrintingId: "GD04-007",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-007.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-007.webp?260424",

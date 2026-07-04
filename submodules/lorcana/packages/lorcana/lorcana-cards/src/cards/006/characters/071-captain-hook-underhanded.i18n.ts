@@ -20,12 +20,12 @@ export const captainHookUnderhandedI18n: Record<Languages, I18nProperties> = {
     version: "Heimtückisch",
     text: [
       {
-        title: "ANGSTEINFLÖSSEND",
+        title: "Angsteinflößend",
         description:
           "Solange dieser Charakter erschöpft ist, können gegnerische Piraten nicht erkunden.",
       },
       {
-        title: "OBERHAND",
+        title: "Oberhand",
         description: "Jedes Mal, wenn dieser Charakter herausgefordert wird, ziehe 1 Karte.",
       },
     ],
@@ -35,12 +35,12 @@ export const captainHookUnderhandedI18n: Record<Languages, I18nProperties> = {
     version: "En sous-main",
     text: [
       {
-        title: "INSPIRER LA CRAINTE",
+        title: "Inspirer la crainte",
         description:
           "Tant que ce personnage est épuisé, les personnages Pirate adverses ne peuvent pas être envoyés à l'aventure.",
       },
       {
-        title: "MAINMISE",
+        title: "Mainmise",
         description: "Chaque fois que ce personnage est défié, piochez une carte.",
       },
     ],
@@ -50,12 +50,12 @@ export const captainHookUnderhandedI18n: Record<Languages, I18nProperties> = {
     version: "Subdolo",
     text: [
       {
-        title: "SUSCITARE TERRORE",
+        title: "Suscitare Terrore",
         description:
           "Mentre questo personaggio è impegnato, i personaggi Pirata avversari non possono andare all'avventura.",
       },
       {
-        title: "VANTAGGIO",
+        title: "Vantaggio",
         description: "Ogni volta che questo personaggio viene sfidato, pesca una carta.",
       },
     ],

@@ -17,9 +17,9 @@ export const honeyLemonChemicalGeniusI18n: Record<Languages, I18nProperties> = {
     version: "Chemie-Genie",
     text: [
       {
-        title: "JETZT KOMMT DAS BESTE",
+        title: "Jetzt kommt das Beste",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du 2 bezahlen, um alle gegnerischen Mitspielenden eine Karte aus ihrer Hand auswählen und abwerfen zu lassen.",
+          "Wenn du diesen Charakter ausspielst, darfst du 2 {I} bezahlen, um alle gegnerischen Mitspielenden eine Karte aus ihrer Hand auswählen und abwerfen zu lassen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const honeyLemonChemicalGeniusI18n: Record<Languages, I18nProperties> = {
     version: "Génie de la chimie",
     text: [
       {
-        title: "ET T'AS ENCORE RIEN VU",
+        title: "Et t'as encore rien vu",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez payer 2. Si vous le faites, chacun de vos adversaires se défausse d'une carte de son choix.",
+          "Lorsque vous jouez ce personnage, vous pouvez payer 2 {I}. Si vous le faites, chacun de vos adversaires se défausse d'une carte de son choix.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const honeyLemonChemicalGeniusI18n: Record<Languages, I18nProperties> = {
     version: "Genio della Chimica",
     text: [
       {
-        title: "ORA ARRIVA IL MEGLIO",
+        title: "Ora Arriva il Meglio",
         description:
-          "Quando giochi questo personaggio, puoi pagare 2 per far scegliere e scartare una carta a ogni avversario.",
+          "Quando giochi questo personaggio, puoi pagare 2 {I} per far scegliere e scartare una carta a ogni avversario.",
       },
     ],
   },

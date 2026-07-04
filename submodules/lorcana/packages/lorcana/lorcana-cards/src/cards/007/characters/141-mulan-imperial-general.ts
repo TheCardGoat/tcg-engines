@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mulanImperialGeneralI18n } from "./141-mulan-imperial-general.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const mulanImperialGeneral: CharacterCard = {
   id: "jFo",
   canonicalId: "ci_jFo",
+  slug: "lorcana-ci_jFo",
+  printings: [
+    {
+      id: "set7-141",
+      artId: "set7-141",
+      setCode: "set7",
+      collectorNumber: "141",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-141"],
   cardType: "character",
   name: "Mulan",
@@ -22,7 +34,7 @@ export const mulanImperialGeneral: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5d754111355845818b81e2a9a506bab4",
-    tcgPlayer: 619486,
+    tcgPlayer: "619486",
   },
   text: [
     {

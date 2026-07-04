@@ -4,6 +4,17 @@ import { youveGotAFriendInMeI18n } from "./030-youve-got-a-friend-in-me.i18n";
 export const youveGotAFriendInMe: ActionCard = {
   id: "U0Y",
   canonicalId: "ci_U0Y",
+  slug: "lorcana-ci_U0Y",
+  printings: [
+    {
+      id: "set12-030",
+      artId: "set12-030",
+      setCode: "set12",
+      collectorNumber: "30",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-030"],
   cardType: "action",
   name: "You've Got a Friend in Me",
@@ -16,6 +27,7 @@ export const youveGotAFriendInMe: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_611ab7622d0b4aa7a9aa98ab736f329c",
+    tcgPlayer: "690747",
   },
   text: "Look at the top 4 cards of your deck. You may reveal up to 2 Toy character cards and put them into your hand. Put the rest on the bottom of your deck in any order.",
   actionSubtype: "song",

@@ -22,13 +22,14 @@ export const captainHookThinkingAHappyThoughtI18n: Record<Languages, I18nPropert
     version: "Ein feiner Gedanke",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Käpt'n-Hook-Charaktere auszuspielen.)",
       },
       {
-        title: "Herausfordern +3",
+        title: "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
       },
       {
-        title: "GESTOHLENER GLANZ",
+        title: "Gestohlener Glanz",
         description:
           "Charaktere, die 3 oder weniger kosten, können diesen Charakter nicht herausfordern.",
       },
@@ -39,10 +40,11 @@ export const captainHookThinkingAHappyThoughtI18n: Record<Languages, I18nPropert
     version: "Rêve d'aventure",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Capitaine Crochet.)",
       },
       {
-        title: "Offensif +3",
+        title: "<Offensif> +3",
       },
       {
         title: "POUSSIÈRE VOLÉE",
@@ -55,13 +57,14 @@ export const captainHookThinkingAHappyThoughtI18n: Record<Languages, I18nPropert
     version: "Thinking a Happy Thought",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Captain Hook.)",
       },
       {
-        title: "Challenger +3",
+        title: "<Challenger> +3 (While challenging, this character gets +3 {S}.)",
       },
       {
-        title: "STOLEN DUST",
+        title: "Stolen Dust",
         description: "Characters with cost 3 or less can't challenge this character.",
       },
     ],

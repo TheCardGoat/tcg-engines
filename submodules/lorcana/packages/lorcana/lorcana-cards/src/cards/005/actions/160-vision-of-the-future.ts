@@ -4,6 +4,17 @@ import { visionOfTheFutureI18n } from "./160-vision-of-the-future.i18n";
 export const visionOfTheFuture: ActionCard = {
   id: "Dub",
   canonicalId: "ci_Dub",
+  slug: "lorcana-ci_Dub",
+  printings: [
+    {
+      id: "set5-160",
+      artId: "set5-160",
+      setCode: "set5",
+      collectorNumber: "160",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-160"],
   cardType: "action",
   name: "Vision of the Future",
@@ -16,7 +27,7 @@ export const visionOfTheFuture: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_69128022cf3e4ff7bdd615ab371405a7",
-    tcgPlayer: 561652,
+    tcgPlayer: "561652",
   },
   text: "Look at the top 5 cards of your deck. Put one into your hand and the rest on the bottom of your deck in any order.",
   abilities: [

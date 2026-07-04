@@ -4,6 +4,17 @@ import { princeJohnsMirrorI18n } from "./098-prince-johns-mirror.i18n";
 export const princeJohnsMirror: ItemCard = {
   id: "x5l",
   canonicalId: "ci_x5l",
+  slug: "lorcana-ci_x5l",
+  printings: [
+    {
+      id: "set5-098",
+      artId: "set5-098",
+      setCode: "set5",
+      collectorNumber: "98",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-098"],
   cardType: "item",
   name: "Prince John's Mirror",
@@ -16,7 +27,7 @@ export const princeJohnsMirror: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e37301dbd08d47fcbd95accf72aa2a3c",
-    tcgPlayer: 561299,
+    tcgPlayer: "561299",
   },
   text: [
     {

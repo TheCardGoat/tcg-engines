@@ -7,14 +7,17 @@ export const gd03GquuuuuuxOmegaPsycommu034: UnitCard = {
   color: "red",
   traits: ["clan"],
   id: "GD03-034",
-  externalId: "gundam:gd03-034",
-  slug: "gquuuuuux-omega-psycommu-gd03-034",
+  canonicalId: "GD03-034",
+  externalIds: { bandai: "gundam:gd03-034" },
+  slug: "gquuuuuux-omega-psycommu/gd03-034",
   displayName: "GQuuuuuuX (Omega Psycommu)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-034",
   printings: [
     {
       id: "GD03-034",
+      artId: "GD03-034",
+      setCode: "GD03",
       collectorNumber: "GD03-034",
       cardNumber: "GD03-034",
       set: {
@@ -30,6 +33,8 @@ export const gd03GquuuuuuxOmegaPsycommu034: UnitCard = {
     },
     {
       id: "GD03-034_p1",
+      artId: "GD03-034_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-034_p1",
       cardNumber: "GD03-034",
       set: {
@@ -45,6 +50,8 @@ export const gd03GquuuuuuxOmegaPsycommu034: UnitCard = {
     },
     {
       id: "GD03-034_p2",
+      artId: "GD03-034_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-034_p2",
       cardNumber: "GD03-034",
       set: {
@@ -59,6 +66,7 @@ export const gd03GquuuuuuxOmegaPsycommu034: UnitCard = {
       productName: "WORLD CHAMPIONSHIPS 26-27 Season 1Winner Prize",
     },
   ],
+  reprints: ["GD03-034", "GD03-034_p1", "GD03-034_p2"],
   selectedPrintingId: "GD03-034",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-034.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-034.webp?260424",

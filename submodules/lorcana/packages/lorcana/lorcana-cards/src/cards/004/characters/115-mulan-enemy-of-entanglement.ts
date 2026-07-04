@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { mulanEnemyOfEntanglementI18n } from "./115-mulan-enemy-of-entanglement.i18n";
 
 export const mulanEnemyOfEntanglement: CharacterCard = {
-  id: "Pd1",
-  canonicalId: "ci_Pd1",
+  id: "U3t",
+  canonicalId: "ci_laZ",
+  slug: "lorcana-ci_laZ",
+  printings: [
+    {
+      id: "set4-115",
+      artId: "set4-115",
+      setCode: "set4",
+      collectorNumber: "115",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-115"],
   cardType: "character",
   name: "Mulan",
@@ -20,7 +31,7 @@ export const mulanEnemyOfEntanglement: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_263c69baf83347208e5cd76863a4afd9",
-    tcgPlayer: 547645,
+    tcgPlayer: "547645",
   },
   text: [
     {

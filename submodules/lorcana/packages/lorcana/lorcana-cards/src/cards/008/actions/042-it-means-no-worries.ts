@@ -4,6 +4,17 @@ import { itMeansNoWorriesI18n } from "./042-it-means-no-worries.i18n";
 export const itMeansNoWorries: ActionCard = {
   id: "VR5",
   canonicalId: "ci_Mgx",
+  slug: "lorcana-ci_Mgx",
+  printings: [
+    {
+      id: "set8-042",
+      artId: "set8-042",
+      setCode: "set8",
+      collectorNumber: "42",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-042"],
   cardType: "action",
   name: "It Means No Worries",
@@ -16,7 +27,7 @@ export const itMeansNoWorries: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a288e4ad2fa24cadada391a6d1896d9c",
-    tcgPlayer: 631992,
+    tcgPlayer: "631992",
   },
   text: [
     {

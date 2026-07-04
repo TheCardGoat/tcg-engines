@@ -7,11 +7,11 @@ export const walkThePlankI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Über die Planke!",
-    text: 'Deine Piraten erhalten in diesem Zug: " — Verbanne einen beschädigten Charakter deiner Wahl."',
+    text: 'Deine Piraten erhalten in diesem Zug: "{E} — Verbanne einen beschädigten Charakter deiner Wahl."',
   },
   fr: {
     name: "Sur la planche !",
-    text: 'Vos personnages Pirate gagnent " — Choisissez un personnage avec un dommage ou plus et bannissez-le." pour le reste de ce tour.',
+    text: 'Vos personnages Pirate gagnent "{E} — Choisissez un personnage avec un dommage ou plus et bannissez-le." pour le reste de ce tour.',
   },
   it: {
     name: "Sull'Asse!",
@@ -19,7 +19,7 @@ export const walkThePlankI18n: Record<Languages, I18nProperties> = {
       {
         title: "I",
         description:
-          'tuoi personaggi Pirata ottengono " — Esilia un personaggio danneggiato a tua scelta" per questo turno.',
+          'tuoi personaggi Pirata ottengono "{E} — Esilia un personaggio danneggiato a tua scelta" per questo turno.',
       },
     ],
   },

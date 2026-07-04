@@ -6,6 +6,7 @@ import { chooseTriggerResolver } from "./choose-trigger.ts";
 import { chooseGigsToStealResolver } from "./choose-gigs-to-steal.ts";
 import { chooseCardToPlayResolver } from "./choose-card-to-play.ts";
 import { chooseCardToMoveResolver } from "./choose-card-to-move.ts";
+import { chooseCardTypeResolver } from "./choose-card-type.ts";
 import { gainGigResolver } from "./gain-gig.ts";
 
 /**
@@ -23,6 +24,7 @@ export const defaultChoiceResolvers: ChoiceResolverMap = {
   chooseGigsToSteal: chooseGigsToStealResolver,
   chooseCardToPlay: chooseCardToPlayResolver,
   chooseCardToMove: chooseCardToMoveResolver,
+  chooseCardType: chooseCardTypeResolver,
   gainGig: gainGigResolver,
 };
 
@@ -34,5 +36,6 @@ export {
   chooseGigsToStealResolver,
   chooseCardToPlayResolver,
   chooseCardToMoveResolver,
+  chooseCardTypeResolver,
   gainGigResolver,
 };

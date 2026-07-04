@@ -4,6 +4,17 @@ import { heiheiPersistentPresenceI18n } from "./043-heihei-persistent-presence.i
 export const heiheiPersistentPresence: CharacterCard = {
   id: "ziG",
   canonicalId: "ci_aw8",
+  slug: "lorcana-ci_aw8",
+  printings: [
+    {
+      id: "set2-043",
+      artId: "set2-043",
+      setCode: "set2",
+      collectorNumber: "43",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-043", "set11-058"],
   cardType: "character",
   name: "HeiHei",
@@ -20,7 +31,7 @@ export const heiheiPersistentPresence: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_122d3f9ccb034f7d9e59245d311a7004",
-    tcgPlayer: 675296,
+    tcgPlayer: "675296",
   },
   text: [
     {

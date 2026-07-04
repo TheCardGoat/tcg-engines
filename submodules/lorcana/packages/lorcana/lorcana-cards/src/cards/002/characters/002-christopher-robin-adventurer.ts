@@ -4,6 +4,17 @@ import { christopherRobinAdventurerI18n } from "./002-christopher-robin-adventur
 export const christopherRobinAdventurer: CharacterCard = {
   id: "2fz",
   canonicalId: "ci_2fz",
+  slug: "lorcana-ci_2fz",
+  printings: [
+    {
+      id: "set2-002",
+      artId: "set2-002",
+      setCode: "set2",
+      collectorNumber: "2",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-002"],
   cardType: "character",
   name: "Christopher Robin",
@@ -20,7 +31,7 @@ export const christopherRobinAdventurer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4730c91483f24305b42abe86b2bb34ee",
-    tcgPlayer: 526351,
+    tcgPlayer: "526351",
   },
   text: [
     {

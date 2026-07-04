@@ -4,6 +4,17 @@ import { beastForbiddingRecluseI18n } from "./171-beast-forbidding-recluse.i18n"
 export const beastForbiddingRecluse: CharacterCard = {
   id: "LxQ",
   canonicalId: "ci_LxQ",
+  slug: "lorcana-ci_LxQ",
+  printings: [
+    {
+      id: "set2-171",
+      artId: "set2-171",
+      setCode: "set2",
+      collectorNumber: "171",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-171"],
   cardType: "character",
   name: "Beast",
@@ -20,7 +31,7 @@ export const beastForbiddingRecluse: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_eb28d5bab74d4784a6a59b2c5cfae6bc",
-    tcgPlayer: 527533,
+    tcgPlayer: "527533",
   },
   text: [
     {

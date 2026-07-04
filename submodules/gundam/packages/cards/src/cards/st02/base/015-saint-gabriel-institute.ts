@@ -6,14 +6,17 @@ export const st02SaintGabrielInstitute015: BaseCard = {
   type: "base",
   traits: ["academy", "stronghold"],
   id: "ST02-015",
-  externalId: "gundam:st02-015",
-  slug: "saint-gabriel-institute-st02-015",
+  canonicalId: "ST02-015",
+  externalIds: { bandai: "gundam:st02-015" },
+  slug: "saint-gabriel-institute/st02-015",
   displayName: "Saint Gabriel Institute",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-015",
   printings: [
     {
       id: "ST02-015",
+      artId: "ST02-015",
+      setCode: "ST02",
       collectorNumber: "ST02-015",
       cardNumber: "ST02-015",
       set: {
@@ -29,6 +32,8 @@ export const st02SaintGabrielInstitute015: BaseCard = {
     },
     {
       id: "ST02-015_p1",
+      artId: "ST02-015_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-015_p1",
       cardNumber: "ST02-015",
       set: {
@@ -44,6 +49,8 @@ export const st02SaintGabrielInstitute015: BaseCard = {
     },
     {
       id: "ST02-015_p2",
+      artId: "ST02-015_p2",
+      setCode: "BETA",
       collectorNumber: "ST02-015_p2",
       cardNumber: "ST02-015",
       set: {
@@ -58,6 +65,7 @@ export const st02SaintGabrielInstitute015: BaseCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST02-015", "ST02-015_p1", "ST02-015_p2"],
   selectedPrintingId: "ST02-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-015.webp?260424",

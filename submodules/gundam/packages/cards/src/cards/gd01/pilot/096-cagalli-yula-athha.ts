@@ -7,14 +7,17 @@ export const gd01CagalliYulaAthha096: PilotCard = {
   color: "white",
   traits: ["orb"],
   id: "GD01-096",
-  externalId: "gundam:gd01-096",
-  slug: "cagalli-yula-athha-gd01-096",
+  canonicalId: "GD01-096",
+  externalIds: { bandai: "gundam:gd01-096" },
+  slug: "cagalli-yula-athha/gd01-096",
   displayName: "Cagalli Yula Athha",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-096",
   printings: [
     {
       id: "GD01-096",
+      artId: "GD01-096",
+      setCode: "GD01",
       collectorNumber: "GD01-096",
       cardNumber: "GD01-096",
       set: {
@@ -30,6 +33,8 @@ export const gd01CagalliYulaAthha096: PilotCard = {
     },
     {
       id: "GD01-096_p1",
+      artId: "GD01-096_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-096_p1",
       cardNumber: "GD01-096",
       set: {
@@ -45,6 +50,8 @@ export const gd01CagalliYulaAthha096: PilotCard = {
     },
     {
       id: "GD01-096_p2",
+      artId: "GD01-096_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-096_p2",
       cardNumber: "GD01-096",
       set: {
@@ -59,6 +66,7 @@ export const gd01CagalliYulaAthha096: PilotCard = {
       productName: "Championship Participation Pack 01",
     },
   ],
+  reprints: ["GD01-096", "GD01-096_p1", "GD01-096_p2"],
   selectedPrintingId: "GD01-096",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-096.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-096.webp?260424",

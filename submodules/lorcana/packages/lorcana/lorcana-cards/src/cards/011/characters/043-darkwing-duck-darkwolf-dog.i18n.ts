@@ -9,21 +9,16 @@ export const darkwingDuckDarkwolfDogI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Darkwing Duck",
     version: "Darkwolf Schnapp",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Myster Mask",
     version: "Clébard Mask",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Darkwing Duck",
     version: "Darkwolf Can",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

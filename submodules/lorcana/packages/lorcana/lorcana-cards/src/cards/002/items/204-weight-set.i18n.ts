@@ -15,9 +15,9 @@ export const weightSetI18n: Record<Languages, I18nProperties> = {
     name: "Hantel",
     text: [
       {
-        title: "KRAFTTRAINING",
+        title: "Krafttraining",
         description:
-          "Jedes Mal, wenn du einen Charakter mit 4 oder mehr ausspielst, darfst du 1 bezahlen, um 1 Karte zu ziehen.",
+          "Jedes Mal, wenn du einen Charakter mit 4 oder mehr {S} ausspielst, darfst du 1 {I} bezahlen, um 1 Karte zu ziehen.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const weightSetI18n: Record<Languages, I18nProperties> = {
     name: "Haltères",
     text: [
       {
-        title: "ENTRAINEMENT",
+        title: "Entrainement",
         description:
-          "Chaque fois que vous jouez un personnage ayant au moins 4, vous pouvez payer 1 pour piocher une carte.",
+          "Chaque fois que vous jouez un personnage ayant au moins 4 {S}, vous pouvez payer 1 {I} pour piocher une carte.",
       },
     ],
   },
@@ -35,8 +35,9 @@ export const weightSetI18n: Record<Languages, I18nProperties> = {
     name: "Weight Set",
     text: [
       {
-        title: "TRAINING",
-        description: "Whenever you play a character with 4 or more, you may pay 1 to draw a card.",
+        title: "Training",
+        description:
+          "Whenever you play a character with 4 {S} or more, you may pay 1 {I} to draw a card.",
       },
     ],
   },

@@ -23,13 +23,14 @@ export const yzmaAboveItAllI18n: Record<Languages, I18nProperties> = {
     version: "Steht über allem",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Isma-Charaktere auszuspielen.)",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "ZURÜCK AN DIE ARBEIT",
+        title: "Zurück an die Arbeit",
         description:
           "Jedes Mal, wenn ein anderer Charakter durch eine Herausforderung verbannt wird, nimmt die zugehörige Person ihn auf ihre Hand zurück und wirft danach eine zufällig ausgewählte Karte von ihrer Hand ab.",
       },
@@ -40,13 +41,14 @@ export const yzmaAboveItAllI18n: Record<Languages, I18nProperties> = {
     version: "Au-dessus de tout",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Yzma.)",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "AU BOULOT",
+        title: "Au boulot",
         description:
           "Chaque fois qu'un autre personnage est banni via un défi, renvoyez-le dans la main de son propriétaire, puis ce joueur se défausse d'une carte au hasard.",
       },
@@ -57,13 +59,14 @@ export const yzmaAboveItAllI18n: Record<Languages, I18nProperties> = {
     version: "Al di Sopra di Ogni Cosa",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Yzma.)",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "AL LAVORO",
+        title: "Al Lavoro",
         description:
           "Ogni volta che un altro personaggio viene esiliato in una sfida, fai riprendere in mano al suo giocatore quella carta, poi quel giocatore scarta una carta a caso.",
       },

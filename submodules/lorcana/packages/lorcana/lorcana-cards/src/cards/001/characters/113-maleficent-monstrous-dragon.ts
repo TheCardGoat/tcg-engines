@@ -4,6 +4,17 @@ import { maleficentMonstrousDragonI18n } from "./113-maleficent-monstrous-dragon
 export const maleficentMonstrousDragon: CharacterCard = {
   id: "MEd",
   canonicalId: "ci_C6t",
+  slug: "lorcana-ci_C6t",
+  printings: [
+    {
+      id: "set1-113",
+      artId: "set1-113",
+      setCode: "set1",
+      collectorNumber: "113",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-113", "set9-108"],
   cardType: "character",
   name: "Maleficent",
@@ -20,7 +31,7 @@ export const maleficentMonstrousDragon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_331c3ce2f2a74490acc4b2bec16a0ad9",
-    tcgPlayer: 650046,
+    tcgPlayer: "650046",
   },
   text: [
     {

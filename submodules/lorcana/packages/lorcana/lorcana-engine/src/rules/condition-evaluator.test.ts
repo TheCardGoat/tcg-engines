@@ -59,6 +59,7 @@ describe("condition-evaluator", () => {
           payloadsByPlayer: {},
         },
         playFromUnderPermissions: { permissionsByPlayer: {} },
+        playFromDiscardPermissions: { permissionsByPlayer: {} },
         replacementEffects: {
           nextSeq: 1,
           registrations: [],

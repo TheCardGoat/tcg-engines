@@ -15,9 +15,9 @@ export const obscurosphereI18n: Record<Languages, I18nProperties> = {
     name: "Obskurosphäre",
     text: [
       {
-        title: "EXTRAKT AUS SMARAGD 2,",
+        title: "Extrakt aus Smaragd",
         description:
-          "Verbanne diesen Gegenstand — Deine Charaktere erhalten bis zu Beginn deines nächsten Zuges Behütet. (Gegnerische Mitspielende können die Charaktere nicht auswählen, außer um sie herauszufordern.)",
+          "2 {I}, Verbanne diesen Gegenstand — Deine Charaktere erhalten bis zu Beginn deines nächsten Zuges <Behütet>. (Gegnerische Mitspielende können die Charaktere nicht auswählen, außer um sie herauszufordern.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const obscurosphereI18n: Record<Languages, I18nProperties> = {
     name: "Obscurosphère",
     text: [
       {
-        title: "EXTRAIT",
+        title: "Extrait d'émeraude",
         description:
-          "D'ÉMERAUDE 2, bannissez cet objet — Vos personnages gagnent Hors d'atteinte jusqu'au début de votre prochain tour. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)",
+          "2 {I}, bannissez cet objet — Vos personnages gagnent <Hors d'atteinte> jusqu'au début de votre prochain tour. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const obscurosphereI18n: Record<Languages, I18nProperties> = {
     name: "Oscurosfera",
     text: [
       {
-        title: "ESTRATTO DI SMERALDO 2,",
+        title: "Estratto di Smeraldo",
         description:
-          "esilia questo oggetto — I tuoi personaggi ottengono Protetto fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierli se non per sfidarli.)",
+          "2 {I}, esilia questo oggetto — I tuoi personaggi ottengono <Protetto> fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierli se non per sfidarli.)",
       },
     ],
   },

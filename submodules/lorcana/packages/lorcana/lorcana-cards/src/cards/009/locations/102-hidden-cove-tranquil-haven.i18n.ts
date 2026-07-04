@@ -16,8 +16,8 @@ export const hiddenCoveTranquilHavenI18n: Record<Languages, I18nProperties> = {
     version: "Ruhiger Hafen",
     text: [
       {
-        title: "BELEBENDE GEWÄSSER",
-        description: "Charaktere an diesem Ort erhalten +1 und +1.",
+        title: "Belebende Gewässer",
+        description: "Charaktere an diesem Ort erhalten +1 {S} und +1 {W}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const hiddenCoveTranquilHavenI18n: Record<Languages, I18nProperties> = {
     version: "Havre de paix",
     text: [
       {
-        title: "EAUX REVITALISANTES",
-        description: "Les personnages sur ce lieu gagnent +1 et +1.",
+        title: "Eaux revitalisantes",
+        description: "Les personnages sur ce lieu gagnent +1 {S} et +1 {W}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const hiddenCoveTranquilHavenI18n: Record<Languages, I18nProperties> = {
     version: "Porto Sicuro",
     text: [
       {
-        title: "ACQUE RIVITALIZZANTI I",
-        description: "personaggi ricevono +1 e +1 mentre si trovano in questo luogo.",
+        title: "Acque Rivitalizzanti",
+        description: "I personaggi ricevono +1 {S} e +1 {W} mentre si trovano in questo luogo.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { ursulasShellNecklaceI18n } from "./034-ursulas-shell-necklace.i18n";
 export const ursulasShellNecklace: ItemCard = {
   id: "0CY",
   canonicalId: "ci_Ewu",
+  slug: "lorcana-ci_Ewu",
+  printings: [
+    {
+      id: "set1-034",
+      artId: "set1-034",
+      setCode: "set1",
+      collectorNumber: "34",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-034", "set9-033"],
   cardType: "item",
   name: "Ursula’s Shell Necklace",
@@ -16,12 +27,12 @@ export const ursulasShellNecklace: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cfa8f36f7729492fa74fa256816c7f55",
-    tcgPlayer: 649980,
+    tcgPlayer: "649980",
   },
   text: [
     {
-      title: "NOW, SING!",
-      description: "Whenever you play a song, you may pay 1 to draw a card.",
+      title: "Now, Sing!",
+      description: "Whenever you play a song, you may pay 1 {I} to draw a card.",
     },
   ],
   abilities: [

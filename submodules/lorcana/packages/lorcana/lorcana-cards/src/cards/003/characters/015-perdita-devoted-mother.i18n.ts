@@ -17,7 +17,7 @@ export const perditaDevotedMotherI18n: Record<Languages, I18nProperties> = {
     version: "Engagierte Mutter",
     text: [
       {
-        title: "KOMMT, KINDER",
+        title: "Kommt, Kinder",
         description:
           "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du einen Charakter von deinem Ablagestapel, der 2 oder weniger kostet, kostenlos ausspielen.",
       },
@@ -28,9 +28,9 @@ export const perditaDevotedMotherI18n: Record<Languages, I18nProperties> = {
     version: "Mère dévouée",
     text: [
       {
-        title: "ALLONS, LES ENFANTS À",
+        title: "Allons, les enfants",
         description:
-          "chaque fois que vous jouez ce personnage ou qu'il est envoyé à l'aventure, vous pouvez jouer gratuitement un personnage de votre défausse coûtant 2 ou moins.",
+          "À chaque fois que vous jouez ce personnage ou qu'il est envoyé à l'aventure, vous pouvez jouer gratuitement un personnage de votre défausse coûtant 2 ou moins.",
       },
     ],
   },
@@ -39,7 +39,7 @@ export const perditaDevotedMotherI18n: Record<Languages, I18nProperties> = {
     version: "Madre Devota",
     text: [
       {
-        title: "VENITE VIA, PICCOLI",
+        title: "Venite via, Piccoli",
         description:
           "Quando giochi questo personaggio e ogni volta che va all'avventura, puoi giocare gratuitamente un personaggio con costo 2 o inferiore dai tuoi scarti.",
       },

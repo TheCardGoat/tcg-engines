@@ -20,12 +20,12 @@ export const robinHoodTimelyContestantI18n: Record<Languages, I18nProperties> = 
     version: "Rechtzeitiger Teilnehmer",
     text: [
       {
-        title: "ICH BIN DRAN!",
+        title: "Ich bin dran!",
         description:
-          "Für jeden Schaden auf gegnerischen Charakteren, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jeden Schaden auf gegnerischen Charakteren, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const robinHoodTimelyContestantI18n: Record<Languages, I18nProperties> = 
     version: "Candidat opportun",
     text: [
       {
-        title: "J'ARRIVE!",
+        title: "J'arrive!",
         description:
-          "Jouer ce personnage vous coûte 1 de moins par dommage sur les personnages adverses.",
+          "Jouer ce personnage vous coûte 1 {I} de moins par dommage sur les personnages adverses.",
       },
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const robinHoodTimelyContestantI18n: Record<Languages, I18nProperties> = 
     version: "Concorrente Tempestivo",
     text: [
       {
-        title: "MANDAMI IN CAMPO!",
+        title: "Mandami in Campo!",
         description:
-          "Per ogni singolo danno sui personaggi avversari, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni singolo danno sui personaggi avversari, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
     ],
   },

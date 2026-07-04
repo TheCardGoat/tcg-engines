@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goofyExpertShipwrightI18n } from "./089-goofy-expert-shipwright.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const goofyExpertShipwright: CharacterCard = {
   id: "T9c",
-  canonicalId: "ci_T9c",
+  canonicalId: "ci_usY",
+  slug: "lorcana-ci_usY",
+  printings: [
+    {
+      id: "set6-089",
+      artId: "set6-089",
+      setCode: "set6",
+      collectorNumber: "89",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-089"],
   cardType: "character",
   name: "Goofy",
@@ -19,8 +31,8 @@ export const goofyExpertShipwright: CharacterCard = {
   lore: 3,
   inkable: true,
   externalIds: {
-    lorcast: "crd_228ea83f82c34ee6a0df937dd8efe3f4",
-    tcgPlayer: 591119,
+    lorcast: "crd_45321c3501974bd39455f3cc7346f535",
+    tcgPlayer: "650209",
   },
   text: [
     {

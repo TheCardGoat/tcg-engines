@@ -4,6 +4,17 @@ import { mushusRocketI18n } from "./134-mushus-rocket.i18n";
 export const mushusRocket: ItemCard = {
   id: "Atf",
   canonicalId: "ci_Atf",
+  slug: "lorcana-ci_Atf",
+  printings: [
+    {
+      id: "set10-134",
+      artId: "set10-134",
+      setCode: "set10",
+      collectorNumber: "134",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-134"],
   cardType: "item",
   name: "Mushu's Rocket",
@@ -16,7 +27,7 @@ export const mushusRocket: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_26b89746756b40979ee1a9885c8e3f5b",
-    tcgPlayer: 659423,
+    tcgPlayer: "659423",
   },
   text: [
     {

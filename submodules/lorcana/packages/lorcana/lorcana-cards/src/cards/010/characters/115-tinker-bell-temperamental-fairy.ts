@@ -4,6 +4,17 @@ import { tinkerBellTemperamentalFairyI18n } from "./115-tinker-bell-temperamenta
 export const tinkerBellTemperamentalFairy: CharacterCard = {
   id: "OR6",
   canonicalId: "ci_OR6",
+  slug: "lorcana-ci_OR6",
+  printings: [
+    {
+      id: "set10-115",
+      artId: "set10-115",
+      setCode: "set10",
+      collectorNumber: "115",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-115"],
   cardType: "character",
   name: "Tinker Bell",
@@ -20,7 +31,7 @@ export const tinkerBellTemperamentalFairy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0a3d4d70ca5f45bfa3642a425a4943f9",
-    tcgPlayer: 659191,
+    tcgPlayer: "659191",
   },
   text: [
     {

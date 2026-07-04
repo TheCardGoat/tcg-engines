@@ -7,14 +7,17 @@ export const gd01Jegan016: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-016",
-  externalId: "gundam:gd01-016",
-  slug: "jegan-gd01-016",
+  canonicalId: "GD01-016",
+  externalIds: { bandai: "gundam:gd01-016" },
+  slug: "jegan/gd01-016",
   displayName: "Jegan",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-016",
   printings: [
     {
       id: "GD01-016",
+      artId: "GD01-016",
+      setCode: "GD01",
       collectorNumber: "GD01-016",
       cardNumber: "GD01-016",
       set: {
@@ -30,6 +33,8 @@ export const gd01Jegan016: UnitCard = {
     },
     {
       id: "GD01-016_p1",
+      artId: "GD01-016_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-016_p1",
       cardNumber: "GD01-016",
       set: {
@@ -45,6 +50,8 @@ export const gd01Jegan016: UnitCard = {
     },
     {
       id: "GD01-016_p2",
+      artId: "GD01-016_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-016_p2",
       cardNumber: "GD01-016",
       set: {
@@ -60,6 +67,8 @@ export const gd01Jegan016: UnitCard = {
     },
     {
       id: "GD01-016_p3",
+      artId: "GD01-016_p3",
+      setCode: "GD01",
       collectorNumber: "GD01-016_p3",
       cardNumber: "GD01-016",
       set: {
@@ -74,6 +83,7 @@ export const gd01Jegan016: UnitCard = {
       productName: "Store Tournament Winner Pack 01",
     },
   ],
+  reprints: ["GD01-016", "GD01-016_p1", "GD01-016_p2", "GD01-016_p3"],
   selectedPrintingId: "GD01-016",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-016.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-016.webp?260424",

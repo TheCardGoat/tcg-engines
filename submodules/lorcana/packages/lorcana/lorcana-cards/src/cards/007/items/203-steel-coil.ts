@@ -4,6 +4,17 @@ import { steelCoilI18n } from "./203-steel-coil.i18n";
 export const steelCoil: ItemCard = {
   id: "02J",
   canonicalId: "ci_02J",
+  slug: "lorcana-ci_02J",
+  printings: [
+    {
+      id: "set7-203",
+      artId: "set7-203",
+      setCode: "set7",
+      collectorNumber: "203",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-203"],
   cardType: "item",
   name: "Steel Coil",
@@ -16,7 +27,7 @@ export const steelCoil: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9733c3ea959643178de845a528ff915c",
-    tcgPlayer: 619525,
+    tcgPlayer: "619525",
   },
   text: [
     {

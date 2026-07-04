@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goGoTomagoDartingDynamoI18n } from "./073-go-go-tomago-darting-dynamo.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const goGoTomagoDartingDynamo: CharacterCard = {
   id: "4JN",
   canonicalId: "ci_4JN",
+  slug: "lorcana-ci_4JN",
+  printings: [
+    {
+      id: "set6-073",
+      artId: "set6-073",
+      setCode: "set6",
+      collectorNumber: "73",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-073"],
   cardType: "character",
   name: "Go Go Tomago",
@@ -21,7 +33,7 @@ export const goGoTomagoDartingDynamo: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2331f6d883e04464ba99cfff895683e2",
-    tcgPlayer: 578177,
+    tcgPlayer: "578177",
   },
   text: [
     {

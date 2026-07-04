@@ -17,7 +17,7 @@ export const jamesRoleModelI18n: Record<Languages, I18nProperties> = {
     version: "Vorbild",
     text: [
       {
-        title: "NIE AUS DEN AUGEN VERLIEREN",
+        title: "Nie aus den Augen verlieren",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du diese Karte verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const jamesRoleModelI18n: Record<Languages, I18nProperties> = {
     version: "Parent modèle",
     text: [
       {
-        title: "NE PERDS JAMAIS, JAMAIS DE VUE",
+        title: "Ne perds jamais, jamais de vue",
         description:
           "Lorsque ce personnage est banni, vous pouvez placer cette carte dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const jamesRoleModelI18n: Record<Languages, I18nProperties> = {
     version: "Role Model",
     text: [
       {
-        title: "NEVER, EVER LOSE SIGHT",
+        title: "Never, Ever Lose Sight",
         description:
           "When this character is banished, you may put this card into your inkwell facedown and exerted.",
       },

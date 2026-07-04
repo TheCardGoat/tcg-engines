@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Card } from "./Card";
 import { CardImage } from "./CardImage";
-import { simEntityAnchor, simZoneAnchor } from "./animationAnchors";
 import { useDragDrop } from "./DragDropContext";
 import { useHandCommand, useSelectedHandCard } from "./useHandCommand";
 import { useMoveSelection } from "./MoveSelectionContext";
@@ -115,13 +114,14 @@ export function HandZone({
       ref={setZoneRef}
       className={`${classes.zone} ${faceDown ? classes.opponentZone : classes.playerZone}`}
       data-testid="hand-zone"
+      data-zone-id={zoneName}
+      data-active-fan="true"
       data-side={side}
       data-face-down={faceDown ? "true" : "false"}
       data-count={renderCount}
       data-drop-zone={!faceDown ? zoneName : undefined}
       data-drop-ready={isReturnDropReady ? "return" : undefined}
       data-drop-over={drop.isOver ? "true" : "false"}
-      {...simZoneAnchor({ id: zoneName, side, visibility: "private", role: "hand" })}
       style={{
         ["--hand-card-w" as string]: `${playerLayout.cardWidth}px`,
       }}
@@ -200,12 +200,6 @@ export function HandZone({
                 "data-power": card.effectivePower ?? card.power ?? undefined,
                 "data-affordable":
                   affordable === undefined ? undefined : affordable ? "true" : "false",
-                ...simEntityAnchor({
-                  entityId: card.cardId,
-                  zoneId: zoneName,
-                  side,
-                  face: "public",
-                }),
               }
             : {};
         return (
@@ -225,7 +219,16 @@ export function HandZone({
             }}
           >
             {faceDown ? (
-              <CardImage faceDown disablePreview alt="Opponent card" />
+              <div
+                data-testid="card"
+                data-card-kind="card"
+                data-entity-id={card?.cardId}
+                data-face="hidden"
+                style={{ display: "contents" }}
+                aria-hidden
+              >
+                <CardImage faceDown disablePreview alt="Opponent card" />
+              </div>
             ) : (
               <Card
                 imageUrl={card?.imageUrl}

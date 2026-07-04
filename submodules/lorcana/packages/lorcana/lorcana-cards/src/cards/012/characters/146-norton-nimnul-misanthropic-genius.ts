@@ -4,6 +4,17 @@ import { nortonNimnulMisanthropicGeniusI18n } from "./146-norton-nimnul-misanthr
 export const nortonNimnulMisanthropicGenius: CharacterCard = {
   id: "SBA",
   canonicalId: "ci_SBA",
+  slug: "lorcana-ci_SBA",
+  printings: [
+    {
+      id: "set12-146",
+      artId: "set12-146",
+      setCode: "set12",
+      collectorNumber: "146",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-146"],
   cardType: "character",
   name: "Norton Nimnul",
@@ -20,6 +31,7 @@ export const nortonNimnulMisanthropicGenius: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_740fc865fdcd40ab8b5391cfdc96509d",
+    tcgPlayer: "692066",
   },
   text: [
     {

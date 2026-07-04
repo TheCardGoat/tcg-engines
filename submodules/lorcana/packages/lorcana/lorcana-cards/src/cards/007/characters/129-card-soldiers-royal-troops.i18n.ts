@@ -16,8 +16,9 @@ export const cardSoldiersRoyalTroopsI18n: Record<Languages, I18nProperties> = {
     version: "Königliche Truppen",
     text: [
       {
-        title: "DEN PUNKT NEHMEN",
-        description: "Solange ein beschädigter Charakter im Spiel ist, erhält dieser Charakter +2.",
+        title: "Den Punkt nehmen",
+        description:
+          "Solange ein beschädigter Charakter im Spiel ist, erhält dieser Charakter +2 {S}.",
       },
     ],
   },
@@ -26,8 +27,8 @@ export const cardSoldiersRoyalTroopsI18n: Record<Languages, I18nProperties> = {
     version: "Troupes royales",
     text: [
       {
-        title: "PRENDRE POSITION",
-        description: "Tant qu'un personnage a au moins un dommage, ce personnage-ci gagne +2.",
+        title: "Prendre position",
+        description: "Tant qu'un personnage a au moins un dommage, ce personnage-ci gagne +2 {S}.",
       },
     ],
   },
@@ -36,8 +37,9 @@ export const cardSoldiersRoyalTroopsI18n: Record<Languages, I18nProperties> = {
     version: "Truppe Reali",
     text: [
       {
-        title: "PRENDERE IL COMANDO",
-        description: "Mentre un personaggio danneggiato è in gioco, questo personaggio riceve +2.",
+        title: "Prendere il Comando",
+        description:
+          "Mentre un personaggio danneggiato è in gioco, questo personaggio riceve +2 {S}.",
       },
     ],
   },

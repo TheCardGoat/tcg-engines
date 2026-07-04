@@ -1,0 +1,9 @@
+{
+  "name": "@tcg/star-wars-unlimited-import-card-data",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "import": "node src/import-card-data.mjs"
+  }
+}

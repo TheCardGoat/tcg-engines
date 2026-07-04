@@ -4,6 +4,17 @@ import { timothyQMouseFlightInstructorI18n } from "./047-timothy-q-mouse-flight-
 export const timothyQMouseFlightInstructor: CharacterCard = {
   id: "WXB",
   canonicalId: "ci_WXB",
+  slug: "lorcana-ci_WXB",
+  printings: [
+    {
+      id: "set9-047",
+      artId: "set9-047",
+      setCode: "set9",
+      collectorNumber: "47",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-047"],
   cardType: "character",
   name: "Timothy Q. Mouse",
@@ -20,7 +31,7 @@ export const timothyQMouseFlightInstructor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7132ae64563f4ca688e7033e90cf50fb",
-    tcgPlayer: 647678,
+    tcgPlayer: "647678",
   },
   text: [
     {

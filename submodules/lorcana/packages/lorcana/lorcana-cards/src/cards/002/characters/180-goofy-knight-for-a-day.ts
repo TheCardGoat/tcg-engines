@@ -4,6 +4,17 @@ import { goofyKnightForADayI18n } from "./180-goofy-knight-for-a-day.i18n";
 export const goofyKnightForADay: CharacterCard = {
   id: "JDP",
   canonicalId: "ci_JDP",
+  slug: "lorcana-ci_JDP",
+  printings: [
+    {
+      id: "set2-180",
+      artId: "set2-180",
+      setCode: "set2",
+      collectorNumber: "180",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-180"],
   cardType: "character",
   name: "Goofy",
@@ -20,7 +31,7 @@ export const goofyKnightForADay: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_3efeba396af644afb4fbef6c35b58521",
-    tcgPlayer: 524364,
+    tcgPlayer: "524364",
   },
   classifications: ["Dreamborn", "Hero", "Knight"],
   i18n: goofyKnightForADayI18n,

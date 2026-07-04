@@ -4,6 +4,17 @@ import { makeThePotionI18n } from "./094-make-the-potion.i18n";
 export const makeThePotion: ActionCard = {
   id: "Ttp",
   canonicalId: "ci_SBd",
+  slug: "lorcana-ci_SBd",
+  printings: [
+    {
+      id: "set4-094",
+      artId: "set4-094",
+      setCode: "set4",
+      collectorNumber: "94",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-094", "set9-098"],
   cardType: "action",
   name: "Make the Potion",
@@ -16,7 +27,7 @@ export const makeThePotion: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5ecd4f8d0e8f44f8bda2b3986c6da49a",
-    tcgPlayer: 650036,
+    tcgPlayer: "650036",
   },
   text: [
     {

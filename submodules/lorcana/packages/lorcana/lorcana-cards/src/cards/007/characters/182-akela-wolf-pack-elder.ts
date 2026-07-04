@@ -4,6 +4,17 @@ import { akelaWolfPackElderI18n } from "./182-akela-wolf-pack-elder.i18n";
 export const akelaWolfPackElder: CharacterCard = {
   id: "uB3",
   canonicalId: "ci_uB3",
+  slug: "lorcana-ci_uB3",
+  printings: [
+    {
+      id: "set7-182",
+      artId: "set7-182",
+      setCode: "set7",
+      collectorNumber: "182",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-182"],
   cardType: "character",
   name: "Akela",
@@ -21,7 +32,7 @@ export const akelaWolfPackElder: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_b8f203cb54ee40baae13e58050d0c843",
-    tcgPlayer: 618713,
+    tcgPlayer: "618713",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: akelaWolfPackElderI18n,

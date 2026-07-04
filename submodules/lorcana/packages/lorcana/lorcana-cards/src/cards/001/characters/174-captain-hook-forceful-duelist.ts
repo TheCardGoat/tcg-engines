@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { captainHookForcefulDuelistI18n } from "./174-captain-hook-forceful-duelist.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const captainHookForcefulDuelist: CharacterCard = {
   id: "p7d",
   canonicalId: "ci_ZXl",
+  slug: "lorcana-ci_ZXl",
+  printings: [
+    {
+      id: "set1-174",
+      artId: "set1-174",
+      setCode: "set1",
+      collectorNumber: "174",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-174", "set8-186"],
   cardType: "character",
   name: "Captain Hook",
@@ -21,7 +33,7 @@ export const captainHookForcefulDuelist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_269551f76e10446cbf947278bf155889",
-    tcgPlayer: 631706,
+    tcgPlayer: "631706",
   },
   text: "Challenger +2",
   classifications: ["Dreamborn", "Villain", "Pirate", "Captain"],

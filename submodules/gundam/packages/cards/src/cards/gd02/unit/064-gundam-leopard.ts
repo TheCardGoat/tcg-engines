@@ -7,14 +7,17 @@ export const gd02GundamLeopard064: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD02-064",
-  externalId: "gundam:gd02-064",
-  slug: "gundam-leopard-gd02-064",
+  canonicalId: "GD02-064",
+  externalIds: { bandai: "gundam:gd02-064" },
+  slug: "gundam-leopard/gd02-064",
   displayName: "Gundam Leopard",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-064",
   printings: [
     {
       id: "GD02-064",
+      artId: "GD02-064",
+      setCode: "GD02",
       collectorNumber: "GD02-064",
       cardNumber: "GD02-064",
       set: {
@@ -29,6 +32,7 @@ export const gd02GundamLeopard064: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-064"],
   selectedPrintingId: "GD02-064",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-064.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-064.webp?260424",

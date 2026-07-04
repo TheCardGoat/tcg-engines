@@ -4,6 +4,17 @@ import { castleWyvernAboveTheCloudsI18n } from "./204-castle-wyvern-above-the-cl
 export const castleWyvernAboveTheClouds: LocationCard = {
   id: "M5d",
   canonicalId: "ci_M5d",
+  slug: "lorcana-ci_M5d",
+  printings: [
+    {
+      id: "set10-204",
+      artId: "set10-204",
+      setCode: "set10",
+      collectorNumber: "204",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-204"],
   cardType: "location",
   name: "Castle Wyvern",
@@ -20,7 +31,7 @@ export const castleWyvernAboveTheClouds: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8212061efed6498f87b6df190c10c4fa",
-    tcgPlayer: 659594,
+    tcgPlayer: "659594",
   },
   text: [
     {

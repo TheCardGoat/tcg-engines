@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { boltDependableFriendI18n } from "./018-bolt-dependable-friend.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const boltDependableFriend: CharacterCard = {
   id: "XZV",
   canonicalId: "ci_XZV",
+  slug: "lorcana-ci_XZV",
+  printings: [
+    {
+      id: "set7-018",
+      artId: "set7-018",
+      setCode: "set7",
+      collectorNumber: "18",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-018"],
   cardType: "character",
   name: "Bolt",
@@ -21,7 +33,7 @@ export const boltDependableFriend: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9b70e9c76a6643c69167b3f081530ae9",
-    tcgPlayer: 618157,
+    tcgPlayer: "618157",
   },
   text: "Support",
   classifications: ["Storyborn", "Hero"],

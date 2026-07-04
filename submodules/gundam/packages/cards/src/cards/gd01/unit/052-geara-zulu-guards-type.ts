@@ -7,14 +7,17 @@ export const gd01GearaZuluGuardsType052: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-052",
-  externalId: "gundam:gd01-052",
-  slug: "geara-zulu-guards-type-gd01-052",
+  canonicalId: "GD01-052",
+  externalIds: { bandai: "gundam:gd01-052" },
+  slug: "geara-zulu-guards-type/gd01-052",
   displayName: "Geara Zulu (Guards Type)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-052",
   printings: [
     {
       id: "GD01-052",
+      artId: "GD01-052",
+      setCode: "GD01",
       collectorNumber: "GD01-052",
       cardNumber: "GD01-052",
       set: {
@@ -29,6 +32,7 @@ export const gd01GearaZuluGuardsType052: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-052"],
   selectedPrintingId: "GD01-052",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-052.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-052.webp?260424",

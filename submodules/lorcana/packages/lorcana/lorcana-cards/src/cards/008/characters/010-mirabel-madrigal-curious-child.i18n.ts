@@ -6,9 +6,9 @@ export const mirabelMadrigalCuriousChildI18n: Record<Languages, I18nProperties> 
     version: "Curious Child",
     text: [
       {
-        title: "YOU ARE A WONDER",
+        title: "YOU ARE",
         description:
-          "When you play this character, you may reveal a song card in your hand to gain 1 lore.",
+          "A WONDER When you play this character, you may reveal a song card in your hand to gain 1 lore.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const mirabelMadrigalCuriousChildI18n: Record<Languages, I18nProperties> 
     version: "Neugieriges Kind",
     text: [
       {
-        title: "DU BIST EIN WUNDER",
+        title: "Du bist ein Wunder",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Liedkarte aus deiner Hand vorzeigen, um 1 Legende zu sammeln.",
       },
@@ -28,7 +28,7 @@ export const mirabelMadrigalCuriousChildI18n: Record<Languages, I18nProperties> 
     version: "Enfant curieuse",
     text: [
       {
-        title: "TU ES UNE PETITE MERVEILLE",
+        title: "Tu es une petite merveille",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez révéler une carte Chanson de votre main pour gagner 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const mirabelMadrigalCuriousChildI18n: Record<Languages, I18nProperties> 
     version: "Bambina Curiosa",
     text: [
       {
-        title: "TU SEI UN GIOIELLINO",
+        title: "Tu Sei un Gioiellino",
         description:
           "Quando giochi questo personaggio, puoi rivelare una carta canzone nella tua mano per ottenere 1 leggenda.",
       },

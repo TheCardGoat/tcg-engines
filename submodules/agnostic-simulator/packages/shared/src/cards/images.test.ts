@@ -18,7 +18,7 @@ import {
   resolveAllCardImages,
   resolveCardImage,
   validateImageRefs,
-} from "./images";
+} from "./images.js";
 
 describe("Image Resolution", () => {
   describe("buildLorcastUrl", () => {

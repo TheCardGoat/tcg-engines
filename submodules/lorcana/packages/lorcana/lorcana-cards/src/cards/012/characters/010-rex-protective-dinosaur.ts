@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rexProtectiveDinosaurI18n } from "./010-rex-protective-dinosaur.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const rexProtectiveDinosaur: CharacterCard = {
-  id: "G6y",
+  id: "5Wd",
   canonicalId: "ci_G6y",
+  slug: "lorcana-ci_G6y",
+  printings: [
+    {
+      id: "set12-010",
+      artId: "set12-010",
+      setCode: "set12",
+      collectorNumber: "10",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-010"],
   cardType: "character",
   name: "Rex",
@@ -20,7 +32,8 @@ export const rexProtectiveDinosaur: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_39de8b639e424da9b739e523f4a661d2",
+    lorcast: "crd_70e7c418c5034714b2eb7889c89e3c86",
+    tcgPlayer: "692204",
   },
   text: [
     {

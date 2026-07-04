@@ -14,8 +14,8 @@ export const amethystChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Amethyst Chromikon",
     text: [
       {
-        title: "AMETHYSTFARBENES LICHT",
-        description: "— Alle Mitspielenden (auch du) dürfen je 1 Karte ziehen.",
+        title: "Amethystfarbenes Licht",
+        description: "{E} — Alle Mitspielenden (auch du) dürfen je 1 Karte ziehen.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const amethystChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Chromicône d'Améthyste",
     text: [
       {
-        title: "LUEUR",
-        description: "D'AMÉTHYSTE — Chaque joueur peut piocher une carte.",
+        title: "Lueur d'améthyste",
+        description: "{E} — Chaque joueur peut piocher une carte.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const amethystChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Cromicon d'Ametista",
     text: [
       {
-        title: "LUCE D'AMETISTA",
-        description: "— Ogni giocatore può pescare una carta.",
+        title: "Luce d'Ametista",
+        description: "{E} — Ogni giocatore può pescare una carta.",
       },
     ],
   },

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onDestroy } from "svelte";
-  import { LoaderCircle, Lock, NotebookPen } from "@lucide/svelte";
+  import LoaderCircle from "@lucide/svelte/icons/loader-circle";
+  import Lock from "@lucide/svelte/icons/lock";
+  import NotebookPen from "@lucide/svelte/icons/notebook-pen";
   import { m } from "$lib/i18n/messages.js";
   import { Button } from "$lib/design-system/primitives/button";
   import * as Sheet from "$lib/design-system/primitives/sheet";

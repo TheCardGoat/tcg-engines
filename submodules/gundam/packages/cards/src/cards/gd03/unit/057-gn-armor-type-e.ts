@@ -7,14 +7,17 @@ export const gd03GnArmorTypeE057: UnitCard = {
   color: "purple",
   traits: ["cb", "gn drive"],
   id: "GD03-057",
-  externalId: "gundam:gd03-057",
-  slug: "gn-armor-type-e-gd03-057",
+  canonicalId: "GD03-057",
+  externalIds: { bandai: "gundam:gd03-057" },
+  slug: "gn-armor-type-e/gd03-057",
   displayName: "GN Armor (Type-E)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-057",
   printings: [
     {
       id: "GD03-057",
+      artId: "GD03-057",
+      setCode: "GD03",
       collectorNumber: "GD03-057",
       cardNumber: "GD03-057",
       set: {
@@ -29,6 +32,7 @@ export const gd03GnArmorTypeE057: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-057"],
   selectedPrintingId: "GD03-057",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-057.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-057.webp?260424",

@@ -1,6 +1,7 @@
 export { balooVonBruinwaldXiii } from "./001-baloo-von-bruinwald-xiii";
 export { bernardBrandnewAgent } from "./002-bernard-brand-new-agent";
 export { chernabogEvildoer } from "./003-chernabog-evildoer";
+export { ursulaDeceiverD23 } from "./d23-003-ursula-deceiver";
 export { joshuaSweetTheDoctor } from "./005-joshua-sweet-the-doctor";
 export { kidaAtlantean } from "./006-kida-atlantean";
 export { kidaProtectorOfAtlantis } from "./007-kida-protector-of-atlantis";
@@ -20,11 +21,15 @@ export { queenOfHeartsWonderlandEmpress } from "./020-queen-of-hearts-wonderland
 export { rollyHungryPup } from "./021-rolly-hungry-pup";
 export { tinkerBellGenerousFairy } from "./022-tinker-bell-generous-fairy";
 export { wendyDarlingTalentedSailor } from "./023-wendy-darling-talented-sailor";
+export { kitCloudkickerToughGuyP1Promo } from "./p1-026-kit-cloudkicker-tough-guy-promo";
+export { johnSilverGreedyTreasureSeekerP1Promo } from "./p1-029-john-silver-greedy-treasure-seeker-promo";
+export { stitchRockStarP1Challenge } from "./p1-030-stitch-rock-star-challenge";
 export { aliceTeaAlchemist } from "./035-alice-tea-alchemist";
 export { chernabogsFollowersCreaturesOfEvil } from "./036-chernabogs-followers-creatures-of-evil";
 export { diabloFaithfulPet } from "./037-diablo-faithful-pet";
 export { genieSupportiveFriend } from "./038-genie-supportive-friend";
 export { hydrosIceTitan } from "./039-hydros-ice-titan";
+export { scroogeMcduckUncleMoneybagsP1Promo } from "./p1-039-scrooge-mcduck-uncle-moneybags-promo";
 export { iagoPrettyPolly } from "./040-iago-pretty-polly";
 export { jafarLampThief } from "./041-jafar-lamp-thief";
 export { jafarStrikingIllusionist } from "./042-jafar-striking-illusionist";

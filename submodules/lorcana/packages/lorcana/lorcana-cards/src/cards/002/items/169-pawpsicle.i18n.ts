@@ -18,11 +18,11 @@ export const pawpsicleI18n: Record<Languages, I18nProperties> = {
     name: "Tatziatella",
     text: [
       {
-        title: "JUMBO-POP",
+        title: "Jumbo-Pop",
         description: "Wenn du diesen Gegenstand ausspielst, darfst du 1 Karte ziehen.",
       },
       {
-        title: "DAS IST KIRSCHHOLZ",
+        title: "Das ist Kirschholz",
         description:
           "Verbanne diesen Gegenstand — Entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
       },
@@ -32,13 +32,13 @@ export const pawpsicleI18n: Record<Languages, I18nProperties> = {
     name: "Glace à l'eau",
     text: [
       {
-        title: "JUMBO POP",
+        title: "Jumbo Pop",
         description: "Lorsque vous jouez cet objet, vous pouvez piocher une carte.",
       },
       {
-        title: "C'EST DU",
+        title: "C'est du bâton rouge",
         description:
-          "BÂTON ROUGE Bannissez cet objet — Choisissez un personnage et retirez-lui jusqu'à 2 jetons Dommage.",
+          "Bannissez cet objet — Choisissez un personnage et retirez-lui jusqu'à 2 jetons Dommage.",
       },
     ],
   },
@@ -46,11 +46,11 @@ export const pawpsicleI18n: Record<Languages, I18nProperties> = {
     name: "Pawpsicle",
     text: [
       {
-        title: "JUMBO POP",
+        title: "Jumbo Pop",
         description: "When you play this item, you may draw a card.",
       },
       {
-        title: "THAT'S REDWOOD",
+        title: "That's Redwood",
         description: "Banish this item — Remove up to 2 damage from chosen character.",
       },
     ],

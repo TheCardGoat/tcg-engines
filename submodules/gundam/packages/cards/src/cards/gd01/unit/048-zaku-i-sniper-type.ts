@@ -7,14 +7,17 @@ export const gd01ZakuISniperType048: UnitCard = {
   color: "red",
   traits: ["zeon"],
   id: "GD01-048",
-  externalId: "gundam:gd01-048",
-  slug: "zaku-i-sniper-type-gd01-048",
+  canonicalId: "GD01-048",
+  externalIds: { bandai: "gundam:gd01-048" },
+  slug: "zaku-i-sniper-type/gd01-048",
   displayName: "Zaku I Sniper Type",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-048",
   printings: [
     {
       id: "GD01-048",
+      artId: "GD01-048",
+      setCode: "GD01",
       collectorNumber: "GD01-048",
       cardNumber: "GD01-048",
       set: {
@@ -29,6 +32,7 @@ export const gd01ZakuISniperType048: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-048"],
   selectedPrintingId: "GD01-048",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-048.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-048.webp?260424",

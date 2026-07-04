@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { brunoMadrigalSingingSeerI18n } from "./020-bruno-madrigal-singing-seer.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const brunoMadrigalSingingSeer: CharacterCard = {
   id: "7WL",
   canonicalId: "ci_7WL",
+  slug: "lorcana-ci_7WL",
+  printings: [
+    {
+      id: "set8-020",
+      artId: "set8-020",
+      setCode: "set8",
+      collectorNumber: "20",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-020"],
   cardType: "character",
   name: "Bruno Madrigal",
@@ -21,7 +33,7 @@ export const brunoMadrigalSingingSeer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5620f9d7486543ea90d2b6a4499c7ae4",
-    tcgPlayer: 631364,
+    tcgPlayer: "631364",
   },
   text: [
     {

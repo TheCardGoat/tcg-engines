@@ -7,14 +7,14 @@ export const bosssOrdersI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Befehl vom Boss",
-    text: "Ein Charakter deiner Wahl erhält in diesem Zug Unterstützen. (Jedes Mal, wenn der Charakter erkundet, darfst du seine in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+    text: "Ein Charakter deiner Wahl erhält in diesem Zug <Unterstützen>. (Jedes Mal, wenn der Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
   },
   fr: {
     name: "Ordres de la patronne",
-    text: "Choisissez un personnage, il gagne Soutien pour le reste de ce tour.",
+    text: "Choisissez un personnage, il gagne <Soutien> pour le reste de ce tour. (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
   },
   it: {
     name: "Ordini del Boss",
-    text: "Un personaggio a tua scelta ottiene Aiutante per questo turno. (Ogni volta che va all'avventura, puoi aggiungere la sua alla di un altro personaggio a tua scelta per questo turno.)",
+    text: "Un personaggio a tua scelta ottiene <Aiutante> per questo turno. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
   },
 };

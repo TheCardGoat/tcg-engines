@@ -7,14 +7,17 @@ export const gd03GundamBarbatosLupus050: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "GD03-050",
-  externalId: "gundam:gd03-050",
-  slug: "gundam-barbatos-lupus-gd03-050",
+  canonicalId: "GD03-050",
+  externalIds: { bandai: "gundam:gd03-050" },
+  slug: "gundam-barbatos-lupus/gd03-050",
   displayName: "Gundam Barbatos Lupus",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-050",
   printings: [
     {
       id: "GD03-050",
+      artId: "GD03-050",
+      setCode: "GD03",
       collectorNumber: "GD03-050",
       cardNumber: "GD03-050",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamBarbatosLupus050: UnitCard = {
     },
     {
       id: "GD03-050_p1",
+      artId: "GD03-050_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-050_p1",
       cardNumber: "GD03-050",
       set: {
@@ -45,6 +50,8 @@ export const gd03GundamBarbatosLupus050: UnitCard = {
     },
     {
       id: "GD03-050_p3",
+      artId: "GD03-050_p3",
+      setCode: "GD03",
       collectorNumber: "GD03-050_p3",
       cardNumber: "GD03-050",
       set: {
@@ -54,10 +61,12 @@ export const gd03GundamBarbatosLupus050: UnitCard = {
       },
       rarity: "legendRare",
       finish: "parallel",
+      imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-050_p3.webp?260424",
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-050_p3.webp?260424",
       productName: "NEWTYPE CHALLENGE 2026 MISSION 3 Winner Prize",
     },
   ],
+  reprints: ["GD03-050", "GD03-050_p1", "GD03-050_p3"],
   selectedPrintingId: "GD03-050",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-050.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-050.webp?260424",

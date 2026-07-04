@@ -4,6 +4,17 @@ import { daisyDuckSapphireChampionI18n } from "./158-daisy-duck-sapphire-champio
 export const daisyDuckSapphireChampion: CharacterCard = {
   id: "CLU",
   canonicalId: "ci_CLU",
+  slug: "lorcana-ci_CLU",
+  printings: [
+    {
+      id: "set10-158",
+      artId: "set10-158",
+      setCode: "set10",
+      collectorNumber: "158",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-158"],
   cardType: "character",
   name: "Daisy Duck",
@@ -19,7 +30,7 @@ export const daisyDuckSapphireChampion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a41add9515e547cb8273ba6973b125b4",
-    tcgPlayer: 659630,
+    tcgPlayer: "659630",
   },
   text: [
     {

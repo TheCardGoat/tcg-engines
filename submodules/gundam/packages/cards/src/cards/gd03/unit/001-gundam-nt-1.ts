@@ -7,14 +7,17 @@ export const gd03GundamNt1001: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD03-001",
-  externalId: "gundam:gd03-001",
-  slug: "gundam-nt-1-gd03-001",
+  canonicalId: "GD03-001",
+  externalIds: { bandai: "gundam:gd03-001" },
+  slug: "gundam-nt-1/gd03-001",
   displayName: "Gundam NT-1",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-001",
   printings: [
     {
       id: "GD03-001",
+      artId: "GD03-001",
+      setCode: "GD03",
       collectorNumber: "GD03-001",
       cardNumber: "GD03-001",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamNt1001: UnitCard = {
     },
     {
       id: "GD03-001_p1",
+      artId: "GD03-001_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-001_p1",
       cardNumber: "GD03-001",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamNt1001: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-001", "GD03-001_p1"],
   selectedPrintingId: "GD03-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-001.webp?260424",

@@ -4,6 +4,17 @@ import { tobyTurtleWaryFriendI18n } from "./190-toby-turtle-wary-friend.i18n";
 export const tobyTurtleWaryFriend: CharacterCard = {
   id: "Qqa",
   canonicalId: "ci_hVZ",
+  slug: "lorcana-ci_hVZ",
+  printings: [
+    {
+      id: "set8-190",
+      artId: "set8-190",
+      setCode: "set8",
+      collectorNumber: "190",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-190"],
   cardType: "character",
   name: "Toby Turtle",
@@ -20,7 +31,7 @@ export const tobyTurtleWaryFriend: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0de5fd56ffa5426c854d2123b28a61c1",
-    tcgPlayer: 631772,
+    tcgPlayer: "631772",
   },
   text: [
     {

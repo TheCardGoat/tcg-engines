@@ -7,14 +7,17 @@ export const betaGundamHeavyarms034: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-034_p1",
-  externalId: "gundam:gd01-034_p1",
-  slug: "gundam-heavyarms-gd01-034-p1",
+  canonicalId: "GD01-034",
+  externalIds: { bandai: "gundam:gd01-034_p1" },
+  slug: "gundam-heavyarms/gd01-034",
   displayName: "Gundam Heavyarms",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-034_p1",
   printings: [
     {
       id: "GD01-034",
+      artId: "GD01-034",
+      setCode: "GD01",
       collectorNumber: "GD01-034",
       cardNumber: "GD01-034",
       set: {
@@ -30,6 +33,8 @@ export const betaGundamHeavyarms034: UnitCard = {
     },
     {
       id: "GD01-034_p1",
+      artId: "GD01-034_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-034_p1",
       cardNumber: "GD01-034",
       set: {
@@ -44,6 +49,7 @@ export const betaGundamHeavyarms034: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-034", "GD01-034_p1"],
   selectedPrintingId: "GD01-034_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-034_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-034_p1.webp?260424",

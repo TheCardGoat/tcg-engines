@@ -17,7 +17,7 @@ export const yzmaAlchemistI18n: Record<Languages, I18nProperties> = {
     version: "Alchemist",
     text: [
       {
-        title: "YOU'RE EXCUSED",
+        title: "You're Excused",
         description:
           "Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
       },
@@ -28,7 +28,7 @@ export const yzmaAlchemistI18n: Record<Languages, I18nProperties> = {
     version: "Alchemist",
     text: [
       {
-        title: "YOU'RE EXCUSED",
+        title: "You're Excused",
         description:
           "Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
       },
@@ -39,7 +39,7 @@ export const yzmaAlchemistI18n: Record<Languages, I18nProperties> = {
     version: "Alchemist",
     text: [
       {
-        title: "YOU'RE EXCUSED",
+        title: "You're Excused",
         description:
           "Whenever this character quests, look at the top card of your deck. Put it on either the top or the bottom of your deck.",
       },

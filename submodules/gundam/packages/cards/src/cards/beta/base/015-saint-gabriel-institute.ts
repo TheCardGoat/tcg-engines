@@ -6,14 +6,17 @@ export const betaSaintGabrielInstitute015: BaseCard = {
   type: "base",
   traits: ["academy", "stronghold"],
   id: "ST02-015_p2",
-  externalId: "gundam:st02-015_p2",
-  slug: "saint-gabriel-institute-st02-015-p2",
+  canonicalId: "ST02-015",
+  externalIds: { bandai: "gundam:st02-015_p2" },
+  slug: "saint-gabriel-institute/st02-015",
   displayName: "Saint Gabriel Institute",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "ST02-015_p2",
   printings: [
     {
       id: "ST02-015",
+      artId: "ST02-015",
+      setCode: "ST02",
       collectorNumber: "ST02-015",
       cardNumber: "ST02-015",
       set: {
@@ -29,6 +32,8 @@ export const betaSaintGabrielInstitute015: BaseCard = {
     },
     {
       id: "ST02-015_p1",
+      artId: "ST02-015_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-015_p1",
       cardNumber: "ST02-015",
       set: {
@@ -44,6 +49,8 @@ export const betaSaintGabrielInstitute015: BaseCard = {
     },
     {
       id: "ST02-015_p2",
+      artId: "ST02-015_p2",
+      setCode: "BETA",
       collectorNumber: "ST02-015_p2",
       cardNumber: "ST02-015",
       set: {
@@ -58,6 +65,7 @@ export const betaSaintGabrielInstitute015: BaseCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST02-015", "ST02-015_p1", "ST02-015_p2"],
   selectedPrintingId: "ST02-015_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST02-015_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-015_p2.webp?260424",

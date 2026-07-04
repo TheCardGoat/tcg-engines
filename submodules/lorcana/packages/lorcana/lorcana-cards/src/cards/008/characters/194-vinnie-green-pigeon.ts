@@ -4,6 +4,17 @@ import { vinnieGreenPigeonI18n } from "./194-vinnie-green-pigeon.i18n";
 export const vinnieGreenPigeon: CharacterCard = {
   id: "f0C",
   canonicalId: "ci_f0C",
+  slug: "lorcana-ci_f0C",
+  printings: [
+    {
+      id: "set8-194",
+      artId: "set8-194",
+      setCode: "set8",
+      collectorNumber: "194",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-194"],
   cardType: "character",
   name: "Vinnie",
@@ -20,7 +31,7 @@ export const vinnieGreenPigeon: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_81959a7827c2427d9ec829539d2a7418",
-    tcgPlayer: 631479,
+    tcgPlayer: "631479",
   },
   text: [
     {

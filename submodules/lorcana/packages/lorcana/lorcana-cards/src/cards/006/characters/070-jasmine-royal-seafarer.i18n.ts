@@ -23,9 +23,15 @@ export const jasmineRoyalSeafarerI18n: Record<Languages, I18nProperties> = {
     version: "Königliche Seefahrerin",
     text: [
       {
-        title: "AUF BEFEHL DER PRINZESSIN",
-        description:
-          "Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus: • Erschöpfe einen beschädigten Charakter deiner Wahl. • Ein gegnerischer Charakter deiner Wahl erhält in seinem nächsten Zug Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+        title: "Auf Befehl der Prinzessin",
+        description: "Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus:",
+      },
+      {
+        title: "• Erschöpfe einen beschädigten Charakter deiner Wahl.",
+      },
+      {
+        title:
+          "• Ein gegnerischer Charakter deiner Wahl erhält in seinem nächsten Zug <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
       },
     ],
   },
@@ -34,15 +40,33 @@ export const jasmineRoyalSeafarerI18n: Record<Languages, I18nProperties> = {
     version: "Navigatrice royale",
     text: [
       {
-        title: "PAR ORDRE DE LA PRINCESSE",
-        description:
-          "Lorsque vous jouez ce personnage, choisissez entre: • Choisissez un personnage ayant au moins 1 dommage et épuisez-le. • Choisissez un personnage adverse qui gagne Combattant durant son prochain tour. (Ce personnage ne peut pas être envoyé à l'aventure et doit défier s'il le peut.)",
+        title: "Par ordre de la Princesse",
+        description: "Lorsque vous jouez ce personnage, choisissez entre:",
+      },
+      {
+        title: "• Choisissez un personnage ayant au moins 1 dommage et épuisez-le.",
+      },
+      {
+        title:
+          "• Choisissez un personnage adverse qui gagne <Combattant> durant son prochain tour. (Ce personnage ne peut pas être envoyé à l'aventure et doit défier s'il le peut.)",
       },
     ],
   },
   it: {
     name: "Jasmine",
     version: "Navigatrice Reale",
-    text: "È LA PRINCIPESSA CHE VE LO ORDINA Quando giochi questo personaggio, scegli uno: • Impegna un personaggio danneggiato a tua scelta. • Un personaggio avversario a tua scelta ottiene Attaccabrighe durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+    text: [
+      {
+        title: "È La Principessa che ve lo Ordina",
+        description: "Quando giochi questo personaggio, scegli uno:",
+      },
+      {
+        title: "• Impegna un personaggio danneggiato a tua scelta.",
+      },
+      {
+        title:
+          "• Un personaggio avversario a tua scelta ottiene <Attaccabrighe> durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+      },
+    ],
   },
 };

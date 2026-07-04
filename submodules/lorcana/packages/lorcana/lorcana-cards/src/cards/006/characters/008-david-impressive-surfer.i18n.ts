@@ -16,9 +16,9 @@ export const davidImpressiveSurferI18n: Record<Languages, I18nProperties> = {
     version: "Eindrucksvoller Surfer",
     text: [
       {
-        title: "PROTZEREI",
+        title: "Protzerei",
         description:
-          "Solange du mindestens einen Nani-Charakter im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens einen Nani-Charakter im Spiel hast, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const davidImpressiveSurferI18n: Record<Languages, I18nProperties> = {
     version: "Surfeur impressionnant",
     text: [
       {
-        title: "FRIMEUR",
-        description: "Tant que vous avez un personnage Nani en jeu, ce personnage gagne +2.",
+        title: "Frimeur",
+        description: "Tant que vous avez un personnage Nani en jeu, ce personnage gagne +2 {L}.",
       },
     ],
   },
@@ -37,9 +37,9 @@ export const davidImpressiveSurferI18n: Record<Languages, I18nProperties> = {
     version: "Surfista Impressionante",
     text: [
       {
-        title: "METTERSI IN MOSTRA",
+        title: "Mettersi in Mostra",
         description:
-          "Mentre hai in gioco un personaggio chiamato Nani, questo personaggio riceve +2.",
+          "Mentre hai in gioco un personaggio chiamato Nani, questo personaggio riceve +2 {L}.",
       },
     ],
   },

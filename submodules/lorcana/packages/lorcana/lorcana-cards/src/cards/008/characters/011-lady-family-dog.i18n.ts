@@ -17,7 +17,7 @@ export const ladyFamilyDogI18n: Record<Languages, I18nProperties> = {
     version: "Familien-Hundedame",
     text: [
       {
-        title: "JEMAND, FÜR DEN MAN SORGT",
+        title: "Jemand, für den man sorgt",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Charakter, der 2 oder weniger kostet, kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const ladyFamilyDogI18n: Record<Languages, I18nProperties> = {
     version: "Chienne de famille",
     text: [
       {
-        title: "QUELQU'UN DONT ON DOIT S'OCCUPER",
+        title: "Quelqu'un dont on doit s'occuper",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez jouer gratuitement un personnage coûtant 2 ou moins.",
       },
@@ -39,7 +39,7 @@ export const ladyFamilyDogI18n: Record<Languages, I18nProperties> = {
     version: "Cagnolina di Famiglia",
     text: [
       {
-        title: "QUALCUNO DA ACCUDIRE",
+        title: "Qualcuno da Accudire",
         description:
           "Quando giochi questo personaggio, puoi giocare un personaggio con costo 2 o inferiore gratis.",
       },

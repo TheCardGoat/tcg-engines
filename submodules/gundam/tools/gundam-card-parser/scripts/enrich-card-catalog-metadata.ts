@@ -10,13 +10,18 @@ const R2_BASE_URL = "https://r2.tcg.online/public/gundam/cards";
 
 const METADATA_FIELDS = new Set([
   "id",
+  // `externalId` (legacy single-string) is stripped during the RFC §10 migration
+  // to `externalIds`; kept here so regeneration removes any lingering field.
   "externalId",
+  "canonicalId",
+  "externalIds",
   "slug",
   "displayName",
   "rulesText",
   "set",
   "printNumber",
   "printings",
+  "reprints",
   "selectedPrintingId",
   "imageUrl",
   "sourceImageUrl",
@@ -51,25 +56,29 @@ interface CardSetMetadata {
 
 interface PrintingMetadata {
   id: string;
+  artId: string;
+  setCode: string;
   collectorNumber: string;
   cardNumber: string;
   set: CardSetMetadata;
-  rarity: string | null;
+  rarity: string;
   finish: "standard" | "parallel";
-  imageUrl?: string;
+  imageUrl: string;
   sourceImageUrl?: string;
   productName?: string;
 }
 
 interface CardMetadata {
   id: string;
-  externalId: string;
+  canonicalId: string;
+  externalIds: { bandai: string };
   slug: string;
   displayName: string;
   rulesText?: string | null;
   set: CardSetMetadata;
   printNumber: string;
   printings: PrintingMetadata[];
+  reprints: string[];
   selectedPrintingId: string;
   imageUrl?: string;
   sourceImageUrl?: string;
@@ -160,6 +169,19 @@ function canonicalCardNumber(cardNumber: string): string {
   return cardNumber.replace(/-p\d+$/i, "");
 }
 
+/**
+ * Derive the platform art id for a printing (RFC §7 Gundam art layer).
+ *
+ * Base art (no `_pN` suffix on the printing id) → `artId === cardNumber`.
+ * Parallel art (`_pN` suffix) → `artId === cardNumber + "_p" + N`. BETA
+ * duplicates that reuse the canonical illustration share the same `artId`
+ * because their printings list the same printing ids.
+ */
+function artIdForPrinting(printingId: string, cardNumber: string): string {
+  const match = printingId.match(/_p(\d+)$/i);
+  return match ? `${cardNumber}_p${match[1]}` : cardNumber;
+}
+
 function codeFromProduct(raw: RawGundamCard): string {
   const source = raw.getIt && raw.getIt !== "-" ? raw.getIt : (raw.set?.name ?? "");
   const bracketed = source.match(/\[([A-Z0-9-]+)\]/);
@@ -231,19 +253,26 @@ function preferredAssetPath(
   );
 }
 
-function rawPrinting(raw: RawGundamCard, assetPathsById: Map<string, string[]>): PrintingMetadata {
+function rawPrinting(
+  raw: RawGundamCard,
+  assetPathsById: Map<string, string[]>,
+  fallbackRarity: string,
+): PrintingMetadata {
   const id = normalizePrintingId(raw.id);
   const setCode = codeFromProduct(raw);
+  const set = setForCode(setCode, raw);
   const assetPath = preferredAssetPath(id, setCode, assetPathsById);
   const sourceImageUrl = raw.images.large ?? raw.images.small ?? undefined;
   return {
     id,
+    artId: artIdForPrinting(id, raw.code),
+    setCode: set.code,
     collectorNumber: id,
     cardNumber: raw.code,
-    set: setForCode(setCode, raw),
-    rarity: parseRawRarity(raw.rarity),
+    set,
+    rarity: parseRawRarity(raw.rarity) ?? fallbackRarity,
     finish: raw.rarity.includes("+") || /_p\d+$/i.test(id) ? "parallel" : "standard",
-    ...(assetPath ? { imageUrl: assetUrl(assetPath) } : {}),
+    imageUrl: assetPath ? assetUrl(assetPath) : (sourceImageUrl ?? ""),
     ...(sourceImageUrl
       ? { sourceImageUrl }
       : assetPath
@@ -263,12 +292,15 @@ function assetOnlyPrinting(
   if (!paths?.[0]) return undefined;
   const path = paths.find((candidate) => !candidate.startsWith("beta/")) ?? paths[0];
   const setCode = path.split("/")[0]?.toUpperCase() ?? canonicalNumber.split("-")[0] ?? "UNKNOWN";
+  const set = setForCode(setCode);
   const url = assetUrl(path);
   return {
     id: printingId,
+    artId: artIdForPrinting(printingId, canonicalNumber),
+    setCode: set.code,
     collectorNumber: printingId,
     cardNumber: canonicalNumber,
-    set: setForCode(setCode),
+    set,
     rarity: selectedRarity,
     finish: /_p\d+$/i.test(printingId) ? "parallel" : "standard",
     imageUrl: url,
@@ -286,7 +318,7 @@ function printingsForCard(
   const printingsById = new Map<string, PrintingMetadata>();
 
   for (const raw of rawByCode.get(canonicalNumber) ?? []) {
-    const printing = rawPrinting(raw, assetPathsById);
+    const printing = rawPrinting(raw, assetPathsById, parsed.rarity);
     printingsById.set(printing.id, printing);
   }
 
@@ -299,13 +331,17 @@ function printingsForCard(
 
   if (printingsById.size === 0) {
     const fallbackId = normalizePrintingId(parsed.cardNumber);
+    const fallbackSet = setForCode(parsed.setDir.toUpperCase());
     printingsById.set(fallbackId, {
       id: fallbackId,
+      artId: artIdForPrinting(fallbackId, canonicalNumber),
+      setCode: fallbackSet.code,
       collectorNumber: fallbackId,
       cardNumber: canonicalNumber,
-      set: setForCode(parsed.setDir.toUpperCase()),
+      set: fallbackSet,
       rarity: parsed.rarity,
       finish: /_p\d+$/i.test(fallbackId) ? "parallel" : "standard",
+      imageUrl: "",
     });
   }
 
@@ -334,17 +370,42 @@ function selectedPrintingId(parsed: ParsedCardFile, printings: PrintingMetadata[
   return printings[0]!.id;
 }
 
-function cardMetadata(parsed: ParsedCardFile, printings: PrintingMetadata[]): CardMetadata {
+function cardMetadata(
+  parsed: ParsedCardFile,
+  printings: PrintingMetadata[],
+  siblingPrintingIds: readonly string[],
+): CardMetadata {
   const id = selectedPrintingId(parsed, printings);
   const selected = printings.find((printing) => printing.id === id) ?? printings[0]!;
+  const canonicalId = canonicalCardNumber(parsed.cardNumber);
   return {
     id,
-    externalId: `gundam:${id.toLowerCase()}`,
+    canonicalId,
+    // NOTE: `externalIds.bandai` is set to `gundam:<lower(selectedPrintingId)>`
+    // (printing-qualified), NOT `gundam:<cardNumber>` (canonical) as RFC §10
+    // Gundam step 9 / §9.1 migration table suggest.
+    //
+    // Rationale: backward compatibility with the existing persisted
+    // `game_card_definitions` rows in platform, which are keyed by
+    // `(gameSlug, externalId)` where `externalId = "gundam:<id>"` and `<id>`
+    // is already the printing id (e.g. `st04-015_p2`). Switching the generator
+    // to canonical `<cardNumber>` would orphan those rows on the next
+    // platform sync because the upsert key would no longer match.
+    //
+    // Implication for P2: the platform migration that wraps the legacy
+    // `externalId` column into `externalIds.{bandai}` MUST preserve the
+    // printing-qualified form (`gundam:<printingId>`) — do NOT normalize to
+    // `gundam:<cardNumber>` there either, or row identity breaks. See the
+    // sibling emission in `src/normalizer.ts` for the same constraint.
+    externalIds: { bandai: `gundam:${id.toLowerCase()}` },
     slug: `${slugify(parsed.name)}-${id.toLowerCase().replace(/_/g, "-")}`,
     displayName: parsed.name,
     set: selected.set,
     printNumber: id,
     printings,
+    // Sibling printing ids sharing this card's canonical cardNumber (parallel
+    // arts, promos, BETA duplicates) — built from the cross-card map.
+    reprints: [...siblingPrintingIds],
     selectedPrintingId: id,
     ...(selected.imageUrl ? { imageUrl: selected.imageUrl } : {}),
     ...(selected.sourceImageUrl ? { sourceImageUrl: selected.sourceImageUrl } : {}),
@@ -381,7 +442,8 @@ function removeExistingMetadata(lines: string[]): string[] {
 function renderMetadata(metadata: CardMetadata): string[] {
   return [
     `  id: ${JSON.stringify(metadata.id)},`,
-    `  externalId: ${JSON.stringify(metadata.externalId)},`,
+    `  canonicalId: ${JSON.stringify(metadata.canonicalId)},`,
+    `  externalIds: ${JSON.stringify(metadata.externalIds)},`,
     `  slug: ${JSON.stringify(metadata.slug)},`,
     `  displayName: ${JSON.stringify(metadata.displayName)},`,
     ...(metadata.rulesText !== undefined
@@ -390,6 +452,7 @@ function renderMetadata(metadata: CardMetadata): string[] {
     `  set: ${JSON.stringify(metadata.set)},`,
     `  printNumber: ${JSON.stringify(metadata.printNumber)},`,
     `  printings: ${JSON.stringify(metadata.printings, null, 2)},`,
+    ...(metadata.reprints.length > 0 ? [`  reprints: ${JSON.stringify(metadata.reprints)},`] : []),
     `  selectedPrintingId: ${JSON.stringify(metadata.selectedPrintingId)},`,
     ...(metadata.imageUrl ? [`  imageUrl: ${JSON.stringify(metadata.imageUrl)},`] : []),
     ...(metadata.sourceImageUrl
@@ -425,7 +488,18 @@ const cardFiles = walkFiles(
     !file.endsWith("/source-titles.ts"),
 ).sort();
 
-let updated = 0;
+// ── Pass 1: parse every card file and compute its printings once. ─────────────
+// Building the cross-card `canonical cardNumber → printing ids` map here lets us
+// populate `reprints` (sibling printing ids sharing a cardNumber) in pass 2
+// without recomputing printings or re-reading files.
+interface ParsedEntry {
+  parsed: ParsedCardFile;
+  printings: PrintingMetadata[];
+  source: string;
+}
+
+const parsedEntries: ParsedEntry[] = [];
+const printingIdsByCanonical = new Map<string, Set<string>>();
 let skipped = 0;
 for (const filePath of cardFiles) {
   const source = readFileSync(filePath, "utf8");
@@ -435,7 +509,25 @@ for (const filePath of cardFiles) {
     continue;
   }
   const printings = printingsForCard(parsed, rawByCode, assetPathsById);
-  const metadata = cardMetadata(parsed, printings);
+  const canonicalId = canonicalCardNumber(parsed.cardNumber);
+  let siblingSet = printingIdsByCanonical.get(canonicalId);
+  if (!siblingSet) {
+    siblingSet = new Set<string>();
+    printingIdsByCanonical.set(canonicalId, siblingSet);
+  }
+  for (const printing of printings) siblingSet.add(printing.id);
+  parsedEntries.push({ parsed, printings, source });
+}
+
+// ── Pass 2: emit metadata (canonicalId, externalIds, artId, reprints) ─────────
+let updated = 0;
+for (const { parsed, printings, source } of parsedEntries) {
+  const filePath = parsed.filePath;
+  const canonicalId = canonicalCardNumber(parsed.cardNumber);
+  const siblingPrintingIds = [...(printingIdsByCanonical.get(canonicalId) ?? [])].sort((a, b) =>
+    a.localeCompare(b, "en", { numeric: true, sensitivity: "base" }),
+  );
+  const metadata = cardMetadata(parsed, printings, siblingPrintingIds);
   const nextSource = insertMetadata(source, metadata);
   if (nextSource !== source) {
     writeFileSync(filePath, nextSource);

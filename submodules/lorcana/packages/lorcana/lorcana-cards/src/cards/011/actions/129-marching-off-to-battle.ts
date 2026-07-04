@@ -4,6 +4,17 @@ import { marchingOffToBattleI18n } from "./129-marching-off-to-battle.i18n";
 export const marchingOffToBattle: ActionCard = {
   id: "P9W",
   canonicalId: "ci_P9W",
+  slug: "lorcana-ci_P9W",
+  printings: [
+    {
+      id: "set11-129",
+      artId: "set11-129",
+      setCode: "set11",
+      collectorNumber: "129",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-129"],
   cardType: "action",
   name: "Marching Off to Battle",
@@ -16,7 +27,7 @@ export const marchingOffToBattle: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ec2f9a5da94841b68ac5f69bfed3c1bd",
-    tcgPlayer: 675506,
+    tcgPlayer: "675506",
   },
   text: "If a character was banished this turn, draw 2 cards.",
   actionSubtype: "song",

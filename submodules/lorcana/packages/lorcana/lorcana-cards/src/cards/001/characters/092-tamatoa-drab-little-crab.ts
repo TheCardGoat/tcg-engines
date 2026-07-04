@@ -4,6 +4,17 @@ import { tamatoaDrabLittleCrabI18n } from "./092-tamatoa-drab-little-crab.i18n";
 export const tamatoaDrabLittleCrab: CharacterCard = {
   id: "q5S",
   canonicalId: "ci_q5S",
+  slug: "lorcana-ci_q5S",
+  printings: [
+    {
+      id: "set1-092",
+      artId: "set1-092",
+      setCode: "set1",
+      collectorNumber: "92",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-092"],
   cardType: "character",
   name: "Tamatoa",
@@ -21,7 +32,7 @@ export const tamatoaDrabLittleCrab: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_ce61d71725be41b7a5a766b690f56a1b",
-    tcgPlayer: 508774,
+    tcgPlayer: "508774",
   },
   classifications: ["Dreamborn"],
   i18n: tamatoaDrabLittleCrabI18n,

@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { ragingStormI18n } from "./028-raging-storm.i18n";
 
 export const ragingStorm: ActionCard = {
-  id: "R9J",
+  id: "02Z",
   canonicalId: "ci_QH5",
+  slug: "lorcana-ci_QH5",
+  printings: [
+    {
+      id: "set11-028",
+      artId: "set11-028",
+      setCode: "set11",
+      collectorNumber: "28",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-028"],
   cardType: "action",
   name: "Raging Storm",
@@ -16,7 +27,7 @@ export const ragingStorm: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b3c4b83755bd417bb09f35ffea57cb68",
-    tcgPlayer: 677159,
+    tcgPlayer: "677159",
   },
   text: "Banish all characters.",
   abilities: [

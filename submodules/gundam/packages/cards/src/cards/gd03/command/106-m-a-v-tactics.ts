@@ -7,14 +7,17 @@ export const gd03MAVTactics106: CommandCard = {
   color: "green",
   traits: [],
   id: "GD03-106",
-  externalId: "gundam:gd03-106",
-  slug: "m-a-v-tactics-gd03-106",
+  canonicalId: "GD03-106",
+  externalIds: { bandai: "gundam:gd03-106" },
+  slug: "m-a-v-tactics/gd03-106",
   displayName: "M.A.V. Tactics",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-106",
   printings: [
     {
       id: "GD03-106",
+      artId: "GD03-106",
+      setCode: "GD03",
       collectorNumber: "GD03-106",
       cardNumber: "GD03-106",
       set: {
@@ -30,6 +33,8 @@ export const gd03MAVTactics106: CommandCard = {
     },
     {
       id: "GD03-106_p1",
+      artId: "GD03-106_p1",
+      setCode: "PC02A",
       collectorNumber: "GD03-106_p1",
       cardNumber: "GD03-106",
       set: {
@@ -45,6 +50,7 @@ export const gd03MAVTactics106: CommandCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam GQuuuuuuX-[PC02A]",
     },
   ],
+  reprints: ["GD03-106", "GD03-106_p1"],
   selectedPrintingId: "GD03-106",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-106.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-106.webp?260424",

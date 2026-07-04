@@ -4,6 +4,17 @@ import { scroogesTopHatI18n } from "./166-scrooges-top-hat.i18n";
 export const scroogesTopHat: ItemCard = {
   id: "7iN",
   canonicalId: "ci_7iN",
+  slug: "lorcana-ci_7iN",
+  printings: [
+    {
+      id: "set3-166",
+      artId: "set3-166",
+      setCode: "set3",
+      collectorNumber: "166",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-166"],
   cardType: "item",
   name: "Scrooge's Top Hat",
@@ -16,7 +27,7 @@ export const scroogesTopHat: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9897b7dc2c8142b5b2afc74e87fa14ae",
-    tcgPlayer: 537623,
+    tcgPlayer: "537623",
   },
   text: [
     {

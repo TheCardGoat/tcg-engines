@@ -4,6 +4,17 @@ import { leadTheWayI18n } from "./129-lead-the-way.i18n";
 export const leadTheWay: ActionCard = {
   id: "4h8",
   canonicalId: "ci_4h8",
+  slug: "lorcana-ci_4h8",
+  printings: [
+    {
+      id: "set6-129",
+      artId: "set6-129",
+      setCode: "set6",
+      collectorNumber: "129",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-129"],
   cardType: "action",
   name: "Lead the Way",
@@ -16,7 +27,7 @@ export const leadTheWay: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_025d33fc4b0c45caabfa10a108e46acd",
-    tcgPlayer: 593020,
+    tcgPlayer: "593020",
   },
   text: "Your characters get +2 {S} this turn.",
   abilities: [

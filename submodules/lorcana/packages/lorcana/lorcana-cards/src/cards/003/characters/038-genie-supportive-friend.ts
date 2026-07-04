@@ -4,6 +4,17 @@ import { genieSupportiveFriendI18n } from "./038-genie-supportive-friend.i18n";
 export const genieSupportiveFriend: CharacterCard = {
   id: "0Ac",
   canonicalId: "ci_pLA",
+  slug: "lorcana-ci_pLA",
+  printings: [
+    {
+      id: "set3-038",
+      artId: "set3-038",
+      setCode: "set3",
+      collectorNumber: "38",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-038", "set9-054"],
   cardType: "character",
   name: "Genie",
@@ -20,7 +31,7 @@ export const genieSupportiveFriend: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_777ef1df73214a63a89bce29396afefa",
-    tcgPlayer: 649998,
+    tcgPlayer: "649998",
   },
   text: [
     {

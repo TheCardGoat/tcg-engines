@@ -6,7 +6,7 @@ export const docTakingNotesI18n: Record<Languages, I18nProperties> = {
     version: "Taking Notes",
     text: [
       {
-        title: "Share Knowledge",
+        title: "SHARE KNOWLEDGE",
         description:
           "When you play this character, if you have another Seven Dwarfs character or a Princess character in play, draw a card.",
       },

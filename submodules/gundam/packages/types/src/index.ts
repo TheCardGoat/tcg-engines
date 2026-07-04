@@ -1,5 +1,6 @@
 export type {
   BaseCard,
+  CardBase,
   Card,
   CardCatalogMetadata,
   CardColor,

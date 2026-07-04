@@ -20,12 +20,12 @@ export const olafHappyPassengerI18n: Record<Languages, I18nProperties> = {
     version: "Fröhlicher Passagier",
     text: [
       {
-        title: "DEN WEG FREI RÄUMEN",
+        title: "Den Weg frei räumen",
         description:
-          "Für jeden gegnerischen erschöpften Charakter im Spiel, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jeden gegnerischen erschöpften Charakter im Spiel, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
     ],
   },
@@ -34,11 +34,11 @@ export const olafHappyPassengerI18n: Record<Languages, I18nProperties> = {
     version: "Passager heureux",
     text: [
       {
-        title: "DÉGAGER LE CHEMIN",
-        description: "Jouer ce personnage vous coûte 1 de moins par personnage adverse épuisé.",
+        title: "Dégager le chemin",
+        description: "Jouer ce personnage vous coûte 1 {I} de moins par personnage adverse épuisé.",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
     ],
   },
@@ -47,12 +47,12 @@ export const olafHappyPassengerI18n: Record<Languages, I18nProperties> = {
     version: "Passeggero Felice",
     text: [
       {
-        title: "SPIANARE LA STRADA",
+        title: "Spianare la Strada",
         description:
-          "Per ogni personaggio impegnato che gli avversari hanno in gioco, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni personaggio impegnato che gli avversari hanno in gioco, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
     ],
   },

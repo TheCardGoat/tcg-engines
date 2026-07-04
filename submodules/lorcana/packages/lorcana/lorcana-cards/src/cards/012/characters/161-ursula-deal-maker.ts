@@ -4,6 +4,17 @@ import { ursulaDealMakerI18n } from "./161-ursula-deal-maker.i18n";
 export const ursulaDealMaker: CharacterCard = {
   id: "5iv",
   canonicalId: "ci_5iv",
+  slug: "lorcana-ci_5iv",
+  printings: [
+    {
+      id: "set12-161",
+      artId: "set12-161",
+      setCode: "set12",
+      collectorNumber: "161",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-161"],
   cardType: "character",
   name: "Ursula",
@@ -20,6 +31,7 @@ export const ursulaDealMaker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1a2311c3639d464d9eb638a08d535276",
+    tcgPlayer: "692188",
   },
   text: [
     {

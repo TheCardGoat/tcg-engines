@@ -4,6 +4,17 @@ import { scarMastermindI18n } from "./158-scar-mastermind.i18n";
 export const scarMastermind: CharacterCard = {
   id: "yBp",
   canonicalId: "ci_yBp",
+  slug: "lorcana-ci_yBp",
+  printings: [
+    {
+      id: "set1-158",
+      artId: "set1-158",
+      setCode: "set1",
+      collectorNumber: "158",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-158"],
   cardType: "character",
   name: "Scar",
@@ -20,7 +31,7 @@ export const scarMastermind: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_39139dbf0feb48b1924d20cc03c58d47",
-    tcgPlayer: 485360,
+    tcgPlayer: "485360",
   },
   text: [
     {

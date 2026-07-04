@@ -17,9 +17,9 @@ export const kakamoraBandOfPiratesI18n: Record<Languages, I18nProperties> = {
     version: "Piratenbande",
     text: [
       {
-        title: "ANGEBEREI",
+        title: "Angeberei",
         description:
-          "Solange du mindestens einen weiteren Piraten im Spiel hast, erhält dieser Charakter Herausfordern +3. (Während der Charakter herausfordert, erhält er +3.)",
+          "Solange du mindestens einen weiteren Piraten im Spiel hast, erhält dieser Charakter <Herausfordern> +3. (Während der Charakter herausfordert, erhält er +3 {S}.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const kakamoraBandOfPiratesI18n: Record<Languages, I18nProperties> = {
     version: "Bande de pirates",
     text: [
       {
-        title: "FANFARONNADE",
+        title: "Fanfaronnade",
         description:
-          "Tant que vous avez un autre personnage Pirate en jeu, ce personnage-ci gagne Offensif +3.",
+          "Tant que vous avez un autre personnage Pirate en jeu, ce personnage-ci gagne <Offensif> +3.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const kakamoraBandOfPiratesI18n: Record<Languages, I18nProperties> = {
     version: "Banda di Pirati",
     text: [
       {
-        title: "METTERSI IN MOSTRA",
+        title: "Mettersi in Mostra",
         description:
-          "Mentre hai in gioco un altro personaggio Pirata, questo personaggio ottiene Sfidante +3.",
+          "Mentre hai in gioco un altro personaggio Pirata, questo personaggio ottiene <Sfidante> +3.",
       },
     ],
   },

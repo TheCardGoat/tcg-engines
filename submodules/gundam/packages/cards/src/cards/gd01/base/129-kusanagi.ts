@@ -6,14 +6,17 @@ export const gd01Kusanagi129: BaseCard = {
   type: "base",
   traits: ["triple ship alliance", "warship"],
   id: "GD01-129",
-  externalId: "gundam:gd01-129",
-  slug: "kusanagi-gd01-129",
+  canonicalId: "GD01-129",
+  externalIds: { bandai: "gundam:gd01-129" },
+  slug: "kusanagi/gd01-129",
   displayName: "Kusanagi",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-129",
   printings: [
     {
       id: "GD01-129",
+      artId: "GD01-129",
+      setCode: "GD01",
       collectorNumber: "GD01-129",
       cardNumber: "GD01-129",
       set: {
@@ -28,6 +31,7 @@ export const gd01Kusanagi129: BaseCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-129"],
   selectedPrintingId: "GD01-129",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-129.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-129.webp?260424",

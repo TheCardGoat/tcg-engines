@@ -1,13 +1,14 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerZetatechFaceplate = {
+export const spoilerZetatechFaceplate = defineCyberpunkCard({
   id: "eead1bba-f247-423e-a4f5-b330945887b0",
-  externalId: "cyberpunk:zetatech-faceplate",
   slug: "zetatech-faceplate",
-  name: "Zetatech Faceplate",
-  displayName: "Zetatech Faceplate",
   rulesText:
     "(Equip to a friendly Unit or face-up Legend.) When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
+  name: "Zetatech Faceplate",
+  displayName: "Zetatech Faceplate",
+  canonicalId: "zetatech-faceplate",
   color: "yellow",
   classifications: ["Cyberware", "Zetatech"],
   set: {
@@ -15,23 +16,12 @@ export const spoilerZetatechFaceplate = {
     name: "Spoiler Set",
   },
   printNumber: "064",
-  printings: [
-    {
-      id: "2bc6dcf3-1690-453e-9ee4-705d08f3fcf6",
-      collectorNumber: "064",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "2bc6dcf3-1690-453e-9ee4-705d08f3fcf6",
   artist: "ADIA",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/064.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "gear",
   cost: 2,
   power: 2,
@@ -92,7 +82,6 @@ export const spoilerZetatechFaceplate = {
       ],
     },
   ],
-  reminderText: [],
   attachment: {
     text: "Equip to a unit or face-up legend.",
     target: {
@@ -103,4 +92,4 @@ export const spoilerZetatechFaceplate = {
       face: "faceUp",
     },
   },
-} satisfies SpoilerCardDefinition;
+}) satisfies GearCardDefinition;

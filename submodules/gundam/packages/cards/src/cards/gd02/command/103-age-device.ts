@@ -7,14 +7,17 @@ export const gd02AgeDevice103: CommandCard = {
   color: "green",
   traits: ["-"],
   id: "GD02-103",
-  externalId: "gundam:gd02-103",
-  slug: "age-device-gd02-103",
+  canonicalId: "GD02-103",
+  externalIds: { bandai: "gundam:gd02-103" },
+  slug: "age-device/gd02-103",
   displayName: "AGE Device",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-103",
   printings: [
     {
       id: "GD02-103",
+      artId: "GD02-103",
+      setCode: "GD02",
       collectorNumber: "GD02-103",
       cardNumber: "GD02-103",
       set: {
@@ -30,6 +33,8 @@ export const gd02AgeDevice103: CommandCard = {
     },
     {
       id: "GD02-103_p1",
+      artId: "GD02-103_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-103_p1",
       cardNumber: "GD02-103",
       set: {
@@ -44,6 +49,7 @@ export const gd02AgeDevice103: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-103", "GD02-103_p1"],
   selectedPrintingId: "GD02-103",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-103.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-103.webp?260424",

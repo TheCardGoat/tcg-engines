@@ -4,6 +4,17 @@ import { morganaMacawberReformedSpellcasterI18n } from "./047-morgana-macawber-r
 export const morganaMacawberReformedSpellcaster: CharacterCard = {
   id: "5kx",
   canonicalId: "ci_5kx",
+  slug: "lorcana-ci_5kx",
+  printings: [
+    {
+      id: "set11-047",
+      artId: "set11-047",
+      setCode: "set11",
+      collectorNumber: "47",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-047"],
   cardType: "character",
   name: "Morgana Macawber",
@@ -20,7 +31,7 @@ export const morganaMacawberReformedSpellcaster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1d1f7c6cafbd497292467de4c883cf0c",
-    tcgPlayer: 676193,
+    tcgPlayer: "676193",
   },
   text: [
     {

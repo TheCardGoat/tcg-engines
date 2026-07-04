@@ -19,10 +19,11 @@ export const calhounHardnosedLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Knallharte Anführerin",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "BEUTEABWURF",
+        title: "Beuteabwurf",
         description: "Wenn dieser Charakter verbannt wird, sammelst du 1 Legende.",
       },
     ],
@@ -32,10 +33,11 @@ export const calhounHardnosedLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Meneuse intraitable",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "APPARITION DE BUTIN",
+        title: "Apparition de butin",
         description: "Lorsque ce personnage est banni, gagnez 1 éclat de Lore.",
       },
     ],
@@ -45,10 +47,10 @@ export const calhounHardnosedLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Leader Inflessibile",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "BOTTINO DI GIOCO",
+        title: "Bottino di Gioco",
         description: "Quando questo personaggio viene esiliato, ottieni 1 leggenda.",
       },
     ],

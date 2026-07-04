@@ -2,8 +2,19 @@ import type { ItemCard } from "@tcg/lorcana-types";
 import { devilsEyeDiamondI18n } from "./152-devils-eye-diamond.i18n";
 
 export const devilsEyeDiamond: ItemCard = {
-  id: "47U",
+  id: "a6n",
   canonicalId: "ci_o00",
+  slug: "lorcana-ci_o00",
+  printings: [
+    {
+      id: "set7-152",
+      artId: "set7-152",
+      setCode: "set7",
+      collectorNumber: "152",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-152"],
   cardType: "item",
   name: "Devil's Eye Diamond",
@@ -16,12 +27,12 @@ export const devilsEyeDiamond: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6a4c5fe1b3b74110acd16d725f8cc3f6",
-    tcgPlayer: 619746,
+    tcgPlayer: "619746",
   },
   text: [
     {
       title: "THE PRICE OF POWER",
-      description: "{E} — If one of your characters took damage this turn, gain 1 lore.",
+      description: "{E} — If one of your characters was damaged this turn, gain 1 lore.",
     },
   ],
   abilities: [

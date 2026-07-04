@@ -7,14 +7,17 @@ export const st04KiraYamato010: PilotCard = {
   color: "white",
   traits: ["earth alliance", "coordinator"],
   id: "ST04-010",
-  externalId: "gundam:st04-010",
-  slug: "kira-yamato-st04-010",
+  canonicalId: "ST04-010",
+  externalIds: { bandai: "gundam:st04-010" },
+  slug: "kira-yamato/st04-010",
   displayName: "Kira Yamato",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-010",
   printings: [
     {
       id: "ST04-010",
+      artId: "ST04-010",
+      setCode: "ST04",
       collectorNumber: "ST04-010",
       cardNumber: "ST04-010",
       set: {
@@ -30,6 +33,8 @@ export const st04KiraYamato010: PilotCard = {
     },
     {
       id: "ST04-010_p1",
+      artId: "ST04-010_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-010_p1",
       cardNumber: "ST04-010",
       set: {
@@ -45,6 +50,8 @@ export const st04KiraYamato010: PilotCard = {
     },
     {
       id: "ST04-010_p2",
+      artId: "ST04-010_p2",
+      setCode: "BETA",
       collectorNumber: "ST04-010_p2",
       cardNumber: "ST04-010",
       set: {
@@ -60,6 +67,8 @@ export const st04KiraYamato010: PilotCard = {
     },
     {
       id: "ST04-010_p3",
+      artId: "ST04-010_p3",
+      setCode: "ST04",
       collectorNumber: "ST04-010_p3",
       cardNumber: "ST04-010",
       set: {
@@ -75,6 +84,8 @@ export const st04KiraYamato010: PilotCard = {
     },
     {
       id: "ST04-010_p4",
+      artId: "ST04-010_p4",
+      setCode: "ST04",
       collectorNumber: "ST04-010_p4",
       cardNumber: "ST04-010",
       set: {
@@ -90,6 +101,8 @@ export const st04KiraYamato010: PilotCard = {
     },
     {
       id: "ST04-010_p5",
+      artId: "ST04-010_p5",
+      setCode: "ST09",
       collectorNumber: "ST04-010_p5",
       cardNumber: "ST04-010",
       set: {
@@ -104,6 +117,7 @@ export const st04KiraYamato010: PilotCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST04-010", "ST04-010_p1", "ST04-010_p2", "ST04-010_p3", "ST04-010_p4", "ST04-010_p5"],
   selectedPrintingId: "ST04-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-010.webp?260424",

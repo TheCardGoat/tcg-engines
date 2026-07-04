@@ -7,14 +7,17 @@ export const gd02GundamAshtaron040: UnitCard = {
   color: "red",
   traits: ["new une"],
   id: "GD02-040",
-  externalId: "gundam:gd02-040",
-  slug: "gundam-ashtaron-gd02-040",
+  canonicalId: "GD02-040",
+  externalIds: { bandai: "gundam:gd02-040" },
+  slug: "gundam-ashtaron/gd02-040",
   displayName: "Gundam Ashtaron",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-040",
   printings: [
     {
       id: "GD02-040",
+      artId: "GD02-040",
+      setCode: "GD02",
       collectorNumber: "GD02-040",
       cardNumber: "GD02-040",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamAshtaron040: UnitCard = {
     },
     {
       id: "GD02-040_p1",
+      artId: "GD02-040_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-040_p1",
       cardNumber: "GD02-040",
       set: {
@@ -44,6 +49,7 @@ export const gd02GundamAshtaron040: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-040", "GD02-040_p1"],
   selectedPrintingId: "GD02-040",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-040.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-040.webp?260424",

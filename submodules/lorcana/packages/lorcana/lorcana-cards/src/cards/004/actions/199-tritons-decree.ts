@@ -4,6 +4,17 @@ import { tritonsDecreeI18n } from "./199-tritons-decree.i18n";
 export const tritonsDecree: ActionCard = {
   id: "DrR",
   canonicalId: "ci_DrR",
+  slug: "lorcana-ci_DrR",
+  printings: [
+    {
+      id: "set4-199",
+      artId: "set4-199",
+      setCode: "set4",
+      collectorNumber: "199",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-199"],
   cardType: "action",
   name: "Triton's Decree",
@@ -16,7 +27,7 @@ export const tritonsDecree: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b54632a900e042c39771ae748820bf43",
-    tcgPlayer: 550625,
+    tcgPlayer: "550625",
   },
   text: "Each opponent chooses one of their characters and deals 2 damage to them.",
   abilities: [

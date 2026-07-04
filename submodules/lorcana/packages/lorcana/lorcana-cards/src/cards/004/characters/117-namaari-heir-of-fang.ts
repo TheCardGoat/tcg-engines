@@ -4,6 +4,17 @@ import { namaariHeirOfFangI18n } from "./117-namaari-heir-of-fang.i18n";
 export const namaariHeirOfFang: CharacterCard = {
   id: "BYL",
   canonicalId: "ci_BYL",
+  slug: "lorcana-ci_BYL",
+  printings: [
+    {
+      id: "set4-117",
+      artId: "set4-117",
+      setCode: "set4",
+      collectorNumber: "117",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-117"],
   cardType: "character",
   name: "Namaari",
@@ -20,7 +31,7 @@ export const namaariHeirOfFang: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5c2aaf063d1f46c89b17dae93940f47c",
-    tcgPlayer: 549460,
+    tcgPlayer: "549460",
   },
   text: [
     {

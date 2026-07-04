@@ -4,6 +4,17 @@ import { helgaSinclairVengefulPartnerI18n } from "./075-helga-sinclair-vengeful-
 export const helgaSinclairVengefulPartner: CharacterCard = {
   id: "1i7",
   canonicalId: "ci_1i7",
+  slug: "lorcana-ci_1i7",
+  printings: [
+    {
+      id: "set3-075",
+      artId: "set3-075",
+      setCode: "set3",
+      collectorNumber: "75",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-075"],
   cardType: "character",
   name: "Helga Sinclair",
@@ -20,7 +31,7 @@ export const helgaSinclairVengefulPartner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_43db4d680b1c4ea7a375334266b28294",
-    tcgPlayer: 537761,
+    tcgPlayer: "537761",
   },
   text: [
     {

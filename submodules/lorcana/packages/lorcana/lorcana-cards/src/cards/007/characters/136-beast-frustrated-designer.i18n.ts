@@ -16,9 +16,9 @@ export const beastFrustratedDesignerI18n: Record<Languages, I18nProperties> = {
     version: "Frustrierter Designer",
     text: [
       {
-        title: "ICH HAB' GENUG!, 2,",
+        title: "Ich hab' genug!",
         description:
-          "Verbanne 2 deiner Gegenstände — Füge einem Charakter deiner Wahl 5 Schaden zu.",
+          "{E}, 2 {I}, Verbanne 2 deiner Gegenstände — Füge einem Charakter deiner Wahl 5 Schaden zu.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const beastFrustratedDesignerI18n: Record<Languages, I18nProperties> = {
     version: "Concepteur frustré",
     text: [
       {
-        title: "J'EN AI ASSEZ!, 2,",
+        title: "J'en ai assez!",
         description:
-          "Bannissez 2 de vos objets — Choisissez un personnage et infligez-lui 5 dommages.",
+          "{E}, 2 {I}, Bannissez 2 de vos objets — Choisissez un personnage et infligez-lui 5 dommages.",
       },
     ],
   },
@@ -38,8 +38,9 @@ export const beastFrustratedDesignerI18n: Record<Languages, I18nProperties> = {
     version: "Inventore Frustrato",
     text: [
       {
-        title: "NE HO ABBASTANZA!, 2,",
-        description: "esilia 2 tuoi oggetti — Infliggi 5 danni a un personaggio a tua scelta.",
+        title: "Ne Ho Abbastanza!",
+        description:
+          "{E}, 2 {I}, esilia 2 tuoi oggetti — Infliggi 5 danni a un personaggio a tua scelta.",
       },
     ],
   },

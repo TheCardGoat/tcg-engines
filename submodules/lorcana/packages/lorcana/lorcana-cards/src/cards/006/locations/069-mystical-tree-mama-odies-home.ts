@@ -4,6 +4,17 @@ import { mysticalTreeMamaOdiesHomeI18n } from "./069-mystical-tree-mama-odies-ho
 export const mysticalTreeMamaOdiesHome: LocationCard = {
   id: "6Fu",
   canonicalId: "ci_6Fu",
+  slug: "lorcana-ci_6Fu",
+  printings: [
+    {
+      id: "set6-069",
+      artId: "set6-069",
+      setCode: "set6",
+      collectorNumber: "69",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-069"],
   cardType: "location",
   name: "Mystical Tree",
@@ -20,7 +31,7 @@ export const mysticalTreeMamaOdiesHome: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9119b44cfe67444288a32f23009541e8",
-    tcgPlayer: 586978,
+    tcgPlayer: "586978",
   },
   text: [
     {

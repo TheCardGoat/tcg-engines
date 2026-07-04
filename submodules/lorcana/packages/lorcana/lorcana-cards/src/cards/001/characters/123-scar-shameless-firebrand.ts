@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { scarShamelessFirebrandI18n } from "./123-scar-shameless-firebrand.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const scarShamelessFirebrand: CharacterCard = {
   id: "pVG",
   canonicalId: "ci_pVG",
+  slug: "lorcana-ci_pVG",
+  printings: [
+    {
+      id: "set1-123",
+      artId: "set1-123",
+      setCode: "set1",
+      collectorNumber: "123",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-123"],
   cardType: "character",
   name: "Scar",
@@ -21,7 +33,7 @@ export const scarShamelessFirebrand: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5ad957ef62844bcaba344b0af0a5ff24",
-    tcgPlayer: 507467,
+    tcgPlayer: "507467",
   },
   text: [
     {

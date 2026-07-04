@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { simbaSonOfMufasaI18n } from "./192-simba-son-of-mufasa.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const simbaSonOfMufasa: CharacterCard = {
   id: "746",
   canonicalId: "ci_746",
+  slug: "lorcana-ci_746",
+  printings: [
+    {
+      id: "set5-192",
+      artId: "set5-192",
+      setCode: "set5",
+      collectorNumber: "192",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-192"],
   cardType: "character",
   name: "Simba",
@@ -21,7 +33,7 @@ export const simbaSonOfMufasa: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6b0937a994d6436ca4ffaf3e6304534b",
-    tcgPlayer: 561974,
+    tcgPlayer: "561974",
   },
   text: [
     {

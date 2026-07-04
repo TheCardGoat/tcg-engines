@@ -4,6 +4,17 @@ import { calhounBattletestedI18n } from "./036-calhoun-battle-tested.i18n";
 export const calhounBattletested: CharacterCard = {
   id: "ilK",
   canonicalId: "ci_ilK",
+  slug: "lorcana-ci_ilK",
+  printings: [
+    {
+      id: "set7-036",
+      artId: "set7-036",
+      setCode: "set7",
+      collectorNumber: "36",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-036"],
   cardType: "character",
   name: "Calhoun",
@@ -20,7 +31,7 @@ export const calhounBattletested: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_64a76c911cf94a1c88039f36efdec741",
-    tcgPlayer: 619427,
+    tcgPlayer: "619427",
   },
   text: [
     {

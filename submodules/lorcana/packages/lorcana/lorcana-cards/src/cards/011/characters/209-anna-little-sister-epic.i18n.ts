@@ -17,7 +17,7 @@ export const annaLittleSisterEpicI18n: Record<Languages, I18nProperties> = {
     version: "Kleine Schwester",
     text: [
       {
-        title: "UNERWARTETE ENTDECKUNG",
+        title: "Unerwartete Entdeckung",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Karte aus einem Ablagestapel deiner Wahl unter das zugehörige Deck legen.",
       },
@@ -28,7 +28,7 @@ export const annaLittleSisterEpicI18n: Record<Languages, I18nProperties> = {
     version: "Petite sœur",
     text: [
       {
-        title: "DÉCOUVERTE INATTENDUE",
+        title: "Découverte inattendue",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un joueur et placer une carte de sa défausse sous sa pioche.",
       },
@@ -39,7 +39,7 @@ export const annaLittleSisterEpicI18n: Record<Languages, I18nProperties> = {
     version: "Sorellina",
     text: [
       {
-        title: "SCOPERTA INATTESA",
+        title: "Scoperta Inattesa",
         description:
           "Quando giochi questo personaggio, puoi mettere una carta dagli scarti di un giocatore a tua scelta in fondo al suo mazzo.",
       },

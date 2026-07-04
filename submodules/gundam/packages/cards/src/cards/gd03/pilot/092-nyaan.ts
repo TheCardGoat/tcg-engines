@@ -7,14 +7,17 @@ export const gd03Nyaan092: PilotCard = {
   color: "red",
   traits: ["zeon", "newtype"],
   id: "GD03-092",
-  externalId: "gundam:gd03-092",
-  slug: "nyaan-gd03-092",
+  canonicalId: "GD03-092",
+  externalIds: { bandai: "gundam:gd03-092" },
+  slug: "nyaan/gd03-092",
   displayName: "Nyaan",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-092",
   printings: [
     {
       id: "GD03-092",
+      artId: "GD03-092",
+      setCode: "GD03",
       collectorNumber: "GD03-092",
       cardNumber: "GD03-092",
       set: {
@@ -30,6 +33,8 @@ export const gd03Nyaan092: PilotCard = {
     },
     {
       id: "GD03-092_p1",
+      artId: "GD03-092_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-092_p1",
       cardNumber: "GD03-092",
       set: {
@@ -45,6 +50,8 @@ export const gd03Nyaan092: PilotCard = {
     },
     {
       id: "GD03-092_p2",
+      artId: "GD03-092_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-092_p2",
       cardNumber: "GD03-092",
       set: {
@@ -59,6 +66,7 @@ export const gd03Nyaan092: PilotCard = {
       productName: "Store Tournament Winner Pack 03",
     },
   ],
+  reprints: ["GD03-092", "GD03-092_p1", "GD03-092_p2"],
   selectedPrintingId: "GD03-092",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-092.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-092.webp?260424",

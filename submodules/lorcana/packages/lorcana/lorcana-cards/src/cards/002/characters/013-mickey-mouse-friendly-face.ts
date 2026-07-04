@@ -4,7 +4,18 @@ import { mickeyMouseFriendlyFaceI18n } from "./013-mickey-mouse-friendly-face.i1
 export const mickeyMouseFriendlyFace: CharacterCard = {
   id: "igT",
   canonicalId: "ci_igT",
-  reprints: ["set2-013"],
+  slug: "lorcana-ci_igT",
+  printings: [
+    {
+      id: "set2-013",
+      artId: "set2-013",
+      setCode: "set2",
+      collectorNumber: "13",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set2-013", "set2-p1-018"],
   cardType: "character",
   name: "Mickey Mouse",
   version: "Friendly Face",
@@ -19,7 +30,7 @@ export const mickeyMouseFriendlyFace: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e32380ac2e3f4e69b385cad4b3c3df11",
-    tcgPlayer: 516384,
+    tcgPlayer: "516384",
   },
   text: [
     {

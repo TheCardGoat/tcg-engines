@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { falinePlayfulFawnI18n } from "./145-faline-playful-fawn.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const falinePlayfulFawn: CharacterCard = {
   id: "OjR",
   canonicalId: "ci_OjR",
+  slug: "lorcana-ci_OjR",
+  printings: [
+    {
+      id: "set8-145",
+      artId: "set8-145",
+      setCode: "set8",
+      collectorNumber: "145",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-145"],
   cardType: "character",
   name: "Faline",
@@ -21,7 +33,7 @@ export const falinePlayfulFawn: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_586a47f740a3450b930cd1cbc7f3e640",
-    tcgPlayer: 631445,
+    tcgPlayer: "631445",
   },
   text: [
     {

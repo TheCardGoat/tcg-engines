@@ -16,9 +16,9 @@ export const cogsworthClimbingClockI18n: Record<Languages, I18nProperties> = {
     version: "Kletternde Uhr",
     text: [
       {
-        title: "NOCH IMMER NÜTZLICH",
+        title: "Noch immer nützlich",
         description:
-          "Solange du mindestens eine Gegenstandskarte in deinem Ablagestapel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens eine Gegenstandskarte in deinem Ablagestapel hast, erhält dieser Charakter +2 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const cogsworthClimbingClockI18n: Record<Languages, I18nProperties> = {
     version: "Horloge grimpeuse",
     text: [
       {
-        title: "ENCORE UTILE",
+        title: "Encore utile",
         description:
-          "Tant que vous avez une carte Objet dans votre défausse, ce personnage gagne +2.",
+          "Tant que vous avez une carte Objet dans votre défausse, ce personnage gagne +2 {S}.",
       },
     ],
   },
@@ -38,8 +38,9 @@ export const cogsworthClimbingClockI18n: Record<Languages, I18nProperties> = {
     version: "Orologio Scalatore",
     text: [
       {
-        title: "ANCORA UTILE",
-        description: "Mentre hai una carta oggetto nei tuoi scarti, questo personaggio riceve +2.",
+        title: "Ancora Utile",
+        description:
+          "Mentre hai una carta oggetto nei tuoi scarti, questo personaggio riceve +2 {S}.",
       },
     ],
   },

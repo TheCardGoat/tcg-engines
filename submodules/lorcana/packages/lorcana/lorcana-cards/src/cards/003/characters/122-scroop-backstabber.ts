@@ -4,6 +4,17 @@ import { scroopBackstabberI18n } from "./122-scroop-backstabber.i18n";
 export const scroopBackstabber: CharacterCard = {
   id: "2ti",
   canonicalId: "ci_2ti",
+  slug: "lorcana-ci_2ti",
+  printings: [
+    {
+      id: "set3-122",
+      artId: "set3-122",
+      setCode: "set3",
+      collectorNumber: "122",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-122"],
   cardType: "character",
   name: "Scroop",
@@ -20,7 +31,7 @@ export const scroopBackstabber: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d785c3ffe80440a5a9ef39641add4d23",
-    tcgPlayer: 537610,
+    tcgPlayer: "537610",
   },
   text: [
     {

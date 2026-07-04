@@ -311,6 +311,8 @@ export type ReplacementTargetReference =
   | "source"
   | "selected-target"
   | "trigger-subject"
+  | "attacker"
+  | "defender"
   | "chosen-card";
 
 export type ReplacementAbilityKind =
@@ -346,6 +348,8 @@ export type ReplacementRegistrationKind =
       toZone: string;
       replacementZone: string;
       replacementPosition?: "top" | "bottom";
+      replacementState?: "ready" | "exerted";
+      replacementPublicFaceState?: "faceUp" | "faceDown";
       consumeOnApply?: boolean;
       applicationKey?: string;
     };

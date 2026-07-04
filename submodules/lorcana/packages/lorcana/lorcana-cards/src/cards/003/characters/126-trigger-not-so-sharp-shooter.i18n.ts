@@ -16,8 +16,8 @@ export const triggerNotsosharpShooterI18n: Record<Languages, I18nProperties> = {
     version: "Unscharfschütze",
     text: [
       {
-        title: "ALTE BETSY",
-        description: "Deine Nutsy-Charaktere erhalten +1.",
+        title: "Alte Betsy",
+        description: "Deine Nutsy-Charaktere erhalten +1 {L}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const triggerNotsosharpShooterI18n: Record<Languages, I18nProperties> = {
     version: "Tireur pas si précis que ça",
     text: [
       {
-        title: "MA VIEILLE BERTA",
-        description: "Vos personnages Niquedouille gagnent +1.",
+        title: "Ma vieille Berta",
+        description: "Vos personnages Niquedouille gagnent +1 {L}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const triggerNotsosharpShooterI18n: Record<Languages, I18nProperties> = {
     version: "Tiratore non Tanto Scelto",
     text: [
       {
-        title: "VECCHIA BETSY I",
-        description: "tuoi personaggi chiamati Tonto ricevono +1.",
+        title: "Vecchia Betsy",
+        description: "I tuoi personaggi chiamati Tonto ricevono +1 {L}.",
       },
     ],
   },

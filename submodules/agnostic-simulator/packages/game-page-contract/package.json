@@ -28,14 +28,17 @@
     "check-types": "tsc --noEmit",
     "format": "bun x oxfmt --write ./src",
     "lint": "bun x oxlint --fix ./src",
-    "test": "bun test",
+    "test": "vp test run --configLoader runner",
     "check:isolation": "bun ./scripts/check-isolation.ts"
   },
   "dependencies": {
-    "zod": "^4.3.5"
+    "@tcg/gateway-client": "link:../gateway-client",
+    "@tcg/protocol": "link:../protocol",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tcg/typescript-config": "link:../typescript-config",
-    "@types/node": "^22.13.4"
+    "@types/node": "^22.13.4",
+    "vitest": "catalog:"
   }
 }

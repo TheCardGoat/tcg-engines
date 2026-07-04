@@ -6,9 +6,9 @@ export const theUnderworldRiverStyxI18n: Record<Languages, I18nProperties> = {
     version: "River Styx",
     text: [
       {
-        title: "SAVE A SOUL",
+        title: "SAVE",
         description:
-          "Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
+          "A SOUL Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const theUnderworldRiverStyxI18n: Record<Languages, I18nProperties> = {
     version: "Fluss Styx",
     text: [
       {
-        title: "EINE SEELE RETTEN",
+        title: "Eine Seele retten",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere an diesem Ort erkundet, darfst du 3 bezahlen, um eine Charakterkarte aus deinem Ablagestapel zurück auf deine Hand zu nehmen.",
+          "Jedes Mal, wenn einer deiner Charaktere an diesem Ort erkundet, darfst du 3 {I} bezahlen, um eine Charakterkarte aus deinem Ablagestapel zurück auf deine Hand zu nehmen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const theUnderworldRiverStyxI18n: Record<Languages, I18nProperties> = {
     version: "Le Styx",
     text: [
       {
-        title: "SAUVER UNE ÂME",
+        title: "Sauver une âme",
         description:
-          "Chaque fois qu'un personnage sur ce lieu est envoyé à l'aventure, vous pouvez payer 3 pour reprendre en main une carte personnage de votre défausse.",
+          "Chaque fois qu'un personnage sur ce lieu est envoyé à l'aventure, vous pouvez payer 3 {I} pour reprendre en main une carte personnage de votre défausse.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const theUnderworldRiverStyxI18n: Record<Languages, I18nProperties> = {
     version: "Fiume Stige",
     text: [
       {
-        title: "SALVARE UN'ANIMA",
+        title: "Salvare un'Anima",
         description:
-          "Ogni volta che un personaggio va all'avventura mentre si trova in questo luogo, puoi pagare 3 per riprendere in mano una carta personaggio dai tuoi scarti.",
+          "Ogni volta che un personaggio va all'avventura mentre si trova in questo luogo, puoi pagare 3 {I} per riprendere in mano una carta personaggio dai tuoi scarti.",
       },
     ],
   },

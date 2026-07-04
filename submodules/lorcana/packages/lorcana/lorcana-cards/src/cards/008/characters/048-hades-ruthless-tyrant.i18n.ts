@@ -17,7 +17,7 @@ export const hadesRuthlessTyrantI18n: Record<Languages, I18nProperties> = {
     version: "Gnadenloser Tyrann",
     text: [
       {
-        title: "WENIG GEDULD",
+        title: "Wenig Geduld",
         description:
           "Wenn du diesen Charakter ausspielst, und jedes Mal, wenn er erkundet, darfst du einen deiner anderen Charaktere wählen und ihm 2 Schaden zufügen, um 2 Karten zu ziehen.",
       },
@@ -28,7 +28,7 @@ export const hadesRuthlessTyrantI18n: Record<Languages, I18nProperties> = {
     version: "Tyran impitoyable",
     text: [
       {
-        title: "À COURT DE PATIENCE",
+        title: "À court de patience",
         description:
           "Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, vous pouvez choisir un autre de vos personnages et lui infliger 2 dommages. Si vous le faites, piochez 2 cartes.",
       },
@@ -39,7 +39,7 @@ export const hadesRuthlessTyrantI18n: Record<Languages, I18nProperties> = {
     version: "Tiranno Spietato",
     text: [
       {
-        title: "POCA PAZIENZA",
+        title: "Poca Pazienza",
         description:
           "Quando giochi questo personaggio e ogni volta che va all'avventura, puoi infliggere 2 danni a un tuo altro personaggio a tua scelta per pescare 2 carte.",
       },

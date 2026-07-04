@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goofyMusketeerI18n } from "./004-goofy-musketeer.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const goofyMusketeer: CharacterCard = {
   id: "BTg",
   canonicalId: "ci_BTg",
+  slug: "lorcana-ci_BTg",
+  printings: [
+    {
+      id: "set1-004",
+      artId: "set1-004",
+      setCode: "set1",
+      collectorNumber: "4",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-004"],
   cardType: "character",
   name: "Goofy",
@@ -20,7 +32,7 @@ export const goofyMusketeer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9bd583ab207a4366a12f37ab94ed8619",
-    tcgPlayer: 501751,
+    tcgPlayer: "501751",
   },
   text: [
     {

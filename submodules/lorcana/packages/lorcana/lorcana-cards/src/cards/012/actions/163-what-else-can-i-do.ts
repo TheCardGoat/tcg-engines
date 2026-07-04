@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { whatElseCanIDoI18n } from "./163-what-else-can-i-do.i18n";
 
 export const whatElseCanIDo: ActionCard = {
-  id: "GBS",
+  id: "YA5",
   canonicalId: "ci_GBS",
+  slug: "lorcana-ci_GBS",
+  printings: [
+    {
+      id: "set12-163",
+      artId: "set12-163",
+      setCode: "set12",
+      collectorNumber: "163",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-163"],
   cardType: "action",
   name: "What Else Can I Do?",
@@ -16,6 +27,7 @@ export const whatElseCanIDo: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a2a3a343dac1408092294ea226dcd028",
+    tcgPlayer: "690556",
   },
   text: "Look at the top 2 cards of your deck. Put one into your hand and the other into your inkwell facedown and exerted. If a character sang this song, your characters gain Ward until the start of your next turn.",
   actionSubtype: "song",

@@ -4,6 +4,17 @@ import { goofyKlutzySkierI18n } from "./121-goofy-klutzy-skier.i18n";
 export const goofyKlutzySkier: CharacterCard = {
   id: "4xG",
   canonicalId: "ci_sej",
+  slug: "lorcana-ci_sej",
+  printings: [
+    {
+      id: "set11-121",
+      artId: "set11-121",
+      setCode: "set11",
+      collectorNumber: "121",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-121"],
   cardType: "character",
   name: "Goofy",
@@ -19,7 +30,7 @@ export const goofyKlutzySkier: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_05285db16a3b4cb28941b7a24913d33f",
-    tcgPlayer: 677151,
+    tcgPlayer: "677151",
   },
   text: [
     {

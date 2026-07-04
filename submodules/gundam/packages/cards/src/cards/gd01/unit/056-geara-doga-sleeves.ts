@@ -7,14 +7,17 @@ export const gd01GearaDogaSleeves056: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-056",
-  externalId: "gundam:gd01-056",
-  slug: "geara-doga-sleeves-gd01-056",
+  canonicalId: "GD01-056",
+  externalIds: { bandai: "gundam:gd01-056" },
+  slug: "geara-doga-sleeves/gd01-056",
   displayName: "Geara Doga (Sleeves)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-056",
   printings: [
     {
       id: "GD01-056",
+      artId: "GD01-056",
+      setCode: "GD01",
       collectorNumber: "GD01-056",
       cardNumber: "GD01-056",
       set: {
@@ -29,6 +32,7 @@ export const gd01GearaDogaSleeves056: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-056"],
   selectedPrintingId: "GD01-056",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-056.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-056.webp?260424",

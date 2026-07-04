@@ -4,6 +4,17 @@ import { drHamstervielInfamousScientistI18n } from "./186-dr-hamsterviel-infamou
 export const drHamstervielInfamousScientist: CharacterCard = {
   id: "U34",
   canonicalId: "ci_U34",
+  slug: "lorcana-ci_U34",
+  printings: [
+    {
+      id: "set11-186",
+      artId: "set11-186",
+      setCode: "set11",
+      collectorNumber: "186",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-186"],
   cardType: "character",
   name: "Dr. Hamsterviel",
@@ -20,7 +31,7 @@ export const drHamstervielInfamousScientist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fa25fc0098884a649dc40a9e0551cff2",
-    tcgPlayer: 673301,
+    tcgPlayer: "673301",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { madameMedusaDiamondLoverI18n } from "./053-madame-medusa-diamond-lover.
 export const madameMedusaDiamondLover: CharacterCard = {
   id: "75X",
   canonicalId: "ci_75X",
+  slug: "lorcana-ci_75X",
+  printings: [
+    {
+      id: "set7-053",
+      artId: "set7-053",
+      setCode: "set7",
+      collectorNumber: "53",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-053"],
   cardType: "character",
   name: "Madame Medusa",
@@ -20,7 +31,7 @@ export const madameMedusaDiamondLover: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2f6408a754bf40a7a71655da8edc5223",
-    tcgPlayer: 618696,
+    tcgPlayer: "618696",
   },
   text: [
     {

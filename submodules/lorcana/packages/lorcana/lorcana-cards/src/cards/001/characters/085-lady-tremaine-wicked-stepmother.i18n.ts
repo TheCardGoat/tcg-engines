@@ -17,7 +17,7 @@ export const ladyTremaineWickedStepmotherI18n: Record<Languages, I18nProperties>
     version: "Böse Stiefmutter",
     text: [
       {
-        title: "MACH ES NOCH MAL!",
+        title: "Mach es noch mal!",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Aktionskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
@@ -39,7 +39,7 @@ export const ladyTremaineWickedStepmotherI18n: Record<Languages, I18nProperties>
     version: "Wicked Stepmother",
     text: [
       {
-        title: "DO IT AGAIN!",
+        title: "Do it Again!",
         description:
           "When you play this character, you may return an action card from your discard to your hand.",
       },

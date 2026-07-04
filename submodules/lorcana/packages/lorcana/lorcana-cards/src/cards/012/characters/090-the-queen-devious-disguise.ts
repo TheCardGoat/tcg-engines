@@ -4,6 +4,17 @@ import { theQueenDeviousDisguiseI18n } from "./090-the-queen-devious-disguise.i1
 export const theQueenDeviousDisguise: CharacterCard = {
   id: "eWy",
   canonicalId: "ci_eWy",
+  slug: "lorcana-ci_eWy",
+  printings: [
+    {
+      id: "set12-090",
+      artId: "set12-090",
+      setCode: "set12",
+      collectorNumber: "90",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-090"],
   cardType: "character",
   name: "The Queen",
@@ -20,6 +31,7 @@ export const theQueenDeviousDisguise: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_676cc0d5efcc4e34ae01d912295510eb",
+    tcgPlayer: "692167",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const betaSimultaneousFire012: CommandCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "ST02-012_p2",
-  externalId: "gundam:st02-012_p2",
-  slug: "simultaneous-fire-st02-012-p2",
+  canonicalId: "ST02-012",
+  externalIds: { bandai: "gundam:st02-012_p2" },
+  slug: "simultaneous-fire/st02-012",
   displayName: "Simultaneous Fire",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "ST02-012_p2",
   printings: [
     {
       id: "ST02-012",
+      artId: "ST02-012",
+      setCode: "ST02",
       collectorNumber: "ST02-012",
       cardNumber: "ST02-012",
       set: {
@@ -30,6 +33,8 @@ export const betaSimultaneousFire012: CommandCard = {
     },
     {
       id: "ST02-012_p1",
+      artId: "ST02-012_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-012_p1",
       cardNumber: "ST02-012",
       set: {
@@ -45,6 +50,8 @@ export const betaSimultaneousFire012: CommandCard = {
     },
     {
       id: "ST02-012_p2",
+      artId: "ST02-012_p2",
+      setCode: "BETA",
       collectorNumber: "ST02-012_p2",
       cardNumber: "ST02-012",
       set: {
@@ -59,6 +66,7 @@ export const betaSimultaneousFire012: CommandCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST02-012", "ST02-012_p1", "ST02-012_p2"],
   selectedPrintingId: "ST02-012_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST02-012_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-012_p2.webp?260424",

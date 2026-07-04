@@ -4,6 +4,17 @@ import { fredMascotByDayI18n } from "./075-fred-mascot-by-day.i18n";
 export const fredMascotByDay: CharacterCard = {
   id: "z1w",
   canonicalId: "ci_z1w",
+  slug: "lorcana-ci_z1w",
+  printings: [
+    {
+      id: "set6-075",
+      artId: "set6-075",
+      setCode: "set6",
+      collectorNumber: "75",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-075"],
   cardType: "character",
   name: "Fred",
@@ -20,7 +31,7 @@ export const fredMascotByDay: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9cbf437511cf41c7b61f04f01a22c39e",
-    tcgPlayer: 578186,
+    tcgPlayer: "578186",
   },
   text: [
     {

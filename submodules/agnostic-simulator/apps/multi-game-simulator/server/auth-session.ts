@@ -1,8 +1,4 @@
-import type {
-  AuthSession,
-  AuthUser,
-  SessionResult,
-} from "../src/games/cyberpunk/auth/platform-session.js";
+import type { AuthSession, AuthUser, SessionResult } from "@tcg/shared/auth";
 
 export interface ResolvePlatformAuthSessionOptions {
   request: Request;

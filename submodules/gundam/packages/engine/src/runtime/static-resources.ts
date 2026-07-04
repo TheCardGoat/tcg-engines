@@ -76,10 +76,12 @@ export function createStaticResources<TCard extends Card>(
     getDefinition(definitionId: string): TCard | undefined {
       // Runtime-registered definitions (e.g. setup tokens spawned by
       // `framework.cards.registerDefinition`) live in `cardsMaps.definitions`
-      // keyed by their synthetic instance id, not in the static `catalog`
-      // (which is keyed by printed cardNumber). Check the runtime map first
-      // so the view filter can resolve those tokens; fall back to the
-      // catalog for ordinary deck cards.
+      // keyed by their synthetic instance id, not in the static `catalog`. The
+      // catalog is keyed by whatever the catalog builder passes in — production
+      // (`gundam-engine-lifecycle.ts`) keys by `card.id` (the printing-qualified
+      // record key, e.g. `ST04-015_p2`), with `cardNumber` as a fallback. Check
+      // the runtime map first so the view filter can resolve those tokens;
+      // fall back to the catalog for ordinary deck cards.
       return (definitionsMap.get(definitionId) ?? catalog.get(definitionId)) as TCard | undefined;
     },
   };

@@ -1,7 +1,8 @@
 <script lang="ts">
   import JSONTree from "svelte-json-tree";
   import * as Sidebar from "$lib/design-system/primitives/sidebar";
-  import {LORCANA_SIMULATOR_FIXTURES} from "@/features/simulator-devtools/fixtures";
+  import { LORCANA_SIMULATOR_FIXTURE_MANIFEST } from "@/features/simulator-devtools/fixtures";
+  import type { FixtureManifestEntry } from "@/features/simulator-devtools/fixtures/registry";
   import {
       LORCANA_SIMULATOR_VIEWS,
       type BoardMoveAnimationVariant,
@@ -159,9 +160,9 @@
   let challengeDefenderBanished = $state(false);
   let animationStatus = $state<string | null>(null);
   let copyFeedback = $state<CopyFeedback | null>(null);
-  const fixtureOptions = Object.values(LORCANA_SIMULATOR_FIXTURES).sort((left, right) =>
+  const fixtureOptions = [...LORCANA_SIMULATOR_FIXTURE_MANIFEST].sort((left, right) =>
     left.name.localeCompare(right.name),
-  ) satisfies LorcanaSimulatorFixture[];
+  ) satisfies FixtureManifestEntry[];
 
   function asRecord(value: unknown): Record<string, unknown> {
     return value && typeof value === "object" && !Array.isArray(value)

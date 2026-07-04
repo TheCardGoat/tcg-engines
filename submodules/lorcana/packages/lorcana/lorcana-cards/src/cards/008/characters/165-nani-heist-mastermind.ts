@@ -4,6 +4,17 @@ import { naniHeistMastermindI18n } from "./165-nani-heist-mastermind.i18n";
 export const naniHeistMastermind: CharacterCard = {
   id: "3b6",
   canonicalId: "ci_3b6",
+  slug: "lorcana-ci_3b6",
+  printings: [
+    {
+      id: "set8-165",
+      artId: "set8-165",
+      setCode: "set8",
+      collectorNumber: "165",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-165"],
   cardType: "character",
   name: "Nani",
@@ -20,7 +31,7 @@ export const naniHeistMastermind: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b5e5171ece4a407eb3261f2f026f4df7",
-    tcgPlayer: 631462,
+    tcgPlayer: "631462",
   },
   text: [
     {
@@ -72,7 +83,14 @@ export const naniHeistMastermind: CharacterCard = {
           owner: "you",
           selector: "all",
           zones: ["play"],
-          filter: [{ type: "attribute", attribute: "name", comparison: "equals", value: "Lilo" }],
+          filter: [
+            {
+              type: "attribute",
+              attribute: "name",
+              comparison: "equals",
+              value: "Lilo",
+            },
+          ],
         },
       },
     },

@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { andThenAlongCameZeusI18n } from "./195-and-then-along-came-zeus.i18n";
 
 export const andThenAlongCameZeus: ActionCard = {
-  id: "DXq",
+  id: "rIR",
   canonicalId: "ci_dTx",
+  slug: "lorcana-ci_dTx",
+  printings: [
+    {
+      id: "set3-195",
+      artId: "set3-195",
+      setCode: "set3",
+      collectorNumber: "195",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-195"],
   cardType: "action",
   name: "And Then Along Came Zeus",
@@ -16,7 +27,7 @@ export const andThenAlongCameZeus: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_0bd8f734ff064b3881191b916f8354cf",
-    tcgPlayer: 539173,
+    tcgPlayer: "539173",
   },
   text: "Deal 5 damage to chosen character or location.",
   actionSubtype: "song",

@@ -22,10 +22,11 @@ export const mrSmeeCaptainOfTheJollyRogerI18n: Record<Languages, I18nProperties>
     version: "Kapitän unter der Piratenflagge",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Herr-Smee-Charaktere auszuspielen.)",
       },
       {
-        title: "ERHEBT DIE SEGEL",
+        title: "Erhebt die Segel",
         description:
           "Wenn du diesen Charakter ausspielst, zähle deine anderen Piraten im Spiel. Du darfst einem Charakter deiner Wahl dieselbe Anzahl Schaden zufügen.",
       },
@@ -36,10 +37,11 @@ export const mrSmeeCaptainOfTheJollyRogerI18n: Record<Languages, I18nProperties>
     version: "Capitaine du Jolly Roger",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Monsieur Mouche.)",
       },
       {
-        title: "HISSEZ LE PAVILLON",
+        title: "Hissez le pavillon",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui infliger autant de dommages que le nombre d'autres personnages Pirate que vous avez en jeu.",
       },
@@ -50,10 +52,11 @@ export const mrSmeeCaptainOfTheJollyRogerI18n: Record<Languages, I18nProperties>
     version: "Capitano della Jolly Roger",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Spugna.)",
       },
       {
-        title: "ISSATE LA BANDIERA",
+        title: "Issate la Bandiera",
         description:
           "Quando giochi questo personaggio, puoi infliggere danno a un personaggio a tua scelta pari al numero dei tuoi altri personaggi Pirata in gioco.",
       },

@@ -9,21 +9,16 @@ export const hermesHarriedMessengerI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Hermes",
     version: "Gestresster Bote",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Hermès",
     version: "Messager pressé",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Hermes",
     version: "Messaggero Stressato",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

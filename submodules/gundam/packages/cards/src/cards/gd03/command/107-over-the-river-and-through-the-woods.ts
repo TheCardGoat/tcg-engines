@@ -7,14 +7,17 @@ export const gd03OverTheRiverAndThroughTheWoods107: CommandCard = {
   color: "green",
   traits: ["zeon", "cyclops team"],
   id: "GD03-107",
-  externalId: "gundam:gd03-107",
-  slug: "over-the-river-and-through-the-woods-gd03-107",
+  canonicalId: "GD03-107",
+  externalIds: { bandai: "gundam:gd03-107" },
+  slug: "over-the-river-and-through-the-woods/gd03-107",
   displayName: "Over the River and Through the Woods",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-107",
   printings: [
     {
       id: "GD03-107",
+      artId: "GD03-107",
+      setCode: "GD03",
       collectorNumber: "GD03-107",
       cardNumber: "GD03-107",
       set: {
@@ -29,6 +32,7 @@ export const gd03OverTheRiverAndThroughTheWoods107: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-107"],
   selectedPrintingId: "GD03-107",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-107.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-107.webp?260424",

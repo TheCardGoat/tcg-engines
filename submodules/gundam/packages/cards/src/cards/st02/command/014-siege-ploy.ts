@@ -7,14 +7,17 @@ export const st02SiegePloy014: CommandCard = {
   color: "blue",
   traits: ["-"],
   id: "ST02-014",
-  externalId: "gundam:st02-014",
-  slug: "siege-ploy-st02-014",
+  canonicalId: "ST02-014",
+  externalIds: { bandai: "gundam:st02-014" },
+  slug: "siege-ploy/st02-014",
   displayName: "Siege Ploy",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-014",
   printings: [
     {
       id: "ST02-014",
+      artId: "ST02-014",
+      setCode: "ST02",
       collectorNumber: "ST02-014",
       cardNumber: "ST02-014",
       set: {
@@ -30,6 +33,8 @@ export const st02SiegePloy014: CommandCard = {
     },
     {
       id: "ST02-014_p1",
+      artId: "ST02-014_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-014_p1",
       cardNumber: "ST02-014",
       set: {
@@ -45,6 +50,8 @@ export const st02SiegePloy014: CommandCard = {
     },
     {
       id: "ST02-014_p2",
+      artId: "ST02-014_p2",
+      setCode: "ST08",
       collectorNumber: "ST02-014_p2",
       cardNumber: "ST02-014",
       set: {
@@ -60,6 +67,8 @@ export const st02SiegePloy014: CommandCard = {
     },
     {
       id: "ST02-014_p3",
+      artId: "ST02-014_p3",
+      setCode: "ST08",
       collectorNumber: "ST02-014_p3",
       cardNumber: "ST02-014",
       set: {
@@ -74,6 +83,7 @@ export const st02SiegePloy014: CommandCard = {
       productName: "Flash of Radiance [ST08] Bonus Pack",
     },
   ],
+  reprints: ["ST02-014", "ST02-014_p1", "ST02-014_p2", "ST02-014_p3"],
   selectedPrintingId: "ST02-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-014.webp?260424",

@@ -19,11 +19,11 @@ export const jetsamRiffraffI18n: Record<Languages, I18nProperties> = {
     version: "Fischabfall",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "UNHEIMLICHES PAAR",
-        description: "Deine Abschaum-Charaktere erhalten Behütet.",
+        title: "Unheimliches Paar",
+        description: "Deine Abschaum-Charaktere erhalten <Behütet>.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const jetsamRiffraffI18n: Record<Languages, I18nProperties> = {
     version: "Boule puante",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "SINISTRE DUO",
-        description: "Vos personnages Flotsam gagnent Hors d'atteinte.",
+        title: "Sinistre duo",
+        description: "Vos personnages Flotsam gagnent <Hors d'atteinte>.",
       },
     ],
   },
@@ -45,11 +45,11 @@ export const jetsamRiffraffI18n: Record<Languages, I18nProperties> = {
     version: "Marmaglia",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "COPPIA INQUIETANTE",
-        description: "I tuoi personaggi chiamati Flotsam ottengono Protetto.",
+        title: "Coppia Inquietante",
+        description: "I tuoi personaggi chiamati Flotsam ottengono <Protetto>.",
       },
     ],
   },

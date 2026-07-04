@@ -34,7 +34,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "check-types": "tsc --noEmit",
-    "test": "vp test run",
+    "test": "vp test run --configLoader runner",
     "format": "vp fmt ./src",
     "lint": "vp lint ./src"
   },
@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@tcg/typescript-config": "link:../typescript-config",
+    "@types/node": "catalog:",
     "@types/react": "catalog:",
     "react": "catalog:",
     "vitest": "catalog:"

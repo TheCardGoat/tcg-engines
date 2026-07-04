@@ -17,9 +17,9 @@ export const chiefSeasonedTrackerI18n: Record<Languages, I18nProperties> = {
     version: "Altgedienter Spurensucher",
     text: [
       {
-        title: "AUF WIEDERSEHEN",
+        title: "Auf Wiedersehen",
         description:
-          "— Falls in diesem Zug ein gegnerischer Charakter durch eine Herausforderung verbannt wurde, ziehe 1 Karte.",
+          "{E} — Falls in diesem Zug ein gegnerischer Charakter durch eine Herausforderung verbannt wurde, ziehe 1 Karte.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const chiefSeasonedTrackerI18n: Record<Languages, I18nProperties> = {
     version: "Pisteur chevronné",
     text: [
       {
-        title: "BON",
+        title: "Bon débarras",
         description:
-          "DÉBARRAS — Si un personnage adverse a été banni via un défi ce tour-ci, piochez une carte.",
+          "{E} — Si un personnage adverse a été banni via un défi ce tour-ci, piochez une carte.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const chiefSeasonedTrackerI18n: Record<Languages, I18nProperties> = {
     version: "Segugio Esperto",
     text: [
       {
-        title: "UNA BELLA LIBERAZIONE",
+        title: "Una Bella Liberazione",
         description:
-          "— Se un personaggio avversario è stato esiliato in una sfida in questo turno, pesca una carta.",
+          "{E} — Se un personaggio avversario è stato esiliato in una sfida in questo turno, pesca una carta.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { svenReindeerSteedI18n } from "./023-sven-reindeer-steed.i18n";
 export const svenReindeerSteed: CharacterCard = {
   id: "DzB",
   canonicalId: "ci_DzB",
+  slug: "lorcana-ci_DzB",
+  printings: [
+    {
+      id: "set5-023",
+      artId: "set5-023",
+      setCode: "set5",
+      collectorNumber: "23",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-023"],
   cardType: "character",
   name: "Sven",
@@ -20,7 +31,7 @@ export const svenReindeerSteed: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a35ce7543f7e4af49eb325083776e061",
-    tcgPlayer: 559714,
+    tcgPlayer: "559714",
   },
   text: [
     {

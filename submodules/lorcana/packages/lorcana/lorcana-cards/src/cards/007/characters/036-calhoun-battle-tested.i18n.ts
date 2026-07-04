@@ -17,9 +17,9 @@ export const calhounBattletestedI18n: Record<Languages, I18nProperties> = {
     version: "Kampferprobt",
     text: [
       {
-        title: "TAKTISCHER VORTEIL",
+        title: "Taktischer Vorteil",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du eine Karte von deiner Hand auswählen und abwerfen, um einem gegnerischen Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -3 zu geben.",
+          "Wenn du diesen Charakter ausspielst, darfst du eine Karte von deiner Hand auswählen und abwerfen, um einem gegnerischen Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -3 {S} zu geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const calhounBattletestedI18n: Record<Languages, I18nProperties> = {
     version: "Aguerrie",
     text: [
       {
-        title: "AVANTAGE TACTIQUE",
+        title: "Avantage tactique",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez défausser une carte pour choisir un personnage adverse qui subit -3 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez défausser une carte pour choisir un personnage adverse qui subit -3 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const calhounBattletestedI18n: Record<Languages, I18nProperties> = {
     version: "Testata in Battaglia",
     text: [
       {
-        title: "VANTAGGIO TATTICO",
+        title: "Vantaggio Tattico",
         description:
-          "Quando giochi questo personaggio, puoi scegliere e scartare una carta per dare a un personaggio avversario a tua scelta -3 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, puoi scegliere e scartare una carta per dare a un personaggio avversario a tua scelta -3 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

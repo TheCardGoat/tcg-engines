@@ -24,16 +24,16 @@ export const elsaIceArtisanEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Eiskünstlerin",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title: "<Gestaltwandel> 4 {I}",
       },
       {
-        title: "ENDLOSER WINTER",
+        title: "Endloser Winter",
         description:
-          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn du einen Ort ausspielst, darfst du einen Charakter deiner Wahl mit 3 oder weniger erschöpfen.",
+          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn du einen Ort ausspielst, darfst du einen Charakter deiner Wahl mit 3 oder weniger {S} erschöpfen.",
       },
       {
-        title: "RUF AUS DER FERNE",
-        description: "Solange dieser Charakter an einem Ort ist, erhält er +3.",
+        title: "Ruf aus der Ferne",
+        description: "Solange dieser Charakter an einem Ort ist, erhält er +3 {L}.",
       },
     ],
   },
@@ -42,16 +42,16 @@ export const elsaIceArtisanEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Artisane de la glace",
     text: [
       {
-        title: "Alter 4",
+        title: "<Alter> 4 {I}",
       },
       {
-        title: "HIVER SANS FIN",
+        title: "Hiver sans fin",
         description:
-          "Lorsque vous jouez ce personnage et chaque fois que vous jouez un lieu, vous pouvez choisir un personnage ayant 3 ou moins et l'épuiser.",
+          "Lorsque vous jouez ce personnage et chaque fois que vous jouez un lieu, vous pouvez choisir un personnage ayant 3 {S} ou moins et l'épuiser.",
       },
       {
-        title: "APPEL LOINTAIN",
-        description: "Tant que ce personnage est sur un lieu, il gagne +3.",
+        title: "Appel lointain",
+        description: "Tant que ce personnage est sur un lieu, il gagne +3 {L}.",
       },
     ],
   },
@@ -60,16 +60,16 @@ export const elsaIceArtisanEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Artigiana del Ghiaccio",
     text: [
       {
-        title: "Trasformazione 4",
+        title: "<Trasformazione> 4 {I}",
       },
       {
-        title: "INVERNO SENZA FINE",
+        title: "Inverno senza Fine",
         description:
-          "Quando giochi questo personaggio e ogni volta che giochi un luogo, puoi impegnare un personaggio a tua scelta con 3 o inferiore.",
+          "Quando giochi questo personaggio e ogni volta che giochi un luogo, puoi impegnare un personaggio a tua scelta con 3 {S} o inferiore.",
       },
       {
-        title: "RICHIAMO LONTANO",
-        description: "Mentre questo personaggio si trova in un luogo, riceve +3.",
+        title: "Richiamo Lontano",
+        description: "Mentre questo personaggio si trova in un luogo, riceve +3 {L}.",
       },
     ],
   },

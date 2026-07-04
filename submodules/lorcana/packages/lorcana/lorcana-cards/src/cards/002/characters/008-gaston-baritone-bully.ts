@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gastonBaritoneBullyI18n } from "./008-gaston-baritone-bully.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const gastonBaritoneBully: CharacterCard = {
   id: "Rc3",
   canonicalId: "ci_Rc3",
+  slug: "lorcana-ci_Rc3",
+  printings: [
+    {
+      id: "set2-008",
+      artId: "set2-008",
+      setCode: "set2",
+      collectorNumber: "8",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-008"],
   cardType: "character",
   name: "Gaston",
@@ -21,7 +33,7 @@ export const gastonBaritoneBully: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_88ec6886b1a0481c9ab402049d1649e8",
-    tcgPlayer: 527713,
+    tcgPlayer: "527713",
   },
   text: "Singer 5",
   classifications: ["Dreamborn", "Villain"],

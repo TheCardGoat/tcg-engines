@@ -4,6 +4,17 @@ import { yelanaNorthuldraLeaderI18n } from "./055-yelana-northuldra-leader.i18n"
 export const yelanaNorthuldraLeader: CharacterCard = {
   id: "umw",
   canonicalId: "ci_umw",
+  slug: "lorcana-ci_umw",
+  printings: [
+    {
+      id: "set8-055",
+      artId: "set8-055",
+      setCode: "set8",
+      collectorNumber: "55",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-055"],
   cardType: "character",
   name: "Yelana",
@@ -20,7 +31,7 @@ export const yelanaNorthuldraLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f5703e0094dd406ba95d5bb9dc6e195c",
-    tcgPlayer: 631388,
+    tcgPlayer: "631388",
   },
   text: [
     {

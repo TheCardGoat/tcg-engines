@@ -4,6 +4,17 @@ import { liShangArcheryInstructorI18n } from "./187-li-shang-archery-instructor.
 export const liShangArcheryInstructor: CharacterCard = {
   id: "vB7",
   canonicalId: "ci_vB7",
+  slug: "lorcana-ci_vB7",
+  printings: [
+    {
+      id: "set2-187",
+      artId: "set2-187",
+      setCode: "set2",
+      collectorNumber: "187",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-187"],
   cardType: "character",
   name: "Li Shang",
@@ -20,7 +31,7 @@ export const liShangArcheryInstructor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_71250fc9f98742369de2116914b4109f",
-    tcgPlayer: 523755,
+    tcgPlayer: "523755",
   },
   text: [
     {

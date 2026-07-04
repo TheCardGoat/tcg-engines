@@ -9,16 +9,16 @@ export const archimedesExasperatedOwlI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Archimedes",
     version: "Verärgerter Kauz",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Archimède",
     version: "Hibou exaspéré",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Anacleto",
     version: "Gufo Esasperato",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

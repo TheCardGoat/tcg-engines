@@ -15,9 +15,9 @@ export const dinnerBellI18n: Record<Languages, I18nProperties> = {
     name: "Tischglocke",
     text: [
       {
-        title: "DU WEISST, WAS PASSIERT, 2",
+        title: "Du weißt, was passiert",
         description:
-          "— Wähle einen deiner Charaktere und zähle den Schaden auf ihm. Ziehe diese Anzahl an Karten und verbanne den Charakter anschließend.",
+          "{E}, 2 {I} — Wähle einen deiner Charaktere und zähle den Schaden auf ihm. Ziehe diese Anzahl an Karten und verbanne den Charakter anschließend.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const dinnerBellI18n: Record<Languages, I18nProperties> = {
     name: "Clochette du dîner",
     text: [
       {
-        title: "TU SAIS CE QUI SE PASSE, 2",
+        title: "Tu sais ce qui se passe",
         description:
-          "— Choisissez l'un de vos personnages blessés et piochez une carte pour chaque jeton Dommage sur lui, puis bannissez-le.",
+          "{E}, 2 {I} — Choisissez l'un de vos personnages blessés et piochez une carte pour chaque jeton Dommage sur lui, puis bannissez-le.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const dinnerBellI18n: Record<Languages, I18nProperties> = {
     name: "Dinner Bell",
     text: [
       {
-        title: "YOU KNOW WHAT HAPPENS, 2",
+        title: "You Know What Happens",
         description:
-          "— Draw cards equal to the damage on chosen character of yours, then banish them.",
+          "{E}, 2 {I} — Draw cards equal to the damage on chosen character of yours, then banish them.",
       },
     ],
   },

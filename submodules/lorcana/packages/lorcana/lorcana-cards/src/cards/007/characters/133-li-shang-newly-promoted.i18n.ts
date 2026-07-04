@@ -20,12 +20,12 @@ export const liShangNewlyPromotedI18n: Record<Languages, I18nProperties> = {
     version: "Frisch befördert",
     text: [
       {
-        title: "DARAUF KÖNNT IHR EUCH VERLASSEN",
+        title: "Darauf könnt ihr euch verlassen",
         description: "Dieser Charakter kann bereite Charaktere herausfordern.",
       },
       {
-        title: "SEHR VIEL VERANTWORTUNG",
-        description: "Solange dieser Charakter beschädigt ist, erhält er +2.",
+        title: "Sehr viel Verantwortung",
+        description: "Solange dieser Charakter beschädigt ist, erhält er +2 {S}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const liShangNewlyPromotedI18n: Record<Languages, I18nProperties> = {
     version: "Nouvellement promu",
     text: [
       {
-        title: "JE FERAI TOUT CE QUI EST EN MON POUVOIR",
+        title: "Je ferai tout ce qui est en mon pouvoir",
         description: "Ce personnage peut défier des personnages redressés.",
       },
       {
-        title: "UNE ÉNORME RESPONSABILITÉ",
-        description: "Tant que ce personnage a au moins un dommage, il gagne +2.",
+        title: "Une énorme responsabilité",
+        description: "Tant que ce personnage a au moins un dommage, il gagne +2 {S}.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const liShangNewlyPromotedI18n: Record<Languages, I18nProperties> = {
     version: "Appena Promosso",
     text: [
       {
-        title: "NON TI DELUDERÒ",
+        title: "Non Ti Deluderò",
         description: "Questo personaggio può sfidare i personaggi preparati.",
       },
       {
-        title: "ENORME RESPONSABILITÀ",
-        description: "Mentre questo personaggio ha danno, riceve +2.",
+        title: "Enorme Responsabilità",
+        description: "Mentre questo personaggio ha danno, riceve +2 {S}.",
       },
     ],
   },

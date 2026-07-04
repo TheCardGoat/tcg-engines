@@ -1,22 +1,9 @@
+import * as generatedMessages from "$lib/paraglide/messages.js";
 import enMessages from "../../messages/en.json";
-import * as paraglideBarrel from "$lib/paraglide/messages.js";
-
-const generatedMessages = paraglideBarrel.m;
-
-export * from "$lib/paraglide/messages.js";
 
 /** Paraglide message id — keep in sync with `src/messages/en.json` fallback keys below. */
 const archetypeIntroKey = "sim.matchmaking.archetype.intro";
 const archetypeUserMatchesTitleKey = "sim.matchmaking.archetype.userMatches.title";
-
-// Access dot-separated message keys dynamically to avoid hard module-link
-// failures when the compiled paraglide barrel doesn't export them yet.
-const simMatchmakingArchetypeIntroParaglide = (paraglideBarrel as Record<string, unknown>)[
-  archetypeIntroKey
-];
-const simMatchmakingArchetypeUserMatchesTitleParaglide = (
-  paraglideBarrel as Record<string, unknown>
-)[archetypeUserMatchesTitleKey];
 
 type Locale = "en" | "de" | "it" | "es" | "pt-br";
 type LocalizedString = string;
@@ -87,24 +74,20 @@ export const m = new Proxy(
   },
 ) as Record<string, SimulatorMessageTranslator>;
 
-/** Archetype lobby hero copy — import stable Paraglide barrel exports so builds work without per-file `messages/*.js` paths (gitignored output; filenames can gain numeric suffixes). */
-export const simMatchmakingArchetypeIntro: SimulatorMessageTranslator =
-  typeof simMatchmakingArchetypeIntroParaglide === "function"
-    ? (simMatchmakingArchetypeIntroParaglide as SimulatorMessageTranslator)
-    : (inputs = {}) => {
-        const template =
-          (enMessages as Record<string, unknown>)[archetypeIntroKey] ??
-          "Create a match by specifying which archetype you want to find. The purpose of this feature is to help you test a specific matchup as thoroughly as possible.";
-        return renderWithValues(template, inputs) as LocalizedString;
-      };
+/** Archetype lobby hero copy. */
+export const simMatchmakingArchetypeIntro: SimulatorMessageTranslator = (inputs = {}) => {
+  const template =
+    (enMessages as Record<string, unknown>)[archetypeIntroKey] ??
+    "Create a match by specifying which archetype you want to find. The purpose of this feature is to help you test a specific matchup as thoroughly as possible.";
+  return renderWithValues(template, inputs) as LocalizedString;
+};
 
-/** Archetype match list card title — same stable barrel import as intro. */
-export const simMatchmakingArchetypeUserMatchesTitle: SimulatorMessageTranslator =
-  typeof simMatchmakingArchetypeUserMatchesTitleParaglide === "function"
-    ? (simMatchmakingArchetypeUserMatchesTitleParaglide as SimulatorMessageTranslator)
-    : (inputs = {}) => {
-        const template =
-          (enMessages as Record<string, unknown>)[archetypeUserMatchesTitleKey] ??
-          "Matches Created by Players";
-        return renderWithValues(template, inputs) as LocalizedString;
-      };
+/** Archetype match list card title. */
+export const simMatchmakingArchetypeUserMatchesTitle: SimulatorMessageTranslator = (
+  inputs = {},
+) => {
+  const template =
+    (enMessages as Record<string, unknown>)[archetypeUserMatchesTitleKey] ??
+    "Matches Created by Players";
+  return renderWithValues(template, inputs) as LocalizedString;
+};

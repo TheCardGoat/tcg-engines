@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mrsIncredibleDeterminedRescuerI18n } from "./195-mrs-incredible-determined-rescuer.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const mrsIncredibleDeterminedRescuer: CharacterCard = {
   id: "2J3",
   canonicalId: "ci_2J3",
+  slug: "lorcana-ci_2J3",
+  printings: [
+    {
+      id: "set12-195",
+      artId: "set12-195",
+      setCode: "set12",
+      collectorNumber: "195",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-195"],
   cardType: "character",
   name: "Mrs. Incredible",
@@ -21,6 +33,7 @@ export const mrsIncredibleDeterminedRescuer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fcfb9ad84f3a4c2db462a9ec4d3a63d1",
+    tcgPlayer: "692229",
   },
   text: [
     {

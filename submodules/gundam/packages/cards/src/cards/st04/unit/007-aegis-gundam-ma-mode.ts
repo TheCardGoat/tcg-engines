@@ -7,14 +7,17 @@ export const st04AegisGundamMaMode007: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "ST04-007",
-  externalId: "gundam:st04-007",
-  slug: "aegis-gundam-ma-mode-st04-007",
+  canonicalId: "ST04-007",
+  externalIds: { bandai: "gundam:st04-007" },
+  slug: "aegis-gundam-ma-mode/st04-007",
   displayName: "Aegis Gundam (MA Mode)",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-007",
   printings: [
     {
       id: "ST04-007",
+      artId: "ST04-007",
+      setCode: "ST04",
       collectorNumber: "ST04-007",
       cardNumber: "ST04-007",
       set: {
@@ -30,6 +33,8 @@ export const st04AegisGundamMaMode007: UnitCard = {
     },
     {
       id: "ST04-007_p1",
+      artId: "ST04-007_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-007_p1",
       cardNumber: "ST04-007",
       set: {
@@ -45,6 +50,8 @@ export const st04AegisGundamMaMode007: UnitCard = {
     },
     {
       id: "ST04-007_p2",
+      artId: "ST04-007_p2",
+      setCode: "ST09",
       collectorNumber: "ST04-007_p2",
       cardNumber: "ST04-007",
       set: {
@@ -59,6 +66,7 @@ export const st04AegisGundamMaMode007: UnitCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["ST04-007", "ST04-007_p1", "ST04-007_p2"],
   selectedPrintingId: "ST04-007",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-007.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-007.webp?260424",

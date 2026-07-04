@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mittensSassyStreetCatI18n } from "./009-mittens-sassy-street-cat.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const mittensSassyStreetCat: CharacterCard = {
   id: "msV",
   canonicalId: "ci_msV",
+  slug: "lorcana-ci_msV",
+  printings: [
+    {
+      id: "set7-009",
+      artId: "set7-009",
+      setCode: "set7",
+      collectorNumber: "9",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-009"],
   cardType: "character",
   name: "Mittens",
@@ -21,7 +33,7 @@ export const mittensSassyStreetCat: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9b5d0e7c5c15447d9f17ea4419b07e3f",
-    tcgPlayer: 618159,
+    tcgPlayer: "618159",
   },
   text: [
     {

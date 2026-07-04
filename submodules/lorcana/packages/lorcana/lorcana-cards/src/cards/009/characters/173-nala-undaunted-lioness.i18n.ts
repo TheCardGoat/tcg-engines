@@ -16,9 +16,9 @@ export const nalaUndauntedLionessI18n: Record<Languages, I18nProperties> = {
     version: "Unerschrockene Löwin",
     text: [
       {
-        title: "ENTSCHLOSSENE ABLENKUNG",
+        title: "Entschlossene Ablenkung",
         description:
-          "Solange dieser Charakter unbeschädigt ist, erhält er +1 und Robust +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+          "Solange dieser Charakter unbeschädigt ist, erhält er +1 {L} und <Robust> +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const nalaUndauntedLionessI18n: Record<Languages, I18nProperties> = {
     version: "Lionne indomptable",
     text: [
       {
-        title: "DIVERSION RÉSOLUE",
+        title: "Diversion résolue",
         description:
-          "Tant que ce personnage n'a aucun dommage sur lui, il gagne +1 et Résistance +1.",
+          "Tant que ce personnage n'a aucun dommage sur lui, il gagne +1 {L} et <Résistance> +1.",
       },
     ],
   },
@@ -38,8 +38,9 @@ export const nalaUndauntedLionessI18n: Record<Languages, I18nProperties> = {
     version: "Leonessa Indomita",
     text: [
       {
-        title: "DISTRAZIONE RISOLUTA",
-        description: "Mentre questo personaggio non ha danno, riceve +1 e ottiene Resistere +1.",
+        title: "Distrazione Risoluta",
+        description:
+          "Mentre questo personaggio non ha danno, riceve +1 {L} e ottiene <Resistere> +1.",
       },
     ],
   },

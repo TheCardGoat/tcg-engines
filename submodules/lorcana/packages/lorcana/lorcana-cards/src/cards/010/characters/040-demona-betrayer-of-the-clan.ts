@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { demonaBetrayerOfTheClanI18n } from "./040-demona-betrayer-of-the-clan.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const demonaBetrayerOfTheClan: CharacterCard = {
   id: "dX5",
   canonicalId: "ci_dX5",
+  slug: "lorcana-ci_dX5",
+  printings: [
+    {
+      id: "set10-040",
+      artId: "set10-040",
+      setCode: "set10",
+      collectorNumber: "40",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-040"],
   cardType: "character",
   name: "Demona",
@@ -22,7 +34,7 @@ export const demonaBetrayerOfTheClan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_35f7836ceed84e21ba7cfdde813d73bc",
-    tcgPlayer: 658503,
+    tcgPlayer: "658503",
   },
   text: [
     {

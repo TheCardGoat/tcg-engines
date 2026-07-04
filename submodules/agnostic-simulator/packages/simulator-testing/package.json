@@ -26,7 +26,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "check-types": "tsc --noEmit",
-    "test": "vp test run --passWithNoTests"
+    "test": "vp test run --configLoader runner --passWithNoTests"
   },
   "dependencies": {
     "@testing-library/dom": "^10.4.1",

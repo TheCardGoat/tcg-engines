@@ -9,8 +9,8 @@ export const balooVonBruinwaldXiiiI18n: Record<Languages, I18nProperties> = {
         title: "Bodyguard",
       },
       {
-        title: "LET'S MAKE LIKE A TREE",
-        description: "When this character is banished, gain 2 lore.",
+        title: "LET'S MAKE LIKE",
+        description: "A TREE When this character is banished, gain 2 lore.",
       },
     ],
   },
@@ -19,10 +19,11 @@ export const balooVonBruinwaldXiiiI18n: Record<Languages, I18nProperties> = {
     version: "von Bruinwald XIII",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "AB DURCH DIE NASSE MITTE",
+        title: "Ab durch die nasse Mitte",
         description: "Wenn dieser Charakter verbannt wird, sammelst du 2 Legenden.",
       },
     ],
@@ -32,11 +33,12 @@ export const balooVonBruinwaldXiiiI18n: Record<Languages, I18nProperties> = {
     version: "von Bruinwald XIII",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il vous défie, un personnage adverse doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "MOI, JE ME JETTE",
-        description: "À L'EAU Lorsque ce personnage est banni, gagnez 2 éclats de Lore.",
+        title: "Moi, je me jette à l'eau",
+        description: "Lorsque ce personnage est banni, gagnez 2 éclats de Lore.",
       },
     ],
   },
@@ -45,10 +47,10 @@ export const balooVonBruinwaldXiiiI18n: Record<Languages, I18nProperties> = {
     version: "Von Bruinwald XIII",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "ALLONTANIAMOCI, SVELTI!",
+        title: "Allontaniamoci, Svelti!",
         description: "Quando questo personaggio viene esiliato, ottieni 2 leggenda.",
       },
     ],

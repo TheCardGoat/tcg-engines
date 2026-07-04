@@ -6,9 +6,9 @@ export const johnSilverVengefulPirateI18n: Record<Languages, I18nProperties> = {
     version: "Vengeful Pirate",
     text: [
       {
-        title: "DRAWN TO A FIGHT",
+        title: "DRAWN TO",
         description:
-          "If an opposing character took damage this turn, you pay 2 {I} less to play this character.",
+          "A FIGHT If an opposing character was damaged this turn, you pay 2 {I} less to play this character.",
       },
       {
         title: "Resist +1",
@@ -25,12 +25,16 @@ export const johnSilverVengefulPirateI18n: Record<Languages, I18nProperties> = {
     version: "Rachsüchtiger Pirat",
     text: [
       {
-        title: "ZUM KAMPF HINGEZOGEN",
+        title: "Zum Kampf hingezogen",
         description:
-          "Falls ein gegnerischer Charakter in diesem Zug Schaden erhalten hat, zahlst du 2 weniger, um diesen Charakter auszuspielen. Robust +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+          "Falls ein gegnerischer Charakter in diesem Zug Schaden erhalten hat, zahlst du 2 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "ICH BIN NICHT WEICH GEWORDEN!",
+        title:
+          "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+      },
+      {
+        title: "Ich bin nicht weich geworden!",
         description:
           "Jedes Mal, wenn du eine Aktion ausspielst, die kein Lied ist, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.",
       },
@@ -41,9 +45,17 @@ export const johnSilverVengefulPirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirate revanchard",
     text: [
       {
-        title: "ATTIRÉ PAR LE COMBAT",
+        title: "Attiré par le combat",
         description:
-          "Jouer ce personnage vous coûte 2 de moins si un personnage adverse a subi au moins un dommage ce tour-ci. Résistance +1 CROIS SURTOUT PAS QUE J'ME DÉGONFLE! Chaque fois que vous jouez une action qui n'est pas une chanson, vous pouvez choisir un personnage et lui infliger 1 dommage.",
+          "Jouer ce personnage vous coûte 2 {I} de moins si un personnage adverse a subi au moins un dommage ce tour-ci.",
+      },
+      {
+        title: "<Résistance> +1",
+      },
+      {
+        title: "Crois surtout pas que j'me dégonfle!",
+        description:
+          "Chaque fois que vous jouez une action qui n'est pas une chanson, vous pouvez choisir un personnage et lui infliger 1 dommage.",
       },
     ],
   },
@@ -52,9 +64,17 @@ export const johnSilverVengefulPirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirata Vendicativo",
     text: [
       {
-        title: "ATTRATTO DALLE ZUFFE",
+        title: "Attratto dalle Zuffe",
         description:
-          "Se un personaggio avversario è stato danneggiato in questo turno, paga 2 in meno per giocare questo personaggio. Resistere +1 NON MI SONO RAMMOLLITO Ogni volta che giochi un'azione che non è una canzone, puoi infliggere 1 danno a un personaggio a tua scelta.",
+          "Se un personaggio avversario ha subito danno in questo turno, paga 2 {I} in meno per giocare questo personaggio.",
+      },
+      {
+        title: "<Resistere> +1",
+      },
+      {
+        title: "Non Mi Sono Rammollito",
+        description:
+          "Ogni volta che giochi un'azione che non è una canzone, puoi infliggere 1 danno a un personaggio a tua scelta.",
       },
     ],
   },

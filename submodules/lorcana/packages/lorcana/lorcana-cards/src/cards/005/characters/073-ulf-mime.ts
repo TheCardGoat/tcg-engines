@@ -4,6 +4,17 @@ import { ulfMimeI18n } from "./073-ulf-mime.i18n";
 export const ulfMime: CharacterCard = {
   id: "5p6",
   canonicalId: "ci_5p6",
+  slug: "lorcana-ci_5p6",
+  printings: [
+    {
+      id: "set5-073",
+      artId: "set5-073",
+      setCode: "set5",
+      collectorNumber: "73",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-073"],
   cardType: "character",
   name: "Ulf",
@@ -20,7 +31,7 @@ export const ulfMime: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4b2b91b67cde4db99f61c51b388a338f",
-    tcgPlayer: 561159,
+    tcgPlayer: "561159",
   },
   text: [
     {

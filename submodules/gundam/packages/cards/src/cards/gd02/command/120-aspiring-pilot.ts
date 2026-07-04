@@ -7,14 +7,17 @@ export const gd02AspiringPilot120: CommandCard = {
   color: "white",
   traits: ["aeug"],
   id: "GD02-120",
-  externalId: "gundam:gd02-120",
-  slug: "aspiring-pilot-gd02-120",
+  canonicalId: "GD02-120",
+  externalIds: { bandai: "gundam:gd02-120" },
+  slug: "aspiring-pilot/gd02-120",
   displayName: "Aspiring Pilot",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-120",
   printings: [
     {
       id: "GD02-120",
+      artId: "GD02-120",
+      setCode: "GD02",
       collectorNumber: "GD02-120",
       cardNumber: "GD02-120",
       set: {
@@ -29,6 +32,7 @@ export const gd02AspiringPilot120: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-120"],
   selectedPrintingId: "GD02-120",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-120.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-120.webp?260424",

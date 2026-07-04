@@ -4,6 +4,17 @@ import { inkrunnerI18n } from "./169-inkrunner.i18n";
 export const inkrunner: ItemCard = {
   id: "VpM",
   canonicalId: "ci_VpM",
+  slug: "lorcana-ci_VpM",
+  printings: [
+    {
+      id: "set10-169",
+      artId: "set10-169",
+      setCode: "set10",
+      collectorNumber: "169",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-169"],
   cardType: "item",
   name: "Inkrunner",
@@ -16,7 +27,7 @@ export const inkrunner: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2e63442a36994d4fa8266285fe63addd",
-    tcgPlayer: 659389,
+    tcgPlayer: "659389",
   },
   text: [
     {

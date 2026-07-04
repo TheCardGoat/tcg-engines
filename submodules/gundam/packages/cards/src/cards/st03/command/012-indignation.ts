@@ -7,14 +7,17 @@ export const st03Indignation012: CommandCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "ST03-012",
-  externalId: "gundam:st03-012",
-  slug: "indignation-st03-012",
+  canonicalId: "ST03-012",
+  externalIds: { bandai: "gundam:st03-012" },
+  slug: "indignation/st03-012",
   displayName: "Indignation",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-012",
   printings: [
     {
       id: "ST03-012",
+      artId: "ST03-012",
+      setCode: "ST03",
       collectorNumber: "ST03-012",
       cardNumber: "ST03-012",
       set: {
@@ -30,6 +33,8 @@ export const st03Indignation012: CommandCard = {
     },
     {
       id: "ST03-012_p1",
+      artId: "ST03-012_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-012_p1",
       cardNumber: "ST03-012",
       set: {
@@ -44,6 +49,7 @@ export const st03Indignation012: CommandCard = {
       productName: "Zeon's Rush [ST03] Bonus Pack",
     },
   ],
+  reprints: ["ST03-012", "ST03-012_p1"],
   selectedPrintingId: "ST03-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-012.webp?260424",

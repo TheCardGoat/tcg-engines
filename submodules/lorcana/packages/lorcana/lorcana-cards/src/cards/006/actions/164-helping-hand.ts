@@ -4,6 +4,17 @@ import { helpingHandI18n } from "./164-helping-hand.i18n";
 export const helpingHand: ActionCard = {
   id: "178",
   canonicalId: "ci_178",
+  slug: "lorcana-ci_178",
+  printings: [
+    {
+      id: "set6-164",
+      artId: "set6-164",
+      setCode: "set6",
+      collectorNumber: "164",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-164"],
   cardType: "action",
   name: "Helping Hand",
@@ -16,7 +27,7 @@ export const helpingHand: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_82a7bdb095d2477bbad45e524ad4a7dd",
-    tcgPlayer: 586975,
+    tcgPlayer: "586975",
   },
   text: "Chosen character gains Support this turn. Draw a card. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
   abilities: [

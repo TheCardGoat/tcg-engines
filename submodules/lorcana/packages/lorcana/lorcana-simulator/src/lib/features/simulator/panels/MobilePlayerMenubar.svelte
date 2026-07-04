@@ -1,27 +1,25 @@
 <script lang="ts">
   import { tick } from "svelte";
-  import {
-    Activity,
-    BookOpenText,
-    CircleHelp,
-    ClipboardEdit,
-    Eye,
-    Flag,
-    Gem,
-    Hand,
-    Layers,
-    MessageSquare,
-    PaintBucket,
-    Settings,
-    Sparkles,
-    Star,
-    ShieldCheck,
-    Swords,
-    Trash2,
-    X,
-    OctagonX,
-    LoaderCircle,
-  } from "@lucide/svelte";
+  import Activity from "@lucide/svelte/icons/activity";
+  import BookOpenText from "@lucide/svelte/icons/book-open-text";
+  import CircleHelp from "@lucide/svelte/icons/circle-help";
+  import ClipboardEdit from "@lucide/svelte/icons/clipboard-edit";
+  import Eye from "@lucide/svelte/icons/eye";
+  import Flag from "@lucide/svelte/icons/flag";
+  import Gem from "@lucide/svelte/icons/gem";
+  import Hand from "@lucide/svelte/icons/hand";
+  import Layers from "@lucide/svelte/icons/layers";
+  import LoaderCircle from "@lucide/svelte/icons/loader-circle";
+  import MessageSquare from "@lucide/svelte/icons/message-square";
+  import OctagonX from "@lucide/svelte/icons/octagon-x";
+  import PaintBucket from "@lucide/svelte/icons/paint-bucket";
+  import Settings from "@lucide/svelte/icons/settings";
+  import ShieldCheck from "@lucide/svelte/icons/shield-check";
+  import Sparkles from "@lucide/svelte/icons/sparkles";
+  import Star from "@lucide/svelte/icons/star";
+  import Swords from "@lucide/svelte/icons/swords";
+  import Trash2 from "@lucide/svelte/icons/trash-2";
+  import X from "@lucide/svelte/icons/x";
   import { Button } from "$lib/components/ui/button";
   import * as Dialog from "$lib/design-system/primitives/dialog";
   import * as Drawer from "$lib/components/ui/drawer";
@@ -226,8 +224,6 @@
     }
     return badges;
   });
-  const loreMaskStyle = `mask-image: url("${loreIconUrl}"); -webkit-mask-image: url("${loreIconUrl}");`;
-  const exertMaskStyle = `mask-image: url("${exertIconUrl}"); -webkit-mask-image: url("${exertIconUrl}");`;
   const confirmationMoveCategoryIds = new Set<ExecutableMovePresentationCategoryId>([
     "concede",
   ]);
@@ -248,7 +244,7 @@
       : null,
   );
   const questAllAvailable = $derived(
-    questAllSummary !== null && questAllLore !== null && questAllCount !== null,
+    questAllLore !== null && questAllCount !== null,
   );
   const passTurnArmed = $derived(armedDirectCategoryId === "pass-turn");
   const questAllArmed = $derived(armedDirectCategoryId === "quest-all");
@@ -438,7 +434,7 @@
           data-testid={`mobile-${seat}-lore-chip`}
         >
           <span class="lore-chip__content">
-            <span aria-hidden="true" class="lore-chip__icon" style={loreMaskStyle}></span>
+            <img aria-hidden="true" alt="" class="lore-chip__icon" src={loreIconUrl} />
             <span class="lore-chip__value">{loreValue}</span>
           </span>
         </Button>
@@ -478,7 +474,7 @@
             data-testid={`mobile-${seat}-lore-chip`}
           >
             <span class="lore-chip__content">
-              <span aria-hidden="true" class="lore-chip__icon" style={loreMaskStyle}></span>
+              <img aria-hidden="true" alt="" class="lore-chip__icon" src={loreIconUrl} />
               <span class="lore-chip__value">{loreValue}</span>
             </span>
           </Button>
@@ -565,19 +561,21 @@
             {#if questAllLore !== null && questAllCount !== null}
               <span class="quick-action__stat-row">
                 <span class="quick-action__stat" aria-label={`${questAllCount} ready characters`}>
-                  <span
+                  <img
                     aria-hidden="true"
+                    alt=""
                     class="quick-action__stat-icon quick-action__stat-icon--exert"
-                    style={exertMaskStyle}
-                  ></span>
+                    src={exertIconUrl}
+                  />
                   <span>{questAllCount}</span>
                 </span>
                 <span class="quick-action__stat" aria-label={`${questAllLore} lore`}>
-                  <span
+                  <img
                     aria-hidden="true"
+                    alt=""
                     class="quick-action__stat-icon quick-action__stat-icon--lore"
-                    style={loreMaskStyle}
-                  ></span>
+                    src={loreIconUrl}
+                  />
                   <span>+{questAllLore}</span>
                 </span>
               </span>
@@ -618,7 +616,7 @@
         data-testid={`mobile-${seat}-lore-chip`}
       >
         <span class="lore-chip__content">
-          <span aria-hidden="true" class="lore-chip__icon" style={loreMaskStyle}></span>
+          <img aria-hidden="true" alt="" class="lore-chip__icon" src={loreIconUrl} />
           <span class="lore-chip__value">{loreValue}</span>
         </span>
       </Button>
@@ -806,7 +804,7 @@
 
             <div class="flex items-center gap-1.5 rounded-full bg-sky-950/70 px-2.5 py-1.25 ring-1 ring-inset ring-sky-300/18">
               <span class="text-[0.95rem] font-black leading-none text-amber-300">{loreValue}</span>
-              <span aria-hidden="true" class="sheet-lore-icon" style={loreMaskStyle}></span>
+              <img aria-hidden="true" alt="" class="sheet-lore-icon" src={loreIconUrl} />
             </div>
           </div>
         </div>
@@ -1263,14 +1261,9 @@
     width: 0.85rem;
     height: 0.85rem;
     flex-shrink: 0;
-    background: #fcd34d;
-    mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
-    mask-position: center;
-    -webkit-mask-position: center;
-    mask-size: contain;
-    -webkit-mask-size: contain;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(83%) sepia(62%) saturate(644%) hue-rotate(349deg)
+      brightness(101%) contrast(98%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
   }
 
   :global(.quick-action) {
@@ -1402,20 +1395,17 @@
     width: 0.52rem;
     height: 0.52rem;
     flex-shrink: 0;
-    mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
-    mask-position: center;
-    -webkit-mask-position: center;
-    mask-size: contain;
-    -webkit-mask-size: contain;
+    object-fit: contain;
   }
 
   .quick-action__stat-icon--exert {
-    background: rgba(191, 219, 254, 0.8);
+    filter: brightness(0) saturate(100%) invert(86%) sepia(20%) saturate(757%) hue-rotate(185deg)
+      brightness(105%) contrast(99%);
   }
 
   .quick-action__stat-icon--lore {
-    background: #fcd34d;
+    filter: brightness(0) saturate(100%) invert(83%) sepia(62%) saturate(644%) hue-rotate(349deg)
+      brightness(101%) contrast(98%);
   }
 
   .quick-action__meta {
@@ -1688,14 +1678,9 @@
     width: 0.95rem;
     height: 0.95rem;
     flex-shrink: 0;
-    background: #fcd34d;
-    mask-repeat: no-repeat;
-    -webkit-mask-repeat: no-repeat;
-    mask-position: center;
-    -webkit-mask-position: center;
-    mask-size: contain;
-    -webkit-mask-size: contain;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+    object-fit: contain;
+    filter: brightness(0) saturate(100%) invert(83%) sepia(62%) saturate(644%) hue-rotate(349deg)
+      brightness(101%) contrast(98%) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
   }
 
   :global(.mobile-confirm-dialog) {

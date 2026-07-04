@@ -6,9 +6,9 @@ export const tinkerBellGenerousFairyI18n: Record<Languages, I18nProperties> = {
     version: "Generous Fairy",
     text: [
       {
-        title: "MAKE A NEW FRIEND",
+        title: "MAKE",
         description:
-          "When you play this character, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+          "A NEW FRIEND When you play this character, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const tinkerBellGenerousFairyI18n: Record<Languages, I18nProperties> = {
     version: "Großzügige Fee",
     text: [
       {
-        title: "NEUE FREUNDE FINDEN",
+        title: "Neue Freunde finden",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Charakterkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const tinkerBellGenerousFairyI18n: Record<Languages, I18nProperties> = {
     version: "Fée généreuse",
     text: [
       {
-        title: "NOUVELLE AMITIÉ",
+        title: "Nouvelle amitié",
         description:
           "Lorsque vous jouez ce personnage, regardez les 4 premières cartes de votre pioche. Vous pouvez révéler un personnage et l'ajouter à votre main. Remettez le reste sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const tinkerBellGenerousFairyI18n: Record<Languages, I18nProperties> = {
     version: "Fata Generosa",
     text: [
       {
-        title: "FARE AMICIZIA",
+        title: "Fare Amicizia",
         description:
           "Quando giochi questo personaggio, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio tra quelle e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

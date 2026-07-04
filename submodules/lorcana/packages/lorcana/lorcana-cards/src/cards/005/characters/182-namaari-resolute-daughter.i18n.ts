@@ -6,9 +6,8 @@ export const namaariResoluteDaughterI18n: Record<Languages, I18nProperties> = {
     version: "Resolute Daughter",
     text: [
       {
-        title: "I DON'T HAVE ANY OTHER CHOICE",
-        description:
-          "For each opposing character banished in a challenge this turn, you pay 2 {I} less to play this character.",
+        title:
+          "I DON'T HAVE ANY OTHER CHOICE For each opposing character banished in a challenge this turn, you pay 2 {I} less to play this character.",
       },
       {
         title: "Resist +3",
@@ -20,12 +19,13 @@ export const namaariResoluteDaughterI18n: Record<Languages, I18nProperties> = {
     version: "Entschlossene Tochter",
     text: [
       {
-        title: "ICH HABE KEINE ANDERE WAHL",
+        title: "Ich habe keine andere Wahl",
         description:
-          "Für jeden gegnerischen Charakter, der in diesem Zug durch eine Herausforderung verbannt wurde, zahlst du 2 weniger, um diesen Charakter auszuspielen.",
+          "Für jeden gegnerischen Charakter, der in diesem Zug durch eine Herausforderung verbannt wurde, zahlst du 2 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "Robust +3",
+        title:
+          "<Robust> +3 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 3.)",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const namaariResoluteDaughterI18n: Record<Languages, I18nProperties> = {
     version: "Fille déterminée",
     text: [
       {
-        title: "JE N'AI VRAIMENT PAS LE CHOIX",
+        title: "Je n'ai vraiment pas le choix",
         description:
-          "Jouer ce personnage vous coûte 2 de moins pour chaque personnage adverse banni via un défi ce tour-ci.",
+          "Jouer ce personnage vous coûte 2 {I} de moins pour chaque personnage adverse banni via un défi ce tour-ci.",
       },
       {
-        title: "Résistance +3",
+        title: "<Résistance> +3",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const namaariResoluteDaughterI18n: Record<Languages, I18nProperties> = {
     version: "Figlia Risoluta",
     text: [
       {
-        title: "NON HO DAVVERO ALTRA SCELTA",
+        title: "Non Ho Davvero Altra Scelta",
         description:
-          "Per ogni personaggio avversario esiliato in una sfida in questo turno, paga 2 in meno per giocare questo personaggio.",
+          "Per ogni personaggio avversario esiliato in una sfida in questo turno, paga 2 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "Resistere +3",
+        title: "<Resistere> +3",
       },
     ],
   },

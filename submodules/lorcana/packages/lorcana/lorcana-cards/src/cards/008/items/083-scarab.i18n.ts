@@ -15,9 +15,9 @@ export const scarabI18n: Record<Languages, I18nProperties> = {
     name: "Skarabäus",
     text: [
       {
-        title: "DURCHSUCHT DEN SAND, 2",
+        title: "Durchsucht den Sand",
         description:
-          "— Nimm eine Illusions-Charakterkarte aus deinem Ablagestapel zurück auf deine Hand.",
+          "{E}, 2 {I} — Nimm eine Illusions-Charakterkarte aus deinem Ablagestapel zurück auf deine Hand.",
       },
     ],
   },
@@ -25,8 +25,9 @@ export const scarabI18n: Record<Languages, I18nProperties> = {
     name: "Scarabée",
     text: [
       {
-        title: "FOUILLER LE SABLE, 2",
-        description: "— Renvoyez une carte Personnage Illusion de votre défausse dans votre main.",
+        title: "Fouiller le sable",
+        description:
+          "{E}, 2 {I} — Renvoyez une carte Personnage Illusion de votre défausse dans votre main.",
       },
     ],
   },
@@ -34,8 +35,9 @@ export const scarabI18n: Record<Languages, I18nProperties> = {
     name: "Scarabeo",
     text: [
       {
-        title: "CERCATE TRA LE SABBIE, 2",
-        description: "— Riprendi in mano una carta personaggio Illusione dai tuoi scarti.",
+        title: "Cercate tra le Sabbie",
+        description:
+          "{E}, 2 {I} — Riprendi in mano una carta personaggio Illusione dai tuoi scarti.",
       },
     ],
   },

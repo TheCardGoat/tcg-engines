@@ -17,7 +17,7 @@ export const kingCandySugarRushNightmareI18n: Record<Languages, I18nProperties> 
     version: "Sugar-Rush-Albtraum",
     text: [
       {
-        title: "EIN NEUER FAHRER",
+        title: "Ein neuer Fahrer",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du eine andere Rennfahrer-Charakterkarte aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
@@ -28,7 +28,7 @@ export const kingCandySugarRushNightmareI18n: Record<Languages, I18nProperties> 
     version: "Cauchemar de Sugar Rush",
     text: [
       {
-        title: "UNE NOUVELLE ÉQUIPE",
+        title: "Une nouvelle équipe",
         description:
           "Lorsque ce personnage est banni, vous pouvez renvoyer dans votre main une autre carte Pilote de votre défausse.",
       },
@@ -39,7 +39,7 @@ export const kingCandySugarRushNightmareI18n: Record<Languages, I18nProperties> 
     version: "Incubo di Sugar Rush",
     text: [
       {
-        title: "NUOVI CONCORRENTI",
+        title: "Nuovi Concorrenti",
         description:
           "Quando questo personaggio viene esiliato, puoi riprendere in mano un'altra carta personaggio Pilota dai tuoi scarti.",
       },

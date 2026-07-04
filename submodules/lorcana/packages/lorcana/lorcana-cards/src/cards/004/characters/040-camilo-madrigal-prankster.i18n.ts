@@ -22,9 +22,15 @@ export const camiloMadrigalPranksterI18n: Record<Languages, I18nProperties> = {
     version: "Scherzkeks",
     text: [
       {
-        title: "VIELE FORMEN",
-        description:
-          "Zu Beginn deines Zuges, darfst du eine Möglichkeit auswählen: • Dieser Charakter erhält in diesem Zug +1. • Dieser Charakter erhält in diesem Zug Herausfordern +2. (Während der Charakter herausfordert, erhält er +2.)",
+        title: "Viele Formen",
+        description: "Zu Beginn deines Zuges, darfst du eine Möglichkeit auswählen:",
+      },
+      {
+        title: "• Dieser Charakter erhält in diesem Zug +1 {L}.",
+      },
+      {
+        title:
+          "• Dieser Charakter erhält in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}.)",
       },
     ],
   },
@@ -33,9 +39,14 @@ export const camiloMadrigalPranksterI18n: Record<Languages, I18nProperties> = {
     version: "Farceur",
     text: [
       {
-        title: "MÉTAMORPHOSES",
-        description:
-          "Au début de votre tour, choisissez entre: • Ce personnage gagne +1 pour le reste de ce tour. • Ce personnage gagne Offensif +2 pour le reste de ce tour.",
+        title: "Métamorphoses",
+        description: "Au début de votre tour, choisissez entre:",
+      },
+      {
+        title: "• Ce personnage gagne +1 {L} pour le reste de ce tour.",
+      },
+      {
+        title: "• Ce personnage gagne <Offensif> +2 pour le reste de ce tour.",
       },
     ],
   },
@@ -44,9 +55,15 @@ export const camiloMadrigalPranksterI18n: Record<Languages, I18nProperties> = {
     version: "Spiritosone",
     text: [
       {
-        title: "MOLTE FORME",
-        description:
-          "All'inizio del tuo turno puoi scegliere uno: • Questo personaggio riceve +1 per questo turno. • Questo personaggio ottiene Sfidante +2 per questo turno.",
+        title: "Molte Forme",
+        description: "All'inizio del tuo turno puoi scegliere uno:",
+      },
+      {
+        title: "• Questo personaggio riceve +1 {L} per questo turno.",
+      },
+      {
+        title:
+          "• Questo personaggio ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
       },
     ],
   },

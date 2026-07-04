@@ -4,6 +4,17 @@ import { rancisFluggerbutterChocolateChargerI18n } from "./108-rancis-fluggerbut
 export const rancisFluggerbutterChocolateCharger: CharacterCard = {
   id: "5sW",
   canonicalId: "ci_5sW",
+  slug: "lorcana-ci_5sW",
+  printings: [
+    {
+      id: "set5-108",
+      artId: "set5-108",
+      setCode: "set5",
+      collectorNumber: "108",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-108"],
   cardType: "character",
   name: "Rancis Fluggerbutter",
@@ -21,7 +32,7 @@ export const rancisFluggerbutterChocolateCharger: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_ba5b6348c7074d0cb21ecde50a1e6651",
-    tcgPlayer: 555266,
+    tcgPlayer: "555266",
   },
   classifications: ["Storyborn", "Ally", "Racer"],
   i18n: rancisFluggerbutterChocolateChargerI18n,

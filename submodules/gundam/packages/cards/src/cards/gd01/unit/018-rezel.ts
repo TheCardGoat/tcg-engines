@@ -7,14 +7,17 @@ export const gd01Rezel018: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-018",
-  externalId: "gundam:gd01-018",
-  slug: "rezel-gd01-018",
+  canonicalId: "GD01-018",
+  externalIds: { bandai: "gundam:gd01-018" },
+  slug: "rezel/gd01-018",
   displayName: "ReZEL",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-018",
   printings: [
     {
       id: "GD01-018",
+      artId: "GD01-018",
+      setCode: "GD01",
       collectorNumber: "GD01-018",
       cardNumber: "GD01-018",
       set: {
@@ -30,6 +33,8 @@ export const gd01Rezel018: UnitCard = {
     },
     {
       id: "GD01-018_p1",
+      artId: "GD01-018_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-018_p1",
       cardNumber: "GD01-018",
       set: {
@@ -44,6 +49,7 @@ export const gd01Rezel018: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-018", "GD01-018_p1"],
   selectedPrintingId: "GD01-018",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-018.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-018.webp?260424",

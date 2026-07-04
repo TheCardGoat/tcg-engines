@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { zipperBigHelperI18n } from "./150-zipper-big-helper.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const zipperBigHelper: CharacterCard = {
   id: "lnZ",
   canonicalId: "ci_lnZ",
+  slug: "lorcana-ci_lnZ",
+  printings: [
+    {
+      id: "set12-150",
+      artId: "set12-150",
+      setCode: "set12",
+      collectorNumber: "150",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-150"],
   cardType: "character",
   name: "Zipper",
@@ -20,7 +32,8 @@ export const zipperBigHelper: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_a7f1e4a1087a438a98d149bb5c4e508b",
+    lorcast: "crd_d515c85e0daa4cfd8c3a84154d328cd4",
+    tcgPlayer: "692226",
   },
   text: [
     {

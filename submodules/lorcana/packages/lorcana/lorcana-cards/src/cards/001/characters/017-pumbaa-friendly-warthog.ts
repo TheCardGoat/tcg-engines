@@ -4,6 +4,17 @@ import { pumbaaFriendlyWarthogI18n } from "./017-pumbaa-friendly-warthog.i18n";
 export const pumbaaFriendlyWarthog: CharacterCard = {
   id: "Itm",
   canonicalId: "ci_Itm",
+  slug: "lorcana-ci_Itm",
+  printings: [
+    {
+      id: "set1-017",
+      artId: "set1-017",
+      setCode: "set1",
+      collectorNumber: "17",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-017"],
   cardType: "character",
   name: "Pumbaa",
@@ -21,7 +32,7 @@ export const pumbaaFriendlyWarthog: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_389a5296a2114c10a16be57f0677429f",
-    tcgPlayer: 508701,
+    tcgPlayer: "508701",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: pumbaaFriendlyWarthogI18n,

@@ -17,9 +17,9 @@ export const sleepyHollowTheBridgeI18n: Record<Languages, I18nProperties> = {
     version: "Die Brücke",
     text: [
       {
-        title: "AUF ZUR BRÜCKE!",
+        title: "Auf zur Brücke!",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere an diesem Ort erkundet, darfst du diesen Ort verbannen, um 2 Legenden zu sammeln und dem Charakter bis zu Beginn deines nächsten Zuges Wendig zu geben.",
+          "Jedes Mal, wenn einer deiner Charaktere an diesem Ort erkundet, darfst du diesen Ort verbannen, um 2 Legenden zu sammeln und dem Charakter bis zu Beginn deines nächsten Zuges <Wendig> zu geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const sleepyHollowTheBridgeI18n: Record<Languages, I18nProperties> = {
     version: "Le Pont",
     text: [
       {
-        title: "FRANCHISSEZ LE PONT!",
+        title: "Franchissez le Pont!",
         description:
-          "Lorsqu'un personnage sur ce lieu est envoyé à l'aventure, vous pouvez bannir ce lieu pour gagner 2 éclats de Lore et donner à ce personnage Insaisissable jusqu'au début de votre prochain tour.",
+          "Lorsqu'un personnage sur ce lieu est envoyé à l'aventure, vous pouvez bannir ce lieu pour gagner 2 éclats de Lore et donner à ce personnage <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const sleepyHollowTheBridgeI18n: Record<Languages, I18nProperties> = {
     version: "Il Ponte",
     text: [
       {
-        title: "VERSO IL PONTE!",
+        title: "Verso il Ponte!",
         description:
-          "Ogni volta che un personaggio va all'avventura mentre si trova in questo luogo, puoi esiliare questo luogo per ottenere 2 leggenda e dargli Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Ogni volta che un personaggio va all'avventura mentre si trova in questo luogo, puoi esiliare questo luogo per ottenere 2 leggenda e dargli <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

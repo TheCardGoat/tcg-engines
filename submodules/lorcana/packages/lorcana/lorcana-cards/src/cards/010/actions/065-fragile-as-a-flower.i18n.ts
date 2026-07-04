@@ -11,10 +11,28 @@ export const fragileAsAFlowerI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Aussi fragile qu’une fleur",
-    text: "Piochez une carte. Choisissez un personnage coûtant 2 ou moins et épuisez-le. Il ne se redresse pas au début de son prochain tour.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Piochez une carte. Choisissez un personnage coûtant 2 ou moins et épuisez-le. Il ne se redresse pas au début de son prochain tour.",
+      },
+    ],
   },
   it: {
     name: "Un Fuscello Delicato",
-    text: "(Un personaggio con costo 3 o superiore può per cantare questa canzone gratis.) Pesca una carta. Impegna un personaggio a tua scelta con costo 2 o inferiore. Non si può preparare all'inizio del suo prossimo turno.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Pesca una carta. Impegna un personaggio a tua scelta con costo 2 o inferiore. Non si può preparare all'inizio del suo prossimo turno.",
+      },
+    ],
   },
 };

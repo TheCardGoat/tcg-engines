@@ -38,6 +38,23 @@ export function resolveSelectTargetEffect(
     resolutionInput.eventSnapshot,
   );
 
+  const firstSelectedCard = selectedCards[0];
+  if (firstSelectedCard) {
+    resolutionInput.eventSnapshot ??= {};
+    if (!resolutionInput.eventSnapshot.chosenCardId) {
+      resolutionInput.eventSnapshot.chosenCardId = firstSelectedCard;
+    }
+
+    if (resolutionInput.eventSnapshot.chosenCardCost === undefined) {
+      const selectedDefinition = ctx.cards.getDefinition(firstSelectedCard);
+      const selectedCost =
+        selectedDefinition && "cost" in selectedDefinition ? selectedDefinition.cost : undefined;
+      if (typeof selectedCost === "number") {
+        resolutionInput.eventSnapshot.chosenCardCost = selectedCost;
+      }
+    }
+  }
+
   markLastEffectPerformed(
     resolutionInput.eventSnapshot,
     selectedCards.length > 0 || selectedPlayers.length > 0,

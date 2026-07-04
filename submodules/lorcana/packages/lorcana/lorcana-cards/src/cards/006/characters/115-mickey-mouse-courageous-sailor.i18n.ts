@@ -16,8 +16,8 @@ export const mickeyMouseCourageousSailorI18n: Record<Languages, I18nProperties> 
     version: "Mutiger Seemann",
     text: [
       {
-        title: "FESTER BODEN",
-        description: "Solange dieser Charakter an einem Ort ist, erhält er +2.",
+        title: "Fester Boden",
+        description: "Solange dieser Charakter an einem Ort ist, erhält er +2 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const mickeyMouseCourageousSailorI18n: Record<Languages, I18nProperties> 
     version: "Marin courageux",
     text: [
       {
-        title: "TERRE FERME",
-        description: "Tant que ce personnage est sur un lieu, il gagne +2.",
+        title: "Terre ferme",
+        description: "Tant que ce personnage est sur un lieu, il gagne +2 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const mickeyMouseCourageousSailorI18n: Record<Languages, I18nProperties> 
     version: "Marinaio Coraggioso",
     text: [
       {
-        title: "TERRAFERMA",
-        description: "Mentre questo personaggio si trova in un luogo, riceve +2.",
+        title: "Terraferma",
+        description: "Mentre questo personaggio si trova in un luogo, riceve +2 {S}.",
       },
     ],
   },

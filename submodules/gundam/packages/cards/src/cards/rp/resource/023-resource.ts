@@ -6,14 +6,17 @@ export const rpResource023: ResourceCard = {
   type: "resource",
   traits: [],
   id: "RP-023",
-  externalId: "gundam:rp-023",
-  slug: "resource-rp-023",
+  canonicalId: "RP-023",
+  externalIds: { bandai: "gundam:rp-023" },
+  slug: "resource/rp-023",
   displayName: "Resource",
   set: { code: "RP", name: "Events", packageId: "616901" },
   printNumber: "RP-023",
   printings: [
     {
       id: "RP-023",
+      artId: "RP-023",
+      setCode: "RP",
       collectorNumber: "RP-023",
       cardNumber: "RP-023",
       set: {
@@ -28,6 +31,7 @@ export const rpResource023: ResourceCard = {
       productName: "Events",
     },
   ],
+  reprints: ["RP-023"],
   selectedPrintingId: "RP-023",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-023.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-023.webp?260424",

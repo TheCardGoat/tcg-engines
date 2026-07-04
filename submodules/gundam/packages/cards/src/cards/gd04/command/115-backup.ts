@@ -7,14 +7,17 @@ export const gd04Backup115: CommandCard = {
   color: "purple",
   traits: [],
   id: "GD04-115",
-  externalId: "gundam:gd04-115",
-  slug: "backup-gd04-115",
+  canonicalId: "GD04-115",
+  externalIds: { bandai: "gundam:gd04-115" },
+  slug: "backup/gd04-115",
   displayName: "Backup",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-115",
   printings: [
     {
       id: "GD04-115",
+      artId: "GD04-115",
+      setCode: "GD04",
       collectorNumber: "GD04-115",
       cardNumber: "GD04-115",
       set: {
@@ -29,6 +32,7 @@ export const gd04Backup115: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-115"],
   selectedPrintingId: "GD04-115",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-115.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-115.webp?260424",

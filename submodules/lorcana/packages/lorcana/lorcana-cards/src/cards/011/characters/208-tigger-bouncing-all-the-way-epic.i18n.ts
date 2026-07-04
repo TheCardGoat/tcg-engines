@@ -17,7 +17,7 @@ export const tiggerBouncingAllTheWayEpicI18n: Record<Languages, I18nProperties> 
     version: "Immerzu am Hüpfen",
     text: [
       {
-        title: "WUNDERTASTISCHER SPRUNG",
+        title: "Wundertastischer Sprung",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Charakter, Gegenstand oder Ort deiner Wahl, der 2 oder weniger kostet, zurück auf die zugehörige Hand schicken.",
       },
@@ -28,7 +28,7 @@ export const tiggerBouncingAllTheWayEpicI18n: Record<Languages, I18nProperties> 
     version: "Bondit à tout va",
     text: [
       {
-        title: "BOND SPLENDIFIQUE",
+        title: "Bond splendifique",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage, un objet ou un lieu coûtant 2 ou moins et le renvoyer dans la main de son propriétaire.",
       },
@@ -39,7 +39,7 @@ export const tiggerBouncingAllTheWayEpicI18n: Record<Languages, I18nProperties> 
     version: "Sempre Saltellante",
     text: [
       {
-        title: "SALTELLO SPLENDERRIMO",
+        title: "Saltello Splenderrimo",
         description:
           "Quando giochi questo personaggio, puoi far riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 2 o inferiore.",
       },

@@ -3,19 +3,17 @@
   import { goto } from "$app/navigation";
   import { Badge } from "$lib/design-system/primitives/badge";
   import { Button } from "$lib/design-system/primitives/button";
-  import {
-    Download,
-    Trash2,
-    Film,
-    Upload,
-    ArrowLeft,
-    Clock,
-    MessageSquare,
-    Play,
-    Swords,
-    Trophy,
-    Gamepad2,
-  } from "@lucide/svelte";
+  import ArrowLeft from "@lucide/svelte/icons/arrow-left";
+  import Clock from "@lucide/svelte/icons/clock";
+  import Download from "@lucide/svelte/icons/download";
+  import Film from "@lucide/svelte/icons/film";
+  import Gamepad2 from "@lucide/svelte/icons/gamepad-2";
+  import MessageSquare from "@lucide/svelte/icons/message-square";
+  import Play from "@lucide/svelte/icons/play";
+  import Swords from "@lucide/svelte/icons/swords";
+  import Trash2 from "@lucide/svelte/icons/trash-2";
+  import Trophy from "@lucide/svelte/icons/trophy";
+  import Upload from "@lucide/svelte/icons/upload";
   import {
     listSavedReplays,
     deleteReplay,

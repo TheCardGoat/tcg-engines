@@ -4,6 +4,17 @@ import { kenaiBigBrotherI18n } from "./005-kenai-big-brother.i18n";
 export const kenaiBigBrother: CharacterCard = {
   id: "6WD",
   canonicalId: "ci_6WD",
+  slug: "lorcana-ci_6WD",
+  printings: [
+    {
+      id: "set5-005",
+      artId: "set5-005",
+      setCode: "set5",
+      collectorNumber: "5",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-005"],
   cardType: "character",
   name: "Kenai",
@@ -20,7 +31,7 @@ export const kenaiBigBrother: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_85a886f78a71416aa253879cbe81d8dd",
-    tcgPlayer: 560502,
+    tcgPlayer: "560502",
   },
   text: [
     {
@@ -43,7 +54,14 @@ export const kenaiBigBrother: CharacterCard = {
           owner: "you",
           zones: ["play"],
           cardTypes: ["character"],
-          filter: [{ type: "attribute", attribute: "name", comparison: "equals", value: "Koda" }],
+          filter: [
+            {
+              type: "attribute",
+              attribute: "name",
+              comparison: "equals",
+              value: "Koda",
+            },
+          ],
         },
         type: "restriction",
       },

@@ -4,6 +4,17 @@ import { starkeyHooksHenchmanI18n } from "./191-starkey-hooks-henchman.i18n";
 export const starkeyHooksHenchman: CharacterCard = {
   id: "lSG",
   canonicalId: "ci_lSG",
+  slug: "lorcana-ci_lSG",
+  printings: [
+    {
+      id: "set1-191",
+      artId: "set1-191",
+      setCode: "set1",
+      collectorNumber: "191",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-191"],
   cardType: "character",
   name: "Starkey",
@@ -20,12 +31,12 @@ export const starkeyHooksHenchman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fdbf31b467214b229b4e4f149c487a47",
-    tcgPlayer: 508947,
+    tcgPlayer: "508947",
   },
   text: [
     {
-      title: "AYE AYE, CAPTAIN",
-      description: "While you have a Captain character in play, this character gets +1.",
+      title: "Aye Aye, Captain",
+      description: "While you have a Captain character in play, this character gets +1 {L}.",
     },
   ],
   classifications: ["Storyborn", "Ally", "Pirate"],

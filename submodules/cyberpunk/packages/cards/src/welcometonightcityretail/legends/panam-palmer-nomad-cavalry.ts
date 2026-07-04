@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailPanamPalmerNomadCavalry = {
+export const welcomeToNightCityRetailPanamPalmerNomadCavalry = defineCyberpunkCard({
   id: "950f045c-f5a4-4318-9907-b630d64de754",
-  externalId: "cb-panam-palmer-nomad-cavalry",
   slug: "panam-palmer-nomad-cavalry",
+  rulesText:
+    "2 €$, {Spend} Move a Gear from this Legend to an unequipped friendly Unit. If you do, ready that Unit.\nAt the end of your turn, if 5 or more friendly Units and/or Legends are equipped, ready them.",
   name: "Panam Palmer — Nomad Cavalry",
   displayName: "Panam Palmer — Nomad Cavalry",
-  rulesText:
-    "2 €$, [Spend Icon:] Move a Gear from this Legend to an unequipped friendly Unit. If you do, ready that Unit.\nAt the end of your turn, if 5 or more friendly Units and/or Legends are equipped, ready them.",
+  canonicalId: "panam-palmer-nomad-cavalry",
   color: "green",
   classifications: ["Aldecado", "Merc", "Nomad"],
   set: {
@@ -15,29 +16,12 @@ export const welcomeToNightCityRetailPanamPalmerNomadCavalry = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "075",
-  printings: [
-    {
-      id: "6e4ee31b-82d1-421c-b658-ba3f79520365",
-      collectorNumber: "075",
-      setCode: "welcometonightcityretail",
-      rarity: "Epic",
-    },
-    {
-      id: "2cfe57a5-cafe-4611-90fd-c72f33250933",
-      collectorNumber: "β075",
-      setCode: "welcometonightcitybeta",
-      rarity: "Epic",
-    },
-  ],
-  selectedPrintingId: "6e4ee31b-82d1-421c-b658-ba3f79520365",
   artist: "Łukasz Poller",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/075.webp",
   rarity: "Epic",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "legend",
   cost: null,
   power: null,
@@ -82,33 +66,42 @@ export const welcomeToNightCityRetailPanamPalmerNomadCavalry = {
       ],
       effects: [
         {
-          effect: "moveCard",
-          target: {
-            selector: "card",
-            controller: "friendly",
-            zones: ["field"],
-            cardTypes: ["gear"],
-            attachedTo: {
-              selector: "self",
+          // Card text: "Move a Gear from this Legend to an unequipped
+          // friendly Unit. If you do, ready that Unit." The ready must only
+          // fire when the move actually happens — wrap the move as the
+          // doEffect and the ready as the ifEffect.
+          effect: "ifYouDo",
+          doEffect: {
+            effect: "moveCard",
+            target: {
+              selector: "card",
+              controller: "friendly",
+              zones: ["field"],
+              cardTypes: ["gear"],
+              attachedTo: {
+                selector: "self",
+              },
+              selection: {
+                mode: "choose",
+                min: 1,
+                max: 1,
+              },
             },
-            selection: {
-              mode: "choose",
-              min: 1,
-              max: 1,
+            destination: "field",
+            attachTo: {
+              selector: "bound",
+              id: "selectedUnit",
             },
           },
-          destination: "field",
-          attachTo: {
-            selector: "bound",
-            id: "selectedUnit",
-          },
-        },
-        {
-          effect: "ready",
-          target: {
-            selector: "bound",
-            id: "selectedUnit",
-          },
+          ifEffects: [
+            {
+              effect: "ready",
+              target: {
+                selector: "bound",
+                id: "selectedUnit",
+              },
+            },
+          ],
         },
       ],
     },
@@ -146,5 +139,4 @@ export const welcomeToNightCityRetailPanamPalmerNomadCavalry = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies LegendCardDefinition;

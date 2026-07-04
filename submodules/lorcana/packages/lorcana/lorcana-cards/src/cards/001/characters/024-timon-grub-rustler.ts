@@ -4,6 +4,17 @@ import { timonGrubRustlerI18n } from "./024-timon-grub-rustler.i18n";
 export const timonGrubRustler: CharacterCard = {
   id: "2d9",
   canonicalId: "ci_2d9",
+  slug: "lorcana-ci_2d9",
+  printings: [
+    {
+      id: "set1-024",
+      artId: "set1-024",
+      setCode: "set1",
+      collectorNumber: "24",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-024"],
   cardType: "character",
   name: "Timon",
@@ -20,7 +31,7 @@ export const timonGrubRustler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a7a780b01376481388b871a1b533de08",
-    tcgPlayer: 497197,
+    tcgPlayer: "497197",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const timonGrubRustler: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           target: "CHOSEN_CHARACTER",
           type: "remove-damage",
         },

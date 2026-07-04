@@ -17,7 +17,7 @@ export const elsaIceSurferI18n: Record<Languages, I18nProperties> = {
     version: "Eissurferin",
     text: [
       {
-        title: "DAS IST KEIN SCHNEESTURM",
+        title: "Das ist kein Schneesturm",
         description:
           "Jedes Mal, wenn du einen Anna-Charakter ausspielst, mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
@@ -39,7 +39,7 @@ export const elsaIceSurferI18n: Record<Languages, I18nProperties> = {
     version: "Surfista sul Ghiaccio",
     text: [
       {
-        title: "QUELLA NON È UNA TEMPESTA",
+        title: "Quella Non È una Tempesta",
         description:
           "Ogni volta che giochi un personaggio chiamato Anna, prepara questo personaggio. Non può andare all'avventura per il resto di questo turno.",
       },

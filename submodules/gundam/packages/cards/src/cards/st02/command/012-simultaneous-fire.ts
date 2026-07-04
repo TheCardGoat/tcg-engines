@@ -7,14 +7,17 @@ export const st02SimultaneousFire012: CommandCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "ST02-012",
-  externalId: "gundam:st02-012",
-  slug: "simultaneous-fire-st02-012",
+  canonicalId: "ST02-012",
+  externalIds: { bandai: "gundam:st02-012" },
+  slug: "simultaneous-fire/st02-012",
   displayName: "Simultaneous Fire",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-012",
   printings: [
     {
       id: "ST02-012",
+      artId: "ST02-012",
+      setCode: "ST02",
       collectorNumber: "ST02-012",
       cardNumber: "ST02-012",
       set: {
@@ -30,6 +33,8 @@ export const st02SimultaneousFire012: CommandCard = {
     },
     {
       id: "ST02-012_p1",
+      artId: "ST02-012_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-012_p1",
       cardNumber: "ST02-012",
       set: {
@@ -45,6 +50,8 @@ export const st02SimultaneousFire012: CommandCard = {
     },
     {
       id: "ST02-012_p2",
+      artId: "ST02-012_p2",
+      setCode: "BETA",
       collectorNumber: "ST02-012_p2",
       cardNumber: "ST02-012",
       set: {
@@ -59,6 +66,7 @@ export const st02SimultaneousFire012: CommandCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST02-012", "ST02-012_p1", "ST02-012_p2"],
   selectedPrintingId: "ST02-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-012.webp?260424",

@@ -4,6 +4,17 @@ import { ticktockRelentlessCrocodileI18n } from "./191-tick-tock-relentless-croc
 export const ticktockRelentlessCrocodile: CharacterCard = {
   id: "33J",
   canonicalId: "ci_33J",
+  slug: "lorcana-ci_33J",
+  printings: [
+    {
+      id: "set7-191",
+      artId: "set7-191",
+      setCode: "set7",
+      collectorNumber: "191",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-191"],
   cardType: "character",
   name: "Tick-Tock",
@@ -20,7 +31,7 @@ export const ticktockRelentlessCrocodile: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_64885a846c394abfa482aa6aa4a3711e",
-    tcgPlayer: 619517,
+    tcgPlayer: "619517",
   },
   text: [
     {

@@ -20,12 +20,12 @@ export const tinkerBellInsistentFairyI18n: Record<Languages, I18nProperties> = {
     version: "Hartnäckige Fee",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "GEBT ACHT",
+        title: "Gebt Acht",
         description:
-          "Jedes Mal, wenn du einen Charakter mit 5 oder mehr ausspielst, darfst du jenen erschöpfen, um 2 Legenden zu sammeln.",
+          "Jedes Mal, wenn du einen Charakter mit 5 oder mehr {S} ausspielst, darfst du jenen erschöpfen, um 2 Legenden zu sammeln.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const tinkerBellInsistentFairyI18n: Record<Languages, I18nProperties> = {
     version: "Fée insistante",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "SOYEZ ATTENTIFS",
+        title: "Soyez attentifs",
         description:
-          "Chaque fois que vous jouez un personnage ayant 5 ou plus, vous pouvez l'épuiser pour gagner 2 éclats de Lore.",
+          "Chaque fois que vous jouez un personnage ayant 5 {S} ou plus, vous pouvez l'épuiser pour gagner 2 éclats de Lore.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const tinkerBellInsistentFairyI18n: Record<Languages, I18nProperties> = {
     version: "Fata Insistente",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "DAMMI RETTA",
+        title: "Dammi Retta",
         description:
-          "Ogni volta che giochi un personaggio con 5 o superiore, puoi impegnarlo per ottenere 2 leggenda.",
+          "Ogni volta che giochi un personaggio con 5 {S} o superiore, puoi impegnarlo per ottenere 2 leggenda.",
       },
     ],
   },

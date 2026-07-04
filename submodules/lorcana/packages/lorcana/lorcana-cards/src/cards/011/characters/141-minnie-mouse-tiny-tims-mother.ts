@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMouseTinyTimsMotherI18n } from "./141-minnie-mouse-tiny-tims-mother.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const minnieMouseTinyTimsMother: CharacterCard = {
   id: "4Kj",
   canonicalId: "ci_4Kj",
+  slug: "lorcana-ci_4Kj",
+  printings: [
+    {
+      id: "set11-141",
+      artId: "set11-141",
+      setCode: "set11",
+      collectorNumber: "141",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-141"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -21,7 +33,7 @@ export const minnieMouseTinyTimsMother: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_33f12c74df68498cb444d6a493be67ef",
-    tcgPlayer: 676221,
+    tcgPlayer: "676221",
   },
   text: "Support",
   classifications: ["Storyborn", "Ally"],

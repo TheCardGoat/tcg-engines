@@ -16,8 +16,8 @@ export const zazuStewardOfThePrideLandsI18n: Record<Languages, I18nProperties> =
     version: "Verwaltet das Geweihte Land",
     text: [
       {
-        title: "ES IST ZEIT ZU GEHEN!",
-        description: "Solange dieser Charakter an einem Ort ist, erhält er +1.",
+        title: "Es ist Zeit zu gehen!",
+        description: "Solange dieser Charakter an einem Ort ist, erhält er +1 {L}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const zazuStewardOfThePrideLandsI18n: Record<Languages, I18nProperties> =
     version: "Intendant de la Terre des Lions",
     text: [
       {
-        title: "IL EST TEMPS DE RENTRER!",
-        description: "Tant que ce personnage se trouve sur un lieu, il gagne +1.",
+        title: "Il est temps de rentrer!",
+        description: "Tant que ce personnage se trouve sur un lieu, il gagne +1 {L}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const zazuStewardOfThePrideLandsI18n: Record<Languages, I18nProperties> =
     version: "Attendente delle Terre del Branco",
     text: [
       {
-        title: "È ORA DI ANDARE!",
-        description: "Mentre questo personaggio si trova in un luogo, riceve +1.",
+        title: "È Ora di Andare!",
+        description: "Mentre questo personaggio si trova in un luogo, riceve +1 {L}.",
       },
     ],
   },

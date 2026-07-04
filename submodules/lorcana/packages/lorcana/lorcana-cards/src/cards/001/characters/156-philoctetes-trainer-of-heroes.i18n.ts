@@ -9,22 +9,16 @@ export const philoctetesTrainerOfHeroesI18n: Record<Languages, I18nProperties> =
   de: {
     name: "Phil",
     version: "Trainer der Helden",
-    text: "Unterstützen (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+    text: "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
   },
   fr: {
     name: "PHILOCTÈTE",
     version: "Entraineur de héros",
-    text: "Soutien",
+    text: "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
   },
   it: {
     name: "Philoctetes",
     version: "Trainer of Heroes",
-    text: [
-      {
-        title: "Support",
-        description:
-          "(Whenever this character quests, you may add their to another chosen character's this turn.)",
-      },
-    ],
+    text: "<Support> (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   },
 };

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { dumboNinthWonderOfTheUniverseI18n } from "./045-dumbo-ninth-wonder-of-the-universe.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const dumboNinthWonderOfTheUniverse: CharacterCard = {
   id: "JlP",
   canonicalId: "ci_hTe",
+  slug: "lorcana-ci_hTe",
+  printings: [
+    {
+      id: "set9-045",
+      artId: "set9-045",
+      setCode: "set9",
+      collectorNumber: "45",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-045"],
   cardType: "character",
   name: "Dumbo",
@@ -21,7 +33,7 @@ export const dumboNinthWonderOfTheUniverse: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_aa13ad9fe176464bac51e72c45dd6914",
-    tcgPlayer: 651119,
+    tcgPlayer: "651119",
   },
   text: [
     {

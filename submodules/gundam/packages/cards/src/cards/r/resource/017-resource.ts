@@ -6,14 +6,17 @@ export const gd02Resource017: ResourceCard = {
   type: "resource",
   traits: ["-"],
   id: "R-017",
-  externalId: "gundam:r-017",
-  slug: "resource-r-017",
+  canonicalId: "R-017",
+  externalIds: { bandai: "gundam:r-017" },
+  slug: "resource/r-017",
   displayName: "resource",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "R-017",
   printings: [
     {
       id: "R-017",
+      artId: "R-017",
+      setCode: "GD02",
       collectorNumber: "R-017",
       cardNumber: "R-017",
       set: {
@@ -29,6 +32,8 @@ export const gd02Resource017: ResourceCard = {
     },
     {
       id: "R-017_p1",
+      artId: "R-017_p1",
+      setCode: "GD02",
       collectorNumber: "R-017_p1",
       cardNumber: "R-017",
       set: {
@@ -42,6 +47,7 @@ export const gd02Resource017: ResourceCard = {
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-017_p1.webp?260424",
     },
   ],
+  reprints: ["R-017", "R-017_p1"],
   selectedPrintingId: "R-017",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/R-017.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-017.webp?260424",

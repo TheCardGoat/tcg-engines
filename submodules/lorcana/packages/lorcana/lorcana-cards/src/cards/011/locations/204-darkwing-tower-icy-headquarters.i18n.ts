@@ -17,7 +17,7 @@ export const darkwingTowerIcyHeadquartersI18n: Record<Languages, I18nProperties>
     version: "Vereistes Hauptquartier",
     text: [
       {
-        title: "DAS BÖSE BEZWUNGEN",
+        title: "Das Böse bezwungen",
         description:
           "Jedes Mal während deines Zuges, wenn ein gegnerischer Schurke verbannt wird, darfst du einen Charakter an diesem Ort bereit machen. Wenn du dies tust, kann jener in diesem Zug nicht mehr erkunden.",
       },
@@ -28,7 +28,7 @@ export const darkwingTowerIcyHeadquartersI18n: Record<Languages, I18nProperties>
     version: "Quartier général glacé",
     text: [
       {
-        title: "LE MAL EST VAINCU",
+        title: "Le mal est vaincu",
         description:
           "Durant votre tour, chaque fois qu'un personnage adverse Méchant est banni, vous pouvez redresser un personnage sur ce lieu. Si vous le faites, ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
@@ -39,7 +39,7 @@ export const darkwingTowerIcyHeadquartersI18n: Record<Languages, I18nProperties>
     version: "Quartier Generale Ghiacciato",
     text: [
       {
-        title: "IL MALE SCONFITTO",
+        title: "Il Male Sconfitto",
         description:
           "Durante il tuo turno, ogni volta che un personaggio Cattivo avversario viene esiliato, puoi preparare un personaggio in questo luogo. Se lo fai, non può andare all'avventura per il resto di questo turno.",
       },

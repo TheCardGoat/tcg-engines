@@ -4,6 +4,17 @@ import { mrsJudsonHousekeeperI18n } from "./153-mrs-judson-housekeeper.i18n";
 export const mrsJudsonHousekeeper: CharacterCard = {
   id: "IFJ",
   canonicalId: "ci_IFJ",
+  slug: "lorcana-ci_IFJ",
+  printings: [
+    {
+      id: "set2-153",
+      artId: "set2-153",
+      setCode: "set2",
+      collectorNumber: "153",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-153"],
   cardType: "character",
   name: "Mrs. Judson",
@@ -20,7 +31,7 @@ export const mrsJudsonHousekeeper: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f70bca6387dd4f34a80c7a0ac8bc102e",
-    tcgPlayer: 525268,
+    tcgPlayer: "525268",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { peterPanNeverLandingI18n } from "./091-peter-pan-never-landing.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const peterPanNeverLanding: CharacterCard = {
   id: "k9e",
   canonicalId: "ci_k9e",
+  slug: "lorcana-ci_k9e",
+  printings: [
+    {
+      id: "set1-091",
+      artId: "set1-091",
+      setCode: "set1",
+      collectorNumber: "91",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-091"],
   cardType: "character",
   name: "Peter Pan",
@@ -21,7 +33,7 @@ export const peterPanNeverLanding: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_91d042c887b54b7098c9044a36816008",
-    tcgPlayer: 502535,
+    tcgPlayer: "502535",
   },
   text: "Evasive",
   classifications: ["Dreamborn", "Hero"],

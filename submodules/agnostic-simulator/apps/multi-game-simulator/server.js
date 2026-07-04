@@ -5,7 +5,7 @@ import morgan from "morgan";
 const BUILD_PATH = "./build/server/index.js";
 const DEVELOPMENT = process.env.NODE_ENV === "development";
 const PORT = Number.parseInt(process.env.PORT || "8080", 10);
-const simulatorBasenames = ["/cyberpunk/simulator", "/gundam/simulator"];
+const simulatorBasenames = ["/cyberpunk/simulator", "/gundam/simulator", "/one-piece/simulator"];
 
 const app = express();
 

@@ -4,6 +4,17 @@ import { theMouseQueenRulerOfMousedomI18n } from "./153-the-mouse-queen-ruler-of
 export const theMouseQueenRulerOfMousedom: CharacterCard = {
   id: "SM3",
   canonicalId: "ci_SM3",
+  slug: "lorcana-ci_SM3",
+  printings: [
+    {
+      id: "set8-153",
+      artId: "set8-153",
+      setCode: "set8",
+      collectorNumber: "153",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-153"],
   cardType: "character",
   name: "The Mouse Queen",
@@ -21,7 +32,7 @@ export const theMouseQueenRulerOfMousedom: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_eafad143336248a791556f90cc93192f",
-    tcgPlayer: 631453,
+    tcgPlayer: "631453",
   },
   classifications: ["Storyborn", "Ally", "Queen"],
   i18n: theMouseQueenRulerOfMousedomI18n,

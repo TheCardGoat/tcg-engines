@@ -7,14 +7,17 @@ export const gd04AliAlSaachez099: PilotCard = {
   color: "white",
   traits: ["superpower bloc", "un"],
   id: "GD04-099",
-  externalId: "gundam:gd04-099",
-  slug: "ali-al-saachez-gd04-099",
+  canonicalId: "GD04-099",
+  externalIds: { bandai: "gundam:gd04-099" },
+  slug: "ali-al-saachez/gd04-099",
   displayName: "Ali al-Saachez",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-099",
   printings: [
     {
       id: "GD04-099",
+      artId: "GD04-099",
+      setCode: "GD04",
       collectorNumber: "GD04-099",
       cardNumber: "GD04-099",
       set: {
@@ -29,6 +32,7 @@ export const gd04AliAlSaachez099: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-099"],
   selectedPrintingId: "GD04-099",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-099.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-099.webp?260424",

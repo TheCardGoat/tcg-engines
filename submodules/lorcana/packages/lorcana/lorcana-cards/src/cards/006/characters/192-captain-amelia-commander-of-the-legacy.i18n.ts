@@ -20,13 +20,13 @@ export const captainAmeliaCommanderOfTheLegacyI18n: Record<Languages, I18nProper
     version: "Kommandantin der Legacy",
     text: [
       {
-        title: "EIN JÄMMERLICHER HAUFEN",
+        title: "Ein jämmerlicher Haufen",
         description: "Dieser Charakter kann nicht von Piraten herausgefordert werden.",
       },
       {
-        title: "ALLES TIPPTOPP",
+        title: "Alles Tipptopp",
         description:
-          "Deine anderen Charaktere erhalten Robust +1, während sie herausgefordert werden. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine anderen Charaktere erhalten <Robust> +1, während sie herausgefordert werden. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -35,12 +35,12 @@ export const captainAmeliaCommanderOfTheLegacyI18n: Record<Languages, I18nProper
     version: "Commandante du RLS Héritage",
     text: [
       {
-        title: "DEMEURÉS RADOTEURS",
+        title: "Demeurés radoteurs",
         description: "Ce personnage ne peut pas être défié par un personnage Pirate.",
       },
       {
-        title: "ET LE BATEAU, ÇA BAIGNE?",
-        description: "Vos autres personnages gagnent Résistance +1 tant qu'ils sont défiés.",
+        title: "Et le bateau, ça baigne?",
+        description: "Vos autres personnages gagnent <Résistance> +1 tant qu'ils sont défiés.",
       },
     ],
   },
@@ -49,12 +49,12 @@ export const captainAmeliaCommanderOfTheLegacyI18n: Record<Languages, I18nProper
     version: "Comandante della Legacy",
     text: [
       {
-        title: "CANAGLIUME VARIO",
+        title: "Canagliume Vario",
         description: "Questo personaggio non può essere sfidato da personaggi Pirata.",
       },
       {
-        title: "TUTTO A POSTO",
-        description: "Mentre vengono sfidati, i tuoi altri personaggi ottengono Resistere +1.",
+        title: "Tutto a Posto",
+        description: "Mentre vengono sfidati, i tuoi altri personaggi ottengono <Resistere> +1.",
       },
     ],
   },

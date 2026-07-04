@@ -17,9 +17,9 @@ export const roxannePowerlineFanI18n: Record<Languages, I18nProperties> = {
     version: "Powerline-Fan",
     text: [
       {
-        title: "KONZERTLIEBHABERIN",
+        title: "Konzertliebhaberin",
         description:
-          "Solange du mindestens einen Charakter mit Singen im Spiel hast, erhält dieser Charakter +1 und +1.",
+          "Solange du mindestens einen Charakter mit <Singen> im Spiel hast, erhält dieser Charakter +1 {S} und +1 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const roxannePowerlineFanI18n: Record<Languages, I18nProperties> = {
     version: "Fan de Powerline",
     text: [
       {
-        title: "AMATRICE DE CONCERTS",
+        title: "Amatrice de concerts",
         description:
-          "Tant que vous avez un personnage avec Mélomane en jeu, ce personnage-ci gagne +1 et +1.",
+          "Tant que vous avez un personnage avec <Mélomane> en jeu, ce personnage-ci gagne +1 {S} et +1 {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const roxannePowerlineFanI18n: Record<Languages, I18nProperties> = {
     version: "Fan di Powerline",
     text: [
       {
-        title: "AMANTE DEI CONCERTI",
+        title: "Amante dei Concerti",
         description:
-          "Mentre hai in gioco un personaggio con Melodioso, questo personaggio riceve +1 e +1.",
+          "Mentre hai in gioco un personaggio con <Melodioso>, questo personaggio riceve +1 {S} e +1 {L}.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const gd02RaiderGundamMaMode019: UnitCard = {
   color: "blue",
   traits: ["earth alliance"],
   id: "GD02-019",
-  externalId: "gundam:gd02-019",
-  slug: "raider-gundam-ma-mode-gd02-019",
+  canonicalId: "GD02-019",
+  externalIds: { bandai: "gundam:gd02-019" },
+  slug: "raider-gundam-ma-mode/gd02-019",
   displayName: "Raider Gundam (MA Mode)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-019",
   printings: [
     {
       id: "GD02-019",
+      artId: "GD02-019",
+      setCode: "GD02",
       collectorNumber: "GD02-019",
       cardNumber: "GD02-019",
       set: {
@@ -29,6 +32,7 @@ export const gd02RaiderGundamMaMode019: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-019"],
   selectedPrintingId: "GD02-019",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-019.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-019.webp?260424",

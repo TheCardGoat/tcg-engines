@@ -1,4 +1,4 @@
-import type { GameSlug, HarnessFixture } from "@tcg/simulator-contract";
+import type { GameSlug } from "@tcg/simulator-contract";
 
 export interface GameMeta {
   slug: GameSlug;
@@ -6,6 +6,9 @@ export interface GameMeta {
   description: string;
   accentColor: string;
   accentSoft: string;
+  badgeLabel: string;
+  defaultIndexPath?: string;
+  includeInIndex?: boolean;
 }
 
 export const GAMES: readonly GameMeta[] = [
@@ -16,6 +19,8 @@ export const GAMES: readonly GameMeta[] = [
       "Leader, character, life, DON!!, and counter timing rendered from the shared contract.",
     accentColor: "#b4232f",
     accentSoft: "#fdebed",
+    badgeLabel: "Visual fixtures",
+    defaultIndexPath: "/one-piece/simulator/tests",
   },
   {
     slug: "gundam",
@@ -24,6 +29,8 @@ export const GAMES: readonly GameMeta[] = [
       "Battle area, shield, resource, base, and paired pilot metadata in one table layout.",
     accentColor: "#1f5faa",
     accentSoft: "#e8f1fb",
+    badgeLabel: "Visual fixtures",
+    defaultIndexPath: "/gundam/simulator/tests",
   },
   {
     slug: "cyberpunk",
@@ -32,6 +39,8 @@ export const GAMES: readonly GameMeta[] = [
       "Legend, eddies, gear, dice, and gig targeting through the shared fixture harness.",
     accentColor: "#b47919",
     accentSoft: "#fff5df",
+    badgeLabel: "Visual fixtures",
+    defaultIndexPath: "/cyberpunk/simulator/tests",
   },
   {
     slug: "lorcana",
@@ -40,6 +49,8 @@ export const GAMES: readonly GameMeta[] = [
       "Characters, ink, locations, lore, and ordering prompts through the same fixture harness.",
     accentColor: "#6d4cc2",
     accentSoft: "#f0ecff",
+    badgeLabel: "External fixtures",
+    includeInIndex: false,
   },
 ];
 
@@ -53,16 +64,10 @@ export function getGameMeta(slug: GameSlug): GameMeta | undefined {
   return GAMES.find((g) => g.slug === slug);
 }
 
-export function groupFixturesByGame(
-  fixtures: readonly HarnessFixture[],
-): Partial<Record<GameSlug, HarnessFixture[]>> {
-  const groups: Partial<Record<GameSlug, HarnessFixture[]>> = {};
+export function listIndexGames(): readonly GameMeta[] {
+  return GAMES.filter((g) => g.includeInIndex !== false);
+}
 
-  for (const fixture of fixtures) {
-    const list = groups[fixture.gameSlug] ?? [];
-    list.push(fixture);
-    groups[fixture.gameSlug] = list;
-  }
-
-  return groups;
+export function getGameDefaultIndexPath(slug: GameSlug): string | null {
+  return getGameMeta(slug)?.defaultIndexPath ?? null;
 }

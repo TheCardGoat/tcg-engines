@@ -16,8 +16,8 @@ export const floraGoodFairyI18n: Record<Languages, I18nProperties> = {
     version: "Gute Fee",
     text: [
       {
-        title: "HAB ICH EINE WUT!",
-        description: "Während dieser Charakter herausgefordert wird, erhält er +2.",
+        title: "Hab ich eine Wut!",
+        description: "Während dieser Charakter herausgefordert wird, erhält er +2 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const floraGoodFairyI18n: Record<Languages, I18nProperties> = {
     version: "Bonne fée",
     text: [
       {
-        title: "CELA NE RIME À RIEN",
-        description: "Lorsqu'il est défié, ce personnage gagne +2.",
+        title: "Cela ne rime à rien",
+        description: "Lorsqu'il est défié, ce personnage gagne +2 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const floraGoodFairyI18n: Record<Languages, I18nProperties> = {
     version: "Buona Fata",
     text: [
       {
-        title: "RIDICOLAGGINE",
-        description: "Mentre viene sfidato, questo personaggio riceve +2.",
+        title: "Ridicolaggine",
+        description: "Mentre viene sfidato, questo personaggio riceve +2 {S}.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { superSuitI18n } from "./066-super-suit.i18n";
 export const superSuit: ItemCard = {
   id: "yHW",
   canonicalId: "ci_yHW",
+  slug: "lorcana-ci_yHW",
+  printings: [
+    {
+      id: "set12-066",
+      artId: "set12-066",
+      setCode: "set12",
+      collectorNumber: "66",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-066"],
   cardType: "item",
   name: "Super Suit",
@@ -16,6 +27,7 @@ export const superSuit: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_65e90409854c4f69bd072e5eb971af8b",
+    tcgPlayer: "690710",
   },
   text: [
     {

@@ -5,8 +5,8 @@ export const beastsMirrorI18n: Record<Languages, I18nProperties> = {
     name: "Beast’s Mirror",
     text: [
       {
-        title: "SHOW ME, 3",
-        description: "— If you have no cards in your hand, draw a card.",
+        title: "Show Me",
+        description: "{E}, 3 {I} — If you have no cards in your hand, draw a card.",
       },
     ],
   },
@@ -14,8 +14,8 @@ export const beastsMirrorI18n: Record<Languages, I18nProperties> = {
     name: "Spiegel des Biests",
     text: [
       {
-        title: "ZEIG'S MIR, 3",
-        description: "— Wenn du keine Karten auf der Hand hast, ziehe 1 Karte.",
+        title: "Zeig's mir",
+        description: "{E}, 3 {I} — Wenn du keine Karten auf der Hand hast, ziehe 1 Karte.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const beastsMirrorI18n: Record<Languages, I18nProperties> = {
     name: "MIROIR DE LA BÊTE",
     text: [
       {
-        title: "MONTRE-MOI, 3",
-        description: "— Si vous n'avez plus de carte en main, piochez une carte.",
+        title: "MONTRE-MOI",
+        description: "{E}, 3 {I} — Si vous n'avez plus de carte en main, piochez une carte.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const beastsMirrorI18n: Record<Languages, I18nProperties> = {
     name: "Beast’s Mirror",
     text: [
       {
-        title: "SHOW ME, 3",
-        description: "— If you have no cards in your hand, draw a card.",
+        title: "Show Me",
+        description: "{E}, 3 {I} — If you have no cards in your hand, draw a card.",
       },
     ],
   },

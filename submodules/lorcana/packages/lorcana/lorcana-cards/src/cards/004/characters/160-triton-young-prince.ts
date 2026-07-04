@@ -4,6 +4,17 @@ import { tritonYoungPrinceI18n } from "./160-triton-young-prince.i18n";
 export const tritonYoungPrince: CharacterCard = {
   id: "A80",
   canonicalId: "ci_A80",
+  slug: "lorcana-ci_A80",
+  printings: [
+    {
+      id: "set4-160",
+      artId: "set4-160",
+      setCode: "set4",
+      collectorNumber: "160",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-160"],
   cardType: "character",
   name: "Triton",
@@ -20,7 +31,7 @@ export const tritonYoungPrince: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ba5d06b298f545f8a2df2df6accd3294",
-    tcgPlayer: 550612,
+    tcgPlayer: "550612",
   },
   text: [
     {

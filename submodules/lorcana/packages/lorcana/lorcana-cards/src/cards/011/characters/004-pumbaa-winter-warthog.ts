@@ -4,6 +4,17 @@ import { pumbaaWinterWarthogI18n } from "./004-pumbaa-winter-warthog.i18n";
 export const pumbaaWinterWarthog: CharacterCard = {
   id: "GCL",
   canonicalId: "ci_GCL",
+  slug: "lorcana-ci_GCL",
+  printings: [
+    {
+      id: "set11-004",
+      artId: "set11-004",
+      setCode: "set11",
+      collectorNumber: "4",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-004"],
   cardType: "character",
   name: "Pumbaa",
@@ -20,7 +31,7 @@ export const pumbaaWinterWarthog: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3538927a26154cb78ef3e9cfd6899035",
-    tcgPlayer: 674820,
+    tcgPlayer: "674820",
   },
   text: [
     {

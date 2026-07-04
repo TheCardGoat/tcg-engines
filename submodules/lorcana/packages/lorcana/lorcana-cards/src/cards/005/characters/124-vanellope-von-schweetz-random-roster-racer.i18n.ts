@@ -20,12 +20,12 @@ export const vanellopeVonSchweetzRandomRosterRacerI18n: Record<Languages, I18nPr
     version: "Im Rennen um die Qualifikation",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "PIXELITIS",
+        title: "Pixelitis",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält er bis zu Beginn deines nächsten Zuges Wendig.",
+          "Wenn du diesen Charakter ausspielst, erhält er bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const vanellopeVonSchweetzRandomRosterRacerI18n: Record<Languages, I18nPr
     version: "Coureuse aléatoire",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "PIXLEXIE",
+        title: "Pixlexie",
         description:
-          "Lorsque vous jouez ce personnage, il gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, il gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const vanellopeVonSchweetzRandomRosterRacerI18n: Record<Languages, I18nPr
     version: "Pilota del Gran Premio",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "PIXELLESSICA",
+        title: "Pixellessica",
         description:
-          "Quando giochi questo personaggio, ottiene Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Quando giochi questo personaggio, ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

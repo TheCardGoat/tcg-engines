@@ -20,12 +20,13 @@ export const basilDisguisedDetectiveEnchantedI18n: Record<Languages, I18nPropert
     version: "Verkleideter Detektiv",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Basil-Charaktere auszuspielen.)",
       },
       {
-        title: "SCHLINGEN UND HAKEN",
+        title: "Schlingen und Haken",
         description:
-          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du 1 bezahlen, um eine gegnerische mitspielende Person deiner Wahl 1 Karte aus ihrer Hand auswählen und abwerfen zu lassen.",
+          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du 1 {I} bezahlen, um eine gegnerische mitspielende Person deiner Wahl 1 Karte aus ihrer Hand auswählen und abwerfen zu lassen.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const basilDisguisedDetectiveEnchantedI18n: Record<Languages, I18nPropert
     version: "Détective déguisé",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Basil.)",
       },
       {
-        title: "TOURS ET DÉTOURS",
+        title: "Tours et détours",
         description:
-          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, vous pouvez payer 1. Si vous le faites, choisissez un adversaire qui défausse une carte.",
+          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, vous pouvez payer 1 {I}. Si vous le faites, choisissez un adversaire qui défausse une carte.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const basilDisguisedDetectiveEnchantedI18n: Record<Languages, I18nPropert
     version: "Detective Camuffato",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Basil.)",
       },
       {
-        title: "RISVOLTI",
+        title: "Risvolti e Sviluppi",
         description:
-          "E SVILUPPI Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi pagare 1 per far scegliere e scartare una carta a un avversario a tua scelta.",
+          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi pagare 1 {I} per far scegliere e scartare una carta a un avversario a tua scelta.",
       },
     ],
   },

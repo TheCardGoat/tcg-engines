@@ -21,12 +21,12 @@ export const plutoSteelChampionI18n: Record<Languages, I18nProperties> = {
     version: "Stahl-Champion",
     text: [
       {
-        title: "DER SIEGER KRIEGT ALLES",
+        title: "Der Sieger kriegt alles",
         description:
           "Jedes Mal während deines Zuges, wenn einer deiner anderen Stahl-Charaktere durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 2 Legenden.",
       },
       {
-        title: "PLATZ SCHAFFEN",
+        title: "Platz schaffen",
         description:
           "Jedes Mal, wenn du einen anderen Stahl-Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen.",
       },
@@ -37,12 +37,12 @@ export const plutoSteelChampionI18n: Record<Languages, I18nProperties> = {
     version: "Champion Acier",
     text: [
       {
-        title: "RAFLER LA MISE",
+        title: "Rafler la mise",
         description:
           "Durant votre tour, chaque fois que l'un de vos autres personnages Acier bannit un autre personnage via un défi, gagnez 2 éclats de Lore.",
       },
       {
-        title: "FAIRE DE LA PLACE",
+        title: "Faire de la place",
         description:
           "Chaque fois que vous jouez un autre personnage Acier, vous pouvez choisir un objet et le bannir.",
       },
@@ -53,12 +53,12 @@ export const plutoSteelChampionI18n: Record<Languages, I18nProperties> = {
     version: "Campione di Acciaio",
     text: [
       {
-        title: "CHI VINCE PRENDE TUTTO",
+        title: "Chi Vince Prende Tutto",
         description:
           "Durante il tuo turno, ogni volta che uno dei tuoi altri personaggi Acciaio esilia un altro personaggio in una sfida, ottieni 2 leggenda.",
       },
       {
-        title: "FARE SPAZIO",
+        title: "Fare Spazio",
         description:
           "Ogni volta che giochi un altro personaggio Acciaio, puoi esiliare un oggetto a tua scelta.",
       },

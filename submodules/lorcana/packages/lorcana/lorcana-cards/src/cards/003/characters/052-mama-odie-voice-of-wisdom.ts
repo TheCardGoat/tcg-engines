@@ -4,6 +4,17 @@ import { mamaOdieVoiceOfWisdomI18n } from "./052-mama-odie-voice-of-wisdom.i18n"
 export const mamaOdieVoiceOfWisdom: CharacterCard = {
   id: "MGp",
   canonicalId: "ci_7n1",
+  slug: "lorcana-ci_7n1",
+  printings: [
+    {
+      id: "set3-052",
+      artId: "set3-052",
+      setCode: "set3",
+      collectorNumber: "52",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-052", "set9-057"],
   cardType: "character",
   name: "Mama Odie",
@@ -20,7 +31,7 @@ export const mamaOdieVoiceOfWisdom: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_262e1faa79d74ec38f16ba92a9981e54",
-    tcgPlayer: 650001,
+    tcgPlayer: "650001",
   },
   text: [
     {
@@ -46,7 +57,10 @@ export const mamaOdieVoiceOfWisdom: CharacterCard = {
         chooser: "CONTROLLER",
         effect: {
           type: "move-damage",
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           from: "CHOSEN_CHARACTER",
           to: "CHOSEN_OPPOSING_CHARACTER",
         },

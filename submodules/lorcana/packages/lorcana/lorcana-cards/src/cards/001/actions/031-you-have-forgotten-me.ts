@@ -3,7 +3,18 @@ import { youHaveForgottenMeI18n } from "./031-you-have-forgotten-me.i18n";
 
 export const youHaveForgottenMe: ActionCard = {
   id: "3p5",
-  canonicalId: "ci_7me",
+  canonicalId: "ci_3p5",
+  slug: "lorcana-ci_3p5",
+  printings: [
+    {
+      id: "set1-031",
+      artId: "set1-031",
+      setCode: "set1",
+      collectorNumber: "31",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-031"],
   cardType: "action",
   name: "You Have Forgotten Me",
@@ -16,7 +27,7 @@ export const youHaveForgottenMe: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c91b8810b881450faa5942daf03e03ef",
-    tcgPlayer: 508716,
+    tcgPlayer: "508716",
   },
   text: "Each opponent chooses and discards 2 cards.",
   abilities: [

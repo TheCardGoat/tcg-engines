@@ -4,6 +4,17 @@ import { cheshireCatNotAllThereI18n } from "./071-cheshire-cat-not-all-there.i18
 export const cheshireCatNotAllThere: CharacterCard = {
   id: "qpX",
   canonicalId: "ci_qpX",
+  slug: "lorcana-ci_qpX",
+  printings: [
+    {
+      id: "set1-071",
+      artId: "set1-071",
+      setCode: "set1",
+      collectorNumber: "71",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-071"],
   cardType: "character",
   name: "Cheshire Cat",
@@ -20,7 +31,7 @@ export const cheshireCatNotAllThere: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e49c0deba37f453f8f27da810c8bfe39",
-    tcgPlayer: 492122,
+    tcgPlayer: "492122",
   },
   text: [
     {

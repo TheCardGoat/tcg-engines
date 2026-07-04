@@ -16,9 +16,9 @@ export const ladyElegantSpanielI18n: Record<Languages, I18nProperties> = {
     version: "Elegante Spaniel",
     text: [
       {
-        title: "EIN HUNDELEBEN",
+        title: "Ein Hundeleben",
         description:
-          "Solange du mindestens einen Strolch-Charakter im Spiel hast, erhält dieser Charakter +1.",
+          "Solange du mindestens einen Strolch-Charakter im Spiel hast, erhält dieser Charakter +1 {L}.",
       },
     ],
   },
@@ -27,8 +27,9 @@ export const ladyElegantSpanielI18n: Record<Languages, I18nProperties> = {
     version: "Épagneule élégante",
     text: [
       {
-        title: "LES DROITS DU CITOYEN CHIEN",
-        description: "Tant que vous avez un personnage Clochard en jeu, ce personnage-ci gagne +1.",
+        title: "Les droits du citoyen chien",
+        description:
+          "Tant que vous avez un personnage Clochard en jeu, ce personnage-ci gagne +1 {L}.",
       },
     ],
   },
@@ -37,9 +38,9 @@ export const ladyElegantSpanielI18n: Record<Languages, I18nProperties> = {
     version: "Elegante Cocker",
     text: [
       {
-        title: "LA VITA D'UN CANE",
+        title: "La Vita d'Un Cane",
         description:
-          "Mentre hai in gioco un personaggio chiamato Biagio, questo personaggio riceve +1.",
+          "Mentre hai in gioco un personaggio chiamato Biagio, questo personaggio riceve +1 {L}.",
       },
     ],
   },

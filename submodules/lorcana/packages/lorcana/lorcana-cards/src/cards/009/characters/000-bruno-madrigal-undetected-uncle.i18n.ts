@@ -20,12 +20,12 @@ export const brunoMadrigalUndetectedUncleI18n: Record<Languages, I18nProperties>
     version: "Undetected Uncle",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "YOU JUST HAVE TO SEE IT",
+        title: "You Just Have to See It",
         description:
-          "— Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.",
+          "{E} — Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const brunoMadrigalUndetectedUncleI18n: Record<Languages, I18nProperties>
     version: "Undetected Uncle",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "YOU JUST HAVE TO SEE IT",
+        title: "You Just Have to See It",
         description:
-          "— Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.",
+          "{E} — Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const brunoMadrigalUndetectedUncleI18n: Record<Languages, I18nProperties>
     version: "Undetected Uncle",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "YOU JUST HAVE TO SEE IT",
+        title: "You Just Have to See It",
         description:
-          "— Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.",
+          "{E} — Name a card, then reveal the top card of your deck. If it's the named card, put that card into your hand and gain 3 lore. Otherwise, put it on the top of your deck.",
       },
     ],
   },

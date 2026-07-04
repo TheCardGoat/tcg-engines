@@ -10,10 +10,7 @@ export const fangCrossbowI18n: Record<Languages, I18nProperties> = {
       },
       {
         title: "STAY BACK!",
-      },
-      {
-        title: "{E},",
-        description: "Banish this item — Banish chosen Dragon character.",
+        description: "{E}, Banish this item — Banish chosen Dragon character.",
       },
     ],
   },
@@ -21,12 +18,12 @@ export const fangCrossbowI18n: Record<Languages, I18nProperties> = {
     name: "Armbrust aus Zahn",
     text: [
       {
-        title: "SORGFÄLTIG ZIELEN",
-        description: "2, — Gib einem Charakter deiner Wahl in diesem Zug -2.",
+        title: "Sorgfältig Zielen",
+        description: "2 {I}, {E} — Gib einem Charakter deiner Wahl in diesem Zug -2 {S}.",
       },
       {
-        title: "ZURÜCK MIT EUCH!,",
-        description: "Verbanne diesen Gegenstand — Verbanne einen Drachen deiner Wahl.",
+        title: "Zurück mit euch!",
+        description: "{E}, Verbanne diesen Gegenstand — Verbanne einen Drachen deiner Wahl.",
       },
     ],
   },
@@ -34,12 +31,13 @@ export const fangCrossbowI18n: Record<Languages, I18nProperties> = {
     name: "Arbalète de Croc du Dragon",
     text: [
       {
-        title: "VISÉE PRÉCISE,",
-        description: "2 — Choisissez un personnage, il subit -2 pour le reste de ce tour.",
+        title: "Visée précise",
+        description:
+          "{E}, 2 {I} — Choisissez un personnage, il subit -2 {S} pour le reste de ce tour.",
       },
       {
-        title: "N'APPROCHEZ PAS!,",
-        description: "bannissez cet objet — Choisissez un personnage Dragon et bannissez-le.",
+        title: "N'approchez pas!",
+        description: "{E}, bannissez cet objet — Choisissez un personnage Dragon et bannissez-le.",
       },
     ],
   },
@@ -47,12 +45,12 @@ export const fangCrossbowI18n: Record<Languages, I18nProperties> = {
     name: "Fang Crossbow",
     text: [
       {
-        title: "CAREFUL AIM, 2",
-        description: "— Chosen character gets -2 this turn.",
+        title: "Careful Aim",
+        description: "{E}, 2 {I} — Chosen character gets -2 {S} this turn.",
       },
       {
-        title: "STAY BACK!,",
-        description: "Banish this item — Banish chosen Dragon character.",
+        title: "Stay Back!",
+        description: "{E}, Banish this item — Banish chosen Dragon character.",
       },
     ],
   },

@@ -7,14 +7,14 @@ export const soBeItI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "So sei es!",
-    text: "Deine Charaktere erhalten in diesem Zug +1. Du darfst einen Gegenstand deiner Wahl verbannen.",
+    text: "Deine Charaktere erhalten in diesem Zug +1 {S}. Du darfst einen Gegenstand deiner Wahl verbannen.",
   },
   fr: {
     name: "Alors tant pis !",
-    text: "Chacun de vos personnages gagne +1 pour le reste de ce tour. Vous pouvez choisir un objet et le bannir.",
+    text: "Chacun de vos personnages gagne +1 {S} pour le reste de ce tour. Vous pouvez choisir un objet et le bannir.",
   },
   it: {
     name: "Ebbene Sia!",
-    text: "Ogni tuo personaggio riceve +1 per questo turno. Puoi esiliare un oggetto a tua scelta.",
+    text: "Ogni tuo personaggio riceve +1 {S} per questo turno. Puoi esiliare un oggetto a tua scelta.",
   },
 };

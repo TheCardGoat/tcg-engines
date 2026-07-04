@@ -172,6 +172,16 @@ describe("Angel - Experiment 624", () => {
         }),
       ).toBeSuccessfulCommand();
 
+      const angelId = testEngine.findCardInstanceId(angelExperiment624, "play", "p1");
+      expect(testEngine.asPlayerOne().getMoveOptions("activateAbility", angelId)).toEqual([]);
+      expect(
+        testEngine
+          .asPlayerOne()
+          .getAvailableMoves()
+          .find((move) => move.moveId === "activateAbility")
+          ?.selectableCardIds.includes(angelId),
+      ).not.toBe(true);
+
       // Second activation in the same turn should fail
       const result = testEngine.asPlayerOne().activateAbility(angelExperiment624, {
         costs: { discardCards: [handFodder2] },

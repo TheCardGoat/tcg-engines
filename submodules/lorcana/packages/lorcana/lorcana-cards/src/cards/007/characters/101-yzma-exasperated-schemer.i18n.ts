@@ -6,9 +6,9 @@ export const yzmaExasperatedSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Exasperated Schemer",
     text: [
       {
-        title: "HOW SHALL I DO IT?",
+        title: "HOW SHALL",
         description:
-          "When you play this character, you may draw a card, then choose and discard a card.",
+          "I DO IT? When you play this character, you may draw a card, then choose and discard a card.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const yzmaExasperatedSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Verärgerte Intrigantin",
     text: [
       {
-        title: "WIE SOLL ICH ES TUN?",
+        title: "Wie soll ich es tun?",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
@@ -28,7 +28,7 @@ export const yzmaExasperatedSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Conspiratrice à cran",
     text: [
       {
-        title: "OOOH, COMMENT PROCÉDER?",
+        title: "Oooh, comment procéder?",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez piocher une carte puis en défausser une.",
       },
@@ -39,7 +39,7 @@ export const yzmaExasperatedSchemerI18n: Record<Languages, I18nProperties> = {
     version: "Cospiratrice Esasperata",
     text: [
       {
-        title: "COME POSSO FARE?",
+        title: "Come Posso Fare?",
         description:
           "Quando giochi questo personaggio, puoi pescare una carta, poi scegliere e scartare una carta.",
       },

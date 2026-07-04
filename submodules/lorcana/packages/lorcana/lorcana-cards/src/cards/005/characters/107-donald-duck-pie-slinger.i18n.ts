@@ -24,17 +24,18 @@ export const donaldDuckPieSlingerI18n: Record<Languages, I18nProperties> = {
     version: "Kuchenschleuderer",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Donald-Duck-Charaktere auszuspielen.)",
       },
       {
-        title: "PUSTEKUCHEN",
+        title: "Pustekuchen",
         description:
-          "Wenn du diesen Charakter ausspielst, falls du Gestaltwandel benutzt hast, um diesen Charakter auszuspielen, verlieren alle gegnerischen Mitspielenden je 2 Legenden.",
+          "Wenn du diesen Charakter ausspielst, falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, verlieren alle gegnerischen Mitspielenden je 2 Legenden.",
       },
       {
-        title: "WÜTENDE ENTE",
+        title: "Wütende Ente",
         description:
-          "Solange mindestens eine gegnerische Person 10 oder mehr Legenden hat, erhält dieser Charakter +6.",
+          "Solange mindestens eine gegnerische Person 10 oder mehr Legenden hat, erhält dieser Charakter +6 {S}.",
       },
     ],
   },
@@ -43,16 +44,18 @@ export const donaldDuckPieSlingerI18n: Record<Languages, I18nProperties> = {
     version: "Lanceur de tartes",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Donald.)",
       },
       {
-        title: "UNE SIMPLE TARTE",
+        title: "Une simple tarte",
         description:
-          "Si vous jouez ce personnage en utilisant sa capacité Alter, chaque adversaire perd 2 éclats de Lore.",
+          "Si vous jouez ce personnage en utilisant sa capacité <Alter>, chaque adversaire perd 2 éclats de Lore.",
       },
       {
-        title: "CANARD ENRAGÉ",
-        description: "Tant qu'un adversaire a 10 éclats de Lore ou plus, ce personnage gagne +6.",
+        title: "Canard enragé",
+        description:
+          "Tant qu'un adversaire a 10 éclats de Lore ou plus, ce personnage gagne +6 {S}.",
       },
     ],
   },
@@ -61,16 +64,17 @@ export const donaldDuckPieSlingerI18n: Record<Languages, I18nProperties> = {
     version: "Lanciatore di Torte",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Paperino.)",
       },
       {
-        title: "TORTA DI UMILTÀ",
+        title: "Torta di Umiltà",
         description:
-          "Quando giochi questo personaggio, se hai usato Trasformazione per giocarlo, ogni avversario perde 2 leggenda.",
+          "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, ogni avversario perde 2 leggenda.",
       },
       {
-        title: "PAPERO IRACONDO",
-        description: "Mentre un avversario ha 10 o più leggenda, questo personaggio riceve +6.",
+        title: "Papero Iracondo",
+        description: "Mentre un avversario ha 10 o più leggenda, questo personaggio riceve +6 {S}.",
       },
     ],
   },

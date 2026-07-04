@@ -4,6 +4,17 @@ import { theNokkMythicalSpiritI18n } from "./036-the-nokk-mythical-spirit.i18n";
 export const theNokkMythicalSpirit: CharacterCard = {
   id: "0UL",
   canonicalId: "ci_0UL",
+  slug: "lorcana-ci_0UL",
+  printings: [
+    {
+      id: "set5-036",
+      artId: "set5-036",
+      setCode: "set5",
+      collectorNumber: "36",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-036"],
   cardType: "character",
   name: "The Nokk",
@@ -20,7 +31,7 @@ export const theNokkMythicalSpirit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fdc463d617dd4b938a2991c4f1e1f542",
-    tcgPlayer: 561486,
+    tcgPlayer: "561486",
   },
   text: [
     {
@@ -46,7 +57,10 @@ export const theNokkMythicalSpirit: CharacterCard = {
         chooser: "CONTROLLER",
         effect: {
           type: "move-damage",
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           from: "CHOSEN_CHARACTER",
           to: "CHOSEN_OPPOSING_CHARACTER",
         },

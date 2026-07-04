@@ -53,6 +53,8 @@ function enqueueTriggerEventsSince(
 ): void {
   for (const event of operations.event.getEmittedEvents().slice(eventsBefore)) {
     if (
+      event.type === "gigStolen" ||
+      event.type === "gigDieRolled" ||
       event.type === "gigValueChanged" ||
       event.type === "legendFlipped" ||
       event.type === "legendCalled" ||
@@ -229,12 +231,33 @@ export function resolveQueuedTrigger(
   const [queued] = state.G.turnMetadata.triggerQueue.splice(index, 1);
   if (!queued) return;
 
+  const card = state.G.cardIndex[queued.sourceCardId as string];
+  const ability = card ? getAbility(card, queued.abilityIndex) : undefined;
+
+  // `firstTimeEachTurn`: a given ability may START at most once per turn.
+  // Record at dequeue time (the single point a queued trigger becomes the
+  // in-progress currentTrigger) so a mid-resolution suspension/resume does
+  // not re-trigger this check and abort the remaining effects of the same
+  // firing (e.g. an adjustGig value choice followed by a conditional draw).
+  if (ability?.limits?.includes("firstTimeEachTurn")) {
+    const alreadyFired = state.G.turnMetadata.abilityFiredThisTurn.some(
+      (e) => e.cardId === queued.sourceCardId && e.abilityIndex === queued.abilityIndex,
+    );
+    if (alreadyFired) {
+      operations.game.setPendingChoice(undefined);
+      continueTriggerResolution(state, operations);
+      return;
+    }
+    state.G.turnMetadata.abilityFiredThisTurn.push({
+      cardId: queued.sourceCardId,
+      abilityIndex: queued.abilityIndex,
+    });
+  }
+
   state.G.turnMetadata.currentTrigger = { ...queued, nextEffectIndex: 0 };
   operations.game.setPendingChoice(undefined);
 
-  const card = state.G.cardIndex[queued.sourceCardId as string];
   const cardName = card ? defOf(card).displayName : "Unknown card";
-  const ability = card ? getAbility(card, queued.abilityIndex) : undefined;
   operations.event.emit({
     type: "actionLog",
     messageKey: opts.auto ? "trigger.autoResolved" : "trigger.resolved",
@@ -332,21 +355,6 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
       },
     });
     return;
-  }
-
-  if (ability.limits?.includes("firstTimeEachTurn")) {
-    const alreadyFired = state.G.turnMetadata.abilityFiredThisTurn.some(
-      (e) => e.cardId === current.sourceCardId && e.abilityIndex === current.abilityIndex,
-    );
-    if (alreadyFired) {
-      state.G.turnMetadata.currentTrigger = undefined;
-      continueTriggerResolution(state, operations);
-      return;
-    }
-    state.G.turnMetadata.abilityFiredThisTurn.push({
-      cardId: current.sourceCardId,
-      abilityIndex: current.abilityIndex,
-    });
   }
 
   if (!allRequiredEffectsHaveTargets(ability, ctx, current.nextEffectIndex)) {
@@ -494,7 +502,14 @@ function passesEventFilter(
       }
     }
     if (
-      !cardMatchesEventFilter(filter.target, defeatedCard, abilityCardId, state, sourcePlayerId)
+      !cardMatchesEventFilter(
+        filter.target,
+        defeatedCard,
+        abilityCardId,
+        state,
+        sourcePlayerId,
+        event.hadAttachedCards,
+      )
     ) {
       return false;
     }
@@ -542,6 +557,39 @@ function passesEventFilter(
       ) {
         return false;
       }
+    }
+  }
+
+  if (ability.trigger.event.event === "gigRolled" && event.type === "gigDieRolled") {
+    const filter = ability.trigger.event;
+    if (filter.player) {
+      if (
+        filter.player === "friendly" &&
+        (event.playerId as string) !== (sourcePlayerId as string)
+      ) {
+        return false;
+      }
+      if (filter.player === "rival" && (event.playerId as string) === (sourcePlayerId as string)) {
+        return false;
+      }
+    }
+    const die = state.G.gigDice[event.dieId as string];
+    if (!die) return false;
+    if (filter.target.sides !== undefined) {
+      const wanted = Array.isArray(filter.target.sides)
+        ? filter.target.sides
+        : [filter.target.sides];
+      if (!wanted.includes(die.dieType)) return false;
+    }
+    if (filter.target.minValue !== undefined && die.faceValue < filter.target.minValue) {
+      return false;
+    }
+    if (filter.target.maxValue !== undefined && die.faceValue > filter.target.maxValue) {
+      return false;
+    }
+    if (filter.target.valueParity !== undefined) {
+      const wantEven = filter.target.valueParity === "even";
+      if ((die.faceValue % 2 === 0) !== wantEven) return false;
     }
   }
 
@@ -632,6 +680,44 @@ function passesEventFilter(
         return false;
       }
     }
+    if (filter.source?.selector === "card") {
+      // Filter the thief (event source) by static card data: cardTypes,
+      // classifications, controller, etc. (e.g. evelyn-parker requires a
+      // friendly Corpo/Ganger Unit; take-control requires a rival Unit).
+      if (!event.sourceCardId) return false;
+      const sourceCard = state.G.cardIndex[event.sourceCardId as string];
+      if (!sourceCard) return false;
+      if (
+        !cardMatchesEventFilter(filter.source, sourceCard, abilityCardId, state, sourcePlayerId)
+      ) {
+        return false;
+      }
+    }
+    if (filter.target) {
+      // Filter the stolen die (event.dieId) by the Gig target's die-level
+      // filters: sides, minValue, maxValue, valueParity. Used by cards that
+      // trigger only when a specific kind of Gig is stolen (e.g. 6th-street-
+      // recruits only cares about a stolen d6).
+      if (!event.dieId) return false;
+      const die = state.G.gigDice[event.dieId as string];
+      if (!die) return false;
+      if (filter.target.sides !== undefined) {
+        const wanted = Array.isArray(filter.target.sides)
+          ? filter.target.sides
+          : [filter.target.sides];
+        if (!wanted.includes(die.dieType)) return false;
+      }
+      if (filter.target.minValue !== undefined && die.faceValue < filter.target.minValue) {
+        return false;
+      }
+      if (filter.target.maxValue !== undefined && die.faceValue > filter.target.maxValue) {
+        return false;
+      }
+      if (filter.target.valueParity !== undefined) {
+        const wantEven = filter.target.valueParity === "even";
+        if ((die.faceValue % 2 === 0) !== wantEven) return false;
+      }
+    }
   }
 
   return true;
@@ -650,6 +736,7 @@ function cardMatchesEventFilter(
   abilityCardId: CardInstanceId | undefined,
   state: MatchState,
   sourcePlayerId: PlayerId,
+  attachedCardsOverride?: boolean,
 ): boolean {
   if (filter.selector === "self") {
     return abilityCardId !== undefined && (card.instanceId as string) === (abilityCardId as string);
@@ -670,7 +757,7 @@ function cardMatchesEventFilter(
     }
     if (filter.colors && !filter.colors.includes(def.color)) return false;
     if (filter.hasAttachedCards !== undefined) {
-      const hasAttachedCards = card.meta.attachedGearIds.length > 0;
+      const hasAttachedCards = attachedCardsOverride ?? card.meta.attachedGearIds.length > 0;
       if (filter.hasAttachedCards !== hasAttachedCards) return false;
     }
     if (filter.controller) {
@@ -706,6 +793,9 @@ function buildContextTargets(event: GameEvent): Record<string, string[]> {
     ctx["triggerCard"] = [event.blockerId as string];
   }
   if (event.type === "gigStolen" && event.dieId) {
+    ctx["triggeredGigs"] = [event.dieId as string];
+  }
+  if (event.type === "gigDieRolled" && event.dieId) {
     ctx["triggeredGigs"] = [event.dieId as string];
   }
   return ctx;
@@ -876,6 +966,18 @@ function describeConditionFailure(condition: Condition): string {
       return `${relativePlayerText(condition.controller)} Street Cred is not ${comparisonText(
         condition.comparison,
       )} ${relativePlayerText(condition.other)} Street Cred`;
+    case "gigCountComparison":
+      return `${relativePlayerText(condition.controller)} Gig count is not ${comparisonText(
+        condition.comparison,
+      )} ${relativePlayerText(condition.other)} Gig count`;
+    case "streetCredDifference":
+      return `${relativePlayerText(condition.controller)} Street Cred does not differ from ${relativePlayerText(
+        condition.other,
+      )} Street Cred by ${comparisonText(condition.comparison)} ${condition.value}`;
+    case "streetCredParity":
+      return `${relativePlayerText(condition.controller)} Street Cred is not ${condition.parity}`;
+    case "allFriendlyLegendsFaceUp":
+      return "not all friendly Legends are face-up";
     case "cardState":
       return "the required card state is not true";
     case "turn":
@@ -892,6 +994,16 @@ function describeConditionFailure(condition: Condition): string {
       return "the attack type condition is not true";
     case "costMatchesGig":
       return `no ${relativePlayerText(condition.controller)} Gig matches the card cost`;
+    case "cardStat":
+      return `${relativePlayerText(undefined)} card ${condition.property} is not ${comparisonText(
+        condition.comparison,
+      )} ${condition.value}`;
+    case "cardName":
+      return `target card is not named "${condition.name}"`;
+    case "targetExists":
+      return "the required target does not exist";
+    case "gigSides":
+      return "the required gig die sides are not present";
     default:
       return assertNever(condition);
   }
@@ -1019,11 +1131,16 @@ function allRequiredEffectsHaveTargets(
     }
     if (!("target" in effect) || !effect.target) return true;
     const target = effect.target as any;
-    if (
-      target.selector === "bound" &&
-      ability.bindings?.some((binding) => binding.id === target.id && isSelectableBinding(binding))
-    ) {
-      return true;
+    if (target.selector === "bound") {
+      // Declared ability bindings can be evaluated now (selectable ones
+      // always pass; others need ≥1 resolved target). Bindings that are NOT
+      // declared — produced mid-ability by an effect like trashFromDeck's
+      // `outputBinding` — can't be evaluated until the producing effect
+      // runs, so defer (the effect itself returns noAction if empty).
+      const declared = ability.bindings?.find((binding) => binding.id === target.id);
+      if (!declared) return true;
+      if (isSelectableBinding(declared)) return true;
+      return resolveTarget(target, ctx).length > 0;
     }
     return resolveTarget(target, ctx).length > 0;
   });
@@ -1071,7 +1188,8 @@ function isProgramPlayAbility(
 type AbilityTargetBinding = NonNullable<Ability["bindings"]>[number];
 
 function getSelection(target: AbilityTargetBinding["target"]) {
-  if (target.selector !== "card" && target.selector !== "gig") return undefined;
+  if (target.selector !== "card" && target.selector !== "gig" && target.selector !== "context")
+    return undefined;
   return target.selection;
 }
 

@@ -13,6 +13,11 @@
  *   expect(p1.deployUnit(rxCard)).toSucceed();
  */
 
+import {
+  openTestSimulatorSnapshot,
+  type OpenInSimulatorOptions,
+  type OpenInSimulatorResult,
+} from "@tcg/engine-core/test-simulator";
 import type { CommandEnvelope, CommandResult } from "../../types/command.ts";
 import type { PlayerId } from "../../types/branded.ts";
 import type { MatchState } from "../../types/match-state.ts";
@@ -27,6 +32,7 @@ import { enqueueOwnCardTriggers } from "../effects/pending-effects.ts";
 import { MatchRuntime } from "../../runtime/match-runtime.ts";
 import { createStaticResources } from "../../runtime/static-resources.ts";
 import type { Player } from "../../runtime/static-resources.ts";
+import { serializeState } from "../../runtime/match-runtime.serialization.ts";
 import { createPlayerId, asPlayerId } from "../../types/branded.ts";
 
 export const PLAYER_ONE = "player_one" as const;
@@ -853,6 +859,30 @@ export class GundamTestEngine {
 
   getState(): MatchState<GundamG> {
     return this.runtime.getState();
+  }
+
+  openInSimulator(options: OpenInSimulatorOptions = {}): OpenInSimulatorResult {
+    const staticResources = this.runtime.getStaticResources();
+    return openTestSimulatorSnapshot(
+      {
+        gameSlug: "gundam",
+        viewer: options.viewer ?? PLAYER_ONE,
+        payload: {
+          snapshot: {
+            fixtureName: "test-engine-state",
+            players: staticResources.players,
+            catalog: [...staticResources.catalog.entries()],
+            instances: [...staticResources.cardsMaps.instances.entries()],
+            definitions: [...staticResources.cardsMaps.definitions.entries()],
+            state: serializeState(this.runtime.getState()),
+            p1Id: PLAYER_ONE,
+            p2Id: PLAYER_TWO,
+            hasBot: false,
+          },
+        },
+      },
+      options,
+    );
   }
 
   getG(): GundamG {

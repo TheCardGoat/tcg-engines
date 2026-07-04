@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { ladyMissParkAvenueI18n } from "./028-lady-miss-park-avenue.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const ladyMissParkAvenue: CharacterCard = {
   id: "Yv7",
   canonicalId: "ci_Yv7",
+  slug: "lorcana-ci_Yv7",
+  printings: [
+    {
+      id: "set7-028",
+      artId: "set7-028",
+      setCode: "set7",
+      collectorNumber: "28",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-028"],
   cardType: "character",
   name: "Lady",
@@ -21,7 +33,7 @@ export const ladyMissParkAvenue: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_50725381dc53418bbb9acdb5df2d16c2",
-    tcgPlayer: 618265,
+    tcgPlayer: "618265",
   },
   text: [
     {

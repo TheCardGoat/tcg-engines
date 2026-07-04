@@ -4,6 +4,17 @@ import { theWitchWilyWoodcarverI18n } from "./074-the-witch-wily-woodcarver.i18n
 export const theWitchWilyWoodcarver: CharacterCard = {
   id: "S7a",
   canonicalId: "ci_S7a",
+  slug: "lorcana-ci_S7a",
+  printings: [
+    {
+      id: "set12-074",
+      artId: "set12-074",
+      setCode: "set12",
+      collectorNumber: "74",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-074"],
   cardType: "character",
   name: "The Witch",
@@ -20,6 +31,7 @@ export const theWitchWilyWoodcarver: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_897e8937b42e46a5b0a3710a1d7617d5",
+    tcgPlayer: "690534",
   },
   text: [
     {

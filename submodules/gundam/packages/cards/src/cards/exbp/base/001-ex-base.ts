@@ -6,14 +6,17 @@ export const exbpExBase001: BaseCard = {
   type: "base",
   traits: [],
   id: "EXBP-001",
-  externalId: "gundam:exbp-001",
-  slug: "ex-base-exbp-001",
+  canonicalId: "EXBP-001",
+  externalIds: { bandai: "gundam:exbp-001" },
+  slug: "ex-base/exbp-001",
   displayName: "EX Base",
   set: { code: "EXBP", name: "Edition Beta Early Trial Event, other events", packageId: "616901" },
   printNumber: "EXBP-001",
   printings: [
     {
       id: "EXBP-001",
+      artId: "EXBP-001",
+      setCode: "EXBP",
       collectorNumber: "EXBP-001",
       cardNumber: "EXBP-001",
       set: {
@@ -28,6 +31,7 @@ export const exbpExBase001: BaseCard = {
       productName: "Edition Beta Early Trial Event, other events",
     },
   ],
+  reprints: ["EXBP-001"],
   selectedPrintingId: "EXBP-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-001.webp?260424",

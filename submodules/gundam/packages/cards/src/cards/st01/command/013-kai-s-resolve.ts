@@ -7,14 +7,17 @@ export const st01KaiSResolve013: CommandCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "ST01-013",
-  externalId: "gundam:st01-013",
-  slug: "kai-s-resolve-st01-013",
+  canonicalId: "ST01-013",
+  externalIds: { bandai: "gundam:st01-013" },
+  slug: "kai-s-resolve/st01-013",
   displayName: "Kai's Resolve",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-013",
   printings: [
     {
       id: "ST01-013",
+      artId: "ST01-013",
+      setCode: "ST01",
       collectorNumber: "ST01-013",
       cardNumber: "ST01-013",
       set: {
@@ -30,6 +33,8 @@ export const st01KaiSResolve013: CommandCard = {
     },
     {
       id: "ST01-013_p1",
+      artId: "ST01-013_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-013_p1",
       cardNumber: "ST01-013",
       set: {
@@ -45,6 +50,8 @@ export const st01KaiSResolve013: CommandCard = {
     },
     {
       id: "ST01-013_p2",
+      artId: "ST01-013_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-013_p2",
       cardNumber: "ST01-013",
       set: {
@@ -59,6 +66,7 @@ export const st01KaiSResolve013: CommandCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST01-013", "ST01-013_p1", "ST01-013_p2"],
   selectedPrintingId: "ST01-013",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-013.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-013.webp?260424",

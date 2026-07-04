@@ -4,6 +4,17 @@ import { darkwingsGasDeviceI18n } from "./169-darkwings-gas-device.i18n";
 export const darkwingsGasDevice: ItemCard = {
   id: "15l",
   canonicalId: "ci_15l",
+  slug: "lorcana-ci_15l",
+  printings: [
+    {
+      id: "set11-169",
+      artId: "set11-169",
+      setCode: "set11",
+      collectorNumber: "169",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-169"],
   cardType: "item",
   name: "Darkwing's Gas Device",
@@ -16,7 +27,7 @@ export const darkwingsGasDevice: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_51455b45e452420caabc777bd7bd1ee5",
-    tcgPlayer: 676233,
+    tcgPlayer: "676233",
   },
   text: [
     {

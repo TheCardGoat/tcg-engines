@@ -17,9 +17,9 @@ export const theColonelOldSheepdogI18n: Record<Languages, I18nProperties> = {
     version: "Alter Hütehund",
     text: [
       {
-        title: "WIR SIND IN DER ÜBERZAHL",
+        title: "Wir sind in der Überzahl",
         description:
-          "Solange du mindestens 3 Welpen im Spiel hast, erhält dieser Charakter +2 und +2.",
+          "Solange du mindestens 3 Welpen im Spiel hast, erhält dieser Charakter +2 {S} und +2 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const theColonelOldSheepdogI18n: Record<Languages, I18nProperties> = {
     version: "Vieux chien de berger",
     text: [
       {
-        title: "ILS SONT LOIN D'AVOIR NOS EFFECTIFS",
+        title: "Ils sont loin d'avoir nos effectifs",
         description:
-          "Tant que vous avez 3 personnages Chiot en jeu ou plus, ce personnage-ci gagne +2 et +2.",
+          "Tant que vous avez 3 personnages Chiot en jeu ou plus, ce personnage-ci gagne +2 {S} et +2 {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const theColonelOldSheepdogI18n: Record<Languages, I18nProperties> = {
     version: "Vecchio Cane Pastore",
     text: [
       {
-        title: "SIAMO SUPERIORI DI NUMERO",
+        title: "Siamo Superiori di Numero",
         description:
-          "Mentre hai in gioco 3 o più personaggi Cucciolo, questo personaggio riceve +2 e +2.",
+          "Mentre hai in gioco 3 o più personaggi Cucciolo, questo personaggio riceve +2 {S} e +2 {L}.",
       },
     ],
   },

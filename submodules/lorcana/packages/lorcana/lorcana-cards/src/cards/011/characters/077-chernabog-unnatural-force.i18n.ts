@@ -17,7 +17,7 @@ export const chernabogUnnaturalForceI18n: Record<Languages, I18nProperties> = {
     version: "Unnatürliche Macht",
     text: [
       {
-        title: "DUNKLER TANZ",
+        title: "Dunkler Tanz",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter deiner Wahl zurück in das zugehörige Deck mischen. Wenn du dies tust, darf die Person, die den Charakter im Spiel hatte, einen Charakter aus ihrem Ablagestapel kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const chernabogUnnaturalForceI18n: Record<Languages, I18nProperties> = {
     version: "Force contre nature",
     text: [
       {
-        title: "DANSE DES TÉNÈBRES",
+        title: "Danse des ténèbres",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse et le mélanger dans la pioche de son propriétaire. Si vous le faites, son propriétaire peut jouer gratuitement un personnage de sa défausse.",
       },
@@ -39,7 +39,7 @@ export const chernabogUnnaturalForceI18n: Record<Languages, I18nProperties> = {
     version: "Forza Innaturale",
     text: [
       {
-        title: "DANZA OSCURA",
+        title: "Danza Oscura",
         description:
           "Quando giochi questo personaggio, puoi mescolare un personaggio avversario a tua scelta nel mazzo del suo giocatore. Se lo fai, quel giocatore può giocare un personaggio dai suoi scarti, gratis.",
       },

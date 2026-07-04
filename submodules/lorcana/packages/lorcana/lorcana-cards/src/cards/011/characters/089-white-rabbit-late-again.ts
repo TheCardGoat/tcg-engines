@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { whiteRabbitLateAgainI18n } from "./089-white-rabbit-late-again.i18n";
+
 import { underdog } from "../../../helpers/abilities/underdog";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const whiteRabbitLateAgain: CharacterCard = {
   id: "k8j",
-  canonicalId: "ci_k8j",
+  canonicalId: "ci_qw7",
+  slug: "lorcana-ci_qw7",
+  printings: [
+    {
+      id: "set11-089",
+      artId: "set11-089",
+      setCode: "set11",
+      collectorNumber: "89",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-089"],
   cardType: "character",
   name: "White Rabbit",
@@ -22,7 +34,7 @@ export const whiteRabbitLateAgain: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a8878d5ac3ea4ff7bfacb512552943cc",
-    tcgPlayer: 673345,
+    tcgPlayer: "673345",
   },
   text: [
     {

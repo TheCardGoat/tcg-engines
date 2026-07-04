@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { genieOfTheLampI18n } from "./076-genie-of-the-lamp.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const genieOfTheLamp: CharacterCard = {
-  id: "4IA",
+  id: "kAd",
   canonicalId: "ci_jXl",
+  slug: "lorcana-ci_jXl",
+  printings: [
+    {
+      id: "set9-076",
+      artId: "set9-076",
+      setCode: "set9",
+      collectorNumber: "76",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-076"],
   cardType: "character",
   name: "Genie",
@@ -21,7 +33,7 @@ export const genieOfTheLamp: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_aed92d8e19b14ef19a92fb436dde357c",
-    tcgPlayer: 651118,
+    tcgPlayer: "651118",
   },
   text: [
     {

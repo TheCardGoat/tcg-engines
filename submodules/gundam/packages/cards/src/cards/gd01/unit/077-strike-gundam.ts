@@ -7,14 +7,17 @@ export const gd01StrikeGundam077: UnitCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "GD01-077",
-  externalId: "gundam:gd01-077",
-  slug: "strike-gundam-gd01-077",
+  canonicalId: "GD01-077",
+  externalIds: { bandai: "gundam:gd01-077" },
+  slug: "strike-gundam/gd01-077",
   displayName: "Strike Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-077",
   printings: [
     {
       id: "GD01-077",
+      artId: "GD01-077",
+      setCode: "GD01",
       collectorNumber: "GD01-077",
       cardNumber: "GD01-077",
       set: {
@@ -30,6 +33,8 @@ export const gd01StrikeGundam077: UnitCard = {
     },
     {
       id: "GD01-077_p1",
+      artId: "GD01-077_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-077_p1",
       cardNumber: "GD01-077",
       set: {
@@ -44,6 +49,7 @@ export const gd01StrikeGundam077: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-077", "GD01-077_p1"],
   selectedPrintingId: "GD01-077",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-077.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-077.webp?260424",

@@ -22,7 +22,7 @@ describe("Setup · mulligan · redraw", () => {
 
     const hand = screen.getByRole("list", { name: /your hand/i });
     const snapshot = () =>
-      [...hand.querySelectorAll<HTMLElement>('[role="listitem"][data-card-id]')]
+      [...hand.querySelectorAll<HTMLElement>("[data-card-id]")]
         .map((el) => el.dataset.cardId ?? "")
         .filter(Boolean);
 

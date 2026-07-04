@@ -4,6 +4,17 @@ import { zeusMrLightningBoltsI18n } from "./092-zeus-mr-lightning-bolts.i18n";
 export const zeusMrLightningBolts: CharacterCard = {
   id: "0AH",
   canonicalId: "ci_0AH",
+  slug: "lorcana-ci_0AH",
+  printings: [
+    {
+      id: "set4-092",
+      artId: "set4-092",
+      setCode: "set4",
+      collectorNumber: "92",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-092"],
   cardType: "character",
   name: "Zeus",
@@ -20,7 +31,7 @@ export const zeusMrLightningBolts: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6c8b36633fae4e9c9106e63af43934eb",
-    tcgPlayer: 550583,
+    tcgPlayer: "550583",
   },
   text: [
     {

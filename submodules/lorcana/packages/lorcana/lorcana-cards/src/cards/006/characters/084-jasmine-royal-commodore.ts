@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jasmineRoyalCommodoreI18n } from "./084-jasmine-royal-commodore.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const jasmineRoyalCommodore: CharacterCard = {
   id: "J56",
   canonicalId: "ci_J56",
+  slug: "lorcana-ci_J56",
+  printings: [
+    {
+      id: "set6-084",
+      artId: "set6-084",
+      setCode: "set6",
+      collectorNumber: "84",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-084"],
   cardType: "character",
   name: "Jasmine",
@@ -21,7 +33,7 @@ export const jasmineRoyalCommodore: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ad218b44923244058918299a897f9e4c",
-    tcgPlayer: 591116,
+    tcgPlayer: "591116",
   },
   text: [
     {

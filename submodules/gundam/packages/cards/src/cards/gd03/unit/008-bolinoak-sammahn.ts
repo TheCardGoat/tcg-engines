@@ -7,14 +7,17 @@ export const gd03BolinoakSammahn008: UnitCard = {
   color: "blue",
   traits: ["titans", "jupitris"],
   id: "GD03-008",
-  externalId: "gundam:gd03-008",
-  slug: "bolinoak-sammahn-gd03-008",
+  canonicalId: "GD03-008",
+  externalIds: { bandai: "gundam:gd03-008" },
+  slug: "bolinoak-sammahn/gd03-008",
   displayName: "Bolinoak Sammahn",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-008",
   printings: [
     {
       id: "GD03-008",
+      artId: "GD03-008",
+      setCode: "GD03",
       collectorNumber: "GD03-008",
       cardNumber: "GD03-008",
       set: {
@@ -29,6 +32,7 @@ export const gd03BolinoakSammahn008: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-008"],
   selectedPrintingId: "GD03-008",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-008.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-008.webp?260424",

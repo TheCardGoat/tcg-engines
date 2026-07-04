@@ -17,7 +17,7 @@ export const galeWindSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Element des Windes",
     text: [
       {
-        title: "WIEDERKEHRENDE BÖE",
+        title: "Wiederkehrende Böe",
         description:
           "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand.",
       },
@@ -28,7 +28,7 @@ export const galeWindSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Esprit du vent",
     text: [
       {
-        title: "BOURRASQUES PERSISTANTES",
+        title: "Bourrasques persistantes",
         description: "Lorsque ce personnage est banni via un défi, renvoyez-le dans votre main.",
       },
     ],
@@ -38,7 +38,7 @@ export const galeWindSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Spirito del Vento",
     text: [
       {
-        title: "BREZZA RICORRENTE",
+        title: "Brezza Ricorrente",
         description:
           "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta.",
       },

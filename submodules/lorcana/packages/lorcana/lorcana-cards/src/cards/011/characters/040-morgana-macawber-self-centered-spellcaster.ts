@@ -4,6 +4,17 @@ import { morganaMacawberSelfcenteredSpellcasterI18n } from "./040-morgana-macawb
 export const morganaMacawberSelfcenteredSpellcaster: CharacterCard = {
   id: "r3V",
   canonicalId: "ci_r3V",
+  slug: "lorcana-ci_r3V",
+  printings: [
+    {
+      id: "set11-040",
+      artId: "set11-040",
+      setCode: "set11",
+      collectorNumber: "40",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-040"],
   cardType: "character",
   name: "Morgana Macawber",
@@ -21,7 +32,7 @@ export const morganaMacawberSelfcenteredSpellcaster: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_08e7171f69da4091b9e8691356768b86",
-    tcgPlayer: 673736,
+    tcgPlayer: "673736",
   },
   classifications: ["Storyborn", "Super", "Villain", "Sorcerer"],
   i18n: morganaMacawberSelfcenteredSpellcasterI18n,

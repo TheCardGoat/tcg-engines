@@ -121,6 +121,27 @@ function createTestContext(args?: {
 }
 
 describe("resolveVariableAmount", () => {
+  it("resolves last-effect-target-count as an aggregate amount", () => {
+    const ctx = createTestContext();
+
+    const amount: VariableAmount = {
+      type: "difference",
+      left: {
+        type: "last-effect-target-count",
+      },
+      right: -1,
+    };
+
+    const resolved = resolveVariableAmount(amount, {
+      ctx,
+      eventSnapshot: {
+        lastEffectTargetCount: 2,
+      },
+    });
+
+    expect(resolved).toEqual({ mode: "aggregate", value: 3 });
+  });
+
   it("resolves target-attribute in per-target mode", () => {
     const targetOne = "target-one" as CardInstanceId;
     const targetTwo = "target-two" as CardInstanceId;

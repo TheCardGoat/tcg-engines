@@ -4,6 +4,17 @@ import { liShangValiantLeaderI18n } from "./183-li-shang-valiant-leader.i18n";
 export const liShangValiantLeader: CharacterCard = {
   id: "qoa",
   canonicalId: "ci_qoa",
+  slug: "lorcana-ci_qoa",
+  printings: [
+    {
+      id: "set11-183",
+      artId: "set11-183",
+      setCode: "set11",
+      collectorNumber: "183",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-183"],
   cardType: "character",
   name: "Li Shang",
@@ -20,7 +31,7 @@ export const liShangValiantLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cf304010edfd42ddb7e2a2ee5702f7ab",
-    tcgPlayer: 676240,
+    tcgPlayer: "676240",
   },
   text: "Shift 4 {I}",
   classifications: ["Floodborn", "Hero", "Captain"],

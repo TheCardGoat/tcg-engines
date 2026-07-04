@@ -4,6 +4,17 @@ import { standOutI18n } from "./094-stand-out.i18n";
 export const standOut: ActionCard = {
   id: "uY9",
   canonicalId: "ci_h90",
+  slug: "lorcana-ci_h90",
+  printings: [
+    {
+      id: "set9-094",
+      artId: "set9-094",
+      setCode: "set9",
+      collectorNumber: "94",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-094"],
   cardType: "action",
   name: "Stand Out",
@@ -15,8 +26,7 @@ export const standOut: ActionCard = {
   cost: 3,
   inkable: true,
   externalIds: {
-    lorcast: "crd_7b7cb2bd63084cf6942b7174b07be8c0",
-    tcgPlayer: 647659,
+    lorcast: "crd_d0049d68c901455c94c76afdd99a2745",
   },
   text: "Chosen character gets +3 {S} and gains Evasive until the start of your next turn.",
   actionSubtype: "song",

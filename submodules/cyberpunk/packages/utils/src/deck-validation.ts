@@ -89,25 +89,30 @@ export function validateDeck(
   const ramBudget = new Map<CardColor, number>();
   for (const card of legends) {
     if (card.type === "legend") {
-      ramBudget.set(card.color, (ramBudget.get(card.color) ?? 0) + card.ram);
+      ramBudget.set(card.color, (ramBudget.get(card.color) ?? 0) + validationRam(card));
     }
   }
 
   for (const card of mainDeck) {
     if (card.type === "legend") continue;
     const budget = ramBudget.get(card.color);
+    const ram = validationRam(card);
     if (budget === undefined) {
       errors.push({
         code: "EXCEEDS_RAM_LIMIT",
         message: `"${card.displayName}" is ${card.color} but no legend provides ${card.color} RAM`,
       });
-    } else if (card.ram > budget) {
+    } else if (ram > budget) {
       errors.push({
         code: "EXCEEDS_RAM_LIMIT",
-        message: `"${card.displayName}" requires ${card.ram} ${card.color} RAM but legends only provide ${budget}`,
+        message: `"${card.displayName}" requires ${ram} ${card.color} RAM but legends only provide ${budget}`,
       });
     }
   }
 
   return errors;
+}
+
+function validationRam(card: CardDefinition): number {
+  return card.ram ?? 0;
 }

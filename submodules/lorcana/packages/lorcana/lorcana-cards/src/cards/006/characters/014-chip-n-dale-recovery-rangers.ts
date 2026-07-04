@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { chipNDaleRecoveryRangersI18n } from "./014-chip-n-dale-recovery-rangers.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const chipNDaleRecoveryRangers: CharacterCard = {
-  id: "FOd",
+  id: "Xln",
   canonicalId: "ci_0J8",
+  slug: "lorcana-ci_0J8",
+  printings: [
+    {
+      id: "set6-014",
+      artId: "set6-014",
+      setCode: "set6",
+      collectorNumber: "14",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-014"],
   cardType: "character",
   name: "Chip 'n' Dale",
@@ -21,7 +33,7 @@ export const chipNDaleRecoveryRangers: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c1cd26316f4948a382770ffb29440699",
-    tcgPlayer: 592030,
+    tcgPlayer: "592030",
   },
   text: [
     {

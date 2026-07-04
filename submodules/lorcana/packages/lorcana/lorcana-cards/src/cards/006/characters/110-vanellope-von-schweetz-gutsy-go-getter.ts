@@ -4,6 +4,17 @@ import { vanellopeVonSchweetzGutsyGogetterI18n } from "./110-vanellope-von-schwe
 export const vanellopeVonSchweetzGutsyGogetter: CharacterCard = {
   id: "xuX",
   canonicalId: "ci_xuX",
+  slug: "lorcana-ci_xuX",
+  printings: [
+    {
+      id: "set6-110",
+      artId: "set6-110",
+      setCode: "set6",
+      collectorNumber: "110",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-110"],
   cardType: "character",
   name: "Vanellope Von Schweetz",
@@ -20,7 +31,7 @@ export const vanellopeVonSchweetzGutsyGogetter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cfd767c1ed88437486b41bb5670ccc1c",
-    tcgPlayer: 591981,
+    tcgPlayer: "591981",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { hiroHamadaArmorDesignerI18n } from "./096-hiro-hamada-armor-designer.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const hiroHamadaArmorDesigner: CharacterCard = {
-  id: "rKO",
+  id: "jaS",
   canonicalId: "ci_TaU",
+  slug: "lorcana-ci_TaU",
+  printings: [
+    {
+      id: "set7-096",
+      artId: "set7-096",
+      setCode: "set7",
+      collectorNumber: "96",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-096"],
   cardType: "character",
   name: "Hiro Hamada",
@@ -21,7 +33,7 @@ export const hiroHamadaArmorDesigner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_434537e486234e2095f03c19628e07d4",
-    tcgPlayer: 619742,
+    tcgPlayer: "619742",
   },
   text: [
     {

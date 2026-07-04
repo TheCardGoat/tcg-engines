@@ -7,14 +7,17 @@ export const gd02RaiderGundam010: UnitCard = {
   color: "blue",
   traits: ["earth alliance"],
   id: "GD02-010",
-  externalId: "gundam:gd02-010",
-  slug: "raider-gundam-gd02-010",
+  canonicalId: "GD02-010",
+  externalIds: { bandai: "gundam:gd02-010" },
+  slug: "raider-gundam/gd02-010",
   displayName: "Raider Gundam",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-010",
   printings: [
     {
       id: "GD02-010",
+      artId: "GD02-010",
+      setCode: "GD02",
       collectorNumber: "GD02-010",
       cardNumber: "GD02-010",
       set: {
@@ -29,6 +32,7 @@ export const gd02RaiderGundam010: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-010"],
   selectedPrintingId: "GD02-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-010.webp?260424",

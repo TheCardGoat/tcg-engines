@@ -4,6 +4,17 @@ import { jimHawkinsStubbornCabinBoyI18n } from "./173-jim-hawkins-stubborn-cabin
 export const jimHawkinsStubbornCabinBoy: CharacterCard = {
   id: "auV",
   canonicalId: "ci_auV",
+  slug: "lorcana-ci_auV",
+  printings: [
+    {
+      id: "set6-173",
+      artId: "set6-173",
+      setCode: "set6",
+      collectorNumber: "173",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-173"],
   cardType: "character",
   name: "Jim Hawkins",
@@ -20,7 +31,7 @@ export const jimHawkinsStubbornCabinBoy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c2b1ec76c46f4bc795726d2c2113e478",
-    tcgPlayer: 593014,
+    tcgPlayer: "593014",
   },
   text: [
     {

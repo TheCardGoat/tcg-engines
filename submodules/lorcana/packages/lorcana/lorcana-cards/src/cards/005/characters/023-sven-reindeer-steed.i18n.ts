@@ -17,7 +17,7 @@ export const svenReindeerSteedI18n: Record<Languages, I18nProperties> = {
     version: "Rentier",
     text: [
       {
-        title: "RENTIER SPIELE",
+        title: "Rentier Spiele",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Charakter deiner Wahl bereit machen. Er kann in diesem Zug nicht mehr erkunden oder herausfordern.",
       },
@@ -28,7 +28,7 @@ export const svenReindeerSteedI18n: Record<Languages, I18nProperties> = {
     version: "Destrier renne",
     text: [
       {
-        title: "JEUX DE RENNES",
+        title: "Jeux de rennes",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et le redresser. Il ne peut ni partir à l'aventure ni défier pour le reste de ce tour.",
       },
@@ -39,7 +39,7 @@ export const svenReindeerSteedI18n: Record<Languages, I18nProperties> = {
     version: "Renna Destriero",
     text: [
       {
-        title: "GIOCHI DA RENNE",
+        title: "Giochi da Renne",
         description:
           "Quando giochi questo personaggio, puoi preparare un personaggio a tua scelta. Non può andare all'avventura o sfidare per il resto di questo turno.",
       },

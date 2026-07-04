@@ -16,7 +16,7 @@ export const kakamoraMenacingSailorI18n: Record<Languages, I18nProperties> = {
     version: "Bedrohlicher Seefahrer",
     text: [
       {
-        title: "PLÜNDERN",
+        title: "Plündern",
         description:
           "Wenn du diesen Charakter ausspielst, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const kakamoraMenacingSailorI18n: Record<Languages, I18nProperties> = {
     version: "Marin menaçant",
     text: [
       {
-        title: "PILLAGE",
+        title: "Pillage",
         description: "Lorsque vous jouez ce personnage, chaque adversaire perd 1 éclat de Lore.",
       },
     ],
@@ -37,7 +37,7 @@ export const kakamoraMenacingSailorI18n: Record<Languages, I18nProperties> = {
     version: "Marinaio Minaccioso",
     text: [
       {
-        title: "RAZZIA",
+        title: "Razzia",
         description: "Quando giochi questo personaggio, ogni avversario perde 1 leggenda.",
       },
     ],

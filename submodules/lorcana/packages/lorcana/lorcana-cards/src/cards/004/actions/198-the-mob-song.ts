@@ -4,6 +4,17 @@ import { theMobSongI18n } from "./198-the-mob-song.i18n";
 export const theMobSong: ActionCard = {
   id: "FC7",
   canonicalId: "ci_f4c",
+  slug: "lorcana-ci_f4c",
+  printings: [
+    {
+      id: "set4-198",
+      artId: "set4-198",
+      setCode: "set4",
+      collectorNumber: "198",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-198", "set9-202"],
   cardType: "action",
   name: "The Mob Song",
@@ -16,7 +27,7 @@ export const theMobSong: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3145e83418b2482291dc9687d76a4057",
-    tcgPlayer: 650134,
+    tcgPlayer: "650134",
   },
   text: [
     {

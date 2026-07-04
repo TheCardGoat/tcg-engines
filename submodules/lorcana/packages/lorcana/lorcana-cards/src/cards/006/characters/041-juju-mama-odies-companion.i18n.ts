@@ -17,7 +17,7 @@ export const jujuMamaOdiesCompanionI18n: Record<Languages, I18nProperties> = {
     version: "Mama Odies Gefährte",
     text: [
       {
-        title: "ABSOLUT HIMMLISCH",
+        title: "Absolut himmlisch",
         description:
           "Wenn du diesen Charakter ausspielst, verschiebe 1 Schadensmarker von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl.",
       },
@@ -28,7 +28,7 @@ export const jujuMamaOdiesCompanionI18n: Record<Languages, I18nProperties> = {
     version: "Compagnon de Mama Odie",
     text: [
       {
-        title: "IL SERAIT PARFAIT",
+        title: "Il serait parfait",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage et déplacez 1 de ses dommages sur un personnage adverse de votre choix.",
       },
@@ -39,7 +39,7 @@ export const jujuMamaOdiesCompanionI18n: Record<Languages, I18nProperties> = {
     version: "Compagno di Mamma Odie",
     text: [
       {
-        title: "ZUPPA PERFETTA",
+        title: "Zuppa Perfetta",
         description:
           "Quando giochi questo personaggio, sposta 1 segnalino danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },

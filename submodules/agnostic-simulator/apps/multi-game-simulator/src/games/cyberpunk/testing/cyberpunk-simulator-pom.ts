@@ -3,6 +3,7 @@ import type { SimulatorDomDriver, SimulatorDomElement } from "@tcg/simulator-tes
 import { cssString, expectDomAttribute, expectDomCount } from "@tcg/simulator-testing";
 
 import type { EngineAction, EngineActionMatcher } from "../types/e2e";
+import { InteractionPanelPom } from "./interaction-panel-pom";
 
 export type CyberpunkSide = "player" | "opponent";
 
@@ -90,12 +91,14 @@ export class CyberpunkSimulatorPom {
   readonly harness: CyberpunkHarnessClient;
   readonly playerBoard: CyberpunkBoardPom;
   readonly opponentBoard: CyberpunkBoardPom;
+  readonly interactionPanel: InteractionPanelPom;
 
   constructor(dom: SimulatorDomDriver, harness: CyberpunkHarnessClient) {
     this.dom = dom;
     this.harness = harness;
     this.playerBoard = new CyberpunkBoardPom(dom, "player");
     this.opponentBoard = new CyberpunkBoardPom(dom, "opponent");
+    this.interactionPanel = new InteractionPanelPom(dom);
   }
 
   async waitForReady(): Promise<void> {
@@ -511,11 +514,11 @@ export class CyberpunkSimulatorPom {
     } else {
       defenderId = defenderOrId;
     }
-    await this.harness.dispatchEngine(
-      (engine, payload) =>
-        engine.attackUnit(payload.attackerId, payload.defenderId, { as: payload.as }),
-      { attackerId, defenderId, as: as! },
-    );
+    await this.takeControl(as!);
+    const interactionId =
+      await this.interactionPanel.interactionIdForMoveCommand("cyberpunk.attackUnit");
+    await this.interactionPanel.selectCandidate(interactionId, `${attackerId}->${defenderId}`);
+    await this.interactionPanel.submitInteraction(interactionId);
   }
 
   async attackRival(attackerId: string, as: PlayerId): Promise<void>;
@@ -1150,7 +1153,7 @@ export class CyberpunkSimulatorPom {
     await this.takeControl(as);
     const button = this.promptForPlayer(as).verbButton(verb);
     await button.waitFor();
-    await button.click();
+    await button.clickJs();
   }
 
   private promptForPlayer(player: PlayerId): CyberpunkPromptPom {

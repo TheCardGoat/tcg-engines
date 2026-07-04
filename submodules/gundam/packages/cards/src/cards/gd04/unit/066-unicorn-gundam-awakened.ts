@@ -7,14 +7,17 @@ export const gd04UnicornGundamAwakened066: UnitCard = {
   color: "white",
   traits: ["civilian"],
   id: "GD04-066",
-  externalId: "gundam:gd04-066",
-  slug: "unicorn-gundam-awakened-gd04-066",
+  canonicalId: "GD04-066",
+  externalIds: { bandai: "gundam:gd04-066" },
+  slug: "unicorn-gundam-awakened/gd04-066",
   displayName: "Unicorn Gundam (Awakened)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-066",
   printings: [
     {
       id: "GD04-066",
+      artId: "GD04-066",
+      setCode: "GD04",
       collectorNumber: "GD04-066",
       cardNumber: "GD04-066",
       set: {
@@ -30,6 +33,8 @@ export const gd04UnicornGundamAwakened066: UnitCard = {
     },
     {
       id: "GD04-066_p1",
+      artId: "GD04-066_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-066_p1",
       cardNumber: "GD04-066",
       set: {
@@ -44,6 +49,7 @@ export const gd04UnicornGundamAwakened066: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-066", "GD04-066_p1"],
   selectedPrintingId: "GD04-066",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-066.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-066.webp?260424",

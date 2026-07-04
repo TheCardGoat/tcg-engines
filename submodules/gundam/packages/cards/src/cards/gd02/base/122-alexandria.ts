@@ -6,14 +6,17 @@ export const gd02Alexandria122: BaseCard = {
   type: "base",
   traits: ["titans", "warship"],
   id: "GD02-122",
-  externalId: "gundam:gd02-122",
-  slug: "alexandria-gd02-122",
+  canonicalId: "GD02-122",
+  externalIds: { bandai: "gundam:gd02-122" },
+  slug: "alexandria/gd02-122",
   displayName: "Alexandria",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-122",
   printings: [
     {
       id: "GD02-122",
+      artId: "GD02-122",
+      setCode: "GD02",
       collectorNumber: "GD02-122",
       cardNumber: "GD02-122",
       set: {
@@ -28,6 +31,7 @@ export const gd02Alexandria122: BaseCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-122"],
   selectedPrintingId: "GD02-122",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-122.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-122.webp?260424",

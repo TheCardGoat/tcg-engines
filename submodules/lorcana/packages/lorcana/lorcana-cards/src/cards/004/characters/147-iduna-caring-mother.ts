@@ -4,6 +4,17 @@ import { idunaCaringMotherI18n } from "./147-iduna-caring-mother.i18n";
 export const idunaCaringMother: CharacterCard = {
   id: "yri",
   canonicalId: "ci_yri",
+  slug: "lorcana-ci_yri",
+  printings: [
+    {
+      id: "set4-147",
+      artId: "set4-147",
+      setCode: "set4",
+      collectorNumber: "147",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-147"],
   cardType: "character",
   name: "Iduna",
@@ -20,7 +31,7 @@ export const idunaCaringMother: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_162d0aec8da44e1d88e84982dd524156",
-    tcgPlayer: 550607,
+    tcgPlayer: "550607",
   },
   text: [
     {

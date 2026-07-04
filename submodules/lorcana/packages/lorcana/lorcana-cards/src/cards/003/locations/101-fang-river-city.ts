@@ -4,6 +4,17 @@ import { fangRiverCityI18n } from "./101-fang-river-city.i18n";
 export const fangRiverCity: LocationCard = {
   id: "AJB",
   canonicalId: "ci_AJB",
+  slug: "lorcana-ci_AJB",
+  printings: [
+    {
+      id: "set3-101",
+      artId: "set3-101",
+      setCode: "set3",
+      collectorNumber: "101",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-101"],
   cardType: "location",
   name: "Fang",
@@ -20,7 +31,7 @@ export const fangRiverCity: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6438731e38f642b38a24a0b566078fa3",
-    tcgPlayer: 533884,
+    tcgPlayer: "533884",
   },
   text: [
     {

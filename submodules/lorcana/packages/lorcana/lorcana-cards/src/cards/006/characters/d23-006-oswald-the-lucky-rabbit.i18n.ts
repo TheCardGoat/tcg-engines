@@ -1,0 +1,48 @@
+import type { I18nProperties, Languages } from "@tcg/lorcana-types";
+
+export const oswaldTheLuckyRabbitD23I18n: Record<Languages, I18nProperties> = {
+  en: {
+    name: "Oswald",
+    version: "The Lucky Rabbit",
+    text: [
+      {
+        title: "[Favorable Chance]",
+        description:
+          "During your turn, whenever a card is put into your inkwell, reveal the top card of your deck. If it's an item card you may play it for free, exerted. Otherwise, put it on the bottom of your deck.",
+      },
+    ],
+  },
+  de: {
+    name: "Oswald",
+    version: "The Lucky Rabbit",
+    text: [
+      {
+        title: "[Favorable Chance]",
+        description:
+          "During your turn, whenever a card is put into your inkwell, reveal the top card of your deck. If it's an item card you may play it for free, exerted. Otherwise, put it on the bottom of your deck.",
+      },
+    ],
+  },
+  fr: {
+    name: "Oswald",
+    version: "The Lucky Rabbit",
+    text: [
+      {
+        title: "[Favorable Chance]",
+        description:
+          "During your turn, whenever a card is put into your inkwell, reveal the top card of your deck. If it's an item card you may play it for free, exerted. Otherwise, put it on the bottom of your deck.",
+      },
+    ],
+  },
+  it: {
+    name: "Oswald",
+    version: "The Lucky Rabbit",
+    text: [
+      {
+        title: "[Favorable Chance]",
+        description:
+          "During your turn, whenever a card is put into your inkwell, reveal the top card of your deck. If it's an item card you may play it for free, exerted. Otherwise, put it on the bottom of your deck.",
+      },
+    ],
+  },
+};

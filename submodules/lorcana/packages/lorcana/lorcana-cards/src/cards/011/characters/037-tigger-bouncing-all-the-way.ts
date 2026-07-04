@@ -4,6 +4,17 @@ import { tiggerBouncingAllTheWayI18n } from "./037-tigger-bouncing-all-the-way.i
 export const tiggerBouncingAllTheWay: CharacterCard = {
   id: "IyC",
   canonicalId: "ci_F3L",
+  slug: "lorcana-ci_F3L",
+  printings: [
+    {
+      id: "set11-037",
+      artId: "set11-037",
+      setCode: "set11",
+      collectorNumber: "37",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-037"],
   cardType: "character",
   name: "Tigger",
@@ -20,7 +31,7 @@ export const tiggerBouncingAllTheWay: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_899fe35731aa4f609bb72a19d7e831c8",
-    tcgPlayer: 677144,
+    tcgPlayer: "677144",
   },
   text: [
     {

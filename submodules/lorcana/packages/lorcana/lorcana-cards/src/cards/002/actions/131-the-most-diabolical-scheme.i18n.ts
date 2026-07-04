@@ -11,7 +11,16 @@ export const theMostDiabolicalSchemeI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "La plus diabolique conjuration",
-    text: "Choisissez l'un de vos personnages Méchant et bannissez-le pour bannir un autre personnage au choix.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez l'un de vos personnages Méchant et bannissez-le pour bannir un autre personnage au choix.",
+      },
+    ],
   },
   it: {
     name: "The Most Diabolical Scheme",

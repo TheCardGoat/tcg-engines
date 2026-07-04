@@ -51,6 +51,8 @@ const ADDITIONAL_GENERIC_MESSAGE_KEYS = new Set<string>([
   "trigger.defeatedTarget",
   "trigger.grantRule.cantAttack",
   "effect.callLegend.free",
+  "trigger.revealTopCardType.hit",
+  "trigger.revealTopCardType.miss",
 ]);
 
 const EXPLICIT_TYPES_THAT_REPLACE_GENERIC = new Set<MoveLog["type"]>([

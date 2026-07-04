@@ -10,8 +10,11 @@ Production entry points:
 - Some replay/bug reports may still reference the legacy simulator origin
   `https://new.lorcanito.com`.
 
-Before rules-facing work, load `.agents/skills/lorcana-rules/SKILL.md`. For
-card work, also use `.agents/skills/lorcana-find-card/SKILL.md`,
+Before rules-facing work, load
+`.agents/skills/lorcana-rules/references/glossary.md`, then
+`.agents/skills/lorcana-rules/SKILL.md`. Keep the glossary in context and use
+the skill indexes before opening the comprehensive rules. For card work, also
+use `.agents/skills/lorcana-find-card/SKILL.md`,
 `.agents/skills/lorcana-cards/SKILL.md`, and
 `.agents/skills/lorcana-test-generation/SKILL.md` as needed.
 
@@ -49,7 +52,8 @@ engine semantics, and glossary-native wording inside this submodule.
 ## Agent Backpressure Gates
 
 Use the root `/backpressured` command for long-running Lorcana work. For
-rules-facing work, load `lorcana-rules` before editing; for card reports, use
+rules-facing work, load the Lorcana glossary and `lorcana-rules` before editing;
+for card reports, use
 `replay-debugging`, `lorcana-find-card`, `lorcana-test-generation`, and
 `lorcana-cards` as the staged gates.
 

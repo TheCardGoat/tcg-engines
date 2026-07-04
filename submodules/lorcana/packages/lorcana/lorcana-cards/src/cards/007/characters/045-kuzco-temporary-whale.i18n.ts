@@ -6,9 +6,9 @@ export const kuzcoTemporaryWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Temporary Whale",
     text: [
       {
-        title: "DON'T YOU SAY A WORD",
+        title: "DON'T YOU SAY",
         description:
-          "Once during your turn, whenever a card is put into your inkwell, you may return chosen character, item, or location with cost 2 or less to their player's hand, then that player draws a card.",
+          "A WORD Once during your turn, whenever a card is put into your inkwell, you may return chosen character, item, or location with cost 2 or less to their player's hand, then that player draws a card.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const kuzcoTemporaryWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Vorübergehender Wal",
     text: [
       {
-        title: "WEHE, DU SAGST JETZT WAS",
+        title: "Wehe, du sagst jetzt was",
         description:
           "Einmal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du einen Charakter, Gegenstand oder Ort deiner Wahl, der 2 oder weniger kostet, zurück auf die zugehörige Hand schicken. Wer jenen im Spiel hatte, zieht 1 Karte.",
       },
@@ -28,7 +28,7 @@ export const kuzcoTemporaryWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Provisoirement en baleine",
     text: [
       {
-        title: "SANS COMMENTAIRE",
+        title: "Sans commentaire",
         description:
           "Une seule fois durant votre tour, lorsqu'une carte est placée dans votre réserve d'encre, vous pouvez choisir un personnage, un objet ou un lieu coûtant 2 ou moins et le renvoyer dans la main de son propriétaire. Ce joueur pioche ensuite une carte.",
       },
@@ -39,7 +39,7 @@ export const kuzcoTemporaryWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Balena per Poco",
     text: [
       {
-        title: "NON DIRE NULLA",
+        title: "Non Dire Nulla",
         description:
           "Una volta durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi far riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 2 o inferiore, poi quel giocatore pesca una carta.",
       },

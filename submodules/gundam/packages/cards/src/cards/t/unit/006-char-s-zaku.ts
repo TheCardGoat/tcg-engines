@@ -6,14 +6,17 @@ export const tCharSZaku006: UnitCard = {
   type: "unit",
   traits: ["zeon"],
   id: "T-006",
-  externalId: "gundam:t-006",
-  slug: "char-s-zaku-t-006",
+  canonicalId: "T-006",
+  externalIds: { bandai: "gundam:t-006" },
+  slug: "char-s-zaku-ii/t-006",
   displayName: "Char's Zaku Ⅱ",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "T-006",
   printings: [
     {
       id: "T-006",
+      artId: "T-006",
+      setCode: "ST03",
       collectorNumber: "T-006",
       cardNumber: "T-006",
       set: {
@@ -29,6 +32,8 @@ export const tCharSZaku006: UnitCard = {
     },
     {
       id: "T-006_p1",
+      artId: "T-006_p1",
+      setCode: "BETA",
       collectorNumber: "T-006_p1",
       cardNumber: "T-006",
       set: {
@@ -43,6 +48,7 @@ export const tCharSZaku006: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["T-006", "T-006_p1"],
   selectedPrintingId: "T-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-006.webp?260424",

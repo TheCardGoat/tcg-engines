@@ -109,6 +109,8 @@ export function resolveCostReductionEffect(
       sourceId: cardPlayed.cardId,
       cardType: normalizedCardType,
       classification: normalizedClassification,
+      cardName: effect.cardName,
+      playMethod: effect.playMethod,
       consumeOnUse,
       expiresAtTurn,
     });

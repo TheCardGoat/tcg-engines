@@ -4,6 +4,17 @@ import { fixitFelixJrDelightedSightseerI18n } from "./017-fix-it-felix-jr-deligh
 export const fixitFelixJrDelightedSightseer: CharacterCard = {
   id: "3wx",
   canonicalId: "ci_3wx",
+  slug: "lorcana-ci_3wx",
+  printings: [
+    {
+      id: "set5-017",
+      artId: "set5-017",
+      setCode: "set5",
+      collectorNumber: "17",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-017"],
   cardType: "character",
   name: "Fix-It Felix, Jr.",
@@ -20,7 +31,7 @@ export const fixitFelixJrDelightedSightseer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3a3a926925af4b4ca1cd8567c7a300ae",
-    tcgPlayer: 559778,
+    tcgPlayer: "559778",
   },
   text: [
     {

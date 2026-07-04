@@ -4,6 +4,17 @@ import { marchHareHarebrainedEccentricI18n } from "./091-march-hare-hare-brained
 export const marchHareHarebrainedEccentric: CharacterCard = {
   id: "tzo",
   canonicalId: "ci_tzo",
+  slug: "lorcana-ci_tzo",
+  printings: [
+    {
+      id: "set8-091",
+      artId: "set8-091",
+      setCode: "set8",
+      collectorNumber: "91",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-091"],
   cardType: "character",
   name: "March Hare",
@@ -20,7 +31,7 @@ export const marchHareHarebrainedEccentric: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_03fb917c4b444c35a0f174f40655e419",
-    tcgPlayer: 631410,
+    tcgPlayer: "631410",
   },
   text: [
     {

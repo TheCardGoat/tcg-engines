@@ -35,6 +35,7 @@ export function resolveReadyEffect(
       cardPlayed,
       effect.target,
       getEffectTargetSelectionInput(effect.target, resolutionInput),
+      resolutionInput.eventSnapshot,
     ) ?? [];
 
   const restriction =

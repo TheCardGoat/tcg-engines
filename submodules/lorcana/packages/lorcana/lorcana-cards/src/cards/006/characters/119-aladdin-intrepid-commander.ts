@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { aladdinIntrepidCommanderI18n } from "./119-aladdin-intrepid-commander.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const aladdinIntrepidCommander: CharacterCard = {
-  id: "brg",
-  canonicalId: "ci_brg",
+  id: "DC2",
+  canonicalId: "ci_ZSh",
+  slug: "lorcana-ci_ZSh",
+  printings: [
+    {
+      id: "set6-119",
+      artId: "set6-119",
+      setCode: "set6",
+      collectorNumber: "119",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-119"],
   cardType: "character",
   name: "Aladdin",
@@ -21,7 +33,7 @@ export const aladdinIntrepidCommander: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a5acdc20f6a54938be2874ab080a9053",
-    tcgPlayer: 588075,
+    tcgPlayer: "588075",
   },
   text: [
     {

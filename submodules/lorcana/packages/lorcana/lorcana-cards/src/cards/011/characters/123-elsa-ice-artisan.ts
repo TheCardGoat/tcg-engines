@@ -4,6 +4,17 @@ import { elsaIceArtisanI18n } from "./123-elsa-ice-artisan.i18n";
 export const elsaIceArtisan: CharacterCard = {
   id: "TnE",
   canonicalId: "ci_8cv",
+  slug: "lorcana-ci_8cv",
+  printings: [
+    {
+      id: "set11-123",
+      artId: "set11-123",
+      setCode: "set11",
+      collectorNumber: "123",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-123"],
   cardType: "character",
   name: "Elsa",
@@ -20,7 +31,7 @@ export const elsaIceArtisan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b35b509f95d441c1bd11ec67d755db5d",
-    tcgPlayer: 675515,
+    tcgPlayer: "675515",
   },
   text: [
     {

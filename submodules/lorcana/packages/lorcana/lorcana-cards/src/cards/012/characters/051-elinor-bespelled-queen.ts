@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { elinorBespelledQueenI18n } from "./051-elinor-bespelled-queen.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const elinorBespelledQueen: CharacterCard = {
   id: "9Ll",
   canonicalId: "ci_9Ll",
+  slug: "lorcana-ci_9Ll",
+  printings: [
+    {
+      id: "set12-051",
+      artId: "set12-051",
+      setCode: "set12",
+      collectorNumber: "51",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-051"],
   cardType: "character",
   name: "Elinor",
@@ -21,6 +33,7 @@ export const elinorBespelledQueen: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0a71c3e50580448eabd6ee24d079ecad",
+    tcgPlayer: "692032",
   },
   text: "Challenger +2",
   classifications: ["Storyborn", "Queen"],

@@ -20,10 +20,11 @@ export const rayaLeaderOfHeartI18n: Record<Languages, I18nProperties> = {
     version: "Anführerin von Herz",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Raya-Charaktere auszuspielen.)",
       },
       {
-        title: "CHAMPION VON KUMANDRA",
+        title: "Champion von Kumandra",
         description:
           "Dieser Charakter erhält keinen Schaden durch Herausforderungen, während er einen beschädigten Charakter herausfordert.",
       },
@@ -34,10 +35,11 @@ export const rayaLeaderOfHeartI18n: Record<Languages, I18nProperties> = {
     version: "Cheffe des Terres de Cœur",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Raya.)",
       },
       {
-        title: "CHAMPIONNE DE KUMANDRA",
+        title: "Championne de Kumandra",
         description:
           "Ce personnage ne subit aucun dommage lorsque qu'il défie un personnage blessé.",
       },
@@ -48,10 +50,11 @@ export const rayaLeaderOfHeartI18n: Record<Languages, I18nProperties> = {
     version: "Leader of Heart",
     text: [
       {
-        title: "Shift 4",
+        title:
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Raya.)",
       },
       {
-        title: "CHAMPION OF KUMANDRA",
+        title: "Champion of Kumandra",
         description:
           "Whenever this character challenges a damaged character, she takes no damage from the challenge.",
       },

@@ -7,14 +7,17 @@ export const st06OrtegaSRickDomGq007: UnitCard = {
   color: "green",
   traits: ["clan"],
   id: "ST06-007",
-  externalId: "gundam:st06-007",
-  slug: "ortega-s-rick-dom-gq-st06-007",
+  canonicalId: "ST06-007",
+  externalIds: { bandai: "gundam:st06-007" },
+  slug: "ortega-s-rick-dom-gq/st06-007",
   displayName: "Ortega's Rick Dom (GQ)",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-007",
   printings: [
     {
       id: "ST06-007",
+      artId: "ST06-007",
+      setCode: "ST06",
       collectorNumber: "ST06-007",
       cardNumber: "ST06-007",
       set: {
@@ -30,6 +33,8 @@ export const st06OrtegaSRickDomGq007: UnitCard = {
     },
     {
       id: "ST06-007_p1",
+      artId: "ST06-007_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-007_p1",
       cardNumber: "ST06-007",
       set: {
@@ -44,6 +49,7 @@ export const st06OrtegaSRickDomGq007: UnitCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST06-007", "ST06-007_p1"],
   selectedPrintingId: "ST06-007",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-007.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-007.webp?260424",

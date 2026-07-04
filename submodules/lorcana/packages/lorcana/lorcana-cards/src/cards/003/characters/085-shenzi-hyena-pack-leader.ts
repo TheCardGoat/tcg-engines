@@ -4,6 +4,17 @@ import { shenziHyenaPackLeaderI18n } from "./085-shenzi-hyena-pack-leader.i18n";
 export const shenziHyenaPackLeader: CharacterCard = {
   id: "BdK",
   canonicalId: "ci_VGS",
+  slug: "lorcana-ci_VGS",
+  printings: [
+    {
+      id: "set3-085",
+      artId: "set3-085",
+      setCode: "set3",
+      collectorNumber: "85",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-085", "set9-087"],
   cardType: "character",
   name: "Shenzi",
@@ -20,7 +31,7 @@ export const shenziHyenaPackLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b082a2cb0d9f4c24a54a8ebb85f6b0a6",
-    tcgPlayer: 650027,
+    tcgPlayer: "650027",
   },
   text: [
     {

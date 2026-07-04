@@ -6,7 +6,7 @@ export const pascalRapunzelsCompanionI18n: Record<Languages, I18nProperties> = {
     version: "Rapunzel’s Companion",
     text: [
       {
-        title: "CAMOUFLAGE",
+        title: "Camouflage",
         description: "While you have another character in play, this character gains Evasive.",
       },
     ],
@@ -16,7 +16,7 @@ export const pascalRapunzelsCompanionI18n: Record<Languages, I18nProperties> = {
     version: "Rapunzels Begleiter",
     text: [
       {
-        title: "TARNUNG",
+        title: "Tarnung",
         description:
           "Dieser Charakter erhält Wendig, solange du mindestens einen weiteren Charakter im Spiel hast.",
       },
@@ -38,7 +38,7 @@ export const pascalRapunzelsCompanionI18n: Record<Languages, I18nProperties> = {
     version: "Rapunzel’s Companion",
     text: [
       {
-        title: "CAMOUFLAGE",
+        title: "Camouflage",
         description:
           "While you have another character in play, this character gains Evasive. (Only characters with Evasive can challenge them.)",
       },

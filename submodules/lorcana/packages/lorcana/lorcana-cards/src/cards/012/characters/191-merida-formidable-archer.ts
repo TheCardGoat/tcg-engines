@@ -4,6 +4,17 @@ import { meridaFormidableArcherI18n } from "./191-merida-formidable-archer.i18n"
 export const meridaFormidableArcher: CharacterCard = {
   id: "m1s",
   canonicalId: "ci_m1s",
+  slug: "lorcana-ci_m1s",
+  printings: [
+    {
+      id: "set12-191",
+      artId: "set12-191",
+      setCode: "set12",
+      collectorNumber: "191",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-191"],
   cardType: "character",
   name: "Merida",
@@ -20,6 +31,7 @@ export const meridaFormidableArcher: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4811e7317e3149db966bab69151147cc",
+    tcgPlayer: "690217",
   },
   text: [
     {

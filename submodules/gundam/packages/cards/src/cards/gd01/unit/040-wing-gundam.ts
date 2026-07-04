@@ -7,14 +7,17 @@ export const gd01WingGundam040: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-040",
-  externalId: "gundam:gd01-040",
-  slug: "wing-gundam-gd01-040",
+  canonicalId: "GD01-040",
+  externalIds: { bandai: "gundam:gd01-040" },
+  slug: "wing-gundam/gd01-040",
   displayName: "Wing Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-040",
   printings: [
     {
       id: "GD01-040",
+      artId: "GD01-040",
+      setCode: "GD01",
       collectorNumber: "GD01-040",
       cardNumber: "GD01-040",
       set: {
@@ -30,6 +33,8 @@ export const gd01WingGundam040: UnitCard = {
     },
     {
       id: "GD01-040_p1",
+      artId: "GD01-040_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-040_p1",
       cardNumber: "GD01-040",
       set: {
@@ -44,6 +49,7 @@ export const gd01WingGundam040: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-040", "GD01-040_p1"],
   selectedPrintingId: "GD01-040",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-040.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-040.webp?260424",

@@ -1,5 +1,4 @@
 import { CardImage } from "./CardImage";
-import { simZoneAnchor } from "./animationAnchors";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { ZoneBadge } from "./ZoneBadge";
 import classes from "./DeckZone.module.css";
@@ -19,9 +18,9 @@ export function DeckZone({ count = 40, opponent = false, side }: DeckZoneProps) 
       ref={drop.setNodeRef}
       className={`${classes.zone} ${drop.isOver ? classes.dropOver : ""}`}
       data-testid="deck-zone"
+      data-zone-id={opponent ? "opp-deck" : "p-deck"}
       data-side={side}
       data-count={count}
-      {...simZoneAnchor({ id: zoneName, side, visibility: "secret", role: "deck" })}
     >
       <div className={classes.inner}>
         {count > 0 ? (

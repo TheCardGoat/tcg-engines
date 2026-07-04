@@ -4,6 +4,17 @@ import { bibbidiBobbidiBooI18n } from "./096-bibbidi-bobbidi-boo.i18n";
 export const bibbidiBobbidiBoo: ActionCard = {
   id: "GrH",
   canonicalId: "ci_GrH",
+  slug: "lorcana-ci_GrH",
+  printings: [
+    {
+      id: "set2-096",
+      artId: "set2-096",
+      setCode: "set2",
+      collectorNumber: "96",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-096"],
   cardType: "action",
   name: "Bibbidi Bobbidi Boo",
@@ -16,9 +27,9 @@ export const bibbidiBobbidiBoo: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5438ceaeaafb4d50a66613cc5df1ac84",
-    tcgPlayer: 524184,
+    tcgPlayer: "524184",
   },
-  text: "Return chosen character of yours to your hand to play a character with the same cost or less for free.",
+  text: "Return chosen character of yours to your hand to play another character with the same cost or less for free.",
   actionSubtype: "song",
   abilities: [
     {

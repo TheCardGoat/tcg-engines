@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rapunzelEtherealProtectorI18n } from "./171-rapunzel-ethereal-protector.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const rapunzelEtherealProtector: CharacterCard = {
-  id: "Jsw",
-  canonicalId: "ci_eFW",
+  id: "wmQ",
+  canonicalId: "ci_rPJ",
+  slug: "lorcana-ci_rPJ",
+  printings: [
+    {
+      id: "set11-171",
+      artId: "set11-171",
+      setCode: "set11",
+      collectorNumber: "171",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-171"],
   cardType: "character",
   name: "Rapunzel",
@@ -21,7 +33,7 @@ export const rapunzelEtherealProtector: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b3924beae9a04927adc0e542f5656aa0",
-    tcgPlayer: 677157,
+    tcgPlayer: "677157",
   },
   text: [
     {

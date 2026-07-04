@@ -4,6 +4,17 @@ import { theWardrobePerceptiveFriendI18n } from "./160-the-wardrobe-perceptive-f
 export const theWardrobePerceptiveFriend: CharacterCard = {
   id: "MRR",
   canonicalId: "ci_MRR",
+  slug: "lorcana-ci_MRR",
+  printings: [
+    {
+      id: "set8-160",
+      artId: "set8-160",
+      setCode: "set8",
+      collectorNumber: "160",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-160"],
   cardType: "character",
   name: "The Wardrobe",
@@ -20,7 +31,7 @@ export const theWardrobePerceptiveFriend: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_00a8d41f53554e5b9151021f4bd59f41",
-    tcgPlayer: 631457,
+    tcgPlayer: "631457",
   },
   text: [
     {

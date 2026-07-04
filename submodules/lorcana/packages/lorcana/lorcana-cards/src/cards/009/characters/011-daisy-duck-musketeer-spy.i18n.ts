@@ -16,7 +16,7 @@ export const daisyDuckMusketeerSpyI18n: Record<Languages, I18nProperties> = {
     version: "Musketier-Spionin",
     text: [
       {
-        title: "INFILTRATION",
+        title: "Infiltration",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle gegnerischen Mitspielenden je 1 Karte aus ihrer Hand und werfen sie ab.",
       },
@@ -27,7 +27,7 @@ export const daisyDuckMusketeerSpyI18n: Record<Languages, I18nProperties> = {
     version: "Mousquetaire espionne",
     text: [
       {
-        title: "INFILTRATION",
+        title: "Infiltration",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire choisit une carte de sa main et la défausse.",
       },
@@ -38,7 +38,7 @@ export const daisyDuckMusketeerSpyI18n: Record<Languages, I18nProperties> = {
     version: "Spia dei Moschettieri",
     text: [
       {
-        title: "INFILTRARSI",
+        title: "Infiltrarsi",
         description:
           "Quando giochi questo personaggio, ogni avversario sceglie e scarta una carta.",
       },

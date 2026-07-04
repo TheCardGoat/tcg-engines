@@ -2,8 +2,19 @@ import type { ItemCard } from "@tcg/lorcana-types";
 import { theSwordOfShanyuI18n } from "./152-the-sword-of-shan-yu.i18n";
 
 export const theSwordOfShanyu: ItemCard = {
-  id: "8S0",
+  id: "Inu",
   canonicalId: "ci_r32",
+  slug: "lorcana-ci_r32",
+  printings: [
+    {
+      id: "set8-152",
+      artId: "set8-152",
+      setCode: "set8",
+      collectorNumber: "152",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-152"],
   cardType: "item",
   name: "The Sword of Shan-Yu",
@@ -16,7 +27,7 @@ export const theSwordOfShanyu: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8b81f6ba845442d095833d7c1bee3a6c",
-    tcgPlayer: 631989,
+    tcgPlayer: "631989",
   },
   text: [
     {

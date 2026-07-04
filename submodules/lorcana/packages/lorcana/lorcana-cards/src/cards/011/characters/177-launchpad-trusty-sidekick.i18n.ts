@@ -17,9 +17,9 @@ export const launchpadTrustySidekickI18n: Record<Languages, I18nProperties> = {
     version: "Treuer Handlanger",
     text: [
       {
-        title: "WAS HAST DU",
+        title: "Was hast du benötigt?",
         description:
-          "BENÖTIGT? — Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab, außer du hast einen Darkwing-Duck-Charakter im Spiel.",
+          "{E} — Ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab, außer du hast einen Darkwing-Duck-Charakter im Spiel.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const launchpadTrustySidekickI18n: Record<Languages, I18nProperties> = {
     version: "Assistant de confiance",
     text: [
       {
-        title: "DE QUOI AVIEZ-VOUS BESOIN?",
+        title: "De quoi aviez-vous besoin?",
         description:
-          "— Piochez une carte. Ensuite, défaussez une carte sauf si vous avez un personnage Myster Mask en jeu.",
+          "{E} — Piochez une carte. Ensuite, défaussez une carte sauf si vous avez un personnage Myster Mask en jeu.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const launchpadTrustySidekickI18n: Record<Languages, I18nProperties> = {
     version: "Fido Assistente",
     text: [
       {
-        title: "DI COSA AVEVI BISOGNO?",
+        title: "Di Cosa Avevi Bisogno?",
         description:
-          "— Pesca una carta. Poi, scegli e scarta una carta a meno che tu non abbia in gioco un personaggio chiamato Darkwing Duck.",
+          "{E} — Pesca una carta. Poi, scegli e scarta una carta a meno che tu non abbia in gioco un personaggio chiamato Darkwing Duck.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { kuzcoWantedLlamaI18n } from "./045-kuzco-wanted-llama.i18n";
 export const kuzcoWantedLlama: CharacterCard = {
   id: "mVP",
   canonicalId: "ci_AlR",
+  slug: "lorcana-ci_AlR",
+  printings: [
+    {
+      id: "set2-045",
+      artId: "set2-045",
+      setCode: "set2",
+      collectorNumber: "45",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-045", "set9-049"],
   cardType: "character",
   name: "Kuzco",
@@ -20,12 +31,12 @@ export const kuzcoWantedLlama: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_21489dcd479a4d209a1b740f356fff6f",
-    tcgPlayer: 647657,
+    tcgPlayer: "647657",
   },
   text: [
     {
-      title: "OK, WHERE AM I?",
-      description: "When this character is banished, you may draw a card.",
+      title: "OK, WHERE AM",
+      description: "I? When this character is banished, you may draw a card.",
     },
   ],
   classifications: ["Storyborn", "King"],

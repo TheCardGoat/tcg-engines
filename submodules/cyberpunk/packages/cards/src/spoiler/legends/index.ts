@@ -1,4 +1,4 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
 import { spoilerAltCunninghamSoulkillerArchitect } from "./alt-cunningham-soulkiller-architect.ts";
 import { spoilerDumDumMaelstromTriggerman } from "./dum-dum-maelstrom-triggerman.ts";
 import { spoilerEvelynParkerBeautifulEnigma } from "./evelyn-parker-beautiful-enigma.ts";
@@ -26,4 +26,4 @@ export const spoilerLegends = [
   spoilerRiverWardDetectiveOnTheHunt,
   spoilerRoycePsychoOnTheEdge,
   spoilerVStreetkid,
-] satisfies SpoilerCardDefinition[];
+] satisfies LegendCardDefinition[];

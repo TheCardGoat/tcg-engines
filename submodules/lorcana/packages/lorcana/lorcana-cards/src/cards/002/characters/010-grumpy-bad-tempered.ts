@@ -4,6 +4,17 @@ import { grumpyBadtemperedI18n } from "./010-grumpy-bad-tempered.i18n";
 export const grumpyBadtempered: CharacterCard = {
   id: "Xv5",
   canonicalId: "ci_Xv5",
+  slug: "lorcana-ci_Xv5",
+  printings: [
+    {
+      id: "set2-010",
+      artId: "set2-010",
+      setCode: "set2",
+      collectorNumber: "10",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-010"],
   cardType: "character",
   name: "Grumpy",
@@ -20,7 +31,7 @@ export const grumpyBadtempered: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9d62c487faa543c78f964ac8ff1a73f6",
-    tcgPlayer: 526388,
+    tcgPlayer: "526388",
   },
   text: [
     {

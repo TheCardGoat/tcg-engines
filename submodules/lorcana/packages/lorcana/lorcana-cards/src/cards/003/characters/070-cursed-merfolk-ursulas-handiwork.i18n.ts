@@ -17,7 +17,7 @@ export const cursedMerfolkUrsulasHandiworkI18n: Record<Languages, I18nProperties
     version: "Ursulas Handwerkskunst",
     text: [
       {
-        title: "ARME SEELEN",
+        title: "Arme Seelen",
         description:
           "Jedes Mal, wenn dieser Charakter herausgefordert wird, wählen alle gegnerischen Mitspielenden je 1 Karte aus ihrer Hand und werfen sie ab.",
       },
@@ -28,7 +28,7 @@ export const cursedMerfolkUrsulasHandiworkI18n: Record<Languages, I18nProperties
     version: "Œuvre d'Ursula",
     text: [
       {
-        title: "PAUVRES ÂMES",
+        title: "Pauvres âmes",
         description:
           "Chaque fois que ce personnage est défié, chaque adversaire choisit une carte et la défausse.",
       },
@@ -39,7 +39,7 @@ export const cursedMerfolkUrsulasHandiworkI18n: Record<Languages, I18nProperties
     version: "Opera di Ursula",
     text: [
       {
-        title: "POVERE ANIME",
+        title: "Povere Anime",
         description:
           "Ogni volta che questo personaggio viene sfidato, ogni avversario sceglie e scarta una carta.",
       },

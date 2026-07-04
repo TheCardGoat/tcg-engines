@@ -20,12 +20,12 @@ export const tianaNaturalTalentI18n: Record<Languages, I18nProperties> = {
     version: "Naturtalent",
     text: [
       {
-        title: "Singen 6",
+        title: "<Singen> 6 (Die Kosten dieses Charakters gelten als 6 für das Singen von Liedern.)",
       },
       {
-        title: "MITREISSENDE MELODIE",
+        title: "Mitreißende Melodie",
         description:
-          "Jedes Mal, wenn du ein Lied ausspielst, gib allen gegnerischen Charakteren bis zu Beginn deines nächsten Zuges -1.",
+          "Jedes Mal, wenn du ein Lied ausspielst, gib allen gegnerischen Charakteren bis zu Beginn deines nächsten Zuges -1 {S}.",
       },
     ],
   },
@@ -34,12 +34,13 @@ export const tianaNaturalTalentI18n: Record<Languages, I18nProperties> = {
     version: "Talent naturel",
     text: [
       {
-        title: "Mélomane 6",
+        title:
+          "<Mélomane> 6 (Ce personnage est considéré comme ayant un coût de 6 pour chanter des chansons.)",
       },
       {
-        title: "MÉLODIE CAPTIVANTE",
+        title: "Mélodie captivante",
         description:
-          "Chaque fois que vous jouez une chanson, chaque personnage adverse subit -1 jusqu'au début de votre prochain tour.",
+          "Chaque fois que vous jouez une chanson, chaque personnage adverse subit -1 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +49,12 @@ export const tianaNaturalTalentI18n: Record<Languages, I18nProperties> = {
     version: "Talento Naturale",
     text: [
       {
-        title: "Melodioso 6",
+        title: "<Melodioso> 6",
       },
       {
-        title: "MELODIA AFFASCINANTE",
+        title: "Melodia Affascinante",
         description:
-          "Ogni volta che giochi una canzone, ogni personaggio avversario riceve -1 fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che giochi una canzone, ogni personaggio avversario riceve -1 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

@@ -6,6 +6,7 @@ import type {
   MoveValidationContext,
   PlayerId,
 } from "#core";
+import type { DynamicAmountEventSnapshot } from "../../types/domain-events";
 import {
   hasReturnFromDiscardCandidates,
   isReturnFromDiscardEffect,
@@ -80,6 +81,7 @@ export function shouldSkipEffectWithNoValidTargets(
   ctx: OptionalSkipContext,
   sourceCardId?: CardInstanceId,
   callSite: "trigger-fire" | "bag-decision" = "trigger-fire",
+  eventSnapshot?: DynamicAmountEventSnapshot,
 ): boolean {
   const effectRecord = effect as Record<string, unknown> | null | undefined;
   if (!effectRecord || typeof effectRecord !== "object") return false;
@@ -182,7 +184,13 @@ export function shouldSkipEffectWithNoValidTargets(
     if ((innerTarget?.owner as string | undefined) === "any") return false;
   }
 
-  const analysis = analyzeEffectTargets(innerEffect, playerId, ctx, sourceCardId);
+  if (isMoveToLocationWithIncludedSelf(innerEffect)) {
+    return false;
+  }
+
+  const analysis = analyzeEffectTargets(innerEffect, playerId, ctx, sourceCardId, {
+    eventSnapshot,
+  });
   const availability = analyzeTargetSelectionAvailabilityFromAnalysis(innerEffect, analysis);
 
   if (
@@ -201,6 +209,14 @@ export function shouldSkipEffectWithNoValidTargets(
   return hasUnfillableChosenSlot(innerEffect, playerId, ctx, sourceCardId);
 }
 
+function isMoveToLocationWithIncludedSelf(effect: unknown): boolean {
+  if (!effect || typeof effect !== "object" || Array.isArray(effect)) {
+    return false;
+  }
+  const record = effect as Record<string, unknown>;
+  return record.type === "move-to-location" && record.includeSelf === true;
+}
+
 function canPayNestedCost(
   effectRecord: Record<string, unknown>,
   playerId: PlayerId,
@@ -214,8 +230,19 @@ function canPayNestedCost(
 
   const cost = rawCost as Record<string, unknown>;
   const ink = typeof cost.ink === "number" && Number.isFinite(cost.ink) ? cost.ink : 0;
+  const millTopDeck =
+    typeof cost.millTopDeck === "number" && Number.isFinite(cost.millTopDeck)
+      ? Math.max(0, Math.floor(cost.millTopDeck))
+      : 0;
   const exertCards =
     cost.exert && sourceCardId ? [{ cardId: sourceCardId, subject: "source" as const }] : undefined;
+
+  if (
+    millTopDeck > 0 &&
+    ctx.framework.zones.getCards({ zone: "deck", playerId }).length < millTopDeck
+  ) {
+    return false;
+  }
 
   return validateBasicCost(
     {

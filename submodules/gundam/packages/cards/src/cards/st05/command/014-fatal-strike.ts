@@ -7,14 +7,17 @@ export const st05FatalStrike014: CommandCard = {
   color: "purple",
   traits: ["-"],
   id: "ST05-014",
-  externalId: "gundam:st05-014",
-  slug: "fatal-strike-st05-014",
+  canonicalId: "ST05-014",
+  externalIds: { bandai: "gundam:st05-014" },
+  slug: "fatal-strike/st05-014",
   displayName: "Fatal Strike",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-014",
   printings: [
     {
       id: "ST05-014",
+      artId: "ST05-014",
+      setCode: "ST05",
       collectorNumber: "ST05-014",
       cardNumber: "ST05-014",
       set: {
@@ -30,6 +33,8 @@ export const st05FatalStrike014: CommandCard = {
     },
     {
       id: "ST05-014_p1",
+      artId: "ST05-014_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-014_p1",
       cardNumber: "ST05-014",
       set: {
@@ -45,6 +50,8 @@ export const st05FatalStrike014: CommandCard = {
     },
     {
       id: "ST05-014_p2",
+      artId: "ST05-014_p2",
+      setCode: "ST07",
       collectorNumber: "ST05-014_p2",
       cardNumber: "ST05-014",
       set: {
@@ -60,6 +67,8 @@ export const st05FatalStrike014: CommandCard = {
     },
     {
       id: "ST05-014_p3",
+      artId: "ST05-014_p3",
+      setCode: "ST07",
       collectorNumber: "ST05-014_p3",
       cardNumber: "ST05-014",
       set: {
@@ -75,6 +84,8 @@ export const st05FatalStrike014: CommandCard = {
     },
     {
       id: "ST05-014_p4",
+      artId: "ST05-014_p4",
+      setCode: "GD03",
       collectorNumber: "ST05-014_p4",
       cardNumber: "ST05-014",
       set: {
@@ -89,6 +100,7 @@ export const st05FatalStrike014: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["ST05-014", "ST05-014_p1", "ST05-014_p2", "ST05-014_p3", "ST05-014_p4"],
   selectedPrintingId: "ST05-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-014.webp?260424",

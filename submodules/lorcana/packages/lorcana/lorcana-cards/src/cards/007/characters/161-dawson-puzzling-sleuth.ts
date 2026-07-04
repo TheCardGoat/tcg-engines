@@ -4,6 +4,17 @@ import { dawsonPuzzlingSleuthI18n } from "./161-dawson-puzzling-sleuth.i18n";
 export const dawsonPuzzlingSleuth: CharacterCard = {
   id: "RK6",
   canonicalId: "ci_RK6",
+  slug: "lorcana-ci_RK6",
+  printings: [
+    {
+      id: "set7-161",
+      artId: "set7-161",
+      setCode: "set7",
+      collectorNumber: "161",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-161"],
   cardType: "character",
   name: "Dawson",
@@ -20,7 +31,7 @@ export const dawsonPuzzlingSleuth: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9fcd1bf3255d48ecb5f16b78512c01bb",
-    tcgPlayer: 619499,
+    tcgPlayer: "619499",
   },
   text: [
     {

@@ -16,7 +16,7 @@ export const chipQuickThinkerI18n: Record<Languages, I18nProperties> = {
     version: "Schnelldenker",
     text: [
       {
-        title: "ICH KÜMMERE MICH DARUM",
+        title: "Ich kümmere mich darum",
         description:
           "Wenn du diesen Charakter ausspielst, wählt eine gegnerische Person deiner Wahl 1 Karte aus ihrer Hand und wirft sie ab.",
       },
@@ -27,7 +27,7 @@ export const chipQuickThinkerI18n: Record<Languages, I18nProperties> = {
     version: "Vif d'esprit",
     text: [
       {
-        title: "JE M'EN OCCUPE",
+        title: "Je m'en occupe",
         description:
           "Lorsque vous jouez ce personnage, choisissez un adversaire qui défausse une carte.",
       },
@@ -38,7 +38,7 @@ export const chipQuickThinkerI18n: Record<Languages, I18nProperties> = {
     version: "Pronto all'Azione",
     text: [
       {
-        title: "CI PENSO IO",
+        title: "Ci Penso Io",
         description:
           "Quando giochi questo personaggio, un avversario a tua scelta sceglie e scarta una carta.",
       },

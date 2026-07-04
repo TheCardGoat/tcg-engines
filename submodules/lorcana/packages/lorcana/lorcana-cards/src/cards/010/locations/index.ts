@@ -1,3 +1,4 @@
+export { theGreatIlluminaryAbandonedLaboratoryP3Challenge } from "./p3-019-the-great-illuminary-abandoned-laboratory-challenge";
 export { duckburgFunsosFunzone } from "./034-duckburg-funsos-funzone";
 export { theGreatIlluminaryAbandonedLaboratory } from "./068-the-great-illuminary-abandoned-laboratory";
 export { whiteAgonyPlainsGoldenLagoon } from "./102-white-agony-plains-golden-lagoon";

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { genieOnTheJobI18n } from "./075-genie-on-the-job.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const genieOnTheJob: CharacterCard = {
-  id: "Y8v",
+  id: "O4w",
   canonicalId: "ci_1oW",
+  slug: "lorcana-ci_1oW",
+  printings: [
+    {
+      id: "set1-075",
+      artId: "set1-075",
+      setCode: "set1",
+      collectorNumber: "75",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-075"],
   cardType: "character",
   name: "Genie",
@@ -21,7 +33,7 @@ export const genieOnTheJob: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ae7e91462bfc4861bbf97e99ed53a1c1",
-    tcgPlayer: 510155,
+    tcgPlayer: "510155",
   },
   text: [
     {

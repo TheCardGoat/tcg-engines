@@ -4,6 +4,17 @@ import { captainHookCaptainOfTheJollyRogerI18n } from "./173-captain-hook-captai
 export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
   id: "svs",
   canonicalId: "ci_0AT",
+  slug: "lorcana-ci_0AT",
+  printings: [
+    {
+      id: "set1-173",
+      artId: "set1-173",
+      setCode: "set1",
+      collectorNumber: "173",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-173", "set9-190"],
   cardType: "character",
   name: "Captain Hook",
@@ -20,7 +31,7 @@ export const captainHookCaptainOfTheJollyRoger: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_79c990fe5bf14f4bbd075b6f80ad4290",
-    tcgPlayer: 650123,
+    tcgPlayer: "650123",
   },
   text: [
     {

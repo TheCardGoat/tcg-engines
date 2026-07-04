@@ -9,21 +9,16 @@ export const tukTukWreckingBallI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Tuktuk",
     version: "Abrisskugel",
-    text: "Impulsiv",
+    text: "<Impulsiv>",
   },
   fr: {
     name: "Tuk Tuk",
     version: "Boule de démolition",
-    text: "Combattant",
+    text: "<Combattant>",
   },
   it: {
     name: "Tuk Tuk",
     version: "Wrecking Ball",
-    text: [
-      {
-        title: "Reckless",
-        description: "(This character can't quest and must challenge each turn if able.)",
-      },
-    ],
+    text: "<Reckless> (This character can't quest and must challenge each turn if able.)",
   },
 };

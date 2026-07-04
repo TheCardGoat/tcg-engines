@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { timonSnowballSwiperI18n } from "./016-timon-snowball-swiper.i18n";
 
 export const timonSnowballSwiper: CharacterCard = {
-  id: "owY",
-  canonicalId: "ci_owY",
+  id: "k5I",
+  canonicalId: "ci_jn6",
+  slug: "lorcana-ci_jn6",
+  printings: [
+    {
+      id: "set11-016",
+      artId: "set11-016",
+      setCode: "set11",
+      collectorNumber: "16",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-016"],
   cardType: "character",
   name: "Timon",
@@ -20,7 +31,7 @@ export const timonSnowballSwiper: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4b2cd621705743f38c49fee9f610bdec",
-    tcgPlayer: 673339,
+    tcgPlayer: "673339",
   },
   text: [
     {

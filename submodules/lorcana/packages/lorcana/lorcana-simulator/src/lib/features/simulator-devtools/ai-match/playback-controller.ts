@@ -48,6 +48,7 @@ export interface AutomatedMatchPlaybackServer {
     strategy?: AutomatedActionStrategyOption["strategy"];
   }): { actorId?: PlayerId };
   getActivePlayer(): PlayerId | undefined;
+  getCurrentActorId(): PlayerId | undefined;
   getCurrentPhase(): string | undefined;
   getCurrentStep(): string | null | undefined;
   getGameSegment(): string | undefined;
@@ -85,6 +86,7 @@ export async function createAutomatedMatchPlaybackSession(
     fixture.playerOne,
     fixture.playerTwo,
     {
+      capturePatches: false,
       seed: fixture.seed,
       skipPreGame: false,
       validateSync: false,

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { dellaDuckUnstoppableMomI18n } from "./106-della-duck-unstoppable-mom.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 
 export const dellaDuckUnstoppableMom: CharacterCard = {
   id: "EO7",
   canonicalId: "ci_EO7",
+  slug: "lorcana-ci_EO7",
+  printings: [
+    {
+      id: "set3-106",
+      artId: "set3-106",
+      setCode: "set3",
+      collectorNumber: "106",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-106"],
   cardType: "character",
   name: "Della Duck",
@@ -21,7 +33,7 @@ export const dellaDuckUnstoppableMom: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_97817cbd2b964970b24740509392cf7b",
-    tcgPlayer: 535723,
+    tcgPlayer: "535723",
   },
   text: "Reckless",
   classifications: ["Storyborn", "Ally"],

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { daisyDuckTrendyTravelerI18n } from "./115-daisy-duck-trendy-traveler.i18n";
 
 export const daisyDuckTrendyTraveler: CharacterCard = {
-  id: "7aI",
+  id: "7dh",
   canonicalId: "ci_7aI",
+  slug: "lorcana-ci_7aI",
+  printings: [
+    {
+      id: "set12-115",
+      artId: "set12-115",
+      setCode: "set12",
+      collectorNumber: "115",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-115"],
   cardType: "character",
   name: "Daisy Duck",
@@ -19,6 +30,7 @@ export const daisyDuckTrendyTraveler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_995abfb15ba34115bbf2283bd853c2c2",
+    tcgPlayer: "690555",
   },
   text: [
     {

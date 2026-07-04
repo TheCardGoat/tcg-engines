@@ -9,21 +9,16 @@ export const peterPanFearlessFighterI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Peter Pan",
     version: "Furchtloser Kämpfer",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "PETER PAN",
     version: "Combattant intrépide",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Peter Pan",
     version: "Fearless Fighter",
-    text: [
-      {
-        title: "Rush",
-        description: "(This character can challenge the turn they're played.)",
-      },
-    ],
+    text: "<Rush> (This character can challenge the turn they're played.)",
   },
 };

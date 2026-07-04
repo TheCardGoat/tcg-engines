@@ -4,6 +4,17 @@ import { ichabodCraneScaredOutOfHisMindI18n } from "./152-ichabod-crane-scared-o
 export const ichabodCraneScaredOutOfHisMind: CharacterCard = {
   id: "qEC",
   canonicalId: "ci_qEC",
+  slug: "lorcana-ci_qEC",
+  printings: [
+    {
+      id: "set10-152",
+      artId: "set10-152",
+      setCode: "set10",
+      collectorNumber: "152",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-152"],
   cardType: "character",
   name: "Ichabod Crane",
@@ -20,7 +31,7 @@ export const ichabodCraneScaredOutOfHisMind: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_295ea334c82b494ca1954f544117bf8a",
-    tcgPlayer: 660021,
+    tcgPlayer: "660021",
   },
   text: [
     {

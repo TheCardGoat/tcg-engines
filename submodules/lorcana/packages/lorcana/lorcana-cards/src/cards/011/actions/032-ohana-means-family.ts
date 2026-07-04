@@ -4,6 +4,17 @@ import { ohanaMeansFamilyI18n } from "./032-ohana-means-family.i18n";
 export const ohanaMeansFamily: ActionCard = {
   id: "w65",
   canonicalId: "ci_iVN",
+  slug: "lorcana-ci_iVN",
+  printings: [
+    {
+      id: "set11-032",
+      artId: "set11-032",
+      setCode: "set11",
+      collectorNumber: "32",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-032"],
   cardType: "action",
   name: "Ohana Means Family",
@@ -16,7 +27,7 @@ export const ohanaMeansFamily: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_87abaabc59344ef1bfed548f0b6753bf",
-    tcgPlayer: 673068,
+    tcgPlayer: "673068",
   },
   text: "Remove all damage from chosen character of yours. Draw a card for each 1 damage removed this way.",
   abilities: [

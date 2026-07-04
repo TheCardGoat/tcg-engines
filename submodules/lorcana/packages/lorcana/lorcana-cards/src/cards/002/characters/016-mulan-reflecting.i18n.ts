@@ -20,10 +20,11 @@ export const mulanReflectingI18n: Record<Languages, I18nProperties> = {
     version: "Reflektiert",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Mulan-Charaktere auszuspielen.)",
       },
       {
-        title: "AHNEN HELFT, HÖRT IHR MICH",
+        title: "Ahnen helft, hört ihr mich",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du die oberste Karte deines Decks aufdecken. Falls sie eine Liedkarte ist, darfst du sie kostenlos ausspielen. Falls nicht, lege sie zurück auf dein Deck.",
       },
@@ -34,10 +35,11 @@ export const mulanReflectingI18n: Record<Languages, I18nProperties> = {
     version: "En pleine réflexion",
     text: [
       {
-        title: "Alter 2",
+        title:
+          "<Alter> 2 (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages Mulan.)",
       },
       {
-        title: "CHERS ANCÊTRES, AIDEZ-MOI",
+        title: "Chers ancêtres, aidez-moi",
         description:
           "Lorsque ce personnage est envoyé à l'aventure, vous pouvez révéler la première carte de votre pioche. S'il s'agit d'une chanson, vous pouvez la jouer gratuitement. Sinon, remettez-la sur le dessus de votre pioche.",
       },
@@ -48,10 +50,11 @@ export const mulanReflectingI18n: Record<Languages, I18nProperties> = {
     version: "Reflecting",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named Mulan.)",
       },
       {
-        title: "HONOR TO THE ANCESTORS",
+        title: "Honor to the Ancestors",
         description:
           "Whenever this character quests, you may reveal the top card of your deck. If it's a song card, you may play it for free. Otherwise, put it on the top of your deck.",
       },

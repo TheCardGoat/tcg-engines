@@ -4,6 +4,17 @@ import { gleanI18n } from "./163-glean.i18n";
 export const glean: ActionCard = {
   id: "XMc",
   canonicalId: "ci_XMc",
+  slug: "lorcana-ci_XMc",
+  printings: [
+    {
+      id: "set4-163",
+      artId: "set4-163",
+      setCode: "set4",
+      collectorNumber: "163",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-163"],
   cardType: "action",
   name: "Glean",
@@ -16,7 +27,7 @@ export const glean: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3185489386dc4b9a833fec1e0668d65f",
-    tcgPlayer: 550614,
+    tcgPlayer: "550614",
   },
   text: "Banish chosen item. Its player gains 2 lore.",
   abilities: [

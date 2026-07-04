@@ -4,6 +4,17 @@ import { duckburgFunsosFunzoneI18n } from "./034-duckburg-funsos-funzone.i18n";
 export const duckburgFunsosFunzone: LocationCard = {
   id: "Skh",
   canonicalId: "ci_Skh",
+  slug: "lorcana-ci_Skh",
+  printings: [
+    {
+      id: "set10-034",
+      artId: "set10-034",
+      setCode: "set10",
+      collectorNumber: "34",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-034"],
   cardType: "location",
   name: "Duckburg",
@@ -20,13 +31,13 @@ export const duckburgFunsosFunzone: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_516d19ec66bf46689607d453ce6f267d",
-    tcgPlayer: 660034,
+    tcgPlayer: "660034",
   },
   text: [
     {
-      title: "WHERE FUN IS IN THE ZONE",
+      title: "Where Fun Is in the Zone",
       description:
-        "Whenever a character quests while here, you pay 2 less for the next character you play this turn.",
+        "Whenever a character quests while here, you pay 2 {I} less for the next character you play this turn.",
     },
   ],
   abilities: [

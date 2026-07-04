@@ -4,6 +4,17 @@ import { cheshireCatAlwaysGrinningI18n } from "./074-cheshire-cat-always-grinnin
 export const cheshireCatAlwaysGrinning: CharacterCard = {
   id: "Eis",
   canonicalId: "ci_Eis",
+  slug: "lorcana-ci_Eis",
+  printings: [
+    {
+      id: "set2-074",
+      artId: "set2-074",
+      setCode: "set2",
+      collectorNumber: "74",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-074"],
   cardType: "character",
   name: "Cheshire Cat",
@@ -21,7 +32,7 @@ export const cheshireCatAlwaysGrinning: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_6ba7d8ee8a894df9a67bc08fa0ad9b35",
-    tcgPlayer: 527271,
+    tcgPlayer: "527271",
   },
   classifications: ["Storyborn"],
   i18n: cheshireCatAlwaysGrinningI18n,

@@ -4,6 +4,17 @@ import { dalmatianPuppyTailWaggerI18n } from "./038-dalmatian-puppy-tail-wagger.
 export const dalmatianPuppyTailWagger: CharacterCard = {
   id: "kvV",
   canonicalId: "ci_kvV",
+  slug: "lorcana-ci_kvV",
+  printings: [
+    {
+      id: "set8-038",
+      artId: "set8-038",
+      setCode: "set8",
+      collectorNumber: "38",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-038"],
   cardType: "character",
   name: "Dalmatian Puppy",
@@ -19,9 +30,11 @@ export const dalmatianPuppyTailWagger: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  missingImplementation: true,
+  missingTests: true,
   externalIds: {
     lorcast: "crd_61323fccb37c45d9b2fb428f60adcf05",
-    tcgPlayer: 631649,
+    tcgPlayer: "631649",
   },
   text: [
     {
@@ -30,6 +43,5 @@ export const dalmatianPuppyTailWagger: CharacterCard = {
     },
   ],
   classifications: ["Storyborn", "Puppy"],
-  abilities: [],
   i18n: dalmatianPuppyTailWaggerI18n,
 };

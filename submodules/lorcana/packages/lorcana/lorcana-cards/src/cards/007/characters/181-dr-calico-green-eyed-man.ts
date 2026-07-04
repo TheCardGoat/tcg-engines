@@ -4,6 +4,17 @@ import { drCalicoGreeneyedManI18n } from "./181-dr-calico-green-eyed-man.i18n";
 export const drCalicoGreeneyedMan: CharacterCard = {
   id: "XeV",
   canonicalId: "ci_XeV",
+  slug: "lorcana-ci_XeV",
+  printings: [
+    {
+      id: "set7-181",
+      artId: "set7-181",
+      setCode: "set7",
+      collectorNumber: "181",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-181"],
   cardType: "character",
   name: "Dr. Calico",
@@ -20,7 +31,7 @@ export const drCalicoGreeneyedMan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f985e42477e649a5af573894d9b0ac74",
-    tcgPlayer: 618160,
+    tcgPlayer: "618160",
   },
   text: [
     {

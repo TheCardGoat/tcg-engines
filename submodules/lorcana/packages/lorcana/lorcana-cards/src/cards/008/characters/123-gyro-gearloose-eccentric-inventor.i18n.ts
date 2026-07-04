@@ -20,12 +20,12 @@ export const gyroGearlooseEccentricInventorI18n: Record<Languages, I18nPropertie
     version: "Exzentrischer Erfinder",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "ICH ZEIGE ES IHNEN!",
+        title: "Ich zeige es ihnen!",
         description:
-          "Wenn du diesen Charakter ausspielst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -3.",
+          "Wenn du diesen Charakter ausspielst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -3 {S}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const gyroGearlooseEccentricInventorI18n: Record<Languages, I18nPropertie
     version: "Inventeur excentrique",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "VOUS ALLEZ VOIR!",
+        title: "Vous allez voir!",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -3 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -3 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const gyroGearlooseEccentricInventorI18n: Record<Languages, I18nPropertie
     version: "Inventore Eccentrico",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "VE LO DIMOSTRERÒ!",
+        title: "Ve lo Dimostrerò!",
         description:
-          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -3 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -3 {S} per questo turno.",
       },
     ],
   },

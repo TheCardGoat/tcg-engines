@@ -7,14 +7,17 @@ export const gd03Gfred048: UnitCard = {
   color: "red",
   traits: ["zeon"],
   id: "GD03-048",
-  externalId: "gundam:gd03-048",
-  slug: "gfred-gd03-048",
+  canonicalId: "GD03-048",
+  externalIds: { bandai: "gundam:gd03-048" },
+  slug: "gfred/gd03-048",
   displayName: "GFreD",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-048",
   printings: [
     {
       id: "GD03-048",
+      artId: "GD03-048",
+      setCode: "GD03",
       collectorNumber: "GD03-048",
       cardNumber: "GD03-048",
       set: {
@@ -30,6 +33,8 @@ export const gd03Gfred048: UnitCard = {
     },
     {
       id: "GD03-048_p1",
+      artId: "GD03-048_p1",
+      setCode: "PC02A",
       collectorNumber: "GD03-048_p1",
       cardNumber: "GD03-048",
       set: {
@@ -45,6 +50,7 @@ export const gd03Gfred048: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam GQuuuuuuX-[PC02A]",
     },
   ],
+  reprints: ["GD03-048", "GD03-048_p1"],
   selectedPrintingId: "GD03-048",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-048.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-048.webp?260424",

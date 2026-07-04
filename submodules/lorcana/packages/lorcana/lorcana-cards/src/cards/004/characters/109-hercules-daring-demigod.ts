@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { herculesDaringDemigodI18n } from "./109-hercules-daring-demigod.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 import { rush } from "../../../helpers/abilities/rush";
 
 export const herculesDaringDemigod: CharacterCard = {
   id: "044",
   canonicalId: "ci_044",
+  slug: "lorcana-ci_044",
+  printings: [
+    {
+      id: "set4-109",
+      artId: "set4-109",
+      setCode: "set4",
+      collectorNumber: "109",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-109"],
   cardType: "character",
   name: "Hercules",
@@ -22,7 +34,7 @@ export const herculesDaringDemigod: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_90c1d84c1ab7490897021c0eb19f781c",
-    tcgPlayer: 550592,
+    tcgPlayer: "550592",
   },
   text: [
     {

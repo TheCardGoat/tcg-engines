@@ -4,6 +4,17 @@ import { littleJohnSirReginaldI18n } from "./176-little-john-sir-reginald.i18n";
 export const littleJohnSirReginald: CharacterCard = {
   id: "2JD",
   canonicalId: "ci_2JD",
+  slug: "lorcana-ci_2JD",
+  printings: [
+    {
+      id: "set9-176",
+      artId: "set9-176",
+      setCode: "set9",
+      collectorNumber: "176",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-176"],
   cardType: "character",
   name: "Little John",
@@ -20,20 +31,9 @@ export const littleJohnSirReginald: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4d7bf56fb70e41289a010677c1ebea27",
-    tcgPlayer: 650109,
+    tcgPlayer: "650109",
   },
-  text: [
-    {
-      title: "WHAT A BEAUTIFUL BRAWL!",
-      description: "When you play this character, choose one:",
-    },
-    {
-      title: "* Chosen Hero character gains Resist +2 this turn.",
-    },
-    {
-      title: "* Deal 2 damage to chosen Villain character.",
-    },
-  ],
+  text: "WHAT A BEAUTIFUL BRAWL! When you play this character, choose one:\n- Chosen Hero character gains Resist +2 this turn.\n- Deal 2 damage to chosen Villain character.",
   classifications: ["Storyborn", "Ally"],
   abilities: [
     {
@@ -64,7 +64,12 @@ export const littleJohnSirReginald: CharacterCard = {
               owner: "any",
               selector: "chosen",
               zones: ["play"],
-              filter: [{ type: "has-classification", classification: "Hero" }],
+              filter: [
+                {
+                  type: "has-classification",
+                  classification: "Hero",
+                },
+              ],
             },
           },
           {
@@ -76,7 +81,12 @@ export const littleJohnSirReginald: CharacterCard = {
               owner: "any",
               zones: ["play"],
               cardTypes: ["character"],
-              filter: [{ type: "has-classification", classification: "Villain" }],
+              filter: [
+                {
+                  type: "has-classification",
+                  classification: "Villain",
+                },
+              ],
             },
           },
         ],

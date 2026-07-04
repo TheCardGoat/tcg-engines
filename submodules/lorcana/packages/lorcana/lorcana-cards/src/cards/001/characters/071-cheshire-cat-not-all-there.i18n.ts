@@ -17,7 +17,7 @@ export const cheshireCatNotAllThereI18n: Record<Languages, I18nProperties> = {
     version: "Nicht ganz da",
     text: [
       {
-        title: "DA BIN ICH!",
+        title: "Da bin ich!",
         description:
           "Wenn dieser Charakter herausgefordert und verbannt wird, verbanne den herausfordernden Charakter.",
       },
@@ -38,7 +38,7 @@ export const cheshireCatNotAllThereI18n: Record<Languages, I18nProperties> = {
     version: "Not All There",
     text: [
       {
-        title: "LOSE SOMETHING?",
+        title: "Lose Something?",
         description:
           "When this character is challenged and banished, banish the challenging character.",
       },

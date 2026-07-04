@@ -7,14 +7,17 @@ export const st07GundamDynames005: UnitCard = {
   color: "green",
   traits: ["cb", "gn drive"],
   id: "ST07-005",
-  externalId: "gundam:st07-005",
-  slug: "gundam-dynames-st07-005",
+  canonicalId: "ST07-005",
+  externalIds: { bandai: "gundam:st07-005" },
+  slug: "gundam-dynames/st07-005",
   displayName: "Gundam Dynames",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-005",
   printings: [
     {
       id: "ST07-005",
+      artId: "ST07-005",
+      setCode: "ST07",
       collectorNumber: "ST07-005",
       cardNumber: "ST07-005",
       set: {
@@ -30,6 +33,8 @@ export const st07GundamDynames005: UnitCard = {
     },
     {
       id: "ST07-005_p1",
+      artId: "ST07-005_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-005_p1",
       cardNumber: "ST07-005",
       set: {
@@ -45,6 +50,8 @@ export const st07GundamDynames005: UnitCard = {
     },
     {
       id: "ST07-005_p2",
+      artId: "ST07-005_p2",
+      setCode: "ST07",
       collectorNumber: "ST07-005_p2",
       cardNumber: "ST07-005",
       set: {
@@ -59,6 +66,7 @@ export const st07GundamDynames005: UnitCard = {
       productName: "Newtype Challenge 2026 Mission 2",
     },
   ],
+  reprints: ["ST07-005", "ST07-005_p1", "ST07-005_p2"],
   selectedPrintingId: "ST07-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-005.webp?260424",

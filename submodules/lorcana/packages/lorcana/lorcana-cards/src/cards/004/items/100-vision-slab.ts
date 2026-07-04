@@ -4,6 +4,17 @@ import { visionSlabI18n } from "./100-vision-slab.i18n";
 export const visionSlab: ItemCard = {
   id: "Kxi",
   canonicalId: "ci_Kxi",
+  slug: "lorcana-ci_Kxi",
+  printings: [
+    {
+      id: "set4-100",
+      artId: "set4-100",
+      setCode: "set4",
+      collectorNumber: "100",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-100"],
   cardType: "item",
   name: "Vision Slab",
@@ -16,7 +27,7 @@ export const visionSlab: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_58f8144b0f884b70a2a6b946ba8377cd",
-    tcgPlayer: 548196,
+    tcgPlayer: "548196",
   },
   text: [
     {

@@ -20,12 +20,12 @@ export const zipperAstuteDecoyI18n: Record<Languages, I18nProperties> = {
     version: "Scharfsinniger Lockvogel",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "EINGREIFEN",
+        title: "Eingreifen",
         description:
-          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält ein anderer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges Robust +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält ein anderer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const zipperAstuteDecoyI18n: Record<Languages, I18nProperties> = {
     version: "Leurre astucieux",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "EN INTERPOSITION",
+        title: "En interposition",
         description:
-          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un autre personnage qui gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un autre personnage qui gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const zipperAstuteDecoyI18n: Record<Languages, I18nProperties> = {
     version: "Astuto Diversivo",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "INTERFERIRE",
+        title: "Interferire",
         description:
-          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un altro personaggio a tua scelta ottiene Resistere +1 fino all'inizio del tuo prossimo turno.",
+          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un altro personaggio a tua scelta ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

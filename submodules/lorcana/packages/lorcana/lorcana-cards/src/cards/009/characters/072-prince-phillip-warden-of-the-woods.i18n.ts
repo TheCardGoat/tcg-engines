@@ -16,9 +16,9 @@ export const princePhillipWardenOfTheWoodsI18n: Record<Languages, I18nProperties
     version: "Hüter des Waldes",
     text: [
       {
-        title: "STRAHLENDES LEUCHTFEUER",
+        title: "Strahlendes Leuchtfeuer",
         description:
-          "Deine anderen Heldinnen und Helden erhalten Behütet. (Gegnerische Karten können diese Charaktere nicht auswählen, außer um sie herauszufordern.)",
+          "Deine anderen Heldinnen und Helden erhalten <Behütet>. (Gegnerische Karten können diese Charaktere nicht auswählen, außer um sie herauszufordern.)",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const princePhillipWardenOfTheWoodsI18n: Record<Languages, I18nProperties
     version: "Gardien de la forêt",
     text: [
       {
-        title: "FLAMBEAU RAYONNANT",
+        title: "Flambeau rayonnant",
         description:
-          "Vos autres personnages Héros gagnent Hors d'atteinte. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)",
+          "Vos autres personnages Héros gagnent <Hors d'atteinte>. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const princePhillipWardenOfTheWoodsI18n: Record<Languages, I18nProperties
     version: "Guardiano delle Foreste",
     text: [
       {
-        title: "FARO SPLENDENTE I",
+        title: "Faro Splendente",
         description:
-          "tuoi altri personaggi Eroe ottengono Protetto. (Gli avversari non possono sceglierli se non per sfidarli.)",
+          "I tuoi altri personaggi Eroe ottengono <Protetto>. (Gli avversari non possono sceglierli se non per sfidarli.)",
       },
     ],
   },

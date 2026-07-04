@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { shereKhanMenacingPredatorI18n } from "./126-shere-khan-menacing-predator.i18n";
 
 export const shereKhanMenacingPredator: CharacterCard = {
-  id: "e9n",
+  id: "1RH",
   canonicalId: "ci_68m",
+  slug: "lorcana-ci_68m",
+  printings: [
+    {
+      id: "set2-126",
+      artId: "set2-126",
+      setCode: "set2",
+      collectorNumber: "126",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-126", "set9-104"],
   cardType: "character",
   name: "Shere Khan",
@@ -20,7 +31,7 @@ export const shereKhanMenacingPredator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4245d44a1e8344e1878acd9002b813e0",
-    tcgPlayer: 650042,
+    tcgPlayer: "650042",
   },
   text: [
     {

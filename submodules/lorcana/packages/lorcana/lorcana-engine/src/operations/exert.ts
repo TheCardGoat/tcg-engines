@@ -3,7 +3,12 @@ import { emitTriggeredLorcanaEvent } from "../runtime-moves/effects/triggered-ab
 
 type ExertCtx = Parameters<typeof emitTriggeredLorcanaEvent>[0] & {
   cards: { patchMeta: (id: CardInstanceId, patch: Record<string, unknown>) => void };
-  framework: { zones: { getCardOwner: (id: CardInstanceId) => string | undefined } };
+  framework: {
+    zones: {
+      getCardOwner: (id: CardInstanceId) => string | undefined;
+      getCardZone?: (id: CardInstanceId) => string | undefined;
+    };
+  };
 };
 
 /**
@@ -27,7 +32,11 @@ export function exertCard(
     emitTriggeredLorcanaEvent(
       ctx,
       "cardExerted",
-      { cardId, source: options.source },
+      {
+        cardId,
+        source: options.source,
+        zone: ctx.framework.zones.getCardZone?.(cardId)?.split(":")[0],
+      },
       {
         event: "exert",
         subjectCardId: cardId,

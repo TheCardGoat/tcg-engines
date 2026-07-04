@@ -4,6 +4,17 @@ import { pennyBoltsPersonI18n } from "./021-penny-bolts-person.i18n";
 export const pennyBoltsPerson: CharacterCard = {
   id: "PYz",
   canonicalId: "ci_PYz",
+  slug: "lorcana-ci_PYz",
+  printings: [
+    {
+      id: "set7-021",
+      artId: "set7-021",
+      setCode: "set7",
+      collectorNumber: "21",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-021"],
   cardType: "character",
   name: "Penny",
@@ -20,7 +31,7 @@ export const pennyBoltsPerson: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_32c3d2920fe747bbb4ee7e95f78523d8",
-    tcgPlayer: 619416,
+    tcgPlayer: "619416",
   },
   text: [
     {
@@ -39,7 +50,10 @@ export const pennyBoltsPerson: CharacterCard = {
           steps: [
             {
               type: "remove-damage",
-              amount: { type: "up-to", value: 2 },
+              amount: {
+                type: "up-to",
+                value: 2,
+              },
               target: {
                 selector: "chosen",
                 count: 1,
@@ -53,7 +67,9 @@ export const pennyBoltsPerson: CharacterCard = {
               keyword: "Resist",
               value: 1,
               duration: "until-start-of-next-turn",
-              target: { ref: "previous-target" },
+              target: {
+                ref: "previous-target",
+              },
             },
           ],
         },

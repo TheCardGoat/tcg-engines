@@ -1,7 +1,6 @@
 import type { ClientToServerEvents, ServerToClientEvents } from "@tcg/protocol";
 import { RawGatewayServerMessageSchema, type RawGatewayServerMessage } from "@tcg/protocol/gateway";
-import { io, type Socket } from "socket.io-client";
-import * as msgpackParser from "socket.io-msgpack-parser";
+import type { Socket } from "socket.io-client";
 
 export interface GatewayTicket {
   ticket?: string;
@@ -15,9 +14,6 @@ export type GatewaySocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 export interface OpenGatewayOptions {
   gameSlug: string;
   gatewayOrigin: string;
-  getAuth?: () => GatewayTicket;
-  authMode?: GatewayAuthMode;
-  debugSlug?: string;
 }
 
 export interface RequestGatewayTicketOptions {
@@ -91,47 +87,6 @@ export async function requestGatewayTicket({
   };
 }
 
-export function openSimulatorGateway(
-  ticket: GatewayTicket,
-  options: OpenGatewayOptions,
-): GatewaySocket {
-  const authMode = options.authMode ?? "optional";
-  const url = buildGatewaySocketIoUrl(options);
-  logGatewayDebug("[live-gateway] opening Socket.IO gateway", {
-    url,
-    hasTicket: Boolean(ticket.ticket),
-    hasAuthToken: Boolean(ticket.authToken),
-    authMode,
-  });
-  const socket = io(url, {
-    path: "/socket.io/",
-    transports: ["websocket"],
-    parser: msgpackParser,
-    autoConnect: false,
-    reconnection: true,
-    reconnectionAttempts: Number.POSITIVE_INFINITY,
-    reconnectionDelay: 1_000,
-    reconnectionDelayMax: 30_000,
-    withCredentials: true,
-    auth: (cb: (data: { ticket?: string; token?: string; requireAuth?: true }) => void) => {
-      const resolved = options.getAuth?.() ?? ticket;
-      logGatewayDebug("[live-gateway] resolving Socket.IO gateway auth", {
-        hasTicket: Boolean(resolved.ticket),
-        hasAuthToken: Boolean(resolved.authToken),
-        authMode,
-      });
-      cb({
-        ...(resolved.ticket ? { ticket: resolved.ticket } : {}),
-        ...(resolved.authToken ? { token: resolved.authToken } : {}),
-        ...(authMode === "required" ? { requireAuth: true } : {}),
-      });
-    },
-  });
-  installGatewayDebugLogging(socket, options.debugSlug ?? options.gameSlug);
-  socket.connect();
-  return socket;
-}
-
 export function shouldRefreshAnonymousWelcome(
   authMode: GatewayAuthMode,
   payload: { authenticated?: boolean },
@@ -191,33 +146,6 @@ export function normalizeOrigin(input: string): string {
 
 const GATEWAY_LOG_STORAGE_KEY = "tcg:gateway-log";
 const GATEWAY_LOG_QUERY_PARAMS = ["gatewayLog", "gatewayDebug"];
-
-function installGatewayDebugLogging(socket: GatewaySocket, slug: string): void {
-  const loggableSocket = socket as GatewaySocket & {
-    onAny?: (handler: (event: string, ...args: unknown[]) => void) => GatewaySocket;
-  };
-  loggableSocket.onAny?.((event, ...args) => {
-    logGatewayMessage("in", slug, event, args);
-  });
-
-  if (typeof socket.emit !== "function") return;
-  const originalEmit = socket.emit.bind(socket) as (event: string, ...args: unknown[]) => Socket;
-  socket.emit = ((event: string, ...args: unknown[]) => {
-    logGatewayMessage("out", slug, event, args);
-    return originalEmit(event, ...args);
-  }) as typeof socket.emit;
-}
-
-function logGatewayMessage(
-  direction: "in" | "out",
-  slug: string,
-  event: string,
-  payloads: unknown[],
-): void {
-  if (!shouldLogGatewayMessages()) return;
-  const arrow = direction === "in" ? "<-" : "->";
-  console.debug(`[gateway:${slug}] ${arrow} ${event}`, ...payloads);
-}
 
 function logGatewayDebug(message: string, details?: Record<string, unknown>): void {
   if (!shouldLogGatewayMessages()) return;

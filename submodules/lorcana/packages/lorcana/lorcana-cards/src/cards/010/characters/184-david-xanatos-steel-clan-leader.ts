@@ -4,6 +4,17 @@ import { davidXanatosSteelClanLeaderI18n } from "./184-david-xanatos-steel-clan-
 export const davidXanatosSteelClanLeader: CharacterCard = {
   id: "FZS",
   canonicalId: "ci_FZS",
+  slug: "lorcana-ci_FZS",
+  printings: [
+    {
+      id: "set10-184",
+      artId: "set10-184",
+      setCode: "set10",
+      collectorNumber: "184",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-184"],
   cardType: "character",
   name: "David Xanatos",
@@ -20,7 +31,7 @@ export const davidXanatosSteelClanLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_af2df57fb8c4408f9bf4e1358f6cac30",
-    tcgPlayer: 658502,
+    tcgPlayer: "658502",
   },
   text: [
     {

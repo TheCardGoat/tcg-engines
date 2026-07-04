@@ -1,13 +1,76 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { cinderellaResourcefulTravelerP3PromoI18n } from "./p3-047-cinderella-resourceful-traveler-promo.i18n";
-import { cinderellaResourcefulTraveler } from "./155-cinderella-resourceful-traveler";
 
 export const cinderellaResourcefulTravelerP3Promo: CharacterCard = {
-  ...cinderellaResourcefulTraveler,
-  id: "otc",
-  set: "P03",
+  id: "v1S",
+  canonicalId: "ci_fXG",
+  slug: "lorcana-ci_fXG",
+  printings: [
+    {
+      id: "set12-p3-047-promo",
+      artId: "ci_fXG-promo",
+      setCode: "set12",
+      collectorNumber: "47",
+      rarity: "promo",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set12-155"],
+  cardType: "character",
+  name: "Cinderella",
+  version: "Resourceful Traveler",
+  inkType: ["sapphire"],
+  franchise: "Cinderella",
+  set: "012",
   cardNumber: 47,
   rarity: "special",
   specialRarity: "promo",
+  cost: 4,
+  strength: 1,
+  willpower: 4,
+  lore: 2,
+  inkable: true,
+  externalIds: {
+    lorcast: "crd_f4e355fa31614d7885933e92a5d0c821",
+    tcgPlayer: "690551",
+  },
+  text: [
+    {
+      title: "THIS AND THAT",
+      description:
+        "Whenever this character quests, if you played another character this turn, you may put the top card of your deck into your inkwell facedown and exerted.",
+    },
+  ],
+  classifications: ["Dreamborn", "Hero", "Princess"],
+  abilities: [
+    {
+      id: "8Mn-1",
+      name: "THIS AND THAT",
+      type: "triggered",
+      text: "THIS AND THAT Whenever this character quests, if you played another character this turn, you may put the top card of your deck into your inkwell facedown and exerted.",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+        timing: "whenever",
+      },
+      condition: {
+        type: "turn-metric",
+        metric: "played-character-with-classification",
+        excludeSource: true,
+        comparison: {
+          operator: "gte",
+          value: 1,
+        },
+      },
+      effect: {
+        type: "optional",
+        chooser: "CONTROLLER",
+        effect: {
+          type: "put-into-inkwell",
+          source: "top-of-deck",
+        },
+      },
+    },
+  ],
   i18n: cinderellaResourcefulTravelerP3PromoI18n,
 };

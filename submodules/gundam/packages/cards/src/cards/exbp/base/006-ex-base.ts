@@ -6,8 +6,9 @@ export const exbpExBase006: BaseCard = {
   type: "base",
   traits: [],
   id: "EXBP-006",
-  externalId: "gundam:exbp-006",
-  slug: "ex-base-exbp-006",
+  canonicalId: "EXBP-006",
+  externalIds: { bandai: "gundam:exbp-006" },
+  slug: "ex-base/exbp-006",
   displayName: "EX Base",
   set: {
     code: "EXBP",
@@ -18,6 +19,8 @@ export const exbpExBase006: BaseCard = {
   printings: [
     {
       id: "EXBP-006",
+      artId: "EXBP-006",
+      setCode: "EXBP",
       collectorNumber: "EXBP-006",
       cardNumber: "EXBP-006",
       set: {
@@ -32,6 +35,7 @@ export const exbpExBase006: BaseCard = {
       productName: "SD Gundam G Generation ETERNAL Collaboration Pack",
     },
   ],
+  reprints: ["EXBP-006"],
   selectedPrintingId: "EXBP-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exbp/EXBP-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-006.webp?260424",

@@ -17,9 +17,9 @@ export const maximusTeamChampionI18n: Record<Languages, I18nProperties> = {
     version: "Team Champion",
     text: [
       {
-        title: "KÖNIGLICHE BELOHNUNGEN",
+        title: "Königliche Belohnungen",
         description:
-          "Am Ende deines Zuges, wenn du mindestens einen Charakter mit 5 oder mehr im Spiel hast, sammelst du 2 Legenden. Wenn er sogar 10 oder mehr hat, sammelst du stattdessen 5 Legenden.",
+          "Am Ende deines Zuges, wenn du mindestens einen Charakter mit 5 oder mehr {S} im Spiel hast, sammelst du 2 Legenden. Wenn er sogar 10 oder mehr {S} hat, sammelst du stattdessen 5 Legenden.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const maximusTeamChampionI18n: Record<Languages, I18nProperties> = {
     version: "Champion de l'équipe",
     text: [
       {
-        title: "UNE RÉCOMPENSE DIGNE D'UN ROI À",
+        title: "Une récompense digne d'un roi",
         description:
-          "la fin de votre tour, si l'un de vos personnages a 5 ou plus, gagnez 2 éclats de Lore. S'il a 10 ou plus, gagnez 5 éclats de Lore à la place.",
+          "À la fin de votre tour, si l'un de vos personnages a 5 {S} ou plus, gagnez 2 éclats de Lore. S'il a 10 {S} ou plus, gagnez 5 éclats de Lore à la place.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const maximusTeamChampionI18n: Record<Languages, I18nProperties> = {
     version: "Campione della Squadra",
     text: [
       {
-        title: "RICOMPENSE DEGNE DI UN RE",
+        title: "Ricompense Degne di un Re",
         description:
-          "Alla fine del tuo turno, se hai in gioco un qualsiasi personaggio con 5 o superiore, ottieni 2 leggenda. Se hai in gioco un qualsiasi personaggio con 10 o superiore, ottieni invece 5 leggenda.",
+          "Alla fine del tuo turno, se hai in gioco un qualsiasi personaggio con 5 {S} o superiore, ottieni 2 leggenda. Se hai in gioco un qualsiasi personaggio con 10 {S} o superiore, ottieni invece 5 leggenda.",
       },
     ],
   },

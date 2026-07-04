@@ -64,6 +64,7 @@ export function assignPrintingIds(
   printingIdsInOrder: string[],
   getFullNameFromCard: (card: { name?: string; subtitle?: string }) => string,
   existingCanonicalCards?: Record<string, CanonicalCard>,
+  existingSourceCardIds?: Record<string, string>,
 ): PipelineIdMapping {
   const byPrintingId: Record<string, string> = {};
   const usedIds = new Set<string>();
@@ -74,7 +75,8 @@ export function assignPrintingIds(
     idx++;
     if (!printingId) continue;
 
-    const existingId = existingCanonicalCards?.[printingId]?.id;
+    const existingId =
+      existingSourceCardIds?.[printingId] ?? existingCanonicalCards?.[printingId]?.id;
     const valid = existingId && existingId.length === CARD_IRD_LENGTH;
     let shortId: string;
     if (valid && !usedIds.has(existingId)) {

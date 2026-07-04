@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tinkerBellInsistentFairyI18n } from "./136-tinker-bell-insistent-fairy.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const tinkerBellInsistentFairy: CharacterCard = {
   id: "01E",
   canonicalId: "ci_01E",
+  slug: "lorcana-ci_01E",
+  printings: [
+    {
+      id: "set8-136",
+      artId: "set8-136",
+      setCode: "set8",
+      collectorNumber: "136",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-136"],
   cardType: "character",
   name: "Tinker Bell",
@@ -20,8 +32,7 @@ export const tinkerBellInsistentFairy: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_b2fee16bc7bb46119501e583d0e97980",
-    tcgPlayer: 631842,
+    lorcast: "crd_f49776538d7247e998024421be5f5a18",
   },
   text: [
     {

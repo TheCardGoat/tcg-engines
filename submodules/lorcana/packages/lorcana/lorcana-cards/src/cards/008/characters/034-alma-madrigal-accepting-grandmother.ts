@@ -4,6 +4,17 @@ import { almaMadrigalAcceptingGrandmotherI18n } from "./034-alma-madrigal-accept
 export const almaMadrigalAcceptingGrandmother: CharacterCard = {
   id: "s3D",
   canonicalId: "ci_s3D",
+  slug: "lorcana-ci_s3D",
+  printings: [
+    {
+      id: "set8-034",
+      artId: "set8-034",
+      setCode: "set8",
+      collectorNumber: "34",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-034"],
   cardType: "character",
   name: "Alma Madrigal",
@@ -20,7 +31,7 @@ export const almaMadrigalAcceptingGrandmother: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_387766e68940442bb6c5b7e29d18626f",
-    tcgPlayer: 631374,
+    tcgPlayer: "631374",
   },
   text: [
     {

@@ -17,9 +17,9 @@ export const crikeePartOfTheTeamI18n: Record<Languages, I18nProperties> = {
     version: "Teil des Teams",
     text: [
       {
-        title: "AN IHRER SEITE",
+        title: "An ihrer Seite",
         description:
-          "Solange du mindestens 2 andere erschöpfte Charaktere im Spiel hast, erhält dieser Charakter +2.",
+          "Solange du mindestens 2 andere erschöpfte Charaktere im Spiel hast, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const crikeePartOfTheTeamI18n: Record<Languages, I18nProperties> = {
     version: "Membre de l'équipe",
     text: [
       {
-        title: "À SES CÔTÉS",
+        title: "À ses côtés",
         description:
-          "Tant que vous avez 2 autres personnages épuisés ou plus en jeu, ce personnage-ci gagne +2.",
+          "Tant que vous avez 2 autres personnages épuisés ou plus en jeu, ce personnage-ci gagne +2 {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const crikeePartOfTheTeamI18n: Record<Languages, I18nProperties> = {
     version: "Parte della Squadra",
     text: [
       {
-        title: "AL SUO FIANCO",
+        title: "Al Suo Fianco",
         description:
-          "Mentre hai in gioco 2 o più altri personaggi impegnati, questo personaggio riceve +2.",
+          "Mentre hai in gioco 2 o più altri personaggi impegnati, questo personaggio riceve +2 {L}.",
       },
     ],
   },

@@ -17,7 +17,7 @@ export const antoniosJaguarFaithfulCompanionI18n: Record<Languages, I18nProperti
     version: "Treuer Gefährte",
     text: [
       {
-        title: "WOHIN WILLST DU GEHEN?",
+        title: "Wohin willst du gehen?",
         description:
           "Wenn du diesen Charakter ausspielst und einen Antonio-Madrigal-Charakter im Spiel hast, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const antoniosJaguarFaithfulCompanionI18n: Record<Languages, I18nProperti
     version: "Fidèle compagnon",
     text: [
       {
-        title: "TU VEUX ALLER OÙ!?",
+        title: "Tu veux aller où!?",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un personnage nommé Antonio Madrigal en jeu, gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const antoniosJaguarFaithfulCompanionI18n: Record<Languages, I18nProperti
     version: "Compagno Fedele",
     text: [
       {
-        title: "DOV'È CHE VUOI ANDARE?",
+        title: "Dov'è Che Vuoi Andare?",
         description:
           "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Antonio Madrigal, ottieni 1 leggenda.",
       },

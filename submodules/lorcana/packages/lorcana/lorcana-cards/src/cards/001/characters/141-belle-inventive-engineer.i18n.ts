@@ -17,9 +17,9 @@ export const belleInventiveEngineerI18n: Record<Languages, I18nProperties> = {
     version: "Ideenreiche Ingenieurin",
     text: [
       {
-        title: "TÜFTELN",
+        title: "Tüfteln",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -30,7 +30,7 @@ export const belleInventiveEngineerI18n: Record<Languages, I18nProperties> = {
       {
         title: "BRICOLEUSE",
         description:
-          "Lorsque ce personnage est envoyé à l'aventure, le prochain objet que vous jouez durant ce tour coûte 1 de moins.",
+          "Lorsque ce personnage est envoyé à l'aventure, le prochain objet que vous jouez durant ce tour coûte 1 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const belleInventiveEngineerI18n: Record<Languages, I18nProperties> = {
     version: "Ingegnera Creativa",
     text: [
       {
-        title: "INVENTRICE",
+        title: "Inventrice",
         description:
-          "Ogni volta che questo personaggio va all'avventura, paga 1 in meno per giocare il tuo prossimo oggetto per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, paga 1 {I} in meno per giocare il tuo prossimo oggetto per questo turno.",
       },
     ],
   },

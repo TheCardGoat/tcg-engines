@@ -4,6 +4,17 @@ import { kuzcoTemporaryWhaleI18n } from "./045-kuzco-temporary-whale.i18n";
 export const kuzcoTemporaryWhale: CharacterCard = {
   id: "0mo",
   canonicalId: "ci_0mo",
+  slug: "lorcana-ci_0mo",
+  printings: [
+    {
+      id: "set7-045",
+      artId: "set7-045",
+      setCode: "set7",
+      collectorNumber: "45",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-045"],
   cardType: "character",
   name: "Kuzco",
@@ -20,13 +31,13 @@ export const kuzcoTemporaryWhale: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_78e4e2811167449d9b2d7a3fa7c0908b",
-    tcgPlayer: 618694,
+    tcgPlayer: "618694",
   },
   text: [
     {
-      title: "DON'T YOU SAY A WORD",
+      title: "DON'T YOU SAY",
       description:
-        "Once during your turn, whenever a card is put into your inkwell, you may return chosen character, item, or location with cost 2 or less to their player's hand, then that player draws a card.",
+        "A WORD Once during your turn, whenever a card is put into your inkwell, you may return chosen character, item, or location with cost 2 or less to their player's hand, then that player draws a card.",
     },
   ],
   classifications: ["Storyborn", "King"],

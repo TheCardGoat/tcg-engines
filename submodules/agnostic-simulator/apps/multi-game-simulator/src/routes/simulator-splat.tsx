@@ -1,1 +1,1 @@
-export { default, loader } from "./simulator";
+export { default } from "./simulator";

@@ -4,6 +4,17 @@ import { roquefortLockExpertI18n } from "./172-roquefort-lock-expert.i18n";
 export const roquefortLockExpert: CharacterCard = {
   id: "P7n",
   canonicalId: "ci_P7n",
+  slug: "lorcana-ci_P7n",
+  printings: [
+    {
+      id: "set8-172",
+      artId: "set8-172",
+      setCode: "set8",
+      collectorNumber: "172",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-172"],
   cardType: "character",
   name: "Roquefort",
@@ -20,7 +31,7 @@ export const roquefortLockExpert: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d2291465ec4640f585a653be4290e2ac",
-    tcgPlayer: 631675,
+    tcgPlayer: "631675",
   },
   text: [
     {

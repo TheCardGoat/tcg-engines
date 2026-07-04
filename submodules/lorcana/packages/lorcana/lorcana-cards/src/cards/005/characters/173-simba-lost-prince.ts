@@ -4,6 +4,17 @@ import { simbaLostPrinceI18n } from "./173-simba-lost-prince.i18n";
 export const simbaLostPrince: CharacterCard = {
   id: "RA4",
   canonicalId: "ci_RA4",
+  slug: "lorcana-ci_RA4",
+  printings: [
+    {
+      id: "set5-173",
+      artId: "set5-173",
+      setCode: "set5",
+      collectorNumber: "173",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-173"],
   cardType: "character",
   name: "Simba",
@@ -20,7 +31,7 @@ export const simbaLostPrince: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1b36e531978a4a9eae7c7acd0d4436b8",
-    tcgPlayer: 560243,
+    tcgPlayer: "560243",
   },
   text: [
     {

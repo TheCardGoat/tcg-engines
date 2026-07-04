@@ -7,14 +7,17 @@ export const betaDemiTrainer008: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "ST01-008_p2",
-  externalId: "gundam:st01-008_p2",
-  slug: "demi-trainer-st01-008-p2",
+  canonicalId: "ST01-008",
+  externalIds: { bandai: "gundam:st01-008_p2" },
+  slug: "demi-trainer/st01-008",
   displayName: "Demi Trainer",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "ST01-008_p2",
   printings: [
     {
       id: "ST01-008",
+      artId: "ST01-008",
+      setCode: "ST01",
       collectorNumber: "ST01-008",
       cardNumber: "ST01-008",
       set: {
@@ -30,6 +33,8 @@ export const betaDemiTrainer008: UnitCard = {
     },
     {
       id: "ST01-008_p1",
+      artId: "ST01-008_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-008_p1",
       cardNumber: "ST01-008",
       set: {
@@ -45,6 +50,8 @@ export const betaDemiTrainer008: UnitCard = {
     },
     {
       id: "ST01-008_p2",
+      artId: "ST01-008_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-008_p2",
       cardNumber: "ST01-008",
       set: {
@@ -59,6 +66,7 @@ export const betaDemiTrainer008: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST01-008", "ST01-008_p1", "ST01-008_p2"],
   selectedPrintingId: "ST01-008_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST01-008_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-008_p2.webp?260424",

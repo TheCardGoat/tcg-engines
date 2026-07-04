@@ -4,6 +4,17 @@ import { buzzsArmI18n } from "./098-buzzs-arm.i18n";
 export const buzzsArm: ItemCard = {
   id: "XEC",
   canonicalId: "ci_XEC",
+  slug: "lorcana-ci_XEC",
+  printings: [
+    {
+      id: "set12-098",
+      artId: "set12-098",
+      setCode: "set12",
+      collectorNumber: "98",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-098"],
   cardType: "item",
   name: "Buzz's Arm",
@@ -16,6 +27,7 @@ export const buzzsArm: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_eb78022ded274a99bea1f50570755b37",
+    tcgPlayer: "692048",
   },
   text: [
     {

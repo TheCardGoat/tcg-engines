@@ -14,8 +14,8 @@ export const eyeOfTheFatesI18n: Record<Languages, I18nProperties> = {
     name: "Auge der Moiren",
     text: [
       {
-        title: "DIE ZUKUNFT OFFENBAREN",
-        description: "— Gib einem Charakter deiner Wahl in diesem Zug +1.",
+        title: "Die Zukunft Offenbaren",
+        description: "{E} — Gib einem Charakter deiner Wahl in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -24,7 +24,7 @@ export const eyeOfTheFatesI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "VOIR L'AVENIR",
-        description: "— Choisissez un personnage, il gagne +1 pour le reste de ce tour.",
+        description: "{E} — Choisissez un personnage, il gagne +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const eyeOfTheFatesI18n: Record<Languages, I18nProperties> = {
     name: "Eye of the Fates",
     text: [
       {
-        title: "SEE THE FUTURE",
-        description: "— Chosen character gets +1 this turn.",
+        title: "See the Future",
+        description: "{E} — Chosen character gets +1 {L} this turn.",
       },
     ],
   },

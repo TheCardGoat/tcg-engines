@@ -7,14 +7,17 @@ export const gd02Qubeley036: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD02-036",
-  externalId: "gundam:gd02-036",
-  slug: "qubeley-gd02-036",
+  canonicalId: "GD02-036",
+  externalIds: { bandai: "gundam:gd02-036" },
+  slug: "qubeley/gd02-036",
   displayName: "Qubeley",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-036",
   printings: [
     {
       id: "GD02-036",
+      artId: "GD02-036",
+      setCode: "GD02",
       collectorNumber: "GD02-036",
       cardNumber: "GD02-036",
       set: {
@@ -30,6 +33,8 @@ export const gd02Qubeley036: UnitCard = {
     },
     {
       id: "GD02-036_p1",
+      artId: "GD02-036_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-036_p1",
       cardNumber: "GD02-036",
       set: {
@@ -45,6 +50,8 @@ export const gd02Qubeley036: UnitCard = {
     },
     {
       id: "GD02-036_p2",
+      artId: "GD02-036_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-036_p2",
       cardNumber: "GD02-036",
       set: {
@@ -59,6 +66,7 @@ export const gd02Qubeley036: UnitCard = {
       productName: "Newtype Challenge 2025 Mission 3",
     },
   ],
+  reprints: ["GD02-036", "GD02-036_p1", "GD02-036_p2"],
   selectedPrintingId: "GD02-036",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-036.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-036.webp?260424",

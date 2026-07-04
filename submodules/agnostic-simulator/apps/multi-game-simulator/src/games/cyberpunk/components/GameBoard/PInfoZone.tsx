@@ -6,7 +6,6 @@ import { useZoneDroppable } from "./useZoneDroppable";
 import { useEngineInteractionView, useEngineOptional } from "../../engine";
 import { interactionViewCanAttackRival } from "../../engine/interactionViewHelpers";
 import { useGameState } from "./gameStateContext";
-import { simZoneAnchor } from "./animationAnchors";
 import type { Phase } from "./gameStateTypes";
 import classes from "./PInfoZone.module.css";
 
@@ -17,9 +16,7 @@ interface PInfoZoneProps {
 }
 
 export function PInfoZone({ opponent = false, children, phase }: PInfoZoneProps) {
-  const zoneId = opponent ? "opp-pinfo" : "p-pinfo";
-  const side = opponent ? "opponent" : "player";
-  const drop = useZoneDroppable(zoneId);
+  const drop = useZoneDroppable(opponent ? "opp-pinfo" : "p-pinfo");
   const { activeSource } = useDragDrop();
   const engine = useEngineOptional();
   const humanSide = engine?.humanSide ?? "player";
@@ -50,9 +47,7 @@ export function PInfoZone({ opponent = false, children, phase }: PInfoZoneProps)
       } ${drop.isOver ? classes.dropOver : ""}`}
       data-phase={resolvedPhase}
       data-testid="pinfo-zone"
-      data-side={side}
       data-drop-hint={directStealTarget ? "attackRival" : undefined}
-      {...simZoneAnchor({ id: zoneId, side, visibility: "public", role: "custom" })}
       aria-label={directStealTarget ? "Attack the rival" : undefined}
       role={directStealTarget ? "button" : undefined}
       tabIndex={directStealTarget ? 0 : undefined}

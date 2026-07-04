@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { scroogeMcduckUncleMoneybagsI18n } from "./155-scrooge-mcduck-uncle-moneybags.i18n";
 
 export const scroogeMcduckUncleMoneybags: CharacterCard = {
-  id: "nL2",
-  canonicalId: "ci_nL2",
+  id: "hec",
+  canonicalId: "ci_5aa",
+  slug: "lorcana-ci_5aa",
+  printings: [
+    {
+      id: "set3-155",
+      artId: "set3-155",
+      setCode: "set3",
+      collectorNumber: "155",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-155"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -20,7 +31,7 @@ export const scroogeMcduckUncleMoneybags: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e25b0a04fd4a44c18a2d52940e33ff64",
-    tcgPlayer: 538374,
+    tcgPlayer: "538374",
   },
   text: [
     {

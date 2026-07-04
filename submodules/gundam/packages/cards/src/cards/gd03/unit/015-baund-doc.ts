@@ -7,14 +7,17 @@ export const gd03BaundDoc015: UnitCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD03-015",
-  externalId: "gundam:gd03-015",
-  slug: "baund-doc-gd03-015",
+  canonicalId: "GD03-015",
+  externalIds: { bandai: "gundam:gd03-015" },
+  slug: "baund-doc/gd03-015",
   displayName: "Baund Doc",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-015",
   printings: [
     {
       id: "GD03-015",
+      artId: "GD03-015",
+      setCode: "GD03",
       collectorNumber: "GD03-015",
       cardNumber: "GD03-015",
       set: {
@@ -29,6 +32,7 @@ export const gd03BaundDoc015: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-015"],
   selectedPrintingId: "GD03-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-015.webp?260424",

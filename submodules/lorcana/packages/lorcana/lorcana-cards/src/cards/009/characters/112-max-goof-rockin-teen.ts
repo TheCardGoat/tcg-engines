@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { maxGoofRockinTeenI18n } from "./112-max-goof-rockin-teen.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const maxGoofRockinTeen: CharacterCard = {
-  id: "X6A",
+  id: "a73",
   canonicalId: "ci_3CP",
+  slug: "lorcana-ci_3CP",
+  printings: [
+    {
+      id: "set9-112",
+      artId: "set9-112",
+      setCode: "set9",
+      collectorNumber: "112",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-112"],
   cardType: "character",
   name: "Max Goof",
@@ -21,7 +33,7 @@ export const maxGoofRockinTeen: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4d1c2c4913d1417294da21592cee8363",
-    tcgPlayer: 650150,
+    tcgPlayer: "650150",
   },
   text: [
     {

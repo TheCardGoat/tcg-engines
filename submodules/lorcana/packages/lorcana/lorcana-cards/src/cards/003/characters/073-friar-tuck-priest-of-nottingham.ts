@@ -4,6 +4,17 @@ import { friarTuckPriestOfNottinghamI18n } from "./073-friar-tuck-priest-of-nott
 export const friarTuckPriestOfNottingham: CharacterCard = {
   id: "29m",
   canonicalId: "ci_29m",
+  slug: "lorcana-ci_29m",
+  printings: [
+    {
+      id: "set3-073",
+      artId: "set3-073",
+      setCode: "set3",
+      collectorNumber: "73",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-073"],
   cardType: "character",
   name: "Friar Tuck",
@@ -20,7 +31,7 @@ export const friarTuckPriestOfNottingham: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f6b07239b4384329b151160a80691d1b",
-    tcgPlayer: 539080,
+    tcgPlayer: "539080",
   },
   text: [
     {

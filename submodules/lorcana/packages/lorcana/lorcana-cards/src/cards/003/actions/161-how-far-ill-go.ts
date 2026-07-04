@@ -3,7 +3,18 @@ import { howFarIllGoI18n } from "./161-how-far-ill-go.i18n";
 
 export const howFarIllGo: ActionCard = {
   id: "r73",
-  canonicalId: "ci_r73",
+  canonicalId: "ci_ySL",
+  slug: "lorcana-ci_ySL",
+  printings: [
+    {
+      id: "set3-161",
+      artId: "set3-161",
+      setCode: "set3",
+      collectorNumber: "161",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-161"],
   cardType: "action",
   name: "How Far I'll Go",
@@ -16,7 +27,7 @@ export const howFarIllGo: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b6996baaca9440328210eecc4afdc123",
-    tcgPlayer: 539102,
+    tcgPlayer: "539102",
   },
   text: "Look at the top 2 cards of your deck. Put one into your hand and the other into your inkwell facedown and exerted.",
   actionSubtype: "song",

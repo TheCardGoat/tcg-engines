@@ -21,12 +21,12 @@ export const scroogeMcduckShushAgentI18n: Record<Languages, I18nProperties> = {
     version: "S.H.U.S.H.-Agent",
     text: [
       {
-        title: "NOTFALLPLAN",
+        title: "Notfallplan",
         description:
           "Wenn du diesen Charakter ausspielst, ziehe 1 Karte. Wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
       },
       {
-        title: "IN BEWEGUNG",
+        title: "In Bewegung",
         description:
           "Wenn dieser Charakter herausgefordert wird, nimm ihn zurück auf deine Hand. (Bevor der Schaden durch die Herausforderung berechnet wird.)",
       },
@@ -37,11 +37,11 @@ export const scroogeMcduckShushAgentI18n: Record<Languages, I18nProperties> = {
     version: "Agent du C.H.U.T.",
     text: [
       {
-        title: "PLAN DE SECOURS",
+        title: "Plan de secours",
         description: "Lorsque vous jouez ce personnage, piochez une carte puis défaussez-en une.",
       },
       {
-        title: "EN MOUVEMENT",
+        title: "En mouvement",
         description:
           "Chaque fois que ce personnage est défié, renvoyez cette carte dans votre main. (Aucun dommage n'est infligé lors de ce défi.)",
       },
@@ -52,12 +52,12 @@ export const scroogeMcduckShushAgentI18n: Record<Languages, I18nProperties> = {
     version: "Agente S.H.U.S.H.",
     text: [
       {
-        title: "PIANO DI RISERVA",
+        title: "Piano di Riserva",
         description:
           "Quando giochi questo personaggio, pesca una carta, poi scegli e scarta una carta.",
       },
       {
-        title: "IN MOVIMENTO",
+        title: "In Movimento",
         description:
           "Quando questo personaggio viene sfidato, riprendi in mano questa carta. (Nessun danno viene inflitto in quella sfida.)",
       },

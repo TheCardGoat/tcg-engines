@@ -6,14 +6,17 @@ export const tSwordStrikeGundam010: UnitCard = {
   type: "unit",
   traits: ["earth alliance"],
   id: "T-010",
-  externalId: "gundam:t-010",
-  slug: "sword-strike-gundam-t-010",
+  canonicalId: "T-010",
+  externalIds: { bandai: "gundam:t-010" },
+  slug: "sword-strike-gundam/t-010",
   displayName: "Sword Strike Gundam",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "T-010",
   printings: [
     {
       id: "T-010",
+      artId: "T-010",
+      setCode: "ST04",
       collectorNumber: "T-010",
       cardNumber: "T-010",
       set: {
@@ -28,6 +31,7 @@ export const tSwordStrikeGundam010: UnitCard = {
       productName: "SEED Strike [ST04]",
     },
   ],
+  reprints: ["T-010"],
   selectedPrintingId: "T-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-010.webp?260424",

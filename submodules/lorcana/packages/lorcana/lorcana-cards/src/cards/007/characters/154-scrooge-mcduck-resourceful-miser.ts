@@ -4,6 +4,17 @@ import { scroogeMcduckResourcefulMiserI18n } from "./154-scrooge-mcduck-resource
 export const scroogeMcduckResourcefulMiser: CharacterCard = {
   id: "eru",
   canonicalId: "ci_eru",
+  slug: "lorcana-ci_eru",
+  printings: [
+    {
+      id: "set7-154",
+      artId: "set7-154",
+      setCode: "set7",
+      collectorNumber: "154",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-154"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -20,7 +31,7 @@ export const scroogeMcduckResourcefulMiser: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_485779f8b4954059b78e81f46882d744",
-    tcgPlayer: 618202,
+    tcgPlayer: "618202",
   },
   text: [
     {
@@ -44,7 +55,11 @@ export const scroogeMcduckResourcefulMiser: CharacterCard = {
           owner: "you",
           zones: ["play"],
           cardTypes: ["item"],
-          filter: [{ type: "ready" }],
+          filter: [
+            {
+              type: "ready",
+            },
+          ],
         },
       },
       alternativeCost: "exert-4-items",

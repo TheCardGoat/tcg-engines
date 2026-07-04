@@ -11,7 +11,7 @@ describe("Grand Councilwoman - Galactic Authority", () => {
     expect(grandCouncilwomanGalacticAuthority.inkable).toBe(false);
     expect(grandCouncilwomanGalacticAuthority.vanilla).toBe(true);
     expect(grandCouncilwomanGalacticAuthority.classifications).toEqual(["Dreamborn", "Alien"]);
-    expect(grandCouncilwomanGalacticAuthority.abilities).toEqual([]);
+    expect(grandCouncilwomanGalacticAuthority.abilities ?? []).toEqual([]);
 
     const testEngine = new LorcanaTestEngine({
       play: [grandCouncilwomanGalacticAuthority],

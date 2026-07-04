@@ -6,9 +6,11 @@ import {
   getStructuredCardBySlug,
   getCardBySlug,
   getStructuredPromoCardBySlug,
+  getStructuredPrm01CardBySlug,
   getRawCardBySlug,
   getStructuredAlphaCardBySlug,
   getStructuredSpoilerCardBySlug,
+  pickCanonicalAndMergePrintings,
   promoCards,
   rawCards,
   spoilerCards,
@@ -38,7 +40,7 @@ test("structured set exports expose parsed abilities", () => {
   expect(alphaCards).toHaveLength(28);
   expect(spoilerCards).toHaveLength(27);
   expect(promoCards).toHaveLength(1);
-  expect(structuredCards).toHaveLength(90);
+  expect(structuredCards).toHaveLength(141);
 
   const corpoSecurity = getStructuredAlphaCardBySlug("corpo-security");
   const viktor = getStructuredAlphaCardBySlug("viktor-vektor-sit-down-and-relax");
@@ -46,6 +48,7 @@ test("structured set exports expose parsed abilities", () => {
   const chromeReverie = getStructuredSpoilerCardBySlug("chrome-reverie");
   const mamanBrigitte = getStructuredSpoilerCardBySlug("maman-brigitte");
   const lucyna = getStructuredPromoCardBySlug("lucyna-kushinada");
+  const rebecca = getStructuredPrm01CardBySlug("rebecca-having-a-moment");
   const afterparty = getStructuredCardBySlug("afterparty-at-lizzie-s");
 
   expect(corpoSecurity?.keywords).toContain("blocker");
@@ -70,10 +73,34 @@ test("structured set exports expose parsed abilities", () => {
     ),
   ).toBe(true);
   expect(lucyna?.abilities).toEqual([]);
+  expect(rebecca?.ram).toBeNull();
   expect(afterparty?.set.code).toBe("spoiler");
   expect(chromeReverie?.abilities[0]?.effects.map((effect) => effect.effect)).toEqual([
     "grantRule",
     "callLegend",
   ]);
   expect(mamanBrigitte?.classifications).toEqual(["Mystic", "Netrunner", "Voodoo Boys"]);
+});
+
+test("retail starter deck printings win over alpha when merging canonical cards", () => {
+  const alpha = {
+    id: "alpha-minotaur",
+    slug: "minotaur",
+    set: { code: "alpha" },
+    printings: [{ id: "alpha-printing" }],
+  };
+  const retailStarter = {
+    id: "retail-minotaur",
+    slug: "minotaur",
+    set: { code: "embracingpowerretailstarterdeck" },
+    printings: [{ id: "retail-printing" }],
+  };
+
+  const merged = pickCanonicalAndMergePrintings([alpha, retailStarter]);
+
+  expect(merged.id).toBe("retail-minotaur");
+  expect(merged.printings.map((printing) => printing.id)).toEqual([
+    "retail-printing",
+    "alpha-printing",
+  ]);
 });

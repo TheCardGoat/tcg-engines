@@ -4,6 +4,17 @@ import { auntCassBiggestFanI18n } from "./138-aunt-cass-biggest-fan.i18n";
 export const auntCassBiggestFan: CharacterCard = {
   id: "zKK",
   canonicalId: "ci_zKK",
+  slug: "lorcana-ci_zKK",
+  printings: [
+    {
+      id: "set6-138",
+      artId: "set6-138",
+      setCode: "set6",
+      collectorNumber: "138",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-138"],
   cardType: "character",
   name: "Aunt Cass",
@@ -20,7 +31,7 @@ export const auntCassBiggestFan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a881e85e281f4e3abe2fbf0437a5c159",
-    tcgPlayer: 591989,
+    tcgPlayer: "591989",
   },
   text: [
     {

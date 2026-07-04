@@ -21,13 +21,13 @@ export const sherwoodForestOutlawHideawayI18n: Record<Languages, I18nProperties>
     version: "Versteck der Gesetzlosen",
     text: [
       {
-        title: "WALDHEIMAT",
+        title: "Waldheimat",
         description: "Deine Robin-Hood-Charaktere können sich kostenlos zu diesem Ort bewegen.",
       },
       {
-        title: "VERTRAUTES",
+        title: "Vertrautes Gelände",
         description:
-          'GELÄNDE Charaktere an diesem Ort erhalten Behütet und: ", 1 — Füge einem beschädigten Charakter deiner Wahl 2 Schaden zu." (Gegnerische Mitspielende können die Charaktere nicht auswählen, außer um sie herauszufordern.)',
+          'Charaktere an diesem Ort erhalten <Behütet> und: "{E}, 1 {I} — Füge einem beschädigten Charakter deiner Wahl 2 Schaden zu." (Gegnerische Mitspielende können die Charaktere nicht auswählen, außer um sie herauszufordern.)',
       },
     ],
   },
@@ -36,14 +36,14 @@ export const sherwoodForestOutlawHideawayI18n: Record<Languages, I18nProperties>
     version: "Cachette des hors-la-loi",
     text: [
       {
-        title: "REFUGE FORESTIER",
+        title: "Refuge forestier",
         description:
           "Vos personnages Robin des Bois peuvent être déplacés gratuitement sur ce lieu.",
       },
       {
-        title: "TERRAIN FAMILIER",
+        title: "Terrain familier",
         description:
-          'Les personnages sur ce lieu gagnent Hors d\'atteinte et ", 1 — Choisissez un personnage ayant au moins un dommage sur lui et infligez-lui 2 dommages." (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)',
+          'Les personnages sur ce lieu gagnent <Hors d\'atteinte> et "{E}, 1 {I} — Choisissez un personnage ayant au moins un dommage sur lui et infligez-lui 2 dommages." (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)',
       },
     ],
   },
@@ -52,14 +52,14 @@ export const sherwoodForestOutlawHideawayI18n: Record<Languages, I18nProperties>
     version: "Nascondiglio dei Fuorilegge",
     text: [
       {
-        title: "CASA NELLA FORESTA I",
+        title: "Casa nella Foresta",
         description:
-          "tuoi personaggi chiamati Robin Hood possono spostarsi in questo luogo gratis.",
+          "I tuoi personaggi chiamati Robin Hood possono spostarsi in questo luogo gratis.",
       },
       {
-        title: "TERRENO FAMILIARE I",
+        title: "Terreno Familiare",
         description:
-          'personaggi ottengono Protetto e ", 1 — Infliggi 2 danni a un personaggio danneggiato a tua scelta" mentre si trovano in questo luogo. (Gli avversari non possono sceglierli se non per sfidarli.)',
+          'I personaggi ottengono <Protetto> e "{E}, 1 {I} — Infliggi 2 danni a un personaggio danneggiato a tua scelta" mentre si trovano in questo luogo. (Gli avversari non possono sceglierli se non per sfidarli.)',
       },
     ],
   },

@@ -4,6 +4,17 @@ import { jafarLampThiefI18n } from "./041-jafar-lamp-thief.i18n";
 export const jafarLampThief: CharacterCard = {
   id: "ley",
   canonicalId: "ci_oLk",
+  slug: "lorcana-ci_oLk",
+  printings: [
+    {
+      id: "set3-041",
+      artId: "set3-041",
+      setCode: "set3",
+      collectorNumber: "41",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-041", "set9-059"],
   cardType: "character",
   name: "Jafar",
@@ -20,7 +31,7 @@ export const jafarLampThief: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fb78447abbd740c3a3509fa91e338b4f",
-    tcgPlayer: 650003,
+    tcgPlayer: "650003",
   },
   text: [
     {

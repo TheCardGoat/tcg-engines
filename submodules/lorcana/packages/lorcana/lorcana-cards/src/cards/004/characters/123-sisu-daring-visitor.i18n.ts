@@ -20,12 +20,12 @@ export const sisuDaringVisitorI18n: Record<Languages, I18nProperties> = {
     version: "Wagemutige Besucherin",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "BRENN MIR DIE ZUNGE WEG!",
+        title: "Brenn mir die Zunge weg!",
         description:
-          "Wenn du diesen Charakter ausspielst, verbanne einen gegnerischen Charakter deiner Wahl mit 1 oder weniger.",
+          "Wenn du diesen Charakter ausspielst, verbanne einen gegnerischen Charakter deiner Wahl mit 1 oder weniger {S}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const sisuDaringVisitorI18n: Record<Languages, I18nProperties> = {
     version: "Visiteuse audacieuse",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "VAS-Y POUR LA DYNAMITE!",
+        title: "Vas-y pour la dynamite!",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse avec 1 ou moins et bannissez-le.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse avec 1 {S} ou moins et bannissez-le.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const sisuDaringVisitorI18n: Record<Languages, I18nProperties> = {
     version: "Visitatrice Audace",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "SUPER PICCANTE!",
+        title: "Super Piccante!",
         description:
-          "Quando giochi questo personaggio, esilia un personaggio avversario a tua scelta con 1 o inferiore.",
+          "Quando giochi questo personaggio, esilia un personaggio avversario a tua scelta con 1 {S} o inferiore.",
       },
     ],
   },

@@ -6,14 +6,17 @@ export const tAdBalloon014: UnitCard = {
   type: "unit",
   traits: ["civilian"],
   id: "T-014",
-  externalId: "gundam:t-014",
-  slug: "ad-balloon-t-014",
+  canonicalId: "T-014",
+  externalIds: { bandai: "gundam:t-014" },
+  slug: "ad-balloon/t-014",
   displayName: "Ad Balloon",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "T-014",
   printings: [
     {
       id: "T-014",
+      artId: "T-014",
+      setCode: "GD03",
       collectorNumber: "T-014",
       cardNumber: "T-014",
       set: {
@@ -28,6 +31,7 @@ export const tAdBalloon014: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["T-014"],
   selectedPrintingId: "T-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-014.webp?260424",

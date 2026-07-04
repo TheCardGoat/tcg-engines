@@ -7,14 +7,17 @@ export const gd04PsychoGundamMk004: UnitCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD04-004",
-  externalId: "gundam:gd04-004",
-  slug: "psycho-gundam-mk-gd04-004",
+  canonicalId: "GD04-004",
+  externalIds: { bandai: "gundam:gd04-004" },
+  slug: "psycho-gundam-mk-ii/gd04-004",
   displayName: "Psycho Gundam Mk-Ⅱ",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-004",
   printings: [
     {
       id: "GD04-004",
+      artId: "GD04-004",
+      setCode: "GD04",
       collectorNumber: "GD04-004",
       cardNumber: "GD04-004",
       set: {
@@ -29,6 +32,7 @@ export const gd04PsychoGundamMk004: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-004"],
   selectedPrintingId: "GD04-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-004.webp?260424",

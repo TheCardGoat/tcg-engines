@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { diabloSpitefulRavenI18n } from "./066-diablo-spiteful-raven.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const diabloSpitefulRaven: CharacterCard = {
   id: "4Ff",
   canonicalId: "ci_4Ff",
+  slug: "lorcana-ci_4Ff",
+  printings: [
+    {
+      id: "set7-066",
+      artId: "set7-066",
+      setCode: "set7",
+      collectorNumber: "66",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-066"],
   cardType: "character",
   name: "Diablo",
@@ -22,7 +34,7 @@ export const diabloSpitefulRaven: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f13e08ae1efd4ae4be493361797a3497",
-    tcgPlayer: 618721,
+    tcgPlayer: "618721",
   },
   text: [
     {

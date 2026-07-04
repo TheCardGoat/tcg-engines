@@ -7,14 +7,17 @@ export const st07LockonStratosNeil011: PilotCard = {
   color: "green",
   traits: ["cb"],
   id: "ST07-011",
-  externalId: "gundam:st07-011",
-  slug: "lockon-stratos-neil-st07-011",
+  canonicalId: "ST07-011",
+  externalIds: { bandai: "gundam:st07-011" },
+  slug: "lockon-stratos-neil/st07-011",
   displayName: "Lockon Stratos (Neil)",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-011",
   printings: [
     {
       id: "ST07-011",
+      artId: "ST07-011",
+      setCode: "ST07",
       collectorNumber: "ST07-011",
       cardNumber: "ST07-011",
       set: {
@@ -30,6 +33,8 @@ export const st07LockonStratosNeil011: PilotCard = {
     },
     {
       id: "ST07-011_p1",
+      artId: "ST07-011_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-011_p1",
       cardNumber: "ST07-011",
       set: {
@@ -45,6 +50,8 @@ export const st07LockonStratosNeil011: PilotCard = {
     },
     {
       id: "ST07-011_p2",
+      artId: "ST07-011_p2",
+      setCode: "ST07",
       collectorNumber: "ST07-011_p2",
       cardNumber: "ST07-011",
       set: {
@@ -59,6 +66,7 @@ export const st07LockonStratosNeil011: PilotCard = {
       productName: "Newtype Challenge 2026 Mission 2",
     },
   ],
+  reprints: ["ST07-011", "ST07-011_p1", "ST07-011_p2"],
   selectedPrintingId: "ST07-011",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-011.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-011.webp?260424",

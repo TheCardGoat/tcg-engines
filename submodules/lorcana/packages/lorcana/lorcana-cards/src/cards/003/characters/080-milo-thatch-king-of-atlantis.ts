@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { miloThatchKingOfAtlantisI18n } from "./080-milo-thatch-king-of-atlantis.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const miloThatchKingOfAtlantis: CharacterCard = {
   id: "cXv",
   canonicalId: "ci_cXv",
+  slug: "lorcana-ci_cXv",
+  printings: [
+    {
+      id: "set3-080",
+      artId: "set3-080",
+      setCode: "set3",
+      collectorNumber: "80",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-080"],
   cardType: "character",
   name: "Milo Thatch",
@@ -21,7 +33,7 @@ export const miloThatchKingOfAtlantis: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1ab44dc7b1b1406ea256eb308fb857f5",
-    tcgPlayer: 536281,
+    tcgPlayer: "536281",
   },
   text: [
     {

@@ -16,8 +16,8 @@ export const mickeyMouseTrumpeterEnchantedI18n: Record<Languages, I18nProperties
     version: "Trompeter",
     text: [
       {
-        title: "DER RUF ERKLINGT, 2",
-        description: "— Spiele einen Charakter kostenlos aus.",
+        title: "Der Ruf erklingt",
+        description: "{E}, 2 {I} — Spiele einen Charakter kostenlos aus.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const mickeyMouseTrumpeterEnchantedI18n: Record<Languages, I18nProperties
     version: "Trompettiste",
     text: [
       {
-        title: "SONNE L'APPEL, 2",
-        description: "— Jouez gratuitement un personnage.",
+        title: "Sonne l'appel",
+        description: "{E}, 2 {I} — Jouez gratuitement un personnage.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const mickeyMouseTrumpeterEnchantedI18n: Record<Languages, I18nProperties
     version: "Trombettiere",
     text: [
       {
-        title: "DARE IL SEGNALE, 2",
-        description: "— Gioca un personaggio gratis.",
+        title: "Dare il Segnale",
+        description: "{E}, 2 {I} — Gioca un personaggio gratis.",
       },
     ],
   },

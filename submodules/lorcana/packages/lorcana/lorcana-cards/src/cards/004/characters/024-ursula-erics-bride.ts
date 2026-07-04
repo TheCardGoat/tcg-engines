@@ -4,6 +4,17 @@ import { ursulaEricsBrideI18n } from "./024-ursula-erics-bride.i18n";
 export const ursulaEricsBride: CharacterCard = {
   id: "cjn",
   canonicalId: "ci_cjn",
+  slug: "lorcana-ci_cjn",
+  printings: [
+    {
+      id: "set4-024",
+      artId: "set4-024",
+      setCode: "set4",
+      collectorNumber: "24",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-024"],
   cardType: "character",
   name: "Ursula",
@@ -20,13 +31,12 @@ export const ursulaEricsBride: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_982da8b7486a480fac3fd751a353a4eb",
-    tcgPlayer: 547763,
+    tcgPlayer: "547763",
   },
   text: [
     {
-      title: "Shift: Discard a song card ",
-      description:
-        "(You may discard a song card to play this on top of one of your characters named Ursula.)",
+      title:
+        "Shift: Discard a song card (You may discard a song card to play this on top of one of your characters named Ursula.)",
     },
     {
       title: "VANESSA'S DESIGN",

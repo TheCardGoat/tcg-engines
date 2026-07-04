@@ -1,14 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerEvelynParkerBeautifulEnigma = {
+export const spoilerEvelynParkerBeautifulEnigma = defineCyberpunkCard({
   id: "1636c26f-189b-494d-96fc-6eb3df564d2f",
-  externalId: "cyberpunk:evelyn-parker-beautiful-enigma",
   slug: "evelyn-parker-beautiful-enigma",
-  name: "Evelyn Parker",
-  subname: "Beautiful Enigma",
-  displayName: "Evelyn Parker - Beautiful Enigma",
   rulesText:
     "CALL Decrease a rival Gig's value by 3. [Spend Icon]: Search the top 3 cards of your deck for up to 1 Braindance Program. Add it to your hand. Bottom-deck the rest.",
+  subname: "Beautiful Enigma",
+  name: "Evelyn Parker",
+  displayName: "Evelyn Parker - Beautiful Enigma",
+  canonicalId: "evelyn-parker-beautiful-enigma",
   color: "blue",
   classifications: ["Doll"],
   set: {
@@ -16,15 +17,6 @@ export const spoilerEvelynParkerBeautifulEnigma = {
     name: "Spoiler Set",
   },
   printNumber: "122",
-  printings: [
-    {
-      id: "2f22896b-5b5e-4c62-9b72-37bc64156d01",
-      collectorNumber: "122",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "2f22896b-5b5e-4c62-9b72-37bc64156d01",
   artist: "Pandart Studio",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/122.webp",
   rarity: null,
@@ -32,7 +24,6 @@ export const spoilerEvelynParkerBeautifulEnigma = {
   hasSellTag: true,
   ram: 2,
   timingTriggers: ["call"],
-  keywords: [],
   type: "legend",
   cost: null,
   power: null,
@@ -100,5 +91,4 @@ export const spoilerEvelynParkerBeautifulEnigma = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies LegendCardDefinition;

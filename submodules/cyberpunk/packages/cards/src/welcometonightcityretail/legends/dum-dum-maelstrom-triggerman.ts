@@ -1,13 +1,15 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { quickAbility } from "@tcg/cyberpunk-types";
 
-export const welcomeToNightCityRetailDumDumMaelstromTriggerman = {
+export const welcomeToNightCityRetailDumDumMaelstromTriggerman = defineCyberpunkCard({
   id: "3b3f941d-aa58-4337-99dc-4af3fd3ccd47",
-  externalId: "cb-dum-dum-maelstrom-triggerman",
   slug: "dum-dum-maelstrom-triggerman",
+  rulesText:
+    "{Call} You may defeat a friendly Gear. If you do, draw 2. Otherwise, draw 1.\n{Quick} 1 €$, {Spend} Give a friendly Unit +1 power this turn for each of its equipped Gear.",
   name: "Dum Dum — Maelstrom Triggerman",
   displayName: "Dum Dum — Maelstrom Triggerman",
-  rulesText:
-    "[CALL] You may defeat a friendly Gear. If you do, draw 2. Otherwise, draw 1.\n[QUICK] 1 €$, [Spend Icon:] Give a friendly Unit +1 power this turn for each of its equipped Gear.",
+  canonicalId: "dum-dum-maelstrom-triggerman",
   color: "yellow",
   classifications: ["Ganger", "Maelstrom"],
   set: {
@@ -15,21 +17,6 @@ export const welcomeToNightCityRetailDumDumMaelstromTriggerman = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "036",
-  printings: [
-    {
-      id: "aaac486c-dbfd-4137-b373-24a2df29522c",
-      collectorNumber: "036",
-      setCode: "welcometonightcityretail",
-      rarity: "Rare",
-    },
-    {
-      id: "33cfbdb0-a169-458a-86dc-9123697654d7",
-      collectorNumber: "β036",
-      setCode: "welcometonightcitybeta",
-      rarity: "Rare",
-    },
-  ],
-  selectedPrintingId: "aaac486c-dbfd-4137-b373-24a2df29522c",
   artist: "Łukasz Poller",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/036.webp",
   rarity: "Rare",
@@ -42,15 +29,7 @@ export const welcomeToNightCityRetailDumDumMaelstromTriggerman = {
   cost: null,
   power: null,
   abilities: [
-    {
-      kind: "keyword",
-      text: "QUICK",
-      keyword: "quick",
-      source: {
-        selector: "self",
-      },
-      effects: [],
-    },
+    quickAbility(),
     {
       kind: "triggered",
       text: "CALL You may defeat a friendly Gear. If you do, draw 2. Otherwise, draw 1.",
@@ -152,5 +131,4 @@ export const welcomeToNightCityRetailDumDumMaelstromTriggerman = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies LegendCardDefinition;

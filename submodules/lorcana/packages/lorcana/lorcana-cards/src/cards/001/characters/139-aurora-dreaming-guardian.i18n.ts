@@ -19,10 +19,11 @@ export const auroraDreamingGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Wächterin der Träume",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Aurora Charaktere auszuspielen.)",
       },
       {
-        title: "SCHÜTZENDE UMARMUNG",
+        title: "Schützende Umarmung",
         description:
           "Deine anderen Charaktere erhalten Behütet. (Gegnerische Karten können diese Charaktere nicht auswählen, außer um sie herauszufordern.)",
       },
@@ -33,7 +34,8 @@ export const auroraDreamingGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Gardienne rêveuse",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur un autre personnage Aurore.)",
       },
       {
         title: "ÉTREINTE PROTECTRICE",
@@ -47,12 +49,13 @@ export const auroraDreamingGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Dreaming Guardian",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Aurora.)",
       },
       {
-        title: "PROTECTIVE EMBRACE",
+        title: "Protective Embrace",
         description:
-          "Your other characters gain Ward. (Opponents can't choose them except to challenge.)",
+          "Your other characters gain <Ward>. (Opponents can't choose them except to challenge.)",
       },
     ],
   },

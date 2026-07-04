@@ -15,9 +15,9 @@ export const imperialBowI18n: Record<Languages, I18nProperties> = {
     name: "Kaiserlicher Bogen",
     text: [
       {
-        title: "IN REICHWEITE, 1",
+        title: "In Reichweite",
         description:
-          "— Ein Held oder eine Heldin deiner Wahl erhält in diesem Zug Herausfordern +2 und Wendig. (Während der Charakter herausfordert, erhält er +2. Er kann Charaktere mit Wendig herausfordern.)",
+          "{E}, 1 {I} — Ein Held oder eine Heldin deiner Wahl erhält in diesem Zug <Herausfordern> +2 und <Wendig>. (Während der Charakter herausfordert, erhält er +2 {S}. Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const imperialBowI18n: Record<Languages, I18nProperties> = {
     name: "Arc Impérial",
     text: [
       {
-        title: "À PORTÉE DE TIR,",
+        title: "À portée de tir",
         description:
-          "1 — Choisissez un personnage Héros qui gagne Offensif +2 et Insaisissable pour le reste de ce tour. (Lorsqu'il défie, ce personnage gagne +2. Il peut défier les personnages avec Insaisissable.)",
+          "{E}, 1 {I} — Choisissez un personnage Héros qui gagne <Offensif> +2 et <Insaisissable> pour le reste de ce tour. (Lorsqu'il défie, ce personnage gagne +2 {S}. Il peut défier les personnages avec Insaisissable.)",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const imperialBowI18n: Record<Languages, I18nProperties> = {
     name: "Arco Imperiale",
     text: [
       {
-        title: "ENTRO GITTATA, 1",
+        title: "Entro Gittata",
         description:
-          "— Un personaggio Eroe a tua scelta ottiene Sfidante +2 e Sfuggente per questo turno. (Riceve +2 mentre sta sfidando. Può sfidare i personaggi con Sfuggente.)",
+          "{E}, 1 {I} — Un personaggio Eroe a tua scelta ottiene <Sfidante> +2 e <Sfuggente> per questo turno. (Riceve +2 {S} mentre sta sfidando. Può sfidare i personaggi con Sfuggente.)",
       },
     ],
   },

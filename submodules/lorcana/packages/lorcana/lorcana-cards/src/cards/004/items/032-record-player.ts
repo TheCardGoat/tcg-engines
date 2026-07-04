@@ -4,6 +4,17 @@ import { recordPlayerI18n } from "./032-record-player.i18n";
 export const recordPlayer: ItemCard = {
   id: "2w7",
   canonicalId: "ci_2w7",
+  slug: "lorcana-ci_2w7",
+  printings: [
+    {
+      id: "set4-032",
+      artId: "set4-032",
+      setCode: "set4",
+      collectorNumber: "32",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-032"],
   cardType: "item",
   name: "Record Player",
@@ -16,7 +27,7 @@ export const recordPlayer: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_15a22d22153042c6ae825f60587268f1",
-    tcgPlayer: 546696,
+    tcgPlayer: "546696",
   },
   text: [
     {

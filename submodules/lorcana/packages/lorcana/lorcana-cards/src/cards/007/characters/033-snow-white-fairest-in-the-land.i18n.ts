@@ -16,7 +16,7 @@ export const snowWhiteFairestInTheLandI18n: Record<Languages, I18nProperties> = 
     version: "Die Schönste im Land",
     text: [
       {
-        title: "VERSTECKT",
+        title: "Versteckt",
         description: "Dieser Charakter kann nicht herausgefordert werden.",
       },
     ],
@@ -26,7 +26,7 @@ export const snowWhiteFairestInTheLandI18n: Record<Languages, I18nProperties> = 
     version: "Plus belle que jamais",
     text: [
       {
-        title: "DISSIMULÉE",
+        title: "Dissimulée",
         description: "Ce personnage ne peut pas être défié.",
       },
     ],
@@ -36,7 +36,7 @@ export const snowWhiteFairestInTheLandI18n: Record<Languages, I18nProperties> = 
     version: "La Più Bella del Reame",
     text: [
       {
-        title: "NASCOSTA",
+        title: "Nascosta",
         description: "Questo personaggio non può essere sfidato.",
       },
     ],

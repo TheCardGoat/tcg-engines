@@ -6,14 +6,17 @@ export const gd01Side7124: BaseCard = {
   type: "base",
   traits: ["earth federation", "stronghold"],
   id: "GD01-124",
-  externalId: "gundam:gd01-124",
-  slug: "side-7-gd01-124",
+  canonicalId: "GD01-124",
+  externalIds: { bandai: "gundam:gd01-124" },
+  slug: "side-7/gd01-124",
   displayName: "Side 7",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-124",
   printings: [
     {
       id: "GD01-124",
+      artId: "GD01-124",
+      setCode: "GD01",
       collectorNumber: "GD01-124",
       cardNumber: "GD01-124",
       set: {
@@ -29,6 +32,8 @@ export const gd01Side7124: BaseCard = {
     },
     {
       id: "GD01-124_p1",
+      artId: "GD01-124_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-124_p1",
       cardNumber: "GD01-124",
       set: {
@@ -43,6 +48,7 @@ export const gd01Side7124: BaseCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-124", "GD01-124_p1"],
   selectedPrintingId: "GD01-124",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-124.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-124.webp?260424",

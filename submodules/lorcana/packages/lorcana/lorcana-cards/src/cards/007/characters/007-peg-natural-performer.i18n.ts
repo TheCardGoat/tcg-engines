@@ -16,8 +16,8 @@ export const pegNaturalPerformerI18n: Record<Languages, I18nProperties> = {
     version: "Naturtalent im Auftreten",
     text: [
       {
-        title: "DAS PUBLIKUM IM BANN",
-        description: "— Wenn du mindestens 3 weitere Charaktere im Spiel hast, ziehe 1 Karte.",
+        title: "Das Publikum im Bann",
+        description: "{E} — Wenn du mindestens 3 weitere Charaktere im Spiel hast, ziehe 1 Karte.",
       },
     ],
   },
@@ -26,9 +26,8 @@ export const pegNaturalPerformerI18n: Record<Languages, I18nProperties> = {
     version: "Née pour la scène",
     text: [
       {
-        title: "AUDITOIRE",
-        description:
-          "CAPTIVÉ — Si vous avez au moins 3 autres personnages en jeu, piochez une carte.",
+        title: "Auditoire captivé",
+        description: "{E} — Si vous avez au moins 3 autres personnages en jeu, piochez une carte.",
       },
     ],
   },
@@ -37,8 +36,8 @@ export const pegNaturalPerformerI18n: Record<Languages, I18nProperties> = {
     version: "Intrattenitrice Nata",
     text: [
       {
-        title: "PUBBLICO RAPITO",
-        description: "— Se hai in gioco 3 o più altri personaggi, pesca una carta.",
+        title: "Pubblico Rapito",
+        description: "{E} — Se hai in gioco 3 o più altri personaggi, pesca una carta.",
       },
     ],
   },

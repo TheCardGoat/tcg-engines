@@ -7,14 +7,17 @@ export const betaGundamSandrock028: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-028_p1",
-  externalId: "gundam:gd01-028_p1",
-  slug: "gundam-sandrock-gd01-028-p1",
+  canonicalId: "GD01-028",
+  externalIds: { bandai: "gundam:gd01-028_p1" },
+  slug: "gundam-sandrock/gd01-028",
   displayName: "Gundam Sandrock",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-028_p1",
   printings: [
     {
       id: "GD01-028",
+      artId: "GD01-028",
+      setCode: "GD01",
       collectorNumber: "GD01-028",
       cardNumber: "GD01-028",
       set: {
@@ -30,6 +33,8 @@ export const betaGundamSandrock028: UnitCard = {
     },
     {
       id: "GD01-028_p1",
+      artId: "GD01-028_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-028_p1",
       cardNumber: "GD01-028",
       set: {
@@ -44,6 +49,7 @@ export const betaGundamSandrock028: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-028", "GD01-028_p1"],
   selectedPrintingId: "GD01-028_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-028_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-028_p1.webp?260424",

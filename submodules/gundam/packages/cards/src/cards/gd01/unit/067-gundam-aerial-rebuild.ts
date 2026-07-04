@@ -7,14 +7,17 @@ export const gd01GundamAerialRebuild067: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-067",
-  externalId: "gundam:gd01-067",
-  slug: "gundam-aerial-rebuild-gd01-067",
+  canonicalId: "GD01-067",
+  externalIds: { bandai: "gundam:gd01-067" },
+  slug: "gundam-aerial-rebuild/gd01-067",
   displayName: "Gundam Aerial Rebuild",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-067",
   printings: [
     {
       id: "GD01-067",
+      artId: "GD01-067",
+      setCode: "GD01",
       collectorNumber: "GD01-067",
       cardNumber: "GD01-067",
       set: {
@@ -30,6 +33,8 @@ export const gd01GundamAerialRebuild067: UnitCard = {
     },
     {
       id: "GD01-067_p1",
+      artId: "GD01-067_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-067_p1",
       cardNumber: "GD01-067",
       set: {
@@ -45,6 +50,8 @@ export const gd01GundamAerialRebuild067: UnitCard = {
     },
     {
       id: "GD01-067_p2",
+      artId: "GD01-067_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-067_p2",
       cardNumber: "GD01-067",
       set: {
@@ -60,6 +67,8 @@ export const gd01GundamAerialRebuild067: UnitCard = {
     },
     {
       id: "GD01-067_p3",
+      artId: "GD01-067_p3",
+      setCode: "GD01",
       collectorNumber: "GD01-067_p3",
       cardNumber: "GD01-067",
       set: {
@@ -74,6 +83,7 @@ export const gd01GundamAerialRebuild067: UnitCard = {
       productName: "Newtype Challenge 2025 Mission1",
     },
   ],
+  reprints: ["GD01-067", "GD01-067_p1", "GD01-067_p2", "GD01-067_p3"],
   selectedPrintingId: "GD01-067",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-067.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-067.webp?260424",

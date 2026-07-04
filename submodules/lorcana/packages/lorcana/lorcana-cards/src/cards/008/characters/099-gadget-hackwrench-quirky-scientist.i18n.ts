@@ -17,7 +17,7 @@ export const gadgetHackwrenchQuirkyScientistI18n: Record<Languages, I18nProperti
     version: "Eigenwillige Wissenschaftlerin",
     text: [
       {
-        title: "DONNERWETTER!",
+        title: "Donnerwetter!",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens eine gegnerische Person mehr Karten auf der Hand hat als du, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const gadgetHackwrenchQuirkyScientistI18n: Record<Languages, I18nProperti
     version: "Scientifique excentrique",
     text: [
       {
-        title: "MINCE ALORS!",
+        title: "Mince alors!",
         description:
           "Lorsque vous jouez ce personnage, si un adversaire a plus de cartes en main que vous, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const gadgetHackwrenchQuirkyScientistI18n: Record<Languages, I18nProperti
     version: "Scienziata Peculiare",
     text: [
       {
-        title: "PERBACCO!",
+        title: "Perbacco!",
         description:
           "Quando giochi questo personaggio, se un avversario ha in mano più carte di te, puoi pescare una carta.",
       },

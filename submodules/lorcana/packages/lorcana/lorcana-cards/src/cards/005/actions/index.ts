@@ -1,3 +1,5 @@
+export { findersKeepersP2Challenge } from "./p2-004-finders-keepers-challenge";
+export { invitedToTheBallC1Challenge } from "./c1-006-invited-to-the-ball-challenge";
 export { tryEverything } from "./025-try-everything";
 export { healingTouch } from "./026-healing-touch";
 export { revive } from "./027-revive";

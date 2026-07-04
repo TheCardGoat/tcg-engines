@@ -4,6 +4,17 @@ import { alistairKreiAmbitiousEntrepreneurI18n } from "./087-alistair-krei-ambit
 export const alistairKreiAmbitiousEntrepreneur: CharacterCard = {
   id: "kZO",
   canonicalId: "ci_kZO",
+  slug: "lorcana-ci_kZO",
+  printings: [
+    {
+      id: "set6-087",
+      artId: "set6-087",
+      setCode: "set6",
+      collectorNumber: "87",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-087"],
   cardType: "character",
   name: "Alistair Krei",
@@ -20,7 +31,7 @@ export const alistairKreiAmbitiousEntrepreneur: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c089296aad2d4e4c86c0225be686795b",
-    tcgPlayer: 588368,
+    tcgPlayer: "588368",
   },
   text: [
     {

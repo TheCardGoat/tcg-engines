@@ -21,6 +21,7 @@ import { resolveAdjustGigMove } from "./resolve-adjust-gig.ts";
 import { resolveStealGigsMove } from "./resolve-steal-gigs.ts";
 import { resolveTriggerMove } from "./resolve-trigger.ts";
 import { resolveEffectTargetMove } from "./resolve-effect-target.ts";
+import { resolveCardTypeChoiceMove } from "./resolve-card-type-choice.ts";
 
 /**
  * Single source of truth for every move id the engine ships. Tuple form so the
@@ -50,6 +51,7 @@ export const MOVE_IDS = [
   "resolveStealGigs",
   "resolveTrigger",
   "resolveEffectTarget",
+  "resolveCardTypeChoice",
 ] as const;
 
 export type MoveId = (typeof MOVE_IDS)[number];
@@ -77,6 +79,7 @@ export const allMoves: Record<MoveId, MoveDefinition<any>> = {
   resolveStealGigs: resolveStealGigsMove,
   resolveTrigger: resolveTriggerMove,
   resolveEffectTarget: resolveEffectTargetMove,
+  resolveCardTypeChoice: resolveCardTypeChoiceMove,
 };
 
 export {
@@ -102,4 +105,5 @@ export {
   resolveStealGigsMove,
   resolveTriggerMove,
   resolveEffectTargetMove,
+  resolveCardTypeChoiceMove,
 };

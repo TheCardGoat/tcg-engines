@@ -1,14 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerPanamPalmerNomadCavalry = {
+export const spoilerPanamPalmerNomadCavalry = defineCyberpunkCard({
   id: "4132e38c-38f4-4958-85df-ba863caf43d5",
-  externalId: "cyberpunk:panam-palmer-nomad-cavalry",
   slug: "panam-palmer-nomad-cavalry",
-  name: "Panam Palmer",
-  subname: "Nomad Cavalry",
-  displayName: "Panam Palmer - Nomad Cavalry",
   rulesText:
     "CALL Ready this Legend. When a friendly Unit attacks, [Spend Icon]: Choose a Gear from this Legend and equip it to that Unit. If you do, ready that Unit.",
+  subname: "Nomad Cavalry",
+  name: "Panam Palmer",
+  displayName: "Panam Palmer - Nomad Cavalry",
+  canonicalId: "panam-palmer-nomad-cavalry",
   color: "green",
   classifications: ["Aldecado", "Merc", "Nomad"],
   set: {
@@ -16,15 +17,6 @@ export const spoilerPanamPalmerNomadCavalry = {
     name: "Spoiler Set",
   },
   printNumber: "032",
-  printings: [
-    {
-      id: "963ef785-1bd9-4404-9a49-263589b0a53b",
-      collectorNumber: "032",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "963ef785-1bd9-4404-9a49-263589b0a53b",
   artist: "Łukasz Poller",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/032.webp",
   rarity: null,
@@ -32,7 +24,6 @@ export const spoilerPanamPalmerNomadCavalry = {
   hasSellTag: true,
   ram: 2,
   timingTriggers: ["call"],
-  keywords: [],
   type: "legend",
   cost: null,
   power: null,
@@ -124,5 +115,4 @@ export const spoilerPanamPalmerNomadCavalry = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies LegendCardDefinition;

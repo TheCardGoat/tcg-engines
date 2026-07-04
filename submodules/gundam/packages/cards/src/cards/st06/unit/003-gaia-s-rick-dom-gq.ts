@@ -7,14 +7,17 @@ export const st06GaiaSRickDomGq003: UnitCard = {
   color: "red",
   traits: ["clan"],
   id: "ST06-003",
-  externalId: "gundam:st06-003",
-  slug: "gaia-s-rick-dom-gq-st06-003",
+  canonicalId: "ST06-003",
+  externalIds: { bandai: "gundam:st06-003" },
+  slug: "gaia-s-rick-dom-gq/st06-003",
   displayName: "Gaia's Rick Dom (GQ)",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-003",
   printings: [
     {
       id: "ST06-003",
+      artId: "ST06-003",
+      setCode: "ST06",
       collectorNumber: "ST06-003",
       cardNumber: "ST06-003",
       set: {
@@ -30,6 +33,8 @@ export const st06GaiaSRickDomGq003: UnitCard = {
     },
     {
       id: "ST06-003_p1",
+      artId: "ST06-003_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-003_p1",
       cardNumber: "ST06-003",
       set: {
@@ -44,6 +49,7 @@ export const st06GaiaSRickDomGq003: UnitCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST06-003", "ST06-003_p1"],
   selectedPrintingId: "ST06-003",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-003.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-003.webp?260424",

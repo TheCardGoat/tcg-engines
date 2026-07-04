@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princeJohnGreediestOfAllI18n } from "./089-prince-john-greediest-of-all.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const princeJohnGreediestOfAll: CharacterCard = {
   id: "Jlo",
   canonicalId: "ci_Jlo",
+  slug: "lorcana-ci_Jlo",
+  printings: [
+    {
+      id: "set2-089",
+      artId: "set2-089",
+      setCode: "set2",
+      collectorNumber: "89",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-089"],
   cardType: "character",
   name: "Prince John",
@@ -21,7 +33,7 @@ export const princeJohnGreediestOfAll: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f5e766865cfb44288cd71675cda91f7f",
-    tcgPlayer: 522737,
+    tcgPlayer: "522737",
   },
   text: [
     {

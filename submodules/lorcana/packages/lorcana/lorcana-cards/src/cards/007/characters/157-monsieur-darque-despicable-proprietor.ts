@@ -4,6 +4,17 @@ import { monsieurDarqueDespicableProprietorI18n } from "./157-monsieur-darque-de
 export const monsieurDarqueDespicableProprietor: CharacterCard = {
   id: "TnS",
   canonicalId: "ci_TnS",
+  slug: "lorcana-ci_TnS",
+  printings: [
+    {
+      id: "set7-157",
+      artId: "set7-157",
+      setCode: "set7",
+      collectorNumber: "157",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-157"],
   cardType: "character",
   name: "Monsieur D'Arque",
@@ -20,7 +31,7 @@ export const monsieurDarqueDespicableProprietor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_986ba61b527b4e5f822c0c8e2d675b7d",
-    tcgPlayer: 619495,
+    tcgPlayer: "619495",
   },
   text: [
     {
@@ -51,7 +62,9 @@ export const monsieurDarqueDespicableProprietor: CharacterCard = {
           },
           {
             type: "conditional",
-            condition: { type: "if-you-do" },
+            condition: {
+              type: "if-you-do",
+            },
             then: {
               type: "draw",
               amount: 1,

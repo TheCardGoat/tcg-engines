@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { belleStrangeButSpecialI18n } from "./142-belle-strange-but-special.i18n";
 
 export const belleStrangeButSpecial: CharacterCard = {
-  id: "6qy",
+  id: "vWb",
   canonicalId: "ci_5l8",
+  slug: "lorcana-ci_5l8",
+  printings: [
+    {
+      id: "set1-142",
+      artId: "set1-142",
+      setCode: "set1",
+      collectorNumber: "142",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-142"],
   cardType: "character",
   name: "Belle",
@@ -20,13 +31,13 @@ export const belleStrangeButSpecial: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_021c1d57c42d4fb7836097cbe9eacfb7",
-    tcgPlayer: 510161,
+    tcgPlayer: "510161",
   },
   text: [
     {
-      title: "READ A BOOK",
+      title: "READ",
       description:
-        "During your turn, you may put an additional card from your hand into your inkwell facedown.",
+        "A BOOK During your turn, you may put an additional card from your hand into your inkwell facedown.",
     },
     {
       title: "MY FAVORITE PART!",

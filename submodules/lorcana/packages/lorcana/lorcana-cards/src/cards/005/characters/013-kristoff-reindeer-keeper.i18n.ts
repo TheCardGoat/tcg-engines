@@ -20,12 +20,13 @@ export const kristoffReindeerKeeperI18n: Record<Languages, I18nProperties> = {
     version: "Rentier Hüter",
     text: [
       {
-        title: "GESANG DER HERDE",
+        title: "Gesang der Herde",
         description:
-          "Für jede Liedkarte in deinem Ablagestapel, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jede Liedkarte in deinem Ablagestapel, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const kristoffReindeerKeeperI18n: Record<Languages, I18nProperties> = {
     version: "Garde-rennes",
     text: [
       {
-        title: "CHANT DU TROUPEAU",
+        title: "Chant du troupeau",
         description:
-          "Jouer ce personnage vous coûte 1 de moins par carte Chanson dans votre défausse.",
+          "Jouer ce personnage vous coûte 1 {I} de moins par carte Chanson dans votre défausse.",
       },
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
     ],
   },
@@ -48,12 +50,12 @@ export const kristoffReindeerKeeperI18n: Record<Languages, I18nProperties> = {
     version: "Custode delle Renne",
     text: [
       {
-        title: "CANZONE DEL BRANCO",
+        title: "Canzone del Branco",
         description:
-          "Per ogni carta canzone nei tuoi scarti, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni carta canzone nei tuoi scarti, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
     ],
   },

@@ -9,16 +9,16 @@ export const tongSurvivorI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Tong",
     version: "Überlebender",
-    text: "Impulsiv",
+    text: "<Impulsiv>",
   },
   fr: {
     name: "Tong",
     version: "Survivant",
-    text: "Combattant",
+    text: "<Combattant>",
   },
   it: {
     name: "Tong",
     version: "Sopravvissuto",
-    text: "Attaccabrighe",
+    text: "<Attaccabrighe>",
   },
 };

@@ -110,13 +110,15 @@ test("normalizes raw labels, nullable legend stats, and program null power", asy
   expect("sourceImageUrl" in normalizedProgram).toBe(false);
   expect(normalizedProgram.printings[0]).toMatchObject({
     id: rawProgram.printings[0]?.id,
+    artId: rawProgram.printings[0]?.id,
     collectorNumber: "α028",
     setCode: "alpha",
-    rarity: null,
+    rarity: "",
+    imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a028.webp",
   });
   expect(
     normalizedProgram.printings.some((printing) =>
-      ["imageUrl", "sourceImageUrl", "set", "finish", "artist"].some((field) => field in printing),
+      ["sourceImageUrl", "set", "finish", "artist"].some((field) => field in printing),
     ),
   ).toBe(false);
 

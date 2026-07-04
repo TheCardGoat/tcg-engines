@@ -9,16 +9,16 @@ export const jafarWickedSorcererI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Dschafar",
     version: "Hinterhältiger Hexer",
-    text: "Herausfordern +3",
+    text: "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
   },
   fr: {
     name: "JAFAR",
     version: "Sorcier maléfique",
-    text: "Offensif +3",
+    text: "<Offensif> +3",
   },
   it: {
     name: "Jafar",
     version: "Stregone Malvagio",
-    text: "Sfidante +3",
+    text: "<Sfidante> +3",
   },
 };

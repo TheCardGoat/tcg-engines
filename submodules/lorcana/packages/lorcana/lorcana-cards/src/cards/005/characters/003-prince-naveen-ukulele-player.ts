@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princeNaveenUkulelePlayerI18n } from "./003-prince-naveen-ukulele-player.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const princeNaveenUkulelePlayer: CharacterCard = {
-  id: "4kO",
+  id: "no3",
   canonicalId: "ci_hWb",
+  slug: "lorcana-ci_hWb",
+  printings: [
+    {
+      id: "set5-003",
+      artId: "set5-003",
+      setCode: "set5",
+      collectorNumber: "3",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-003"],
   cardType: "character",
   name: "Prince Naveen",
@@ -21,7 +33,7 @@ export const princeNaveenUkulelePlayer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_74f050d47ef34391ba29b8c521450dac",
-    tcgPlayer: 561993,
+    tcgPlayer: "561993",
   },
   text: [
     {

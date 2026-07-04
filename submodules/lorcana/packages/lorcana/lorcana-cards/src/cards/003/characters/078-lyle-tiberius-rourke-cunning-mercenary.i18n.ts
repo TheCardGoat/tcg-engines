@@ -22,12 +22,12 @@ export const lyleTiberiusRourkeCunningMercenaryI18n: Record<Languages, I18nPrope
     version: "Gerissener Söldner",
     text: [
       {
-        title: "JETZT REICHT'S JA AUCH NOCH",
+        title: "Jetzt reicht's ja auch noch",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl in seinem nächsten Zug Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl in seinem nächsten Zug <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
       },
       {
-        title: "SCHÖN, DASS DU DICH FREIWILLIG MELDEST",
+        title: "Schön, dass du dich freiwillig meldest",
         description:
           "Jedes Mal, wenn einer deiner anderen Charaktere verbannt wird, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -38,12 +38,12 @@ export const lyleTiberiusRourkeCunningMercenaryI18n: Record<Languages, I18nPrope
     version: "Mercenaire fourbe",
     text: [
       {
-        title: "VOUS VOILÀ DANS LA CONFIDENCE",
+        title: "Vous voilà dans la confidence",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui gagne Combattant durant son prochain tour. (Ce personnage ne peut pas être envoyé à l'aventure et doit défier s'il le peut.)",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui gagne <Combattant> durant son prochain tour. (Ce personnage ne peut pas être envoyé à l'aventure et doit défier s'il le peut.)",
       },
       {
-        title: "VOUS ÊTES L'HOMME QU'IL NOUS FAUT",
+        title: "Vous êtes l'homme qu'il nous faut",
         description:
           "Chaque fois que l'un de vos autres personnages est banni, chaque adversaire perd 1 éclat de Lore.",
       },
@@ -54,12 +54,12 @@ export const lyleTiberiusRourkeCunningMercenaryI18n: Record<Languages, I18nPrope
     version: "Astuto Mercenario",
     text: [
       {
-        title: "BEH, ORA LO SAI",
+        title: "Beh, Ora Lo Sai",
         description:
-          "Quando giochi questo personaggio, un personaggio avversario a tua scelta ottiene Attaccabrighe durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+          "Quando giochi questo personaggio, un personaggio avversario a tua scelta ottiene <Attaccabrighe> durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
       },
       {
-        title: "GRAZIE PER ESSERTI OFFERTO VOLONTARIO",
+        title: "Grazie per Esserti Offerto Volontario",
         description:
           "Ogni volta che uno dei tuoi altri personaggi viene esiliato, ogni avversario perde 1 leggenda.",
       },

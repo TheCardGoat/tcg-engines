@@ -4,6 +4,17 @@ import { kenaiProtectiveBrotherI18n } from "./030-kenai-protective-brother.i18n"
 export const kenaiProtectiveBrother: CharacterCard = {
   id: "k5M",
   canonicalId: "ci_k5M",
+  slug: "lorcana-ci_k5M",
+  printings: [
+    {
+      id: "set7-030",
+      artId: "set7-030",
+      setCode: "set7",
+      collectorNumber: "30",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-030"],
   cardType: "character",
   name: "Kenai",
@@ -20,7 +31,7 @@ export const kenaiProtectiveBrother: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_11827c57989a4d9c961b1c5b08c42945",
-    tcgPlayer: 619423,
+    tcgPlayer: "619423",
   },
   text: [
     {

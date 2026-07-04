@@ -4,6 +4,17 @@ import { rakshaFearlessMotherI18n } from "./107-raksha-fearless-mother.i18n";
 export const rakshaFearlessMother: CharacterCard = {
   id: "Gk5",
   canonicalId: "ci_Gk5",
+  slug: "lorcana-ci_Gk5",
+  printings: [
+    {
+      id: "set10-107",
+      artId: "set10-107",
+      setCode: "set10",
+      collectorNumber: "107",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-107"],
   cardType: "character",
   name: "Raksha",
@@ -20,7 +31,7 @@ export const rakshaFearlessMother: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2e40c49df1cd47a8ace3dfcb6bec1741",
-    tcgPlayer: 659626,
+    tcgPlayer: "659626",
   },
   text: [
     {

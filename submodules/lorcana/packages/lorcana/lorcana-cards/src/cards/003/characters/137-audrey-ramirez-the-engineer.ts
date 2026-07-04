@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { audreyRamirezTheEngineerI18n } from "./137-audrey-ramirez-the-engineer.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const audreyRamirezTheEngineer: CharacterCard = {
   id: "2j6",
   canonicalId: "ci_2j6",
+  slug: "lorcana-ci_2j6",
+  printings: [
+    {
+      id: "set3-137",
+      artId: "set3-137",
+      setCode: "set3",
+      collectorNumber: "137",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-137"],
   cardType: "character",
   name: "Audrey Ramirez",
@@ -21,7 +33,7 @@ export const audreyRamirezTheEngineer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ac107df1d3864416ac579de7b826d297",
-    tcgPlayer: 536269,
+    tcgPlayer: "536269",
   },
   text: [
     {

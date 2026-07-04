@@ -7,14 +7,17 @@ export const gd01M1Astray081: UnitCard = {
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD01-081",
-  externalId: "gundam:gd01-081",
-  slug: "m1-astray-gd01-081",
+  canonicalId: "GD01-081",
+  externalIds: { bandai: "gundam:gd01-081" },
+  slug: "m1-astray/gd01-081",
   displayName: "M1 Astray",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-081",
   printings: [
     {
       id: "GD01-081",
+      artId: "GD01-081",
+      setCode: "GD01",
       collectorNumber: "GD01-081",
       cardNumber: "GD01-081",
       set: {
@@ -30,6 +33,8 @@ export const gd01M1Astray081: UnitCard = {
     },
     {
       id: "GD01-081_p1",
+      artId: "GD01-081_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-081_p1",
       cardNumber: "GD01-081",
       set: {
@@ -44,6 +49,7 @@ export const gd01M1Astray081: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-081", "GD01-081_p1"],
   selectedPrintingId: "GD01-081",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-081.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-081.webp?260424",

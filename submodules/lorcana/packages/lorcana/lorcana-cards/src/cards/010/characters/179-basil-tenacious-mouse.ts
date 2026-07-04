@@ -4,6 +4,17 @@ import { basilTenaciousMouseI18n } from "./179-basil-tenacious-mouse.i18n";
 export const basilTenaciousMouse: CharacterCard = {
   id: "1XP",
   canonicalId: "ci_1XP",
+  slug: "lorcana-ci_1XP",
+  printings: [
+    {
+      id: "set10-179",
+      artId: "set10-179",
+      setCode: "set10",
+      collectorNumber: "179",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-179"],
   cardType: "character",
   name: "Basil",
@@ -20,7 +31,7 @@ export const basilTenaciousMouse: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5047361d5e154f1099d8996c8904fb2d",
-    tcgPlayer: 658783,
+    tcgPlayer: "658783",
   },
   text: [
     {

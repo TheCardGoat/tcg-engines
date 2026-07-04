@@ -4,6 +4,17 @@ import { packTacticsI18n } from "./100-pack-tactics.i18n";
 export const packTactics: ActionCard = {
   id: "GkR",
   canonicalId: "ci_GkR",
+  slug: "lorcana-ci_GkR",
+  printings: [
+    {
+      id: "set2-100",
+      artId: "set2-100",
+      setCode: "set2",
+      collectorNumber: "100",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-100"],
   cardType: "action",
   name: "Pack Tactics",
@@ -16,7 +27,7 @@ export const packTactics: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3255845b67e447e9821ea5cee4848f57",
-    tcgPlayer: 525311,
+    tcgPlayer: "525311",
   },
   text: "Gain 1 lore for each damaged character opponents have in play.",
   abilities: [

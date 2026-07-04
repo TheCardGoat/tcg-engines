@@ -6,14 +6,17 @@ export const tDaughtress012: UnitCard = {
   type: "unit",
   traits: ["new une"],
   id: "T-012",
-  externalId: "gundam:t-012",
-  slug: "daughtress-t-012",
+  canonicalId: "T-012",
+  externalIds: { bandai: "gundam:t-012" },
+  slug: "daughtress/t-012",
   displayName: "Daughtress",
   set: { code: "GD02", name: "-", packageId: "616102" },
   printNumber: "T-012",
   printings: [
     {
       id: "T-012",
+      artId: "T-012",
+      setCode: "GD02",
       collectorNumber: "T-012",
       cardNumber: "T-012",
       set: {
@@ -27,6 +30,7 @@ export const tDaughtress012: UnitCard = {
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-012.webp?260424",
     },
   ],
+  reprints: ["T-012"],
   selectedPrintingId: "T-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-012.webp?260424",

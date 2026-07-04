@@ -4,6 +4,17 @@ import { lookAtThisFamilyI18n } from "./028-look-at-this-family.i18n";
 export const lookAtThisFamily: ActionCard = {
   id: "U4j",
   canonicalId: "ci_ClP",
+  slug: "lorcana-ci_ClP",
+  printings: [
+    {
+      id: "set4-028",
+      artId: "set4-028",
+      setCode: "set4",
+      collectorNumber: "28",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-028", "set9-025"],
   cardType: "action",
   name: "Look at This Family",
@@ -16,7 +27,7 @@ export const lookAtThisFamily: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c8a627814d404f46ad87c09ece866017",
-    tcgPlayer: 649973,
+    tcgPlayer: "649973",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { butImMuchFasterI18n } from "./195-but-im-much-faster.i18n";
 export const butImMuchFaster: ActionCard = {
   id: "BQt",
   canonicalId: "ci_BQt",
+  slug: "lorcana-ci_BQt",
+  printings: [
+    {
+      id: "set10-195",
+      artId: "set10-195",
+      setCode: "set10",
+      collectorNumber: "195",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-195"],
   cardType: "action",
   name: "But I'm Much Faster",
@@ -16,7 +27,7 @@ export const butImMuchFaster: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_194c57c22f0c46a5a7ec456ac28c7bfa",
-    tcgPlayer: 658867,
+    tcgPlayer: "658867",
   },
   text: "Chosen character gains Alert and Challenger +2 this turn. (They can challenge as if they had Evasive. They get +2 {S} while challenging.)",
   actionSubtype: "song",

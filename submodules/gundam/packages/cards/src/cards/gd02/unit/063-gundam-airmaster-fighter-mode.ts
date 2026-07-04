@@ -7,14 +7,17 @@ export const gd02GundamAirmasterFighterMode063: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD02-063",
-  externalId: "gundam:gd02-063",
-  slug: "gundam-airmaster-fighter-mode-gd02-063",
+  canonicalId: "GD02-063",
+  externalIds: { bandai: "gundam:gd02-063" },
+  slug: "gundam-airmaster-fighter-mode/gd02-063",
   displayName: "Gundam Airmaster (Fighter Mode)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-063",
   printings: [
     {
       id: "GD02-063",
+      artId: "GD02-063",
+      setCode: "GD02",
       collectorNumber: "GD02-063",
       cardNumber: "GD02-063",
       set: {
@@ -29,6 +32,7 @@ export const gd02GundamAirmasterFighterMode063: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-063"],
   selectedPrintingId: "GD02-063",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-063.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-063.webp?260424",

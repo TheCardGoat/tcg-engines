@@ -17,9 +17,9 @@ export const maidMarianLadyOfTheListsI18n: Record<Languages, I18nProperties> = {
     version: "Herrin der Ränge",
     text: [
       {
-        title: "WENN DIE LADY ES WILL",
+        title: "Wenn die Lady es will",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -5.",
+          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -5 {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const maidMarianLadyOfTheListsI18n: Record<Languages, I18nProperties> = {
     version: "Dame des lices",
     text: [
       {
-        title: "SI MADAME VEUT BIEN...",
+        title: "Si Madame veut bien...",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -5 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -5 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const maidMarianLadyOfTheListsI18n: Record<Languages, I18nProperties> = {
     version: "Lady della Lizza",
     text: [
       {
-        title: "SE LA LADY È D'ACCORDO",
+        title: "Se la Lady è d'Accordo",
         description:
-          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -5 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -5 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

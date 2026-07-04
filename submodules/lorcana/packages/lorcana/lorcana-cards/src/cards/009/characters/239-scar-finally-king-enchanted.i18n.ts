@@ -21,13 +21,13 @@ export const scarFinallyKingEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Endlich König",
     text: [
       {
-        title: "SEID DANKBAR",
-        description: "Deine Verbündeten erhalten +1.",
+        title: "Seid dankbar",
+        description: "Deine Verbündeten erhalten +1 {S}.",
       },
       {
-        title: "HALTET ZU MIR",
+        title: "Haltet zu mir",
         description:
-          "Am Ende deines Zuges, wenn dieser Charakter erschöpft ist, darfst du einen deiner Verbündeten wählen und so viele Karten ziehen, wie dieser hat. Wenn du dies tust, wähle 2 Karten aus deiner Hand und wirf sie ab und verbanne den gewählten Charakter.",
+          "Am Ende deines Zuges, wenn dieser Charakter erschöpft ist, darfst du einen deiner Verbündeten wählen und so viele Karten ziehen, wie dieser {S} hat. Wenn du dies tust, wähle 2 Karten aus deiner Hand und wirf sie ab und verbanne den gewählten Charakter.",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const scarFinallyKingEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Enfin roi",
     text: [
       {
-        title: "SOYEZ RECONNAISSANTES",
-        description: "Vos personnages Allié gagnent +1.",
+        title: "Soyez reconnaissantes",
+        description: "Vos personnages Allié gagnent +1 {S}.",
       },
       {
-        title: "SUIVEZ-MOI À",
+        title: "Suivez-moi",
         description:
-          "la fin de votre tour, si ce personnage est épuisé, vous pouvez choisir l'un de vos personnages Allié et piocher autant de cartes que sa. Si vous le faites, défaussez 2 cartes et bannissez le personnage choisi de cette façon.",
+          "À la fin de votre tour, si ce personnage est épuisé, vous pouvez choisir l'un de vos personnages Allié et piocher autant de cartes que sa {S}. Si vous le faites, défaussez 2 cartes et bannissez le personnage choisi de cette façon.",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const scarFinallyKingEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Finalmente Re",
     text: [
       {
-        title: "SIATE GRATI I",
-        description: "tuoi personaggi Alleato ricevono +1.",
+        title: "Siate Grati",
+        description: "I tuoi personaggi Alleato ricevono +1 {S}.",
       },
       {
-        title: "SEGUITEMI",
+        title: "Seguitemi",
         description:
-          "Alla fine del tuo turno, se questo personaggio è impegnato, puoi pescare carte pari alla di un tuo personaggio Alleato a tua scelta. Se lo fai, scegli e scarta 2 carte ed esilia quel personaggio.",
+          "Alla fine del tuo turno, se questo personaggio è impegnato, puoi pescare carte pari alla {S} di un tuo personaggio Alleato a tua scelta. Se lo fai, scegli e scarta 2 carte ed esilia quel personaggio.",
       },
     ],
   },

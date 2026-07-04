@@ -18,12 +18,12 @@ export const visionSlabI18n: Record<Languages, I18nProperties> = {
     name: "Visionsplatte",
     text: [
       {
-        title: "ENTHÜLLTE GEFAHR",
+        title: "Enthüllte Gefahr",
         description:
           "Zu Beginn deines Zuges, wenn mindestens eine gegnerische Person einen beschädigten Charakter im Spiel hat, sammelst du 1 Legende.",
       },
       {
-        title: "IN DER FALLE!",
+        title: "In der Falle!",
         description: "Schadensmarker können nicht entfernt werden.",
       },
     ],
@@ -32,12 +32,12 @@ export const visionSlabI18n: Record<Languages, I18nProperties> = {
     name: "Plaque de vision",
     text: [
       {
-        title: "DANGER RÉVÉLÉ",
+        title: "Danger révélé",
         description:
           "Au début de votre tour, si un personnage adverse a au moins un jeton Dommage, gagnez 1 éclat de Lore.",
       },
       {
-        title: "PIÉGÉ!",
+        title: "Piégé!",
         description: "Aucun jeton Dommage ne peut être retiré.",
       },
     ],
@@ -46,16 +46,13 @@ export const visionSlabI18n: Record<Languages, I18nProperties> = {
     name: "Tavoletta della Visione",
     text: [
       {
-        title: "PERICOLO RIVELATO",
+        title: "Pericolo Rivelato",
         description:
           "All'inizio del tuo turno, se un personaggio avversario è danneggiato, ottieni 1 leggenda.",
       },
       {
-        title: "IN TRAPPOLA!",
-      },
-      {
-        title: "I",
-        description: "segnalini danno non possono essere rimossi.",
+        title: "In Trappola!",
+        description: "I segnalini danno non possono essere rimossi.",
       },
     ],
   },

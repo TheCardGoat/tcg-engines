@@ -17,7 +17,7 @@ export const kenaiBigBrotherI18n: Record<Languages, I18nProperties> = {
     version: "Großer Bruder",
     text: [
       {
-        title: "BRÜDER AUF EWIG",
+        title: "Brüder auf ewig",
         description:
           "Solange dieser Charakter erschöpft ist, können deine Koda-Charaktere nicht herausgefordert werden.",
       },
@@ -28,7 +28,7 @@ export const kenaiBigBrotherI18n: Record<Languages, I18nProperties> = {
     version: "Grand frère",
     text: [
       {
-        title: "FRÈRES POUR TOUJOURS",
+        title: "Frères pour toujours",
         description:
           "Tant que ce personnage est épuisé, vos personnages Koda ne peuvent pas être défiés.",
       },
@@ -39,7 +39,7 @@ export const kenaiBigBrotherI18n: Record<Languages, I18nProperties> = {
     version: "Fratello Grande",
     text: [
       {
-        title: "FRATELLI PER SEMPRE",
+        title: "Fratelli Per Sempre",
         description:
           "Mentre questo personaggio è impegnato, i tuoi personaggi chiamati Koda non possono essere sfidati.",
       },

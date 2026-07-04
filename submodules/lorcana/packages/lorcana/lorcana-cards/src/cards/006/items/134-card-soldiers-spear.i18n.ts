@@ -14,8 +14,8 @@ export const cardSoldiersSpearI18n: Record<Languages, I18nProperties> = {
     name: "Speer des Kartensoldaten",
     text: [
       {
-        title: "EINE GEEIGNETE WAFFE",
-        description: "Deine beschädigten Charaktere erhalten +1.",
+        title: "Eine geeignete Waffe",
+        description: "Deine beschädigten Charaktere erhalten +1 {S}.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const cardSoldiersSpearI18n: Record<Languages, I18nProperties> = {
     name: "Lance de Garde carte",
     text: [
       {
-        title: "UNE ARME CONVENABLE",
-        description: "Vos personnages ayant au moins 1 dommage sur eux gagnent +1.",
+        title: "Une arme convenable",
+        description: "Vos personnages ayant au moins 1 dommage sur eux gagnent +1 {S}.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const cardSoldiersSpearI18n: Record<Languages, I18nProperties> = {
     name: "Lancia della Carta Soldato",
     text: [
       {
-        title: "UN'ARMA ASSOLUTA I",
-        description: "tuoi personaggi danneggiati ricevono +1.",
+        title: "Un'Arma Assoluta",
+        description: "I tuoi personaggi danneggiati ricevono +1 {S}.",
       },
     ],
   },

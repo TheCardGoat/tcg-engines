@@ -1,4 +1,5 @@
 import * as gundamCards from "@tcg/gundam-cards";
+import { getGundamCanonicalForCardId } from "@tcg/gundam-cards";
 import type {
   CardSummary,
   CardsMaps,
@@ -77,6 +78,17 @@ export const gundamServerAdapter: GameAdapter = {
       publicId,
       colors: Array.isArray(card.color) ? card.color : card.color ? [card.color] : [],
     };
+  },
+
+  /**
+   * Resolve any Gundam runtime public id to its canonical gameplay id. The
+   * atelier helper resolves both `card.id` (which may carry a `_pN` parallel
+   * suffix on the selected printing) and the bare `cardNumber` to the
+   * canonical id, stripping any parallel-art suffix. Returns null for
+   * truly-unknown ids so callers fall back to the raw publicId.
+   */
+  getCanonicalCardId(publicId: string): string | null {
+    return getGundamCanonicalForCardId(publicId);
   },
 
   validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult {

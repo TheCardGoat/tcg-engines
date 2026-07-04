@@ -4,6 +4,17 @@ import { duckForCoverI18n } from "./198-duck-for-cover.i18n";
 export const duckForCover: ActionCard = {
   id: "WBj",
   canonicalId: "ci_WBj",
+  slug: "lorcana-ci_WBj",
+  printings: [
+    {
+      id: "set5-198",
+      artId: "set5-198",
+      setCode: "set5",
+      collectorNumber: "198",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-198"],
   cardType: "action",
   name: "Duck for Cover!",
@@ -15,7 +26,7 @@ export const duckForCover: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2eae8238f1d54959a3bc9f1e875c1efe",
-    tcgPlayer: 561850,
+    tcgPlayer: "561850",
   },
   text: "Chosen character gains Resist +1 and Evasive this turn. (Damage dealt to them is reduced by 1. They can challenge characters with Evasive.)",
   abilities: [

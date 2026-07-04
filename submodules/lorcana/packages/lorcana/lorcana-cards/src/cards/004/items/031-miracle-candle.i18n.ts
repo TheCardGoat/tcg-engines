@@ -15,7 +15,7 @@ export const miracleCandleI18n: Record<Languages, I18nProperties> = {
     name: "Wunderkerze",
     text: [
       {
-        title: "ABUELAS GABE",
+        title: "Abuelas Gabe",
         description:
           "Verbanne diesen Gegenstand — Wenn du mindestens 3 Charaktere im Spiel hast, sammle 2 Legenden und entferne bis zu 2 Schaden von einem Ort deiner Wahl.",
       },
@@ -25,7 +25,7 @@ export const miracleCandleI18n: Record<Languages, I18nProperties> = {
     name: "La Chandelle du Miracle",
     text: [
       {
-        title: "LE DON D'ABUELA",
+        title: "Le Don d'Abuela",
         description:
           "Bannissez cet objet — Si vous avez 3 personnages ou plus en jeu, gagnez 2 éclats de Lore et choisissez un lieu et retirez-lui jusqu'à 2 jetons Dommage.",
       },
@@ -35,7 +35,7 @@ export const miracleCandleI18n: Record<Languages, I18nProperties> = {
     name: "Candela del Miracolo",
     text: [
       {
-        title: "IL TALENTO DI ABUELA",
+        title: "Il Talento di Abuela",
         description:
           "Esilia questo oggetto — Se hai in gioco 3 o più personaggi, ottieni 2 leggenda e rimuovi fino a 2 danni da un luogo a tua scelta.",
       },

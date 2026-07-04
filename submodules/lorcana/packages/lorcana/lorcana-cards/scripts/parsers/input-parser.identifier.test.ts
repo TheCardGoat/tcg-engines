@@ -23,6 +23,17 @@ describe("parseCardIdentifier", () => {
     });
   });
 
+  it("parses alphanumeric promo sheet identifiers (PD1)", () => {
+    const p = parseCardIdentifier("3/PD1 EN 13");
+    expect(p).toEqual({
+      cardNumber: 3,
+      totalCards: 0,
+      language: "EN",
+      setNumber: 13,
+      promoSheetCode: "PD1",
+    });
+  });
+
   it("is case-insensitive on the promo sheet code", () => {
     const p = parseCardIdentifier("53/p3 EN 12");
     expect(p?.promoSheetCode).toBe("P3");

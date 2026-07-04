@@ -1,4 +1,4 @@
-export type GameSlug = "one-piece" | "gundam" | "cyberpunk" | "lorcana";
+export type GameSlug = "one-piece" | "gundam" | "cyberpunk" | "lorcana" | "platform";
 
 export type ZoneRole =
   | "leader"
@@ -63,6 +63,7 @@ export interface SimulatorEntity {
   backImageUrl?: string;
   frameStyle?: { color: string; pattern?: string };
   overlayBadges?: { label: string; color: string; position: "tl" | "tr" | "bl" | "br" }[];
+  dataAttributes?: Record<string, string | number | boolean | undefined>;
   spawnAnimation?: "fade" | "slide-up" | "flip";
 }
 
@@ -213,6 +214,24 @@ export interface BoardLayout {
   appearance?: BoardLayoutAppearance;
   buildingBlocks: CoreUiComponent[];
   sections: BoardSection[];
+}
+
+export interface InteractionSelection {
+  entityIds: string[];
+  optionIds: string[];
+  paymentIds: string[];
+  orderedIds: string[];
+}
+
+export interface SimulatorRendererProps {
+  fixture: HarnessFixture;
+  onSubmitInteraction?: (interactionId: string, selection: InteractionSelection) => void;
+}
+
+export interface SimulatorRendererPackage<Renderer = unknown> {
+  BoardRenderer: Renderer;
+  InteractionRenderer?: Renderer;
+  MobileBoardRenderer?: Renderer;
 }
 
 export interface HarnessFixture {

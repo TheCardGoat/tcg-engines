@@ -4,6 +4,17 @@ import { bellesHouseMauricesWorkshopI18n } from "./168-belles-house-maurices-wor
 export const bellesHouseMauricesWorkshop: LocationCard = {
   id: "jgM",
   canonicalId: "ci_6N3",
+  slug: "lorcana-ci_6N3",
+  printings: [
+    {
+      id: "set3-168",
+      artId: "set3-168",
+      setCode: "set3",
+      collectorNumber: "168",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-168"],
   cardType: "location",
   name: "Belle's House",
@@ -20,7 +31,7 @@ export const bellesHouseMauricesWorkshop: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c9f08696c3cd44bf96e2a149bb3cfb12",
-    tcgPlayer: 539169,
+    tcgPlayer: "539169",
   },
   text: [
     {

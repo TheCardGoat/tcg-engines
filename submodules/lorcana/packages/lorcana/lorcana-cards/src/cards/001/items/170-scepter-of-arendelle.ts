@@ -4,6 +4,17 @@ import { scepterOfArendelleI18n } from "./170-scepter-of-arendelle.i18n";
 export const scepterOfArendelle: ItemCard = {
   id: "jt9",
   canonicalId: "ci_jt9",
+  slug: "lorcana-ci_jt9",
+  printings: [
+    {
+      id: "set1-170",
+      artId: "set1-170",
+      setCode: "set1",
+      collectorNumber: "170",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-170"],
   cardType: "item",
   name: "Scepter of Arendelle",
@@ -16,7 +27,7 @@ export const scepterOfArendelle: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e6bc27d53eb341549fc31d79de6ddb7f",
-    tcgPlayer: 505963,
+    tcgPlayer: "505963",
   },
   text: [
     {

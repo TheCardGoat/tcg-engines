@@ -4,6 +4,17 @@ import { donaldDuckDeepseaDiverI18n } from "./178-donald-duck-deep-sea-diver.i18
 export const donaldDuckDeepseaDiver: CharacterCard = {
   id: "iVk",
   canonicalId: "ci_iVk",
+  slug: "lorcana-ci_iVk",
+  printings: [
+    {
+      id: "set2-178",
+      artId: "set2-178",
+      setCode: "set2",
+      collectorNumber: "178",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-178"],
   cardType: "character",
   name: "Donald Duck",
@@ -20,7 +31,7 @@ export const donaldDuckDeepseaDiver: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_0e5d59110fee4c7e922e2ec67f5fe1a6",
-    tcgPlayer: 524218,
+    tcgPlayer: "524218",
   },
   classifications: ["Dreamborn", "Hero"],
   i18n: donaldDuckDeepseaDiverI18n,

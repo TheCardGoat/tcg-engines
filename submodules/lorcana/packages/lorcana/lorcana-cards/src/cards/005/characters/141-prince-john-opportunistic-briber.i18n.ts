@@ -16,9 +16,9 @@ export const princeJohnOpportunisticBriberI18n: Record<Languages, I18nProperties
     version: "Gelegenheitsbetrüger",
     text: [
       {
-        title: "STEUERN LASSEN MICH NIEMALS IM STICH",
+        title: "Steuern lassen mich niemals im Stich",
         description:
-          "Jedes Mal, wenn du einen Gegenstand ausspielst, erhält dieser Charakter in diesem Zug +2.",
+          "Jedes Mal, wenn du einen Gegenstand ausspielst, erhält dieser Charakter in diesem Zug +2 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const princeJohnOpportunisticBriberI18n: Record<Languages, I18nProperties
     version: "Corrupteur opportuniste",
     text: [
       {
-        title: "JE COLLECTE TOUTES LES TAXES",
+        title: "Je collecte toutes les taxes",
         description:
-          "Chaque fois que vous jouez un objet, ce personnage gagne +2 pour le reste du tour.",
+          "Chaque fois que vous jouez un objet, ce personnage gagne +2 {S} pour le reste du tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const princeJohnOpportunisticBriberI18n: Record<Languages, I18nProperties
     version: "Corruttore Opportunista",
     text: [
       {
-        title: "LE TASSE NON DELUDONO MAI",
+        title: "Le Tasse non Deludono Mai",
         description:
-          "Ogni volta che giochi un oggetto, questo personaggio riceve +2 per questo turno.",
+          "Ogni volta che giochi un oggetto, questo personaggio riceve +2 {S} per questo turno.",
       },
     ],
   },

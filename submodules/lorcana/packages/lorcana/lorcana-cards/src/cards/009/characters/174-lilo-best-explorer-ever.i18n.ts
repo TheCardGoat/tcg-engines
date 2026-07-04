@@ -22,14 +22,14 @@ export const liloBestExplorerEverI18n: Record<Languages, I18nProperties> = {
     version: "Beste Entdeckerin aller Zeiten",
     text: [
       {
-        title: "KOMMT SCHON, JUNGS, BEWEGUNG",
+        title: "Kommt schon, Jungs, Bewegung",
         description:
-          "Wenn du diesen Charakter ausspielst, erhalten deine anderen Charaktere in diesem Zug Herausfordern +2. (Während sie herausfordern, erhalten sie +2.)",
+          "Wenn du diesen Charakter ausspielst, erhalten deine anderen Charaktere in diesem Zug <Herausfordern> +2. (Während sie herausfordern, erhalten sie +2 {S}.)",
       },
       {
-        title: "SCHNAPPT SIE EUCH",
+        title: "Schnappt sie euch",
         description:
-          'Jedes Mal, wenn dieser Charakter erkundet, erhält ein Alien deiner Wahl in diesem Zug Herausfordern +2 und "Dieser Charakter kann bereite Charaktere herausfordern".',
+          'Jedes Mal, wenn dieser Charakter erkundet, erhält ein Alien deiner Wahl in diesem Zug <Herausfordern> +2 und "Dieser Charakter kann bereite Charaktere herausfordern".',
       },
     ],
   },
@@ -38,14 +38,14 @@ export const liloBestExplorerEverI18n: Record<Languages, I18nProperties> = {
     version: "La meilleure exploratrice de tous les temps",
     text: [
       {
-        title: "AU TRAVAIL, MES AMIS, ACTIVEZ-VOUS",
+        title: "Au travail, mes amis, activez-vous",
         description:
-          "Lorsque vous jouez ce personnage, vos autres personnages gagnent Offensif +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, vos autres personnages gagnent <Offensif> +2 pour le reste de ce tour.",
       },
       {
-        title: "VAS-Y, ATTRAPE-LES",
+        title: "Vas-y, attrape-les",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage Alien qui gagne Offensif +2 et « Ce personnage peut défier des personnages redressés » pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage Alien qui gagne <Offensif> +2 et « Ce personnage peut défier des personnages redressés » pour le reste de ce tour.",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const liloBestExplorerEverI18n: Record<Languages, I18nProperties> = {
     version: "Migliore Esploratrice di Sempre",
     text: [
       {
-        title: "ANDIAMO RAGAZZI, DIAMOCI UNA MOSSA",
+        title: "Andiamo Ragazzi, Diamoci una Mossa",
         description:
-          "Quando giochi questo personaggio, i tuoi altri personaggi ottengono Sfidante +2 per questo turno. (Ricevono +2 mentre stanno sfidando.)",
+          "Quando giochi questo personaggio, i tuoi altri personaggi ottengono <Sfidante> +2 per questo turno. (Ricevono +2 {S} mentre stanno sfidando.)",
       },
       {
-        title: "FAGLI VEDERE CHI SEI",
+        title: "Fagli Vedere chi Sei",
         description:
-          'Ogni volta che questo personaggio va all\'avventura, un personaggio Alieno a tua scelta ottiene Sfidante +2 e "Questo personaggio può sfidare i personaggi preparati" per questo turno.',
+          'Ogni volta che questo personaggio va all\'avventura, un personaggio Alieno a tua scelta ottiene <Sfidante> +2 e "Questo personaggio può sfidare i personaggi preparati" per questo turno.',
       },
     ],
   },

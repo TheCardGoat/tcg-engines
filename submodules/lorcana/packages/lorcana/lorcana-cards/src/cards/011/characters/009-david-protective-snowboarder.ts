@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { davidProtectiveSnowboarderI18n } from "./009-david-protective-snowboarder.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const davidProtectiveSnowboarder: CharacterCard = {
   id: "qaR",
   canonicalId: "ci_qaR",
+  slug: "lorcana-ci_qaR",
+  printings: [
+    {
+      id: "set11-009",
+      artId: "set11-009",
+      setCode: "set11",
+      collectorNumber: "9",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-009"],
   cardType: "character",
   name: "David",
@@ -21,7 +33,7 @@ export const davidProtectiveSnowboarder: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b5db84fe81624162968c99d1ca9ee5af",
-    tcgPlayer: 674826,
+    tcgPlayer: "674826",
   },
   text: "Bodyguard",
   classifications: ["Storyborn", "Ally"],

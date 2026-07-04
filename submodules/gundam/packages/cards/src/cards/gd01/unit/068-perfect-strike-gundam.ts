@@ -7,14 +7,17 @@ export const gd01PerfectStrikeGundam068: UnitCard = {
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD01-068",
-  externalId: "gundam:gd01-068",
-  slug: "perfect-strike-gundam-gd01-068",
+  canonicalId: "GD01-068",
+  externalIds: { bandai: "gundam:gd01-068" },
+  slug: "perfect-strike-gundam/gd01-068",
   displayName: "Perfect Strike Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-068",
   printings: [
     {
       id: "GD01-068",
+      artId: "GD01-068",
+      setCode: "GD01",
       collectorNumber: "GD01-068",
       cardNumber: "GD01-068",
       set: {
@@ -30,6 +33,8 @@ export const gd01PerfectStrikeGundam068: UnitCard = {
     },
     {
       id: "GD01-068_p1",
+      artId: "GD01-068_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-068_p1",
       cardNumber: "GD01-068",
       set: {
@@ -45,6 +50,8 @@ export const gd01PerfectStrikeGundam068: UnitCard = {
     },
     {
       id: "GD01-068_p2",
+      artId: "GD01-068_p2",
+      setCode: "EVX05",
       collectorNumber: "GD01-068_p2",
       cardNumber: "GD01-068",
       set: {
@@ -59,6 +66,7 @@ export const gd01PerfectStrikeGundam068: UnitCard = {
       productName: "Premium Card Collection [EVX05]",
     },
   ],
+  reprints: ["GD01-068", "GD01-068_p1", "GD01-068_p2"],
   selectedPrintingId: "GD01-068",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-068.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-068.webp?260424",

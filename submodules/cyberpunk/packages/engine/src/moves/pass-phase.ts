@@ -81,12 +81,46 @@ export const passPhaseMove: MoveDefinition<PassPhaseInput> = {
 
 function endTurn(state: MatchState, playerId: PlayerIdType, operations: Operations) {
   const currentTurn = state.G.turnMetadata.turnNumber;
-  operations.event.emit({
-    type: "turnEnded",
+  const turnEndedEvent = {
+    type: "turnEnded" as const,
     playerId,
     turnNumber: currentTurn,
-  });
+  };
+  operations.event.emit(turnEndedEvent);
+  // Fire any end-of-turn triggers keyed on the `turnEnded` event (e.g.
+  // modded-kusanagi's return-to-hand, panam-palmer's mass-ready) BEFORE
+  // delayed-effects-bag cleanup so immediate end-of-turn triggers resolve
+  // first. Every emitted event must have its triggers processed.
+  processEventTriggers(turnEndedEvent, state, operations);
+  if (state.G.turnMetadata.pendingChoice || state.G.turnMetadata.currentTrigger) {
+    state.G.turnMetadata.suspendedEndTurn = { playerId, turnNumber: currentTurn };
+    return;
+  }
 
+  finishEndTurn(state, playerId, operations, currentTurn);
+}
+
+export function resumeSuspendedEndTurn(state: MatchState, operations: Operations): void {
+  const suspended = state.G.turnMetadata.suspendedEndTurn;
+  if (!suspended) return;
+  if (
+    state.G.turnMetadata.pendingChoice ||
+    state.G.turnMetadata.currentTrigger ||
+    state.G.turnMetadata.triggerQueue.length > 0
+  ) {
+    return;
+  }
+
+  state.G.turnMetadata.suspendedEndTurn = undefined;
+  finishEndTurn(state, suspended.playerId, operations, suspended.turnNumber);
+}
+
+function finishEndTurn(
+  state: MatchState,
+  playerId: PlayerIdType,
+  operations: Operations,
+  currentTurn: number,
+): void {
   operations.event.emit({
     type: "actionLog",
     messageKey: "move.turnEnded",
@@ -121,6 +155,7 @@ function endTurn(state: MatchState, playerId: PlayerIdType, operations: Operatio
 
   operations.game.cleanupTurnEffects();
   operations.game.resetTurnFlags(playerId);
+  state.G.turnMetadata.suspendedEndTurn = undefined;
 
   const opponentId = state.ctx.playerIds.find((id) => id !== playerId)!;
   const noGigTaken = !state.G.turnMetadata.gigTakenThisTurn;
@@ -145,11 +180,16 @@ function endTurn(state: MatchState, playerId: PlayerIdType, operations: Operatio
 
   operations.game.setPhase("start");
 
-  operations.event.emit({
-    type: "turnStarted",
+  const turnStartedEvent = {
+    type: "turnStarted" as const,
     playerId: opponentId,
     turnNumber: currentTurn + 1,
-  });
+  };
+  operations.event.emit(turnStartedEvent);
+  // Invariant: every emitted event has its triggers processed. No card uses a
+  // turnStarted trigger today, but establish the invariant so future
+  // turn-start triggers fire.
+  processEventTriggers(turnStartedEvent, state, operations);
 
   operations.game.cleanupEffectsExpiringAtTurnStart(opponentId);
 
@@ -198,6 +238,7 @@ function defeatCardsMarkedForEndTurn(state: MatchState, operations: Operations):
   for (const cardId of getCardsMarkedForEndTurnDefeat(state)) {
     const card = state.G.cardIndex[cardId as string];
     if (!card || card.zone !== "field") continue;
+    const hadAttachedCards = card.meta.attachedGearIds.length > 0;
     operations.card.moveAttachedGear(cardId, "trash");
     operations.zone.moveCard(cardId, "trash", card.controllerId);
     const event = {
@@ -205,6 +246,7 @@ function defeatCardsMarkedForEndTurn(state: MatchState, operations: Operations):
       cardId,
       defeatedBy: null,
       playerId: card.controllerId,
+      hadAttachedCards,
     };
     operations.event.emit(event);
     processEventTriggers(event, state, operations);

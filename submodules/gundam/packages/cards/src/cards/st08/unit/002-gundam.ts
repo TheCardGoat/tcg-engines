@@ -7,14 +7,17 @@ export const st08Gundam002: UnitCard = {
   color: "red",
   traits: ["mafty"],
   id: "ST08-002",
-  externalId: "gundam:st08-002",
-  slug: "gundam-st08-002",
+  canonicalId: "ST08-002",
+  externalIds: { bandai: "gundam:st08-002" },
+  slug: "gundam/st08-002",
   displayName: "Ξ Gundam",
   set: { code: "ST08", name: "Flash of Radiance [ST08]", packageId: "616008" },
   printNumber: "ST08-002",
   printings: [
     {
       id: "ST08-002",
+      artId: "ST08-002",
+      setCode: "ST08",
       collectorNumber: "ST08-002",
       cardNumber: "ST08-002",
       set: {
@@ -30,6 +33,8 @@ export const st08Gundam002: UnitCard = {
     },
     {
       id: "ST08-002_p1",
+      artId: "ST08-002_p1",
+      setCode: "ST08",
       collectorNumber: "ST08-002_p1",
       cardNumber: "ST08-002",
       set: {
@@ -45,6 +50,8 @@ export const st08Gundam002: UnitCard = {
     },
     {
       id: "ST08-002_p2",
+      artId: "ST08-002_p2",
+      setCode: "ST07",
       collectorNumber: "ST08-002_p2",
       cardNumber: "ST08-002",
       set: {
@@ -59,6 +66,7 @@ export const st08Gundam002: UnitCard = {
       productName: "Starter Deck [ST07]/[ST08] Release Event",
     },
   ],
+  reprints: ["ST08-002", "ST08-002_p1", "ST08-002_p2"],
   selectedPrintingId: "ST08-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st08/ST08-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST08-002.webp?260424",

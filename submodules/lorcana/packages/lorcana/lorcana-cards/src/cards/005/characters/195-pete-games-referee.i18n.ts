@@ -17,7 +17,7 @@ export const peteGamesRefereeI18n: Record<Languages, I18nProperties> = {
     version: "Schiedsrichter der Spiele",
     text: [
       {
-        title: "ABPFIFF",
+        title: "Abpfiff",
         description:
           "Wenn du diesen Charakter ausspielst, können gegnerische Mitspielende, bis zu Beginn deines nächsten Zuges, keine Aktionen ausspielen.",
       },
@@ -28,7 +28,7 @@ export const peteGamesRefereeI18n: Record<Languages, I18nProperties> = {
     version: "Arbitre",
     text: [
       {
-        title: "SIFFLET!",
+        title: "Sifflet!",
         description:
           "Lorsque vous jouez ce personnage, les adversaires ne peuvent pas jouer d'actions jusqu'au début de votre prochain tour.",
       },
@@ -39,7 +39,7 @@ export const peteGamesRefereeI18n: Record<Languages, I18nProperties> = {
     version: "Arbitro di Gioco",
     text: [
       {
-        title: "FISCHIARE",
+        title: "Fischiare",
         description:
           "Quando giochi questo personaggio, gli avversari non possono giocare azioni fino all'inizio del tuo prossimo turno.",
       },

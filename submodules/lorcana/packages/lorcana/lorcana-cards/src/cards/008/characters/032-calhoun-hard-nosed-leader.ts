@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { calhounHardnosedLeaderI18n } from "./032-calhoun-hard-nosed-leader.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const calhounHardnosedLeader: CharacterCard = {
   id: "g8l",
   canonicalId: "ci_g8l",
+  slug: "lorcana-ci_g8l",
+  printings: [
+    {
+      id: "set8-032",
+      artId: "set8-032",
+      setCode: "set8",
+      collectorNumber: "32",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-032"],
   cardType: "character",
   name: "Calhoun",
@@ -21,7 +33,7 @@ export const calhounHardnosedLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6fe60149cee34a1e8c979d598251e279",
-    tcgPlayer: 631372,
+    tcgPlayer: "631372",
   },
   text: [
     {

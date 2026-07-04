@@ -17,9 +17,9 @@ export const flintheartGlomgoldSchemingBillionaireI18n: Record<Languages, I18nPr
     version: "Verlogener Milliardär",
     text: [
       {
-        title: "FORDERE MICH DOCH HERAUS",
+        title: "Fordere mich doch heraus",
         description:
-          "Solange du einen Charakter oder Ort im Spiel hast, der eine Karte unter sich hat, erhält dieser Charakter Behütet.",
+          "Solange du einen Charakter oder Ort im Spiel hast, der eine Karte unter sich hat, erhält dieser Charakter <Behütet>.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const flintheartGlomgoldSchemingBillionaireI18n: Record<Languages, I18nPr
     version: "Milliardaire comploteur",
     text: [
       {
-        title: "ESSAIE, POUR VOIR",
+        title: "Essaie, pour voir",
         description:
-          "Tant que vous avez un personnage ou un lieu en jeu avec une carte sous lui, ce personnage-ci gagne Hors d'atteinte.",
+          "Tant que vous avez un personnage ou un lieu en jeu avec une carte sous lui, ce personnage-ci gagne <Hors d'atteinte>.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const flintheartGlomgoldSchemingBillionaireI18n: Record<Languages, I18nPr
     version: "Subdolo Miliardario",
     text: [
       {
-        title: "METTIMI ALLA PROVA",
+        title: "Mettimi alla Prova",
         description:
-          "Mentre hai in gioco un personaggio o un luogo con una carta sotto di sé, questo personaggio ottiene Protetto. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+          "Mentre hai in gioco un personaggio o un luogo con una carta sotto di sé, questo personaggio ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
       },
     ],
   },

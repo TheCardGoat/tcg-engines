@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jiminyCricketPinocchiosConscienceI18n } from "./044-jiminy-cricket-pinocchios-conscience.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const jiminyCricketPinocchiosConscience: CharacterCard = {
   id: "C3x",
   canonicalId: "ci_C3x",
+  slug: "lorcana-ci_C3x",
+  printings: [
+    {
+      id: "set2-044",
+      artId: "set2-044",
+      setCode: "set2",
+      collectorNumber: "44",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-044"],
   cardType: "character",
   name: "Jiminy Cricket",
@@ -21,7 +33,7 @@ export const jiminyCricketPinocchiosConscience: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cf6f37c499d34d8aaf47e0e3e2eb6523",
-    tcgPlayer: 527302,
+    tcgPlayer: "527302",
   },
   text: [
     {

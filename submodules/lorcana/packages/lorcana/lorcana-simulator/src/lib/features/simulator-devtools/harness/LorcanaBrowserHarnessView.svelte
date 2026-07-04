@@ -10,7 +10,7 @@ import {
 } from "$lib";
 import type { LorcanaGameContext } from "@/features/simulator/context/game-context.svelte.js";
 import type { PlayerInteractionView } from "@tcg/lorcana-interaction";
-import { LorcanaMultiplayerSimulatorAdapter } from "@/features/simulator-devtools/harness";
+import { LorcanaMultiplayerSimulatorAdapter } from "@/features/simulator-devtools/harness/lorcana-multiplayer-simulator-adapter.js";
 import {
 	PLAYER_ONE,
 	PLAYER_TWO,
@@ -23,16 +23,16 @@ import {
 import { assertLorcanaSimulatorMoveId } from "@/features/simulator/model/contracts";
 import { dispatchSimulatorMove } from "@/features/simulator/model/move-dispatch";
 import LorcanaDebugControls from "@/features/simulator-devtools/harness/LorcanaDebugControls.svelte";
-import { HarnessAiController } from "@/features/simulator-devtools/harness";
-import { DEFAULT_AUTOMATED_ACTION_STRATEGY_ID } from "@tcg/lorcana-engine";
 import { createHumanVsAiContext } from "@/features/simulator-devtools/vs-ai/context.js";
 import type { AiPlayMode } from "@/features/simulator-devtools/vs-ai/types.js";
+import type { HarnessAiController } from "@/features/simulator-devtools/harness/harness-ai-controller.svelte.js";
 import {
 	type BrowserTransportConfig,
 	DEFAULT_DYNAMIC_CLOCK_CONFIG,
 	LorcanaMultiplayerTestEngine,
 	normalizeBrowserTransportConfig,
 } from "@tcg/lorcana-engine/testing";
+import { tick } from "svelte";
 
 interface Props {
 	browserTransport?: BrowserTransportConfig;
@@ -93,6 +93,7 @@ const testEngine = $derived.by(() => {
 		fixture.playerTwo,
 		{
 			browserTransport: normalizedBrowserTransport,
+			capturePatches: false,
 			initialView: view,
 			optimizeInactiveClientProjection: true,
 			seed: fixture.seed ?? "simulator-default",
@@ -108,14 +109,8 @@ const testEngine = $derived.by(() => {
 	);
 });
 
-const aiController = $derived.by(() => {
-	if (!aiBotEnabled || aiBot === false) return null;
-	const strategyId = aiBot.strategyId ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID;
-	return new HarnessAiController(testEngine.asServer(), {
-		initialPlayMode: aiBot.initialPlayMode,
-		strategyId,
-	});
-});
+let aiController = $state<HarnessAiController | null>(null);
+let aiControllerRevision = 0;
 
 const adapter = $derived.by(
 	() =>
@@ -258,10 +253,44 @@ function refreshDebugPayloads(): void {
 }
 
 $effect(() => {
-	const controller = aiController;
-	aiOrchestratorStore.set(controller);
+	if (!aiBotEnabled || aiBot === false) {
+		aiController?.dispose();
+		aiController = null;
+		aiOrchestratorStore.set(null);
+		return;
+	}
+
+	const revision = ++aiControllerRevision;
+	let disposed = false;
+	const server = testEngine.asServer();
+	const initialPlayMode = aiBot.initialPlayMode;
+	const requestedStrategyId = aiBot.strategyId;
+
+	void Promise.all([
+		import("@tcg/lorcana-engine"),
+		import("@/features/simulator-devtools/harness/harness-ai-controller.svelte.js"),
+	]).then(([engineModule, controllerModule]) => {
+		if (disposed || revision !== aiControllerRevision) {
+			return;
+		}
+
+		const controller = new controllerModule.HarnessAiController(server, {
+			initialPlayMode,
+			strategyId: requestedStrategyId ?? engineModule.DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
+		});
+
+		aiController?.dispose();
+		aiController = controller;
+		aiOrchestratorStore.set(controller);
+	});
+
 	return () => {
-		controller?.dispose();
+		disposed = true;
+		if (revision === aiControllerRevision) {
+			aiController?.dispose();
+			aiController = null;
+			aiOrchestratorStore.set(null);
+		}
 	};
 });
 
@@ -285,6 +314,8 @@ function resetToInitialFixture(): void {
 
 async function reset(): Promise<void> {
 	resetRevision += 1;
+	await tick();
+	gameContextRef?.refreshFromReadModel("harness:reset");
 }
 
 async function execute(
@@ -299,6 +330,9 @@ async function execute(
 		normalizedMoveId,
 		params as never,
 	);
+	if (result.success && gameContextRef && targetView === currentView) {
+		gameContextRef.refreshFromReadModel(`harness:${normalizedMoveId}`);
+	}
 
 	return {
 		success: result.success,

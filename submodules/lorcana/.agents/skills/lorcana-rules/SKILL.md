@@ -5,7 +5,13 @@ description: "Explain and cite Disney Lorcana rules using indexed references, an
 
 # Lorcana Rules
 
-Use indexed references first, then load only required deep sections.
+Use the glossary and indexed references first, then load only required deep sections.
+
+## Required Loading
+
+1. Read `references/glossary.md` and keep the terms in context for the full task.
+2. Read `indexes/master-index.md`.
+3. Use topic or section indexes to identify exact rule references before opening the full comprehensive rules.
 
 ## Required Memory Step
 
@@ -22,7 +28,7 @@ When conflicts occur, prefer the newer official source.
 
 ## Retrieval Flow
 
-1. Start at `indexes/master-index.md`.
+1. Start at `references/glossary.md`, then `indexes/master-index.md`.
 2. Use `indexes/by-topic/*` for gameplay questions.
 3. Use `indexes/by-section/*` for technical/numbered-rule questions.
 4. Open only the minimal rule sections needed for final answer.

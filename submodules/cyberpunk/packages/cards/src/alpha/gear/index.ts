@@ -1,4 +1,4 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
 import { alphaDyingNightVSPistol } from "./dying-night-v-s-pistol.ts";
 import { alphaKiroshiOptics } from "./kiroshi-optics.ts";
 import { alphaMandibularUpgrade } from "./mandibular-upgrade.ts";
@@ -20,4 +20,4 @@ export const alphaGear = [
   alphaMantisBlades,
   alphaSandevistan,
   alphaSatoriSwordOfSaburo,
-] satisfies AlphaCardDefinition[];
+] satisfies GearCardDefinition[];

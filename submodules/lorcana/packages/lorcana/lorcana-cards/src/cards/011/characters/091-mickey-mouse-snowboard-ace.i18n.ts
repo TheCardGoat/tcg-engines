@@ -17,7 +17,7 @@ export const mickeyMouseSnowboardAceI18n: Record<Languages, I18nProperties> = {
     version: "Snowboard-Ass",
     text: [
       {
-        title: "RUTSCHIGE PISTE",
+        title: "Rutschige Piste",
         description:
           "Wenn du diesen Charakter ausspielst und wenn er das Spiel verlässt, wählen alle gegnerischen Mitspielenden je 1 Karte aus ihrer Hand und werfen sie ab.",
       },
@@ -28,7 +28,7 @@ export const mickeyMouseSnowboardAceI18n: Record<Languages, I18nProperties> = {
     version: "As du snowboard",
     text: [
       {
-        title: "PENTE GLISSANTE",
+        title: "Pente glissante",
         description:
           "Lorsque vous jouez ce personnage et quand il quitte la zone de jeu, chaque adversaire défausse une carte.",
       },
@@ -39,7 +39,7 @@ export const mickeyMouseSnowboardAceI18n: Record<Languages, I18nProperties> = {
     version: "Asso dello Snowboard",
     text: [
       {
-        title: "PISTA SCIVOLOSA",
+        title: "Pista Scivolosa",
         description:
           "Quando giochi questo personaggio e quando lascia il gioco, ogni avversario sceglie e scarta una carta.",
       },

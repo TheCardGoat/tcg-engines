@@ -4,6 +4,17 @@ import { lefouInstigatorI18n } from "./112-lefou-instigator.i18n";
 export const lefouInstigator: CharacterCard = {
   id: "S44",
   canonicalId: "ci_KDb",
+  slug: "lorcana-ci_KDb",
+  printings: [
+    {
+      id: "set1-112",
+      artId: "set1-112",
+      setCode: "set1",
+      collectorNumber: "112",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-112", "set9-103"],
   cardType: "character",
   name: "LeFou",
@@ -20,7 +31,7 @@ export const lefouInstigator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f3852a9841064672acd078eb9d2220a1",
-    tcgPlayer: 650041,
+    tcgPlayer: "650041",
   },
   text: [
     {
@@ -47,7 +58,9 @@ export const lefouInstigator: CharacterCard = {
           {
             duration: "this-turn",
             restriction: "cant-quest",
-            target: { ref: "previous-target" },
+            target: {
+              ref: "previous-target",
+            },
             type: "restriction",
           },
         ],

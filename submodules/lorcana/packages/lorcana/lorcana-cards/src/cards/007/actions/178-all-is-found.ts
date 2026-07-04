@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { allIsFoundI18n } from "./178-all-is-found.i18n";
 
 export const allIsFound: ActionCard = {
-  id: "OTu",
+  id: "1xN",
   canonicalId: "ci_Qon",
+  slug: "lorcana-ci_Qon",
+  printings: [
+    {
+      id: "set7-178",
+      artId: "set7-178",
+      setCode: "set7",
+      collectorNumber: "178",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-178"],
   cardType: "action",
   name: "All Is Found",
@@ -16,7 +27,7 @@ export const allIsFound: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0fa2b60dcf3d46fbb5e61428e33d7d7d",
-    tcgPlayer: 619748,
+    tcgPlayer: "619748",
   },
   text: "Put up to 2 cards from your discard into your inkwell, facedown and exerted.",
   actionSubtype: "song",

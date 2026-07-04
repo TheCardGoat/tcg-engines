@@ -6,15 +6,15 @@ export const zipperTinyHelperP3ChallengeI18n: Record<Languages, I18nProperties> 
     version: "Tiny Helper",
   },
   de: {
-    name: "Zipper",
-    version: "Tiny Helper",
+    name: "Summi",
+    version: "Kleiner Helfer",
   },
   fr: {
-    name: "Zipper",
-    version: "Tiny Helper",
+    name: "Ruzor",
+    version: "Assistant minuscule",
   },
   it: {
     name: "Zipper",
-    version: "Tiny Helper",
+    version: "Minuscolo Aiutante",
   },
 };

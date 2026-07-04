@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { singer } from "../../../helpers/abilities/singer";
 import { gazelleBalladSingerI18n } from "./025-gazelle-ballad-singer.i18n";
+
+import { singer } from "../../../helpers/abilities/singer";
 
 export const gazelleBalladSinger: CharacterCard = {
   id: "OP1",
   canonicalId: "ci_OP1",
+  slug: "lorcana-ci_OP1",
+  printings: [
+    {
+      id: "set10-025",
+      artId: "set10-025",
+      setCode: "set10",
+      collectorNumber: "25",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-025"],
   cardType: "character",
   name: "Gazelle",
@@ -21,7 +33,7 @@ export const gazelleBalladSinger: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_089f8cf3f74944b5ad3c64b25adc7886",
-    tcgPlayer: 658446,
+    tcgPlayer: "658446",
   },
   text: [
     {

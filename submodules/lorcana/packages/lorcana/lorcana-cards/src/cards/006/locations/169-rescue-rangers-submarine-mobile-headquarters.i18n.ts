@@ -17,7 +17,7 @@ export const rescueRangersSubmarineMobileHeadquartersI18n: Record<Languages, I18
     version: "Mobiles Hauptquartier",
     text: [
       {
-        title: "PLANUNGSSITZUNG",
+        title: "Planungssitzung",
         description:
           "Zu Beginn deines Zuges, wenn du mindestens einen Charakter an diesem Ort hast, lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat.",
       },
@@ -28,7 +28,7 @@ export const rescueRangersSubmarineMobileHeadquartersI18n: Record<Languages, I18
     version: "Quartier général mobile",
     text: [
       {
-        title: "SESSION DE PLANIFICATION",
+        title: "Session de planification",
         description:
           "Au début de votre tour, si vous avez un personnage sur ce lieu, vous pouvez placer la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const rescueRangersSubmarineMobileHeadquartersI18n: Record<Languages, I18
     version: "Quartier Generale Mobile",
     text: [
       {
-        title: "RIUNIONE STRATEGICA",
+        title: "Riunione Strategica",
         description:
           "All'inizio del tuo turno, se hai un personaggio in questo luogo, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },

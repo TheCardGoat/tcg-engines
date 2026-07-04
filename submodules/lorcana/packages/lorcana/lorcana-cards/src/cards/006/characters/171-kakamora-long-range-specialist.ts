@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { kakamoraLongrangeSpecialistI18n } from "./171-kakamora-long-range-specialist.i18n";
 
 export const kakamoraLongrangeSpecialist: CharacterCard = {
-  id: "8jt",
+  id: "56b",
   canonicalId: "ci_8jt",
+  slug: "lorcana-ci_8jt",
+  printings: [
+    {
+      id: "set6-171",
+      artId: "set6-171",
+      setCode: "set6",
+      collectorNumber: "171",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-171"],
   cardType: "character",
   name: "Kakamora",
@@ -20,7 +31,7 @@ export const kakamoraLongrangeSpecialist: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6df56dd3dbb5471589800f12bba4eb46",
-    tcgPlayer: 588366,
+    tcgPlayer: "588366",
   },
   text: [
     {

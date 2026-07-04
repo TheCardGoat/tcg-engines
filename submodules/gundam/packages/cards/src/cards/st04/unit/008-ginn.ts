@@ -7,14 +7,17 @@ export const st04Ginn008: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "ST04-008",
-  externalId: "gundam:st04-008",
-  slug: "ginn-st04-008",
+  canonicalId: "ST04-008",
+  externalIds: { bandai: "gundam:st04-008" },
+  slug: "ginn/st04-008",
   displayName: "Ginn",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-008",
   printings: [
     {
       id: "ST04-008",
+      artId: "ST04-008",
+      setCode: "ST04",
       collectorNumber: "ST04-008",
       cardNumber: "ST04-008",
       set: {
@@ -30,6 +33,8 @@ export const st04Ginn008: UnitCard = {
     },
     {
       id: "ST04-008_p1",
+      artId: "ST04-008_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-008_p1",
       cardNumber: "ST04-008",
       set: {
@@ -44,6 +49,7 @@ export const st04Ginn008: UnitCard = {
       productName: "SEED Strike [ST04] Bonus Pack",
     },
   ],
+  reprints: ["ST04-008", "ST04-008_p1"],
   selectedPrintingId: "ST04-008",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-008.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-008.webp?260424",

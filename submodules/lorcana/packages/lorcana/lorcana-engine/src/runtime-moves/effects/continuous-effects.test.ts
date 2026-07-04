@@ -97,7 +97,9 @@ describe("continuous-effects", () => {
     });
     const defenderDefinition: LocationCard = {
       id: "defender",
+      printings: [{ id: "defender", artId: "defender", setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
       canonicalId: "ci_defender",
+      slug: "lorcana-ci_defender",
       name: "Defender",
       cardType: "location",
       inkType: ["amber"],

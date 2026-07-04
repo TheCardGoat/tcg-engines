@@ -4,6 +4,17 @@ import { theColonelOldSheepdogI18n } from "./017-the-colonel-old-sheepdog.i18n";
 export const theColonelOldSheepdog: CharacterCard = {
   id: "hQZ",
   canonicalId: "ci_hQZ",
+  slug: "lorcana-ci_hQZ",
+  printings: [
+    {
+      id: "set8-017",
+      artId: "set8-017",
+      setCode: "set8",
+      collectorNumber: "17",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-017"],
   cardType: "character",
   name: "The Colonel",
@@ -20,7 +31,7 @@ export const theColonelOldSheepdog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cddc453bf8734d989b68193f212de440",
-    tcgPlayer: 631361,
+    tcgPlayer: "631361",
   },
   text: [
     {

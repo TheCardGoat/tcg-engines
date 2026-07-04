@@ -52,7 +52,7 @@ export function useSimulatorProjection(): UseSimulatorProjectionResult {
         },
         "Cyberpunk live match",
       ),
-    [matchState, viewerSide, interactionViews, humanSide],
+    [matchState.ctx.stateID, viewerSide, interactionViews, humanSide],
   );
 
   // Keep a stable map from projected interaction id back to the original
@@ -81,7 +81,14 @@ export function useSimulatorProjection(): UseSimulatorProjectionResult {
       const context = actionContextById.get(interactionId);
       if (!context) return;
 
-      const values = selectionToValues(context.inputs, selection);
+      let values = selectionToValues(context.inputs, selection);
+      if (context.action.id === "attackUnit") {
+        const pairId = selection.entityIds[0];
+        if (!pairId || !pairId.includes("->")) return;
+        const [attackerId, defenderId] = pairId.split("->");
+        if (!attackerId || !defenderId) return;
+        values = { attackerId, defenderId };
+      }
       const submission = buildInteractionSubmissionForActionId({
         view: context.view,
         actionId: context.action.id,

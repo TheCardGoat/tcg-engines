@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ComponentType, type ReactNode } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { createBrowserRouter, RouterProvider, type RouteObject } from "react-router-dom";
-import { normalizeRouterBasename } from "../router-paths";
+import { normalizeRouterBasename } from "../routes/router-paths.ts";
 
 export interface MountedBrowserSimulatorProps {
   basename: string;

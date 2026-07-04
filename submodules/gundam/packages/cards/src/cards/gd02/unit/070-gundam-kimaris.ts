@@ -7,14 +7,17 @@ export const gd02GundamKimaris070: UnitCard = {
   color: "white",
   traits: ["gjallarhorn", "gundam frame"],
   id: "GD02-070",
-  externalId: "gundam:gd02-070",
-  slug: "gundam-kimaris-gd02-070",
+  canonicalId: "GD02-070",
+  externalIds: { bandai: "gundam:gd02-070" },
+  slug: "gundam-kimaris/gd02-070",
   displayName: "Gundam Kimaris",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-070",
   printings: [
     {
       id: "GD02-070",
+      artId: "GD02-070",
+      setCode: "GD02",
       collectorNumber: "GD02-070",
       cardNumber: "GD02-070",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamKimaris070: UnitCard = {
     },
     {
       id: "GD02-070_p1",
+      artId: "GD02-070_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-070_p1",
       cardNumber: "GD02-070",
       set: {
@@ -44,6 +49,7 @@ export const gd02GundamKimaris070: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-070", "GD02-070_p1"],
   selectedPrintingId: "GD02-070",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-070.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-070.webp?260424",

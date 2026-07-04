@@ -4,6 +4,17 @@ import { maleficentMistressOfAllEvilI18n } from "./051-maleficent-mistress-of-al
 export const maleficentMistressOfAllEvil: CharacterCard = {
   id: "rHc",
   canonicalId: "ci_FwY",
+  slug: "lorcana-ci_FwY",
+  printings: [
+    {
+      id: "set3-051",
+      artId: "set3-051",
+      setCode: "set3",
+      collectorNumber: "51",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-051"],
   cardType: "character",
   name: "Maleficent",
@@ -20,7 +31,7 @@ export const maleficentMistressOfAllEvil: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_40690491af114f2e810a6fd1c6ddcafa",
-    tcgPlayer: 539159,
+    tcgPlayer: "539159",
   },
   text: [
     {

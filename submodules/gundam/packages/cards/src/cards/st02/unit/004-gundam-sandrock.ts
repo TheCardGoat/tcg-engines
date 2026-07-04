@@ -7,14 +7,17 @@ export const st02GundamSandrock004: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "ST02-004",
-  externalId: "gundam:st02-004",
-  slug: "gundam-sandrock-st02-004",
+  canonicalId: "ST02-004",
+  externalIds: { bandai: "gundam:st02-004" },
+  slug: "gundam-sandrock/st02-004",
   displayName: "Gundam Sandrock",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-004",
   printings: [
     {
       id: "ST02-004",
+      artId: "ST02-004",
+      setCode: "ST02",
       collectorNumber: "ST02-004",
       cardNumber: "ST02-004",
       set: {
@@ -30,6 +33,8 @@ export const st02GundamSandrock004: UnitCard = {
     },
     {
       id: "ST02-004_p1",
+      artId: "ST02-004_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-004_p1",
       cardNumber: "ST02-004",
       set: {
@@ -44,6 +49,7 @@ export const st02GundamSandrock004: UnitCard = {
       productName: "Wings of Advance [ST02] Bonus Pack",
     },
   ],
+  reprints: ["ST02-004", "ST02-004_p1"],
   selectedPrintingId: "ST02-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-004.webp?260424",

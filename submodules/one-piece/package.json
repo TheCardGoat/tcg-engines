@@ -1,0 +1,23 @@
+{
+  "name": "one-piece",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ready": "vp run full-ready",
+    "ci-check": "vp run ci:check",
+    "ci-check-full": "vp run ci:full",
+    "prepare": "node -e \"process.exit(process.env.CI?0:1)\" || vp config",
+    "build": "pnpm exec turbo run build"
+  },
+  "devDependencies": {
+    "@playwright/test": "catalog:",
+    "@types/node": "catalog:",
+    "turbo": "2.9.12",
+    "vite-plus": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

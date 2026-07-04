@@ -14,7 +14,7 @@ export const swordOfTruthI18n: Record<Languages, I18nProperties> = {
     name: "Schwert der Wahrheit",
     text: [
       {
-        title: "LETZTER ZAUBER",
+        title: "Letzter Zauber",
         description:
           "Verbanne diesen Gegenstand — verbanne eine Schurkin oder einen Schurken deiner Wahl.",
       },
@@ -33,7 +33,7 @@ export const swordOfTruthI18n: Record<Languages, I18nProperties> = {
     name: "Sword of Truth",
     text: [
       {
-        title: "FINAL ENCHANTMENT",
+        title: "Final Enchantment",
         description: "Banish this item — Banish chosen Villain character.",
       },
     ],

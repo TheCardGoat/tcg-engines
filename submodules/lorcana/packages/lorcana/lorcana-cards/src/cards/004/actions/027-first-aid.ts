@@ -4,6 +4,17 @@ import { firstAidI18n } from "./027-first-aid.i18n";
 export const firstAid: ActionCard = {
   id: "qRf",
   canonicalId: "ci_qRf",
+  slug: "lorcana-ci_qRf",
+  printings: [
+    {
+      id: "set4-027",
+      artId: "set4-027",
+      setCode: "set4",
+      collectorNumber: "27",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-027"],
   cardType: "action",
   name: "First Aid",
@@ -15,7 +26,7 @@ export const firstAid: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_258d12e6617d4e648d73be028f191b40",
-    tcgPlayer: 550563,
+    tcgPlayer: "550563",
   },
   text: "Remove up to 1 damage from each of your characters.",
   abilities: [
@@ -24,7 +35,10 @@ export const firstAid: ActionCard = {
       text: "Remove up to 1 damage from each of your characters.",
       name: "First Aid",
       effect: {
-        amount: { type: "up-to", value: 1 },
+        amount: {
+          type: "up-to",
+          value: 1,
+        },
         target: {
           cardTypes: ["character"],
           count: "all",

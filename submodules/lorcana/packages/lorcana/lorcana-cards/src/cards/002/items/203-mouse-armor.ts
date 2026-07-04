@@ -4,6 +4,17 @@ import { mouseArmorI18n } from "./203-mouse-armor.i18n";
 export const mouseArmor: ItemCard = {
   id: "ab5",
   canonicalId: "ci_ab5",
+  slug: "lorcana-ci_ab5",
+  printings: [
+    {
+      id: "set2-203",
+      artId: "set2-203",
+      setCode: "set2",
+      collectorNumber: "203",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-203"],
   cardType: "item",
   name: "Mouse Armor",
@@ -16,7 +27,7 @@ export const mouseArmor: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a529727601b84e9ca6f8b5052d1d2572",
-    tcgPlayer: 520862,
+    tcgPlayer: "520862",
   },
   text: [
     {

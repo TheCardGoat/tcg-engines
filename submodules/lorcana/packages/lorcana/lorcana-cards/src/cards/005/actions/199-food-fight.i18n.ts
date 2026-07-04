@@ -7,11 +7,11 @@ export const foodFightI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Essensschlacht!",
-    text: 'Deine Charaktere erhalten in diesem Zug: ", 1 — Füge einem Charakter deiner Wahl 1 Schaden zu."',
+    text: 'Deine Charaktere erhalten in diesem Zug: "{E}, 1 {I} — Füge einem Charakter deiner Wahl 1 Schaden zu."',
   },
   fr: {
     name: "Bataille de nourriture !",
-    text: 'Vos personnages gagnent ", 1 — Choisissez un personnage et infligez-lui 1 dommage." pour le reste de ce tour.',
+    text: 'Vos personnages gagnent "{E}, 1 {I} — Choisissez un personnage et infligez-lui 1 dommage." pour le reste de ce tour.',
   },
   it: {
     name: "Battaglia di Cibo!",
@@ -19,7 +19,7 @@ export const foodFightI18n: Record<Languages, I18nProperties> = {
       {
         title: "I",
         description:
-          'tuoi personaggi ottengono ", 1 — Infliggi 1 danno a un personaggio a tua scelta" per questo turno.',
+          'tuoi personaggi ottengono "{E}, 1 {I} — Infliggi 1 danno a un personaggio a tua scelta" per questo turno.',
       },
     ],
   },

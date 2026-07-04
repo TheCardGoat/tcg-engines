@@ -17,7 +17,7 @@ export const elsaTrustedSisterI18n: Record<Languages, I18nProperties> = {
     version: "Vertraute Schwester",
     text: [
       {
-        title: "WAS TUN WIR JETZT?",
+        title: "Was tun wir jetzt?",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, falls du einen Anna-Charakter im Spiel hast, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const elsaTrustedSisterI18n: Record<Languages, I18nProperties> = {
     version: "Sœur de confiance",
     text: [
       {
-        title: "QUE FAIT-ON MAINTENANT?",
+        title: "Que fait-on maintenant?",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, si vous avez un personnage Anna en jeu, gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const elsaTrustedSisterI18n: Record<Languages, I18nProperties> = {
     version: "Sorella Fidata",
     text: [
       {
-        title: "COSA FACCIAMO ORA?",
+        title: "Cosa Facciamo Ora?",
         description:
           "Ogni volta che questo personaggio va all'avventura, se hai in gioco un personaggio chiamato Anna, ottieni 1 leggenda.",
       },

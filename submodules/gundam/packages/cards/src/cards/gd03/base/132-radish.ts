@@ -6,14 +6,17 @@ export const gd03Radish132: BaseCard = {
   type: "base",
   traits: ["aeug", "warship"],
   id: "GD03-132",
-  externalId: "gundam:gd03-132",
-  slug: "radish-gd03-132",
+  canonicalId: "GD03-132",
+  externalIds: { bandai: "gundam:gd03-132" },
+  slug: "radish/gd03-132",
   displayName: "Radish",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-132",
   printings: [
     {
       id: "GD03-132",
+      artId: "GD03-132",
+      setCode: "GD03",
       collectorNumber: "GD03-132",
       cardNumber: "GD03-132",
       set: {
@@ -28,6 +31,7 @@ export const gd03Radish132: BaseCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-132"],
   selectedPrintingId: "GD03-132",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-132.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-132.webp?260424",

@@ -20,10 +20,10 @@ export const kronkLaidBackI18n: Record<Languages, I18nProperties> = {
     version: "Entspannt",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "DAS GEFÄLLT MIR",
+        title: "Das gefällt mir",
         description:
           "Wenn du durch einen Effekt 1 oder mehr Karten abwerfen müsstest, wirfst du keine Karten ab.",
       },
@@ -34,10 +34,10 @@ export const kronkLaidBackI18n: Record<Languages, I18nProperties> = {
     version: "Décontracté",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "QU'EST-CE QUE J'M'AMUSE",
+        title: "Qu'est-ce que j'm'amuse",
         description:
           "Si un effet devait vous faire défausser une ou plusieurs cartes, ne les défaussez pas.",
       },
@@ -48,10 +48,10 @@ export const kronkLaidBackI18n: Record<Languages, I18nProperties> = {
     version: "Rilassato",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "LO ADORO",
+        title: "Lo Adoro",
         description: "Se un effetto ti farebbe scartare una o più carte, non scartarne.",
       },
     ],

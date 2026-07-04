@@ -1,13 +1,76 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { maleficentImperiousTravelerP3PromoI18n } from "./p3-044-maleficent-imperious-traveler-promo.i18n";
-import { maleficentImperiousTraveler } from "./055-maleficent-imperious-traveler";
 
 export const maleficentImperiousTravelerP3Promo: CharacterCard = {
-  ...maleficentImperiousTraveler,
-  id: "NKp",
-  set: "P03",
+  id: "eg5",
+  canonicalId: "ci_6j1",
+  slug: "lorcana-ci_6j1",
+  printings: [
+    {
+      id: "set12-p3-044-promo",
+      artId: "ci_6j1-promo",
+      setCode: "set12",
+      collectorNumber: "44",
+      rarity: "promo",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set12-055"],
+  cardType: "character",
+  name: "Maleficent",
+  version: "Imperious Traveler",
+  inkType: ["amethyst"],
+  franchise: "Sleeping Beauty",
+  set: "012",
   cardNumber: 44,
   rarity: "special",
   specialRarity: "promo",
+  cost: 5,
+  strength: 3,
+  willpower: 5,
+  lore: 2,
+  inkable: true,
+  externalIds: {
+    lorcast: "crd_586e5a2d7baa4cefb96e5f65a68e0cc2",
+    tcgPlayer: "690527",
+  },
+  text: [
+    {
+      title: "HEED MY WORDS",
+      description:
+        "Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+    },
+  ],
+  classifications: ["Dreamborn", "Villain", "Sorcerer"],
+  abilities: [
+    {
+      id: "QsI-1",
+      name: "HEED MY WORDS",
+      type: "triggered",
+      text: "HEED MY WORDS Whenever this character quests, if you played another character this turn, you may exert chosen opposing character.",
+      trigger: {
+        event: "quest",
+        on: "SELF",
+        timing: "whenever",
+      },
+      condition: {
+        type: "turn-metric",
+        metric: "played-character-with-classification",
+        excludeSource: true,
+        comparison: {
+          operator: "gte",
+          value: 1,
+        },
+      },
+      effect: {
+        type: "optional",
+        chooser: "CONTROLLER",
+        effect: {
+          type: "exert",
+          target: "CHOSEN_OPPOSING_CHARACTER",
+        },
+      },
+    },
+  ],
   i18n: maleficentImperiousTravelerP3PromoI18n,
 };

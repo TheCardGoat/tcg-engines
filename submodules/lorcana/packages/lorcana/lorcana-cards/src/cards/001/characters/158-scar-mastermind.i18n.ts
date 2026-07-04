@@ -17,9 +17,9 @@ export const scarMastermindI18n: Record<Languages, I18nProperties> = {
     version: "Drahtzieher",
     text: [
       {
-        title: "HEIMTÜCKISCHER PLAN",
+        title: "Heimtückischer Plan",
         description:
-          "Wenn du diesen Charakter ausspielst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -5.",
+          "Wenn du diesen Charakter ausspielst, gib einem gegnerischen Charakter deiner Wahl in diesem Zug -5 {S}.",
       },
     ],
   },
@@ -30,7 +30,7 @@ export const scarMastermindI18n: Record<Languages, I18nProperties> = {
       {
         title: "COMPLOT INSIDIEUX",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -5 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -5 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,8 +39,9 @@ export const scarMastermindI18n: Record<Languages, I18nProperties> = {
     version: "Mastermind",
     text: [
       {
-        title: "INSIDIOUS PLOT",
-        description: "When you play this character, chosen opposing character gets –5 this turn.",
+        title: "Insidious Plot",
+        description:
+          "When you play this character, chosen opposing character gets –5 {S} this turn.",
       },
     ],
   },

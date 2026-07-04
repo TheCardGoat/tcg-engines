@@ -4,6 +4,17 @@ import { ladyFamilyDogI18n } from "./011-lady-family-dog.i18n";
 export const ladyFamilyDog: CharacterCard = {
   id: "XlN",
   canonicalId: "ci_XlN",
+  slug: "lorcana-ci_XlN",
+  printings: [
+    {
+      id: "set8-011",
+      artId: "set8-011",
+      setCode: "set8",
+      collectorNumber: "11",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-011"],
   cardType: "character",
   name: "Lady",
@@ -20,7 +31,7 @@ export const ladyFamilyDog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5cad0c55b4644a3ea12fff8717e5fe83",
-    tcgPlayer: 631355,
+    tcgPlayer: "631355",
   },
   text: [
     {

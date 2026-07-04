@@ -7,14 +7,17 @@ export const gd02Genoace030: UnitCard = {
   color: "green",
   traits: ["earth federation"],
   id: "GD02-030",
-  externalId: "gundam:gd02-030",
-  slug: "genoace-gd02-030",
+  canonicalId: "GD02-030",
+  externalIds: { bandai: "gundam:gd02-030" },
+  slug: "genoace/gd02-030",
   displayName: "Genoace",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-030",
   printings: [
     {
       id: "GD02-030",
+      artId: "GD02-030",
+      setCode: "GD02",
       collectorNumber: "GD02-030",
       cardNumber: "GD02-030",
       set: {
@@ -29,6 +32,7 @@ export const gd02Genoace030: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-030"],
   selectedPrintingId: "GD02-030",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-030.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-030.webp?260424",

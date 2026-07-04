@@ -4,6 +4,17 @@ import { sapphireCoilI18n } from "./179-sapphire-coil.i18n";
 export const sapphireCoil: ItemCard = {
   id: "jrq",
   canonicalId: "ci_jrq",
+  slug: "lorcana-ci_jrq",
+  printings: [
+    {
+      id: "set7-179",
+      artId: "set7-179",
+      setCode: "set7",
+      collectorNumber: "179",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-179"],
   cardType: "item",
   name: "Sapphire Coil",
@@ -16,7 +27,7 @@ export const sapphireCoil: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3f99d55a6a434a00b6e547ec30e48a69",
-    tcgPlayer: 619510,
+    tcgPlayer: "619510",
   },
   text: [
     {

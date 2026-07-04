@@ -7,14 +7,14 @@ export const undermineI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Sabotieren",
-    text: "Eine gegnerische Person deiner Wahl wählt 1 Karte aus ihrer Hand und wirft sie ab. Gib einem Charakter deiner Wahl in diesem Zug +2.",
+    text: "Eine gegnerische Person deiner Wahl wählt 1 Karte aus ihrer Hand und wirft sie ab. Gib einem Charakter deiner Wahl in diesem Zug +2 {S}.",
   },
   fr: {
     name: "Bousillage",
-    text: "Choisissez un adversaire qui défausse une carte. Choisissez un personnage qui gagne +2 pour le reste de ce tour.",
+    text: "Choisissez un adversaire qui défausse une carte. Choisissez un personnage qui gagne +2 {S} pour le reste de ce tour.",
   },
   it: {
     name: "Sabotare",
-    text: "Un avversario a tua scelta sceglie e scarta una carta. Un personaggio a tua scelta riceve +2 per questo turno.",
+    text: "Un avversario a tua scelta sceglie e scarta una carta. Un personaggio a tua scelta riceve +2 {S} per questo turno.",
   },
 };

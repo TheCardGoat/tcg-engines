@@ -4,6 +4,17 @@ import { jasmineRoyalSeafarerI18n } from "./070-jasmine-royal-seafarer.i18n";
 export const jasmineRoyalSeafarer: CharacterCard = {
   id: "Iyt",
   canonicalId: "ci_Iyt",
+  slug: "lorcana-ci_Iyt",
+  printings: [
+    {
+      id: "set6-070",
+      artId: "set6-070",
+      setCode: "set6",
+      collectorNumber: "70",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-070"],
   cardType: "character",
   name: "Jasmine",
@@ -20,7 +31,7 @@ export const jasmineRoyalSeafarer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3aa1cf07954647c89708b98355e6c976",
-    tcgPlayer: 586172,
+    tcgPlayer: "586172",
   },
   text: [
     {

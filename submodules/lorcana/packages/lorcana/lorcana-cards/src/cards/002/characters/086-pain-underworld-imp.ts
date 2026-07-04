@@ -4,6 +4,17 @@ import { painUnderworldImpI18n } from "./086-pain-underworld-imp.i18n";
 export const painUnderworldImp: CharacterCard = {
   id: "qfi",
   canonicalId: "ci_qfi",
+  slug: "lorcana-ci_qfi",
+  printings: [
+    {
+      id: "set2-086",
+      artId: "set2-086",
+      setCode: "set2",
+      collectorNumber: "86",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-086"],
   cardType: "character",
   name: "Pain",
@@ -20,7 +31,7 @@ export const painUnderworldImp: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_756eca11fdec48c2bc3b4f427b151b6e",
-    tcgPlayer: 527748,
+    tcgPlayer: "527748",
   },
   text: [
     {

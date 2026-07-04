@@ -16,7 +16,7 @@ export const fredMajorScienceEnthusiastI18n: Record<Languages, I18nProperties> =
     version: "Wissenschaftsenthusiast",
     text: [
       {
-        title: "SPUCKE FEUER!",
+        title: "Spucke Feuer!",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen.",
       },
@@ -27,7 +27,7 @@ export const fredMajorScienceEnthusiastI18n: Record<Languages, I18nProperties> =
     version: "Adore la science",
     text: [
       {
-        title: "J'CRACHE DU FEU!",
+        title: "J'crache du feu!",
         description: "Lorsque vous jouez ce personnage, vous pouvez choisir un objet et le bannir.",
       },
     ],
@@ -37,7 +37,7 @@ export const fredMajorScienceEnthusiastI18n: Record<Languages, I18nProperties> =
     version: "Grandissimo Fanatico della Scienza",
     text: [
       {
-        title: "SPUTAFUOCO!",
+        title: "Sputafuoco!",
         description: "Quando giochi questo personaggio, puoi esiliare un oggetto a tua scelta.",
       },
     ],

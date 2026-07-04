@@ -139,6 +139,8 @@ export interface ResolveBagCompletedNamedLogValues extends ResolveBagCompletedLo
 
 export interface ResolveBagCompletedTargetsLogValues extends ResolveBagCompletedLogValues {
   targets: LogTargetId[];
+  effectType?: "play-card";
+  sourceZone?: "discard";
 }
 
 export interface ResolveBagCompletedTargetsNamedLogValues extends ResolveBagCompletedTargetsLogValues {
@@ -354,9 +356,19 @@ export interface OutcomeCardExertedLogValues {
   cardId: CardInstanceId;
 }
 
+export interface OutcomeInkwellCardsExertedLogValues {
+  playerId: PlayerId;
+  amount: number;
+}
+
 export interface OutcomeCardReadiedLogValues {
   playerId: PlayerId;
   cardId: CardInstanceId;
+}
+
+export interface OutcomeInkwellCardsReadiedLogValues {
+  playerId: PlayerId;
+  amount: number;
 }
 
 export interface CardsMilledLogValues {
@@ -406,6 +418,7 @@ export interface LorcanaLogMessageMap {
   "lorcana.effect.lookAtInkwell": LookAtInkwellLogValues;
   "lorcana.effect.lookAtInkwell.detail": LookAtInkwellDetailLogValues;
   "lorcana.move.playCard": PlayCardLogValues;
+  "lorcana.move.playCard.fromDiscard": PlayCardLogValues;
   "lorcana.move.quest": QuestLogValues;
   "lorcana.move.questWithAll": QuestWithAllLogValues;
   "lorcana.move.challenge": ChallengeLogValues;
@@ -453,7 +466,9 @@ export interface LorcanaLogMessageMap {
   "lorcana.outcome.locationLoreGained": LocationLoreGainedLogValues;
   "lorcana.outcome.loreLost": LoreLostLogValues;
   "lorcana.outcome.cardExerted": OutcomeCardExertedLogValues;
+  "lorcana.outcome.inkwellCardsExerted": OutcomeInkwellCardsExertedLogValues;
   "lorcana.outcome.cardReadied": OutcomeCardReadiedLogValues;
+  "lorcana.outcome.inkwellCardsReadied": OutcomeInkwellCardsReadiedLogValues;
   "lorcana.outcome.cardsMilled": CardsMilledLogValues;
   "lorcana.outcome.cardsPutOnBottom": CardsPutOnBottomLogValues;
   "lorcana.move.playCard.shift": PlayCardShiftLogValues;
@@ -487,6 +502,7 @@ export type ActionLogMessageKey =
   | "lorcana.effect.lookAtInkwell"
   | "lorcana.effect.lookAtInkwell.detail"
   | "lorcana.move.playCard"
+  | "lorcana.move.playCard.fromDiscard"
   | "lorcana.move.playCard.shift"
   | "lorcana.move.playCard.sing"
   | "lorcana.move.quest"
@@ -555,6 +571,7 @@ export const LORCANA_LOG_TRANSLATION_KEYS = {
   "lorcana.effect.lookAtInkwell": "lorcana.effect.lookAtInkwell",
   "lorcana.effect.lookAtInkwell.detail": "lorcana.effect.lookAtInkwell.detail",
   "lorcana.move.playCard": "lorcana.move.playCard",
+  "lorcana.move.playCard.fromDiscard": "lorcana.move.playCard.fromDiscard",
   "lorcana.move.quest": "lorcana.move.quest",
   "lorcana.move.questWithAll": "lorcana.move.questWithAll",
   "lorcana.move.challenge": "lorcana.move.challenge",
@@ -608,7 +625,9 @@ export const LORCANA_LOG_TRANSLATION_KEYS = {
   "lorcana.outcome.locationLoreGained": "lorcana.outcome.locationLoreGained",
   "lorcana.outcome.loreLost": "lorcana.outcome.loreLost",
   "lorcana.outcome.cardExerted": "lorcana.outcome.cardExerted",
+  "lorcana.outcome.inkwellCardsExerted": "lorcana.outcome.inkwellCardsExerted",
   "lorcana.outcome.cardReadied": "lorcana.outcome.cardReadied",
+  "lorcana.outcome.inkwellCardsReadied": "lorcana.outcome.inkwellCardsReadied",
   "lorcana.outcome.cardsMilled": "lorcana.outcome.cardsMilled",
   "lorcana.outcome.cardsPutOnBottom": "lorcana.outcome.cardsPutOnBottom",
   "lorcana.move.playCard.shift": "lorcana.move.playCard.shift",
@@ -637,6 +656,7 @@ export const LORCANA_LOG_TRANSLATION_VALUE_KEYS = {
   "lorcana.effect.lookAtInkwell": ["count"],
   "lorcana.effect.lookAtInkwell.detail": ["count", "cardIds"],
   "lorcana.move.playCard": ["cardId"],
+  "lorcana.move.playCard.fromDiscard": ["cardId"],
   "lorcana.move.quest": ["cardId", "loreGained"],
   "lorcana.move.questWithAll": ["count", "cardIds", "loreGained"],
   "lorcana.move.challenge": ["attackerId", "defenderId"],
@@ -692,7 +712,9 @@ export const LORCANA_LOG_TRANSLATION_VALUE_KEYS = {
   "lorcana.outcome.locationLoreGained": ["playerId", "amount", "locationCount"],
   "lorcana.outcome.loreLost": ["playerId", "amount"],
   "lorcana.outcome.cardExerted": ["cardId"],
+  "lorcana.outcome.inkwellCardsExerted": ["playerId", "amount"],
   "lorcana.outcome.cardReadied": ["cardId"],
+  "lorcana.outcome.inkwellCardsReadied": ["playerId", "amount"],
   "lorcana.outcome.cardsMilled": ["amount"],
   "lorcana.outcome.cardsPutOnBottom": ["cardIds"],
   "lorcana.move.playCard.shift": ["cardId", "shiftTargetId"],

@@ -4,7 +4,7 @@ export const frozoneSuperSlickI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Frozone",
     version: "Super Slick",
-    text: "<Evasive>",
+    text: "Evasive",
   },
   de: {
     name: "Frozone",

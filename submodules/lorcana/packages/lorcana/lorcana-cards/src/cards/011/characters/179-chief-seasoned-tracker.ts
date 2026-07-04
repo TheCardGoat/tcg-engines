@@ -4,6 +4,17 @@ import { chiefSeasonedTrackerI18n } from "./179-chief-seasoned-tracker.i18n";
 export const chiefSeasonedTracker: CharacterCard = {
   id: "pkL",
   canonicalId: "ci_pkL",
+  slug: "lorcana-ci_pkL",
+  printings: [
+    {
+      id: "set11-179",
+      artId: "set11-179",
+      setCode: "set11",
+      collectorNumber: "179",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-179"],
   cardType: "character",
   name: "Chief",
@@ -20,7 +31,7 @@ export const chiefSeasonedTracker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a26bf7d81173483589a2df5446ab1ec0",
-    tcgPlayer: 673740,
+    tcgPlayer: "673740",
   },
   text: [
     {

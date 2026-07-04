@@ -7,14 +7,17 @@ export const gd04Gundam008: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD04-008",
-  externalId: "gundam:gd04-008",
-  slug: "gundam-gd04-008",
+  canonicalId: "GD04-008",
+  externalIds: { bandai: "gundam:gd04-008" },
+  slug: "gundam/gd04-008",
   displayName: "Gundam",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-008",
   printings: [
     {
       id: "GD04-008",
+      artId: "GD04-008",
+      setCode: "GD04",
       collectorNumber: "GD04-008",
       cardNumber: "GD04-008",
       set: {
@@ -29,6 +32,7 @@ export const gd04Gundam008: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-008"],
   selectedPrintingId: "GD04-008",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-008.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-008.webp?260424",

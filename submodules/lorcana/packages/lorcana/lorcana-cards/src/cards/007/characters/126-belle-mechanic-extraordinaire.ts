@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { belleMechanicExtraordinaireI18n } from "./126-belle-mechanic-extraordinaire.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const belleMechanicExtraordinaire: CharacterCard = {
-  id: "AY5",
+  id: "yFe",
   canonicalId: "ci_PhF",
+  slug: "lorcana-ci_PhF",
+  printings: [
+    {
+      id: "set7-126",
+      artId: "set7-126",
+      setCode: "set7",
+      collectorNumber: "126",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-126"],
   cardType: "character",
   name: "Belle",
@@ -21,7 +33,7 @@ export const belleMechanicExtraordinaire: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0d38ed42e8f14a299f6efefb250350d3",
-    tcgPlayer: 619745,
+    tcgPlayer: "619745",
   },
   text: [
     {

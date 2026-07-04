@@ -4,6 +4,17 @@ import { jumbaJookibaRenegadeScientistI18n } from "./083-jumba-jookiba-renegade-
 export const jumbaJookibaRenegadeScientist: CharacterCard = {
   id: "JMC",
   canonicalId: "ci_JMC",
+  slug: "lorcana-ci_JMC",
+  printings: [
+    {
+      id: "set1-083",
+      artId: "set1-083",
+      setCode: "set1",
+      collectorNumber: "83",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-083"],
   cardType: "character",
   name: "Jumba Jookiba",
@@ -21,7 +32,7 @@ export const jumbaJookibaRenegadeScientist: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_a1887fe9f3f74f7183a0a9bc44f57582",
-    tcgPlayer: 485366,
+    tcgPlayer: "485366",
   },
   classifications: ["Dreamborn", "Alien", "Inventor"],
   i18n: jumbaJookibaRenegadeScientistI18n,

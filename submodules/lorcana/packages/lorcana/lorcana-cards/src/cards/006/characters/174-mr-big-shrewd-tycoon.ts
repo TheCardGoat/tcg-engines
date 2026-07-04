@@ -4,6 +4,17 @@ import { mrBigShrewdTycoonI18n } from "./174-mr-big-shrewd-tycoon.i18n";
 export const mrBigShrewdTycoon: CharacterCard = {
   id: "05m",
   canonicalId: "ci_05m",
+  slug: "lorcana-ci_05m",
+  printings: [
+    {
+      id: "set6-174",
+      artId: "set6-174",
+      setCode: "set6",
+      collectorNumber: "174",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-174"],
   cardType: "character",
   name: "Mr. Big",
@@ -20,7 +31,7 @@ export const mrBigShrewdTycoon: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_0b5dcdce945a404395b6c65a894ecf6d",
-    tcgPlayer: 593029,
+    tcgPlayer: "593029",
   },
   text: [
     {

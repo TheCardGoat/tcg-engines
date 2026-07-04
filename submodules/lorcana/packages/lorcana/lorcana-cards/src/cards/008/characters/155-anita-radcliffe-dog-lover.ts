@@ -4,6 +4,17 @@ import { anitaRadcliffeDogLoverI18n } from "./155-anita-radcliffe-dog-lover.i18n
 export const anitaRadcliffeDogLover: CharacterCard = {
   id: "q1w",
   canonicalId: "ci_q1w",
+  slug: "lorcana-ci_q1w",
+  printings: [
+    {
+      id: "set8-155",
+      artId: "set8-155",
+      setCode: "set8",
+      collectorNumber: "155",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-155"],
   cardType: "character",
   name: "Anita Radcliffe",
@@ -20,7 +31,7 @@ export const anitaRadcliffeDogLover: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3e1fbfdb7f9c42119cd02bba07f694e7",
-    tcgPlayer: 633100,
+    tcgPlayer: "633100",
   },
   text: [
     {

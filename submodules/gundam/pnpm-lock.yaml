@@ -57,6 +57,9 @@ importers:
 
   packages/cards:
     dependencies:
+      '@tcg/card-model':
+        specifier: link:../../../agnostic-simulator/packages/card-model
+        version: link:../../../agnostic-simulator/packages/card-model
       '@tcg/gundam-token-data':
         specifier: workspace:*
         version: link:../token-data
@@ -140,6 +143,10 @@ importers:
         version: 0.1.21(@types/node@24.12.2)(jiti@2.6.1)(jsdom@29.0.2)(typescript@5.9.3)(vite@8.0.5(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(@types/node@24.12.2)(jiti@2.6.1)(yaml@2.8.3))(yaml@2.8.3)
 
   packages/types:
+    dependencies:
+      '@tcg/card-model':
+        specifier: link:../../../agnostic-simulator/packages/card-model
+        version: link:../../../agnostic-simulator/packages/card-model
     devDependencies:
       '@types/node':
         specifier: ^25.5.0

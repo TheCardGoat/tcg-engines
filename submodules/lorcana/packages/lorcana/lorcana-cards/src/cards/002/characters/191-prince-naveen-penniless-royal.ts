@@ -4,6 +4,17 @@ import { princeNaveenPennilessRoyalI18n } from "./191-prince-naveen-penniless-ro
 export const princeNaveenPennilessRoyal: CharacterCard = {
   id: "A9R",
   canonicalId: "ci_DSe",
+  slug: "lorcana-ci_DSe",
+  printings: [
+    {
+      id: "set2-191",
+      artId: "set2-191",
+      setCode: "set2",
+      collectorNumber: "191",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-191", "set9-182"],
   cardType: "character",
   name: "Prince Naveen",
@@ -21,7 +32,7 @@ export const princeNaveenPennilessRoyal: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_6bfaedf8350c4f27ad9c60c2ecb2c942",
-    tcgPlayer: 650115,
+    tcgPlayer: "650115",
   },
   classifications: ["Storyborn", "Prince"],
   i18n: princeNaveenPennilessRoyalI18n,

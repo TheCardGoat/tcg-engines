@@ -15,9 +15,9 @@ export const scepterOfArendelleI18n: Record<Languages, I18nProperties> = {
     name: "Zepter von Arendelle",
     text: [
       {
-        title: "BEFEHL",
+        title: "Befehl",
         description:
-          "— Ein Charakter deiner Wahl erhält in diesem Zug Unterstützen. (Jedes Mal, wenn der Charakter erkundet, darfst du seine in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "{E} — Ein Charakter deiner Wahl erhält in diesem Zug Unterstützen. (Jedes Mal, wenn der Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
     ],
   },
@@ -26,7 +26,8 @@ export const scepterOfArendelleI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "COMMANDEMENT",
-        description: "— choisissez un personnage, il gagne Soutien pour le reste de ce tour.",
+        description:
+          "{E} — choisissez un personnage, il gagne Soutien pour le reste de ce tour. (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
     ],
   },
@@ -34,9 +35,9 @@ export const scepterOfArendelleI18n: Record<Languages, I18nProperties> = {
     name: "Scettro di Arendelle",
     text: [
       {
-        title: "COMANDO",
+        title: "Comando",
         description:
-          "— Un personaggio a tua scelta ottiene Aiutante per questo turno. (Ogni volta che va all'avventura, puoi aggiungere la sua alla di un altro personaggio a tua scelta per questo turno.)",
+          "{E} — Un personaggio a tua scelta ottiene <Aiutante> per questo turno. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
     ],
   },

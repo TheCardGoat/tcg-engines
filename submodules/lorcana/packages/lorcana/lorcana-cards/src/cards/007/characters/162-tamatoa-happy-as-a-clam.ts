@@ -4,6 +4,17 @@ import { tamatoaHappyAsAClamI18n } from "./162-tamatoa-happy-as-a-clam.i18n";
 export const tamatoaHappyAsAClam: CharacterCard = {
   id: "c1L",
   canonicalId: "ci_rx2",
+  slug: "lorcana-ci_rx2",
+  printings: [
+    {
+      id: "set7-162",
+      artId: "set7-162",
+      setCode: "set7",
+      collectorNumber: "162",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-162"],
   cardType: "character",
   name: "Tamatoa",
@@ -20,7 +31,7 @@ export const tamatoaHappyAsAClam: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f2493d13b19a45559af0e7ce96f079bc",
-    tcgPlayer: 619747,
+    tcgPlayer: "619747",
   },
   text: [
     {

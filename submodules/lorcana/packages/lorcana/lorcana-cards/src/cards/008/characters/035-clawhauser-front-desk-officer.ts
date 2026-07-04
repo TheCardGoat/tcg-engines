@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { clawhauserFrontDeskOfficerI18n } from "./035-clawhauser-front-desk-officer.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { singer } from "../../../helpers/abilities/singer";
 
 export const clawhauserFrontDeskOfficer: CharacterCard = {
   id: "q40",
   canonicalId: "ci_9eu",
+  slug: "lorcana-ci_9eu",
+  printings: [
+    {
+      id: "set8-035",
+      artId: "set8-035",
+      setCode: "set8",
+      collectorNumber: "35",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-035"],
   cardType: "character",
   name: "Clawhauser",
@@ -22,7 +34,7 @@ export const clawhauserFrontDeskOfficer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1727b81007044782bc9c1df26820e7e1",
-    tcgPlayer: 631375,
+    tcgPlayer: "631375",
   },
   text: [
     {

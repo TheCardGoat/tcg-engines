@@ -7,14 +7,17 @@ export const gd03GundamBarbatosAdapt056: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "GD03-056",
-  externalId: "gundam:gd03-056",
-  slug: "gundam-barbatos-adapt-gd03-056",
+  canonicalId: "GD03-056",
+  externalIds: { bandai: "gundam:gd03-056" },
+  slug: "gundam-barbatos-adapt/gd03-056",
   displayName: "Gundam Barbatos Adapt",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-056",
   printings: [
     {
       id: "GD03-056",
+      artId: "GD03-056",
+      setCode: "GD03",
       collectorNumber: "GD03-056",
       cardNumber: "GD03-056",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamBarbatosAdapt056: UnitCard = {
     },
     {
       id: "GD03-056_p1",
+      artId: "GD03-056_p1",
+      setCode: "GD04",
       collectorNumber: "GD03-056_p1",
       cardNumber: "GD03-056",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamBarbatosAdapt056: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD03-056", "GD03-056_p1"],
   selectedPrintingId: "GD03-056",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-056.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-056.webp?260424",

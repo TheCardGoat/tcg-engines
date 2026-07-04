@@ -17,9 +17,9 @@ export const merryweatherGoodFairyI18n: Record<Languages, I18nProperties> = {
     version: "Gute Fee",
     text: [
       {
-        title: "EIN FÜNKCHEN HOFFNUNG",
+        title: "Ein Fünkchen Hoffnung",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du 1 bezahlen, um einem Charakter deiner Wahl in diesem Zug +2 zu geben.",
+          "Wenn du diesen Charakter ausspielst, darfst du 1 {I} bezahlen, um einem Charakter deiner Wahl in diesem Zug +2 {S} zu geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const merryweatherGoodFairyI18n: Record<Languages, I18nProperties> = {
     version: "Bonne fée",
     text: [
       {
-        title: "UN PEU D'ESPOIR",
+        title: "Un peu d'espoir",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez payer 1 pour choisir un personnage qui gagne +2 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez payer 1 {I} pour choisir un personnage qui gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const merryweatherGoodFairyI18n: Record<Languages, I18nProperties> = {
     version: "Buona Fata",
     text: [
       {
-        title: "CHE LA SPERANZA MAI TI ABBANDONI",
+        title: "Che la Speranza Mai ti Abbandoni",
         description:
-          "Quando giochi questo personaggio, puoi pagare 1 per dare a un personaggio a tua scelta +2 per questo turno.",
+          "Quando giochi questo personaggio, puoi pagare 1 {I} per dare a un personaggio a tua scelta +2 {S} per questo turno.",
       },
     ],
   },

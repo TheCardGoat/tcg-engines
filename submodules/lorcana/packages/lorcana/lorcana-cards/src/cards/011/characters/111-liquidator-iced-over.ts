@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { liquidatorIcedOverI18n } from "./111-liquidator-iced-over.i18n";
+
 import { underdog } from "../../../helpers/abilities/underdog";
 import { reckless } from "../../../helpers/abilities/reckless";
 
 export const liquidatorIcedOver: CharacterCard = {
   id: "UCV",
   canonicalId: "ci_UCV",
+  slug: "lorcana-ci_UCV",
+  printings: [
+    {
+      id: "set11-111",
+      artId: "set11-111",
+      setCode: "set11",
+      collectorNumber: "111",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-111"],
   cardType: "character",
   name: "Liquidator",
@@ -22,7 +34,7 @@ export const liquidatorIcedOver: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_109b0bfb7a374953b896f3d6d051c099",
-    tcgPlayer: 676212,
+    tcgPlayer: "676212",
   },
   text: [
     {

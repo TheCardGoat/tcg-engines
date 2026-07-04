@@ -17,7 +17,7 @@ export const heiheiAccidentalExplorerI18n: Record<Languages, I18nProperties> = {
     version: "Ungewollter Entdecker",
     text: [
       {
-        title: "GEDANKENLOSES UMHERSCHWEIFEN",
+        title: "Gedankenloses Umherschweifen",
         description:
           "Einmal pro Zug, wenn dieser Charakter zu einem Ort bewegt wird, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const heiheiAccidentalExplorerI18n: Record<Languages, I18nProperties> = {
     version: "Explorateur accidentel",
     text: [
       {
-        title: "ERRANCE INSOUCIANTE",
+        title: "Errance insouciante",
         description:
           "Une fois par tour, lorsque ce personnage est déplacé sur un lieu, chaque adversaire perd 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const heiheiAccidentalExplorerI18n: Record<Languages, I18nProperties> = {
     version: "Esploratore per Caso",
     text: [
       {
-        title: "VAGARE INSENSATO",
+        title: "Vagare Insensato",
         description:
           "Una volta per turno, quando questo personaggio si sposta in un luogo, ogni avversario perde 1 leggenda.",
       },

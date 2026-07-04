@@ -7,14 +7,17 @@ export const gd02Barzam016: UnitCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD02-016",
-  externalId: "gundam:gd02-016",
-  slug: "barzam-gd02-016",
+  canonicalId: "GD02-016",
+  externalIds: { bandai: "gundam:gd02-016" },
+  slug: "barzam/gd02-016",
   displayName: "Barzam",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-016",
   printings: [
     {
       id: "GD02-016",
+      artId: "GD02-016",
+      setCode: "GD02",
       collectorNumber: "GD02-016",
       cardNumber: "GD02-016",
       set: {
@@ -29,6 +32,7 @@ export const gd02Barzam016: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-016"],
   selectedPrintingId: "GD02-016",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-016.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-016.webp?260424",

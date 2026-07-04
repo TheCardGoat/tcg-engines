@@ -4,6 +4,17 @@ import { hiddenCoveTranquilHavenI18n } from "./101-hidden-cove-tranquil-haven.i1
 export const hiddenCoveTranquilHaven: LocationCard = {
   id: "4BC",
   canonicalId: "ci_Of3",
+  slug: "lorcana-ci_Of3",
+  printings: [
+    {
+      id: "set4-101",
+      artId: "set4-101",
+      setCode: "set4",
+      collectorNumber: "101",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-101", "set9-102"],
   cardType: "location",
   name: "Hidden Cove",
@@ -20,7 +31,7 @@ export const hiddenCoveTranquilHaven: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a7b30a7923bd4b3596c48ede7e6b438e",
-    tcgPlayer: 650040,
+    tcgPlayer: "650040",
   },
   text: [
     {

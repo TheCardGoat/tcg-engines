@@ -16,7 +16,7 @@ export const beastForbiddingRecluseI18n: Record<Languages, I18nProperties> = {
     version: "Furchteinflößender Einsiedler",
     text: [
       {
-        title: "DU BIST HIER NICHT WILLKOMMEN",
+        title: "Du bist hier nicht willkommen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.",
       },
@@ -27,7 +27,7 @@ export const beastForbiddingRecluseI18n: Record<Languages, I18nProperties> = {
     version: "Reclus inhospitalier",
     text: [
       {
-        title: "VOTRE PRÉSENCE M'EST INTOLÉRABLE",
+        title: "Votre présence m'est intolérable",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui infliger 1 dommage.",
       },
@@ -38,7 +38,7 @@ export const beastForbiddingRecluseI18n: Record<Languages, I18nProperties> = {
     version: "Forbidding Recluse",
     text: [
       {
-        title: "YOU'RE NOT WELCOME HERE",
+        title: "You're Not Welcome Here",
         description: "When you play this character, you may deal 1 damage to chosen character.",
       },
     ],

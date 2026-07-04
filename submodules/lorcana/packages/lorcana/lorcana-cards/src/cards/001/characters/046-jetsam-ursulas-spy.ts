@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jetsamUrsulasSpyI18n } from "./046-jetsam-ursulas-spy.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const jetsamUrsulasSpy: CharacterCard = {
   id: "0Bx",
   canonicalId: "ci_0Bx",
+  slug: "lorcana-ci_0Bx",
+  printings: [
+    {
+      id: "set1-046",
+      artId: "set1-046",
+      setCode: "set1",
+      collectorNumber: "46",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-046"],
   cardType: "character",
   name: "Jetsam",
@@ -21,14 +33,14 @@ export const jetsamUrsulasSpy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3725a62bd3aa40a086ad041a84a910d3",
-    tcgPlayer: 503317,
+    tcgPlayer: "503317",
   },
   text: [
     {
-      title: "Evasive",
+      title: "<Evasive>",
     },
     {
-      title: "SINISTER SLITHER",
+      title: "Sinister Slither",
       description: "Your characters named Flotsam gain Evasive.",
     },
   ],

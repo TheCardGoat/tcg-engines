@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { powerlineTakingTheStageI18n } from "./109-powerline-taking-the-stage.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const powerlineTakingTheStage: CharacterCard = {
   id: "aRw",
   canonicalId: "ci_aRw",
+  slug: "lorcana-ci_aRw",
+  printings: [
+    {
+      id: "set9-109",
+      artId: "set9-109",
+      setCode: "set9",
+      collectorNumber: "109",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-109"],
   cardType: "character",
   name: "Powerline",
@@ -21,7 +33,7 @@ export const powerlineTakingTheStage: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7d7835f351084d94aa5f108f373a1de2",
-    tcgPlayer: 647682,
+    tcgPlayer: "647682",
   },
   text: "Singer 4",
   classifications: ["Storyborn"],

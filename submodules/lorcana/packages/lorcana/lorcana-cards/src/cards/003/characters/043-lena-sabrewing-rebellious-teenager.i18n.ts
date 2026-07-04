@@ -9,21 +9,16 @@ export const lenaSabrewingRebelliousTeenagerI18n: Record<Languages, I18nProperti
   de: {
     name: "Lena Degenflügel",
     version: "Rebellischer Teenager",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Lena de Sortilège",
     version: "Adolescente rebelle",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Lena Sabrewing",
     version: "Adolescente Ribelle",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

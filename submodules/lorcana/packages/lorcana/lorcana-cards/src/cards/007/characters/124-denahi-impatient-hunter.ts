@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { denahiImpatientHunterI18n } from "./124-denahi-impatient-hunter.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 import { resist } from "../../../helpers/abilities/resist";
 
 export const denahiImpatientHunter: CharacterCard = {
   id: "OYJ",
   canonicalId: "ci_OYJ",
+  slug: "lorcana-ci_OYJ",
+  printings: [
+    {
+      id: "set7-124",
+      artId: "set7-124",
+      setCode: "set7",
+      collectorNumber: "124",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-124"],
   cardType: "character",
   name: "Denahi",
@@ -22,7 +34,7 @@ export const denahiImpatientHunter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b91e58cc0277450595a28974cf70c180",
-    tcgPlayer: 618144,
+    tcgPlayer: "618144",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { stratosTornadoTitanI18n } from "./055-stratos-tornado-titan.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const stratosTornadoTitan: CharacterCard = {
   id: "NxG",
   canonicalId: "ci_NxG",
+  slug: "lorcana-ci_NxG",
+  printings: [
+    {
+      id: "set3-055",
+      artId: "set3-055",
+      setCode: "set3",
+      collectorNumber: "55",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-055"],
   cardType: "character",
   name: "Stratos",
@@ -21,7 +33,7 @@ export const stratosTornadoTitan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a3263d84bb5645f3974b837b717d50f5",
-    tcgPlayer: 539075,
+    tcgPlayer: "539075",
   },
   text: [
     {

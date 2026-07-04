@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { baymaxPersonalHealthcareCompanionI18n } from "./156-baymax-personal-healthcare-companion.i18n";
 
 export const baymaxPersonalHealthcareCompanion: CharacterCard = {
-  id: "umf",
+  id: "J99",
   canonicalId: "ci_StD",
+  slug: "lorcana-ci_StD",
+  printings: [
+    {
+      id: "set6-156",
+      artId: "set6-156",
+      setCode: "set6",
+      collectorNumber: "156",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-156"],
   cardType: "character",
   name: "Baymax",
@@ -20,7 +31,7 @@ export const baymaxPersonalHealthcareCompanion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7a1524eb2f994287ab6de2e677431724",
-    tcgPlayer: 591999,
+    tcgPlayer: "591999",
   },
   text: [
     {
@@ -57,7 +68,10 @@ export const baymaxPersonalHealthcareCompanion: CharacterCard = {
         ink: 2,
       },
       effect: {
-        amount: { type: "up-to", value: 1 },
+        amount: {
+          type: "up-to",
+          value: 1,
+        },
         target: "ANOTHER_CHOSEN_CHARACTER",
         type: "remove-damage",
       },

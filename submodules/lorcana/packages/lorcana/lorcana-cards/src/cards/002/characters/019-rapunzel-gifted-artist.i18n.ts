@@ -20,10 +20,11 @@ export const rapunzelGiftedArtistI18n: Record<Languages, I18nProperties> = {
     version: "Gifted Artist",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Rapunzel.)",
       },
       {
-        title: "LET YOUR POWER SHINE",
+        title: "Let Your Power Shine",
         description:
           "Whenever you remove 1 or more damage from one of your characters, you may draw a card.",
       },
@@ -34,10 +35,11 @@ export const rapunzelGiftedArtistI18n: Record<Languages, I18nProperties> = {
     version: "Gifted Artist",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Rapunzel.)",
       },
       {
-        title: "LET YOUR POWER SHINE",
+        title: "Let Your Power Shine",
         description:
           "Whenever you remove 1 or more damage from one of your characters, you may draw a card.",
       },
@@ -48,10 +50,11 @@ export const rapunzelGiftedArtistI18n: Record<Languages, I18nProperties> = {
     version: "Gifted Artist",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Rapunzel.)",
       },
       {
-        title: "LET YOUR POWER SHINE",
+        title: "Let Your Power Shine",
         description:
           "Whenever you remove 1 or more damage from one of your characters, you may draw a card.",
       },

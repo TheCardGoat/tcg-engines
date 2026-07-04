@@ -16,8 +16,8 @@ export const theGreatIlluminaryAbandonedLaboratoryI18n: Record<Languages, I18nPr
     version: "Verlassenes Labor",
     text: [
       {
-        title: "ERSTAUNLICHE ENTDECKUNG",
-        description: 'Deine Charaktere an diesem Ort erhalten " — Ziehe 1 Karte".',
+        title: "Erstaunliche Entdeckung",
+        description: 'Deine Charaktere an diesem Ort erhalten "{E} — Ziehe 1 Karte".',
       },
     ],
   },
@@ -26,8 +26,8 @@ export const theGreatIlluminaryAbandonedLaboratoryI18n: Record<Languages, I18nPr
     version: "Laboratoire abandonné",
     text: [
       {
-        title: "TROUBLANTE",
-        description: 'DÉCOUVERTE Les personnages sur ce lieu gagnent " — Piochez une carte."',
+        title: "Troublante découverte",
+        description: 'Les personnages sur ce lieu gagnent "{E} — Piochez une carte."',
       },
     ],
   },
@@ -36,8 +36,9 @@ export const theGreatIlluminaryAbandonedLaboratoryI18n: Record<Languages, I18nPr
     version: "Laboratorio Abbandonato",
     text: [
       {
-        title: "SCOPERTA SCONCERTANTE I",
-        description: 'personaggi ottengono " — Pesca una carta" mentre si trovano in questo luogo.',
+        title: "Scoperta Sconcertante",
+        description:
+          'I personaggi ottengono "{E} — Pesca una carta" mentre si trovano in questo luogo.',
       },
     ],
   },

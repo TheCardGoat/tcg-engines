@@ -17,7 +17,7 @@ export const widowTweedKindlySoulI18n: Record<Languages, I18nProperties> = {
     version: "Freundliche Seele",
     text: [
       {
-        title: "ICH HAB DICH",
+        title: "Ich hab dich",
         description:
           "Wenn du diesen Charakter ausspielst, nimm 1 Charakterkarte aus deinem Ablagestapel zurück auf deine Hand. Falls jene Karte eine Cap-Charakterkarte ist, darfst du sie kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const widowTweedKindlySoulI18n: Record<Languages, I18nProperties> = {
     version: "Âme bienveillante",
     text: [
       {
-        title: "JE TE TIENS",
+        title: "Je te tiens",
         description:
           "Lorsque vous jouez ce personnage, renvoyez dans votre main une carte Personnage de votre défausse. Si ce personnage-là est nommé Rox, vous pouvez le jouer gratuitement.",
       },
@@ -39,7 +39,7 @@ export const widowTweedKindlySoulI18n: Record<Languages, I18nProperties> = {
     version: "Anima Gentile",
     text: [
       {
-        title: "CI PENSO IO",
+        title: "Ci Penso Io",
         description:
           "Quando giochi questo personaggio, riprendi in mano una carta personaggio dai tuoi scarti. Se quel personaggio si chiama Red, puoi giocarlo gratis.",
       },

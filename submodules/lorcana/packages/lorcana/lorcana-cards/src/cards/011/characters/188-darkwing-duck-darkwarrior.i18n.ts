@@ -20,12 +20,12 @@ export const darkwingDuckDarkwarriorI18n: Record<Languages, I18nProperties> = {
     version: "Darkwarrior",
     text: [
       {
-        title: "Herausfordern +2",
+        title: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
       },
       {
-        title: "SOFORT-RÜSTUNG",
+        title: "Sofort-Rüstung",
         description:
-          "Jedes Mal während deines Zuges, wenn ein Gegenstand verbannt wird, erhält dieser Charakter bis zu Beginn deines nächsten Zuges Robust +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+          "Jedes Mal während deines Zuges, wenn ein Gegenstand verbannt wird, erhält dieser Charakter bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const darkwingDuckDarkwarriorI18n: Record<Languages, I18nProperties> = {
     version: "Canard Vador",
     text: [
       {
-        title: "Offensif +2",
+        title: "<Offensif> +2",
       },
       {
-        title: "INSTA-ARMURE",
+        title: "Insta-armure",
         description:
-          "Durant votre tour, chaque fois qu'un objet est banni, ce personnage gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "Durant votre tour, chaque fois qu'un objet est banni, ce personnage gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const darkwingDuckDarkwarriorI18n: Record<Languages, I18nProperties> = {
     version: "Darkwarrior",
     text: [
       {
-        title: "Sfidante +2",
+        title: "<Sfidante> +2",
       },
       {
-        title: "ARMATURA ISTANTANEA",
+        title: "Armatura Istantanea",
         description:
-          "Durante il tuo turno, ogni volta che un oggetto viene esiliato, questo personaggio ottiene Resistere +1 fino all'inizio del tuo prossimo turno.",
+          "Durante il tuo turno, ogni volta che un oggetto viene esiliato, questo personaggio ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

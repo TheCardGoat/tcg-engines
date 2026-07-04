@@ -16,9 +16,9 @@ export const sisuEmboldenedWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Mutige Kriegerin",
     text: [
       {
-        title: "ENERGIEWELLE",
+        title: "Energiewelle",
         description:
-          "Dieser Charakter erhält +1 für jede Karte auf der Hand aller gegnerischen Mitspielenden.",
+          "Dieser Charakter erhält +1 {S} für jede Karte auf der Hand aller gegnerischen Mitspielenden.",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const sisuEmboldenedWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Combattante enhardie",
     text: [
       {
-        title: "VAGUE DE PUISSANCE",
-        description: "Ce personnage gagne +1 par carte dans les mains des adversaires.",
+        title: "Vague de puissance",
+        description: "Ce personnage gagne +1 {S} par carte dans les mains des adversaires.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const sisuEmboldenedWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerriera Rincuorata",
     text: [
       {
-        title: "ONDATA DI POTERE",
-        description: "Questo personaggio riceve +1 per ogni carta in mano ai tuoi avversari.",
+        title: "Ondata di Potere",
+        description: "Questo personaggio riceve +1 {S} per ogni carta in mano ai tuoi avversari.",
       },
     ],
   },

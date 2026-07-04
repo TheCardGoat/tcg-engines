@@ -11,10 +11,26 @@ export const beKingUndisputedI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Un roi incontesté",
-    text: "Chaque adversaire choisit un de ses personnages et le bannit.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Chaque adversaire choisit un de ses personnages et le bannit.",
+      },
+    ],
   },
   it: {
     name: "Sarò un Re Stimato",
-    text: "(Un personaggio con costo 4 o superiore può per cantare questa canzone gratis.) Ogni avversario sceglie ed esilia uno dei suoi personaggi.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Ogni avversario sceglie ed esilia uno dei suoi personaggi.",
+      },
+    ],
   },
 };

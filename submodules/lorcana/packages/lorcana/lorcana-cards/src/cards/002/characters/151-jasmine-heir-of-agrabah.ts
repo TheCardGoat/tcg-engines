@@ -4,6 +4,17 @@ import { jasmineHeirOfAgrabahI18n } from "./151-jasmine-heir-of-agrabah.i18n";
 export const jasmineHeirOfAgrabah: CharacterCard = {
   id: "kVO",
   canonicalId: "ci_OtD",
+  slug: "lorcana-ci_OtD",
+  printings: [
+    {
+      id: "set2-151",
+      artId: "set2-151",
+      setCode: "set2",
+      collectorNumber: "151",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-151", "set9-155"],
   cardType: "character",
   name: "Jasmine",
@@ -20,20 +31,23 @@ export const jasmineHeirOfAgrabah: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_76abbf408f4940dea3dc5daf5afdd314",
-    tcgPlayer: 650090,
+    tcgPlayer: "650090",
   },
   text: [
     {
-      title: "I'M A FAST LEARNER",
+      title: "I'M",
       description:
-        "When you play this character, remove up to 1 damage from chosen character of yours.",
+        "A FAST LEARNER When you play this character, remove up to 1 damage from chosen character of yours.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],
   abilities: [
     {
       effect: {
-        amount: { type: "up-to", value: 1 },
+        amount: {
+          type: "up-to",
+          value: 1,
+        },
         target: {
           cardTypes: ["character"],
           count: 1,

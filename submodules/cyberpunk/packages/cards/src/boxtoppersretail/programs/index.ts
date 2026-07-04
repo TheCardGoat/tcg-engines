@@ -1,3 +1,3 @@
-import type { BoxToppersRetailCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
 
-export const boxTopperRetailPrograms = [] satisfies BoxToppersRetailCardDefinition[];
+export const boxTopperRetailPrograms = [] satisfies ProgramCardDefinition[];

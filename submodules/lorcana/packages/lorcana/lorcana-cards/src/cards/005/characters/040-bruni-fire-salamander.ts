@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { bruniFireSalamanderI18n } from "./040-bruni-fire-salamander.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const bruniFireSalamander: CharacterCard = {
   id: "K4I",
   canonicalId: "ci_K4I",
+  slug: "lorcana-ci_K4I",
+  printings: [
+    {
+      id: "set5-040",
+      artId: "set5-040",
+      setCode: "set5",
+      collectorNumber: "40",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-040"],
   cardType: "character",
   name: "Bruni",
@@ -21,7 +33,7 @@ export const bruniFireSalamander: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c1cb807b384241ea876b8b2d52b1bc46",
-    tcgPlayer: 555244,
+    tcgPlayer: "555244",
   },
   text: [
     {

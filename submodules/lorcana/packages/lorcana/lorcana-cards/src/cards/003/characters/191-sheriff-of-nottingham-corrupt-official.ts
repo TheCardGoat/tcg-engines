@@ -4,6 +4,17 @@ import { sheriffOfNottinghamCorruptOfficialI18n } from "./191-sheriff-of-notting
 export const sheriffOfNottinghamCorruptOfficial: CharacterCard = {
   id: "0k3",
   canonicalId: "ci_0k3",
+  slug: "lorcana-ci_0k3",
+  printings: [
+    {
+      id: "set3-191",
+      artId: "set3-191",
+      setCode: "set3",
+      collectorNumber: "191",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-191"],
   cardType: "character",
   name: "Sheriff of Nottingham",
@@ -20,7 +31,7 @@ export const sheriffOfNottinghamCorruptOfficial: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_989b5642c80e4a999f54f75e02a2fb13",
-    tcgPlayer: 537942,
+    tcgPlayer: "537942",
   },
   text: [
     {

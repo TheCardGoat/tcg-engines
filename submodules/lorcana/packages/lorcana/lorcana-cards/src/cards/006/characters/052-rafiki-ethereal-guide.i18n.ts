@@ -20,10 +20,11 @@ export const rafikiEtherealGuideI18n: Record<Languages, I18nProperties> = {
     version: "Geistiger Ratgeber",
     text: [
       {
-        title: "Gestaltwandel 7",
+        title:
+          "<Gestaltwandel> 7 (Du kannst 7 {I} zahlen, um diesen Charakter auf einen deiner Rafiki-Charaktere auszuspielen.)",
       },
       {
-        title: "ASTRALE EINSTIMMUNG",
+        title: "Astrale Einstimmung",
         description:
           "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du 1 Karte ziehen.",
       },
@@ -34,10 +35,11 @@ export const rafikiEtherealGuideI18n: Record<Languages, I18nProperties> = {
     version: "Guide éthéré",
     text: [
       {
-        title: "Alter 7",
+        title:
+          "<Alter> 7 (Vous pouvez payer 7 {I} pour jouer ce personnage sur l'un de vos personnages Rafiki.)",
       },
       {
-        title: "HARMONISATION ASTRALE",
+        title: "Harmonisation Astrale",
         description:
           "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, vous pouvez piocher une carte.",
       },
@@ -48,10 +50,11 @@ export const rafikiEtherealGuideI18n: Record<Languages, I18nProperties> = {
     version: "Guida Eterea",
     text: [
       {
-        title: "Trasformazione 7",
+        title:
+          "<Trasformazione> 7 (Puoi pagare 7 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Rafiki.)",
       },
       {
-        title: "SINTONIZZAZIONE ASTRALE",
+        title: "Sintonizzazione Astrale",
         description:
           "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi pescare una carta.",
       },

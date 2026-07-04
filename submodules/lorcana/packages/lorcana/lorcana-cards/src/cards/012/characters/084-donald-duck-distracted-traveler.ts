@@ -4,6 +4,17 @@ import { donaldDuckDistractedTravelerI18n } from "./084-donald-duck-distracted-t
 export const donaldDuckDistractedTraveler: CharacterCard = {
   id: "QXV",
   canonicalId: "ci_QXV",
+  slug: "lorcana-ci_QXV",
+  printings: [
+    {
+      id: "set12-084",
+      artId: "set12-084",
+      setCode: "set12",
+      collectorNumber: "84",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-084"],
   cardType: "character",
   name: "Donald Duck",
@@ -18,7 +29,8 @@ export const donaldDuckDistractedTraveler: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_8ca111f27f65418b8cc535a74f90d921",
+    lorcast: "crd_5186a8ffa2ac448c9108a110b747e4e5",
+    tcgPlayer: "692209",
   },
   text: [
     {

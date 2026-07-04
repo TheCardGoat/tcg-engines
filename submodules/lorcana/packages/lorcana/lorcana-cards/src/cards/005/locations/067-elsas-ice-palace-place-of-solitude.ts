@@ -4,6 +4,17 @@ import { elsasIcePalacePlaceOfSolitudeI18n } from "./067-elsas-ice-palace-place-
 export const elsasIcePalacePlaceOfSolitude: LocationCard = {
   id: "kvC",
   canonicalId: "ci_kvC",
+  slug: "lorcana-ci_kvC",
+  printings: [
+    {
+      id: "set5-067",
+      artId: "set5-067",
+      setCode: "set5",
+      collectorNumber: "67",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-067"],
   cardType: "location",
   name: "Elsa's Ice Palace",
@@ -20,7 +31,7 @@ export const elsasIcePalacePlaceOfSolitude: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_aaae8eab8f604635883282a61d3376ff",
-    tcgPlayer: 560547,
+    tcgPlayer: "560547",
   },
   text: [
     {

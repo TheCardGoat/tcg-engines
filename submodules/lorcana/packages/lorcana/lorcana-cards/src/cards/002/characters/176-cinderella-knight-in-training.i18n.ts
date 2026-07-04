@@ -17,7 +17,7 @@ export const cinderellaKnightInTrainingI18n: Record<Languages, I18nProperties> =
     version: "Knight in Training",
     text: [
       {
-        title: "HAVE COURAGE",
+        title: "Have Courage",
         description:
           "When you play this character, you may draw a card, then choose and discard a card.",
       },
@@ -28,7 +28,7 @@ export const cinderellaKnightInTrainingI18n: Record<Languages, I18nProperties> =
     version: "Knight in Training",
     text: [
       {
-        title: "HAVE COURAGE",
+        title: "Have Courage",
         description:
           "When you play this character, you may draw a card, then choose and discard a card.",
       },
@@ -39,7 +39,7 @@ export const cinderellaKnightInTrainingI18n: Record<Languages, I18nProperties> =
     version: "Knight in Training",
     text: [
       {
-        title: "HAVE COURAGE",
+        title: "Have Courage",
         description:
           "When you play this character, you may draw a card, then choose and discard a card.",
       },

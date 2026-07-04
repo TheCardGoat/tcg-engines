@@ -17,7 +17,7 @@ export const brunoMadrigalOutOfTheShadowsI18n: Record<Languages, I18nProperties>
     version: "Aus den Schatten heraus",
     text: [
       {
-        title: "ES WAR DEINE VISION",
+        title: "Es war deine Vision",
         description:
           'Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug: "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand".',
       },
@@ -28,7 +28,7 @@ export const brunoMadrigalOutOfTheShadowsI18n: Record<Languages, I18nProperties>
     version: "Sorti de la pénombre",
     text: [
       {
-        title: "C'EST TA VISION",
+        title: "C'est ta vision",
         description:
           'Lorsque vous jouez ce personnage, choisissez un personnage qui gagne "Lorsque ce personnage est banni via un défi, vous pouvez le renvoyer dans la main de son propriétaire" pour le reste de ce tour.',
       },
@@ -39,7 +39,7 @@ export const brunoMadrigalOutOfTheShadowsI18n: Record<Languages, I18nProperties>
     version: "Uscito dalle Ombre",
     text: [
       {
-        title: "ERA LA TUA VISIONE",
+        title: "Era la Tua Visione",
         description:
           'Quando giochi questo personaggio, un personaggio a tua scelta ottiene "Quando questo personaggio viene esiliato in una sfida, puoi riprendere in mano questa carta" per questo turno.',
       },

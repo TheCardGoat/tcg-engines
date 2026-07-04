@@ -20,9 +20,15 @@ export const thePlankI18n: Record<Languages, I18nProperties> = {
     name: "Die Planke",
     text: [
       {
-        title: "LOS! 2,",
-        description:
-          "Verbanne diesen Gegenstand — Wähle eine Möglickeit aus: • Verbanne einen Held oder eine Heldin deiner Wahl. • Mache eine Schurkin oder einen Schurken deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
+        title: "Los!",
+        description: "2 {I}, Verbanne diesen Gegenstand — Wähle eine Möglickeit aus:",
+      },
+      {
+        title: "• Verbanne einen Held oder eine Heldin deiner Wahl.",
+      },
+      {
+        title:
+          "• Mache eine Schurkin oder einen Schurken deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
     ],
   },
@@ -30,9 +36,15 @@ export const thePlankI18n: Record<Languages, I18nProperties> = {
     name: "La Planche",
     text: [
       {
-        title: "AVANCE! 2,",
-        description:
-          "Bannissez cet objet — Choisissez entre: • Choisissez un personnage Héros et bannissez-le. • Choisissez un personnage Méchant et redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+        title: "Avance!",
+        description: "2 {I}, Bannissez cet objet — Choisissez entre:",
+      },
+      {
+        title: "• Choisissez un personnage Héros et bannissez-le.",
+      },
+      {
+        title:
+          "• Choisissez un personnage Méchant et redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
     ],
   },
@@ -40,9 +52,15 @@ export const thePlankI18n: Record<Languages, I18nProperties> = {
     name: "L'Asse",
     text: [
       {
-        title: "CAMMINA! 2,",
-        description:
-          "esilia questo oggetto — Scegli uno: • Esilia un personaggio Eroe a tua scelta. • Prepara un personaggio Cattivo a tua scelta. Non può andare all'avventura per il resto di questo turno.",
+        title: "Cammina!",
+        description: "2 {I}, esilia questo oggetto — Scegli uno:",
+      },
+      {
+        title: "• Esilia un personaggio Eroe a tua scelta.",
+      },
+      {
+        title:
+          "• Prepara un personaggio Cattivo a tua scelta. Non può andare all'avventura per il resto di questo turno.",
       },
     ],
   },

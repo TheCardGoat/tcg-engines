@@ -4,6 +4,17 @@ import { dragonGemI18n } from "./033-dragon-gem.i18n";
 export const dragonGem: ItemCard = {
   id: "1DR",
   canonicalId: "ci_1DR",
+  slug: "lorcana-ci_1DR",
+  printings: [
+    {
+      id: "set2-033",
+      artId: "set2-033",
+      setCode: "set2",
+      collectorNumber: "33",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-033"],
   cardType: "item",
   name: "Dragon Gem",
@@ -16,7 +27,7 @@ export const dragonGem: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9d869b2d59da48ad81923dc474ab2bfc",
-    tcgPlayer: 526346,
+    tcgPlayer: "526346",
   },
   text: [
     {

@@ -7,14 +7,14 @@ export const nightHowlerRageI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Wut der Könige der Nacht",
-    text: "Ziehe 1 Karte. Ein Charakter deiner Wahl erhält in seinem nächsten Zug Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+    text: "Ziehe 1 Karte. Ein Charakter deiner Wahl erhält in seinem nächsten Zug <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
   },
   fr: {
     name: "Rage du Hurleur nocturne",
-    text: "Piochez une carte. Choisissez un personnage qui gagne Combattant lors de son prochain tour.",
+    text: "Piochez une carte. Choisissez un personnage qui gagne <Combattant> lors de son prochain tour.",
   },
   it: {
     name: "Furia da Ululatore Notturno",
-    text: "Pesca una carta. Un personaggio a tua scelta ottiene Attaccabrighe durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+    text: "Pesca una carta. Un personaggio a tua scelta ottiene <Attaccabrighe> durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
   },
 };

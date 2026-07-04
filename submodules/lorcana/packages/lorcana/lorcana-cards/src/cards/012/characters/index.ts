@@ -54,9 +54,9 @@ export { willOTheWispForestSpiritP3Challenge } from "./p3-051-will-o-the-wisp-fo
 export { mickeyMouseExperiencedTraveler } from "./052-mickey-mouse-experienced-traveler";
 export { dashParrLavaRunnerP3Promo } from "./p3-052-dash-parr-lava-runner-promo";
 export { mirageSuperRecruiter } from "./053-mirage-super-recruiter";
-export { woodyJungleGuideP3Challenge } from "./p3-053-woody-jungle-guide-challenge";
+export { woodyJungleGuideP3Challenge as woodyJungleGuideP3ChallengeP3053WoodyJungleGuideChallenge } from "./p3-053-woody-jungle-guide-challenge";
 export { ednaModeFashionDesigner } from "./054-edna-mode-fashion-designer";
-export { woodyJungleGuideP3Enchanted } from "./p3-054-woody-jungle-guide-enchanted";
+export { woodyJungleGuideP3Challenge as woodyJungleGuideP3ChallengeP3054WoodyJungleGuideChallenge } from "./p3-054-woody-jungle-guide-challenge";
 export { maleficentImperiousTraveler } from "./055-maleficent-imperious-traveler";
 export { violetParrLearningNewPowersP3Promo } from "./p3-055-violet-parr-learning-new-powers-promo";
 export { pepaMadrigalCalmBeforeTheStorm } from "./056-pepa-madrigal-calm-before-the-storm";

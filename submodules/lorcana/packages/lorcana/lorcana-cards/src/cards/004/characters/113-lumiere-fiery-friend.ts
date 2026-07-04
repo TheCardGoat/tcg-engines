@@ -4,6 +4,17 @@ import { lumiereFieryFriendI18n } from "./113-lumiere-fiery-friend.i18n";
 export const lumiereFieryFriend: CharacterCard = {
   id: "RPE",
   canonicalId: "ci_fE7",
+  slug: "lorcana-ci_fE7",
+  printings: [
+    {
+      id: "set4-113",
+      artId: "set4-113",
+      setCode: "set4",
+      collectorNumber: "113",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-113", "set9-121"],
   cardType: "character",
   name: "Lumiere",
@@ -20,7 +31,7 @@ export const lumiereFieryFriend: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_724fef83bb594bbf883b6fc1bcc6d4e2",
-    tcgPlayer: 650056,
+    tcgPlayer: "650056",
   },
   text: [
     {

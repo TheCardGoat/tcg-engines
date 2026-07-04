@@ -7,14 +7,17 @@ export const st02WingGundam001: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "ST02-001",
-  externalId: "gundam:st02-001",
-  slug: "wing-gundam-st02-001",
+  canonicalId: "ST02-001",
+  externalIds: { bandai: "gundam:st02-001" },
+  slug: "wing-gundam/st02-001",
   displayName: "Wing Gundam",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-001",
   printings: [
     {
       id: "ST02-001",
+      artId: "ST02-001",
+      setCode: "ST02",
       collectorNumber: "ST02-001",
       cardNumber: "ST02-001",
       set: {
@@ -30,6 +33,8 @@ export const st02WingGundam001: UnitCard = {
     },
     {
       id: "ST02-001_p1",
+      artId: "ST02-001_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-001_p1",
       cardNumber: "ST02-001",
       set: {
@@ -45,6 +50,8 @@ export const st02WingGundam001: UnitCard = {
     },
     {
       id: "ST02-001_p2",
+      artId: "ST02-001_p2",
+      setCode: "BETA",
       collectorNumber: "ST02-001_p2",
       cardNumber: "ST02-001",
       set: {
@@ -60,6 +67,8 @@ export const st02WingGundam001: UnitCard = {
     },
     {
       id: "ST02-001_p3",
+      artId: "ST02-001_p3",
+      setCode: "BETA",
       collectorNumber: "ST02-001_p3",
       cardNumber: "ST02-001",
       set: {
@@ -74,6 +83,7 @@ export const st02WingGundam001: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST02-001", "ST02-001_p1", "ST02-001_p2", "ST02-001_p3"],
   selectedPrintingId: "ST02-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-001.webp?260424",

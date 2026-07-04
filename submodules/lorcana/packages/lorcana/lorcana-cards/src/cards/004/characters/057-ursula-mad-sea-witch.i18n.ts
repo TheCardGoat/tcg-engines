@@ -9,16 +9,16 @@ export const ursulaMadSeaWitchI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Ursula",
     version: "Verrückte Seehexe",
-    text: "Herausfordern +2",
+    text: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
   },
   fr: {
     name: "Ursula",
     version: "Sorcière des mers enragée",
-    text: "Offensif +2",
+    text: "<Offensif> +2",
   },
   it: {
     name: "Ursula",
     version: "Folle Strega del Mare",
-    text: "Sfidante +2",
+    text: "<Sfidante> +2",
   },
 };

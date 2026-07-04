@@ -7,14 +7,17 @@ export const gd03UnheraldedAttack121: CommandCard = {
   color: "white",
   traits: ["aeug", "newtype"],
   id: "GD03-121",
-  externalId: "gundam:gd03-121",
-  slug: "unheralded-attack-gd03-121",
+  canonicalId: "GD03-121",
+  externalIds: { bandai: "gundam:gd03-121" },
+  slug: "unheralded-attack/gd03-121",
   displayName: "Unheralded Attack",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-121",
   printings: [
     {
       id: "GD03-121",
+      artId: "GD03-121",
+      setCode: "GD03",
       collectorNumber: "GD03-121",
       cardNumber: "GD03-121",
       set: {
@@ -29,6 +32,7 @@ export const gd03UnheraldedAttack121: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-121"],
   selectedPrintingId: "GD03-121",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-121.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-121.webp?260424",

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { scarHeartlessHunterI18n } from "./127-scar-heartless-hunter.i18n";
 
 export const scarHeartlessHunter: CharacterCard = {
-  id: "YvX",
-  canonicalId: "ci_YvX",
+  id: "tUE",
+  canonicalId: "ci_Mty",
+  slug: "lorcana-ci_Mty",
+  printings: [
+    {
+      id: "set6-127",
+      artId: "set6-127",
+      setCode: "set6",
+      collectorNumber: "127",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-127"],
   cardType: "character",
   name: "Scar",
@@ -12,7 +23,7 @@ export const scarHeartlessHunter: CharacterCard = {
   franchise: "Lion King",
   set: "006",
   cardNumber: 127,
-  rarity: "super_rare",
+  rarity: "common",
   cost: 5,
   strength: 4,
   willpower: 2,
@@ -20,7 +31,7 @@ export const scarHeartlessHunter: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_eea9acebbeb6449a8cc03786f5bca24d",
-    tcgPlayer: 591122,
+    tcgPlayer: "591122",
   },
   text: [
     {

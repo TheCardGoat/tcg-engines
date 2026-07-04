@@ -4,6 +4,17 @@ import { theWallBorderFortressI18n } from "./203-the-wall-border-fortress.i18n";
 export const theWallBorderFortress: LocationCard = {
   id: "a8H",
   canonicalId: "ci_oUR",
+  slug: "lorcana-ci_oUR",
+  printings: [
+    {
+      id: "set4-203",
+      artId: "set4-203",
+      setCode: "set4",
+      collectorNumber: "203",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-203"],
   cardType: "location",
   name: "The Wall",
@@ -20,7 +31,7 @@ export const theWallBorderFortress: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ae2a969b746542268ff0bcfc735ea367",
-    tcgPlayer: 550536,
+    tcgPlayer: "550536",
   },
   text: [
     {

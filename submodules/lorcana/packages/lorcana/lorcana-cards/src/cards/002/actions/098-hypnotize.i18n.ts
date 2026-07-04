@@ -7,7 +7,15 @@ export const hypnotizeI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Hypnose",
-    text: "Alle gegnerischen Mitspielenden wählen je 1 Karte aus ihrer Hand und werfen diese ab. Ziehe 1 Karte.",
+    text: [
+      {
+        title:
+          "Alle gegnerischen Mitspielenden wählen je 1 Karte aus ihrer Hand und werfen diese ab.",
+      },
+      {
+        title: "Ziehe 1 Karte.",
+      },
+    ],
   },
   fr: {
     name: "Hypnotiser",

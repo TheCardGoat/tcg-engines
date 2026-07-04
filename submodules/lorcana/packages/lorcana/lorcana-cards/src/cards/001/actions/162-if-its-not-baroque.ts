@@ -4,6 +4,17 @@ import { ifItsNotBaroqueI18n } from "./162-if-its-not-baroque.i18n";
 export const ifItsNotBaroque: ActionCard = {
   id: "wfG",
   canonicalId: "ci_wfG",
+  slug: "lorcana-ci_wfG",
+  printings: [
+    {
+      id: "set1-162",
+      artId: "set1-162",
+      setCode: "set1",
+      collectorNumber: "162",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-162"],
   cardType: "action",
   name: "If it’s Not Baroque",
@@ -16,7 +27,7 @@ export const ifItsNotBaroque: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_fcfc387c36dc450c93bb85840e3b6957",
-    tcgPlayer: 505980,
+    tcgPlayer: "505980",
   },
   text: "Return an item card from your discard to your hand.",
   abilities: [

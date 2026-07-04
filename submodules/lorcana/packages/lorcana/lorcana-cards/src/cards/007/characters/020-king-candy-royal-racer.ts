@@ -4,6 +4,17 @@ import { kingCandyRoyalRacerI18n } from "./020-king-candy-royal-racer.i18n";
 export const kingCandyRoyalRacer: CharacterCard = {
   id: "oc8",
   canonicalId: "ci_oc8",
+  slug: "lorcana-ci_oc8",
+  printings: [
+    {
+      id: "set7-020",
+      artId: "set7-020",
+      setCode: "set7",
+      collectorNumber: "20",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-020"],
   cardType: "character",
   name: "King Candy",
@@ -20,7 +31,7 @@ export const kingCandyRoyalRacer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_68c5e563c4774f3f94a16eed86475c95",
-    tcgPlayer: 618737,
+    tcgPlayer: "618737",
   },
   text: [
     {

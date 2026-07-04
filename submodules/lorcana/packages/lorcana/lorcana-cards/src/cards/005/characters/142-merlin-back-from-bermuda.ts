@@ -4,6 +4,17 @@ import { merlinBackFromBermudaI18n } from "./142-merlin-back-from-bermuda.i18n";
 export const merlinBackFromBermuda: CharacterCard = {
   id: "gdk",
   canonicalId: "ci_gdk",
+  slug: "lorcana-ci_gdk",
+  printings: [
+    {
+      id: "set5-142",
+      artId: "set5-142",
+      setCode: "set5",
+      collectorNumber: "142",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-142"],
   cardType: "character",
   name: "Merlin",
@@ -20,7 +31,7 @@ export const merlinBackFromBermuda: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0a76a477c4d142439e5005d76bc01da2",
-    tcgPlayer: 561966,
+    tcgPlayer: "561966",
   },
   text: [
     {
@@ -45,7 +56,14 @@ export const merlinBackFromBermuda: CharacterCard = {
           owner: "you",
           selector: "all",
           zones: ["play"],
-          filter: [{ type: "attribute", attribute: "name", comparison: "equals", value: "Arthur" }],
+          filter: [
+            {
+              type: "attribute",
+              attribute: "name",
+              comparison: "equals",
+              value: "Arthur",
+            },
+          ],
         },
       },
     },

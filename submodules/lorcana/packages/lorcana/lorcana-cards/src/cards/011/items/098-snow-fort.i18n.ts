@@ -18,13 +18,13 @@ export const snowFortI18n: Record<Languages, I18nProperties> = {
     name: "Schneefestung",
     text: [
       {
-        title: "VORTEILHAFTE LAGE",
-        description: "Deine Charaktere erhalten +1.",
+        title: "Vorteilhafte Lage",
+        description: "Deine Charaktere erhalten +1 {S}.",
       },
       {
-        title: "BARRIKADE",
+        title: "Barrikade",
         description:
-          "Deine Charaktere erhalten im Zug einer gegnerischen Person Robust +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine Charaktere erhalten im Zug einer gegnerischen Person <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -32,12 +32,12 @@ export const snowFortI18n: Record<Languages, I18nProperties> = {
     name: "Fort de neige",
     text: [
       {
-        title: "POSITION AVANTAGEUSE",
-        description: "Vos personnages gagnent +1.",
+        title: "Position avantageuse",
+        description: "Vos personnages gagnent +1 {S}.",
       },
       {
-        title: "BARRICADE",
-        description: "Durant le tour de vos adversaires, vos personnages gagnent Résistance +1.",
+        title: "Barricade",
+        description: "Durant le tour de vos adversaires, vos personnages gagnent <Résistance> +1.",
       },
     ],
   },
@@ -45,12 +45,12 @@ export const snowFortI18n: Record<Languages, I18nProperties> = {
     name: "Fortino di Neve",
     text: [
       {
-        title: "POSIZIONE DI VANTAGGIO I",
-        description: "tuoi personaggi ricevono +1.",
+        title: "Posizione di Vantaggio",
+        description: "I tuoi personaggi ricevono +1 {S}.",
       },
       {
-        title: "BARRICATA",
-        description: "Durante i turni degli avversari, i tuoi personaggi ottengono Resistere +1.",
+        title: "Barricata",
+        description: "Durante i turni degli avversari, i tuoi personaggi ottengono <Resistere> +1.",
       },
     ],
   },

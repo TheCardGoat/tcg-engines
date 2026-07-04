@@ -18,10 +18,11 @@ export const denahiImpatientHunterI18n: Record<Languages, I18nProperties> = {
     version: "Ungeduldiger Jäger",
     text: [
       {
-        title: "Impulsiv",
+        title: "<Impulsiv>",
       },
       {
-        title: "Robust +2",
+        title:
+          "<Robust> +2 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
       },
     ],
   },
@@ -30,10 +31,10 @@ export const denahiImpatientHunterI18n: Record<Languages, I18nProperties> = {
     version: "Chasseur impatient",
     text: [
       {
-        title: "Combattant",
+        title: "<Combattant>",
       },
       {
-        title: "Résistance +2",
+        title: "<Résistance> +2",
       },
     ],
   },
@@ -42,10 +43,10 @@ export const denahiImpatientHunterI18n: Record<Languages, I18nProperties> = {
     version: "Cacciatore Impaziente",
     text: [
       {
-        title: "Attaccabrighe",
+        title: "<Attaccabrighe>",
       },
       {
-        title: "Resistere +2",
+        title: "<Resistere> +2",
       },
     ],
   },

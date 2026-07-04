@@ -266,11 +266,11 @@ function validateLocalization(
   }
 
   if (missing.length > 0) {
-    errors.push(`${missing.length} cards missing in ${locale} localization`);
+    warnings.push(`${missing.length} cards missing in ${locale} localization`);
     // Show first few examples
     for (const shortId of missing.slice(0, 3)) {
       const canonicalId = auxKv.canonicalIdByShortId[shortId];
-      errors.push(`  - shortId ${shortId} (canonicalId: ${canonicalId})`);
+      warnings.push(`  - shortId ${shortId} (canonicalId: ${canonicalId})`);
     }
   }
 

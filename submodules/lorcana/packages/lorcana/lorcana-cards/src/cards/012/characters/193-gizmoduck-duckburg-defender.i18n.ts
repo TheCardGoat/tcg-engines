@@ -6,10 +6,10 @@ export const gizmoduckDuckburgDefenderI18n: Record<Languages, I18nProperties> = 
     version: "Duckburg Defender",
     text: [
       {
-        title: "<Resist> +1",
+        title: "Resist +1",
       },
       {
-        title: "Fail-Safe",
+        title: "FAIL-SAFE",
         description:
           "While you have no cards in your hand, opponents can't play actions with cost 4 or more.",
       },

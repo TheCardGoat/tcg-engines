@@ -4,6 +4,17 @@ import { whosWithMeI18n } from "./131-whos-with-me.i18n";
 export const whosWithMe: ActionCard = {
   id: "OM9",
   canonicalId: "ci_OM9",
+  slug: "lorcana-ci_OM9",
+  printings: [
+    {
+      id: "set5-131",
+      artId: "set5-131",
+      setCode: "set5",
+      collectorNumber: "131",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-131"],
   cardType: "action",
   name: "Who's With Me?",
@@ -16,7 +27,7 @@ export const whosWithMe: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_534a9b86f32b472ab15ec30d254d76e3",
-    tcgPlayer: 560637,
+    tcgPlayer: "560637",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { rooLittleHelperI18n } from "./137-roo-little-helper.i18n";
 export const rooLittleHelper: CharacterCard = {
   id: "0Bd",
   canonicalId: "ci_0Bd",
+  slug: "lorcana-ci_0Bd",
+  printings: [
+    {
+      id: "set11-137",
+      artId: "set11-137",
+      setCode: "set11",
+      collectorNumber: "137",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-137"],
   cardType: "character",
   name: "Roo",
@@ -20,7 +31,7 @@ export const rooLittleHelper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e2a1ea3f5b0d48db8e7197056581c11d",
-    tcgPlayer: 676217,
+    tcgPlayer: "676217",
   },
   text: [
     {

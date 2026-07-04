@@ -9,21 +9,16 @@ export const goofyDaredevilI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Goofy",
     version: "Draufgänger",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "DINGO",
     version: "Tête brulée",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Goofy",
     version: "Daredevil",
-    text: [
-      {
-        title: "Evasive",
-        description: "(Only characters with Evasive can challenge this character.)",
-      },
-    ],
+    text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
 };

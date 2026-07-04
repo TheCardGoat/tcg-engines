@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { elsaExploringTheUnknownI18n } from "./045-elsa-exploring-the-unknown.i18n";
 
 export const elsaExploringTheUnknown: CharacterCard = {
-  id: "g4t",
-  canonicalId: "ci_yaH",
+  id: "FQw",
+  canonicalId: "ci_bTR",
+  slug: "lorcana-ci_bTR",
+  printings: [
+    {
+      id: "set10-045",
+      artId: "set10-045",
+      setCode: "set10",
+      collectorNumber: "45",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-045"],
   cardType: "character",
   name: "Elsa",
@@ -20,7 +31,7 @@ export const elsaExploringTheUnknown: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_04d59c2ff0e648eb9dad622fa82ce49b",
-    tcgPlayer: 660188,
+    tcgPlayer: "660188",
   },
   text: [
     {

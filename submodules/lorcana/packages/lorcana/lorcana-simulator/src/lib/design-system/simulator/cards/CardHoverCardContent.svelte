@@ -19,12 +19,12 @@ import {
 	getMoveCostIconUrl,
 	getStatSmallIconUrl,
 } from "@/features/simulator/model/asset-urls.js";
-import { buildSimulatorAssetUrl } from "$lib/config/public-url-config.js";
 import type { LorcanaInkName } from "@/features/simulator/model/lorcana-colors.js";
 import { getCardActionCategoryIcon } from "@/features/simulator/model/action-icons.js";
 import { maybeUseLorcanaBoardPresenter } from "@/features/simulator/context/game-context.svelte.js";
 import { maybeUseSimulatorCardContext } from "@/features/simulator/context/simulator-card-context.svelte.js";
 import { getManualModeContext } from "@/features/manual-mode/manual-mode-context.svelte.js";
+import { SYMBOL_BASE_URL, tokenizeTextWithSymbols } from "./symbol-tokenizer.js";
 
 interface CardHoverCardContentProps {
 	card: LorcanaCardSnapshot;
@@ -51,26 +51,11 @@ interface RenderableRulesEntry extends LorcanaCardTextEntrySnapshot {
 	textEntryIndex: number;
 }
 
-interface TextToken {
-	type: "text" | "symbol";
-	value: string;
-}
-
 interface LocationOccupantStatusChip {
 	id: string;
 	label: string;
 	tone: "neutral" | "warning" | "danger";
 }
-
-const TEXT_SYMBOL_BASE_URL = buildSimulatorAssetUrl("symbols");
-const TEXT_SYMBOLS: Record<string, string> = {
-	E: "exert.svg",
-	W: "willpower-2.svg",
-	L: "lore-2.svg",
-	S: "strength-simple-2.svg",
-	I: "ink-simple-2.svg",
-};
-const TEXT_SYMBOL_PATTERN = /\{([EWLSI])\}/gi;
 
 const SIMPLE_KEYWORD_PATTERN =
 	/^(Rush|Ward|Evasive|Bodyguard|Support|Reckless|Vanish|Alert)$/i;
@@ -127,39 +112,6 @@ function normalizeInk(ink: string): LorcanaInkName {
 		return normalized;
 	}
 	return "amber"; // fallback
-}
-
-function tokenizeTextWithSymbols(text: string | undefined): TextToken[] {
-	if (!text) {
-		return [];
-	}
-
-	const tokens: TextToken[] = [];
-	let lastIndex = 0;
-
-	for (const match of text.matchAll(TEXT_SYMBOL_PATTERN)) {
-		const [fullMatch, symbolCode] = match;
-		const start = match.index ?? 0;
-		const symbolFile = TEXT_SYMBOLS[symbolCode.toUpperCase()];
-
-		if (start > lastIndex) {
-			tokens.push({ type: "text", value: text.slice(lastIndex, start) });
-		}
-
-		if (symbolFile) {
-			tokens.push({ type: "symbol", value: symbolFile });
-		} else {
-			tokens.push({ type: "text", value: fullMatch });
-		}
-
-		lastIndex = start + fullMatch.length;
-	}
-
-	if (lastIndex < text.length) {
-		tokens.push({ type: "text", value: text.slice(lastIndex) });
-	}
-
-	return tokens;
 }
 
 function getLocationOccupantStatusChips(
@@ -281,7 +233,11 @@ const activatedAbilityActionsByIndex = $derived(
 
 				return [
 					{
-						matchLabel: normalizeAbilityMatchKey(move.label),
+						matchLabel: normalizeAbilityMatchKey(
+							move.presentation.kind === "targeted"
+								? move.presentation.optionLabel
+								: `${move.label} ${action.label}`,
+						),
 						action: {
 							...action,
 							moves: [move],
@@ -651,13 +607,15 @@ function handleFaceUpUnderCardLeave(card: LorcanaCardSnapshot): void {
             >
               <span class="rules-entry__head">
                 <span class="ability-title">
-                  {#each tokenizeTextWithSymbols(entry.title) as token, tokenIndex (`${token.type}-${token.value}-${tokenIndex}`)}
+                  {#each tokenizeTextWithSymbols(entry.title) as token, tokenIndex (tokenIndex)}
                     {#if token.type === "symbol"}
                       <img
-                        src={`${TEXT_SYMBOL_BASE_URL}/${token.value}`}
+                        src={`${SYMBOL_BASE_URL}/${token.file}`}
                         alt=""
                         class="inline-symbol inline-symbol--ability-title"
                       />
+                    {:else if token.type === "keyword"}
+                      <strong class="inline-keyword">{token.value}</strong>
                     {:else}
                       {token.value}
                     {/if}
@@ -671,13 +629,15 @@ function handleFaceUpUnderCardLeave(card: LorcanaCardSnapshot): void {
                 <span class="entry-description">{entryAction.reason}</span>
               {:else if entry.description}
                 <span class="entry-description">
-                  {#each tokenizeTextWithSymbols(entry.description) as token, tokenIndex (`${token.type}-${token.value}-${tokenIndex}`)}
+                  {#each tokenizeTextWithSymbols(entry.description) as token, tokenIndex (tokenIndex)}
                     {#if token.type === "symbol"}
                       <img
-                        src={`${TEXT_SYMBOL_BASE_URL}/${token.value}`}
+                        src={`${SYMBOL_BASE_URL}/${token.file}`}
                         alt=""
                         class="inline-symbol inline-symbol--description"
                       />
+                    {:else if token.type === "keyword"}
+                      <strong class="inline-keyword">{token.value}</strong>
                     {:else}
                       {token.value}
                     {/if}
@@ -692,13 +652,15 @@ function handleFaceUpUnderCardLeave(card: LorcanaCardSnapshot): void {
             <p class:rules-entry={entry.kind !== "body"} class={`rules-entry--${entry.kind}`}>
               {#if entry.kind === "ability"}
                 <span class="ability-title">
-                  {#each tokenizeTextWithSymbols(entry.title) as token, tokenIndex (`${token.type}-${token.value}-${tokenIndex}`)}
+                  {#each tokenizeTextWithSymbols(entry.title) as token, tokenIndex (tokenIndex)}
                     {#if token.type === "symbol"}
                       <img
-                        src={`${TEXT_SYMBOL_BASE_URL}/${token.value}`}
+                        src={`${SYMBOL_BASE_URL}/${token.file}`}
                         alt=""
                         class="inline-symbol inline-symbol--ability-title"
                       />
+                    {:else if token.type === "keyword"}
+                      <strong class="inline-keyword">{token.value}</strong>
                     {:else}
                       {token.value}
                     {/if}
@@ -706,13 +668,15 @@ function handleFaceUpUnderCardLeave(card: LorcanaCardSnapshot): void {
                 </span>
               {:else if entry.kind === "keyword"}
                 <span class="keyword-title">
-                  {#each tokenizeTextWithSymbols(entry.title) as token, tokenIndex (`${token.type}-${token.value}-${tokenIndex}`)}
+                  {#each tokenizeTextWithSymbols(entry.title) as token, tokenIndex (tokenIndex)}
                     {#if token.type === "symbol"}
                       <img
-                        src={`${TEXT_SYMBOL_BASE_URL}/${token.value}`}
+                        src={`${SYMBOL_BASE_URL}/${token.file}`}
                         alt=""
                         class="inline-symbol inline-symbol--title"
                       />
+                    {:else if token.type === "keyword"}
+                      <strong class="inline-keyword">{token.value}</strong>
                     {:else}
                       {token.value}
                     {/if}
@@ -720,13 +684,15 @@ function handleFaceUpUnderCardLeave(card: LorcanaCardSnapshot): void {
                 </span>
               {:else}
                 <span class="ability-text">
-                  {#each tokenizeTextWithSymbols(entry.title) as token, tokenIndex (`${token.type}-${token.value}-${tokenIndex}`)}
+                  {#each tokenizeTextWithSymbols(entry.title) as token, tokenIndex (tokenIndex)}
                     {#if token.type === "symbol"}
                       <img
-                        src={`${TEXT_SYMBOL_BASE_URL}/${token.value}`}
+                        src={`${SYMBOL_BASE_URL}/${token.file}`}
                         alt=""
                         class="inline-symbol inline-symbol--body"
                       />
+                    {:else if token.type === "keyword"}
+                      <strong class="inline-keyword">{token.value}</strong>
                     {:else}
                       {token.value}
                     {/if}
@@ -735,13 +701,15 @@ function handleFaceUpUnderCardLeave(card: LorcanaCardSnapshot): void {
               {/if}
               {#if entry.description}
                 <span class="entry-description">
-                  {#each tokenizeTextWithSymbols(entry.description) as token, tokenIndex (`${token.type}-${token.value}-${tokenIndex}`)}
+                  {#each tokenizeTextWithSymbols(entry.description) as token, tokenIndex (tokenIndex)}
                     {#if token.type === "symbol"}
                       <img
-                        src={`${TEXT_SYMBOL_BASE_URL}/${token.value}`}
+                        src={`${SYMBOL_BASE_URL}/${token.file}`}
                         alt=""
                         class="inline-symbol inline-symbol--description"
                       />
+                    {:else if token.type === "keyword"}
+                      <strong class="inline-keyword">{token.value}</strong>
                     {:else}
                       {token.value}
                     {/if}
@@ -762,9 +730,11 @@ function handleFaceUpUnderCardLeave(card: LorcanaCardSnapshot): void {
             </p>
           {:else}
             <p class="ability-text">
-              {#each tokenizeTextWithSymbols(line.text) as token, tokenIndex (`${token.type}-${token.value}-${tokenIndex}`)}
+              {#each tokenizeTextWithSymbols(line.text) as token, tokenIndex (tokenIndex)}
                 {#if token.type === "symbol"}
-                  <img src={`${TEXT_SYMBOL_BASE_URL}/${token.value}`} alt="" class="inline-symbol inline-symbol--body" />
+                  <img src={`${SYMBOL_BASE_URL}/${token.file}`} alt="" class="inline-symbol inline-symbol--body" />
+                {:else if token.type === "keyword"}
+                  <strong class="inline-keyword">{token.value}</strong>
                 {:else}
                   {token.value}
                 {/if}
@@ -2111,6 +2081,11 @@ function handleFaceUpUnderCardLeave(card: LorcanaCardSnapshot): void {
   .inline-symbol--body {
     width: 0.9em;
     height: 0.9em;
+  }
+
+  .inline-keyword {
+    font-weight: 800;
+    font-style: italic;
   }
 
   /* Footer */

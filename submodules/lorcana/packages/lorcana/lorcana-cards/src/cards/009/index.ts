@@ -1,8 +1,8 @@
 import type { CharacterCard, ActionCard, ItemCard, LocationCard } from "@tcg/lorcana-types";
-import * as characters from "./characters/index";
-import * as actions from "./actions/index";
-import * as items from "./items/index";
-import * as locations from "./locations/index";
+import * as characters from "./characters";
+import * as actions from "./actions";
+import * as items from "./items";
+import * as locations from "./locations";
 
 export const all009Cards: (CharacterCard | ActionCard | ItemCard | LocationCard)[] = [
   ...Object.values(characters),
@@ -17,7 +17,7 @@ for (const card of all009Cards) {
   all009CardsById[card.id] = card;
 }
 
-export * from "./characters/index";
-export * from "./actions/index";
-export * from "./items/index";
-export * from "./locations/index";
+export * from "./characters";
+export * from "./actions";
+export * from "./items";
+export * from "./locations";

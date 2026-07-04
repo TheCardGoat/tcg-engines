@@ -17,7 +17,7 @@ export const camiloMadrigalFamilyCopycatI18n: Record<Languages, I18nProperties> 
     version: "Verwandlungskünstler",
     text: [
       {
-        title: "IMITIEREN",
+        title: "Imitieren",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen deiner anderen Charaktere auswählen. Sammle so viele Legenden, wie sein Legendenwert beträgt. Nimm jenen danach zurück auf deine Hand.",
       },
@@ -28,9 +28,9 @@ export const camiloMadrigalFamilyCopycatI18n: Record<Languages, I18nProperties> 
     version: "Changeforme de la famille",
     text: [
       {
-        title: "MIMÉTISME",
+        title: "Mimétisme",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un autre de vos personnages et gagner autant d'éclats de Lore que son, puis le renvoyer dans votre main.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un autre de vos personnages et gagner autant d'éclats de Lore que son {L}, puis le renvoyer dans votre main.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const camiloMadrigalFamilyCopycatI18n: Record<Languages, I18nProperties> 
     version: "Copione di Famiglia",
     text: [
       {
-        title: "IMITARE",
+        title: "Imitare",
         description:
-          "Ogni volta che questo personaggio va all'avventura, puoi ottenere leggenda pari al di un tuo altro personaggio a tua scelta. Riprendi in mano quel personaggio.",
+          "Ogni volta che questo personaggio va all'avventura, puoi ottenere leggenda pari al {L} di un tuo altro personaggio a tua scelta. Riprendi in mano quel personaggio.",
       },
     ],
   },

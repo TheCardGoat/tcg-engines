@@ -4,6 +4,17 @@ import { namaariSinglemindedRivalI18n } from "./198-namaari-single-minded-rival.
 export const namaariSinglemindedRival: CharacterCard = {
   id: "Gsh",
   canonicalId: "ci_Gsh",
+  slug: "lorcana-ci_Gsh",
+  printings: [
+    {
+      id: "set8-198",
+      artId: "set8-198",
+      setCode: "set8",
+      collectorNumber: "198",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-198"],
   cardType: "character",
   name: "Namaari",
@@ -20,7 +31,7 @@ export const namaariSinglemindedRival: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_444715c10be04c9f875a24424adb9fb4",
-    tcgPlayer: 631849,
+    tcgPlayer: "631849",
   },
   text: [
     {

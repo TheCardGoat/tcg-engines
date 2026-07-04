@@ -7,14 +7,17 @@ export const gd04CoreBooster005CoreBooster006012: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD04-012",
-  externalId: "gundam:gd04-012",
-  slug: "core-booster-005-core-booster-006-gd04-012",
+  canonicalId: "GD04-012",
+  externalIds: { bandai: "gundam:gd04-012" },
+  slug: "core-booster-005-and-core-booster-006/gd04-012",
   displayName: "Core Booster (005) & Core Booster (006)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-012",
   printings: [
     {
       id: "GD04-012",
+      artId: "GD04-012",
+      setCode: "GD04",
       collectorNumber: "GD04-012",
       cardNumber: "GD04-012",
       set: {
@@ -29,6 +32,7 @@ export const gd04CoreBooster005CoreBooster006012: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-012"],
   selectedPrintingId: "GD04-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-012.webp?260424",

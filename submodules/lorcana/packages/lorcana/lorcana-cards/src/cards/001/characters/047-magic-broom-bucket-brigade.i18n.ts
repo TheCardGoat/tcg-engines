@@ -17,7 +17,7 @@ export const magicBroomBucketBrigadeI18n: Record<Languages, I18nProperties> = {
     version: "Wasser marsch!",
     text: [
       {
-        title: "FEGEN",
+        title: "Fegen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Karte deiner Wahl aus einem Ablagestapel zurück in das zugehörige Deck mischen.",
       },
@@ -39,7 +39,7 @@ export const magicBroomBucketBrigadeI18n: Record<Languages, I18nProperties> = {
     version: "Brigata del Secchio",
     text: [
       {
-        title: "SPAZZARE",
+        title: "Spazzare",
         description:
           "Quando giochi questo personaggio, puoi rimescolare una carta dagli scarti di un qualsiasi giocatore nel suo mazzo.",
       },

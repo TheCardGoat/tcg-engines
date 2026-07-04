@@ -4,6 +4,17 @@ import { soBeItI18n } from "./094-so-be-it.i18n";
 export const soBeIt: ActionCard = {
   id: "L16",
   canonicalId: "ci_L16",
+  slug: "lorcana-ci_L16",
+  printings: [
+    {
+      id: "set10-094",
+      artId: "set10-094",
+      setCode: "set10",
+      collectorNumber: "94",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-094"],
   cardType: "action",
   name: "So Be It!",
@@ -16,7 +27,7 @@ export const soBeIt: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_758f17fbfa45410ab196cc29a03a4c45",
-    tcgPlayer: 658462,
+    tcgPlayer: "658462",
   },
   text: "Each of your characters gets +1 {S} this turn. You may banish chosen item.",
   abilities: [

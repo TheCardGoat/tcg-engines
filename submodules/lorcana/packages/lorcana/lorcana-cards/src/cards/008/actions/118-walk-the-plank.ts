@@ -4,6 +4,17 @@ import { walkThePlankI18n } from "./118-walk-the-plank.i18n";
 export const walkThePlank: ActionCard = {
   id: "m8D",
   canonicalId: "ci_m8D",
+  slug: "lorcana-ci_m8D",
+  printings: [
+    {
+      id: "set8-118",
+      artId: "set8-118",
+      setCode: "set8",
+      collectorNumber: "118",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-118"],
   cardType: "action",
   name: "Walk the Plank!",
@@ -16,7 +27,7 @@ export const walkThePlank: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d5390ce678f1438eb716de9952cfd9d2",
-    tcgPlayer: 631427,
+    tcgPlayer: "631427",
   },
   text: 'Your Pirate characters gain "{E} — Banish chosen damaged character" this turn.',
   abilities: [

@@ -4,6 +4,17 @@ import { launchpadExceptionalPilotI18n } from "./083-launchpad-exceptional-pilot
 export const launchpadExceptionalPilot: CharacterCard = {
   id: "zE0",
   canonicalId: "ci_zE0",
+  slug: "lorcana-ci_zE0",
+  printings: [
+    {
+      id: "set10-083",
+      artId: "set10-083",
+      setCode: "set10",
+      collectorNumber: "83",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-083"],
   cardType: "character",
   name: "Launchpad",
@@ -20,7 +31,7 @@ export const launchpadExceptionalPilot: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5380e792419f4668ad25176094c6e667",
-    tcgPlayer: 658464,
+    tcgPlayer: "658464",
   },
   text: [
     {

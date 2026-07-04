@@ -4,6 +4,17 @@ import { sailTheAzuriteSeaI18n } from "./163-sail-the-azurite-sea.i18n";
 export const sailTheAzuriteSea: ActionCard = {
   id: "EfC",
   canonicalId: "ci_EfC",
+  slug: "lorcana-ci_EfC",
+  printings: [
+    {
+      id: "set6-163",
+      artId: "set6-163",
+      setCode: "set6",
+      collectorNumber: "163",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-163"],
   cardType: "action",
   name: "Sail the Azurite Sea",
@@ -16,7 +27,7 @@ export const sailTheAzuriteSea: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_049739e69c034e898c3c48abd37544cc",
-    tcgPlayer: 592008,
+    tcgPlayer: "592008",
   },
   text: "This turn, you may put an additional card from your hand into your inkwell facedown. Draw a card.",
   abilities: [

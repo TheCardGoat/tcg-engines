@@ -16,8 +16,8 @@ export const theQueenWickedAndVainI18n: Record<Languages, I18nProperties> = {
     version: "Boshaft und eitel",
     text: [
       {
-        title: "HÖRE MICH!",
-        description: "— Ziehe 1 Karte.",
+        title: "Höre mich!",
+        description: "{E} — Ziehe 1 Karte.",
       },
     ],
   },
@@ -27,7 +27,7 @@ export const theQueenWickedAndVainI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "JE TE L'ORDONNE",
-        description: "— Piochez une carte.",
+        description: "{E} — Piochez une carte.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const theQueenWickedAndVainI18n: Record<Languages, I18nProperties> = {
     version: "Wicked and Vain",
     text: [
       {
-        title: "I SUMMON THEE",
-        description: "— Draw a card.",
+        title: "I Summon Thee",
+        description: "{E} — Draw a card.",
       },
     ],
   },

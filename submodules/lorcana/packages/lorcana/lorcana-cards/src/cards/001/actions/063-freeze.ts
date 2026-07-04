@@ -4,6 +4,17 @@ import { freezeI18n } from "./063-freeze.i18n";
 export const freeze: ActionCard = {
   id: "D1e",
   canonicalId: "ci_D1e",
+  slug: "lorcana-ci_D1e",
+  printings: [
+    {
+      id: "set1-063",
+      artId: "set1-063",
+      setCode: "set1",
+      collectorNumber: "63",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-063"],
   cardType: "action",
   name: "Freeze",
@@ -16,7 +27,7 @@ export const freeze: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_7ea36567dec64789a714995b1f459a47",
-    tcgPlayer: 508733,
+    tcgPlayer: "508733",
   },
   text: "Exert chosen opposing character.",
   abilities: [

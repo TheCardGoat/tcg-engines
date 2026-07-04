@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { goofyGalumphingGumshoeI18n } from "./024-goofy-galumphing-gumshoe.i18n";
 
 export const goofyGalumphingGumshoe: CharacterCard = {
-  id: "42x",
+  id: "LYe",
   canonicalId: "ci_zXO",
+  slug: "lorcana-ci_zXO",
+  printings: [
+    {
+      id: "set10-024",
+      artId: "set10-024",
+      setCode: "set10",
+      collectorNumber: "24",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-024"],
   cardType: "character",
   name: "Goofy",
@@ -19,7 +30,7 @@ export const goofyGalumphingGumshoe: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_51faef6e502845188f6fee9429829df2",
-    tcgPlayer: 660365,
+    tcgPlayer: "660365",
   },
   text: [
     {

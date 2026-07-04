@@ -7,14 +7,17 @@ export const gd04MichaelTrinity092: PilotCard = {
   color: "red",
   traits: ["cb", "trinity"],
   id: "GD04-092",
-  externalId: "gundam:gd04-092",
-  slug: "michael-trinity-gd04-092",
+  canonicalId: "GD04-092",
+  externalIds: { bandai: "gundam:gd04-092" },
+  slug: "michael-trinity/gd04-092",
   displayName: "Michael Trinity",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-092",
   printings: [
     {
       id: "GD04-092",
+      artId: "GD04-092",
+      setCode: "GD04",
       collectorNumber: "GD04-092",
       cardNumber: "GD04-092",
       set: {
@@ -29,6 +32,7 @@ export const gd04MichaelTrinity092: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-092"],
   selectedPrintingId: "GD04-092",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-092.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-092.webp?260424",

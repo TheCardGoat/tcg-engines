@@ -20,10 +20,11 @@ export const annaIceBreakerI18n: Record<Languages, I18nProperties> = {
     version: "Eisbrecherin",
     text: [
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "WINTERLICHER HINTERHALT",
+        title: "Winterlicher Hinterhalt",
         description:
           "Wenn du diesen Charakter ausspielst, wähle einen gegnerischen Charakter. Er wird zu Beginn seines nächsten Zuges nicht bereit gemacht.",
       },
@@ -34,10 +35,11 @@ export const annaIceBreakerI18n: Record<Languages, I18nProperties> = {
     version: "Briseuse de glace",
     text: [
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "EMBUSCADE GLACIALE",
+        title: "Embuscade glaciale",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui ne se redresse pas au début de son prochain tour.",
       },
@@ -48,10 +50,11 @@ export const annaIceBreakerI18n: Record<Languages, I18nProperties> = {
     version: "Rompighiaccio",
     text: [
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "IMBOSCATA INVERNALE",
+        title: "Imboscata Invernale",
         description:
           "Quando giochi questo personaggio, un personaggio avversario a tua scelta non si può preparare all'inizio del suo prossimo turno.",
       },

@@ -55,7 +55,17 @@ interface CardLite {
  */
 export function createRealDeckList(playerId: string): DeckList {
   const sorted = [...structuredCards].sort((a, b) => a.slug.localeCompare(b.slug));
-  const legends = sorted.filter((c) => c.type === "legend").slice(0, 3) as CardLite[];
+  // Dedupe by slug before picking the legend trio — the same legend can appear
+  // in multiple structured sets (e.g. alpha + retail reprint) and a deck must
+  // use 3 DISTINCT legends. Slicing without dedup yields duplicate slugs.
+  const legendsBySlug = new Map<string, CardLite>();
+  for (const card of sorted) {
+    if (card.type !== "legend") continue;
+    const lite = card as CardLite;
+    if (legendsBySlug.has(lite.slug)) continue;
+    legendsBySlug.set(lite.slug, lite);
+  }
+  const legends = [...legendsBySlug.values()].slice(0, 3);
   if (legends.length < 3) {
     throw new Error(`Need at least 3 legends in the catalog; found ${legends.length}`);
   }

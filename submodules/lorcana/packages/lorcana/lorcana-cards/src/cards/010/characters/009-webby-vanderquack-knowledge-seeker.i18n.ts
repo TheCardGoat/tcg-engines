@@ -17,9 +17,9 @@ export const webbyVanderquackKnowledgeSeekerI18n: Record<Languages, I18nProperti
     version: "Wissenssucherin",
     text: [
       {
-        title: "ICH HABE DAVON GELESEN",
+        title: "Ich habe davon gelesen",
         description:
-          "Solange du einen Charakter oder Ort im Spiel hast, der eine Karte unter sich hat, erhält dieser Charakter +1.",
+          "Solange du einen Charakter oder Ort im Spiel hast, der eine Karte unter sich hat, erhält dieser Charakter +1 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const webbyVanderquackKnowledgeSeekerI18n: Record<Languages, I18nProperti
     version: "À la recherche de connaissance",
     text: [
       {
-        title: "J'AI LU QUELQUE CHOSE LÀ-DESSUS",
+        title: "J'ai lu quelque chose là-dessus",
         description:
-          "Tant que vous avez un personnage ou un lieu en jeu avec une carte sous lui, ce personnage-ci gagne +1.",
+          "Tant que vous avez un personnage ou un lieu en jeu avec une carte sous lui, ce personnage-ci gagne +1 {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const webbyVanderquackKnowledgeSeekerI18n: Record<Languages, I18nProperti
     version: "Cercatrice di Conoscenza",
     text: [
       {
-        title: "HO LETTO QUALCOSA IN MERITO",
+        title: "Ho Letto Qualcosa in Merito",
         description:
-          "Mentre hai in gioco un personaggio o un luogo con una carta sotto di sé, questo personaggio riceve +1.",
+          "Mentre hai in gioco un personaggio o un luogo con una carta sotto di sé, questo personaggio riceve +1 {L}.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { whenWillMyLifeBeginI18n } from "./197-when-will-my-life-begin.i18n";
 export const whenWillMyLifeBegin: ActionCard = {
   id: "6iQ",
   canonicalId: "ci_6iQ",
+  slug: "lorcana-ci_6iQ",
+  printings: [
+    {
+      id: "set5-197",
+      artId: "set5-197",
+      setCode: "set5",
+      collectorNumber: "197",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-197"],
   cardType: "action",
   name: "When Will My Life Begin?",
@@ -16,7 +27,7 @@ export const whenWillMyLifeBegin: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f4219fc0ab3a47ed9fc0b3f5f705f597",
-    tcgPlayer: 559754,
+    tcgPlayer: "559754",
   },
   text: "Chosen character can't challenge during their next turn. Draw a card.",
   actionSubtype: "song",

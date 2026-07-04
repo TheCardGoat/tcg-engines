@@ -15,7 +15,12 @@ import { invalidateStaticEffects } from "../../runtime-moves/rules/static-effect
 export interface ZoneOperationsAPI extends ZoneQueryAPI, ZoneMutationAPI {}
 
 export type ZoneRef = { zone: string; playerId?: string };
-export type DrawCardsArgs = { from: ZoneRef; to: ZoneRef; count: number };
+export type DrawCardsArgs = {
+  from: ZoneRef;
+  to: ZoneRef;
+  count: number;
+  position?: "top" | "bottom";
+};
 
 export interface ZoneQueryAPI {
   // Searching
@@ -80,6 +85,7 @@ interface ZoneOperationsOptions {
   onUndoBarrier?: (reason: UndoBarrierReason) => void;
   random?: () => number;
   onCardEnteredZone?: (cardId: string, toZone: string, ownerId: string) => void;
+  onCardViewsInvalidated?: () => void;
 }
 
 // =============================================================================
@@ -97,6 +103,7 @@ export function createZoneOperations(
   const random = options?.random ?? Math.random;
   const markUndoBarrier = options?.onUndoBarrier;
   const onCardEnteredZone = options?.onCardEnteredZone;
+  const invalidateCardViews = options?.onCardViewsInvalidated;
 
   function getZoneDef(zoneId: string) {
     return zoneRegistry[zoneId];
@@ -230,6 +237,7 @@ export function createZoneOperations(
       const resolvedToZone = resolveZoneId(toZone);
       const previous = setCardZone(cardId, resolvedToZone, options?.index);
 
+      invalidateCardViews?.();
       onCardEnteredZone?.(cardId, resolvedToZone, previous.ownerId);
 
       // Invalidate the static-effect registry when cards enter or leave a zone whose
@@ -295,7 +303,7 @@ export function createZoneOperations(
     // Drawing
     // -------------------------------------------------------------------------
 
-    drawCards({ from, to, count: normalizedCount }: DrawCardsArgs): string[] {
+    drawCards({ from, to, count: normalizedCount, position = "top" }: DrawCardsArgs): string[] {
       if (normalizedCount > 0) {
         markUndoBarrier?.("draw");
       }
@@ -306,11 +314,12 @@ export function createZoneOperations(
       const fromCards = getZoneCards(normalizedFromZone);
 
       if (zoneDef?.ownerScoped) {
-        const ownedCards = [...fromCards]
-          .reverse()
-          .filter((cardId) => zones.private.cardIndex[cardId]?.ownerID === from.playerId);
+        const ownedCards = fromCards.filter(
+          (cardId) => zones.private.cardIndex[cardId]?.ownerID === from.playerId,
+        );
+        const orderedOwnedCards = position === "bottom" ? ownedCards : [...ownedCards].reverse();
         const toDraw = Math.min(Math.max(0, normalizedCount), ownedCards.length);
-        const drawnCards = ownedCards.slice(0, toDraw);
+        const drawnCards = orderedOwnedCards.slice(0, toDraw);
 
         for (const cardId of drawnCards) {
           this.moveCard(cardId, { zone: normalizedToZone, playerId: to.playerId });
@@ -329,7 +338,12 @@ export function createZoneOperations(
       }
 
       const toDraw = Math.min(Math.max(0, normalizedCount), fromCards.length);
-      const drawnCards = toDraw === 0 ? [] : fromCards.slice(-toDraw).reverse();
+      const drawnCards =
+        toDraw === 0
+          ? []
+          : position === "bottom"
+            ? fromCards.slice(0, toDraw)
+            : fromCards.slice(-toDraw).reverse();
 
       for (const cardId of drawnCards) {
         this.moveCard(cardId, { zone: normalizedToZone, playerId: to.playerId });

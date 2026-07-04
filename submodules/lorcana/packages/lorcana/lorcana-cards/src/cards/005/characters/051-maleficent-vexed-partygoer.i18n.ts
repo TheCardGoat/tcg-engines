@@ -17,7 +17,7 @@ export const maleficentVexedPartygoerI18n: Record<Languages, I18nProperties> = {
     version: "Unerwünschter Gast",
     text: [
       {
-        title: "WAS FÜR EINE PEINLICHE SITUATION",
+        title: "Was für eine peinliche Situation",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du eine Karte von deiner Hand auswählen und abwerfen, um einen Charakter, Gegenstand oder Ort deiner Wahl, der 3 oder weniger kostet, auf die zugehörige Hand zurückzuschicken.",
       },
@@ -28,7 +28,7 @@ export const maleficentVexedPartygoerI18n: Record<Languages, I18nProperties> = {
     version: "Fêtarde vexée",
     text: [
       {
-        title: "UN FÂCHEUX OUBLI",
+        title: "Un fâcheux oubli",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir et défausser une carte. Si vous le faites, choisissez un personnage, objet ou lieu ayant un coût de 3 ou moins et renvoyez-le dans la main de son propriétaire.",
       },
@@ -39,7 +39,7 @@ export const maleficentVexedPartygoerI18n: Record<Languages, I18nProperties> = {
     version: "Ospite Seccata",
     text: [
       {
-        title: "CHE SITUAZIONE IMBARAZZANTE",
+        title: "Che Situazione Imbarazzante",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi scegliere e scartare una carta per far riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 3 o inferiore.",
       },

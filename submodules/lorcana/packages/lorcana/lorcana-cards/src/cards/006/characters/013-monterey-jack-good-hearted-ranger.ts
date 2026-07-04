@@ -4,6 +4,17 @@ import { montereyJackGoodheartedRangerI18n } from "./013-monterey-jack-good-hear
 export const montereyJackGoodheartedRanger: CharacterCard = {
   id: "uAr",
   canonicalId: "ci_uAr",
+  slug: "lorcana-ci_uAr",
+  printings: [
+    {
+      id: "set6-013",
+      artId: "set6-013",
+      setCode: "set6",
+      collectorNumber: "13",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-013"],
   cardType: "character",
   name: "Monterey Jack",
@@ -21,7 +32,7 @@ export const montereyJackGoodheartedRanger: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_f20ba045e5754b24b0c431115ab83dd8",
-    tcgPlayer: 591996,
+    tcgPlayer: "591996",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: montereyJackGoodheartedRangerI18n,

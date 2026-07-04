@@ -4,6 +4,17 @@ import { tritonsTridentI18n } from "./066-tritons-trident.i18n";
 export const tritonsTrident: ItemCard = {
   id: "xKb",
   canonicalId: "ci_xKb",
+  slug: "lorcana-ci_xKb",
+  printings: [
+    {
+      id: "set4-066",
+      artId: "set4-066",
+      setCode: "set4",
+      collectorNumber: "66",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-066"],
   cardType: "item",
   name: "Triton's Trident",
@@ -16,7 +27,7 @@ export const tritonsTrident: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_57067560f7f0499da43dd94731e85552",
-    tcgPlayer: 543911,
+    tcgPlayer: "543911",
   },
   text: [
     {

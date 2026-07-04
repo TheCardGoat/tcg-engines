@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { ruttNorthernMooseI18n } from "./004-rutt-northern-moose.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const ruttNorthernMoose: CharacterCard = {
   id: "6Ic",
   canonicalId: "ci_6Ic",
+  slug: "lorcana-ci_6Ic",
+  printings: [
+    {
+      id: "set5-004",
+      artId: "set5-004",
+      setCode: "set5",
+      collectorNumber: "4",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-004"],
   cardType: "character",
   name: "Rutt",
@@ -21,7 +33,7 @@ export const ruttNorthernMoose: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_db3ade6d337c4c72aad63938a16e7692",
-    tcgPlayer: 560498,
+    tcgPlayer: "560498",
   },
   text: "Support",
   classifications: ["Storyborn", "Ally"],

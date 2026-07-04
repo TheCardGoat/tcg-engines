@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { maximusPalaceHorseI18n } from "./010-maximus-palace-horse.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { support } from "../../../helpers/abilities/support";
 
 export const maximusPalaceHorse: CharacterCard = {
   id: "A1E",
   canonicalId: "ci_A1E",
+  slug: "lorcana-ci_A1E",
+  printings: [
+    {
+      id: "set1-010",
+      artId: "set1-010",
+      setCode: "set1",
+      collectorNumber: "10",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-010"],
   cardType: "character",
   name: "Maximus",
@@ -22,7 +34,7 @@ export const maximusPalaceHorse: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1d41bcb819ef4f12b40b5aab332e0c4c",
-    tcgPlayer: 506837,
+    tcgPlayer: "506837",
   },
   text: [
     {

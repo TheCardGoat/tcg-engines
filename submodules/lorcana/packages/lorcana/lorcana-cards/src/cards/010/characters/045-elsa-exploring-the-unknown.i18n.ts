@@ -16,7 +16,7 @@ export const elsaExploringTheUnknownI18n: Record<Languages, I18nProperties> = {
     version: "Erforscht das Unbekannte",
     text: [
       {
-        title: "GENAUERER BLICK",
+        title: "Genauerer Blick",
         description: "Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen.",
       },
     ],
@@ -26,7 +26,7 @@ export const elsaExploringTheUnknownI18n: Record<Languages, I18nProperties> = {
     version: "Explorant un autre monde",
     text: [
       {
-        title: "REGARDE DE PLUS PRÈS",
+        title: "Regarde de plus près",
         description: "Lorsque vous jouez ce personnage, vous pouvez piocher une carte.",
       },
     ],
@@ -36,7 +36,7 @@ export const elsaExploringTheUnknownI18n: Record<Languages, I18nProperties> = {
     version: "Che Esplora l'Ignoto",
     text: [
       {
-        title: "ESAMINARE PIÙ DA VICINO",
+        title: "Esaminare Più da Vicino",
         description: "Quando giochi questo personaggio, puoi pescare una carta.",
       },
     ],

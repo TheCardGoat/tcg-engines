@@ -157,6 +157,8 @@ export interface PendingCostReduction {
     | ("character" | "item" | "location" | "action" | "song")[]
     | readonly ("character" | "item" | "location" | "action" | "song")[];
   classification?: Classification | Classification[] | readonly Classification[];
+  cardName?: string;
+  playMethod?: "shift" | "standard" | "either";
   expiresAtTurn: number;
   consumeOnUse: boolean;
 }
@@ -183,6 +185,20 @@ export interface PlayFromUnderPermission {
  */
 export interface PlayFromUnderPermissionsState {
   permissionsByPlayer: Record<PlayerId, PlayFromUnderPermission[]>;
+}
+
+/**
+ * Temporary permission to play a specific card from discard this turn.
+ */
+export interface PlayFromDiscardPermission {
+  cardId: CardInstanceId;
+  expiresAtTurn: number;
+  cardType?: string;
+  controllerId: PlayerId;
+}
+
+export interface PlayFromDiscardPermissionsState {
+  permissionsByPlayer: Record<PlayerId, PlayFromDiscardPermission[]>;
 }
 
 export interface TemporaryGrantedAbilityPayload {
@@ -517,6 +533,8 @@ export interface LorcanaCardMeta extends Record<string, unknown> {
   stackParentId?: CardInstanceId;
   /** Whether this card entered play using Shift */
   playedViaShift?: boolean;
+  /** Whether this shifted top card should detach at the end of its controller's turn */
+  temporaryShiftReturnTurn?: number;
   /** Which payment mode was used to play this card */
   playedCostType?: "standard" | "shift" | "sing" | "singTogether" | "free";
   /** Temporary keywords granted by action effects and their inclusive expiration turn */
@@ -603,6 +621,9 @@ export interface LorcanaG {
   /** Player-level permissions to play cards from under items (continuous effect) */
   playFromUnderPermissions: PlayFromUnderPermissionsState;
 
+  /** Player-level permissions to play specific cards from discard */
+  playFromDiscardPermissions: PlayFromDiscardPermissionsState;
+
   /** Replacement effects created by resolving cards and abilities */
   replacementEffects: ReplacementEffectsState;
 
@@ -681,6 +702,9 @@ export function createInitialLorcanaG(player1Id: PlayerId, player2Id: PlayerId):
       payloadsByPlayer: {},
     },
     playFromUnderPermissions: {
+      permissionsByPlayer: {},
+    },
+    playFromDiscardPermissions: {
       permissionsByPlayer: {},
     },
     replacementEffects: {

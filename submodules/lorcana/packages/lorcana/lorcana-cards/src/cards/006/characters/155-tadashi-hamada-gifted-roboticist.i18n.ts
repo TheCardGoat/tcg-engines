@@ -17,7 +17,7 @@ export const tadashiHamadaGiftedRoboticistI18n: Record<Languages, I18nProperties
     version: "Talentierter Robotiker",
     text: [
       {
-        title: "JEMAND MUSS IHM HELFEN",
+        title: "Jemand muss ihm helfen",
         description:
           "Wenn dieser Charakter im Zug einer gegnerischen Person verbannt wird, darfst du die oberste Karte deines Decks verdeckt in deinen Tintenvorrat legen. Lege danach diese Karte verdeckt in deinen Tintenvorrat.",
       },
@@ -28,7 +28,7 @@ export const tadashiHamadaGiftedRoboticistI18n: Record<Languages, I18nProperties
     version: "Roboticien doué",
     text: [
       {
-        title: "IL FAUT BIEN QU'ON LE SAUVE",
+        title: "Il faut bien qu'on le sauve",
         description:
           "Durant le tour des adversaires, lorsque ce personnage est banni, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée. Ensuite, placez cette carte dans votre réserve d'encre, face cachée.",
       },
@@ -39,7 +39,7 @@ export const tadashiHamadaGiftedRoboticistI18n: Record<Languages, I18nProperties
     version: "Robotista Dotato",
     text: [
       {
-        title: "QUALCUNO DEVE AIUTARLO",
+        title: "Qualcuno deve Aiutarlo",
         description:
           "Durante il turno di un avversario, quando questo personaggio viene esiliato, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù. Poi aggiungi questa carta al tuo calamaio, a faccia in giù.",
       },

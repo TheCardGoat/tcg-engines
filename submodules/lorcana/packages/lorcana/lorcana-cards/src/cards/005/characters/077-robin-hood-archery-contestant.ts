@@ -4,6 +4,17 @@ import { robinHoodArcheryContestantI18n } from "./077-robin-hood-archery-contest
 export const robinHoodArcheryContestant: CharacterCard = {
   id: "pmt",
   canonicalId: "ci_pmt",
+  slug: "lorcana-ci_pmt",
+  printings: [
+    {
+      id: "set5-077",
+      artId: "set5-077",
+      setCode: "set5",
+      collectorNumber: "77",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-077"],
   cardType: "character",
   name: "Robin Hood",
@@ -20,7 +31,7 @@ export const robinHoodArcheryContestant: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5d3eec99c8a746a5b8b774fb50cc5180",
-    tcgPlayer: 561956,
+    tcgPlayer: "561956",
   },
   text: [
     {

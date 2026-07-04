@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { giantCobraGhostlySerpentI18n } from "./057-giant-cobra-ghostly-serpent.i18n";
+
 import { vanish } from "../../../helpers/abilities/vanish";
 
 export const giantCobraGhostlySerpent: CharacterCard = {
   id: "FdJ",
   canonicalId: "ci_FdJ",
+  slug: "lorcana-ci_FdJ",
+  printings: [
+    {
+      id: "set7-057",
+      artId: "set7-057",
+      setCode: "set7",
+      collectorNumber: "57",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-057"],
   cardType: "character",
   name: "Giant Cobra",
@@ -21,7 +33,7 @@ export const giantCobraGhostlySerpent: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e83395def01e4f76b670fd014c79d440",
-    tcgPlayer: 618174,
+    tcgPlayer: "618174",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { plutoSteelChampionI18n } from "./191-pluto-steel-champion.i18n";
 export const plutoSteelChampion: CharacterCard = {
   id: "hQC",
   canonicalId: "ci_hQC",
+  slug: "lorcana-ci_hQC",
+  printings: [
+    {
+      id: "set10-191",
+      artId: "set10-191",
+      setCode: "set10",
+      collectorNumber: "191",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-191"],
   cardType: "character",
   name: "Pluto",
@@ -19,7 +30,7 @@ export const plutoSteelChampion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bd58d594eb5940b98b648d9eeffe6272",
-    tcgPlayer: 659631,
+    tcgPlayer: "659631",
   },
   text: [
     {
@@ -48,7 +59,12 @@ export const plutoSteelChampion: CharacterCard = {
           controller: "you",
           cardType: "character",
           excludeSelf: true,
-          filters: [{ type: "ink-type", inkType: "steel" }],
+          filters: [
+            {
+              type: "ink-type",
+              inkType: "steel",
+            },
+          ],
         },
         timing: "whenever",
         restrictions: [
@@ -84,7 +100,12 @@ export const plutoSteelChampion: CharacterCard = {
           controller: "you",
           cardType: "character",
           excludeSelf: true,
-          filters: [{ type: "ink-type", inkType: "steel" }],
+          filters: [
+            {
+              type: "ink-type",
+              inkType: "steel",
+            },
+          ],
         },
         timing: "whenever",
       },

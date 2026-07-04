@@ -7,14 +7,14 @@ export const viciousBetrayalI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Grauenhafter Verrat",
-    text: "Gib einem Charakter deiner Wahl in diesem Zug +2. Wählst du eine Schurkin oder einen Schurken, dann gib dem Charakter stattdessen +3.",
+    text: "Gib einem Charakter deiner Wahl in diesem Zug +2 {S}. Wählst du eine Schurkin oder einen Schurken, dann gib dem Charakter stattdessen +3 {S}.",
   },
   fr: {
     name: "TRAHISON BRUTALE",
-    text: "Choisissez un personnage, il gagne +2 pour le reste de ce tour. S'il s'agit d'un personnage Méchant, il gagne +3 à la place.",
+    text: "Choisissez un personnage, il gagne +2 {S} pour le reste de ce tour. S'il s'agit d'un personnage Méchant, il gagne +3 {S} à la place.",
   },
   it: {
     name: "Vicious Betrayal",
-    text: "Chosen character gets +2 this turn. If a Villain character is chosen, they get +3 instead.",
+    text: "Chosen character gets +2 {S} this turn. If a Villain character is chosen, they get +3 {S} instead.",
   },
 };

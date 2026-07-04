@@ -4,6 +4,17 @@ import { isisVanderchillIceQueenOfStCanardI18n } from "./038-isis-vanderchill-ic
 export const isisVanderchillIceQueenOfStCanard: CharacterCard = {
   id: "StU",
   canonicalId: "ci_StU",
+  slug: "lorcana-ci_StU",
+  printings: [
+    {
+      id: "set11-038",
+      artId: "set11-038",
+      setCode: "set11",
+      collectorNumber: "38",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-038"],
   cardType: "character",
   name: "Isis Vanderchill",
@@ -20,7 +31,7 @@ export const isisVanderchillIceQueenOfStCanard: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_48084ac3a18c452cadbabd4675f9672b",
-    tcgPlayer: 673428,
+    tcgPlayer: "673428",
   },
   text: [
     {

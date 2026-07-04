@@ -4,6 +4,17 @@ import { andysRoomHomeBaseI18n } from "./034-andys-room-home-base.i18n";
 export const andysRoomHomeBase: LocationCard = {
   id: "iCW",
   canonicalId: "ci_iCW",
+  slug: "lorcana-ci_iCW",
+  printings: [
+    {
+      id: "set12-034",
+      artId: "set12-034",
+      setCode: "set12",
+      collectorNumber: "34",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-034"],
   cardType: "location",
   name: "Andy's Room",
@@ -20,6 +31,7 @@ export const andysRoomHomeBase: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ce7d516d02e247edb80360f39baa9dcb",
+    tcgPlayer: "690522",
   },
   text: [
     {

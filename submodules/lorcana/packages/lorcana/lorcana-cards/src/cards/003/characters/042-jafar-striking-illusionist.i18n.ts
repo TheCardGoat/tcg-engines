@@ -23,13 +23,14 @@ export const jafarStrikingIllusionistI18n: Record<Languages, I18nProperties> = {
     version: "Verblüffender Illusionist",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Dschafar-Charaktere auszuspielen.)",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "GRENZENLOSE MACHT",
+        title: "Grenzenlose Macht",
         description:
           "Solange dieser Charakter während deines Zuges erschöpft ist, sammelst du jedes mal 1 Legende, wenn du eine Karte ziehst.",
       },
@@ -40,13 +41,14 @@ export const jafarStrikingIllusionistI18n: Record<Languages, I18nProperties> = {
     version: "Illusionniste ensorcelant",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Jafar.)",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "POUVOIR SANS LIMITE",
+        title: "Pouvoir sans limite",
         description:
           "Tant que ce personnage est épuisé, gagnez 1 éclat de Lore pour chaque carte que vous piochez durant votre tour.",
       },
@@ -57,13 +59,14 @@ export const jafarStrikingIllusionistI18n: Record<Languages, I18nProperties> = {
     version: "Strabiliante Illusionista",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Jafar.)",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "POTERE OLTRE OGNI LIMITE",
+        title: "Potere Oltre Ogni Limite",
         description:
           "Durante il tuo turno, mentre questo personaggio è impegnato, ottieni 1 leggenda ogni volta che peschi una carta.",
       },

@@ -17,7 +17,7 @@ export const honeymarenNorthuldraGuideI18n: Record<Languages, I18nProperties> = 
     version: "Northuldra Fremdenführerin",
     text: [
       {
-        title: "GESCHICHTE DES FÜNFTEN GEISTES",
+        title: "Geschichte des fünften Geistes",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens eine gegnerische Person einen erschöpften Charakter im Spiel hat, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const honeymarenNorthuldraGuideI18n: Record<Languages, I18nProperties> = 
     version: "Guide de Northuldra",
     text: [
       {
-        title: "CONTE DU CINQUIÈME ESPRIT",
+        title: "Conte du cinquième esprit",
         description:
           "Lorsque vous jouez ce personnage, si un adversaire a un personnage épuisé en jeu, gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const honeymarenNorthuldraGuideI18n: Record<Languages, I18nProperties> = 
     version: "Guida dei Northuldri",
     text: [
       {
-        title: "LA LEGGENDA DEL QUINTO SPIRITO",
+        title: "La Leggenda del Quinto Spirito",
         description:
           "Quando giochi questo personaggio, se un avversario ha in gioco un personaggio impegnato, ottieni 1 leggenda.",
       },

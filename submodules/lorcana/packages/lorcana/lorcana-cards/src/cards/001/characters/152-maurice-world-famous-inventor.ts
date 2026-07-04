@@ -4,6 +4,17 @@ import { mauriceWorldfamousInventorI18n } from "./152-maurice-world-famous-inven
 export const mauriceWorldfamousInventor: CharacterCard = {
   id: "Yw4",
   canonicalId: "ci_Yw4",
+  slug: "lorcana-ci_Yw4",
+  printings: [
+    {
+      id: "set1-152",
+      artId: "set1-152",
+      setCode: "set1",
+      collectorNumber: "152",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-152"],
   cardType: "character",
   name: "Maurice",
@@ -20,13 +31,13 @@ export const mauriceWorldfamousInventor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_de24a04b1d83417594730a5036cfc2a4",
-    tcgPlayer: 492126,
+    tcgPlayer: "492126",
   },
   text: [
     {
-      title: "GIVE IT A TRY",
+      title: "GIVE IT",
       description:
-        "Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
+        "A TRY Whenever this character quests, you pay 2 {I} less for the next item you play this turn.",
     },
     {
       title: "IT WORKS!",

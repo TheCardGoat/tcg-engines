@@ -14,9 +14,9 @@ import type {
   StaticAbility,
   TriggeredAbility,
 } from "../abilities/ability-types";
+import type { BaseCardDefinition, Printing } from "@tcg/card-model";
 import type { Classification } from "./classifications";
 import type { InkType } from "./ink-types";
-import type { CardPublicId } from "../branded";
 
 /** Card Types (Section 6) */
 export const CARD_TYPES = ["character", "action", "item", "location"] as const;
@@ -36,6 +36,26 @@ export interface CardTextEntry {
 
 /** Card rules text as raw text or structured entries */
 export type CardText = string | CardTextEntry[];
+
+/** Filters used by card-specific deck construction rules. */
+export interface DeckConstructionCardFilter {
+  cardType?: CardType;
+  classification?: Classification;
+}
+
+/**
+ * Card-specific deck construction rule.
+ *
+ * These are static deck-building permissions from printed card text, not
+ * runtime abilities.
+ */
+export interface IgnoreInkTypesDeckConstructionRule {
+  type: "ignore-ink-types";
+  filter: DeckConstructionCardFilter;
+  excludeSourceCard?: boolean;
+}
+
+export type DeckConstructionRule = IgnoreInkTypesDeckConstructionRule;
 
 /**
  * Base interface for all ability definitions in card data
@@ -130,8 +150,13 @@ export interface ActionAbilityDefinition
    * - "sacrifice-item" = banish an item you control to play this card for free.
    * - "exert-4-items" = exert 4 ready items you control to play this card for free.
    * - "put-toy-character-on-deck-bottom" = put a Toy character card from your discard on the bottom of your deck to play this card for free.
+   * - "put-5-character-cards-on-deck-bottom-to-shift" = put five character cards from your discard on the bottom of your deck to shift this card for free.
    */
-  alternativeCost?: "sacrifice-item" | "exert-4-items" | "put-toy-character-on-deck-bottom";
+  alternativeCost?:
+    | "sacrifice-item"
+    | "exert-4-items"
+    | "put-toy-character-on-deck-bottom"
+    | "put-5-character-cards-on-deck-bottom-to-shift";
 }
 
 /**
@@ -185,9 +210,24 @@ export interface I18nProperties {
 }
 
 /**
- * Base properties shared by all card types
+ * Base properties shared by all card types.
+ *
+ * Literally `extends BaseCardDefinition` (RFC §7 / ADR-11) so every Lorcana card
+ * type satisfies the cross-game identity contract. The unified fields
+ * (`canonicalId`, `slug`, `name`, `printings[]`, `externalIds?`) are therefore
+ * available without a read-time projection.
+ *
+ * Identity hierarchy mirrored from the base type (RFC §3: canonical → art → printing):
+ *  - `canonicalId`: passthrough of the Ravensburger `culture_invariant_id`
+ *    (e.g. `"ci_tMV"`). Stable across reprints and alternate arts.
+ *  - `slug`: derived as `lorcana-${canonicalId}` — language-independent and NOT a
+ *    uniqueness anchor (RFC ADR-8).
+ *  - `printings`: each card literal carries its own representative printing (one
+ *    entry; art derived per the RFC §4 Lorcana rule). The canonical multi-printing
+ *    registry remains `cards.aux.printing-metadata.json` (`@tcg/lorcana-cards/data`),
+ *    which is what the platform atelier / art resolver reads.
  */
-export interface BaseCardProperties {
+export interface BaseCardProperties extends BaseCardDefinition {
   /** Unique identifier for the card */
   id: string;
 
@@ -196,6 +236,12 @@ export interface BaseCardProperties {
    * Groups reprints and alternate art as the same card; derived from Ravensburger culture_invariant_id.
    */
   canonicalId: string;
+
+  /**
+   * Language-stable URL slug, derived as `lorcana-${canonicalId}` (e.g. "lorcana-ci_42").
+   * NOT a uniqueness anchor (RFC ADR-8) — canonical identity lives on `canonicalId`.
+   */
+  slug: string;
 
   /**
    * Other printing IDs for this card (same game card, different set/art).
@@ -227,6 +273,9 @@ export interface BaseCardProperties {
 
   /** Card abilities (includes keywords) */
   abilities?: AbilityDefinition[];
+
+  /** Static deck construction rules granted by this card's printed text. */
+  deckConstructionRules?: DeckConstructionRule[];
 
   /** Rules text - raw ability text as printed on the card */
   text?: CardText;
@@ -273,20 +322,30 @@ export interface BaseCardProperties {
   /** Whether the card is vanilla (no abilities/rules text) */
   vanilla?: boolean;
 
-  /** External IDs from various systems */
+  /**
+   * External IDs from various systems.
+   *
+   * Satisfies `BaseCardDefinition.externalIds` (`Partial<Record<ExternalSource, string>>`):
+   * every value is a `string` (RFC §10 Lorcana step 2). Lorcana populates the
+   * `ravensburger` / `cultureInvariantId` / `lorcast` / `tcgPlayer` subset; the
+   * `bandai` source is Bandai-only (Gundam/One Piece/SWU) and never set here.
+   */
   externalIds?: {
     ravensburger?: string;
-    cultureInvariantId?: number;
+    cultureInvariantId?: string;
     lorcast?: string;
-    tcgPlayer?: number;
+    tcgPlayer?: string;
   };
 
-  /** Printing references for cards with multiple printings */
-  printings?: {
-    set: string;
-    collectorNumber: number;
-    id: CardPublicId;
-  }[];
+  /**
+   * Printings of this card. Inherited from `BaseCardDefinition` as `Printing[]`
+   * (RFC §7). Each Lorcana card literal carries its own representative printing
+   * (one entry, sourced from `cards.aux.printing-metadata.json`); `artId` groups
+   * alt-arts by `specialRarity` tier (`${canonicalId}-${specialRarity}`), else is
+   * degenerate (`artId === printing.id`). The full canonical multi-printing set
+   * remains in the aux registry consumed by the atelier / art resolver.
+   */
+  printings: Printing[];
 
   /**
    * Flag indicating that the card logic is not yet fully implemented
@@ -424,12 +483,15 @@ export function isLocationCard(card: LorcanaCardDefinition): card is LocationCar
  * - Location-specific: moveCost
  * - abilities
  */
-export interface LorcanaCardDefinition {
+export interface LorcanaCardDefinition extends BaseCardDefinition {
   /** Unique identifier for the card */
   id: string;
 
   /** Canonical ID (e.g. "ci_27") for same-card grouping; from Ravensburger culture_invariant_id. */
   canonicalId: string;
+
+  /** Language-stable URL slug: `lorcana-${canonicalId}` (RFC ADR-8). */
+  slug: string;
 
   /**
    * Other printing IDs for this card (same game card, different set/art).
@@ -491,6 +553,9 @@ export interface LorcanaCardDefinition {
   /** Card abilities (includes keywords) */
   abilities?: AbilityDefinition[];
 
+  /** Static deck construction rules granted by this card's printed text. */
+  deckConstructionRules?: DeckConstructionRule[];
+
   /** Rules text - raw ability text as printed on the card */
   text?: CardText;
 
@@ -533,12 +598,12 @@ export interface LorcanaCardDefinition {
   /** Franchise the card belongs to (e.g., "Jungle Book", "Frozen") */
   franchise?: string;
 
-  /** External IDs from various systems */
+  /** External IDs from various systems (values stringified; RFC §10 Lorcana step 2) */
   externalIds?: {
     ravensburger?: string;
-    cultureInvariantId?: number;
+    cultureInvariantId?: string;
     lorcast?: string;
-    tcgPlayer?: number;
+    tcgPlayer?: string;
   };
 }
 

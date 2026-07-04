@@ -14,9 +14,9 @@ export const vaultDoorI18n: Record<Languages, I18nProperties> = {
     name: "Tresortür",
     text: [
       {
-        title: "WEGGESPERRT",
+        title: "Weggesperrt",
         description:
-          "Deine Orte und Charaktere an Orten erhalten Robust +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine Orte und Charaktere an Orten erhalten <Robust> +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -24,8 +24,8 @@ export const vaultDoorI18n: Record<Languages, I18nProperties> = {
     name: "Porte du coffre",
     text: [
       {
-        title: "SCELLÉ",
-        description: "Vos lieux et personnages sur des lieux gagnent Résistance +1",
+        title: "Scellé",
+        description: "Vos lieux et personnages sur des lieux gagnent <Résistance> +1",
       },
     ],
   },
@@ -33,8 +33,8 @@ export const vaultDoorI18n: Record<Languages, I18nProperties> = {
     name: "Porta Blindata",
     text: [
       {
-        title: "SIGILLATO I",
-        description: "tuoi luoghi e i tuoi personaggi in un luogo ottengono Resistere +1.",
+        title: "Sigillato",
+        description: "I tuoi luoghi e i tuoi personaggi in un luogo ottengono <Resistere> +1.",
       },
     ],
   },

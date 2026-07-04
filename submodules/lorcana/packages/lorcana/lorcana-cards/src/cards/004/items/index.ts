@@ -1,5 +1,6 @@
 export { miracleCandle } from "./031-miracle-candle";
 export { recordPlayer } from "./032-record-player";
+export { hiddenInkcasterP1Promo } from "./p1-036-hidden-inkcaster-promo";
 export { mysticalRose } from "./064-mystical-rose";
 export { roseLantern } from "./065-rose-lantern";
 export { tritonsTrident } from "./066-tritons-trident";

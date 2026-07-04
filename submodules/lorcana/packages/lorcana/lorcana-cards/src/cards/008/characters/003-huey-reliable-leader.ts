@@ -4,6 +4,17 @@ import { hueyReliableLeaderI18n } from "./003-huey-reliable-leader.i18n";
 export const hueyReliableLeader: CharacterCard = {
   id: "h09",
   canonicalId: "ci_h09",
+  slug: "lorcana-ci_h09",
+  printings: [
+    {
+      id: "set8-003",
+      artId: "set8-003",
+      setCode: "set8",
+      collectorNumber: "3",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-003"],
   cardType: "character",
   name: "Huey",
@@ -20,7 +31,7 @@ export const hueyReliableLeader: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_8e39d0718ce5499c92ac736ff111f7e3",
-    tcgPlayer: 633429,
+    tcgPlayer: "633429",
   },
   text: [
     {

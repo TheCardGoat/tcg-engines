@@ -4,6 +4,17 @@ import { gastonDespicableDealerI18n } from "./010-gaston-despicable-dealer.i18n"
 export const gastonDespicableDealer: CharacterCard = {
   id: "a3C",
   canonicalId: "ci_a3C",
+  slug: "lorcana-ci_a3C",
+  printings: [
+    {
+      id: "set4-010",
+      artId: "set4-010",
+      setCode: "set4",
+      collectorNumber: "10",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-010"],
   cardType: "character",
   name: "Gaston",
@@ -20,7 +31,7 @@ export const gastonDespicableDealer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_17b54146ce0942e29c41fd91356c1940",
-    tcgPlayer: 550557,
+    tcgPlayer: "550557",
   },
   text: [
     {

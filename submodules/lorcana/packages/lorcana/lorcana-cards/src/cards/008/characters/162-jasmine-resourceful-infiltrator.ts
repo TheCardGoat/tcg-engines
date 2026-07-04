@@ -4,6 +4,17 @@ import { jasmineResourcefulInfiltratorI18n } from "./162-jasmine-resourceful-inf
 export const jasmineResourcefulInfiltrator: CharacterCard = {
   id: "wQI",
   canonicalId: "ci_wQI",
+  slug: "lorcana-ci_wQI",
+  printings: [
+    {
+      id: "set8-162",
+      artId: "set8-162",
+      setCode: "set8",
+      collectorNumber: "162",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-162"],
   cardType: "character",
   name: "Jasmine",
@@ -20,7 +31,7 @@ export const jasmineResourcefulInfiltrator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d3a3d2e8ab64463b824138c932880523",
-    tcgPlayer: 631459,
+    tcgPlayer: "631459",
   },
   text: [
     {

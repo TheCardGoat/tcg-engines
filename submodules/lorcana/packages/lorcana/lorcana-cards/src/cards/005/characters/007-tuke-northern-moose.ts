@@ -4,6 +4,17 @@ import { tukeNorthernMooseI18n } from "./007-tuke-northern-moose.i18n";
 export const tukeNorthernMoose: CharacterCard = {
   id: "GYp",
   canonicalId: "ci_GYp",
+  slug: "lorcana-ci_GYp",
+  printings: [
+    {
+      id: "set5-007",
+      artId: "set5-007",
+      setCode: "set5",
+      collectorNumber: "7",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-007"],
   cardType: "character",
   name: "Tuke",
@@ -21,7 +32,7 @@ export const tukeNorthernMoose: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_461c6287b34c4be19933bac34f7c7d78",
-    tcgPlayer: 560496,
+    tcgPlayer: "560496",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: tukeNorthernMooseI18n,

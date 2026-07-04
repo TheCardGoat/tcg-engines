@@ -4,6 +4,17 @@ import { camiloMadrigalCenterStageI18n } from "./075-camilo-madrigal-center-stag
 export const camiloMadrigalCenterStage: CharacterCard = {
   id: "lBR",
   canonicalId: "ci_lBR",
+  slug: "lorcana-ci_lBR",
+  printings: [
+    {
+      id: "set8-075",
+      artId: "set8-075",
+      setCode: "set8",
+      collectorNumber: "75",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-075"],
   cardType: "character",
   name: "Camilo Madrigal",
@@ -20,11 +31,14 @@ export const camiloMadrigalCenterStage: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0d9e3acb5cc6406c9d6965fa60d58ff6",
-    tcgPlayer: 631345,
+    tcgPlayer: "631345",
   },
   text: [
     {
-      title: "ENCORE! ENCORE!",
+      title: "ENCORE!",
+    },
+    {
+      title: "ENCORE!",
       description: "When this character is banished in a challenge, return this card to your hand.",
     },
   ],

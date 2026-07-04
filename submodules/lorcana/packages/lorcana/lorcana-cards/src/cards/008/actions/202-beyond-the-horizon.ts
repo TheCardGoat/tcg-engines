@@ -4,6 +4,17 @@ import { beyondTheHorizonI18n } from "./202-beyond-the-horizon.i18n";
 export const beyondTheHorizon: ActionCard = {
   id: "hIs",
   canonicalId: "ci_hIs",
+  slug: "lorcana-ci_hIs",
+  printings: [
+    {
+      id: "set8-202",
+      artId: "set8-202",
+      setCode: "set8",
+      collectorNumber: "202",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-202"],
   cardType: "action",
   name: "Beyond the Horizon",
@@ -16,7 +27,7 @@ export const beyondTheHorizon: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b653851369d8432198a23d09e7642dbd",
-    tcgPlayer: 631483,
+    tcgPlayer: "631483",
   },
   text: [
     {

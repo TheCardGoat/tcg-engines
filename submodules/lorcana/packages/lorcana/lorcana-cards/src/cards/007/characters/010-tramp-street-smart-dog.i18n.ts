@@ -6,9 +6,9 @@ export const trampStreetsmartDogI18n: Record<Languages, I18nProperties> = {
     version: "Street-Smart Dog",
     text: [
       {
-        title: "NOW IT'S A PARTY",
+        title: "NOW IT'S",
         description:
-          "For each character you have in play, you pay 1 {I} less to play this character.",
+          "A PARTY For each character you have in play, you pay 1 {I} less to play this character.",
       },
       {
         title: "HOW'S PICKINGS?",
@@ -22,12 +22,12 @@ export const trampStreetsmartDogI18n: Record<Languages, I18nProperties> = {
     version: "Schlauer Hund",
     text: [
       {
-        title: "JETZT IST ES EINE PARTY",
+        title: "Jetzt ist es eine Party",
         description:
-          "Für jeden deiner Charaktere im Spiel zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Für jeden deiner Charaktere im Spiel zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "WIEDER AM TURTELN?",
+        title: "Wieder am turteln?",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du für jeden deiner anderen Charaktere im Spiel eine Karte ziehen. Wähle danach dieselbe Anzahl Karten aus deiner Hand und wirf sie ab.",
       },
@@ -38,12 +38,12 @@ export const trampStreetsmartDogI18n: Record<Languages, I18nProperties> = {
     version: "Chien débrouillard",
     text: [
       {
-        title: "LA FÊTE, C'EST MAINTENANT",
+        title: "La fête, c'est maintenant",
         description:
-          "Jouer ce personnage vous coûte 1 de moins pour chaque personnage que vous avez en jeu.",
+          "Jouer ce personnage vous coûte 1 {I} de moins pour chaque personnage que vous avez en jeu.",
       },
       {
-        title: "ON PICORE?",
+        title: "On picore?",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez piocher une carte pour chaque autre personnage que vous avez en jeu. Ensuite, défaussez autant de cartes que vous en avez pioché.",
       },
@@ -54,12 +54,12 @@ export const trampStreetsmartDogI18n: Record<Languages, I18nProperties> = {
     version: "Cane Scaltro",
     text: [
       {
-        title: "ORA SÌ CHE È UNA FESTA",
+        title: "Ora Sì che è una Festa",
         description:
-          "Per ogni personaggio che hai in gioco, paga 1 in meno per giocare questo personaggio.",
+          "Per ogni personaggio che hai in gioco, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "COME VA?",
+        title: "Come va?",
         description:
           "Quando giochi questo personaggio, puoi pescare una carta per ogni altro personaggio che hai in gioco, poi scegli e scarta altrettante carte.",
       },

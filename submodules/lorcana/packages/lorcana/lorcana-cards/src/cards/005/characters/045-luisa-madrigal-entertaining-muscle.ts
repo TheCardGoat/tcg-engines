@@ -4,6 +4,17 @@ import { luisaMadrigalEntertainingMuscleI18n } from "./045-luisa-madrigal-entert
 export const luisaMadrigalEntertainingMuscle: CharacterCard = {
   id: "GTb",
   canonicalId: "ci_GTb",
+  slug: "lorcana-ci_GTb",
+  printings: [
+    {
+      id: "set5-045",
+      artId: "set5-045",
+      setCode: "set5",
+      collectorNumber: "45",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-045"],
   cardType: "character",
   name: "Luisa Madrigal",
@@ -21,7 +32,7 @@ export const luisaMadrigalEntertainingMuscle: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_5c628b6eefe64685a02ea0bd3bef7a44",
-    tcgPlayer: 557729,
+    tcgPlayer: "557729",
   },
   classifications: ["Storyborn", "Ally", "Madrigal"],
   i18n: luisaMadrigalEntertainingMuscleI18n,

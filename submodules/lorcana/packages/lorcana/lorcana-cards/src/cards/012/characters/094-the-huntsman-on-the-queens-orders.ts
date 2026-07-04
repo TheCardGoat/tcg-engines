@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theHuntsmanOnTheQueensOrdersI18n } from "./094-the-huntsman-on-the-queens-orders.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const theHuntsmanOnTheQueensOrders: CharacterCard = {
   id: "xq2",
   canonicalId: "ci_xq2",
+  slug: "lorcana-ci_xq2",
+  printings: [
+    {
+      id: "set12-094",
+      artId: "set12-094",
+      setCode: "set12",
+      collectorNumber: "94",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-094"],
   cardType: "character",
   name: "The Huntsman",
@@ -21,8 +33,9 @@ export const theHuntsmanOnTheQueensOrders: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b3558cc6e55c47c6823f2324e28b0397",
+    tcgPlayer: "692046",
   },
-  text: "<Ward>",
+  text: "Ward",
   classifications: ["Storyborn", "Ally"],
   abilities: [ward],
   i18n: theHuntsmanOnTheQueensOrdersI18n,

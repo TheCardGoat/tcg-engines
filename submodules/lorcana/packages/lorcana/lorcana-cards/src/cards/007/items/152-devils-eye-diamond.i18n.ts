@@ -6,7 +6,7 @@ export const devilsEyeDiamondI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "THE PRICE OF POWER",
-        description: "{E} — If one of your characters took damage this turn, gain 1 lore.",
+        description: "{E} — If one of your characters was damaged this turn, gain 1 lore.",
       },
     ],
   },
@@ -14,9 +14,9 @@ export const devilsEyeDiamondI18n: Record<Languages, I18nProperties> = {
     name: "Teufelsaugen Diamant",
     text: [
       {
-        title: "DER PREIS DER MACHT",
+        title: "Der Preis der Macht",
         description:
-          "— Falls einer deiner Charaktere in diesem Zug Schaden erhalten hat, sammelst du 1 Legende.",
+          "{E} — Falls einer deiner Charaktere in diesem Zug Schaden erhalten hat, sammelst du 1 Legende.",
       },
     ],
   },
@@ -24,9 +24,9 @@ export const devilsEyeDiamondI18n: Record<Languages, I18nProperties> = {
     name: "Le Diamant Œil-du-Diable",
     text: [
       {
-        title: "LE PRIX DU POUVOIR",
+        title: "Le prix du pouvoir",
         description:
-          "— Si l'un de vos personnages s'est vu infliger des dommages ce tour-ci, gagnez 1 éclat de Lore.",
+          "{E} — Si l'un de vos personnages a subi au moins un dommage ce tour-ci, gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -34,9 +34,9 @@ export const devilsEyeDiamondI18n: Record<Languages, I18nProperties> = {
     name: "Diamante Occhio del Diavolo",
     text: [
       {
-        title: "IL PREZZO DEL POTERE",
+        title: "Il Prezzo del Potere",
         description:
-          "— Se uno dei tuoi personaggi è stato danneggiato in questo turno, ottieni 1 leggenda.",
+          "{E} — Se uno dei tuoi personaggi ha subito danno in questo turno, ottieni 1 leggenda.",
       },
     ],
   },

@@ -20,10 +20,10 @@ export const kenaiMagicalBearI18n: Record<Languages, I18nProperties> = {
     version: "Magischer Bär",
     text: [
       {
-        title: "Herausfordern +2",
+        title: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
       },
       {
-        title: "DIE WEISHEIT SEINER GESCHICHTE",
+        title: "Die Weisheit seiner Geschichte",
         description:
           "Wenn dieser Charakter in deinem Zug durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand und sammle 1 Legende.",
       },
@@ -34,10 +34,10 @@ export const kenaiMagicalBearI18n: Record<Languages, I18nProperties> = {
     version: "Ours magique",
     text: [
       {
-        title: "Offensif +2",
+        title: "<Offensif> +2",
       },
       {
-        title: "LA SAGESSE DE CETTE HISTOIRE",
+        title: "La sagesse de cette histoire",
         description:
           "Durant votre tour, lorsque ce personnage est banni via un défi, renvoyez-le dans votre main et gagnez 1 éclat de Lore.",
       },
@@ -48,10 +48,10 @@ export const kenaiMagicalBearI18n: Record<Languages, I18nProperties> = {
     version: "Orso Magico",
     text: [
       {
-        title: "Sfidante +2",
+        title: "<Sfidante> +2",
       },
       {
-        title: "LA SAGGEZZA DELLA SUA STORIA",
+        title: "La Saggezza della Sua Storia",
         description:
           "Durante il tuo turno, quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta e ottieni 1 leggenda.",
       },

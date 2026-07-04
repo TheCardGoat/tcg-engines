@@ -16,7 +16,7 @@ export const motherGothelWitheredAndWickedI18n: Record<Languages, I18nProperties
     version: "Verwelkt und verrucht",
     text: [
       {
-        title: "WAS HAST DU GETAN?!",
+        title: "Was hast du getan?!",
         description: "Dieser Charakter kommt mit 3 Schaden auf ihm ins Spiel.",
       },
     ],
@@ -26,7 +26,7 @@ export const motherGothelWitheredAndWickedI18n: Record<Languages, I18nProperties
     version: "Mauvaise et desséchée",
     text: [
       {
-        title: "QU'AVEZ-VOUS FAIT?!",
+        title: "Qu'avez-vous fait?!",
         description: "Ce personnage entre en jeu avec 3 jetons Dommage.",
       },
     ],
@@ -36,7 +36,7 @@ export const motherGothelWitheredAndWickedI18n: Record<Languages, I18nProperties
     version: "Withered and Wicked",
     text: [
       {
-        title: "WHAT HAVE YOU DONE?!",
+        title: "What Have You Done?!",
         description: "This character enters play with 3 damage.",
       },
     ],

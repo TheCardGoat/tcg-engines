@@ -17,7 +17,7 @@ export const queenOfHeartsQuicktemperedI18n: Record<Languages, I18nProperties> =
     version: "Jähzornig",
     text: [
       {
-        title: "ICH WARNE DICH, KIND!",
+        title: "Ich warne dich, Kind!",
         description:
           "Wenn du diesen Charakter ausspielst, füge einem beschädigten gegnerischen Charakter deiner Wahl 1 Schaden zu.",
       },
@@ -28,7 +28,7 @@ export const queenOfHeartsQuicktemperedI18n: Record<Languages, I18nProperties> =
     version: "Rapidement en colère",
     text: [
       {
-        title: "FUREUR ROYALE",
+        title: "Fureur royale",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage adverse blessé et infligez-lui 1 dommage supplémentaire.",
       },
@@ -39,7 +39,7 @@ export const queenOfHeartsQuicktemperedI18n: Record<Languages, I18nProperties> =
     version: "Quick-Tempered",
     text: [
       {
-        title: "ROYAL RAGE",
+        title: "Royal Rage",
         description:
           "When you play this character, deal 1 damage to chosen damaged opposing character.",
       },

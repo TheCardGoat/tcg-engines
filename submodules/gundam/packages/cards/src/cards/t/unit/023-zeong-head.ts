@@ -6,14 +6,17 @@ export const tZeongHead023: UnitCard = {
   type: "unit",
   traits: ["zeon"],
   id: "T-023",
-  externalId: "gundam:t-023",
-  slug: "zeong-head-t-023",
+  canonicalId: "T-023",
+  externalIds: { bandai: "gundam:t-023" },
+  slug: "zeong-head/t-023",
   displayName: "Zeong (Head)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "T-023",
   printings: [
     {
       id: "T-023",
+      artId: "T-023",
+      setCode: "GD04",
       collectorNumber: "T-023",
       cardNumber: "T-023",
       set: {
@@ -28,6 +31,7 @@ export const tZeongHead023: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["T-023"],
   selectedPrintingId: "T-023",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-023.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-023.webp?260424",

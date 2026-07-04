@@ -4,6 +4,17 @@ import { crikeeLuckyCricketI18n } from "./069-cri-kee-lucky-cricket.i18n";
 export const crikeeLuckyCricket: CharacterCard = {
   id: "pGG",
   canonicalId: "ci_pGG",
+  slug: "lorcana-ci_pGG",
+  printings: [
+    {
+      id: "set4-069",
+      artId: "set4-069",
+      setCode: "set4",
+      collectorNumber: "69",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-069"],
   cardType: "character",
   name: "Cri-Kee",
@@ -20,7 +31,7 @@ export const crikeeLuckyCricket: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_38b8a802fe784ee286fd81ddc09ea7ec",
-    tcgPlayer: 547783,
+    tcgPlayer: "547783",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd03VeteranTactics122: CommandCard = {
   color: "white",
   traits: ["superpower bloc", "un"],
   id: "GD03-122",
-  externalId: "gundam:gd03-122",
-  slug: "veteran-tactics-gd03-122",
+  canonicalId: "GD03-122",
+  externalIds: { bandai: "gundam:gd03-122" },
+  slug: "veteran-tactics/gd03-122",
   displayName: "Veteran Tactics",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-122",
   printings: [
     {
       id: "GD03-122",
+      artId: "GD03-122",
+      setCode: "GD03",
       collectorNumber: "GD03-122",
       cardNumber: "GD03-122",
       set: {
@@ -29,6 +32,7 @@ export const gd03VeteranTactics122: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-122"],
   selectedPrintingId: "GD03-122",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-122.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-122.webp?260424",

@@ -20,12 +20,13 @@ export const minnieMouseMusketeerChampionI18n: Record<Languages, I18nProperties>
     version: "Musketier-Champion",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "SPEKTAKULÄRER AUFTRITT",
+        title: "Spektakulärer Auftritt",
         description:
-          "Wenn du diesen Charakter ausspielst, verbanne einen gegnerischen Charakter deiner Wahl mit 5 oder mehr.",
+          "Wenn du diesen Charakter ausspielst, verbanne einen gegnerischen Charakter deiner Wahl mit 5 oder mehr {S}.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const minnieMouseMusketeerChampionI18n: Record<Languages, I18nProperties>
     version: "Championne Mousquetaire",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "ENTRÉE THÉATRALE",
+        title: "Entrée théatrale",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse avec 5 ou plus et bannissez-le.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse avec 5 {S} ou plus et bannissez-le.",
       },
     ],
   },
@@ -48,12 +50,12 @@ export const minnieMouseMusketeerChampionI18n: Record<Languages, I18nProperties>
     version: "Paladina dei Moschettieri",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "ENTRATA DRAMMATICA",
+        title: "Entrata Drammatica",
         description:
-          "Quando giochi questo personaggio, esilia un personaggio avversario a tua scelta con 5 o superiore.",
+          "Quando giochi questo personaggio, esilia un personaggio avversario a tua scelta con 5 {S} o superiore.",
       },
     ],
   },

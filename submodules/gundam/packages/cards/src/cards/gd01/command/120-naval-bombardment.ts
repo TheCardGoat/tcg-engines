@@ -7,14 +7,17 @@ export const gd01NavalBombardment120: CommandCard = {
   color: "white",
   traits: ["-"],
   id: "GD01-120",
-  externalId: "gundam:gd01-120",
-  slug: "naval-bombardment-gd01-120",
+  canonicalId: "GD01-120",
+  externalIds: { bandai: "gundam:gd01-120" },
+  slug: "naval-bombardment/gd01-120",
   displayName: "Naval Bombardment",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-120",
   printings: [
     {
       id: "GD01-120",
+      artId: "GD01-120",
+      setCode: "GD01",
       collectorNumber: "GD01-120",
       cardNumber: "GD01-120",
       set: {
@@ -30,6 +33,8 @@ export const gd01NavalBombardment120: CommandCard = {
     },
     {
       id: "GD01-120_p1",
+      artId: "GD01-120_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-120_p1",
       cardNumber: "GD01-120",
       set: {
@@ -44,6 +49,7 @@ export const gd01NavalBombardment120: CommandCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-120", "GD01-120_p1"],
   selectedPrintingId: "GD01-120",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-120.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-120.webp?260424",

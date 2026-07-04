@@ -6,14 +6,17 @@ export const tTallgeese005: UnitCard = {
   type: "unit",
   traits: ["oz"],
   id: "T-005",
-  externalId: "gundam:t-005",
-  slug: "tallgeese-t-005",
+  canonicalId: "T-005",
+  externalIds: { bandai: "gundam:t-005" },
+  slug: "tallgeese/t-005",
   displayName: "Tallgeese",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "T-005",
   printings: [
     {
       id: "T-005",
+      artId: "T-005",
+      setCode: "ST02",
       collectorNumber: "T-005",
       cardNumber: "T-005",
       set: {
@@ -28,6 +31,7 @@ export const tTallgeese005: UnitCard = {
       productName: "Wings of Advance [ST02]",
     },
   ],
+  reprints: ["T-005"],
   selectedPrintingId: "T-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-005.webp?260424",

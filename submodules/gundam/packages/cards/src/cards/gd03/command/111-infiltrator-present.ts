@@ -7,14 +7,17 @@ export const gd03InfiltratorPresent111: CommandCard = {
   color: "red",
   traits: ["mafty"],
   id: "GD03-111",
-  externalId: "gundam:gd03-111",
-  slug: "infiltrator-present-gd03-111",
+  canonicalId: "GD03-111",
+  externalIds: { bandai: "gundam:gd03-111" },
+  slug: "infiltrator-present/gd03-111",
   displayName: "Infiltrator Present",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-111",
   printings: [
     {
       id: "GD03-111",
+      artId: "GD03-111",
+      setCode: "GD03",
       collectorNumber: "GD03-111",
       cardNumber: "GD03-111",
       set: {
@@ -29,6 +32,7 @@ export const gd03InfiltratorPresent111: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-111"],
   selectedPrintingId: "GD03-111",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-111.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-111.webp?260424",

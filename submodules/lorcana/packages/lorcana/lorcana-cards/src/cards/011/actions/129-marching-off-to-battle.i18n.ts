@@ -11,10 +11,26 @@ export const marchingOffToBattleI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Vers notre champ de bataille",
-    text: "Si un personnage a été banni ce tour-ci, piochez 2 cartes.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Si un personnage a été banni ce tour-ci, piochez 2 cartes.",
+      },
+    ],
   },
   it: {
     name: "Marciamo Verso il Fronte",
-    text: "(Un personaggio con costo 4 o superiore può per cantare questa canzone gratis.) Se un personaggio è stato esiliato in questo turno, pesca 2 carte.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Se un personaggio è stato esiliato in questo turno, pesca 2 carte.",
+      },
+    ],
   },
 };

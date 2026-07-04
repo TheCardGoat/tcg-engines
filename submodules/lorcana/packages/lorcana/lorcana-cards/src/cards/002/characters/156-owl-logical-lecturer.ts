@@ -4,6 +4,17 @@ import { owlLogicalLecturerI18n } from "./156-owl-logical-lecturer.i18n";
 export const owlLogicalLecturer: CharacterCard = {
   id: "S4z",
   canonicalId: "ci_S4z",
+  slug: "lorcana-ci_S4z",
+  printings: [
+    {
+      id: "set2-156",
+      artId: "set2-156",
+      setCode: "set2",
+      collectorNumber: "156",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-156"],
   cardType: "character",
   name: "Owl",
@@ -21,7 +32,7 @@ export const owlLogicalLecturer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_c60b5558ee6c404f8cdf7955d1087b10",
-    tcgPlayer: 527278,
+    tcgPlayer: "527278",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: owlLogicalLecturerI18n,

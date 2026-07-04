@@ -17,7 +17,7 @@ export const yzmaUnjustlyTreatedI18n: Record<Languages, I18nProperties> = {
     version: "Ungerecht behandelt",
     text: [
       {
-        title: "ICH WARNE DICH!",
+        title: "Ich warne dich!",
         description:
           "Jedes Mal, wenn einer deiner Charaktere in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.",
       },
@@ -28,7 +28,7 @@ export const yzmaUnjustlyTreatedI18n: Record<Languages, I18nProperties> = {
     version: "Injustement traitée",
     text: [
       {
-        title: "JE T'AVERTIS!",
+        title: "Je t'avertis!",
         description:
           "Durant votre tour, chaque fois que l'un de vos personnages en bannit un autre via un défi, vous pouvez choisir un personnage et lui infliger 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const yzmaUnjustlyTreatedI18n: Record<Languages, I18nProperties> = {
     version: "Trattata Ingiustamente",
     text: [
       {
-        title: "STAI BEN ATTENTO!",
+        title: "Stai Ben Attento!",
         description:
           "Durante il tuo turno, ogni volta che uno dei tuoi personaggi esilia un altro personaggio in una sfida, puoi infliggere 1 danno a un personaggio a tua scelta.",
       },

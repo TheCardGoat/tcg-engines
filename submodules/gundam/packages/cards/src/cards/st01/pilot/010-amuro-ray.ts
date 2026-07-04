@@ -7,14 +7,17 @@ export const st01AmuroRay010: PilotCard = {
   color: "blue",
   traits: ["earth federation", "white base team", "newtype"],
   id: "ST01-010",
-  externalId: "gundam:st01-010",
-  slug: "amuro-ray-st01-010",
+  canonicalId: "ST01-010",
+  externalIds: { bandai: "gundam:st01-010" },
+  slug: "amuro-ray/st01-010",
   displayName: "Amuro Ray",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-010",
   printings: [
     {
       id: "ST01-010",
+      artId: "ST01-010",
+      setCode: "ST01",
       collectorNumber: "ST01-010",
       cardNumber: "ST01-010",
       set: {
@@ -30,6 +33,8 @@ export const st01AmuroRay010: PilotCard = {
     },
     {
       id: "ST01-010_p1",
+      artId: "ST01-010_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-010_p1",
       cardNumber: "ST01-010",
       set: {
@@ -45,6 +50,8 @@ export const st01AmuroRay010: PilotCard = {
     },
     {
       id: "ST01-010_p2",
+      artId: "ST01-010_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-010_p2",
       cardNumber: "ST01-010",
       set: {
@@ -60,6 +67,8 @@ export const st01AmuroRay010: PilotCard = {
     },
     {
       id: "ST01-010_p3",
+      artId: "ST01-010_p3",
+      setCode: "ST01",
       collectorNumber: "ST01-010_p3",
       cardNumber: "ST01-010",
       set: {
@@ -74,6 +83,7 @@ export const st01AmuroRay010: PilotCard = {
       productName: "WORLD CHAMPIONSHIPS 25-26 REGIONAL CHAMPIONSHIPS Participation Card",
     },
   ],
+  reprints: ["ST01-010", "ST01-010_p1", "ST01-010_p2", "ST01-010_p3"],
   selectedPrintingId: "ST01-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-010.webp?260424",

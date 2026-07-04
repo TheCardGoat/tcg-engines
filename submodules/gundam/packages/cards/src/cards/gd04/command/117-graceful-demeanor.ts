@@ -7,14 +7,17 @@ export const gd04GracefulDemeanor117: CommandCard = {
   color: "white",
   traits: [],
   id: "GD04-117",
-  externalId: "gundam:gd04-117",
-  slug: "graceful-demeanor-gd04-117",
+  canonicalId: "GD04-117",
+  externalIds: { bandai: "gundam:gd04-117" },
+  slug: "graceful-demeanor/gd04-117",
   displayName: "Graceful Demeanor",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-117",
   printings: [
     {
       id: "GD04-117",
+      artId: "GD04-117",
+      setCode: "GD04",
       collectorNumber: "GD04-117",
       cardNumber: "GD04-117",
       set: {
@@ -30,6 +33,8 @@ export const gd04GracefulDemeanor117: CommandCard = {
     },
     {
       id: "GD04-117_p1",
+      artId: "GD04-117_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-117_p1",
       cardNumber: "GD04-117",
       set: {
@@ -44,6 +49,7 @@ export const gd04GracefulDemeanor117: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-117", "GD04-117_p1"],
   selectedPrintingId: "GD04-117",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-117.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-117.webp?260424",

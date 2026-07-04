@@ -16,8 +16,8 @@ export const razoulPalaceGuardI18n: Record<Languages, I18nProperties> = {
     version: "Palastwache",
     text: [
       {
-        title: "SEHT EUCH DAS AN",
-        description: "Solange dieser Charakter unbeschädigt ist, erhält er +2.",
+        title: "Seht euch das an",
+        description: "Solange dieser Charakter unbeschädigt ist, erhält er +2 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const razoulPalaceGuardI18n: Record<Languages, I18nProperties> = {
     version: "Garde du palais",
     text: [
       {
-        title: "REGARDEZ",
-        description: "Tant que ce personnage n'a aucun jeton Dommage sur lui, il gagne +2.",
+        title: "Regardez",
+        description: "Tant que ce personnage n'a aucun jeton Dommage sur lui, il gagne +2 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const razoulPalaceGuardI18n: Record<Languages, I18nProperties> = {
     version: "Guardia di Palazzo",
     text: [
       {
-        title: "GUARDATE UN PO'",
-        description: "Mentre questo personaggio non ha danno, riceve +2.",
+        title: "Guardate un Po'",
+        description: "Mentre questo personaggio non ha danno, riceve +2 {S}.",
       },
     ],
   },

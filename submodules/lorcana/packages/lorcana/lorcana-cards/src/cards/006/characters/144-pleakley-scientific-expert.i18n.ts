@@ -17,7 +17,7 @@ export const pleakleyScientificExpertI18n: Record<Languages, I18nProperties> = {
     version: "Wissenschaftlicher Experte",
     text: [
       {
-        title: "MELDUNG ZUM DIENST",
+        title: "Meldung zum Dienst",
         description:
           "Wenn du diesen Charakter ausspielst, wähle einen deiner Charaktere und lege ihn verdeckt und erschöpft in deinen Tintenvorrat.",
       },
@@ -28,7 +28,7 @@ export const pleakleyScientificExpertI18n: Record<Languages, I18nProperties> = {
     version: "Expert scientifique",
     text: [
       {
-        title: "AU RAPPORT",
+        title: "Au rapport",
         description:
           "Lorsque vous jouez ce personnage, choisissez l'un de vos personnages et placez-le dans votre réserve d'encre, face cachée et épuisé.",
       },
@@ -39,7 +39,7 @@ export const pleakleyScientificExpertI18n: Record<Languages, I18nProperties> = {
     version: "Esperto Scientifico",
     text: [
       {
-        title: "A RAPPORTO, SIGNORE",
+        title: "A Rapporto, Signore",
         description:
           "Quando giochi questo personaggio, aggiungi un tuo personaggio a tua scelta al tuo calamaio, a faccia in giù e impegnato.",
       },

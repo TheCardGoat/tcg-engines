@@ -20,12 +20,13 @@ export const merlinIntellectualVisionaryI18n: Record<Languages, I18nProperties> 
     version: "Intellektueller Visionär",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Merlin-Charaktere auszuspielen.)",
       },
       {
-        title: "ÜBERENTWICKELTES GEHIRN",
+        title: "Überentwickeltes Gehirn",
         description:
-          "Wenn du diesen Charakter ausspielst, falls du Gestaltwandel benutzt hast, um diesen Charakter auszuspielen, darfst du dein Deck nach einer beliebigen Karte durchsuchen und diese auf deine Hand nehmen. Mische danach dein Deck.",
+          "Wenn du diesen Charakter ausspielst, falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, darfst du dein Deck nach einer beliebigen Karte durchsuchen und diese auf deine Hand nehmen. Mische danach dein Deck.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const merlinIntellectualVisionaryI18n: Record<Languages, I18nProperties> 
     version: "Visionnaire éclairé",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Merlin.)",
       },
       {
-        title: "CERVEAU SURDÉVELOPPÉ",
+        title: "Cerveau surdéveloppé",
         description:
-          "Si vous jouez ce personnage en utilisant sa capacité Alter, vous pouvez chercher une carte dans votre pioche et la placer dans votre main. Ensuite, mélangez votre pioche.",
+          "Si vous jouez ce personnage en utilisant sa capacité <Alter>, vous pouvez chercher une carte dans votre pioche et la placer dans votre main. Ensuite, mélangez votre pioche.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const merlinIntellectualVisionaryI18n: Record<Languages, I18nProperties> 
     version: "Intellettuale Visionario",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Merlino.)",
       },
       {
-        title: "INTELLIGENZA SUPERSVILUPPATA",
+        title: "Intelligenza Supersviluppata",
         description:
-          "Quando giochi questo personaggio, se hai usato Trasformazione per giocarlo, puoi cercare una qualsiasi carta nel tuo mazzo, aggiungere quella carta alla tua mano e poi rimescolare il tuo mazzo.",
+          "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, puoi cercare una qualsiasi carta nel tuo mazzo, aggiungere quella carta alla tua mano e poi rimescolare il tuo mazzo.",
       },
     ],
   },

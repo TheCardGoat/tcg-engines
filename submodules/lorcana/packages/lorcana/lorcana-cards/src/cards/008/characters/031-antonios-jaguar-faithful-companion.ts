@@ -4,6 +4,17 @@ import { antoniosJaguarFaithfulCompanionI18n } from "./031-antonios-jaguar-faith
 export const antoniosJaguarFaithfulCompanion: CharacterCard = {
   id: "tDk",
   canonicalId: "ci_tDk",
+  slug: "lorcana-ci_tDk",
+  printings: [
+    {
+      id: "set8-031",
+      artId: "set8-031",
+      setCode: "set8",
+      collectorNumber: "31",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-031"],
   cardType: "character",
   name: "Antonio's Jaguar",
@@ -20,7 +31,7 @@ export const antoniosJaguarFaithfulCompanion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5aeba01760c3494cae9eb6629dfdb1de",
-    tcgPlayer: 631344,
+    tcgPlayer: "631344",
   },
   text: [
     {

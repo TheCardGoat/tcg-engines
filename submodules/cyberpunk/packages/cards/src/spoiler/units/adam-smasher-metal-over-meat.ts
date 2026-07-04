@@ -1,13 +1,14 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerAdamSmasherMetalOverMeat = {
+export const spoilerAdamSmasherMetalOverMeat = defineCyberpunkCard({
   id: "ad8dee60-9812-4d00-95b6-a79a8dd632f3",
-  externalId: "cyberpunk:adam-smasher-metal-over-meat",
   slug: "adam-smasher-metal-over-meat",
-  name: "Adam Smasher",
-  subname: "Metal Over Meat",
-  displayName: "Adam Smasher - Metal Over Meat",
   rulesText: "PLAY Defeat all other Units.",
+  subname: "Metal Over Meat",
+  name: "Adam Smasher",
+  displayName: "Adam Smasher - Metal Over Meat",
+  canonicalId: "adam-smasher-metal-over-meat",
   color: "yellow",
   classifications: ["Arasaka", "Merc"],
   set: {
@@ -15,15 +16,6 @@ export const spoilerAdamSmasherMetalOverMeat = {
     name: "Spoiler Set",
   },
   printNumber: "137",
-  printings: [
-    {
-      id: "751524e4-9cc0-4598-8775-1dfe0e14624e",
-      collectorNumber: "137",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "751524e4-9cc0-4598-8775-1dfe0e14624e",
   artist: "Łukasz Poller",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/137.webp",
   rarity: null,
@@ -31,7 +23,6 @@ export const spoilerAdamSmasherMetalOverMeat = {
   hasSellTag: false,
   ram: 5,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 9,
   power: 15,
@@ -58,5 +49,4 @@ export const spoilerAdamSmasherMetalOverMeat = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

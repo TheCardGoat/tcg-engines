@@ -4,6 +4,17 @@ import { doItAgainI18n } from "./094-do-it-again.i18n";
 export const doItAgain: ActionCard = {
   id: "27H",
   canonicalId: "ci_27H",
+  slug: "lorcana-ci_27H",
+  printings: [
+    {
+      id: "set1-094",
+      artId: "set1-094",
+      setCode: "set1",
+      collectorNumber: "94",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-094"],
   cardType: "action",
   name: "Do It Again!",
@@ -16,7 +27,7 @@ export const doItAgain: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c6e59761b01b488b9a46b1dbfb30707e",
-    tcgPlayer: 506830,
+    tcgPlayer: "506830",
   },
   text: "Return an action card from your discard to your hand.",
   abilities: [

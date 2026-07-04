@@ -58,6 +58,43 @@ export const coreScenarios: Scenario[] = [
       ),
   },
   {
+    id: "retailPr2295Cards",
+    group: "core",
+    label: "Retail · PR 2295 cards",
+    description:
+      "Visible board fixture containing the seven Cyberpunk retail cards added in PR #2295 for human validation.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailYorinobuArasakaSteelDragon,
+            c.welcomeToNightCityRetailOverwatchPanamSGift,
+          ],
+          field: [
+            { card: c.welcomeToNightCityRetailLaLloronaGhostOfThePast, spent: false },
+            { card: c.welcomeToNightCityRetailMistyOlszewskiMenderOfBrokenSpirits, spent: false },
+            { card: c.welcomeToNightCityRetailSaulBrightStormrider, spent: false },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
+          ],
+          eddies: 8,
+          deck: [c.alphaRuthlessLowlife, c.alphaRebootOptics],
+          gigArea: [{ dieType: "d6", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          gigArea: [{ dieType: "d4", faceValue: 1 }],
+        },
+        {
+          seed: scenarioSeed("retailPr2295Cards"),
+          preserveDeckOrder: true,
+          autoGainGig: false,
+        },
+      ),
+  },
+  {
     id: "openingMain",
     group: "core",
     label: "Opening · Your turn",

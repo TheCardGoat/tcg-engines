@@ -4,6 +4,17 @@ import { elsaIceSurferI18n } from "./109-elsa-ice-surfer.i18n";
 export const elsaIceSurfer: CharacterCard = {
   id: "zCK",
   canonicalId: "ci_zCK",
+  slug: "lorcana-ci_zCK",
+  printings: [
+    {
+      id: "set1-109",
+      artId: "set1-109",
+      setCode: "set1",
+      collectorNumber: "109",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-109"],
   cardType: "character",
   name: "Elsa",
@@ -20,7 +31,7 @@ export const elsaIceSurfer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4dff89f588a5466097978e9889eef559",
-    tcgPlayer: 507482,
+    tcgPlayer: "507482",
   },
   text: [
     {

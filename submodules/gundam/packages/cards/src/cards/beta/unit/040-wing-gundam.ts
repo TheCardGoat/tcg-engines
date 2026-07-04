@@ -7,14 +7,17 @@ export const betaWingGundam040: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-040_p1",
-  externalId: "gundam:gd01-040_p1",
-  slug: "wing-gundam-gd01-040-p1",
+  canonicalId: "GD01-040",
+  externalIds: { bandai: "gundam:gd01-040_p1" },
+  slug: "wing-gundam/gd01-040",
   displayName: "Wing Gundam",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-040_p1",
   printings: [
     {
       id: "GD01-040",
+      artId: "GD01-040",
+      setCode: "GD01",
       collectorNumber: "GD01-040",
       cardNumber: "GD01-040",
       set: {
@@ -30,6 +33,8 @@ export const betaWingGundam040: UnitCard = {
     },
     {
       id: "GD01-040_p1",
+      artId: "GD01-040_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-040_p1",
       cardNumber: "GD01-040",
       set: {
@@ -44,6 +49,7 @@ export const betaWingGundam040: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-040", "GD01-040_p1"],
   selectedPrintingId: "GD01-040_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-040_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-040_p1.webp?260424",

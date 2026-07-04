@@ -16,8 +16,8 @@ export const flotsamRiffraffI18n: Record<Languages, I18nProperties> = {
     version: "Fischabfall",
     text: [
       {
-        title: "UNHEIMLICHES PAAR",
-        description: "Deine Meerschaum-Charaktere erhalten +3.",
+        title: "Unheimliches Paar",
+        description: "Deine Meerschaum-Charaktere erhalten +3 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const flotsamRiffraffI18n: Record<Languages, I18nProperties> = {
     version: "Boule puante",
     text: [
       {
-        title: "SINISTRE DUO",
-        description: "Vos personnages Jetsam gagnent +3.",
+        title: "Sinistre duo",
+        description: "Vos personnages Jetsam gagnent +3 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const flotsamRiffraffI18n: Record<Languages, I18nProperties> = {
     version: "Marmaglia",
     text: [
       {
-        title: "COPPIA INQUIETANTE I",
-        description: "tuoi personaggi chiamati Jetsam ricevono +3.",
+        title: "Coppia Inquietante",
+        description: "I tuoi personaggi chiamati Jetsam ricevono +3 {S}.",
       },
     ],
   },

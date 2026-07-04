@@ -4,6 +4,17 @@ import { madHatterEccentricHostI18n } from "./059-mad-hatter-eccentric-host.i18n
 export const madHatterEccentricHost: CharacterCard = {
   id: "u3f",
   canonicalId: "ci_u3f",
+  slug: "lorcana-ci_u3f",
+  printings: [
+    {
+      id: "set6-059",
+      artId: "set6-059",
+      setCode: "set6",
+      collectorNumber: "59",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-059"],
   cardType: "character",
   name: "Mad Hatter",
@@ -20,7 +31,7 @@ export const madHatterEccentricHost: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_374115dba006482aa076efca3e52635a",
-    tcgPlayer: 593022,
+    tcgPlayer: "593022",
   },
   text: [
     {

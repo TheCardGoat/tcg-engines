@@ -4,6 +4,17 @@ import { akelaForestRunnerI18n } from "./090-akela-forest-runner.i18n";
 export const akelaForestRunner: CharacterCard = {
   id: "iHw",
   canonicalId: "ci_iHw",
+  slug: "lorcana-ci_iHw",
+  printings: [
+    {
+      id: "set10-090",
+      artId: "set10-090",
+      setCode: "set10",
+      collectorNumber: "90",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-090"],
   cardType: "character",
   name: "Akela",
@@ -20,7 +31,7 @@ export const akelaForestRunner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_37c56a7dac1a492499e021595eda74a7",
-    tcgPlayer: 659186,
+    tcgPlayer: "659186",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd01MQuve092: PilotCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-092",
-  externalId: "gundam:gd01-092",
-  slug: "m-quve-gd01-092",
+  canonicalId: "GD01-092",
+  externalIds: { bandai: "gundam:gd01-092" },
+  slug: "m-quve/gd01-092",
   displayName: "M'Quve",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-092",
   printings: [
     {
       id: "GD01-092",
+      artId: "GD01-092",
+      setCode: "GD01",
       collectorNumber: "GD01-092",
       cardNumber: "GD01-092",
       set: {
@@ -29,6 +32,7 @@ export const gd01MQuve092: PilotCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-092"],
   selectedPrintingId: "GD01-092",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-092.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-092.webp?260424",

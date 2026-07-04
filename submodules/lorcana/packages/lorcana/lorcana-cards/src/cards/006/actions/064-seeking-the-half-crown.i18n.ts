@@ -15,14 +15,38 @@ export const seekingTheHalfCrownI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Nach der Kronenhälfte suchen",
-    text: "Für jeden Magier, den du im Spiel hast, zahlst du 1 weniger, um diese Aktion auszuspielen. Ziehe 2 Karten.",
+    text: [
+      {
+        title:
+          "Für jeden Magier, den du im Spiel hast, zahlst du 1 {I} weniger, um diese Aktion auszuspielen.",
+      },
+      {
+        title: "Ziehe 2 Karten.",
+      },
+    ],
   },
   fr: {
     name: "En quête de la moitié de Couronne",
-    text: "Jouer cette action coûte 1 de moins pour chaque personnage Mage que vous avez en jeu. Piochez 2 cartes.",
+    text: [
+      {
+        title:
+          "Jouer cette action coûte 1 {I} de moins pour chaque personnage Mage que vous avez en jeu.",
+      },
+      {
+        title: "Piochez 2 cartes.",
+      },
+    ],
   },
   it: {
     name: "Alla Ricerca della Mezza Corona",
-    text: "Per ogni personaggio Incantatore che hai in gioco, paga 1 in meno per giocare questa azione. Pesca 2 carte.",
+    text: [
+      {
+        title:
+          "Per ogni personaggio Incantatore che hai in gioco, paga 1 {I} in meno per giocare questa azione.",
+      },
+      {
+        title: "Pesca 2 carte.",
+      },
+    ],
   },
 };

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { belleHiddenArcherI18n } from "./072-belle-hidden-archer.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const belleHiddenArcher: CharacterCard = {
   id: "df2",
   canonicalId: "ci_df2",
+  slug: "lorcana-ci_df2",
+  printings: [
+    {
+      id: "set2-072",
+      artId: "set2-072",
+      setCode: "set2",
+      collectorNumber: "72",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-072"],
   cardType: "character",
   name: "Belle",
@@ -21,7 +33,7 @@ export const belleHiddenArcher: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_db68b32c197d4f808a46afc957338877",
-    tcgPlayer: 516417,
+    tcgPlayer: "516417",
   },
   text: [
     {

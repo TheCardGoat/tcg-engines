@@ -7,14 +7,17 @@ export const gd02AmidaSHyakuren062: UnitCard = {
   color: "purple",
   traits: ["teiwaz"],
   id: "GD02-062",
-  externalId: "gundam:gd02-062",
-  slug: "amida-s-hyakuren-gd02-062",
+  canonicalId: "GD02-062",
+  externalIds: { bandai: "gundam:gd02-062" },
+  slug: "amida-s-hyakuren/gd02-062",
   displayName: "Amida's Hyakuren",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-062",
   printings: [
     {
       id: "GD02-062",
+      artId: "GD02-062",
+      setCode: "GD02",
       collectorNumber: "GD02-062",
       cardNumber: "GD02-062",
       set: {
@@ -29,6 +32,7 @@ export const gd02AmidaSHyakuren062: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-062"],
   selectedPrintingId: "GD02-062",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-062.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-062.webp?260424",

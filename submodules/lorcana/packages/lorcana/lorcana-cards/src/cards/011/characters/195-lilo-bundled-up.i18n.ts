@@ -17,7 +17,7 @@ export const liloBundledUpI18n: Record<Languages, I18nProperties> = {
     version: "Gut angezogen",
     text: [
       {
-        title: "EXTRASCHICHTEN",
+        title: "Extraschichten",
         description:
           "Jedes erste Mal, wenn dieser Charakter im Zug einer gegnerischen Person Schaden erhalten würde, erhält er stattdessen keinen Schaden.",
       },
@@ -28,7 +28,7 @@ export const liloBundledUpI18n: Record<Languages, I18nProperties> = {
     version: "Bien emmitouflée",
     text: [
       {
-        title: "EXTRA COUCHES",
+        title: "Extra couches",
         description:
           "Durant le tour de chaque adversaire, la première fois que ce personnage doit subir des dommages, il n'en subit aucun à la place.",
       },
@@ -39,7 +39,7 @@ export const liloBundledUpI18n: Record<Languages, I18nProperties> = {
     version: "Infagottata",
     text: [
       {
-        title: "STRATI AGGIUNTIVI",
+        title: "Strati Aggiuntivi",
         description:
           "Durante il turno di ogni avversario, la prima volta che questo personaggio subirebbe danni, non subisce invece alcun danno.",
       },

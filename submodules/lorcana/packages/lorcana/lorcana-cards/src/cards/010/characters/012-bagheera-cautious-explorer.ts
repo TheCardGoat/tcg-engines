@@ -4,6 +4,17 @@ import { bagheeraCautiousExplorerI18n } from "./012-bagheera-cautious-explorer.i
 export const bagheeraCautiousExplorer: CharacterCard = {
   id: "G0X",
   canonicalId: "ci_G0X",
+  slug: "lorcana-ci_G0X",
+  printings: [
+    {
+      id: "set10-012",
+      artId: "set10-012",
+      setCode: "set10",
+      collectorNumber: "12",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-012"],
   cardType: "character",
   name: "Bagheera",
@@ -21,7 +32,7 @@ export const bagheeraCautiousExplorer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_bd27b70ddc3540489c47c824128ec53f",
-    tcgPlayer: 659180,
+    tcgPlayer: "659180",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: bagheeraCautiousExplorerI18n,

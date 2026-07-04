@@ -4,6 +4,17 @@ import { peteRottenGuyI18n } from "./086-pete-rotten-guy.i18n";
 export const peteRottenGuy: CharacterCard = {
   id: "qJb",
   canonicalId: "ci_qJb",
+  slug: "lorcana-ci_qJb",
+  printings: [
+    {
+      id: "set4-086",
+      artId: "set4-086",
+      setCode: "set4",
+      collectorNumber: "86",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-086"],
   cardType: "character",
   name: "Pete",
@@ -20,7 +31,7 @@ export const peteRottenGuy: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_e99a28536b8c4a7e98db8ee70e564fba",
-    tcgPlayer: 549516,
+    tcgPlayer: "549516",
   },
   classifications: ["Storyborn", "Villain", "Musketeer"],
   i18n: peteRottenGuyI18n,

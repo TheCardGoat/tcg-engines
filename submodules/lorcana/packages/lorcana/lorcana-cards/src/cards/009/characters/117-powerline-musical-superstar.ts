@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { powerlineMusicalSuperstarI18n } from "./117-powerline-musical-superstar.i18n";
 
 export const powerlineMusicalSuperstar: CharacterCard = {
-  id: "Xee",
+  id: "XTx",
   canonicalId: "ci_JGr",
+  slug: "lorcana-ci_JGr",
+  printings: [
+    {
+      id: "set9-117",
+      artId: "set9-117",
+      setCode: "set9",
+      collectorNumber: "117",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-117"],
   cardType: "character",
   name: "Powerline",
@@ -20,7 +31,7 @@ export const powerlineMusicalSuperstar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e234293cec8f422eb1d613594771e5ee",
-    tcgPlayer: 650151,
+    tcgPlayer: "650151",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { youngMacguffinSoftspokenSonI18n } from "./071-young-macguffin-soft-spok
 export const youngMacguffinSoftspokenSon: CharacterCard = {
   id: "1yf",
   canonicalId: "ci_1yf",
+  slug: "lorcana-ci_1yf",
+  printings: [
+    {
+      id: "set12-071",
+      artId: "set12-071",
+      setCode: "set12",
+      collectorNumber: "71",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-071"],
   cardType: "character",
   name: "Young MacGuffin",
@@ -21,6 +32,7 @@ export const youngMacguffinSoftspokenSon: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_0e3b42aaf42e4bc9bdc7b2814a825893",
+    tcgPlayer: "692163",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: youngMacguffinSoftspokenSonI18n,

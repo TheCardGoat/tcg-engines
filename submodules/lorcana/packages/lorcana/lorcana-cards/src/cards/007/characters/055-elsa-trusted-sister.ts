@@ -4,6 +4,17 @@ import { elsaTrustedSisterI18n } from "./055-elsa-trusted-sister.i18n";
 export const elsaTrustedSister: CharacterCard = {
   id: "DdM",
   canonicalId: "ci_DdM",
+  slug: "lorcana-ci_DdM",
+  printings: [
+    {
+      id: "set7-055",
+      artId: "set7-055",
+      setCode: "set7",
+      collectorNumber: "55",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-055"],
   cardType: "character",
   name: "Elsa",
@@ -20,7 +31,7 @@ export const elsaTrustedSister: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6e04382533a045eda3c48e76e9dda411",
-    tcgPlayer: 619434,
+    tcgPlayer: "619434",
   },
   text: [
     {

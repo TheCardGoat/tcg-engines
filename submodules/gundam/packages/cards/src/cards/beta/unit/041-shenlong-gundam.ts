@@ -7,14 +7,17 @@ export const betaShenlongGundam041: UnitCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-041_p1",
-  externalId: "gundam:gd01-041_p1",
-  slug: "shenlong-gundam-gd01-041-p1",
+  canonicalId: "GD01-041",
+  externalIds: { bandai: "gundam:gd01-041_p1" },
+  slug: "shenlong-gundam/gd01-041",
   displayName: "Shenlong Gundam",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-041_p1",
   printings: [
     {
       id: "GD01-041",
+      artId: "GD01-041",
+      setCode: "GD01",
       collectorNumber: "GD01-041",
       cardNumber: "GD01-041",
       set: {
@@ -30,6 +33,8 @@ export const betaShenlongGundam041: UnitCard = {
     },
     {
       id: "GD01-041_p1",
+      artId: "GD01-041_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-041_p1",
       cardNumber: "GD01-041",
       set: {
@@ -44,6 +49,7 @@ export const betaShenlongGundam041: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-041", "GD01-041_p1"],
   selectedPrintingId: "GD01-041_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-041_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-041_p1.webp?260424",

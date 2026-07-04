@@ -21,12 +21,12 @@ export const angelExperiment624EnchantedI18n: Record<Languages, I18nProperties> 
     version: "Experiment 624",
     text: [
       {
-        title: "UNANTASTBAR",
+        title: "Unantastbar",
         description:
-          "Solange du keine Karten auf der Hand hast, erhält dieser Charakter Robust +2.",
+          "Solange du keine Karten auf der Hand hast, erhält dieser Charakter <Robust> +2.",
       },
       {
-        title: "GUT GEZIELT",
+        title: "Gut gezielt",
         description:
           "Einmal während deines Zuges darfst du eine Karte von deiner Hand auswählen und abwerfen, um einem Charakter deiner Wahl 2 Schaden zuzufügen.",
       },
@@ -37,12 +37,12 @@ export const angelExperiment624EnchantedI18n: Record<Languages, I18nProperties> 
     version: "Expérience 624",
     text: [
       {
-        title: "INTOUCHABLE",
+        title: "Intouchable",
         description:
-          "Tant que vous n'avez aucune carte en main, ce personnage gagne Résistance +2.",
+          "Tant que vous n'avez aucune carte en main, ce personnage gagne <Résistance> +2.",
       },
       {
-        title: "BIEN VISÉ",
+        title: "Bien visé",
         description:
           "Une fois durant votre tour, vous pouvez défausser une carte pour choisir un personnage et lui infliger 2 dommages.",
       },
@@ -53,11 +53,11 @@ export const angelExperiment624EnchantedI18n: Record<Languages, I18nProperties> 
     version: "Esperimento 624",
     text: [
       {
-        title: "IMBATTIBILE",
-        description: "Mentre non hai carte in mano, questo personaggio ottiene Resistere +2.",
+        title: "Imbattibile",
+        description: "Mentre non hai carte in mano, questo personaggio ottiene <Resistere> +2.",
       },
       {
-        title: "OTTIMA MIRA",
+        title: "Ottima Mira",
         description:
           "Una volta durante il tuo turno, puoi scegliere e scartare una carta per infliggere 2 danni a un personaggio a tua scelta.",
       },

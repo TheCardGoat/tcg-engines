@@ -20,12 +20,13 @@ export const jasmineRoyalCommodoreI18n: Record<Languages, I18nProperties> = {
     version: "Königliche Kommodorin",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Jasmin-Charaktere auszuspielen.)",
       },
       {
-        title: "HERRSCHERIN DER MEERE",
+        title: "Herrscherin der Meere",
         description:
-          "Falls du Gestaltwandel benutzt hast, um diesen Charakter auszuspielen, schicke alle anderen erschöpften Charaktere auf die zugehörigen Hände zurück.",
+          "Falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, schicke alle anderen erschöpften Charaktere auf die zugehörigen Hände zurück.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const jasmineRoyalCommodoreI18n: Record<Languages, I18nProperties> = {
     version: "Commodore royale",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Jasmine.)",
       },
       {
-        title: "RÉGENTE DES MERS",
+        title: "Régente des mers",
         description:
-          "Si vous jouez ce personnage en utilisant sa capacité Alter, renvoyez tous les autres personnages épuisés dans la main de leur propriétaire.",
+          "Si vous jouez ce personnage en utilisant sa capacité <Alter>, renvoyez tous les autres personnages épuisés dans la main de leur propriétaire.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const jasmineRoyalCommodoreI18n: Record<Languages, I18nProperties> = {
     version: "Commodoro Reale",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Jasmine.)",
       },
       {
-        title: "SOVRANA DEI MARI",
+        title: "Sovrana dei Mari",
         description:
-          "Quando giochi questo personaggio, se hai usato Trasformazione per giocarlo, fai riprendere in mano ai loro giocatori tutti gli altri personaggi impegnati.",
+          "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, fai riprendere in mano ai loro giocatori tutti gli altri personaggi impegnati.",
       },
     ],
   },

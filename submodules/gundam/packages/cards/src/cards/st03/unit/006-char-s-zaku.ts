@@ -7,14 +7,17 @@ export const st03CharSZaku006: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "ST03-006",
-  externalId: "gundam:st03-006",
-  slug: "char-s-zaku-st03-006",
+  canonicalId: "ST03-006",
+  externalIds: { bandai: "gundam:st03-006" },
+  slug: "char-s-zaku-ii/st03-006",
   displayName: "Char's Zaku Ⅱ",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-006",
   printings: [
     {
       id: "ST03-006",
+      artId: "ST03-006",
+      setCode: "ST03",
       collectorNumber: "ST03-006",
       cardNumber: "ST03-006",
       set: {
@@ -30,6 +33,8 @@ export const st03CharSZaku006: UnitCard = {
     },
     {
       id: "ST03-006_p1",
+      artId: "ST03-006_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-006_p1",
       cardNumber: "ST03-006",
       set: {
@@ -45,6 +50,8 @@ export const st03CharSZaku006: UnitCard = {
     },
     {
       id: "ST03-006_p2",
+      artId: "ST03-006_p2",
+      setCode: "ST03",
       collectorNumber: "ST03-006_p2",
       cardNumber: "ST03-006",
       set: {
@@ -59,6 +66,7 @@ export const st03CharSZaku006: UnitCard = {
       productName: "WORLD CHAMPIONSHIPS 25-26 GRAND FINAL Participation Prize",
     },
   ],
+  reprints: ["ST03-006", "ST03-006_p1", "ST03-006_p2"],
   selectedPrintingId: "ST03-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-006.webp?260424",

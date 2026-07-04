@@ -17,7 +17,7 @@ export const mrsJudsonHousekeeperI18n: Record<Languages, I18nProperties> = {
     version: "Haushälterin",
     text: [
       {
-        title: "AUFRÄUMEN",
+        title: "Aufräumen",
         description:
           "Jedes Mal, wenn du eine Flutgestalt ausspielst, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const mrsJudsonHousekeeperI18n: Record<Languages, I18nProperties> = {
     version: "Gouvernante",
     text: [
       {
-        title: "ORDONNÉE",
+        title: "Ordonnée",
         description:
           "Chaque fois que vous jouez un personnage Floodborn, vous pouvez placer la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const mrsJudsonHousekeeperI18n: Record<Languages, I18nProperties> = {
     version: "Housekeeper",
     text: [
       {
-        title: "TIDY UP",
+        title: "Tidy Up",
         description:
           "Whenever you play a Floodborn character, you may put the top card of your deck into your inkwell facedown and exerted.",
       },

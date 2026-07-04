@@ -20,10 +20,11 @@ export const robinHoodEphemeralArcherEpicI18n: Record<Languages, I18nProperties>
     version: "Flüchtiger Bogenschütze",
     text: [
       {
-        title: "Stärken 1",
+        title:
+          "<Stärken> 1 {I} (Einmal während deines Zuges darfst du 1 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "MEISTERHAFTER SCHUSS",
+        title: "Meisterhafter Schuss",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, falls er mindestens eine Karte unter sich hat, wähle bis zu 2 Charaktere und füge ihnen je 1 Schaden zu.",
       },
@@ -34,10 +35,11 @@ export const robinHoodEphemeralArcherEpicI18n: Record<Languages, I18nProperties>
     version: "Archer éphémère",
     text: [
       {
-        title: "Boost 1",
+        title:
+          "<Boost> 1 {I} (Une fois durant votre tour, vous pouvez payer 1 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "TIREUR EXPERT",
+        title: "Tireur expert",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, s'il y a une carte sous lui, choisissez jusqu'à 2 personnages et infligez 1 dommage à chacun.",
       },
@@ -48,10 +50,11 @@ export const robinHoodEphemeralArcherEpicI18n: Record<Languages, I18nProperties>
     version: "Arciere Effimero",
     text: [
       {
-        title: "Potenziamento 1",
+        title:
+          "<Potenziamento> 1 {I} (Una volta durante il tuo turno, puoi pagare 1 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "TIRO ESPERTO",
+        title: "Tiro Esperto",
         description:
           "Ogni volta che questo personaggio va all'avventura, se c'è una carta sotto di esso, infliggi 1 danno a fino a 2 personaggi a tua scelta.",
       },

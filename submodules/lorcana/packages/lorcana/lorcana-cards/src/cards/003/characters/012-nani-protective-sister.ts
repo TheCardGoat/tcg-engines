@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { naniProtectiveSisterI18n } from "./012-nani-protective-sister.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const naniProtectiveSister: CharacterCard = {
   id: "5yO",
   canonicalId: "ci_2at",
+  slug: "lorcana-ci_2at",
+  printings: [
+    {
+      id: "set3-012",
+      artId: "set3-012",
+      setCode: "set3",
+      collectorNumber: "12",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-012", "set9-017"],
   cardType: "character",
   name: "Nani",
@@ -21,7 +33,7 @@ export const naniProtectiveSister: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_46a9657cca954d1981ba9f69647ebe44",
-    tcgPlayer: 649965,
+    tcgPlayer: "649965",
   },
   text: "Bodyguard",
   classifications: ["Storyborn", "Hero"],

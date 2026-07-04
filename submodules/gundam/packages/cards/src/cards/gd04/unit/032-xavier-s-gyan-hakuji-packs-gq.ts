@@ -7,14 +7,17 @@ export const gd04XavierSGyanHakujiPacksGq032: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD04-032",
-  externalId: "gundam:gd04-032",
-  slug: "xavier-s-gyan-hakuji-packs-gq-gd04-032",
+  canonicalId: "GD04-032",
+  externalIds: { bandai: "gundam:gd04-032" },
+  slug: "xavier-s-gyan-hakuji-packs-gq/gd04-032",
   displayName: "Xavier's Gyan Hakuji-Packs (GQ)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-032",
   printings: [
     {
       id: "GD04-032",
+      artId: "GD04-032",
+      setCode: "GD04",
       collectorNumber: "GD04-032",
       cardNumber: "GD04-032",
       set: {
@@ -29,6 +32,7 @@ export const gd04XavierSGyanHakujiPacksGq032: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-032"],
   selectedPrintingId: "GD04-032",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-032.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-032.webp?260424",

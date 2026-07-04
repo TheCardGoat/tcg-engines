@@ -20,12 +20,13 @@ export const peteSpacePirateI18n: Record<Languages, I18nProperties> = {
     version: "Weltraum-Pirat",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Kater-Karlo-Charaktere auszuspielen.)",
       },
       {
-        title: "SCHRECKLICHER PLAN",
+        title: "Schrecklicher Plan",
         description:
-          "Solange dieser Charakter erschöpft ist, können gegnerische Charaktere nicht erschöpft werden, um Lieder zu singen, und deine Piraten erhalten Robust +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Solange dieser Charakter erschöpft ist, können gegnerische Charaktere nicht erschöpft werden, um Lieder zu singen, und deine Piraten erhalten <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const peteSpacePirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirate de l'espace",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Pat.)",
       },
       {
-        title: "PLAN EFFROYABLE",
+        title: "Plan effroyable",
         description:
-          "Tant que ce personnage est épuisé, les personnages adverses ne peuvent pas être épuisés pour chanter des chansons, et vos personnages Pirate gagnent Résistance +1.",
+          "Tant que ce personnage est épuisé, les personnages adverses ne peuvent pas être épuisés pour chanter des chansons, et vos personnages Pirate gagnent <Résistance> +1.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const peteSpacePirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirata Spaziale",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Gambadilegno.)",
       },
       {
-        title: "COMPLOTTO SPAVENTOSO",
+        title: "Complotto Spaventoso",
         description:
-          "Mentre questo personaggio è impegnato, i personaggi avversari non si possono impegnare per cantare canzoni e i tuoi personaggi Pirata ottengono Resistere +1.",
+          "Mentre questo personaggio è impegnato, i personaggi avversari non si possono impegnare per cantare canzoni e i tuoi personaggi Pirata ottengono <Resistere> +1.",
       },
     ],
   },

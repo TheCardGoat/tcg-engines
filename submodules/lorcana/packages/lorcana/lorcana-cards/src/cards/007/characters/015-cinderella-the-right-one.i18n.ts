@@ -17,7 +17,7 @@ export const cinderellaTheRightOneI18n: Record<Languages, I18nProperties> = {
     version: "Die Richtige",
     text: [
       {
-        title: "WENN DER SCHUH PASST",
+        title: "Wenn der Schuh passt",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Der-gläserne-Schuh-Gegenstandskarte aus deinem Ablagestapel unter dein Deck legen, um 3 Legenden zu sammeln.",
       },
@@ -28,7 +28,7 @@ export const cinderellaTheRightOneI18n: Record<Languages, I18nProperties> = {
     version: "La bonne personne",
     text: [
       {
-        title: "SI LA PANTOUFLE EST À SA TAILLE",
+        title: "Si la pantoufle est à sa taille",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez placer une carte Objet La Pantoufle de Verre de votre défausse sous votre pioche pour gagner 3 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const cinderellaTheRightOneI18n: Record<Languages, I18nProperties> = {
     version: "Quella Giusta",
     text: [
       {
-        title: "SE LA SCARPETTA CALZA",
+        title: "Se la Scarpetta Calza",
         description:
           "Quando giochi questo personaggio, puoi mettere una carta oggetto chiamata La Scarpetta di Cristallo dai tuoi scarti in fondo al tuo mazzo per ottenere 3 leggenda.",
       },

@@ -16,9 +16,9 @@ export const rapunzelAppreciativeArtistI18n: Record<Languages, I18nProperties> =
     version: "Wertschätzende Künstlerin",
     text: [
       {
-        title: "EINFÜHLSAME PARTNERIN",
+        title: "Einfühlsame Partnerin",
         description:
-          "Solange du mindestens einen Pascal-Charakter im Spiel hast, erhält dieser Charakter Behütet.",
+          "Solange du mindestens einen Pascal-Charakter im Spiel hast, erhält dieser Charakter <Behütet>.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const rapunzelAppreciativeArtistI18n: Record<Languages, I18nProperties> =
     version: "Artiste sensible",
     text: [
       {
-        title: "PARTENAIRE PERSPICACE",
+        title: "Partenaire perspicace",
         description:
-          "Tant que vous avez un personnage Pascal en jeu, ce personnage-ci gagne Hors d'atteinte.",
+          "Tant que vous avez un personnage Pascal en jeu, ce personnage-ci gagne <Hors d'atteinte>.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const rapunzelAppreciativeArtistI18n: Record<Languages, I18nProperties> =
     version: "Artista Entusiasta",
     text: [
       {
-        title: "COMPAGNO PERSPICACE",
+        title: "Compagno Perspicace",
         description:
-          "Mentre hai in gioco un personaggio chiamato Pascal, questo personaggio ottiene Protetto. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+          "Mentre hai in gioco un personaggio chiamato Pascal, questo personaggio ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
       },
     ],
   },

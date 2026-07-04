@@ -4,6 +4,17 @@ import { auroraHoldingCourtI18n } from "./006-aurora-holding-court.i18n";
 export const auroraHoldingCourt: CharacterCard = {
   id: "udr",
   canonicalId: "ci_qjl",
+  slug: "lorcana-ci_qjl",
+  printings: [
+    {
+      id: "set9-006",
+      artId: "set9-006",
+      setCode: "set9",
+      collectorNumber: "6",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-006"],
   cardType: "character",
   name: "Aurora",
@@ -20,7 +31,7 @@ export const auroraHoldingCourt: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d292fcaa144d4f739bda2c14948da2ce",
-    tcgPlayer: 650142,
+    tcgPlayer: "650142",
   },
   text: [
     {

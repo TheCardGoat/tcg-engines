@@ -4,6 +4,17 @@ import { tugofwarI18n } from "./196-tug-of-war.i18n";
 export const tugofwar: ActionCard = {
   id: "J1D",
   canonicalId: "ci_J1D",
+  slug: "lorcana-ci_J1D",
+  printings: [
+    {
+      id: "set5-196",
+      artId: "set5-196",
+      setCode: "set5",
+      collectorNumber: "196",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-196"],
   cardType: "action",
   name: "Tug-of-War",
@@ -16,7 +27,7 @@ export const tugofwar: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3a34c665afa94105b0b19383925dd830",
-    tcgPlayer: 557731,
+    tcgPlayer: "557731",
   },
   text: [
     {

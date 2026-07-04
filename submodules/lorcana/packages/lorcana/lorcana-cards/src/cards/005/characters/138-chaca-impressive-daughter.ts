@@ -4,6 +4,17 @@ import { chacaImpressiveDaughterI18n } from "./138-chaca-impressive-daughter.i18
 export const chacaImpressiveDaughter: CharacterCard = {
   id: "y9B",
   canonicalId: "ci_y9B",
+  slug: "lorcana-ci_y9B",
+  printings: [
+    {
+      id: "set5-138",
+      artId: "set5-138",
+      setCode: "set5",
+      collectorNumber: "138",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-138"],
   cardType: "character",
   name: "Chaca",
@@ -21,7 +32,7 @@ export const chacaImpressiveDaughter: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_ee79f31b26a94960a66ea9e5defa5a0c",
-    tcgPlayer: 560507,
+    tcgPlayer: "560507",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: chacaImpressiveDaughterI18n,

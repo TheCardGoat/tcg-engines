@@ -1,15 +1,61 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { lawrenceJealousManservant as canonicalLawrenceJealousManservant } from "../../002";
+import { lawrenceJealousManservantI18n } from "./187-lawrence-jealous-manservant.i18n";
 
 export const lawrenceJealousManservant: CharacterCard = {
-  ...canonicalLawrenceJealousManservant,
-  id: "BUx",
+  id: "0u8",
+  canonicalId: "ci_HIY",
+  slug: "lorcana-ci_HIY",
+  printings: [
+    {
+      id: "set9-187",
+      artId: "set9-187",
+      setCode: "set9",
+      collectorNumber: "187",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-186", "set9-187"],
+  cardType: "character",
+  name: "Lawrence",
+  version: "Jealous Manservant",
+  inkType: ["steel"],
+  franchise: "Princess and the Frog",
   set: "009",
   cardNumber: 187,
   rarity: "uncommon",
+  cost: 3,
+  strength: 0,
+  willpower: 4,
+  lore: 2,
+  inkable: true,
   externalIds: {
     lorcast: "crd_9cba34a84bf04721aefd09dc1e87cb3a",
-    tcgPlayer: 650120,
+    tcgPlayer: "650120",
   },
+  text: [
+    {
+      title: "PAYBACK",
+      description: "While this character has no damage, he gets +4 {S}.",
+    },
+  ],
+  classifications: ["Storyborn", "Ally"],
+  abilities: [
+    {
+      condition: {
+        type: "no-damage",
+      },
+      effect: {
+        modifier: 4,
+        stat: "strength",
+        target: "SELF",
+        type: "modify-stat",
+      },
+      id: "1rx-1",
+      name: "PAYBACK",
+      text: "PAYBACK While this character has no damage, he gets +4 {S}.",
+      type: "static",
+    },
+  ],
+  i18n: lawrenceJealousManservantI18n,
 };

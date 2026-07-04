@@ -14,9 +14,9 @@ export const enigmaticInkcasterI18n: Record<Languages, I18nProperties> = {
     name: "Rätselhafter Tintenformer",
     text: [
       {
-        title: "SEINE EIGENE BELOHNUNG",
+        title: "Seine eigene Belohnung",
         description:
-          "— Falls du in diesem Zug mindestens 2 Karten ausgespielt hast, sammelst du 1 Legende.",
+          "{E} — Falls du in diesem Zug mindestens 2 Karten ausgespielt hast, sammelst du 1 Legende.",
       },
     ],
   },
@@ -24,9 +24,8 @@ export const enigmaticInkcasterI18n: Record<Languages, I18nProperties> = {
     name: "Invocateur d’encre mystérieux",
     text: [
       {
-        title: "UNE",
-        description:
-          "RÉCOMPENSE EN SOI — Si vous avez joué 2 cartes ou plus ce tour-ci, gagnez 1 éclat de Lore.",
+        title: "Une récompense en soi",
+        description: "{E} — Si vous avez joué 2 cartes ou plus ce tour-ci, gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -34,8 +33,8 @@ export const enigmaticInkcasterI18n: Record<Languages, I18nProperties> = {
     name: "Inchiostratore Enigmatico",
     text: [
       {
-        title: "UNA RICOMPENSA DI PER",
-        description: "SÉ — Se hai giocato 2 o più carte in questo turno, ottieni 1 leggenda.",
+        title: "Una Ricompensa di Per Sé",
+        description: "{E} — Se hai giocato 2 o più carte in questo turno, ottieni 1 leggenda.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { gazelleAngelWithHornsI18n } from "./088-gazelle-angel-with-horns.i18n";
 export const gazelleAngelWithHorns: CharacterCard = {
   id: "pGq",
   canonicalId: "ci_pGq",
+  slug: "lorcana-ci_pGq",
+  printings: [
+    {
+      id: "set6-088",
+      artId: "set6-088",
+      setCode: "set6",
+      collectorNumber: "88",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-088"],
   cardType: "character",
   name: "Gazelle",
@@ -20,13 +31,13 @@ export const gazelleAngelWithHorns: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c53a704a909445f5b2837b51f29faa47",
-    tcgPlayer: 591117,
+    tcgPlayer: "591117",
   },
   text: [
     {
-      title: "YOU ARE A REALLY HOT DANCER",
+      title: "YOU ARE",
       description:
-        "When you play this character, chosen character gains Evasive until the start of your next turn.",
+        "A REALLY HOT DANCER When you play this character, chosen character gains Evasive until the start of your next turn.",
     },
   ],
   classifications: ["Dreamborn", "Ally"],

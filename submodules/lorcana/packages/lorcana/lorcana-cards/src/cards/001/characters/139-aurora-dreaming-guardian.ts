@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { auroraDreamingGuardianI18n } from "./139-aurora-dreaming-guardian.i18n";
 
 export const auroraDreamingGuardian: CharacterCard = {
-  id: "Au0",
+  id: "F9x",
   canonicalId: "ci_mSW",
+  slug: "lorcana-ci_mSW",
+  printings: [
+    {
+      id: "set1-139",
+      artId: "set1-139",
+      setCode: "set1",
+      collectorNumber: "139",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-139", "set9-153"],
   cardType: "character",
   name: "Aurora",
@@ -20,7 +31,7 @@ export const auroraDreamingGuardian: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_81f418041acd4fd98990e02403938de4",
-    tcgPlayer: 650088,
+    tcgPlayer: "650088",
   },
   text: [
     {

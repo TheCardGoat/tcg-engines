@@ -20,12 +20,12 @@ export const johnSmithsCompassI18n: Record<Languages, I18nProperties> = {
     name: "John Smiths Kompass",
     text: [
       {
-        title: "DER KREISENDE PFEIL",
+        title: "Der kreisende Pfeil",
         description:
           "Am Ende deines Zuges, falls einer deiner Charaktere in diesem Zug herausgefordert hat, verbanne diesen Gegenstand.",
       },
       {
-        title: "DEIN WEG",
+        title: "Dein Weg",
         description:
           "Am Ende deines Zuges, falls in diesem Zug noch keiner deiner Charaktere herausgefordert hat, decke die oberste Karte deines Decks auf. Falls sie eine Charakterkarte ist, die 3 oder weniger kostet, oder falls sie eine Pocahontas-Charakterkarte ist, darfst du sie auf deine Hand nehmen. Falls nicht, lege sie unter dein Deck.",
       },
@@ -35,14 +35,14 @@ export const johnSmithsCompassI18n: Record<Languages, I18nProperties> = {
     name: "Boussole de John Smith",
     text: [
       {
-        title: "CETTE FLÈCHE QUI TOURNE À",
+        title: "Cette flèche qui tourne",
         description:
-          "la fin de votre tour, si l'un de vos personnages a défié ce tour-ci, bannissez cet objet.",
+          "À la fin de votre tour, si l'un de vos personnages a défié ce tour-ci, bannissez cet objet.",
       },
       {
-        title: "LE DROIT CHEMIN À",
+        title: "Le droit chemin",
         description:
-          "la fin de votre tour, si aucun de vos personnages n'a défié ce tour-ci, révélez la carte du dessus de votre pioche. S'il s'agit d'une carte Personnage coûtant 3 ou moins ou qu'elle est nommée Pocahontas, vous pouvez l'ajouter à votre main. Sinon, placez-la sous votre pioche.",
+          "À la fin de votre tour, si aucun de vos personnages n'a défié ce tour-ci, révélez la carte du dessus de votre pioche. S'il s'agit d'une carte Personnage coûtant 3 ou moins ou qu'elle est nommée Pocahontas, vous pouvez l'ajouter à votre main. Sinon, placez-la sous votre pioche.",
       },
     ],
   },
@@ -50,12 +50,12 @@ export const johnSmithsCompassI18n: Record<Languages, I18nProperties> = {
     name: "Bussola di John Smith",
     text: [
       {
-        title: "FRECCIA CHE RUOTA",
+        title: "Freccia Che Ruota",
         description:
           "Alla fine del tuo turno, se un tuo personaggio ha sfidato in questo turno, esilia questo oggetto.",
       },
       {
-        title: "LA TUA VIA",
+        title: "La tua Via",
         description:
           "Alla fine del tuo turno, se nessuno dei tuoi personaggi ha sfidato in questo turno, rivela la prima carta del tuo mazzo. Se è una carta personaggio con costo 3 o inferiore o se si chiama Pocahontas, puoi aggiungerla alla tua mano. Altrimenti, mettila in fondo al tuo mazzo.",
       },

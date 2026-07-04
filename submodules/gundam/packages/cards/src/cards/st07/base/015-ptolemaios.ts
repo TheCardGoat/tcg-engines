@@ -6,14 +6,17 @@ export const st07Ptolemaios015: BaseCard = {
   type: "base",
   traits: ["cb", "warship"],
   id: "ST07-015",
-  externalId: "gundam:st07-015",
-  slug: "ptolemaios-st07-015",
+  canonicalId: "ST07-015",
+  externalIds: { bandai: "gundam:st07-015" },
+  slug: "ptolemaios/st07-015",
   displayName: "Ptolemaios",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-015",
   printings: [
     {
       id: "ST07-015",
+      artId: "ST07-015",
+      setCode: "ST07",
       collectorNumber: "ST07-015",
       cardNumber: "ST07-015",
       set: {
@@ -29,6 +32,8 @@ export const st07Ptolemaios015: BaseCard = {
     },
     {
       id: "ST07-015_p1",
+      artId: "ST07-015_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-015_p1",
       cardNumber: "ST07-015",
       set: {
@@ -43,6 +48,7 @@ export const st07Ptolemaios015: BaseCard = {
       productName: "Celestial Drive [ST07] Bonus Pack",
     },
   ],
+  reprints: ["ST07-015", "ST07-015_p1"],
   selectedPrintingId: "ST07-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-015.webp?260424",

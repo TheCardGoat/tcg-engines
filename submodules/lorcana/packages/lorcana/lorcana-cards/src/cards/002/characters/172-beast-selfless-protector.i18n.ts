@@ -17,9 +17,9 @@ export const beastSelflessProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Selbstloser Beschützer",
     text: [
       {
-        title: "ANDERE SCHÜTZEN",
+        title: "Andere Schützen",
         description:
-          "Jedes Mal, wenn einer deiner anderen Charaktere Schaden erhalten würde, lege die entsprechenden Schadensmarker stattdessen auf diesen Charakter.",
+          "Jedes Mal, wenn einem deiner anderen Charaktere Schaden zugefügt würde, lege die entsprechenden Schadensmarker stattdessen auf diesen Charakter.",
       },
     ],
   },
@@ -28,7 +28,7 @@ export const beastSelflessProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Prêt à se sacrifier",
     text: [
       {
-        title: "PROTÉGER LES AUTRES",
+        title: "Protéger les autres",
         description:
           "Si des dommages sont infligés à l'un de vos autres personnages, placez-les sur ce personnage à la place.",
       },
@@ -39,7 +39,7 @@ export const beastSelflessProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Selfless Protector",
     text: [
       {
-        title: "SHIELD ANOTHER",
+        title: "Shield Another",
         description:
           "Whenever one of your other characters would be dealt damage, put that many damage counters on this character instead.",
       },

@@ -7,14 +7,17 @@ export const gd01DemiGarrison085: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-085",
-  externalId: "gundam:gd01-085",
-  slug: "demi-garrison-gd01-085",
+  canonicalId: "GD01-085",
+  externalIds: { bandai: "gundam:gd01-085" },
+  slug: "demi-garrison/gd01-085",
   displayName: "Demi Garrison",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-085",
   printings: [
     {
       id: "GD01-085",
+      artId: "GD01-085",
+      setCode: "GD01",
       collectorNumber: "GD01-085",
       cardNumber: "GD01-085",
       set: {
@@ -29,6 +32,7 @@ export const gd01DemiGarrison085: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-085"],
   selectedPrintingId: "GD01-085",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-085.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-085.webp?260424",

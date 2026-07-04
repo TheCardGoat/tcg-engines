@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { evasive } from "../../../helpers/abilities/evasive";
 import { kaaSecretiveSnakeI18n } from "./079-kaa-secretive-snake.i18n";
+
+import { evasive } from "../../../helpers/abilities/evasive";
 
 export const kaaSecretiveSnake: CharacterCard = {
   id: "I5f",
   canonicalId: "ci_qS6",
+  slug: "lorcana-ci_qS6",
+  printings: [
+    {
+      id: "set10-079",
+      artId: "set10-079",
+      setCode: "set10",
+      collectorNumber: "79",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-079"],
   cardType: "character",
   name: "Kaa",
@@ -21,7 +33,7 @@ export const kaaSecretiveSnake: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f2d99b79354c466ebcaaeadcba69678e",
-    tcgPlayer: 660191,
+    tcgPlayer: "660191",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Villain"],

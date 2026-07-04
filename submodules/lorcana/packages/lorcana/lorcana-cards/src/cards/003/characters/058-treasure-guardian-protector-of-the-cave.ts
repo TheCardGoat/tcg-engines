@@ -4,6 +4,17 @@ import { treasureGuardianProtectorOfTheCaveI18n } from "./058-treasure-guardian-
 export const treasureGuardianProtectorOfTheCave: CharacterCard = {
   id: "gsz",
   canonicalId: "ci_gsz",
+  slug: "lorcana-ci_gsz",
+  printings: [
+    {
+      id: "set3-058",
+      artId: "set3-058",
+      setCode: "set3",
+      collectorNumber: "58",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-058"],
   cardType: "character",
   name: "Treasure Guardian",
@@ -20,7 +31,7 @@ export const treasureGuardianProtectorOfTheCave: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_8b9133c809b04113a3b464d0f1c2ca82",
-    tcgPlayer: 539077,
+    tcgPlayer: "539077",
   },
   text: [
     {

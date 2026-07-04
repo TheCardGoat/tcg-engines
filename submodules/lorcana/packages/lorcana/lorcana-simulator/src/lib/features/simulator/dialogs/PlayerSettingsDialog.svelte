@@ -40,6 +40,8 @@
     onToggleAccessibleMobileControls?: (enabled: boolean) => void;
     showZoneCounters?: boolean;
     onToggleShowZoneCounters?: (enabled: boolean) => void;
+    priorityNudgeEnabled?: boolean;
+    onTogglePriorityNudgeEnabled?: (enabled: boolean) => void;
     selectedCardBack?: string;
     selectedPlaymat?: string;
     onCardBackChange?: (id: string) => void;
@@ -71,6 +73,8 @@
     onToggleAccessibleMobileControls,
     showZoneCounters = false,
     onToggleShowZoneCounters,
+    priorityNudgeEnabled = true,
+    onTogglePriorityNudgeEnabled,
     selectedCardBack = "default",
     selectedPlaymat = "default",
     onCardBackChange,
@@ -190,6 +194,15 @@
     }
 
     onToggleShowZoneCounters?.(input.checked);
+  }
+
+  function handlePriorityNudgeEnabledToggle(event: Event): void {
+    const input = event.currentTarget;
+    if (!(input instanceof HTMLInputElement)) {
+      return;
+    }
+
+    onTogglePriorityNudgeEnabled?.(input.checked);
   }
 
   function handleOpenHotkeysClick(): void {
@@ -395,6 +408,22 @@
             <span>{m["sim.settings.showZoneCountersLabel"]({})}</span>
           </label>
           <p class="player-settings-help">{m["sim.settings.showZoneCountersDescription"]({})}</p>
+        </div>
+
+        <div class="grid gap-1.5">
+          <label
+            class="player-settings-checkbox-row"
+            for="player-priority-nudge-enabled-toggle"
+          >
+            <input
+              id="player-priority-nudge-enabled-toggle"
+              type="checkbox"
+              checked={priorityNudgeEnabled}
+              onchange={handlePriorityNudgeEnabledToggle}
+            />
+            <span>{m["sim.settings.priorityNudgeLabel"]({})}</span>
+          </label>
+          <p class="player-settings-help">{m["sim.settings.priorityNudgeDescription"]({})}</p>
         </div>
 
         {#if import.meta.env.DEV}

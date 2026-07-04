@@ -21,12 +21,12 @@ export const princePhillipSwordsmanOfTheRealmI18n: Record<Languages, I18nPropert
     version: "Schwertkämpfer des Königreichs",
     text: [
       {
-        title: "DRACHENBEZWINGER",
+        title: "Drachenbezwinger",
         description:
           "Wenn du diesen Charakter ausspielst, verbanne einen gegnerischen Drachen deiner Wahl.",
       },
       {
-        title: "DEN VORTEIL AUSNUTZEN",
+        title: "Den Vorteil ausnutzen",
         description:
           "Jedes Mal, wenn dieser Charakter einen beschädigten Charakter herausfordert, mache diesen Charakter nach der Herausforderung bereit.",
       },
@@ -37,12 +37,12 @@ export const princePhillipSwordsmanOfTheRealmI18n: Record<Languages, I18nPropert
     version: "Épéiste du royaume",
     text: [
       {
-        title: "POURFENDEUR DE DRAGONS",
+        title: "Pourfendeur de dragons",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage Dragon adverse et bannissez-le.",
       },
       {
-        title: "PROFITER DE L'AVANTAGE",
+        title: "Profiter de l'avantage",
         description:
           "Chaque fois que ce personnage défie un personnage ayant au moins un dommage sur lui, redressez ce personnage-ci après le défi.",
       },
@@ -53,12 +53,12 @@ export const princePhillipSwordsmanOfTheRealmI18n: Record<Languages, I18nPropert
     version: "Spadaccino del Regno",
     text: [
       {
-        title: "UCCISORE DI DRAGHI",
+        title: "Uccisore di Draghi",
         description:
           "Quando giochi questo personaggio, esilia un personaggio Drago avversario a tua scelta.",
       },
       {
-        title: "SFRUTTARE IL VANTAGGIO",
+        title: "Sfruttare il Vantaggio",
         description:
           "Ogni volta che sfida un personaggio danneggiato, prepara questo personaggio dopo la sfida.",
       },

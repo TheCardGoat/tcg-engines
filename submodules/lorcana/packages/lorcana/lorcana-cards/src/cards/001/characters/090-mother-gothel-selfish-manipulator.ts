@@ -4,6 +4,17 @@ import { motherGothelSelfishManipulatorI18n } from "./090-mother-gothel-selfish-
 export const motherGothelSelfishManipulator: CharacterCard = {
   id: "QPF",
   canonicalId: "ci_QPF",
+  slug: "lorcana-ci_QPF",
+  printings: [
+    {
+      id: "set1-090",
+      artId: "set1-090",
+      setCode: "set1",
+      collectorNumber: "90",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-090"],
   cardType: "character",
   name: "Mother Gothel",
@@ -20,7 +31,7 @@ export const motherGothelSelfishManipulator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b9b75a9f9ec8475b836925a711e88d8d",
-    tcgPlayer: 508772,
+    tcgPlayer: "508772",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tritonChampionOfAtlanticaI18n } from "./158-triton-champion-of-atlantica.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const tritonChampionOfAtlantica: CharacterCard = {
   id: "0J0",
   canonicalId: "ci_0J0",
+  slug: "lorcana-ci_0J0",
+  printings: [
+    {
+      id: "set4-158",
+      artId: "set4-158",
+      setCode: "set4",
+      collectorNumber: "158",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-158"],
   cardType: "character",
   name: "Triton",
@@ -21,7 +33,7 @@ export const tritonChampionOfAtlantica: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9ddadbe1950b402696855e6668e5cf8f",
-    tcgPlayer: 550611,
+    tcgPlayer: "550611",
   },
   text: [
     {

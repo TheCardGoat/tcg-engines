@@ -4,6 +4,17 @@ import { iagoReappearingParrotI18n } from "./045-iago-reappearing-parrot.i18n";
 export const iagoReappearingParrot: CharacterCard = {
   id: "Swd",
   canonicalId: "ci_Swd",
+  slug: "lorcana-ci_Swd",
+  printings: [
+    {
+      id: "set6-045",
+      artId: "set6-045",
+      setCode: "set6",
+      collectorNumber: "45",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-045"],
   cardType: "character",
   name: "Iago",
@@ -20,7 +31,7 @@ export const iagoReappearingParrot: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_92d831ee2e5b430a9bbbcf7d684bbd57",
-    tcgPlayer: 592020,
+    tcgPlayer: "592020",
   },
   text: [
     {

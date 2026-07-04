@@ -7,14 +7,17 @@ export const gd01Dinn064: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD01-064",
-  externalId: "gundam:gd01-064",
-  slug: "dinn-gd01-064",
+  canonicalId: "GD01-064",
+  externalIds: { bandai: "gundam:gd01-064" },
+  slug: "dinn/gd01-064",
   displayName: "DINN",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-064",
   printings: [
     {
       id: "GD01-064",
+      artId: "GD01-064",
+      setCode: "GD01",
       collectorNumber: "GD01-064",
       cardNumber: "GD01-064",
       set: {
@@ -29,6 +32,7 @@ export const gd01Dinn064: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-064"],
   selectedPrintingId: "GD01-064",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-064.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-064.webp?260424",

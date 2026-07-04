@@ -17,9 +17,9 @@ export const snugglyDucklingDisreputablePubI18n: Record<Languages, I18nPropertie
     version: "Verrufene Kneipe",
     text: [
       {
-        title: "ROUTINIERTER KRAWALL",
+        title: "Routinierter Krawall",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere an diesem Ort, mit 3 oder mehr, einen anderen Charakter herausfordert, sammelst du 1 Legende. Wenn der herausfordernde Charakter 6 oder mehr hat, sammelst du stattdessen 3 Legenden.",
+          "Jedes Mal, wenn einer deiner Charaktere an diesem Ort, mit 3 oder mehr {S}, einen anderen Charakter herausfordert, sammelst du 1 Legende. Wenn der herausfordernde Charakter 6 oder mehr {S} hat, sammelst du stattdessen 3 Legenden.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const snugglyDucklingDisreputablePubI18n: Record<Languages, I18nPropertie
     version: "Taverne malfamée",
     text: [
       {
-        title: "REMUE-MÉNAGE ROUTINIER",
+        title: "Remue-ménage routinier",
         description:
-          "Chaque fois qu'un personnage sur ce lieu avec 3 ou plus en défie un autre, gagnez 1 éclat de Lore. Si le personnage qui défie a 6 ou plus, gagnez 3 éclats de Lore à la place.",
+          "Chaque fois qu'un personnage sur ce lieu avec 3 {S} ou plus en défie un autre, gagnez 1 éclat de Lore. Si le personnage qui défie a 6 {S} ou plus, gagnez 3 éclats de Lore à la place.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const snugglyDucklingDisreputablePubI18n: Record<Languages, I18nPropertie
     version: "Pub Poco Raccomandabile",
     text: [
       {
-        title: "TRAMBUSTO QUOTIDIANO",
+        title: "Trambusto Quotidiano",
         description:
-          "Ogni volta che un personaggio con 3 o superiore sfida un altro personaggio mentre si trova in questo luogo, ottieni 1 leggenda. Se il personaggio sfidante ha 6 o superiore, ottieni invece 3 leggenda.",
+          "Ogni volta che un personaggio con 3 {S} o superiore sfida un altro personaggio mentre si trova in questo luogo, ottieni 1 leggenda. Se il personaggio sfidante ha 6 {S} o superiore, ottieni invece 3 leggenda.",
       },
     ],
   },

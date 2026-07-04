@@ -421,7 +421,7 @@ export interface ExternalIds {
   lorcast?: string;
 
   /** TCGPlayer product ID */
-  tcgPlayer?: number;
+  tcgPlayer?: string;
 }
 
 /**
@@ -456,6 +456,7 @@ export interface AbilityDefinition {
   value?: number;
   cost?: unknown;
   shiftTarget?: string;
+  shiftClassification?: string;
 }
 
 /**

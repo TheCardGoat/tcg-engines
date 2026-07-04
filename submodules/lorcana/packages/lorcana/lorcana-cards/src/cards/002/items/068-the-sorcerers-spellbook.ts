@@ -4,6 +4,17 @@ import { theSorcerersSpellbookI18n } from "./068-the-sorcerers-spellbook.i18n";
 export const theSorcerersSpellbook: ItemCard = {
   id: "ES1",
   canonicalId: "ci_ES1",
+  slug: "lorcana-ci_ES1",
+  printings: [
+    {
+      id: "set2-068",
+      artId: "set2-068",
+      setCode: "set2",
+      collectorNumber: "68",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-068"],
   cardType: "item",
   name: "The Sorcerer's Spellbook",
@@ -16,7 +27,7 @@ export const theSorcerersSpellbook: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c48a5579b74d4299b4bc48db0776cd36",
-    tcgPlayer: 516340,
+    tcgPlayer: "516340",
   },
   text: [
     {

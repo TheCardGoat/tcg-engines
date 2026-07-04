@@ -7,14 +7,17 @@ export const gd04GundamKyrios034: UnitCard = {
   color: "red",
   traits: ["cb", "gn drive"],
   id: "GD04-034",
-  externalId: "gundam:gd04-034",
-  slug: "gundam-kyrios-gd04-034",
+  canonicalId: "GD04-034",
+  externalIds: { bandai: "gundam:gd04-034" },
+  slug: "gundam-kyrios/gd04-034",
   displayName: "Gundam Kyrios",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-034",
   printings: [
     {
       id: "GD04-034",
+      artId: "GD04-034",
+      setCode: "GD04",
       collectorNumber: "GD04-034",
       cardNumber: "GD04-034",
       set: {
@@ -30,6 +33,8 @@ export const gd04GundamKyrios034: UnitCard = {
     },
     {
       id: "GD04-034_p1",
+      artId: "GD04-034_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-034_p1",
       cardNumber: "GD04-034",
       set: {
@@ -44,6 +49,7 @@ export const gd04GundamKyrios034: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-034", "GD04-034_p1"],
   selectedPrintingId: "GD04-034",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-034.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-034.webp?260424",

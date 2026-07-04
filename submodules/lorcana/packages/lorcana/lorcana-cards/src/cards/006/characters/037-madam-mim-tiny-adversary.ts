@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { madamMimTinyAdversaryI18n } from "./037-madam-mim-tiny-adversary.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const madamMimTinyAdversary: CharacterCard = {
   id: "SKE",
   canonicalId: "ci_SKE",
+  slug: "lorcana-ci_SKE",
+  printings: [
+    {
+      id: "set6-037",
+      artId: "set6-037",
+      setCode: "set6",
+      collectorNumber: "37",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-037"],
   cardType: "character",
   name: "Madam Mim",
@@ -21,7 +33,7 @@ export const madamMimTinyAdversary: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cb73a29ef0e94fdb80188902527c5d86",
-    tcgPlayer: 593023,
+    tcgPlayer: "593023",
   },
   text: [
     {

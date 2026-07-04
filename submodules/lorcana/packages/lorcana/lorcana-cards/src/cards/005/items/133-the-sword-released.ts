@@ -4,6 +4,17 @@ import { theSwordReleasedI18n } from "./133-the-sword-released.i18n";
 export const theSwordReleased: ItemCard = {
   id: "703",
   canonicalId: "ci_703",
+  slug: "lorcana-ci_703",
+  printings: [
+    {
+      id: "set5-133",
+      artId: "set5-133",
+      setCode: "set5",
+      collectorNumber: "133",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-133"],
   cardType: "item",
   name: "The Sword Released",
@@ -16,7 +27,7 @@ export const theSwordReleased: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_22989be17783417ea635d11b83b71252",
-    tcgPlayer: 560544,
+    tcgPlayer: "560544",
   },
   text: [
     {

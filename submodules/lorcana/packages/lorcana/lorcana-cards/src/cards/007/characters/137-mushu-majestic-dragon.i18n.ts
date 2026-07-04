@@ -22,12 +22,12 @@ export const mushuMajesticDragonI18n: Record<Languages, I18nProperties> = {
     version: "Majestätischer Drache",
     text: [
       {
-        title: "FURCHTEINFLÖSSEND UND ANBETUNGSWÜRDIG",
+        title: "Furchteinflößend und anbetungswürdig",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere herausfordert, erhält er während der Herausforderung Robust +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
+          "Jedes Mal, wenn einer deiner Charaktere herausfordert, erhält er während der Herausforderung <Robust> +2. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
       },
       {
-        title: "BESCHÜTZER DER VERLORENEN SEELEN",
+        title: "Beschützer der verlorenen Seelen",
         description:
           "Jedes Mal, wenn einer deiner Charaktere in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 2 Legenden.",
       },
@@ -38,12 +38,12 @@ export const mushuMajesticDragonI18n: Record<Languages, I18nProperties> = {
     version: "Dragon majestueux",
     text: [
       {
-        title: "INTIMIDANT ET EFFRAYANT",
+        title: "Intimidant et effrayant",
         description:
-          "Chaque fois que l'un de vos personnages défie, il gagne Résistance +2 durant ce défi.",
+          "Chaque fois que l'un de vos personnages défie, il gagne <Résistance> +2 durant ce défi.",
       },
       {
-        title: "GARDIEN DES ÂMES PERDUES",
+        title: "Gardien des âmes perdues",
         description:
           "Durant votre tour, chaque fois que l'un de vos personnages en bannit un autre via un défi, gagnez 2 éclats de Lore.",
       },
@@ -54,12 +54,12 @@ export const mushuMajesticDragonI18n: Record<Languages, I18nProperties> = {
     version: "Maestoso Drago",
     text: [
       {
-        title: "INTIMIDATORIO E IMPONENTE",
+        title: "Intimidatorio e Imponente",
         description:
-          "Ogni volta che uno dei tuoi personaggi sfida, ottiene Resistere +2 durante quella sfida.",
+          "Ogni volta che uno dei tuoi personaggi sfida, ottiene <Resistere> +2 durante quella sfida.",
       },
       {
-        title: "GUARDIANO DELLE ANIME PERDUTE",
+        title: "Guardiano delle Anime Perdute",
         description:
           "Durante il tuo turno, ogni volta che uno dei tuoi personaggi esilia un altro personaggio in una sfida, ottieni 2 leggenda.",
       },

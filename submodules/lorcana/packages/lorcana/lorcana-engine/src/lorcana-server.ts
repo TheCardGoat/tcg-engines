@@ -71,6 +71,7 @@ export type LorcanaEngineInit = {
   cardCatalog: CardCatalog;
   players: Player[];
   cardsMaps: LorcanaCardsMaps;
+  capturePatches?: boolean;
   timeControl?: import("#core").TimeControlConfig;
   /** Skip game initialization — used for deserialization fast path. */
   _skipInitialization?: boolean;
@@ -94,6 +95,7 @@ export class LorcanaServer extends LorcanaEngineBase {
       gameID: init.gameID,
       matchID: init.matchID,
       staticResources: staticResources,
+      capturePatches: init.capturePatches,
       debugMode: false,
       choosingFirstPlayer: init.goingFirst,
       _skipInitialization: init._skipInitialization,
@@ -320,6 +322,15 @@ export class LorcanaServer extends LorcanaEngineBase {
       actorColorPairId: actorDeckProfile?.colorPairId,
       strategyId,
     });
+  }
+
+  public getCurrentActorId(): PlayerId | undefined {
+    const actorResolution = resolveServerCurrentActor({
+      state: this.getState(),
+      staticResources: this.getResolvedStaticResources(),
+    });
+
+    return actorResolution.actorId;
   }
 
   public enumerateAutomatedActionsForCurrentActor(

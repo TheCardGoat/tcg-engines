@@ -9,21 +9,16 @@ export const ratiganCriminalMastermindI18n: Record<Languages, I18nProperties> = 
   de: {
     name: "Rattenzahn",
     version: "Kriminelles Genie",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Ratigan",
     version: "Génie du crime",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Ratigan",
     version: "Criminal Mastermind",
-    text: [
-      {
-        title: "Evasive",
-        description: "(Only characters with Evasive can challenge this character.)",
-      },
-    ],
+    text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
 };

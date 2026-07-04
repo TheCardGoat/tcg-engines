@@ -7,14 +7,17 @@ export const gd01ExtremeHatred112: CommandCard = {
   color: "red",
   traits: ["zeon", "newtype"],
   id: "GD01-112",
-  externalId: "gundam:gd01-112",
-  slug: "extreme-hatred-gd01-112",
+  canonicalId: "GD01-112",
+  externalIds: { bandai: "gundam:gd01-112" },
+  slug: "extreme-hatred/gd01-112",
   displayName: "Extreme Hatred",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-112",
   printings: [
     {
       id: "GD01-112",
+      artId: "GD01-112",
+      setCode: "GD01",
       collectorNumber: "GD01-112",
       cardNumber: "GD01-112",
       set: {
@@ -29,6 +32,7 @@ export const gd01ExtremeHatred112: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-112"],
   selectedPrintingId: "GD01-112",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-112.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-112.webp?260424",

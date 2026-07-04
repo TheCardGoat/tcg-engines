@@ -16,7 +16,7 @@ export const maleficentMonstrousDragonI18n: Record<Languages, I18nProperties> = 
     version: "Monstrous Dragon",
     text: [
       {
-        title: "DRAGON FIRE",
+        title: "Dragon Fire",
         description: "When you play this character, you may banish chosen character.",
       },
     ],
@@ -26,7 +26,7 @@ export const maleficentMonstrousDragonI18n: Record<Languages, I18nProperties> = 
     version: "Monstrous Dragon",
     text: [
       {
-        title: "DRAGON FIRE",
+        title: "Dragon Fire",
         description: "When you play this character, you may banish chosen character.",
       },
     ],
@@ -36,7 +36,7 @@ export const maleficentMonstrousDragonI18n: Record<Languages, I18nProperties> = 
     version: "Monstrous Dragon",
     text: [
       {
-        title: "DRAGON FIRE",
+        title: "Dragon Fire",
         description: "When you play this character, you may banish chosen character.",
       },
     ],

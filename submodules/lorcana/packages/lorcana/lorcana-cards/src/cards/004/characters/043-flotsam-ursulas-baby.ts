@@ -4,6 +4,17 @@ import { flotsamUrsulasBabyI18n } from "./043-flotsam-ursulas-baby.i18n";
 export const flotsamUrsulasBaby: CharacterCard = {
   id: "8TS",
   canonicalId: "ci_8TS",
+  slug: "lorcana-ci_8TS",
+  printings: [
+    {
+      id: "set4-043",
+      artId: "set4-043",
+      setCode: "set4",
+      collectorNumber: "43",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-043"],
   cardType: "character",
   name: "Flotsam",
@@ -20,7 +31,7 @@ export const flotsamUrsulasBaby: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5fb77165fcbc43e99fc15c3d64426b65",
-    tcgPlayer: 549467,
+    tcgPlayer: "549467",
   },
   text: [
     {

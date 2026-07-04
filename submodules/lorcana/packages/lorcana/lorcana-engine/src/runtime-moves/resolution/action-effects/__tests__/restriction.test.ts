@@ -62,4 +62,28 @@ describe("restriction", () => {
 
     expect(readRestrictions(ctx, TGT)).toBeUndefined();
   });
+
+  it("can restrict the trigger subject from the event snapshot", () => {
+    const ctx = createTestContext({
+      zoneCards: { "play:player-one": [TGT] },
+      definitions: { tgt: { id: "tgt", cardType: "character" } },
+    });
+    const effect = {
+      type: "restriction",
+      restriction: "cant-quest-or-challenge",
+      duration: "this-turn",
+      target: { ref: "trigger-subject" },
+    } as unknown as RestrictionEffect;
+
+    resolveRestrictionEffect(
+      ctx,
+      createCardPlayed({ cardId: "src", playerId: PLAYER_ONE }),
+      effect,
+      { eventSnapshot: { subjectCardId: TGT } },
+    );
+
+    const restrictions = readRestrictions(ctx, TGT);
+    expect(restrictions).toBeDefined();
+    expect(Object.keys(restrictions ?? {})).toContain("cant-quest-or-challenge");
+  });
 });

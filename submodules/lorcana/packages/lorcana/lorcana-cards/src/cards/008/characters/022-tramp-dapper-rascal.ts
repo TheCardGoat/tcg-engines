@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { trampDapperRascalI18n } from "./022-tramp-dapper-rascal.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const trampDapperRascal: CharacterCard = {
   id: "M9y",
   canonicalId: "ci_M9y",
+  slug: "lorcana-ci_M9y",
+  printings: [
+    {
+      id: "set8-022",
+      artId: "set8-022",
+      setCode: "set8",
+      collectorNumber: "22",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-022"],
   cardType: "character",
   name: "Tramp",
@@ -21,7 +33,7 @@ export const trampDapperRascal: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_85f71d1d81a54038b066e3efe226a8f9",
-    tcgPlayer: 631366,
+    tcgPlayer: "631366",
   },
   text: [
     {

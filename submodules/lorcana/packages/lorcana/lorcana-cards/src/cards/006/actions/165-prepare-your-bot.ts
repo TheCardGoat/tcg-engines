@@ -4,6 +4,17 @@ import { prepareYourBotI18n } from "./165-prepare-your-bot.i18n";
 export const prepareYourBot: ActionCard = {
   id: "o3v",
   canonicalId: "ci_o3v",
+  slug: "lorcana-ci_o3v",
+  printings: [
+    {
+      id: "set6-165",
+      artId: "set6-165",
+      setCode: "set6",
+      collectorNumber: "165",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-165"],
   cardType: "action",
   name: "Prepare Your Bot",
@@ -16,7 +27,7 @@ export const prepareYourBot: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_21d32224cf9f452ab94f70d9a2b40d79",
-    tcgPlayer: 587504,
+    tcgPlayer: "587504",
   },
   text: [
     {

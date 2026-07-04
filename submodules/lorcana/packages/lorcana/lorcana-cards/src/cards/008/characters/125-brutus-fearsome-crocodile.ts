@@ -4,6 +4,17 @@ import { brutusFearsomeCrocodileI18n } from "./125-brutus-fearsome-crocodile.i18
 export const brutusFearsomeCrocodile: CharacterCard = {
   id: "ZmK",
   canonicalId: "ci_ZmK",
+  slug: "lorcana-ci_ZmK",
+  printings: [
+    {
+      id: "set8-125",
+      artId: "set8-125",
+      setCode: "set8",
+      collectorNumber: "125",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-125"],
   cardType: "character",
   name: "Brutus",
@@ -20,13 +31,13 @@ export const brutusFearsomeCrocodile: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_413aa60d7950479282acb68e97eaafcd",
-    tcgPlayer: 633431,
+    tcgPlayer: "633431",
   },
   text: [
     {
       title: "SPITEFUL",
       description:
-        "During your turn, when this character is banished, if one of your characters took damage this turn, gain 2 lore.",
+        "During your turn, when this character is banished, if one of your characters was damaged this turn, gain 2 lore.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

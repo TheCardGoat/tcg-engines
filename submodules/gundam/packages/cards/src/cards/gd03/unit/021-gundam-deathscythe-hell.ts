@@ -7,14 +7,17 @@ export const gd03GundamDeathscytheHell021: UnitCard = {
   color: "green",
   traits: ["g team"],
   id: "GD03-021",
-  externalId: "gundam:gd03-021",
-  slug: "gundam-deathscythe-hell-gd03-021",
+  canonicalId: "GD03-021",
+  externalIds: { bandai: "gundam:gd03-021" },
+  slug: "gundam-deathscythe-hell/gd03-021",
   displayName: "Gundam Deathscythe Hell",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-021",
   printings: [
     {
       id: "GD03-021",
+      artId: "GD03-021",
+      setCode: "GD03",
       collectorNumber: "GD03-021",
       cardNumber: "GD03-021",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamDeathscytheHell021: UnitCard = {
     },
     {
       id: "GD03-021_p1",
+      artId: "GD03-021_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-021_p1",
       cardNumber: "GD03-021",
       set: {
@@ -45,6 +50,8 @@ export const gd03GundamDeathscytheHell021: UnitCard = {
     },
     {
       id: "GD03-021_p2",
+      artId: "GD03-021_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-021_p2",
       cardNumber: "GD03-021",
       set: {
@@ -59,6 +66,7 @@ export const gd03GundamDeathscytheHell021: UnitCard = {
       productName: "Store Tournament Winner Pack 03",
     },
   ],
+  reprints: ["GD03-021", "GD03-021_p1", "GD03-021_p2"],
   selectedPrintingId: "GD03-021",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-021.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-021.webp?260424",

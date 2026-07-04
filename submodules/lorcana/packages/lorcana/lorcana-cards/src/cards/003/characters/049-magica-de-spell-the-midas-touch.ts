@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { magicaDeSpellTheMidasTouchI18n } from "./049-magica-de-spell-the-midas-touch.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const magicaDeSpellTheMidasTouch: CharacterCard = {
   id: "XJy",
   canonicalId: "ci_XJy",
+  slug: "lorcana-ci_XJy",
+  printings: [
+    {
+      id: "set3-049",
+      artId: "set3-049",
+      setCode: "set3",
+      collectorNumber: "49",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-049"],
   cardType: "character",
   name: "Magica De Spell",
@@ -21,7 +33,7 @@ export const magicaDeSpellTheMidasTouch: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_fc52c08c7f254d8cb1e54150de516407",
-    tcgPlayer: 538254,
+    tcgPlayer: "538254",
   },
   text: [
     {

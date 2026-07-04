@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { scroopOdiousMutineerI18n } from "./082-scroop-odious-mutineer.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const scroopOdiousMutineer: CharacterCard = {
   id: "6v8",
   canonicalId: "ci_6v8",
+  slug: "lorcana-ci_6v8",
+  printings: [
+    {
+      id: "set5-082",
+      artId: "set5-082",
+      setCode: "set5",
+      collectorNumber: "82",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-082"],
   cardType: "character",
   name: "Scroop",
@@ -21,14 +33,17 @@ export const scroopOdiousMutineer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6ecf18a6435e46238220c23606eb7768",
-    tcgPlayer: 561301,
+    tcgPlayer: "561301",
   },
   text: [
     {
       title: "Evasive",
     },
     {
-      title: "DO SAY HELLO TO MR. ARROW",
+      title: "DO SAY HELLO TO MR.",
+    },
+    {
+      title: "ARROW",
       description:
         "When you play this character, you may pay 3 {I} to banish chosen damaged character.",
     },

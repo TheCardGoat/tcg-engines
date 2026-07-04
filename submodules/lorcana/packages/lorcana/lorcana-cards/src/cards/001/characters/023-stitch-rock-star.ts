@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { stitchRockStarI18n } from "./023-stitch-rock-star.i18n";
 
 export const stitchRockStar: CharacterCard = {
-  id: "kSG",
-  canonicalId: "ci_zbd",
+  id: "UIq",
+  canonicalId: "ci_x45",
+  slug: "lorcana-ci_x45",
+  printings: [
+    {
+      id: "set1-023",
+      artId: "set1-023",
+      setCode: "set1",
+      collectorNumber: "23",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-023", "set9-003"],
   cardType: "character",
   name: "Stitch",
@@ -19,8 +30,8 @@ export const stitchRockStar: CharacterCard = {
   lore: 3,
   inkable: true,
   externalIds: {
-    lorcast: "crd_1135ff76d7504441942b3f9e9edae58d",
-    tcgPlayer: 649952,
+    lorcast: "crd_65191d1c43f443469868bfc69f3aa1c4",
+    tcgPlayer: "668575",
   },
   text: [
     {
@@ -57,7 +68,9 @@ export const stitchRockStar: CharacterCard = {
             },
             {
               type: "conditional",
-              condition: { type: "if-you-do" },
+              condition: {
+                type: "if-you-do",
+              },
               ifTrue: {
                 amount: 1,
                 target: "CONTROLLER",

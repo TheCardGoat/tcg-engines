@@ -20,10 +20,11 @@ export const clarabelleLightOnHerHoovesI18n: Record<Languages, I18nProperties> =
     version: "Mit leichten Hufen",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Klarabella-Charaktere auszuspielen.)",
       },
       {
-        title: "IM TAKT BLEIBEN",
+        title: "Im Takt bleiben",
         description:
           "Am Ende deines Zuges, wenn eine gegnerische Person deiner Wahl mehr Karten auf der Hand hat als du, darfst du so viele Karten ziehen, bis ihr die selbe Anzahl an Handkarten habt.",
       },
@@ -34,10 +35,11 @@ export const clarabelleLightOnHerHoovesI18n: Record<Languages, I18nProperties> =
     version: "Au sabot léger",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Clarabelle.)",
       },
       {
-        title: "GARDER L'ALLURE",
+        title: "Garder l'allure",
         description:
           "À la fin de votre tour, choisissez un adversaire. S'il a plus de cartes en main que vous, vous pouvez piocher pour en avoir autant que lui.",
       },
@@ -48,10 +50,11 @@ export const clarabelleLightOnHerHoovesI18n: Record<Languages, I18nProperties> =
     version: "Zoccoli Leggiadri",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Clarabella.)",
       },
       {
-        title: "STARE AL PASSO",
+        title: "Stare al Passo",
         description:
           "Alla fine del tuo turno, se un avversario a tua scelta ha più carte in mano di te, puoi pescare carte finché non ne hai lo stesso numero.",
       },

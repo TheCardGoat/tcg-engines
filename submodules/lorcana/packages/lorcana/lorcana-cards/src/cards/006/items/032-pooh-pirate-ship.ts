@@ -4,6 +4,17 @@ import { poohPirateShipI18n } from "./032-pooh-pirate-ship.i18n";
 export const poohPirateShip: ItemCard = {
   id: "zKX",
   canonicalId: "ci_zKX",
+  slug: "lorcana-ci_zKX",
+  printings: [
+    {
+      id: "set6-032",
+      artId: "set6-032",
+      setCode: "set6",
+      collectorNumber: "32",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-032"],
   cardType: "item",
   name: "Pooh Pirate Ship",
@@ -16,7 +27,7 @@ export const poohPirateShip: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4251575ec547497da73676a6a09c8872",
-    tcgPlayer: 587239,
+    tcgPlayer: "587239",
   },
   text: [
     {

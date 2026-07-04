@@ -14,8 +14,8 @@ export const iceBlockI18n: Record<Languages, I18nProperties> = {
     name: "Eisklotz",
     text: [
       {
-        title: "KÜHLES ARBEITEN",
-        description: "— Gib einem Charakter deiner Wahl in diesem Zug -1.",
+        title: "Kühles Arbeiten",
+        description: "{E} — Gib einem Charakter deiner Wahl in diesem Zug -1 {S}.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const iceBlockI18n: Record<Languages, I18nProperties> = {
     name: "Bloc de Glace",
     text: [
       {
-        title: "TRAVAIL GLACIAL",
-        description: "— Choisissez un personnage qui subit -1 pour le reste de ce tour.",
+        title: "Travail glacial",
+        description: "{E} — Choisissez un personnage qui subit -1 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const iceBlockI18n: Record<Languages, I18nProperties> = {
     name: "Blocco di Ghiaccio",
     text: [
       {
-        title: "LAVORO DA BRIVIDI",
-        description: "— Un personaggio a tua scelta riceve -1 per questo turno.",
+        title: "Lavoro da Brividi",
+        description: "{E} — Un personaggio a tua scelta riceve -1 {S} per questo turno.",
       },
     ],
   },

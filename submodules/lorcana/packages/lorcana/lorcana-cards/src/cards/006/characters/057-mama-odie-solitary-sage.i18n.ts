@@ -17,7 +17,7 @@ export const mamaOdieSolitarySageI18n: Record<Languages, I18nProperties> = {
     version: "Einsame Weise",
     text: [
       {
-        title: "ICH MUSS WIRKLICH ALLES HIER SELBST MACHEN",
+        title: "Ich muss wirklich alles hier selbst machen",
         description:
           "Jedes Mal, wenn du ein Lied ausspielst, darfst du bis zu 2 Schadensmarker von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
       },
@@ -28,7 +28,7 @@ export const mamaOdieSolitarySageI18n: Record<Languages, I18nProperties> = {
     version: "Sage solitaire",
     text: [
       {
-        title: "IL FAUT TOUT FAIRE SOI-MÊME ICI",
+        title: "Il faut tout faire soi-même ici",
         description:
           "Chaque fois que vous jouez une chanson, vous pouvez choisir un personnage et déplacer jusqu'à 2 de ses dommages sur un personnage adverse de votre choix.",
       },
@@ -39,7 +39,7 @@ export const mamaOdieSolitarySageI18n: Record<Languages, I18nProperties> = {
     version: "Saggia Solitaria",
     text: [
       {
-        title: "DEVO FARE TUTTO IO QUI",
+        title: "Devo Fare Tutto Io Qui",
         description:
           "Ogni volta che giochi una canzone, puoi spostare fino a 2 segnalini danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },

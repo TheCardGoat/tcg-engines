@@ -6,14 +6,17 @@ export const gd04TrinityWarship125: BaseCard = {
   type: "base",
   traits: ["cb", "warship"],
   id: "GD04-125",
-  externalId: "gundam:gd04-125",
-  slug: "trinity-warship-gd04-125",
+  canonicalId: "GD04-125",
+  externalIds: { bandai: "gundam:gd04-125" },
+  slug: "trinity-warship/gd04-125",
   displayName: "Trinity Warship",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-125",
   printings: [
     {
       id: "GD04-125",
+      artId: "GD04-125",
+      setCode: "GD04",
       collectorNumber: "GD04-125",
       cardNumber: "GD04-125",
       set: {
@@ -28,6 +31,7 @@ export const gd04TrinityWarship125: BaseCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-125"],
   selectedPrintingId: "GD04-125",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-125.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-125.webp?260424",

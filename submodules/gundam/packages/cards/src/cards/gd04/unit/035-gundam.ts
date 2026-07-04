@@ -7,14 +7,17 @@ export const gd04Gundam035: UnitCard = {
   color: "red",
   traits: ["mafty"],
   id: "GD04-035",
-  externalId: "gundam:gd04-035",
-  slug: "gundam-gd04-035",
+  canonicalId: "GD04-035",
+  externalIds: { bandai: "gundam:gd04-035" },
+  slug: "gundam/gd04-035",
   displayName: "Ξ Gundam",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-035",
   printings: [
     {
       id: "GD04-035",
+      artId: "GD04-035",
+      setCode: "GD04",
       collectorNumber: "GD04-035",
       cardNumber: "GD04-035",
       set: {
@@ -29,6 +32,7 @@ export const gd04Gundam035: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-035"],
   selectedPrintingId: "GD04-035",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-035.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-035.webp?260424",

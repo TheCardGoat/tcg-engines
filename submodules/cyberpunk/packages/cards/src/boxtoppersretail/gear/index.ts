@@ -1,3 +1,3 @@
-import type { BoxToppersRetailCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
 
-export const boxTopperRetailGear = [] satisfies BoxToppersRetailCardDefinition[];
+export const boxTopperRetailGear = [] satisfies GearCardDefinition[];

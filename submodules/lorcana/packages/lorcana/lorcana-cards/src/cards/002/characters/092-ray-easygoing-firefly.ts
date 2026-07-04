@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rayEasygoingFireflyI18n } from "./092-ray-easygoing-firefly.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const rayEasygoingFirefly: CharacterCard = {
   id: "Jkc",
   canonicalId: "ci_Jkc",
+  slug: "lorcana-ci_Jkc",
+  printings: [
+    {
+      id: "set2-092",
+      artId: "set2-092",
+      setCode: "set2",
+      collectorNumber: "92",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-092"],
   cardType: "character",
   name: "Ray",
@@ -21,7 +33,7 @@ export const rayEasygoingFirefly: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b7cb9265f8b84f77afabe12e61219153",
-    tcgPlayer: 527250,
+    tcgPlayer: "527250",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Ally"],

@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
+import { aladdinBarrelingThroughI18n } from "./123-aladdin-barreling-through.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 import { reckless } from "../../../helpers/abilities/reckless";
-import { aladdinBarrelingThroughI18n } from "./123-aladdin-barreling-through.i18n";
 
 export const aladdinBarrelingThrough: CharacterCard = {
   id: "c04",
   canonicalId: "ci_pqa",
+  slug: "lorcana-ci_pqa",
+  printings: [
+    {
+      id: "set10-123",
+      artId: "set10-123",
+      setCode: "set10",
+      collectorNumber: "123",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-123"],
   cardType: "character",
   name: "Aladdin",
@@ -22,7 +34,7 @@ export const aladdinBarrelingThrough: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_eca465c4f9f6483db912ae876f8011ce",
-    tcgPlayer: 660269,
+    tcgPlayer: "660269",
   },
   text: [
     {

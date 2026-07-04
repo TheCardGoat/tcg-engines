@@ -16,7 +16,8 @@ describe("PriorityNudge", () => {
     expect(body).not.toContain("Actions");
     expect(body).toContain("I'm thinking");
     expect(body).not.toContain("One moment.");
-    expect(body).toContain("Close");
+    expect(body).toContain("Dismiss priority reminder");
+    expect(body).toContain("Don't show again");
   });
 
   it("always renders the thinking helper button", () => {
@@ -28,6 +29,7 @@ describe("PriorityNudge", () => {
 
     expect(body).toContain("Pass priority");
     expect(body).toContain("I'm thinking");
-    expect(body).toContain("Close");
+    expect(body).toContain("Dismiss priority reminder");
+    expect(body).toContain("Don't show again");
   });
 });

@@ -4,6 +4,17 @@ import { fallingDownTheRabbitHoleI18n } from "./162-falling-down-the-rabbit-hole
 export const fallingDownTheRabbitHole: ActionCard = {
   id: "kL9",
   canonicalId: "ci_kL9",
+  slug: "lorcana-ci_kL9",
+  printings: [
+    {
+      id: "set2-162",
+      artId: "set2-162",
+      setCode: "set2",
+      collectorNumber: "162",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-162"],
   cardType: "action",
   name: "Falling Down the Rabbit Hole",
@@ -16,7 +27,7 @@ export const fallingDownTheRabbitHole: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2a71e5ea621f41ce9028d6551c153764",
-    tcgPlayer: 526208,
+    tcgPlayer: "526208",
   },
   text: "Each player chooses one of their characters and puts them into their inkwell facedown and exerted.",
   abilities: [

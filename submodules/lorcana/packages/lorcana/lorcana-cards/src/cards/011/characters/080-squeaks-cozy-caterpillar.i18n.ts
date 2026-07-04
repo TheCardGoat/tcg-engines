@@ -9,16 +9,16 @@ export const squeaksCozyCaterpillarI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Squeaks",
     version: "Gemütliche Raupe",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Twist",
     version: "Chenille bien installée",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Ugo il Bruco",
     version: "Bruco Confortevole",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

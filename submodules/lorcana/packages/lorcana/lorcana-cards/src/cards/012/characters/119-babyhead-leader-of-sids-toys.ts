@@ -4,6 +4,17 @@ import { babyheadLeaderOfSidsToysI18n } from "./119-babyhead-leader-of-sids-toys
 export const babyheadLeaderOfSidsToys: CharacterCard = {
   id: "IrS",
   canonicalId: "ci_IrS",
+  slug: "lorcana-ci_IrS",
+  printings: [
+    {
+      id: "set12-119",
+      artId: "set12-119",
+      setCode: "set12",
+      collectorNumber: "119",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-119"],
   cardType: "character",
   name: "Babyhead",
@@ -20,15 +31,16 @@ export const babyheadLeaderOfSidsToys: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e8e7a7e2380f456887bb6b8f01f991b1",
+    tcgPlayer: "690543",
   },
   text: [
     {
-      title: "Tighten the Bolts",
+      title: "TIGHTEN THE BOLTS",
       description:
         "Whenever you pay 2 {I} or less to play a card, chosen character gets +2 {S} this turn.",
     },
     {
-      title: "Replacement Parts",
+      title: "REPLACEMENT PARTS",
       description:
         "During your turn, whenever one of your other characters is banished, draw a card.",
     },

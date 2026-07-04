@@ -21,12 +21,12 @@ export const mufasaRulerOfPrideRockI18n: Record<Languages, I18nProperties> = {
     version: "Herrscher des Königsfelsens",
     text: [
       {
-        title: "EIN EMPFINDLICHES GLEICHGEWICHT",
+        title: "Ein empfindliches Gleichgewicht",
         description:
           "Wenn du diesen Charakter ausspielst, erschöpfe alle Karten in deinem Tintenvorrat, nimm danach 2 zufällig ausgewählte Karten deines Tintenvorrats auf deine Hand.",
       },
       {
-        title: "ALLES, WAS DAS LICHT BERÜHRT",
+        title: "Alles, was das Licht berührt",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, mache alle Karten in deinem Tintenvorrat bereit.",
       },
@@ -37,12 +37,12 @@ export const mufasaRulerOfPrideRockI18n: Record<Languages, I18nProperties> = {
     version: "Souverain du Rocher des Lions",
     text: [
       {
-        title: "UN ÉQUILIBRE DÉLICAT",
+        title: "Un équilibre délicat",
         description:
           "Lorsque vous jouez ce personnage, épuisez toutes les cartes de votre réserve d'encre. Ensuite, renvoyez 2 cartes au hasard de votre réserve d'encre dans votre main.",
       },
       {
-        title: "CETTE IMMENSITÉ BAIGNÉE DE LUMIÈRE",
+        title: "Cette immensité baignée de lumière",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, redressez toutes les cartes de votre réserve d'encre.",
       },
@@ -53,12 +53,12 @@ export const mufasaRulerOfPrideRockI18n: Record<Languages, I18nProperties> = {
     version: "Sovrano della Rupe dei Re",
     text: [
       {
-        title: "UN DELICATO EQUILIBRIO",
+        title: "Un Delicato Equilibrio",
         description:
           "Quando giochi questo personaggio, impegna tutte le carte nel tuo calamaio, poi riprendi in mano 2 carte a caso dal tuo calamaio.",
       },
       {
-        title: "TUTTO CIÒ CHE È ILLUMINATO DAL SOLE",
+        title: "Tutto Ciò che È Illuminato dal Sole",
         description:
           "Ogni volta che questo personaggio va all'avventura, prepara tutte le carte nel tuo calamaio.",
       },

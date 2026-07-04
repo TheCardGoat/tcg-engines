@@ -7,14 +7,17 @@ export const gd02GundamAge1Titus031: UnitCard = {
   color: "green",
   traits: ["earth federation", "age system"],
   id: "GD02-031",
-  externalId: "gundam:gd02-031",
-  slug: "gundam-age-1-titus-gd02-031",
+  canonicalId: "GD02-031",
+  externalIds: { bandai: "gundam:gd02-031" },
+  slug: "gundam-age-1-titus/gd02-031",
   displayName: "Gundam AGE-1 Titus",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-031",
   printings: [
     {
       id: "GD02-031",
+      artId: "GD02-031",
+      setCode: "GD02",
       collectorNumber: "GD02-031",
       cardNumber: "GD02-031",
       set: {
@@ -29,6 +32,7 @@ export const gd02GundamAge1Titus031: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-031"],
   selectedPrintingId: "GD02-031",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-031.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-031.webp?260424",

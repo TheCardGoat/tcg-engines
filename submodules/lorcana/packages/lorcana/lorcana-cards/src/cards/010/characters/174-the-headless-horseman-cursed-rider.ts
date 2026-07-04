@@ -4,6 +4,17 @@ import { theHeadlessHorsemanCursedRiderI18n } from "./174-the-headless-horseman-
 export const theHeadlessHorsemanCursedRider: CharacterCard = {
   id: "OVf",
   canonicalId: "ci_OVf",
+  slug: "lorcana-ci_OVf",
+  printings: [
+    {
+      id: "set10-174",
+      artId: "set10-174",
+      setCode: "set10",
+      collectorNumber: "174",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-174"],
   cardType: "character",
   name: "The Headless Horseman",
@@ -19,8 +30,7 @@ export const theHeadlessHorsemanCursedRider: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_1e28088d9c49441390e874b91d6352d0",
-    tcgPlayer: 660020,
+    lorcast: "crd_f64c2b670af947f8bca5f1ce7a5a88d9",
   },
   text: [
     {

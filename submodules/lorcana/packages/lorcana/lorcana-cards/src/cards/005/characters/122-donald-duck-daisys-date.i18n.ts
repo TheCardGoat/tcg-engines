@@ -17,7 +17,7 @@ export const donaldDuckDaisysDateI18n: Record<Languages, I18nProperties> = {
     version: "Daisys Verabredung",
     text: [
       {
-        title: "ENT-SCHEIDENDES SPIEL",
+        title: "Ent-scheidendes Spiel",
         description:
           "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const donaldDuckDaisysDateI18n: Record<Languages, I18nProperties> = {
     version: "Rendez-vous de Daisy",
     text: [
       {
-        title: "ON LES PLUMERA!",
+        title: "On les plumera!",
         description:
           "Chaque fois que ce personnage en défie un autre, chaque adversaire perd 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const donaldDuckDaisysDateI18n: Record<Languages, I18nProperties> = {
     version: "Ragazzo di Paperina",
     text: [
       {
-        title: "MOSSA SPENNACOLARE",
+        title: "Mossa Spennacolare",
         description:
           "Ogni volta che questo personaggio sfida un altro personaggio, ogni avversario perde 1 leggenda.",
       },

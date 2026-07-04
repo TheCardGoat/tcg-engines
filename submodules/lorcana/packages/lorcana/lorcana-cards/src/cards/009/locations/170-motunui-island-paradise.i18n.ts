@@ -17,7 +17,7 @@ export const motunuiIslandParadiseI18n: Record<Languages, I18nProperties> = {
     version: "Insel-Paradies",
     text: [
       {
-        title: "REINKARNATION",
+        title: "Reinkarnation",
         description:
           "Jedes Mal, wenn einer deiner Charaktere an diesem Ort verbannt wird, darfst du jenen verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const motunuiIslandParadiseI18n: Record<Languages, I18nProperties> = {
     version: "Île paradisiaque",
     text: [
       {
-        title: "RÉINCARNATION",
+        title: "Réincarnation",
         description:
           "Chaque fois qu'un personnage sur ce lieu est banni, vous pouvez le placer dans votre réserve d'encre, face cachée et épuisé.",
       },
@@ -39,7 +39,7 @@ export const motunuiIslandParadiseI18n: Record<Languages, I18nProperties> = {
     version: "Isola Paradisiaca",
     text: [
       {
-        title: "REINCARNAZIONE",
+        title: "Reincarnazione",
         description:
           "Ogni volta che un personaggio viene esiliato mentre si trova in questo luogo, puoi aggiungere quella carta al tuo calamaio, a faccia in giù e impegnata.",
       },

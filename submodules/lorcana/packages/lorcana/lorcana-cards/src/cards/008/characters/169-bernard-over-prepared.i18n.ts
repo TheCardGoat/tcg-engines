@@ -17,7 +17,7 @@ export const bernardOverpreparedI18n: Record<Languages, I18nProperties> = {
     version: "Übervorbereitet",
     text: [
       {
-        title: "WIR MÜSSEN DORTHIN UND NACHFORSCHEN",
+        title: "Wir müssen dorthin und nachforschen",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen Verbündeten im Spiel hast, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const bernardOverpreparedI18n: Record<Languages, I18nProperties> = {
     version: "Paré à toute éventualité",
     text: [
       {
-        title: "IL FAUT NOUS Y RENDRE SANS PLUS TARDER",
+        title: "Il faut nous y rendre sans plus tarder",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un personnage Allié en jeu, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const bernardOverpreparedI18n: Record<Languages, I18nProperties> = {
     version: "Fin Troppo Preparato",
     text: [
       {
-        title: "ANDARE LÌ AD INDAGARE",
+        title: "Andare lì ad Indagare",
         description:
           "Quando giochi questo personaggio, se hai in gioco un personaggio Alleato, puoi pescare una carta.",
       },

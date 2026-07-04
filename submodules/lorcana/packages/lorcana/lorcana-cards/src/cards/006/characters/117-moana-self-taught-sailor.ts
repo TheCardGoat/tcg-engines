@@ -4,6 +4,17 @@ import { moanaSelftaughtSailorI18n } from "./117-moana-self-taught-sailor.i18n";
 export const moanaSelftaughtSailor: CharacterCard = {
   id: "DbC",
   canonicalId: "ci_DbC",
+  slug: "lorcana-ci_DbC",
+  printings: [
+    {
+      id: "set6-117",
+      artId: "set6-117",
+      setCode: "set6",
+      collectorNumber: "117",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-117"],
   cardType: "character",
   name: "Moana",
@@ -20,7 +31,7 @@ export const moanaSelftaughtSailor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_772912bd2bb0469890adfcc1b3eedd61",
-    tcgPlayer: 591990,
+    tcgPlayer: "591990",
   },
   text: [
     {

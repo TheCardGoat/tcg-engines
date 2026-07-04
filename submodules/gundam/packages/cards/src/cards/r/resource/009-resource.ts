@@ -6,14 +6,17 @@ export const gd01Resource009: ResourceCard = {
   type: "resource",
   traits: ["-"],
   id: "R-009",
-  externalId: "gundam:r-009",
-  slug: "resource-r-009",
+  canonicalId: "R-009",
+  externalIds: { bandai: "gundam:r-009" },
+  slug: "resource/r-009",
   displayName: "resource",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "R-009",
   printings: [
     {
       id: "R-009",
+      artId: "R-009",
+      setCode: "GD01",
       collectorNumber: "R-009",
       cardNumber: "R-009",
       set: {
@@ -29,6 +32,8 @@ export const gd01Resource009: ResourceCard = {
     },
     {
       id: "R-009_p1",
+      artId: "R-009_p1",
+      setCode: "GD01",
       collectorNumber: "R-009_p1",
       cardNumber: "R-009",
       set: {
@@ -43,6 +48,7 @@ export const gd01Resource009: ResourceCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["R-009", "R-009_p1"],
   selectedPrintingId: "R-009",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/R-009.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-009.webp?260424",

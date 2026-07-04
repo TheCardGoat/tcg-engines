@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { ednaModeFashionDesignerI18n } from "./054-edna-mode-fashion-designer.i18n";
 
 export const ednaModeFashionDesigner: CharacterCard = {
-  id: "qC1",
+  id: "P5r",
   canonicalId: "ci_qC1",
+  slug: "lorcana-ci_qC1",
+  printings: [
+    {
+      id: "set12-054",
+      artId: "set12-054",
+      setCode: "set12",
+      collectorNumber: "54",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-054"],
   cardType: "character",
   name: "Edna Mode",
@@ -19,7 +30,8 @@ export const ednaModeFashionDesigner: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_6b3d567e31d54df2aeafb8f6c13d9273",
+    lorcast: "crd_fb68c593a65344d5ad1585cb7a67777f",
+    tcgPlayer: "692206",
   },
   text: [
     {

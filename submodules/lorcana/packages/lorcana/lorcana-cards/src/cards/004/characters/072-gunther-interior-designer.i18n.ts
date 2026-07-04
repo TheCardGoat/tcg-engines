@@ -17,7 +17,7 @@ export const guntherInteriorDesignerI18n: Record<Languages, I18nProperties> = {
     version: "Innenarchitekt",
     text: [
       {
-        title: "WELPE MIT KULLERAUGEN",
+        title: "Welpe mit Kulleraugen",
         description:
           "Wenn dieser Charakter herausgefordert und verbannt wird, wählen alle gegnerischen Mitspielenden je einen ihrer Charaktere und nehmen diesen zurück auf ihre Hand.",
       },
@@ -28,7 +28,7 @@ export const guntherInteriorDesignerI18n: Record<Languages, I18nProperties> = {
     version: "Décorateur et styliste",
     text: [
       {
-        title: "YEUX DE CHIEN BATTU",
+        title: "Yeux de chien battu",
         description:
           "Lorsque ce personnage est défié et banni, chaque adversaire choisit un de ses personnages en jeu et le renvoie dans sa main.",
       },
@@ -39,7 +39,7 @@ export const guntherInteriorDesignerI18n: Record<Languages, I18nProperties> = {
     version: "Fissato col Design",
     text: [
       {
-        title: "OCCHIONI DA CUCCIOLO",
+        title: "Occhioni da Cucciolo",
         description:
           "Quando questo personaggio viene sfidato ed esiliato, ogni avversario sceglie uno dei suoi personaggi e riprende in mano quella carta.",
       },

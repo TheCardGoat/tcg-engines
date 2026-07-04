@@ -20,10 +20,11 @@ export const fredGiantsizedI18n: Record<Languages, I18nProperties> = {
     version: "Riesengroß",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Fred-Charaktere auszuspielen.)",
       },
       {
-        title: "JETZT WIRD'S TOTAL KRASS",
+        title: "Jetzt wird's total krass",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, decke so lange die oberste Karte deines Decks auf, bis du eine Flutgestalt-Charakterkarte aufdeckst. Nimm jene auf deine Hand und mische die restlichen aufgedeckten Karten in dein Deck.",
       },
@@ -34,10 +35,11 @@ export const fredGiantsizedI18n: Record<Languages, I18nProperties> = {
     version: "Version géante",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Fred.)",
       },
       {
-        title: "J'ADORE, ÇA S'ANNONCE BIEN",
+        title: "J'adore, ça s'annonce bien",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, révélez des cartes du dessus de votre pioche jusqu'à révéler une carte Personnage Floodborn. Mettez cette carte dans votre main et mélangez les autres cartes révélées dans votre pioche.",
       },
@@ -48,10 +50,11 @@ export const fredGiantsizedI18n: Record<Languages, I18nProperties> = {
     version: "Gigantesco",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Fred.)",
       },
       {
-        title: "LA COSA SI FA INTERESSANTE",
+        title: "La Cosa si Fa Interessante",
         description:
           "Ogni volta che questo personaggio va all'avventura, rivela carte dalla cima del tuo mazzo finché non riveli una carta personaggio Imbevuto. Aggiungi quella carta alla tua mano e rimescola il resto nel tuo mazzo.",
       },

@@ -17,7 +17,7 @@ export const iagoOutOfReachI18n: Record<Languages, I18nProperties> = {
     version: "Out of Reach",
     text: [
       {
-        title: "SELF-PRESERVATION",
+        title: "Self-Preservation",
         description:
           "While you have another exerted character in play, this character can't be challenged.",
       },
@@ -28,7 +28,7 @@ export const iagoOutOfReachI18n: Record<Languages, I18nProperties> = {
     version: "Out of Reach",
     text: [
       {
-        title: "SELF-PRESERVATION",
+        title: "Self-Preservation",
         description:
           "While you have another exerted character in play, this character can't be challenged.",
       },
@@ -39,7 +39,7 @@ export const iagoOutOfReachI18n: Record<Languages, I18nProperties> = {
     version: "Out of Reach",
     text: [
       {
-        title: "SELF-PRESERVATION",
+        title: "Self-Preservation",
         description:
           "While you have another exerted character in play, this character can't be challenged.",
       },

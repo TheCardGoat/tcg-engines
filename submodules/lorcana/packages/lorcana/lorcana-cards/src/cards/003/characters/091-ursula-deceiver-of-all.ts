@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { ursulaDeceiverOfAllI18n } from "./091-ursula-deceiver-of-all.i18n";
 
 export const ursulaDeceiverOfAll: CharacterCard = {
-  id: "vf1",
+  id: "c16",
   canonicalId: "ci_hfF",
+  slug: "lorcana-ci_hfF",
+  printings: [
+    {
+      id: "set3-091",
+      artId: "set3-091",
+      setCode: "set3",
+      collectorNumber: "91",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-091"],
   cardType: "character",
   name: "Ursula",
@@ -20,13 +31,13 @@ export const ursulaDeceiverOfAll: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7c5be60911d844b48189f3a042abdcfa",
-    tcgPlayer: 539164,
+    tcgPlayer: "539164",
   },
   text: [
     {
-      title: "WHAT A DEAL",
+      title: "WHAT",
       description:
-        "Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.",
+        "A DEAL Whenever this character sings a song, you may play that song again from your discard for free, then put it on the bottom of your deck.",
     },
   ],
   classifications: ["Dreamborn", "Villain", "Sorcerer"],

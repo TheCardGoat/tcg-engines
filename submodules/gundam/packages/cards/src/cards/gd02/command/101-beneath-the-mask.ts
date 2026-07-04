@@ -7,14 +7,17 @@ export const gd02BeneathTheMask101: CommandCard = {
   color: "blue",
   traits: ["-"],
   id: "GD02-101",
-  externalId: "gundam:gd02-101",
-  slug: "beneath-the-mask-gd02-101",
+  canonicalId: "GD02-101",
+  externalIds: { bandai: "gundam:gd02-101" },
+  slug: "beneath-the-mask/gd02-101",
   displayName: "Beneath the Mask",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-101",
   printings: [
     {
       id: "GD02-101",
+      artId: "GD02-101",
+      setCode: "GD02",
       collectorNumber: "GD02-101",
       cardNumber: "GD02-101",
       set: {
@@ -29,6 +32,7 @@ export const gd02BeneathTheMask101: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-101"],
   selectedPrintingId: "GD02-101",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-101.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-101.webp?260424",

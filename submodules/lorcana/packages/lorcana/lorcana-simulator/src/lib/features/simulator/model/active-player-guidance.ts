@@ -8,6 +8,7 @@ export type GuidancePosition = GuidanceAnchor;
 export interface GuidanceAction {
   id: string;
   label: string;
+  card?: LorcanaCardSnapshot | null;
   onClick: () => void;
   disabled?: boolean;
   emphasis?: boolean;

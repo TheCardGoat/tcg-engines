@@ -4,6 +4,17 @@ import { rafikisBakoraStaffI18n } from "./099-rafikis-bakora-staff.i18n";
 export const rafikisBakoraStaff: ItemCard = {
   id: "GU7",
   canonicalId: "ci_GU7",
+  slug: "lorcana-ci_GU7",
+  printings: [
+    {
+      id: "set11-099",
+      artId: "set11-099",
+      setCode: "set11",
+      collectorNumber: "99",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-099"],
   cardType: "item",
   name: "Rafiki's Bakora Staff",
@@ -16,7 +27,7 @@ export const rafikisBakoraStaff: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b33671b3938940708ac2a4f7d00d942b",
-    tcgPlayer: 675392,
+    tcgPlayer: "675392",
   },
   text: [
     {

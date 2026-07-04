@@ -17,9 +17,9 @@ export const mulanImperialSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Kaiserliche Soldatin",
     text: [
       {
-        title: "MIT GUTEM BEISPIEL VORANGEHEN",
+        title: "Mit gutem Beispiel vorangehen",
         description:
-          "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, erhalten deine anderen Charaktere in diesem Zug je +1.",
+          "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, erhalten deine anderen Charaktere in diesem Zug je +1 {L}.",
       },
     ],
   },
@@ -30,7 +30,7 @@ export const mulanImperialSoldierI18n: Record<Languages, I18nProperties> = {
       {
         title: "UN EXEMPLE",
         description:
-          "Lorsque ce personnage en bannit un autre via un défi durant votre tour, tous vos autres personnages gagnent +1 pour le reste de ce tour.",
+          "Lorsque ce personnage en bannit un autre via un défi durant votre tour, tous vos autres personnages gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const mulanImperialSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Imperial Soldier",
     text: [
       {
-        title: "LEAD BY EXAMPLE",
+        title: "Lead by Example",
         description:
-          "During your turn, whenever this character banishes another character in a challenge, your other characters get +1 this turn.",
+          "During your turn, whenever this character banishes another character in a challenge, your other characters get +1 {L} this turn.",
       },
     ],
   },

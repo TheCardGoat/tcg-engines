@@ -6,7 +6,7 @@ export const remoteInklandsDesertRuinsI18n: Record<Languages, I18nProperties> = 
     version: "Desert Ruins",
     text: [
       {
-        title: "ERODING WINGS",
+        title: "ERODING WINDS",
         description: "At the start of your turn, put the top card of your deck into your discard.",
       },
       {

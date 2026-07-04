@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { stitchCovertAgentI18n } from "./089-stitch-covert-agent.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const stitchCovertAgent: CharacterCard = {
   id: "uqB",
   canonicalId: "ci_uqB",
+  slug: "lorcana-ci_uqB",
+  printings: [
+    {
+      id: "set3-089",
+      artId: "set3-089",
+      setCode: "set3",
+      collectorNumber: "89",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-089"],
   cardType: "character",
   name: "Stitch",
@@ -21,7 +33,7 @@ export const stitchCovertAgent: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a9fd85371b4f4a45bb279981167941d1",
-    tcgPlayer: 539083,
+    tcgPlayer: "539083",
   },
   text: [
     {

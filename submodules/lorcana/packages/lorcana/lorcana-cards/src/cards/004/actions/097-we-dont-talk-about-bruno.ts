@@ -4,6 +4,17 @@ import { weDontTalkAboutBrunoI18n } from "./097-we-dont-talk-about-bruno.i18n";
 export const weDontTalkAboutBruno: ActionCard = {
   id: "ILB",
   canonicalId: "ci_Xd1",
+  slug: "lorcana-ci_Xd1",
+  printings: [
+    {
+      id: "set4-097",
+      artId: "set4-097",
+      setCode: "set4",
+      collectorNumber: "97",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-097"],
   cardType: "action",
   name: "We Don’t Talk About Bruno",
@@ -16,7 +27,7 @@ export const weDontTalkAboutBruno: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3694abe0d09349ca9dbef6861ea42f5a",
-    tcgPlayer: 550541,
+    tcgPlayer: "550541",
   },
   text: "Return chosen character to their player's hand, then that player discards a card at random.",
   actionSubtype: "song",

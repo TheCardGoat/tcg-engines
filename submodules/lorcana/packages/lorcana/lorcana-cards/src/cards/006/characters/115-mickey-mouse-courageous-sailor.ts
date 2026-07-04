@@ -4,6 +4,17 @@ import { mickeyMouseCourageousSailorI18n } from "./115-mickey-mouse-courageous-s
 export const mickeyMouseCourageousSailor: CharacterCard = {
   id: "N8b",
   canonicalId: "ci_N8b",
+  slug: "lorcana-ci_N8b",
+  printings: [
+    {
+      id: "set6-115",
+      artId: "set6-115",
+      setCode: "set6",
+      collectorNumber: "115",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-115"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseCourageousSailor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_01d728f9a98643378187ab0151a89b06",
-    tcgPlayer: 586979,
+    tcgPlayer: "586979",
   },
   text: [
     {

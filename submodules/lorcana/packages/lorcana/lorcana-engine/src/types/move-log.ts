@@ -78,8 +78,11 @@ export interface MoveOutcomes {
   damageDealt?: DamageEntry[];
   damageMoved?: MovedDamageEntry[];
   loreChanged?: { playerId: PlayerId; amount: number; operation: "add" | "remove" };
+  loreChanges?: Array<{ playerId: PlayerId; amount: number; operation: "add" | "remove" }>;
   cardsExerted?: CardInstanceId[];
+  inkwellCardsExerted?: Array<{ playerId: PlayerId; amount: number }>;
   cardsReadied?: CardInstanceId[];
+  inkwellCardsReadied?: Array<{ playerId: PlayerId; amount: number }>;
   cardsMilled?: { playerId: PlayerId; amount: number; cardIds?: PrivateField<CardInstanceId[]> };
   cardsReturnedToHand?: CardInstanceId[];
   cardsMovedToZone?: Array<{ cardId: CardInstanceId; zone: string }>;

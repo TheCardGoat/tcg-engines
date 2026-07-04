@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { yokaiScientificSupervillainI18n } from "./160-yokai-scientific-supervillain.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const yokaiScientificSupervillain: CharacterCard = {
   id: "dzp",
   canonicalId: "ci_dzp",
+  slug: "lorcana-ci_dzp",
+  printings: [
+    {
+      id: "set6-160",
+      artId: "set6-160",
+      setCode: "set6",
+      collectorNumber: "160",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-160"],
   cardType: "character",
   name: "Yokai",
@@ -21,7 +33,7 @@ export const yokaiScientificSupervillain: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c2ee125c29104a138b2a26608d6849c1",
-    tcgPlayer: 588333,
+    tcgPlayer: "588333",
   },
   text: [
     {

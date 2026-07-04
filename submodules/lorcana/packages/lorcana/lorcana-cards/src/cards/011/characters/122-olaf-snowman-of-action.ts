@@ -4,6 +4,17 @@ import { olafSnowmanOfActionI18n } from "./122-olaf-snowman-of-action.i18n";
 export const olafSnowmanOfAction: CharacterCard = {
   id: "G4S",
   canonicalId: "ci_G4S",
+  slug: "lorcana-ci_G4S",
+  printings: [
+    {
+      id: "set11-122",
+      artId: "set11-122",
+      setCode: "set11",
+      collectorNumber: "122",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-122"],
   cardType: "character",
   name: "Olaf",
@@ -20,7 +31,7 @@ export const olafSnowmanOfAction: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_22e26220f81745b394485c0cb6ef2c2d",
-    tcgPlayer: 676213,
+    tcgPlayer: "676213",
   },
   text: [
     {
@@ -42,7 +53,12 @@ export const olafSnowmanOfAction: CharacterCard = {
         type: "cost-reduction",
         amount: {
           type: "filtered-count",
-          filters: [{ type: "card-type", cardType: "action" }],
+          filters: [
+            {
+              type: "card-type",
+              cardType: "action",
+            },
+          ],
           owner: "you",
           zones: ["discard"],
         },

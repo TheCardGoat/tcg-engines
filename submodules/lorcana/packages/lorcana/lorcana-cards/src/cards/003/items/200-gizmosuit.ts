@@ -4,6 +4,17 @@ import { gizmosuitI18n } from "./200-gizmosuit.i18n";
 export const gizmosuit: ItemCard = {
   id: "Ip9",
   canonicalId: "ci_Ip9",
+  slug: "lorcana-ci_Ip9",
+  printings: [
+    {
+      id: "set3-200",
+      artId: "set3-200",
+      setCode: "set3",
+      collectorNumber: "200",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-200"],
   cardType: "item",
   name: "Gizmosuit",
@@ -16,7 +27,7 @@ export const gizmosuit: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4ffb52f1841e434f9263e1b8973f46a6",
-    tcgPlayer: 538292,
+    tcgPlayer: "538292",
   },
   text: [
     {

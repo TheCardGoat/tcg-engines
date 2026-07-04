@@ -4,6 +4,17 @@ import { rollerBobSidsToyI18n } from "./113-roller-bob-sids-toy.i18n";
 export const rollerBobSidsToy: CharacterCard = {
   id: "uOj",
   canonicalId: "ci_uOj",
+  slug: "lorcana-ci_uOj",
+  printings: [
+    {
+      id: "set12-113",
+      artId: "set12-113",
+      setCode: "set12",
+      collectorNumber: "113",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-113"],
   cardType: "character",
   name: "Roller Bob",
@@ -20,6 +31,7 @@ export const rollerBobSidsToy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c9ceb70d89834fafb495e0b0da01e406",
+    tcgPlayer: "690716",
   },
   text: [
     {

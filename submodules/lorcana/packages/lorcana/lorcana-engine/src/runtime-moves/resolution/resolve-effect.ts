@@ -98,6 +98,25 @@ function normalizeResolveEffectTargets(
   return [];
 }
 
+function getResolveEffectLogTargets(
+  pendingEffect: PendingActionEffect,
+  resolutionInput: PendingActionResolutionInput,
+): LogTargetId[] {
+  const selectedTargets = normalizeResolveEffectTargets(getCurrentSelectionInput(resolutionInput));
+  if (selectedTargets.length > 0) {
+    return selectedTargets;
+  }
+
+  if (
+    getPendingEffectLogEffectType(pendingEffect) === "play-card" &&
+    typeof resolutionInput.eventSnapshot?.chosenCardId === "string"
+  ) {
+    return normalizeResolveEffectTargets(resolutionInput.eventSnapshot.chosenCardId);
+  }
+
+  return selectedTargets;
+}
+
 function resolvePendingEffectAbilityName(
   ctx: ResolveEffectExecutionContext,
   pendingEffect: PendingActionEffect,
@@ -323,7 +342,7 @@ function logResolveEffectMessage(
 
   const visibility = { mode: "PUBLIC" as const };
   const category = "action" as const;
-  const selectedTargets = normalizeResolveEffectTargets(getCurrentSelectionInput(resolutionInput));
+  const selectedTargets = getResolveEffectLogTargets(pendingEffect, resolutionInput);
   const abilityName = resolvePendingEffectAbilityName(ctx, pendingEffect);
 
   if (pendingEffect.kind === "scry-selection") {
@@ -509,6 +528,23 @@ function getPendingEffectLogEffectType(pendingEffect: PendingActionEffect): stri
 
   const type = (effect as { type?: unknown }).type;
   return typeof type === "string" ? type : undefined;
+}
+
+function logMergedOptionalTargetDecline(
+  ctx: ResolveEffectExecutionContext,
+  pendingEffect: PendingActionEffect,
+): void {
+  ctx.framework.log(
+    createLorcanaLogProjection(
+      "lorcana.effect.resolve.optionalSelection.rejected",
+      {
+        playerId: pendingEffect.chooserId,
+        sourceCardId: pendingEffect.sourceCardId,
+      },
+      { mode: "PUBLIC" },
+      "action",
+    ),
+  );
 }
 
 function isValidActionResolutionAmount(value: unknown): boolean {
@@ -738,6 +774,7 @@ function validatePendingEffectParams(
   const allowsEmptyTargetResolution = (targetSelectionContext?.minSelections ?? 1) === 0;
   const allowsOptionalDecline =
     normalizedParams.resolveOptional === false &&
+    pendingEffect.kind === "target-selection" &&
     (targetSelectionContext?.originatesFromOptional === true ||
       targetSelectionContext?.canDeclineSelection === true);
 
@@ -1114,6 +1151,7 @@ export const resolveEffect: LorcanaMoveDefinition<"resolveEffect"> = {
       (pendingEffect.selectionContext.canDeclineSelection === true ||
         pendingEffect.selectionContext.originatesFromOptional === true)
     ) {
+      logMergedOptionalTargetDecline(ctx, pendingEffect);
       finalizeResolvedActionCard(ctx, pendingEffect.cardPlayed);
       traceLorcanaRuntimeStep({
         kind: "effect.resolution.completed",
@@ -1170,7 +1208,7 @@ export const resolveEffect: LorcanaMoveDefinition<"resolveEffect"> = {
 
       if (nextStep) {
         const nextResolutionInput = {
-          ...clearCurrentSelectionTargets(pendingEffect.resolutionInput),
+          ...clearCurrentSelectionTargets(resolutionInput),
         };
         const stagedPendingEffect = createPendingActionEffect(ctx, {
           kind: "target-selection",

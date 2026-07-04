@@ -4,6 +4,17 @@ import { tinkerBellTinyTacticianI18n } from "./194-tinker-bell-tiny-tactician.i1
 export const tinkerBellTinyTactician: CharacterCard = {
   id: "cY7",
   canonicalId: "ci_Itn",
+  slug: "lorcana-ci_Itn",
+  printings: [
+    {
+      id: "set1-194",
+      artId: "set1-194",
+      setCode: "set1",
+      collectorNumber: "194",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-194", "set9-189"],
   cardType: "character",
   name: "Tinker Bell",
@@ -20,7 +31,7 @@ export const tinkerBellTinyTactician: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_24d837a8adab46e8ac2ffa7859489926",
-    tcgPlayer: 650122,
+    tcgPlayer: "650122",
   },
   text: [
     {

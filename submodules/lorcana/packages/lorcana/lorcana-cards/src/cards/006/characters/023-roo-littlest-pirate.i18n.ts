@@ -6,9 +6,9 @@ export const rooLittlestPirateI18n: Record<Languages, I18nProperties> = {
     version: "Littlest Pirate",
     text: [
       {
-        title: "I'M A PIRATE TOO!",
+        title: "I'M",
         description:
-          "When you play this character, you may give chosen character -2 {S} until the start of your next turn.",
+          "A PIRATE TOO! When you play this character, you may give chosen character -2 {S} until the start of your next turn.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const rooLittlestPirateI18n: Record<Languages, I18nProperties> = {
     version: "Jüngster Pirat",
     text: [
       {
-        title: "ICH BIN AUCH EIN PIRAT!",
+        title: "Ich bin auch ein Pirat!",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 geben.",
+          "Wenn du diesen Charakter ausspielst, darfst du einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -2 {S} geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const rooLittlestPirateI18n: Record<Languages, I18nProperties> = {
     version: "Le plus petit des pirates",
     text: [
       {
-        title: "MOI AUSSI, J'SUIS UN PIRATE!",
+        title: "Moi aussi, j'suis un pirate!",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage qui subit -2 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage qui subit -2 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const rooLittlestPirateI18n: Record<Languages, I18nProperties> = {
     version: "Piccolissimo Pirata",
     text: [
       {
-        title: "ANCHE IO SONO UN PIRATA!",
+        title: "Anche io Sono un Pirata!",
         description:
-          "Quando giochi questo personaggio, puoi dare a un personaggio a tua scelta -2 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, puoi dare a un personaggio a tua scelta -2 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

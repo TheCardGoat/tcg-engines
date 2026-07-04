@@ -7,14 +7,14 @@ export const swordInTheStoneI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Das Schwert in dem Stein",
-    text: ", 2 — Gib einem Charakter deiner Wahl in diesem Zug +1 für jeden Schaden auf ihm.",
+    text: "{E}, 2 {I} — Gib einem Charakter deiner Wahl in diesem Zug +1 {S} für jeden Schaden auf ihm.",
   },
   fr: {
     name: "L'épée dans l'enclume",
-    text: ", 2 — Choisissez un personnage, il gagne +1 pour chaque jeton Dommage sur lui, pour le reste de ce tour.",
+    text: "{E}, 2 {I} — Choisissez un personnage, il gagne +1 {S} pour chaque jeton Dommage sur lui, pour le reste de ce tour.",
   },
   it: {
     name: "Sword in the Stone",
-    text: ", 2 — Chosen character gets +1 this turn for each 1 damage on them.",
+    text: "{E}, 2 {I} — Chosen character gets +1 {S} this turn for each 1 damage on them.",
   },
 };

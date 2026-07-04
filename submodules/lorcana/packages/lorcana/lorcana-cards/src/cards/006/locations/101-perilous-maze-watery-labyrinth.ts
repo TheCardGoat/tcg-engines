@@ -4,6 +4,17 @@ import { perilousMazeWateryLabyrinthI18n } from "./101-perilous-maze-watery-laby
 export const perilousMazeWateryLabyrinth: LocationCard = {
   id: "e5W",
   canonicalId: "ci_e5W",
+  slug: "lorcana-ci_e5W",
+  printings: [
+    {
+      id: "set6-101",
+      artId: "set6-101",
+      setCode: "set6",
+      collectorNumber: "101",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-101"],
   cardType: "location",
   name: "Perilous Maze",
@@ -20,7 +31,7 @@ export const perilousMazeWateryLabyrinth: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_766de0c1ae8b4e5da1ecd7740eb5feb8",
-    tcgPlayer: 592027,
+    tcgPlayer: "592027",
   },
   text: [
     {

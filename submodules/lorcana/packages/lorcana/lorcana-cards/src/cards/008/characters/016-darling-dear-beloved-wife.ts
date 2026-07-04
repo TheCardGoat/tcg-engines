@@ -4,6 +4,17 @@ import { darlingDearBelovedWifeI18n } from "./016-darling-dear-beloved-wife.i18n
 export const darlingDearBelovedWife: CharacterCard = {
   id: "rnQ",
   canonicalId: "ci_rnQ",
+  slug: "lorcana-ci_rnQ",
+  printings: [
+    {
+      id: "set8-016",
+      artId: "set8-016",
+      setCode: "set8",
+      collectorNumber: "16",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-016"],
   cardType: "character",
   name: "Darling Dear",
@@ -20,7 +31,7 @@ export const darlingDearBelovedWife: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_135ceb6f79ed43aa90077b344b26ea10",
-    tcgPlayer: 631360,
+    tcgPlayer: "631360",
   },
   text: [
     {

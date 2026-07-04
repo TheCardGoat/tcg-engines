@@ -4,6 +4,17 @@ import { yokaiEnigmaticInventorI18n } from "./143-yokai-enigmatic-inventor.i18n"
 export const yokaiEnigmaticInventor: CharacterCard = {
   id: "zRb",
   canonicalId: "ci_zRb",
+  slug: "lorcana-ci_zRb",
+  printings: [
+    {
+      id: "set6-143",
+      artId: "set6-143",
+      setCode: "set6",
+      collectorNumber: "143",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-143"],
   cardType: "character",
   name: "Yokai",
@@ -20,7 +31,7 @@ export const yokaiEnigmaticInventor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_aa952f818e964c30b5d4be10e3654474",
-    tcgPlayer: 583210,
+    tcgPlayer: "583210",
   },
   text: [
     {

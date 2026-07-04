@@ -5,9 +5,9 @@ export const whiteRabbitsPocketWatchI18n: Record<Languages, I18nProperties> = {
     name: "White Rabbit’s Pocket Watch",
     text: [
       {
-        title: "I'M LATE!, 1",
+        title: "I'm Late!",
         description:
-          "— Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
+          "{E}, 1 {I} — Chosen character gains <Rush> this turn. (They can challenge the turn they're played.)",
       },
     ],
   },
@@ -15,9 +15,9 @@ export const whiteRabbitsPocketWatchI18n: Record<Languages, I18nProperties> = {
     name: "Taschenuhr des weißen Kaninchens",
     text: [
       {
-        title: "ZU",
+        title: "Zu spät!",
         description:
-          "SPÄT!, 1 — Ein Charakter deiner Wahl erhält in diesem Zug Rasant. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
+          "{E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug Rasant. (Der Charakter kann im selben Zug herausfordern, in dem er ausgespielt wird.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const whiteRabbitsPocketWatchI18n: Record<Languages, I18nProperties> = {
     name: "MONTRE À GOUSSET",
     text: [
       {
-        title: "EN RETARD!, 1",
+        title: "EN RETARD!",
         description:
-          "— Choisissez un personnage, il gagne Charge pour le reste de ce tour. (Il peut défier le tour où il est joué.)",
+          "{E}, 1 {I} — Choisissez un personnage, il gagne Charge pour le reste de ce tour. (Il peut défier le tour où il est joué.)",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const whiteRabbitsPocketWatchI18n: Record<Languages, I18nProperties> = {
     name: "White Rabbit’s Pocket Watch",
     text: [
       {
-        title: "I'M LATE!, 1",
+        title: "I'm Late!",
         description:
-          "— Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
+          "{E}, 1 {I} — Chosen character gains <Rush> this turn. (They can challenge the turn they're played.)",
       },
     ],
   },

@@ -9,16 +9,16 @@ export const scuttleBirdbrainedI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Scuttle",
     version: "Spatzenhirn",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "Eurêka",
     version: "Tête de linotte",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Scuttle",
     version: "Cervello di Gallina",
-    text: "Protetto",
+    text: "<Protetto>",
   },
 };

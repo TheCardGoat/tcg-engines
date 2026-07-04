@@ -4,6 +4,17 @@ import { goodJobI18n } from "./027-good-job.i18n";
 export const goodJob: ActionCard = {
   id: "B7K",
   canonicalId: "ci_B7K",
+  slug: "lorcana-ci_B7K",
+  printings: [
+    {
+      id: "set6-027",
+      artId: "set6-027",
+      setCode: "set6",
+      collectorNumber: "27",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-027"],
   cardType: "action",
   name: "Good Job!",
@@ -16,7 +27,7 @@ export const goodJob: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a9d39ce276fd4f1b9435d1bb1d09559c",
-    tcgPlayer: 591977,
+    tcgPlayer: "591977",
   },
   text: "Chosen character gets +1 {L} this turn.",
   abilities: [

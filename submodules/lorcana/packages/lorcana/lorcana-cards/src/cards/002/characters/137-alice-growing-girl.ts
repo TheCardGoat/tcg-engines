@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { aliceGrowingGirlI18n } from "./137-alice-growing-girl.i18n";
 
 export const aliceGrowingGirl: CharacterCard = {
-  id: "6Vx",
+  id: "Tmr",
   canonicalId: "ci_Gej",
+  slug: "lorcana-ci_Gej",
+  printings: [
+    {
+      id: "set2-137",
+      artId: "set2-137",
+      setCode: "set2",
+      collectorNumber: "137",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-137", "set9-160"],
   cardType: "character",
   name: "Alice",
@@ -20,7 +31,7 @@ export const aliceGrowingGirl: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8619541a52554ab3b8a32dcaf795748e",
-    tcgPlayer: 647672,
+    tcgPlayer: "647672",
   },
   text: [
     {
@@ -29,8 +40,8 @@ export const aliceGrowingGirl: CharacterCard = {
         "Your other characters gain Support. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
     },
     {
-      title: "WHAT DID I DO?",
-      description: "While this character has 10 {S} or more, she gets +4 {L}.",
+      title: "WHAT DID",
+      description: "I DO? While this character has 10 {S} or more, she gets +4 {L}.",
     },
   ],
   classifications: ["Dreamborn", "Hero"],

@@ -4,6 +4,17 @@ import { scarFieryUsurperI18n } from "./122-scar-fiery-usurper.i18n";
 export const scarFieryUsurper: CharacterCard = {
   id: "AoK",
   canonicalId: "ci_AoK",
+  slug: "lorcana-ci_AoK",
+  printings: [
+    {
+      id: "set1-122",
+      artId: "set1-122",
+      setCode: "set1",
+      collectorNumber: "122",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-122"],
   cardType: "character",
   name: "Scar",
@@ -21,7 +32,7 @@ export const scarFieryUsurper: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_59bf4857765e425bb663ea128e53ee0b",
-    tcgPlayer: 492711,
+    tcgPlayer: "492711",
   },
   classifications: ["Dreamborn", "Villain"],
   i18n: scarFieryUsurperI18n,

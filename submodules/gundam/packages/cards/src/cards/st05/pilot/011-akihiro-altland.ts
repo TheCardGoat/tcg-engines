@@ -7,14 +7,17 @@ export const st05AkihiroAltland011: PilotCard = {
   color: "purple",
   traits: ["tekkadan", "alaya-vijnana"],
   id: "ST05-011",
-  externalId: "gundam:st05-011",
-  slug: "akihiro-altland-st05-011",
+  canonicalId: "ST05-011",
+  externalIds: { bandai: "gundam:st05-011" },
+  slug: "akihiro-altland/st05-011",
   displayName: "Akihiro Altland",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-011",
   printings: [
     {
       id: "ST05-011",
+      artId: "ST05-011",
+      setCode: "ST05",
       collectorNumber: "ST05-011",
       cardNumber: "ST05-011",
       set: {
@@ -30,6 +33,8 @@ export const st05AkihiroAltland011: PilotCard = {
     },
     {
       id: "ST05-011_p1",
+      artId: "ST05-011_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-011_p1",
       cardNumber: "ST05-011",
       set: {
@@ -44,6 +49,7 @@ export const st05AkihiroAltland011: PilotCard = {
       productName: "Iron Bloom [ST05] Bonus Pack",
     },
   ],
+  reprints: ["ST05-011", "ST05-011_p1"],
   selectedPrintingId: "ST05-011",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-011.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-011.webp?260424",

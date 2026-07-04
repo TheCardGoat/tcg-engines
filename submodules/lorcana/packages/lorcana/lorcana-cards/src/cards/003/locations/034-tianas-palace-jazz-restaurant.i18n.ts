@@ -16,7 +16,7 @@ export const tianasPalaceJazzRestaurantI18n: Record<Languages, I18nProperties> =
     version: "Jazz Restaurant",
     text: [
       {
-        title: "AUSGEHEN",
+        title: "Ausgehen",
         description: "Charaktere an diesem Ort können nicht herausgefordert werden.",
       },
     ],
@@ -26,7 +26,7 @@ export const tianasPalaceJazzRestaurantI18n: Record<Languages, I18nProperties> =
     version: "Restaurant de jazz",
     text: [
       {
-        title: "SOIR DE SORTIE",
+        title: "Soir de sortie",
         description: "Les personnages sur ce lieu ne peuvent pas être défiés.",
       },
     ],
@@ -36,8 +36,8 @@ export const tianasPalaceJazzRestaurantI18n: Record<Languages, I18nProperties> =
     version: "Ristorante Jazz",
     text: [
       {
-        title: "UNA SERATA FUORI I",
-        description: "personaggi non possono essere sfidati mentre si trovano in questo luogo.",
+        title: "Una Serata Fuori",
+        description: "I personaggi non possono essere sfidati mentre si trovano in questo luogo.",
       },
     ],
   },

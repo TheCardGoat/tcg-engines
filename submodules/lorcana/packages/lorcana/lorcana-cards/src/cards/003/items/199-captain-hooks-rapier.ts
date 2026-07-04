@@ -4,6 +4,17 @@ import { captainHooksRapierI18n } from "./199-captain-hooks-rapier.i18n";
 export const captainHooksRapier: ItemCard = {
   id: "tET",
   canonicalId: "ci_tET",
+  slug: "lorcana-ci_tET",
+  printings: [
+    {
+      id: "set3-199",
+      artId: "set3-199",
+      setCode: "set3",
+      collectorNumber: "199",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-199"],
   cardType: "item",
   name: "Captain Hook's Rapier",
@@ -16,7 +27,7 @@ export const captainHooksRapier: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3c6f007d30714e5183dc6d9da8b200ae",
-    tcgPlayer: 537759,
+    tcgPlayer: "537759",
   },
   text: [
     {
@@ -51,7 +62,9 @@ export const captainHooksRapier: ItemCard = {
       name: "GET THOSE SCURVY BRATS!",
       text: "GET THOSE SCURVY BRATS! During your turn, whenever one of your characters banishes another character in a challenge, you may pay 1 {I} to draw a card.",
       trigger: {
-        challengeContext: { role: "attacker" },
+        challengeContext: {
+          role: "attacker",
+        },
         event: "banish-in-challenge",
         on: "YOUR_CHARACTERS",
         restrictions: [

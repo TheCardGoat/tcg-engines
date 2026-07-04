@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mulanReflectingI18n } from "./016-mulan-reflecting.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const mulanReflecting: CharacterCard = {
   id: "1Ib",
   canonicalId: "ci_1Ib",
+  slug: "lorcana-ci_1Ib",
+  printings: [
+    {
+      id: "set2-016",
+      artId: "set2-016",
+      setCode: "set2",
+      collectorNumber: "16",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-016"],
   cardType: "character",
   name: "Mulan",
@@ -21,7 +33,7 @@ export const mulanReflecting: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f04fa097a7234ecb95ea7eeea70c9c39",
-    tcgPlayer: 525083,
+    tcgPlayer: "525083",
   },
   text: [
     {

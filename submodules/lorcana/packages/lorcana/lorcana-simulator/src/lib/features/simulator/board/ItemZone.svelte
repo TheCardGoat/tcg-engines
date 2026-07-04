@@ -2,6 +2,7 @@
 import ChevronLeftIcon from "@lucide/svelte/icons/chevron-left";
 import ChevronRightIcon from "@lucide/svelte/icons/chevron-right";
 import type {
+	LorcanaCardSnapshot,
 	LorcanaPlayerSide,
 	LorcanaTableSeat,
 } from "@/features/simulator/model/contracts.js";
@@ -41,6 +42,24 @@ const items = $derived.by(() =>
 		.getZoneCards(playerSide, "play")
 		.filter((card) => card.cardType === "item"),
 );
+const actionPlayableCardIds = $derived.by(() => {
+	const playableIds = new Set<string>();
+	for (const card of items) {
+		if (sidebar.getCardActionHighlightState(card).playable) {
+			playableIds.add(card.cardId);
+		}
+	}
+	return playableIds;
+});
+const actionActivatableCardIds = $derived.by(() => {
+	const activatableIds = new Set<string>();
+	for (const card of items) {
+		if (sidebar.getCardActionHighlightState(card).activatable) {
+			activatableIds.add(card.cardId);
+		}
+	}
+	return activatableIds;
+});
 
 let itemContainerEl = $state<HTMLDivElement | null>(null);
 let hiddenItemsToLeft = $state(0);
@@ -100,6 +119,22 @@ function scrollItems(direction: "left" | "right"): void {
 	});
 }
 
+function handleDirectItemSelection(selectedCard: LorcanaCardSnapshot, event: MouseEvent): boolean {
+	if (sidebar.actionSelectionSession || sidebar.resolutionSelectionSession) {
+		return false;
+	}
+
+	const abilityAction = sidebar
+		.getCardActionViews(selectedCard)
+		.find((action) => action.categoryId === "activate-ability" && action.enabled);
+	if (!abilityAction) {
+		return false;
+	}
+
+	event.stopPropagation();
+	return sidebar.handleCardActionClick(abilityAction);
+}
+
 $effect(() => {
 	if (layoutMode !== "mobile" || !itemContainerEl) {
 		hiddenItemsToLeft = 0;
@@ -139,6 +174,8 @@ $effect(() => {
 	data-layout-mode={layoutMode}
 	data-player-seat={seat}
 	data-player-side={playerSide}
+	data-action-playable-card-ids={[...actionPlayableCardIds].join(",")}
+	data-action-activatable-card-ids={[...actionActivatableCardIds].join(",")}
 >
   {#if showZoneCounters}
   <div class="item-counter">
@@ -150,18 +187,26 @@ $effect(() => {
     <div class="item-cards" bind:this={itemContainerEl}>
       {#each items as card (card.cardId)}
         {@const actionState = sidebar.getActionSessionCardState(card.cardId)}
+        {@const isActionPlayable = actionPlayableCardIds.has(card.cardId)}
+        {@const isActionActivatable = actionActivatableCardIds.has(card.cardId)}
         <div class="item-card">
           <LorcanaCard
             {card}
+            onSelect={(selectedCard, event) => handleDirectItemSelection(selectedCard, event)}
             useContainerSize
             imageFormat="art_only"
             hoverShowActions
+            interactionMeta={
+              isActionActivatable
+                ? { selectable: true, selectionMode: "single", suppressInspectOnSelect: true }
+                : undefined
+            }
             isMasked={false}
             isSelected={
               actionState.isSelected ||
               simulatorCardContext.previewCard?.cardId === card.cardId
             }
-            isPlayable={actionState.isSelectable}
+            isPlayable={actionState.isSelectable || isActionPlayable}
             isValidTarget={actionState.isSelectable}
             isInvalidTarget={actionState.isInvalidTarget}
             isExerted={card.readyState === "exerted"}

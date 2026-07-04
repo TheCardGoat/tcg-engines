@@ -4,6 +4,17 @@ import { microbotsI18n } from "./167-microbots.i18n";
 export const microbots: ItemCard = {
   id: "0HD",
   canonicalId: "ci_0HD",
+  slug: "lorcana-ci_0HD",
+  printings: [
+    {
+      id: "set6-167",
+      artId: "set6-167",
+      setCode: "set6",
+      collectorNumber: "167",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-167"],
   cardType: "item",
   name: "Microbots",
@@ -17,7 +28,7 @@ export const microbots: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bb181c94e74a4e6e8983a33275b59f55",
-    tcgPlayer: 588323,
+    tcgPlayer: "588323",
   },
   text: [
     {

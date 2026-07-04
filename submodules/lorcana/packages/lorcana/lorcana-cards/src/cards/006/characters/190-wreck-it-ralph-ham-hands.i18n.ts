@@ -17,7 +17,7 @@ export const wreckitRalphHamHandsI18n: Record<Languages, I18nProperties> = {
     version: "Riesenpranke",
     text: [
       {
-        title: "ICH MACH SACHEN KAPUTT",
+        title: "Ich mach Sachen kaputt",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen Gegenstand oder Ort deiner Wahl verbannen, um 2 Legenden zu sammeln.",
       },
@@ -28,7 +28,7 @@ export const wreckitRalphHamHandsI18n: Record<Languages, I18nProperties> = {
     version: "ce vieux Ralph La Casse",
     text: [
       {
-        title: "JE CASSE LES CHOSES",
+        title: "Je casse les choses",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un lieu ou un objet et le bannir pour gagner 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const wreckitRalphHamHandsI18n: Record<Languages, I18nProperties> = {
     version: "Spaccone",
     text: [
       {
-        title: "SPACCO LE COSE",
+        title: "Spacco le Cose",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi esiliare un oggetto o un luogo a tua scelta per ottenere 2 leggenda.",
       },

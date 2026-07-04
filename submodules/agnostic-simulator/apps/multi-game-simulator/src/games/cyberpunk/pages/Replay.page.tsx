@@ -26,7 +26,7 @@ import type { MatchState, MoveLog } from "@tcg/cyberpunk-engine";
 import type { EngineInteractionView, InteractionSubmissionValue } from "@tcg/protocol";
 import { createLiveMatchViewerEngine } from "../engine/live/liveState";
 import { PLAYER_SIDE_TO_ID, type EngineAction, type Side } from "../engine";
-import { BoardPage } from "./Board.page";
+import { BoardSharedPage } from "./BoardShared.page";
 import { loadCyberpunkReplay } from "../replay/loadReplay";
 import type { CyberpunkReplayOrchestrator } from "../replay/replayOrchestrator";
 import classes from "./Replay.module.css";
@@ -172,7 +172,7 @@ function ReplayBoard({
 
   return (
     <main className={classes.page}>
-      <BoardPage
+      <BoardSharedPage
         key={`replay:${snapshot.step}`}
         initialEngineBuilder={() => createLiveMatchViewerEngine(snapshot.state)}
         initialAi={{ player: null, opponent: null }}

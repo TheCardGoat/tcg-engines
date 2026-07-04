@@ -17,7 +17,7 @@ export const thaddeusEKlangMetallicLeaderI18n: Record<Languages, I18nProperties>
     version: "Metallener Anführer",
     text: [
       {
-        title: "MEINE ZÄHNE SIND SCHÄRFER",
+        title: "Meine Zähne sind schärfer",
         description:
           "Jedes Mal, wenn dieser Charakter an einem Ort erkundet, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.",
       },
@@ -28,7 +28,7 @@ export const thaddeusEKlangMetallicLeaderI18n: Record<Languages, I18nProperties>
     version: "Chef métallique",
     text: [
       {
-        title: "MÂCHOIRE ACÉRÉE",
+        title: "Mâchoire acérée",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure et qu'il se trouve sur un lieu, vous pouvez choisir un personnage et lui infliger 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const thaddeusEKlangMetallicLeaderI18n: Record<Languages, I18nProperties>
     version: "Leader Metallico",
     text: [
       {
-        title: "I MIEI DENTI SONO PIÙ AFFILATI",
+        title: "I Miei Denti Sono Più Affilati",
         description:
           "Ogni volta che questo personaggio va all'avventura mentre si trova in un luogo, puoi infliggere 1 danno a un personaggio a tua scelta.",
       },

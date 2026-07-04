@@ -16,8 +16,8 @@ export const ulfMimeI18n: Record<Languages, I18nProperties> = {
     version: "Pantomime",
     text: [
       {
-        title: "STUMME DARSTELLUNG",
-        description: "Dieser Charakter kann nicht, um Lieder zu singen.",
+        title: "Stumme Darstellung",
+        description: "Dieser Charakter kann nicht {E}, um Lieder zu singen.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const ulfMimeI18n: Record<Languages, I18nProperties> = {
     version: "Mime",
     text: [
       {
-        title: "NUMÉRO SILENCIEUX",
-        description: "Ce personnage ne peut pas être pour chanter des chansons.",
+        title: "Numéro silencieux",
+        description: "Ce personnage ne peut pas être {E} pour chanter des chansons.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const ulfMimeI18n: Record<Languages, I18nProperties> = {
     version: "Mimo",
     text: [
       {
-        title: "PERFORMANCE SILENZIOSA",
-        description: "Questo personaggio non può per cantare le canzoni.",
+        title: "Performance Silenziosa",
+        description: "Questo personaggio non può {E} per cantare le canzoni.",
       },
     ],
   },

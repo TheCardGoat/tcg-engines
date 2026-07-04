@@ -8,11 +8,6 @@ export interface MatchSidebarRailContainerProps {
   readonly onOpenDrawer: () => void;
 }
 
-/**
- * Wires the v2 collapsed sidebar rail. The full match panel (logs,
- * meta, vs-AI controls) opens inline via `onOpenDrawer`; this container
- * only handles the inline shortcut actions.
- */
 export function MatchSidebarRailContainer({ onOpenDrawer }: MatchSidebarRailContainerProps) {
   const { adapter } = useGundamGame();
   const { report } = useSubmitError();

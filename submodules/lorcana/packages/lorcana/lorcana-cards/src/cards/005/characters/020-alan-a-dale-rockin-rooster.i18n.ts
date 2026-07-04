@@ -16,7 +16,7 @@ export const alanadaleRockinRoosterI18n: Record<Languages, I18nProperties> = {
     version: "Rockiger Hahn",
     text: [
       {
-        title: "FAN-LIEBLING",
+        title: "Fan-Liebling",
         description: "Jedes Mal, wenn du ein Lied ausspielst, sammelst du 1 Legende.",
       },
     ],
@@ -26,7 +26,7 @@ export const alanadaleRockinRoosterI18n: Record<Languages, I18nProperties> = {
     version: "Coq 'n' Roll",
     text: [
       {
-        title: "FAVORI DE LA FOULE",
+        title: "Favori de la foule",
         description: "Chaque fois que vous jouez une chanson, gagnez 1 éclat de Lore.",
       },
     ],
@@ -36,7 +36,7 @@ export const alanadaleRockinRoosterI18n: Record<Languages, I18nProperties> = {
     version: "Galletto Rock",
     text: [
       {
-        title: "BENIAMINO DEI FAN",
+        title: "Beniamino dei Fan",
         description: "Ogni volta che giochi una canzone, ottieni 1 leggenda.",
       },
     ],

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMouseMusicalArtistI18n } from "./009-minnie-mouse-musical-artist.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const minnieMouseMusicalArtist: CharacterCard = {
   id: "8V8",
   canonicalId: "ci_8V8",
+  slug: "lorcana-ci_8V8",
+  printings: [
+    {
+      id: "set3-009",
+      artId: "set3-009",
+      setCode: "set3",
+      collectorNumber: "9",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-009"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -20,7 +32,7 @@ export const minnieMouseMusicalArtist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a6d0aaef05744b279192132d481af4be",
-    tcgPlayer: 539062,
+    tcgPlayer: "539062",
   },
   text: [
     {

@@ -15,7 +15,7 @@ export const amethystCoilI18n: Record<Languages, I18nProperties> = {
     name: "Amethyst-Reif",
     text: [
       {
-        title: "MAGISCHE BERÜHRUNG",
+        title: "Magische Berührung",
         description:
           "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du 1 Schadensmarker von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
       },
@@ -25,7 +25,7 @@ export const amethystCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spirale d’améthyste",
     text: [
       {
-        title: "TOUCHER MAGIQUE",
+        title: "Toucher magique",
         description:
           "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, vous pouvez choisir un personnage et déplacer 1 de ses dommages sur un personnage adverse de votre choix.",
       },
@@ -35,7 +35,7 @@ export const amethystCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spira d'Ametista",
     text: [
       {
-        title: "TOCCO MAGICO",
+        title: "Tocco Magico",
         description:
           "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi spostare 1 segnalino danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },

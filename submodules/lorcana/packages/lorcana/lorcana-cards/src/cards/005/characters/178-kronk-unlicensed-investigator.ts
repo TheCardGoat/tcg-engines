@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kronkUnlicensedInvestigatorI18n } from "./178-kronk-unlicensed-investigator.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const kronkUnlicensedInvestigator: CharacterCard = {
   id: "D2Y",
   canonicalId: "ci_D2Y",
+  slug: "lorcana-ci_D2Y",
+  printings: [
+    {
+      id: "set5-178",
+      artId: "set5-178",
+      setCode: "set5",
+      collectorNumber: "178",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-178"],
   cardType: "character",
   name: "Kronk",
@@ -21,7 +33,7 @@ export const kronkUnlicensedInvestigator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bb7c0120d4b14622b11e2a06f9352a3c",
-    tcgPlayer: 561492,
+    tcgPlayer: "561492",
   },
   text: "Challenger +1",
   classifications: ["Dreamborn", "Ally"],

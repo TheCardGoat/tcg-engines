@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { peteGhostOfChristmasFutureI18n } from "./154-pete-ghost-of-christmas-future.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const peteGhostOfChristmasFuture: CharacterCard = {
   id: "0RS",
   canonicalId: "ci_0RS",
+  slug: "lorcana-ci_0RS",
+  printings: [
+    {
+      id: "set11-154",
+      artId: "set11-154",
+      setCode: "set11",
+      collectorNumber: "154",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-154"],
   cardType: "character",
   name: "Pete",
@@ -21,7 +33,7 @@ export const peteGhostOfChristmasFuture: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cc4685ee359648a9b100d7a20c00ee5f",
-    tcgPlayer: 672431,
+    tcgPlayer: "672431",
   },
   text: [
     {

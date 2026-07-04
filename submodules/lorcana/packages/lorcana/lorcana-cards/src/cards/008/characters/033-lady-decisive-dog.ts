@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { ladyDecisiveDogI18n } from "./033-lady-decisive-dog.i18n";
 
 export const ladyDecisiveDog: CharacterCard = {
-  id: "oNE",
-  canonicalId: "ci_Jim",
+  id: "x3B",
+  canonicalId: "ci_4V7",
+  slug: "lorcana-ci_4V7",
+  printings: [
+    {
+      id: "set8-033",
+      artId: "set8-033",
+      setCode: "set8",
+      collectorNumber: "33",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-033"],
   cardType: "character",
   name: "Lady",
@@ -20,7 +31,7 @@ export const ladyDecisiveDog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d5c56759b4164f8d98eac7c93c8514b2",
-    tcgPlayer: 633053,
+    tcgPlayer: "633053",
   },
   text: [
     {

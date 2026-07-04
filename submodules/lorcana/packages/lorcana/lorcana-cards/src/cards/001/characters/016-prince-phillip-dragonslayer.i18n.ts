@@ -17,7 +17,7 @@ export const princePhillipDragonslayerI18n: Record<Languages, I18nProperties> = 
     version: "Drachenbändiger",
     text: [
       {
-        title: "HELDENTUM",
+        title: "Heldentum",
         description:
           "Wenn dieser Charakter einen anderen Charakter herausfordert und dadurch verbannt wird, darfst du den herausgeforderten Charakter verbannen.",
       },
@@ -39,7 +39,7 @@ export const princePhillipDragonslayerI18n: Record<Languages, I18nProperties> = 
     version: "Dragonslayer",
     text: [
       {
-        title: "HEROISM",
+        title: "Heroism",
         description:
           "When this character challenges and is banished, you may banish the challenged character.",
       },

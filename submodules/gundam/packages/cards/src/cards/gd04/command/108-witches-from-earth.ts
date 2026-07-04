@@ -7,14 +7,17 @@ export const gd04WitchesFromEarth108: CommandCard = {
   color: "green",
   traits: ["academy", "dawn of fold"],
   id: "GD04-108",
-  externalId: "gundam:gd04-108",
-  slug: "witches-from-earth-gd04-108",
+  canonicalId: "GD04-108",
+  externalIds: { bandai: "gundam:gd04-108" },
+  slug: "witches-from-earth/gd04-108",
   displayName: "Witches from Earth",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-108",
   printings: [
     {
       id: "GD04-108",
+      artId: "GD04-108",
+      setCode: "GD04",
       collectorNumber: "GD04-108",
       cardNumber: "GD04-108",
       set: {
@@ -29,6 +32,7 @@ export const gd04WitchesFromEarth108: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-108"],
   selectedPrintingId: "GD04-108",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-108.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-108.webp?260424",

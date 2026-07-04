@@ -4,6 +4,17 @@ import { jingleJoeSidsToyI18n } from "./111-jingle-joe-sids-toy.i18n";
 export const jingleJoeSidsToy: CharacterCard = {
   id: "NoE",
   canonicalId: "ci_NoE",
+  slug: "lorcana-ci_NoE",
+  printings: [
+    {
+      id: "set12-111",
+      artId: "set12-111",
+      setCode: "set12",
+      collectorNumber: "111",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-111"],
   cardType: "character",
   name: "Jingle Joe",
@@ -20,12 +31,13 @@ export const jingleJoeSidsToy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b55a67a84a954c57933ff1d7218f1093",
+    tcgPlayer: "690715",
   },
   text: [
     {
-      title: "Turn Out the Light",
+      title: "TURN OUT THE LIGHT",
       description:
-        "During your turn, whenever one of your other Toy characters is banished, chosen character of yours gains <Evasive> until the start of your next turn.",
+        "During your turn, whenever one of your other Toy characters is banished, chosen character of yours gains Evasive until the start of your next turn.",
     },
   ],
   classifications: ["Storyborn", "Ally", "Toy"],

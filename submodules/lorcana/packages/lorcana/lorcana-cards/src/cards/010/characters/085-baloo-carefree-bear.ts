@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { shift } from "../../../helpers/abilities/shift";
 import { balooCarefreeBearI18n } from "./085-baloo-carefree-bear.i18n";
 
+import { shift } from "../../../helpers/abilities/shift";
+
 export const balooCarefreeBear: CharacterCard = {
-  id: "VNz",
+  id: "7AC",
   canonicalId: "ci_3I5",
+  slug: "lorcana-ci_3I5",
+  printings: [
+    {
+      id: "set10-085",
+      artId: "set10-085",
+      setCode: "set10",
+      collectorNumber: "85",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-085"],
   cardType: "character",
   name: "Baloo",
@@ -21,16 +33,15 @@ export const balooCarefreeBear: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9a1c82a2d3dd4ef898fb86f089242018",
-    tcgPlayer: 659443,
+    tcgPlayer: "659443",
   },
   text: [
     {
       title: "Shift 3 {I}",
     },
     {
-      title: "ROLL WITH IT",
-      description:
-        "When you play this character, choose one:\n- Each player draws a card.\n- Each player chooses and discards a card.",
+      title:
+        "ROLL WITH IT When you play this character, choose one:\n- Each player draws a card.\n- Each player chooses and discards a card.",
     },
   ],
   classifications: ["Floodborn", "Ally"],

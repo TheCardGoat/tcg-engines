@@ -7,14 +7,17 @@ export const gd03Balient045: UnitCard = {
   color: "red",
   traits: ["new une"],
   id: "GD03-045",
-  externalId: "gundam:gd03-045",
-  slug: "balient-gd03-045",
+  canonicalId: "GD03-045",
+  externalIds: { bandai: "gundam:gd03-045" },
+  slug: "balient/gd03-045",
   displayName: "Balient",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-045",
   printings: [
     {
       id: "GD03-045",
+      artId: "GD03-045",
+      setCode: "GD03",
       collectorNumber: "GD03-045",
       cardNumber: "GD03-045",
       set: {
@@ -29,6 +32,7 @@ export const gd03Balient045: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-045"],
   selectedPrintingId: "GD03-045",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-045.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-045.webp?260424",

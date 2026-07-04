@@ -7,14 +7,17 @@ export const gd03GundamVirsagoGundamAshtaron040: UnitCard = {
   color: "red",
   traits: ["new une"],
   id: "GD03-040",
-  externalId: "gundam:gd03-040",
-  slug: "gundam-virsago-gundam-ashtaron-gd03-040",
+  canonicalId: "GD03-040",
+  externalIds: { bandai: "gundam:gd03-040" },
+  slug: "gundam-virsago-and-gundam-ashtaron/gd03-040",
   displayName: "Gundam Virsago & Gundam Ashtaron",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-040",
   printings: [
     {
       id: "GD03-040",
+      artId: "GD03-040",
+      setCode: "GD03",
       collectorNumber: "GD03-040",
       cardNumber: "GD03-040",
       set: {
@@ -29,6 +32,7 @@ export const gd03GundamVirsagoGundamAshtaron040: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-040"],
   selectedPrintingId: "GD03-040",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-040.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-040.webp?260424",

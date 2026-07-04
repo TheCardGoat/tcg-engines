@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMouseDrumMajorI18n } from "./015-minnie-mouse-drum-major.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const minnieMouseDrumMajor: CharacterCard = {
   id: "p71",
   canonicalId: "ci_p71",
+  slug: "lorcana-ci_p71",
+  printings: [
+    {
+      id: "set5-015",
+      artId: "set5-015",
+      setCode: "set5",
+      collectorNumber: "15",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-015"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -12,7 +24,7 @@ export const minnieMouseDrumMajor: CharacterCard = {
   inkType: ["amber"],
   set: "005",
   cardNumber: 15,
-  rarity: "super_rare",
+  rarity: "common",
   cost: 5,
   strength: 4,
   willpower: 4,
@@ -20,7 +32,7 @@ export const minnieMouseDrumMajor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9b72fe4e823b447fbdd927b3dae1342a",
-    tcgPlayer: 561600,
+    tcgPlayer: "561600",
   },
   text: [
     {

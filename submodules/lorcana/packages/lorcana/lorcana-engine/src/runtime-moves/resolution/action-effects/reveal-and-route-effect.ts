@@ -86,21 +86,40 @@ export function resolveRevealAndRouteEffect(
     }
 
     // Route matched
-    if (route.optional && route.destination.zone === "play") {
-      // Optional play-for-free: delegate to optional + play-card effect chain
+    if (route.optional) {
       const fallback = effect.fallback ?? DEFAULT_FALLBACK;
-      const playEffect = {
-        type: "play-card" as const,
-        from: "revealed" as const,
-        cost: route.destination.cost ?? ("free" as const),
-        target: "CONTROLLER" as const,
-      };
+      const routeEffect =
+        route.destination.zone === "play"
+          ? {
+              type: "play-card" as const,
+              from: "revealed" as const,
+              cost: route.destination.cost ?? ("free" as const),
+              target: "CONTROLLER" as const,
+            }
+          : route.destination.zone === "hand"
+            ? {
+                type: "put-in-hand" as const,
+                source: "revealed" as const,
+                target: "CONTROLLER" as const,
+              }
+            : undefined;
 
-      // Build the nested effect: if optional, wrap in optional with play-card
-      // On decline, the card needs to go to fallback destination
+      if (!routeEffect) {
+        moveCardToDestination(ctx, topCard, route.destination, targetPlayerId);
+        markLastEffectPerformed(resolutionInput.eventSnapshot, true);
+        return { status: "resolved" };
+      }
+
+      const optionalEffect =
+        route.destination.zone !== "play" && route.sideEffects && route.sideEffects.length > 0
+          ? {
+              type: "sequence" as const,
+              steps: [routeEffect, ...route.sideEffects],
+            }
+          : routeEffect;
       const nestedEffect = {
         type: "optional" as const,
-        effect: playEffect,
+        effect: optionalEffect,
         chooser: "CONTROLLER" as const,
       };
 
@@ -116,12 +135,15 @@ export function resolveRevealAndRouteEffect(
         // If card is still in deck (not played), move to fallback.
         if (stillOnDeck) {
           moveCardToDestination(ctx, topCard, fallback, targetPlayerId);
+          logRevealAndRouteFallback(ctx, cardPlayed, topCard, fallback, targetPlayerId);
         } else {
           markLastEffectPerformed(resolutionInput.eventSnapshot, true);
         }
 
-        // Execute side effects if the card was played (not on deck anymore)
-        if (!stillOnDeck && route.sideEffects) {
+        // Execute side effects for legacy optional play routes that pass them outside
+        // the nested effect. Non-play optional routes include side effects in the
+        // optional sequence above so they respect the player's accept/decline choice.
+        if (!stillOnDeck && route.destination.zone === "play" && route.sideEffects) {
           for (const sideEffect of route.sideEffects) {
             resolveNestedEffect(ctx, cardPlayed, sideEffect, resolutionInput, options);
           }
@@ -137,7 +159,7 @@ export function resolveRevealAndRouteEffect(
         // card started playing. Return "resolved" so the outer card is finalised to discard
         // instead of staying orphaned in limbo while the inner card resolves separately.
         markLastEffectPerformed(resolutionInput.eventSnapshot, true);
-        if (route.sideEffects) {
+        if (route.destination.zone === "play" && route.sideEffects) {
           for (const sideEffect of route.sideEffects) {
             resolveNestedEffect(ctx, cardPlayed, sideEffect, resolutionInput, options);
           }
@@ -168,9 +190,35 @@ export function resolveRevealAndRouteEffect(
   // No route matched: move to fallback
   const fallback = effect.fallback ?? DEFAULT_FALLBACK;
   moveCardToDestination(ctx, topCard, fallback, targetPlayerId);
+  logRevealAndRouteFallback(ctx, cardPlayed, topCard, fallback, targetPlayerId);
   markLastEffectPerformed(resolutionInput.eventSnapshot, false);
 
   return { status: "resolved" };
+}
+
+function logRevealAndRouteFallback(
+  ctx: PlayCardExecutionContext,
+  cardPlayed: CardPlayedPayload,
+  cardId: CardInstanceId,
+  destination: RevealRouteDestination,
+  targetPlayerId: PlayerId,
+): void {
+  if (destination.zone !== "deck-bottom") {
+    return;
+  }
+
+  ctx.framework.log(
+    createLorcanaLogProjection(
+      "lorcana.effect.resolve.revealTopCard.autoBottom",
+      {
+        playerId: cardPlayed.playerId,
+        targetPlayerId,
+        revealedCardId: cardId,
+      },
+      { mode: "PUBLIC" },
+      "action",
+    ),
+  );
 }
 
 function moveCardToDestination(
@@ -184,16 +232,7 @@ function moveCardToDestination(
       // Card is already on top of deck, no-op
       break;
     case "deck-bottom": {
-      // Move to bottom of deck
-      const deckCards = ctx.framework.zones.getCards({
-        zone: "deck",
-        playerId,
-      }) as CardInstanceId[];
-      // Remove from current position and place at bottom (index 0)
-      ctx.framework.zones.moveCard(cardId, { zone: "deck", playerId });
-      // The moveCard places at the end (top), so we need to reorder
-      // Actually, let's just use the existing put-on-bottom logic
-      ctx.framework.zones.moveCard(cardId, { zone: "deck", playerId });
+      ctx.framework.zones.moveCard(cardId, { zone: "deck", playerId }, { index: 0 });
       break;
     }
     case "hand":

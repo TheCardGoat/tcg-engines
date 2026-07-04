@@ -17,7 +17,7 @@ export const sisuUnitingDragonI18n: Record<Languages, I18nProperties> = {
     version: "Vereinigender Drache",
     text: [
       {
-        title: "VERTRAUEN BRINGT VERTRAUEN",
+        title: "Vertrauen bringt Vertrauen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, decke die oberste Karte deines Decks auf. Falls sie ein Drache ist, nimm sie auf die Hand und wiederhole diesen Effekt. Falls nicht, lege sie zurück auf dein Deck oder darunter.",
       },
@@ -28,7 +28,7 @@ export const sisuUnitingDragonI18n: Record<Languages, I18nProperties> = {
     version: "Dragon fédérateur",
     text: [
       {
-        title: "LA CONFIANCE ENGENDRE LA CONFIANCE",
+        title: "La confiance engendre la confiance",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, révélez la carte du dessus de votre pioche. Si la carte révélée est un personnage Dragon, placez-la dans votre main et répétez cet effet. Sinon, remettez-la soit sur le dessus de votre pioche, soit en dessous.",
       },
@@ -39,7 +39,7 @@ export const sisuUnitingDragonI18n: Record<Languages, I18nProperties> = {
     version: "Drago Unificante",
     text: [
       {
-        title: "LA FIDUCIA GENERA FIDUCIA",
+        title: "La Fiducia Genera Fiducia",
         description:
           "Ogni volta che questo personaggio va all'avventura, rivela la prima carta del tuo mazzo. Se è una carta personaggio Drago, aggiungila alla tua mano e ripeti questo effetto. Altrimenti, mettila in cima o in fondo al tuo mazzo.",
       },

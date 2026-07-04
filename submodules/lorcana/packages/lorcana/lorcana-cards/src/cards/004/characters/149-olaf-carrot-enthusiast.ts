@@ -4,6 +4,17 @@ import { olafCarrotEnthusiastI18n } from "./149-olaf-carrot-enthusiast.i18n";
 export const olafCarrotEnthusiast: CharacterCard = {
   id: "fW1",
   canonicalId: "ci_fW1",
+  slug: "lorcana-ci_fW1",
+  printings: [
+    {
+      id: "set4-149",
+      artId: "set4-149",
+      setCode: "set4",
+      collectorNumber: "149",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-149"],
   cardType: "character",
   name: "Olaf",
@@ -20,7 +31,7 @@ export const olafCarrotEnthusiast: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f4f749bc095641e1b953b1784a6efa51",
-    tcgPlayer: 547767,
+    tcgPlayer: "547767",
   },
   text: [
     {
@@ -64,7 +75,9 @@ export const olafCarrotEnthusiast: CharacterCard = {
           stat: "strength",
           modifier: {
             type: "strength-of",
-            target: { ref: "self" },
+            target: {
+              ref: "self",
+            },
           },
           target: "YOUR_OTHER_CHARACTERS",
           duration: "this-turn",

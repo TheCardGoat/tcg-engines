@@ -4,6 +4,17 @@ import { theClawI18n } from "./099-the-claw.i18n";
 export const theClaw: ItemCard = {
   id: "7z5",
   canonicalId: "ci_7z5",
+  slug: "lorcana-ci_7z5",
+  printings: [
+    {
+      id: "set12-099",
+      artId: "set12-099",
+      setCode: "set12",
+      collectorNumber: "99",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-099"],
   cardType: "item",
   name: "The Claw",
@@ -16,6 +27,7 @@ export const theClaw: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_559113fd213144ec805c27797d7376ef",
+    tcgPlayer: "692169",
   },
   text: [
     {
@@ -30,7 +42,11 @@ export const theClaw: ItemCard = {
       name: "THE CLAW CHOOSES",
       type: "activated",
       text: "THE CLAW CHOOSES {E}, 2 {I}, Banish one of your characters — Return chosen opposing character to their player's hand.",
-      cost: { exert: true, ink: 2, banishCharacter: true },
+      cost: {
+        exert: true,
+        ink: 2,
+        banishCharacter: true,
+      },
       effect: {
         type: "return-to-hand",
         target: {

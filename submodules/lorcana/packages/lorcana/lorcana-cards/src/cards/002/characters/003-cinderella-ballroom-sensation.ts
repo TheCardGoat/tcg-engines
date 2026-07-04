@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { cinderellaBallroomSensationI18n } from "./003-cinderella-ballroom-sensation.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const cinderellaBallroomSensation: CharacterCard = {
   id: "D9h",
   canonicalId: "ci_Djx",
+  slug: "lorcana-ci_Djx",
+  printings: [
+    {
+      id: "set2-003",
+      artId: "set2-003",
+      setCode: "set2",
+      collectorNumber: "3",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-003"],
   cardType: "character",
   name: "Cinderella",
@@ -21,7 +33,7 @@ export const cinderellaBallroomSensation: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4cf391db31ba468f948bad5a20b0bc16",
-    tcgPlayer: 527802,
+    tcgPlayer: "527802",
   },
   text: "Singer 3",
   classifications: ["Storyborn", "Hero", "Princess"],

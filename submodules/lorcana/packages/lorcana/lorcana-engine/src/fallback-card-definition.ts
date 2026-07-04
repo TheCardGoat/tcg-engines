@@ -5,6 +5,17 @@ import { createCardI18n } from "./card-i18n";
 export const FALLBACK_LORCANA_CARD: LorcanaCardDefinition = {
   id: "fallback-card",
   canonicalId: "ci_fallback-card",
+  slug: "lorcana-ci_fallback-card",
+  printings: [
+    {
+      id: "fallback-card",
+      artId: "fallback-card",
+      setCode: "UNKNOWN",
+      collectorNumber: "0",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   name: "Unknown Card",
   fullName: "Unknown Card",
   cardType: "item",

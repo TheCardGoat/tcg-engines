@@ -19,12 +19,12 @@ export const svenKeeneyedReindeerI18n: Record<Languages, I18nProperties> = {
     version: "Scharfsichtiges Rentier",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "AUSSERORDENTLICH SCHARFER BLICK",
+        title: "Außerordentlich scharfer Blick",
         description:
-          "Wenn du diesen Charakter ausspielst, gib einem Charakter deiner Wahl in diesem Zug -3.",
+          "Wenn du diesen Charakter ausspielst, gib einem Charakter deiner Wahl in diesem Zug -3 {S}.",
       },
     ],
   },
@@ -33,12 +33,12 @@ export const svenKeeneyedReindeerI18n: Record<Languages, I18nProperties> = {
     version: "Renne aux aguets",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "REGARD REDOUTABLE",
+        title: "Regard redoutable",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui subit -3 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui subit -3 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -47,12 +47,12 @@ export const svenKeeneyedReindeerI18n: Record<Languages, I18nProperties> = {
     version: "Renna dallo Sguardo Acuto",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "OCCHIATACCIA FORMIDABILE",
+        title: "Occhiataccia Formidabile",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta riceve -3 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta riceve -3 {S} per questo turno.",
       },
     ],
   },

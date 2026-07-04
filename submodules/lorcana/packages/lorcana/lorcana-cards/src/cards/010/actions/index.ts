@@ -1,5 +1,7 @@
+export { theHorsemanStrikesP3Challenge } from "./p3-020-the-horseman-strikes-challenge";
 export { searchForClues } from "./026-search-for-clues";
 export { orRewriteHistory } from "./027-or-rewrite-history";
+export { puttingItAllTogetherP3Promo } from "./p3-027-putting-it-all-together-promo";
 export { dellasMoonLullaby } from "./028-dellas-moon-lullaby";
 export { theHorsemanStrikes } from "./029-the-horseman-strikes";
 export { begone } from "./061-begone";

@@ -4,6 +4,17 @@ import { mauisPlaceOfExileHiddenIslandI18n } from "./202-mauis-place-of-exile-hi
 export const mauisPlaceOfExileHiddenIsland: LocationCard = {
   id: "8P7",
   canonicalId: "ci_jZZ",
+  slug: "lorcana-ci_jZZ",
+  printings: [
+    {
+      id: "set3-202",
+      artId: "set3-202",
+      setCode: "set3",
+      collectorNumber: "202",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-202", "set9-204"],
   cardType: "location",
   name: "Maui's Place of Exile",
@@ -20,7 +31,7 @@ export const mauisPlaceOfExileHiddenIsland: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f2169b618849493a969102f760825622",
-    tcgPlayer: 650136,
+    tcgPlayer: "650136",
   },
   text: [
     {

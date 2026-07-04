@@ -4,6 +4,17 @@ import { jaqConnoisseurOfClimbingI18n } from "./077-jaq-connoisseur-of-climbing.
 export const jaqConnoisseurOfClimbing: CharacterCard = {
   id: "Ck0",
   canonicalId: "ci_Ck0",
+  slug: "lorcana-ci_Ck0",
+  printings: [
+    {
+      id: "set4-077",
+      artId: "set4-077",
+      setCode: "set4",
+      collectorNumber: "77",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-077"],
   cardType: "character",
   name: "Jaq",
@@ -20,7 +31,7 @@ export const jaqConnoisseurOfClimbing: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b0d75ae5da0646e797f1563c8811e629",
-    tcgPlayer: 547781,
+    tcgPlayer: "547781",
   },
   text: [
     {

@@ -156,6 +156,7 @@ export interface RestrictionEffect {
     | "cant-play-items" // Opponents can't play items
     | "cant-play-characters" // Opponents can't play characters
     | "cant-play" // Generic can't play restriction
+    | "cant-sing-without-sing-together" // Character can only sing songs with Sing Together
     | "must-be-chosen-for-effects" // Opponents must choose this character for actions and abilities if able
     | "cant-gain-lore" // Player can't gain lore
     // Extended restrictions for card text coverage
@@ -264,7 +265,7 @@ export interface CostReductionEffect {
   classification?: Classification | Classification[];
   /** Restrict reduction to cards with this specific name */
   name?: string;
-  target?: PlayerTarget; // Who gets the reduction (usually YOU)
+  target?: PlayerTarget | CharacterTarget; // Who gets the reduction, or the Shift target it applies to
   duration?: EffectDuration;
   /**
    * When set, the reduction only applies when playing a card via the specified method.
@@ -438,6 +439,19 @@ export interface GrantHandInkabilityEffect {
  */
 export interface GrantDiscardInkabilityEffect {
   type: "grant-discard-inkability";
+}
+
+/**
+ * Grants permission to play cards from your discard as a continuous static effect.
+ *
+ * @example "While this character is exerted, you may play characters from your discard.
+ * If you do, they enter play exerted."
+ */
+export interface PlayFromDiscardEffect {
+  type: "play-from-discard";
+  cardType?: CardType | "song" | "floodborn";
+  entersExerted?: boolean;
+  whileSourceExerted?: boolean;
 }
 
 // ============================================================================

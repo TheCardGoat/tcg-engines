@@ -4,6 +4,17 @@ import { theCarpenterDinnerCompanionI18n } from "./044-the-carpenter-dinner-comp
 export const theCarpenterDinnerCompanion: CharacterCard = {
   id: "BhW",
   canonicalId: "ci_BhW",
+  slug: "lorcana-ci_BhW",
+  printings: [
+    {
+      id: "set6-044",
+      artId: "set6-044",
+      setCode: "set6",
+      collectorNumber: "44",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-044"],
   cardType: "character",
   name: "The Carpenter",
@@ -20,7 +31,7 @@ export const theCarpenterDinnerCompanion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_034ca9ad96044d5297e30286fbd64ecb",
-    tcgPlayer: 587934,
+    tcgPlayer: "587934",
   },
   text: [
     {

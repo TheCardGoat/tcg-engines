@@ -4,6 +4,17 @@ import { stabbingtonBrotherWithAPatchI18n } from "./128-stabbington-brother-with
 export const stabbingtonBrotherWithAPatch: CharacterCard = {
   id: "QMj",
   canonicalId: "ci_QMj",
+  slug: "lorcana-ci_QMj",
+  printings: [
+    {
+      id: "set7-128",
+      artId: "set7-128",
+      setCode: "set7",
+      collectorNumber: "128",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-128"],
   cardType: "character",
   name: "Stabbington Brother",
@@ -20,7 +31,7 @@ export const stabbingtonBrotherWithAPatch: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2e6d017b97da415fb97b8d42bb129e98",
-    tcgPlayer: 619476,
+    tcgPlayer: "619476",
   },
   text: [
     {

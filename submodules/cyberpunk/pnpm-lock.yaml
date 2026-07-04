@@ -42,6 +42,9 @@ importers:
 
   packages/cards:
     dependencies:
+      '@tcg/card-model':
+        specifier: link:../../../agnostic-simulator/packages/card-model
+        version: link:../../../agnostic-simulator/packages/card-model
       '@tcg/cyberpunk-types':
         specifier: workspace:*
         version: link:../types
@@ -94,6 +97,10 @@ importers:
         version: 0.1.15(@types/node@25.5.0)(esbuild@0.27.5)(jiti@2.6.1)(jsdom@29.0.1(@noble/hashes@2.2.0))(sugarss@5.0.1(postcss@8.5.8))(typescript@6.0.2)(vite@8.0.3(@emnapi/core@1.9.1)(@emnapi/runtime@1.9.1)(@types/node@25.5.0)(esbuild@0.27.5)(jiti@2.6.1)(sugarss@5.0.1(postcss@8.5.8))(yaml@2.8.3))(yaml@2.8.3)
 
   packages/types:
+    dependencies:
+      '@tcg/card-model':
+        specifier: link:../../../agnostic-simulator/packages/card-model
+        version: link:../../../agnostic-simulator/packages/card-model
     devDependencies:
       '@types/node':
         specifier: ^25.5.0

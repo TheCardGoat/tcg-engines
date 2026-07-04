@@ -20,12 +20,12 @@ export const helgaSinclairToughAsNailsI18n: Record<Languages, I18nProperties> = 
     version: "Knallhart",
     text: [
       {
-        title: "Herausfordern +3",
+        title: "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
       },
       {
-        title: "SCHNELLE REFLEXE",
+        title: "Schnelle Reflexe",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const helgaSinclairToughAsNailsI18n: Record<Languages, I18nProperties> = 
     version: "Dure à cuire",
     text: [
       {
-        title: "Offensif +3",
+        title: "<Offensif> +3",
       },
       {
-        title: "BONS RÉFLEXES",
+        title: "Bons réflexes",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier des personnages avec Insaisissable.)",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const helgaSinclairToughAsNailsI18n: Record<Languages, I18nProperties> = 
     version: "Dura Come la Roccia",
     text: [
       {
-        title: "Sfidante +3",
+        title: "<Sfidante> +3",
       },
       {
-        title: "RIFLESSI FULMINEI",
+        title: "Riflessi Fulminei",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

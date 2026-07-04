@@ -4,6 +4,17 @@ import { kingOfHeartsPickyRulerI18n } from "./111-king-of-hearts-picky-ruler.i18
 export const kingOfHeartsPickyRuler: CharacterCard = {
   id: "LEE",
   canonicalId: "ci_LEE",
+  slug: "lorcana-ci_LEE",
+  printings: [
+    {
+      id: "set7-111",
+      artId: "set7-111",
+      setCode: "set7",
+      collectorNumber: "111",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-111"],
   cardType: "character",
   name: "King of Hearts",
@@ -20,7 +31,7 @@ export const kingOfHeartsPickyRuler: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f20054bb326b460c8ac1dc08f2723ce3",
-    tcgPlayer: 618705,
+    tcgPlayer: "618705",
   },
   text: [
     {

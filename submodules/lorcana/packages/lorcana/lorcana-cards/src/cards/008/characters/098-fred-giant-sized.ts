@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { fredGiantsizedI18n } from "./098-fred-giant-sized.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const fredGiantsized: CharacterCard = {
   id: "Hxd",
   canonicalId: "ci_Hxd",
+  slug: "lorcana-ci_Hxd",
+  printings: [
+    {
+      id: "set8-098",
+      artId: "set8-098",
+      setCode: "set8",
+      collectorNumber: "98",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-098"],
   cardType: "character",
   name: "Fred",
@@ -21,7 +33,7 @@ export const fredGiantsized: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c4073b6ba72a428e9e213027b112d48f",
-    tcgPlayer: 632710,
+    tcgPlayer: "632710",
   },
   text: [
     {

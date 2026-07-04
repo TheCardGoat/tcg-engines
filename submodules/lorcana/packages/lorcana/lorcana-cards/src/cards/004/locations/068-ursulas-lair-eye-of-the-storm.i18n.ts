@@ -21,13 +21,13 @@ export const ursulasLairEyeOfTheStormI18n: Record<Languages, I18nProperties> = {
     version: "Auge des Sturms",
     text: [
       {
-        title: "GLITSCHIGE HALLEN",
+        title: "Glitschige Hallen",
         description:
           "Jedes Mal, wenn einer deiner Charaktere an diesem Ort durch eine Herausforderung verbannt wird, darfst du jenen zurück auf deine Hand nehmen.",
       },
       {
-        title: "ORT DER MACHT",
-        description: "Ursula-Charaktere an diesem Ort erhalten +1.",
+        title: "Ort der Macht",
+        description: "Ursula-Charaktere an diesem Ort erhalten +1 {L}.",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const ursulasLairEyeOfTheStormI18n: Record<Languages, I18nProperties> = {
     version: "L'œil du cyclone",
     text: [
       {
-        title: "SALLES GLISSANTES",
+        title: "Salles glissantes",
         description:
           "Chaque fois qu'un personnage sur ce lieu est banni via un défi, vous pouvez le renvoyer dans votre main.",
       },
       {
-        title: "SIÈGE DU POUVOIR",
-        description: "Tant qu'ils sont sur ce lieu, les personnages Ursula gagnent +1.",
+        title: "Siège du Pouvoir",
+        description: "Tant qu'ils sont sur ce lieu, les personnages Ursula gagnent +1 {L}.",
       },
     ],
   },
@@ -51,13 +51,14 @@ export const ursulasLairEyeOfTheStormI18n: Record<Languages, I18nProperties> = {
     version: "Occhio del Ciclone",
     text: [
       {
-        title: "CORRIDOI SCIVOLOSI",
+        title: "Corridoi Scivolosi",
         description:
           "Ogni volta che un personaggio viene esiliato in una sfida mentre si trova in questo luogo, puoi riprenderlo in mano.",
       },
       {
-        title: "SEDE DEL POTERE I",
-        description: "personaggi chiamati Ursula ricevono +1 mentre si trovano in questo luogo.",
+        title: "Sede del Potere",
+        description:
+          "I personaggi chiamati Ursula ricevono +1 {L} mentre si trovano in questo luogo.",
       },
     ],
   },

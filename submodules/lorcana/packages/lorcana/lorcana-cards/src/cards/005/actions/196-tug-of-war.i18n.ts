@@ -17,14 +17,44 @@ export const tugofwarI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Tauziehen",
-    text: "Wähle eine Möglichkeit aus: • Füge jedem gegnerischen Charakter ohne Wendig 1 Schaden zu. • Füge jedem gegnerischen Charakter mit Wendig 3 Schaden zu.",
+    text: [
+      {
+        title: "Wähle eine Möglichkeit aus:",
+      },
+      {
+        title: "• Füge jedem gegnerischen Charakter ohne <Wendig> 1 Schaden zu.",
+      },
+      {
+        title: "• Füge jedem gegnerischen Charakter mit <Wendig> 3 Schaden zu.",
+      },
+    ],
   },
   fr: {
     name: "Tir à la corde",
-    text: "Choisissez entre: • Infligez 1 dommage à chaque personnage adverse sans Insaisissable. • Infligez 3 dommages à chaque personnage adverse avec Insaisissable.",
+    text: [
+      {
+        title: "Choisissez entre:",
+      },
+      {
+        title: "• Infligez 1 dommage à chaque personnage adverse sans <Insaisissable>.",
+      },
+      {
+        title: "• Infligez 3 dommages à chaque personnage adverse avec <Insaisissable>.",
+      },
+    ],
   },
   it: {
     name: "Tiro alla Fune",
-    text: "Scegli uno: • Infliggi 1 danno a ogni personaggio avversario senza Sfuggente. • Infliggi 3 danni a ogni personaggio avversario con Sfuggente.",
+    text: [
+      {
+        title: "Scegli uno:",
+      },
+      {
+        title: "• Infliggi 1 danno a ogni personaggio avversario senza <Sfuggente>.",
+      },
+      {
+        title: "• Infliggi 3 danni a ogni personaggio avversario con <Sfuggente>.",
+      },
+    ],
   },
 };

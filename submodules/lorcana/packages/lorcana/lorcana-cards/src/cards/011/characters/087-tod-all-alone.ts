@@ -4,6 +4,17 @@ import { todAllAloneI18n } from "./087-tod-all-alone.i18n";
 export const todAllAlone: CharacterCard = {
   id: "oKC",
   canonicalId: "ci_oKC",
+  slug: "lorcana-ci_oKC",
+  printings: [
+    {
+      id: "set11-087",
+      artId: "set11-087",
+      setCode: "set11",
+      collectorNumber: "87",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-087"],
   cardType: "character",
   name: "Tod",
@@ -21,7 +32,7 @@ export const todAllAlone: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_fdbc7b03d5194e2cb2c407273f96e01a",
-    tcgPlayer: 676205,
+    tcgPlayer: "676205",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: todAllAloneI18n,

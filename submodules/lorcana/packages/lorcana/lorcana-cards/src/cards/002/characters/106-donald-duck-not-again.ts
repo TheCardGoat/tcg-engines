@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { donaldDuckNotAgainI18n } from "./106-donald-duck-not-again.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const donaldDuckNotAgain: CharacterCard = {
   id: "2q9",
   canonicalId: "ci_2q9",
+  slug: "lorcana-ci_2q9",
+  printings: [
+    {
+      id: "set2-106",
+      artId: "set2-106",
+      setCode: "set2",
+      collectorNumber: "106",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-106"],
   cardType: "character",
   name: "Donald Duck",
@@ -20,7 +32,7 @@ export const donaldDuckNotAgain: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9599f783023446468e24ada470972aa4",
-    tcgPlayer: 527754,
+    tcgPlayer: "527754",
   },
   text: [
     {

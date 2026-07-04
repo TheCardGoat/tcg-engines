@@ -20,10 +20,11 @@ export const miloThatchKingOfAtlantisI18n: Record<Languages, I18nProperties> = {
     version: "König von Atlantis",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Milo-Thatch-Charaktere auszuspielen.)",
       },
       {
-        title: "ÜBERRASCHUNGSANGRIFF",
+        title: "Überraschungsangriff",
         description:
           "Wenn dieser Charakter verbannt wird, schicke alle gegnerischen Charaktere auf die zugehörigen Hände zurück.",
       },
@@ -34,10 +35,11 @@ export const miloThatchKingOfAtlantisI18n: Record<Languages, I18nProperties> = {
     version: "Roi de l'Atlantide",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Milo Thatch.)",
       },
       {
-        title: "ON PROFITE DE L'EFFET DE SURPRISE",
+        title: "On profite de l'effet de surprise",
         description:
           "Lorsque ce personnage est banni, renvoyez tous les personnages adverses dans la main de leur propriétaire.",
       },
@@ -48,10 +50,11 @@ export const miloThatchKingOfAtlantisI18n: Record<Languages, I18nProperties> = {
     version: "Re di Atlantide",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Milo Thatch.)",
       },
       {
-        title: "LI COGLIEREMO DI SORPRESA",
+        title: "Li Coglieremo di Sorpresa",
         description:
           "Quando questo personaggio viene esiliato, fai tornare tutti i personaggi avversari nelle mani dei loro giocatori.",
       },

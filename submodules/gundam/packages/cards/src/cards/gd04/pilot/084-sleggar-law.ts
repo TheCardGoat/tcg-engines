@@ -7,14 +7,17 @@ export const gd04SleggarLaw084: PilotCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD04-084",
-  externalId: "gundam:gd04-084",
-  slug: "sleggar-law-gd04-084",
+  canonicalId: "GD04-084",
+  externalIds: { bandai: "gundam:gd04-084" },
+  slug: "sleggar-law/gd04-084",
   displayName: "Sleggar Law",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-084",
   printings: [
     {
       id: "GD04-084",
+      artId: "GD04-084",
+      setCode: "GD04",
       collectorNumber: "GD04-084",
       cardNumber: "GD04-084",
       set: {
@@ -29,6 +32,7 @@ export const gd04SleggarLaw084: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-084"],
   selectedPrintingId: "GD04-084",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-084.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-084.webp?260424",

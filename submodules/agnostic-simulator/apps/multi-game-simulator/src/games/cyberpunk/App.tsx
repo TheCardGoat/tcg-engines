@@ -5,10 +5,8 @@ import "./tokens.css";
 import { useEffect, type ReactNode } from "react";
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
-import { CardInspectProvider } from "./components/GameBoard/CardInspectContext";
-import { CardPreviewProvider } from "./components/GameBoard/CardPreviewContext";
-import { DragDropProvider } from "./components/GameBoard";
-import { injectDicierFonts } from "./components/GameBoard/dieAssets";
+import { CardPreviewProvider } from "./components/CardPreview/CardPreviewContext";
+import { injectDicierFonts } from "./components/DieAssets/dieAssets";
 import { AuthSessionBootstrap } from "./auth/AuthSessionBootstrap";
 import { Router } from "./Router";
 import { theme } from "./theme";
@@ -29,11 +27,7 @@ export function CyberpunkSimulatorProviders({ children }: CyberpunkSimulatorProv
       <MantineProvider theme={theme} defaultColorScheme="dark">
         <Notifications position="top-right" />
         <AuthSessionBootstrap />
-        <CardPreviewProvider>
-          <CardInspectProvider>
-            <DragDropProvider>{children}</DragDropProvider>
-          </CardInspectProvider>
-        </CardPreviewProvider>
+        <CardPreviewProvider>{children}</CardPreviewProvider>
       </MantineProvider>
     </UserConfigProvider>
   );
@@ -42,7 +36,9 @@ export function CyberpunkSimulatorProviders({ children }: CyberpunkSimulatorProv
 export function CyberpunkSimulatorApp({ basename }: CyberpunkSimulatorAppProps) {
   return (
     <CyberpunkSimulatorProviders>
-      <Router basename={basename} />
+      <div data-game="cyberpunk" className="min-h-svh">
+        <Router basename={basename} />
+      </div>
     </CyberpunkSimulatorProviders>
   );
 }

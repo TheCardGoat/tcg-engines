@@ -6,14 +6,17 @@ export const st03Falmel016: BaseCard = {
   type: "base",
   traits: ["zeon", "warship"],
   id: "ST03-016",
-  externalId: "gundam:st03-016",
-  slug: "falmel-st03-016",
+  canonicalId: "ST03-016",
+  externalIds: { bandai: "gundam:st03-016" },
+  slug: "falmel/st03-016",
   displayName: "Falmel",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-016",
   printings: [
     {
       id: "ST03-016",
+      artId: "ST03-016",
+      setCode: "ST03",
       collectorNumber: "ST03-016",
       cardNumber: "ST03-016",
       set: {
@@ -29,6 +32,8 @@ export const st03Falmel016: BaseCard = {
     },
     {
       id: "ST03-016_p1",
+      artId: "ST03-016_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-016_p1",
       cardNumber: "ST03-016",
       set: {
@@ -44,6 +49,8 @@ export const st03Falmel016: BaseCard = {
     },
     {
       id: "ST03-016_p2",
+      artId: "ST03-016_p2",
+      setCode: "BETA",
       collectorNumber: "ST03-016_p2",
       cardNumber: "ST03-016",
       set: {
@@ -58,6 +65,7 @@ export const st03Falmel016: BaseCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST03-016", "ST03-016_p1", "ST03-016_p2"],
   selectedPrintingId: "ST03-016",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-016.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-016.webp?260424",

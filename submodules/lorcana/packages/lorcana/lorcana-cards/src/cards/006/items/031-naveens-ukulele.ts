@@ -4,6 +4,17 @@ import { naveensUkuleleI18n } from "./031-naveens-ukulele.i18n";
 export const naveensUkulele: ItemCard = {
   id: "2CJ",
   canonicalId: "ci_2CJ",
+  slug: "lorcana-ci_2CJ",
+  printings: [
+    {
+      id: "set6-031",
+      artId: "set6-031",
+      setCode: "set6",
+      collectorNumber: "31",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-031"],
   cardType: "item",
   name: "Naveen's Ukulele",
@@ -16,7 +27,7 @@ export const naveensUkulele: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d4d40d9e539442f592da01b640e440a7",
-    tcgPlayer: 593032,
+    tcgPlayer: "593032",
   },
   text: [
     {

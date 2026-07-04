@@ -4,6 +4,17 @@ import { shieldOfArendelleI18n } from "./200-shield-of-arendelle.i18n";
 export const shieldOfArendelle: ItemCard = {
   id: "k2d",
   canonicalId: "ci_k2d",
+  slug: "lorcana-ci_k2d",
+  printings: [
+    {
+      id: "set5-200",
+      artId: "set5-200",
+      setCode: "set5",
+      collectorNumber: "200",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-200"],
   cardType: "item",
   name: "Shield of Arendelle",
@@ -16,7 +27,7 @@ export const shieldOfArendelle: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c54910dbfc304bb5b4e71639858ceb82",
-    tcgPlayer: 561851,
+    tcgPlayer: "561851",
   },
   text: [
     {

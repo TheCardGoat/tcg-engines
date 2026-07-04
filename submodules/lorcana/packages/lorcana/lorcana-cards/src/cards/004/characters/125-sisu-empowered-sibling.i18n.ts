@@ -20,12 +20,13 @@ export const sisuEmpoweredSiblingI18n: Record<Languages, I18nProperties> = {
     version: "Starkes Familienmitglied",
     text: [
       {
-        title: "Gestaltwandel 6",
+        title:
+          "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Sisu-Charaktere auszuspielen.)",
       },
       {
-        title: "ICH MACH DAS SCHON!",
+        title: "Ich mach das schon!",
         description:
-          "Wenn du diesen Charakter ausspielst, verbanne alle gegnerischen Charaktere mit 2 oder weniger.",
+          "Wenn du diesen Charakter ausspielst, verbanne alle gegnerischen Charaktere mit 2 oder weniger {S}.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const sisuEmpoweredSiblingI18n: Record<Languages, I18nProperties> = {
     version: "Sœur responsable",
     text: [
       {
-        title: "Alter 6",
+        title:
+          "<Alter> 6 (Vous pouvez payer 6 {I} pour jouer ce personnage sur l'un de vos personnages Sisu.)",
       },
       {
-        title: "LAISSE-MOI GÉRER ÇA!",
+        title: "Laisse-moi gérer ça!",
         description:
-          "Lorsque vous jouez ce personnage, bannissez tous les personnages adverses ayant 2 ou moins.",
+          "Lorsque vous jouez ce personnage, bannissez tous les personnages adverses ayant 2 {S} ou moins.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const sisuEmpoweredSiblingI18n: Record<Languages, I18nProperties> = {
     version: "Sorella Potenziata",
     text: [
       {
-        title: "Trasformazione 6",
+        title:
+          "<Trasformazione> 6 (Puoi pagare 6 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Sisu.)",
       },
       {
-        title: "LASCIA FARE",
+        title: "Lascia Fare a Me",
         description:
-          "A ME Quando giochi questo personaggio, esilia tutti i personaggi avversari con 2 o inferiore.",
+          "Quando giochi questo personaggio, esilia tutti i personaggi avversari con 2 {S} o inferiore.",
       },
     ],
   },

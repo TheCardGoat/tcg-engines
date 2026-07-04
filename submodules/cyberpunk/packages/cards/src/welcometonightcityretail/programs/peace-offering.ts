@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailPeaceOffering = {
+export const welcomeToNightCityRetailPeaceOffering = defineCyberpunkCard({
   id: "3b30f02d-84dd-402c-ab4b-87a2ec3badce",
-  externalId: "cb-peace-offering",
   slug: "peace-offering",
-  name: "Peace Offering",
-  displayName: "Peace Offering",
   rulesText:
     "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
+  name: "Peace Offering",
+  displayName: "Peace Offering",
+  canonicalId: "peace-offering",
   color: "green",
   classifications: ["Braindance"],
   set: {
@@ -15,21 +16,6 @@ export const welcomeToNightCityRetailPeaceOffering = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "101",
-  printings: [
-    {
-      id: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
-      collectorNumber: "101",
-      setCode: "welcometonightcityretail",
-      rarity: "Common",
-    },
-    {
-      id: "2cff513f-6a75-40f0-8e70-e1491d340472",
-      collectorNumber: "β101",
-      setCode: "welcometonightcitybeta",
-      rarity: "Common",
-    },
-  ],
-  selectedPrintingId: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
   artist: "Mattia De Iulis",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/101.webp",
   rarity: "Common",
@@ -37,7 +23,6 @@ export const welcomeToNightCityRetailPeaceOffering = {
   hasSellTag: true,
   ram: 1,
   timingTriggers: ["play"],
-  keywords: [],
   type: "program",
   cost: 1,
   power: null,
@@ -95,4 +80,4 @@ export const welcomeToNightCityRetailPeaceOffering = {
     },
   ],
   reminderText: ["Discard programs after they resolve."],
-} satisfies StructuredCardDefinition;
+}) satisfies ProgramCardDefinition;

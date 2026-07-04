@@ -4,6 +4,17 @@ import { donaldDuckGhostHunterI18n } from "./172-donald-duck-ghost-hunter.i18n";
 export const donaldDuckGhostHunter: CharacterCard = {
   id: "8QA",
   canonicalId: "ci_8QA",
+  slug: "lorcana-ci_8QA",
+  printings: [
+    {
+      id: "set10-172",
+      artId: "set10-172",
+      setCode: "set10",
+      collectorNumber: "172",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-172"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,13 +30,13 @@ export const donaldDuckGhostHunter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_54826b5dca034c2d8afd142a96fedf58",
-    tcgPlayer: 659396,
+    tcgPlayer: "659396",
   },
   text: [
     {
-      title: "RAISE A RUCKUS",
+      title: "RAISE",
       description:
-        "When you play this character, chosen Detective character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
+        "A RUCKUS When you play this character, chosen Detective character gains Challenger +2 this turn. (They get +2 {S} while challenging.)",
     },
   ],
   classifications: ["Dreamborn", "Hero", "Detective"],

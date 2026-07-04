@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { herculesTrueHeroI18n } from "./181-hercules-true-hero.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const herculesTrueHero: CharacterCard = {
   id: "Wrj",
   canonicalId: "ci_0p0",
+  slug: "lorcana-ci_0p0",
+  printings: [
+    {
+      id: "set1-181",
+      artId: "set1-181",
+      setCode: "set1",
+      collectorNumber: "181",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-181", "set9-191"],
   cardType: "character",
   name: "Hercules",
@@ -21,7 +33,7 @@ export const herculesTrueHero: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2ae8a63bba494c3e842e54ec56da3021",
-    tcgPlayer: 650124,
+    tcgPlayer: "650124",
   },
   text: "Bodyguard",
   classifications: ["Dreamborn", "Hero", "Prince"],

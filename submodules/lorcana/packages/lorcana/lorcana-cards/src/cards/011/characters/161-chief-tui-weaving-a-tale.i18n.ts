@@ -17,7 +17,7 @@ export const chiefTuiWeavingATaleI18n: Record<Languages, I18nProperties> = {
     version: "Webt eine Geschichte",
     text: [
       {
-        title: "UND DANN...",
+        title: "Und dann...",
         description:
           "Einmal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, schaue dir die oberste Karte deines Decks an. Lege sie anschließend entweder auf dein Deck oder darunter.",
       },
@@ -28,7 +28,7 @@ export const chiefTuiWeavingATaleI18n: Record<Languages, I18nProperties> = {
     version: "Brode une histoire",
     text: [
       {
-        title: "ET ENSUITE...",
+        title: "Et ensuite...",
         description:
           "Une fois durant votre tour, lorsqu'une carte est placée dans votre réserve d'encre, regardez la carte du dessus de votre pioche. Placez-la sur ou sous votre pioche.",
       },
@@ -39,7 +39,7 @@ export const chiefTuiWeavingATaleI18n: Record<Languages, I18nProperties> = {
     version: "Tessitore di Racconti",
     text: [
       {
-        title: "E POI...",
+        title: "E Poi...",
         description:
           "Una volta durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, guarda la prima carta del tuo mazzo. Puoi metterla in cima o in fondo al tuo mazzo.",
       },

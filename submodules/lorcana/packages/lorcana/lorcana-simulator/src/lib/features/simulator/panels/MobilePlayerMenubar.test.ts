@@ -118,6 +118,7 @@ describe("MobilePlayerMenubar rendering", () => {
     });
 
     expect(body.indexOf("lore-chip__icon")).toBeLessThan(body.indexOf(">7<"));
+    expect(body).toContain("symbols/lore-2.svg");
   });
 
   it("renders top-bar settings and event log controls together", async () => {

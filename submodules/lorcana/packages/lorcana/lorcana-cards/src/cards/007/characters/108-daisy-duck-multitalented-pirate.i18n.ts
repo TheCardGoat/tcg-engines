@@ -17,7 +17,7 @@ export const daisyDuckMultitalentedPirateI18n: Record<Languages, I18nProperties>
     version: "Vielseitig begabte Piratin",
     text: [
       {
-        title: "FALSCHES SPIEL",
+        title: "Falsches Spiel",
         description:
           "Einmal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, wählt eine gegnerische Person deiner Wahl einen ihrer Charaktere und nimmt diesen zurück auf ihre Hand.",
       },
@@ -28,7 +28,7 @@ export const daisyDuckMultitalentedPirateI18n: Record<Languages, I18nProperties>
     version: "Pirate aux multiples talents",
     text: [
       {
-        title: "DINDON DE LA FARCE",
+        title: "Dindon de la farce",
         description:
           "Une seule fois durant votre tour, lorsqu'une carte est placée dans votre réserve d'encre, choisissez un adversaire qui choisit et renvoie l'un de ses personnages dans sa main.",
       },
@@ -39,7 +39,7 @@ export const daisyDuckMultitalentedPirateI18n: Record<Languages, I18nProperties>
     version: "Pirata dai Molti Talenti",
     text: [
       {
-        title: "MOSSA ASTUTA",
+        title: "Mossa Astuta",
         description:
           "Una volta durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un avversario a tua scelta sceglie uno dei suoi personaggi e riprende in mano quella carta.",
       },

@@ -4,6 +4,17 @@ import { bendToMyWillI18n } from "./093-bend-to-my-will.i18n";
 export const bendToMyWill: ActionCard = {
   id: "7l9",
   canonicalId: "ci_7l9",
+  slug: "lorcana-ci_7l9",
+  printings: [
+    {
+      id: "set6-093",
+      artId: "set6-093",
+      setCode: "set6",
+      collectorNumber: "93",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-093"],
   cardType: "action",
   name: "Bend to My Will",
@@ -16,7 +27,7 @@ export const bendToMyWill: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5406218b8d7a41a68bdf0be3029acf05",
-    tcgPlayer: 591980,
+    tcgPlayer: "591980",
   },
   text: "Each opponent discards all cards in their hand.",
   abilities: [

@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theTroubadourMusicalNarratorI18n } from "./011-the-troubadour-musical-narrator.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 import { singer } from "../../../helpers/abilities/singer";
 
 export const theTroubadourMusicalNarrator: CharacterCard = {
   id: "k1P",
   canonicalId: "ci_k1P",
+  slug: "lorcana-ci_k1P",
+  printings: [
+    {
+      id: "set7-011",
+      artId: "set7-011",
+      setCode: "set7",
+      collectorNumber: "11",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-011"],
   cardType: "character",
   name: "The Troubadour",
@@ -21,7 +33,7 @@ export const theTroubadourMusicalNarrator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7f80a94bb56149dea86cbcf92b7eff6f",
-    tcgPlayer: 618128,
+    tcgPlayer: "618128",
   },
   text: [
     {

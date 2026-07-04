@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { support } from "../../../helpers/abilities/support";
 import { eilonwyPrincessOfLlyrI18n } from "./007-eilonwy-princess-of-llyr.i18n";
+
+import { support } from "../../../helpers/abilities/support";
 
 export const eilonwyPrincessOfLlyr: CharacterCard = {
   id: "B00",
   canonicalId: "ci_B00",
+  slug: "lorcana-ci_B00",
+  printings: [
+    {
+      id: "set10-007",
+      artId: "set10-007",
+      setCode: "set10",
+      collectorNumber: "7",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-007"],
   cardType: "character",
   name: "Eilonwy",
@@ -21,7 +33,7 @@ export const eilonwyPrincessOfLlyr: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_495426e5c16b4039977439b3c7a9b9e2",
-    tcgPlayer: 659763,
+    tcgPlayer: "659763",
   },
   text: "Support",
   classifications: ["Storyborn", "Ally", "Princess"],

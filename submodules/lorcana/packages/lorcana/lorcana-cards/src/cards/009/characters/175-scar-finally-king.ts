@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { scarFinallyKingI18n } from "./175-scar-finally-king.i18n";
 
 export const scarFinallyKing: CharacterCard = {
-  id: "mUj",
+  id: "zKN",
   canonicalId: "ci_rq5",
+  slug: "lorcana-ci_rq5",
+  printings: [
+    {
+      id: "set9-175",
+      artId: "set9-175",
+      setCode: "set9",
+      collectorNumber: "175",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-175"],
   cardType: "character",
   name: "Scar",
@@ -20,7 +31,7 @@ export const scarFinallyKing: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3d02b1019aa34f70b5e0da64191d9326",
-    tcgPlayer: 651108,
+    tcgPlayer: "651108",
   },
   text: [
     {
@@ -73,7 +84,11 @@ export const scarFinallyKing: CharacterCard = {
         query: {
           selector: "all",
           reference: "source",
-          filters: [{ type: "exerted" }],
+          filters: [
+            {
+              type: "exerted",
+            },
+          ],
         },
         comparison: {
           operator: "gte",
@@ -94,7 +109,12 @@ export const scarFinallyKing: CharacterCard = {
                 owner: "you",
                 zones: ["play"],
                 cardTypes: ["character"],
-                filter: [{ type: "has-classification", classification: "Ally" }],
+                filter: [
+                  {
+                    type: "has-classification",
+                    classification: "Ally",
+                  },
+                ],
               },
             },
             {

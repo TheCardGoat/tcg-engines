@@ -18,23 +18,14 @@ export const captainHookRuthlessPirateI18n: Record<Languages, I18nProperties> = 
   de: {
     name: "Käpt'n Hook",
     version: "Skrupelloser Pirat",
-    text: [
-      {
-        title: "Rasant",
-      },
-      {
-        title: "DU FEIGLING!",
-        description:
-          "Solange dieser Charakter erschöpft ist, erhalten gegnerische Charaktere mit Wendig zusätzlich Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
-      },
-    ],
+    text: "<Rasant> \\Du Feigling!\\ Solange dieser Charakter erschöpft ist, erhalten gegnerische Charaktere mit Wendig zusätzlich Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
   },
   fr: {
     name: "CAPITAINE CROCHET",
     version: "Pirate impitoyable",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
         title: "LÂCHE!",
@@ -48,12 +39,12 @@ export const captainHookRuthlessPirateI18n: Record<Languages, I18nProperties> = 
     version: "Ruthless Pirate",
     text: [
       {
-        title: "Rush",
+        title: "<Rush> (This character can challenge the turn they're played.)",
       },
       {
-        title: "YOU COWARD!",
+        title: "You Coward!",
         description:
-          "While this character is exerted, opposing characters with Evasive gain Reckless. (They can't quest and must challenge if able.)",
+          "While this character is exerted, opposing characters with <Evasive> gain <Reckless>. (They can't quest and must challenge if able.)",
       },
     ],
   },

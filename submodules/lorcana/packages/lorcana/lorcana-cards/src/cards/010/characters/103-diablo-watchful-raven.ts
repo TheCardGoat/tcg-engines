@@ -4,6 +4,17 @@ import { diabloWatchfulRavenI18n } from "./103-diablo-watchful-raven.i18n";
 export const diabloWatchfulRaven: CharacterCard = {
   id: "tM1",
   canonicalId: "ci_tM1",
+  slug: "lorcana-ci_tM1",
+  printings: [
+    {
+      id: "set10-103",
+      artId: "set10-103",
+      setCode: "set10",
+      collectorNumber: "103",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-103"],
   cardType: "character",
   name: "Diablo",
@@ -21,7 +32,7 @@ export const diabloWatchfulRaven: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_65729f741f574e078711c5cec14ee087",
-    tcgPlayer: 658380,
+    tcgPlayer: "658380",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: diabloWatchfulRavenI18n,

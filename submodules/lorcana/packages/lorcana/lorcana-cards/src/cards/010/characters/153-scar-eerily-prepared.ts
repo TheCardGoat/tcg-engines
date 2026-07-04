@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { scarEerilyPreparedI18n } from "./153-scar-eerily-prepared.i18n";
 
+import { boost } from "../../../helpers/abilities/boost";
+
 export const scarEerilyPrepared: CharacterCard = {
-  id: "ETj",
-  canonicalId: "ci_ETj",
+  id: "xU1",
+  canonicalId: "ci_X5v",
+  slug: "lorcana-ci_X5v",
+  printings: [
+    {
+      id: "set10-153",
+      artId: "set10-153",
+      setCode: "set10",
+      collectorNumber: "153",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-153"],
   cardType: "character",
   name: "Scar",
@@ -21,7 +33,7 @@ export const scarEerilyPrepared: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f2674e110de64c81ae9b07068364c22d",
-    tcgPlayer: 659384,
+    tcgPlayer: "659384",
   },
   text: [
     {

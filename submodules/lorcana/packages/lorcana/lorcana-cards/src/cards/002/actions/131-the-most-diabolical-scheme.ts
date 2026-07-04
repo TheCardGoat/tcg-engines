@@ -4,6 +4,17 @@ import { theMostDiabolicalSchemeI18n } from "./131-the-most-diabolical-scheme.i1
 export const theMostDiabolicalScheme: ActionCard = {
   id: "7eC",
   canonicalId: "ci_7eC",
+  slug: "lorcana-ci_7eC",
+  printings: [
+    {
+      id: "set2-131",
+      artId: "set2-131",
+      setCode: "set2",
+      collectorNumber: "131",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-131"],
   cardType: "action",
   name: "The Most Diabolical Scheme",
@@ -16,7 +27,7 @@ export const theMostDiabolicalScheme: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_07082198195e40d6b940142d1383c881",
-    tcgPlayer: 527540,
+    tcgPlayer: "527540",
   },
   text: "Banish chosen Villain of yours to banish chosen character.",
   actionSubtype: "song",

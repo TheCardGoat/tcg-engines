@@ -4,6 +4,17 @@ import { louisEndearingAlligatorI18n } from "./095-louis-endearing-alligator.i18
 export const louisEndearingAlligator: CharacterCard = {
   id: "hTp",
   canonicalId: "ci_hTp",
+  slug: "lorcana-ci_hTp",
+  printings: [
+    {
+      id: "set8-095",
+      artId: "set8-095",
+      setCode: "set8",
+      collectorNumber: "95",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-095"],
   cardType: "character",
   name: "Louis",
@@ -20,7 +31,7 @@ export const louisEndearingAlligator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fbddbf17f5824cb38bc0b35502f0d9a9",
-    tcgPlayer: 631775,
+    tcgPlayer: "631775",
   },
   text: [
     {

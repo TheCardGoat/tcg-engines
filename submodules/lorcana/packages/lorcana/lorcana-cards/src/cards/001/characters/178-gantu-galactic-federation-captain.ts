@@ -4,6 +4,17 @@ import { gantuGalacticFederationCaptainI18n } from "./178-gantu-galactic-federat
 export const gantuGalacticFederationCaptain: CharacterCard = {
   id: "A1d",
   canonicalId: "ci_A1d",
+  slug: "lorcana-ci_A1d",
+  printings: [
+    {
+      id: "set1-178",
+      artId: "set1-178",
+      setCode: "set1",
+      collectorNumber: "178",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-178"],
   cardType: "character",
   name: "Gantu",
@@ -20,7 +31,7 @@ export const gantuGalacticFederationCaptain: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c165a1025f82402fa3834ed4c9da14ba",
-    tcgPlayer: 488097,
+    tcgPlayer: "488097",
   },
   text: [
     {

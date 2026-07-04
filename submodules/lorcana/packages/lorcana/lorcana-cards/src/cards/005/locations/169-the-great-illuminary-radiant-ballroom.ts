@@ -4,6 +4,17 @@ import { theGreatIlluminaryRadiantBallroomI18n } from "./169-the-great-illuminar
 export const theGreatIlluminaryRadiantBallroom: LocationCard = {
   id: "FUQ",
   canonicalId: "ci_FUQ",
+  slug: "lorcana-ci_FUQ",
+  printings: [
+    {
+      id: "set5-169",
+      artId: "set5-169",
+      setCode: "set5",
+      collectorNumber: "169",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-169"],
   cardType: "location",
   name: "The Great Illuminary",
@@ -20,7 +31,7 @@ export const theGreatIlluminaryRadiantBallroom: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5b27a13096a24ba4af338df7a19a358f",
-    tcgPlayer: 555275,
+    tcgPlayer: "555275",
   },
   text: [
     {

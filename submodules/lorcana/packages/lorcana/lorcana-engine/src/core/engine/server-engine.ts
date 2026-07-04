@@ -61,6 +61,7 @@ export interface ServerEngineConfig {
   /** Server-side match ID. Stored in ctx.matchID. */
   matchID?: string;
   staticResources: MatchStaticResources;
+  capturePatches?: boolean;
   debugMode?: boolean;
   choosingFirstPlayer?: string;
   /**
@@ -113,7 +114,7 @@ export class ServerEngine implements GameEngine {
         seed: config.seed,
         gameID: config.gameID,
         matchID: config.matchID,
-        capturePatches: true,
+        capturePatches: config.capturePatches ?? false,
         cardsMaps: emptyCardsMaps,
         cardCatalog: config.staticResources.cards,
         choosingFirstPlayer: config.choosingFirstPlayer,
@@ -129,7 +130,7 @@ export class ServerEngine implements GameEngine {
       seed: config.seed,
       gameID: config.gameID,
       matchID: config.matchID,
-      capturePatches: true,
+      capturePatches: config.capturePatches ?? false,
       //TODO: We could pass both `cardsMaps` and `cardCatalog` from constructuror
       cardsMaps: createCardsMapsFromStaticResources(config.staticResources),
       cardCatalog: config.staticResources.cards,

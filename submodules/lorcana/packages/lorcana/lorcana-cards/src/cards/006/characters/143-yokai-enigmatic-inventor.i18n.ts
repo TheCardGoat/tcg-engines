@@ -17,9 +17,9 @@ export const yokaiEnigmaticInventorI18n: Record<Languages, I18nProperties> = {
     version: "Rätselhafter Erfinder",
     text: [
       {
-        title: "ZEIT FÜR EIN UPGRADE",
+        title: "Zeit für ein Upgrade",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 deiner Gegenstände zurück auf deine Hand nehmen. Wenn du dies tust, zahlst du 2 weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 deiner Gegenstände zurück auf deine Hand nehmen. Wenn du dies tust, zahlst du 2 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const yokaiEnigmaticInventorI18n: Record<Languages, I18nProperties> = {
     version: "Inventeur énigmatique",
     text: [
       {
-        title: "MISE À JOUR IMMÉDIATE",
+        title: "Mise à jour immédiate",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez renvoyer l'un de vos objets dans votre main. Si vous le faites, le prochain objet que vous jouez ce tour-ci vous coûte 2 de moins.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez renvoyer l'un de vos objets dans votre main. Si vous le faites, le prochain objet que vous jouez ce tour-ci vous coûte 2 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const yokaiEnigmaticInventorI18n: Record<Languages, I18nProperties> = {
     version: "Inventore Enigmatico",
     text: [
       {
-        title: "È ORA DI UN UPGRADE",
+        title: "È Ora di un Upgrade",
         description:
-          "Ogni volta che questo personaggio va all'avventura, puoi riprendere in mano uno dei tuoi oggetti per pagare 2 in meno per giocare il tuo prossimo oggetto per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, puoi riprendere in mano uno dei tuoi oggetti per pagare 2 {I} in meno per giocare il tuo prossimo oggetto per questo turno.",
       },
     ],
   },

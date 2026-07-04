@@ -17,7 +17,7 @@ export const peteSteamboatRivalI18n: Record<Languages, I18nProperties> = {
     version: "Dampfschiff-Rivale",
     text: [
       {
-        title: "VERSCHWINDE!",
+        title: "Verschwinde!",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen weiteren Kater-Karlo-Charakter im Spiel hast, darfst du einen gegnerischen Charakter deiner Wahl verbannen.",
       },
@@ -28,7 +28,7 @@ export const peteSteamboatRivalI18n: Record<Languages, I18nProperties> = {
     version: "Rival du bateau à vapeur",
     text: [
       {
-        title: "FICHE LE CAMP!",
+        title: "Fiche le camp!",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un autre personnage Pat en jeu, vous pouvez choisir un personnage adverse et le bannir.",
       },
@@ -39,7 +39,7 @@ export const peteSteamboatRivalI18n: Record<Languages, I18nProperties> = {
     version: "Rivale del Battello a Vapore",
     text: [
       {
-        title: "SPARISCI!",
+        title: "Sparisci!",
         description:
           "Quando giochi questo personaggio, se hai in gioco un altro personaggio chiamato Gambadilegno, puoi esiliare un personaggio avversario a tua scelta.",
       },

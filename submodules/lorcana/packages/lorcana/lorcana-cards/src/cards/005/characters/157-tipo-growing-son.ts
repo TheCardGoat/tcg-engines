@@ -4,6 +4,17 @@ import { tipoGrowingSonI18n } from "./157-tipo-growing-son.i18n";
 export const tipoGrowingSon: CharacterCard = {
   id: "gPY",
   canonicalId: "ci_gPY",
+  slug: "lorcana-ci_gPY",
+  printings: [
+    {
+      id: "set5-157",
+      artId: "set5-157",
+      setCode: "set5",
+      collectorNumber: "157",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-157"],
   cardType: "character",
   name: "Tipo",
@@ -20,7 +31,7 @@ export const tipoGrowingSon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bef15d42bda94a50a0fea05384b4cd72",
-    tcgPlayer: 560584,
+    tcgPlayer: "560584",
   },
   text: [
     {

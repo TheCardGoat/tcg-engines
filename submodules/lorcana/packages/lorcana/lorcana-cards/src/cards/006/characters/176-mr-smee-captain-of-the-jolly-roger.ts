@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mrSmeeCaptainOfTheJollyRogerI18n } from "./176-mr-smee-captain-of-the-jolly-roger.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const mrSmeeCaptainOfTheJollyRoger: CharacterCard = {
   id: "ma6",
   canonicalId: "ci_ma6",
+  slug: "lorcana-ci_ma6",
+  printings: [
+    {
+      id: "set6-176",
+      artId: "set6-176",
+      setCode: "set6",
+      collectorNumber: "176",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-176"],
   cardType: "character",
   name: "Mr. Smee",
@@ -21,7 +33,7 @@ export const mrSmeeCaptainOfTheJollyRoger: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6a19afc00c8b45769267ad82f20e0929",
-    tcgPlayer: 592004,
+    tcgPlayer: "592004",
   },
   text: [
     {

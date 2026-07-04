@@ -22,14 +22,14 @@ export const peterPansShadowNotSewnOnI18n: Record<Languages, I18nProperties> = {
     version: "Nicht angenäht",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "AUF ZEHENSPITZEN",
-        description: "Deine anderen Charaktere mit Rasant erhalten Wendig.",
+        title: "Auf Zehenspitzen",
+        description: "Deine anderen Charaktere mit <Rasant> erhalten <Wendig>.",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const peterPansShadowNotSewnOnI18n: Record<Languages, I18nProperties> = {
     version: "Décousue",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "SUR LA POINTE DES PIEDS",
-        description: "Vos autres personnages avec Charge gagnent Insaisissable.",
+        title: "Sur la pointe des pieds",
+        description: "Vos autres personnages avec <Charge> gagnent <Insaisissable>.",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const peterPansShadowNotSewnOnI18n: Record<Languages, I18nProperties> = {
     version: "Not Sewn On",
     text: [
       {
-        title: "Evasive",
+        title: "<Evasive> (Only characters with Evasive can challenge this character.)",
       },
       {
-        title: "Rush",
+        title: "<Rush> (This character can challenge the turn they're played.)",
       },
       {
-        title: "TIPTOE",
-        description: "Your other characters with Rush gain Evasive.",
+        title: "Tiptoe",
+        description: "Your other characters with <Rush> gain <Evasive>.",
       },
     ],
   },

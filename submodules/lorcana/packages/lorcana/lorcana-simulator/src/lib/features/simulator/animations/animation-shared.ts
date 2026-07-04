@@ -42,8 +42,8 @@ export function toLocalRect(rect: BoardAnchorRect, boardRect: BoardAnchorRect): 
 
 /**
  * Svelte action that detects when a CSS animation on an element completes
- * using the Web Animations API. Calls `onFinished` when the first CSS animation
- * on the node reaches its end state.
+ * using the Web Animations API. Calls `onFinished` when every CSS animation
+ * owned by the node reaches its end state.
  *
  * If no CSS animation is found (e.g., `prefers-reduced-motion: reduce` disables
  * animations), `onFinished` is not called — a safety timeout in the game context
@@ -53,11 +53,19 @@ export function watchCssAnimation(
   node: HTMLElement,
   params: { id: string; onFinished: (id: string) => void },
 ): { destroy: () => void } {
+  let cancelled = false;
   const frameId = requestAnimationFrame(() => {
-    const animations = node.getAnimations();
+    const animations = node.getAnimations().filter((animation) => {
+      const effect = animation.effect;
+      return effect instanceof KeyframeEffect && effect.target === node;
+    });
     if (animations.length > 0) {
-      animations[0].finished
-        .then(() => params.onFinished(params.id))
+      Promise.allSettled(animations.map((animation) => animation.finished))
+        .then(() => {
+          if (!cancelled) {
+            params.onFinished(params.id);
+          }
+        })
         .catch(() => {
           // Animation was cancelled (element removed, or .cancel() called) — no-op.
         });
@@ -66,6 +74,7 @@ export function watchCssAnimation(
 
   return {
     destroy() {
+      cancelled = true;
       cancelAnimationFrame(frameId);
     },
   };

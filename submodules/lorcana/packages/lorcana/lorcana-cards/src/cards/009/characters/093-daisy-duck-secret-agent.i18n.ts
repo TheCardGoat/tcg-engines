@@ -16,7 +16,7 @@ export const daisyDuckSecretAgentI18n: Record<Languages, I18nProperties> = {
     version: "Geheimagentin",
     text: [
       {
-        title: "SABOTIEREN",
+        title: "Sabotieren",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, wählen alle gegnerischen Mitspielenden je 1 Karte aus ihrer Hand und werfen diese ab.",
       },
@@ -27,7 +27,7 @@ export const daisyDuckSecretAgentI18n: Record<Languages, I18nProperties> = {
     version: "Agente secrète",
     text: [
       {
-        title: "DÉJOUER",
+        title: "Déjouer",
         description:
           "Lorsque ce personnage est envoyé à l'aventure, chaque adversaire choisit une carte et la défausse.",
       },
@@ -38,7 +38,7 @@ export const daisyDuckSecretAgentI18n: Record<Languages, I18nProperties> = {
     version: "Secret Agent",
     text: [
       {
-        title: "THWART",
+        title: "Thwart",
         description: "Whenever this character quests, each opponent chooses and discards a card.",
       },
     ],

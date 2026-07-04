@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMouseMrsCratchitI18n } from "./088-minnie-mouse-mrs-cratchit.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const minnieMouseMrsCratchit: CharacterCard = {
   id: "g4Z",
   canonicalId: "ci_mKu",
+  slug: "lorcana-ci_mKu",
+  printings: [
+    {
+      id: "set11-088",
+      artId: "set11-088",
+      setCode: "set11",
+      collectorNumber: "88",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-088"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -21,7 +33,7 @@ export const minnieMouseMrsCratchit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_84aa488aa433406493abed00a9d99611",
-    tcgPlayer: 677148,
+    tcgPlayer: "677148",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { challenger } from "../../../helpers/abilities/challenger";
 import { iagoStompinMadI18n } from "./043-iago-stompin-mad.i18n";
+
+import { challenger } from "../../../helpers/abilities/challenger";
 
 export const iagoStompinMad: CharacterCard = {
   id: "UTt",
   canonicalId: "ci_UTt",
+  slug: "lorcana-ci_UTt",
+  printings: [
+    {
+      id: "set10-043",
+      artId: "set10-043",
+      setCode: "set10",
+      collectorNumber: "43",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-043"],
   cardType: "character",
   name: "Iago",
@@ -21,7 +33,7 @@ export const iagoStompinMad: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_93fe86cf6bea47328896bd5ff2560694",
-    tcgPlayer: 659181,
+    tcgPlayer: "659181",
   },
   text: "Challenger +5",
   classifications: ["Storyborn", "Ally"],

@@ -4,6 +4,17 @@ import { cardSoldiersSpearI18n } from "./134-card-soldiers-spear.i18n";
 export const cardSoldiersSpear: ItemCard = {
   id: "bi3",
   canonicalId: "ci_bi3",
+  slug: "lorcana-ci_bi3",
+  printings: [
+    {
+      id: "set6-134",
+      artId: "set6-134",
+      setCode: "set6",
+      collectorNumber: "134",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-134"],
   cardType: "item",
   name: "Card Soldier's Spear",
@@ -16,7 +27,7 @@ export const cardSoldiersSpear: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b9c345526a994ae88d5832aac9f083b9",
-    tcgPlayer: 588342,
+    tcgPlayer: "588342",
   },
   text: [
     {

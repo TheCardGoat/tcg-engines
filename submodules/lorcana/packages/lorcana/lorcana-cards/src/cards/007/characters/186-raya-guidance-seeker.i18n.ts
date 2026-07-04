@@ -17,9 +17,9 @@ export const rayaGuidanceSeekerI18n: Record<Languages, I18nProperties> = {
     version: "Sucht nach Führung",
     text: [
       {
-        title: "EIN GRÖSSERER ZWECK",
+        title: "Ein größerer Zweck",
         description:
-          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält dieser Charakter bis zu Beginn deines nächsten Zuges Robust +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält dieser Charakter bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const rayaGuidanceSeekerI18n: Record<Languages, I18nProperties> = {
     version: "À la recherche de conseils",
     text: [
       {
-        title: "UNE CAUSE PLUS GRANDE",
+        title: "Une cause plus grande",
         description:
-          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, ce personnage gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, ce personnage gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const rayaGuidanceSeekerI18n: Record<Languages, I18nProperties> = {
     version: "In Cerca di una Guida",
     text: [
       {
-        title: "UNO SCOPO PIÙ GRANDE",
+        title: "Uno Scopo più Grande",
         description:
-          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, questo personaggio ottiene Resistere +1 fino all'inizio del tuo prossimo turno.",
+          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, questo personaggio ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

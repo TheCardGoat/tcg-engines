@@ -7,14 +7,17 @@ export const gd01Cancer022: UnitCard = {
   color: "blue",
   traits: ["oz"],
   id: "GD01-022",
-  externalId: "gundam:gd01-022",
-  slug: "cancer-gd01-022",
+  canonicalId: "GD01-022",
+  externalIds: { bandai: "gundam:gd01-022" },
+  slug: "cancer/gd01-022",
   displayName: "Cancer",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-022",
   printings: [
     {
       id: "GD01-022",
+      artId: "GD01-022",
+      setCode: "GD01",
       collectorNumber: "GD01-022",
       cardNumber: "GD01-022",
       set: {
@@ -29,6 +32,7 @@ export const gd01Cancer022: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-022"],
   selectedPrintingId: "GD01-022",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-022.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-022.webp?260424",

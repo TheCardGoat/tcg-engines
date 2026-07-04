@@ -7,14 +7,17 @@ export const betaBanagherLinks088: PilotCard = {
   color: "blue",
   traits: ["civilian", "newtype"],
   id: "GD01-088_p1",
-  externalId: "gundam:gd01-088_p1",
-  slug: "banagher-links-gd01-088-p1",
+  canonicalId: "GD01-088",
+  externalIds: { bandai: "gundam:gd01-088_p1" },
+  slug: "banagher-links/gd01-088",
   displayName: "Banagher Links",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-088_p1",
   printings: [
     {
       id: "GD01-088",
+      artId: "GD01-088",
+      setCode: "GD01",
       collectorNumber: "GD01-088",
       cardNumber: "GD01-088",
       set: {
@@ -30,6 +33,8 @@ export const betaBanagherLinks088: PilotCard = {
     },
     {
       id: "GD01-088_p1",
+      artId: "GD01-088_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-088_p1",
       cardNumber: "GD01-088",
       set: {
@@ -45,6 +50,8 @@ export const betaBanagherLinks088: PilotCard = {
     },
     {
       id: "GD01-088_p2",
+      artId: "GD01-088_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-088_p2",
       cardNumber: "GD01-088",
       set: {
@@ -60,6 +67,8 @@ export const betaBanagherLinks088: PilotCard = {
     },
     {
       id: "GD01-088_p3",
+      artId: "GD01-088_p3",
+      setCode: "GD01",
       collectorNumber: "GD01-088_p3",
       cardNumber: "GD01-088",
       set: {
@@ -74,6 +83,7 @@ export const betaBanagherLinks088: PilotCard = {
       productName: "GUNDAM CARD GAME Booster Pack Launch Event",
     },
   ],
+  reprints: ["GD01-088", "GD01-088_p1", "GD01-088_p2", "GD01-088_p3"],
   selectedPrintingId: "GD01-088_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-088_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p1.webp?260424",

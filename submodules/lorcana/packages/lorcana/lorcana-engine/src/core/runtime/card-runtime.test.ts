@@ -51,7 +51,18 @@ describe("card-runtime", () => {
         cards: createRecordCardCatalog("cards:test", {
           alpha: {
             id: "alpha",
+            printings: [
+              {
+                id: "alpha",
+                artId: "alpha",
+                setCode: "TST",
+                collectorNumber: "1",
+                rarity: "common",
+                imageUrl: "",
+              },
+            ],
             canonicalId: "alpha",
+            slug: "lorcana-alpha",
             name: "Alpha Unit",
             cardType: "unit",
           } as unknown as BaseCardDefinition,
@@ -130,25 +141,69 @@ describe("card-runtime", () => {
       cards: createRecordCardCatalog("cards:test", {
         alpha: {
           id: "alpha",
+          printings: [
+            {
+              id: "alpha",
+              artId: "alpha",
+              setCode: "TST",
+              collectorNumber: "1",
+              rarity: "common",
+              imageUrl: "",
+            },
+          ],
           canonicalId: "alpha",
+          slug: "lorcana-alpha",
           name: "Alpha",
           cardType: "unit",
         } as unknown as BaseCardDefinition,
         beta: {
           id: "beta",
+          printings: [
+            {
+              id: "beta",
+              artId: "beta",
+              setCode: "TST",
+              collectorNumber: "1",
+              rarity: "common",
+              imageUrl: "",
+            },
+          ],
           canonicalId: "beta",
+          slug: "lorcana-beta",
           name: "Beta",
           cardType: "unit",
         } as unknown as BaseCardDefinition,
         gamma: {
           id: "gamma",
+          printings: [
+            {
+              id: "gamma",
+              artId: "gamma",
+              setCode: "TST",
+              collectorNumber: "1",
+              rarity: "common",
+              imageUrl: "",
+            },
+          ],
           canonicalId: "gamma",
+          slug: "lorcana-gamma",
           name: "Gamma",
           cardType: "unit",
         } as unknown as BaseCardDefinition,
         delta: {
           id: "delta",
+          printings: [
+            {
+              id: "delta",
+              artId: "delta",
+              setCode: "TST",
+              collectorNumber: "1",
+              rarity: "common",
+              imageUrl: "",
+            },
+          ],
           canonicalId: "delta",
+          slug: "lorcana-delta",
           name: "Delta",
           cardType: "unit",
         } as unknown as BaseCardDefinition,
@@ -222,7 +277,18 @@ describe("card-runtime", () => {
         cards: createRecordCardCatalog("cards:test", {
           alpha: {
             id: "alpha",
+            printings: [
+              {
+                id: "alpha",
+                artId: "alpha",
+                setCode: "TST",
+                collectorNumber: "1",
+                rarity: "common",
+                imageUrl: "",
+              },
+            ],
             canonicalId: "alpha",
+            slug: "lorcana-alpha",
             name: "Alpha Unit",
             cardType: "unit",
           } as unknown as BaseCardDefinition,
@@ -280,7 +346,18 @@ describe("card-runtime", () => {
       cards: createRecordCardCatalog("cards:test", {
         alpha: {
           id: "alpha",
+          printings: [
+            {
+              id: "alpha",
+              artId: "alpha",
+              setCode: "TST",
+              collectorNumber: "1",
+              rarity: "common",
+              imageUrl: "",
+            },
+          ],
           canonicalId: "alpha",
+          slug: "lorcana-alpha",
           name: "Alpha Unit",
           cardType: "unit",
         } as unknown as BaseCardDefinition,
@@ -383,7 +460,18 @@ describe("card-runtime", () => {
         cards: createRecordCardCatalog("cards:test", {
           alpha: {
             id: "alpha",
+            printings: [
+              {
+                id: "alpha",
+                artId: "alpha",
+                setCode: "TST",
+                collectorNumber: "1",
+                rarity: "common",
+                imageUrl: "",
+              },
+            ],
             canonicalId: "alpha",
+            slug: "lorcana-alpha",
             name: "Alpha Unit",
             cardType: "unit",
           } as unknown as BaseCardDefinition,
@@ -397,7 +485,7 @@ describe("card-runtime", () => {
         }),
       },
       {
-        cacheViews: false,
+        cacheViews: true,
         deriveRuntimeCard: ({ card }) => ({
           damageSnapshot: card.meta.damage ?? 0,
         }),

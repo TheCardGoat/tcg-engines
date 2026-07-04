@@ -19,13 +19,13 @@ export const theGlassSlipperI18n: Record<Languages, I18nProperties> = {
     name: "Der gläserne Schuh",
     text: [
       {
-        title: "PERFEKTES PAAR",
+        title: "Perfektes Paar",
         description: "Dein Deck darf nur 2 Der-gläserne-Schuh-Karten enthalten.",
       },
       {
-        title: "DURCHSUCHE DAS",
+        title: "Durchsuche das Königreich",
         description:
-          "KÖNIGREICH Verbanne diesen Gegenstand, einen deiner Prinzen — Durchsuche dein Deck nach einer Prinzessinnen-Charakterkarte und zeige diese allen Mitspielenden. Nimm die Karte auf deine Hand und mische danach dein Deck.",
+          "Verbanne diesen Gegenstand, {E} einen deiner Prinzen — Durchsuche dein Deck nach einer Prinzessinnen-Charakterkarte und zeige diese allen Mitspielenden. Nimm die Karte auf deine Hand und mische danach dein Deck.",
       },
     ],
   },
@@ -33,14 +33,14 @@ export const theGlassSlipperI18n: Record<Languages, I18nProperties> = {
     name: "La Pantoufle de verre",
     text: [
       {
-        title: "LA PAIRE PARFAITE",
+        title: "La paire parfaite",
         description:
           "Vous ne pouvez avoir au maximum que 2 exemplaires de La Pantoufle de Verre dans votre deck.",
       },
       {
-        title: "CHERCHER DANS TOUT LE ROYAUME",
+        title: "Chercher dans tout le royaume",
         description:
-          "Bannissez cet objet, l'un de vos personnages Prince — Cherchez une carte Personnage Princesse dans votre deck et révélez-la à tous les joueurs. Placez la carte révélée dans votre main et mélangez votre pioche.",
+          "Bannissez cet objet, {E} l'un de vos personnages Prince — Cherchez une carte Personnage Princesse dans votre deck et révélez-la à tous les joueurs. Placez la carte révélée dans votre main et mélangez votre pioche.",
       },
     ],
   },
@@ -48,13 +48,13 @@ export const theGlassSlipperI18n: Record<Languages, I18nProperties> = {
     name: "La Scarpetta di Cristallo",
     text: [
       {
-        title: "PAIO PERFETTO",
+        title: "Paio Perfetto",
         description: "Puoi avere solo 2 copie de La Scarpetta di Cristallo nel tuo mazzo.",
       },
       {
-        title: "CERCATE IN TUTTO IL REGNO",
+        title: "Cercate in Tutto il Regno",
         description:
-          "Esilia questo oggetto, uno dei tuoi personaggi Principe — Cerca una carta personaggio Principessa nel tuo mazzo e rivelala a tutti i giocatori. Aggiungi quella carta alla tua mano e rimescola il tuo mazzo.",
+          "Esilia questo oggetto, {E} uno dei tuoi personaggi Principe — Cerca una carta personaggio Principessa nel tuo mazzo e rivelala a tutti i giocatori. Aggiungi quella carta alla tua mano e rimescola il tuo mazzo.",
       },
     ],
   },

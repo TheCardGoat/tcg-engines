@@ -1,20 +1,18 @@
 import { IconSparkles } from "@tabler/icons-react";
 import { useEffect, type CSSProperties } from "react";
-import type { HarnessFixture } from "@tcg/simulator-contract";
-import { GAMES, groupFixturesByGame } from "../simulator/games";
-import { buildMountedHref } from "../router-paths";
+import { getGameDefaultIndexPath, listIndexGames } from "../simulator/games";
+import { buildMountedHref } from "../routes/router-paths.ts";
 
 export interface GameIndexProps {
-  fixtures: readonly HarnessFixture[];
   onNavigate: (path: string) => void;
 }
 
-export default function GameIndex({ fixtures, onNavigate }: GameIndexProps) {
+export default function GameIndex({ onNavigate }: GameIndexProps) {
   useEffect(() => {
     document.title = "Multi-Game Simulator Harness";
   }, []);
 
-  const grouped = groupFixturesByGame(fixtures);
+  const games = listIndexGames();
 
   return (
     <main className="mx-auto min-h-svh w-full max-w-[1200px] p-6 max-[900px]:p-4">
@@ -26,8 +24,8 @@ export default function GameIndex({ fixtures, onNavigate }: GameIndexProps) {
           Fixture harness for humans and agents
         </h1>
         <p className="mt-3 max-w-[820px] text-base leading-relaxed text-[var(--muted)]">
-          One renderer consumes sample snapshots for One Piece, Gundam, Cyberpunk, and Lorcana.
-          Engines stay outside this app; adapters own state projection and move conversion.
+          One renderer links to visual fixture hubs for One Piece, Gundam, and Cyberpunk. Engines
+          stay outside this app; adapters own state projection and move conversion.
         </p>
       </header>
 
@@ -69,8 +67,8 @@ export default function GameIndex({ fixtures, onNavigate }: GameIndexProps) {
             </span>
           </div>
         </button>
-        {GAMES.map((game) => {
-          const count = grouped[game.slug]?.length ?? 0;
+        {games.map((game) => {
+          const href = getGameDefaultIndexPath(game.slug) ?? `/${game.slug}`;
           return (
             <button
               key={game.slug}
@@ -82,7 +80,7 @@ export default function GameIndex({ fixtures, onNavigate }: GameIndexProps) {
                   "--game-accent-soft": game.accentSoft,
                 } as CSSProperties
               }
-              onClick={() => onNavigate(`/${game.slug}`)}
+              onClick={() => onNavigate(href)}
             >
               <div
                 className="flex h-10 w-10 items-center justify-center rounded-lg"
@@ -116,7 +114,7 @@ export default function GameIndex({ fixtures, onNavigate }: GameIndexProps) {
                   className="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
                   style={{ background: game.accentSoft, color: game.accentColor }}
                 >
-                  {count} fixture{count === 1 ? "" : "s"}
+                  {game.badgeLabel}
                 </span>
               </div>
             </button>

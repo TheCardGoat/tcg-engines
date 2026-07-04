@@ -4,6 +4,17 @@ import { aVeryMerryUnbirthdayI18n } from "./060-a-very-merry-unbirthday.i18n";
 export const aVeryMerryUnbirthday: ActionCard = {
   id: "Nv8",
   canonicalId: "ci_Nv8",
+  slug: "lorcana-ci_Nv8",
+  printings: [
+    {
+      id: "set6-060",
+      artId: "set6-060",
+      setCode: "set6",
+      collectorNumber: "60",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-060"],
   cardType: "action",
   name: "A Very Merry Unbirthday",
@@ -16,7 +27,7 @@ export const aVeryMerryUnbirthday: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6b0de2d0a5b84b5f852ba2a8eccd1a17",
-    tcgPlayer: 591114,
+    tcgPlayer: "591114",
   },
   text: "Each opponent puts the top 2 cards of their deck into their discard.",
   actionSubtype: "song",

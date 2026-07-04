@@ -6,14 +6,17 @@ export const gd04Jaburo122: BaseCard = {
   type: "base",
   traits: ["earth federation", "stronghold"],
   id: "GD04-122",
-  externalId: "gundam:gd04-122",
-  slug: "jaburo-gd04-122",
+  canonicalId: "GD04-122",
+  externalIds: { bandai: "gundam:gd04-122" },
+  slug: "jaburo/gd04-122",
   displayName: "Jaburo",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-122",
   printings: [
     {
       id: "GD04-122",
+      artId: "GD04-122",
+      setCode: "GD04",
       collectorNumber: "GD04-122",
       cardNumber: "GD04-122",
       set: {
@@ -28,6 +31,7 @@ export const gd04Jaburo122: BaseCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-122"],
   selectedPrintingId: "GD04-122",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-122.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-122.webp?260424",

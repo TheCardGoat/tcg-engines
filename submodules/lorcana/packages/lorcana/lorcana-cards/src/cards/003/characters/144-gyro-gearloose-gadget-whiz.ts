@@ -4,6 +4,17 @@ import { gyroGearlooseGadgetWhizI18n } from "./144-gyro-gearloose-gadget-whiz.i1
 export const gyroGearlooseGadgetWhiz: CharacterCard = {
   id: "nxo",
   canonicalId: "ci_nxo",
+  slug: "lorcana-ci_nxo",
+  printings: [
+    {
+      id: "set3-144",
+      artId: "set3-144",
+      setCode: "set3",
+      collectorNumber: "144",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-144"],
   cardType: "character",
   name: "Gyro Gearloose",
@@ -20,7 +31,7 @@ export const gyroGearlooseGadgetWhiz: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_921f3a8bbf1c486490121d18a6d45752",
-    tcgPlayer: 539096,
+    tcgPlayer: "539096",
   },
   text: [
     {

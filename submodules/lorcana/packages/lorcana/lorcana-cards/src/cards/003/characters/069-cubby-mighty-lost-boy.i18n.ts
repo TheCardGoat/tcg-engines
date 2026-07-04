@@ -16,9 +16,9 @@ export const cubbyMightyLostBoyI18n: Record<Languages, I18nProperties> = {
     version: "Stärkster der verwunschenen Kinder",
     text: [
       {
-        title: "DER BÄR",
+        title: "Der Bär",
         description:
-          "Jedes Mal, wenn dieser Charakter zu einem Ort bewegt wird, erhält er in diesem Zug +3.",
+          "Jedes Mal, wenn dieser Charakter zu einem Ort bewegt wird, erhält er in diesem Zug +3 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const cubbyMightyLostBoyI18n: Record<Languages, I18nProperties> = {
     version: "Enfant perdu très costaud",
     text: [
       {
-        title: "L'OURS",
+        title: "L'ours",
         description:
-          "Chaque fois que vous déplacez ce personnage sur un lieu, il gagne +3 pour le reste de ce tour.",
+          "Chaque fois que vous déplacez ce personnage sur un lieu, il gagne +3 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const cubbyMightyLostBoyI18n: Record<Languages, I18nProperties> = {
     version: "Possente Bimbo Sperduto",
     text: [
       {
-        title: "L'ORSO",
+        title: "L'Orso",
         description:
-          "Ogni volta che questo personaggio si sposta in un luogo, riceve +3 per questo turno.",
+          "Ogni volta che questo personaggio si sposta in un luogo, riceve +3 {S} per questo turno.",
       },
     ],
   },

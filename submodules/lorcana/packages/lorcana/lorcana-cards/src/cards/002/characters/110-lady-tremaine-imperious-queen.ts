@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { ladyTremaineImperiousQueenI18n } from "./110-lady-tremaine-imperious-queen.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const ladyTremaineImperiousQueen: CharacterCard = {
-  id: "h4L",
+  id: "key",
   canonicalId: "ci_KcF",
+  slug: "lorcana-ci_KcF",
+  printings: [
+    {
+      id: "set2-110",
+      artId: "set2-110",
+      setCode: "set2",
+      collectorNumber: "110",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-110"],
   cardType: "character",
   name: "Lady Tremaine",
@@ -21,7 +33,7 @@ export const ladyTremaineImperiousQueen: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e08d7a85c4e84f1e83a7521ff9c15a89",
-    tcgPlayer: 528109,
+    tcgPlayer: "528109",
   },
   text: [
     {

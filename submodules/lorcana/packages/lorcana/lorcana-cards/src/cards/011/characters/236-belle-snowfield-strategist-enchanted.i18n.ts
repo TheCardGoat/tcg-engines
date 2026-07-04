@@ -17,7 +17,7 @@ export const belleSnowfieldStrategistEnchantedI18n: Record<Languages, I18nProper
     version: "Schneefeld-Strategin",
     text: [
       {
-        title: "WINTERVORRAT",
+        title: "Wintervorrat",
         description:
           "Jedes Mal, wenn einer deiner Charaktere verbannt wird, darfst du jenen aus deinem Ablagestapel verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const belleSnowfieldStrategistEnchantedI18n: Record<Languages, I18nProper
     version: "Stratège du champ de neige",
     text: [
       {
-        title: "RÉSERVES HIVERNALES",
+        title: "Réserves hivernales",
         description:
           "Chaque fois que l'un de vos personnages est banni, vous pouvez le placer de votre défausse dans votre réserve d'encre, face cachée et épuisé.",
       },
@@ -39,7 +39,7 @@ export const belleSnowfieldStrategistEnchantedI18n: Record<Languages, I18nProper
     version: "Stratega del Campo Innevato",
     text: [
       {
-        title: "RISERVA INVERNALE",
+        title: "Riserva Invernale",
         description:
           "Ogni volta che uno dei tuoi personaggi viene esiliato, puoi aggiungere quella carta dai tuoi scarti al tuo calamaio, a faccia in giù e impegnata.",
       },

@@ -7,14 +7,17 @@ export const gd03GBouncer023: UnitCard = {
   color: "green",
   traits: ["earth federation"],
   id: "GD03-023",
-  externalId: "gundam:gd03-023",
-  slug: "g-bouncer-gd03-023",
+  canonicalId: "GD03-023",
+  externalIds: { bandai: "gundam:gd03-023" },
+  slug: "g-bouncer/gd03-023",
   displayName: "G-Bouncer",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-023",
   printings: [
     {
       id: "GD03-023",
+      artId: "GD03-023",
+      setCode: "GD03",
       collectorNumber: "GD03-023",
       cardNumber: "GD03-023",
       set: {
@@ -29,6 +32,7 @@ export const gd03GBouncer023: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-023"],
   selectedPrintingId: "GD03-023",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-023.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-023.webp?260424",

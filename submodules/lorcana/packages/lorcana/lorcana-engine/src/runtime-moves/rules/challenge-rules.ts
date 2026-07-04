@@ -193,6 +193,7 @@ function canChallengeReadyCharacters(
   const attackerControllerId = getCardsApi(ctx).require(attackerId).controllerID as
     | PlayerId
     | undefined;
+  const stateWithG = { ...ctx.framework.state, G: ctx.G };
 
   const matchesStaticReadyGrant = (attackerDefinition.abilities ?? []).some((ability) => {
     if (ability.type !== "static" || ability.effect.type !== "grant-ability") {
@@ -218,7 +219,7 @@ function canChallengeReadyCharacters(
     if (
       !evaluateStaticCondition({
         condition: ability.condition,
-        state: ctx.framework.state,
+        state: stateWithG,
         controllerId: attackerControllerId,
         sourceId: attackerId,
         getDefinitionByInstanceId: (instanceId) => getCardDefinition(ctx, instanceId),

@@ -7,14 +7,17 @@ export const gd03ImprovedTechnique109: CommandCard = {
   color: "red",
   traits: [],
   id: "GD03-109",
-  externalId: "gundam:gd03-109",
-  slug: "improved-technique-gd03-109",
+  canonicalId: "GD03-109",
+  externalIds: { bandai: "gundam:gd03-109" },
+  slug: "improved-technique/gd03-109",
   displayName: "Improved Technique",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-109",
   printings: [
     {
       id: "GD03-109",
+      artId: "GD03-109",
+      setCode: "GD03",
       collectorNumber: "GD03-109",
       cardNumber: "GD03-109",
       set: {
@@ -30,6 +33,8 @@ export const gd03ImprovedTechnique109: CommandCard = {
     },
     {
       id: "GD03-109_p1",
+      artId: "GD03-109_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-109_p1",
       cardNumber: "GD03-109",
       set: {
@@ -45,6 +50,8 @@ export const gd03ImprovedTechnique109: CommandCard = {
     },
     {
       id: "GD03-109_p2",
+      artId: "GD03-109_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-109_p2",
       cardNumber: "GD03-109",
       set: {
@@ -59,6 +66,7 @@ export const gd03ImprovedTechnique109: CommandCard = {
       productName: "WORLD CHAMPIONSHIPS 26-27 Participation Pack 26-27 Vol.1",
     },
   ],
+  reprints: ["GD03-109", "GD03-109_p1", "GD03-109_p2"],
   selectedPrintingId: "GD03-109",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-109.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-109.webp?260424",

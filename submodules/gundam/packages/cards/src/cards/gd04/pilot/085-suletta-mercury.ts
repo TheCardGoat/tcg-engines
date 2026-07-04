@@ -7,14 +7,17 @@ export const gd04SulettaMercury085: PilotCard = {
   color: "green",
   traits: ["academy"],
   id: "GD04-085",
-  externalId: "gundam:gd04-085",
-  slug: "suletta-mercury-gd04-085",
+  canonicalId: "GD04-085",
+  externalIds: { bandai: "gundam:gd04-085" },
+  slug: "suletta-mercury/gd04-085",
   displayName: "Suletta Mercury",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-085",
   printings: [
     {
       id: "GD04-085",
+      artId: "GD04-085",
+      setCode: "GD04",
       collectorNumber: "GD04-085",
       cardNumber: "GD04-085",
       set: {
@@ -30,6 +33,8 @@ export const gd04SulettaMercury085: PilotCard = {
     },
     {
       id: "GD04-085_p1",
+      artId: "GD04-085_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-085_p1",
       cardNumber: "GD04-085",
       set: {
@@ -45,6 +50,8 @@ export const gd04SulettaMercury085: PilotCard = {
     },
     {
       id: "GD04-085_p2",
+      artId: "GD04-085_p2",
+      setCode: "GD04",
       collectorNumber: "GD04-085_p2",
       cardNumber: "GD04-085",
       set: {
@@ -60,6 +67,7 @@ export const gd04SulettaMercury085: PilotCard = {
         "Booster Pack Phantom Aria [GD04] Release Event Commemorative Items for Participants",
     },
   ],
+  reprints: ["GD04-085", "GD04-085_p1", "GD04-085_p2"],
   selectedPrintingId: "GD04-085",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-085.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-085.webp?260424",

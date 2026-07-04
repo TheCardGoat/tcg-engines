@@ -34,7 +34,7 @@
       case "sapphire":
         return "text-sky-300";
       case "steel":
-        return "text-slate-200";
+        return "text-zinc-400";
       default:
         return "text-slate-300";
     }

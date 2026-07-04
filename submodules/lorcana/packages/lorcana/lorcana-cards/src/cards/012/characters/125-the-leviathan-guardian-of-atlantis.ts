@@ -4,6 +4,17 @@ import { theLeviathanGuardianOfAtlantisI18n } from "./125-the-leviathan-guardian
 export const theLeviathanGuardianOfAtlantis: CharacterCard = {
   id: "lYe",
   canonicalId: "ci_lYe",
+  slug: "lorcana-ci_lYe",
+  printings: [
+    {
+      id: "set12-125",
+      artId: "set12-125",
+      setCode: "set12",
+      collectorNumber: "125",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-125"],
   cardType: "character",
   name: "The Leviathan",
@@ -19,13 +30,14 @@ export const theLeviathanGuardianOfAtlantis: CharacterCard = {
   lore: 3,
   inkable: false,
   externalIds: {
-    lorcast: "crd_0a72279b05f0453399584e40b7caaa1d",
+    lorcast: "crd_acf86cd5ee4e434fac91134e9ecf07c5",
+    tcgPlayer: "692224",
   },
   text: [
     {
       title: "IT'S",
       description:
-        "A MACHINE! When you play this character, if 2 or more cards were put into your discard this turn, you may banish any number of chosen opposing characters with total {} 10 or less.",
+        "A MACHINE! When you play this character, if 2 or more cards were put into your discard this turn, you may banish any number of chosen opposing characters with total {S} 10 or less.",
     },
   ],
   classifications: ["Dreamborn", "Monster", "Robot"],

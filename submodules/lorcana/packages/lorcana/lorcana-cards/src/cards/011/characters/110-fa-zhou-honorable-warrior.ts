@@ -4,6 +4,17 @@ import { faZhouHonorableWarriorI18n } from "./110-fa-zhou-honorable-warrior.i18n
 export const faZhouHonorableWarrior: CharacterCard = {
   id: "nta",
   canonicalId: "ci_nta",
+  slug: "lorcana-ci_nta",
+  printings: [
+    {
+      id: "set11-110",
+      artId: "set11-110",
+      setCode: "set11",
+      collectorNumber: "110",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-110"],
   cardType: "character",
   name: "Fa Zhou",
@@ -20,7 +31,7 @@ export const faZhouHonorableWarrior: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e10790e2f76f46f4aeb38d35164934b1",
-    tcgPlayer: 676211,
+    tcgPlayer: "676211",
   },
   text: [
     {

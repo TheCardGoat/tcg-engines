@@ -15,9 +15,9 @@ export const shieldOfVirtueI18n: Record<Languages, I18nProperties> = {
     name: "Schild der Tugend",
     text: [
       {
-        title: "FEUERFEST, 3",
+        title: "Feuerfest",
         description:
-          "— Mache einen Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
+          "{E}, 3 {I} — Mache einen Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const shieldOfVirtueI18n: Record<Languages, I18nProperties> = {
     name: "BOUCLIER DE VERTU",
     text: [
       {
-        title: "À L'ÉPREUVE DU FEU,",
+        title: "À L'ÉPREUVE DU FEU",
         description:
-          "3 — Choisissez un personnage et redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+          "{E}, 3 {I} — Choisissez un personnage et redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const shieldOfVirtueI18n: Record<Languages, I18nProperties> = {
     name: "Scudo di Virtù",
     text: [
       {
-        title: "IGNIFUGO, 3",
+        title: "Ignifugo",
         description:
-          "— Prepara un personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno.",
+          "{E}, 3 {I} — Prepara un personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno.",
       },
     ],
   },

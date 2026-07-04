@@ -4,6 +4,17 @@ import { robinHoodBelovedOutlawI18n } from "./189-robin-hood-beloved-outlaw.i18n
 export const robinHoodBelovedOutlaw: CharacterCard = {
   id: "1k5",
   canonicalId: "ci_1k5",
+  slug: "lorcana-ci_1k5",
+  printings: [
+    {
+      id: "set3-189",
+      artId: "set3-189",
+      setCode: "set3",
+      collectorNumber: "189",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-189"],
   cardType: "character",
   name: "Robin Hood",
@@ -21,7 +32,7 @@ export const robinHoodBelovedOutlaw: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_69258eaba19a498182c2e4039c89466d",
-    tcgPlayer: 537937,
+    tcgPlayer: "537937",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: robinHoodBelovedOutlawI18n,

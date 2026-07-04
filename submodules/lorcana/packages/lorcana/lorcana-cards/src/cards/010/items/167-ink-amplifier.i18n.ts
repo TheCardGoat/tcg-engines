@@ -15,7 +15,7 @@ export const inkAmplifierI18n: Record<Languages, I18nProperties> = {
     name: "Tintenverstärker",
     text: [
       {
-        title: "ENERGIEGEWINNUNG",
+        title: "Energiegewinnung",
         description:
           "Jedes Mal, wenn eine gegnerische Person in ihrem Zug 1 Karte zieht und falls es die zweite Karte ist, die sie in diesem Zug zieht, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -25,7 +25,7 @@ export const inkAmplifierI18n: Record<Languages, I18nProperties> = {
     name: "Amplificateur d'encre",
     text: [
       {
-        title: "CAPTURE D'ÉNERGIE",
+        title: "Capture d'énergie",
         description:
           "Chaque fois qu'un adversaire pioche une carte durant son tour, si c'est la deuxième qu'il pioche ce tour-ci, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -35,7 +35,7 @@ export const inkAmplifierI18n: Record<Languages, I18nProperties> = {
     name: "Amplificatore d'Inchiostro",
     text: [
       {
-        title: "CATTURARE ENERGIA",
+        title: "Catturare Energia",
         description:
           "Ogni volta che un avversario pesca una carta durante il suo turno, se è la seconda carta che ha pescato in questo turno, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },

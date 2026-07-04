@@ -4,6 +4,17 @@ import { merlinGoatI18n } from "./051-merlin-goat.i18n";
 export const merlinGoat: CharacterCard = {
   id: "nZn",
   canonicalId: "ci_nZn",
+  slug: "lorcana-ci_nZn",
+  printings: [
+    {
+      id: "set2-051",
+      artId: "set2-051",
+      setCode: "set2",
+      collectorNumber: "51",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-051"],
   cardType: "character",
   name: "Merlin",
@@ -20,12 +31,12 @@ export const merlinGoat: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_760a3c258ef143de8f8e85176c0bfd1d",
-    tcgPlayer: 522719,
+    tcgPlayer: "522719",
   },
   text: [
     {
-      title: "HERE I COME!",
-      description: "When you play this character and when he leaves play, gain 1 lore.",
+      title: "HERE",
+      description: "I COME! When you play this character and when he leaves play, gain 1 lore.",
     },
   ],
   classifications: ["Storyborn", "Mentor", "Sorcerer"],

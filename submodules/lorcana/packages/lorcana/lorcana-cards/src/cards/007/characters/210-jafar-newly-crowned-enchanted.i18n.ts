@@ -17,7 +17,7 @@ export const jafarNewlyCrownedEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Neu gekrönt",
     text: [
       {
-        title: "MIT DIR BIN ICH NOCH NICHT FERTIG",
+        title: "Mit dir bin ich noch nicht fertig",
         description:
           "Jedes Mal, wenn eine deiner Illusionen im Zug einer gegnerischen Person verbannt wird, darfst du jene Karte zurück auf deine Hand nehmen.",
       },
@@ -28,7 +28,7 @@ export const jafarNewlyCrownedEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Tout juste couronné",
     text: [
       {
-        title: "JE N'AI PAS DIT MON DERNIER MOT",
+        title: "Je n'ai pas dit mon dernier mot",
         description:
           "Durant le tour d'un adversaire, chaque fois que l'un de vos personnages Illusion est banni, vous pouvez le renvoyer dans votre main.",
       },
@@ -39,7 +39,7 @@ export const jafarNewlyCrownedEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Appena Incoronato",
     text: [
       {
-        title: "NON HAI ANCORA VINTO",
+        title: "Non Hai Ancora Vinto",
         description:
           "Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi Illusione viene esiliato, puoi riprendere in mano quella carta.",
       },

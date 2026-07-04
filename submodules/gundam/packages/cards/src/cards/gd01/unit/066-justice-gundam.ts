@@ -7,14 +7,17 @@ export const gd01JusticeGundam066: UnitCard = {
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD01-066",
-  externalId: "gundam:gd01-066",
-  slug: "justice-gundam-gd01-066",
+  canonicalId: "GD01-066",
+  externalIds: { bandai: "gundam:gd01-066" },
+  slug: "justice-gundam/gd01-066",
   displayName: "Justice Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-066",
   printings: [
     {
       id: "GD01-066",
+      artId: "GD01-066",
+      setCode: "GD01",
       collectorNumber: "GD01-066",
       cardNumber: "GD01-066",
       set: {
@@ -30,6 +33,8 @@ export const gd01JusticeGundam066: UnitCard = {
     },
     {
       id: "GD01-066_p1",
+      artId: "GD01-066_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-066_p1",
       cardNumber: "GD01-066",
       set: {
@@ -44,6 +49,7 @@ export const gd01JusticeGundam066: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-066", "GD01-066_p1"],
   selectedPrintingId: "GD01-066",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-066.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-066.webp?260424",

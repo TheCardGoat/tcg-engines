@@ -6,9 +6,9 @@ export const missBiancaUnwaveringAgentI18n: Record<Languages, I18nProperties> = 
     version: "Unwavering Agent",
     text: [
       {
-        title: "HAVE A LITTLE FAITH",
+        title: "HAVE",
         description:
-          "If you have an Ally character in play, you pay 2 {I} less to play this character.",
+          "A LITTLE FAITH If you have an Ally character in play, you pay 2 {I} less to play this character.",
       },
     ],
   },
@@ -17,9 +17,9 @@ export const missBiancaUnwaveringAgentI18n: Record<Languages, I18nProperties> = 
     version: "Unermüdliche Agentin",
     text: [
       {
-        title: "WENN WIR ZUVERSICHTLICH SIND",
+        title: "Wenn wir zuversichtlich sind",
         description:
-          "Wenn du mindestens einen Verbündeten im Spiel hast, zahlst du 2 weniger, um diesen Charakter auszuspielen.",
+          "Wenn du mindestens einen Verbündeten im Spiel hast, zahlst du 2 {I} weniger, um diesen Charakter auszuspielen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const missBiancaUnwaveringAgentI18n: Record<Languages, I18nProperties> = 
     version: "Agente indéfectible",
     text: [
       {
-        title: "GARDONS ESPOIR",
+        title: "Gardons espoir",
         description:
-          "Jouer ce personnage vous coûte 2 de moins si vous avez un personnage Allié en jeu.",
+          "Jouer ce personnage vous coûte 2 {I} de moins si vous avez un personnage Allié en jeu.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const missBiancaUnwaveringAgentI18n: Record<Languages, I18nProperties> = 
     version: "Agente Risoluta",
     text: [
       {
-        title: "SE ABBIAMO UN PO' DI FEDE",
+        title: "Se Abbiamo un Po' Di Fede",
         description:
-          "Se hai in gioco un personaggio Alleato, paga 2 in meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio Alleato, paga 2 {I} in meno per giocare questo personaggio.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const gd04IndiscriminateViolence106: CommandCard = {
   color: "green",
   traits: ["academy", "dawn of fold"],
   id: "GD04-106",
-  externalId: "gundam:gd04-106",
-  slug: "indiscriminate-violence-gd04-106",
+  canonicalId: "GD04-106",
+  externalIds: { bandai: "gundam:gd04-106" },
+  slug: "indiscriminate-violence/gd04-106",
   displayName: "Indiscriminate Violence",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-106",
   printings: [
     {
       id: "GD04-106",
+      artId: "GD04-106",
+      setCode: "GD04",
       collectorNumber: "GD04-106",
       cardNumber: "GD04-106",
       set: {
@@ -29,6 +32,7 @@ export const gd04IndiscriminateViolence106: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-106"],
   selectedPrintingId: "GD04-106",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-106.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-106.webp?260424",

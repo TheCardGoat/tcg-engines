@@ -4,6 +4,17 @@ import { brunoMadrigalOutOfTheShadowsI18n } from "./038-bruno-madrigal-out-of-th
 export const brunoMadrigalOutOfTheShadows: CharacterCard = {
   id: "Ran",
   canonicalId: "ci_Ran",
+  slug: "lorcana-ci_Ran",
+  printings: [
+    {
+      id: "set4-038",
+      artId: "set4-038",
+      setCode: "set4",
+      collectorNumber: "38",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-038"],
   cardType: "character",
   name: "Bruno Madrigal",
@@ -20,7 +31,7 @@ export const brunoMadrigalOutOfTheShadows: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_140b4894a53d4884a4ec1e15dab9319a",
-    tcgPlayer: 543899,
+    tcgPlayer: "543899",
   },
   text: [
     {

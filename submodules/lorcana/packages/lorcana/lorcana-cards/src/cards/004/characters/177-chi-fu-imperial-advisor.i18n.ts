@@ -16,8 +16,8 @@ export const chifuImperialAdvisorI18n: Record<Languages, I18nProperties> = {
     version: "Berater des Kaisers",
     text: [
       {
-        title: "ÜBERVORSICHTIG",
-        description: "Solange dieser Charakter unbeschädigt ist, erhält er +2.",
+        title: "Übervorsichtig",
+        description: "Solange dieser Charakter unbeschädigt ist, erhält er +2 {L}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const chifuImperialAdvisorI18n: Record<Languages, I18nProperties> = {
     version: "Conseiller Impérial",
     text: [
       {
-        title: "EXCESSIVEMENT PRUDENT",
-        description: "Tant que ce personnage n'a aucun jeton Dommage sur lui, il gagne +2.",
+        title: "Excessivement prudent",
+        description: "Tant que ce personnage n'a aucun jeton Dommage sur lui, il gagne +2 {L}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const chifuImperialAdvisorI18n: Record<Languages, I18nProperties> = {
     version: "Consigliere Imperiale",
     text: [
       {
-        title: "ESTREMAMENTE CAUTO",
-        description: "Mentre questo personaggio non ha danno, riceve +2.",
+        title: "Estremamente Cauto",
+        description: "Mentre questo personaggio non ha danno, riceve +2 {L}.",
       },
     ],
   },

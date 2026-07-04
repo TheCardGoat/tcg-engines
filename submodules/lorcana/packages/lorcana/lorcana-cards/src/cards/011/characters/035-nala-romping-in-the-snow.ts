@@ -4,6 +4,17 @@ import { nalaRompingInTheSnowI18n } from "./035-nala-romping-in-the-snow.i18n";
 export const nalaRompingInTheSnow: CharacterCard = {
   id: "C3q",
   canonicalId: "ci_C3q",
+  slug: "lorcana-ci_C3q",
+  printings: [
+    {
+      id: "set11-035",
+      artId: "set11-035",
+      setCode: "set11",
+      collectorNumber: "35",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-035"],
   cardType: "character",
   name: "Nala",
@@ -20,7 +31,7 @@ export const nalaRompingInTheSnow: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c86496abfa1c4cc9a138143a845e15ce",
-    tcgPlayer: 674840,
+    tcgPlayer: "674840",
   },
   text: [
     {

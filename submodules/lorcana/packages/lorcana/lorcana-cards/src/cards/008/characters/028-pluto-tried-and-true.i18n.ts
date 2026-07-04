@@ -17,9 +17,9 @@ export const plutoTriedAndTrueI18n: Record<Languages, I18nProperties> = {
     version: "Bewährt und treu",
     text: [
       {
-        title: "FREUNDLICHER HELFER",
+        title: "Freundlicher Helfer",
         description:
-          "Solange dieser Charakter unbeschädigt ist, erhält er +2 und Unterstützen. (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "Solange dieser Charakter unbeschädigt ist, erhält er +2 {S} und <Unterstützen>. (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
     ],
   },
@@ -28,8 +28,9 @@ export const plutoTriedAndTrueI18n: Record<Languages, I18nProperties> = {
     version: "Ayant fait ses preuves",
     text: [
       {
-        title: "AIDE AVEC JOIE",
-        description: "Tant que ce personnage n'a aucun dommage sur lui, il gagne +2 et Soutien.",
+        title: "Aide avec joie",
+        description:
+          "Tant que ce personnage n'a aucun dommage sur lui, il gagne +2 {S} et <Soutien>. (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
     ],
   },
@@ -38,9 +39,9 @@ export const plutoTriedAndTrueI18n: Record<Languages, I18nProperties> = {
     version: "Affidabile",
     text: [
       {
-        title: "AIUTANTE FELICE",
+        title: "Aiutante felice",
         description:
-          "Mentre questo personaggio non ha danno, riceve +2 e ottiene Aiutante. (Ogni volta che va all'avventura, puoi aggiungere la sua alla di un altro personaggio a tua scelta per questo turno.)",
+          "Mentre questo personaggio non ha danno, riceve +2 {S} e ottiene <Aiutante>. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
     ],
   },

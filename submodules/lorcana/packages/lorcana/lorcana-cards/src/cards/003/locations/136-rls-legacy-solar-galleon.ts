@@ -4,6 +4,17 @@ import { rlsLegacySolarGalleonI18n } from "./136-rls-legacy-solar-galleon.i18n";
 export const rlsLegacySolarGalleon: LocationCard = {
   id: "Lt1",
   canonicalId: "ci_Rim",
+  slug: "lorcana-ci_Rim",
+  printings: [
+    {
+      id: "set3-136",
+      artId: "set3-136",
+      setCode: "set3",
+      collectorNumber: "136",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-136"],
   cardType: "location",
   name: "RLS Legacy",
@@ -20,7 +31,7 @@ export const rlsLegacySolarGalleon: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_7c421033c14c40e7a5be957ba42bb1b7",
-    tcgPlayer: 539167,
+    tcgPlayer: "539167",
   },
   text: [
     {

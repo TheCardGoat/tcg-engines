@@ -7,14 +7,17 @@ export const st06ShujiIt010: PilotCard = {
   color: "green",
   traits: ["clan", "newtype"],
   id: "ST06-010",
-  externalId: "gundam:st06-010",
-  slug: "shuji-it-st06-010",
+  canonicalId: "ST06-010",
+  externalIds: { bandai: "gundam:st06-010" },
+  slug: "shuji-ito/st06-010",
   displayName: "Shuji Itō",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-010",
   printings: [
     {
       id: "ST06-010",
+      artId: "ST06-010",
+      setCode: "ST06",
       collectorNumber: "ST06-010",
       cardNumber: "ST06-010",
       set: {
@@ -30,6 +33,8 @@ export const st06ShujiIt010: PilotCard = {
     },
     {
       id: "ST06-010_p1",
+      artId: "ST06-010_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-010_p1",
       cardNumber: "ST06-010",
       set: {
@@ -45,6 +50,8 @@ export const st06ShujiIt010: PilotCard = {
     },
     {
       id: "ST06-010_p2",
+      artId: "ST06-010_p2",
+      setCode: "ST06",
       collectorNumber: "ST06-010_p2",
       cardNumber: "ST06-010",
       set: {
@@ -60,6 +67,8 @@ export const st06ShujiIt010: PilotCard = {
     },
     {
       id: "ST06-010_p3",
+      artId: "ST06-010_p3",
+      setCode: "ST06",
       collectorNumber: "ST06-010_p3",
       cardNumber: "ST06-010",
       set: {
@@ -74,6 +83,7 @@ export const st06ShujiIt010: PilotCard = {
       productName: "Store Tournament Winner Pack 02",
     },
   ],
+  reprints: ["ST06-010", "ST06-010_p1", "ST06-010_p2", "ST06-010_p3"],
   selectedPrintingId: "ST06-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-010.webp?260424",

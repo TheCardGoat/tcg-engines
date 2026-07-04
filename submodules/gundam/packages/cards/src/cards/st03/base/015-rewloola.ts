@@ -6,14 +6,17 @@ export const st03Rewloola015: BaseCard = {
   type: "base",
   traits: ["neo zeon", "warship"],
   id: "ST03-015",
-  externalId: "gundam:st03-015",
-  slug: "rewloola-st03-015",
+  canonicalId: "ST03-015",
+  externalIds: { bandai: "gundam:st03-015" },
+  slug: "rewloola/st03-015",
   displayName: "Rewloola",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-015",
   printings: [
     {
       id: "ST03-015",
+      artId: "ST03-015",
+      setCode: "ST03",
       collectorNumber: "ST03-015",
       cardNumber: "ST03-015",
       set: {
@@ -29,6 +32,8 @@ export const st03Rewloola015: BaseCard = {
     },
     {
       id: "ST03-015_p1",
+      artId: "ST03-015_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-015_p1",
       cardNumber: "ST03-015",
       set: {
@@ -43,6 +48,7 @@ export const st03Rewloola015: BaseCard = {
       productName: "Zeon's Rush [ST03] Bonus Pack",
     },
   ],
+  reprints: ["ST03-015", "ST03-015_p1"],
   selectedPrintingId: "ST03-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-015.webp?260424",

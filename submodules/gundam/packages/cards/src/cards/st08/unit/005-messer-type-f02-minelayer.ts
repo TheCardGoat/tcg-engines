@@ -7,14 +7,17 @@ export const st08MesserTypeF02Minelayer005: UnitCard = {
   color: "red",
   traits: ["mafty"],
   id: "ST08-005",
-  externalId: "gundam:st08-005",
-  slug: "messer-type-f02-minelayer-st08-005",
+  canonicalId: "ST08-005",
+  externalIds: { bandai: "gundam:st08-005" },
+  slug: "messer-type-f02-minelayer/st08-005",
   displayName: "Messer Type-F02 Minelayer",
   set: { code: "ST08", name: "Flash of Radiance [ST08]", packageId: "616008" },
   printNumber: "ST08-005",
   printings: [
     {
       id: "ST08-005",
+      artId: "ST08-005",
+      setCode: "ST08",
       collectorNumber: "ST08-005",
       cardNumber: "ST08-005",
       set: {
@@ -30,6 +33,8 @@ export const st08MesserTypeF02Minelayer005: UnitCard = {
     },
     {
       id: "ST08-005_p1",
+      artId: "ST08-005_p1",
+      setCode: "ST08",
       collectorNumber: "ST08-005_p1",
       cardNumber: "ST08-005",
       set: {
@@ -44,6 +49,7 @@ export const st08MesserTypeF02Minelayer005: UnitCard = {
       productName: "Flash of Radiance [ST08] Bonus Pack",
     },
   ],
+  reprints: ["ST08-005", "ST08-005_p1"],
   selectedPrintingId: "ST08-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st08/ST08-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST08-005.webp?260424",

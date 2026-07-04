@@ -22,12 +22,12 @@ export const flotsamUrsulasBabyI18n: Record<Languages, I18nProperties> = {
     version: 'Ursulas "Baby"',
     text: [
       {
-        title: "SCHNELLE FLUCHT",
+        title: "Schnelle Flucht",
         description:
           "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand.",
       },
       {
-        title: "UNHEIMLICHES DUO",
+        title: "Unheimliches Duo",
         description:
           'Deine Meerschaum-Charaktere erhalten "Wenn dieser Charakter durch eine Herausforderung verbannt wird, nimm ihn zurück auf deine Hand".',
       },
@@ -38,11 +38,11 @@ export const flotsamUrsulasBabyI18n: Record<Languages, I18nProperties> = {
     version: '"Bébé" d\'Ursula',
     text: [
       {
-        title: "FUITE RAPIDE",
+        title: "Fuite rapide",
         description: "Lorsque ce personnage est banni via un défi, renvoyez-le dans votre main.",
       },
       {
-        title: "DUO INQUIÉTANT",
+        title: "Duo inquiétant",
         description:
           'Vos personnages Jetsam gagnent "Lorsque ce personnage est banni via un défi, renvoyez cette carte dans votre main".',
       },
@@ -53,14 +53,14 @@ export const flotsamUrsulasBabyI18n: Record<Languages, I18nProperties> = {
     version: "“Piccino” di Ursula",
     text: [
       {
-        title: "FUGA RAPIDA",
+        title: "Fuga Rapida",
         description:
           "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta.",
       },
       {
-        title: "COPPIA SINISTRA I",
+        title: "Coppia Sinistra",
         description:
-          'tuoi personaggi chiamati Jetsam ottengono "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta."',
+          'I tuoi personaggi chiamati Jetsam ottengono "Quando questo personaggio viene esiliato in una sfida, riprendi in mano questa carta."',
       },
     ],
   },

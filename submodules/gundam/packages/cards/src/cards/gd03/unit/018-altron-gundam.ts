@@ -7,14 +7,17 @@ export const gd03AltronGundam018: UnitCard = {
   color: "green",
   traits: ["g team"],
   id: "GD03-018",
-  externalId: "gundam:gd03-018",
-  slug: "altron-gundam-gd03-018",
+  canonicalId: "GD03-018",
+  externalIds: { bandai: "gundam:gd03-018" },
+  slug: "altron-gundam/gd03-018",
   displayName: "Altron Gundam",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-018",
   printings: [
     {
       id: "GD03-018",
+      artId: "GD03-018",
+      setCode: "GD03",
       collectorNumber: "GD03-018",
       cardNumber: "GD03-018",
       set: {
@@ -30,6 +33,8 @@ export const gd03AltronGundam018: UnitCard = {
     },
     {
       id: "GD03-018_p1",
+      artId: "GD03-018_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-018_p1",
       cardNumber: "GD03-018",
       set: {
@@ -44,6 +49,7 @@ export const gd03AltronGundam018: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-018", "GD03-018_p1"],
   selectedPrintingId: "GD03-018",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-018.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-018.webp?260424",

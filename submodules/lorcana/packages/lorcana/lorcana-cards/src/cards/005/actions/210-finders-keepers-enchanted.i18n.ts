@@ -10,8 +10,8 @@ export const findersKeepersEnchantedI18n: Record<Languages, I18nProperties> = {
     text: "Ziehe 3 Karten.",
   },
   fr: {
-    name: "Force hypnotique",
-    text: "Piochez une carte. Choisissez un personnage qui gagne Offensif +2 pour le reste de ce tour.",
+    name: "Qui trouve, garde",
+    text: "Piochez 3 cartes.",
   },
   it: {
     name: "Chi Trova Tiene",

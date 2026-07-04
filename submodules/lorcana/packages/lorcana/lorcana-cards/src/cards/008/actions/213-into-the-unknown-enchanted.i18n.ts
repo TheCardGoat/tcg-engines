@@ -11,10 +11,28 @@ export const intoTheUnknownEnchantedI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Dans un autre monde",
-    text: "Choisissez un personnage épuisé et placez-le dans la réserve d'encre de son propriétaire, face cachée et épuisé.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage épuisé et placez-le dans la réserve d'encre de son propriétaire, face cachée et épuisé.",
+      },
+    ],
   },
   it: {
     name: "Quello Che non So",
-    text: "(Un personaggio con costo 3 o superiore può per cantare questa canzone gratis.) Aggiungi un personaggio impegnato a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Aggiungi un personaggio impegnato a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato.",
+      },
+    ],
   },
 };

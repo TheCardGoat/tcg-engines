@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { merlinCompletingHisResearchI18n } from "./058-merlin-completing-his-research.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const merlinCompletingHisResearch: CharacterCard = {
   id: "JaP",
   canonicalId: "ci_Vvr",
+  slug: "lorcana-ci_Vvr",
+  printings: [
+    {
+      id: "set10-058",
+      artId: "set10-058",
+      setCode: "set10",
+      collectorNumber: "58",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-058"],
   cardType: "character",
   name: "Merlin",
@@ -21,7 +33,7 @@ export const merlinCompletingHisResearch: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d51cdd2a1d904e03adb5e255a2b53a22",
-    tcgPlayer: 660189,
+    tcgPlayer: "660189",
   },
   text: [
     {

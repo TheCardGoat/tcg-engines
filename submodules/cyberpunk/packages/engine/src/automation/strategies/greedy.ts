@@ -295,6 +295,7 @@ function pickArgsFor(
     case "resolveStealGigs":
     case "resolveTrigger":
     case "resolveEffectTarget":
+    case "resolveCardTypeChoice":
       return decisionFromMove(available, {
         pickFromCandidates: (cands) => cands[0] ?? null,
         pickPair: () => null,

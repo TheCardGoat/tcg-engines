@@ -4,6 +4,17 @@ import { angusMightyHorseI18n } from "./174-angus-mighty-horse.i18n";
 export const angusMightyHorse: CharacterCard = {
   id: "4N8",
   canonicalId: "ci_4N8",
+  slug: "lorcana-ci_4N8",
+  printings: [
+    {
+      id: "set12-174",
+      artId: "set12-174",
+      setCode: "set12",
+      collectorNumber: "174",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-174"],
   cardType: "character",
   name: "Angus",
@@ -18,11 +29,15 @@ export const angusMightyHorse: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_4b01090937874d888d3f0f475bc1b671",
+    tcgPlayer: "692193",
+  },
   text: [
     {
-      title: "Dauntless",
+      title: "DAUNTLESS",
       description:
-        "When you play this character, chosen character gains <Alert> this turn. (They can challenge as if they had Evasive.)",
+        "When you play this character, chosen character gains Alert this turn. (They can challenge as if they had Evasive.)",
     },
   ],
   classifications: ["Storyborn", "Ally"],

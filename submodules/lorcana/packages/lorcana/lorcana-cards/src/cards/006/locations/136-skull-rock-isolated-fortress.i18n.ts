@@ -20,11 +20,11 @@ export const skullRockIsolatedFortressI18n: Record<Languages, I18nProperties> = 
     version: "Abgelegene Festung",
     text: [
       {
-        title: "VERTRAUTER BODEN",
-        description: "Charaktere an diesem Ort erhalten +1.",
+        title: "Vertrauter Boden",
+        description: "Charaktere an diesem Ort erhalten +1 {S}.",
       },
       {
-        title: "SICHERER HAFEN",
+        title: "sicherer Hafen",
         description:
           "Zu Beginn deines Zuges, wenn du mindestens einen Piraten an diesem Ort hast, sammelst du 1 Legende.",
       },
@@ -35,11 +35,11 @@ export const skullRockIsolatedFortressI18n: Record<Languages, I18nProperties> = 
     version: "Forteresse isolée",
     text: [
       {
-        title: "EN TERRAIN CONNU",
-        description: "Les personnages sur ce lieu gagnent +1.",
+        title: "En terrain connu",
+        description: "Les personnages sur ce lieu gagnent +1 {S}.",
       },
       {
-        title: "HAVRE DE PAIX",
+        title: "Havre de paix",
         description:
           "Au début de votre tour, si vous avez un personnage Pirate sur ce lieu, gagnez 1 éclat de Lore.",
       },
@@ -50,11 +50,11 @@ export const skullRockIsolatedFortressI18n: Record<Languages, I18nProperties> = 
     version: "Fortezza Isolata",
     text: [
       {
-        title: "TERRENO FAMILIARE I",
-        description: "personaggi ricevono +1 mentre si trovano in questo luogo.",
+        title: "Terreno Familiare",
+        description: "I personaggi ricevono +1 {S} mentre si trovano in questo luogo.",
       },
       {
-        title: "PORTO SICURO",
+        title: "Porto Sicuro",
         description:
           "All'inizio del tuo turno, se hai un personaggio Pirata in questo luogo, ottieni 1 leggenda.",
       },

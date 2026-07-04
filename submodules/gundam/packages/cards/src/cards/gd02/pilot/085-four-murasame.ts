@@ -7,14 +7,17 @@ export const gd02FourMurasame085: PilotCard = {
   color: "blue",
   traits: ["titans", "cyber-newtype"],
   id: "GD02-085",
-  externalId: "gundam:gd02-085",
-  slug: "four-murasame-gd02-085",
+  canonicalId: "GD02-085",
+  externalIds: { bandai: "gundam:gd02-085" },
+  slug: "four-murasame/gd02-085",
   displayName: "Four Murasame",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-085",
   printings: [
     {
       id: "GD02-085",
+      artId: "GD02-085",
+      setCode: "GD02",
       collectorNumber: "GD02-085",
       cardNumber: "GD02-085",
       set: {
@@ -30,6 +33,8 @@ export const gd02FourMurasame085: PilotCard = {
     },
     {
       id: "GD02-085_p1",
+      artId: "GD02-085_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-085_p1",
       cardNumber: "GD02-085",
       set: {
@@ -44,6 +49,7 @@ export const gd02FourMurasame085: PilotCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-085", "GD02-085_p1"],
   selectedPrintingId: "GD02-085",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-085.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-085.webp?260424",

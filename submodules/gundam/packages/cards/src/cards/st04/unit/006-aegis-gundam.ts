@@ -7,14 +7,17 @@ export const st04AegisGundam006: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "ST04-006",
-  externalId: "gundam:st04-006",
-  slug: "aegis-gundam-st04-006",
+  canonicalId: "ST04-006",
+  externalIds: { bandai: "gundam:st04-006" },
+  slug: "aegis-gundam/st04-006",
   displayName: "Aegis Gundam",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-006",
   printings: [
     {
       id: "ST04-006",
+      artId: "ST04-006",
+      setCode: "ST04",
       collectorNumber: "ST04-006",
       cardNumber: "ST04-006",
       set: {
@@ -30,6 +33,8 @@ export const st04AegisGundam006: UnitCard = {
     },
     {
       id: "ST04-006_p1",
+      artId: "ST04-006_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-006_p1",
       cardNumber: "ST04-006",
       set: {
@@ -44,6 +49,7 @@ export const st04AegisGundam006: UnitCard = {
       productName: "SEED Strike [ST04] Bonus Pack",
     },
   ],
+  reprints: ["ST04-006", "ST04-006_p1"],
   selectedPrintingId: "ST04-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-006.webp?260424",

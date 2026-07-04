@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { ursulaSeaWitchQueenI18n } from "./058-ursula-sea-witch-queen.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const ursulaSeaWitchQueen: CharacterCard = {
-  id: "KAb",
-  canonicalId: "ci_iD3",
+  id: "APG",
+  canonicalId: "ci_CCz",
+  slug: "lorcana-ci_CCz",
+  printings: [
+    {
+      id: "set4-058",
+      artId: "set4-058",
+      setCode: "set4",
+      collectorNumber: "58",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-058"],
   cardType: "character",
   name: "Ursula",
@@ -21,15 +33,15 @@ export const ursulaSeaWitchQueen: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_68c45595c25041f3bcf2073a5b533edd",
-    tcgPlayer: 550844,
+    tcgPlayer: "550844",
   },
   text: [
     {
       title: "Shift 5",
     },
     {
-      title: "NOW I AM THE RULER!",
-      description: "Whenever this character quests, exert chosen character.",
+      title: "NOW",
+      description: "I AM THE RULER! Whenever this character quests, exert chosen character.",
     },
     {
       title: "YOU'LL LISTEN TO ME!",

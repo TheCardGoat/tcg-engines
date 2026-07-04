@@ -7,14 +7,17 @@ export const gd04Heindree031: UnitCard = {
   color: "green",
   traits: ["academy"],
   id: "GD04-031",
-  externalId: "gundam:gd04-031",
-  slug: "heindree-gd04-031",
+  canonicalId: "GD04-031",
+  externalIds: { bandai: "gundam:gd04-031" },
+  slug: "heindree/gd04-031",
   displayName: "Heindree",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-031",
   printings: [
     {
       id: "GD04-031",
+      artId: "GD04-031",
+      setCode: "GD04",
       collectorNumber: "GD04-031",
       cardNumber: "GD04-031",
       set: {
@@ -29,6 +32,7 @@ export const gd04Heindree031: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-031"],
   selectedPrintingId: "GD04-031",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-031.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-031.webp?260424",

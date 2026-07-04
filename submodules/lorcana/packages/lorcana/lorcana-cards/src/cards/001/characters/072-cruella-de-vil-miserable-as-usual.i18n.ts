@@ -17,7 +17,7 @@ export const cruellaDeVilMiserableAsUsualI18n: Record<Languages, I18nProperties>
     version: "Miserable As Usual",
     text: [
       {
-        title: "YOU'LL BE SORRY!",
+        title: "You'll Be Sorry!",
         description:
           "When this character is challenged and banished, you may return chosen character to their player's hand.",
       },
@@ -28,7 +28,7 @@ export const cruellaDeVilMiserableAsUsualI18n: Record<Languages, I18nProperties>
     version: "Miserable As Usual",
     text: [
       {
-        title: "YOU'LL BE SORRY!",
+        title: "You'll Be Sorry!",
         description:
           "When this character is challenged and banished, you may return chosen character to their player's hand.",
       },
@@ -39,7 +39,7 @@ export const cruellaDeVilMiserableAsUsualI18n: Record<Languages, I18nProperties>
     version: "Miserable As Usual",
     text: [
       {
-        title: "YOU'LL BE SORRY!",
+        title: "You'll Be Sorry!",
         description:
           "When this character is challenged and banished, you may return chosen character to their player's hand.",
       },

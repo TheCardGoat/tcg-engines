@@ -20,10 +20,10 @@ export const magicBroomSwiftCleanerI18n: Record<Languages, I18nProperties> = {
     version: "Rasanter Saubermacher",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "REINIGE DIES, PUTZE DAS",
+        title: "Reinige dies, putze das",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du alle Besen aus deinem Ablagestapel zurück in dein Deck mischen.",
       },
@@ -34,10 +34,10 @@ export const magicBroomSwiftCleanerI18n: Record<Languages, I18nProperties> = {
     version: "Nettoyeur rapide",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "NETTOIE CECI, NETTOIE CELA",
+        title: "Nettoie ceci, nettoie cela",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez remélanger toutes les cartes Balai de votre défausse dans votre pioche.",
       },
@@ -48,10 +48,10 @@ export const magicBroomSwiftCleanerI18n: Record<Languages, I18nProperties> = {
     version: "Pulitore Rapido",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "PULISCI QUESTO, PULISCI QUELLO",
+        title: "Pulisci Questo, Pulisci Quello",
         description:
           "Quando giochi questo personaggio, puoi rimescolare nel tuo mazzo tutte le carte Scopa presenti nei tuoi scarti.",
       },

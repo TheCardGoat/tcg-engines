@@ -4,6 +4,17 @@ import { allFunnedOutI18n } from "./164-all-funned-out.i18n";
 export const allFunnedOut: ActionCard = {
   id: "uyQ",
   canonicalId: "ci_uyQ",
+  slug: "lorcana-ci_uyQ",
+  printings: [
+    {
+      id: "set5-164",
+      artId: "set5-164",
+      setCode: "set5",
+      collectorNumber: "164",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-164"],
   cardType: "action",
   name: "All Funned Out",
@@ -16,7 +27,7 @@ export const allFunnedOut: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_22015e39f7a8462688822b423e11f891",
-    tcgPlayer: 561971,
+    tcgPlayer: "561971",
   },
   text: "Put chosen character of yours into your inkwell facedown and exerted.",
   abilities: [

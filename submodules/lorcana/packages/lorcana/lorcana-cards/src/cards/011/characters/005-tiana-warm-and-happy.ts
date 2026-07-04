@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tianaWarmAndHappyI18n } from "./005-tiana-warm-and-happy.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const tianaWarmAndHappy: CharacterCard = {
   id: "5Io",
   canonicalId: "ci_FOF",
+  slug: "lorcana-ci_FOF",
+  printings: [
+    {
+      id: "set11-005",
+      artId: "set11-005",
+      setCode: "set11",
+      collectorNumber: "5",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-005"],
   cardType: "character",
   name: "Tiana",
@@ -21,7 +33,7 @@ export const tianaWarmAndHappy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_801cd6ba9a3048499af41d6186fa4100",
-    tcgPlayer: 677142,
+    tcgPlayer: "677142",
   },
   text: "Support",
   classifications: ["Dreamborn", "Hero", "Princess"],

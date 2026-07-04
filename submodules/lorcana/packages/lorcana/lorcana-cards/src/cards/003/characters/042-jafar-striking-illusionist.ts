@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jafarStrikingIllusionistI18n } from "./042-jafar-striking-illusionist.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const jafarStrikingIllusionist: CharacterCard = {
   id: "4un",
   canonicalId: "ci_7x1",
+  slug: "lorcana-ci_7x1",
+  printings: [
+    {
+      id: "set3-042",
+      artId: "set3-042",
+      setCode: "set3",
+      collectorNumber: "42",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-042"],
   cardType: "character",
   name: "Jafar",
@@ -22,7 +34,7 @@ export const jafarStrikingIllusionist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3ecab24376cb4cd5989309e000f797c1",
-    tcgPlayer: 539158,
+    tcgPlayer: "539158",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { nanisPaybackI18n } from "./127-nanis-payback.i18n";
 export const nanisPayback: ActionCard = {
   id: "9Vx",
   canonicalId: "ci_9Vx",
+  slug: "lorcana-ci_9Vx",
+  printings: [
+    {
+      id: "set11-127",
+      artId: "set11-127",
+      setCode: "set11",
+      collectorNumber: "127",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-127"],
   cardType: "action",
   name: "Nani's Payback",
@@ -16,7 +27,7 @@ export const nanisPayback: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ade83b5dd75144a4b901097e22b7b8b1",
-    tcgPlayer: 676215,
+    tcgPlayer: "676215",
   },
   text: "Each opponent loses lore equal to the damage on chosen character of yours, to a maximum of 4 lore each. Draw a card.",
   abilities: [

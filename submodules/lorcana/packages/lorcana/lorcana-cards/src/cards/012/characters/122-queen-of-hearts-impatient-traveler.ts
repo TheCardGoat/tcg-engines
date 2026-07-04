@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { queenOfHeartsImpatientTravelerI18n } from "./122-queen-of-hearts-impatient-traveler.i18n";
 
 export const queenOfHeartsImpatientTraveler: CharacterCard = {
-  id: "kE0",
-  canonicalId: "ci_kE0",
+  id: "tZ3",
+  canonicalId: "ci_nFK",
+  slug: "lorcana-ci_nFK",
+  printings: [
+    {
+      id: "set12-122",
+      artId: "set12-122",
+      setCode: "set12",
+      collectorNumber: "122",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-122"],
   cardType: "character",
   name: "Queen of Hearts",
@@ -20,6 +31,7 @@ export const queenOfHeartsImpatientTraveler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d0e471f08f1e48f9ac4103827e910ce4",
+    tcgPlayer: "690545",
   },
   text: [
     {

@@ -17,7 +17,7 @@ export const marchHareHarebrainedEccentricI18n: Record<Languages, I18nProperties
     version: "Exzentriker mit Hasenhirn",
     text: [
       {
-        title: "ENTZÜNDE DIE KERZEN",
+        title: "Entzünde die Kerzen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einem beschädigten Charakter deiner Wahl 2 Schaden zufügen.",
       },
@@ -28,7 +28,7 @@ export const marchHareHarebrainedEccentricI18n: Record<Languages, I18nProperties
     version: "Farfelu excentrique",
     text: [
       {
-        title: "ALLUMER LES BOUGIES",
+        title: "Allumer les bougies",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage ayant un dommage ou plus et lui infliger 2 dommages.",
       },
@@ -39,7 +39,7 @@ export const marchHareHarebrainedEccentricI18n: Record<Languages, I18nProperties
     version: "Eccentrico Strampalato",
     text: [
       {
-        title: "ACCENDERE LE CANDELINE",
+        title: "Accendere le Candeline",
         description:
           "Quando giochi questo personaggio, puoi infliggere 2 danni a un personaggio danneggiato a tua scelta.",
       },

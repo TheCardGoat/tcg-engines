@@ -17,9 +17,9 @@ export const peteWrestlingChampI18n: Record<Languages, I18nProperties> = {
     version: "Wrestling-Champion",
     text: [
       {
-        title: "ABGEKATERTES SPIEL",
+        title: "Abgekatertes Spiel",
         description:
-          "— Decke die oberste Karte deines Decks auf. Falls sie eine Kater-Karlo-Charakterkarte ist, darfst du sie kostenlos ausspielen.",
+          "{E} — Decke die oberste Karte deines Decks auf. Falls sie eine Kater-Karlo-Charakterkarte ist, darfst du sie kostenlos ausspielen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const peteWrestlingChampI18n: Record<Languages, I18nProperties> = {
     version: "Champion de lutte",
     text: [
       {
-        title: "RÉ-PAT-ITION",
+        title: "Ré-pat-ition",
         description:
-          "— Révélez la carte du dessus de votre pioche. Si c'est un personnage Pat, vous pouvez le jouer gratuitement.",
+          "{E} — Révélez la carte du dessus de votre pioche. Si c'est un personnage Pat, vous pouvez le jouer gratuitement.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const peteWrestlingChampI18n: Record<Languages, I18nProperties> = {
     version: "Campione di Wrestling",
     text: [
       {
-        title: "RADDOPPIETRO",
+        title: "Raddoppietro",
         description:
-          "— Rivela la prima carta del tuo mazzo. Se è una carta personaggio chiamata Gambadilegno, puoi giocarla gratis.",
+          "{E} — Rivela la prima carta del tuo mazzo. Se è una carta personaggio chiamata Gambadilegno, puoi giocarla gratis.",
       },
     ],
   },

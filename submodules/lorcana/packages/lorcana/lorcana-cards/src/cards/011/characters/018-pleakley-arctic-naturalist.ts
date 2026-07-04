@@ -4,6 +4,17 @@ import { pleakleyArcticNaturalistI18n } from "./018-pleakley-arctic-naturalist.i
 export const pleakleyArcticNaturalist: CharacterCard = {
   id: "rDI",
   canonicalId: "ci_rDI",
+  slug: "lorcana-ci_rDI",
+  printings: [
+    {
+      id: "set11-018",
+      artId: "set11-018",
+      setCode: "set11",
+      collectorNumber: "18",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-018"],
   cardType: "character",
   name: "Pleakley",
@@ -20,7 +31,7 @@ export const pleakleyArcticNaturalist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d2e66bee41214f2f9b1e38f4e1ccdbc3",
-    tcgPlayer: 673069,
+    tcgPlayer: "673069",
   },
   text: [
     {

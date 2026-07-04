@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princeEricSeafaringPrinceI18n } from "./021-prince-eric-seafaring-prince.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const princeEricSeafaringPrince: CharacterCard = {
   id: "U2e",
   canonicalId: "ci_U2e",
+  slug: "lorcana-ci_U2e",
+  printings: [
+    {
+      id: "set4-021",
+      artId: "set4-021",
+      setCode: "set4",
+      collectorNumber: "21",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-021"],
   cardType: "character",
   name: "Prince Eric",
@@ -21,7 +33,7 @@ export const princeEricSeafaringPrince: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_59c6d7badfc34295857ca0743b40ceca",
-    tcgPlayer: 550560,
+    tcgPlayer: "550560",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { herculesSpectralDemigodI18n } from "./117-hercules-spectral-demigod.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const herculesSpectralDemigod: CharacterCard = {
-  id: "pHV",
+  id: "Pwi",
   canonicalId: "ci_hMF",
+  slug: "lorcana-ci_hMF",
+  printings: [
+    {
+      id: "set11-117",
+      artId: "set11-117",
+      setCode: "set11",
+      collectorNumber: "117",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-117"],
   cardType: "character",
   name: "Hercules",
@@ -21,7 +33,7 @@ export const herculesSpectralDemigod: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_366f46e2c0bc4366832935158a49cdb4",
-    tcgPlayer: 677149,
+    tcgPlayer: "677149",
   },
   text: [
     {

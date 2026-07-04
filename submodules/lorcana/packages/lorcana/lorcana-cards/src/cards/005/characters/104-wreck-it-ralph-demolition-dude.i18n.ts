@@ -16,7 +16,7 @@ export const wreckitRalphDemolitionDudeI18n: Record<Languages, I18nProperties> =
     version: "Abrissbirne",
     text: [
       {
-        title: "ERHOLSAME AUSZEIT",
+        title: "Erholsame Auszeit",
         description:
           "Jedes Mal, wenn du diesen Charakter bereit machst, sammlest du 1 Legende für jeden Schaden auf ihm.",
       },
@@ -27,7 +27,7 @@ export const wreckitRalphDemolitionDudeI18n: Record<Languages, I18nProperties> =
     version: "Démolisseur",
     text: [
       {
-        title: "PAUSE RAFRAÎCHISSANTE",
+        title: "Pause rafraîchissante",
         description:
           "Chaque fois que ce personnage se redresse, gagnez 1 éclat de Lore par dommage sur lui.",
       },
@@ -38,7 +38,7 @@ export const wreckitRalphDemolitionDudeI18n: Record<Languages, I18nProperties> =
     version: "Il Tipo delle Demolizioni",
     text: [
       {
-        title: "PAUSA RITEMPRANTE",
+        title: "Pausa Ritemprante",
         description:
           "Ogni volta che prepari questo personaggio, ottieni 1 leggenda per ogni singolo danno su di esso.",
       },

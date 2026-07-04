@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princePhillipGallantDefenderI18n } from "./152-prince-phillip-gallant-defender.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const princePhillipGallantDefender: CharacterCard = {
   id: "kbT",
   canonicalId: "ci_kbT",
+  slug: "lorcana-ci_kbT",
+  printings: [
+    {
+      id: "set4-152",
+      artId: "set4-152",
+      setCode: "set4",
+      collectorNumber: "152",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-152"],
   cardType: "character",
   name: "Prince Phillip",
@@ -21,7 +33,7 @@ export const princePhillipGallantDefender: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_02bb98b56ae0427abdd944699f1bda1c",
-    tcgPlayer: 549517,
+    tcgPlayer: "549517",
   },
   text: [
     {

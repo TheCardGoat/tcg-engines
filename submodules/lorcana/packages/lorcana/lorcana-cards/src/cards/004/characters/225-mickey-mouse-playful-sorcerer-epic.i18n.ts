@@ -23,13 +23,14 @@ export const mickeyMousePlayfulSorcererEpicI18n: Record<Languages, I18nPropertie
     version: "Playful Sorcerer",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)",
       },
       {
-        title: "Resist +1",
+        title: "<Resist> +1 (Damage dealt to this character is reduced by 1.)",
       },
       {
-        title: "SWEEP AWAY",
+        title: "Sweep Away",
         description:
           "When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
       },
@@ -40,13 +41,14 @@ export const mickeyMousePlayfulSorcererEpicI18n: Record<Languages, I18nPropertie
     version: "Playful Sorcerer",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)",
       },
       {
-        title: "Resist +1",
+        title: "<Resist> +1 (Damage dealt to this character is reduced by 1.)",
       },
       {
-        title: "SWEEP AWAY",
+        title: "Sweep Away",
         description:
           "When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
       },
@@ -57,13 +59,14 @@ export const mickeyMousePlayfulSorcererEpicI18n: Record<Languages, I18nPropertie
     version: "Playful Sorcerer",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Mickey Mouse.)",
       },
       {
-        title: "Resist +1",
+        title: "<Resist> +1 (Damage dealt to this character is reduced by 1.)",
       },
       {
-        title: "SWEEP AWAY",
+        title: "Sweep Away",
         description:
           "When you play this character, deal damage to chosen character equal to the number of Broom characters you have in play.",
       },

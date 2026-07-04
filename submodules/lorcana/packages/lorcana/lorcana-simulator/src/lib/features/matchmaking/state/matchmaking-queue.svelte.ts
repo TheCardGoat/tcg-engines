@@ -29,11 +29,15 @@ export type MatchmakingStatus =
   | "match_ready"
   | "match_found"
   | "blocked";
-export type MatchmakingQueueFormat = "infinity" | "core-constructed";
+export type MatchmakingQueueFormat = "infinity" | "core-constructed" | "attack-of-the-vine";
 export type MatchmakingQueueMode = "1" | "3";
 export type MatchmakingQueueMatchType = "ranked" | "casual" | "testing";
 
-const SUPPORTED_QUEUE_FORMATS: readonly MatchmakingQueueFormat[] = ["infinity", "core-constructed"];
+const SUPPORTED_QUEUE_FORMATS: readonly MatchmakingQueueFormat[] = [
+  "infinity",
+  "core-constructed",
+  "attack-of-the-vine",
+];
 
 function coerceQueuedFormat(value: string | undefined | null): MatchmakingQueueFormat | null {
   return SUPPORTED_QUEUE_FORMATS.includes(value as MatchmakingQueueFormat)

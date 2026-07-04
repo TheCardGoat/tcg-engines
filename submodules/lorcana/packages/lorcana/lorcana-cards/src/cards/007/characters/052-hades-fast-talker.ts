@@ -4,6 +4,17 @@ import { hadesFastTalkerI18n } from "./052-hades-fast-talker.i18n";
 export const hadesFastTalker: CharacterCard = {
   id: "Ubd",
   canonicalId: "ci_Ubd",
+  slug: "lorcana-ci_Ubd",
+  printings: [
+    {
+      id: "set7-052",
+      artId: "set7-052",
+      setCode: "set7",
+      collectorNumber: "52",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-052"],
   cardType: "character",
   name: "Hades",
@@ -20,13 +31,13 @@ export const hadesFastTalker: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5dd4b7c75d134e76998535e1f8ec6b6c",
-    tcgPlayer: 618133,
+    tcgPlayer: "618133",
   },
   text: [
     {
-      title: "FOR JUST A LITTLE PAIN",
+      title: "FOR JUST",
       description:
-        "When you play this character, you may deal 2 damage to another chosen character of yours to banish chosen character with cost 3 or less.",
+        "A LITTLE PAIN When you play this character, you may deal 2 damage to another chosen character of yours to banish chosen character with cost 3 or less.",
     },
   ],
   classifications: ["Storyborn", "Villain", "Deity"],

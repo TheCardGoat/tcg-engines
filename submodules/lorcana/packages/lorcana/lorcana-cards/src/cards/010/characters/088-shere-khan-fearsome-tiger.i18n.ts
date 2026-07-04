@@ -20,10 +20,10 @@ export const shereKhanFearsomeTigerI18n: Record<Languages, I18nProperties> = {
     version: "Furchterregender Tiger",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "AUF DER JAGD",
+        title: "Auf der Jagd",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, verbanne einen gegnerischen beschädigten Charakter deiner Wahl. Danach darfst du 1 Schadensmarker auf einen anderen Charakter deiner Wahl legen.",
       },
@@ -34,10 +34,10 @@ export const shereKhanFearsomeTigerI18n: Record<Languages, I18nProperties> = {
     version: "Tigre redoutable",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "EN CHASSE",
+        title: "En chasse",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage adverse avec au moins un dommage et bannissez-le. Ensuite, vous pouvez choisir un autre personnage et placer 1 dommage sur lui.",
       },
@@ -48,11 +48,12 @@ export const shereKhanFearsomeTigerI18n: Record<Languages, I18nProperties> = {
     version: "Tigre Spaventosa",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title:
-          "A CACCIA Ogni volta che questo personaggio va all'avventura, esilia un personaggio avversario danneggiato a tua scelta. Poi, puoi mettere 1 segnalino danno su un altro personaggio a tua scelta.",
+        title: "A Caccia",
+        description:
+          "Ogni volta che questo personaggio va all'avventura, esilia un personaggio avversario danneggiato a tua scelta. Poi, puoi mettere 1 segnalino danno su un altro personaggio a tua scelta.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { healWhatHasBeenHurtI18n } from "./026-heal-what-has-been-hurt.i18n";
 export const healWhatHasBeenHurt: ActionCard = {
   id: "qoo",
   canonicalId: "ci_ol7",
+  slug: "lorcana-ci_ol7",
+  printings: [
+    {
+      id: "set3-026",
+      artId: "set3-026",
+      setCode: "set3",
+      collectorNumber: "26",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-026", "set9-027"],
   cardType: "action",
   name: "Heal What Has Been Hurt",
@@ -16,7 +27,7 @@ export const healWhatHasBeenHurt: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d3bdbbdbd842435fa3fa0ac7ec4eb28d",
-    tcgPlayer: 649974,
+    tcgPlayer: "649974",
   },
   text: "Remove up to 3 damage from chosen character. Draw a card.",
   actionSubtype: "song",
@@ -28,7 +39,10 @@ export const healWhatHasBeenHurt: ActionCard = {
         steps: [
           {
             type: "remove-damage",
-            amount: { type: "up-to", value: 3 },
+            amount: {
+              type: "up-to",
+              value: 3,
+            },
             target: "CHOSEN_CHARACTER",
           },
           {

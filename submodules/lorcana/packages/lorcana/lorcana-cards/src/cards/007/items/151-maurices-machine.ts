@@ -4,6 +4,17 @@ import { mauricesMachineI18n } from "./151-maurices-machine.i18n";
 export const mauricesMachine: ItemCard = {
   id: "jlq",
   canonicalId: "ci_jlq",
+  slug: "lorcana-ci_jlq",
+  printings: [
+    {
+      id: "set7-151",
+      artId: "set7-151",
+      setCode: "set7",
+      collectorNumber: "151",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-151"],
   cardType: "item",
   name: "Maurice's Machine",
@@ -16,7 +27,7 @@ export const mauricesMachine: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_86f1f9b1aee3486ca626ba64f1a8edb5",
-    tcgPlayer: 619493,
+    tcgPlayer: "619493",
   },
   text: [
     {

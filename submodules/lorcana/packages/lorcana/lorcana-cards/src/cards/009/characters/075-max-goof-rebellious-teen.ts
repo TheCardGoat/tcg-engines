@@ -4,6 +4,17 @@ import { maxGoofRebelliousTeenI18n } from "./075-max-goof-rebellious-teen.i18n";
 export const maxGoofRebelliousTeen: CharacterCard = {
   id: "A7j",
   canonicalId: "ci_A7j",
+  slug: "lorcana-ci_A7j",
+  printings: [
+    {
+      id: "set9-075",
+      artId: "set9-075",
+      setCode: "set9",
+      collectorNumber: "75",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-075"],
   cardType: "character",
   name: "Max Goof",
@@ -20,7 +31,7 @@ export const maxGoofRebelliousTeen: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0599c55386a649bb9af21a906ed52db5",
-    tcgPlayer: 647681,
+    tcgPlayer: "647681",
   },
   text: [
     {

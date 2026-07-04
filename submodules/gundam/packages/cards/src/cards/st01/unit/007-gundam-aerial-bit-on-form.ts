@@ -7,14 +7,17 @@ export const st01GundamAerialBitOnForm007: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "ST01-007",
-  externalId: "gundam:st01-007",
-  slug: "gundam-aerial-bit-on-form-st01-007",
+  canonicalId: "ST01-007",
+  externalIds: { bandai: "gundam:st01-007" },
+  slug: "gundam-aerial-bit-on-form/st01-007",
   displayName: "Gundam Aerial (Bit on Form)",
   set: { code: "ST01", name: "Heroic Beginnings [ST01]", packageId: "616001" },
   printNumber: "ST01-007",
   printings: [
     {
       id: "ST01-007",
+      artId: "ST01-007",
+      setCode: "ST01",
       collectorNumber: "ST01-007",
       cardNumber: "ST01-007",
       set: {
@@ -30,6 +33,8 @@ export const st01GundamAerialBitOnForm007: UnitCard = {
     },
     {
       id: "ST01-007_p1",
+      artId: "ST01-007_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-007_p1",
       cardNumber: "ST01-007",
       set: {
@@ -45,6 +50,8 @@ export const st01GundamAerialBitOnForm007: UnitCard = {
     },
     {
       id: "ST01-007_p2",
+      artId: "ST01-007_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-007_p2",
       cardNumber: "ST01-007",
       set: {
@@ -59,6 +66,7 @@ export const st01GundamAerialBitOnForm007: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST01-007", "ST01-007_p1", "ST01-007_p2"],
   selectedPrintingId: "ST01-007",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st01/ST01-007.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-007.webp?260424",

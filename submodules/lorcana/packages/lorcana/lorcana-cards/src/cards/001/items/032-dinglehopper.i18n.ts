@@ -14,8 +14,8 @@ export const dinglehopperI18n: Record<Languages, I18nProperties> = {
     name: "Dingelhopper",
     text: [
       {
-        title: "HAARE STRIEGELN",
-        description: "— Entferne bis zu 1 Schaden von einem Charakter deiner Wahl.",
+        title: "Haare Striegeln",
+        description: "{E} — Entferne bis zu 1 Schaden von einem Charakter deiner Wahl.",
       },
     ],
   },
@@ -23,8 +23,8 @@ export const dinglehopperI18n: Record<Languages, I18nProperties> = {
     name: "ZIRGOUFLEX",
     text: [
       {
-        title: "RATISSER LES POILS DE",
-        description: "TÊTE — Choisissez un personnage et retirez-lui 1 jeton Dommage.",
+        title: "RATISSER LES POILS DE TÊTE",
+        description: "{E} — Choisissez un personnage et retirez-lui 1 jeton Dommage.",
       },
     ],
   },
@@ -32,8 +32,8 @@ export const dinglehopperI18n: Record<Languages, I18nProperties> = {
     name: "Arricciaspiccia",
     text: [
       {
-        title: "SISTEMARE I CAPELLI",
-        description: "— Rimuovi fino a 1 danno da un personaggio a tua scelta.",
+        title: "Sistemare i Capelli",
+        description: "{E} — Rimuovi fino a 1 danno da un personaggio a tua scelta.",
       },
     ],
   },

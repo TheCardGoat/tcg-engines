@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { herculesBabyDemigodI18n } from "./086-hercules-baby-demigod.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const herculesBabyDemigod: CharacterCard = {
   id: "7Td",
   canonicalId: "ci_7Td",
+  slug: "lorcana-ci_7Td",
+  printings: [
+    {
+      id: "set6-086",
+      artId: "set6-086",
+      setCode: "set6",
+      collectorNumber: "86",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-086"],
   cardType: "character",
   name: "Hercules",
@@ -21,7 +33,7 @@ export const herculesBabyDemigod: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3463916fe4e54939a91ee57a62d50ba2",
-    tcgPlayer: 588071,
+    tcgPlayer: "588071",
   },
   text: [
     {

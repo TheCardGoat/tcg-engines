@@ -17,7 +17,7 @@ export const grammaTalaStorytellerI18n: Record<Languages, I18nProperties> = {
     version: "Geschichtenerzählerin",
     text: [
       {
-        title: "ICH WERDE DICH BEGLEITEN",
+        title: "Ich werde dich Begleiten",
         description:
           "Wenn dieser Charakter verbannt wird, darfst du diese Karte verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -39,7 +39,7 @@ export const grammaTalaStorytellerI18n: Record<Languages, I18nProperties> = {
     version: "Storyteller",
     text: [
       {
-        title: "I WILL BE WITH YOU",
+        title: "I Will Be With You",
         description:
           "When this character is banished, you may put this card into your inkwell facedown and exerted.",
       },

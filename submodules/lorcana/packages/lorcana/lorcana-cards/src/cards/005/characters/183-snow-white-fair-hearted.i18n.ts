@@ -17,9 +17,9 @@ export const snowWhiteFairheartedI18n: Record<Languages, I18nProperties> = {
     version: "Ein gutes Herz",
     text: [
       {
-        title: "SELBSTVERSTÄNDLICHE ANFÜHRERIN",
+        title: "Selbstverständliche Anführerin",
         description:
-          "Dieser Charakter erhält Robust +1 für jeden anderen Ritter, den du im Spiel hast. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1 pro anderen Ritter.)",
+          "Dieser Charakter erhält <Robust> +1 für jeden anderen Ritter, den du im Spiel hast. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1 pro anderen Ritter.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const snowWhiteFairheartedI18n: Record<Languages, I18nProperties> = {
     version: "Cœur juste",
     text: [
       {
-        title: "MENEUSE-NÉE",
+        title: "Meneuse-née",
         description:
-          "Ce personnage gagne Résistance +1 pour chaque autre personnage Chevalier que vous avez en jeu. (Les dommages qui lui sont infligés sont réduits de 1 pour chaque autre Chevalier.)",
+          "Ce personnage gagne <Résistance> +1 pour chaque autre personnage Chevalier que vous avez en jeu. (Les dommages qui lui sont infligés sont réduits de 1 pour chaque autre Chevalier.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const snowWhiteFairheartedI18n: Record<Languages, I18nProperties> = {
     version: "Giusta di Cuore",
     text: [
       {
-        title: "LEADER NATA",
+        title: "Leader Nata",
         description:
-          "Questo personaggio ottiene Resistere +1 per ogni altro personaggio Cavaliere che hai in gioco.",
+          "Questo personaggio ottiene <Resistere> +1 per ogni altro personaggio Cavaliere che hai in gioco.",
       },
     ],
   },

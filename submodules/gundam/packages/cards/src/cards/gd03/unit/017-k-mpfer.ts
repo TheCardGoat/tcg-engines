@@ -7,14 +7,17 @@ export const gd03KMpfer017: UnitCard = {
   color: "green",
   traits: ["zeon", "cyclops team"],
   id: "GD03-017",
-  externalId: "gundam:gd03-017",
-  slug: "k-mpfer-gd03-017",
+  canonicalId: "GD03-017",
+  externalIds: { bandai: "gundam:gd03-017" },
+  slug: "kampfer/gd03-017",
   displayName: "Kämpfer",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-017",
   printings: [
     {
       id: "GD03-017",
+      artId: "GD03-017",
+      setCode: "GD03",
       collectorNumber: "GD03-017",
       cardNumber: "GD03-017",
       set: {
@@ -30,6 +33,8 @@ export const gd03KMpfer017: UnitCard = {
     },
     {
       id: "GD03-017_p1",
+      artId: "GD03-017_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-017_p1",
       cardNumber: "GD03-017",
       set: {
@@ -45,6 +50,8 @@ export const gd03KMpfer017: UnitCard = {
     },
     {
       id: "GD03-017_p2",
+      artId: "GD03-017_p2",
+      setCode: "GD03",
       collectorNumber: "GD03-017_p2",
       cardNumber: "GD03-017",
       set: {
@@ -59,6 +66,7 @@ export const gd03KMpfer017: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-017", "GD03-017_p1", "GD03-017_p2"],
   selectedPrintingId: "GD03-017",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-017.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-017.webp?260424",

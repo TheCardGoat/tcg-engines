@@ -7,14 +7,32 @@ export const imStillHereI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "I'm Still Here",
-    text: "Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Robust +2. Ziehe 1 Karte. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
+    text: "Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Robust> +2. Ziehe 1 Karte. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 2.)",
   },
   fr: {
     name: "Un homme libre",
-    text: "Choisissez un personnage qui gagne Résistance +2 jusqu'au début de votre prochain tour. Piochez une carte.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage qui gagne <Résistance> +2 jusqu'au début de votre prochain tour. Piochez une carte.",
+      },
+    ],
   },
   it: {
     name: "Ci sono Anch'Io",
-    text: "(Un personaggio con costo 3 o superiore può per cantare questa canzone gratis.) Un personaggio a tua scelta ottiene Resistere +2 fino all'inizio del tuo prossimo turno. Pesca una carta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Un personaggio a tua scelta ottiene <Resistere> +2 fino all'inizio del tuo prossimo turno. Pesca una carta.",
+      },
+    ],
   },
 };

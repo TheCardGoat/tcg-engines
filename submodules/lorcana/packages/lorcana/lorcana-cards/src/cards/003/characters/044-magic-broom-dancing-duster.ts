@@ -4,6 +4,17 @@ import { magicBroomDancingDusterI18n } from "./044-magic-broom-dancing-duster.i1
 export const magicBroomDancingDuster: CharacterCard = {
   id: "hC1",
   canonicalId: "ci_hC1",
+  slug: "lorcana-ci_hC1",
+  printings: [
+    {
+      id: "set3-044",
+      artId: "set3-044",
+      setCode: "set3",
+      collectorNumber: "44",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-044"],
   cardType: "character",
   name: "Magic Broom",
@@ -20,7 +31,7 @@ export const magicBroomDancingDuster: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_bf44f442286c4b5fa783412ae85c3b58",
-    tcgPlayer: 539069,
+    tcgPlayer: "539069",
   },
   text: [
     {

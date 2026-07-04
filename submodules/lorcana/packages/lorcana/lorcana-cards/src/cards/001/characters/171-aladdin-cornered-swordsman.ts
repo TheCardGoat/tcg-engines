@@ -4,6 +4,17 @@ import { aladdinCorneredSwordsmanI18n } from "./171-aladdin-cornered-swordsman.i
 export const aladdinCorneredSwordsman: CharacterCard = {
   id: "K3y",
   canonicalId: "ci_K3y",
+  slug: "lorcana-ci_K3y",
+  printings: [
+    {
+      id: "set1-171",
+      artId: "set1-171",
+      setCode: "set1",
+      collectorNumber: "171",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-171"],
   cardType: "character",
   name: "Aladdin",
@@ -21,7 +32,7 @@ export const aladdinCorneredSwordsman: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_cabcdb68fdc14360a495869d3e7fc281",
-    tcgPlayer: 508895,
+    tcgPlayer: "508895",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: aladdinCorneredSwordsmanI18n,

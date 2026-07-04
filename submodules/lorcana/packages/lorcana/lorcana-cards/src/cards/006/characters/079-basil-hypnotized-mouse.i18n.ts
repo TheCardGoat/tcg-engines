@@ -9,16 +9,16 @@ export const basilHypnotizedMouseI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Basil",
     version: "Hypnotisierte Maus",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Basil",
     version: "Souris hypnotisée",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Basil",
     version: "Topo Ipnotizzato",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

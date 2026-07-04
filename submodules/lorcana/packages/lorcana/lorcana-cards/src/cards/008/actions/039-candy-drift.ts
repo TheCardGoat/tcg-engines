@@ -4,6 +4,17 @@ import { candyDriftI18n } from "./039-candy-drift.i18n";
 export const candyDrift: ActionCard = {
   id: "Zzh",
   canonicalId: "ci_Zzh",
+  slug: "lorcana-ci_Zzh",
+  printings: [
+    {
+      id: "set8-039",
+      artId: "set8-039",
+      setCode: "set8",
+      collectorNumber: "39",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-039"],
   cardType: "action",
   name: "Candy Drift",
@@ -16,7 +27,7 @@ export const candyDrift: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_25e476ae1e6545bc87787d0705f87364",
-    tcgPlayer: 631377,
+    tcgPlayer: "631377",
   },
   text: "Draw a card. Chosen character of yours gets +5 {S} this turn. At the end of your turn, banish them.",
   abilities: [

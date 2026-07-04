@@ -4,6 +4,17 @@ import { tiggerOneOfAKindI18n } from "./127-tigger-one-of-a-kind.i18n";
 export const tiggerOneOfAKind: CharacterCard = {
   id: "n3U",
   canonicalId: "ci_n3U",
+  slug: "lorcana-ci_n3U",
+  printings: [
+    {
+      id: "set2-127",
+      artId: "set2-127",
+      setCode: "set2",
+      collectorNumber: "127",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-127"],
   cardType: "character",
   name: "Tigger",
@@ -20,7 +31,7 @@ export const tiggerOneOfAKind: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a3aef995690e4b4995241341af5f31e3",
-    tcgPlayer: 524189,
+    tcgPlayer: "524189",
   },
   text: [
     {

@@ -1,12 +1,13 @@
-import type { WelcomeToNightCityRetailCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailAllIsLost = {
+export const welcomeToNightCityRetailAllIsLost = defineCyberpunkCard({
   id: "1f969c27-dddb-4971-9ab5-bd728c3e3e52",
-  externalId: "cb-all-is-lost",
   slug: "all-is-lost",
+  rulesText: "Trash 3. Add a Unit from among them to your hand.",
   name: "All is Lost",
   displayName: "All is Lost",
-  rulesText: "Trash 3. Add a Unit from among them to your hand.",
+  canonicalId: "all-is-lost",
   color: "red",
   classifications: ["Zetatech"],
   set: {
@@ -14,38 +15,51 @@ export const welcomeToNightCityRetailAllIsLost = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "027",
-  printings: [
-    {
-      id: "d1a3c0e0-e0e7-418d-afb4-e6e43400c42e",
-      collectorNumber: "027",
-      setCode: "welcometonightcityretail",
-      rarity: "Common",
-    },
-    {
-      id: "27a2fceb-5c37-4cfa-8efb-1e4618d22401",
-      collectorNumber: "β027",
-      setCode: "welcometonightcitybeta",
-      rarity: "Common",
-    },
-  ],
-  selectedPrintingId: "d1a3c0e0-e0e7-418d-afb4-e6e43400c42e",
   artist: "Fabrizio De Tommaso",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/027.webp",
   rarity: "Common",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
+  timingTriggers: ["play"],
   type: "program",
   cost: 1,
   power: null,
   abilities: [
     {
-      kind: "static",
+      kind: "triggered",
       text: "Trash 3. Add a Unit from among them to your hand.",
-      effects: [],
+      trigger: {
+        trigger: "play",
+      },
+      source: {
+        selector: "self",
+      },
+      effects: [
+        {
+          effect: "trashFromDeck",
+          player: "friendly",
+          amount: 3,
+          // Publish the just-trashed card ids so the next effect can pick a
+          // Unit "from among them" rather than from the whole trash.
+          outputBinding: "trashedCards",
+        },
+        {
+          effect: "moveCard",
+          target: {
+            selector: "bound",
+            id: "trashedCards",
+            cardTypes: ["unit"],
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
+            },
+          },
+          destination: "hand",
+        },
+      ],
     },
   ],
   reminderText: ["Discard programs after they resolve."],
-} satisfies WelcomeToNightCityRetailCardDefinition;
+}) satisfies ProgramCardDefinition;

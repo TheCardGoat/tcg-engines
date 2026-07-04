@@ -4,6 +4,17 @@ import { gantuHamstervielsAccompliceI18n } from "./176-gantu-hamsterviels-accomp
 export const gantuHamstervielsAccomplice: CharacterCard = {
   id: "qvC",
   canonicalId: "ci_qvC",
+  slug: "lorcana-ci_qvC",
+  printings: [
+    {
+      id: "set11-176",
+      artId: "set11-176",
+      setCode: "set11",
+      collectorNumber: "176",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-176"],
   cardType: "character",
   name: "Gantu",
@@ -20,7 +31,7 @@ export const gantuHamstervielsAccomplice: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e58426a12e4840d1a58c49c2a147f6b4",
-    tcgPlayer: 673305,
+    tcgPlayer: "673305",
   },
   text: [
     {

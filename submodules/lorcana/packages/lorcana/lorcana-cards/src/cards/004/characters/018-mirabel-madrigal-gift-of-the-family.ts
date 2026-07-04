@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mirabelMadrigalGiftOfTheFamilyI18n } from "./018-mirabel-madrigal-gift-of-the-family.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const mirabelMadrigalGiftOfTheFamily: CharacterCard = {
   id: "iqv",
   canonicalId: "ci_iqv",
+  slug: "lorcana-ci_iqv",
+  printings: [
+    {
+      id: "set4-018",
+      artId: "set4-018",
+      setCode: "set4",
+      collectorNumber: "18",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-018"],
   cardType: "character",
   name: "Mirabel Madrigal",
@@ -21,7 +33,7 @@ export const mirabelMadrigalGiftOfTheFamily: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_0f2a801e619f4b5eba26e139a30e49ef",
-    tcgPlayer: 543898,
+    tcgPlayer: "543898",
   },
   text: [
     {

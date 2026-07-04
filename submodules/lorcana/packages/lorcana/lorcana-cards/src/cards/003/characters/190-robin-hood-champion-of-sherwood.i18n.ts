@@ -24,15 +24,16 @@ export const robinHoodChampionOfSherwoodI18n: Record<Languages, I18nProperties> 
     version: "Champion von Sherwood",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Robin-Hood-Charaktere auszuspielen.)",
       },
       {
-        title: "ERFAHRENER KÄMPFER",
+        title: "Erfahrener Kämpfer",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 2 Legenden.",
       },
       {
-        title: "DAS WOHL DER ANDEREN",
+        title: "Das Wohl der anderen",
         description:
           "Wenn dieser Charakter durch eine Herausforderung verbannt wird, darfst du 1 Karte ziehen.",
       },
@@ -43,15 +44,16 @@ export const robinHoodChampionOfSherwoodI18n: Record<Languages, I18nProperties> 
     version: "Champion de Sherwood",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Robin des Bois.)",
       },
       {
-        title: "COMBATTANT ÉMÉRITE",
+        title: "Combattant émérite",
         description:
           "Chaque fois que ce personnage en bannit un autre via un défi durant votre tour, gagnez 2 éclats de Lore.",
       },
       {
-        title: "POUR LE BIEN D'AUTRUI",
+        title: "Pour le bien d'autrui",
         description: "Si ce personnage est banni via un défi, vous pouvez piocher une carte.",
       },
     ],
@@ -61,15 +63,16 @@ export const robinHoodChampionOfSherwoodI18n: Record<Languages, I18nProperties> 
     version: "Campione di Sherwood",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Robin Hood.)",
       },
       {
-        title: "COMBATTENTE ESPERTO",
+        title: "Combattente Esperto",
         description:
           "Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, ottieni 2 leggenda.",
       },
       {
-        title: "PER IL BENE DEGLI ALTRI",
+        title: "Per il Bene degli Altri",
         description:
           "Quando questo personaggio viene esiliato in una sfida, puoi pescare una carta.",
       },

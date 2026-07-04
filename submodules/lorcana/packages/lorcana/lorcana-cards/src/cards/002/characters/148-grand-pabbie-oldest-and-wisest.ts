@@ -4,6 +4,17 @@ import { grandPabbieOldestAndWisestI18n } from "./148-grand-pabbie-oldest-and-wi
 export const grandPabbieOldestAndWisest: CharacterCard = {
   id: "iZk",
   canonicalId: "ci_KJO",
+  slug: "lorcana-ci_KJO",
+  printings: [
+    {
+      id: "set2-148",
+      artId: "set2-148",
+      setCode: "set2",
+      collectorNumber: "148",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-148", "set9-150"],
   cardType: "character",
   name: "Grand Pabbie",
@@ -20,7 +31,7 @@ export const grandPabbieOldestAndWisest: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_fded826f4af24bb7aac039d15848173e",
-    tcgPlayer: 650085,
+    tcgPlayer: "650085",
   },
   text: [
     {
@@ -41,7 +52,12 @@ export const grandPabbieOldestAndWisest: CharacterCard = {
       trigger: {
         event: "remove-damage",
         on: "YOUR_CHARACTERS",
-        restrictions: [{ type: "during-turn", whose: "your" }],
+        restrictions: [
+          {
+            type: "during-turn",
+            whose: "your",
+          },
+        ],
         timing: "whenever",
       },
       type: "triggered",

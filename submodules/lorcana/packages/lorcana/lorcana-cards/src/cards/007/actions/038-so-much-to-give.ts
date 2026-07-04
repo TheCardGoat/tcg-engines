@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { soMuchToGiveI18n } from "./038-so-much-to-give.i18n";
 
 export const soMuchToGive: ActionCard = {
-  id: "Q7m",
+  id: "SXr",
   canonicalId: "ci_Q7m",
+  slug: "lorcana-ci_Q7m",
+  printings: [
+    {
+      id: "set7-038",
+      artId: "set7-038",
+      setCode: "set7",
+      collectorNumber: "38",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-038"],
   cardType: "action",
   name: "So Much to Give",
@@ -16,7 +27,7 @@ export const soMuchToGive: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1420be51e8504e689e1166dfb5bd2790",
-    tcgPlayer: 618720,
+    tcgPlayer: "618720",
   },
   text: "Draw a card. Chosen character gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
   actionSubtype: "song",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theNokkWaterSpiritI18n } from "./160-the-nokk-water-spirit.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const theNokkWaterSpirit: CharacterCard = {
   id: "2Pk",
   canonicalId: "ci_2Pk",
+  slug: "lorcana-ci_2Pk",
+  printings: [
+    {
+      id: "set2-160",
+      artId: "set2-160",
+      setCode: "set2",
+      collectorNumber: "160",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-160"],
   cardType: "character",
   name: "The Nokk",
@@ -21,7 +33,7 @@ export const theNokkWaterSpirit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_780972e5c4f84315bcd27496ef5184a3",
-    tcgPlayer: 527768,
+    tcgPlayer: "527768",
   },
   text: "Ward",
   classifications: ["Storyborn"],

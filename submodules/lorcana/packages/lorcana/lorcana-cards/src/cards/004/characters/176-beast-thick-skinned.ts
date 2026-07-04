@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { beastThickskinnedI18n } from "./176-beast-thick-skinned.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const beastThickskinned: CharacterCard = {
   id: "P74",
   canonicalId: "ci_P74",
+  slug: "lorcana-ci_P74",
+  printings: [
+    {
+      id: "set4-176",
+      artId: "set4-176",
+      setCode: "set4",
+      collectorNumber: "176",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-176"],
   cardType: "character",
   name: "Beast",
@@ -21,7 +33,7 @@ export const beastThickskinned: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_aca54534108b43fcb881cb411581c618",
-    tcgPlayer: 549654,
+    tcgPlayer: "549654",
   },
   text: "Resist +1",
   classifications: ["Storyborn", "Hero", "Prince"],

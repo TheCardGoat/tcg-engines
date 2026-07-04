@@ -4,6 +4,17 @@ import { thisIsMyFamilyI18n } from "./081-this-is-my-family.i18n";
 export const thisIsMyFamily: ActionCard = {
   id: "7pX",
   canonicalId: "ci_7pX",
+  slug: "lorcana-ci_7pX",
+  printings: [
+    {
+      id: "set7-081",
+      artId: "set7-081",
+      setCode: "set7",
+      collectorNumber: "81",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-081"],
   cardType: "action",
   name: "This Is My Family",
@@ -16,7 +27,7 @@ export const thisIsMyFamily: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_703029977ead4c46bf7f4991b6fd1736",
-    tcgPlayer: 619448,
+    tcgPlayer: "619448",
   },
   text: "Gain 1 lore. Draw a card.",
   actionSubtype: "song",

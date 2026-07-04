@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailSandayuOdaHanakoSGuardian = {
+export const welcomeToNightCityRetailSandayuOdaHanakoSGuardian = defineCyberpunkCard({
   id: "9611a3ba-d365-453f-89ed-c986a1948edc",
-  externalId: "cb-sandayu-oda-hanako-s-guardian",
   slug: "sandayu-oda-hanako-s-guardian",
+  rulesText:
+    "{Play} Spend a rival Unit for each friendly value-pair of Gigs.\nThis Unit can attack rival Units the turn it's played.",
   name: "Sandayu Oda — Hanako's Guardian",
   displayName: "Sandayu Oda — Hanako's Guardian",
-  rulesText:
-    "[PLAY] Spend a rival Unit for each friendly value-pair of Gigs.\nThis Unit can attack rival Units the turn it's played.",
+  canonicalId: "sandayu-oda-hanako-s-guardian",
   color: "green",
   classifications: ["Arasaka", "Merc"],
   set: {
@@ -15,21 +16,6 @@ export const welcomeToNightCityRetailSandayuOdaHanakoSGuardian = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "088",
-  printings: [
-    {
-      id: "f452a0ca-3204-48d5-8565-ec746f27959b",
-      collectorNumber: "088",
-      setCode: "welcometonightcityretail",
-      rarity: "Rare",
-    },
-    {
-      id: "28cf40e2-f83a-47f4-9c4d-c0b5157e84e6",
-      collectorNumber: "β088",
-      setCode: "welcometonightcitybeta",
-      rarity: "Rare",
-    },
-  ],
-  selectedPrintingId: "f452a0ca-3204-48d5-8565-ec746f27959b",
   artist: "ADIA",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/088.webp",
   rarity: "Rare",
@@ -37,7 +23,6 @@ export const welcomeToNightCityRetailSandayuOdaHanakoSGuardian = {
   hasSellTag: false,
   ram: 2,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 7,
   power: 8,
@@ -97,5 +82,4 @@ export const welcomeToNightCityRetailSandayuOdaHanakoSGuardian = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies UnitCardDefinition;

@@ -4,6 +4,17 @@ import { lefouBumblerI18n } from "./008-lefou-bumbler.i18n";
 export const lefouBumbler: CharacterCard = {
   id: "irS",
   canonicalId: "ci_irS",
+  slug: "lorcana-ci_irS",
+  printings: [
+    {
+      id: "set1-008",
+      artId: "set1-008",
+      setCode: "set1",
+      collectorNumber: "8",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-008"],
   cardType: "character",
   name: "LeFou",
@@ -20,7 +31,7 @@ export const lefouBumbler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5a1091c1a03c43d4854b66426d49aa10",
-    tcgPlayer: 492738,
+    tcgPlayer: "492738",
   },
   text: [
     {

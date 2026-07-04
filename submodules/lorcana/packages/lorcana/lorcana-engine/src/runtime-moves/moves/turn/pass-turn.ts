@@ -42,6 +42,7 @@ import {
 } from "../../effects/temporary-effects";
 import { pruneExpiredReplacementEffects } from "../../effects/replacement-effects";
 import { pruneExpiredPlayFromUnderPermissions } from "../../effects/play-from-under-permissions";
+import { pruneExpiredPlayFromDiscardPermissions } from "../../effects/play-from-discard-permissions";
 import {
   hasStaticCardRestriction,
   hasStaticPlayerRestriction,
@@ -49,6 +50,7 @@ import {
 import { getOrBuildMoveRegistry } from "../../rules/move-registry-cache";
 import { invalidateStaticEffects } from "../../rules/static-effects-invalidation";
 import { recordCardDrawnThisTurn } from "../../state/turn-metrics";
+import { detachTemporaryShiftTopCard } from "../../state/shift-stack";
 import { resolveTurnOwnerId } from "../../../core/runtime/turn-owner";
 import { checkDeckEmptyForPlayer } from "../../state/game-state-check";
 import { gainLore, isCardInPlayZone } from "../../../operations";
@@ -115,6 +117,35 @@ function getCheapPassTurnFailure(ctx: PassTurnIntentContext): PassTurnFailure | 
   }
 
   return null;
+}
+
+function cleanupTemporaryShiftCardsAtEndOfTurn(
+  ctx: PassTurnExecutionContext,
+  playerId: PlayerId,
+): void {
+  const turn = ctx.framework.state.status.turn ?? 1;
+  const playCards = ctx.framework.zones.getCards({ zone: "play", playerId }) as CardInstanceId[];
+  let changed = false;
+
+  for (const cardId of playCards) {
+    const meta = ctx.cards.getMeta(String(cardId)) as LorcanaCardMeta | undefined;
+    if (
+      typeof meta?.temporaryShiftReturnTurn !== "number" ||
+      meta.temporaryShiftReturnTurn > turn ||
+      !Array.isArray(meta.cardsUnder) ||
+      meta.cardsUnder.length === 0
+    ) {
+      continue;
+    }
+
+    const ownerId = (ctx.framework.zones.getCardOwner(cardId) as PlayerId | undefined) ?? playerId;
+    detachTemporaryShiftTopCard(ctx, cardId, ownerId);
+    changed = true;
+  }
+
+  if (changed) {
+    invalidateStaticEffects(ctx);
+  }
 }
 
 function pruneExpiredTemporaryCardMeta(ctx: PassTurnExecutionContext, currentTurn: number): void {
@@ -385,6 +416,7 @@ export function advanceTurnToNextPlayer(ctx: PassTurnExecutionContext): AdvanceT
     startsByPlayer: {},
   };
   pruneExpiredPlayFromUnderPermissions(ctx.G.playFromUnderPermissions, turnNumber);
+  pruneExpiredPlayFromDiscardPermissions(ctx.G.playFromDiscardPermissions, turnNumber);
 
   const turnsCompletedByPlayer =
     ctx.G.turnsCompletedByPlayer ?? (ctx.G.turnsCompletedByPlayer = {} as Record<PlayerId, number>);
@@ -468,6 +500,8 @@ export function continuePendingTurnTransition(ctx: PassTurnExecutionContext): vo
             return;
           }
         }
+
+        cleanupTemporaryShiftCardsAtEndOfTurn(ctx, transitionState.previousPlayer);
 
         transitionState = createPendingTurnTransitionState(
           transitionState.previousPlayer,

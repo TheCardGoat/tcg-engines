@@ -4,6 +4,17 @@ import { poisonedAppleI18n } from "./134-poisoned-apple.i18n";
 export const poisonedApple: ItemCard = {
   id: "NVz",
   canonicalId: "ci_NVz",
+  slug: "lorcana-ci_NVz",
+  printings: [
+    {
+      id: "set1-134",
+      artId: "set1-134",
+      setCode: "set1",
+      collectorNumber: "134",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-134"],
   cardType: "item",
   name: "Poisoned Apple",
@@ -16,7 +27,7 @@ export const poisonedApple: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3c0355d3cc2d409e9b10876744aa534a",
-    tcgPlayer: 507862,
+    tcgPlayer: "507862",
   },
   text: [
     {

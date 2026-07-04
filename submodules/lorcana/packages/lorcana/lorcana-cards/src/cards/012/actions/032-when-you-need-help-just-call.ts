@@ -4,6 +4,17 @@ import { whenYouNeedHelpJustCallI18n } from "./032-when-you-need-help-just-call.
 export const whenYouNeedHelpJustCall: ActionCard = {
   id: "tjB",
   canonicalId: "ci_tjB",
+  slug: "lorcana-ci_tjB",
+  printings: [
+    {
+      id: "set12-032",
+      artId: "set12-032",
+      setCode: "set12",
+      collectorNumber: "32",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-032"],
   cardType: "action",
   name: "When You Need Help, Just Call",
@@ -16,6 +27,7 @@ export const whenYouNeedHelpJustCall: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b12d63a99baa4fa1b94f257cb6530acc",
+    tcgPlayer: "692158",
   },
   text: "If an opponent has more characters in play than you, you may play a character with cost 4 or less for free.",
   actionSubtype: "song",

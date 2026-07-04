@@ -15,9 +15,9 @@ export const trainingStaffI18n: Record<Languages, I18nProperties> = {
     name: "Übungsstab",
     text: [
       {
-        title: "PRÄZISIONSSCHLAG,",
+        title: "Präzisionsschlag",
         description:
-          "1 — Ein Charakter deiner Wahl erhält in diesem Zug Herausfordern +2. (Während der Charakter herausfordert, erhält er +2.)",
+          "{E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const trainingStaffI18n: Record<Languages, I18nProperties> = {
     name: "Bâton d’entraînement",
     text: [
       {
-        title: "FRAPPE",
+        title: "Frappe précise",
         description:
-          "PRÉCISE, 1 — Choisissez un personnage qui gagne Offensif +2 pour le reste de ce tour.",
+          "{E}, 1 {I} — Choisissez un personnage qui gagne <Offensif> +2 pour le reste de ce tour.",
       },
     ],
   },
@@ -35,8 +35,9 @@ export const trainingStaffI18n: Record<Languages, I18nProperties> = {
     name: "Bastone da Allenamento",
     text: [
       {
-        title: "COLPO DI PRECISIONE, 1",
-        description: "— Un personaggio a tua scelta ottiene Sfidante +2 per questo turno.",
+        title: "Colpo di Precisione",
+        description:
+          "{E}, 1 {I} — Un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
       },
     ],
   },

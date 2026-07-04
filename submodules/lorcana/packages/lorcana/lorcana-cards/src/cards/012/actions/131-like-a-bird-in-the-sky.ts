@@ -4,6 +4,17 @@ import { likeABirdInTheSkyI18n } from "./131-like-a-bird-in-the-sky.i18n";
 export const likeABirdInTheSky: ActionCard = {
   id: "49o",
   canonicalId: "ci_49o",
+  slug: "lorcana-ci_49o",
+  printings: [
+    {
+      id: "set12-131",
+      artId: "set12-131",
+      setCode: "set12",
+      collectorNumber: "131",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-131"],
   cardType: "action",
   name: "Like A Bird In the Sky",
@@ -16,6 +27,7 @@ export const likeABirdInTheSky: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2a4015409c2d48788a2885b200a080e4",
+    tcgPlayer: "690718",
   },
   text: "Chosen character gets +1 {L} and gains Evasive until the start of your next turn.",
   actionSubtype: "song",

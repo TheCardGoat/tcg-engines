@@ -4,6 +4,17 @@ import { pascalInquisitivePetI18n } from "./151-pascal-inquisitive-pet.i18n";
 export const pascalInquisitivePet: CharacterCard = {
   id: "5d3",
   canonicalId: "ci_5d3",
+  slug: "lorcana-ci_5d3",
+  printings: [
+    {
+      id: "set4-151",
+      artId: "set4-151",
+      setCode: "set4",
+      collectorNumber: "151",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-151"],
   cardType: "character",
   name: "Pascal",
@@ -20,7 +31,7 @@ export const pascalInquisitivePet: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_551090cbc3134b44b9736a0fd5320b3a",
-    tcgPlayer: 550520,
+    tcgPlayer: "550520",
   },
   text: [
     {

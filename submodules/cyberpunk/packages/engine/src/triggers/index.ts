@@ -23,6 +23,7 @@ export interface TriggerMatch {
 export const EVENT_TYPE_TO_DSL: Partial<Record<GameEvent["type"], string>> = {
   attackDeclared: "cardAttacks",
   attackResolved: "fightResolved",
+  gigDieRolled: "gigRolled",
 };
 
 export function matchTriggers(event: GameEvent, state: MatchState): TriggerMatch[] {

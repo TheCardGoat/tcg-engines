@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { bobbyPurplePigeonI18n } from "./182-bobby-purple-pigeon.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const bobbyPurplePigeon: CharacterCard = {
   id: "hjd",
   canonicalId: "ci_hjd",
+  slug: "lorcana-ci_hjd",
+  printings: [
+    {
+      id: "set8-182",
+      artId: "set8-182",
+      setCode: "set8",
+      collectorNumber: "182",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-182"],
   cardType: "character",
   name: "Bobby",
@@ -21,7 +33,7 @@ export const bobbyPurplePigeon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_88d71cff12ab4e23940f32ab8c568af4",
-    tcgPlayer: 631471,
+    tcgPlayer: "631471",
   },
   text: "Bodyguard",
   classifications: ["Storyborn"],

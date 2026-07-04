@@ -7,14 +7,17 @@ export const gd03Zeydra054: UnitCard = {
   color: "purple",
   traits: ["vagan"],
   id: "GD03-054",
-  externalId: "gundam:gd03-054",
-  slug: "zeydra-gd03-054",
+  canonicalId: "GD03-054",
+  externalIds: { bandai: "gundam:gd03-054" },
+  slug: "zeydra/gd03-054",
   displayName: "Zeydra",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-054",
   printings: [
     {
       id: "GD03-054",
+      artId: "GD03-054",
+      setCode: "GD03",
       collectorNumber: "GD03-054",
       cardNumber: "GD03-054",
       set: {
@@ -29,6 +32,7 @@ export const gd03Zeydra054: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-054"],
   selectedPrintingId: "GD03-054",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-054.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-054.webp?260424",

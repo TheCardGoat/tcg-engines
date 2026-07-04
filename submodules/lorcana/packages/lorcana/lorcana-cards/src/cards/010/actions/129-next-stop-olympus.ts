@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { nextStopOlympusI18n } from "./129-next-stop-olympus.i18n";
 
 export const nextStopOlympus: ActionCard = {
-  id: "DMG",
+  id: "xnD",
   canonicalId: "ci_49R",
+  slug: "lorcana-ci_49R",
+  printings: [
+    {
+      id: "set10-129",
+      artId: "set10-129",
+      setCode: "set10",
+      collectorNumber: "129",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-129"],
   cardType: "action",
   name: "Next Stop, Olympus",
@@ -16,7 +27,7 @@ export const nextStopOlympus: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fe0bc499ead74e4f8a5d2b0e6037cf91",
-    tcgPlayer: 660028,
+    tcgPlayer: "660028",
   },
   text: [
     {

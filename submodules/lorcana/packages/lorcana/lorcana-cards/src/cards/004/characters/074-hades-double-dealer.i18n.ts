@@ -17,9 +17,9 @@ export const hadesDoubleDealerI18n: Record<Languages, I18nProperties> = {
     version: "Falsches Spiel",
     text: [
       {
-        title: "NUN ZUM",
+        title: "Nun zum Geschäft",
         description:
-          "GESCHÄFT, Verbanne einen deiner anderen Charaktere — Spiele einen Charakter mit demselben Namen wie der verbannte Charakter, kostenlos aus.",
+          "{E}, Verbanne einen deiner anderen Charaktere — Spiele einen Charakter mit demselben Namen wie der verbannte Charakter, kostenlos aus.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const hadesDoubleDealerI18n: Record<Languages, I18nProperties> = {
     version: "Double jeu",
     text: [
       {
-        title: "VOILÀ LE MARCHÉ,",
+        title: "Voilà le marché",
         description:
-          "Bannissez l'un de vos autres personnages — Jouez gratuitement un personnage de votre main portant le même nom que le personnage banni.",
+          "{E}, Bannissez l'un de vos autres personnages — Jouez gratuitement un personnage de votre main portant le même nom que le personnage banni.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const hadesDoubleDealerI18n: Record<Languages, I18nProperties> = {
     version: "Doppiogiochista",
     text: [
       {
-        title: "FACCIAMO UNO SCAMBIO,",
+        title: "Facciamo uno Scambio",
         description:
-          "esilia uno dei tuoi altri personaggi — Gioca un personaggio con lo stesso nome di quello che hai esiliato, gratis.",
+          "{E}, esilia uno dei tuoi altri personaggi — Gioca un personaggio con lo stesso nome di quello che hai esiliato, gratis.",
       },
     ],
   },

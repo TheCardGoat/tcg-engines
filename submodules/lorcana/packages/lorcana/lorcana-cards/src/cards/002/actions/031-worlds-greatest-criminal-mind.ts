@@ -4,6 +4,17 @@ import { worldsGreatestCriminalMindI18n } from "./031-worlds-greatest-criminal-m
 export const worldsGreatestCriminalMind: ActionCard = {
   id: "KVh",
   canonicalId: "ci_NsP",
+  slug: "lorcana-ci_NsP",
+  printings: [
+    {
+      id: "set2-031",
+      artId: "set2-031",
+      setCode: "set2",
+      collectorNumber: "31",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-031", "set9-030"],
   cardType: "action",
   name: "World's Greatest Criminal Mind",
@@ -16,7 +27,7 @@ export const worldsGreatestCriminalMind: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_772b7e1de7024e47bdbe47e672f35d2f",
-    tcgPlayer: 649977,
+    tcgPlayer: "649977",
   },
   text: "Banish chosen character with 5 {S} or more.",
   actionSubtype: "song",

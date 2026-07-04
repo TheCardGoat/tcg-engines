@@ -7,14 +7,17 @@ export const betaCitizensTakeAStand105: CommandCard = {
   color: "green",
   traits: ["-"],
   id: "GD01-105_p2",
-  externalId: "gundam:gd01-105_p2",
-  slug: "citizens-take-a-stand-gd01-105-p2",
+  canonicalId: "GD01-105",
+  externalIds: { bandai: "gundam:gd01-105_p2" },
+  slug: "citizens-take-a-stand/gd01-105",
   displayName: "Citizens, Take a Stand!",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-105_p2",
   printings: [
     {
       id: "GD01-105",
+      artId: "GD01-105",
+      setCode: "GD01",
       collectorNumber: "GD01-105",
       cardNumber: "GD01-105",
       set: {
@@ -30,6 +33,8 @@ export const betaCitizensTakeAStand105: CommandCard = {
     },
     {
       id: "GD01-105_p1",
+      artId: "GD01-105_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-105_p1",
       cardNumber: "GD01-105",
       set: {
@@ -45,6 +50,8 @@ export const betaCitizensTakeAStand105: CommandCard = {
     },
     {
       id: "GD01-105_p2",
+      artId: "GD01-105_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-105_p2",
       cardNumber: "GD01-105",
       set: {
@@ -59,6 +66,7 @@ export const betaCitizensTakeAStand105: CommandCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-105", "GD01-105_p1", "GD01-105_p2"],
   selectedPrintingId: "GD01-105_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-105_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-105_p2.webp?260424",

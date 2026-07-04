@@ -1,13 +1,15 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { quickAbility } from "@tcg/cyberpunk-types";
 
-export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = {
+export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = defineCyberpunkCard({
   id: "e64e2978-695b-4fc5-b17b-62c710a11c47",
-  externalId: "cb-river-ward-detective-on-the-hunt",
   slug: "river-ward-detective-on-the-hunt",
+  rulesText:
+    "{Quick} {Spend} Play a Gear with cost 2 or less from your hand for free.\nWhen a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
   name: "River Ward — Detective on the Hunt",
   displayName: "River Ward — Detective on the Hunt",
-  rulesText:
-    "[QUICK] [Spend Icon:] Play a Gear with cost 2 or less from your hand for free.\nWhen a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
+  canonicalId: "river-ward-detective-on-the-hunt",
   color: "yellow",
   classifications: ["NCPD"],
   set: {
@@ -15,42 +17,18 @@ export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "039",
-  printings: [
-    {
-      id: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
-      collectorNumber: "039",
-      setCode: "welcometonightcityretail",
-      rarity: "Rare",
-    },
-    {
-      id: "b217ae88-52a6-44b3-b021-964db4534dbd",
-      collectorNumber: "β039",
-      setCode: "welcometonightcitybeta",
-      rarity: "Rare",
-    },
-  ],
-  selectedPrintingId: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
   artist: "Daniel Valaisis",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/039.webp",
   rarity: "Rare",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
   keywords: ["quick"],
   type: "legend",
   cost: null,
   power: null,
   abilities: [
-    {
-      kind: "keyword",
-      text: "QUICK",
-      keyword: "quick",
-      source: {
-        selector: "self",
-      },
-      effects: [],
-    },
+    quickAbility(),
     {
       kind: "triggered",
       text: "SPEND Play a Gear with cost 2 or less from your hand for free.",
@@ -66,8 +44,9 @@ export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = {
           target: {
             selector: "card",
             controller: "friendly",
-            zones: ["field"],
-            cardTypes: ["unit"],
+            zones: ["field", "legendArea"],
+            cardTypes: ["unit", "legend"],
+            face: "faceUp",
             selection: {
               mode: "choose",
               min: 1,
@@ -149,5 +128,4 @@ export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies LegendCardDefinition;

@@ -6,6 +6,7 @@ import type {
   CardDefinition,
   CardKeyword,
   CardPrinting,
+  CardRarity,
   CardSet,
   PrintFinish,
   RawCardColor,
@@ -23,7 +24,15 @@ export const CDN_BASE_URL = "https://cdn.tcg.online/public/cyberpunk/cards";
 
 const TSR_SCRIPT_SELECTOR = 'script[id="$tsr-stream-barrier"]';
 const DEFAULT_PAGE_SIZE = 100;
+const OFFICIAL_SITE_CARD_FETCH_CONCURRENCY = 8;
 type NodeSelection = ReturnType<CheerioAPI>;
+
+class ApiRequestError extends Error {
+  constructor(message: string, options?: { cause?: unknown }) {
+    super(message, options);
+    this.name = "ApiRequestError";
+  }
+}
 
 const RAW_COLOR_MAP = {
   Blue: "blue",
@@ -96,6 +105,7 @@ const CANONICAL_CLASSIFICATION_MAP = new Map(
 
 export interface ScrapeCatalogOptions {
   apiBaseUrl?: string;
+  siteBaseUrl?: string;
   tenantId?: string;
   fetchImpl?: typeof fetch;
 }
@@ -343,12 +353,16 @@ export function normalizeCard(rawCard: RawCardRecord): CardDefinition {
     }
   }
 
-  const setCode = rawCard.set.code.toLowerCase();
-  const cdnImageUrl = buildCdnImageUrl(rawCard.print_number, setCode);
+  const setCode = normalizeSetCode(rawCard.set.code);
+  const printNumber =
+    setCode === "spoiler"
+      ? spoilerCollectorNumberFromSourceImageUrl(rawCard.source_image_url)
+      : rawCard.print_number;
+  const cdnImageUrl = buildCdnImageUrl(printNumber, setCode, rawCard.source_image_url);
 
   const baseCard = {
     id: rawCard.id,
-    externalId: rawCard.external_id,
+    canonicalId: rawCard.slug,
     slug: rawCard.slug,
     name: rawCard.name,
     subname: rawCard.subname,
@@ -361,8 +375,8 @@ export function normalizeCard(rawCard: RawCardRecord): CardDefinition {
     color: RAW_COLOR_MAP[rawCard.color],
     classifications: [...rawCard.classifications],
     set: normalizeSet(rawCard.set),
-    printNumber: rawCard.print_number,
-    printings: rawCard.printings.map(normalizePrinting),
+    printNumber,
+    printings: rawCard.printings.map((printing) => normalizePrinting(printing, setCode)),
     selectedPrintingId: rawCard.selected_printing_id,
     artist: rawCard.artist,
     imageUrl: cdnImageUrl,
@@ -372,6 +386,8 @@ export function normalizeCard(rawCard: RawCardRecord): CardDefinition {
     ram: rawCard.ram,
     timingTriggers,
     keywords,
+    abilities: [],
+    reminderText: [],
   };
 
   switch (rawCard.card_type) {
@@ -441,6 +457,20 @@ export async function fetchCatalogSlugs(options: ScrapeCatalogOptions = {}): Pro
 export async function fetchAllRawCards(
   options: ScrapeCatalogOptions = {},
 ): Promise<RawCardRecord[]> {
+  try {
+    return await fetchAllRawCardsFromApi(options);
+  } catch (error) {
+    if (options.apiBaseUrl || !(error instanceof ApiRequestError)) {
+      throw error;
+    }
+
+    return fetchAllRawCardsFromOfficialSite(options);
+  }
+}
+
+async function fetchAllRawCardsFromApi(
+  options: ScrapeCatalogOptions = {},
+): Promise<RawCardRecord[]> {
   const apiBaseUrl = options.apiBaseUrl ?? NETDECK_API_BASE_URL;
   const tenantId = options.tenantId ?? CYBERPUNK_TENANT_ID;
   const fetchImpl = options.fetchImpl ?? fetch;
@@ -463,6 +493,75 @@ export async function fetchAllRawCards(
   }
 
   return Promise.all(catalogCards.map((card) => fetchRawCard(card.slug, options)));
+}
+
+async function fetchAllRawCardsFromOfficialSite(
+  options: ScrapeCatalogOptions = {},
+): Promise<RawCardRecord[]> {
+  const fetchImpl = options.fetchImpl ?? fetch;
+  const siteBaseUrl = options.siteBaseUrl ?? CYBERPUNK_TCG_BASE_URL;
+  const catalogHtml = await fetchText(`${siteBaseUrl}/cards`, fetchImpl);
+  const $ = loadDocument(catalogHtml);
+  const scriptText = extractTsrScript($);
+  const slugs = extractOfficialSiteCatalogSlugs($, scriptText);
+
+  const rawCards: RawCardRecord[] = [];
+
+  for (let index = 0; index < slugs.length; index += OFFICIAL_SITE_CARD_FETCH_CONCURRENCY) {
+    const chunk = slugs.slice(index, index + OFFICIAL_SITE_CARD_FETCH_CONCURRENCY);
+    const results = await Promise.allSettled(
+      chunk.map((slug) => fetchRawCardFromOfficialSite(slug, options)),
+    );
+    const failures = results
+      .map((result, resultIndex) => ({ result, slug: chunk[resultIndex]! }))
+      .filter(
+        (entry): entry is { result: PromiseRejectedResult; slug: string } =>
+          entry.result.status === "rejected",
+      );
+
+    if (failures.length > 0) {
+      throw new Error(
+        `Official Cyberpunk card scrape failed for ${failures
+          .map(({ slug, result }) => `${slug}: ${formatError(result.reason)}`)
+          .join("; ")}`,
+      );
+    }
+
+    rawCards.push(
+      ...results.map((result) => (result as PromiseFulfilledResult<RawCardRecord>).value),
+    );
+  }
+
+  return rawCards;
+}
+
+function extractOfficialSiteCatalogSlugs($: CheerioAPI, scriptText: string | null): string[] {
+  if (!scriptText) {
+    return extractCatalogSlugsFromDocument($);
+  }
+
+  try {
+    return extractCatalogSlugsFromRouter(parseRouterState(scriptText));
+  } catch {
+    return extractCatalogSlugsFromDocument($);
+  }
+}
+
+async function fetchRawCardFromOfficialSite(
+  slug: string,
+  options: ScrapeCatalogOptions = {},
+): Promise<RawCardRecord> {
+  const fetchImpl = options.fetchImpl ?? fetch;
+  const siteBaseUrl = options.siteBaseUrl ?? CYBERPUNK_TCG_BASE_URL;
+  const html = await fetchText(`${siteBaseUrl}/cards/${encodeURIComponent(slug)}`, fetchImpl);
+  const $ = loadDocument(html);
+  const scriptText = extractTsrScript($);
+
+  if (!scriptText) {
+    throw new Error(`Official card page ${slug} did not include TSR state.`);
+  }
+
+  return extractRawCardFromRouter(parseRouterState(scriptText));
 }
 
 export async function fetchRawCard(
@@ -492,7 +591,6 @@ export async function scrapeCatalog(
   const cards = rawCards.map(normalizeCard);
 
   assertUnique(cards, "id", (card) => card.id);
-  assertUnique(cards, "externalId", (card) => card.externalId);
   assertUnique(cards, "slug", (card) => card.slug);
 
   return {
@@ -502,16 +600,20 @@ export async function scrapeCatalog(
 }
 
 export function formatGeneratedCardsModule(snapshot: ScrapedCatalogSnapshot): string {
-  const rawCardsJson = JSON.stringify(snapshot.rawCards, null, 2);
-  const cardsJson = JSON.stringify(snapshot.cards.map(omitPrintedNullCardProperties), null, 2);
+  const rawCardsTs = toTs(snapshot.rawCards);
+  const cardsTs = toTs(snapshot.cards.map(omitPrintedNullCardProperties));
 
   return `// This file is generated by @tcg/cyberpunk-scraper. Do not edit manually.
 import type { CardDefinition, RawCardRecord } from "@tcg/cyberpunk-types";
 
-export const rawCards = ${rawCardsJson} satisfies RawCardRecord[];
+export const rawCards = ${rawCardsTs} satisfies RawCardRecord[];
 
-export const cards = ${cardsJson} satisfies CardDefinition[];
+export const cards = ${cardsTs} satisfies CardDefinition[];
 `;
+}
+
+function toTs(value: unknown): string {
+  return JSON.stringify(value, null, 2).replace(/"([A-Za-z0-9_]+)":/g, "$1:");
 }
 
 const OMITTED_NULL_GENERATED_CARD_PROPERTIES = [
@@ -607,9 +709,17 @@ function getRouterMatches(router: unknown): unknown[] {
 
 function normalizeSet(rawSet: { code: string; name: string }): CardSet {
   return {
-    code: rawSet.code as CardSet["code"],
+    code: normalizeSetCode(rawSet.code) as CardSet["code"],
     name: rawSet.name,
   };
+}
+
+function normalizeSetCode(code: string): string {
+  const trimmed = code.trim();
+  if (/^PRM\d+$/i.test(trimmed)) {
+    return trimmed.toUpperCase();
+  }
+  return trimmed.toLowerCase();
 }
 
 function buildStableIdMap<T extends { id: string }>(
@@ -653,18 +763,28 @@ function rawCardIdentityKeys(card: RawCardRecord): string[] {
 function cardIdentityKeys(card: CardDefinition): string[] {
   return [
     `slug:${card.set.code}:${card.slug}`,
-    `external:${card.externalId}`,
     `display:${card.set.code}:${card.displayName}`,
     `name:${card.set.code}:${card.type}:${card.name}`,
   ];
 }
 
-function normalizePrinting(rawPrinting: RawCardPrinting): CardPrinting {
+function normalizePrinting(rawPrinting: RawCardPrinting, setCode: string): CardPrinting {
+  const collectorNumber =
+    setCode === "spoiler"
+      ? spoilerCollectorNumberFromSourceImageUrl(rawPrinting.source_image_url)
+      : rawPrinting.collector_number;
+  const normalizedCollectorNumber = collectorNumber
+    .toLowerCase()
+    .replace(/^\u03b1/, "a")
+    .replace(/^\u03b2/, "b");
+
   return {
     id: rawPrinting.id,
-    collectorNumber: rawPrinting.collector_number,
+    artId: rawPrinting.id,
+    collectorNumber,
     setCode: rawPrinting.set.code as CardPrinting["setCode"],
-    rarity: rawPrinting.rarity ?? null,
+    rarity: rawPrinting.rarity ?? "",
+    imageUrl: `${CDN_BASE_URL}/${rawPrinting.set.code}/${normalizedCollectorNumber}.webp`,
   };
 }
 
@@ -673,18 +793,41 @@ async function fetchJson<TResult>(
   fetchImpl: typeof fetch,
   tenantId: string,
 ): Promise<TResult> {
-  const response = await fetchImpl(url, {
-    headers: {
-      "Content-Type": "application/json",
-      "X-Tenant-ID": tenantId,
-    },
-  });
+  let response: Response;
+  try {
+    response = await fetchImpl(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Tenant-ID": tenantId,
+      },
+    });
+  } catch (error) {
+    throw new ApiRequestError(`API request failed for ${url}: ${formatError(error)}`, {
+      cause: error,
+    });
+  }
 
   if (!response.ok) {
-    throw new Error(`API request failed for ${url}: ${response.status} ${response.statusText}`);
+    throw new ApiRequestError(
+      `API request failed for ${url}: ${response.status} ${response.statusText}`,
+    );
   }
 
   return response.json() as Promise<TResult>;
+}
+
+function formatError(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
+async function fetchText(url: string, fetchImpl: typeof fetch): Promise<string> {
+  const response = await fetchImpl(url);
+
+  if (!response.ok) {
+    throw new Error(`Request failed for ${url}: ${response.status} ${response.statusText}`);
+  }
+
+  return response.text();
 }
 
 function assertUnique<T>(items: readonly T[], label: string, readValue: (item: T) => string) {
@@ -809,17 +952,119 @@ function slugFromCanonicalUrl(url: string | null): string {
   return match?.[1] ?? "";
 }
 
+const SET_PRIORITY: Record<string, number> = {
+  welcometonightcityretail: 1,
+  theheistretailstarterdeck: 2,
+  embracingpowerretailstarterdeck: 3,
+  boxtoppersretail: 4,
+  welcometonightcitybeta: 5,
+  theheistbetastarterdeck: 6,
+  embracingpowerbetastarterdeck: 7,
+  boxtoppersbeta: 8,
+  alpha: 9,
+  promo: 10,
+  spoiler: 11,
+};
+
+export function deduplicateRawCardsById(rawCards: readonly RawCardRecord[]): RawCardRecord[] {
+  const groups = new Map<string, RawCardRecord[]>();
+  for (const card of rawCards) {
+    const list = groups.get(card.id) ?? [];
+    list.push(card);
+    groups.set(card.id, list);
+  }
+
+  const deduped: RawCardRecord[] = [];
+  for (const group of groups.values()) {
+    if (group.length === 1) {
+      deduped.push(group[0]);
+      continue;
+    }
+
+    const primary = group.reduce((best, card) => {
+      const bestPriority = SET_PRIORITY[best.set.code] ?? Infinity;
+      const cardPriority = SET_PRIORITY[card.set.code] ?? Infinity;
+      return cardPriority < bestPriority ? card : best;
+    }, group[0]);
+
+    const printingsById = new Map<string, RawCardPrinting>();
+    for (const card of group) {
+      for (const printing of card.printings) {
+        if (!printingsById.has(printing.id)) {
+          printingsById.set(printing.id, printing);
+        }
+      }
+    }
+
+    const mergedPrintings = [...printingsById.values()].sort((left, right) => {
+      const leftPriority = SET_PRIORITY[left.set.code] ?? Infinity;
+      const rightPriority = SET_PRIORITY[right.set.code] ?? Infinity;
+      if (leftPriority !== rightPriority) {
+        return leftPriority - rightPriority;
+      }
+      return left.collector_number.localeCompare(right.collector_number);
+    });
+
+    deduped.push({
+      ...primary,
+      printings: mergedPrintings,
+    });
+  }
+
+  return deduped.sort((left, right) => {
+    return `${left.set.code}:${left.slug}`.localeCompare(`${right.set.code}:${right.slug}`);
+  });
+}
+
 function stripUrlQuery(url: string): string {
   const [withoutQuery] = url.split("?");
   return withoutQuery;
 }
 
-function buildCdnImageUrl(collectorNumber: string, setCode: string): string {
-  const filename = `${collectorNumber
-    .trim()
+function normalizeCollectorNumberForFilename(collectorNumber: string): string {
+  return `${collectorNumber.trim().replace(/^α/i, "a").replace(/^β/i, "b").toLowerCase()}.webp`;
+}
+
+function spoilerCollectorNumberFromSourceImageUrl(sourceImageUrl: string): string {
+  const cleanUrl = sourceImageUrl.split("?")[0] ?? sourceImageUrl;
+  const basename = cleanUrl.split("/").pop() ?? "";
+  const normalized = basename
+    .replace(/^Α/i, "a")
     .replace(/^α/i, "a")
+    .replace(/^Β/i, "b")
     .replace(/^β/i, "b")
-    .toLowerCase()}.webp`;
+    .toLowerCase()
+    .replace(/\.webp$/, "");
+
+  return normalized.startsWith("b") ? normalized.slice(1) : normalized;
+}
+
+function filenameFromSourceImageUrl(sourceImageUrl: string, setCode: string): string {
+  if (setCode === "spoiler") {
+    return `${spoilerCollectorNumberFromSourceImageUrl(sourceImageUrl)}.webp`;
+  }
+
+  const cleanUrl = sourceImageUrl.split("?")[0] ?? sourceImageUrl;
+  const basename = cleanUrl.split("/").pop() ?? "";
+  const normalized = basename
+    .replace(/^Α/i, "a")
+    .replace(/^α/i, "a")
+    .replace(/^Β/i, "b")
+    .replace(/^β/i, "b")
+    .toLowerCase();
+
+  return normalized;
+}
+
+function buildCdnImageUrl(
+  collectorNumber: string,
+  setCode: string,
+  sourceImageUrl: string | null,
+): string {
+  const filename =
+    setCode === "spoiler" && sourceImageUrl
+      ? filenameFromSourceImageUrl(sourceImageUrl, setCode)
+      : normalizeCollectorNumberForFilename(collectorNumber);
   return `${CDN_BASE_URL}/${setCode}/${filename}`;
 }
 
@@ -853,7 +1098,7 @@ function parseSetLine(value: string | null): {
   }
 
   return {
-    setCode: match[2].trim().toLowerCase(),
+    setCode: normalizeSetCode(match[2]),
     setName: match[1].trim(),
   };
 }
@@ -905,7 +1150,7 @@ function coerceRawCardRecord(value: unknown, context: string): RawCardRecord {
     youtube_url: readOptionalNullableString(record.youtube_url, `${context}.youtube_url`),
     source_url: readOptionalNullableString(record.source_url, `${context}.source_url`),
     set: coerceRawSet(record.set, `${context}.set`),
-    rarity: requireNullableString(record.rarity, `${context}.rarity`),
+    rarity: requireNullableString(record.rarity, `${context}.rarity`) as CardRarity | null,
     image_url: imageUrl,
     source_image_url: sourceImageUrl,
     color: requireRawCardColor(record.color, `${context}.color`),
@@ -915,7 +1160,7 @@ function coerceRawCardRecord(value: unknown, context: string): RawCardRecord {
     keywords: requireStringArray(record.keywords, `${context}.keywords`),
     cost: requireNullableNumber(record.cost, `${context}.cost`),
     power: requireNullableNumber(record.power, `${context}.power`),
-    ram: requireNumber(record.ram, `${context}.ram`),
+    ram: requireNullableNumber(record.ram, `${context}.ram`),
     artist: requireString(record.artist, `${context}.artist`),
     print_number: requireString(record.print_number, `${context}.print_number`),
     printings: coerceRawPrintings(record.printings, `${context}.printings`),
@@ -955,7 +1200,10 @@ function coerceRawPrintings(value: unknown, context: string): RawCardRecord["pri
         requireString(record.source_image_url, `${context}[${index}].source_image_url`),
       ),
       set: coerceRawSet(record.set, `${context}[${index}].set`),
-      rarity: requireNullableString(record.rarity, `${context}[${index}].rarity`),
+      rarity: requireNullableString(
+        record.rarity,
+        `${context}[${index}].rarity`,
+      ) as CardRarity | null,
       finish: coercePrintFinish(record.finish, `${context}[${index}].finish`),
       artist: readOptionalNullableString(record.artist, `${context}[${index}].artist`) ?? "Unknown",
     };

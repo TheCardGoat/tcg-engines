@@ -19,14 +19,14 @@ export const kingsSensorCoreI18n: Record<Languages, I18nProperties> = {
     name: "Sensorkern des Königs",
     text: [
       {
-        title: "KÖNIGLICHES SYMBOL",
+        title: "Königliches Symbol",
         description:
-          "Deine Prinzen und Könige erhalten Robust +1. (Reduziere jeglichen Schaden, der den Charakteren zugefügt wird, um 1.)",
+          "Deine Prinzen und Könige erhalten <Robust> +1. (Reduziere jeglichen Schaden, der den Charakteren zugefügt wird, um 1.)",
       },
       {
-        title: "KÖNIGLICHE SUCHE,",
+        title: "Königliche Suche",
         description:
-          "2 — Decke die oberste Karte deines Decks auf. Falls es eine Prinz- oder eine König-Charakterkarte ist, darfst du diese auf deine Hand nehmen. Falls nicht, lege sie zurück auf dein Deck.",
+          "{E}, 2 {I} — Decke die oberste Karte deines Decks auf. Falls es eine Prinz- oder eine König-Charakterkarte ist, darfst du diese auf deine Hand nehmen. Falls nicht, lege sie zurück auf dein Deck.",
       },
     ],
   },
@@ -34,13 +34,13 @@ export const kingsSensorCoreI18n: Record<Languages, I18nProperties> = {
     name: "Cœur du détecteur du roi",
     text: [
       {
-        title: "SYMBOLE DE ROYAUTÉ",
-        description: "Vos personnages Prince et Roi gagnent Résistance +1.",
+        title: "Symbole de royauté",
+        description: "Vos personnages Prince et Roi gagnent <Résistance> +1.",
       },
       {
-        title: "RECHERCHE ROYALE, 2",
+        title: "Recherche royale",
         description:
-          "— Révélez la première carte de votre pioche. S'il s'agit d'un personnage Prince ou Roi, vous pouvez placer cette carte dans votre main. Sinon, replacez cette carte sur votre pioche.",
+          "{E}, 2 {I} — Révélez la première carte de votre pioche. S'il s'agit d'un personnage Prince ou Roi, vous pouvez placer cette carte dans votre main. Sinon, replacez cette carte sur votre pioche.",
       },
     ],
   },
@@ -48,13 +48,13 @@ export const kingsSensorCoreI18n: Record<Languages, I18nProperties> = {
     name: "Nucleo Rivelatore del Re",
     text: [
       {
-        title: "SIMBOLO DI REGALITÀ",
-        description: "I tuoi personaggi Principe e Re ottengono Resistere +1.",
+        title: "Simbolo di Regalità",
+        description: "I tuoi personaggi Principe e Re ottengono <Resistere> +1.",
       },
       {
-        title: "RICERCA REGALE, 2",
+        title: "Ricerca Regale",
         description:
-          "— Rivela la prima carta del tuo mazzo. Se è una carta personaggio Principe o Re, puoi aggiungerla alla tua mano. Altrimenti, rimettila in cima al tuo mazzo.",
+          "{E}, 2 {I} — Rivela la prima carta del tuo mazzo. Se è una carta personaggio Principe o Re, puoi aggiungerla alla tua mano. Altrimenti, rimettila in cima al tuo mazzo.",
       },
     ],
   },

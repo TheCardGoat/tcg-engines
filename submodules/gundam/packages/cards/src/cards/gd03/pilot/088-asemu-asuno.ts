@@ -7,14 +7,17 @@ export const gd03AsemuAsuno088: PilotCard = {
   color: "green",
   traits: ["earth federation", "asuno family"],
   id: "GD03-088",
-  externalId: "gundam:gd03-088",
-  slug: "asemu-asuno-gd03-088",
+  canonicalId: "GD03-088",
+  externalIds: { bandai: "gundam:gd03-088" },
+  slug: "asemu-asuno/gd03-088",
   displayName: "Asemu Asuno",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-088",
   printings: [
     {
       id: "GD03-088",
+      artId: "GD03-088",
+      setCode: "GD03",
       collectorNumber: "GD03-088",
       cardNumber: "GD03-088",
       set: {
@@ -30,6 +33,8 @@ export const gd03AsemuAsuno088: PilotCard = {
     },
     {
       id: "GD03-088_p1",
+      artId: "GD03-088_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-088_p1",
       cardNumber: "GD03-088",
       set: {
@@ -44,6 +49,7 @@ export const gd03AsemuAsuno088: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-088", "GD03-088_p1"],
   selectedPrintingId: "GD03-088",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-088.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-088.webp?260424",

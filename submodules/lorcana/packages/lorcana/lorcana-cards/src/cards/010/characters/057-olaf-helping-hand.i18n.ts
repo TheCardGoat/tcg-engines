@@ -17,7 +17,7 @@ export const olafHelpingHandI18n: Record<Languages, I18nProperties> = {
     version: "Helfende Hand",
     text: [
       {
-        title: "ZWEITE CHANCE",
+        title: "Zweite Chance",
         description:
           "Wenn dieser Charakter das Spiel verlässt, darfst du einen deiner Charaktere wählen und ihn zurück auf deine Hand nehmen.",
       },
@@ -28,7 +28,7 @@ export const olafHelpingHandI18n: Record<Languages, I18nProperties> = {
     version: "Tend la main",
     text: [
       {
-        title: "DEUXIÈME CHANCE",
+        title: "Deuxième chance",
         description:
           "Lorsque ce personnage quitte la zone de jeu, vous pouvez choisir l'un de vos personnages et le renvoyer dans votre main.",
       },
@@ -39,7 +39,7 @@ export const olafHelpingHandI18n: Record<Languages, I18nProperties> = {
     version: "Mano Amica",
     text: [
       {
-        title: "SECONDA OCCASIONE",
+        title: "Seconda Occasione",
         description:
           "Quando questo personaggio lascia il gioco, puoi riprendere in mano un tuo personaggio a tua scelta.",
       },

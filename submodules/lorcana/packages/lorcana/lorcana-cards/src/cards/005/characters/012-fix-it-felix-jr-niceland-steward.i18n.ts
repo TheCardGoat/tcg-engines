@@ -19,11 +19,12 @@ export const fixitFelixJrNicelandStewardI18n: Record<Languages, I18nProperties> 
     version: "Verwalter von Niceland",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Fix-It-Felix, Jr.-Charaktere auszuspielen.)",
       },
       {
-        title: "ZUSAMMEN AUFBAUEN",
-        description: "Deine Orte erhalten +2.",
+        title: "Zusammen aufbauen",
+        description: "Deine Orte erhalten +2 {W}.",
       },
     ],
   },
@@ -32,11 +33,12 @@ export const fixitFelixJrNicelandStewardI18n: Record<Languages, I18nProperties> 
     version: "Intendant de Niceland",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Félix Fixe Junior.)",
       },
       {
-        title: "BÂTIR ENSEMBLE",
-        description: "Vos lieux gagnent +2.",
+        title: "Bâtir ensemble",
+        description: "Vos lieux gagnent +2 {W}.",
       },
     ],
   },
@@ -45,11 +47,12 @@ export const fixitFelixJrNicelandStewardI18n: Record<Languages, I18nProperties> 
     version: "Amministratore di Belposto",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Felix Aggiustatutto Jr.)",
       },
       {
-        title: "COSTRUIRE INSIEME",
-        description: "I tuoi luoghi ricevono +2.",
+        title: "Costruire Insieme",
+        description: "I tuoi luoghi ricevono +2 {W}.",
       },
     ],
   },

@@ -21,13 +21,13 @@ export const mickeyMouseAmberChampionI18n: Record<Languages, I18nProperties> = {
     version: "Bernstein-Champion",
     text: [
       {
-        title: "WEIST DEN WEG",
-        description: "Deine anderen Bernstein-Charaktere erhalten +2.",
+        title: "Weist den Weg",
+        description: "Deine anderen Bernstein-Charaktere erhalten +2 {W}.",
       },
       {
-        title: "FREUNDSCHAFTLICHER CHOR",
+        title: "Freundschaftlicher Chor",
         description:
-          "Solange du mindestens 2 weitere Bernstein-Charaktere im Spiel hast, erhält dieser Charakter Singen 8. (Die Kosten dieses Charakters gelten als 8 für das Singen von Liedern.)",
+          "Solange du mindestens 2 weitere Bernstein-Charaktere im Spiel hast, erhält dieser Charakter <Singen> 8. (Die Kosten dieses Charakters gelten als 8 für das Singen von Liedern.)",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const mickeyMouseAmberChampionI18n: Record<Languages, I18nProperties> = {
     version: "Champion Ambre",
     text: [
       {
-        title: "MONTRANT LA VOIE",
-        description: "Vos autres personnages Ambre gagnent +2.",
+        title: "Montrant la voie",
+        description: "Vos autres personnages Ambre gagnent +2 {W}.",
       },
       {
-        title: "EN REFRAIN LES AMIS",
+        title: "En refrain les amis",
         description:
-          "Tant que vous avez 2 autres personnages Ambre ou plus en jeu, ce personnage-ci gagne Mélomane 8. (Ce personnage est considéré comme ayant un coût de 8 pour chanter des chansons.)",
+          "Tant que vous avez 2 autres personnages Ambre ou plus en jeu, ce personnage-ci gagne <Mélomane> 8. (Ce personnage est considéré comme ayant un coût de 8 pour chanter des chansons.)",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const mickeyMouseAmberChampionI18n: Record<Languages, I18nProperties> = {
     version: "Campione d'Ambra",
     text: [
       {
-        title: "FARE STRADA I",
-        description: "tuoi altri personaggi Ambra ricevono +2.",
+        title: "Fare Strada",
+        description: "I tuoi altri personaggi Ambra ricevono +2 {W}.",
       },
       {
-        title: "CORO AMICHEVOLE",
+        title: "Coro Amichevole",
         description:
-          "Mentre hai in gioco 2 o più altri personaggi Ambra, questo personaggio ottiene Melodioso 8. (Conta come di costo 8 per cantare le canzoni.)",
+          "Mentre hai in gioco 2 o più altri personaggi Ambra, questo personaggio ottiene <Melodioso> 8. (Conta come di costo 8 per cantare le canzoni.)",
       },
     ],
   },

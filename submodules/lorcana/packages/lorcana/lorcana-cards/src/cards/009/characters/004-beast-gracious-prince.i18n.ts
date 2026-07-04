@@ -16,8 +16,8 @@ export const beastGraciousPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Gracious Prince",
     text: [
       {
-        title: "FULL DANCE CARD",
-        description: "Your Princess characters get +1 and +1.",
+        title: "Full Dance Card",
+        description: "Your Princess characters get +1 {S} and +1 {W}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const beastGraciousPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Gracious Prince",
     text: [
       {
-        title: "FULL DANCE CARD",
-        description: "Your Princess characters get +1 and +1.",
+        title: "Full Dance Card",
+        description: "Your Princess characters get +1 {S} and +1 {W}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const beastGraciousPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Gracious Prince",
     text: [
       {
-        title: "FULL DANCE CARD",
-        description: "Your Princess characters get +1 and +1.",
+        title: "Full Dance Card",
+        description: "Your Princess characters get +1 {S} and +1 {W}.",
       },
     ],
   },

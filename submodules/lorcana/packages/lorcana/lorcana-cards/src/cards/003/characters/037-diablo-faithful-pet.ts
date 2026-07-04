@@ -4,6 +4,17 @@ import { diabloFaithfulPetI18n } from "./037-diablo-faithful-pet.i18n";
 export const diabloFaithfulPet: CharacterCard = {
   id: "6Jh",
   canonicalId: "ci_6Jh",
+  slug: "lorcana-ci_6Jh",
+  printings: [
+    {
+      id: "set3-037",
+      artId: "set3-037",
+      setCode: "set3",
+      collectorNumber: "37",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-037"],
   cardType: "character",
   name: "Diablo",
@@ -20,7 +31,7 @@ export const diabloFaithfulPet: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_96b06169bec644898473633766c5e534",
-    tcgPlayer: 539068,
+    tcgPlayer: "539068",
   },
   text: [
     {

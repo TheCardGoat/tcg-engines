@@ -4,6 +4,17 @@ import { dopeyKnightApprenticeI18n } from "./181-dopey-knight-apprentice.i18n";
 export const dopeyKnightApprentice: CharacterCard = {
   id: "kCO",
   canonicalId: "ci_kCO",
+  slug: "lorcana-ci_kCO",
+  printings: [
+    {
+      id: "set5-181",
+      artId: "set5-181",
+      setCode: "set5",
+      collectorNumber: "181",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-181"],
   cardType: "character",
   name: "Dopey",
@@ -20,7 +31,7 @@ export const dopeyKnightApprentice: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8711108b2bca45a18bcabd2f982d0457",
-    tcgPlayer: 559667,
+    tcgPlayer: "559667",
   },
   text: [
     {

@@ -11,7 +11,16 @@ export const bibbidiBobbidiBooI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Bibbidi Bobbidi Boo",
-    text: "Choisissez l'un de vos personnages et renvoyez-le dans votre main pour pouvoir jouer gratuitement un autre personnage coûtant autant ou moins.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez l'un de vos personnages et renvoyez-le dans votre main pour pouvoir jouer gratuitement un autre personnage coûtant autant ou moins.",
+      },
+    ],
   },
   it: {
     name: "Bibbidi Bobbidi Boo",

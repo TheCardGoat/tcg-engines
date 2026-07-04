@@ -7,14 +7,17 @@ export const gd01DuelGundamAssaultShroud045: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD01-045",
-  externalId: "gundam:gd01-045",
-  slug: "duel-gundam-assault-shroud-gd01-045",
+  canonicalId: "GD01-045",
+  externalIds: { bandai: "gundam:gd01-045" },
+  slug: "duel-gundam-assault-shroud/gd01-045",
   displayName: "Duel Gundam (Assault Shroud)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-045",
   printings: [
     {
       id: "GD01-045",
+      artId: "GD01-045",
+      setCode: "GD01",
       collectorNumber: "GD01-045",
       cardNumber: "GD01-045",
       set: {
@@ -30,6 +33,8 @@ export const gd01DuelGundamAssaultShroud045: UnitCard = {
     },
     {
       id: "GD01-045_p1",
+      artId: "GD01-045_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-045_p1",
       cardNumber: "GD01-045",
       set: {
@@ -44,6 +49,7 @@ export const gd01DuelGundamAssaultShroud045: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-045", "GD01-045_p1"],
   selectedPrintingId: "GD01-045",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-045.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-045.webp?260424",

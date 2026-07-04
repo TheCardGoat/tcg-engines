@@ -4,6 +4,17 @@ import { sardineCanI18n } from "./170-sardine-can.i18n";
 export const sardineCan: ItemCard = {
   id: "QGa",
   canonicalId: "ci_QGa",
+  slug: "lorcana-ci_QGa",
+  printings: [
+    {
+      id: "set2-170",
+      artId: "set2-170",
+      setCode: "set2",
+      collectorNumber: "170",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-170"],
   cardType: "item",
   name: "Sardine Can",
@@ -16,7 +27,7 @@ export const sardineCan: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ac6b41f1d4314cd48a6c0e40b01203fd",
-    tcgPlayer: 527771,
+    tcgPlayer: "527771",
   },
   text: [
     {

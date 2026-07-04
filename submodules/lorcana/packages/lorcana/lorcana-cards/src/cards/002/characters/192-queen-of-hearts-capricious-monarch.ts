@@ -4,6 +4,17 @@ import { queenOfHeartsCapriciousMonarchI18n } from "./192-queen-of-hearts-capric
 export const queenOfHeartsCapriciousMonarch: CharacterCard = {
   id: "1vc",
   canonicalId: "ci_1vc",
+  slug: "lorcana-ci_1vc",
+  printings: [
+    {
+      id: "set2-192",
+      artId: "set2-192",
+      setCode: "set2",
+      collectorNumber: "192",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-192"],
   cardType: "character",
   name: "Queen of Hearts",
@@ -20,7 +31,7 @@ export const queenOfHeartsCapriciousMonarch: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e2f72bebe6594283a1d71d93ba4e72bc",
-    tcgPlayer: 525269,
+    tcgPlayer: "525269",
   },
   text: [
     {

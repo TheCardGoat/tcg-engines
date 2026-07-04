@@ -17,7 +17,7 @@ export const pepaMadrigalWeatherMakerI18n: Record<Languages, I18nProperties> = {
     version: "Wettermacherin",
     text: [
       {
-        title: "BRUNO KÜNDIGT REGEN AN",
+        title: "Bruno kündigt Regen an",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter deiner Wahl erschöpfen. Wenn er nicht an einem Ort ist, wird er zu Beginn seines nächsten Zuges nicht bereit gemacht.",
       },
@@ -28,7 +28,7 @@ export const pepaMadrigalWeatherMakerI18n: Record<Languages, I18nProperties> = {
     version: "Fait la pluie et le beau temps",
     text: [
       {
-        title: "PRÉDIT UNE TEMPÊTE",
+        title: "Prédit une tempête",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse et l'épuiser. Il ne peut pas être redressé au début de son prochain tour, sauf s'il se trouve sur un lieu.",
       },
@@ -39,7 +39,7 @@ export const pepaMadrigalWeatherMakerI18n: Record<Languages, I18nProperties> = {
     version: "Signora degli Elementi",
     text: [
       {
-        title: "SEMBRA PIOVERE",
+        title: "Sembra Piovere",
         description:
           "Quando giochi questo personaggio, puoi impegnare un personaggio avversario a tua scelta. Quel personaggio non si può preparare all'inizio del suo prossimo turno a meno che non si trovi in un luogo.",
       },

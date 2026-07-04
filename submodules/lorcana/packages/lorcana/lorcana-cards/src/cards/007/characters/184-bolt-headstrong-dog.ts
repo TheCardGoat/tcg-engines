@@ -4,6 +4,17 @@ import { boltHeadstrongDogI18n } from "./184-bolt-headstrong-dog.i18n";
 export const boltHeadstrongDog: CharacterCard = {
   id: "MIh",
   canonicalId: "ci_MIh",
+  slug: "lorcana-ci_MIh",
+  printings: [
+    {
+      id: "set7-184",
+      artId: "set7-184",
+      setCode: "set7",
+      collectorNumber: "184",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-184"],
   cardType: "character",
   name: "Bolt",
@@ -20,7 +31,7 @@ export const boltHeadstrongDog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b6cecef16e364dc6bbc9b538aaa52226",
-    tcgPlayer: 618158,
+    tcgPlayer: "618158",
   },
   text: [
     {

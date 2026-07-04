@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { diabloDevotedHeraldI18n } from "./070-diablo-devoted-herald.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const diabloDevotedHerald: CharacterCard = {
   id: "Mnw",
   canonicalId: "ci_Ljv",
+  slug: "lorcana-ci_Ljv",
+  printings: [
+    {
+      id: "set4-070",
+      artId: "set4-070",
+      setCode: "set4",
+      collectorNumber: "70",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-070"],
   cardType: "character",
   name: "Diablo",
@@ -21,13 +33,12 @@ export const diabloDevotedHerald: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_93ab5d88940f4610a375a928963a570f",
-    tcgPlayer: 550535,
+    tcgPlayer: "550535",
   },
   text: [
     {
-      title: "Shift: Discard an action card ",
-      description:
-        "(You may discard an action card to play this on top of one of your characters named Diablo.)",
+      title:
+        "Shift: Discard an action card (You may discard an action card to play this on top of one of your characters named Diablo.)",
     },
     {
       title: "Evasive",

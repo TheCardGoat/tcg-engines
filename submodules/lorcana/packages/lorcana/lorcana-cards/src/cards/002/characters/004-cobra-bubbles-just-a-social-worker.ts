@@ -4,6 +4,17 @@ import { cobraBubblesJustASocialWorkerI18n } from "./004-cobra-bubbles-just-a-so
 export const cobraBubblesJustASocialWorker: CharacterCard = {
   id: "2vT",
   canonicalId: "ci_2vT",
+  slug: "lorcana-ci_2vT",
+  printings: [
+    {
+      id: "set2-004",
+      artId: "set2-004",
+      setCode: "set2",
+      collectorNumber: "4",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-004"],
   cardType: "character",
   name: "Cobra Bubbles",
@@ -21,7 +32,7 @@ export const cobraBubblesJustASocialWorker: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_ab2c56210cf647609962b1be64726001",
-    tcgPlayer: 525118,
+    tcgPlayer: "525118",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: cobraBubblesJustASocialWorkerI18n,

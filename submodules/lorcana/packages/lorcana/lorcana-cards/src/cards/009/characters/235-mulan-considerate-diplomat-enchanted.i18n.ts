@@ -17,7 +17,7 @@ export const mulanConsiderateDiplomatEnchantedI18n: Record<Languages, I18nProper
     version: "Besonnene Diplomatin",
     text: [
       {
-        title: "KAISERLICHE EINLADUNG",
+        title: "Kaiserliche Einladung",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Prinzessinnen-Charakterkarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -28,7 +28,7 @@ export const mulanConsiderateDiplomatEnchantedI18n: Record<Languages, I18nProper
     version: "Diplomate prévenante",
     text: [
       {
-        title: "INVITATION IMPÉRIALE",
+        title: "Invitation impériale",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage Princesse parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const mulanConsiderateDiplomatEnchantedI18n: Record<Languages, I18nProper
     version: "Diplomatica Rispettosa",
     text: [
       {
-        title: "INVITO IMPERIALE",
+        title: "Invito Imperiale",
         description:
           "Ogni volta che questo personaggio va all'avventura, guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio Principessa e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

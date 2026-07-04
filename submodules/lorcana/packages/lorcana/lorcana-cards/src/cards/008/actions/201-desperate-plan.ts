@@ -4,6 +4,17 @@ import { desperatePlanI18n } from "./201-desperate-plan.i18n";
 export const desperatePlan: ActionCard = {
   id: "uXE",
   canonicalId: "ci_sk9",
+  slug: "lorcana-ci_sk9",
+  printings: [
+    {
+      id: "set8-201",
+      artId: "set8-201",
+      setCode: "set8",
+      collectorNumber: "201",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-201"],
   cardType: "action",
   name: "Desperate Plan",
@@ -16,7 +27,7 @@ export const desperatePlan: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cfbcf752b5064d1e8abfc2a2c6d3e98a",
-    tcgPlayer: 631990,
+    tcgPlayer: "631990",
   },
   text: "If you have no cards in your hand, draw until you have 3 cards in your hand. Otherwise, choose and discard any number of cards, then draw that many cards.",
   abilities: [

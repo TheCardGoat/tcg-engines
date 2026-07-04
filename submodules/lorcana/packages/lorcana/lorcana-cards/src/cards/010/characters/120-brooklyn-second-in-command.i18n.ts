@@ -19,10 +19,10 @@ export const brooklynSecondInCommandI18n: Record<Languages, I18nProperties> = {
     version: "Zweiter Befehlshaber",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "AM TAGE AUS STEIN",
+        title: "Am Tage aus Stein",
         description:
           "Solange du 3 oder mehr Karten auf der Hand hast, kann dieser Charakter nicht bereit gemacht werden.",
       },
@@ -33,10 +33,10 @@ export const brooklynSecondInCommandI18n: Record<Languages, I18nProperties> = {
     version: "Bras droit",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "STATUE LE JOUR",
+        title: "Statue le jour",
         description:
           "Ce personnage ne peut pas se redresser si vous avez 3 cartes ou plus en main.",
       },
@@ -47,10 +47,10 @@ export const brooklynSecondInCommandI18n: Record<Languages, I18nProperties> = {
     version: "Secondo in Comando",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "STATUE DI GIORNO",
+        title: "Statue di Giorno",
         description: "Se hai 3 o più carte in mano, questo personaggio non si può preparare.",
       },
     ],

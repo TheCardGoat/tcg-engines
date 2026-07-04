@@ -4,6 +4,17 @@ import { daisyDuckSecretAgentI18n } from "./076-daisy-duck-secret-agent.i18n";
 export const daisyDuckSecretAgent: CharacterCard = {
   id: "2mw",
   canonicalId: "ci_BEH",
+  slug: "lorcana-ci_BEH",
+  printings: [
+    {
+      id: "set2-076",
+      artId: "set2-076",
+      setCode: "set2",
+      collectorNumber: "76",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-076", "set9-093"],
   cardType: "character",
   name: "Daisy Duck",
@@ -19,7 +30,7 @@ export const daisyDuckSecretAgent: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2da1b21d6bdc4b29b5e04bacfa14eded",
-    tcgPlayer: 650032,
+    tcgPlayer: "650032",
   },
   text: [
     {

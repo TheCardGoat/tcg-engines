@@ -16,7 +16,7 @@ export const theWhiteRoseJewelOfTheGardenI18n: Record<Languages, I18nProperties>
     version: "Juwel des Gartens",
     text: [
       {
-        title: "SO BLÜH'N WIR VOLLER GLÜCK",
+        title: "So blüh'n wir voller Glück",
         description: "Wenn du diesen Charakter ausspielst, sammelst du 1 Legende.",
       },
     ],
@@ -26,7 +26,7 @@ export const theWhiteRoseJewelOfTheGardenI18n: Record<Languages, I18nProperties>
     version: "Joyau du jardin",
     text: [
       {
-        title: "LA BEAUTÉ DU MONDE",
+        title: "La beauté du monde",
         description: "Lorsque vous jouez ce personnage, gagnez 1 éclat de Lore.",
       },
     ],
@@ -36,7 +36,7 @@ export const theWhiteRoseJewelOfTheGardenI18n: Record<Languages, I18nProperties>
     version: "Gioiello del Giardino",
     text: [
       {
-        title: "FELICI IN PRIMAVERA",
+        title: "Felici in Primavera",
         description: "Quando giochi questo personaggio, ottieni 1 leggenda.",
       },
     ],

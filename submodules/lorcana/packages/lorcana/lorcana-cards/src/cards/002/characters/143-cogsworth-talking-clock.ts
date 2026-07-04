@@ -4,6 +4,17 @@ import { cogsworthTalkingClockI18n } from "./143-cogsworth-talking-clock.i18n";
 export const cogsworthTalkingClock: CharacterCard = {
   id: "xGr",
   canonicalId: "ci_xGr",
+  slug: "lorcana-ci_xGr",
+  printings: [
+    {
+      id: "set2-143",
+      artId: "set2-143",
+      setCode: "set2",
+      collectorNumber: "143",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-143"],
   cardType: "character",
   name: "Cogsworth",
@@ -20,7 +31,7 @@ export const cogsworthTalkingClock: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6ae3b063360244f19a8aa03334b16078",
-    tcgPlayer: 517592,
+    tcgPlayer: "517592",
   },
   text: [
     {

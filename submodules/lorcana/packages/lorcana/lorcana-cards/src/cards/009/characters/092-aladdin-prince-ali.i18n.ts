@@ -9,21 +9,16 @@ export const aladdinPrinceAliI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Aladdin",
     version: "Prinz Ali",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "Aladdin",
     version: "Prince Ali",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Aladdin",
     version: "Prince Ali",
-    text: [
-      {
-        title: "Ward",
-        description: "(Opponents can't choose this character except to challenge.)",
-      },
-    ],
+    text: "<Ward> (Opponents can't choose this character except to challenge.)",
   },
 };

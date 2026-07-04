@@ -19,10 +19,11 @@ export const teKElementalTerrorI18n: Record<Languages, I18nProperties> = {
     version: "Elementarer Terror",
     text: [
       {
-        title: "Gestaltwandel 7",
+        title:
+          "<Gestaltwandel> 7 (Du kannst 7 {I} zahlen, um diesen Charakter auf einen deiner Te-Kā-Charaktere auszuspielen.)",
       },
       {
-        title: "ALTER ZORN",
+        title: "Alter Zorn",
         description:
           "Jedes Mal während deines Zuges, wenn ein gegnerischer Charakter erschöpft wird, verbanne ihn.",
       },
@@ -33,10 +34,11 @@ export const teKElementalTerrorI18n: Record<Languages, I18nProperties> = {
     version: "Terreur élémentaire",
     text: [
       {
-        title: "Alter 7",
+        title:
+          "<Alter> 7 (Vous pouvez payer 7 {I} pour jouer ce personnage sur l'un de vos personnages Te Kā.)",
       },
       {
-        title: "RAGE ANCESTRALE",
+        title: "Rage ancestrale",
         description:
           "Durant votre tour, chaque fois qu'un personnage adverse devient épuisé, bannissez-le.",
       },
@@ -47,10 +49,11 @@ export const teKElementalTerrorI18n: Record<Languages, I18nProperties> = {
     version: "Terrore Elementale",
     text: [
       {
-        title: "Trasformazione 7",
+        title:
+          "<Trasformazione> 7 (Puoi pagare 7 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Te Kā.)",
       },
       {
-        title: "RABBIA ANTICA",
+        title: "Rabbia Antica",
         description:
           "Durante il tuo turno, ogni volta che un personaggio avversario viene impegnato, esilialo.",
       },

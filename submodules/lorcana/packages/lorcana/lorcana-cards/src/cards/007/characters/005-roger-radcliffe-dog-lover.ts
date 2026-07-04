@@ -4,6 +4,17 @@ import { rogerRadcliffeDogLoverI18n } from "./005-roger-radcliffe-dog-lover.i18n
 export const rogerRadcliffeDogLover: CharacterCard = {
   id: "aPy",
   canonicalId: "ci_aPy",
+  slug: "lorcana-ci_aPy",
+  printings: [
+    {
+      id: "set7-005",
+      artId: "set7-005",
+      setCode: "set7",
+      collectorNumber: "5",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-005"],
   cardType: "character",
   name: "Roger Radcliffe",
@@ -20,7 +31,7 @@ export const rogerRadcliffeDogLover: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fb3fdf1042f04416b070bdd8566a53e6",
-    tcgPlayer: 619408,
+    tcgPlayer: "619408",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const rogerRadcliffeDogLover: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 1 },
+          amount: {
+            type: "up-to",
+            value: 1,
+          },
           target: "YOUR_PUPPY_CHARACTERS",
           type: "remove-damage",
         },

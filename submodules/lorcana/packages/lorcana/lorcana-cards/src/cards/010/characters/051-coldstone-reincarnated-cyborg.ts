@@ -4,6 +4,17 @@ import { coldstoneReincarnatedCyborgI18n } from "./051-coldstone-reincarnated-cy
 export const coldstoneReincarnatedCyborg: CharacterCard = {
   id: "uHx",
   canonicalId: "ci_uHx",
+  slug: "lorcana-ci_uHx",
+  printings: [
+    {
+      id: "set10-051",
+      artId: "set10-051",
+      setCode: "set10",
+      collectorNumber: "51",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-051"],
   cardType: "character",
   name: "Coldstone",
@@ -20,7 +31,7 @@ export const coldstoneReincarnatedCyborg: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_988e3140d13242c5b38ba85e86702f91",
-    tcgPlayer: 659762,
+    tcgPlayer: "659762",
   },
   text: [
     {

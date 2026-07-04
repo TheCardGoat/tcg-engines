@@ -6,14 +6,17 @@ export const tGquuuuuuxOmegaPsycommu019: UnitCard = {
   type: "unit",
   traits: ["clan"],
   id: "T-019",
-  externalId: "gundam:t-019",
-  slug: "gquuuuuux-omega-psycommu-t-019",
+  canonicalId: "T-019",
+  externalIds: { bandai: "gundam:t-019" },
+  slug: "gquuuuuux-omega-psycommu/t-019",
   displayName: "GQuuuuuuX (Omega Psycommu)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "T-019",
   printings: [
     {
       id: "T-019",
+      artId: "T-019",
+      setCode: "GD03",
       collectorNumber: "T-019",
       cardNumber: "T-019",
       set: {
@@ -29,6 +32,8 @@ export const tGquuuuuuxOmegaPsycommu019: UnitCard = {
     },
     {
       id: "T-019_p1",
+      artId: "T-019_p1",
+      setCode: "PC02A",
       collectorNumber: "T-019_p1",
       cardNumber: "T-019",
       set: {
@@ -44,6 +49,7 @@ export const tGquuuuuuxOmegaPsycommu019: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam GQuuuuuuX-[PC02A]",
     },
   ],
+  reprints: ["T-019", "T-019_p1"],
   selectedPrintingId: "T-019",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-019.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-019.webp?260424",

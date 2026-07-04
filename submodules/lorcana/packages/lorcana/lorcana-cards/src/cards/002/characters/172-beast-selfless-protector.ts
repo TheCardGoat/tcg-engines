@@ -4,6 +4,17 @@ import { beastSelflessProtectorI18n } from "./172-beast-selfless-protector.i18n"
 export const beastSelflessProtector: CharacterCard = {
   id: "sLs",
   canonicalId: "ci_sLs",
+  slug: "lorcana-ci_sLs",
+  printings: [
+    {
+      id: "set2-172",
+      artId: "set2-172",
+      setCode: "set2",
+      collectorNumber: "172",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-172"],
   cardType: "character",
   name: "Beast",
@@ -20,7 +31,7 @@ export const beastSelflessProtector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_966bd91d331f46b3af9f199a2e03515d",
-    tcgPlayer: 527772,
+    tcgPlayer: "527772",
   },
   text: [
     {

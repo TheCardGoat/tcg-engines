@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { basilDisguisedDetectiveI18n } from "./091-basil-disguised-detective.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const basilDisguisedDetective: CharacterCard = {
   id: "357",
   canonicalId: "ci_h57",
+  slug: "lorcana-ci_h57",
+  printings: [
+    {
+      id: "set6-091",
+      artId: "set6-091",
+      setCode: "set6",
+      collectorNumber: "91",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-091"],
   cardType: "character",
   name: "Basil",
@@ -21,7 +33,7 @@ export const basilDisguisedDetective: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_03fecbc6607a4948a586ccf4f0915c79",
-    tcgPlayer: 591994,
+    tcgPlayer: "591994",
   },
   text: [
     {

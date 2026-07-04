@@ -4,6 +4,17 @@ import { flotillaCoconutArmadaI18n } from "./135-flotilla-coconut-armada.i18n";
 export const flotillaCoconutArmada: LocationCard = {
   id: "Xlq",
   canonicalId: "ci_Xlq",
+  slug: "lorcana-ci_Xlq",
+  printings: [
+    {
+      id: "set6-135",
+      artId: "set6-135",
+      setCode: "set6",
+      collectorNumber: "135",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-135"],
   cardType: "location",
   name: "Flotilla",
@@ -20,7 +31,7 @@ export const flotillaCoconutArmada: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5b57ee130c204b778df487c9826834c1",
-    tcgPlayer: 588367,
+    tcgPlayer: "588367",
   },
   text: [
     {

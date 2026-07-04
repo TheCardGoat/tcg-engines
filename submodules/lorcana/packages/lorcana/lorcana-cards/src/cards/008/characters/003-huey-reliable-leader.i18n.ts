@@ -17,9 +17,9 @@ export const hueyReliableLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Verlässlicher Anführer",
     text: [
       {
-        title: "ICH KENNE DEN WEG",
+        title: "Ich kenne den Weg",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 1 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const hueyReliableLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Leader sérieux",
     text: [
       {
-        title: "JE CONNAIS LE CHEMIN",
+        title: "Je connais le chemin",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, le prochain personnage que vous jouez ce tour-ci vous coûte 1 de moins.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, le prochain personnage que vous jouez ce tour-ci vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const hueyReliableLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Leader Affidabile",
     text: [
       {
-        title: "CONOSCO LA STRADA",
+        title: "Conosco la Strada",
         description:
-          "Ogni volta che questo personaggio va all'avventura, paga 1 in meno per giocare il tuo prossimo personaggio per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, paga 1 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

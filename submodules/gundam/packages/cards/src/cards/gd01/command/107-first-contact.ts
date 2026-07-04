@@ -7,14 +7,17 @@ export const gd01FirstContact107: CommandCard = {
   color: "green",
   traits: ["-"],
   id: "GD01-107",
-  externalId: "gundam:gd01-107",
-  slug: "first-contact-gd01-107",
+  canonicalId: "GD01-107",
+  externalIds: { bandai: "gundam:gd01-107" },
+  slug: "first-contact/gd01-107",
   displayName: "First Contact",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-107",
   printings: [
     {
       id: "GD01-107",
+      artId: "GD01-107",
+      setCode: "GD01",
       collectorNumber: "GD01-107",
       cardNumber: "GD01-107",
       set: {
@@ -30,6 +33,8 @@ export const gd01FirstContact107: CommandCard = {
     },
     {
       id: "GD01-107_p1",
+      artId: "GD01-107_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-107_p1",
       cardNumber: "GD01-107",
       set: {
@@ -45,6 +50,8 @@ export const gd01FirstContact107: CommandCard = {
     },
     {
       id: "GD01-107_p2",
+      artId: "GD01-107_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-107_p2",
       cardNumber: "GD01-107",
       set: {
@@ -60,6 +67,8 @@ export const gd01FirstContact107: CommandCard = {
     },
     {
       id: "GD01-107_p3",
+      artId: "GD01-107_p3",
+      setCode: "GD03",
       collectorNumber: "GD01-107_p3",
       cardNumber: "GD01-107",
       set: {
@@ -74,6 +83,7 @@ export const gd01FirstContact107: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD01-107", "GD01-107_p1", "GD01-107_p2", "GD01-107_p3"],
   selectedPrintingId: "GD01-107",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-107.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-107.webp?260424",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jasmineQueenOfAgrabahI18n } from "./149-jasmine-queen-of-agrabah.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const jasmineQueenOfAgrabah: CharacterCard = {
   id: "Abg",
   canonicalId: "ci_Abg",
+  slug: "lorcana-ci_Abg",
+  printings: [
+    {
+      id: "set1-149",
+      artId: "set1-149",
+      setCode: "set1",
+      collectorNumber: "149",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-149"],
   cardType: "character",
   name: "Jasmine",
@@ -21,7 +33,7 @@ export const jasmineQueenOfAgrabah: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6b26bc2dda6e49bba695529a039dcaee",
-    tcgPlayer: 508857,
+    tcgPlayer: "508857",
   },
   text: [
     {

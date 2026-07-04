@@ -4,6 +4,17 @@ import { queenOfHeartsSensingWeaknessI18n } from "./120-queen-of-hearts-sensing-
 export const queenOfHeartsSensingWeakness: CharacterCard = {
   id: "DCW",
   canonicalId: "ci_Il0",
+  slug: "lorcana-ci_Il0",
+  printings: [
+    {
+      id: "set2-120",
+      artId: "set2-120",
+      setCode: "set2",
+      collectorNumber: "120",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-120", "set9-120"],
   cardType: "character",
   name: "Queen of Hearts",
@@ -20,7 +31,7 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_51f0f91029254f61ab6d7b91efb0873b",
-    tcgPlayer: 647670,
+    tcgPlayer: "647670",
   },
   text: [
     {
@@ -59,7 +70,11 @@ export const queenOfHeartsSensingWeakness: CharacterCard = {
         event: "challenge",
         timing: "whenever",
         on: "YOUR_CHARACTERS",
-        restrictions: [{ type: "defender-is-character" }],
+        restrictions: [
+          {
+            type: "defender-is-character",
+          },
+        ],
       },
       type: "triggered",
       text: "LET THE GAME BEGIN Whenever one of your characters challenges another character, you may draw a card.",

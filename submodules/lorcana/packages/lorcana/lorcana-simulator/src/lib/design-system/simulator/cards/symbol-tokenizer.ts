@@ -11,27 +11,37 @@ export const SYMBOLS: Record<string, string> = {
 };
 
 export const SYMBOL_PATTERN = /\{([EWLSI])\}/gi;
+export const CARD_TEXT_TOKEN_PATTERN = /\{([EWLSI])\}|<([^<>\n]+)>/gi;
 
 export type Token =
   | { type: "text"; value: string }
-  | { type: "symbol"; file: string; code: string };
+  | { type: "symbol"; file: string; code: string }
+  | { type: "keyword"; value: string };
 
 export function tokenizeTextWithSymbols(raw: string | undefined): Token[] {
   if (!raw) return [];
   const tokens: Token[] = [];
   let lastIndex = 0;
 
-  for (const match of raw.matchAll(SYMBOL_PATTERN)) {
-    const [fullMatch, code] = match;
+  for (const match of raw.matchAll(CARD_TEXT_TOKEN_PATTERN)) {
+    const [fullMatch, symbolCode, keywordText] = match;
     const start = match.index ?? 0;
-    const file = SYMBOLS[code.toUpperCase()];
 
     if (start > lastIndex) {
       tokens.push({ type: "text", value: raw.slice(lastIndex, start) });
     }
 
-    if (file) {
-      tokens.push({ type: "symbol", file, code: code.toUpperCase() });
+    if (symbolCode) {
+      const code = symbolCode.toUpperCase();
+      const file = SYMBOLS[code];
+
+      if (file) {
+        tokens.push({ type: "symbol", file, code });
+      } else {
+        tokens.push({ type: "text", value: fullMatch });
+      }
+    } else if (keywordText?.trim()) {
+      tokens.push({ type: "keyword", value: keywordText.trim() });
     } else {
       tokens.push({ type: "text", value: fullMatch });
     }

@@ -19,10 +19,10 @@ export const audreyRamirezTheEngineerI18n: Record<Languages, I18nProperties> = {
     version: "Die Ingenieurin",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "ERSATZTEILE",
+        title: "Ersatzteile",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, mache einen deiner Gegenstände bereit.",
       },
@@ -33,10 +33,10 @@ export const audreyRamirezTheEngineerI18n: Record<Languages, I18nProperties> = {
     version: "L'ingénieure",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "PIÈCES DÉTACHÉES",
+        title: "Pièces détachées",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, redressez l'un de vos objets.",
       },
@@ -47,10 +47,10 @@ export const audreyRamirezTheEngineerI18n: Record<Languages, I18nProperties> = {
     version: "L'Ingegnere",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "PARTI DI RICAMBIO",
+        title: "Parti di Ricambio",
         description:
           "Ogni volta che questo personaggio va all'avventura, prepara uno dei tuoi oggetti.",
       },

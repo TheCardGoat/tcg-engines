@@ -33,7 +33,16 @@ export function resolveTarget(target: TargetDSL, ctx: ResolutionContext): string
       return [];
     }
     case "bound": {
-      const bound = ctx.boundTargets[target.id] ?? [];
+      const rawBound = ctx.boundTargets[target.id] ?? [];
+      // Optional sub-filter: narrow the captured binding to a card type
+      // (e.g. "the Units among the trashed cards").
+      const bound =
+        target.cardTypes && target.cardTypes.length > 0
+          ? rawBound.filter((id) => {
+              const card = ctx.state.G.cardIndex[id];
+              return card ? target.cardTypes!.includes(defOf(card).type) : false;
+            })
+          : rawBound;
       if (target.index === undefined) return bound;
       const selected = bound[target.index];
       return selected === undefined ? [] : [selected];
@@ -44,6 +53,23 @@ export function resolveTarget(target: TargetDSL, ctx: ResolutionContext): string
       return resolveCardTarget(target, ctx);
     case "gig":
       return resolveGigTarget(target, ctx);
+    case "attacker": {
+      const attackerId = ctx.state.G.attackState?.attackerId;
+      if (!attackerId) return [];
+      const card = ctx.state.G.cardIndex[attackerId as string];
+      if (!card) return [];
+      const def = defOf(card);
+      if (target.cardTypes && !target.cardTypes.includes(def.type)) return [];
+      if (
+        target.classifications &&
+        !target.classifications.some((classification) =>
+          def.classifications.includes(classification),
+        )
+      ) {
+        return [];
+      }
+      return [attackerId as string];
+    }
     default:
       return [];
   }
@@ -104,6 +130,19 @@ function getCardCandidates(
     });
   }
 
+  if (target.maxCostOf) {
+    const refIds = resolveTarget(target.maxCostOf, ctx);
+    const refCosts = refIds.map((id) => {
+      const card = ctx.state.G.cardIndex[id];
+      return card ? (defOf(card).cost ?? 0) : 0;
+    });
+    const maxRefCost = refCosts.length > 0 ? Math.max(...refCosts) : Infinity;
+    candidates = candidates.filter((c) => {
+      const cost = defOf(c).cost ?? 0;
+      return cost <= maxRefCost;
+    });
+  }
+
   if (target.minCost !== undefined) {
     candidates = candidates.filter((c) => {
       const cost = defOf(c).cost ?? 0;
@@ -123,6 +162,23 @@ function getCardCandidates(
       const power = getEffectivePower(ctx.state, c.instanceId as string);
       return power <= target.maxPower!;
     });
+  }
+
+  if (target.maxPowerOfGigValueOf) {
+    const gigIds = resolveTarget(
+      target.maxPowerOfGigValueOf.selector === "gig"
+        ? { ...target.maxPowerOfGigValueOf, amount: "all" }
+        : target.maxPowerOfGigValueOf,
+      ctx,
+    );
+    const gigValues = gigIds
+      .map((id) => ctx.state.G.gigDice[id])
+      .filter(Boolean)
+      .map((d) => d.faceValue);
+    const maxGigValue = gigValues.length > 0 ? Math.max(...gigValues) : -Infinity;
+    candidates = candidates.filter(
+      (c) => getEffectivePower(ctx.state, c.instanceId as string) <= maxGigValue,
+    );
   }
 
   if (target.excludeSelf) {
@@ -218,12 +274,22 @@ function resolveGigTarget(target: GigTargetDSL, ctx: ResolutionContext): string[
     dice = dice.filter((d) => refTypes.includes(d.dieType));
   }
 
+  if (target.sides !== undefined) {
+    const wanted = Array.isArray(target.sides) ? target.sides : [target.sides];
+    dice = dice.filter((d) => wanted.includes(d.dieType));
+  }
+
   if (target.minValue !== undefined) {
     dice = dice.filter((d) => d.faceValue >= target.minValue!);
   }
 
   if (target.maxValue !== undefined) {
     dice = dice.filter((d) => d.faceValue <= target.maxValue!);
+  }
+
+  if (target.valueParity !== undefined) {
+    const wantEven = target.valueParity === "even";
+    dice = dice.filter((d) => (d.faceValue % 2 === 0) === wantEven);
   }
 
   const ids = dice.map((d) => d.id as string);
@@ -251,6 +317,11 @@ function computeStreetCred(player: RelativePlayer, ctx: ResolutionContext): numb
     .map((id) => ctx.state.G.gigDice[id as string])
     .filter(Boolean)
     .reduce((sum, d) => sum + d.faceValue, 0);
+}
+
+function computeGigCount(player: RelativePlayer, ctx: ResolutionContext): number {
+  const playerId = resolveRelativePlayer(player, ctx);
+  return ctx.state.G.players[playerId as string]?.gigArea.length ?? 0;
 }
 
 /**
@@ -289,6 +360,33 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
       const left = computeStreetCred(condition.controller, ctx);
       const right = computeStreetCred(condition.other, ctx);
       return compareValues(left, condition.comparison, right);
+    }
+
+    case "gigCountComparison": {
+      const left = computeGigCount(condition.controller, ctx);
+      const right = computeGigCount(condition.other, ctx);
+      return compareValues(left, condition.comparison, right);
+    }
+
+    case "streetCredDifference": {
+      const left = computeStreetCred(condition.controller, ctx);
+      const right = computeStreetCred(condition.other, ctx);
+      return compareValues(Math.abs(left - right), condition.comparison, condition.value);
+    }
+
+    case "streetCredParity": {
+      const streetCred = computeStreetCred(condition.controller, ctx);
+      return condition.parity === "even" ? streetCred % 2 === 0 : streetCred % 2 !== 0;
+    }
+
+    case "allFriendlyLegendsFaceUp": {
+      const playerId = resolveRelativePlayer("friendly", ctx);
+      const player = ctx.state.G.players[playerId as string];
+      if (!player) return false;
+      const legends = player.zones.legendArea
+        .map((id) => ctx.state.G.cardIndex[id as string])
+        .filter(Boolean);
+      return legends.length > 0 && legends.every((card) => !card.meta.faceDown);
     }
 
     case "cardState": {
@@ -456,6 +554,39 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
         .filter(Boolean)
         .map((d) => d.faceValue);
       return gigValues.includes(cost);
+    }
+
+    case "cardStat": {
+      const ids = resolveTarget(condition.target, ctx);
+      if (ids.length === 0) return false;
+      const card = ctx.state.G.cardIndex[ids[0]!];
+      if (!card) return false;
+      const stat =
+        condition.property === "power"
+          ? getEffectivePower(ctx.state, ids[0]!)
+          : (defOf(card).cost ?? 0);
+      return compareValues(stat, condition.comparison, condition.value);
+    }
+
+    case "cardName": {
+      const ids = resolveTarget(condition.target, ctx);
+      return ids.some((id) => {
+        const card = ctx.state.G.cardIndex[id];
+        return card ? defOf(card).name === condition.name : false;
+      });
+    }
+
+    case "targetExists": {
+      return resolveTarget(condition.target, ctx).length > 0;
+    }
+
+    case "gigSides": {
+      const ids = resolveTarget(condition.target, ctx);
+      const wanted = Array.isArray(condition.sides) ? condition.sides : [condition.sides];
+      return ids.some((id) => {
+        const die = ctx.state.G.gigDice[id];
+        return die ? wanted.includes(die.dieType) : false;
+      });
     }
 
     default:

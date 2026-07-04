@@ -4,6 +4,17 @@ import { fergusOutpostBuilderI18n } from "./194-fergus-outpost-builder.i18n";
 export const fergusOutpostBuilder: CharacterCard = {
   id: "Ys5",
   canonicalId: "ci_Ys5",
+  slug: "lorcana-ci_Ys5",
+  printings: [
+    {
+      id: "set12-194",
+      artId: "set12-194",
+      setCode: "set12",
+      collectorNumber: "194",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-194"],
   cardType: "character",
   name: "Fergus",
@@ -18,14 +29,18 @@ export const fergusOutpostBuilder: CharacterCard = {
   willpower: 6,
   lore: 2,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_e9a024091f294cfab0aebe2882414fdc",
+    tcgPlayer: "692201",
+  },
   text: [
     {
-      title: "Just the Spot",
+      title: "JUST THE SPOT",
       description:
         "During your turn, whenever this character becomes exerted, you may play a location from your hand or discard with cost 4 or less for free.",
     },
     {
-      title: "Hold Fast",
+      title: "HOLD FAST",
       description:
         "While this character is at a location, whenever a location is challenged and banished, you may deal 4 damage to chosen character.",
     },

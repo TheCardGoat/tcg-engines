@@ -9,7 +9,7 @@ describe("Card Soldiers - Full Deck", () => {
     });
 
     expect(cardSoldiersFullDeck).toMatchObject({
-      id: "ToP",
+      id: "a6N",
       canonicalId: "ci_lN7",
       reprints: ["set2-105", "set9-122"],
       cardType: "character",

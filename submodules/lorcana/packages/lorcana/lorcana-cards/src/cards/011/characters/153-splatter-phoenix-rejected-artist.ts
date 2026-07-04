@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { splatterPhoenixRejectedArtistI18n } from "./153-splatter-phoenix-rejected-artist.i18n";
+
 import { underdog } from "../../../helpers/abilities/underdog";
 import { ward } from "../../../helpers/abilities/ward";
 
 export const splatterPhoenixRejectedArtist: CharacterCard = {
   id: "q39",
   canonicalId: "ci_q39",
+  slug: "lorcana-ci_q39",
+  printings: [
+    {
+      id: "set11-153",
+      artId: "set11-153",
+      setCode: "set11",
+      collectorNumber: "153",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-153"],
   cardType: "character",
   name: "Splatter Phoenix",
@@ -22,7 +34,7 @@ export const splatterPhoenixRejectedArtist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dd7610ea1502422199f68ea86fce5b19",
-    tcgPlayer: 676224,
+    tcgPlayer: "676224",
   },
   text: [
     {

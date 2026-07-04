@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { scarViciousCheaterI18n } from "./125-scar-vicious-cheater.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const scarViciousCheater: CharacterCard = {
   id: "U8O",
   canonicalId: "ci_U8O",
+  slug: "lorcana-ci_U8O",
+  printings: [
+    {
+      id: "set2-125",
+      artId: "set2-125",
+      setCode: "set2",
+      collectorNumber: "125",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-125"],
   cardType: "character",
   name: "Scar",
@@ -21,7 +33,7 @@ export const scarViciousCheater: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_02f5f28e11b84721906692f042d0baee",
-    tcgPlayer: 523760,
+    tcgPlayer: "523760",
   },
   text: [
     {

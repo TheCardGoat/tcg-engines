@@ -7,14 +7,17 @@ export const betaChangWufei091: PilotCard = {
   color: "green",
   traits: ["operation meteor"],
   id: "GD01-091_p1",
-  externalId: "gundam:gd01-091_p1",
-  slug: "chang-wufei-gd01-091-p1",
+  canonicalId: "GD01-091",
+  externalIds: { bandai: "gundam:gd01-091_p1" },
+  slug: "chang-wufei/gd01-091",
   displayName: "Chang Wufei",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-091_p1",
   printings: [
     {
       id: "GD01-091",
+      artId: "GD01-091",
+      setCode: "GD01",
       collectorNumber: "GD01-091",
       cardNumber: "GD01-091",
       set: {
@@ -30,6 +33,8 @@ export const betaChangWufei091: PilotCard = {
     },
     {
       id: "GD01-091_p1",
+      artId: "GD01-091_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-091_p1",
       cardNumber: "GD01-091",
       set: {
@@ -44,6 +49,7 @@ export const betaChangWufei091: PilotCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-091", "GD01-091_p1"],
   selectedPrintingId: "GD01-091_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-091_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-091_p1.webp?260424",

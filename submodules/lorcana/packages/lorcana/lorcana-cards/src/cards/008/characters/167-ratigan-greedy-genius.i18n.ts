@@ -20,10 +20,10 @@ export const ratiganGreedyGeniusI18n: Record<Languages, I18nProperties> = {
     version: "Gieriges Genie",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "DIE ZEIT LÄUFT AB",
+        title: "Die Zeit läuft ab",
         description:
           "Am Ende deines Zuges, falls du in diesem Zug keine Karte in deinen Tintenvorrat gelegt hast, verbanne diesen Charakter.",
       },
@@ -34,10 +34,10 @@ export const ratiganGreedyGeniusI18n: Record<Languages, I18nProperties> = {
     version: "Génie cupide",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "LE TEMPS PRESSE",
+        title: "Le temps presse",
         description:
           "À la fin de votre tour, si vous n'avez placé aucune carte dans votre réserve d'encre ce tour-ci, bannissez ce personnage.",
       },
@@ -48,10 +48,10 @@ export const ratiganGreedyGeniusI18n: Record<Languages, I18nProperties> = {
     version: "Avido Genio",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "TEMPO SCADUTO",
+        title: "Tempo Scaduto",
         description:
           "Alla fine del tuo turno, se non hai aggiunto nessuna carta al tuo calamaio in questo turno, esilia questo personaggio.",
       },

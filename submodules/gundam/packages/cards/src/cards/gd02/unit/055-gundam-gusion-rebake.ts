@@ -7,14 +7,17 @@ export const gd02GundamGusionRebake055: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "GD02-055",
-  externalId: "gundam:gd02-055",
-  slug: "gundam-gusion-rebake-gd02-055",
+  canonicalId: "GD02-055",
+  externalIds: { bandai: "gundam:gd02-055" },
+  slug: "gundam-gusion-rebake/gd02-055",
   displayName: "Gundam Gusion Rebake",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-055",
   printings: [
     {
       id: "GD02-055",
+      artId: "GD02-055",
+      setCode: "GD02",
       collectorNumber: "GD02-055",
       cardNumber: "GD02-055",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamGusionRebake055: UnitCard = {
     },
     {
       id: "GD02-055_p1",
+      artId: "GD02-055_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-055_p1",
       cardNumber: "GD02-055",
       set: {
@@ -44,6 +49,7 @@ export const gd02GundamGusionRebake055: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-055", "GD02-055_p1"],
   selectedPrintingId: "GD02-055",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-055.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-055.webp?260424",

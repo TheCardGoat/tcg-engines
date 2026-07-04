@@ -4,6 +4,17 @@ import { merlinCrabI18n } from "./050-merlin-crab.i18n";
 export const merlinCrab: CharacterCard = {
   id: "mYZ",
   canonicalId: "ci_mYZ",
+  slug: "lorcana-ci_mYZ",
+  printings: [
+    {
+      id: "set2-050",
+      artId: "set2-050",
+      setCode: "set2",
+      collectorNumber: "50",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-050"],
   cardType: "character",
   name: "Merlin",
@@ -20,7 +31,7 @@ export const merlinCrab: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ce53812441ff4a67bd0b987da44126c8",
-    tcgPlayer: 522652,
+    tcgPlayer: "522652",
   },
   text: [
     {

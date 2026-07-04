@@ -4,6 +4,17 @@ import { pawpsicleI18n } from "./169-pawpsicle.i18n";
 export const pawpsicle: ItemCard = {
   id: "VrY",
   canonicalId: "ci_VrY",
+  slug: "lorcana-ci_VrY",
+  printings: [
+    {
+      id: "set2-169",
+      artId: "set2-169",
+      setCode: "set2",
+      collectorNumber: "169",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-169"],
   cardType: "item",
   name: "Pawpsicle",
@@ -16,7 +27,7 @@ export const pawpsicle: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_60f1bf0ac9ac46ca92e290a11ac334e5",
-    tcgPlayer: 527535,
+    tcgPlayer: "527535",
   },
   text: [
     {
@@ -54,7 +65,10 @@ export const pawpsicle: ItemCard = {
         banishSelf: true,
       },
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         target: "CHOSEN_CHARACTER",
         type: "remove-damage",
       },

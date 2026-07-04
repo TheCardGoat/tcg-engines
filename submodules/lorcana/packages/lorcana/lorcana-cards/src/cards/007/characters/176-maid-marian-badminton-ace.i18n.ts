@@ -8,7 +8,7 @@ export const maidMarianBadmintonAceI18n: Record<Languages, I18nProperties> = {
       {
         title: "GOOD SHOT",
         description:
-          "During an opponent's turn, whenever one of your Ally characters takes damage, deal 1 damage to chosen opposing character.",
+          "During an opponent's turn, whenever one of your Ally characters is damaged, deal 1 damage to chosen opposing character.",
       },
       {
         title: "FAIR PLAY",
@@ -21,14 +21,14 @@ export const maidMarianBadmintonAceI18n: Record<Languages, I18nProperties> = {
     version: "Badminton-Ass",
     text: [
       {
-        title: "EIN GUTER SCHLAG",
+        title: "Ein guter Schlag",
         description:
           "Jedes Mal, wenn einer deiner Verbündeten im Zug einer gegnerischen Person Schaden erhält, füge einem gegnerischen Charakter deiner Wahl 1 Schaden zu.",
       },
       {
-        title: "FAIRES SPIEL",
+        title: "Faires Spiel",
         description:
-          "Deine Lady-Gluck-Charaktere erhalten Robust +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine Lady-Gluck-Charaktere erhalten <Robust> +1 (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -37,13 +37,13 @@ export const maidMarianBadmintonAceI18n: Record<Languages, I18nProperties> = {
     version: "As du badminton",
     text: [
       {
-        title: "FORT BIEN JOUÉ",
+        title: "Fort bien joué",
         description:
           "Durant le tour d'un adversaire, chaque fois que l'un de vos personnages Allié subit des dommages, choisissez un personnage adverse et infligez-lui 1 dommage.",
       },
       {
-        title: "ESPRIT SPORTIF",
-        description: "Vos personnages Dame Gertrude gagnent Résistance +1.",
+        title: "Esprit sportif",
+        description: "Vos personnages Dame Gertrude gagnent <Résistance> +1.",
       },
     ],
   },
@@ -52,13 +52,13 @@ export const maidMarianBadmintonAceI18n: Record<Languages, I18nProperties> = {
     version: "Asso del Volano",
     text: [
       {
-        title: "BEL COLPO",
+        title: "Bel Colpo",
         description:
-          "Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi Alleato viene danneggiato, infliggi 1 danno a un personaggio avversario a tua scelta.",
+          "Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi Alleato subisce danno, infliggi 1 danno a un personaggio avversario a tua scelta.",
       },
       {
-        title: "FAIR PLAY I",
-        description: "tuoi personaggi chiamati Lady Cocca ottengono Resistere +1.",
+        title: "Fair Play",
+        description: "I tuoi personaggi chiamati Lady Cocca ottengono <Resistere> +1.",
       },
     ],
   },

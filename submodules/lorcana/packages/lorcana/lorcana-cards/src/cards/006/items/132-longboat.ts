@@ -4,6 +4,17 @@ import { longboatI18n } from "./132-longboat.i18n";
 export const longboat: ItemCard = {
   id: "LxE",
   canonicalId: "ci_LxE",
+  slug: "lorcana-ci_LxE",
+  printings: [
+    {
+      id: "set6-132",
+      artId: "set6-132",
+      setCode: "set6",
+      collectorNumber: "132",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-132"],
   cardType: "item",
   name: "Longboat",
@@ -16,7 +27,7 @@ export const longboat: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3f429b4816d0421cb951261fa3552a95",
-    tcgPlayer: 592009,
+    tcgPlayer: "592009",
   },
   text: [
     {

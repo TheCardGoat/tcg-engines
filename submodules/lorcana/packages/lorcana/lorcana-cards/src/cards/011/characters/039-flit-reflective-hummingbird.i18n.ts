@@ -17,7 +17,7 @@ export const flitReflectiveHummingbirdI18n: Record<Languages, I18nProperties> = 
     version: "Reflektierter Kolibri",
     text: [
       {
-        title: "PASS DOCH AUF!",
+        title: "Pass doch auf!",
         description:
           "Wenn du diesen Charakter ausspielst, verschiebe bis zu 1 Schaden von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl.",
       },
@@ -28,7 +28,7 @@ export const flitReflectiveHummingbirdI18n: Record<Languages, I18nProperties> = 
     version: "Colibri réfléchissant",
     text: [
       {
-        title: "ATTENTION!",
+        title: "Attention!",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et déplacer 1 de ses dommages sur un personnage adverse de votre choix.",
       },
@@ -39,7 +39,7 @@ export const flitReflectiveHummingbirdI18n: Record<Languages, I18nProperties> = 
     version: "Colibrì Che Si Riflette",
     text: [
       {
-        title: "ATTENTO!",
+        title: "Attento!",
         description:
           "Quando giochi questo personaggio, sposta fino a 1 danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },

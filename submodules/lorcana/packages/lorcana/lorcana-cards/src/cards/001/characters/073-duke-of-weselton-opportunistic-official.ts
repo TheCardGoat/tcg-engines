@@ -4,6 +4,17 @@ import { dukeOfWeseltonOpportunisticOfficialI18n } from "./073-duke-of-weselton-
 export const dukeOfWeseltonOpportunisticOfficial: CharacterCard = {
   id: "vyg",
   canonicalId: "ci_vyg",
+  slug: "lorcana-ci_vyg",
+  printings: [
+    {
+      id: "set1-073",
+      artId: "set1-073",
+      setCode: "set1",
+      collectorNumber: "73",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-073"],
   cardType: "character",
   name: "Duke of Weselton",
@@ -21,7 +32,7 @@ export const dukeOfWeseltonOpportunisticOfficial: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_fb2dc6f12f584032a54f9925f060e059",
-    tcgPlayer: 505971,
+    tcgPlayer: "505971",
   },
   classifications: ["Storyborn", "Villain"],
   i18n: dukeOfWeseltonOpportunisticOfficialI18n,

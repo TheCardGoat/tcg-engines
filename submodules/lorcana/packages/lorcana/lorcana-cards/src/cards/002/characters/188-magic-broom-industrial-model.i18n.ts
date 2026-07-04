@@ -17,9 +17,9 @@ export const magicBroomIndustrialModelI18n: Record<Languages, I18nProperties> = 
     version: "Industrieausführung",
     text: [
       {
-        title: "AUF HOCHGLANZ POLIEREN",
+        title: "Auf Hochglanz polieren",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges Robust +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const magicBroomIndustrialModelI18n: Record<Languages, I18nProperties> = 
     version: "Modèle industriel",
     text: [
       {
-        title: "FAUT QUE ÇA BRILLE",
+        title: "Faut que ça brille",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const magicBroomIndustrialModelI18n: Record<Languages, I18nProperties> = 
     version: "Modello Industriale",
     text: [
       {
-        title: "FALLO BRILLARE",
+        title: "Fallo Brillare",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene Resistere +1 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

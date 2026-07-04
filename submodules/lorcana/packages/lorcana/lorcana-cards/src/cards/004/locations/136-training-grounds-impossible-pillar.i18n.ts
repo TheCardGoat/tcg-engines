@@ -16,8 +16,8 @@ export const trainingGroundsImpossiblePillarI18n: Record<Languages, I18nProperti
     version: "Unerreichbare Säule",
     text: [
       {
-        title: "STÄRKE DES WILLENS",
-        description: "1 — Wähle einen Charakter an diesem Ort. Er erhält in diesem Zug +1.",
+        title: "Stärke des Willens",
+        description: "1 {I} — Wähle einen Charakter an diesem Ort. Er erhält in diesem Zug +1{S}.",
       },
     ],
   },
@@ -26,9 +26,9 @@ export const trainingGroundsImpossiblePillarI18n: Record<Languages, I18nProperti
     version: "Mât insurmontable",
     text: [
       {
-        title: "FORCE MENTALE 1",
+        title: "Force mentale",
         description:
-          "— Choisissez un personnage sur ce lieu qui gagne +1 pour le reste de ce tour.",
+          "1 {I} — Choisissez un personnage sur ce lieu qui gagne +1 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -37,8 +37,9 @@ export const trainingGroundsImpossiblePillarI18n: Record<Languages, I18nProperti
     version: "Pilastro Impossibile",
     text: [
       {
-        title: "FORZA DELLA MENTE 1",
-        description: "— Un personaggio a tua scelta in questo luogo riceve +1 per questo turno.",
+        title: "Forza della Mente",
+        description:
+          "1 {I} — Un personaggio a tua scelta in questo luogo riceve +1 {S} per questo turno.",
       },
     ],
   },

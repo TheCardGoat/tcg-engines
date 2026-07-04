@@ -24,16 +24,17 @@ export const yokaiScientificSupervillainI18n: Record<Languages, I18nProperties> 
     version: "Wissenschaftlicher Superschurke",
     text: [
       {
-        title: "Gestaltwandel 6",
+        title:
+          "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Yokai-Charaktere auszuspielen.)",
       },
       {
-        title: "NEUROTRANSMITTER",
+        title: "Neurotransmitter",
         description: "Du darfst Microbots-Gegenstände kostenlos ausspielen.",
       },
       {
-        title: "TECHNISCHER FORTSCHRITT",
+        title: "Technischer Fortschritt",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, ziehe 1 Karte für jeden gegnerischen Charakter mit 0.",
+          "Jedes Mal, wenn dieser Charakter erkundet, ziehe 1 Karte für jeden gegnerischen Charakter mit 0 {S}.",
       },
     ],
   },
@@ -42,16 +43,17 @@ export const yokaiScientificSupervillainI18n: Record<Languages, I18nProperties> 
     version: "Super-méchant scientifique",
     text: [
       {
-        title: "Alter 6",
+        title:
+          "<Alter> 6 (Vous pouvez payer 6 {I} pour jouer ce personnage sur l'un de vos personnages Yokai.)",
       },
       {
-        title: "NEUROTRANSMETTEUR",
+        title: "Neurotransmetteur",
         description: "Vous pouvez jouer des objets Microrobots gratuitement.",
       },
       {
-        title: "PROGRÈS TECHNIQUE",
+        title: "Progrès technique",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, piochez une carte pour chaque personnage adverse avec une de 0.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, piochez une carte pour chaque personnage adverse avec une {S} de 0.",
       },
     ],
   },
@@ -60,16 +62,17 @@ export const yokaiScientificSupervillainI18n: Record<Languages, I18nProperties> 
     version: "Supercattivo Scientifico",
     text: [
       {
-        title: "Trasformazione 6",
+        title:
+          "<Trasformazione> 6 (Puoi pagare 6 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Yokai.)",
       },
       {
-        title: "TRASMETTITORE NEURALE",
+        title: "Trasmettitore Neurale",
         description: "Puoi giocare gratis gli oggetti chiamati Microbot.",
       },
       {
-        title: "CONQUISTA TECNICA",
+        title: "Conquista Tecnica",
         description:
-          "Ogni volta che questo personaggio va all'avventura, pesca una carta per ogni personaggio avversario con 0.",
+          "Ogni volta che questo personaggio va all'avventura, pesca una carta per ogni personaggio avversario con 0 {S}.",
       },
     ],
   },

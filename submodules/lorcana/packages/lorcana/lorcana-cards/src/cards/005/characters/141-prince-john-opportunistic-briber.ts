@@ -4,6 +4,17 @@ import { princeJohnOpportunisticBriberI18n } from "./141-prince-john-opportunist
 export const princeJohnOpportunisticBriber: CharacterCard = {
   id: "wvs",
   canonicalId: "ci_wvs",
+  slug: "lorcana-ci_wvs",
+  printings: [
+    {
+      id: "set5-141",
+      artId: "set5-141",
+      setCode: "set5",
+      collectorNumber: "141",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-141"],
   cardType: "character",
   name: "Prince John",
@@ -20,7 +31,7 @@ export const princeJohnOpportunisticBriber: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_16dd3d0f11fb4a96a4aa7d7f69468a23",
-    tcgPlayer: 561648,
+    tcgPlayer: "561648",
   },
   text: [
     {

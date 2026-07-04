@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { isabelaMadrigalSuchALovelyVoiceI18n } from "./016-isabela-madrigal-such-a-lovely-voice.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const isabelaMadrigalSuchALovelyVoice: CharacterCard = {
-  id: "jrh",
+  id: "5Rp",
   canonicalId: "ci_jrh",
+  slug: "lorcana-ci_jrh",
+  printings: [
+    {
+      id: "set12-016",
+      artId: "set12-016",
+      setCode: "set12",
+      collectorNumber: "16",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-016"],
   cardType: "character",
   name: "Isabela Madrigal",
@@ -21,6 +33,7 @@ export const isabelaMadrigalSuchALovelyVoice: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1747f940605e4b6eb87f5df5ee96d9d8",
+    tcgPlayer: "692088",
   },
   text: [
     {

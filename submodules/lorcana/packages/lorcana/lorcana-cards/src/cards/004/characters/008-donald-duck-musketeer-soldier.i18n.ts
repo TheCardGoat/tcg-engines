@@ -19,12 +19,13 @@ export const donaldDuckMusketeerSoldierI18n: Record<Languages, I18nProperties> =
     version: "Musketier-Soldat",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "WARTET AUF MICH",
+        title: "Wartet auf mich",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +1.",
+          "Wenn du diesen Charakter ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -33,12 +34,13 @@ export const donaldDuckMusketeerSoldierI18n: Record<Languages, I18nProperties> =
     version: "Mousquetaire soldat",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "ATTENDEZ-MOI!",
+        title: "Attendez-moi!",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +1 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage qui gagne +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -47,12 +49,12 @@ export const donaldDuckMusketeerSoldierI18n: Record<Languages, I18nProperties> =
     version: "Soldato Moschettiere",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "ECCOMI, ARRIVO!",
+        title: "Eccomi, Arrivo!",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta riceve +1 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta riceve +1 {L} per questo turno.",
       },
     ],
   },

@@ -9,9 +9,9 @@ export const flounderCollectorsCompanionI18n: Record<Languages, I18nProperties> 
         title: "Support",
       },
       {
-        title: "I'M NOT A GUPPY",
+        title: "I'M NOT",
         description:
-          "If you have a character named Ariel in play, you pay 1 {I} less to play this character.",
+          "A GUPPY If you have a character named Ariel in play, you pay 1 {I} less to play this character.",
       },
     ],
   },
@@ -20,12 +20,13 @@ export const flounderCollectorsCompanionI18n: Record<Languages, I18nProperties> 
     version: "Begleiter der Sammlerin",
     text: [
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "ICH BIN KEINE KAULQUAPPE",
+        title: "Ich bin keine Kaulquappe",
         description:
-          "Wenn du einen Arielle-Charakter im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Wenn du einen Arielle-Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const flounderCollectorsCompanionI18n: Record<Languages, I18nProperties> 
     version: "Compagnon de la collectionneuse",
     text: [
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "JE NE SUIS PAS UN POISSON-LUNE",
+        title: "Je ne suis pas un poisson-lune",
         description:
-          "Si vous avez un personnage Ariel en jeu, jouer ce personnage coûte 1 de moins.",
+          "Si vous avez un personnage Ariel en jeu, jouer ce personnage coûte 1 {I} de moins.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const flounderCollectorsCompanionI18n: Record<Languages, I18nProperties> 
     version: "Compagno della Collezionista",
     text: [
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "NON SONO UN PESCE ROSSO",
+        title: "Non Sono un Pesce Rosso",
         description:
-          "Se hai in gioco un personaggio chiamato Ariel, paga 1 in meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio chiamato Ariel, paga 1 {I} in meno per giocare questo personaggio.",
       },
     ],
   },

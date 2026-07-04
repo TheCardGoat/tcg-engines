@@ -4,6 +4,17 @@ import { potOfHoneyI18n } from "./067-pot-of-honey.i18n";
 export const potOfHoney: ItemCard = {
   id: "cBK",
   canonicalId: "ci_cBK",
+  slug: "lorcana-ci_cBK",
+  printings: [
+    {
+      id: "set11-067",
+      artId: "set11-067",
+      setCode: "set11",
+      collectorNumber: "67",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-067"],
   cardType: "item",
   name: "Pot of Honey",
@@ -16,7 +27,7 @@ export const potOfHoney: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9ab9a1951014457b824c8f11a3d0fdbc",
-    tcgPlayer: 673417,
+    tcgPlayer: "673417",
   },
   text: [
     {

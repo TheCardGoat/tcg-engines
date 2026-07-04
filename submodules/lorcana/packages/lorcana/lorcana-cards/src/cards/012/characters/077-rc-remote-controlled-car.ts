@@ -4,6 +4,17 @@ import { rcRemotecontrolledCarI18n } from "./077-rc-remote-controlled-car.i18n";
 export const rcRemotecontrolledCar: CharacterCard = {
   id: "Q20",
   canonicalId: "ci_Q20",
+  slug: "lorcana-ci_Q20",
+  printings: [
+    {
+      id: "set12-077",
+      artId: "set12-077",
+      setCode: "set12",
+      collectorNumber: "77",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-077"],
   cardType: "character",
   name: "RC",
@@ -20,6 +31,7 @@ export const rcRemotecontrolledCar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_82226e6a95b54a879f3428c272b34108",
+    tcgPlayer: "692038",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd03ZakuFz020: UnitCard = {
   color: "green",
   traits: ["zeon", "cyclops team"],
   id: "GD03-020",
-  externalId: "gundam:gd03-020",
-  slug: "zaku-fz-gd03-020",
+  canonicalId: "GD03-020",
+  externalIds: { bandai: "gundam:gd03-020" },
+  slug: "zaku-ii-fz/gd03-020",
   displayName: "Zaku Ⅱ FZ",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-020",
   printings: [
     {
       id: "GD03-020",
+      artId: "GD03-020",
+      setCode: "GD03",
       collectorNumber: "GD03-020",
       cardNumber: "GD03-020",
       set: {
@@ -30,6 +33,8 @@ export const gd03ZakuFz020: UnitCard = {
     },
     {
       id: "GD03-020_p1",
+      artId: "GD03-020_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-020_p1",
       cardNumber: "GD03-020",
       set: {
@@ -45,6 +50,8 @@ export const gd03ZakuFz020: UnitCard = {
     },
     {
       id: "GD03-020_p3",
+      artId: "GD03-020_p3",
+      setCode: "GD03",
       collectorNumber: "GD03-020_p3",
       cardNumber: "GD03-020",
       set: {
@@ -54,10 +61,12 @@ export const gd03ZakuFz020: UnitCard = {
       },
       rarity: "rare",
       finish: "parallel",
+      imageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-020_p3.webp?260424",
       sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-020_p3.webp?260424",
       productName: "Booster Pack Steel Requiem [GD03] Release Event",
     },
   ],
+  reprints: ["GD03-020", "GD03-020_p1", "GD03-020_p3"],
   selectedPrintingId: "GD03-020",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-020.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-020.webp?260424",

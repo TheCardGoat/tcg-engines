@@ -42,6 +42,7 @@
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
+    "@tcg/card-model": "link:../../../agnostic-simulator/packages/card-model",
     "@tcg/cyberpunk-types": "workspace:*"
   },
   "devDependencies": {

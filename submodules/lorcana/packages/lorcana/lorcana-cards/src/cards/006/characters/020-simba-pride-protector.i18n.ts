@@ -20,10 +20,11 @@ export const simbaPrideProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Pride Protector",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Simba.)",
       },
       {
-        title: "UNDERSTAND THE BALANCE",
+        title: "Understand the Balance",
         description:
           "At the end of your turn, if this character is exerted, you may ready your other characters.",
       },
@@ -34,10 +35,11 @@ export const simbaPrideProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Pride Protector",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Simba.)",
       },
       {
-        title: "UNDERSTAND THE BALANCE",
+        title: "Understand the Balance",
         description:
           "At the end of your turn, if this character is exerted, you may ready your other characters.",
       },
@@ -48,10 +50,11 @@ export const simbaPrideProtectorI18n: Record<Languages, I18nProperties> = {
     version: "Pride Protector",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Simba.)",
       },
       {
-        title: "UNDERSTAND THE BALANCE",
+        title: "Understand the Balance",
         description:
           "At the end of your turn, if this character is exerted, you may ready your other characters.",
       },

@@ -17,9 +17,9 @@ export const dellaDuckReturningMotherI18n: Record<Languages, I18nProperties> = {
     version: "Zurückkehrende Mutter",
     text: [
       {
-        title: "HIER, UM ZU HELFEN",
+        title: "Hier, um zu helfen",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du einen Charakter deiner Wahl mit Stärken bereit machen. Wenn du dies tust, kann jener in diesem Zug nicht mehr erkunden oder herausfordern.",
+          "Wenn du diesen Charakter ausspielst, darfst du einen Charakter deiner Wahl mit <Stärken> bereit machen. Wenn du dies tust, kann jener in diesem Zug nicht mehr erkunden oder herausfordern.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const dellaDuckReturningMotherI18n: Record<Languages, I18nProperties> = {
     version: "Mère en chemin",
     text: [
       {
-        title: "LÀ POUR AIDER",
+        title: "Là pour aider",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage ayant Boost et le redresser. Si vous le faites, ce personnage-là ne peut ni être envoyé à l'aventure ni défier pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage ayant <Boost> et le redresser. Si vous le faites, ce personnage-là ne peut ni être envoyé à l'aventure ni défier pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const dellaDuckReturningMotherI18n: Record<Languages, I18nProperties> = {
     version: "Madre Ritornata",
     text: [
       {
-        title: "TI AIUTERÒ",
+        title: "Ti Aiuterò",
         description:
-          "Quando giochi questo personaggio, puoi preparare un personaggio a tua scelta con Potenziamento. Se lo fai, non può andare all'avventura o sfidare per il resto di questo turno.",
+          "Quando giochi questo personaggio, puoi preparare un personaggio a tua scelta con <Potenziamento>. Se lo fai, non può andare all'avventura o sfidare per il resto di questo turno.",
       },
     ],
   },

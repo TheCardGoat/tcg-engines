@@ -4,6 +4,17 @@ import { stegmuttClumsyDinosaurI18n } from "./079-stegmutt-clumsy-dinosaur.i18n"
 export const stegmuttClumsyDinosaur: CharacterCard = {
   id: "28g",
   canonicalId: "ci_28g",
+  slug: "lorcana-ci_28g",
+  printings: [
+    {
+      id: "set11-079",
+      artId: "set11-079",
+      setCode: "set11",
+      collectorNumber: "79",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-079"],
   cardType: "character",
   name: "Stegmutt",
@@ -20,7 +31,7 @@ export const stegmuttClumsyDinosaur: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5864156730e6408181fd43e5a59dbe05",
-    tcgPlayer: 675390,
+    tcgPlayer: "675390",
   },
   text: [
     {

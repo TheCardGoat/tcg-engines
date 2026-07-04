@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import type { ServerGameEngine } from "@tcg/shared/game-engine";
-import { serializeCyberpunkState } from "./state-view";
+import { serializeCyberpunkState } from "./state-view.js";
 
 function makeMockEngine(state: Record<string, unknown>): ServerGameEngine {
   return {

@@ -7,14 +7,17 @@ export const gd03HowManyMilesToTheBattlefield108: CommandCard = {
   color: "green",
   traits: ["zeon", "cyclops team"],
   id: "GD03-108",
-  externalId: "gundam:gd03-108",
-  slug: "how-many-miles-to-the-battlefield-gd03-108",
+  canonicalId: "GD03-108",
+  externalIds: { bandai: "gundam:gd03-108" },
+  slug: "how-many-miles-to-the-battlefield/gd03-108",
   displayName: "How Many Miles to the Battlefield?",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-108",
   printings: [
     {
       id: "GD03-108",
+      artId: "GD03-108",
+      setCode: "GD03",
       collectorNumber: "GD03-108",
       cardNumber: "GD03-108",
       set: {
@@ -29,6 +32,7 @@ export const gd03HowManyMilesToTheBattlefield108: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-108"],
   selectedPrintingId: "GD03-108",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-108.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-108.webp?260424",

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { johnSmithUndauntedProtectorI18n } from "./193-john-smith-undaunted-protector.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const johnSmithUndauntedProtector: CharacterCard = {
   id: "h1O",
   canonicalId: "ci_h1O",
+  slug: "lorcana-ci_h1O",
+  printings: [
+    {
+      id: "set11-193",
+      artId: "set11-193",
+      setCode: "set11",
+      collectorNumber: "193",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-193"],
   cardType: "character",
   name: "John Smith",
@@ -21,7 +33,7 @@ export const johnSmithUndauntedProtector: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_26b1e9d58acf429aa2d77f89f6534c16",
-    tcgPlayer: 676245,
+    tcgPlayer: "676245",
   },
   text: [
     {

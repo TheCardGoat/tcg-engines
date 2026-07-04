@@ -17,9 +17,9 @@ export const princeJohnGoldLoverI18n: Record<Languages, I18nProperties> = {
     version: "Goldliebhaber",
     text: [
       {
-        title: "WUNDERSCHÖNE, LIEBLICHE STEUERN",
+        title: "Wunderschöne, liebliche Steuern",
         description:
-          "— Spiele einen Gegenstand, der 5 oder weniger kostet, von deiner Hand oder aus deinem Ablagestapel kostenlos und erschöpft aus.",
+          "{E} — Spiele einen Gegenstand, der 5 oder weniger kostet, von deiner Hand oder aus deinem Ablagestapel kostenlos und erschöpft aus.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const princeJohnGoldLoverI18n: Record<Languages, I18nProperties> = {
     version: "Amateur d'or",
     text: [
       {
-        title: "MAGNIFIQUES TAXES",
+        title: "Magnifiques taxes",
         description:
-          "— Jouez gratuitement un objet coûtant 5 ou moins de votre main ou de votre défausse. Il entre en jeu épuisé.",
+          "{E} — Jouez gratuitement un objet coûtant 5 ou moins de votre main ou de votre défausse. Il entre en jeu épuisé.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const princeJohnGoldLoverI18n: Record<Languages, I18nProperties> = {
     version: "Amante dell'Oro",
     text: [
       {
-        title: "BELLISSIME, ADORABILI TASSE",
+        title: "Bellissime, Adorabili Tasse",
         description:
-          "— Gioca gratis un oggetto dalla tua mano o dai tuoi scarti con costo 5 o inferiore, impegnato.",
+          "{E} — Gioca gratis un oggetto dalla tua mano o dai tuoi scarti con costo 5 o inferiore, impegnato.",
       },
     ],
   },

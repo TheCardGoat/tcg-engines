@@ -4,6 +4,17 @@ import { madDogKarnagesFirstMateI18n } from "./093-mad-dog-karnages-first-mate.i
 export const madDogKarnagesFirstMate: CharacterCard = {
   id: "rMw",
   canonicalId: "ci_rMw",
+  slug: "lorcana-ci_rMw",
+  printings: [
+    {
+      id: "set8-093",
+      artId: "set8-093",
+      setCode: "set8",
+      collectorNumber: "93",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-093"],
   cardType: "character",
   name: "Mad Dog",
@@ -20,7 +31,7 @@ export const madDogKarnagesFirstMate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a48e0fd953434daa8315590258fe62a6",
-    tcgPlayer: 631680,
+    tcgPlayer: "631680",
   },
   text: [
     {

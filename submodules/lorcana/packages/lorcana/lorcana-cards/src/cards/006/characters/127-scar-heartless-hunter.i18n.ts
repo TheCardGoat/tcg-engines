@@ -17,7 +17,7 @@ export const scarHeartlessHunterI18n: Record<Languages, I18nProperties> = {
     version: "Herzloser Jäger",
     text: [
       {
-        title: "ZÄHNE BLANK WIE NEID",
+        title: "Zähne blank wie Neid",
         description:
           "Wenn du diesen Charakter ausspielst, wähle einen deiner Charaktere und füge ihm 2 Schaden zu, um einem anderen Charakter deiner Wahl 2 Schaden zuzufügen.",
       },
@@ -28,7 +28,7 @@ export const scarHeartlessHunterI18n: Record<Languages, I18nProperties> = {
     version: "Chasseur sans cœur",
     text: [
       {
-        title: "VOTRE ROI VOUS INVITE À LA FÊTE",
+        title: "Votre roi vous invite à la fête",
         description:
           "Lorsque vous jouez ce personnage, choisissez l'un de vos personnages et infligez-lui 2 dommages pour infliger 2 dommages à un autre personnage au choix.",
       },
@@ -39,7 +39,7 @@ export const scarHeartlessHunterI18n: Record<Languages, I18nProperties> = {
     version: "Cacciatore Spietato",
     text: [
       {
-        title: "AFFILIAMO LE ZANNE",
+        title: "Affiliamo le Zanne",
         description:
           "Quando giochi questo personaggio, infliggi 2 danni a un tuo personaggio a tua scelta per infliggere 2 danni a un altro personaggio a tua scelta.",
       },

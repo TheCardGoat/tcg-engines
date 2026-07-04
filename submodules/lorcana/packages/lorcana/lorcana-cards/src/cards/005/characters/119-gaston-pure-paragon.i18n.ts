@@ -6,9 +6,8 @@ export const gastonPureParagonI18n: Record<Languages, I18nProperties> = {
     version: "Pure Paragon",
     text: [
       {
-        title: "A MAN AMONG MEN!",
-        description:
-          "For each damaged character you have in play, you pay 2 {I} less to play this character.",
+        title:
+          "A MAN AMONG MEN! For each damaged character you have in play, you pay 2 {I} less to play this character.",
       },
       {
         title: "Rush",
@@ -20,12 +19,12 @@ export const gastonPureParagonI18n: Record<Languages, I18nProperties> = {
     version: "Redlich, solid, tadellos",
     text: [
       {
-        title: "DER MANN UNTER DEN MÄNNERN!",
+        title: "Der Mann unter den Männern!",
         description:
-          "Für jeden beschädigten Charakter den du im Spiel hast, zahlst du 2 weniger, um diesen Charakter auszuspielen.",
+          "Für jeden beschädigten Charakter den du im Spiel hast, zahlst du 2 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
     ],
   },
@@ -34,12 +33,12 @@ export const gastonPureParagonI18n: Record<Languages, I18nProperties> = {
     version: "Du chic et de la prestance",
     text: [
       {
-        title: "LE PLUS CLASSE, C'EST GASTON!",
+        title: "Le plus classe, c'est Gaston!",
         description:
-          "Jouer ce personnage vous coûte 2 de moins pour chacun de vos personnages ayant au moins un dommage sur lui.",
+          "Jouer ce personnage vous coûte 2 {I} de moins pour chacun de vos personnages ayant au moins un dommage sur lui.",
       },
       {
-        title: "Charge",
+        title: "<Charge>",
       },
     ],
   },
@@ -48,12 +47,12 @@ export const gastonPureParagonI18n: Record<Languages, I18nProperties> = {
     version: "Ganzo Più Ganzo",
     text: [
       {
-        title: "L'UOMO PERFETTO!",
+        title: "L'Uomo Perfetto!",
         description:
-          "Per ogni personaggio danneggiato che hai in gioco, paga 2 in meno per giocare questo personaggio.",
+          "Per ogni personaggio danneggiato che hai in gioco, paga 2 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
     ],
   },

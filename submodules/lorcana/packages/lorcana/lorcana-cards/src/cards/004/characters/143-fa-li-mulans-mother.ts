@@ -4,6 +4,17 @@ import { faLiMulansMotherI18n } from "./143-fa-li-mulans-mother.i18n";
 export const faLiMulansMother: CharacterCard = {
   id: "DxW",
   canonicalId: "ci_DxW",
+  slug: "lorcana-ci_DxW",
+  printings: [
+    {
+      id: "set4-143",
+      artId: "set4-143",
+      setCode: "set4",
+      collectorNumber: "143",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-143"],
   cardType: "character",
   name: "Fa Li",
@@ -21,7 +32,7 @@ export const faLiMulansMother: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_b792d79485f44ddd8d1fb20b25cb19a3",
-    tcgPlayer: 549527,
+    tcgPlayer: "549527",
   },
   classifications: ["Storyborn", "Mentor"],
   i18n: faLiMulansMotherI18n,

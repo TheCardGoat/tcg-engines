@@ -4,6 +4,17 @@ import { taffytaMuttonfudgeCrowdFavoriteI18n } from "./114-taffyta-muttonfudge-c
 export const taffytaMuttonfudgeCrowdFavorite: CharacterCard = {
   id: "47M",
   canonicalId: "ci_47M",
+  slug: "lorcana-ci_47M",
+  printings: [
+    {
+      id: "set5-114",
+      artId: "set5-114",
+      setCode: "set5",
+      collectorNumber: "114",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-114"],
   cardType: "character",
   name: "Taffyta Muttonfudge",
@@ -20,7 +31,7 @@ export const taffytaMuttonfudgeCrowdFavorite: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4a0125f47df34b3c9f0f097e0cc68c84",
-    tcgPlayer: 555269,
+    tcgPlayer: "555269",
   },
   text: [
     {

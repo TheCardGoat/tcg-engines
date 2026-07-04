@@ -4,6 +4,17 @@ import { peteBornToCheatI18n } from "./085-pete-born-to-cheat.i18n";
 export const peteBornToCheat: CharacterCard = {
   id: "NSZ",
   canonicalId: "ci_NSZ",
+  slug: "lorcana-ci_NSZ",
+  printings: [
+    {
+      id: "set4-085",
+      artId: "set4-085",
+      setCode: "set4",
+      collectorNumber: "85",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-085"],
   cardType: "character",
   name: "Pete",
@@ -19,7 +30,7 @@ export const peteBornToCheat: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_07556ab263e64b3e816e9b094893b497",
-    tcgPlayer: 550580,
+    tcgPlayer: "550580",
   },
   text: [
     {

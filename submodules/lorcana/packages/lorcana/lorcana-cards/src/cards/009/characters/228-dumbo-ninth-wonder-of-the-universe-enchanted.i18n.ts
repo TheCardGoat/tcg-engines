@@ -24,16 +24,16 @@ export const dumboNinthWonderOfTheUniverseEnchantedI18n: Record<Languages, I18nP
     version: "Das neunte Weltwunder",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "REKORDE BRECHEN, 1",
-        description: "— Ziehe 1 Karte und sammle 1 Legende.",
+        title: "Rekorde brechen",
+        description: "{E}, 1 {I} — Ziehe 1 Karte und sammle 1 Legende.",
       },
       {
-        title: "GESCHICHTE SCHREIBEN",
+        title: "Geschichte schreiben",
         description:
-          'Deine anderen Charaktere mit Wendig erhalten ", 1 — Ziehe 1 Karte und sammle 1 Legende".',
+          'Deine anderen Charaktere mit <Wendig> erhalten "{E}, 1 {I} — Ziehe 1 Karte und sammle 1 Legende".',
       },
     ],
   },
@@ -42,16 +42,16 @@ export const dumboNinthWonderOfTheUniverseEnchantedI18n: Record<Languages, I18nP
     version: "Neuvième merveille du monde",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "BATTANT DES RECORDS, 1",
-        description: "— Piochez une carte et gagnez 1 éclat de Lore.",
+        title: "Battant des records",
+        description: "{E}, 1 {I} — Piochez une carte et gagnez 1 éclat de Lore.",
       },
       {
-        title: "LA UNE DE TOUS LES JOURNAUX",
+        title: "La une de tous les journaux",
         description:
-          "Vos autres personnages avec Insaisissable gagnent «, 1 — Piochez une carte. Gagnez 1 éclat de Lore. »",
+          "Vos autres personnages avec <Insaisissable> gagnent « {E}, 1 {I} — Piochez une carte. Gagnez 1 éclat de Lore. »",
       },
     ],
   },
@@ -60,16 +60,16 @@ export const dumboNinthWonderOfTheUniverseEnchantedI18n: Record<Languages, I18nP
     version: "Nona Meraviglia dell'Universo",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "SUPERARE I RECORD, 1",
-        description: "— Pesca una carta e ottieni 1 leggenda.",
+        title: "Superare i Record",
+        description: "{E}, 1 {I} — Pesca una carta e ottieni 1 leggenda.",
       },
       {
-        title: "PASSERAI ALLA STORIA I",
+        title: "Passerai alla Storia",
         description:
-          'tuoi altri personaggi con Sfuggente ottengono ", 1 — Pesca una carta e ottieni 1 leggenda".',
+          'I tuoi altri personaggi con <Sfuggente> ottengono "{E}, 1 {I} — Pesca una carta e ottieni 1 leggenda".',
       },
     ],
   },

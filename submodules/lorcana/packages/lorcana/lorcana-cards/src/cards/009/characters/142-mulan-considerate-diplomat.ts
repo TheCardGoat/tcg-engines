@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { mulanConsiderateDiplomatI18n } from "./142-mulan-considerate-diplomat.i18n";
 
 export const mulanConsiderateDiplomat: CharacterCard = {
-  id: "bDb",
+  id: "EOk",
   canonicalId: "ci_uTh",
+  slug: "lorcana-ci_uTh",
+  printings: [
+    {
+      id: "set9-142",
+      artId: "set9-142",
+      setCode: "set9",
+      collectorNumber: "142",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-142"],
   cardType: "character",
   name: "Mulan",
@@ -20,7 +31,7 @@ export const mulanConsiderateDiplomat: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_08b670dabf3b4ff0a56cb4525b0b57db",
-    tcgPlayer: 651111,
+    tcgPlayer: "651111",
   },
   text: [
     {

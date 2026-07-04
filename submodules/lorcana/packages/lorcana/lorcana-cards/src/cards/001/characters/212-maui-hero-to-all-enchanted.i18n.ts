@@ -18,10 +18,10 @@ export const mauiHeroToAllEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Held von Allen",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "Impulsiv",
+        title: "<Impulsiv>",
       },
     ],
   },
@@ -30,10 +30,10 @@ export const mauiHeroToAllEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Idole des Hommes",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "Combattant",
+        title: "<Combattant>",
       },
     ],
   },
@@ -42,10 +42,10 @@ export const mauiHeroToAllEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Hero to All",
     text: [
       {
-        title: "Rush",
+        title: "<Rush> (This character can challenge the turn they're played.)",
       },
       {
-        title: "Reckless",
+        title: "<Reckless> (This character can't quest and must challenge each turn if able.)",
       },
     ],
   },

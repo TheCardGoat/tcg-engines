@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { broadwaySturdyAndStrongI18n } from "./190-broadway-sturdy-and-strong.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const broadwaySturdyAndStrong: CharacterCard = {
   id: "y1f",
   canonicalId: "ci_y1f",
+  slug: "lorcana-ci_y1f",
+  printings: [
+    {
+      id: "set10-190",
+      artId: "set10-190",
+      setCode: "set10",
+      collectorNumber: "190",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-190"],
   cardType: "character",
   name: "Broadway",
@@ -22,7 +34,7 @@ export const broadwaySturdyAndStrong: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_63132ee7ba1f4847a88e67273e1714fa",
-    tcgPlayer: 658294,
+    tcgPlayer: "658294",
   },
   text: [
     {

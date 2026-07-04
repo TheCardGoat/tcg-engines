@@ -4,6 +4,17 @@ import { seldomAllTheySeemI18n } from "./164-seldom-all-they-seem.i18n";
 export const seldomAllTheySeem: ActionCard = {
   id: "2xE",
   canonicalId: "ci_2xE",
+  slug: "lorcana-ci_2xE",
+  printings: [
+    {
+      id: "set4-164",
+      artId: "set4-164",
+      setCode: "set4",
+      collectorNumber: "164",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-164"],
   cardType: "action",
   name: "Seldom All They Seem",
@@ -16,7 +27,7 @@ export const seldomAllTheySeem: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c894fefd53624306a2a7f29942641a9c",
-    tcgPlayer: 547771,
+    tcgPlayer: "547771",
   },
   text: "Chosen character gets -3 {S} this turn.",
   actionSubtype: "song",

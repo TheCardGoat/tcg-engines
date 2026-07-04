@@ -4,6 +4,17 @@ import { ursulasGardenFullOfTheUnfortunateI18n } from "./102-ursulas-garden-full
 export const ursulasGardenFullOfTheUnfortunate: LocationCard = {
   id: "S3h",
   canonicalId: "ci_S3h",
+  slug: "lorcana-ci_S3h",
+  printings: [
+    {
+      id: "set4-102",
+      artId: "set4-102",
+      setCode: "set4",
+      collectorNumber: "102",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-102"],
   cardType: "location",
   name: "Ursula’s Garden",
@@ -20,7 +31,7 @@ export const ursulasGardenFullOfTheUnfortunate: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5b7970f5f54d4311882227c856ac28ac",
-    tcgPlayer: 547688,
+    tcgPlayer: "547688",
   },
   text: [
     {

@@ -17,7 +17,7 @@ export const mrLitwakArcadeOwnerI18n: Record<Languages, I18nProperties> = {
     version: "Spielhallenbesitzer",
     text: [
       {
-        title: "DIE GANZE BANDE IST HIER",
+        title: "Die ganze Bande ist hier",
         description:
           "Einmal während deines Zuges, wenn du einen anderen Charakter ausspielst, darfst du diesen Charakter bereit machen. Er kann in diesem Zug nicht mehr erkunden oder herausfordern.",
       },
@@ -28,7 +28,7 @@ export const mrLitwakArcadeOwnerI18n: Record<Languages, I18nProperties> = {
     version: "Propriétaire de salle d'arcade",
     text: [
       {
-        title: "TOUTE LA BANDE EST LÀ",
+        title: "Toute la bande est là",
         description:
           "Une fois durant votre tour, lorsque vous jouez un autre personnage, vous pouvez redresser ce personnage-ci. Il ne peut ni partir à l'aventure ni défier pour le reste de ce tour.",
       },
@@ -39,7 +39,7 @@ export const mrLitwakArcadeOwnerI18n: Record<Languages, I18nProperties> = {
     version: "Proprietario dell'Arcade",
     text: [
       {
-        title: "LA GANG È TUTTA QUI",
+        title: "La Gang è tutta Qui",
         description:
           "Una volta durante il tuo turno, ogni volta che giochi un altro personaggio, puoi preparare questo personaggio. Non può andare all'avventura o sfidare per il resto di questo turno.",
       },

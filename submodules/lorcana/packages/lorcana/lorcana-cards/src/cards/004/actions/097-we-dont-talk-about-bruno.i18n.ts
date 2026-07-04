@@ -11,10 +11,28 @@ export const weDontTalkAboutBrunoI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Ne parlons pas de Bruno",
-    text: "Choisissez un personnage et renvoyez-le dans la main de son propriétaire. Puis, ce joueur doit défausser une carte au hasard de sa main.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage et renvoyez-le dans la main de son propriétaire. Puis, ce joueur doit défausser une carte au hasard de sa main.",
+      },
+    ],
   },
   it: {
     name: "Non Si Nomina Bruno",
-    text: "(Un personaggio con costo 5 o superiore può per cantare questa canzone gratis.) Fai ripendere in mano al suo giocatore un personaggio a tua scelta, poi quel giocatore scarta una carta a caso.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Fai ripendere in mano al suo giocatore un personaggio a tua scelta, poi quel giocatore scarta una carta a caso.",
+      },
+    ],
   },
 };

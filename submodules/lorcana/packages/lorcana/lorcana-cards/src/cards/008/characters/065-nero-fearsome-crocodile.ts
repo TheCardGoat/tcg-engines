@@ -4,6 +4,17 @@ import { neroFearsomeCrocodileI18n } from "./065-nero-fearsome-crocodile.i18n";
 export const neroFearsomeCrocodile: CharacterCard = {
   id: "hjp",
   canonicalId: "ci_hjp",
+  slug: "lorcana-ci_hjp",
+  printings: [
+    {
+      id: "set8-065",
+      artId: "set8-065",
+      setCode: "set8",
+      collectorNumber: "65",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-065"],
   cardType: "character",
   name: "Nero",
@@ -20,7 +31,7 @@ export const neroFearsomeCrocodile: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_25752105ef234b63b373e43d61eaf48b",
-    tcgPlayer: 633430,
+    tcgPlayer: "633430",
   },
   text: [
     {

@@ -16,8 +16,8 @@ export const akelaForestRunnerI18n: Record<Languages, I18nProperties> = {
     version: "Waldläufer",
     text: [
       {
-        title: "DEM RUDEL VORAUS 1",
-        description: "— Dieser Charakter erhält in diesem Zug +1.",
+        title: "Dem Rudel voraus",
+        description: "1 {I} — Dieser Charakter erhält in diesem Zug +1 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const akelaForestRunnerI18n: Record<Languages, I18nProperties> = {
     version: "Court dans la forêt",
     text: [
       {
-        title: "À L'AVANT DE LA MEUTE",
-        description: "1 — Ce personnage gagne +1 pour le reste de ce tour.",
+        title: "À l'avant de la meute",
+        description: "1 {I} — Ce personnage gagne +1 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const akelaForestRunnerI18n: Record<Languages, I18nProperties> = {
     version: "Corridore Silvano",
     text: [
       {
-        title: "DAVANTI AL BRANCO 1",
-        description: "— Questo personaggio riceve +1 per questo turno.",
+        title: "Davanti al Branco",
+        description: "1 {I} — Questo personaggio riceve +1 {S} per questo turno.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const gd01ElanCeresEnhancedPersonNumber4098: PilotCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-098",
-  externalId: "gundam:gd01-098",
-  slug: "elan-ceres-enhanced-person-number-4-gd01-098",
+  canonicalId: "GD01-098",
+  externalIds: { bandai: "gundam:gd01-098" },
+  slug: "elan-ceres-enhanced-person-number-4/gd01-098",
   displayName: "Elan Ceres (Enhanced Person Number 4)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-098",
   printings: [
     {
       id: "GD01-098",
+      artId: "GD01-098",
+      setCode: "GD01",
       collectorNumber: "GD01-098",
       cardNumber: "GD01-098",
       set: {
@@ -29,6 +32,7 @@ export const gd01ElanCeresEnhancedPersonNumber4098: PilotCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-098"],
   selectedPrintingId: "GD01-098",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-098.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-098.webp?260424",

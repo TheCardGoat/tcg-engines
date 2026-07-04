@@ -4,6 +4,17 @@ import { rayaInfiltrationExpertI18n } from "./100-raya-infiltration-expert.i18n"
 export const rayaInfiltrationExpert: CharacterCard = {
   id: "XZW",
   canonicalId: "ci_XZW",
+  slug: "lorcana-ci_XZW",
+  printings: [
+    {
+      id: "set8-100",
+      artId: "set8-100",
+      setCode: "set8",
+      collectorNumber: "100",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-100"],
   cardType: "character",
   name: "Raya",
@@ -20,7 +31,7 @@ export const rayaInfiltrationExpert: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0a97dde4f01045ccb29a9f61ac3c36d8",
-    tcgPlayer: 631413,
+    tcgPlayer: "631413",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { mamaOdieSolitarySageI18n } from "./057-mama-odie-solitary-sage.i18n";
 export const mamaOdieSolitarySage: CharacterCard = {
   id: "Few",
   canonicalId: "ci_Few",
+  slug: "lorcana-ci_Few",
+  printings: [
+    {
+      id: "set6-057",
+      artId: "set6-057",
+      setCode: "set6",
+      collectorNumber: "57",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-057"],
   cardType: "character",
   name: "Mama Odie",
@@ -20,7 +31,7 @@ export const mamaOdieSolitarySage: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c6f28ec2e7a94ce0901675915ba9ff7c",
-    tcgPlayer: 591113,
+    tcgPlayer: "591113",
   },
   text: [
     {
@@ -36,7 +47,10 @@ export const mamaOdieSolitarySage: CharacterCard = {
         chooser: "CONTROLLER",
         effect: {
           type: "move-damage",
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           from: "CHOSEN_CHARACTER",
           to: "CHOSEN_OPPOSING_CHARACTER",
         },

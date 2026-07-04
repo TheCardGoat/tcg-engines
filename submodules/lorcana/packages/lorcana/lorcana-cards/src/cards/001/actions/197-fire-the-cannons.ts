@@ -4,6 +4,17 @@ import { fireTheCannonsI18n } from "./197-fire-the-cannons.i18n";
 export const fireTheCannons: ActionCard = {
   id: "BFV",
   canonicalId: "ci_Ots",
+  slug: "lorcana-ci_Ots",
+  printings: [
+    {
+      id: "set1-197",
+      artId: "set1-197",
+      setCode: "set1",
+      collectorNumber: "197",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-197", "set9-200"],
   cardType: "action",
   name: "Fire the Cannons!",
@@ -16,7 +27,7 @@ export const fireTheCannons: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5056d5a4da8e4d9bb329620e1e77329b",
-    tcgPlayer: 650133,
+    tcgPlayer: "650133",
   },
   text: "Deal 2 damage to chosen character.",
   abilities: [

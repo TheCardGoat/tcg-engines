@@ -3,7 +3,18 @@ import { jollyRogerHooksShipI18n } from "./135-jolly-roger-hooks-ship.i18n";
 
 export const jollyRogerHooksShip: LocationCard = {
   id: "UV5",
-  canonicalId: "ci_UV5",
+  canonicalId: "ci_UWn",
+  slug: "lorcana-ci_UWn",
+  printings: [
+    {
+      id: "set3-135",
+      artId: "set3-135",
+      setCode: "set3",
+      collectorNumber: "135",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-135"],
   cardType: "location",
   name: "Jolly Roger",
@@ -20,7 +31,7 @@ export const jollyRogerHooksShip: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f74acb5e986f496092a1c5ef8bfa741a",
-    tcgPlayer: 538280,
+    tcgPlayer: "538280",
   },
   text: [
     {

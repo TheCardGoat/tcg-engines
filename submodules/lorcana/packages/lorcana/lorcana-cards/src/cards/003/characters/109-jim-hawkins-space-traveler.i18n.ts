@@ -21,12 +21,12 @@ export const jimHawkinsSpaceTravelerI18n: Record<Languages, I18nProperties> = {
     version: "Raumfahrer",
     text: [
       {
-        title: "DAS IST ES!",
+        title: "Das ist es!",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Ort, der 4 oder weniger kostet, kostenlos ausspielen.",
       },
       {
-        title: "ANS RUDER STELLEN",
+        title: "Ans Ruder stellen",
         description:
           "Jedes Mal, wenn du einen Ort ausspielst, darfst du diesen Charakter kostenlos zu diesem Ort bewegen.",
       },
@@ -37,12 +37,12 @@ export const jimHawkinsSpaceTravelerI18n: Record<Languages, I18nProperties> = {
     version: "Voyageur de l'espace",
     text: [
       {
-        title: "C'EST GAGNÉ!",
+        title: "C'est gagné!",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez jouer gratuitement un lieu coûtant 4 ou moins.",
       },
       {
-        title: "IL FAUT TE METTRE À LA BARRE",
+        title: "Il faut te mettre à la barre",
         description:
           "Chaque fois que vous jouez un lieu, vous pouvez y déplacer ce personnage gratuitement.",
       },
@@ -53,12 +53,12 @@ export const jimHawkinsSpaceTravelerI18n: Record<Languages, I18nProperties> = {
     version: "Viaggiatore Spaziale",
     text: [
       {
-        title: "GUARDA QUI!",
+        title: "Guarda Qui!",
         description:
           "Quando giochi questo personaggio, puoi giocare gratis un luogo con costo 4 o inferiore.",
       },
       {
-        title: "PRENDERE IN MANO IL TIMONE",
+        title: "Prendere in Mano il Timone",
         description:
           "Ogni volta che giochi un luogo, questo personaggio può spostarsi in quel luogo gratis.",
       },

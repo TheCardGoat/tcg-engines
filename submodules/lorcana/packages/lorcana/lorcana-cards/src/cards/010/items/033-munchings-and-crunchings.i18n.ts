@@ -18,12 +18,12 @@ export const munchingsAndCrunchingsI18n: Record<Languages, I18nProperties> = {
     name: "Ein Leckerschmeckerchen",
     text: [
       {
-        title: "SO EIN SAFTIGER APFEL",
-        description: "— Entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
+        title: "So ein saftiger Apfel",
+        description: "{E} — Entferne bis zu 2 Schaden von einem Charakter deiner Wahl.",
       },
       {
-        title: "KOMM HERAUS",
-        description: "Du zahlst 1 weniger, um Gurgi-Charaktere auszuspielen.",
+        title: "Komm heraus",
+        description: "Du zahlst 1 {I} weniger, um Gurgi-Charaktere auszuspielen.",
       },
     ],
   },
@@ -31,12 +31,12 @@ export const munchingsAndCrunchingsI18n: Record<Languages, I18nProperties> = {
     name: "Mâchouiller et crachouiller",
     text: [
       {
-        title: "BIEN JUTEUSE EN PLUS",
-        description: "— Choisissez un personnage et retirez-lui jusqu'à 2 dommages.",
+        title: "Bien juteuse en plus",
+        description: "{E} — Choisissez un personnage et retirez-lui jusqu'à 2 dommages.",
       },
       {
-        title: "VIENS MAINTENANT",
-        description: "Jouer des personnages nommés Gurgi vous coûte 1 de moins.",
+        title: "Viens maintenant",
+        description: "Jouer des personnages nommés Gurgi vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -44,12 +44,12 @@ export const munchingsAndCrunchingsI18n: Record<Languages, I18nProperties> = {
     name: "Mangiucchiare e Sgranocchiare",
     text: [
       {
-        title: "CHE BELLA MELA SUCCOSA",
-        description: "— Rimuovi fino a 2 danni da un personaggio a tua scelta.",
+        title: "Che Bella Mela Succosa",
+        description: "{E} — Rimuovi fino a 2 danni da un personaggio a tua scelta.",
       },
       {
-        title: "VIENI FUORI",
-        description: "Paga 1 in meno per giocare i personaggi chiamati Gurghi.",
+        title: "Vieni Fuori",
+        description: "Paga 1 {I} in meno per giocare i personaggi chiamati Gurghi.",
       },
     ],
   },

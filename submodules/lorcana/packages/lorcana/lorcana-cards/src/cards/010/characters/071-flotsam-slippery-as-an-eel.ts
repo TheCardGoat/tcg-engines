@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { evasive } from "../../../helpers/abilities/evasive";
 import { flotsamSlipperyAsAnEelI18n } from "./071-flotsam-slippery-as-an-eel.i18n";
+
+import { evasive } from "../../../helpers/abilities/evasive";
 
 export const flotsamSlipperyAsAnEel: CharacterCard = {
   id: "gWd",
   canonicalId: "ci_gWd",
+  slug: "lorcana-ci_gWd",
+  printings: [
+    {
+      id: "set10-071",
+      artId: "set10-071",
+      setCode: "set10",
+      collectorNumber: "71",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-071"],
   cardType: "character",
   name: "Flotsam",
@@ -21,7 +33,7 @@ export const flotsamSlipperyAsAnEel: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_478ffd8c6de24f6c8beda8f4863b7154",
-    tcgPlayer: 659421,
+    tcgPlayer: "659421",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Ally"],

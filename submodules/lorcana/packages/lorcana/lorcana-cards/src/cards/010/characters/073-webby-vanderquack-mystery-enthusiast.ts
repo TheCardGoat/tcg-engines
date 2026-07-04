@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { webbyVanderquackMysteryEnthusiastI18n } from "./073-webby-vanderquack-mystery-enthusiast.i18n";
 
 export const webbyVanderquackMysteryEnthusiast: CharacterCard = {
-  id: "jsz",
+  id: "uiQ",
   canonicalId: "ci_Y0c",
+  slug: "lorcana-ci_Y0c",
+  printings: [
+    {
+      id: "set10-073",
+      artId: "set10-073",
+      setCode: "set10",
+      collectorNumber: "73",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-073"],
   cardType: "character",
   name: "Webby Vanderquack",
@@ -20,7 +31,7 @@ export const webbyVanderquackMysteryEnthusiast: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_63194dcb766c473093e3802f309030e0",
-    tcgPlayer: 660190,
+    tcgPlayer: "660190",
   },
   text: [
     {

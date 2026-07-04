@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
-import { playUrl } from "../../../../runtime/gameRuntimeApi";
-import { buildReplayDataUrl } from "../../replay/fetchReplay";
-import { buildGatewaySocketIoUrl, buildGatewayTicketUrl } from "./liveGateway";
-import { buildMatchContextUrl, buildMatchOverviewUrl } from "./matchContext";
+import { playUrl } from "../../../../runtime/gameRuntimeApi.js";
+import { buildReplayDataUrl } from "../../replay/fetchReplay.js";
+import { buildGatewaySocketIoUrl, buildGatewayTicketUrl } from "./liveGateway.js";
+import { buildMatchContextUrl, buildMatchOverviewUrl } from "./matchContext.js";
 
 describe("game-aware live route URL builders", () => {
   test("builds game-scoped match overview and context URLs", () => {

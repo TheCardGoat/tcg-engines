@@ -4,6 +4,17 @@ import { maleficentsStaffI18n } from "./065-maleficents-staff.i18n";
 export const maleficentsStaff: ItemCard = {
   id: "8Jv",
   canonicalId: "ci_O2Q",
+  slug: "lorcana-ci_O2Q",
+  printings: [
+    {
+      id: "set6-065",
+      artId: "set6-065",
+      setCode: "set6",
+      collectorNumber: "65",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-065"],
   cardType: "item",
   name: "Maleficent's Staff",
@@ -16,7 +27,7 @@ export const maleficentsStaff: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_66c2f5fd704b45bdbe79f585ac31d6fc",
-    tcgPlayer: 592034,
+    tcgPlayer: "592034",
   },
   text: [
     {

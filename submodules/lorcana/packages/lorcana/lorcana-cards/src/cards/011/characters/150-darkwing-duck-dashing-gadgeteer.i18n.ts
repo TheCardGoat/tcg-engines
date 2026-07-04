@@ -17,7 +17,7 @@ export const darkwingDuckDashingGadgeteerI18n: Record<Languages, I18nProperties>
     version: "Gerissener Tüftler",
     text: [
       {
-        title: "MODERNES WUNDER",
+        title: "Modernes Wunder",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 Gegenstandskarte aus deinem Ablagestapel unter dein Deck legen. Wenn du dies tust, darfst du einen Gegenstand, der 5 oder weniger kostet, aus deinem Ablagestapel kostenlos ausspielen.",
       },
@@ -28,7 +28,7 @@ export const darkwingDuckDashingGadgeteerI18n: Record<Languages, I18nProperties>
     version: "Fringant bricoleur de gadgets",
     text: [
       {
-        title: "MERVEILLE MODERNE",
+        title: "Merveille moderne",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez placer une carte Objet de votre défausse sous votre pioche. Si vous le faites, vous pouvez jouer gratuitement un objet coûtant 5 ou moins de votre défausse.",
       },
@@ -39,7 +39,7 @@ export const darkwingDuckDashingGadgeteerI18n: Record<Languages, I18nProperties>
     version: "Affascinante Appassionato di Gadget",
     text: [
       {
-        title: "MERAVIGLIA MODERNA",
+        title: "Meraviglia Moderna",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi mettere una carta oggetto dai tuoi scarti in fondo al tuo mazzo. Se lo fai, puoi giocare un oggetto con costo 5 o inferiore dai tuoi scarti, gratis.",
       },

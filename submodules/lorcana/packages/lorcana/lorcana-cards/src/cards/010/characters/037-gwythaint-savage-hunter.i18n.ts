@@ -20,10 +20,10 @@ export const gwythaintSavageHunterI18n: Record<Languages, I18nProperties> = {
     version: "Wilder Jäger",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "STURZFLUGANGRIFF",
+        title: "Sturzflugangriff",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, wählen alle gegnerischen Mitspielenden je einen ihrer bereiten Charaktere und erschöpfen ihn.",
       },
@@ -34,10 +34,10 @@ export const gwythaintSavageHunterI18n: Record<Languages, I18nProperties> = {
     version: "Chasseur sauvage",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "ATTAQUE EN PIQUÉ",
+        title: "Attaque en piqué",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, chaque adversaire choisit l'un de ses personnages redressés et l'épuise.",
       },
@@ -48,10 +48,10 @@ export const gwythaintSavageHunterI18n: Record<Languages, I18nProperties> = {
     version: "Cacciatore Selvaggio",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "ATTACCO IN PICCHIATA",
+        title: "Attacco in Picchiata",
         description:
           "Ogni volta che questo personaggio va all'avventura, ogni avversario sceglie e impegna uno dei suoi personaggi preparati.",
       },

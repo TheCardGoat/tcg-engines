@@ -3,18 +3,58 @@ import type { I18nProperties, Languages } from "@tcg/lorcana-types";
 export const dunbrochFamilyTapestryEnchantedI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "DunBroch Family Tapestry",
-    text: "\\Torn Apart\\ This item enters play exerted.\n\n\\Mend the Bond\\ {E}, Banish this item — Each player shuffles all character cards from their discard into their deck.",
+    text: [
+      {
+        title: "TORN APART",
+        description: "This item enters play exerted.",
+      },
+      {
+        title: "MEND THE BOND",
+        description:
+          "{E}, Banish this item — Each player shuffles all character cards from their discard into their deck.",
+      },
+    ],
   },
   de: {
-    name: "DunBroch Family Tapestry",
-    text: "\\Torn Apart\\ This item enters play exerted.\n\n\\Mend the Bond\\ {E}, Banish this item — Each player shuffles all character cards from their discard into their deck.",
+    name: "DunBroch-Familien-Wandteppich",
+    text: [
+      {
+        title: "Zerrissen",
+        description: "Dieser Gegenstand kommt erschöpft ins Spiel.",
+      },
+      {
+        title: "Das Band wiederherstellen",
+        description:
+          "{E}, Verbanne diesen Gegenstand — Alle Mitspielenden mischen alle Charakterkarten aus ihrem Ablagestapel zurück in ihr Deck.",
+      },
+    ],
   },
   fr: {
-    name: "DunBroch Family Tapestry",
-    text: "\\Torn Apart\\ This item enters play exerted.\n\n\\Mend the Bond\\ {E}, Banish this item — Each player shuffles all character cards from their discard into their deck.",
+    name: "Tapisserie familiale de DunBroch",
+    text: [
+      {
+        title: "Déchirée",
+        description: "Cet objet entre en jeu épuisé.",
+      },
+      {
+        title: "Répare le mal",
+        description:
+          "{E}, Bannissez cet objet — Chaque joueur mélange dans sa pioche toutes les cartes Personnage de sa défausse.",
+      },
+    ],
   },
   it: {
-    name: "DunBroch Family Tapestry",
-    text: "\\Torn Apart\\ This item enters play exerted.\n\n\\Mend the Bond\\ {E}, Banish this item — Each player shuffles all character cards from their discard into their deck.",
+    name: "Arazzo della Famiglia DunBroch",
+    text: [
+      {
+        title: "Strappato",
+        description: "Questo oggetto entra in gioco impegnato.",
+      },
+      {
+        title: "Riparare lo Strappo",
+        description:
+          "{E}, esilia questo oggetto — Ogni giocatore mescola tutte le carte personaggio dai suoi scarti nel suo mazzo.",
+      },
+    ],
   },
 };

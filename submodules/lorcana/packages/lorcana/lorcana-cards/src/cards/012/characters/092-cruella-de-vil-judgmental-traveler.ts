@@ -3,7 +3,18 @@ import { cruellaDeVilJudgmentalTravelerI18n } from "./092-cruella-de-vil-judgmen
 
 export const cruellaDeVilJudgmentalTraveler: CharacterCard = {
   id: "fQT",
-  canonicalId: "ci_fQT",
+  canonicalId: "ci_u7q",
+  slug: "lorcana-ci_u7q",
+  printings: [
+    {
+      id: "set12-092",
+      artId: "set12-092",
+      setCode: "set12",
+      collectorNumber: "92",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-092"],
   cardType: "character",
   name: "Cruella De Vil",
@@ -20,6 +31,7 @@ export const cruellaDeVilJudgmentalTraveler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f8c2be32fbd44519b24aba773718210a",
+    tcgPlayer: "690538",
   },
   text: [
     {

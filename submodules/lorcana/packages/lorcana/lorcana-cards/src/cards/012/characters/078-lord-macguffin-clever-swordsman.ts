@@ -4,6 +4,17 @@ import { lordMacguffinCleverSwordsmanI18n } from "./078-lord-macguffin-clever-sw
 export const lordMacguffinCleverSwordsman: CharacterCard = {
   id: "XII",
   canonicalId: "ci_XII",
+  slug: "lorcana-ci_XII",
+  printings: [
+    {
+      id: "set12-078",
+      artId: "set12-078",
+      setCode: "set12",
+      collectorNumber: "78",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-078"],
   cardType: "character",
   name: "Lord MacGuffin",
@@ -20,6 +31,7 @@ export const lordMacguffinCleverSwordsman: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_71d961ae91de4bd1970b32e561d1f3af",
+    tcgPlayer: "692039",
   },
   text: [
     {

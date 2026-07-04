@@ -17,9 +17,9 @@ export const johnSilverGreedyTreasureSeekerI18n: Record<Languages, I18nPropertie
     version: "Habgieriger Schatzsucher",
     text: [
       {
-        title: "DEINEN KURS BESTIMMEN",
+        title: "Deinen Kurs bestimmen",
         description:
-          "Für jeden Ort den du im Spiel hast, erhält dieser Charakter +1 und Robust +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+          "Für jeden Ort den du im Spiel hast, erhält dieser Charakter +1 {L} und <Robust> +1. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const johnSilverGreedyTreasureSeekerI18n: Record<Languages, I18nPropertie
     version: "Chasseur de trésor avide",
     text: [
       {
-        title: "CHOISIS TOI-MÊME TON CAP",
+        title: "Choisis toi-même ton cap",
         description:
-          "Ce personnage gagne +1 et Résistance +1 pour chaque lieu que vous avez en jeu.",
+          "Ce personnage gagne +1 {L} et <Résistance> +1 pour chaque lieu que vous avez en jeu.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const johnSilverGreedyTreasureSeekerI18n: Record<Languages, I18nPropertie
     version: "Avido Cacciatore di Tesori",
     text: [
       {
-        title: "TRACCIARE LA TUA ROTTA",
+        title: "Tracciare la Tua Rotta",
         description:
-          "Per ogni luogo che hai in gioco, questo personaggio ottiene Resistere +1 e riceve +1.",
+          "Per ogni luogo che hai in gioco, questo personaggio ottiene Resistere +1 e riceve +1 {L}.",
       },
     ],
   },

@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { fourDozenEggsI18n } from "./163-four-dozen-eggs.i18n";
 
 export const fourDozenEggs: ActionCard = {
-  id: "Ydi",
-  canonicalId: "ci_Y4g",
+  id: "6Xn",
+  canonicalId: "ci_jY8",
+  slug: "lorcana-ci_jY8",
+  printings: [
+    {
+      id: "set2-163",
+      artId: "set2-163",
+      setCode: "set2",
+      collectorNumber: "163",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-163", "set9-164"],
   cardType: "action",
   name: "Four Dozen Eggs",
@@ -16,7 +27,7 @@ export const fourDozenEggs: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_afa9023a2aeb4569bad0116e638821fa",
-    tcgPlayer: 650098,
+    tcgPlayer: "650098",
   },
   text: "Your characters gain Resist +2 until the start of your next turn.",
   actionSubtype: "song",

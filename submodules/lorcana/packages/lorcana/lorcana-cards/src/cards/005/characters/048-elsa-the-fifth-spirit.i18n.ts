@@ -22,13 +22,13 @@ export const elsaTheFifthSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Der fünfte Geist",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "KRISTALLISIEREN",
+        title: "Kristallisieren",
         description:
           "Wenn du diesen Charakter ausspielst, erschöpfe einen gegnerischen Charakter deiner Wahl.",
       },
@@ -39,13 +39,13 @@ export const elsaTheFifthSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Le cinquième esprit",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "CRISTALLISATION",
+        title: "Cristallisation",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage adverse et épuisez-le.",
       },
@@ -56,13 +56,13 @@ export const elsaTheFifthSpiritI18n: Record<Languages, I18nProperties> = {
     version: "Il Quinto Spirito",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "CRISTALLIZZARE",
+        title: "Cristallizzare",
         description:
           "Quando giochi questo personaggio, impegna un personaggio avversario a tua scelta.",
       },

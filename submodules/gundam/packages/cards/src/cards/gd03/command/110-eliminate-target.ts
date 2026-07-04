@@ -7,14 +7,17 @@ export const gd03EliminateTarget110: CommandCard = {
   color: "red",
   traits: [],
   id: "GD03-110",
-  externalId: "gundam:gd03-110",
-  slug: "eliminate-target-gd03-110",
+  canonicalId: "GD03-110",
+  externalIds: { bandai: "gundam:gd03-110" },
+  slug: "eliminate-target/gd03-110",
   displayName: "Eliminate Target",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-110",
   printings: [
     {
       id: "GD03-110",
+      artId: "GD03-110",
+      setCode: "GD03",
       collectorNumber: "GD03-110",
       cardNumber: "GD03-110",
       set: {
@@ -29,6 +32,7 @@ export const gd03EliminateTarget110: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-110"],
   selectedPrintingId: "GD03-110",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-110.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-110.webp?260424",

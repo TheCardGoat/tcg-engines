@@ -4,6 +4,17 @@ import { theQueenHatefulRivalI18n } from "./057-the-queen-hateful-rival.i18n";
 export const theQueenHatefulRival: CharacterCard = {
   id: "F4E",
   canonicalId: "ci_F4E",
+  slug: "lorcana-ci_F4E",
+  printings: [
+    {
+      id: "set3-057",
+      artId: "set3-057",
+      setCode: "set3",
+      collectorNumber: "57",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-057"],
   cardType: "character",
   name: "The Queen",
@@ -21,7 +32,7 @@ export const theQueenHatefulRival: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8af5e037a64f41e58380427a86148bb5",
-    tcgPlayer: 539076,
+    tcgPlayer: "539076",
   },
   classifications: ["Dreamborn", "Villain", "Queen", "Sorcerer"],
   i18n: theQueenHatefulRivalI18n,

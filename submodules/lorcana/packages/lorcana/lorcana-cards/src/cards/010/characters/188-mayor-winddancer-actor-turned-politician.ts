@@ -4,6 +4,17 @@ import { mayorWinddancerActorturnedpoliticianI18n } from "./188-mayor-winddancer
 export const mayorWinddancerActorturnedpolitician: CharacterCard = {
   id: "9T3",
   canonicalId: "ci_9T3",
+  slug: "lorcana-ci_9T3",
+  printings: [
+    {
+      id: "set10-188",
+      artId: "set10-188",
+      setCode: "set10",
+      collectorNumber: "188",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-188"],
   cardType: "character",
   name: "Mayor Winddancer",
@@ -21,7 +32,7 @@ export const mayorWinddancerActorturnedpolitician: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_af858595efd7455b8c37dd000fe6d136",
-    tcgPlayer: 659457,
+    tcgPlayer: "659457",
   },
   classifications: ["Storyborn"],
   i18n: mayorWinddancerActorturnedpoliticianI18n,

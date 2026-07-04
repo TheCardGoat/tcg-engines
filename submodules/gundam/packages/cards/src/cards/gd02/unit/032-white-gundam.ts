@@ -7,14 +7,17 @@ export const gd02WhiteGundam032: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD02-032",
-  externalId: "gundam:gd02-032",
-  slug: "white-gundam-gd02-032",
+  canonicalId: "GD02-032",
+  externalIds: { bandai: "gundam:gd02-032" },
+  slug: "white-gundam/gd02-032",
   displayName: "White Gundam",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-032",
   printings: [
     {
       id: "GD02-032",
+      artId: "GD02-032",
+      setCode: "GD02",
       collectorNumber: "GD02-032",
       cardNumber: "GD02-032",
       set: {
@@ -29,6 +32,7 @@ export const gd02WhiteGundam032: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-032"],
   selectedPrintingId: "GD02-032",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-032.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-032.webp?260424",

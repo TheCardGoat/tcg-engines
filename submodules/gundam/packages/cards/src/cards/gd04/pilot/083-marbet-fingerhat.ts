@@ -7,14 +7,17 @@ export const gd04MarbetFingerhat083: PilotCard = {
   color: "blue",
   traits: ["league militaire"],
   id: "GD04-083",
-  externalId: "gundam:gd04-083",
-  slug: "marbet-fingerhat-gd04-083",
+  canonicalId: "GD04-083",
+  externalIds: { bandai: "gundam:gd04-083" },
+  slug: "marbet-fingerhat/gd04-083",
   displayName: "Marbet Fingerhat",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-083",
   printings: [
     {
       id: "GD04-083",
+      artId: "GD04-083",
+      setCode: "GD04",
       collectorNumber: "GD04-083",
       cardNumber: "GD04-083",
       set: {
@@ -29,6 +32,7 @@ export const gd04MarbetFingerhat083: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-083"],
   selectedPrintingId: "GD04-083",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-083.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-083.webp?260424",

@@ -4,6 +4,17 @@ import { kangaNurturingMotherI18n } from "./021-kanga-nurturing-mother.i18n";
 export const kangaNurturingMother: CharacterCard = {
   id: "jsu",
   canonicalId: "ci_jsu",
+  slug: "lorcana-ci_jsu",
+  printings: [
+    {
+      id: "set6-021",
+      artId: "set6-021",
+      setCode: "set6",
+      collectorNumber: "21",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-021"],
   cardType: "character",
   name: "Kanga",
@@ -20,7 +31,7 @@ export const kangaNurturingMother: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4557d5bc41de40728df0ebbbdce4787f",
-    tcgPlayer: 593019,
+    tcgPlayer: "593019",
   },
   text: [
     {

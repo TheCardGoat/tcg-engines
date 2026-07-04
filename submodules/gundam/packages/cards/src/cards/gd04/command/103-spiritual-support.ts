@@ -7,14 +7,17 @@ export const gd04SpiritualSupport103: CommandCard = {
   color: "blue",
   traits: [],
   id: "GD04-103",
-  externalId: "gundam:gd04-103",
-  slug: "spiritual-support-gd04-103",
+  canonicalId: "GD04-103",
+  externalIds: { bandai: "gundam:gd04-103" },
+  slug: "spiritual-support/gd04-103",
   displayName: "Spiritual Support",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-103",
   printings: [
     {
       id: "GD04-103",
+      artId: "GD04-103",
+      setCode: "GD04",
       collectorNumber: "GD04-103",
       cardNumber: "GD04-103",
       set: {
@@ -29,6 +32,7 @@ export const gd04SpiritualSupport103: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-103"],
   selectedPrintingId: "GD04-103",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-103.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-103.webp?260424",

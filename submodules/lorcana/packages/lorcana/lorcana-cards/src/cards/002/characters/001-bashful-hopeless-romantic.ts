@@ -4,6 +4,17 @@ import { bashfulHopelessRomanticI18n } from "./001-bashful-hopeless-romantic.i18
 export const bashfulHopelessRomantic: CharacterCard = {
   id: "0Tb",
   canonicalId: "ci_0Tb",
+  slug: "lorcana-ci_0Tb",
+  printings: [
+    {
+      id: "set2-001",
+      artId: "set2-001",
+      setCode: "set2",
+      collectorNumber: "1",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-001"],
   cardType: "character",
   name: "Bashful",
@@ -20,7 +31,7 @@ export const bashfulHopelessRomantic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ac175f73ee3c4cce86c8ffe6d32db73a",
-    tcgPlayer: 526599,
+    tcgPlayer: "526599",
   },
   text: [
     {

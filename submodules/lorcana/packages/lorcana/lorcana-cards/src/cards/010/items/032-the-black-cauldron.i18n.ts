@@ -18,14 +18,14 @@ export const theBlackCauldronI18n: Record<Languages, I18nProperties> = {
     name: "Der schwarze Zauberkessel",
     text: [
       {
-        title: "DER KESSEL RUFT, 1",
+        title: "Der Kessel ruft",
         description:
-          "— Lege 1 Charakterkarte aus deinem Ablagestapel offen unter diesen Gegenstand.",
+          "{E}, 1 {I} — Lege 1 Charakterkarte aus deinem Ablagestapel offen unter diesen Gegenstand.",
       },
       {
-        title: "STEHT AUF UND FOLGT MIR!, 1",
+        title: "Steht auf und folgt mir!",
         description:
-          "— Du darfst in diesem Zug Charaktere ausspielen, die unter diesem Gegenstand liegen.",
+          "{E}, 1 {I} — Du darfst in diesem Zug Charaktere ausspielen, die unter diesem Gegenstand liegen.",
       },
     ],
   },
@@ -33,9 +33,14 @@ export const theBlackCauldronI18n: Record<Languages, I18nProperties> = {
     name: "Le Chaudron magique",
     text: [
       {
-        title: "L'APPEL DU CHAUDRON, 1",
+        title: "L'Appel du chaudron",
         description:
-          "— Placez une carte Personnage de votre défausse sous cet objet, face visible. LEVEZ-VOUS ET JOIGNEZ-VOUS À MOI!, 1 — Pour le reste de ce tour, vous pouvez jouer les personnages placés sous cet objet.",
+          "{E}, 1 {I} — Placez une carte Personnage de votre défausse sous cet objet, face visible.",
+      },
+      {
+        title: "Levez-vous et joignez-vous à moi!",
+        description:
+          "{E}, 1 {I} — Pour le reste de ce tour, vous pouvez jouer les personnages placés sous cet objet.",
       },
     ],
   },
@@ -43,9 +48,14 @@ export const theBlackCauldronI18n: Record<Languages, I18nProperties> = {
     name: "La Pentola Magica",
     text: [
       {
-        title: "IL RICHIAMO DELLA PENTOLA, 1",
+        title: "Il Richiamo della Pentola",
         description:
-          "— Metti una carta personaggio dai tuoi scarti sotto a questo oggetto, a faccia in su. ALZATEVI E UNITEVI A ME!, 1 — Per questo turno, puoi giocare i personaggi da sotto questo oggetto.",
+          "{E}, 1 {I} — Metti una carta personaggio dai tuoi scarti sotto a questo oggetto, a faccia in su.",
+      },
+      {
+        title: "Alzatevi e Unitevi a Me!",
+        description:
+          "{E}, 1 {I} — Per questo turno, puoi giocare i personaggi da sotto questo oggetto.",
       },
     ],
   },

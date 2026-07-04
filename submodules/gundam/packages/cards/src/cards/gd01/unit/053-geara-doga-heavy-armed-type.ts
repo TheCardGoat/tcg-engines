@@ -7,14 +7,17 @@ export const gd01GearaDogaHeavyArmedType053: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD01-053",
-  externalId: "gundam:gd01-053",
-  slug: "geara-doga-heavy-armed-type-gd01-053",
+  canonicalId: "GD01-053",
+  externalIds: { bandai: "gundam:gd01-053" },
+  slug: "geara-doga-heavy-armed-type/gd01-053",
   displayName: "Geara Doga (Heavy Armed Type)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-053",
   printings: [
     {
       id: "GD01-053",
+      artId: "GD01-053",
+      setCode: "GD01",
       collectorNumber: "GD01-053",
       cardNumber: "GD01-053",
       set: {
@@ -29,6 +32,7 @@ export const gd01GearaDogaHeavyArmedType053: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-053"],
   selectedPrintingId: "GD01-053",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-053.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-053.webp?260424",

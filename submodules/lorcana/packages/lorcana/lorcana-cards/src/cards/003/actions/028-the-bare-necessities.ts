@@ -4,6 +4,17 @@ import { theBareNecessitiesI18n } from "./028-the-bare-necessities.i18n";
 export const theBareNecessities: ActionCard = {
   id: "chI",
   canonicalId: "ci_chI",
+  slug: "lorcana-ci_chI",
+  printings: [
+    {
+      id: "set3-028",
+      artId: "set3-028",
+      setCode: "set3",
+      collectorNumber: "28",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-028"],
   cardType: "action",
   name: "The Bare Necessities",
@@ -16,7 +27,7 @@ export const theBareNecessities: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_54e5e880c70e4e2bb68cc318a7d47e34",
-    tcgPlayer: 538224,
+    tcgPlayer: "538224",
   },
   text: "Chosen opponent reveals their hand and discards a non-character card of your choice.",
   actionSubtype: "song",

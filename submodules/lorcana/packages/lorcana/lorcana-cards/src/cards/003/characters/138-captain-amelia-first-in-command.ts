@@ -4,6 +4,17 @@ import { captainAmeliaFirstInCommandI18n } from "./138-captain-amelia-first-in-c
 export const captainAmeliaFirstInCommand: CharacterCard = {
   id: "TRx",
   canonicalId: "ci_TRx",
+  slug: "lorcana-ci_TRx",
+  printings: [
+    {
+      id: "set3-138",
+      artId: "set3-138",
+      setCode: "set3",
+      collectorNumber: "138",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-138"],
   cardType: "character",
   name: "Captain Amelia",
@@ -20,7 +31,7 @@ export const captainAmeliaFirstInCommand: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9ada4799889b49d69ae388f141a0c52c",
-    tcgPlayer: 539094,
+    tcgPlayer: "539094",
   },
   text: [
     {

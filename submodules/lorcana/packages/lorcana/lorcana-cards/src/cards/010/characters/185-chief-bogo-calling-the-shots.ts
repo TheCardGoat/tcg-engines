@@ -4,6 +4,17 @@ import { chiefBogoCallingTheShotsI18n } from "./185-chief-bogo-calling-the-shots
 export const chiefBogoCallingTheShots: CharacterCard = {
   id: "A6f",
   canonicalId: "ci_A6f",
+  slug: "lorcana-ci_A6f",
+  printings: [
+    {
+      id: "set10-185",
+      artId: "set10-185",
+      setCode: "set10",
+      collectorNumber: "185",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-185"],
   cardType: "character",
   name: "Chief Bogo",
@@ -20,7 +31,7 @@ export const chiefBogoCallingTheShots: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_49b1333917404a9fa4e855f4c2da3487",
-    tcgPlayer: 660273,
+    tcgPlayer: "660273",
   },
   text: [
     {

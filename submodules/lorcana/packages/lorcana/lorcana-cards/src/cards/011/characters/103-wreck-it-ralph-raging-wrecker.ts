@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { wreckitRalphRagingWreckerI18n } from "./103-wreck-it-ralph-raging-wrecker.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const wreckitRalphRagingWrecker: CharacterCard = {
   id: "C0z",
   canonicalId: "ci_C0z",
+  slug: "lorcana-ci_C0z",
+  printings: [
+    {
+      id: "set11-103",
+      artId: "set11-103",
+      setCode: "set11",
+      collectorNumber: "103",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-103"],
   cardType: "character",
   name: "Wreck-it Ralph",
@@ -21,7 +33,7 @@ export const wreckitRalphRagingWrecker: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_cb5f4cea3a664d12952b12a0a30fbbf3",
-    tcgPlayer: 675344,
+    tcgPlayer: "675344",
   },
   text: [
     {

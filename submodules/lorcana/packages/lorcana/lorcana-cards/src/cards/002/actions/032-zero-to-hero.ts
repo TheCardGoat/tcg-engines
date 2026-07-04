@@ -4,6 +4,17 @@ import { zeroToHeroI18n } from "./032-zero-to-hero.i18n";
 export const zeroToHero: ActionCard = {
   id: "YND",
   canonicalId: "ci_YND",
+  slug: "lorcana-ci_YND",
+  printings: [
+    {
+      id: "set2-032",
+      artId: "set2-032",
+      setCode: "set2",
+      collectorNumber: "32",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-032"],
   cardType: "action",
   name: "Zero to Hero",
@@ -16,7 +27,7 @@ export const zeroToHero: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_03538324959a406cb3ac98684214d437",
-    tcgPlayer: 516387,
+    tcgPlayer: "516387",
   },
   text: "Count the number of characters you have in play. You pay that amount of {I} less for the next character you play this turn.",
   actionSubtype: "song",

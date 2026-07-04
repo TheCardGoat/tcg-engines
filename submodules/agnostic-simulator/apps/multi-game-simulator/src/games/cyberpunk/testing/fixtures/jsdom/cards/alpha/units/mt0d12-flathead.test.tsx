@@ -1,8 +1,8 @@
-import { describe, test } from "vite-plus/test";
+import { describe, expect, test } from "vite-plus/test";
 import { alphaCorpoSecurity, alphaMt0d12Flathead } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
-import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
+
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
 import {
   createTestingLibraryCyberpunkSimulatorPom,
@@ -30,17 +30,17 @@ describe("MT0D12 Flathead jsdom happy path", () => {
       await pom.attackRival(flathead.instanceId, CYBERPUNK_P1);
       await pom.resolveAttack(CYBERPUNK_P1);
 
-      const result = await pom.harness.dispatchEngine(
-        (engine, payload) =>
-          engine.executeMove("useBlocker", { args: { blockerId: payload.blockerId } }, payload.as),
-        { blockerId: blocker.instanceId, as: CYBERPUNK_P2 },
+      await expect(pom.useBlocker(blocker.instanceId, CYBERPUNK_P2)).rejects.toThrow(
+        "Attacker can't be blocked",
       );
-      expectEqual("MT0D12 blocker rejected", (result as { success: boolean }).success, false);
+
       const attack = await pom.getAttackState();
       if (!attack) {
         throw new Error("Expected Flathead direct attack to remain active.");
       }
-      expectEqual("MT0D12 direct attack", attack.kind, "direct");
+      if (attack.kind !== "direct") {
+        throw new Error(`Expected Flathead direct attack to remain active, got ${attack.kind}.`);
+      }
     } finally {
       view.unmount();
     }

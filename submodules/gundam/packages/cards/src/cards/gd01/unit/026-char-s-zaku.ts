@@ -7,14 +7,17 @@ export const gd01CharSZaku026: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-026",
-  externalId: "gundam:gd01-026",
-  slug: "char-s-zaku-gd01-026",
+  canonicalId: "GD01-026",
+  externalIds: { bandai: "gundam:gd01-026" },
+  slug: "char-s-zaku-ii/gd01-026",
   displayName: "Char's Zaku Ⅱ",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-026",
   printings: [
     {
       id: "GD01-026",
+      artId: "GD01-026",
+      setCode: "GD01",
       collectorNumber: "GD01-026",
       cardNumber: "GD01-026",
       set: {
@@ -30,6 +33,8 @@ export const gd01CharSZaku026: UnitCard = {
     },
     {
       id: "GD01-026_p1",
+      artId: "GD01-026_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-026_p1",
       cardNumber: "GD01-026",
       set: {
@@ -45,6 +50,8 @@ export const gd01CharSZaku026: UnitCard = {
     },
     {
       id: "GD01-026_p2",
+      artId: "GD01-026_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-026_p2",
       cardNumber: "GD01-026",
       set: {
@@ -59,6 +66,7 @@ export const gd01CharSZaku026: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-026", "GD01-026_p1", "GD01-026_p2"],
   selectedPrintingId: "GD01-026",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-026.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-026.webp?260424",

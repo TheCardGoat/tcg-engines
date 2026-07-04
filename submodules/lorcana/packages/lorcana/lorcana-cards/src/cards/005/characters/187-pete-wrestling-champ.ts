@@ -4,6 +4,17 @@ import { peteWrestlingChampI18n } from "./187-pete-wrestling-champ.i18n";
 export const peteWrestlingChamp: CharacterCard = {
   id: "tEN",
   canonicalId: "ci_tEN",
+  slug: "lorcana-ci_tEN",
+  printings: [
+    {
+      id: "set5-187",
+      artId: "set5-187",
+      setCode: "set5",
+      collectorNumber: "187",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-187"],
   cardType: "character",
   name: "Pete",
@@ -19,7 +30,7 @@ export const peteWrestlingChamp: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_77a41111eb054ad3acd73de5f7f800e7",
-    tcgPlayer: 559085,
+    tcgPlayer: "559085",
   },
   text: [
     {
@@ -43,11 +54,16 @@ export const peteWrestlingChamp: CharacterCard = {
               type: "revealed-is-character-named",
               name: "Pete",
             },
-            destination: { zone: "play", cost: "free" },
+            destination: {
+              zone: "play",
+              cost: "free",
+            },
             optional: true,
           },
         ],
-        fallback: { zone: "deck-top" },
+        fallback: {
+          zone: "deck-top",
+        },
       },
       id: "pvv-1",
       name: "RE-PETE",

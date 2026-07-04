@@ -181,6 +181,7 @@ Choose a rival Gig die and move it to your friendly Gig area. Units steal an ext
 
 | Power | Gigs Stolen |
 |-------|-------------|
+| 0 | 0 Gigs |
 | 1+ | 1 Gig |
 | 10+ | 2 Gigs |
 | 20+ | 3 Gigs |
@@ -219,7 +220,8 @@ The cumulative RAM of your three Legends cards sets the maximum RAM value for co
 |------|------------|
 | **Spend / Spent** | Turn a card sideways. A spent card cannot be spent again until it is readied. Eddies and Legends spend to pay costs. Units spend when they attack. |
 | **Ready** | Turn a card upright. Only ready Units can attack. Ready Units cannot be attacked. |
-| **Eddies** | Currency used to play cards. Pay a card's printed cost by spending that many Eddies. |
+| **Eddies** | Face-down sold cards in your Eddies area. Each is 1 Eddie and can be spent to pay card play and effect costs. Card text using `€$` can also be paid with Legends, but Legends are not actually Eddies. |
+| **Cost** | Number in the top left corner of a card. Spend Eddies equal to a card's cost to play it. Legends can also be spent as 1 `€$` each. |
 | **Sell** | Once per turn, reveal a card with the Sell Tag (`€$`) from your hand and place it face-down in the Eddies area. A sold card pays only 1 Eddie per turn when spent, no matter how much it costs in your hand. |
 | **Gig** | One die in a Gig area. Count dice, not die values, for winning. |
 | **Street Cred** | Sum of the face values of the dice in your Gig area. |
@@ -227,13 +229,16 @@ The cumulative RAM of your three Legends cards sets the maximum RAM value for co
 | **Gig area** | Area that holds your claimed Gigs, including stolen ones. Check this area for the win condition and Street Cred. |
 | **Field** | Area for Units and combat. |
 | **Legend** | Crew leader card. Start face-down in a random order. Spend it for 1 Eddie while face-down or face-up. Gain its broader effects only when it is face-up unless the card says otherwise. |
-| **Call a Legend** | Spend 1 Eddie to flip one face-down Legend face-up without peeking first. Do this once per turn in your main phase or once per turn in a defensive step. |
+| **Call a Legend** | Spend 1 Eddie to flip one face-down Legend face-up without peeking first. Do this during your main phase, or as a reaction when a rival Unit attacks. |
 | **Unit** | Crew member that attacks rival Units or the rival. Prevent it from attacking on the turn it is played unless an effect overrides that restriction. |
 | **Lag** | Condition that all Units enter the field with. It lasts until the end of the turn. Units with Lag can't attack or activate self-spend effects. |
+| **Power** | Number in the bottom-right corner of a card, used while attacking. Units compare power in a fight. When a Unit attacks a Gig area, it steals an additional Gig for every 10 power it has. |
+| **Bottom-deck** | Keyword meaning to put cards at the bottom of your deck in any order. |
+| **Trash** | Keyword meaning to put the top card of your deck into your trash area. If it specifies a number, trash that many cards. |
 | **Program** | One-shot effect. Resolve it, then discard it. |
 | **Gear** | Attachment for a friendly Unit or Legend. When the card moves to a different area, all equipped Gear goes with it. |
 | **PLAY** | Effect that happens as soon as you pay the card's cost. |
-| **ATTACK** | Effect that happens when the Unit attacks, before the fight or steal resolves. |
+| **ATTACK** | Effect that happens when the Unit attacks, before the Rival reacts. |
 | **CALL** | Effect that happens when you flip this Legend face-up through Call a Legend. |
 | **DEFEATED** | Effect that happens when this Unit is defeated. |
 | **BLOCKER** | Keyword that lets a ready Unit spend to redirect a rival's attack to itself. |

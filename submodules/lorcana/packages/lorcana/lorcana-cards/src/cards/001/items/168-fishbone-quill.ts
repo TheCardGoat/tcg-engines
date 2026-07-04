@@ -4,6 +4,17 @@ import { fishboneQuillI18n } from "./168-fishbone-quill.i18n";
 export const fishboneQuill: ItemCard = {
   id: "UUs",
   canonicalId: "ci_UUs",
+  slug: "lorcana-ci_UUs",
+  printings: [
+    {
+      id: "set1-168",
+      artId: "set1-168",
+      setCode: "set1",
+      collectorNumber: "168",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-168"],
   cardType: "item",
   name: "Fishbone Quill",
@@ -16,7 +27,7 @@ export const fishboneQuill: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_33db0577186a4483aa85190fd0496d90",
-    tcgPlayer: 508830,
+    tcgPlayer: "508830",
   },
   text: [
     {

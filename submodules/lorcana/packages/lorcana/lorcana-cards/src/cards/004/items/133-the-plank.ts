@@ -4,6 +4,17 @@ import { thePlankI18n } from "./133-the-plank.i18n";
 export const thePlank: ItemCard = {
   id: "PlS",
   canonicalId: "ci_PlS",
+  slug: "lorcana-ci_PlS",
+  printings: [
+    {
+      id: "set4-133",
+      artId: "set4-133",
+      setCode: "set4",
+      collectorNumber: "133",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-133"],
   cardType: "item",
   name: "The Plank",
@@ -16,7 +27,7 @@ export const thePlank: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_20286eaca8e44e0c8527a00bf07be1c7",
-    tcgPlayer: 550603,
+    tcgPlayer: "550603",
   },
   text: [
     {

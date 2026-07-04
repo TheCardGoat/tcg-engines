@@ -7,14 +7,17 @@ export const gd03YazanGable086: PilotCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD03-086",
-  externalId: "gundam:gd03-086",
-  slug: "yazan-gable-gd03-086",
+  canonicalId: "GD03-086",
+  externalIds: { bandai: "gundam:gd03-086" },
+  slug: "yazan-gable/gd03-086",
   displayName: "Yazan Gable",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-086",
   printings: [
     {
       id: "GD03-086",
+      artId: "GD03-086",
+      setCode: "GD03",
       collectorNumber: "GD03-086",
       cardNumber: "GD03-086",
       set: {
@@ -29,6 +32,7 @@ export const gd03YazanGable086: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-086"],
   selectedPrintingId: "GD03-086",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-086.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-086.webp?260424",

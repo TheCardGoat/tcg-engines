@@ -19,11 +19,11 @@ export const stitchCovertAgentI18n: Record<Languages, I18nProperties> = {
     version: "Verdeckter Ermittler",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "VERSTECKEN",
-        description: "Solange dieser Charakter an einem Ort ist, erhält er Behütet.",
+        title: "Verstecken",
+        description: "Solange dieser Charakter an einem Ort ist, erhält er <Behütet>.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const stitchCovertAgentI18n: Record<Languages, I18nProperties> = {
     version: "Agent sous couverture",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "CACHÉ",
-        description: "Tant que ce personnage se trouve sur un lieu, il gagne Hors d'atteinte",
+        title: "Caché",
+        description: "Tant que ce personnage se trouve sur un lieu, il gagne <Hors d'atteinte>",
       },
     ],
   },
@@ -45,12 +45,12 @@ export const stitchCovertAgentI18n: Record<Languages, I18nProperties> = {
     version: "Agente in Incognito",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "NASCONDERSI",
+        title: "Nascondersi",
         description:
-          "Mentre questo personaggio si trova in un luogo, ottiene Protetto. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+          "Mentre questo personaggio si trova in un luogo, ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
       },
     ],
   },

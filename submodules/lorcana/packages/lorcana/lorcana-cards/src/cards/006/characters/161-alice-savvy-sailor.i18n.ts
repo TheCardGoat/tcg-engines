@@ -20,12 +20,12 @@ export const aliceSavvySailorI18n: Record<Languages, I18nProperties> = {
     version: "Gerissene Seglerin",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "AHOI!",
+        title: "Ahoi!",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, wähle einen deiner anderen Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges +1 und Behütet.",
+          "Jedes Mal, wenn dieser Charakter erkundet, wähle einen deiner anderen Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges +1 {L} und <Behütet>.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const aliceSavvySailorI18n: Record<Languages, I18nProperties> = {
     version: "Marin avisée",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "NAVIRE EN VUE!",
+        title: "Navire en vue!",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un autre de vos personnages qui gagne +1 et Hors d'atteinte jusqu'au début de votre prochain tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un autre de vos personnages qui gagne +1 {L} et <Hors d'atteinte> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const aliceSavvySailorI18n: Record<Languages, I18nProperties> = {
     version: "Esperta Marinaia",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "AHOY!",
+        title: "Ahoy!",
         description:
-          "Ogni volta che questo personaggio va all'avventura, un tuo altro personaggio a tua scelta riceve +1 e ottiene Protetto fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che questo personaggio va all'avventura, un tuo altro personaggio a tua scelta riceve +1 {L} e ottiene <Protetto> fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

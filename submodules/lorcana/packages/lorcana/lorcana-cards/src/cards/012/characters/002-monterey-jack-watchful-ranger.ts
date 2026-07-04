@@ -4,6 +4,17 @@ import { montereyJackWatchfulRangerI18n } from "./002-monterey-jack-watchful-ran
 export const montereyJackWatchfulRanger: CharacterCard = {
   id: "KWV",
   canonicalId: "ci_KWV",
+  slug: "lorcana-ci_KWV",
+  printings: [
+    {
+      id: "set12-002",
+      artId: "set12-002",
+      setCode: "set12",
+      collectorNumber: "2",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-002"],
   cardType: "character",
   name: "Monterey Jack",
@@ -20,6 +31,7 @@ export const montereyJackWatchfulRanger: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a277ec572a7c4e2b8a351bfd233c139c",
+    tcgPlayer: "690516",
   },
   text: [
     {

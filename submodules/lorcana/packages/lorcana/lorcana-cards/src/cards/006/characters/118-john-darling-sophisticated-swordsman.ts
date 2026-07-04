@@ -4,6 +4,17 @@ import { johnDarlingSophisticatedSwordsmanI18n } from "./118-john-darling-sophis
 export const johnDarlingSophisticatedSwordsman: CharacterCard = {
   id: "0gP",
   canonicalId: "ci_0gP",
+  slug: "lorcana-ci_0gP",
+  printings: [
+    {
+      id: "set6-118",
+      artId: "set6-118",
+      setCode: "set6",
+      collectorNumber: "118",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-118"],
   cardType: "character",
   name: "John Darling",
@@ -21,7 +32,7 @@ export const johnDarlingSophisticatedSwordsman: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_97ffca1bcf534de0ae272cbe065245f8",
-    tcgPlayer: 593017,
+    tcgPlayer: "593017",
   },
   classifications: ["Storyborn", "Ally", "Pirate"],
   i18n: johnDarlingSophisticatedSwordsmanI18n,

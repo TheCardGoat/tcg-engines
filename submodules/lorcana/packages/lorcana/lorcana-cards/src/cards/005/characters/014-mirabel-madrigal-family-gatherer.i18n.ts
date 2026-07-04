@@ -16,7 +16,7 @@ export const mirabelMadrigalFamilyGathererI18n: Record<Languages, I18nProperties
     version: "Führt die Familie zusammen",
     text: [
       {
-        title: "NICHT OHNE MEINE FAMILIE",
+        title: "Nicht ohne meine Familie",
         description:
           "Du kannst diesen Charakter nicht ausspielen, außer du hast mindestens 5 Charaktere im Spiel.",
       },
@@ -27,7 +27,7 @@ export const mirabelMadrigalFamilyGathererI18n: Record<Languages, I18nProperties
     version: "Rassembleuse de la Famille",
     text: [
       {
-        title: "PAS SANS MA FAMILLE",
+        title: "Pas sans ma famille",
         description:
           "Vous ne pouvez pas jouer ce personnage à moins d'avoir 5 personnages ou plus en jeu.",
       },
@@ -38,7 +38,7 @@ export const mirabelMadrigalFamilyGathererI18n: Record<Languages, I18nProperties
     version: "Che Riunisce la Famiglia",
     text: [
       {
-        title: "NON SENZA LA MIA FAMIGLIA",
+        title: "Non Senza la Mia Famiglia",
         description:
           "Non puoi giocare questo personaggio a meno che tu non abbia in gioco 5 o più personaggi.",
       },

@@ -22,14 +22,14 @@ export const stitchExperiment626EnchantedI18n: Record<Languages, I18nProperties>
     version: "Experiment 626",
     text: [
       {
-        title: "DAS IST JA WIDERLICH",
+        title: "Das ist ja widerlich",
         description:
           "Wenn du diesen Charakter ausspielst, legen alle gegnerischen Mitspielenden die oberste Karte ihres Decks verdeckt und erschöpft in ihren Tintenvorrat.",
       },
       {
-        title: "TARNKAPPENMODUS",
+        title: "Tarnkappenmodus",
         description:
-          "Zu Beginn deines Zuges, wenn diese Karte in deinem Ablagestapel ist, darfst du eine Karte mit von deiner Hand abwerfen, um diese Karte kostenlos und erschöpft auszuspielen.",
+          "Zu Beginn deines Zuges, wenn diese Karte in deinem Ablagestapel ist, darfst du eine Karte mit {C} von deiner Hand abwerfen, um diese Karte kostenlos und erschöpft auszuspielen.",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const stitchExperiment626EnchantedI18n: Record<Languages, I18nProperties>
     version: "Expérience 626",
     text: [
       {
-        title: "SI MÉCHANT",
+        title: "Si méchant",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire place la carte du dessus de sa pioche dans sa réserve d'encre, face cachée et épuisé.",
       },
       {
-        title: "MODE FURTIF",
+        title: "Mode furtif",
         description:
-          "Au début de votre tour, si cette carte est dans votre défausse, vous pouvez défausser une carte pour jouer cette carte-ci gratuitement et épuisée.",
+          "Au début de votre tour, si cette carte est dans votre défausse, vous pouvez défausser une carte {C} pour jouer cette carte-ci gratuitement et épuisée.",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const stitchExperiment626EnchantedI18n: Record<Languages, I18nProperties>
     version: "Esperimento 626",
     text: [
       {
-        title: "CHE LINGUAGGIO SCONCIO",
+        title: "Che Linguaggio Sconcio",
         description:
           "Quando giochi questo personaggio, ogni avversario aggiunge la prima carta del suo mazzo al suo calamaio, a faccia in giù e impegnata.",
       },
       {
-        title: "MODALITÀ FURTIVA",
+        title: "Modalità Furtiva",
         description:
-          "All'inizio del tuo turno, se questa carta si trova nei tuoi scarti, puoi scegliere e scartare una carta con per giocare questo personaggio gratis ed entra in gioco impegnato.",
+          "All'inizio del tuo turno, se questa carta si trova nei tuoi scarti, puoi scegliere e scartare una carta con {C} per giocare questo personaggio gratis ed entra in gioco impegnato.",
       },
     ],
   },

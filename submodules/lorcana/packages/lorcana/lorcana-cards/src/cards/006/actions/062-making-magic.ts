@@ -4,6 +4,17 @@ import { makingMagicI18n } from "./062-making-magic.i18n";
 export const makingMagic: ActionCard = {
   id: "sXO",
   canonicalId: "ci_sXO",
+  slug: "lorcana-ci_sXO",
+  printings: [
+    {
+      id: "set6-062",
+      artId: "set6-062",
+      setCode: "set6",
+      collectorNumber: "62",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-062"],
   cardType: "action",
   name: "Making Magic",
@@ -16,7 +27,7 @@ export const makingMagic: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9bc0e3add087485a927ee66c7414802d",
-    tcgPlayer: 593024,
+    tcgPlayer: "593024",
   },
   text: "Move 1 damage counter from chosen character to chosen opposing character. Draw a card.",
   abilities: [

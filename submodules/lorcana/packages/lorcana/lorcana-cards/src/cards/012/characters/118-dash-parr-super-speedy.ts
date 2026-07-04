@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { dashParrSuperSpeedyI18n } from "./118-dash-parr-super-speedy.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const dashParrSuperSpeedy: CharacterCard = {
   id: "eme",
   canonicalId: "ci_eme",
+  slug: "lorcana-ci_eme",
+  printings: [
+    {
+      id: "set12-118",
+      artId: "set12-118",
+      setCode: "set12",
+      collectorNumber: "118",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-118"],
   cardType: "character",
   name: "Dash Parr",
@@ -21,6 +33,7 @@ export const dashParrSuperSpeedy: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_160175c3b760464390790a1a4b6f206f",
+    tcgPlayer: "690717",
   },
   text: "Rush",
   classifications: ["Storyborn", "Super", "Hero"],

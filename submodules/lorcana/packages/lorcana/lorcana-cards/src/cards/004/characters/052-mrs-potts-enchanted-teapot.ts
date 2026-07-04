@@ -4,6 +4,17 @@ import { mrsPottsEnchantedTeapotI18n } from "./052-mrs-potts-enchanted-teapot.i1
 export const mrsPottsEnchantedTeapot: CharacterCard = {
   id: "R9W",
   canonicalId: "ci_R9W",
+  slug: "lorcana-ci_R9W",
+  printings: [
+    {
+      id: "set4-052",
+      artId: "set4-052",
+      setCode: "set4",
+      collectorNumber: "52",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-052"],
   cardType: "character",
   name: "Mrs. Potts",
@@ -20,7 +31,7 @@ export const mrsPottsEnchantedTeapot: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_26639bb10e744e3ca745b81492084497",
-    tcgPlayer: 549620,
+    tcgPlayer: "549620",
   },
   text: [
     {
@@ -35,8 +46,16 @@ export const mrsPottsEnchantedTeapot: CharacterCard = {
       condition: {
         type: "or",
         conditions: [
-          { type: "has-named-character", controller: "you", name: "Lumiere" },
-          { type: "has-named-character", controller: "you", name: "Cogsworth" },
+          {
+            type: "has-named-character",
+            controller: "you",
+            name: "Lumiere",
+          },
+          {
+            type: "has-named-character",
+            controller: "you",
+            name: "Cogsworth",
+          },
         ],
       },
       effect: {

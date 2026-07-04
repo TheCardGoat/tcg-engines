@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jiminyCricketLevelheadedAndWiseI18n } from "./062-jiminy-cricket-level-headed-and-wise.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const jiminyCricketLevelheadedAndWise: CharacterCard = {
   id: "JE3",
   canonicalId: "ci_JE3",
+  slug: "lorcana-ci_JE3",
+  printings: [
+    {
+      id: "set8-062",
+      artId: "set8-062",
+      setCode: "set8",
+      collectorNumber: "62",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-062"],
   cardType: "character",
   name: "Jiminy Cricket",
@@ -21,7 +33,7 @@ export const jiminyCricketLevelheadedAndWise: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c9470722efc54fbbad1e2485e03b52c2",
-    tcgPlayer: 631392,
+    tcgPlayer: "631392",
   },
   text: [
     {

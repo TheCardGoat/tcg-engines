@@ -15,9 +15,9 @@ export const televisionSetI18n: Record<Languages, I18nProperties> = {
     name: "Fernseher",
     text: [
       {
-        title: "LÄUFT SIE SCHON?,",
+        title: "Läuft sie schon?",
         description:
-          "1 — Schaue dir die oberste Karte deines Decks an. Falls sie eine Welpen-Charakterkarte ist, darfst du sie aufdecken und auf deine Hand nehmen. Falls nicht, lege sie unter dein Deck.",
+          "{E}, 1 {I} — Schaue dir die oberste Karte deines Decks an. Falls sie eine Welpen-Charakterkarte ist, darfst du sie aufdecken und auf deine Hand nehmen. Falls nicht, lege sie unter dein Deck.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const televisionSetI18n: Record<Languages, I18nProperties> = {
     name: "Poste de télévision",
     text: [
       {
-        title: "ÇA A COMMENCÉ?,",
+        title: "Ça a commencé?",
         description:
-          "1 — Regardez la carte du dessus de votre pioche. S'il s'agit d'une carte Personnage Chiot, vous pouvez la révéler et la prendre en main. Sinon, placez-la sous votre pioche.",
+          "{E}, 1 {I} — Regardez la carte du dessus de votre pioche. S'il s'agit d'une carte Personnage Chiot, vous pouvez la révéler et la prendre en main. Sinon, placez-la sous votre pioche.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const televisionSetI18n: Record<Languages, I18nProperties> = {
     name: "Televisore",
     text: [
       {
-        title: "È GIÀ INIZIATO?,",
+        title: "È Già Iniziato?",
         description:
-          "1 — Guarda la prima carta del tuo mazzo. Se è una carta personaggio Cucciolo, puoi rivelarla e aggiungerla alla tua mano. Altrimenti, mettila in fondo al tuo mazzo.",
+          "{E}, 1 {I} — Guarda la prima carta del tuo mazzo. Se è una carta personaggio Cucciolo, puoi rivelarla e aggiungerla alla tua mano. Altrimenti, mettila in fondo al tuo mazzo.",
       },
     ],
   },

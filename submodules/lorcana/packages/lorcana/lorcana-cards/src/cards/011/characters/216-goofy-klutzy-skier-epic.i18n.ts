@@ -16,8 +16,8 @@ export const goofyKlutzySkierEpicI18n: Record<Languages, I18nProperties> = {
     version: "Tollpatschiger Skifahrer",
     text: [
       {
-        title: "JAAAAAAA-HUU-HUU-HUU-HUIII,",
-        description: "Verbanne diesen Charakter — Verbanne einen Charakter deiner Wahl.",
+        title: "Jaaaaaaa-huu-huu-huu-huiii",
+        description: "{E}, Verbanne diesen Charakter — Verbanne einen Charakter deiner Wahl.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const goofyKlutzySkierEpicI18n: Record<Languages, I18nProperties> = {
     version: "Skieur gauche",
     text: [
       {
-        title: "YAAAAAAA-HOO-HOO-HOO-HOOEY,",
-        description: "Bannissez ce personnage — Choisissez un personnage et bannissez-le.",
+        title: "Yaaaaaaa-hoo-hoo-hoo-hooey",
+        description: "{E}, Bannissez ce personnage — Choisissez un personnage et bannissez-le.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const goofyKlutzySkierEpicI18n: Record<Languages, I18nProperties> = {
     version: "Sciatore Imbranato",
     text: [
       {
-        title: "YAAAAAAA-HOO-HOO-HOO-HOOEY,",
-        description: "esilia questo personaggio — Esilia un personaggio a tua scelta.",
+        title: "Yaaaaaaa-hoo-hoo-hoo-hooey",
+        description: "{E}, esilia questo personaggio — Esilia un personaggio a tua scelta.",
       },
     ],
   },

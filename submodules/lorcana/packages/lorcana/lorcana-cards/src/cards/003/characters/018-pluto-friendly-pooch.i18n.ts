@@ -16,9 +16,9 @@ export const plutoFriendlyPoochI18n: Record<Languages, I18nProperties> = {
     version: "Freundliches Hündchen",
     text: [
       {
-        title: "BRAVER JUNGE",
+        title: "Braver Junge",
         description:
-          "— Du zahlst 1 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "{E} — Du zahlst 1 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const plutoFriendlyPoochI18n: Record<Languages, I18nProperties> = {
     version: "Gentil cabot",
     text: [
       {
-        title: "BON CHIEN",
+        title: "Bon chien",
         description:
-          "— Le prochain personnage que vous jouez durant ce tour vous coûte 1 de moins.",
+          "{E} — Le prochain personnage que vous jouez durant ce tour vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -38,8 +38,9 @@ export const plutoFriendlyPoochI18n: Record<Languages, I18nProperties> = {
     version: "Cane Amichevole",
     text: [
       {
-        title: "BRAVO CAGNOLINO",
-        description: "— Paga 1 in meno per giocare il tuo prossimo personaggio per questo turno.",
+        title: "Bravo Cagnolino",
+        description:
+          "{E} — Paga 1 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

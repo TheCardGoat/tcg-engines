@@ -24,15 +24,15 @@ export const mulanChargingAheadI18n: Record<Languages, I18nProperties> = {
     version: "Charging Ahead",
     text: [
       {
-        title: "Reckless",
+        title: "<Reckless> (This character can't quest and must challenge each turn if able.)",
       },
       {
-        title: "BURST OF SPEED",
+        title: "Burst of Speed",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "During your turn, this character gains <Evasive>. (They can challenge characters with Evasive.)",
       },
       {
-        title: "LONG RANGE",
+        title: "Long Range",
         description: "This character can challenge ready characters.",
       },
     ],
@@ -42,15 +42,15 @@ export const mulanChargingAheadI18n: Record<Languages, I18nProperties> = {
     version: "Charging Ahead",
     text: [
       {
-        title: "Reckless",
+        title: "<Reckless> (This character can't quest and must challenge each turn if able.)",
       },
       {
-        title: "BURST OF SPEED",
+        title: "Burst of Speed",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "During your turn, this character gains <Evasive>. (They can challenge characters with Evasive.)",
       },
       {
-        title: "LONG RANGE",
+        title: "Long Range",
         description: "This character can challenge ready characters.",
       },
     ],
@@ -60,15 +60,15 @@ export const mulanChargingAheadI18n: Record<Languages, I18nProperties> = {
     version: "Charging Ahead",
     text: [
       {
-        title: "Reckless",
+        title: "<Reckless> (This character can't quest and must challenge each turn if able.)",
       },
       {
-        title: "BURST OF SPEED",
+        title: "Burst of Speed",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "During your turn, this character gains <Evasive>. (They can challenge characters with Evasive.)",
       },
       {
-        title: "LONG RANGE",
+        title: "Long Range",
         description: "This character can challenge ready characters.",
       },
     ],

@@ -1,0 +1,34 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 0;
+  padding: 10px 0 12px;
+  background: var(--cp-sidebar-bg, rgb(6 9 13 / 96%));
+  border: 1px solid var(--cp-sidebar-rule, rgb(210 232 238 / 8%));
+  border-radius: 2px;
+  color: var(--cp-sidebar-text, rgb(247 252 255 / 88%));
+}
+
+.section {
+  padding: 0 10px;
+}
+
+.section + .section {
+  border-top: 1px solid var(--cp-sidebar-rule, rgb(210 232 238 / 8%));
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.logPanel {
+  composes: section;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.logPanel > * {
+  flex: 1 1 auto;
+  min-height: 0;
+}

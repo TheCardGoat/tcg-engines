@@ -7,14 +7,17 @@ export const gd02GundamX056: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD02-056",
-  externalId: "gundam:gd02-056",
-  slug: "gundam-x-gd02-056",
+  canonicalId: "GD02-056",
+  externalIds: { bandai: "gundam:gd02-056" },
+  slug: "gundam-x/gd02-056",
   displayName: "Gundam X",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-056",
   printings: [
     {
       id: "GD02-056",
+      artId: "GD02-056",
+      setCode: "GD02",
       collectorNumber: "GD02-056",
       cardNumber: "GD02-056",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamX056: UnitCard = {
     },
     {
       id: "GD02-056_p1",
+      artId: "GD02-056_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-056_p1",
       cardNumber: "GD02-056",
       set: {
@@ -45,6 +50,8 @@ export const gd02GundamX056: UnitCard = {
     },
     {
       id: "GD02-056_p2",
+      artId: "GD02-056_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-056_p2",
       cardNumber: "GD02-056",
       set: {
@@ -59,6 +66,7 @@ export const gd02GundamX056: UnitCard = {
       productName: "Store Tournament Winner Pack 02",
     },
   ],
+  reprints: ["GD02-056", "GD02-056_p1", "GD02-056_p2"],
   selectedPrintingId: "GD02-056",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-056.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-056.webp?260424",

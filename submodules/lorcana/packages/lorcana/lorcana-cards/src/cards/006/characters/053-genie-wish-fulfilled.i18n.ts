@@ -19,10 +19,10 @@ export const genieWishFulfilledI18n: Record<Languages, I18nProperties> = {
     version: "Wunsch erfüllt",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "WAS KOMMT JETZT?",
+        title: "Was kommt jetzt?",
         description: "Wenn du diesen Charakter ausspielst, ziehe 1 Karte.",
       },
     ],
@@ -32,10 +32,10 @@ export const genieWishFulfilledI18n: Record<Languages, I18nProperties> = {
     version: "Vœu exaucé",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "QUE ME RÉSERVE L'AVENIR?",
+        title: "Que me réserve l'avenir?",
         description: "Lorsque vous jouez ce personnage, piochez une carte.",
       },
     ],
@@ -45,10 +45,11 @@ export const genieWishFulfilledI18n: Record<Languages, I18nProperties> = {
     version: "Desiderio Esaudito",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "E ORA CHE SI FA? Quando giochi questo personaggio, pesca una carta.",
+        title: "E Ora Che si Fa?",
+        description: "Quando giochi questo personaggio, pesca una carta.",
       },
     ],
   },

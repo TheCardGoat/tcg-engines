@@ -21,12 +21,12 @@ export const kristoffIcyExplorerI18n: Record<Languages, I18nProperties> = {
     version: "Eisiger Entdecker",
     text: [
       {
-        title: "VERBORGENE TIEFEN",
+        title: "Verborgene Tiefen",
         description:
           "Wenn du diesen Charakter ausspielst und einen Anna-Charakter im Spiel hast, darfst du 1 Karte aus einem Ablagestapel deiner Wahl unter das zugehörige Deck legen.",
       },
       {
-        title: "GLÜCKSTREFFER",
+        title: "Glückstreffer",
         description:
           "Einmal während deines Zuges, wenn eine Karte deinen Ablagestapel verlässt, ziehe 1 Karte.",
       },
@@ -37,12 +37,12 @@ export const kristoffIcyExplorerI18n: Record<Languages, I18nProperties> = {
     version: "Explorateur des glaces",
     text: [
       {
-        title: "PROFONDEURS CACHÉES",
+        title: "Profondeurs cachées",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un personnage Anna en jeu, vous pouvez choisir un joueur et placer une carte de sa défausse sous sa pioche.",
       },
       {
-        title: "COUP DE CHANCE",
+        title: "Coup de chance",
         description:
           "Une fois durant votre tour, lorsqu'une carte quitte votre défausse, piochez une carte.",
       },
@@ -53,12 +53,12 @@ export const kristoffIcyExplorerI18n: Record<Languages, I18nProperties> = {
     version: "Esploratore dei Ghiacci",
     text: [
       {
-        title: "PROFONDITÀ NASCOSTE",
+        title: "Profondità Nascoste",
         description:
           "Quando giochi questo personaggio, se hai in gioco un personaggio chiamato Anna, puoi mettere una carta dagli scarti di un giocatore a tua scelta in fondo al suo mazzo.",
       },
       {
-        title: "COLPO DI FORTUNA",
+        title: "Colpo di Fortuna",
         description:
           "Una volta durante il tuo turno, ogni volta che una carta lascia i tuoi scarti, pesca una carta.",
       },

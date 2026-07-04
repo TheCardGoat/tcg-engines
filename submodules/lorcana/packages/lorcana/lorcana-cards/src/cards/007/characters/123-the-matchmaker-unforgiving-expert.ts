@@ -4,6 +4,17 @@ import { theMatchmakerUnforgivingExpertI18n } from "./123-the-matchmaker-unforgi
 export const theMatchmakerUnforgivingExpert: CharacterCard = {
   id: "w5E",
   canonicalId: "ci_w5E",
+  slug: "lorcana-ci_w5E",
+  printings: [
+    {
+      id: "set7-123",
+      artId: "set7-123",
+      setCode: "set7",
+      collectorNumber: "123",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-123"],
   cardType: "character",
   name: "The Matchmaker",
@@ -20,13 +31,13 @@ export const theMatchmakerUnforgivingExpert: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9b84afa5574c49e4a0270195f6ced69b",
-    tcgPlayer: 618207,
+    tcgPlayer: "618207",
   },
   text: [
     {
-      title: "YOU ARE A DISGRACE!",
+      title: "YOU ARE",
       description:
-        "Whenever this character challenges another character, each opponent loses 1 lore.",
+        "A DISGRACE! Whenever this character challenges another character, each opponent loses 1 lore.",
     },
   ],
   classifications: ["Storyborn"],

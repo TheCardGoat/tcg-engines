@@ -4,6 +4,17 @@ import { ingeniousDeviceI18n } from "./201-ingenious-device.i18n";
 export const ingeniousDevice: ItemCard = {
   id: "iZ1",
   canonicalId: "ci_iZ1",
+  slug: "lorcana-ci_iZ1",
+  printings: [
+    {
+      id: "set10-201",
+      artId: "set10-201",
+      setCode: "set10",
+      collectorNumber: "201",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-201"],
   cardType: "item",
   name: "Ingenious Device",
@@ -16,7 +27,7 @@ export const ingeniousDevice: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_415b89e575ba4ce289709dfd16d4ff14",
-    tcgPlayer: 659410,
+    tcgPlayer: "659410",
   },
   text: [
     {

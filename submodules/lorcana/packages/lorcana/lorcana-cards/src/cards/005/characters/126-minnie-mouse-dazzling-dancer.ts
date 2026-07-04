@@ -4,6 +4,17 @@ import { minnieMouseDazzlingDancerI18n } from "./126-minnie-mouse-dazzling-dance
 export const minnieMouseDazzlingDancer: CharacterCard = {
   id: "dg4",
   canonicalId: "ci_dg4",
+  slug: "lorcana-ci_dg4",
+  printings: [
+    {
+      id: "set5-126",
+      artId: "set5-126",
+      setCode: "set5",
+      collectorNumber: "126",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-126"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -19,7 +30,7 @@ export const minnieMouseDazzlingDancer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_534dcd9a655747bfbcb0c52c605e9220",
-    tcgPlayer: 557294,
+    tcgPlayer: "557294",
   },
   text: [
     {

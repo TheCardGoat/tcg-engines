@@ -3,7 +3,18 @@ import { wasabiMethodicalEngineerI18n } from "./149-wasabi-methodical-engineer.i
 
 export const wasabiMethodicalEngineer: CharacterCard = {
   id: "2ZH",
-  canonicalId: "ci_2ZH",
+  canonicalId: "ci_3z5",
+  slug: "lorcana-ci_3z5",
+  printings: [
+    {
+      id: "set6-149",
+      artId: "set6-149",
+      setCode: "set6",
+      collectorNumber: "149",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-149"],
   cardType: "character",
   name: "Wasabi",
@@ -20,7 +31,7 @@ export const wasabiMethodicalEngineer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_40ef816e4c7a43cba37bb9f51a586626",
-    tcgPlayer: 578231,
+    tcgPlayer: "578231",
   },
   text: [
     {

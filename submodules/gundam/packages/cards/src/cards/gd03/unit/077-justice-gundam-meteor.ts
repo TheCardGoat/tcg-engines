@@ -7,14 +7,17 @@ export const gd03JusticeGundamMeteor077: UnitCard = {
   color: "white",
   traits: ["triple ship alliance"],
   id: "GD03-077",
-  externalId: "gundam:gd03-077",
-  slug: "justice-gundam-meteor-gd03-077",
+  canonicalId: "GD03-077",
+  externalIds: { bandai: "gundam:gd03-077" },
+  slug: "justice-gundam-meteor/gd03-077",
   displayName: "Justice Gundam (METEOR)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-077",
   printings: [
     {
       id: "GD03-077",
+      artId: "GD03-077",
+      setCode: "GD03",
       collectorNumber: "GD03-077",
       cardNumber: "GD03-077",
       set: {
@@ -29,6 +32,7 @@ export const gd03JusticeGundamMeteor077: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-077"],
   selectedPrintingId: "GD03-077",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-077.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-077.webp?260424",

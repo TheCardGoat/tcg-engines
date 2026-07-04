@@ -4,6 +4,17 @@ import { yaoSnowWarriorI18n } from "./073-yao-snow-warrior.i18n";
 export const yaoSnowWarrior: CharacterCard = {
   id: "SFC",
   canonicalId: "ci_SFC",
+  slug: "lorcana-ci_SFC",
+  printings: [
+    {
+      id: "set11-073",
+      artId: "set11-073",
+      setCode: "set11",
+      collectorNumber: "73",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-073"],
   cardType: "character",
   name: "Yao",
@@ -20,7 +31,7 @@ export const yaoSnowWarrior: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_85ee925c4b1c4c1bbf2d6320a9aeaf7d",
-    tcgPlayer: 675387,
+    tcgPlayer: "675387",
   },
   text: [
     {

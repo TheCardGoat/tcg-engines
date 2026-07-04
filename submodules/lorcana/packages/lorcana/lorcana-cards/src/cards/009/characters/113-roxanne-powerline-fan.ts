@@ -4,6 +4,17 @@ import { roxannePowerlineFanI18n } from "./113-roxanne-powerline-fan.i18n";
 export const roxannePowerlineFan: CharacterCard = {
   id: "rlI",
   canonicalId: "ci_rlI",
+  slug: "lorcana-ci_rlI",
+  printings: [
+    {
+      id: "set9-113",
+      artId: "set9-113",
+      setCode: "set9",
+      collectorNumber: "113",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-113"],
   cardType: "character",
   name: "Roxanne",
@@ -20,7 +31,7 @@ export const roxannePowerlineFan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1d1f302d846749939eb57dbe5013d807",
-    tcgPlayer: 650049,
+    tcgPlayer: "650049",
   },
   text: [
     {

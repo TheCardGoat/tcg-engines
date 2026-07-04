@@ -7,14 +7,17 @@ export const st03TheBlueGiant014: CommandCard = {
   color: "green",
   traits: ["zeon"],
   id: "ST03-014",
-  externalId: "gundam:st03-014",
-  slug: "the-blue-giant-st03-014",
+  canonicalId: "ST03-014",
+  externalIds: { bandai: "gundam:st03-014" },
+  slug: "the-blue-giant/st03-014",
   displayName: "The Blue Giant",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-014",
   printings: [
     {
       id: "ST03-014",
+      artId: "ST03-014",
+      setCode: "ST03",
       collectorNumber: "ST03-014",
       cardNumber: "ST03-014",
       set: {
@@ -30,6 +33,8 @@ export const st03TheBlueGiant014: CommandCard = {
     },
     {
       id: "ST03-014_p1",
+      artId: "ST03-014_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-014_p1",
       cardNumber: "ST03-014",
       set: {
@@ -44,6 +49,7 @@ export const st03TheBlueGiant014: CommandCard = {
       productName: "Zeon's Rush [ST03] Bonus Pack",
     },
   ],
+  reprints: ["ST03-014", "ST03-014_p1"],
   selectedPrintingId: "ST03-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-014.webp?260424",

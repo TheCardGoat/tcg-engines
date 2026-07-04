@@ -4,6 +4,17 @@ import { captainHookUnderhandedI18n } from "./071-captain-hook-underhanded.i18n"
 export const captainHookUnderhanded: CharacterCard = {
   id: "2U6",
   canonicalId: "ci_2U6",
+  slug: "lorcana-ci_2U6",
+  printings: [
+    {
+      id: "set6-071",
+      artId: "set6-071",
+      setCode: "set6",
+      collectorNumber: "71",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-071"],
   cardType: "character",
   name: "Captain Hook",
@@ -20,7 +31,7 @@ export const captainHookUnderhanded: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_44fceab89d3a4b40bd343c2c84a5cca3",
-    tcgPlayer: 583852,
+    tcgPlayer: "583852",
   },
   text: [
     {
@@ -46,7 +57,12 @@ export const captainHookUnderhanded: CharacterCard = {
           owner: "opponent",
           count: "all",
           cardTypes: ["character"],
-          filters: [{ type: "has-classification", classification: "Pirate" }],
+          filters: [
+            {
+              type: "has-classification",
+              classification: "Pirate",
+            },
+          ],
         },
         type: "restriction",
       },

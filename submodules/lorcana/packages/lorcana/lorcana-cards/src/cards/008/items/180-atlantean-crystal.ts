@@ -4,6 +4,17 @@ import { atlanteanCrystalI18n } from "./180-atlantean-crystal.i18n";
 export const atlanteanCrystal: ItemCard = {
   id: "ReY",
   canonicalId: "ci_ReY",
+  slug: "lorcana-ci_ReY",
+  printings: [
+    {
+      id: "set8-180",
+      artId: "set8-180",
+      setCode: "set8",
+      collectorNumber: "180",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-180"],
   cardType: "item",
   name: "Atlantean Crystal",
@@ -16,7 +27,7 @@ export const atlanteanCrystal: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a6c7778d84d249c8be2863e3fb67678b",
-    tcgPlayer: 631685,
+    tcgPlayer: "631685",
   },
   text: [
     {

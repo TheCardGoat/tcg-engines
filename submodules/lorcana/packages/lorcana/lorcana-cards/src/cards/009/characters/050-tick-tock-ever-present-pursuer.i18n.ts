@@ -9,16 +9,16 @@ export const ticktockEverpresentPursuerI18n: Record<Languages, I18nProperties> =
   de: {
     name: "Ticktack",
     version: "Ständiger Verfolger",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Tic-Tac",
     version: "Implacable poursuivant",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Cocò",
     version: "Inseguitore Onnipresente",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

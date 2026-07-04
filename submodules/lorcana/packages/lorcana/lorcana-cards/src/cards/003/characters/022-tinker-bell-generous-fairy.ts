@@ -4,6 +4,17 @@ import { tinkerBellGenerousFairyI18n } from "./022-tinker-bell-generous-fairy.i1
 export const tinkerBellGenerousFairy: CharacterCard = {
   id: "NlL",
   canonicalId: "ci_CV5",
+  slug: "lorcana-ci_CV5",
+  printings: [
+    {
+      id: "set3-022",
+      artId: "set3-022",
+      setCode: "set3",
+      collectorNumber: "22",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-022", "set9-012"],
   cardType: "character",
   name: "Tinker Bell",
@@ -20,13 +31,13 @@ export const tinkerBellGenerousFairy: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6ec58a64abf84ea2968667aa02d50769",
-    tcgPlayer: 649961,
+    tcgPlayer: "649961",
   },
   text: [
     {
-      title: "MAKE A NEW FRIEND",
+      title: "MAKE",
       description:
-        "When you play this character, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
+        "A NEW FRIEND When you play this character, look at the top 4 cards of your deck. You may reveal a character card and put it into your hand. Put the rest on the bottom of your deck in any order.",
     },
   ],
   classifications: ["Storyborn", "Ally", "Fairy"],

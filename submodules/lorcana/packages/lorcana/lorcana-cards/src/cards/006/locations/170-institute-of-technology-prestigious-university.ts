@@ -4,6 +4,17 @@ import { instituteOfTechnologyPrestigiousUniversityI18n } from "./170-institute-
 export const instituteOfTechnologyPrestigiousUniversity: LocationCard = {
   id: "cKc",
   canonicalId: "ci_cKc",
+  slug: "lorcana-ci_cKc",
+  printings: [
+    {
+      id: "set6-170",
+      artId: "set6-170",
+      setCode: "set6",
+      collectorNumber: "170",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-170"],
   cardType: "location",
   name: "Institute of Technology",
@@ -20,7 +31,7 @@ export const instituteOfTechnologyPrestigiousUniversity: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b499c66fd5104b3a994c3a6bd51ba692",
-    tcgPlayer: 591988,
+    tcgPlayer: "591988",
   },
   text: [
     {

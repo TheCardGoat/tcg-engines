@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { perlaNimbleSeamstressI18n } from "./032-perla-nimble-seamstress.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { support } from "../../../helpers/abilities/support";
 
 export const perlaNimbleSeamstress: CharacterCard = {
   id: "D8H",
   canonicalId: "ci_D8H",
+  slug: "lorcana-ci_D8H",
+  printings: [
+    {
+      id: "set7-032",
+      artId: "set7-032",
+      setCode: "set7",
+      collectorNumber: "32",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-032"],
   cardType: "character",
   name: "Perla",
@@ -22,7 +34,7 @@ export const perlaNimbleSeamstress: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fd0e022a8b8c4171a610ffe0a440d8be",
-    tcgPlayer: 618131,
+    tcgPlayer: "618131",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd02LafterFrankland095: PilotCard = {
   color: "purple",
   traits: ["teiwaz"],
   id: "GD02-095",
-  externalId: "gundam:gd02-095",
-  slug: "lafter-frankland-gd02-095",
+  canonicalId: "GD02-095",
+  externalIds: { bandai: "gundam:gd02-095" },
+  slug: "lafter-frankland/gd02-095",
   displayName: "Lafter Frankland",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-095",
   printings: [
     {
       id: "GD02-095",
+      artId: "GD02-095",
+      setCode: "GD02",
       collectorNumber: "GD02-095",
       cardNumber: "GD02-095",
       set: {
@@ -29,6 +32,7 @@ export const gd02LafterFrankland095: PilotCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-095"],
   selectedPrintingId: "GD02-095",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-095.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-095.webp?260424",

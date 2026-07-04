@@ -4,6 +4,17 @@ import { badanonVillainSupportCenterI18n } from "./203-bad-anon-villain-support-
 export const badanonVillainSupportCenter: LocationCard = {
   id: "rvD",
   canonicalId: "ci_Uqb",
+  slug: "lorcana-ci_Uqb",
+  printings: [
+    {
+      id: "set5-203",
+      artId: "set5-203",
+      setCode: "set5",
+      collectorNumber: "203",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-203"],
   cardType: "location",
   name: "Bad-Anon",
@@ -20,7 +31,7 @@ export const badanonVillainSupportCenter: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c88d044f605440a29cbf41b7cdc7d340",
-    tcgPlayer: 561978,
+    tcgPlayer: "561978",
   },
   text: [
     {

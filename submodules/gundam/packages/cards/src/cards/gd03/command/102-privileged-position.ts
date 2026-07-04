@@ -7,14 +7,17 @@ export const gd03PrivilegedPosition102: CommandCard = {
   color: "blue",
   traits: [],
   id: "GD03-102",
-  externalId: "gundam:gd03-102",
-  slug: "privileged-position-gd03-102",
+  canonicalId: "GD03-102",
+  externalIds: { bandai: "gundam:gd03-102" },
+  slug: "privileged-position/gd03-102",
   displayName: "Privileged Position",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-102",
   printings: [
     {
       id: "GD03-102",
+      artId: "GD03-102",
+      setCode: "GD03",
       collectorNumber: "GD03-102",
       cardNumber: "GD03-102",
       set: {
@@ -29,6 +32,7 @@ export const gd03PrivilegedPosition102: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-102"],
   selectedPrintingId: "GD03-102",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-102.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-102.webp?260424",

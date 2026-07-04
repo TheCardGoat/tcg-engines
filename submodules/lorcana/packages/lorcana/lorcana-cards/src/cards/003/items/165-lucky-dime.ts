@@ -4,6 +4,17 @@ import { luckyDimeI18n } from "./165-lucky-dime.i18n";
 export const luckyDime: ItemCard = {
   id: "Vpm",
   canonicalId: "ci_Vpm",
+  slug: "lorcana-ci_Vpm",
+  printings: [
+    {
+      id: "set3-165",
+      artId: "set3-165",
+      setCode: "set3",
+      collectorNumber: "165",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-165"],
   cardType: "item",
   name: "Lucky Dime",
@@ -16,7 +27,7 @@ export const luckyDime: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b4342b1e77754c4caec6596f27f963b2",
-    tcgPlayer: 536272,
+    tcgPlayer: "536272",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd03GundamGusionRebakeFullCity053: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "GD03-053",
-  externalId: "gundam:gd03-053",
-  slug: "gundam-gusion-rebake-full-city-gd03-053",
+  canonicalId: "GD03-053",
+  externalIds: { bandai: "gundam:gd03-053" },
+  slug: "gundam-gusion-rebake-full-city/gd03-053",
   displayName: "Gundam Gusion Rebake Full City",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-053",
   printings: [
     {
       id: "GD03-053",
+      artId: "GD03-053",
+      setCode: "GD03",
       collectorNumber: "GD03-053",
       cardNumber: "GD03-053",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamGusionRebakeFullCity053: UnitCard = {
     },
     {
       id: "GD03-053_p1",
+      artId: "GD03-053_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-053_p1",
       cardNumber: "GD03-053",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamGusionRebakeFullCity053: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-053", "GD03-053_p1"],
   selectedPrintingId: "GD03-053",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-053.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-053.webp?260424",

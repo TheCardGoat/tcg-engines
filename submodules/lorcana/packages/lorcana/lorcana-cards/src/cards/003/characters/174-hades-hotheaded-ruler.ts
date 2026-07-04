@@ -4,6 +4,17 @@ import { hadesHotheadedRulerI18n } from "./174-hades-hotheaded-ruler.i18n";
 export const hadesHotheadedRuler: CharacterCard = {
   id: "3Tj",
   canonicalId: "ci_3Tj",
+  slug: "lorcana-ci_3Tj",
+  printings: [
+    {
+      id: "set3-174",
+      artId: "set3-174",
+      setCode: "set3",
+      collectorNumber: "174",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-174"],
   cardType: "character",
   name: "Hades",
@@ -20,7 +31,7 @@ export const hadesHotheadedRuler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_380dc3639d7349c28a244b65ed675fcb",
-    tcgPlayer: 539106,
+    tcgPlayer: "539106",
   },
   text: [
     {

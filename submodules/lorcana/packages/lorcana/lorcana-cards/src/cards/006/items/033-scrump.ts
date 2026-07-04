@@ -4,6 +4,17 @@ import { scrumpI18n } from "./033-scrump.i18n";
 export const scrump: ItemCard = {
   id: "9I8",
   canonicalId: "ci_9I8",
+  slug: "lorcana-ci_9I8",
+  printings: [
+    {
+      id: "set6-033",
+      artId: "set6-033",
+      setCode: "set6",
+      collectorNumber: "33",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-033"],
   cardType: "item",
   name: "Scrump",
@@ -16,7 +27,7 @@ export const scrump: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a631b5ead5b34dd4b89ae313a3dcbd1d",
-    tcgPlayer: 592003,
+    tcgPlayer: "592003",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { peteSteamboatRivalI18n } from "./116-pete-steamboat-rival.i18n";
 export const peteSteamboatRival: CharacterCard = {
   id: "c2L",
   canonicalId: "ci_c2L",
+  slug: "lorcana-ci_c2L",
+  printings: [
+    {
+      id: "set5-116",
+      artId: "set5-116",
+      setCode: "set5",
+      collectorNumber: "116",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-116"],
   cardType: "character",
   name: "Pete",
@@ -19,7 +30,7 @@ export const peteSteamboatRival: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3c2769ada879468487b74479a921bc27",
-    tcgPlayer: 561963,
+    tcgPlayer: "561963",
   },
   text: [
     {

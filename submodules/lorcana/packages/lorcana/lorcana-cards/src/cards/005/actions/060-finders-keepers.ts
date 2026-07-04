@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { findersKeepersI18n } from "./060-finders-keepers.i18n";
 
 export const findersKeepers: ActionCard = {
-  id: "J7L",
-  canonicalId: "ci_LfA",
+  id: "0kU",
+  canonicalId: "ci_6e1",
+  slug: "lorcana-ci_6e1",
+  printings: [
+    {
+      id: "set5-060",
+      artId: "set5-060",
+      setCode: "set5",
+      collectorNumber: "60",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-060"],
   cardType: "action",
   name: "Finders Keepers",
@@ -16,7 +27,7 @@ export const findersKeepers: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c2ea432892434d9c9814d4bf6c3791a5",
-    tcgPlayer: 561997,
+    tcgPlayer: "561997",
   },
   text: "Draw 3 cards.",
   abilities: [

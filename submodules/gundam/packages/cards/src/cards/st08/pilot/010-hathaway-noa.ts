@@ -7,14 +7,17 @@ export const st08HathawayNoa010: PilotCard = {
   color: "red",
   traits: ["mafty", "newtype"],
   id: "ST08-010",
-  externalId: "gundam:st08-010",
-  slug: "hathaway-noa-st08-010",
+  canonicalId: "ST08-010",
+  externalIds: { bandai: "gundam:st08-010" },
+  slug: "hathaway-noa/st08-010",
   displayName: "Hathaway Noa",
   set: { code: "ST08", name: "Flash of Radiance [ST08]", packageId: "616008" },
   printNumber: "ST08-010",
   printings: [
     {
       id: "ST08-010",
+      artId: "ST08-010",
+      setCode: "ST08",
       collectorNumber: "ST08-010",
       cardNumber: "ST08-010",
       set: {
@@ -30,6 +33,8 @@ export const st08HathawayNoa010: PilotCard = {
     },
     {
       id: "ST08-010_p1",
+      artId: "ST08-010_p1",
+      setCode: "ST08",
       collectorNumber: "ST08-010_p1",
       cardNumber: "ST08-010",
       set: {
@@ -45,6 +50,8 @@ export const st08HathawayNoa010: PilotCard = {
     },
     {
       id: "ST08-010_p2",
+      artId: "ST08-010_p2",
+      setCode: "ST07",
       collectorNumber: "ST08-010_p2",
       cardNumber: "ST08-010",
       set: {
@@ -59,6 +66,7 @@ export const st08HathawayNoa010: PilotCard = {
       productName: "Starter Deck [ST07]/[ST08] Release Event",
     },
   ],
+  reprints: ["ST08-010", "ST08-010_p1", "ST08-010_p2"],
   selectedPrintingId: "ST08-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st08/ST08-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST08-010.webp?260424",

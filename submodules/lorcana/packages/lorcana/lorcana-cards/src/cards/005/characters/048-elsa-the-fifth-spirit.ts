@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { elsaTheFifthSpiritI18n } from "./048-elsa-the-fifth-spirit.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const elsaTheFifthSpirit: CharacterCard = {
-  id: "PX4",
-  canonicalId: "ci_PX4",
+  id: "3zi",
+  canonicalId: "ci_BaR",
+  slug: "lorcana-ci_BaR",
+  printings: [
+    {
+      id: "set5-048",
+      artId: "set5-048",
+      setCode: "set5",
+      collectorNumber: "48",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-048"],
   cardType: "character",
   name: "Elsa",
@@ -21,8 +33,8 @@ export const elsaTheFifthSpirit: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_db64e740e8ef4c22b87c89fa48093cee",
-    tcgPlayer: 555245,
+    lorcast: "crd_b16f35fcfe884bc4b442745f49c0b811",
+    tcgPlayer: "650189",
   },
   text: [
     {

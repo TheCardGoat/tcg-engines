@@ -3,7 +3,12 @@ import type { StaticEffectRegistry } from "../rules/static-effect-registry";
 
 // Re-export the type for consumers
 export type { ProjectedLorcanaCardDerived } from "../types/projected-board";
-import { getFullName, isParameterizedKeywordAbility, isValueKeywordAbility } from "../card-utils";
+import {
+  getFullName,
+  getPrintedKeywordTitles,
+  isParameterizedKeywordAbility,
+  isValueKeywordAbility,
+} from "../card-utils";
 import { getTemporaryKeywordValue } from "../runtime-moves/effects/temporary-effects";
 import type {
   LorcanaCardDefinition,
@@ -189,9 +194,12 @@ export function projectLorcanaCardDerived(args: {
   derived.fullName = definition ? getFullName(definition) : "";
 
   const baseKeywords = definition
-    ? (definition.abilities ?? [])
-        .filter((ability) => ability.type === "keyword" && typeof ability.keyword === "string")
-        .map((ability) => ability.keyword)
+    ? [
+        ...(definition.abilities ?? [])
+          .filter((ability) => ability.type === "keyword" && typeof ability.keyword === "string")
+          .map((ability) => ability.keyword),
+        ...getPrintedKeywordTitles(definition),
+      ]
     : [];
   const temporaryKeywords = getActiveTemporaryKeywordNames(meta, currentTurn, state);
   const staticSelfKeywords = getActiveStaticSelfKeywordGrants({

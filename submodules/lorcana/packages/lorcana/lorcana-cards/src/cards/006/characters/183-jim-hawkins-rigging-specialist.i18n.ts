@@ -20,10 +20,11 @@ export const jimHawkinsRiggingSpecialistI18n: Record<Languages, I18nProperties> 
     version: "Takelage-Experte",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Jim-Hawkins-Charaktere auszuspielen.)",
       },
       {
-        title: "GEFECHTSSTATIONEN",
+        title: "Gefechtsstationen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einem Charakter oder einem Ort deiner Wahl 1 Schaden zufügen.",
       },
@@ -34,10 +35,11 @@ export const jimHawkinsRiggingSpecialistI18n: Record<Languages, I18nProperties> 
     version: "Spécialiste en gréement",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Jim Hawkins.)",
       },
       {
-        title: "POSTE DE COMBAT",
+        title: "Poste de combat",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage ou un lieu et lui infliger 1 dommage.",
       },
@@ -48,10 +50,11 @@ export const jimHawkinsRiggingSpecialistI18n: Record<Languages, I18nProperties> 
     version: "Specialista del Sartiame",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Jim Hawkins.)",
       },
       {
-        title: "POSTAZIONI DI COMBATTIMENTO",
+        title: "Postazioni di Combattimento",
         description:
           "Quando giochi questo personaggio, puoi infliggere 1 danno a un personaggio o a un luogo a tua scelta.",
       },

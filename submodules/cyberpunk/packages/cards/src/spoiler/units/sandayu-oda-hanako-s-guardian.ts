@@ -1,14 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerSandayuOdaHanakoSGuardian = {
+export const spoilerSandayuOdaHanakoSGuardian = defineCyberpunkCard({
   id: "f8c82c1c-8ef2-4924-b5ba-5bb7f333aae7",
-  externalId: "cyberpunk:sandayu-oda-hanako-s-guardian",
   slug: "sandayu-oda-hanako-s-guardian",
-  name: "Sandayu Oda",
-  subname: "Hanako's Guardian",
-  displayName: "Sandayu Oda - Hanako's Guardian",
   rulesText:
     "PLAY Spend a rival Unit for each friendly value-pair of Gigs. This Unit can attack rival Units the turn it's played.",
+  subname: "Hanako's Guardian",
+  name: "Sandayu Oda",
+  displayName: "Sandayu Oda - Hanako's Guardian",
+  canonicalId: "sandayu-oda-hanako-s-guardian",
   color: "green",
   classifications: ["Ganger", "Valentino"],
   set: {
@@ -16,15 +17,6 @@ export const spoilerSandayuOdaHanakoSGuardian = {
     name: "Spoiler Set",
   },
   printNumber: "088",
-  printings: [
-    {
-      id: "06596a74-abef-4532-8920-2f1631441636",
-      collectorNumber: "088",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "06596a74-abef-4532-8920-2f1631441636",
   artist: "ADIA",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/088.webp",
   rarity: null,
@@ -32,7 +24,6 @@ export const spoilerSandayuOdaHanakoSGuardian = {
   hasSellTag: false,
   ram: 2,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 7,
   power: 8,
@@ -92,5 +83,4 @@ export const spoilerSandayuOdaHanakoSGuardian = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

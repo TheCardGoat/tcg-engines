@@ -7,14 +7,17 @@ export const gd04Inspector112: CommandCard = {
   color: "red",
   traits: ["earth federation", "cyber-newtype"],
   id: "GD04-112",
-  externalId: "gundam:gd04-112",
-  slug: "inspector-gd04-112",
+  canonicalId: "GD04-112",
+  externalIds: { bandai: "gundam:gd04-112" },
+  slug: "inspector/gd04-112",
   displayName: "Inspector",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-112",
   printings: [
     {
       id: "GD04-112",
+      artId: "GD04-112",
+      setCode: "GD04",
       collectorNumber: "GD04-112",
       cardNumber: "GD04-112",
       set: {
@@ -29,6 +32,7 @@ export const gd04Inspector112: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-112"],
   selectedPrintingId: "GD04-112",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-112.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-112.webp?260424",

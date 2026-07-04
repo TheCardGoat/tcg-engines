@@ -1,13 +1,15 @@
-import type { WelcomeToNightCityRetailCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts";
 
-export const welcomeToNightCityRetailKiroshiOptics = {
+export const welcomeToNightCityRetailKiroshiOptics = defineCyberpunkCard({
   id: "654f2289-5d75-4f8b-bd35-702031fbb214",
-  externalId: "cb-kiroshi-optics",
   slug: "kiroshi-optics",
-  name: "Kiroshi Optics",
-  displayName: "Kiroshi Optics",
   rulesText:
     "(Equip to a friendly Unit or face-up Legend.)\n{Attack} Look at a friendly face-down Legend. (Don't reveal it.)",
+  name: "Kiroshi Optics",
+  displayName: "Kiroshi Optics",
+  canonicalId: "kiroshi-optics",
   color: "yellow",
   classifications: ["Cyberware"],
   set: {
@@ -15,52 +17,39 @@ export const welcomeToNightCityRetailKiroshiOptics = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "061",
-  printings: [
-    {
-      id: "ec3368a9-79f1-4dfc-9cf7-1cb464ec1c88",
-      collectorNumber: "061",
-      setCode: "welcometonightcityretail",
-      rarity: "Common",
-    },
-    {
-      id: "d35720e4-f307-4732-ae3d-8f47f1351549",
-      collectorNumber: "β061",
-      setCode: "welcometonightcitybeta",
-      rarity: "Common",
-    },
-    {
-      id: "aa9b8a2e-ffd6-4435-8bed-c4e64e1c32ac",
-      collectorNumber: "007",
-      setCode: "theheistretailstarterdeck",
-      rarity: "Common",
-    },
-    {
-      id: "b18ce43d-3441-4a55-a6a9-34ae8765aa27",
-      collectorNumber: "β007",
-      setCode: "theheistbetastarterdeck",
-      rarity: "Common",
-    },
-  ],
-  selectedPrintingId: "ec3368a9-79f1-4dfc-9cf7-1cb464ec1c88",
   artist: "CD Projekt Red",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/061.webp",
   rarity: "Common",
   legality: "legal",
   hasSellTag: true,
   ram: 1,
-  timingTriggers: [],
-  keywords: [],
+  timingTriggers: ["attack"],
   type: "gear",
   cost: 1,
   power: 1,
   abilities: [
-    {
-      kind: "static",
-      text: "Attack Look at a friendly face-down Legend. (Don't reveal it.)",
-      effects: [],
-    },
+    AbilityBuilder.triggered()
+      .text("ATTACK Look at a friendly face-down Legend. (Don't reveal it.)")
+      .onAttack()
+      .source(target.host())
+      .effect(
+        effect.lookAt({
+          target: target.card({
+            controller: "friendly",
+            zones: ["legendArea"],
+            cardTypes: ["legend"],
+            face: "faceDown",
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
+            },
+          }),
+          revealToOpponent: false,
+        }),
+      )
+      .build(),
   ],
-  reminderText: [],
   attachment: {
     text: "Equip to a unit or face-up legend.",
     target: {
@@ -71,4 +60,4 @@ export const welcomeToNightCityRetailKiroshiOptics = {
       face: "faceUp",
     },
   },
-} satisfies WelcomeToNightCityRetailCardDefinition;
+}) satisfies GearCardDefinition;

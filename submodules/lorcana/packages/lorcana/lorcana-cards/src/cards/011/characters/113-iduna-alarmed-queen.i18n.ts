@@ -9,16 +9,16 @@ export const idunaAlarmedQueenI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Iduna",
     version: "Alarmierte Königin",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Iduna",
     version: "Reine inquiète",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Iduna",
     version: "Regina Allarmata",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

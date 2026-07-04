@@ -4,6 +4,17 @@ import { magicBroomIlluminaryKeeperI18n } from "./048-magic-broom-illuminary-kee
 export const magicBroomIlluminaryKeeper: CharacterCard = {
   id: "9H2",
   canonicalId: "ci_9H2",
+  slug: "lorcana-ci_9H2",
+  printings: [
+    {
+      id: "set4-048",
+      artId: "set4-048",
+      setCode: "set4",
+      collectorNumber: "48",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-048"],
   cardType: "character",
   name: "Magic Broom",
@@ -20,7 +31,7 @@ export const magicBroomIlluminaryKeeper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_65f55cf2eedd49668ac8946ebd4d2105",
-    tcgPlayer: 549715,
+    tcgPlayer: "549715",
   },
   text: [
     {

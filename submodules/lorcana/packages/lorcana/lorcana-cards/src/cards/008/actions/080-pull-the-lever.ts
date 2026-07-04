@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { pullTheLeverI18n } from "./080-pull-the-lever.i18n";
 
 export const pullTheLever: ActionCard = {
-  id: "e3L",
-  canonicalId: "ci_e3L",
+  id: "OrQ",
+  canonicalId: "ci_UMU",
+  slug: "lorcana-ci_UMU",
+  printings: [
+    {
+      id: "set8-080",
+      artId: "set8-080",
+      setCode: "set8",
+      collectorNumber: "80",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-080"],
   cardType: "action",
   name: "Pull the Lever!",
@@ -16,7 +27,7 @@ export const pullTheLever: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6cc548274208402aa28a8b1da0c983aa",
-    tcgPlayer: 631402,
+    tcgPlayer: "631402",
   },
   text: "Choose one:\n- Draw 2 cards.\n- Each opponent chooses and discards a card.",
   abilities: [

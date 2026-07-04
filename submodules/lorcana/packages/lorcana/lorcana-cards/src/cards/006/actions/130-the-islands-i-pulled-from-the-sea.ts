@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { theIslandsIPulledFromTheSeaI18n } from "./130-the-islands-i-pulled-from-the-sea.i18n";
 
 export const theIslandsIPulledFromTheSea: ActionCard = {
-  id: "O9N",
+  id: "oqN",
   canonicalId: "ci_qzk",
+  slug: "lorcana-ci_qzk",
+  printings: [
+    {
+      id: "set6-130",
+      artId: "set6-130",
+      setCode: "set6",
+      collectorNumber: "130",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-130"],
   cardType: "action",
   name: "The Islands I Pulled from the Sea",
@@ -16,7 +27,7 @@ export const theIslandsIPulledFromTheSea: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_37f652aa15934d2b9bd7ad15eb18bbfb",
-    tcgPlayer: 592000,
+    tcgPlayer: "592000",
   },
   text: "Search your deck for a location card, reveal that card to all players, and put it into your hand. Then, shuffle your deck.",
   actionSubtype: "song",

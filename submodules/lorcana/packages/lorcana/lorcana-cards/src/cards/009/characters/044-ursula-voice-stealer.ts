@@ -4,6 +4,17 @@ import { ursulaVoiceStealerI18n } from "./044-ursula-voice-stealer.i18n";
 export const ursulaVoiceStealer: CharacterCard = {
   id: "JPS",
   canonicalId: "ci_JPS",
+  slug: "lorcana-ci_JPS",
+  printings: [
+    {
+      id: "set9-044",
+      artId: "set9-044",
+      setCode: "set9",
+      collectorNumber: "44",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-044"],
   cardType: "character",
   name: "Ursula",
@@ -20,7 +31,7 @@ export const ursulaVoiceStealer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1c44a2b730a54018a567031f38363a17",
-    tcgPlayer: 649991,
+    tcgPlayer: "649991",
   },
   text: [
     {

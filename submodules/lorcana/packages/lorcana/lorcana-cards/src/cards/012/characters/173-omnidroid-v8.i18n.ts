@@ -10,11 +10,11 @@ export const omnidroidV8I18n: Record<Languages, I18nProperties> = {
     version: "V.8",
   },
   fr: {
-    name: "Omnidroid",
+    name: "Omnidroïde",
     version: "V.8",
   },
   it: {
-    name: "Omnidroid",
+    name: "Omnidroide",
     version: "V.8",
   },
 };

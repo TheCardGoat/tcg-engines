@@ -4,6 +4,17 @@ import { unconventionalToolI18n } from "./150-unconventional-tool.i18n";
 export const unconventionalTool: ItemCard = {
   id: "t79",
   canonicalId: "ci_t79",
+  slug: "lorcana-ci_t79",
+  printings: [
+    {
+      id: "set7-150",
+      artId: "set7-150",
+      setCode: "set7",
+      collectorNumber: "150",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-150"],
   cardType: "item",
   name: "Unconventional Tool",
@@ -16,7 +27,7 @@ export const unconventionalTool: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_99bcca2953964e4180ad6d27bea2d14d",
-    tcgPlayer: 618709,
+    tcgPlayer: "618709",
   },
   text: [
     {

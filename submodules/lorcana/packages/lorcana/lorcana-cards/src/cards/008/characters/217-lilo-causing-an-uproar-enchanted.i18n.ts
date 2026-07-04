@@ -22,7 +22,7 @@ export const liloCausingAnUproarEnchantedI18n: Record<Languages, I18nProperties>
     version: "Aufruhr-Auslöserin",
     text: [
       {
-        title: "ZEIT, ZU STAMPFEN!",
+        title: "Zeit, zu stampfen!",
         description:
           "Falls du in diesem Zug mindestens 3 Aktionen ausgespielt hast, darfst du diesen Charakter kostenlos ausspielen.",
       },
@@ -38,12 +38,12 @@ export const liloCausingAnUproarEnchantedI18n: Record<Languages, I18nProperties>
     version: "Faisant du raffut",
     text: [
       {
-        title: "L'HEURE DU PIÉTINEMENT!",
+        title: "L'heure du piétinement!",
         description:
           "Durant votre tour, vous pouvez jouer ce personnage gratuitement si vous avez joué 3 actions ou plus lors de ce tour.",
       },
       {
-        title: "ROAAAR!",
+        title: "Roaaar!",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage et redressez-le. Ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
@@ -54,7 +54,7 @@ export const liloCausingAnUproarEnchantedI18n: Record<Languages, I18nProperties>
     version: "Che Scatena un Putiferio",
     text: [
       {
-        title: "È TEMPO DI CALPESTARE!",
+        title: "È Tempo di Calpestare!",
         description:
           "Durante il tuo turno, se hai giocato 3 o più azioni in questo turno, puoi giocare questo personaggio gratis.",
       },

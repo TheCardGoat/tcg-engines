@@ -4,6 +4,17 @@ import { scuttleExpertOnHumansI18n } from "./154-scuttle-expert-on-humans.i18n";
 export const scuttleExpertOnHumans: CharacterCard = {
   id: "IaS",
   canonicalId: "ci_IaS",
+  slug: "lorcana-ci_IaS",
+  printings: [
+    {
+      id: "set4-154",
+      artId: "set4-154",
+      setCode: "set4",
+      collectorNumber: "154",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-154"],
   cardType: "character",
   name: "Scuttle",
@@ -20,7 +31,7 @@ export const scuttleExpertOnHumans: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3dcdfd3bf35341d7835d5b51893bd0cb",
-    tcgPlayer: 549431,
+    tcgPlayer: "549431",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const st04AileStrikeGundam001: UnitCard = {
   color: "white",
   traits: ["earth alliance"],
   id: "ST04-001",
-  externalId: "gundam:st04-001",
-  slug: "aile-strike-gundam-st04-001",
+  canonicalId: "ST04-001",
+  externalIds: { bandai: "gundam:st04-001" },
+  slug: "aile-strike-gundam/st04-001",
   displayName: "Aile Strike Gundam",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "ST04-001",
   printings: [
     {
       id: "ST04-001",
+      artId: "ST04-001",
+      setCode: "ST04",
       collectorNumber: "ST04-001",
       cardNumber: "ST04-001",
       set: {
@@ -30,6 +33,8 @@ export const st04AileStrikeGundam001: UnitCard = {
     },
     {
       id: "ST04-001_p1",
+      artId: "ST04-001_p1",
+      setCode: "ST04",
       collectorNumber: "ST04-001_p1",
       cardNumber: "ST04-001",
       set: {
@@ -45,6 +50,8 @@ export const st04AileStrikeGundam001: UnitCard = {
     },
     {
       id: "ST04-001_p2",
+      artId: "ST04-001_p2",
+      setCode: "BETA",
       collectorNumber: "ST04-001_p2",
       cardNumber: "ST04-001",
       set: {
@@ -60,6 +67,8 @@ export const st04AileStrikeGundam001: UnitCard = {
     },
     {
       id: "ST04-001_p3",
+      artId: "ST04-001_p3",
+      setCode: "BETA",
       collectorNumber: "ST04-001_p3",
       cardNumber: "ST04-001",
       set: {
@@ -75,6 +84,8 @@ export const st04AileStrikeGundam001: UnitCard = {
     },
     {
       id: "ST04-001_p4",
+      artId: "ST04-001_p4",
+      setCode: "GD04",
       collectorNumber: "ST04-001_p4",
       cardNumber: "ST04-001",
       set: {
@@ -89,6 +100,7 @@ export const st04AileStrikeGundam001: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["ST04-001", "ST04-001_p1", "ST04-001_p2", "ST04-001_p3", "ST04-001_p4"],
   selectedPrintingId: "ST04-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st04/ST04-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST04-001.webp?260424",

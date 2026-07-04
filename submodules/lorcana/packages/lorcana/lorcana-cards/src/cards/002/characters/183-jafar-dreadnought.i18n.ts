@@ -20,10 +20,11 @@ export const jafarDreadnoughtI18n: Record<Languages, I18nProperties> = {
     version: "Wüstenkreuzer",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Dschafar-Charaktere auszuspielen.)",
       },
       {
-        title: "ALSO, WO WAREN WIR?",
+        title: "Also, wo waren wir?",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du 1 Karte ziehen.",
       },
@@ -34,10 +35,11 @@ export const jafarDreadnoughtI18n: Record<Languages, I18nProperties> = {
     version: "Serpent cuirassé",
     text: [
       {
-        title: "Alter 2",
+        title:
+          "<Alter> 2 (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages Jafar.)",
       },
       {
-        title: "ALORS, OÙ EN ÉTIONS-NOUS?",
+        title: "Alors, où en étions-nous?",
         description:
           "Lorsque ce personnage en bannit un autre via un défi durant votre tour, vous pouvez piocher une carte.",
       },
@@ -48,10 +50,11 @@ export const jafarDreadnoughtI18n: Record<Languages, I18nProperties> = {
     version: "Dreadnought",
     text: [
       {
-        title: "Shift 2",
+        title:
+          "<Shift> 2 (You may pay 2 {I} to play this on top of one of your characters named Jafar.)",
       },
       {
-        title: "NOW WHERE WERE WE?",
+        title: "Now Where Were We?",
         description:
           "During your turn, whenever this character banishes another character in a challenge, you may draw a card.",
       },

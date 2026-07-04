@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rayaUnstoppableForceI18n } from "./193-raya-unstoppable-force.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 import { resist } from "../../../helpers/abilities/resist";
 
 export const rayaUnstoppableForce: CharacterCard = {
   id: "u57",
   canonicalId: "ci_u57",
+  slug: "lorcana-ci_u57",
+  printings: [
+    {
+      id: "set4-193",
+      artId: "set4-193",
+      setCode: "set4",
+      collectorNumber: "193",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-193"],
   cardType: "character",
   name: "Raya",
@@ -22,7 +34,7 @@ export const rayaUnstoppableForce: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_498044d6e5da4eb3868df6a6d0c058d4",
-    tcgPlayer: 550621,
+    tcgPlayer: "550621",
   },
   text: [
     {

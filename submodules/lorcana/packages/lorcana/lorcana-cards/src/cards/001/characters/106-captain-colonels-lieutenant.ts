@@ -4,6 +4,17 @@ import { captainColonelsLieutenantI18n } from "./106-captain-colonels-lieutenant
 export const captainColonelsLieutenant: CharacterCard = {
   id: "lk3",
   canonicalId: "ci_lk3",
+  slug: "lorcana-ci_lk3",
+  printings: [
+    {
+      id: "set1-106",
+      artId: "set1-106",
+      setCode: "set1",
+      collectorNumber: "106",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-106"],
   cardType: "character",
   name: "Captain",
@@ -21,7 +32,7 @@ export const captainColonelsLieutenant: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_6b4e0c325cbb46698922c45438b4f1a7",
-    tcgPlayer: 508779,
+    tcgPlayer: "508779",
   },
   classifications: ["Storyborn", "Ally", "Captain"],
   i18n: captainColonelsLieutenantI18n,

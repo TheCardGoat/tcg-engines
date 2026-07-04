@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 import { ROOT_FIXTURE_SCENARIO_CASES } from "../../src/games/cyberpunk/testing/root-fixture-scenarios";
@@ -9,6 +9,8 @@ test.describe("Cyberpunk root fixture POM smoke", () => {
       await page.goto(`/cyberpunk/simulator/tests/${scenario.id}?ai=off`);
 
       const pom = await createPlaywrightCyberpunkSimulatorPom(page);
+      await pom.waitForReady();
+      await pom.expectStructuralState();
     });
   }
 });

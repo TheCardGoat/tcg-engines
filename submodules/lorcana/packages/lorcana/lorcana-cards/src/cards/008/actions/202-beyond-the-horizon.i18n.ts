@@ -16,19 +16,40 @@ export const beyondTheHorizonI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Beyond the Horizon",
-    text: "Gemeinsam singen 7 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 7 oder mehr kosten,, damit sie dieses Lied kostenlos singen.) Wähle beliebig viele Personen aus. Sie werfen die Karten aus ihrer Hand ab und ziehen je 3 Karten.",
+    text: [
+      {
+        title:
+          "<Gemeinsam singen> 7 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 7 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)",
+      },
+      {
+        title:
+          "Wähle beliebig viele Personen aus. Sie werfen die Karten aus ihrer Hand ab und ziehen je 3 Karten.",
+      },
+    ],
   },
   fr: {
     name: "Beyond the Horizon",
-    text: "À l'unisson 7 (Vous pouvez n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 7 ou plus pour chanter cette chanson gratuitement.) Choisissez n'importe quel nombre de joueurs. Chaque joueur ainsi choisi défausse sa main puis pioche 3 cartes.",
+    text: [
+      {
+        title:
+          "<À l'unisson> 7 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 7 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez n'importe quel nombre de joueurs. Chaque joueur ainsi choisi défausse sa main puis pioche 3 cartes.",
+      },
+    ],
   },
   it: {
     name: "Beyond the Horizon",
     text: [
       {
-        title: "Cantare Insieme 7",
-        description:
-          "(Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 7 o superiore può per cantare questa canzone gratis.) Scegli un qualsiasi numero di giocatori. Ognuno di loro scarta la propria mano e pesca 3 carte.",
+        title:
+          "<Cantare Insieme> 7 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 7 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Scegli un qualsiasi numero di giocatori. Ognuno di loro scarta la propria mano e pesca 3 carte.",
       },
     ],
   },

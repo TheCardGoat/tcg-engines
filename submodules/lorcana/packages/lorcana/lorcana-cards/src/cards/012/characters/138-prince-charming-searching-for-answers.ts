@@ -4,6 +4,17 @@ import { princeCharmingSearchingForAnswersI18n } from "./138-prince-charming-sea
 export const princeCharmingSearchingForAnswers: CharacterCard = {
   id: "zqs",
   canonicalId: "ci_zqs",
+  slug: "lorcana-ci_zqs",
+  printings: [
+    {
+      id: "set12-138",
+      artId: "set12-138",
+      setCode: "set12",
+      collectorNumber: "138",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-138"],
   cardType: "character",
   name: "Prince Charming",
@@ -19,6 +30,10 @@ export const princeCharmingSearchingForAnswers: CharacterCard = {
   lore: 1,
   inkable: true,
   vanilla: true,
+  externalIds: {
+    lorcast: "crd_4129dadfa88448b5bda96c8b85320ffc",
+    tcgPlayer: "692178",
+  },
   classifications: ["Storyborn", "Hero", "Prince"],
   i18n: princeCharmingSearchingForAnswersI18n,
 };

@@ -4,6 +4,17 @@ import { stitchNewDogI18n } from "./022-stitch-new-dog.i18n";
 export const stitchNewDog: CharacterCard = {
   id: "Weh",
   canonicalId: "ci_Weh",
+  slug: "lorcana-ci_Weh",
+  printings: [
+    {
+      id: "set1-022",
+      artId: "set1-022",
+      setCode: "set1",
+      collectorNumber: "22",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-022"],
   cardType: "character",
   name: "Stitch",
@@ -21,7 +32,7 @@ export const stitchNewDog: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_a46be9bd3971477695ee84d0f25ff88d",
-    tcgPlayer: 493499,
+    tcgPlayer: "493499",
   },
   classifications: ["Storyborn", "Hero", "Alien"],
   i18n: stitchNewDogI18n,

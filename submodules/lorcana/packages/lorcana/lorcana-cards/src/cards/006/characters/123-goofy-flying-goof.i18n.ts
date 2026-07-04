@@ -18,10 +18,10 @@ export const goofyFlyingGoofI18n: Record<Languages, I18nProperties> = {
     version: "Fliegender Goof",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
     ],
   },
@@ -30,10 +30,10 @@ export const goofyFlyingGoofI18n: Record<Languages, I18nProperties> = {
     version: "Gaffeur volant",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
     ],
   },
@@ -42,10 +42,10 @@ export const goofyFlyingGoofI18n: Record<Languages, I18nProperties> = {
     version: "Pasticcione Volante",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
     ],
   },

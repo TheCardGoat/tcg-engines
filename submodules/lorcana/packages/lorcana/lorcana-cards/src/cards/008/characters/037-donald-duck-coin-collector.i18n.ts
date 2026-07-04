@@ -22,14 +22,14 @@ export const donaldDuckCoinCollectorI18n: Record<Languages, I18nProperties> = {
     version: "Münzsammler",
     text: [
       {
-        title: "WO IST DAS SCHWEINCHEN?",
+        title: "Wo ist das Schweinchen?",
         description:
-          "Für jeden Das-Sparschwein-der-Neffen-Gegenstand, den du im Spiel hast, zahlst du 2 weniger, um diesen Charakter auszuspielen.",
+          "Für jeden Das-Sparschwein-der-Neffen-Gegenstand, den du im Spiel hast, zahlst du 2 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "ÜBERALL GELD",
+        title: "Überall Geld",
         description:
-          'Wenn du diesen Charakter ausspielst, erhalten deine anderen Charaktere in diesem Zug: " — Ziehe 1 Karte."',
+          'Wenn du diesen Charakter ausspielst, erhalten deine anderen Charaktere in diesem Zug: "{E} — Ziehe 1 Karte."',
       },
     ],
   },
@@ -38,14 +38,14 @@ export const donaldDuckCoinCollectorI18n: Record<Languages, I18nProperties> = {
     version: "Collectionneur de pièces",
     text: [
       {
-        title: "PAR ICI, PETIT COCHON",
+        title: "Par ici, petit cochon",
         description:
-          "Jouer ce personnage vous coûte 2 de moins pour chaque objet nommé La tirelire des neveux que vous avez en jeu.",
+          "Jouer ce personnage vous coûte 2 {I} de moins pour chaque objet nommé La tirelire des neveux que vous avez en jeu.",
       },
       {
-        title: "DE L'ARGENT PARTOUT",
+        title: "De l'argent partout",
         description:
-          'Lorsque vous jouez ce personnage, vos autres personnages gagnent " — Piochez une carte." pour le reste de ce tour.',
+          'Lorsque vous jouez ce personnage, vos autres personnages gagnent "{E} — Piochez une carte." pour le reste de ce tour.',
       },
     ],
   },
@@ -54,14 +54,14 @@ export const donaldDuckCoinCollectorI18n: Record<Languages, I18nProperties> = {
     version: "Collezionista di Monete",
     text: [
       {
-        title: "QUI, MAIALINO",
+        title: "Qui, Maialino",
         description:
-          "Per ogni oggetto chiamato Salvadanaio dei Nipoti che hai in gioco, paga 2 in meno per giocare questo personaggio.",
+          "Per ogni oggetto chiamato Salvadanaio dei Nipoti che hai in gioco, paga 2 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "SOLDI OVUNQUE",
+        title: "Soldi Ovunque",
         description:
-          'Quando giochi questo personaggio, i tuoi altri personaggi ottengono " — Pesca una carta" per questo turno.',
+          'Quando giochi questo personaggio, i tuoi altri personaggi ottengono "{E} — Pesca una carta" per questo turno.',
       },
     ],
   },

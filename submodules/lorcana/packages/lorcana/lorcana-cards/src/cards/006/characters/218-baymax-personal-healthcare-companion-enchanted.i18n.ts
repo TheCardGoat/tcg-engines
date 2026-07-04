@@ -21,14 +21,13 @@ export const baymaxPersonalHealthcareCompanionEnchantedI18n: Record<Languages, I
     version: "Persönlicher Gesundheitsbegleiter",
     text: [
       {
-        title: "VOLL AUFGELADEN",
+        title: "Voll Aufgeladen",
         description:
-          "Wenn du einen Erfinder im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Wenn du einen Erfinder im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "DU HAST",
-        description:
-          '"AU" GESAGT 2 — Entferne bis zu 1 Schaden von einem anderen Charakter deiner Wahl.',
+        title: 'Du hast "Au" gesagt',
+        description: "2 {I} — Entferne bis zu 1 Schaden von einem anderen Charakter deiner Wahl.",
       },
     ],
   },
@@ -37,13 +36,13 @@ export const baymaxPersonalHealthcareCompanionEnchantedI18n: Record<Languages, I
     version: "Assistant de santé personnel",
     text: [
       {
-        title: "CHARGE TERMINÉE",
+        title: "Charge terminée",
         description:
-          "Jouer ce personnage vous coûte 1 de moins si vous avez un personnage Inventeur en jeu.",
+          "Jouer ce personnage vous coûte 1 {I} de moins si vous avez un personnage Inventeur en jeu.",
       },
       {
-        title: "VOUS AVEZ DIT",
-        description: "'AÏE' 2 — Choisissez un autre personnage et retirez-lui jusqu'à 1 dommage.",
+        title: "Vous avez dit 'Aïe'",
+        description: "2 {I} — Choisissez un autre personnage et retirez-lui jusqu'à 1 dommage.",
       },
     ],
   },
@@ -52,13 +51,13 @@ export const baymaxPersonalHealthcareCompanionEnchantedI18n: Record<Languages, I
     version: "Operatore Sanitario Personale",
     text: [
       {
-        title: "COMPLETAMENTE RICARICATO",
+        title: "Completamente Ricaricato",
         description:
-          "Se hai in gioco un personaggio Inventore, paga 1 in meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio Inventore, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "HAI ESCLAMATO",
-        description: '"AHI" 2 — Rimuovi fino a 1 danno da un altro personaggio a tua scelta.',
+        title: 'Hai Esclamato "Ahi"',
+        description: "2 {I} — Rimuovi fino a 1 danno da un altro personaggio a tua scelta.",
       },
     ],
   },

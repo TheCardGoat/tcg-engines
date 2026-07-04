@@ -17,7 +17,7 @@ export const moanaOfMotunuiI18n: Record<Languages, I18nProperties> = {
     version: "Von Motunui",
     text: [
       {
-        title: "WIR KRIEGEN DAS HIN",
+        title: "Wir kriegen das hin",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du deine anderen Prinzessinnen bereit machen. Sie können in diesem Zug nicht mehr erkunden.",
       },
@@ -39,7 +39,7 @@ export const moanaOfMotunuiI18n: Record<Languages, I18nProperties> = {
     version: "Of Motunui",
     text: [
       {
-        title: "WE CAN FIX IT",
+        title: "We Can Fix It",
         description:
           "Whenever this character quests, you may ready your other Princess characters. They can't quest for the rest of this turn.",
       },

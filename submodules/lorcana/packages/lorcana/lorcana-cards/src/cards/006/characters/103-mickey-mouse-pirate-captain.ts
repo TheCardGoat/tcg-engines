@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMousePirateCaptainI18n } from "./103-mickey-mouse-pirate-captain.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const mickeyMousePirateCaptain: CharacterCard = {
   id: "xEw",
-  canonicalId: "ci_xEw",
+  canonicalId: "ci_xLf",
+  slug: "lorcana-ci_xLf",
+  printings: [
+    {
+      id: "set6-103",
+      artId: "set6-103",
+      setCode: "set6",
+      collectorNumber: "103",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-103"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,8 +31,8 @@ export const mickeyMousePirateCaptain: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_2baa971c1cbf4f349f4d343cd97010d5",
-    tcgPlayer: 593027,
+    lorcast: "crd_8fed60626775467d90a99dbb2a5d881b",
+    tcgPlayer: "650208",
   },
   text: [
     {

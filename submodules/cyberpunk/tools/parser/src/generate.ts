@@ -1,20 +1,26 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type {
+  Ability,
   AlphaCardDefinition,
-  BoxToppersRetailCardDefinition,
+  CardKeyword,
   CardType,
   PromoCardDefinition,
+  Prm01CardDefinition,
+  BoxToppersRetailCardDefinition,
   SpoilerCardDefinition,
   StructuredCardDefinition,
   TheHeistRetailStarterDeckCardDefinition,
+  EmbracingPowerRetailStarterDeckCardDefinition,
   WelcomeToNightCityRetailCardDefinition,
 } from "@tcg/cyberpunk-types";
 import { loadGeneratedCards } from "./load-generated.ts";
 import {
   parseAlphaCards,
   parseBoxToppersRetailCards,
+  parseEmbracingPowerRetailStarterDeckCards,
   parsePromoCards,
+  parsePrm01Cards,
   parseSpoilerCards,
   parseTheHeistRetailStarterDeckCards,
   parseWelcomeToNightCityRetailCards,
@@ -22,10 +28,12 @@ import {
 
 type StructuredSetCardDefinition =
   | AlphaCardDefinition
-  | BoxToppersRetailCardDefinition
   | SpoilerCardDefinition
   | PromoCardDefinition
+  | Prm01CardDefinition
+  | BoxToppersRetailCardDefinition
   | TheHeistRetailStarterDeckCardDefinition
+  | EmbracingPowerRetailStarterDeckCardDefinition
   | WelcomeToNightCityRetailCardDefinition
   | StructuredCardDefinition;
 
@@ -33,14 +41,6 @@ type StructuredSetCode = StructuredSetCardDefinition["set"]["code"];
 
 interface SetConfig {
   code: StructuredSetCode;
-  typeName:
-    | "AlphaCardDefinition"
-    | "BoxToppersRetailCardDefinition"
-    | "SpoilerCardDefinition"
-    | "PromoCardDefinition"
-    | "TheHeistRetailStarterDeckCardDefinition"
-    | "WelcomeToNightCityRetailCardDefinition"
-    | "StructuredCardDefinition";
   prefix: string;
   cardsExportName: string;
   getBySlugName: string;
@@ -66,8 +66,10 @@ export interface GenerateStructuredCardFilesResult {
   alphaCards: AlphaCardDefinition[];
   spoilerCards: SpoilerCardDefinition[];
   promoCards: PromoCardDefinition[];
+  prm01Cards: Prm01CardDefinition[];
   boxToppersRetailCards: BoxToppersRetailCardDefinition[];
   theHeistRetailStarterDeckCards: TheHeistRetailStarterDeckCardDefinition[];
+  embracingPowerRetailStarterDeckCards: EmbracingPowerRetailStarterDeckCardDefinition[];
   welcomeToNightCityRetailCards: WelcomeToNightCityRetailCardDefinition[];
   retailCards: StructuredCardDefinition[];
 }
@@ -89,42 +91,48 @@ interface ExistingCardFile {
 const SET_CONFIGS: readonly SetConfig[] = [
   {
     code: "alpha",
-    typeName: "AlphaCardDefinition",
     prefix: "alpha",
     cardsExportName: "alphaCards",
     getBySlugName: "getAlphaCardBySlug",
   },
   {
     code: "spoiler",
-    typeName: "SpoilerCardDefinition",
     prefix: "spoiler",
     cardsExportName: "spoilerCards",
     getBySlugName: "getSpoilerCardBySlug",
   },
   {
     code: "promo",
-    typeName: "PromoCardDefinition",
     prefix: "promo",
     cardsExportName: "promoCards",
     getBySlugName: "getPromoCardBySlug",
   },
   {
+    code: "PRM01",
+    prefix: "prm01",
+    cardsExportName: "prm01Cards",
+    getBySlugName: "getPrm01CardBySlug",
+  },
+  {
     code: "boxtoppersretail",
-    typeName: "BoxToppersRetailCardDefinition",
-    prefix: "boxTopperRetail",
+    prefix: "boxToppersRetail",
     cardsExportName: "boxToppersRetailCards",
     getBySlugName: "getBoxToppersRetailCardBySlug",
   },
   {
     code: "theheistretailstarterdeck",
-    typeName: "TheHeistRetailStarterDeckCardDefinition",
     prefix: "theHeistRetailStarterDeck",
     cardsExportName: "theHeistRetailStarterDeckCards",
     getBySlugName: "getTheHeistRetailStarterDeckCardBySlug",
   },
   {
+    code: "embracingpowerretailstarterdeck",
+    prefix: "embracingPowerRetailStarterDeck",
+    cardsExportName: "embracingPowerRetailStarterDeckCards",
+    getBySlugName: "getEmbracingPowerRetailStarterDeckCardBySlug",
+  },
+  {
     code: "welcometonightcityretail",
-    typeName: "WelcomeToNightCityRetailCardDefinition",
     prefix: "welcomeToNightCityRetail",
     cardsExportName: "welcomeToNightCityRetailCards",
     getBySlugName: "getWelcomeToNightCityRetailCardBySlug",
@@ -136,6 +144,13 @@ const BUCKET_META_BY_TYPE: Record<CardType, BucketMeta> = {
   unit: { dir: "units", suffix: "Units" },
   gear: { dir: "gear", suffix: "Gear" },
   program: { dir: "programs", suffix: "Programs" },
+};
+
+const CARD_TYPE_NAME_BY_TYPE: Record<CardType, string> = {
+  legend: "LegendCardDefinition",
+  unit: "UnitCardDefinition",
+  gear: "GearCardDefinition",
+  program: "ProgramCardDefinition",
 };
 
 function slugToPascalCase(slug: string): string {
@@ -159,12 +174,45 @@ function bucketForCardType(type: CardType): BucketMeta {
   return BUCKET_META_BY_TYPE[type];
 }
 
+const BUCKET_TYPE_NAME_BY_DIR: Record<BucketMeta["dir"], string> = {
+  legends: "LegendCardDefinition",
+  units: "UnitCardDefinition",
+  gear: "GearCardDefinition",
+  programs: "ProgramCardDefinition",
+};
+
 function constName(card: StructuredSetCardDefinition): string {
   return `${setConfigForCard(card).prefix}${slugToPascalCase(card.slug)}`;
 }
 
 function toTs(value: unknown): string {
   return JSON.stringify(value, null, 2).replace(/"([A-Za-z0-9_]+)":/g, "$1:");
+}
+
+function compactJsonValue(value: unknown): unknown {
+  if (value === null || value === undefined || value === "") {
+    return undefined;
+  }
+
+  if (Array.isArray(value)) {
+    const compacted = value
+      .map(compactJsonValue)
+      .filter((entry): entry is NonNullable<unknown> => entry !== undefined);
+    return compacted.length > 0 ? compacted : undefined;
+  }
+
+  if (typeof value === "object") {
+    const compacted: Record<string, unknown> = {};
+    for (const [key, nestedValue] of Object.entries(value)) {
+      const compactedValue = compactJsonValue(nestedValue);
+      if (compactedValue !== undefined) {
+        compacted[key] = compactedValue;
+      }
+    }
+    return Object.keys(compacted).length > 0 ? compacted : undefined;
+  }
+
+  return value;
 }
 
 const OMITTED_NULL_GENERATED_PROPERTIES = [
@@ -177,54 +225,211 @@ const OMITTED_NULL_GENERATED_PROPERTIES = [
   "selectedPrintingId",
 ] as const;
 
-function omitPrintedNullProperties(card: StructuredSetCardDefinition): Record<string, unknown> {
+const METADATA_BACKED_CARD_PROPERTIES = ["printings", "selectedPrintingId"] as const;
+
+const COMPACT_DEFAULT_CARD_PROPERTIES = [
+  "abilities",
+  "attachment",
+  "classifications",
+  "keywords",
+  "timingTriggers",
+  "reminderText",
+] as const;
+
+const CARD_TEXT_PROPERTIES = [
+  "name",
+  "subname",
+  "displayName",
+  "rulesText",
+  "flavorText",
+  "description",
+  "youtubeUrl",
+  "sourceUrl",
+] as const;
+
+function omitMetadataBackedProperties(card: StructuredSetCardDefinition): Record<string, unknown> {
   const generatedCard: Record<string, unknown> = { ...card };
 
-  for (const property of OMITTED_NULL_GENERATED_PROPERTIES) {
-    if (generatedCard[property] === null) {
+  for (const property of METADATA_BACKED_CARD_PROPERTIES) {
+    delete generatedCard[property];
+  }
+
+  for (const property of COMPACT_DEFAULT_CARD_PROPERTIES) {
+    if (
+      generatedCard[property] === null ||
+      (Array.isArray(generatedCard[property]) && generatedCard[property].length === 0)
+    ) {
       delete generatedCard[property];
     }
   }
 
-  return generatedCard;
+  return compactJsonValue(generatedCard) as Record<string, unknown>;
+}
+
+function metadataKey(card: StructuredSetCardDefinition): string {
+  return `${card.set.code}:${card.slug}`;
+}
+
+function metadataForCard(card: StructuredSetCardDefinition): Record<string, unknown> {
+  return compactJsonValue({
+    i18n: {
+      en: {
+        name: card.name,
+        subname: card.subname,
+        displayName: card.displayName,
+        rulesText: card.rulesText,
+        flavorText: card.flavorText,
+        description: card.description,
+        youtubeUrl: card.youtubeUrl,
+        sourceUrl: card.sourceUrl,
+      },
+    },
+    printings: card.printings,
+    selectedPrintingId: card.selectedPrintingId,
+  }) as Record<string, unknown>;
+}
+
+/**
+ * Maps each keyword to its shared factory name in `@tcg/cyberpunk-types`. Kept
+ * in sync with `packages/types/src/keyword-abilities.ts`.
+ */
+const KEYWORD_FACTORY_NAMES: Record<CardKeyword, string> = {
+  goSolo: "goSoloAbility",
+  blocker: "blockerAbility",
+  adrenaline: "adrenalineAbility",
+  quick: "quickAbility",
+};
+
+/**
+ * If `ability` is a `kind: "keyword"` ability backed by a shared factory,
+ * return the factory-call source that reproduces it verbatim; otherwise return
+ * `null` so the caller falls back to {@link toTs}. The `text` is always passed
+ * (preserving the parser-produced reminder copy exactly), and `host: true` is
+ * emitted when the ability targets the gear's host.
+ */
+function renderKeywordAbilityFactoryCall(ability: Ability): string | null {
+  if (ability.kind !== "keyword" || ability.keyword === undefined) {
+    return null;
+  }
+
+  const factory = KEYWORD_FACTORY_NAMES[ability.keyword];
+  if (factory === undefined) {
+    return null;
+  }
+
+  const options: string[] = [`text: ${toTs(ability.text)}`];
+  if (ability.source?.selector === "host") {
+    options.push("host: true");
+  }
+
+  return `${factory}({ ${options.join(", ")} })`;
 }
 
 function renderCardFile(card: StructuredSetCardDefinition): string {
-  const { typeName } = setConfigForCard(card);
-  const generatedCard = omitPrintedNullProperties(card);
+  const typeName = CARD_TYPE_NAME_BY_TYPE[card.type];
+  const generatedCard = omitMetadataBackedProperties(card);
+  const abilities = (generatedCard.abilities ?? []) as Ability[];
+
+  // Map each ability to either a factory-call source (for keyword abilities) or
+  // null (fall back to toTs). When at least one factory call is present, render
+  // keyword abilities via the shared factories and add the matching runtime
+  // import; otherwise emit the whole card as a single literal as before.
+  const factoryCalls = abilities.map(renderKeywordAbilityFactoryCall);
+  const factoryNames = [
+    ...new Set(
+      factoryCalls
+        .filter((call): call is string => call !== null)
+        .map((call) => call.split("(")[0]!),
+    ),
+  ].sort();
+
+  const importLines = [
+    `import type { ${typeName} } from "@tcg/cyberpunk-types";`,
+    `import { defineCyberpunkCard } from "../../define.ts";`,
+  ];
+  if (factoryNames.length > 0) {
+    importLines.push(`import { ${factoryNames.join(", ")} } from "@tcg/cyberpunk-types";`);
+  }
+
+  let body: string;
+  if (factoryNames.length === 0) {
+    body = toTs(generatedCard);
+  } else {
+    // Swap each keyword ability for a unique sentinel string token so the
+    // surrounding JSON stays valid, then splice each token back to its factory
+    // call. The tokens are used only as string values, so toTs keeps them
+    // quoted and the quoted forms are replaced verbatim.
+    const cardWithTokens: Record<string, unknown> = { ...generatedCard };
+    cardWithTokens.abilities = abilities.map((ability, index) => {
+      if (factoryCalls[index] === null) {
+        return ability;
+      }
+      return `__keyword_factory_${index}__`;
+    });
+
+    body = toTs(cardWithTokens);
+    for (const [index, call] of factoryCalls.entries()) {
+      if (call === null) {
+        continue;
+      }
+      const token = `"__keyword_factory_${index}__"`;
+      // Use a replacer function so `$` in the factory call text is emitted
+      // literally instead of being interpreted by String.replace.
+      body = body.replace(token, () => call);
+    }
+  }
 
   return [
-    `import type { ${typeName} } from "@tcg/cyberpunk-types";`,
+    ...importLines,
     "",
-    `export const ${constName(card)} = ${toTs(generatedCard)} satisfies ${typeName};`,
+    `export const ${constName(card)} = defineCyberpunkCard(${body}) satisfies ${typeName};`,
     "",
   ].join("\n");
 }
 
 function renderMergedCardFile(card: StructuredSetCardDefinition, existingSource: string): string {
+  const typeName = CARD_TYPE_NAME_BY_TYPE[card.type];
   let source = existingSource.replace(
     /export const [A-Za-z0-9_]+ =/,
     `export const ${constName(card)} =`,
   );
 
-  source = replaceObjectProperty(source, "id", toTs(card.id));
-  source = replaceObjectProperty(source, "externalId", toTs(card.externalId));
-  source = replaceObjectProperty(source, "slug", toTs(card.slug));
-  source = replaceObjectProperty(source, "name", toTs(card.name));
-  source = replaceObjectProperty(source, "subname", toTs(card.subname ?? null));
-  source = replaceObjectProperty(source, "displayName", toTs(card.displayName));
-  source = replaceObjectProperty(source, "printings", toTs(card.printings));
-  source = replaceObjectProperty(
-    source,
-    "selectedPrintingId",
-    toTs(card.selectedPrintingId ?? null),
+  source = source.replace(
+    /import type \{ [A-Za-z0-9_]+ \} from "@tcg\/cyberpunk-types";\n/,
+    `import type { ${typeName} } from "@tcg/cyberpunk-types";\n`,
   );
+  source = source.replace(/\} satisfies [A-Za-z0-9_]+;/, `} satisfies ${typeName};`);
+
+  source = replaceObjectProperty(source, "id", toTs(card.id));
+  source = replaceObjectProperty(source, "slug", toTs(card.slug));
   source = replaceObjectProperty(source, "imageUrl", toTs(card.imageUrl));
+  for (const property of CARD_TEXT_PROPERTIES) {
+    source = upsertCardTextProperty(source, property, card[property]);
+  }
   source = removeObjectProperty(source, "sourceImageUrl");
+  for (const property of METADATA_BACKED_CARD_PROPERTIES) {
+    source = removeTopLevelObjectProperty(source, property);
+  }
+  for (const property of COMPACT_DEFAULT_CARD_PROPERTIES) {
+    source = removeEmptyTopLevelObjectProperty(source, property);
+  }
   source = removePrintedNullProperties(source);
   source = source.replace(/,,/g, ",");
+  source = wrapWithDefineCyberpunkCard(source);
 
   return source.endsWith("\n") ? source : `${source}\n`;
+}
+
+function upsertCardTextProperty(
+  source: string,
+  propertyName: (typeof CARD_TEXT_PROPERTIES)[number],
+  value: string | null | undefined,
+): string {
+  if (value === null || value === undefined) {
+    return removeTopLevelObjectProperty(source, propertyName);
+  }
+
+  return upsertTopLevelObjectProperty(source, propertyName, toTs(value));
 }
 
 function replaceObjectProperty(source: string, propertyName: string, value: string): string {
@@ -240,8 +445,76 @@ function replaceObjectProperty(source: string, propertyName: string, value: stri
   return `${source.slice(0, valueStart)} ${value}${source.slice(valueEnd)}`;
 }
 
+function upsertTopLevelObjectProperty(source: string, propertyName: string, value: string): string {
+  if (source.search(new RegExp(`\\n  ${propertyName}:`)) !== -1) {
+    return replaceObjectProperty(source, propertyName, value);
+  }
+
+  const anchorProperty = propertyName === "displayName" ? "name" : "slug";
+  const anchorStart = source.search(new RegExp(`\\n  ${anchorProperty}:`));
+  if (anchorStart === -1) {
+    return source;
+  }
+
+  const anchorValueStart = source.indexOf(":", anchorStart) + 1;
+  const anchorValueEnd = findTopLevelPropertyEnd(source, anchorValueStart);
+  const anchorEnd = source[anchorValueEnd] === "," ? anchorValueEnd + 1 : anchorValueEnd;
+
+  return `${source.slice(0, anchorEnd)}\n  ${propertyName}: ${value},${source.slice(anchorEnd)}`;
+}
+
 function removeObjectProperty(source: string, propertyName: string): string {
   return source.replace(new RegExp(`\\n\\s+${propertyName}: [^\\n]+,?`, "g"), "");
+}
+
+function removeTopLevelObjectProperty(source: string, propertyName: string): string {
+  const propertyStart = source.search(new RegExp(`\\n  ${propertyName}:`));
+
+  if (propertyStart === -1) {
+    return source;
+  }
+
+  const valueStart = source.indexOf(":", propertyStart) + 1;
+  const valueEnd = findTopLevelPropertyEnd(source, valueStart);
+  const propertyEnd = source[valueEnd] === "," ? valueEnd + 1 : valueEnd;
+
+  return `${source.slice(0, propertyStart)}${source.slice(propertyEnd)}`;
+}
+
+function removeEmptyTopLevelObjectProperty(source: string, propertyName: string): string {
+  const propertyStart = source.search(new RegExp(`\\n  ${propertyName}:`));
+
+  if (propertyStart === -1) {
+    return source;
+  }
+
+  const valueStart = source.indexOf(":", propertyStart) + 1;
+  const valueEnd = findTopLevelPropertyEnd(source, valueStart);
+  const propertyValue = source.slice(valueStart, valueEnd).trim().replace(/,$/, "");
+
+  if (propertyValue !== "null" && propertyValue !== "[]") {
+    return source;
+  }
+
+  const propertyEnd = source[valueEnd] === "," ? valueEnd + 1 : valueEnd;
+  return `${source.slice(0, propertyStart)}${source.slice(propertyEnd)}`;
+}
+
+function wrapWithDefineCyberpunkCard(source: string): string {
+  let nextSource = source;
+  if (!nextSource.includes(`import { defineCyberpunkCard } from "../../define.ts";`)) {
+    nextSource = nextSource.replace(
+      /import type \{ [A-Za-z0-9_]+ \} from "@tcg\/cyberpunk-types";\n/,
+      (importLine) => `${importLine}import { defineCyberpunkCard } from "../../define.ts";\n`,
+    );
+  }
+
+  if (!nextSource.includes("= defineCyberpunkCard(")) {
+    nextSource = nextSource.replace(/(export const [A-Za-z0-9_]+ = )\{/, "$1defineCyberpunkCard({");
+    nextSource = nextSource.replace(/\n\} satisfies ([A-Za-z0-9_]+);/, "\n}) satisfies $1;");
+  }
+
+  return nextSource;
 }
 
 function removePrintedNullProperties(source: string): string {
@@ -252,6 +525,37 @@ function removePrintedNullProperties(source: string): string {
   }
 
   return nextSource;
+}
+
+function renderMetadataFile(cards: StructuredSetCardDefinition[]): string {
+  const metadata = Object.fromEntries(
+    cards.map((card) => [metadataKey(card), metadataForCard(card)]),
+  );
+
+  return [
+    `// This file is generated by @tcg/cyberpunk-parser. Do not edit manually.`,
+    `import type { CardPrinting } from "@tcg/cyberpunk-types";`,
+    "",
+    `export interface CyberpunkCardMetadataEntry {`,
+    `  i18n: {`,
+    `    en: {`,
+    `      name: string;`,
+    `      subname?: string;`,
+    `      displayName: string;`,
+    `      rulesText?: string;`,
+    `      flavorText?: string;`,
+    `      description?: string;`,
+    `      youtubeUrl?: string;`,
+    `      sourceUrl?: string;`,
+    `    };`,
+    `  };`,
+    `  printings: (Partial<CardPrinting> & Pick<CardPrinting, "id" | "collectorNumber" | "setCode">)[];`,
+    `  selectedPrintingId?: string;`,
+    `}`,
+    "",
+    `export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> = ${toTs(metadata)};`,
+    "",
+  ].join("\n");
 }
 
 function findTopLevelPropertyEnd(source: string, valueStart: number): number {
@@ -334,15 +638,19 @@ function buildBuckets(config: SetConfig, cards: StructuredSetCardDefinition[]): 
   return [seed.legends, seed.units, seed.gear, seed.programs];
 }
 
+function bucketTypeName(bucket: CardBucket): string {
+  return BUCKET_TYPE_NAME_BY_DIR[bucket.dir];
+}
+
 async function writeBucket(
   outputDir: string,
-  typeName: SetConfig["typeName"],
   bucket: CardBucket,
   existingFiles: ReadonlyMap<string, ExistingCardFile>,
 ): Promise<void> {
   const bucketDir = join(outputDir, bucket.dir);
   await mkdir(bucketDir, { recursive: true });
 
+  const typeName = bucketTypeName(bucket);
   const importLines = bucket.cards.map((card) => {
     return `import { ${constName(card)} } from "./${card.slug}.ts";`;
   });
@@ -383,16 +691,16 @@ function buildRootIndex(config: SetConfig, buckets: CardBucket[]): string {
   });
 
   return [
-    `import type { ${config.typeName} } from "@tcg/cyberpunk-types";`,
+    `import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";`,
     ...imports,
     "",
     ...exports,
     "",
-    `export const ${config.cardsExportName} = [`,
+    `export const ${config.cardsExportName}: StructuredCardDefinition[] = [`,
     ...buckets.map((bucket) => `  ...${bucket.exportName},`),
-    `] satisfies ${config.typeName}[];`,
+    `];`,
     "",
-    `export function ${config.getBySlugName}(slug: string): ${config.typeName} | undefined {`,
+    `export function ${config.getBySlugName}(slug: string): StructuredCardDefinition | undefined {`,
     `  return ${config.cardsExportName}.find((card) => card.slug === slug);`,
     "}",
     "",
@@ -412,7 +720,7 @@ async function writeSetFiles(
   await mkdir(setDir, { recursive: true });
 
   for (const bucket of buckets) {
-    await writeBucket(setDir, config.typeName, bucket, existingFiles);
+    await writeBucket(setDir, bucket, existingFiles);
   }
 
   await writeFile(join(setDir, "index.ts"), buildRootIndex(config, buckets));
@@ -584,12 +892,17 @@ export async function generateStructuredCardFiles(
   const alphaCards = preserveExistingIds(parseAlphaCards(generatedCards), existingIds);
   const spoilerCards = preserveExistingIds(parseSpoilerCards(generatedCards), existingIds);
   const promoCards = preserveExistingIds(parsePromoCards(generatedCards), existingIds);
+  const prm01Cards = preserveExistingIds(parsePrm01Cards(generatedCards), existingIds);
   const boxToppersRetailCards = preserveExistingIds(
     parseBoxToppersRetailCards(generatedCards),
     existingIds,
   );
   const theHeistRetailStarterDeckCards = preserveExistingIds(
     parseTheHeistRetailStarterDeckCards(generatedCards),
+    existingIds,
+  );
+  const embracingPowerRetailStarterDeckCards = preserveExistingIds(
+    parseEmbracingPowerRetailStarterDeckCards(generatedCards),
     existingIds,
   );
   const welcomeToNightCityRetailCards = preserveExistingIds(
@@ -599,32 +912,52 @@ export async function generateStructuredCardFiles(
   const retailCards = [
     ...boxToppersRetailCards,
     ...theHeistRetailStarterDeckCards,
+    ...embracingPowerRetailStarterDeckCards,
     ...welcomeToNightCityRetailCards,
   ] satisfies StructuredCardDefinition[];
 
   await writeSetFiles(options.outputDir, SET_CONFIGS[0], alphaCards, existingFiles);
   await writeSetFiles(options.outputDir, SET_CONFIGS[1], spoilerCards, existingFiles);
   await writeSetFiles(options.outputDir, SET_CONFIGS[2], promoCards, existingFiles);
-  await writeSetFiles(options.outputDir, SET_CONFIGS[3], boxToppersRetailCards, existingFiles);
+  await writeSetFiles(options.outputDir, SET_CONFIGS[3], prm01Cards, existingFiles);
+  await writeSetFiles(options.outputDir, SET_CONFIGS[4], boxToppersRetailCards, existingFiles);
   await writeSetFiles(
     options.outputDir,
-    SET_CONFIGS[4],
+    SET_CONFIGS[5],
     theHeistRetailStarterDeckCards,
     existingFiles,
   );
   await writeSetFiles(
     options.outputDir,
-    SET_CONFIGS[5],
+    SET_CONFIGS[6],
+    embracingPowerRetailStarterDeckCards,
+    existingFiles,
+  );
+  await writeSetFiles(
+    options.outputDir,
+    SET_CONFIGS[7],
     welcomeToNightCityRetailCards,
     existingFiles,
+  );
+  await writeFile(
+    join(options.outputDir, "card-metadata.ts"),
+    renderMetadataFile([
+      ...alphaCards,
+      ...spoilerCards,
+      ...promoCards,
+      ...prm01Cards,
+      ...retailCards,
+    ]),
   );
 
   return {
     alphaCards,
     spoilerCards,
     promoCards,
+    prm01Cards,
     boxToppersRetailCards,
     theHeistRetailStarterDeckCards,
+    embracingPowerRetailStarterDeckCards,
     welcomeToNightCityRetailCards,
     retailCards,
   };

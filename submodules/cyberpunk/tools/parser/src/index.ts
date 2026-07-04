@@ -11,10 +11,10 @@ export { generateEngineTestFiles } from "./generate-engine-tests.ts";
 export {
   parseAlphaCard,
   parseAlphaCards,
-  parseBoxToppersRetailCard,
-  parseBoxToppersRetailCards,
+  parseEmbracingPowerRetailStarterDeckCards,
   parsePromoCard,
   parsePromoCards,
+  parsePrm01Cards,
   parseSpoilerCard,
   parseSpoilerCards,
   parseStructuredCard,

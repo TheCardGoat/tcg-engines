@@ -4,6 +4,17 @@ import { rememberWhoYouAreI18n } from "./097-remember-who-you-are.i18n";
 export const rememberWhoYouAre: ActionCard = {
   id: "f6o",
   canonicalId: "ci_2KA",
+  slug: "lorcana-ci_2KA",
+  printings: [
+    {
+      id: "set5-097",
+      artId: "set5-097",
+      setCode: "set5",
+      collectorNumber: "97",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-097"],
   cardType: "action",
   name: "Remember Who You Are",
@@ -16,7 +27,7 @@ export const rememberWhoYouAre: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d5e31be3b67a41c0a0f6ce871e8c69c4",
-    tcgPlayer: 556975,
+    tcgPlayer: "556975",
   },
   text: "If chosen opponent has more cards in their hand than you, draw cards until you have the same number.",
   abilities: [

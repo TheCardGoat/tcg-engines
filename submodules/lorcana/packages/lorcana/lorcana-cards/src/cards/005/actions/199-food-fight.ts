@@ -4,6 +4,17 @@ import { foodFightI18n } from "./199-food-fight.i18n";
 export const foodFight: ActionCard = {
   id: "jt8",
   canonicalId: "ci_jt8",
+  slug: "lorcana-ci_jt8",
+  printings: [
+    {
+      id: "set5-199",
+      artId: "set5-199",
+      setCode: "set5",
+      collectorNumber: "199",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-199"],
   cardType: "action",
   name: "Food Fight!",
@@ -15,7 +26,7 @@ export const foodFight: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_301228de8de94aa382a1cface63a3422",
-    tcgPlayer: 561494,
+    tcgPlayer: "561494",
   },
   text: 'Your characters gain "{E}, 1 {I} — Deal 1 damage to chosen character" this turn.',
   abilities: [

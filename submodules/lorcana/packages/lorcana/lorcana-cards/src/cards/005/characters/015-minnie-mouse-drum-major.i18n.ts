@@ -20,12 +20,13 @@ export const minnieMouseDrumMajorI18n: Record<Languages, I18nProperties> = {
     version: "Tambourmajorin",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Minnie-Maus-Charaktere auszuspielen.)",
       },
       {
-        title: "REIHENFOLGE DER PARADE",
+        title: "Reihenfolge der Parade",
         description:
-          "Falls du Gestaltwandel benutzt hast, um diesen Charakter auszuspielen, darfst du dein Deck nach einer Charakterkarte durchsuchen und diese allen Mitspielenden zeigen. Mische danach dein Deck und lege die gewählte Karte als oberste Karte auf dein Deck.",
+          "Falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, darfst du dein Deck nach einer Charakterkarte durchsuchen und diese allen Mitspielenden zeigen. Mische danach dein Deck und lege die gewählte Karte als oberste Karte auf dein Deck.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const minnieMouseDrumMajorI18n: Record<Languages, I18nProperties> = {
     version: "Tambour-major",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Minnie.)",
       },
       {
-        title: "CHEFFE DE LA FANFARE",
+        title: "Cheffe de la fanfare",
         description:
-          "Si vous jouez ce personnage en utilisant sa capacité Alter, vous pouvez chercher une carte Personnage dans votre pioche et la révéler à tous les joueurs. Mélangez votre pioche puis placez la carte révélée sur le dessus.",
+          "Si vous jouez ce personnage en utilisant sa capacité <Alter>, vous pouvez chercher une carte Personnage dans votre pioche et la révéler à tous les joueurs. Mélangez votre pioche puis placez la carte révélée sur le dessus.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const minnieMouseDrumMajorI18n: Record<Languages, I18nProperties> = {
     version: "Capobanda",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Minni.)",
       },
       {
-        title: "ORDINE DI MARCIA",
+        title: "Ordine di Marcia",
         description:
-          "Quando giochi questo personaggio, se hai usato Trasformazione per giocarlo, puoi cercare una carta personaggio nel tuo mazzo e rivelare quella carta a tutti i giocatori. Rimescola il tuo mazzo e metti quella carta in cima ad esso.",
+          "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, puoi cercare una carta personaggio nel tuo mazzo e rivelare quella carta a tutti i giocatori. Rimescola il tuo mazzo e metti quella carta in cima ad esso.",
       },
     ],
   },

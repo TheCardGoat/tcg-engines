@@ -21,10 +21,10 @@ export const aladdinBraveRescuerI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Gestaltwandel: Wirf 1 Ortskarte ab (Du kannst 1 Ortskarte abwerfen, um diesen Charakter auf einen deiner Aladdin-Charaktere auszuspielen.)",
+          "<Gestaltwandel: Wirf 1 Ortskarte ab> (Du kannst 1 Ortskarte abwerfen, um diesen Charakter auf einen deiner Aladdin-Charaktere auszuspielen.)",
       },
       {
-        title: "DURCHSCHLAGENDE ERFOLGE",
+        title: "Durchschlagende Erfolge",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen Gegenstand deiner Wahl verbannen.",
       },
@@ -36,10 +36,10 @@ export const aladdinBraveRescuerI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Alter: Défaussez une carte Lieu (Vous pouvez défausser une carte Lieu pour jouer ce personnage sur l'un de vos personnages Aladdin.)",
+          "<Alter: Défaussez une carte Lieu> (Vous pouvez défausser une carte Lieu pour jouer ce personnage sur l'un de vos personnages Aladdin.)",
       },
       {
-        title: "PASSAGE EN FORCE",
+        title: "Passage en force",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un objet et le bannir.",
       },
@@ -51,10 +51,10 @@ export const aladdinBraveRescuerI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Trasformazione: Scarta una carta luogo (Puoi scartare una carta luogo per giocare questa carta sopra a uno dei tuoi personaggi chiamato Aladdin.)",
+          "<Trasformazione: Scarta una carta luogo> (Puoi scartare una carta luogo per giocare questa carta sopra a uno dei tuoi personaggi chiamato Aladdin.)",
       },
       {
-        title: "FARSI LARGO",
+        title: "Farsi Largo",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi esiliare un oggetto a tua scelta.",
       },

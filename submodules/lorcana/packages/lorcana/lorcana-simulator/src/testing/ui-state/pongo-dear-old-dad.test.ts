@@ -114,9 +114,9 @@ describe("Pongo - Dear Old Dad | inkwell play UI", () => {
 
     const titles = adapter.getMoveLog(20, "playerOne").map((entry) => entry.title);
     expect(titles.slice(-3)).toEqual([
-      "Started resolving FOUND YOU, YOU LITTLE RASCAL from Pongo - Dear Old Dad. More input is required. Looked at their inkwell (5 cards): Freckles - Good Boy, Lucky - Runt of the Litter, Perdita - Playful Mother, Reflection, Dragon Fire.",
-      "Resolved FOUND YOU, YOU LITTLE RASCAL from Pongo - Dear Old Dad, targeting Freckles - Good Boy.",
-      "JUST SO CUTE! from Freckles - Good Boy cancelled (no-valid-targets).",
+      "Started resolving FOUND YOU, YOU LITTLE RASCAL from Pongo - Dear Old Dad. More input is required. Looked at their inkwell (5 cards). Saw Freckles - Good Boy, Lucky - Runt of the Litter, Perdita - Playful Mother, Reflection, Dragon Fire.",
+      "Resolved FOUND YOU, YOU LITTLE RASCAL from Pongo - Dear Old Dad by choosing yes, targeting Freckles - Good Boy.",
+      "JUST SO CUTE! from Freckles - Good Boy was not resolved because there were no valid targets.",
     ]);
   });
 });

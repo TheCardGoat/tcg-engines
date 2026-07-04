@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMouseGiantMouseI18n } from "./199-mickey-mouse-giant-mouse.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const mickeyMouseGiantMouse: CharacterCard = {
   id: "eAJ",
   canonicalId: "ci_eAJ",
+  slug: "lorcana-ci_eAJ",
+  printings: [
+    {
+      id: "set8-199",
+      artId: "set8-199",
+      setCode: "set8",
+      collectorNumber: "199",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-199"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -20,7 +32,7 @@ export const mickeyMouseGiantMouse: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_475efa3afb754da4bba8e1d7104ebdf1",
-    tcgPlayer: 631331,
+    tcgPlayer: "631331",
   },
   text: [
     {

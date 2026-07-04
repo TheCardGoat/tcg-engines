@@ -1,13 +1,14 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, condition, effect, target } from "../../helpers/builders/index.ts";
 
-export const alphaArmoredMinotaur = {
+export const alphaArmoredMinotaur = defineCyberpunkCard({
   id: "3f52804a-9595-4115-a698-3b53f9b71227",
-  externalId: "cyberpunk:armored-minotaur",
   slug: "armored-minotaur",
+  rulesText: "PLAY If you have 12+ * (Street Cred), defeat a rival unit with power 5 or less.",
   name: "Armored Minotaur",
   displayName: "Armored Minotaur",
-  rulesText: "PLAY If you have 12+ Street Cred, defeat a rival unit with power 5 or less.",
+  canonicalId: "armored-minotaur",
   color: "red",
   classifications: ["Arasaka", "Militech", "Drone"],
   set: {
@@ -15,15 +16,6 @@ export const alphaArmoredMinotaur = {
     name: "Alpha Kit Set",
   },
   printNumber: "α007",
-  printings: [
-    {
-      id: "31ab0503-dd9a-46e3-ab21-31932376ed42",
-      collectorNumber: "α007",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "31ab0503-dd9a-46e3-ab21-31932376ed42",
   artist: "CD PROJEKT RED",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a007.webp",
   rarity: null,
@@ -31,7 +23,6 @@ export const alphaArmoredMinotaur = {
   hasSellTag: false,
   ram: 4,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 6,
   power: 9,
@@ -60,5 +51,4 @@ export const alphaArmoredMinotaur = {
       )
       .build(),
   ],
-  reminderText: [],
-} satisfies AlphaCardDefinition;
+}) satisfies UnitCardDefinition;

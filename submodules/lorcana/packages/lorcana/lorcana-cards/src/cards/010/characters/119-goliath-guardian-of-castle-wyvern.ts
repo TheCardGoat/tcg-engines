@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goliathGuardianOfCastleWyvernI18n } from "./119-goliath-guardian-of-castle-wyvern.i18n";
+
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const goliathGuardianOfCastleWyvern: CharacterCard = {
   id: "5GE",
   canonicalId: "ci_5GE",
+  slug: "lorcana-ci_5GE",
+  printings: [
+    {
+      id: "set10-119",
+      artId: "set10-119",
+      setCode: "set10",
+      collectorNumber: "119",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-119"],
   cardType: "character",
   name: "Goliath",
@@ -21,7 +33,7 @@ export const goliathGuardianOfCastleWyvern: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5cf26c9115a64c96a22f5151714cbc61",
-    tcgPlayer: 658295,
+    tcgPlayer: "658295",
   },
   text: [
     {

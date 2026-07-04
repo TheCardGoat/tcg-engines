@@ -4,6 +4,17 @@ import { princePhillipDragonslayerI18n } from "./016-prince-phillip-dragonslayer
 export const princePhillipDragonslayer: CharacterCard = {
   id: "0Xn",
   canonicalId: "ci_0Xn",
+  slug: "lorcana-ci_0Xn",
+  printings: [
+    {
+      id: "set1-016",
+      artId: "set1-016",
+      setCode: "set1",
+      collectorNumber: "16",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-016"],
   cardType: "character",
   name: "Prince Phillip",
@@ -20,7 +31,7 @@ export const princePhillipDragonslayer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f1e67c29942c408daaa683520972e1ea",
-    tcgPlayer: 505946,
+    tcgPlayer: "505946",
   },
   text: [
     {
@@ -35,7 +46,9 @@ export const princePhillipDragonslayer: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          target: { ref: "defender" },
+          target: {
+            ref: "defender",
+          },
           type: "banish",
         },
         type: "optional",
@@ -47,7 +60,11 @@ export const princePhillipDragonslayer: CharacterCard = {
         event: "banish",
         on: "SELF",
         timing: "when",
-        restrictions: [{ type: "in-challenge" }],
+        restrictions: [
+          {
+            type: "in-challenge",
+          },
+        ],
       },
       type: "triggered",
     },

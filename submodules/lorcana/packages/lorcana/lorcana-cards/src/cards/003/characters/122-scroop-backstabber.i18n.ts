@@ -16,8 +16,8 @@ export const scroopBackstabberI18n: Record<Languages, I18nProperties> = {
     version: "Hinterlistig",
     text: [
       {
-        title: "BRACHIAL",
-        description: "Solange dieser Charakter beschädigt ist, erhält er +3.",
+        title: "Brachial",
+        description: "Solange dieser Charakter beschädigt ist, erhält er +3 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const scroopBackstabberI18n: Record<Languages, I18nProperties> = {
     version: "Traître",
     text: [
       {
-        title: "BRUTE",
-        description: "Tant que ce personnage a des jetons Dommage sur lui, il gagne +3.",
+        title: "Brute",
+        description: "Tant que ce personnage a des jetons Dommage sur lui, il gagne +3 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const scroopBackstabberI18n: Record<Languages, I18nProperties> = {
     version: "Traditore",
     text: [
       {
-        title: "BRUTO",
-        description: "Mentre questo personaggio ha danno, riceve +3.",
+        title: "Bruto",
+        description: "Mentre questo personaggio ha danno, riceve +3 {S}.",
       },
     ],
   },

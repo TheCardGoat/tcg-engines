@@ -8,7 +8,7 @@
   import LorcanaCard from "@/design-system/simulator/cards/LorcanaCard.svelte";
   import {ZONE_IMAGE_FORMATS} from "@/design-system/simulator/cards/card-image-format.js";
   import ZoneCounter from "@/design-system/simulator/display/ZoneCounter.svelte";
-  import { Trash2 } from "lucide-svelte";
+  import Trash2 from "lucide-svelte/icons/trash-2";
 
   interface DiscardZoneProps {
     isOpponent: boolean;

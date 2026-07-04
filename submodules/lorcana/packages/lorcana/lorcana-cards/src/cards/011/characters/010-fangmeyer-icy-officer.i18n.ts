@@ -17,7 +17,7 @@ export const fangmeyerIcyOfficerI18n: Record<Languages, I18nProperties> = {
     version: "Eisiger Offizier",
     text: [
       {
-        title: "VERSTÄRKUNG ANFORDERN",
+        title: "Verstärkung anfordern",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du 1 Detektiv-Charakterkarte aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
@@ -28,7 +28,7 @@ export const fangmeyerIcyOfficerI18n: Record<Languages, I18nProperties> = {
     version: "Policier froid",
     text: [
       {
-        title: "DEMANDE DE RENFORTS",
+        title: "Demande de renforts",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez renvoyer dans votre main une carte Personnage Détective de votre défausse.",
       },
@@ -39,7 +39,7 @@ export const fangmeyerIcyOfficerI18n: Record<Languages, I18nProperties> = {
     version: "Agente Glaciale",
     text: [
       {
-        title: "RICHIESTA DI RINFORZI",
+        title: "Richiesta di Rinforzi",
         description:
           "Quando giochi questo personaggio, puoi riprendere in mano una carta personaggio Detective dai tuoi scarti.",
       },

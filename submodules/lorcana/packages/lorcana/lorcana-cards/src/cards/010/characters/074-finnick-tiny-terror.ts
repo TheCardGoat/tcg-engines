@@ -4,6 +4,17 @@ import { finnickTinyTerrorI18n } from "./074-finnick-tiny-terror.i18n";
 export const finnickTinyTerror: CharacterCard = {
   id: "oXH",
   canonicalId: "ci_oXH",
+  slug: "lorcana-ci_oXH",
+  printings: [
+    {
+      id: "set10-074",
+      artId: "set10-074",
+      setCode: "set10",
+      collectorNumber: "74",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-074"],
   cardType: "character",
   name: "Finnick",
@@ -20,7 +31,7 @@ export const finnickTinyTerror: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c9465de418104f1fab0483d5c168266b",
-    tcgPlayer: 658876,
+    tcgPlayer: "658876",
   },
   text: [
     {

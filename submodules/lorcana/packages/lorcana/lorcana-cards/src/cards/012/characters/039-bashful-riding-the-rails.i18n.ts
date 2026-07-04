@@ -4,7 +4,7 @@ export const bashfulRidingTheRailsI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Bashful",
     version: "Riding the Rails",
-    text: "<Evasive>",
+    text: "Evasive",
   },
   de: {
     name: "Pimpel",

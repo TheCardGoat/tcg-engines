@@ -12,8 +12,10 @@ const {
   alphaCards,
   spoilerCards,
   promoCards,
+  prm01Cards,
   boxToppersRetailCards,
   theHeistRetailStarterDeckCards,
+  embracingPowerRetailStarterDeckCards,
   welcomeToNightCityRetailCards,
 } = await generateStructuredCardFiles({
   generatedFilePath,
@@ -24,8 +26,10 @@ const generatedCounts = [
   `${alphaCards.length} alpha`,
   `${spoilerCards.length} spoiler`,
   `${promoCards.length} promo`,
+  `${prm01Cards.length} PRM01`,
   `${boxToppersRetailCards.length} box toppers retail`,
   `${theHeistRetailStarterDeckCards.length} The Heist retail starter deck`,
+  `${embracingPowerRetailStarterDeckCards.length} Embracing Power retail starter deck`,
   `${welcomeToNightCityRetailCards.length} Welcome to Night City retail`,
 ].join(", ");
 

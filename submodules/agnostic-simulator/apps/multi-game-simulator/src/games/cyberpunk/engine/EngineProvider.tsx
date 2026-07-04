@@ -1627,6 +1627,7 @@ export function EngineProvider({
       __cyberpunkSimulator?: {
         engine: unknown;
         forceRender: () => void;
+        dispatch: (action: EngineAction) => ReturnType<typeof dispatch>;
         getDispatchLog: () => ReadonlyArray<{ action: EngineAction; result: unknown }>;
         clearDispatchLog: () => void;
         getHumanSide: () => Side;
@@ -1640,6 +1641,7 @@ export function EngineProvider({
     win.__cyberpunkSimulator = {
       engine,
       forceRender,
+      dispatch,
       getDispatchLog: () => dispatchLogRef.current.slice(),
       clearDispatchLog: () => {
         dispatchLogRef.current.length = 0;

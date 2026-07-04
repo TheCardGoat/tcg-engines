@@ -21,12 +21,12 @@ export const tamatoaHappyAsAClamI18n: Record<Languages, I18nProperties> = {
     version: "Ist er nicht souverän",
     text: [
       {
-        title: "SAGENHAFTE SAMMLUNG",
+        title: "Sagenhafte Sammlung",
         description:
           "Wenn du diesen Charakter ausspielst, nimm bis zu 2 Gegenstandskarten aus deinem Ablagestapel zurück auf deine Hand.",
       },
       {
-        title: "ICH BIN STRAHLEND SCHÖN, BABY!",
+        title: "Ich bin strahlend schön, Baby!",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen Gegenstand kostenlos ausspielen.",
       },
@@ -37,12 +37,12 @@ export const tamatoaHappyAsAClamI18n: Record<Languages, I18nProperties> = {
     version: "Peut enfin sécher ses larmes",
     text: [
       {
-        title: "LA PLUS BELLE DES COLLECTIONS",
+        title: "La plus belle des collections",
         description:
           "Lorsque vous jouez ce personnage, renvoyez dans votre main jusqu'à 2 objets de votre défausse.",
       },
       {
-        title: "ON M'APPELLE L'ARTISTE",
+        title: "On m'appelle l'Artiste",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez jouer un objet gratuitement.",
       },
@@ -53,12 +53,12 @@ export const tamatoaHappyAsAClamI18n: Record<Languages, I18nProperties> = {
     version: "Fama Trovata",
     text: [
       {
-        title: "INCREDIBILE COLLEZIONE",
+        title: "Incredibile Collezione",
         description:
           "Quando giochi questo personaggio, riprendi in mano fino a 2 carte oggetto dai tuoi scarti.",
       },
       {
-        title: "IO SONO IL PIÙ BELLO, BABY!",
+        title: "Io Sono il Più Bello, Baby!",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi giocare un oggetto gratis.",
       },

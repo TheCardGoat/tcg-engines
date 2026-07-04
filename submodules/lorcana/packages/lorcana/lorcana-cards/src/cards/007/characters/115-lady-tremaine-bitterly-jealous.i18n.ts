@@ -17,9 +17,9 @@ export const ladyTremaineBitterlyJealousI18n: Record<Languages, I18nProperties> 
     version: "Zutiefst neidisch",
     text: [
       {
-        title: "JETZT",
+        title: "Jetzt hört ihr auf",
         description:
-          "HÖRT IHR AUF — Schicke einen beschädigten Charakter deiner Wahl auf die zugehörige Hand zurück. Danach müssen alle gegnerischen Mitspielenden je eine zufällig ausgewählte Karte von ihrer Hand abwerfen.",
+          "{E} — Schicke einen beschädigten Charakter deiner Wahl auf die zugehörige Hand zurück. Danach müssen alle gegnerischen Mitspielenden je eine zufällig ausgewählte Karte von ihrer Hand abwerfen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const ladyTremaineBitterlyJealousI18n: Record<Languages, I18nProperties> 
     version: "Amèrement jalouse",
     text: [
       {
-        title: "CELA SUFFIT",
+        title: "Cela suffit",
         description:
-          "— Choisissez un personnage avec au moins un dommage et renvoyez-le dans la main de son propriétaire. Ensuite, chaque adversaire défausse une carte au hasard.",
+          "{E} — Choisissez un personnage avec au moins un dommage et renvoyez-le dans la main de son propriétaire. Ensuite, chaque adversaire défausse une carte au hasard.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const ladyTremaineBitterlyJealousI18n: Record<Languages, I18nProperties> 
     version: "Tremendamente Invidiosa",
     text: [
       {
-        title: "ADESSO BASTA",
+        title: "Adesso Basta",
         description:
-          "— Fai riprendere in mano al suo giocatore un personaggio danneggiato a tua scelta. Poi, ogni avversario scarta una carta a caso.",
+          "{E} — Fai riprendere in mano al suo giocatore un personaggio danneggiato a tua scelta. Poi, ogni avversario scarta una carta a caso.",
       },
     ],
   },

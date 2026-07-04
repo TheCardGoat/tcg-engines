@@ -3,8 +3,10 @@ import { describe, expect, it } from "bun:test";
 import { resolveBrowserRouteState, resolveBrowserTransportConfig } from "./browser-route.js";
 
 describe("browser-route", () => {
-  it("defaults browser transport to zero-latency async when no transport params are present", () => {
-    const state = resolveBrowserRouteState(new URL("http://example.test/test?fixtureId=pre-game"));
+  it("defaults browser transport to zero-latency async when no transport params are present", async () => {
+    const state = await resolveBrowserRouteState(
+      new URL("http://example.test/test?fixtureId=pre-game"),
+    );
 
     expect(state.browserTransport).toEqual({
       mode: "async",
@@ -27,8 +29,8 @@ describe("browser-route", () => {
     });
   });
 
-  it("preserves explicit async transport query params", () => {
-    const state = resolveBrowserRouteState(
+  it("preserves explicit async transport query params", async () => {
+    const state = await resolveBrowserRouteState(
       new URL(
         "http://example.test/test?fixtureId=pre-game&view=playerTwo&transport=async&latencyMs=250&latencyModel=rtt",
       ),

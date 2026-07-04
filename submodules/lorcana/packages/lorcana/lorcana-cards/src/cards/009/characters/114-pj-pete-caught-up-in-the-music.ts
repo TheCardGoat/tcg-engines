@@ -4,6 +4,17 @@ import { pjPeteCaughtUpInTheMusicI18n } from "./114-pj-pete-caught-up-in-the-mus
 export const pjPeteCaughtUpInTheMusic: CharacterCard = {
   id: "Z6l",
   canonicalId: "ci_Z6l",
+  slug: "lorcana-ci_Z6l",
+  printings: [
+    {
+      id: "set9-114",
+      artId: "set9-114",
+      setCode: "set9",
+      collectorNumber: "114",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-114"],
   cardType: "character",
   name: "P.J. Pete",
@@ -20,7 +31,7 @@ export const pjPeteCaughtUpInTheMusic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6ce1cd22f2bb44b18d3c31ffb9c8251c",
-    tcgPlayer: 650050,
+    tcgPlayer: "650050",
   },
   text: [
     {

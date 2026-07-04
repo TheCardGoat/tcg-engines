@@ -7,19 +7,14 @@ export const olympusWouldBeThatWayI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Zum Olymp geht's da lang",
-    text: "Deine Charaktere erhalten in diesem Zug +3, während sie einen Ort herausfordern.",
+    text: "Deine Charaktere erhalten in diesem Zug +3 {S}, während sie einen Ort herausfordern.",
   },
   fr: {
     name: "L'Olympe, ce serait pas plutôt par là ?",
-    text: "Lorsqu'ils défient un lieu durant votre tour, vos personnages gagnent +3.",
+    text: "Lorsqu'ils défient un lieu durant votre tour, vos personnages gagnent +3 {S}.",
   },
   it: {
     name: "L'Olimpo Sarebbe per di Là",
-    text: [
-      {
-        title: "I",
-        description: "tuoi personaggi ottengono +3 mentre stanno sfidando luoghi per questo turno.",
-      },
-    ],
+    text: "I tuoi personaggi ottengono +3 {S} mentre stanno sfidando luoghi per questo turno.",
   },
 };

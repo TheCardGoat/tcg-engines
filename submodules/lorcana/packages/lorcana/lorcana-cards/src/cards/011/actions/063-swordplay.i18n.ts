@@ -7,14 +7,14 @@ export const swordplayI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Schwertkunst",
-    text: "Ein Charakter deiner Wahl erhält in diesem Zug Herausfordern +3. (Während der Charakter herausfordert, erhält er +3.)",
+    text: "Ein Charakter deiner Wahl erhält in diesem Zug <Herausfordern> +3. (Während der Charakter herausfordert, erhält er +3 {S}.)",
   },
   fr: {
     name: "Manier l'épée",
-    text: "Choisissez un personnage qui gagne Offensif +3 pour le reste de ce tour.",
+    text: "Choisissez un personnage qui gagne <Offensif> +3 pour le reste de ce tour.",
   },
   it: {
     name: "Abilità con la Spada",
-    text: "Un personaggio a tua scelta ottiene Sfidante +3 per questo turno.",
+    text: "Un personaggio a tua scelta ottiene <Sfidante> +3 per questo turno. (Riceve +3 {S} mentre sta sfidando.)",
   },
 };

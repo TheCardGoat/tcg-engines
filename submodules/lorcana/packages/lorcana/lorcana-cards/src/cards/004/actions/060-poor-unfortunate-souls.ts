@@ -4,6 +4,17 @@ import { poorUnfortunateSoulsI18n } from "./060-poor-unfortunate-souls.i18n";
 export const poorUnfortunateSouls: ActionCard = {
   id: "ysE",
   canonicalId: "ci_smr",
+  slug: "lorcana-ci_smr",
+  printings: [
+    {
+      id: "set4-060",
+      artId: "set4-060",
+      setCode: "set4",
+      collectorNumber: "60",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-060", "set9-061"],
   cardType: "action",
   name: "Poor Unfortunate Souls",
@@ -16,7 +27,7 @@ export const poorUnfortunateSouls: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_06c998317b6d45d0abc056cea429ad13",
-    tcgPlayer: 650005,
+    tcgPlayer: "650005",
   },
   text: "Return chosen character, item, or location with cost 2 or less to their player's hand.",
   actionSubtype: "song",

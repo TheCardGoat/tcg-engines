@@ -4,6 +4,17 @@ import { sumerianTalismanI18n } from "./133-sumerian-talisman.i18n";
 export const sumerianTalisman: ItemCard = {
   id: "zQ8",
   canonicalId: "ci_zQ8",
+  slug: "lorcana-ci_zQ8",
+  printings: [
+    {
+      id: "set3-133",
+      artId: "set3-133",
+      setCode: "set3",
+      collectorNumber: "133",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-133"],
   cardType: "item",
   name: "Sumerian Talisman",
@@ -16,7 +27,7 @@ export const sumerianTalisman: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_890de7a0c3e34c8da80430d86a27365c",
-    tcgPlayer: 536271,
+    tcgPlayer: "536271",
   },
   text: [
     {

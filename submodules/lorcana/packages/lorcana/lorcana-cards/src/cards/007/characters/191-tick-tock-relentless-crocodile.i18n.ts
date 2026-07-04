@@ -17,9 +17,9 @@ export const ticktockRelentlessCrocodileI18n: Record<Languages, I18nProperties> 
     version: "Unerbittliches Krokodil",
     text: [
       {
-        title: "SUCHT NACH ESSEN",
+        title: "Sucht nach Essen",
         description:
-          "Solange ein Pirat im Spiel ist, erhält dieser Charakter in deinem Zug Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "Solange ein Pirat im Spiel ist, erhält dieser Charakter in deinem Zug <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const ticktockRelentlessCrocodileI18n: Record<Languages, I18nProperties> 
     version: "Crocodile acharné",
     text: [
       {
-        title: "EN QUÊTE D'UN REPAS",
+        title: "En quête d'un repas",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable tant qu'il y a un personnage Pirate en jeu. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable> tant qu'il y a un personnage Pirate en jeu. (Il peut défier des personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const ticktockRelentlessCrocodileI18n: Record<Languages, I18nProperties> 
     version: "Coccodrillo Implacabile",
     text: [
       {
-        title: "IN CERCA DI UNO SPUNTINO",
+        title: "In Cerca di uno Spuntino",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente mentre un personaggio Pirata è in gioco. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente> mentre un personaggio Pirata è in gioco. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

@@ -15,9 +15,9 @@ export const roseLanternI18n: Record<Languages, I18nProperties> = {
     name: "Rosen-Laterne",
     text: [
       {
-        title: "GEHEIMNISVOLLE",
+        title: "Geheimnisvolle Blütenblätter",
         description:
-          "BLÜTENBLÄTTER, 2 — Verschiebe 1 Schadensmarker von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl.",
+          "{E}, 2 {I} — Verschiebe 1 Schadensmarker von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const roseLanternI18n: Record<Languages, I18nProperties> = {
     name: "Rose-Lanterne",
     text: [
       {
-        title: "PÉTALES MYSTIQUES,",
+        title: "Pétales mystiques",
         description:
-          "2 — Choisissez un personnage et déplacez 1 de ses jetons Dommage sur un personnage adverse de votre choix.",
+          "{E}, 2 {I} — Choisissez un personnage et déplacez 1 de ses jetons Dommage sur un personnage adverse de votre choix.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const roseLanternI18n: Record<Languages, I18nProperties> = {
     name: "Lanterna della Rosa",
     text: [
       {
-        title: "PETALI MISTICI, 2",
+        title: "Petali Mistici",
         description:
-          "— Sposta 1 segnalino danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
+          "{E}, 2 {I} — Sposta 1 segnalino danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },
     ],
   },

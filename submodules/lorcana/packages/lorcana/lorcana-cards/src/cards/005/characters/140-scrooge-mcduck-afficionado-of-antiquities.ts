@@ -4,6 +4,17 @@ import { scroogeMcduckAfficionadoOfAntiquitiesI18n } from "./140-scrooge-mcduck-
 export const scroogeMcduckAfficionadoOfAntiquities: CharacterCard = {
   id: "fV0",
   canonicalId: "ci_fV0",
+  slug: "lorcana-ci_fV0",
+  printings: [
+    {
+      id: "set5-140",
+      artId: "set5-140",
+      setCode: "set5",
+      collectorNumber: "140",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-140"],
   cardType: "character",
   name: "Scrooge McDuck",
@@ -21,7 +32,7 @@ export const scroogeMcduckAfficionadoOfAntiquities: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_d71041d05a2249a6a4785367a7236274",
-    tcgPlayer: 561642,
+    tcgPlayer: "561642",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: scroogeMcduckAfficionadoOfAntiquitiesI18n,

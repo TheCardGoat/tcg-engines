@@ -12,8 +12,8 @@
     "ci:gundam": "pnpm --dir submodules/gundam run ci-check-full",
     "ci:lorcana:check": "pnpm --dir submodules/lorcana run ci-check",
     "ci:lorcana": "pnpm --dir submodules/lorcana run ci-check-full",
-    "ci:one-piece:check": "pnpm --dir submodules/one-piece-simulator run ci-check",
-    "ci:one-piece": "pnpm --dir submodules/one-piece-simulator run ci-check-full",
+    "ci:one-piece:check": "pnpm --dir submodules/one-piece run ci-check",
+    "ci:one-piece": "pnpm --dir submodules/one-piece run ci-check-full",
     "ci:public": "pnpm run ci:cyberpunk:check && pnpm run ci:gundam:check && pnpm run ci:lorcana:check && pnpm run ci:one-piece:check && pnpm run ci:agnostic:check"
   },
   "volta": {

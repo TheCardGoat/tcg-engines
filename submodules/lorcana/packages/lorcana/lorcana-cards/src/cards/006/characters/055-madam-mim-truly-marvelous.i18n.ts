@@ -16,8 +16,8 @@ export const madamMimTrulyMarvelousI18n: Record<Languages, I18nProperties> = {
     version: "Wahrlich wunderbar",
     text: [
       {
-        title: "BEIM BEELZEBUB 2,",
-        description: "Wähle eine Karte aus deiner Hand und wirf sie ab — Sammle 1 Legende.",
+        title: "Beim Beelzebub",
+        description: "2 {I}, Wähle eine Karte aus deiner Hand und wirf sie ab — Sammle 1 Legende.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const madamMimTrulyMarvelousI18n: Record<Languages, I18nProperties> = {
     version: "Vraiment merveilleuse",
     text: [
       {
-        title: "PAR LES CORNES DE SATAN 2,",
-        description: "défaussez une carte de votre main — Gagnez 1 éclat de Lore.",
+        title: "Par les cornes de Satan",
+        description: "2 {I}, défaussez une carte de votre main — Gagnez 1 éclat de Lore.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const madamMimTrulyMarvelousI18n: Record<Languages, I18nProperties> = {
     version: "La Più Formidabile",
     text: [
       {
-        title: "OH, PESTE E CORNA! 2,",
-        description: "scegli e scarta una carta — Ottieni 1 leggenda.",
+        title: "Oh, Peste e Corna!",
+        description: "2 {I}, scegli e scarta una carta — Ottieni 1 leggenda.",
       },
     ],
   },

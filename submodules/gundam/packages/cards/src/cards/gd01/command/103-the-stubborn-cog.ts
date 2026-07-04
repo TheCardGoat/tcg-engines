@@ -7,14 +7,17 @@ export const gd01TheStubbornCog103: CommandCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD01-103",
-  externalId: "gundam:gd01-103",
-  slug: "the-stubborn-cog-gd01-103",
+  canonicalId: "GD01-103",
+  externalIds: { bandai: "gundam:gd01-103" },
+  slug: "the-stubborn-cog/gd01-103",
   displayName: "The Stubborn Cog",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-103",
   printings: [
     {
       id: "GD01-103",
+      artId: "GD01-103",
+      setCode: "GD01",
       collectorNumber: "GD01-103",
       cardNumber: "GD01-103",
       set: {
@@ -29,6 +32,7 @@ export const gd01TheStubbornCog103: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-103"],
   selectedPrintingId: "GD01-103",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-103.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-103.webp?260424",

@@ -4,6 +4,17 @@ import { castleOfTheHornedKingBastionOfEvilI18n } from "./170-castle-of-the-horn
 export const castleOfTheHornedKingBastionOfEvil: LocationCard = {
   id: "ilT",
   canonicalId: "ci_ilT",
+  slug: "lorcana-ci_ilT",
+  printings: [
+    {
+      id: "set10-170",
+      artId: "set10-170",
+      setCode: "set10",
+      collectorNumber: "170",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-170"],
   cardType: "location",
   name: "Castle of the Horned King",
@@ -20,7 +31,7 @@ export const castleOfTheHornedKingBastionOfEvil: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_da44468c05d647ad965adcaf8f568c8c",
-    tcgPlayer: 659603,
+    tcgPlayer: "659603",
   },
   text: [
     {

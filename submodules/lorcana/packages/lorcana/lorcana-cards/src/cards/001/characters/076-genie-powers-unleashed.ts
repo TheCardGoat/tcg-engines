@@ -1,12 +1,24 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { geniePowersUnleashedI18n } from "./076-genie-powers-unleashed.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const geniePowersUnleashed: CharacterCard = {
   id: "Mpt",
-  canonicalId: "ci_Mpt",
-  reprints: ["set1-076"],
+  canonicalId: "ci_K4J",
+  slug: "lorcana-ci_K4J",
+  printings: [
+    {
+      id: "set1-076",
+      artId: "set1-076",
+      setCode: "set1",
+      collectorNumber: "76",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set1-p1-020", "set1-076"],
   cardType: "character",
   name: "Genie",
   version: "Powers Unleashed",
@@ -22,7 +34,7 @@ export const geniePowersUnleashed: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_976b70e13c194a6f8b955d7ea5307bbc",
-    tcgPlayer: 508766,
+    tcgPlayer: "508766",
   },
   text: [
     {

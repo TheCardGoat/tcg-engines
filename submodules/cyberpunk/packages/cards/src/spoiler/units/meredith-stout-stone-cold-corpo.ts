@@ -1,14 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerMeredithStoutStoneColdCorpo = {
+export const spoilerMeredithStoutStoneColdCorpo = defineCyberpunkCard({
   id: "bd96d2fc-5c51-47a8-a428-09b13cfff35b",
-  externalId: "cyberpunk:meredith-stout-stone-cold-corpo",
   slug: "meredith-stout-stone-cold-corpo",
-  name: "Meredith Stout",
-  subname: "Stone Cold Corpo",
-  displayName: "Meredith Stout - Stone Cold Corpo",
   rulesText:
     "When a rival decreases the value of your friendly Gig, you may choose a card from your trash and add it to your hand.",
+  subname: "Stone Cold Corpo",
+  name: "Meredith Stout",
+  displayName: "Meredith Stout - Stone Cold Corpo",
+  canonicalId: "meredith-stout-stone-cold-corpo",
   color: "red",
   classifications: ["Corpo", "Militech"],
   set: {
@@ -16,23 +17,12 @@ export const spoilerMeredithStoutStoneColdCorpo = {
     name: "Spoiler Set",
   },
   printNumber: "069",
-  printings: [
-    {
-      id: "0d09e470-1130-4ace-a5e7-7094ca9256f4",
-      collectorNumber: "069",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "0d09e470-1130-4ace-a5e7-7094ca9256f4",
   artist: "Daniel Valaisis",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/069.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "unit",
   cost: 4,
   power: 3,
@@ -69,5 +59,4 @@ export const spoilerMeredithStoutStoneColdCorpo = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

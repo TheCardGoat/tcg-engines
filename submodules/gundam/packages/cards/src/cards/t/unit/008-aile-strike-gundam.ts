@@ -6,14 +6,17 @@ export const tAileStrikeGundam008: UnitCard = {
   type: "unit",
   traits: ["earth alliance"],
   id: "T-008",
-  externalId: "gundam:t-008",
-  slug: "aile-strike-gundam-t-008",
+  canonicalId: "T-008",
+  externalIds: { bandai: "gundam:t-008" },
+  slug: "aile-strike-gundam/t-008",
   displayName: "Aile Strike Gundam",
   set: { code: "ST04", name: "SEED Strike [ST04]", packageId: "616004" },
   printNumber: "T-008",
   printings: [
     {
       id: "T-008",
+      artId: "T-008",
+      setCode: "ST04",
       collectorNumber: "T-008",
       cardNumber: "T-008",
       set: {
@@ -28,6 +31,7 @@ export const tAileStrikeGundam008: UnitCard = {
       productName: "SEED Strike [ST04]",
     },
   ],
+  reprints: ["T-008"],
   selectedPrintingId: "T-008",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-008.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-008.webp?260424",

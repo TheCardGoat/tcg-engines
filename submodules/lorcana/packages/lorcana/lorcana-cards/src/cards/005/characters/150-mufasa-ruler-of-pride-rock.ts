@@ -4,6 +4,17 @@ import { mufasaRulerOfPrideRockI18n } from "./150-mufasa-ruler-of-pride-rock.i18
 export const mufasaRulerOfPrideRock: CharacterCard = {
   id: "6p3",
   canonicalId: "ci_Q4A",
+  slug: "lorcana-ci_Q4A",
+  printings: [
+    {
+      id: "set5-150",
+      artId: "set5-150",
+      setCode: "set5",
+      collectorNumber: "150",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-150"],
   cardType: "character",
   name: "Mufasa",
@@ -20,7 +31,7 @@ export const mufasaRulerOfPrideRock: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ca78ff510359490a862b871b577a5fec",
-    tcgPlayer: 562021,
+    tcgPlayer: "562021",
   },
   text: [
     {

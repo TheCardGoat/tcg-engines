@@ -4,6 +4,17 @@ import { winterspellI18n } from "./199-winterspell.i18n";
 export const winterspell: ActionCard = {
   id: "5Yu",
   canonicalId: "ci_5Yu",
+  slug: "lorcana-ci_5Yu",
+  printings: [
+    {
+      id: "set11-199",
+      artId: "set11-199",
+      setCode: "set11",
+      collectorNumber: "199",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-199"],
   cardType: "action",
   name: "Winterspell",
@@ -16,7 +27,7 @@ export const winterspell: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6e3ec107e64e498ca64d1a4de4e6abb9",
-    tcgPlayer: 673357,
+    tcgPlayer: "673357",
   },
   text: "Chosen location of yours can't be challenged until the start of your next turn. Draw a card.",
   abilities: [

@@ -7,8 +7,7 @@ export const annaSoothingSisterEnchantedI18n: Record<Languages, I18nProperties> 
     text: [
       {
         title: "UNUSUAL TRANSFORMATION",
-        description:
-          "If a card left a player's discard this turn, this character gains Shift 0 {I}.",
+        description: "If a card left a player's discard this turn, this card gains Shift 0 {I}.",
       },
       {
         title: "WARM HEART",
@@ -22,12 +21,12 @@ export const annaSoothingSisterEnchantedI18n: Record<Languages, I18nProperties> 
     version: "Beruhigende Schwester",
     text: [
       {
-        title: "UNGEWÖHNLICHE TRANSFORMATION",
+        title: "Ungewöhnliche Transformation",
         description:
-          "Falls in diesem Zug eine Karte einen Ablagestapel verlassen hat, erhält diese Karte Gestaltwandel 0",
+          "Falls in diesem Zug eine Karte einen Ablagestapel verlassen hat, erhält diese Karte <Gestaltwandel> 0 {I}",
       },
       {
-        title: "WARMES HERZ",
+        title: "Warmes Herz",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du eine Charakterkarte in deinem Ablagestapel wählen und so viele Legenden sammeln, wie dessen Legendenwert beträgt. Wenn du dies tust, lege die gewählte Karte danach unter dein Deck.",
       },
@@ -38,14 +37,14 @@ export const annaSoothingSisterEnchantedI18n: Record<Languages, I18nProperties> 
     version: "Sœur rassurante",
     text: [
       {
-        title: "TRANSFORMATION ATYPIQUE",
+        title: "Transformation atypique",
         description:
-          "Si une carte a quitté la défausse d'un joueur ce tour-ci, cette carte-ci gagne Alter 0.",
+          "Si une carte a quitté la défausse d'un joueur ce tour-ci, cette carte-ci gagne <Alter> 0 {I}.",
       },
       {
-        title: "CŒUR CHALEUREUX",
+        title: "Cœur chaleureux",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez gagner autant d'éclats de Lore que le d'une carte Personnage de votre défausse. Si vous le faites, placez cette carte-là sous votre pioche.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez gagner autant d'éclats de Lore que le {L} d'une carte Personnage de votre défausse. Si vous le faites, placez cette carte-là sous votre pioche.",
       },
     ],
   },
@@ -54,14 +53,14 @@ export const annaSoothingSisterEnchantedI18n: Record<Languages, I18nProperties> 
     version: "Sorella Rassicurante",
     text: [
       {
-        title: "TRASFORMAZIONE INUSUALE",
+        title: "Trasformazione Inusuale",
         description:
-          "Se una carta ha lasciato gli scarti di un giocatore in questo turno, questa carta ottiene Trasformazione 0.",
+          "Se una carta ha lasciato gli scarti di un giocatore in questo turno, questa carta ottiene <Trasformazione> 0 {I}.",
       },
       {
-        title: "BUON CUORE",
+        title: "Buon Cuore",
         description:
-          "Ogni volta che questo personaggio va all'avventura, puoi ottenere leggenda pari al di una carta personaggio nei tuoi scarti. Se lo fai, metti quella carta in fondo al tuo mazzo.",
+          "Ogni volta che questo personaggio va all'avventura, puoi ottenere leggenda pari al {L} di una carta personaggio nei tuoi scarti. Se lo fai, metti quella carta in fondo al tuo mazzo.",
       },
     ],
   },

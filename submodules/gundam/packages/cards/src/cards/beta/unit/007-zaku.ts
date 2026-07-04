@@ -7,14 +7,17 @@ export const betaZaku007: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "ST03-007_p2",
-  externalId: "gundam:st03-007_p2",
-  slug: "zaku-st03-007-p2",
+  canonicalId: "ST03-007",
+  externalIds: { bandai: "gundam:st03-007_p2" },
+  slug: "zaku-i/st03-007",
   displayName: "Zaku Ⅰ",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "ST03-007_p2",
   printings: [
     {
       id: "ST03-007",
+      artId: "ST03-007",
+      setCode: "ST03",
       collectorNumber: "ST03-007",
       cardNumber: "ST03-007",
       set: {
@@ -30,6 +33,8 @@ export const betaZaku007: UnitCard = {
     },
     {
       id: "ST03-007_p1",
+      artId: "ST03-007_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-007_p1",
       cardNumber: "ST03-007",
       set: {
@@ -45,6 +50,8 @@ export const betaZaku007: UnitCard = {
     },
     {
       id: "ST03-007_p2",
+      artId: "ST03-007_p2",
+      setCode: "BETA",
       collectorNumber: "ST03-007_p2",
       cardNumber: "ST03-007",
       set: {
@@ -59,6 +66,7 @@ export const betaZaku007: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["ST03-007", "ST03-007_p1", "ST03-007_p2"],
   selectedPrintingId: "ST03-007_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST03-007_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-007_p2.webp?260424",

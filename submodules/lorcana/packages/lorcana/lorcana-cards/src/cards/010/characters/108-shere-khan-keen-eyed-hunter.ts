@@ -4,6 +4,17 @@ import { shereKhanKeeneyedHunterI18n } from "./108-shere-khan-keen-eyed-hunter.i
 export const shereKhanKeeneyedHunter: CharacterCard = {
   id: "601",
   canonicalId: "ci_601",
+  slug: "lorcana-ci_601",
+  printings: [
+    {
+      id: "set10-108",
+      artId: "set10-108",
+      setCode: "set10",
+      collectorNumber: "108",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-108"],
   cardType: "character",
   name: "Shere Khan",
@@ -21,7 +32,7 @@ export const shereKhanKeeneyedHunter: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_92a9208587e145dc808634c7d82007ef",
-    tcgPlayer: 659599,
+    tcgPlayer: "659599",
   },
   classifications: ["Storyborn", "Villain"],
   i18n: shereKhanKeeneyedHunterI18n,

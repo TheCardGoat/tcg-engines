@@ -1,14 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerRiverWardDetectiveOnTheHunt = {
+export const spoilerRiverWardDetectiveOnTheHunt = defineCyberpunkCard({
   id: "53886d23-5ec8-4d75-824f-9b02921e87dc",
-  externalId: "cyberpunk:river-ward-detective-on-the-hunt",
   slug: "river-ward-detective-on-the-hunt",
-  name: "River Ward",
-  subname: "Detective on the Hunt",
-  displayName: "River Ward - Detective on the Hunt",
   rulesText:
     "CALL Draw a card. When a Unit attacks, [Spend Icon]: Choose a Gear from your hand with cost 2 or less. Equip it for free to a friendly Yellow Unit with no equipped Gears.",
+  subname: "Detective on the Hunt",
+  name: "River Ward",
+  displayName: "River Ward - Detective on the Hunt",
+  canonicalId: "river-ward-detective-on-the-hunt",
   color: "yellow",
   classifications: ["NCPD"],
   set: {
@@ -16,15 +17,6 @@ export const spoilerRiverWardDetectiveOnTheHunt = {
     name: "Spoiler Set",
   },
   printNumber: "135",
-  printings: [
-    {
-      id: "cd02a445-e212-4937-b904-cecbf29f792f",
-      collectorNumber: "135",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "cd02a445-e212-4937-b904-cecbf29f792f",
   artist: "Pandart Studio",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/135.webp",
   rarity: null,
@@ -32,7 +24,6 @@ export const spoilerRiverWardDetectiveOnTheHunt = {
   hasSellTag: true,
   ram: 2,
   timingTriggers: ["call"],
-  keywords: [],
   type: "legend",
   cost: null,
   power: null,
@@ -112,5 +103,4 @@ export const spoilerRiverWardDetectiveOnTheHunt = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies LegendCardDefinition;

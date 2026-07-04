@@ -6,14 +6,17 @@ export const st08Davao015: BaseCard = {
   type: "base",
   traits: ["earth federation", "stronghold"],
   id: "ST08-015",
-  externalId: "gundam:st08-015",
-  slug: "davao-st08-015",
+  canonicalId: "ST08-015",
+  externalIds: { bandai: "gundam:st08-015" },
+  slug: "davao/st08-015",
   displayName: "Davao",
   set: { code: "ST08", name: "Flash of Radiance [ST08]", packageId: "616008" },
   printNumber: "ST08-015",
   printings: [
     {
       id: "ST08-015",
+      artId: "ST08-015",
+      setCode: "ST08",
       collectorNumber: "ST08-015",
       cardNumber: "ST08-015",
       set: {
@@ -29,6 +32,8 @@ export const st08Davao015: BaseCard = {
     },
     {
       id: "ST08-015_p1",
+      artId: "ST08-015_p1",
+      setCode: "ST08",
       collectorNumber: "ST08-015_p1",
       cardNumber: "ST08-015",
       set: {
@@ -43,6 +48,7 @@ export const st08Davao015: BaseCard = {
       productName: "Flash of Radiance [ST08] Bonus Pack",
     },
   ],
+  reprints: ["ST08-015", "ST08-015_p1"],
   selectedPrintingId: "ST08-015",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st08/ST08-015.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST08-015.webp?260424",

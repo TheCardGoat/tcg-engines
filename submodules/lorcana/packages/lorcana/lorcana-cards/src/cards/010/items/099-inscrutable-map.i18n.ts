@@ -15,9 +15,9 @@ export const inscrutableMapI18n: Record<Languages, I18nProperties> = {
     name: "Unergründliche Karte",
     text: [
       {
-        title: "ZURÜCKVERFOLGEN,",
+        title: "Zurückverfolgen",
         description:
-          "1 — Ein gegnerischer Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges -1.",
+          "{E}, 1 {I} — Ein gegnerischer Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges -1 {L}.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const inscrutableMapI18n: Record<Languages, I18nProperties> = {
     name: "Carte indéchiffrable",
     text: [
       {
-        title: "REBROUSSER CHEMIN, 1",
+        title: "Rebrousser chemin",
         description:
-          "— Choisissez un personnage adverse qui subit -1 jusqu'au début de votre prochain tour.",
+          "{E}, 1 {I} — Choisissez un personnage adverse qui subit -1 {L} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const inscrutableMapI18n: Record<Languages, I18nProperties> = {
     name: "Mappa Imperscrutabile",
     text: [
       {
-        title: "TORNARE SUI PROPRI PASSI, 1",
+        title: "Tornare sui Propri Passi",
         description:
-          "— Un personaggio avversario a tua scelta riceve -1 fino all'inizio del tuo prossimo turno.",
+          "{E}, 1 {I} — Un personaggio avversario a tua scelta riceve -1 {L} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

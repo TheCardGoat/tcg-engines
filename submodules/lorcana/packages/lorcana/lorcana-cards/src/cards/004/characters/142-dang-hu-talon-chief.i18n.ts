@@ -17,9 +17,9 @@ export const dangHuTalonChiefI18n: Record<Languages, I18nProperties> = {
     version: "Oberhaupt von Klaue",
     text: [
       {
-        title: "BEEIL DICH BEIM SPRECHEN",
+        title: "Beeil dich beim Sprechen",
         description:
-          "Deine anderen Schurkinnen und Schurken erhalten Unterstützen. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "Deine anderen Schurkinnen und Schurken erhalten <Unterstützen>. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const dangHuTalonChiefI18n: Record<Languages, I18nProperties> = {
     version: "Cheffe de Griffes du Dragon",
     text: [
       {
-        title: "DÉCIDEZ-VOUS VITE",
+        title: "Décidez-vous vite",
         description:
-          "Vos autres personnages Méchant gagnent Soutien. (Lorsqu'ils sont envoyés à l'aventure, vous pouvez ajouter leur à celle d'un autre personnage au choix pour le reste de ce tour.)",
+          "Vos autres personnages Méchant gagnent <Soutien>. (Lorsqu'ils sont envoyés à l'aventure, vous pouvez ajouter leur {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const dangHuTalonChiefI18n: Record<Languages, I18nProperties> = {
     version: "Capo di Artiglio",
     text: [
       {
-        title: "È MEGLIO SE FAI IN FRETTA I",
+        title: "È Meglio Se Fai in Fretta",
         description:
-          "tuoi altri personaggi Cattivo ottengono Aiutante. (Ogni volta che vanno all'avventura, puoi aggiungere la loro alla di un altro personaggio a tua scelta per questo turno.)",
+          "I tuoi altri personaggi Cattivo ottengono <Aiutante>. (Ogni volta che vanno all'avventura, puoi aggiungere la loro {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
     ],
   },

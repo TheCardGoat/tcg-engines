@@ -4,6 +4,17 @@ import { chernabogUnnaturalForceI18n } from "./077-chernabog-unnatural-force.i18
 export const chernabogUnnaturalForce: CharacterCard = {
   id: "OZJ",
   canonicalId: "ci_OZJ",
+  slug: "lorcana-ci_OZJ",
+  printings: [
+    {
+      id: "set11-077",
+      artId: "set11-077",
+      setCode: "set11",
+      collectorNumber: "77",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-077"],
   cardType: "character",
   name: "Chernabog",
@@ -20,7 +31,7 @@ export const chernabogUnnaturalForce: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_10d405a5074a498592c40bed3888538a",
-    tcgPlayer: 676198,
+    tcgPlayer: "676198",
   },
   text: [
     {

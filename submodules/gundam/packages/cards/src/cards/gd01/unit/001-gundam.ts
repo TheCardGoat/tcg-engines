@@ -7,14 +7,17 @@ export const gd01Gundam001: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-001",
-  externalId: "gundam:gd01-001",
-  slug: "gundam-gd01-001",
+  canonicalId: "GD01-001",
+  externalIds: { bandai: "gundam:gd01-001" },
+  slug: "gundam/gd01-001",
   displayName: "Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-001",
   printings: [
     {
       id: "GD01-001",
+      artId: "GD01-001",
+      setCode: "GD01",
       collectorNumber: "GD01-001",
       cardNumber: "GD01-001",
       set: {
@@ -30,6 +33,8 @@ export const gd01Gundam001: UnitCard = {
     },
     {
       id: "GD01-001_p1",
+      artId: "GD01-001_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-001_p1",
       cardNumber: "GD01-001",
       set: {
@@ -45,6 +50,8 @@ export const gd01Gundam001: UnitCard = {
     },
     {
       id: "GD01-001_p2",
+      artId: "GD01-001_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-001_p2",
       cardNumber: "GD01-001",
       set: {
@@ -59,6 +66,7 @@ export const gd01Gundam001: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-001", "GD01-001_p1", "GD01-001_p2"],
   selectedPrintingId: "GD01-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-001.webp?260424",

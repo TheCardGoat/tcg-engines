@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { robinHoodEphemeralArcherI18n } from "./171-robin-hood-ephemeral-archer.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const robinHoodEphemeralArcher: CharacterCard = {
   id: "6Ji",
   canonicalId: "ci_ZXj",
+  slug: "lorcana-ci_ZXj",
+  printings: [
+    {
+      id: "set10-171",
+      artId: "set10-171",
+      setCode: "set10",
+      collectorNumber: "171",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-171"],
   cardType: "character",
   name: "Robin Hood",
@@ -21,7 +33,7 @@ export const robinHoodEphemeralArcher: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9a7e83a63b8444438f4bc7714df6faf9",
-    tcgPlayer: 660272,
+    tcgPlayer: "660272",
   },
   text: [
     {

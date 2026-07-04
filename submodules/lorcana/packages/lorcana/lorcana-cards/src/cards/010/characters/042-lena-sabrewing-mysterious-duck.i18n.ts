@@ -17,7 +17,7 @@ export const lenaSabrewingMysteriousDuckI18n: Record<Languages, I18nProperties> 
     version: "Geheimnisvolle Ente",
     text: [
       {
-        title: "ARKANE VERBINDUNG",
+        title: "Arkane Verbindung",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens einen Charakter oder Ort mit einer Karte unter sich im Spiel hast, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const lenaSabrewingMysteriousDuckI18n: Record<Languages, I18nProperties> 
     version: "Canette mystérieuse",
     text: [
       {
-        title: "LIEN ARCANIQUE",
+        title: "Lien arcanique",
         description:
           "Lorsque vous jouez ce personnage, si vous avez un personnage ou un lieu en jeu avec une carte sous lui, gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const lenaSabrewingMysteriousDuckI18n: Record<Languages, I18nProperties> 
     version: "Papera Misteriosa",
     text: [
       {
-        title: "CONNESSIONE ARCANA",
+        title: "Connessione Arcana",
         description:
           "Quando giochi questo personaggio, se hai in gioco un personaggio o un luogo con una carta sotto di sé, ottieni 1 leggenda.",
       },

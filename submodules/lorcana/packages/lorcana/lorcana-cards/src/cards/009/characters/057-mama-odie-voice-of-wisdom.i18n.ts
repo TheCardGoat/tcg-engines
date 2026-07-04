@@ -17,7 +17,7 @@ export const mamaOdieVoiceOfWisdomI18n: Record<Languages, I18nProperties> = {
     version: "Stimme der Weisheit",
     text: [
       {
-        title: "JETZT HÖRT MAL GUT EURER MAMA ZU",
+        title: "Jetzt hört mal gut eurer Mama zu",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du bis zu 2 Schadensmarker von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
       },
@@ -28,7 +28,7 @@ export const mamaOdieVoiceOfWisdomI18n: Record<Languages, I18nProperties> = {
     version: "Voix de la sagesse",
     text: [
       {
-        title: "ÉCOUTEZ BIEN VOTRE MAMA",
+        title: "Écoutez bien votre Mama",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage et déplacer jusqu'à 2 de ses jetons Dommage sur un personnage adverse de votre choix.",
       },
@@ -39,7 +39,7 @@ export const mamaOdieVoiceOfWisdomI18n: Record<Languages, I18nProperties> = {
     version: "Voce della Saggezza",
     text: [
       {
-        title: "ASCOLTATE LA VOSTRA MAMMA ADESSO",
+        title: "Ascoltate la Vostra Mamma Adesso",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi spostare fino a 2 segnalini danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },

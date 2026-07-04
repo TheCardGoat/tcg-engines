@@ -4,6 +4,17 @@ import { katrinaVanTasselRosycheekedLassI18n } from "./111-katrina-van-tassel-ro
 export const katrinaVanTasselRosycheekedLass: CharacterCard = {
   id: "lUe",
   canonicalId: "ci_lUe",
+  slug: "lorcana-ci_lUe",
+  printings: [
+    {
+      id: "set10-111",
+      artId: "set10-111",
+      setCode: "set10",
+      collectorNumber: "111",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-111"],
   cardType: "character",
   name: "Katrina Van Tassel",
@@ -21,7 +32,7 @@ export const katrinaVanTasselRosycheekedLass: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_9c86af4392a04099982e5f11127d8c6c",
-    tcgPlayer: 660022,
+    tcgPlayer: "660022",
   },
   classifications: ["Storyborn"],
   i18n: katrinaVanTasselRosycheekedLassI18n,

@@ -1,16 +1,75 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { belleAccomplishedMystic } from "../../004";
+import { belleAccomplishedMysticEnchantedI18n } from "./226-belle-accomplished-mystic-enchanted.i18n";
+
+import { shift } from "../../../helpers/abilities/shift";
 
 export const belleAccomplishedMysticEnchanted: CharacterCard = {
-  ...belleAccomplishedMystic,
-  id: "OJv",
+  id: "5yU",
+  canonicalId: "ci_4lK",
+  slug: "lorcana-ci_4lK",
+  printings: [
+    {
+      id: "set9-226-enchanted",
+      artId: "ci_4lK-enchanted",
+      setCode: "set9",
+      collectorNumber: "226",
+      rarity: "enchanted",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-036", "set9-040"],
+  cardType: "character",
+  name: "Belle",
+  version: "Accomplished Mystic",
+  inkType: ["amethyst"],
+  franchise: "Beauty and the Beast",
   set: "009",
   cardNumber: 226,
   rarity: "enchanted",
   specialRarity: "enchanted",
+  cost: 5,
+  strength: 4,
+  willpower: 4,
+  lore: 2,
+  inkable: true,
   externalIds: {
     lorcast: "crd_c51b6a26015b45f298d1664787f37234",
-    tcgPlayer: 651121,
+    tcgPlayer: "651121",
   },
+  text: [
+    {
+      title: "Shift 3 {I}",
+    },
+    {
+      title: "ENHANCED HEALING",
+      description:
+        "When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
+    },
+  ],
+  classifications: ["Floodborn", "Hero", "Princess", "Sorcerer"],
+  abilities: [
+    shift(3),
+    {
+      id: "Ybr-2",
+      name: "ENHANCED HEALING",
+      text: "ENHANCED HEALING When you play this character, move up to 3 damage counters from chosen character to chosen opposing character.",
+      type: "triggered",
+      trigger: {
+        event: "play",
+        on: "SELF",
+        timing: "when",
+      },
+      effect: {
+        type: "optional",
+        chooser: "CONTROLLER",
+        effect: {
+          type: "move-damage",
+          amount: { type: "up-to", value: 3 },
+          from: "CHOSEN_CHARACTER",
+          to: "CHOSEN_OPPOSING_CHARACTER",
+        },
+      },
+    },
+  ],
+  i18n: belleAccomplishedMysticEnchantedI18n,
 };

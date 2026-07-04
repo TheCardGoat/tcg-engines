@@ -9,16 +9,16 @@ export const arthurNoviceSparrowI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Arthur",
     version: "Spatz-Anfänger",
-    text: "Impulsiv",
+    text: "<Impulsiv>",
   },
   fr: {
     name: "Arthur",
     version: "Moineau novice",
-    text: "Combattant",
+    text: "<Combattant>",
   },
   it: {
     name: "Artù",
     version: "Passerotto Principiante",
-    text: "Attaccabrighe",
+    text: "<Attaccabrighe>",
   },
 };

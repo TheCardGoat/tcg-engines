@@ -23,13 +23,14 @@ export const cinderellaStoutheartedI18n: Record<Languages, I18nProperties> = {
     version: "Stouthearted",
     text: [
       {
-        title: "Shift 5",
+        title:
+          "<Shift> 5 (You may pay 5 {I} to play this on top of one of your characters named Cinderella.)",
       },
       {
-        title: "Resist +2",
+        title: "<Resist> +2 (Damage dealt to this character is reduced by 2.)",
       },
       {
-        title: "THE SINGING SWORD",
+        title: "The Singing Sword",
         description:
           "Whenever you play a song, this character may challenge ready characters this turn.",
       },
@@ -40,13 +41,14 @@ export const cinderellaStoutheartedI18n: Record<Languages, I18nProperties> = {
     version: "Stouthearted",
     text: [
       {
-        title: "Shift 5",
+        title:
+          "<Shift> 5 (You may pay 5 {I} to play this on top of one of your characters named Cinderella.)",
       },
       {
-        title: "Resist +2",
+        title: "<Resist> +2 (Damage dealt to this character is reduced by 2.)",
       },
       {
-        title: "THE SINGING SWORD",
+        title: "The Singing Sword",
         description:
           "Whenever you play a song, this character may challenge ready characters this turn.",
       },
@@ -57,13 +59,14 @@ export const cinderellaStoutheartedI18n: Record<Languages, I18nProperties> = {
     version: "Stouthearted",
     text: [
       {
-        title: "Shift 5",
+        title:
+          "<Shift> 5 (You may pay 5 {I} to play this on top of one of your characters named Cinderella.)",
       },
       {
-        title: "Resist +2",
+        title: "<Resist> +2 (Damage dealt to this character is reduced by 2.)",
       },
       {
-        title: "THE SINGING SWORD",
+        title: "The Singing Sword",
         description:
           "Whenever you play a song, this character may challenge ready characters this turn.",
       },

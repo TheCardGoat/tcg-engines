@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { parsePlatformAuthSession, resolvePlatformAuthSession } from "./auth-session.js";
-import type { SessionResult } from "../src/games/cyberpunk/auth/platform-session.js";
+import type { SessionResult } from "@tcg/shared/auth";
 
 const platformSessionWithDates: SessionResult = {
   user: {

@@ -7,14 +7,17 @@ export const st03DraCSleeves005: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "ST03-005",
-  externalId: "gundam:st03-005",
-  slug: "dra-c-sleeves-st03-005",
+  canonicalId: "ST03-005",
+  externalIds: { bandai: "gundam:st03-005" },
+  slug: "dra-c-sleeves/st03-005",
   displayName: "Dra-C (Sleeves)",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-005",
   printings: [
     {
       id: "ST03-005",
+      artId: "ST03-005",
+      setCode: "ST03",
       collectorNumber: "ST03-005",
       cardNumber: "ST03-005",
       set: {
@@ -30,6 +33,8 @@ export const st03DraCSleeves005: UnitCard = {
     },
     {
       id: "ST03-005_p1",
+      artId: "ST03-005_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-005_p1",
       cardNumber: "ST03-005",
       set: {
@@ -44,6 +49,7 @@ export const st03DraCSleeves005: UnitCard = {
       productName: "Zeon's Rush [ST03] Bonus Pack",
     },
   ],
+  reprints: ["ST03-005", "ST03-005_p1"],
   selectedPrintingId: "ST03-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-005.webp?260424",

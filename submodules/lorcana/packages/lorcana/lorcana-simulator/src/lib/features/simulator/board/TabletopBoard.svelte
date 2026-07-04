@@ -16,6 +16,7 @@ import type {
 	LorcanaCardSnapshot,
 	LorcanaPlayerSide,
 	LorcanaZoneId,
+	MoveCategorySummary,
 	ResolutionChoiceAvailableMovesSelectionState,
 	ResolutionTargetAvailableMovesSelectionState,
 } from "@/features/simulator/model/contracts.js";
@@ -54,6 +55,7 @@ import BoardAnimationLayer from "./BoardAnimationLayer.svelte";
 import QuestAnimationLayer from "./QuestAnimationLayer.svelte";
 import ChallengeAnimationLayer from "./ChallengeAnimationLayer.svelte";
 import ActionAnimationLayer from "./ActionAnimationLayer.svelte";
+import ActionTargetingSourceLayer from "./ActionTargetingSourceLayer.svelte";
 import OverlayAnnouncementLayer from "./OverlayAnnouncementLayer.svelte";
 import CardEffectAnimationLayer from "./CardEffectAnimationLayer.svelte";
 import ChallengeAimOverlay from "@/features/simulator/board/ChallengeAimOverlay.svelte";
@@ -241,6 +243,7 @@ let inlineMoveChoices = $state<{
 } | null>(null);
 let anchorRevision = 0;
 let measurementRequestId = 0;
+let lastPublishedAnchorSignature = "";
 let targetSelectionDialogOpen = $state(false);
 let dismissedTargetDialogSessionKey = $state<string | null>(null);
 let userForcedTargetDialogOpen = $state(false);
@@ -434,20 +437,88 @@ const activeMobileMoveCategoryId = $derived(
 		: (inlineMoveChoices?.categoryId ?? null),
 );
 const pendingEffectsCount = $derived(pendingEffectsPopoverItems.length);
+const actionablePendingEffectsCount = $derived(
+	pendingEffectsPopoverItems.filter(
+		(item) =>
+			(item.canResolve && item.onResolve) ||
+			(item.canAccept && item.onAccept) ||
+			(item.canReject && item.onReject),
+	).length,
+);
+const hidePreviewableTargetingSourceStage = $derived(actionablePendingEffectsCount > 1);
 const questAllSummary = $derived(
 	getQuestAllSummary(moveCategorySummaries, board.cardSnapshotsById),
 );
-const questAllLore = $derived(questAllSummary?.lore ?? null);
-const questAllCount = $derived(questAllSummary?.count ?? null);
+const fallbackQuestAllSummary = $derived.by(() => {
+	if (questAllSummary) {
+		return null;
+	}
+
+	let count = 0;
+	let lore = 0;
+	const questSourceCardIds =
+		moveCategorySummaries.find((summary) => summary.categoryId === "quest")?.sourceCardIds ?? [];
+	for (const card of Object.values(board.cardSnapshotsById)) {
+		if (card.zoneId !== "play" || card.ownerSide !== bottomSide) {
+			continue;
+		}
+
+		if (!questSourceCardIds.includes(card.cardId)) {
+			continue;
+		}
+
+		count += 1;
+		lore += card.loreValue ?? 0;
+	}
+
+	return count > 0 ? { count, lore } : null;
+});
+const effectiveQuestAllSummary = $derived(questAllSummary ?? fallbackQuestAllSummary);
+const questAllLore = $derived(effectiveQuestAllSummary?.lore ?? null);
+const questAllCount = $derived(effectiveQuestAllSummary?.count ?? null);
+const effectiveMoveCategorySummaries = $derived.by(() => {
+	const missingDirectSummaries: MoveCategorySummary[] = [];
+
+	if (
+		!moveCategorySummaries.some((summary) => summary.categoryId === "pass-turn") &&
+		(sidebar.expandCategoryMoves("pass-turn").length > 0 || bottomHasPriority)
+	) {
+		missingDirectSummaries.push({
+			categoryId: "pass-turn",
+			categoryLabel: m["sim.actions.label.passTurn"]({}),
+			sourceCardIds: [],
+			isDirect: true,
+		});
+	}
+
+	if (
+		fallbackQuestAllSummary &&
+		!moveCategorySummaries.some((summary) => summary.categoryId === "quest-all")
+	) {
+		missingDirectSummaries.push({
+			categoryId: "quest-all",
+			categoryLabel: m["sim.actions.label.questAll"]({}),
+			sourceCardIds: [],
+			isDirect: true,
+		});
+	}
+
+	if (missingDirectSummaries.length === 0) {
+		return moveCategorySummaries;
+	}
+
+	return [...moveCategorySummaries, ...missingDirectSummaries];
+});
 const canPassTurn = $derived(
-	moveCategorySummaries.some((summary) => summary.categoryId === "pass-turn"),
+	effectiveMoveCategorySummaries.some((summary) => summary.categoryId === "pass-turn"),
 );
 const canUndo = $derived(
-	moveCategorySummaries.some((summary) => summary.categoryId === "undo"),
+	effectiveMoveCategorySummaries.some((summary) => summary.categoryId === "undo"),
 );
 const canQuestAll = $derived(
-	moveCategorySummaries.some((summary) => summary.categoryId === "quest-all"),
+	effectiveMoveCategorySummaries.some((summary) => summary.categoryId === "quest-all"),
 );
+const priorityNudgeEnabled = $derived(sidebar.priorityNudgeEnabled);
 const priorityNudgeWindowKey = $derived(createPriorityWindowKey({
 	ownerSide,
 	prioritySide,
@@ -475,6 +546,59 @@ const targetSelectionState = $derived.by(() => {
 
 	return null;
 });
+
+function asRecord(value: unknown): Record<string, unknown> | null {
+	return value !== null && typeof value === "object"
+		? (value as Record<string, unknown>)
+		: null;
+}
+
+function getTargetingSourceCardIdFromContext(context: unknown): string | null {
+	const record = asRecord(context);
+	const kind = record?.kind;
+	const sourceCardId = record?.sourceCardId;
+
+	if (
+		(kind === "target-selection" || kind === "discard-choice") &&
+		typeof sourceCardId === "string"
+	) {
+		return sourceCardId;
+	}
+
+	return null;
+}
+
+function getTargetingSourceCardIdFromPendingEntry(entry: unknown): string | null {
+	const record = asRecord(entry);
+	const directContextSourceId = getTargetingSourceCardIdFromContext(record?.selectionContext);
+	if (directContextSourceId) {
+		return directContextSourceId;
+	}
+
+	const payload = asRecord(record?.payload);
+	return getTargetingSourceCardIdFromContext(payload?.selectionContext);
+}
+
+function getPendingTargetingSourceCardId(): string | null {
+	const pendingEffects = boardSnapshot?.pendingEffects ?? [];
+	for (const pendingEffect of pendingEffects) {
+		const sourceCardId = getTargetingSourceCardIdFromPendingEntry(pendingEffect);
+		if (sourceCardId) {
+			return sourceCardId;
+		}
+	}
+
+	const bagEffects = boardSnapshot?.bagEffects ?? [];
+	for (const bagEffect of bagEffects) {
+		const sourceCardId = getTargetingSourceCardIdFromPendingEntry(bagEffect);
+		if (sourceCardId) {
+			return sourceCardId;
+		}
+	}
+
+	return null;
+}
+
 function createActionTargetDialogSessionKey(
 	state: ActionAvailableMovesSelectionState,
 	allowedZones: readonly LorcanaZoneId[],
@@ -595,6 +719,42 @@ const choiceSelectionState = $derived.by((): ResolutionChoiceAvailableMovesSelec
  * `docs/player-interaction-rewrite.md`.
  */
 const interactionView = $derived(sidebar.interactionView);
+
+const activeTargetingSourceCardId = $derived.by(() => {
+	if (
+		targetSelectionState?.mode === "action" &&
+		targetSelectionState.phase === "choose-target" &&
+		typeof targetSelectionState.sourceCardId === "string"
+	) {
+		return targetSelectionState.sourceCardId;
+	}
+
+	if (
+		targetSelectionState?.mode === "resolution-target" &&
+		typeof targetSelectionState.sourceCardId === "string"
+	) {
+		return targetSelectionState.sourceCardId;
+	}
+
+	const promptSourceCardId = interactionView?.activePrompt?.sourceCardId;
+	if (typeof promptSourceCardId === "string") {
+		return promptSourceCardId;
+	}
+
+	return getPendingTargetingSourceCardId();
+});
+
+const activeTargetingSourceCard = $derived.by(() => {
+	if (!activeTargetingSourceCardId || board.actionAnimations.length > 0) {
+		return null;
+	}
+
+	return (
+		board.cardSnapshotsById[activeTargetingSourceCardId] ??
+		game.resolveCardSnapshot(activeTargetingSourceCardId) ??
+		game.resolveStaticCardSnapshot(activeTargetingSourceCardId)
+	);
+});
 
 const choiceFocusCard = $derived.by(() => {
   const prompt = interactionView?.activePrompt;
@@ -899,6 +1059,11 @@ function dismissPriorityNudge(): void {
 	priorityNudgeVisible = false;
 }
 
+function disablePriorityNudge(): void {
+	sidebar.handlePriorityNudgeEnabledToggle(false);
+	dismissPriorityNudge();
+}
+
 function handleLocalMoveSubmitted(): void {
 	dismissPriorityNudge();
 }
@@ -952,24 +1117,25 @@ function handleTargetSelectionDialogCard(cardId: string): boolean {
 function handleMobileMoveCategory(
 	categoryId: ExecutableMovePresentationCategoryId,
 ): void {
+	const summary =
+		effectiveMoveCategorySummaries.find((entry) => entry.categoryId === categoryId) ??
+		null;
+	if (
+		summary?.isDirect &&
+		(categoryId === "pass-turn" || categoryId === "quest-all") &&
+		onConfirmableDirectMoveCategory
+	) {
+		inlineMoveChoices = null;
+		onConfirmableDirectMoveCategory(categoryId, "pointer");
+		return;
+	}
+
 	const moves = sidebar.expandCategoryMoves(categoryId);
 	if (moves.length === 0) {
 		return;
 	}
 
-	const summary =
-		moveCategorySummaries.find((entry) => entry.categoryId === categoryId) ??
-		null;
 	if (summary?.isDirect) {
-		if (
-			(categoryId === "pass-turn" || categoryId === "quest-all") &&
-			onConfirmableDirectMoveCategory
-		) {
-			inlineMoveChoices = null;
-			onConfirmableDirectMoveCategory(categoryId, "pointer");
-			return;
-		}
-
 		inlineMoveChoices = null;
 		handleLocalMoveSubmitted();
 		sidebar.handleAvailableMoveClick(moves[0]);
@@ -1001,6 +1167,29 @@ function handleExecuteInlineMoveChoice(move: ExecutableMoveEntry): void {
 	sidebar.handleAvailableMoveClick(move);
 }
 
+function createInlineMoveGuidanceAction(move: ExecutableMoveEntry): GuidanceAction {
+	const playCardParams =
+		move.moveId === "playCard"
+			? (move.params as { cost?: unknown; singer?: unknown })
+			: null;
+	const singleSingerId =
+		inlineMoveChoices?.categoryId === "sing-card" &&
+		playCardParams?.cost === "sing" &&
+		typeof playCardParams.singer === "string"
+			? playCardParams.singer
+			: null;
+	const singerCard = singleSingerId ? (board.cardSnapshotsById[singleSingerId] ?? null) : null;
+
+	return {
+		id: `mobile-expanded-moves:${move.id}`,
+		label:
+			singerCard?.label ??
+			(move.presentation.kind === "targeted" ? move.presentation.optionLabel : move.label),
+		...(singerCard ? { card: singerCard } : {}),
+		onClick: () => handleExecuteInlineMoveChoice(move),
+	};
+}
+
 function toggleHandTucked(playerSide: LorcanaPlayerSide): void {
 	handTuckState = toggleHandTuckState(handTuckState, playerSide);
 }
@@ -1021,11 +1210,13 @@ async function scheduleAnchorMeasurement(): Promise<void> {
 
 function publishAnchorSnapshot(): void {
 	if (!tabletopRef || !boardRef) {
+		lastPublishedAnchorSignature = "";
 		return;
 	}
 
 	const boardRect = boardRef.getBoundingClientRect();
 	if (boardRect.width <= 0 || boardRect.height <= 0) {
+		lastPublishedAnchorSignature = "";
 		return;
 	}
 
@@ -1041,6 +1232,12 @@ function publishAnchorSnapshot(): void {
 		anchors[anchorId] = measureBoardAnchorRect(element.getBoundingClientRect());
 	}
 
+	const anchorSignature = createAnchorSnapshotSignature(boardRect, anchors);
+	if (anchorSignature === lastPublishedAnchorSignature) {
+		return;
+	}
+	lastPublishedAnchorSignature = anchorSignature;
+
 	anchorRevision += 1;
 	boardAnchorSnapshot = {
 		revision: anchorRevision,
@@ -1048,6 +1245,36 @@ function publishAnchorSnapshot(): void {
 		anchors,
 	};
 	board.handleBoardAnchorsChange(boardAnchorSnapshot);
+}
+
+function createAnchorSnapshotSignature(
+	boardRect: DOMRect,
+	anchors: Record<string, ReturnType<typeof measureBoardAnchorRect>>,
+): string {
+	const rectParts = [
+		boardRect.left,
+		boardRect.top,
+		boardRect.width,
+		boardRect.height,
+	].map(normalizeMeasuredPixel);
+	const anchorParts = Object.keys(anchors)
+		.sort()
+		.flatMap((anchorId) => {
+			const anchor = anchors[anchorId];
+			return [
+				anchorId,
+				normalizeMeasuredPixel(anchor.left),
+				normalizeMeasuredPixel(anchor.top),
+				normalizeMeasuredPixel(anchor.width),
+				normalizeMeasuredPixel(anchor.height),
+			];
+		});
+
+	return [...rectParts, ...anchorParts].join("|");
+}
+
+function normalizeMeasuredPixel(value: number): string {
+	return Math.round(value * 10).toString();
 }
 
 function toBoardLocalRect(
@@ -1243,7 +1470,11 @@ $effect(() => {
 
 	priorityNudgeVisible = false;
 
-	if (!priorityNudgeArmed || dismissedPriorityNudgeWindowKey === priorityNudgeWindowKey) {
+	if (
+		!priorityNudgeEnabled ||
+		!priorityNudgeArmed ||
+		dismissedPriorityNudgeWindowKey === priorityNudgeWindowKey
+	) {
 		return;
 	}
 
@@ -1286,11 +1517,7 @@ $effect(() => {
 				label: m["sim.actions.back"]({}),
 				onClick: handleBackInlineMoveChoices,
 			},
-			...inlineMoveChoices.moves.map((move) => ({
-				id: `mobile-expanded-moves:${move.id}`,
-				label: move.label,
-				onClick: () => handleExecuteInlineMoveChoice(move),
-			})),
+			...inlineMoveChoices.moves.map(createInlineMoveGuidanceAction),
 		],
 		mode: "default",
 	});
@@ -1622,6 +1849,11 @@ $effect(() => {
         <QuestAnimationLayer />
         <CardEffectAnimationLayer />
         <ChallengeAnimationLayer />
+        <ActionTargetingSourceLayer
+          sourceCard={activeTargetingSourceCard}
+          selectedTargetCount={selectedTargetCount}
+          hidePreviewableStage={hidePreviewableTargetingSourceStage}
+        />
         <ActionAnimationLayer />
         <OverlayAnnouncementLayer />
       </div>
@@ -1690,7 +1922,7 @@ $effect(() => {
             hasPriority: bottomHasPriority,
           }}
           actionCount={moveCategoryCount}
-          moveSummaries={moveCategorySummaries}
+          moveSummaries={effectiveMoveCategorySummaries}
           activeMoveCategoryId={activeMobileMoveCategoryId}
           timer={bottomSummary?.timer}
           isOwnClock={hasOwnedView}
@@ -1742,6 +1974,7 @@ $effect(() => {
       onSendThinking={sendPriorityThinkingPreset}
       onPassTurn={handlePriorityNudgePassTurn}
       onDismiss={dismissPriorityNudge}
+      onDisable={disablePriorityNudge}
     />
   {/if}
 

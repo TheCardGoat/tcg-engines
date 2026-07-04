@@ -4,6 +4,17 @@ import { motherGothelConceitedManipulatorI18n } from "./089-mother-gothel-concei
 export const motherGothelConceitedManipulator: CharacterCard = {
   id: "GVH",
   canonicalId: "ci_GVH",
+  slug: "lorcana-ci_GVH",
+  printings: [
+    {
+      id: "set5-089",
+      artId: "set5-089",
+      setCode: "set5",
+      collectorNumber: "89",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-089"],
   cardType: "character",
   name: "Mother Gothel",
@@ -20,7 +31,7 @@ export const motherGothelConceitedManipulator: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_209d406df9574154ad94b0b7c78d635f",
-    tcgPlayer: 561631,
+    tcgPlayer: "561631",
   },
   text: [
     {

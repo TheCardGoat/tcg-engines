@@ -17,9 +17,9 @@ export const merlinShapeshifterI18n: Record<Languages, I18nProperties> = {
     version: "Formwandler",
     text: [
       {
-        title: "KAMPF DER GEISTER",
+        title: "Kampf der Geister",
         description:
-          "Dieser Charakter erhält jedes Mal, wenn einer deiner anderen Charaktere aus dem Spiel auf deine Hand zurückkehrt, in diesem Zug +1.",
+          "Dieser Charakter erhält jedes Mal, wenn einer deiner anderen Charaktere aus dem Spiel auf deine Hand zurückkehrt, in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const merlinShapeshifterI18n: Record<Languages, I18nProperties> = {
     version: "Métamorphe",
     text: [
       {
-        title: "BATAILLE D'ESPRITS",
+        title: "Bataille d'esprits",
         description:
-          "Chaque fois que vous renvoyez l'un de vos autres personnages dans votre main, ce personnage gagne +1 pour le reste du tour.",
+          "Chaque fois que vous renvoyez l'un de vos autres personnages dans votre main, ce personnage gagne +1 {L} pour le reste du tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const merlinShapeshifterI18n: Record<Languages, I18nProperties> = {
     version: "Shapeshifter",
     text: [
       {
-        title: "BATTLE OF WITS",
+        title: "Battle of Wits",
         description:
-          "Whenever one of your other characters is returned to your hand from play, this character gets +1 this turn.",
+          "Whenever one of your other characters is returned to your hand from play, this character gets +1 {L} this turn.",
       },
     ],
   },

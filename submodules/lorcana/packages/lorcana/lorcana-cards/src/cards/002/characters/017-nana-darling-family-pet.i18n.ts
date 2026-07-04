@@ -17,7 +17,7 @@ export const nanaDarlingFamilyPetI18n: Record<Languages, I18nProperties> = {
     version: "Haustier der Darlings",
     text: [
       {
-        title: "KINDERFRAU",
+        title: "Kinderfrau",
         description:
           "Jedes Mal, wenn du eine Flutgestalt ausspielst, darfst du jeglichen Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -28,7 +28,7 @@ export const nanaDarlingFamilyPetI18n: Record<Languages, I18nProperties> = {
     version: "Chienne de la famille Darling",
     text: [
       {
-        title: "NOUNOU",
+        title: "Nounou",
         description:
           "Chaque fois vous jouez un personnage Floodborn, vous pouvez choisir un personnage et lui retirer tous ses jetons Dommage.",
       },
@@ -39,7 +39,7 @@ export const nanaDarlingFamilyPetI18n: Record<Languages, I18nProperties> = {
     version: "Darling Family Pet",
     text: [
       {
-        title: "NURSEMAID",
+        title: "Nursemaid",
         description:
           "Whenever you play a Floodborn character, you may remove all damage from chosen character.",
       },

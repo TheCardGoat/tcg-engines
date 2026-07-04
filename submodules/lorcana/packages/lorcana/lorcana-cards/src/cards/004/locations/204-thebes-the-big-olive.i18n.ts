@@ -17,7 +17,7 @@ export const thebesTheBigOliveI18n: Record<Languages, I18nProperties> = {
     version: "Theben erleben und sterben",
     text: [
       {
-        title: "WENN DU'S IN THEBEN SCHAFFST,...",
+        title: "Wenn du's in Theben schaffst,...",
         description:
           "Jedes Mal, wenn einer deiner Charakter, an diesem Ort, in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 2 Legenden.",
       },
@@ -28,7 +28,7 @@ export const thebesTheBigOliveI18n: Record<Languages, I18nProperties> = {
     version: "Le Joyau de la Grèce",
     text: [
       {
-        title: "SI TU Y ARRIVES MAINTENANT...",
+        title: "Si tu y arrives maintenant...",
         description:
           "Chaque fois qu'un personnage sur ce lieu en bannit un autre via un défi durant votre tour, gagnez 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const thebesTheBigOliveI18n: Record<Languages, I18nProperties> = {
     version: "La Grande Oliva",
     text: [
       {
-        title: "SE CE LA FAI QUI...",
+        title: "Se Ce la Fai Qui...",
         description:
           "Durante il tuo turno, ogni volta che un personaggio esilia un altro personaggio in una sfida mentre si trova in questo luogo, ottieni 2 leggenda.",
       },

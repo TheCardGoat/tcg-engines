@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tukTukDisarminglyCuteI18n } from "./187-tuk-tuk-disarmingly-cute.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { resist } from "../../../helpers/abilities/resist";
 
 export const tukTukDisarminglyCute: CharacterCard = {
   id: "MK2",
   canonicalId: "ci_MK2",
+  slug: "lorcana-ci_MK2",
+  printings: [
+    {
+      id: "set7-187",
+      artId: "set7-187",
+      setCode: "set7",
+      collectorNumber: "187",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-187"],
   cardType: "character",
   name: "Tuk Tuk",
@@ -22,7 +34,7 @@ export const tukTukDisarminglyCute: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_fd63d8b5d43d49ae9441e6839bfdec37",
-    tcgPlayer: 619514,
+    tcgPlayer: "619514",
   },
   text: [
     {

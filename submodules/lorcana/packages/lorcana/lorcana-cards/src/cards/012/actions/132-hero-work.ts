@@ -4,6 +4,17 @@ import { heroWorkI18n } from "./132-hero-work.i18n";
 export const heroWork: ActionCard = {
   id: "5Mc",
   canonicalId: "ci_5Mc",
+  slug: "lorcana-ci_5Mc",
+  printings: [
+    {
+      id: "set12-132",
+      artId: "set12-132",
+      setCode: "set12",
+      collectorNumber: "132",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-132"],
   cardType: "action",
   name: "Hero Work",
@@ -16,6 +27,7 @@ export const heroWork: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0e38efe0ee78447b8966de3f57656c86",
+    tcgPlayer: "692055",
   },
   text: 'Your characters get +1 {S} this turn. Your Hero characters gain "Whenever this character challenges another character, each opponent loses 1 lore and you gain 1 lore" this turn.',
   abilities: [

@@ -17,9 +17,9 @@ export const royalGuardOctopusSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Oktopus-Soldat",
     text: [
       {
-        title: "SCHWER BEWAFFNET",
+        title: "Schwer bewaffnet",
         description:
-          "Jedes Mal, wenn du 1 Karte ziehst, erhält dieser Charakter in diesem Zug Herausfordern +1. (Während der Charakter herausfordert, erhält er +1.)",
+          "Jedes Mal, wenn du 1 Karte ziehst, erhält dieser Charakter in diesem Zug <Herausfordern> +1. (Während der Charakter herausfordert, erhält er +1 {S}.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const royalGuardOctopusSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Soldat pieuvre",
     text: [
       {
-        title: "LOURDEMENT ARMÉ",
+        title: "Lourdement armé",
         description:
-          "Chaque fois que vous piochez une carte, ce personnage gagne Offensif +1 pour le reste de ce tour.",
+          "Chaque fois que vous piochez une carte, ce personnage gagne <Offensif> +1 pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const royalGuardOctopusSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Soldato Piovra",
     text: [
       {
-        title: "ARMATO PESANTEMENTE",
+        title: "Armato Pesantemente",
         description:
-          "Ogni volta che peschi una carta, questo personaggio ottiene Sfidante +1 per questo turno.",
+          "Ogni volta che peschi una carta, questo personaggio ottiene <Sfidante> +1 per questo turno. (Riceve +1 {S} mentre sta sfidando.)",
       },
     ],
   },

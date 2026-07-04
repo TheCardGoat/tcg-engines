@@ -1,6 +1,10 @@
 <script lang="ts">
   import { tick } from "svelte";
-  import { ClipboardList, MessageSquareText, OctagonX, ScrollText, X } from "@lucide/svelte";
+  import ClipboardList from "@lucide/svelte/icons/clipboard-list";
+  import MessageSquareText from "@lucide/svelte/icons/message-square-text";
+  import OctagonX from "@lucide/svelte/icons/octagon-x";
+  import ScrollText from "@lucide/svelte/icons/scroll-text";
+  import X from "@lucide/svelte/icons/x";
   import { Button } from "$lib/components/ui/button";
   import * as Drawer from "$lib/components/ui/drawer";
   import * as Dialog from "$lib/design-system/primitives/dialog";

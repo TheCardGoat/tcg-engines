@@ -4,6 +4,17 @@ import { doYouWantToBuildASnowmanI18n } from "./061-do-you-want-to-build-a-snowm
 export const doYouWantToBuildASnowman: ActionCard = {
   id: "tmK",
   canonicalId: "ci_tmK",
+  slug: "lorcana-ci_tmK",
+  printings: [
+    {
+      id: "set11-061",
+      artId: "set11-061",
+      setCode: "set11",
+      collectorNumber: "61",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-061"],
   cardType: "action",
   name: "Do You Want to Build A Snowman?",
@@ -16,7 +27,7 @@ export const doYouWantToBuildASnowman: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_adb608b3667f4c769a3bab709840dad1",
-    tcgPlayer: 668577,
+    tcgPlayer: "668577",
   },
   text: [
     {

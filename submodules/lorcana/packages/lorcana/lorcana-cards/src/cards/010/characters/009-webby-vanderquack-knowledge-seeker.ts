@@ -4,6 +4,17 @@ import { webbyVanderquackKnowledgeSeekerI18n } from "./009-webby-vanderquack-kno
 export const webbyVanderquackKnowledgeSeeker: CharacterCard = {
   id: "uBf",
   canonicalId: "ci_uBf",
+  slug: "lorcana-ci_uBf",
+  printings: [
+    {
+      id: "set10-009",
+      artId: "set10-009",
+      setCode: "set10",
+      collectorNumber: "9",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-009"],
   cardType: "character",
   name: "Webby Vanderquack",
@@ -20,7 +31,7 @@ export const webbyVanderquackKnowledgeSeeker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5608e887343c4adbadaacf7ba7379ff0",
-    tcgPlayer: 659445,
+    tcgPlayer: "659445",
   },
   text: [
     {

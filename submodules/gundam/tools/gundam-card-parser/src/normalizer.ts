@@ -142,6 +142,17 @@ function normalizeCardId(value: string): string {
   return value.trim().replace(/_/g, "-");
 }
 
+/**
+ * Derive the platform art id for a normalizer-produced printing (RFC §7 Gundam
+ * art layer). Handles both the `_pN` (underscore) and `-pN` (dash) suffix
+ * conventions; emits the canonical `_pN` underscore form. Mirrors the enrich
+ * script's `artIdForPrinting`.
+ */
+function artIdForPrinting(printingId: string, cardNumber: string): string {
+  const match = printingId.match(/[-_]p(\d+)$/i);
+  return match ? `${cardNumber}_p${match[1]}` : cardNumber;
+}
+
 function setCodeFromProduct(raw: RawGundamCard): string | undefined {
   const source = raw.getIt && raw.getIt !== "-" ? raw.getIt : (raw.set?.name ?? "");
   const bracketed = source.match(/\[([A-Z0-9-]+)\]/);
@@ -171,15 +182,19 @@ function normalizePrinting(raw: RawGundamCard, rarity: CardRarity): CardPrinting
   const set = normalizeSet(raw);
   if (!set) return undefined;
   const id = normalizeCardId(raw.id);
+  const cardNumber = raw.code || id;
   const sourceImageUrl = imageUrl(raw);
   return {
     id,
+    artId: artIdForPrinting(id, cardNumber),
+    setCode: set.code,
     collectorNumber: id,
-    cardNumber: raw.code || id,
+    cardNumber,
     set,
     rarity,
     finish: raw.rarity.includes("+") || /-p\d+$/i.test(id) ? "parallel" : "standard",
-    ...(sourceImageUrl ? { imageUrl: sourceImageUrl, sourceImageUrl } : {}),
+    imageUrl: sourceImageUrl ?? "",
+    ...(sourceImageUrl ? { sourceImageUrl } : {}),
     ...(raw.getIt && raw.getIt !== "-" ? { productName: raw.getIt } : {}),
   };
 }
@@ -191,13 +206,22 @@ function catalogMetadata(raw: RawGundamCard, rarity: CardRarity) {
   const sourceImageUrl = imageUrl(raw);
   return {
     id,
-    externalId: `gundam:${id.toLowerCase()}`,
+    canonicalId: raw.code || id,
+    // Printing-qualified `gundam:<printingId>` for backward compat with
+    // persisted platform rows; see the full rationale in
+    // `scripts/enrich-card-catalog-metadata.ts` (`cardMetadata`).
+    // P2 migration must preserve this form, not canonical `<cardNumber>`.
+    externalIds: { bandai: `gundam:${id.toLowerCase()}` },
     slug: `${slugify(raw.name)}-${id.toLowerCase()}`,
     displayName: raw.name,
     rulesText: raw.effect,
     ...(set ? { set } : {}),
     printNumber: id,
-    ...(printing ? { printings: [printing], selectedPrintingId: printing.id } : {}),
+    // `printings` is required by the card type; emit at least an empty array
+    // when no set is derivable (does not happen for real scraped data).
+    ...(printing
+      ? { printings: [printing], selectedPrintingId: printing.id }
+      : { printings: [] as CardPrinting[] }),
     ...(sourceImageUrl ? { imageUrl: sourceImageUrl, sourceImageUrl } : {}),
     legality: "legal" as const,
   };

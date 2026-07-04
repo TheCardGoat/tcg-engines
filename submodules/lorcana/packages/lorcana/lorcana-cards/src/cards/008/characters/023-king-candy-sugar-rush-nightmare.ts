@@ -4,6 +4,17 @@ import { kingCandySugarRushNightmareI18n } from "./023-king-candy-sugar-rush-nig
 export const kingCandySugarRushNightmare: CharacterCard = {
   id: "ABb",
   canonicalId: "ci_ABb",
+  slug: "lorcana-ci_ABb",
+  printings: [
+    {
+      id: "set8-023",
+      artId: "set8-023",
+      setCode: "set8",
+      collectorNumber: "23",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-023"],
   cardType: "character",
   name: "King Candy",
@@ -20,7 +31,7 @@ export const kingCandySugarRushNightmare: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c7f64e55e7234c46bc9ed7d742e22265",
-    tcgPlayer: 631367,
+    tcgPlayer: "631367",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd02GaZowmnSleeves050: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD02-050",
-  externalId: "gundam:gd02-050",
-  slug: "ga-zowmn-sleeves-gd02-050",
+  canonicalId: "GD02-050",
+  externalIds: { bandai: "gundam:gd02-050" },
+  slug: "ga-zowmn-sleeves/gd02-050",
   displayName: "Ga-Zowmn (Sleeves)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-050",
   printings: [
     {
       id: "GD02-050",
+      artId: "GD02-050",
+      setCode: "GD02",
       collectorNumber: "GD02-050",
       cardNumber: "GD02-050",
       set: {
@@ -29,6 +32,7 @@ export const gd02GaZowmnSleeves050: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-050"],
   selectedPrintingId: "GD02-050",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-050.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-050.webp?260424",

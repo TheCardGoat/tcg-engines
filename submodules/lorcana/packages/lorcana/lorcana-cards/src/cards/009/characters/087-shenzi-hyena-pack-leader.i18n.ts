@@ -21,11 +21,11 @@ export const shenziHyenaPackLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Hyänen-Rudelführerin",
     text: [
       {
-        title: "ICH MACH' DAS SCHON",
-        description: "Solange dieser Charakter an einem Ort ist, erhält er +3.",
+        title: "Ich mach' das schon",
+        description: "Solange dieser Charakter an einem Ort ist, erhält er +3 {S}.",
       },
       {
-        title: "SO EILIG?",
+        title: "So eilig?",
         description:
           "Solange dieser Charakter an einem Ort ist, darfst du jedes Mal, wenn er einen anderen Charakter herausfordert, 1 Karte ziehen.",
       },
@@ -36,11 +36,11 @@ export const shenziHyenaPackLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Cheffe de meute des hyènes",
     text: [
       {
-        title: "LAISSE, J'M'EN OCCUPE",
-        description: "Tant que ce personnage se trouve sur un lieu, il gagne +3.",
+        title: "Laisse, j'm'en occupe",
+        description: "Tant que ce personnage se trouve sur un lieu, il gagne +3 {S}.",
       },
       {
-        title: "RIEN NE PRESSE",
+        title: "Rien ne presse",
         description:
           "Si ce personnage se trouve sur un lieu et défie un autre personnage, vous pouvez piocher une carte.",
       },
@@ -51,11 +51,11 @@ export const shenziHyenaPackLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Iena Capobranco",
     text: [
       {
-        title: "ME NE OCCUPO IO",
-        description: "Mentre questo personaggio si trova in un luogo, riceve +3.",
+        title: "Me Ne Occupo Io",
+        description: "Mentre questo personaggio si trova in un luogo, riceve +3 {S}.",
       },
       {
-        title: "CHE FRETTA C'È?",
+        title: "Che Fretta C'è?",
         description:
           "Mentre questo personaggio si trova in un luogo, ogni volta che sfida un altro personaggio, puoi pescare una carta.",
       },

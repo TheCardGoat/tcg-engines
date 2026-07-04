@@ -3,6 +3,7 @@ import type { GigDieId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { Operations } from "../operations/index.ts";
 import { SeededRNG } from "../state/rng.ts";
+import { processEventTriggers } from "../ability-executor.ts";
 
 export interface GainGigInput extends MoveInput {
   args: {
@@ -53,12 +54,19 @@ export const gainGigMove: MoveDefinition<GainGigInput> = {
 
     const rng = new SeededRNG(state.ctx.seed);
     if (state.ctx.rngState) rng.setState(state.ctx.rngState);
+    const eventsBefore = operations.event.getEmittedEvents().length;
     operations.gig.takeFromFixer(playerId, dieId, (dieType) => rng.rollDie(dieType));
     state.ctx.rngState = rng.getState();
     state.G.turnMetadata.gigTakenThisTurn = true;
+    operations.game.setPendingChoice(undefined);
+
+    for (const event of operations.event.getEmittedEvents().slice(eventsBefore)) {
+      if (event.type === "gigDieRolled") {
+        processEventTriggers(event, state as MatchState, operations);
+      }
+    }
 
     const die = state.G.gigDice[dieId as string];
-    operations.game.setPendingChoice(undefined);
 
     operations.log.emit({
       type: "gainGig",

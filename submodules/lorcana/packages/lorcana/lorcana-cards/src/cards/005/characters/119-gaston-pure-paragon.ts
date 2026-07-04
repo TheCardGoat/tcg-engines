@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gastonPureParagonI18n } from "./119-gaston-pure-paragon.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const gastonPureParagon: CharacterCard = {
   id: "JSc",
   canonicalId: "ci_JSc",
+  slug: "lorcana-ci_JSc",
+  printings: [
+    {
+      id: "set5-119",
+      artId: "set5-119",
+      setCode: "set5",
+      collectorNumber: "119",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-119"],
   cardType: "character",
   name: "Gaston",
@@ -21,7 +33,7 @@ export const gastonPureParagon: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_63f4432a95d84d9dab23728cf715f31f",
-    tcgPlayer: 560542,
+    tcgPlayer: "560542",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd04GundamLeopardDestroy052: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD04-052",
-  externalId: "gundam:gd04-052",
-  slug: "gundam-leopard-destroy-gd04-052",
+  canonicalId: "GD04-052",
+  externalIds: { bandai: "gundam:gd04-052" },
+  slug: "gundam-leopard-destroy/gd04-052",
   displayName: "Gundam Leopard Destroy",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-052",
   printings: [
     {
       id: "GD04-052",
+      artId: "GD04-052",
+      setCode: "GD04",
       collectorNumber: "GD04-052",
       cardNumber: "GD04-052",
       set: {
@@ -29,6 +32,7 @@ export const gd04GundamLeopardDestroy052: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-052"],
   selectedPrintingId: "GD04-052",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-052.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-052.webp?260424",

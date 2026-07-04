@@ -4,6 +4,17 @@ import { hiddenTrapI18n } from "./170-hidden-trap.i18n";
 export const hiddenTrap: ItemCard = {
   id: "aeY",
   canonicalId: "ci_aeY",
+  slug: "lorcana-ci_aeY",
+  printings: [
+    {
+      id: "set11-170",
+      artId: "set11-170",
+      setCode: "set11",
+      collectorNumber: "170",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-170"],
   cardType: "item",
   name: "Hidden Trap",
@@ -16,7 +27,7 @@ export const hiddenTrap: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7e0852ee050446dd96742b3986444917",
-    tcgPlayer: 676234,
+    tcgPlayer: "676234",
   },
   text: [
     {

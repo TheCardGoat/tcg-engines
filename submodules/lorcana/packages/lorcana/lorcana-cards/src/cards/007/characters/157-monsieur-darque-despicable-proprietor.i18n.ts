@@ -17,7 +17,7 @@ export const monsieurDarqueDespicableProprietorI18n: Record<Languages, I18nPrope
     version: "Verachtenswerter Inhaber",
     text: [
       {
-        title: "ICH KOMME ZUR ABHOLUNG",
+        title: "Ich komme zur Abholung",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen deiner Gegenstände wählen und verbannen, um 1 Karte zu ziehen.",
       },
@@ -28,7 +28,7 @@ export const monsieurDarqueDespicableProprietorI18n: Record<Languages, I18nPrope
     version: "Propriétaire méprisable",
     text: [
       {
-        title: "JE VIENS RÉCUPÉRER MON DÛ",
+        title: "Je viens récupérer mon dû",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir l'un de vos objets et le bannir pour piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const monsieurDarqueDespicableProprietorI18n: Record<Languages, I18nPrope
     version: "Proprietario Spregevole",
     text: [
       {
-        title: "SONO VENUTO A PORTAR VIA",
+        title: "Sono Venuto a Portar Via",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi esiliare un tuo oggetto a tua scelta per pescare una carta.",
       },

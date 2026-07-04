@@ -4,6 +4,17 @@ import { trampEnterprisingDogI18n } from "./110-tramp-enterprising-dog.i18n";
 export const trampEnterprisingDog: CharacterCard = {
   id: "XWF",
   canonicalId: "ci_DSV",
+  slug: "lorcana-ci_DSV",
+  printings: [
+    {
+      id: "set7-110",
+      artId: "set7-110",
+      setCode: "set7",
+      collectorNumber: "110",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-110"],
   cardType: "character",
   name: "Tramp",
@@ -20,7 +31,7 @@ export const trampEnterprisingDog: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_07d1ea2923ad44b9b2dddf78993e103b",
-    tcgPlayer: 619740,
+    tcgPlayer: "619740",
   },
   text: [
     {

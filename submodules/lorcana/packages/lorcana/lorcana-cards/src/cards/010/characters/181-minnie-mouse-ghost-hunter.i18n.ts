@@ -17,9 +17,9 @@ export const minnieMouseGhostHunterI18n: Record<Languages, I18nProperties> = {
     version: "Geisterjägerin",
     text: [
       {
-        title: "SUCHE IN DEN SCHATTEN",
+        title: "Suche in den Schatten",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Detektiv deiner Wahl in diesem Zug Alarmiert. (Der Charakter kann herausfordern, als hätte er Wendig.)",
+          "Wenn du diesen Charakter ausspielst, erhält ein Detektiv deiner Wahl in diesem Zug <Alarmiert>. (Der Charakter kann herausfordern, als hätte er Wendig.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const minnieMouseGhostHunterI18n: Record<Languages, I18nProperties> = {
     version: "Chasseuse de fantômes",
     text: [
       {
-        title: "INVESTIGUER LES OMBRES",
+        title: "Investiguer les ombres",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage Détective qui gagne Agilité pour le reste de ce tour. (Il peut défier comme s'il avait Insaisissable.)",
+          "Lorsque vous jouez ce personnage, choisissez un personnage Détective qui gagne <Agilité> pour le reste de ce tour. (Il peut défier comme s'il avait Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const minnieMouseGhostHunterI18n: Record<Languages, I18nProperties> = {
     version: "Cacciatrice di Fantasmi",
     text: [
       {
-        title: "CERCARE TRA LE OMBRE",
+        title: "Cercare tra le Ombre",
         description:
-          "Quando giochi questo personaggio, un personaggio Detective a tua scelta ottiene Vigile per questo turno. (Può sfidare come se avesse Sfuggente.)",
+          "Quando giochi questo personaggio, un personaggio Detective a tua scelta ottiene <Vigile> per questo turno. (Può sfidare come se avesse Sfuggente.)",
       },
     ],
   },

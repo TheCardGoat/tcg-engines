@@ -6,14 +6,17 @@ export const st06ClanBattle014: BaseCard = {
   type: "base",
   traits: ["clan", "stronghold"],
   id: "ST06-014",
-  externalId: "gundam:st06-014",
-  slug: "clan-battle-st06-014",
+  canonicalId: "ST06-014",
+  externalIds: { bandai: "gundam:st06-014" },
+  slug: "clan-battle/st06-014",
   displayName: "Clan Battle",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-014",
   printings: [
     {
       id: "ST06-014",
+      artId: "ST06-014",
+      setCode: "ST06",
       collectorNumber: "ST06-014",
       cardNumber: "ST06-014",
       set: {
@@ -29,6 +32,8 @@ export const st06ClanBattle014: BaseCard = {
     },
     {
       id: "ST06-014_p1",
+      artId: "ST06-014_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-014_p1",
       cardNumber: "ST06-014",
       set: {
@@ -43,6 +48,7 @@ export const st06ClanBattle014: BaseCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST06-014", "ST06-014_p1"],
   selectedPrintingId: "ST06-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-014.webp?260424",

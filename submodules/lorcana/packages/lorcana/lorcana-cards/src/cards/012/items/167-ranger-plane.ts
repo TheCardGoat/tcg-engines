@@ -4,6 +4,17 @@ import { rangerPlaneI18n } from "./167-ranger-plane.i18n";
 export const rangerPlane: ItemCard = {
   id: "WTA",
   canonicalId: "ci_WTA",
+  slug: "lorcana-ci_WTA",
+  printings: [
+    {
+      id: "set12-167",
+      artId: "set12-167",
+      setCode: "set12",
+      collectorNumber: "167",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-167"],
   cardType: "item",
   name: "Ranger Plane",
@@ -16,6 +27,7 @@ export const rangerPlane: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f9616f640bae49f5811aa5ecff83d6a8",
+    tcgPlayer: "692190",
   },
   text: [
     {

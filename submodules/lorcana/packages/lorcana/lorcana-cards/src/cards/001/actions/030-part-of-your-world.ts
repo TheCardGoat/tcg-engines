@@ -4,6 +4,17 @@ import { partOfYourWorldI18n } from "./030-part-of-your-world.i18n";
 export const partOfYourWorld: ActionCard = {
   id: "Vba",
   canonicalId: "ci_Vba",
+  slug: "lorcana-ci_Vba",
+  printings: [
+    {
+      id: "set1-030",
+      artId: "set1-030",
+      setCode: "set1",
+      collectorNumber: "30",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-030"],
   cardType: "action",
   name: "Part of Your World",
@@ -16,7 +27,7 @@ export const partOfYourWorld: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_df53bbf046f542d19202f4e11bbe9d5b",
-    tcgPlayer: 493481,
+    tcgPlayer: "493481",
   },
   text: "Return a character card from your discard to your hand.",
   actionSubtype: "song",

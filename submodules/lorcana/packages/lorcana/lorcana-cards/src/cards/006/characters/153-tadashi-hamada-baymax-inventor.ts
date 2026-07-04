@@ -4,6 +4,17 @@ import { tadashiHamadaBaymaxInventorI18n } from "./153-tadashi-hamada-baymax-inv
 export const tadashiHamadaBaymaxInventor: CharacterCard = {
   id: "AMb",
   canonicalId: "ci_AMb",
+  slug: "lorcana-ci_AMb",
+  printings: [
+    {
+      id: "set6-153",
+      artId: "set6-153",
+      setCode: "set6",
+      collectorNumber: "153",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-153"],
   cardType: "character",
   name: "Tadashi Hamada",
@@ -20,7 +31,7 @@ export const tadashiHamadaBaymaxInventor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3a009848a04944aba8e7402d221c897c",
-    tcgPlayer: 588327,
+    tcgPlayer: "588327",
   },
   text: [
     {
@@ -32,7 +43,10 @@ export const tadashiHamadaBaymaxInventor: CharacterCard = {
   abilities: [
     {
       effect: {
-        modifier: { type: "items-in-play", controller: "you" },
+        modifier: {
+          type: "items-in-play",
+          controller: "you",
+        },
         stat: "strength",
         target: "SELF",
         type: "modify-stat",
@@ -44,7 +58,10 @@ export const tadashiHamadaBaymaxInventor: CharacterCard = {
     },
     {
       effect: {
-        modifier: { type: "items-in-play", controller: "you" },
+        modifier: {
+          type: "items-in-play",
+          controller: "you",
+        },
         stat: "willpower",
         target: "SELF",
         type: "modify-stat",

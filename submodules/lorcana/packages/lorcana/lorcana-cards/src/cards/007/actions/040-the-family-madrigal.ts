@@ -4,6 +4,17 @@ import { theFamilyMadrigalI18n } from "./040-the-family-madrigal.i18n";
 export const theFamilyMadrigal: ActionCard = {
   id: "QHV",
   canonicalId: "ci_QHV",
+  slug: "lorcana-ci_QHV",
+  printings: [
+    {
+      id: "set7-040",
+      artId: "set7-040",
+      setCode: "set7",
+      collectorNumber: "40",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-040"],
   cardType: "action",
   name: "The Family Madrigal",
@@ -16,7 +27,7 @@ export const theFamilyMadrigal: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c6cad61cbf8445be93e29134eb073af6",
-    tcgPlayer: 619429,
+    tcgPlayer: "619429",
   },
   text: "Look at the top 5 cards of your deck. You may reveal up to 1 Madrigal character card and up to 1 song card and put them into your hand. Put the rest on the top of your deck in any order.",
   actionSubtype: "song",

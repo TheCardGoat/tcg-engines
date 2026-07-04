@@ -310,6 +310,25 @@ describe("Attack Step", () => {
     });
 
     describe("Steal Resolution", () => {
+      it("steals 0 gigs at power 0 (base rule: power-0 Units don't steal)", () => {
+        // alphaArmoredMinotaur has printed power 9; -9 modifier → effective 0.
+        // Direct attacks from a power-0 attacker must not steal any Gigs even
+        // on a successful hit (gameplay-guide base rule).
+        const engine = CyberpunkTestEngine.createWithFixture(
+          { field: [{ card: alphaArmoredMinotaur, powerModifier: -9 }] }, // effective power 0
+          { gigArea: [{ dieType: "d6", faceValue: 3 }] },
+        );
+        toAttackPhase(engine);
+
+        expect(engine.getGigCount(P2)).toBe(1);
+
+        engine.attackRival(alphaArmoredMinotaur, { as: P1 });
+        resolveFullSteal(engine);
+
+        expect(engine.getGigCount(P1)).toBe(0);
+        expect(engine.getGigCount(P2)).toBe(1);
+      });
+
       it("steals 1 gig by default (power < 10)", () => {
         const engine = CyberpunkTestEngine.createWithFixture(
           { field: [alphaArmoredMinotaur] }, // power 9

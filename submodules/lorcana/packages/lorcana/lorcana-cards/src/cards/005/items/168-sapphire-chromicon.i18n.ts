@@ -18,12 +18,12 @@ export const sapphireChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Saphir Chromikon",
     text: [
       {
-        title: "LADEVORGANG",
+        title: "Ladevorgang",
         description: "Dieser Gegenstand kommt erschöpft ins Spiel.",
       },
       {
-        title: "SAPHIRFARBENES LICHT, 2,",
-        description: "Verbanne einen deiner Gegenstände — Sammle 2 Legenden.",
+        title: "Saphirfarbenes Licht",
+        description: "{E}, 2 {I}, Verbanne einen deiner Gegenstände — Sammle 2 Legenden.",
       },
     ],
   },
@@ -31,12 +31,12 @@ export const sapphireChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Chromicône de Saphir",
     text: [
       {
-        title: "EN CHARGE",
+        title: "En charge",
         description: "Cet objet arrive en jeu épuisé.",
       },
       {
-        title: "LUEUR DE SAPHIR, 2,",
-        description: "bannissez l'un de vos objets — Gagnez 2 éclats de Lore.",
+        title: "Lueur de saphir",
+        description: "{E}, 2 {I}, bannissez l'un de vos objets — Gagnez 2 éclats de Lore.",
       },
     ],
   },
@@ -44,12 +44,12 @@ export const sapphireChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Cromicon di Zaffiro",
     text: [
       {
-        title: "ACCENSIONE",
+        title: "Accensione",
         description: "Questo oggetto entra in gioco impegnato.",
       },
       {
-        title: "LUCE DI ZAFFIRO, 2,",
-        description: "esilia uno dei tuoi oggetti — Ottieni 2 leggenda.",
+        title: "Luce di Zaffiro",
+        description: "{E}, 2 {I}, esilia uno dei tuoi oggetti — Ottieni 2 leggenda.",
       },
     ],
   },

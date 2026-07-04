@@ -4,6 +4,17 @@ import { grandCouncilwomanFederationLeaderI18n } from "./017-grand-councilwoman-
 export const grandCouncilwomanFederationLeader: CharacterCard = {
   id: "Lt8",
   canonicalId: "ci_Lt8",
+  slug: "lorcana-ci_Lt8",
+  printings: [
+    {
+      id: "set6-017",
+      artId: "set6-017",
+      setCode: "set6",
+      collectorNumber: "17",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-017"],
   cardType: "character",
   name: "Grand Councilwoman",
@@ -20,7 +31,7 @@ export const grandCouncilwomanFederationLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_07af0c79c9fe46728b147454f273deac",
-    tcgPlayer: 587757,
+    tcgPlayer: "587757",
   },
   text: [
     {

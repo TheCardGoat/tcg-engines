@@ -17,7 +17,7 @@ export const mrSmeeBumblingMateI18n: Record<Languages, I18nProperties> = {
     version: "Stümperhafter Offizier",
     text: [
       {
-        title: "OJE, KÄPT'N",
+        title: "Oje, Käpt'n",
         description:
           "Am Ende deines Zuges, wenn dieser Charakter erschöpft ist und du keinen Kapitän oder keine Kapitänin im Spiel hast, füge diesem Charakter 1 Schaden zu.",
       },
@@ -28,9 +28,9 @@ export const mrSmeeBumblingMateI18n: Record<Languages, I18nProperties> = {
     version: "Matelos empoté",
     text: [
       {
-        title: "OH LA LA LA LA À",
+        title: "Oh la la la la",
         description:
-          "la fin de votre tour, si ce personnage est épuisé et que vous n'avez aucun personnage Capitaine en jeu, infligez-lui 1 dommage.",
+          "À la fin de votre tour, si ce personnage est épuisé et que vous n'avez aucun personnage Capitaine en jeu, infligez-lui 1 dommage.",
       },
     ],
   },
@@ -39,7 +39,7 @@ export const mrSmeeBumblingMateI18n: Record<Languages, I18nProperties> = {
     version: "Goffo Nostromo",
     text: [
       {
-        title: "OH CARO, CARO CAPITAN UNCINO",
+        title: "Oh Caro, Caro Capitan Uncino",
         description:
           "Alla fine del tuo turno, se questo personaggio è impegnato e non hai un personaggio Capitano in gioco, infliggi 1 danno a questo personaggio.",
       },

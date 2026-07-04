@@ -9,16 +9,16 @@ export const tipoJuniorChipmunkI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Tipo",
     version: "Junior Chipmunk",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Tipo",
     version: "Ragondin Junior",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Tipo",
     version: "Giovane Marmotta",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

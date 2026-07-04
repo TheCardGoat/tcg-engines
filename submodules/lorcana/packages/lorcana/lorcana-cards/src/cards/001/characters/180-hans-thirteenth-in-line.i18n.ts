@@ -6,8 +6,9 @@ export const hansThirteenthInLineI18n: Record<Languages, I18nProperties> = {
     version: "Thirteenth in Line",
     text: [
       {
-        title: "STAGE A LITTLE ACCIDENT",
-        description: "Whenever this character quests, you may deal 1 damage to chosen character.",
+        title: "STAGE",
+        description:
+          "A LITTLE ACCIDENT Whenever this character quests, you may deal 1 damage to chosen character.",
       },
     ],
   },
@@ -16,7 +17,7 @@ export const hansThirteenthInLineI18n: Record<Languages, I18nProperties> = {
     version: "Dreizehnter in der Thronfolge",
     text: [
       {
-        title: "KLEINER UNFALL",
+        title: "Kleiner Unfall",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.",
       },
@@ -38,7 +39,7 @@ export const hansThirteenthInLineI18n: Record<Languages, I18nProperties> = {
     version: "Thirteenth in Line",
     text: [
       {
-        title: "STAGE A LITTLE ACCIDENT",
+        title: "Stage a Little Accident",
         description: "Whenever this character quests, you may deal 1 damage to chosen character.",
       },
     ],

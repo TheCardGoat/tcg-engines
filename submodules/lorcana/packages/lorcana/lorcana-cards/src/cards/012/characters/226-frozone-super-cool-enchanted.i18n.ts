@@ -6,10 +6,10 @@ export const frozoneSuperCoolEnchantedI18n: Record<Languages, I18nProperties> = 
     version: "Super Cool",
     text: [
       {
-        title: "<Rush>",
+        title: "Rush",
       },
       {
-        title: "Just Chill",
+        title: "JUST CHILL",
         description:
           "When you play this character, if you have another Super character in play, you may exert chosen opposing character.",
       },

@@ -22,14 +22,14 @@ export const luckyThe15thPuppyI18n: Record<Languages, I18nProperties> = {
     version: "Der 15. Welpe",
     text: [
       {
-        title: "EIN PRACHTEXEMPLAR",
+        title: "Ein Prachtexemplar",
         description:
-          "— Decke die obersten 3 Karten deines Decks auf. Du darfst davon jeden Charakter, der 2 oder weniger kostet, auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+          "{E} — Decke die obersten 3 Karten deines Decks auf. Du darfst davon jeden Charakter, der 2 oder weniger kostet, auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
       {
-        title: "HUNDELIEBE",
+        title: "Hundeliebe",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet und du mindestens 4 weitere Charaktere im Spiel hast, erhalten deine anderen Charaktere in diesem Zug je +1.",
+          "Jedes Mal, wenn dieser Charakter erkundet und du mindestens 4 weitere Charaktere im Spiel hast, erhalten deine anderen Charaktere in diesem Zug je +1 {L}.",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const luckyThe15thPuppyI18n: Record<Languages, I18nProperties> = {
     version: "Le 15e chiot",
     text: [
       {
-        title: "CE SERA UN COSTAUD",
+        title: "Ce sera un costaud",
         description:
-          "— Révélez les 3 premières cartes de votre pioche. Vous pouvez ajouter toutes les cartes personnages coûtant 2 ou moins à votre main. Remettez le reste sous votre pioche, dans l'ordre de votre choix.",
+          "{E} — Révélez les 3 premières cartes de votre pioche. Vous pouvez ajouter toutes les cartes personnages coûtant 2 ou moins à votre main. Remettez le reste sous votre pioche, dans l'ordre de votre choix.",
       },
       {
-        title: "AMOUR DE CHIOT",
+        title: "Amour de chiot",
         description:
-          "Si vous avez au moins 4 autres cartes personnages en jeu lorsque ce personnage est envoyé à l'aventure, vos autres personnages gagnent +1 pour le reste de ce tour.",
+          "Si vous avez au moins 4 autres cartes personnages en jeu lorsque ce personnage est envoyé à l'aventure, vos autres personnages gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const luckyThe15thPuppyI18n: Record<Languages, I18nProperties> = {
     version: "Quindicesimo Cucciolo",
     text: [
       {
-        title: "PIÙ VIVO CHE MAI",
+        title: "Più Vivo che Mai",
         description:
-          "— Rivela le prime 3 carte del tuo mazzo. Puoi aggiungere ogni carta personaggio con costo 2 o inferiore alla tua mano. Metti il resto in fondo al tuo mazzo, in qualsiasi ordine.",
+          "{E} — Rivela le prime 3 carte del tuo mazzo. Puoi aggiungere ogni carta personaggio con costo 2 o inferiore alla tua mano. Metti il resto in fondo al tuo mazzo, in qualsiasi ordine.",
       },
       {
-        title: "SUPPORTO TRA CUCCIOLI",
+        title: "Supporto tra Cuccioli",
         description:
-          "Ogni volta che questo personaggio va all'avventura, se hai altri 4 o più personaggi in gioco, i tuoi altri personaggi ottengono +1 per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, se hai altri 4 o più personaggi in gioco, i tuoi altri personaggi ottengono +1 {L} per questo turno.",
       },
     ],
   },

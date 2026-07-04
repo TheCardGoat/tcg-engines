@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { megaraSecretKeeperI18n } from "./086-megara-secret-keeper.i18n";
 
+import { boost } from "../../../helpers/abilities/boost";
+
 export const megaraSecretKeeper: CharacterCard = {
-  id: "YZf",
+  id: "z20",
   canonicalId: "ci_uSJ",
+  slug: "lorcana-ci_uSJ",
+  printings: [
+    {
+      id: "set10-086",
+      artId: "set10-086",
+      setCode: "set10",
+      collectorNumber: "86",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-086"],
   cardType: "character",
   name: "Megara",
@@ -21,7 +33,7 @@ export const megaraSecretKeeper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_78c11305e1674d348fe8839940f029a5",
-    tcgPlayer: 658217,
+    tcgPlayer: "658217",
   },
   text: [
     {

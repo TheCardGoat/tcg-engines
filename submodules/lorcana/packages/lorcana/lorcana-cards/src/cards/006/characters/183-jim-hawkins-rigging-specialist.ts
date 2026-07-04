@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jimHawkinsRiggingSpecialistI18n } from "./183-jim-hawkins-rigging-specialist.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const jimHawkinsRiggingSpecialist: CharacterCard = {
   id: "FZ4",
   canonicalId: "ci_FZ4",
+  slug: "lorcana-ci_FZ4",
+  printings: [
+    {
+      id: "set6-183",
+      artId: "set6-183",
+      setCode: "set6",
+      collectorNumber: "183",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-183"],
   cardType: "character",
   name: "Jim Hawkins",
@@ -21,7 +33,7 @@ export const jimHawkinsRiggingSpecialist: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_88c973fe2a114a198654133896a022b7",
-    tcgPlayer: 593015,
+    tcgPlayer: "593015",
   },
   text: [
     {

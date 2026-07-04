@@ -17,9 +17,9 @@ export const rapunzelCreativeCaptorI18n: Record<Languages, I18nProperties> = {
     version: "Kreative Fängerin",
     text: [
       {
-        title: "EINWICKELN",
+        title: "Einwickeln",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl in diesem Zug -3.",
+          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl in diesem Zug -3 {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const rapunzelCreativeCaptorI18n: Record<Languages, I18nProperties> = {
     version: "Capture créative",
     text: [
       {
-        title: "EMMÊLER",
+        title: "Emmêler",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -3 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui subit -3 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const rapunzelCreativeCaptorI18n: Record<Languages, I18nProperties> = {
     version: "Carceriera Creativa",
     text: [
       {
-        title: "AVVOLGERE",
+        title: "Avvolgere",
         description:
-          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -3 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio avversario a tua scelta riceve -3 {S} per questo turno.",
       },
     ],
   },

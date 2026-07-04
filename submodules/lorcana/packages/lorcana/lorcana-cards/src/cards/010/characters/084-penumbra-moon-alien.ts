@@ -4,6 +4,17 @@ import { penumbraMoonAlienI18n } from "./084-penumbra-moon-alien.i18n";
 export const penumbraMoonAlien: CharacterCard = {
   id: "tak",
   canonicalId: "ci_tak",
+  slug: "lorcana-ci_tak",
+  printings: [
+    {
+      id: "set10-084",
+      artId: "set10-084",
+      setCode: "set10",
+      collectorNumber: "84",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-084"],
   cardType: "character",
   name: "Penumbra",
@@ -21,7 +32,7 @@ export const penumbraMoonAlien: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_b3484a7d91f949b485eb269bcb2d9975",
-    tcgPlayer: 660366,
+    tcgPlayer: "660366",
   },
   classifications: ["Storyborn", "Alien"],
   i18n: penumbraMoonAlienI18n,

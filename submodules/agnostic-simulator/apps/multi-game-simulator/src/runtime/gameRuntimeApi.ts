@@ -4,6 +4,7 @@ import { normalizeOrigin } from "@tcg/simulator-runtime/gateway";
 export type RuntimeApiEnv = Record<string, string | undefined>;
 
 const PRODUCTION_GAME_RUNTIME_API_ORIGINS: Record<GameSlug, string> = {
+  platform: "https://api.tcg.online",
   cyberpunk: "https://cyberpunk-api.tcg.online",
   gundam: "https://gundam-api.tcg.online",
   lorcana: "https://lorcana-api.tcg.online",
@@ -69,9 +70,11 @@ export function parseRuntimeApiUrlMap(value: string | undefined): Record<string,
 
   try {
     const parsed = JSON.parse(trimmed) as unknown;
+
     if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
       return {};
     }
+
     return Object.fromEntries(
       Object.entries(parsed).filter(
         (entry): entry is [string, string] =>

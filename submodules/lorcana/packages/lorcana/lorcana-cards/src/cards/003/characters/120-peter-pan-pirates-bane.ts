@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { peterPanPiratesBaneI18n } from "./120-peter-pan-pirates-bane.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const peterPanPiratesBane: CharacterCard = {
   id: "3nS",
   canonicalId: "ci_rxb",
+  slug: "lorcana-ci_rxb",
+  printings: [
+    {
+      id: "set3-120",
+      artId: "set3-120",
+      setCode: "set3",
+      collectorNumber: "120",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-120"],
   cardType: "character",
   name: "Peter Pan",
@@ -22,7 +34,7 @@ export const peterPanPiratesBane: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b5e74b533270492982dff9472aee8664",
-    tcgPlayer: 539274,
+    tcgPlayer: "539274",
   },
   text: [
     {

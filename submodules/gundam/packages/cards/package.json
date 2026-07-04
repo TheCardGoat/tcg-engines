@@ -45,6 +45,7 @@
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
+    "@tcg/card-model": "link:../../../agnostic-simulator/packages/card-model",
     "@tcg/gundam-token-data": "workspace:*",
     "@tcg/gundam-types": "workspace:*"
   },

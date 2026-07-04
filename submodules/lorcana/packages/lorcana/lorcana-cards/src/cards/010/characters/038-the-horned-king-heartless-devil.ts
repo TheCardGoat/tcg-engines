@@ -4,6 +4,17 @@ import { theHornedKingHeartlessDevilI18n } from "./038-the-horned-king-heartless
 export const theHornedKingHeartlessDevil: CharacterCard = {
   id: "ETS",
   canonicalId: "ci_ETS",
+  slug: "lorcana-ci_ETS",
+  printings: [
+    {
+      id: "set10-038",
+      artId: "set10-038",
+      setCode: "set10",
+      collectorNumber: "38",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-038"],
   cardType: "character",
   name: "The Horned King",
@@ -21,7 +32,7 @@ export const theHornedKingHeartlessDevil: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_f2535ab8555e4cc3bcd5cf3f5ff022e1",
-    tcgPlayer: 657896,
+    tcgPlayer: "657896",
   },
   classifications: ["Storyborn", "Villain", "King", "Sorcerer"],
   i18n: theHornedKingHeartlessDevilI18n,

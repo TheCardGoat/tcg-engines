@@ -18,10 +18,10 @@ export const copperOnTheScentI18n: Record<Languages, I18nProperties> = {
     version: "Auf der Spur",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "Impulsiv",
+        title: "<Impulsiv>",
       },
     ],
   },
@@ -30,10 +30,10 @@ export const copperOnTheScentI18n: Record<Languages, I18nProperties> = {
     version: "Sur une piste",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "Combattant",
+        title: "<Combattant>",
       },
     ],
   },
@@ -42,10 +42,10 @@ export const copperOnTheScentI18n: Record<Languages, I18nProperties> = {
     version: "Sulle Tracce",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "Attaccabrighe",
+        title: "<Attaccabrighe>",
       },
     ],
   },

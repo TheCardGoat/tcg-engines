@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gastonIntellectualPowerhouseI18n } from "./147-gaston-intellectual-powerhouse.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const gastonIntellectualPowerhouse: CharacterCard = {
   id: "E5w",
   canonicalId: "ci_E5w",
+  slug: "lorcana-ci_E5w",
+  printings: [
+    {
+      id: "set2-147",
+      artId: "set2-147",
+      setCode: "set2",
+      collectorNumber: "147",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-147"],
   cardType: "character",
   name: "Gaston",
@@ -21,7 +33,7 @@ export const gastonIntellectualPowerhouse: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f3d2d4123acd473da89b7358ae6dc5e4",
-    tcgPlayer: 516406,
+    tcgPlayer: "516406",
   },
   text: [
     {

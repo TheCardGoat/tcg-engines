@@ -4,6 +4,17 @@ import { torFloristI18n } from "./091-tor-florist.i18n";
 export const torFlorist: CharacterCard = {
   id: "iSO",
   canonicalId: "ci_iSO",
+  slug: "lorcana-ci_iSO",
+  printings: [
+    {
+      id: "set4-091",
+      artId: "set4-091",
+      setCode: "set4",
+      collectorNumber: "91",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-091"],
   cardType: "character",
   name: "Tor",
@@ -21,7 +32,7 @@ export const torFlorist: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_da27f6ea33754e3990af2592197c8c35",
-    tcgPlayer: 547775,
+    tcgPlayer: "547775",
   },
   classifications: ["Dreamborn", "Ally"],
   i18n: torFloristI18n,

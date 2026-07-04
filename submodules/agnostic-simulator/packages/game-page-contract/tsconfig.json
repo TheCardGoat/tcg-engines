@@ -2,7 +2,7 @@
   "extends": "../typescript-config/node.json",
   "compilerOptions": {
     "lib": ["esnext", "ES2023", "DOM"],
-    "types": ["node"]
+    "types": ["node", "@types/bun"]
   },
   "include": ["src", "scripts"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]

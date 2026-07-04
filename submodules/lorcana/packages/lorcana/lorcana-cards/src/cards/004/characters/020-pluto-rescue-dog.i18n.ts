@@ -17,7 +17,7 @@ export const plutoRescueDogI18n: Record<Languages, I18nProperties> = {
     version: "Rettungshund",
     text: [
       {
-        title: "ZUR RETTUNG",
+        title: "Zur Rettung",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du bis zu 3 Schaden von einem deiner Charaktere entfernen.",
       },
@@ -28,7 +28,7 @@ export const plutoRescueDogI18n: Record<Languages, I18nProperties> = {
     version: "Chien de sauvetage",
     text: [
       {
-        title: "À LA RESCOUSSE",
+        title: "À la rescousse",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez retirer jusqu'à 3 jetons Dommage de l'un de vos personnages.",
       },
@@ -39,7 +39,7 @@ export const plutoRescueDogI18n: Record<Languages, I18nProperties> = {
     version: "Cane da Salvataggio",
     text: [
       {
-        title: "CORRERE IN SOCCORSO",
+        title: "Correre in Soccorso",
         description:
           "Quando giochi questo personaggio, puoi rimuovere fino a 3 danni da uno dei tuoi personaggi.",
       },

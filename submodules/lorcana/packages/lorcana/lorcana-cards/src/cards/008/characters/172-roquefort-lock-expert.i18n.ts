@@ -17,7 +17,7 @@ export const roquefortLockExpertI18n: Record<Languages, I18nProperties> = {
     version: "Experte für Schlösser",
     text: [
       {
-        title: "SICHERE VERWAHRUNG",
+        title: "Sichere Verwahrung",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen Gegenstand deiner Wahl verdeckt und erschöpft in den zugehörigen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const roquefortLockExpertI18n: Record<Languages, I18nProperties> = {
     version: "Expert en serrures",
     text: [
       {
-        title: "GARDER EN SÉCURITÉ",
+        title: "Garder en sécurité",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un objet et le placer dans la réserve d'encre de son propriétaire, face cachée et épuisé.",
       },
@@ -39,7 +39,7 @@ export const roquefortLockExpertI18n: Record<Languages, I18nProperties> = {
     version: "Esperto di Serrature",
     text: [
       {
-        title: "METTERE AL SICURO",
+        title: "Mettere al Sicuro",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi aggiungere un oggetto a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato.",
       },

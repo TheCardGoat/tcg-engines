@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { fairyGodmotherMysticArmorerI18n } from "./041-fairy-godmother-mystic-armorer.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const fairyGodmotherMysticArmorer: CharacterCard = {
   id: "1WY",
   canonicalId: "ci_1WY",
+  slug: "lorcana-ci_1WY",
+  printings: [
+    {
+      id: "set2-041",
+      artId: "set2-041",
+      setCode: "set2",
+      collectorNumber: "41",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-041"],
   cardType: "character",
   name: "Fairy Godmother",
@@ -21,16 +33,16 @@ export const fairyGodmotherMysticArmorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ea4fdeec62324b1eac04465ca25a1fbc",
-    tcgPlayer: 527734,
+    tcgPlayer: "527734",
   },
   text: [
     {
       title: "Shift 2",
     },
     {
-      title: "FORGET THE COACH, HERE'S A SWORD",
+      title: "FORGET THE COACH, HERE'S",
       description:
-        'Whenever this character quests, your characters gain Challenger +3 and "When this character is banished in a challenge, return this card to your hand" this turn. (They get +3 {S} while challenging.)',
+        'A SWORD Whenever this character quests, your characters gain Challenger +3 and "When this character is banished in a challenge, return this card to your hand" this turn. (They get +3 {S} while challenging.)',
     },
   ],
   classifications: ["Floodborn", "Mentor", "Fairy"],

@@ -3,7 +3,18 @@ import { kitCloudkickerToughGuyI18n } from "./077-kit-cloudkicker-tough-guy.i18n
 
 export const kitCloudkickerToughGuy: CharacterCard = {
   id: "th7",
-  canonicalId: "ci_th7",
+  canonicalId: "ci_tgU",
+  slug: "lorcana-ci_tgU",
+  printings: [
+    {
+      id: "set3-077",
+      artId: "set3-077",
+      setCode: "set3",
+      collectorNumber: "77",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-077"],
   cardType: "character",
   name: "Kit Cloudkicker",
@@ -20,7 +31,7 @@ export const kitCloudkickerToughGuy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e672bba7d4c5402f82d9360fca1594f5",
-    tcgPlayer: 538357,
+    tcgPlayer: "538357",
   },
   text: [
     {

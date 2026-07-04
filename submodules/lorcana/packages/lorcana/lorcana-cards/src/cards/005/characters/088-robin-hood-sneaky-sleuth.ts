@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { robinHoodSneakySleuthI18n } from "./088-robin-hood-sneaky-sleuth.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const robinHoodSneakySleuth: CharacterCard = {
   id: "9VF",
   canonicalId: "ci_9VF",
+  slug: "lorcana-ci_9VF",
+  printings: [
+    {
+      id: "set5-088",
+      artId: "set5-088",
+      setCode: "set5",
+      collectorNumber: "88",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-088"],
   cardType: "character",
   name: "Robin Hood",
@@ -21,7 +33,7 @@ export const robinHoodSneakySleuth: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c87a5472942748c6af5d609bb93d63c1",
-    tcgPlayer: 559159,
+    tcgPlayer: "559159",
   },
   text: [
     {

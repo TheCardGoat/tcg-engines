@@ -20,14 +20,14 @@ export const captainHooksRapierI18n: Record<Languages, I18nProperties> = {
     name: "Käpt'n Hooks Degen",
     text: [
       {
-        title: "FANGT DIESE TEUFELSBRATEN WIEDER EIN!",
+        title: "Fangt diese Teufelsbraten wieder ein!",
         description:
-          "Jedes Mal, wenn einer deiner Charaktere in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du 1 bezahlen, um 1 Karte zu ziehen.",
+          "Jedes Mal, wenn einer deiner Charaktere in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du 1 {I} bezahlen, um 1 Karte zu ziehen.",
       },
       {
-        title: "LOS GEHT'S!",
+        title: "Los geht's!",
         description:
-          "Deine Käpt'n-Hook-Charaktere erhalten Herausfordern +1. (Während sie herausfordern, erhalten sie +1.)",
+          "Deine Käpt'n-Hook-Charaktere erhalten <Herausfordern> +1. (Während sie herausfordern, erhalten sie +1 {S}.)",
       },
     ],
   },
@@ -35,14 +35,14 @@ export const captainHooksRapierI18n: Record<Languages, I18nProperties> = {
     name: "Rapière du Capitaine Crochet",
     text: [
       {
-        title: "RATTRAPEZ CES IMMONDES GAMINS!",
+        title: "Rattrapez ces immondes gamins!",
         description:
-          "Chaque fois que l'un de vos personnages en bannit un autre via un défi durant votre tour, vous pouvez payer 1 pour piocher une carte.",
+          "Chaque fois que l'un de vos personnages en bannit un autre via un défi durant votre tour, vous pouvez payer 1 {I} pour piocher une carte.",
       },
       {
-        title: "À L'ATTAQUE!",
+        title: "À l'attaque!",
         description:
-          "Vos personnages Capitaine Crochet gagnent Offensif + 1. (Lorsqu'ils défient, ces personnages gagnent +1.)",
+          "Vos personnages Capitaine Crochet gagnent <Offensif> + 1. (Lorsqu'ils défient, ces personnages gagnent +1 {S}.)",
       },
     ],
   },
@@ -50,17 +50,14 @@ export const captainHooksRapierI18n: Record<Languages, I18nProperties> = {
     name: "Stocco di Capitan Uncino",
     text: [
       {
-        title: "INSEGUITELI, PRESTO!",
+        title: "Inseguiteli, Presto!",
         description:
-          "Durante il tuo turno, ogni volta che uno dei tuoi personaggi esilia un altro personaggio in una sfida, puoi pagare 1 per pescare una carta.",
+          "Durante il tuo turno, ogni volta che uno dei tuoi personaggi esilia un altro personaggio in una sfida, puoi pagare 1 {I} per pescare una carta.",
       },
       {
-        title: "INCOMINCIAMO!",
-      },
-      {
-        title: "I",
+        title: "Incominciamo!",
         description:
-          "tuoi personaggi chiamati Capitan Uncino ottengono Sfidante +1. (Ricevono +1 mentre stanno sfidando.)",
+          "I tuoi personaggi chiamati Capitan Uncino ottengono <Sfidante> +1. (Ricevono +1 {S} mentre stanno sfidando.)",
       },
     ],
   },

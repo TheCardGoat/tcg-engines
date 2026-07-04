@@ -4,6 +4,17 @@ import { argesTheCyclopsI18n } from "./173-arges-the-cyclops.i18n";
 export const argesTheCyclops: CharacterCard = {
   id: "6DG",
   canonicalId: "ci_6DG",
+  slug: "lorcana-ci_6DG",
+  printings: [
+    {
+      id: "set4-173",
+      artId: "set4-173",
+      setCode: "set4",
+      collectorNumber: "173",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-173"],
   cardType: "character",
   name: "Arges",
@@ -21,7 +32,7 @@ export const argesTheCyclops: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_8b213fe23fec4f629b8368b197d7d7c8",
-    tcgPlayer: 549558,
+    tcgPlayer: "549558",
   },
   classifications: ["Storyborn", "Titan"],
   i18n: argesTheCyclopsI18n,

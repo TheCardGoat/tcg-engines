@@ -4,6 +4,17 @@ import { pizzaPlanetSpaceportI18n } from "./102-pizza-planet-spaceport.i18n";
 export const pizzaPlanetSpaceport: LocationCard = {
   id: "59B",
   canonicalId: "ci_59B",
+  slug: "lorcana-ci_59B",
+  printings: [
+    {
+      id: "set12-102",
+      artId: "set12-102",
+      setCode: "set12",
+      collectorNumber: "102",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-102"],
   cardType: "location",
   name: "Pizza Planet",
@@ -20,10 +31,11 @@ export const pizzaPlanetSpaceport: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b5d8124396864ca4a60ab2e5482185a8",
+    tcgPlayer: "690209",
   },
   text: [
     {
-      title: "YOU ARE CLEARED TO ENTER",
+      title: "YOU ARE CLEAR TO ENTER",
       description: "Your Toy characters can move here for free.",
     },
     {

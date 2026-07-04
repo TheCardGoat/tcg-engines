@@ -7,14 +7,17 @@ export const gd03WistarioAfam097: PilotCard = {
   color: "purple",
   traits: ["civilian"],
   id: "GD03-097",
-  externalId: "gundam:gd03-097",
-  slug: "wistario-afam-gd03-097",
+  canonicalId: "GD03-097",
+  externalIds: { bandai: "gundam:gd03-097" },
+  slug: "wistario-afam/gd03-097",
   displayName: "Wistario Afam",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-097",
   printings: [
     {
       id: "GD03-097",
+      artId: "GD03-097",
+      setCode: "GD03",
       collectorNumber: "GD03-097",
       cardNumber: "GD03-097",
       set: {
@@ -29,6 +32,7 @@ export const gd03WistarioAfam097: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-097"],
   selectedPrintingId: "GD03-097",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-097.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-097.webp?260424",

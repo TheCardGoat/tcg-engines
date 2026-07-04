@@ -7,14 +7,17 @@ export const gd03GundamHeavyarmsCustom029: UnitCard = {
   color: "green",
   traits: ["g team"],
   id: "GD03-029",
-  externalId: "gundam:gd03-029",
-  slug: "gundam-heavyarms-custom-gd03-029",
+  canonicalId: "GD03-029",
+  externalIds: { bandai: "gundam:gd03-029" },
+  slug: "gundam-heavyarms-custom/gd03-029",
   displayName: "Gundam Heavyarms Custom",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-029",
   printings: [
     {
       id: "GD03-029",
+      artId: "GD03-029",
+      setCode: "GD03",
       collectorNumber: "GD03-029",
       cardNumber: "GD03-029",
       set: {
@@ -29,6 +32,7 @@ export const gd03GundamHeavyarmsCustom029: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-029"],
   selectedPrintingId: "GD03-029",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-029.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-029.webp?260424",

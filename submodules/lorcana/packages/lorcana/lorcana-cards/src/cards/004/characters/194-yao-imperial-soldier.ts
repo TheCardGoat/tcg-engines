@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { yaoImperialSoldierI18n } from "./194-yao-imperial-soldier.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const yaoImperialSoldier: CharacterCard = {
   id: "0wR",
   canonicalId: "ci_0wR",
+  slug: "lorcana-ci_0wR",
+  printings: [
+    {
+      id: "set4-194",
+      artId: "set4-194",
+      setCode: "set4",
+      collectorNumber: "194",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-194"],
   cardType: "character",
   name: "Yao",
@@ -21,7 +33,7 @@ export const yaoImperialSoldier: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_80c0754783744500af77590d9234826c",
-    tcgPlayer: 550622,
+    tcgPlayer: "550622",
   },
   text: "Challenger +2",
   classifications: ["Storyborn", "Ally"],

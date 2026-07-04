@@ -40,6 +40,7 @@ import type {
   PutIntoInkwellEffect,
   PutOnTopEffect,
   PutUnderEffect,
+  EnablePlayFromDiscardEffect,
   EnablePlayFromUnderEffect,
   PutOnBottomEffect,
   ReadyEffect,
@@ -142,6 +143,10 @@ import {
 import { isPutIntoInkwellEffect, resolvePutIntoInkwellEffect } from "./put-into-inkwell-effect";
 import { isPutOnTopEffect, resolvePutOnTopEffect } from "./put-on-top-effect";
 import { isPutUnderEffect, resolvePutUnderEffect } from "./put-under-effect";
+import {
+  isEnablePlayFromDiscardEffect,
+  resolveEnablePlayFromDiscardEffect,
+} from "./enable-play-from-discard-effect";
 import {
   isEnablePlayFromUnderEffect,
   resolveEnablePlayFromUnderEffect,
@@ -733,6 +738,47 @@ function scopeResolutionInputToOptionalChooser(
     : { ...resolutionInput, chooserPlayerId };
 }
 
+function getPayCostMillTopDeckAmount(cost: PayCostEffect["cost"]): number {
+  return typeof cost?.millTopDeck === "number" &&
+    Number.isFinite(cost.millTopDeck) &&
+    cost.millTopDeck > 0
+    ? Math.floor(cost.millTopDeck)
+    : 0;
+}
+
+function canPayMillTopDeckCost(
+  ctx: Pick<EffectLegalityContext, "framework">,
+  playerId: PlayerId,
+  amount: number,
+): boolean {
+  if (amount <= 0) {
+    return true;
+  }
+
+  return ctx.framework.zones.getCards({ zone: "deck", playerId }).length >= amount;
+}
+
+function payMillTopDeckCost(
+  ctx: PlayCardExecutionContext,
+  playerId: PlayerId,
+  amount: number,
+): boolean {
+  if (amount <= 0) {
+    return true;
+  }
+
+  const deckCards = ctx.framework.zones.getCards({ zone: "deck", playerId }) as CardInstanceId[];
+  if (deckCards.length < amount) {
+    return false;
+  }
+
+  const cardsToMill = deckCards.slice(-amount).reverse();
+  for (const cardId of cardsToMill) {
+    ctx.framework.zones.moveCard(cardId, { zone: "discard", playerId });
+  }
+  return true;
+}
+
 function resolvePayCostEffect(
   ctx: PlayCardExecutionContext,
   cardPlayed: CardPlayedPayload,
@@ -742,6 +788,7 @@ function resolvePayCostEffect(
 ): ActionResolutionResult {
   const actorId = getCurrentActionActorId(ctx, cardPlayed);
   const cost = effect.cost ?? {};
+  const millTopDeckAmount = getPayCostMillTopDeckAmount(cost);
   const costValidation = validateBasicCost(
     {
       framework: ctx.framework,
@@ -753,7 +800,11 @@ function resolvePayCostEffect(
       exertCards: cost.exert ? [{ cardId: cardPlayed.cardId, subject: "source" }] : undefined,
     },
   );
-  if (!costValidation.valid || !effect.effect) {
+  if (
+    !costValidation.valid ||
+    !canPayMillTopDeckCost(ctx, actorId, millTopDeckAmount) ||
+    !effect.effect
+  ) {
     return RESOLVED_ACTION_EFFECT;
   }
 
@@ -789,6 +840,9 @@ function resolvePayCostEffect(
     },
   );
   if (!payResult.success) {
+    return RESOLVED_ACTION_EFFECT;
+  }
+  if (!payMillTopDeckCost(ctx, actorId, millTopDeckAmount)) {
     return RESOLVED_ACTION_EFFECT;
   }
 
@@ -941,6 +995,8 @@ function maybeSuspendForChosenTargets(
     effect,
     resolutionInput: selectionResolutionInput,
     ctx,
+    originatesFromOptional: options?.originatesFromOptional,
+    canDeclineSelection: options?.originatesFromOptional,
   });
   if (
     !selectionContext ||
@@ -957,6 +1013,20 @@ function maybeSuspendForChosenTargets(
     // No legal targets: do not suspend into an empty picker for bag / on-play
     // resolution — the resolver no-ops and the bag entry can complete as fizzle.
     // Activated abilities pass {@link allowSuspendWithZeroTargetCandidates}.
+    return undefined;
+  }
+
+  // Optional "you may play a card" after a draw with one playable candidate:
+  // auto-resolve that candidate instead of opening a single-choice picker.
+  if (
+    options?.originatesFromOptional === true &&
+    effectRecord.type === "play-card" &&
+    selectionContext.kind === "target-selection" &&
+    selectionContext.cardCandidateIds.length === 1 &&
+    selectionContext.playerCandidateIds.length === 0 &&
+    typeof resolutionInput.eventSnapshot?.drawnCount === "number" &&
+    ((selectionContext.playCardEntryModeCandidateIds as unknown[] | undefined)?.length ?? 0) === 0
+  ) {
     return undefined;
   }
 
@@ -1295,6 +1365,7 @@ export const ACTION_EFFECT_RESOLVER_TYPES = [
   "mill",
   "put-into-inkwell",
   "put-under",
+  "enable-play-from-discard",
   "enable-play-from-under",
   "pay-cost",
   "put-on-bottom",
@@ -1912,7 +1983,13 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
         chooserId,
         cardPlayed.playerId,
       );
-      return resolveActionEffect(ctx, cardPlayed, effect.effect, inputWithChooser, options);
+      const result = resolveActionEffect(ctx, cardPlayed, effect.effect, inputWithChooser, {
+        ...options,
+        originatesFromOptional: true,
+      });
+      resolutionInput.effectType = inputWithChooser.effectType;
+      resolutionInput.sourceZone = inputWithChooser.sourceZone;
+      return result;
     }
 
     return RESOLVED_ACTION_EFFECT;
@@ -2833,6 +2910,24 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
     return RESOLVED_ACTION_EFFECT;
   },
 
+  "enable-play-from-discard": (ctx, cardPlayed, effect, resolutionInput) => {
+    if (!isEnablePlayFromDiscardEffect(effect)) {
+      handleUnsupportedActionEffect(
+        "enable-play-from-discard",
+        "Malformed enable-play-from-discard effect payload",
+      );
+      return RESOLVED_ACTION_EFFECT;
+    }
+
+    resolveEnablePlayFromDiscardEffect(
+      ctx,
+      cardPlayed,
+      effect as EnablePlayFromDiscardEffect,
+      resolutionInput,
+    );
+    return RESOLVED_ACTION_EFFECT;
+  },
+
   "enable-play-from-under": (ctx, cardPlayed, effect, resolutionInput) => {
     if (!isEnablePlayFromUnderEffect(effect)) {
       handleUnsupportedActionEffect(
@@ -3402,6 +3497,7 @@ function isEffectCurrentlyLegal(
     const actorId = getCurrentActionActorId(ctx, cardPlayed);
     const payCostEffect = effect as PayCostEffect;
     const cost = payCostEffect.cost ?? {};
+    const millTopDeckAmount = getPayCostMillTopDeckAmount(cost);
     const costValidation = validateBasicCost(
       {
         framework: ctx.framework,
@@ -3414,7 +3510,7 @@ function isEffectCurrentlyLegal(
       },
     );
 
-    return costValidation.valid;
+    return costValidation.valid && canPayMillTopDeckCost(ctx, actorId, millTopDeckAmount);
   }
 
   if (isDiscardEffect(effect)) {

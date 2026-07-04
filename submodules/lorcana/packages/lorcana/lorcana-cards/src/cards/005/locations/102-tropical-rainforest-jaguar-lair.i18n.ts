@@ -17,9 +17,9 @@ export const tropicalRainforestJaguarLairI18n: Record<Languages, I18nProperties>
     version: "Jaguar-Lager",
     text: [
       {
-        title: "SNACK-ZEIT",
+        title: "Snack-Zeit",
         description:
-          "Beschädigte gegnerische Charaktere erhalten Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
+          "Beschädigte gegnerische Charaktere erhalten <Impulsiv>. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const tropicalRainforestJaguarLairI18n: Record<Languages, I18nProperties>
     version: "Repaire des jaguars",
     text: [
       {
-        title: "L'HEURE DU CASSE-CROÛTE",
+        title: "L'heure du casse-croûte",
         description:
-          "Les personnages adverses ayant au moins un dommage sur eux gagnent Combattant. (Ces personnages ne peuvent pas être envoyés à l'aventure et doivent défier à chaque tour s'ils le peuvent.)",
+          "Les personnages adverses ayant au moins un dommage sur eux gagnent <Combattant>. (Ces personnages ne peuvent pas être envoyés à l'aventure et doivent défier à chaque tour s'ils le peuvent.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const tropicalRainforestJaguarLairI18n: Record<Languages, I18nProperties>
     version: "Tana dei Giaguari",
     text: [
       {
-        title: "ORA DELLA MERENDA I",
+        title: "Ora della Merenda",
         description:
-          "personaggi danneggiati avversari ottengono Attaccabrighe. (Non possono andare all'avventura e devono sfidare, se possibile.)",
+          "I personaggi danneggiati avversari ottengono <Attaccabrighe>. (Non possono andare all'avventura e devono sfidare, se possibile.)",
       },
     ],
   },

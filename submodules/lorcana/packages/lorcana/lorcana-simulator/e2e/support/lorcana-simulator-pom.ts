@@ -19,7 +19,7 @@ import {
   serializeInlineFixture,
   type LorcanaBrowserFixtureInput,
 } from "../../src/lib/features/simulator-devtools/harness/browser-fixture";
-import { LORCANA_SIMULATOR_FIXTURES } from "../../src/lib/features/simulator-devtools/fixtures/index";
+import { LORCANA_SIMULATOR_FIXTURE_MANIFEST_BY_ID } from "../../src/lib/features/simulator-devtools/fixtures/index";
 import type {
   LorcanaSimulatorFixture,
   LorcanaTableSeat,
@@ -136,6 +136,7 @@ export class LorcanaSimulatorPom {
   }
 
   async getStatus(view?: LorcanaSimulatorView): Promise<LorcanaBrowserStatus> {
+    await this.waitForHarness();
     return this.page.evaluate(async (targetView) => {
       const harness = (window as LorcanaHarnessWindow).__lorcanaTestHarness;
       if (!harness) {
@@ -151,6 +152,7 @@ export class LorcanaSimulatorPom {
     moveId: string,
     params: Record<string, unknown> = {},
   ): Promise<LorcanaBrowserHarnessExecuteResult> {
+    await this.waitForHarness();
     return this.page.evaluate(
       async ({ targetView, targetMoveId, targetParams }) => {
         const harness = (window as LorcanaHarnessWindow).__lorcanaTestHarness;
@@ -165,6 +167,7 @@ export class LorcanaSimulatorPom {
   }
 
   async getBoard(view?: LorcanaSimulatorView): Promise<LorcanaProjectedBoardView> {
+    await this.waitForHarness();
     return this.page.evaluate(async (targetView) => {
       const harness = (window as LorcanaHarnessWindow).__lorcanaTestHarness;
       if (!harness) {
@@ -273,8 +276,7 @@ function resolveRegisteredFixtureId(
     return undefined;
   }
 
-  const registeredFixture = LORCANA_SIMULATOR_FIXTURES[fixture.id];
-  return registeredFixture === fixture ? registeredFixture.id : undefined;
+  return LORCANA_SIMULATOR_FIXTURE_MANIFEST_BY_ID[fixture.id] ? fixture.id : undefined;
 }
 
 export class LorcanaSimulatorSeatPom implements LorcanaSimulatorPomLike {

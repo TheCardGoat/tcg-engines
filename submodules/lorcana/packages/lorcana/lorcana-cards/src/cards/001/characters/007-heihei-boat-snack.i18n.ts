@@ -9,34 +9,16 @@ export const heiheiBoatSnackI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "HeiHei",
     version: "Boat Snack",
-    text: [
-      {
-        title: "Support",
-        description:
-          "(Whenever this character quests, you may add their to another chosen character's this turn.)",
-      },
-    ],
+    text: "<Support> (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   },
   fr: {
     name: "HeiHei",
     version: "Boat Snack",
-    text: [
-      {
-        title: "Support",
-        description:
-          "(Whenever this character quests, you may add their to another chosen character's this turn.)",
-      },
-    ],
+    text: "<Support> (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   },
   it: {
     name: "HeiHei",
     version: "Boat Snack",
-    text: [
-      {
-        title: "Support",
-        description:
-          "(Whenever this character quests, you may add their to another chosen character's this turn.)",
-      },
-    ],
+    text: "<Support> (Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
   },
 };

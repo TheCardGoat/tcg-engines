@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { fixitFelixJrNicelandStewardI18n } from "./012-fix-it-felix-jr-niceland-steward.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const fixitFelixJrNicelandSteward: CharacterCard = {
   id: "zoW",
   canonicalId: "ci_zoW",
+  slug: "lorcana-ci_zoW",
+  printings: [
+    {
+      id: "set5-012",
+      artId: "set5-012",
+      setCode: "set5",
+      collectorNumber: "12",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-012"],
   cardType: "character",
   name: "Fix-It Felix, Jr.",
@@ -21,7 +33,7 @@ export const fixitFelixJrNicelandSteward: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_894f1b97871342e29b414e927dcd1140",
-    tcgPlayer: 559773,
+    tcgPlayer: "559773",
   },
   text: [
     {

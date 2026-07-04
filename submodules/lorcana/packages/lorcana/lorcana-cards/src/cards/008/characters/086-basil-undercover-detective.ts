@@ -4,6 +4,17 @@ import { basilUndercoverDetectiveI18n } from "./086-basil-undercover-detective.i
 export const basilUndercoverDetective: CharacterCard = {
   id: "c7u",
   canonicalId: "ci_c7u",
+  slug: "lorcana-ci_c7u",
+  printings: [
+    {
+      id: "set8-086",
+      artId: "set8-086",
+      setCode: "set8",
+      collectorNumber: "86",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-086"],
   cardType: "character",
   name: "Basil",
@@ -20,7 +31,7 @@ export const basilUndercoverDetective: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_36c4b9223273478a903b07f18fe7d193",
-    tcgPlayer: 631407,
+    tcgPlayer: "631407",
   },
   text: [
     {

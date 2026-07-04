@@ -3,7 +3,18 @@ import { ursulasLairEyeOfTheStormI18n } from "./068-ursulas-lair-eye-of-the-stor
 
 export const ursulasLairEyeOfTheStorm: LocationCard = {
   id: "U6D",
-  canonicalId: "ci_U6D",
+  canonicalId: "ci_S9h",
+  slug: "lorcana-ci_S9h",
+  printings: [
+    {
+      id: "set4-068",
+      artId: "set4-068",
+      setCode: "set4",
+      collectorNumber: "68",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-068"],
   cardType: "location",
   name: "Ursula’s Lair",
@@ -20,7 +31,7 @@ export const ursulasLairEyeOfTheStorm: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_70a2a01e064142b0a132d9ce3a86a293",
-    tcgPlayer: 547784,
+    tcgPlayer: "547784",
   },
   text: [
     {

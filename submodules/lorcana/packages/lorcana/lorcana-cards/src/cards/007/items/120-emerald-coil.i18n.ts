@@ -15,9 +15,9 @@ export const emeraldCoilI18n: Record<Languages, I18nProperties> = {
     name: "Smaragd-Reif",
     text: [
       {
-        title: "SCHIMMERNDE FLÜGEL",
+        title: "Schimmernde Flügel",
         description:
-          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges Wendig.",
+          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält ein Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const emeraldCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spirale d’Émeraude",
     text: [
       {
-        title: "AILES CHATOYANTES",
+        title: "Ailes chatoyantes",
         description:
-          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage qui gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage qui gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const emeraldCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spira di Smeraldo",
     text: [
       {
-        title: "ALI SCINTILLANTI",
+        title: "Ali Scintillanti",
         description:
-          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
+          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarlo.)",
       },
     ],
   },

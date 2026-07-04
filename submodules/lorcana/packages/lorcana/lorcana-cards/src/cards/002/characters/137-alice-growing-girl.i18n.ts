@@ -11,8 +11,8 @@ export const aliceGrowingGirlI18n: Record<Languages, I18nProperties> = {
           "Your other characters gain Support. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
       },
       {
-        title: "WHAT DID I DO?",
-        description: "While this character has 10 {S} or more, she gets +4 {L}.",
+        title: "WHAT DID",
+        description: "I DO? While this character has 10 {S} or more, she gets +4 {L}.",
       },
     ],
   },
@@ -21,13 +21,13 @@ export const aliceGrowingGirlI18n: Record<Languages, I18nProperties> = {
     version: "Wachsendes Mädchen",
     text: [
       {
-        title: "DAS IST EIN GUTER RAT",
+        title: "Das ist ein guter Rat",
         description:
-          "Deine anderen Charaktere erhalten Unterstützen. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "Deine anderen Charaktere erhalten <Unterstützen>. (Jedes Mal, wenn die Charaktere erkunden, darfst du ihre {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "WAS HAB ICH GETAN?",
-        description: "Solange dieser Charakter 10 oder mehr hat, erhält er +4.",
+        title: "Was hab ich getan?",
+        description: "Solange dieser Charakter 10 oder mehr {S} hat, erhält er +4 {L}.",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const aliceGrowingGirlI18n: Record<Languages, I18nProperties> = {
     version: "En pleine croissance",
     text: [
       {
-        title: "JE SAIS CE QUE JE DOIS FAIRE",
+        title: "Je sais ce que je dois faire",
         description:
-          "Vos autres personnages gagnent Soutien. (Lorsqu'ils sont envoyés à l'aventure, vous pouvez ajouter leur à celle d'un autre personnage au choix pour le reste de ce tour.)",
+          "Vos autres personnages gagnent <Soutien>. (Lorsqu'ils sont envoyés à l'aventure, vous pouvez ajouter leur {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "QU'AI-JE FAIT?",
-        description: "Tant que ce personnage a au moins 10, il gagne +4.",
+        title: "Qu'ai-je fait?",
+        description: "Tant que ce personnage a au moins 10 {S}, il gagne +4 {L}.",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const aliceGrowingGirlI18n: Record<Languages, I18nProperties> = {
     version: "Growing Girl",
     text: [
       {
-        title: "GOOD ADVICE",
+        title: "Good Advice",
         description:
-          "Your other characters gain Support. (Whenever they quest, you may add their to another chosen character's this turn.)",
+          "Your other characters gain <Support>. (Whenever they quest, you may add their {S} to another chosen character's {S} this turn.)",
       },
       {
-        title: "WHAT DID I DO?",
-        description: "While this character has 10 or more, she gets +4.",
+        title: "What Did I Do?",
+        description: "While this character has 10 {S} or more, she gets +4 {L}.",
       },
     ],
   },

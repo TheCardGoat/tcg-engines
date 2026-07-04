@@ -4,6 +4,17 @@ import { donaldDuckRubyChampionI18n } from "./121-donald-duck-ruby-champion.i18n
 export const donaldDuckRubyChampion: CharacterCard = {
   id: "Yk1",
   canonicalId: "ci_Yk1",
+  slug: "lorcana-ci_Yk1",
+  printings: [
+    {
+      id: "set10-121",
+      artId: "set10-121",
+      setCode: "set10",
+      collectorNumber: "121",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-121"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckRubyChampion: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a9118586fa7c492bbe23ad34b60dcc57",
-    tcgPlayer: 659629,
+    tcgPlayer: "659629",
   },
   text: [
     {

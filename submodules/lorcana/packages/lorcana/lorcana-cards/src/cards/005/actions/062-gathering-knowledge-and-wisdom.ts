@@ -4,6 +4,17 @@ import { gatheringKnowledgeAndWisdomI18n } from "./062-gathering-knowledge-and-w
 export const gatheringKnowledgeAndWisdom: ActionCard = {
   id: "hDY",
   canonicalId: "ci_hDY",
+  slug: "lorcana-ci_hDY",
+  printings: [
+    {
+      id: "set5-062",
+      artId: "set5-062",
+      setCode: "set5",
+      collectorNumber: "62",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-062"],
   cardType: "action",
   name: "Gathering Knowledge and Wisdom",
@@ -16,7 +27,7 @@ export const gatheringKnowledgeAndWisdom: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f199d7305e4a4b0a81d20610d4761aa9",
-    tcgPlayer: 561620,
+    tcgPlayer: "561620",
   },
   text: "Gain 2 lore.",
   abilities: [

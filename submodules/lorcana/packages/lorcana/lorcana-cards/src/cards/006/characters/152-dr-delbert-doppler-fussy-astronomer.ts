@@ -4,6 +4,17 @@ import { drDelbertDopplerFussyAstronomerI18n } from "./152-dr-delbert-doppler-fu
 export const drDelbertDopplerFussyAstronomer: CharacterCard = {
   id: "CFc",
   canonicalId: "ci_CFc",
+  slug: "lorcana-ci_CFc",
+  printings: [
+    {
+      id: "set6-152",
+      artId: "set6-152",
+      setCode: "set6",
+      collectorNumber: "152",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-152"],
   cardType: "character",
   name: "Dr. Delbert Doppler",
@@ -21,7 +32,7 @@ export const drDelbertDopplerFussyAstronomer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_6e0ebfc57c174717baae1a0ec2a16830",
-    tcgPlayer: 593003,
+    tcgPlayer: "593003",
   },
   classifications: ["Storyborn", "Ally", "Alien"],
   i18n: drDelbertDopplerFussyAstronomerI18n,

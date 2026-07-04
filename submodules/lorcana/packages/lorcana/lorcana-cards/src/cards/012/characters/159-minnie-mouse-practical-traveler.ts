@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMousePracticalTravelerI18n } from "./159-minnie-mouse-practical-traveler.i18n";
 
 export const minnieMousePracticalTraveler: CharacterCard = {
-  id: "uSb",
+  id: "lv1",
   canonicalId: "ci_uSb",
+  slug: "lorcana-ci_uSb",
+  printings: [
+    {
+      id: "set12-159",
+      artId: "set12-159",
+      setCode: "set12",
+      collectorNumber: "159",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-159"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -18,7 +29,8 @@ export const minnieMousePracticalTraveler: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_b760305650e54e7b84dcbeb7c014b0f5",
+    lorcast: "crd_c3586bda90744abf8eb5c15db3b0b766",
+    tcgPlayer: "692214",
   },
   text: [
     {

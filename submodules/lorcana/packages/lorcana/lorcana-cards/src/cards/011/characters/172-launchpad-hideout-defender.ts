@@ -4,6 +4,17 @@ import { launchpadHideoutDefenderI18n } from "./172-launchpad-hideout-defender.i
 export const launchpadHideoutDefender: CharacterCard = {
   id: "wIl",
   canonicalId: "ci_wIl",
+  slug: "lorcana-ci_wIl",
+  printings: [
+    {
+      id: "set11-172",
+      artId: "set11-172",
+      setCode: "set11",
+      collectorNumber: "172",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-172"],
   cardType: "character",
   name: "Launchpad",
@@ -20,7 +31,7 @@ export const launchpadHideoutDefender: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_31c0320e66744254b1a8a70f108427aa",
-    tcgPlayer: 677139,
+    tcgPlayer: "677139",
   },
   text: [
     {

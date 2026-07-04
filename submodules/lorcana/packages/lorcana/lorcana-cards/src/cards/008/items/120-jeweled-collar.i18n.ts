@@ -15,7 +15,7 @@ export const jeweledCollarI18n: Record<Languages, I18nProperties> = {
     name: "Juwelenhalsband",
     text: [
       {
-        title: "WILLKOMMEN EXTRAVAGANZ",
+        title: "Willkommen Extravaganz",
         description:
           "Jedes Mal, wenn einer deiner Charaktere herausgefordert wird, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -25,7 +25,7 @@ export const jeweledCollarI18n: Record<Languages, I18nProperties> = {
     name: "Collier incrusté",
     text: [
       {
-        title: "EXTRAVAGANT ET DE BON GOÛT",
+        title: "Extravagant et de bon goût",
         description:
           "Chaque fois que l'un de vos personnages est défié, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -35,7 +35,7 @@ export const jeweledCollarI18n: Record<Languages, I18nProperties> = {
     name: "Collare Ingioiellato",
     text: [
       {
-        title: "BENVENUTA STRAVAGANZA",
+        title: "Benvenuta Stravaganza",
         description:
           "Ogni volta che uno dei tuoi personaggi viene sfidato, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },

@@ -17,9 +17,9 @@ export const basilSecretInformerI18n: Record<Languages, I18nProperties> = {
     version: "Geheimer Informant",
     text: [
       {
-        title: "LOCKE SIE HERAUS",
+        title: "Locke sie heraus",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhalten gegnerische beschädigte Charaktere in ihrem nächsten Zug Impulsiv. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhalten gegnerische beschädigte Charaktere in ihrem nächsten Zug <Impulsiv>. (Sie können nicht erkunden und müssen herausfordern, wenn möglich.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const basilSecretInformerI18n: Record<Languages, I18nProperties> = {
     version: "Informateur secret",
     text: [
       {
-        title: "LES APPÂTER",
+        title: "Les appâter",
         description:
-          "Lorsque ce personnage est envoyé à l'aventure, les personnages adverses avec au moins un dommage gagnent Combattant durant leur prochain tour. (Ils ne peuvent pas être envoyés à l'aventure et doivent défier s'il le peuvent.)",
+          "Lorsque ce personnage est envoyé à l'aventure, les personnages adverses avec au moins un dommage gagnent <Combattant> durant leur prochain tour. (Ils ne peuvent pas être envoyés à l'aventure et doivent défier s'il le peuvent.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const basilSecretInformerI18n: Record<Languages, I18nProperties> = {
     version: "Informatore Segreto",
     text: [
       {
-        title: "ATTIRARLI ALLO SCOPERTO",
+        title: "Attirarli allo Scoperto",
         description:
-          "Ogni volta che questo personaggio va all'avventura, i personaggi danneggiati avversari ottengono Attaccabrighe durante il loro prossimo turno. (Non possono andare all'avventura e devono sfidare, se possibile.)",
+          "Ogni volta che questo personaggio va all'avventura, i personaggi danneggiati avversari ottengono <Attaccabrighe> durante il loro prossimo turno. (Non possono andare all'avventura e devono sfidare, se possibile.)",
       },
     ],
   },

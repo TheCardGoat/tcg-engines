@@ -4,6 +4,17 @@ import { ambushI18n } from "./198-ambush.i18n";
 export const ambush: ActionCard = {
   id: "UOR",
   canonicalId: "ci_UOR",
+  slug: "lorcana-ci_UOR",
+  printings: [
+    {
+      id: "set6-198",
+      artId: "set6-198",
+      setCode: "set6",
+      collectorNumber: "198",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-198"],
   cardType: "action",
   name: "Ambush!",
@@ -16,7 +27,7 @@ export const ambush: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_35df29e6893942a38a14f775719ce522",
-    tcgPlayer: 587971,
+    tcgPlayer: "587971",
   },
   text: "{E} one of your characters to deal damage equal to their {S} to chosen character.",
   abilities: [

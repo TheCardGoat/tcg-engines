@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princeCharmingProtectorOfTheRealmI18n } from "./189-prince-charming-protector-of-the-realm.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const princeCharmingProtectorOfTheRealm: CharacterCard = {
   id: "rzC",
   canonicalId: "ci_rzC",
+  slug: "lorcana-ci_rzC",
+  printings: [
+    {
+      id: "set10-189",
+      artId: "set10-189",
+      setCode: "set10",
+      collectorNumber: "189",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-189"],
   cardType: "character",
   name: "Prince Charming",
@@ -21,7 +33,7 @@ export const princeCharmingProtectorOfTheRealm: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fafe3c3da4484cf6b0485a5f5a1c557a",
-    tcgPlayer: 658343,
+    tcgPlayer: "658343",
   },
   text: [
     {

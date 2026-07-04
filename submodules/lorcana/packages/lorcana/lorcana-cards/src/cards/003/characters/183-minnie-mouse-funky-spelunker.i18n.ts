@@ -16,8 +16,8 @@ export const minnieMouseFunkySpelunkerI18n: Record<Languages, I18nProperties> = 
     version: "Flippige Höhlenforscherin",
     text: [
       {
-        title: "REISE",
-        description: "Solange dieser Charakter an einem Ort ist, erhält er +2.",
+        title: "Reise",
+        description: "Solange dieser Charakter an einem Ort ist, erhält er +2 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const minnieMouseFunkySpelunkerI18n: Record<Languages, I18nProperties> = 
     version: "Spéléologue funky",
     text: [
       {
-        title: "VOYAGE",
-        description: "Tant que ce personnage se trouve sur un lieu, il gagne +2.",
+        title: "Voyage",
+        description: "Tant que ce personnage se trouve sur un lieu, il gagne +2 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const minnieMouseFunkySpelunkerI18n: Record<Languages, I18nProperties> = 
     version: "Speleologa Eccentrica",
     text: [
       {
-        title: "VIAGGIO",
-        description: "Mentre questo personaggio si trova in un luogo, riceve +2.",
+        title: "Viaggio",
+        description: "Mentre questo personaggio si trova in un luogo, riceve +2 {S}.",
       },
     ],
   },

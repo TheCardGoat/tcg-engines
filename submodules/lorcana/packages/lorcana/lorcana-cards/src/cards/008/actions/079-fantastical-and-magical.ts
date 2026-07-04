@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { fantasticalAndMagicalI18n } from "./079-fantastical-and-magical.i18n";
 
 export const fantasticalAndMagical: ActionCard = {
-  id: "XxM",
+  id: "r0t",
   canonicalId: "ci_ABM",
+  slug: "lorcana-ci_ABM",
+  printings: [
+    {
+      id: "set8-079",
+      artId: "set8-079",
+      setCode: "set8",
+      collectorNumber: "79",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-079"],
   cardType: "action",
   name: "Fantastical and Magical",
@@ -16,7 +27,7 @@ export const fantasticalAndMagical: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a728498e9f554bb2b5e4fd82595ed11e",
-    tcgPlayer: 631975,
+    tcgPlayer: "631975",
   },
   text: [
     {

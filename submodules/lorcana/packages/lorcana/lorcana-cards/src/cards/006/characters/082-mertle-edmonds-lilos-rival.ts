@@ -4,6 +4,17 @@ import { mertleEdmondsLilosRivalI18n } from "./082-mertle-edmonds-lilos-rival.i1
 export const mertleEdmondsLilosRival: CharacterCard = {
   id: "Tkf",
   canonicalId: "ci_Tkf",
+  slug: "lorcana-ci_Tkf",
+  printings: [
+    {
+      id: "set6-082",
+      artId: "set6-082",
+      setCode: "set6",
+      collectorNumber: "82",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-082"],
   cardType: "character",
   name: "Mertle Edmonds",
@@ -21,7 +32,7 @@ export const mertleEdmondsLilosRival: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_23e456f99c354c9892c90d72d6992bcb",
-    tcgPlayer: 588339,
+    tcgPlayer: "588339",
   },
   classifications: ["Storyborn"],
   i18n: mertleEdmondsLilosRivalI18n,

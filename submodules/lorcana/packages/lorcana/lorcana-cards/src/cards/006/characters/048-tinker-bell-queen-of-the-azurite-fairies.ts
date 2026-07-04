@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tinkerBellQueenOfTheAzuriteFairiesI18n } from "./048-tinker-bell-queen-of-the-azurite-fairies.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const tinkerBellQueenOfTheAzuriteFairies: CharacterCard = {
   id: "yE4",
   canonicalId: "ci_yE4",
+  slug: "lorcana-ci_yE4",
+  printings: [
+    {
+      id: "set6-048",
+      artId: "set6-048",
+      setCode: "set6",
+      collectorNumber: "48",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-048"],
   cardType: "character",
   name: "Tinker Bell",
@@ -22,7 +34,7 @@ export const tinkerBellQueenOfTheAzuriteFairies: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_99ced91e0cc94c6cb0be7bf655372dfd",
-    tcgPlayer: 584614,
+    tcgPlayer: "584614",
   },
   text: [
     {

@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { princePhillipVanquisherOfFoesI18n } from "./087-prince-phillip-vanquisher-of-foes.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const princePhillipVanquisherOfFoes: CharacterCard = {
   id: "Z2r",
   canonicalId: "ci_UBa",
+  slug: "lorcana-ci_UBa",
+  printings: [
+    {
+      id: "set4-087",
+      artId: "set4-087",
+      setCode: "set4",
+      collectorNumber: "87",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-087", "set9-073"],
   cardType: "character",
   name: "Prince Phillip",
@@ -22,7 +34,7 @@ export const princePhillipVanquisherOfFoes: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4c762e16709149b79b4f7d895fd1de8b",
-    tcgPlayer: 650015,
+    tcgPlayer: "650015",
   },
   text: [
     {

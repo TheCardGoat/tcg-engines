@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { balooFriendAndGuardianI18n } from "./001-baloo-friend-and-guardian.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { support } from "../../../helpers/abilities/support";
 
 export const balooFriendAndGuardian: CharacterCard = {
   id: "T1d",
   canonicalId: "ci_T1d",
+  slug: "lorcana-ci_T1d",
+  printings: [
+    {
+      id: "set10-001",
+      artId: "set10-001",
+      setCode: "set10",
+      collectorNumber: "1",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-001"],
   cardType: "character",
   name: "Baloo",
@@ -22,7 +34,7 @@ export const balooFriendAndGuardian: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9149ad820976479daad901fbd5bb1679",
-    tcgPlayer: 659178,
+    tcgPlayer: "659178",
   },
   text: [
     {

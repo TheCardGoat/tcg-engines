@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { judyHoppsResourcefulRabbitI18n } from "./015-judy-hopps-resourceful-rabbit.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const judyHoppsResourcefulRabbit: CharacterCard = {
   id: "Z78",
   canonicalId: "ci_Z78",
+  slug: "lorcana-ci_Z78",
+  printings: [
+    {
+      id: "set6-015",
+      artId: "set6-015",
+      setCode: "set6",
+      collectorNumber: "15",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-015"],
   cardType: "character",
   name: "Judy Hopps",
@@ -21,7 +33,7 @@ export const judyHoppsResourcefulRabbit: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_17a352bad7df43d2bfd36a9c2c475c6c",
-    tcgPlayer: 579923,
+    tcgPlayer: "579923",
   },
   text: [
     {

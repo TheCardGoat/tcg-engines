@@ -21,12 +21,12 @@ export const basilUndercoverDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Verdeckter Ermittler",
     text: [
       {
-        title: "AUSSER GEFECHT SETZEN",
+        title: "Außer Gefecht setzen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Charakter deiner Wahl zurück auf die zugehörige Hand schicken.",
       },
       {
-        title: "EINGREIFEN",
+        title: "Eingreifen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, wirft eine gegnerische Person deiner Wahl 1 zufällig ausgewählte Karte aus ihrer Hand ab.",
       },
@@ -37,12 +37,12 @@ export const basilUndercoverDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Détective infiltré",
     text: [
       {
-        title: "NEUTRALISER",
+        title: "Neutraliser",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et le renvoyer dans la main de son propriétaire.",
       },
       {
-        title: "INTERFÉRER",
+        title: "Interférer",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un adversaire qui défausse une carte au hasard.",
       },
@@ -53,12 +53,12 @@ export const basilUndercoverDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Detective Sotto Copertura",
     text: [
       {
-        title: "NEUTRALIZZARE",
+        title: "Neutralizzare",
         description:
           "Quando giochi questo personaggio, puoi far riprendere in mano al suo giocatore un personaggio a tua scelta.",
       },
       {
-        title: "INTERFERIRE",
+        title: "Interferire",
         description:
           "Ogni volta che questo personaggio va all'avventura, un avversario a tua scelta scarta una carta a caso.",
       },

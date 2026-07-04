@@ -1,0 +1,4 @@
+interface:
+  display_name: "SWU Rules"
+  short_description: "Star Wars Unlimited rules and glossary"
+  default_prompt: "Use $swu-rules to answer this Star Wars Unlimited rules or implementation question with citations."

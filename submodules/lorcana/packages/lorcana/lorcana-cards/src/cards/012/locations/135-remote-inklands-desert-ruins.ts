@@ -4,6 +4,17 @@ import { remoteInklandsDesertRuinsI18n } from "./135-remote-inklands-desert-ruin
 export const remoteInklandsDesertRuins: LocationCard = {
   id: "JRM",
   canonicalId: "ci_JRM",
+  slug: "lorcana-ci_JRM",
+  printings: [
+    {
+      id: "set12-135",
+      artId: "set12-135",
+      setCode: "set12",
+      collectorNumber: "135",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-135"],
   cardType: "location",
   name: "Remote Inklands",
@@ -19,10 +30,11 @@ export const remoteInklandsDesertRuins: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_89c1af2f0ec443728e91c461511190f1",
+    tcgPlayer: "690210",
   },
   text: [
     {
-      title: "ERODING WINGS",
+      title: "ERODING WINDS",
       description: "At the start of your turn, put the top card of your deck into your discard.",
     },
     {

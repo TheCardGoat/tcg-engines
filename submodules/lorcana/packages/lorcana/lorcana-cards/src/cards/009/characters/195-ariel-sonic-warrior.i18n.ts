@@ -20,12 +20,13 @@ export const arielSonicWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Schall-Kriegerin",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Arielle-Charaktere auszuspielen.)",
       },
       {
-        title: "VERSTÄRKTE STIMME",
+        title: "Verstärkte Stimme",
         description:
-          "Jedes Mal, wenn du ein Lied ausspielst, darfst du 2 bezahlen, um einem Charakter deiner Wahl 3 Schaden zuzufügen.",
+          "Jedes Mal, wenn du ein Lied ausspielst, darfst du 2 {I} bezahlen, um einem Charakter deiner Wahl 3 Schaden zuzufügen.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const arielSonicWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerrière sonique",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Ariel.)",
       },
       {
-        title: "VOIX AMPLIFIÉE",
+        title: "Voix amplifiée",
         description:
-          "Chaque fois que vous jouez une chanson, vous pouvez payer 2 pour choisir un personnage et lui infliger 3 dommages.",
+          "Chaque fois que vous jouez une chanson, vous pouvez payer 2 {I} pour choisir un personnage et lui infliger 3 dommages.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const arielSonicWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerriera Sonica",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Ariel.)",
       },
       {
-        title: "VOCE AMPLIFICATA",
+        title: "Voce Amplificata",
         description:
-          "Ogni volta che giochi una canzone, puoi pagare 2 per infliggere 3 danni a un personaggio a tua scelta.",
+          "Ogni volta che giochi una canzone, puoi pagare 2 {I} per infliggere 3 danni a un personaggio a tua scelta.",
       },
     ],
   },

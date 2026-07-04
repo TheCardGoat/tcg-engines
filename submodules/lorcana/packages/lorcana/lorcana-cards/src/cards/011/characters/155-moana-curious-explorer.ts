@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { moanaCuriousExplorerI18n } from "./155-moana-curious-explorer.i18n";
 
 export const moanaCuriousExplorer: CharacterCard = {
-  id: "wRv",
+  id: "q6R",
   canonicalId: "ci_sp0",
+  slug: "lorcana-ci_sp0",
+  printings: [
+    {
+      id: "set11-155",
+      artId: "set11-155",
+      setCode: "set11",
+      collectorNumber: "155",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-155"],
   cardType: "character",
   name: "Moana",
@@ -20,7 +31,7 @@ export const moanaCuriousExplorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b73d08030c9646ab8a227158b8e453d4",
-    tcgPlayer: 673300,
+    tcgPlayer: "673300",
   },
   text: [
     {

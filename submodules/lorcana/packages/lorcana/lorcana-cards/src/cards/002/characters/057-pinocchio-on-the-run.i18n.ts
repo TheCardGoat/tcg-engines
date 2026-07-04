@@ -20,10 +20,11 @@ export const pinocchioOnTheRunI18n: Record<Languages, I18nProperties> = {
     version: "Auf der Flucht",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Pinocchio-Charaktere auszuspielen.)",
       },
       {
-        title: "HÖR AUF DEIN GEWISSEN",
+        title: "Hör auf dein Gewissen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Charakter oder Gegenstand deiner Wahl, der 3 oder weniger kostet, zurück auf die zugehörige Hand schicken.",
       },
@@ -34,10 +35,11 @@ export const pinocchioOnTheRunI18n: Record<Languages, I18nProperties> = {
     version: "Livré à lui-même",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Pinocchio.)",
       },
       {
-        title: "ÉCOUTE TA CONSCIENCE",
+        title: "Écoute ta conscience",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir soit un personnage soit un objet coûtant 3 ou moins et le renvoyer dans la main de son propriétaire.",
       },
@@ -48,10 +50,11 @@ export const pinocchioOnTheRunI18n: Record<Languages, I18nProperties> = {
     version: "On the Run",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Pinocchio.)",
       },
       {
-        title: "LISTEN TO YOUR CONSCIENCE",
+        title: "Listen to Your Conscience",
         description:
           "When you play this character, you may return chosen character or item with cost 3 or less to their player's hand.",
       },

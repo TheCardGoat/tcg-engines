@@ -6,12 +6,12 @@ export const snowWhiteMerryAsTheMorningI18n: Record<Languages, I18nProperties> =
     version: "Merry as the Morning",
     text: [
       {
-        title: "Clarion Call",
+        title: "CLARION CALL",
         description:
           "Whenever this character quests, you may return chosen Seven Dwarfs character of yours to your hand to draw a card.",
       },
       {
-        title: "Never Forgotten",
+        title: "NEVER FORGOTTEN",
         description:
           "During an opponent's turn, when this character is banished in a challenge, return this card to your hand.",
       },

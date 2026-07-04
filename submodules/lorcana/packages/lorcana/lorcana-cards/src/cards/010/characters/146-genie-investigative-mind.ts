@@ -4,6 +4,17 @@ import { genieInvestigativeMindI18n } from "./146-genie-investigative-mind.i18n"
 export const genieInvestigativeMind: CharacterCard = {
   id: "wxG",
   canonicalId: "ci_wxG",
+  slug: "lorcana-ci_wxG",
+  printings: [
+    {
+      id: "set10-146",
+      artId: "set10-146",
+      setCode: "set10",
+      collectorNumber: "146",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-146"],
   cardType: "character",
   name: "Genie",
@@ -21,7 +32,7 @@ export const genieInvestigativeMind: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_cd2b67f12f9f42beab11392540a24c2e",
-    tcgPlayer: 659382,
+    tcgPlayer: "659382",
   },
   classifications: ["Storyborn", "Ally", "Detective"],
   i18n: genieInvestigativeMindI18n,

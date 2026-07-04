@@ -21,13 +21,13 @@ export const svenLeapingReindeerI18n: Record<Languages, I18nProperties> = {
     version: "Springendes Rentier",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "Herausfordern +3",
+        title: "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const svenLeapingReindeerI18n: Record<Languages, I18nProperties> = {
     version: "Renne en plein saut",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "Offensif +3",
+        title: "<Offensif> +3",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const svenLeapingReindeerI18n: Record<Languages, I18nProperties> = {
     version: "Renna Salterina",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "Sfidante +3",
+        title: "<Sfidante> +3",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
     ],
   },

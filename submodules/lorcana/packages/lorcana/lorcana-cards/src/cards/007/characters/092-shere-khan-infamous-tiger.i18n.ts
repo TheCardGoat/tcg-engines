@@ -6,8 +6,8 @@ export const shereKhanInfamousTigerI18n: Record<Languages, I18nProperties> = {
     version: "Infamous Tiger",
     text: [
       {
-        title: "WHAT A PITY",
-        description: "When you play this character, discard your hand.",
+        title: "WHAT",
+        description: "A PITY When you play this character, discard your hand.",
       },
     ],
   },
@@ -16,7 +16,7 @@ export const shereKhanInfamousTigerI18n: Record<Languages, I18nProperties> = {
     version: "Berüchtigter Tiger",
     text: [
       {
-        title: "SO EIN JAMMER",
+        title: "So ein Jammer",
         description: "Wenn du diesen Charakter ausspielst, wirf alle Karten von deiner Hand ab.",
       },
     ],
@@ -26,7 +26,7 @@ export const shereKhanInfamousTigerI18n: Record<Languages, I18nProperties> = {
     version: "Tigre tristement célèbre",
     text: [
       {
-        title: "C'EST REGRETTABLE",
+        title: "C'est regrettable",
         description: "Lorsque vous jouez ce personnage, défaussez votre main.",
       },
     ],
@@ -36,7 +36,7 @@ export const shereKhanInfamousTigerI18n: Record<Languages, I18nProperties> = {
     version: "Tigre Famigerata",
     text: [
       {
-        title: "CHE PECCATO",
+        title: "Che Peccato",
         description: "Quando giochi questo personaggio, scarta la tua mano.",
       },
     ],

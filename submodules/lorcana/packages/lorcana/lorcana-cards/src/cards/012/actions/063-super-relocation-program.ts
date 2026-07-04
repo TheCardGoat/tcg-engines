@@ -4,6 +4,17 @@ import { superRelocationProgramI18n } from "./063-super-relocation-program.i18n"
 export const superRelocationProgram: ActionCard = {
   id: "Rxt",
   canonicalId: "ci_Rxt",
+  slug: "lorcana-ci_Rxt",
+  printings: [
+    {
+      id: "set12-063",
+      artId: "set12-063",
+      setCode: "set12",
+      collectorNumber: "63",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-063"],
   cardType: "action",
   name: "Super Relocation Program",
@@ -14,6 +25,10 @@ export const superRelocationProgram: ActionCard = {
   rarity: "common",
   cost: 4,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_e2aa8e208e934f27a81fb6cb5ce26d6b",
+    tcgPlayer: "692161",
+  },
   text: "Return chosen character of yours to your hand. If you returned a Hero character this way, draw 2 cards.",
   abilities: [
     {
@@ -38,11 +53,20 @@ export const superRelocationProgram: ActionCard = {
             condition: {
               type: "and",
               conditions: [
-                { type: "if-you-do" },
-                { type: "returned-card-has-classification", classification: "Hero" },
+                {
+                  type: "if-you-do",
+                },
+                {
+                  type: "returned-card-has-classification",
+                  classification: "Hero",
+                },
               ],
             },
-            then: { type: "draw", amount: 2, target: "CONTROLLER" },
+            then: {
+              type: "draw",
+              amount: 2,
+              target: "CONTROLLER",
+            },
           },
         ],
       },

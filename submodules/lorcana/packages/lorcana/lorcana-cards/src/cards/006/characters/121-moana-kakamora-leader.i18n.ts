@@ -20,10 +20,11 @@ export const moanaKakamoraLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Anführerin der Kokomora",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Vaiana-Charaktere auszuspielen.)",
       },
       {
-        title: "KRÄFTE VEREINEN",
+        title: "Kräfte vereinen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du beliebig viele deiner Charaktere kostenlos zu demselben Ort bewegen. Sammle 1 Legende für jeden Charakter, den du auf diese Weise bewegt hast.",
       },
@@ -34,10 +35,11 @@ export const moanaKakamoraLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Cheffe des Kakamora",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Vaiana.)",
       },
       {
-        title: "RASSEMBLEMENT DES FORCES",
+        title: "Rassemblement des forces",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez déplacer gratuitement n'importe quel nombre de vos personnages sur le même lieu. Gagnez 1 éclat de Lore par personnage déplacé de cette façon.",
       },
@@ -48,10 +50,11 @@ export const moanaKakamoraLeaderI18n: Record<Languages, I18nProperties> = {
     version: "Leader dei Kakamora",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Vaiana.)",
       },
       {
-        title: "RADUNARE LE TRUPPE",
+        title: "Radunare le Truppe",
         description:
           "Quando giochi questo personaggio, puoi spostare un qualsiasi numero di tuoi personaggi nello stesso luogo, gratis. Ottieni 1 leggenda per ogni personaggio che hai spostato.",
       },

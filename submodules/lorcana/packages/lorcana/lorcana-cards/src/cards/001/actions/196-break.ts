@@ -4,6 +4,17 @@ import { breakCardI18n } from "./196-break.i18n";
 export const breakCard: ActionCard = {
   id: "PsS",
   canonicalId: "ci_PsS",
+  slug: "lorcana-ci_PsS",
+  printings: [
+    {
+      id: "set1-196",
+      artId: "set1-196",
+      setCode: "set1",
+      collectorNumber: "196",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-196"],
   cardType: "action",
   name: "Break",
@@ -16,7 +27,7 @@ export const breakCard: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_327f997026094ec49f0dc7d77e4628f5",
-    tcgPlayer: 506000,
+    tcgPlayer: "506000",
   },
   text: "Banish chosen item.",
   abilities: [

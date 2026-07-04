@@ -17,7 +17,7 @@ export const luciferCunningCatI18n: Record<Languages, I18nProperties> = {
     version: "Listige Katze",
     text: [
       {
-        title: "MÄUSEFÄNGER",
+        title: "Mäusefänger",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle gegnerischen Mitspielenden jeweils entweder 1 Aktionskarte oder 2 Karten aus ihrer Hand und werfen diese ab.",
       },
@@ -28,7 +28,7 @@ export const luciferCunningCatI18n: Record<Languages, I18nProperties> = {
     version: "Chat sournois",
     text: [
       {
-        title: "CHASSEUR DE SOURIS",
+        title: "Chasseur de souris",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire choisit et défausse soit 2 cartes soit 1 carte Action.",
       },
@@ -39,7 +39,7 @@ export const luciferCunningCatI18n: Record<Languages, I18nProperties> = {
     version: "Cunning Cat",
     text: [
       {
-        title: "MOUSE CATCHER",
+        title: "Mouse Catcher",
         description:
           "When you play this character, each opponent chooses and discards either 2 cards or 1 action card.",
       },

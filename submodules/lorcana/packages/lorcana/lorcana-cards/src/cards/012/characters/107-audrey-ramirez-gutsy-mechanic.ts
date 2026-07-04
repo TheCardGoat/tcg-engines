@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { audreyRamirezGutsyMechanicI18n } from "./107-audrey-ramirez-gutsy-mechanic.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const audreyRamirezGutsyMechanic: CharacterCard = {
   id: "XG0",
   canonicalId: "ci_XG0",
+  slug: "lorcana-ci_XG0",
+  printings: [
+    {
+      id: "set12-107",
+      artId: "set12-107",
+      setCode: "set12",
+      collectorNumber: "107",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-107"],
   cardType: "character",
   name: "Audrey Ramirez",
@@ -21,6 +33,7 @@ export const audreyRamirezGutsyMechanic: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b2d382e40e5642e0bd54eb50f0b0dc5c",
+    tcgPlayer: "690540",
   },
   text: "Rush",
   classifications: ["Storyborn", "Ally"],

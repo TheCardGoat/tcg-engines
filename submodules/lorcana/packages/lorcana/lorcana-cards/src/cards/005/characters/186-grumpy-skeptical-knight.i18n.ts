@@ -22,14 +22,14 @@ export const grumpySkepticalKnightI18n: Record<Languages, I18nProperties> = {
     version: "Ritter des Misstrauens",
     text: [
       {
-        title: "GESCHENK DER UNVERWÜSTLICHKEIT",
+        title: "Geschenk der Unverwüstlichkeit",
         description:
-          "Solange einer deiner Ritter an einem Ort ist, erhält jener Charakter Robust +2. (Reduziere jeglichen Schaden, der ihm zugefügt wird, um 2.)",
+          "Solange einer deiner Ritter an einem Ort ist, erhält jener Charakter <Robust> +2. (Reduziere jeglichen Schaden, der ihm zugefügt wird, um 2.)",
       },
       {
-        title: "GESCHWINDIGKEITSSCHUB",
+        title: "Geschwindigkeitsschub",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -38,13 +38,13 @@ export const grumpySkepticalKnightI18n: Record<Languages, I18nProperties> = {
     version: "Chevalier sceptique",
     text: [
       {
-        title: "RÉSILIENCE",
-        description: "Vos personnages Chevalier sur un lieu gagnent Résistance +2.",
+        title: "Résilience",
+        description: "Vos personnages Chevalier sur un lieu gagnent <Résistance> +2.",
       },
       {
-        title: "ACCÉLÉRATION",
+        title: "Accélération",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier les personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier les personnages avec Insaisissable.)",
       },
     ],
   },
@@ -53,14 +53,14 @@ export const grumpySkepticalKnightI18n: Record<Languages, I18nProperties> = {
     version: "Cavaliere Scettico",
     text: [
       {
-        title: "DONO DI RESILIENZA",
+        title: "Dono di Resilienza",
         description:
-          "Mentre uno dei tuoi personaggi Cavaliere si trova in un luogo, quel personaggio ottiene Resistere +2.",
+          "Mentre uno dei tuoi personaggi Cavaliere si trova in un luogo, quel personaggio ottiene <Resistere> +2.",
       },
       {
-        title: "SCATTO VELOCE",
+        title: "Scatto Veloce",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

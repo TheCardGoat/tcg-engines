@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rajahGhostlyTigerI18n } from "./062-rajah-ghostly-tiger.i18n";
+
 import { vanish } from "../../../helpers/abilities/vanish";
 
 export const rajahGhostlyTiger: CharacterCard = {
   id: "yQ2",
   canonicalId: "ci_yQ2",
+  slug: "lorcana-ci_yQ2",
+  printings: [
+    {
+      id: "set7-062",
+      artId: "set7-062",
+      setCode: "set7",
+      collectorNumber: "62",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-062"],
   cardType: "character",
   name: "Rajah",
@@ -21,7 +33,7 @@ export const rajahGhostlyTiger: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_85bc31bc75a34ebcbcfc164e701ae6ef",
-    tcgPlayer: 618172,
+    tcgPlayer: "618172",
   },
   text: [
     {

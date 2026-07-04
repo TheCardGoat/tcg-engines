@@ -4,6 +4,17 @@ import { theBlackCauldronI18n } from "./032-the-black-cauldron.i18n";
 export const theBlackCauldron: ItemCard = {
   id: "4V4",
   canonicalId: "ci_uoZ",
+  slug: "lorcana-ci_uoZ",
+  printings: [
+    {
+      id: "set10-032",
+      artId: "set10-032",
+      setCode: "set10",
+      collectorNumber: "32",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-032"],
   cardType: "item",
   name: "The Black Cauldron",
@@ -16,7 +27,7 @@ export const theBlackCauldron: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_24dfd54db49e4a5d8004c51d0882aa46",
-    tcgPlayer: 658884,
+    tcgPlayer: "658884",
   },
   text: [
     {

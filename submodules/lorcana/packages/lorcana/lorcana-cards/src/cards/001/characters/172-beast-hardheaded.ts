@@ -4,6 +4,17 @@ import { beastHardheadedI18n } from "./172-beast-hardheaded.i18n";
 export const beastHardheaded: CharacterCard = {
   id: "VIG",
   canonicalId: "ci_VIG",
+  slug: "lorcana-ci_VIG",
+  printings: [
+    {
+      id: "set1-172",
+      artId: "set1-172",
+      setCode: "set1",
+      collectorNumber: "172",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-172"],
   cardType: "character",
   name: "Beast",
@@ -20,7 +31,7 @@ export const beastHardheaded: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9600ba030e244c31becf34a3bf0822af",
-    tcgPlayer: 508900,
+    tcgPlayer: "508900",
   },
   text: [
     {

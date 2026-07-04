@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { belleAccomplishedMysticI18n } from "./036-belle-accomplished-mystic.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const belleAccomplishedMystic: CharacterCard = {
-  id: "Ybr",
-  canonicalId: "ci_CTt",
+  id: "xMe",
+  canonicalId: "ci_4lK",
+  slug: "lorcana-ci_4lK",
+  printings: [
+    {
+      id: "set4-036",
+      artId: "set4-036",
+      setCode: "set4",
+      collectorNumber: "36",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-036", "set9-040"],
   cardType: "character",
   name: "Belle",
@@ -21,7 +33,7 @@ export const belleAccomplishedMystic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c51b6a26015b45f298d1664787f37234",
-    tcgPlayer: 651121,
+    tcgPlayer: "651121",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { lonelyGraveI18n } from "./132-lonely-grave.i18n";
 export const lonelyGrave: ItemCard = {
   id: "zMB",
   canonicalId: "ci_zMB",
+  slug: "lorcana-ci_zMB",
+  printings: [
+    {
+      id: "set11-132",
+      artId: "set11-132",
+      setCode: "set11",
+      collectorNumber: "132",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-132"],
   cardType: "item",
   name: "Lonely Grave",
@@ -16,7 +27,7 @@ export const lonelyGrave: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0fb558452ff949e1ad997108b6f0ad06",
-    tcgPlayer: 675345,
+    tcgPlayer: "675345",
   },
   text: [
     {

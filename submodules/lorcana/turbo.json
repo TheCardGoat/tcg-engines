@@ -51,6 +51,11 @@
       "outputs": [],
       "env": ["AGENT"]
     },
+    "@tcg/lorcana-simulator#test": {
+      "dependsOn": ["@tcg/lorcana-simulator#check-types", "^build"],
+      "outputs": [],
+      "env": ["AGENT"]
+    },
     "ci-check": {
       "cache": true,
       "outputs": [],

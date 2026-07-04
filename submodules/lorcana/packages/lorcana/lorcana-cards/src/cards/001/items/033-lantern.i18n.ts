@@ -14,9 +14,9 @@ export const lanternI18n: Record<Languages, I18nProperties> = {
     name: "Himmelslaterne",
     text: [
       {
-        title: "GEBURTSTAGSLICHTER",
+        title: "Geburtstagslichter",
         description:
-          "— Du zahlst 1 weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
+          "{E} — Du zahlst 1 {I} weniger für den nächsten Charakter, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -25,7 +25,8 @@ export const lanternI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "LUMIÈRES D'ANNIVERSAIRE",
-        description: "— Le prochain personnage que vous jouez durant ce tour coûte 1 de moins.",
+        description:
+          "{E} — Le prochain personnage que vous jouez durant ce tour coûte 1 {I} de moins.",
       },
     ],
   },
@@ -33,8 +34,9 @@ export const lanternI18n: Record<Languages, I18nProperties> = {
     name: "Lanterna",
     text: [
       {
-        title: "LUCI DI COMPLEANNO",
-        description: "— Paga 1 in meno per giocare il tuo prossimo personaggio per questo turno.",
+        title: "Luci di Compleanno",
+        description:
+          "{E} — Paga 1 {I} in meno per giocare il tuo prossimo personaggio per questo turno.",
       },
     ],
   },

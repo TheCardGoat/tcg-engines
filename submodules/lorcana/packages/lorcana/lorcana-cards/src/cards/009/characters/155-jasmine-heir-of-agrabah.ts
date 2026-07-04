@@ -1,15 +1,72 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { jasmineHeirOfAgrabah as canonicalJasmineHeirOfAgrabah } from "../../002";
+import { jasmineHeirOfAgrabahI18n } from "./155-jasmine-heir-of-agrabah.i18n";
 
 export const jasmineHeirOfAgrabah: CharacterCard = {
-  ...canonicalJasmineHeirOfAgrabah,
-  id: "vNP",
+  id: "2JR",
+  canonicalId: "ci_OtD",
+  slug: "lorcana-ci_OtD",
+  printings: [
+    {
+      id: "set9-155",
+      artId: "set9-155",
+      setCode: "set9",
+      collectorNumber: "155",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-151", "set9-155"],
+  cardType: "character",
+  name: "Jasmine",
+  version: "Heir of Agrabah",
+  inkType: ["sapphire"],
+  franchise: "Aladdin",
   set: "009",
   cardNumber: 155,
   rarity: "common",
+  cost: 1,
+  strength: 1,
+  willpower: 2,
+  lore: 1,
+  inkable: true,
   externalIds: {
     lorcast: "crd_76abbf408f4940dea3dc5daf5afdd314",
-    tcgPlayer: 650090,
+    tcgPlayer: "650090",
   },
+  text: [
+    {
+      title: "I'M",
+      description:
+        "A FAST LEARNER When you play this character, remove up to 1 damage from chosen character of yours.",
+    },
+  ],
+  classifications: ["Storyborn", "Hero", "Princess"],
+  abilities: [
+    {
+      effect: {
+        amount: {
+          type: "up-to",
+          value: 1,
+        },
+        target: {
+          cardTypes: ["character"],
+          count: 1,
+          owner: "you",
+          selector: "chosen",
+          zones: ["play"],
+        },
+        type: "remove-damage",
+      },
+      id: "1sv-1",
+      name: "I'M A FAST LEARNER",
+      text: "I'M A FAST LEARNER When you play this character, remove up to 1 damage from chosen character of yours.",
+      trigger: {
+        event: "play",
+        on: "SELF",
+        timing: "when",
+      },
+      type: "triggered",
+    },
+  ],
+  i18n: jasmineHeirOfAgrabahI18n,
 };

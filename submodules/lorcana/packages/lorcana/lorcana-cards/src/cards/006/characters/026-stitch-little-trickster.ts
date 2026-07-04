@@ -4,6 +4,17 @@ import { stitchLittleTricksterI18n } from "./026-stitch-little-trickster.i18n";
 export const stitchLittleTrickster: CharacterCard = {
   id: "Yiv",
   canonicalId: "ci_Yiv",
+  slug: "lorcana-ci_Yiv",
+  printings: [
+    {
+      id: "set6-026",
+      artId: "set6-026",
+      setCode: "set6",
+      collectorNumber: "26",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-026"],
   cardType: "character",
   name: "Stitch",
@@ -20,7 +31,7 @@ export const stitchLittleTrickster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_91292f4ca0684baf9ed9715bf7caa07a",
-    tcgPlayer: 592007,
+    tcgPlayer: "592007",
   },
   text: [
     {

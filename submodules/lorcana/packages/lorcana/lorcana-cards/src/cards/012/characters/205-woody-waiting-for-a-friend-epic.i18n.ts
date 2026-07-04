@@ -7,14 +7,14 @@ export const woodyWaitingForAFriendEpicI18n: Record<Languages, I18nProperties> =
   },
   de: {
     name: "Woody",
-    version: "Waiting for a Friend",
+    version: "Wartet auf einen Freund",
   },
   fr: {
     name: "Woody",
-    version: "Waiting for a Friend",
+    version: "Attend un ami",
   },
   it: {
     name: "Woody",
-    version: "Waiting for a Friend",
+    version: "In Attesa di un Amico",
   },
 };

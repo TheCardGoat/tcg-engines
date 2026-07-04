@@ -9,7 +9,6 @@
   } from '$lib';
   import type { LorcanaGameContext } from '@/features/simulator/context/game-context.svelte.js';
   import type { PlayerInteractionView } from '@tcg/lorcana-interaction';
-  import { getLorcanaFixture } from '@/features/simulator-devtools/fixtures';
   import { LorcanaMultiplayerSimulatorAdapter } from '@/features/simulator-devtools/harness';
   import { buildSimulatorAssetUrl } from '$lib/config/public-url-config.js';
 
@@ -25,7 +24,7 @@
 
   interface StoryWrapperProps {
     browserTransport?: BrowserTransportConfig;
-    fixture?: LorcanaSimulatorFixture;
+    fixture: LorcanaSimulatorFixture;
     fixtureId: string;
     initialView: LorcanaSimulatorView;
     locale?: LorcanaSimulatorLocale;
@@ -45,7 +44,7 @@
   let {
     browserTransport = { mode: 'sync' },
     fixtureId,
-    fixture: fixtureProp,
+    fixture,
     initialView,
     locale: storyLocale = 'en',
     frameWidth = '100%',
@@ -65,9 +64,6 @@
   let debugStateId = $state<number | null>(null);
   let currentView = $derived(currentViewOverride ?? initialView);
 
-  let fixture = $derived<LorcanaSimulatorFixture>(
-    fixtureProp || getLorcanaFixture(fixtureId),
-  );
   let normalizedBrowserTransport = $derived(
     normalizeBrowserTransportConfig(browserTransport),
   );
@@ -77,6 +73,7 @@
       fixture.playerTwo,
       {
         browserTransport: normalizedBrowserTransport,
+        capturePatches: false,
         seed: fixture.seed ?? 'simulator-default',
         skipPreGame: fixture.skipPreGame ?? true,
         validateSync: false,

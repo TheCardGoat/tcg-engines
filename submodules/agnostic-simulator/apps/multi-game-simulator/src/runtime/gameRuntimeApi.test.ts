@@ -7,7 +7,7 @@ import {
   normalizeApiBase,
   parseRuntimeApiUrlMap,
   playUrl,
-} from "./gameRuntimeApi";
+} from "./gameRuntimeApi.js";
 
 describe("game runtime API URLs", () => {
   test("prefers per-game runtime URLs over VITE_API_URL", () => {

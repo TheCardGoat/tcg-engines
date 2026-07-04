@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gazellePopStarI18n } from "./011-gazelle-pop-star.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const gazellePopStar: CharacterCard = {
   id: "5Ov",
   canonicalId: "ci_5Ov",
+  slug: "lorcana-ci_5Ov",
+  printings: [
+    {
+      id: "set5-011",
+      artId: "set5-011",
+      setCode: "set5",
+      collectorNumber: "11",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-011"],
   cardType: "character",
   name: "Gazelle",
@@ -21,7 +33,7 @@ export const gazellePopStar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_12426744b21049a39b01acf3d93e4311",
-    tcgPlayer: 561947,
+    tcgPlayer: "561947",
   },
   text: "Singer 5",
   classifications: ["Storyborn", "Ally"],

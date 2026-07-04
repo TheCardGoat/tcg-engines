@@ -11,10 +11,28 @@ export const whenWillMyLifeBeginI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Où est la vraie vie ?",
-    text: "Choisissez un personnage qui ne pourra pas défier lors de son prochain tour. Piochez une carte.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage qui ne pourra pas défier lors de son prochain tour. Piochez une carte.",
+      },
+    ],
   },
   it: {
     name: "Aspetto Quel che Succederà",
-    text: "(Un personaggio con costo 3 o superiore può per cantare questa canzone gratis.) Un personaggio a tua scelta non può sfidare durante il suo prossimo turno. Pesca una carta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Un personaggio a tua scelta non può sfidare durante il suo prossimo turno. Pesca una carta.",
+      },
+    ],
   },
 };

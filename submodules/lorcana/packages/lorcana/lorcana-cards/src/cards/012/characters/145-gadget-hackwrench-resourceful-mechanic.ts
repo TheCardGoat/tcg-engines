@@ -4,6 +4,17 @@ import { gadgetHackwrenchResourcefulMechanicI18n } from "./145-gadget-hackwrench
 export const gadgetHackwrenchResourcefulMechanic: CharacterCard = {
   id: "fJ4",
   canonicalId: "ci_fJ4",
+  slug: "lorcana-ci_fJ4",
+  printings: [
+    {
+      id: "set12-145",
+      artId: "set12-145",
+      setCode: "set12",
+      collectorNumber: "145",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-145"],
   cardType: "character",
   name: "Gadget Hackwrench",
@@ -20,6 +31,7 @@ export const gadgetHackwrenchResourcefulMechanic: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ddc2c44f61984a82b0020763c4e4a5e8",
+    tcgPlayer: "690211",
   },
   text: [
     {

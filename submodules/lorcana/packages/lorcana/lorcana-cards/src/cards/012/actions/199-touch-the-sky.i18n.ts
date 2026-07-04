@@ -3,14 +3,7 @@ import type { I18nProperties, Languages } from "@tcg/lorcana-types";
 export const touchTheSkyI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Touch the Sky",
-    text: [
-      {
-        title: "Move a character of yours to a location for free.",
-      },
-      {
-        title: "Then, draw cards equal to that location's {L}.",
-      },
-    ],
+    text: "Move a character of yours to a location for free. Then, draw cards equal to that location's {L}.",
   },
   de: {
     name: "Touch the Sky",

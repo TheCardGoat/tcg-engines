@@ -7,14 +7,17 @@ export const gd04NenaTrinity089: PilotCard = {
   color: "red",
   traits: ["cb", "trinity"],
   id: "GD04-089",
-  externalId: "gundam:gd04-089",
-  slug: "nena-trinity-gd04-089",
+  canonicalId: "GD04-089",
+  externalIds: { bandai: "gundam:gd04-089" },
+  slug: "nena-trinity/gd04-089",
   displayName: "Nena Trinity",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-089",
   printings: [
     {
       id: "GD04-089",
+      artId: "GD04-089",
+      setCode: "GD04",
       collectorNumber: "GD04-089",
       cardNumber: "GD04-089",
       set: {
@@ -30,6 +33,8 @@ export const gd04NenaTrinity089: PilotCard = {
     },
     {
       id: "GD04-089_p1",
+      artId: "GD04-089_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-089_p1",
       cardNumber: "GD04-089",
       set: {
@@ -44,6 +49,7 @@ export const gd04NenaTrinity089: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-089", "GD04-089_p1"],
   selectedPrintingId: "GD04-089",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-089.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-089.webp?260424",

@@ -17,7 +17,7 @@ export const robinHoodArcheryContestantI18n: Record<Languages, I18nProperties> =
     version: "Teilnehmer am Wettbewerb im Bogenschießen",
     text: [
       {
-        title: "TRICKSCHUSS",
+        title: "Trickschuss",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens eine gegnerische Person einen beschädigten Charakter im Spiel hat, sammelst du 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const robinHoodArcheryContestantI18n: Record<Languages, I18nProperties> =
     version: "Concurrent au tir à l'arc",
     text: [
       {
-        title: "FLÈCHE FOURBE",
+        title: "Flèche fourbe",
         description:
           "Lorsque vous jouez ce personnage, si un adversaire a un personnage ayant au moins un dommage sur lui, gagnez un éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const robinHoodArcheryContestantI18n: Record<Languages, I18nProperties> =
     version: "Concorrente di Tiro con l'Arco",
     text: [
       {
-        title: "COLPO DA MAESTRO",
+        title: "Colpo da Maestro",
         description:
           "Quando giochi questo personaggio, se un avversario ha in gioco un personaggio danneggiato, ottieni 1 leggenda.",
       },

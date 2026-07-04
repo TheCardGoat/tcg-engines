@@ -4,6 +4,17 @@ import { liShangImperialCaptainI18n } from "./182-li-shang-imperial-captain.i18n
 export const liShangImperialCaptain: CharacterCard = {
   id: "5lW",
   canonicalId: "ci_8Te",
+  slug: "lorcana-ci_8Te",
+  printings: [
+    {
+      id: "set4-182",
+      artId: "set4-182",
+      setCode: "set4",
+      collectorNumber: "182",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-182", "set9-193"],
   cardType: "character",
   name: "Li Shang",
@@ -21,7 +32,7 @@ export const liShangImperialCaptain: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_3a743f412ff34cd38bd9896f146950f4",
-    tcgPlayer: 650126,
+    tcgPlayer: "650126",
   },
   classifications: ["Dreamborn", "Hero", "Captain"],
   i18n: liShangImperialCaptainI18n,

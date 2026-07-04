@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Flag } from "@lucide/svelte";
+  import Flag from "@lucide/svelte/icons/flag";
 
   interface Props {
     label: string;

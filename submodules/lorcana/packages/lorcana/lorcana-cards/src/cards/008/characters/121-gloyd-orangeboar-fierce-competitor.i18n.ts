@@ -17,7 +17,7 @@ export const gloydOrangeboarFierceCompetitorI18n: Record<Languages, I18nProperti
     version: "Hartnäckiger Konkurrent",
     text: [
       {
-        title: "KÜRBISGEWÜRZ",
+        title: "Kürbisgewürz",
         description:
           "Wenn du diesen Charakter ausspielst, verlieren alle gegnerischen Mitspielenden je 1 Legende und du sammelst 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const gloydOrangeboarFierceCompetitorI18n: Record<Languages, I18nProperti
     version: "Concurrent acharné",
     text: [
       {
-        title: "ÉPICE DE CITROUILLE",
+        title: "Épice de citrouille",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire perd 1 éclat de Lore et vous gagnez 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const gloydOrangeboarFierceCompetitorI18n: Record<Languages, I18nProperti
     version: "Avversario Agguerrito",
     text: [
       {
-        title: "ZUCCA E CANNELLA",
+        title: "Zucca e Cannella",
         description:
           "Quando giochi questo personaggio, ogni avversario perde 1 leggenda e tu ottieni 1 leggenda.",
       },

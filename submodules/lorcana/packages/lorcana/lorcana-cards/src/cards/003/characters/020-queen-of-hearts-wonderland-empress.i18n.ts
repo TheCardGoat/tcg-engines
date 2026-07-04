@@ -17,9 +17,9 @@ export const queenOfHeartsWonderlandEmpressI18n: Record<Languages, I18nPropertie
     version: "Kaiserliche Majestät des Wunderlands",
     text: [
       {
-        title: "ALLE WEGE HIER SIND MEINE WEGE",
+        title: "Alle Wege hier sind meine Wege",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Schurkinnen und Schurken in diesem Zug +1.",
+          "Jedes Mal, wenn dieser Charakter erkundet, erhalten deine anderen Schurkinnen und Schurken in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const queenOfHeartsWonderlandEmpressI18n: Record<Languages, I18nPropertie
     version: "Impératrice du Pays des Merveilles",
     text: [
       {
-        title: "TOUS LES MOYENS SONT À MOI",
+        title: "Tous les moyens sont à moi",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages Méchant gagnent +1 pour le reste de ce tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vos autres personnages Méchant gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const queenOfHeartsWonderlandEmpressI18n: Record<Languages, I18nPropertie
     version: "Imperatrice del Paese delle Meraviglie",
     text: [
       {
-        title: "TUTTE LE STRADE QUI SONO MIE",
+        title: "Tutte le Strade Qui Sono Mie",
         description:
-          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi Cattivo ricevono +1 per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, i tuoi altri personaggi Cattivo ricevono +1 {L} per questo turno.",
       },
     ],
   },

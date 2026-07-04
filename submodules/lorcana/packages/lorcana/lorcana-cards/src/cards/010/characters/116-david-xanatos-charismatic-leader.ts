@@ -4,6 +4,17 @@ import { davidXanatosCharismaticLeaderI18n } from "./116-david-xanatos-charismat
 export const davidXanatosCharismaticLeader: CharacterCard = {
   id: "9PD",
   canonicalId: "ci_9PD",
+  slug: "lorcana-ci_9PD",
+  printings: [
+    {
+      id: "set10-116",
+      artId: "set10-116",
+      setCode: "set10",
+      collectorNumber: "116",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-116"],
   cardType: "character",
   name: "David Xanatos",
@@ -20,7 +31,7 @@ export const davidXanatosCharismaticLeader: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c587751a496c4f5f9c199ca81459e231",
-    tcgPlayer: 659622,
+    tcgPlayer: "659622",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const st02Aries008: UnitCard = {
   color: "blue",
   traits: ["oz"],
   id: "ST02-008",
-  externalId: "gundam:st02-008",
-  slug: "aries-st02-008",
+  canonicalId: "ST02-008",
+  externalIds: { bandai: "gundam:st02-008" },
+  slug: "aries/st02-008",
   displayName: "Aries",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-008",
   printings: [
     {
       id: "ST02-008",
+      artId: "ST02-008",
+      setCode: "ST02",
       collectorNumber: "ST02-008",
       cardNumber: "ST02-008",
       set: {
@@ -30,6 +33,8 @@ export const st02Aries008: UnitCard = {
     },
     {
       id: "ST02-008_p1",
+      artId: "ST02-008_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-008_p1",
       cardNumber: "ST02-008",
       set: {
@@ -44,6 +49,7 @@ export const st02Aries008: UnitCard = {
       productName: "Wings of Advance [ST02] Bonus Pack",
     },
   ],
+  reprints: ["ST02-008", "ST02-008_p1"],
   selectedPrintingId: "ST02-008",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-008.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-008.webp?260424",

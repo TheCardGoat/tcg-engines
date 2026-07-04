@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { lenaSabrewingPureEnergyI18n } from "./049-lena-sabrewing-pure-energy.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const lenaSabrewingPureEnergy: CharacterCard = {
   id: "q7a",
   canonicalId: "ci_q7a",
+  slug: "lorcana-ci_q7a",
+  printings: [
+    {
+      id: "set8-049",
+      artId: "set8-049",
+      setCode: "set8",
+      collectorNumber: "49",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-049"],
   cardType: "character",
   name: "Lena Sabrewing",
@@ -21,7 +33,7 @@ export const lenaSabrewingPureEnergy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5d5fd6b02f3646c9ae4661c9a36177c6",
-    tcgPlayer: 631383,
+    tcgPlayer: "631383",
   },
   text: [
     {

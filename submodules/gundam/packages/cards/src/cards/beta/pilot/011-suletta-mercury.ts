@@ -7,14 +7,17 @@ export const betaSulettaMercury011: PilotCard = {
   color: "white",
   traits: ["academy"],
   id: "ST01-011_p2",
-  externalId: "gundam:st01-011_p2",
-  slug: "suletta-mercury-st01-011-p2",
+  canonicalId: "ST01-011",
+  externalIds: { bandai: "gundam:st01-011_p2" },
+  slug: "suletta-mercury/st01-011",
   displayName: "Suletta Mercury",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "ST01-011_p2",
   printings: [
     {
       id: "ST01-011",
+      artId: "ST01-011",
+      setCode: "ST01",
       collectorNumber: "ST01-011",
       cardNumber: "ST01-011",
       set: {
@@ -30,6 +33,8 @@ export const betaSulettaMercury011: PilotCard = {
     },
     {
       id: "ST01-011_p1",
+      artId: "ST01-011_p1",
+      setCode: "ST01",
       collectorNumber: "ST01-011_p1",
       cardNumber: "ST01-011",
       set: {
@@ -45,6 +50,8 @@ export const betaSulettaMercury011: PilotCard = {
     },
     {
       id: "ST01-011_p2",
+      artId: "ST01-011_p2",
+      setCode: "BETA",
       collectorNumber: "ST01-011_p2",
       cardNumber: "ST01-011",
       set: {
@@ -60,6 +67,8 @@ export const betaSulettaMercury011: PilotCard = {
     },
     {
       id: "ST01-011_p3",
+      artId: "ST01-011_p3",
+      setCode: "BETA",
       collectorNumber: "ST01-011_p3",
       cardNumber: "ST01-011",
       set: {
@@ -75,6 +84,8 @@ export const betaSulettaMercury011: PilotCard = {
     },
     {
       id: "ST01-011_p4",
+      artId: "ST01-011_p4",
+      setCode: "ST01",
       collectorNumber: "ST01-011_p4",
       cardNumber: "ST01-011",
       set: {
@@ -89,6 +100,7 @@ export const betaSulettaMercury011: PilotCard = {
       productName: "Newtype Challenge 2025 Mission1",
     },
   ],
+  reprints: ["ST01-011", "ST01-011_p1", "ST01-011_p2", "ST01-011_p3", "ST01-011_p4"],
   selectedPrintingId: "ST01-011_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/ST01-011_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST01-011_p2.webp?260424",

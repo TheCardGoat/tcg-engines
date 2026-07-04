@@ -4,6 +4,17 @@ import { theTwinsLostBoysI18n } from "./186-the-twins-lost-boys.i18n";
 export const theTwinsLostBoys: CharacterCard = {
   id: "Lqt",
   canonicalId: "ci_Lqt",
+  slug: "lorcana-ci_Lqt",
+  printings: [
+    {
+      id: "set10-186",
+      artId: "set10-186",
+      setCode: "set10",
+      collectorNumber: "186",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-186"],
   cardType: "character",
   name: "The Twins",
@@ -20,7 +31,7 @@ export const theTwinsLostBoys: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_171e6569a06946a89dcc64afdd1585c7",
-    tcgPlayer: 659409,
+    tcgPlayer: "659409",
   },
   text: [
     {

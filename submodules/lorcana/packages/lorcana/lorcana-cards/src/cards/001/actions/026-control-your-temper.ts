@@ -4,6 +4,17 @@ import { controlYourTemperI18n } from "./026-control-your-temper.i18n";
 export const controlYourTemper: ActionCard = {
   id: "PZv",
   canonicalId: "ci_PZv",
+  slug: "lorcana-ci_PZv",
+  printings: [
+    {
+      id: "set1-026",
+      artId: "set1-026",
+      setCode: "set1",
+      collectorNumber: "26",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-026"],
   cardType: "action",
   name: "Control Your Temper!",
@@ -16,7 +27,7 @@ export const controlYourTemper: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3a593c8dd2fe4552a4874f7346527387",
-    tcgPlayer: 493501,
+    tcgPlayer: "493501",
   },
   text: "Chosen character gets -2 {S} this turn.",
   abilities: [

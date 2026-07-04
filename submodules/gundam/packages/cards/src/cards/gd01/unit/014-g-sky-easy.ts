@@ -7,14 +7,17 @@ export const gd01GSkyEasy014: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-014",
-  externalId: "gundam:gd01-014",
-  slug: "g-sky-easy-gd01-014",
+  canonicalId: "GD01-014",
+  externalIds: { bandai: "gundam:gd01-014" },
+  slug: "g-sky-easy/gd01-014",
   displayName: "G-Sky Easy",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-014",
   printings: [
     {
       id: "GD01-014",
+      artId: "GD01-014",
+      setCode: "GD01",
       collectorNumber: "GD01-014",
       cardNumber: "GD01-014",
       set: {
@@ -29,6 +32,7 @@ export const gd01GSkyEasy014: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-014"],
   selectedPrintingId: "GD01-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-014.webp?260424",

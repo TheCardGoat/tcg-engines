@@ -4,6 +4,17 @@ import { yzmaUnjustlyTreatedI18n } from "./184-yzma-unjustly-treated.i18n";
 export const yzmaUnjustlyTreated: CharacterCard = {
   id: "luJ",
   canonicalId: "ci_luJ",
+  slug: "lorcana-ci_luJ",
+  printings: [
+    {
+      id: "set5-184",
+      artId: "set5-184",
+      setCode: "set5",
+      collectorNumber: "184",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-184"],
   cardType: "character",
   name: "Yzma",
@@ -20,7 +31,7 @@ export const yzmaUnjustlyTreated: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6349578aae2742c6901e3129e8da6925",
-    tcgPlayer: 561493,
+    tcgPlayer: "561493",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { vanellopeVonSchweetzRandomRosterRacerI18n } from "./124-vanellope-von-schweetz-random-roster-racer.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const vanellopeVonSchweetzRandomRosterRacer: CharacterCard = {
   id: "yeD",
   canonicalId: "ci_yeD",
+  slug: "lorcana-ci_yeD",
+  printings: [
+    {
+      id: "set5-124",
+      artId: "set5-124",
+      setCode: "set5",
+      collectorNumber: "124",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-124"],
   cardType: "character",
   name: "Vanellope von Schweetz",
@@ -21,7 +33,7 @@ export const vanellopeVonSchweetzRandomRosterRacer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a24dcdebfc7246d4be1faad573e0a23e",
-    tcgPlayer: 555271,
+    tcgPlayer: "555271",
   },
   text: [
     {

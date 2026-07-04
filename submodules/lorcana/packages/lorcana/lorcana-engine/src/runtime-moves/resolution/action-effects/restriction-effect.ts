@@ -88,6 +88,7 @@ export function resolveRestrictionEffect(
       cardPlayed,
       effect.target,
       getEffectTargetSelectionInput(effect.target, resolutionInput),
+      resolutionInput.eventSnapshot,
     ) ?? [];
   if (resolvedTargets.length === 0) {
     return;

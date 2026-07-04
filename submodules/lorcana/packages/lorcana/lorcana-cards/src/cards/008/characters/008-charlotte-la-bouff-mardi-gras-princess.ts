@@ -4,6 +4,17 @@ import { charlotteLaBouffMardiGrasPrincessI18n } from "./008-charlotte-la-bouff-
 export const charlotteLaBouffMardiGrasPrincess: CharacterCard = {
   id: "M8z",
   canonicalId: "ci_M8z",
+  slug: "lorcana-ci_M8z",
+  printings: [
+    {
+      id: "set8-008",
+      artId: "set8-008",
+      setCode: "set8",
+      collectorNumber: "8",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-008"],
   cardType: "character",
   name: "Charlotte La Bouff",
@@ -21,7 +32,7 @@ export const charlotteLaBouffMardiGrasPrincess: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_6183fa48800b4b52b6a5e81f473dee3b",
-    tcgPlayer: 631693,
+    tcgPlayer: "631693",
   },
   classifications: ["Storyborn", "Ally", "Princess"],
   i18n: charlotteLaBouffMardiGrasPrincessI18n,

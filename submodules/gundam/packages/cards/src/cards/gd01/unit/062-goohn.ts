@@ -7,14 +7,17 @@ export const gd01Goohn062: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD01-062",
-  externalId: "gundam:gd01-062",
-  slug: "goohn-gd01-062",
+  canonicalId: "GD01-062",
+  externalIds: { bandai: "gundam:gd01-062" },
+  slug: "goohn/gd01-062",
   displayName: "GOOhN",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-062",
   printings: [
     {
       id: "GD01-062",
+      artId: "GD01-062",
+      setCode: "GD01",
       collectorNumber: "GD01-062",
       cardNumber: "GD01-062",
       set: {
@@ -29,6 +32,7 @@ export const gd01Goohn062: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-062"],
   selectedPrintingId: "GD01-062",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-062.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-062.webp?260424",

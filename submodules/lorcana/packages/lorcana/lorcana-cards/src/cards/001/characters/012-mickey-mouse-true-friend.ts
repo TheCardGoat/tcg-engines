@@ -3,7 +3,18 @@ import { mickeyMouseTrueFriendI18n } from "./012-mickey-mouse-true-friend.i18n";
 
 export const mickeyMouseTrueFriend: CharacterCard = {
   id: "xhF",
-  canonicalId: "ci_wSP",
+  canonicalId: "ci_mvj",
+  slug: "lorcana-ci_mvj",
+  printings: [
+    {
+      id: "set1-012",
+      artId: "set1-012",
+      setCode: "set1",
+      collectorNumber: "12",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-012", "set9-013"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -20,7 +31,7 @@ export const mickeyMouseTrueFriend: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_da34abc7da464b338103666b1ca3d0f8",
-    tcgPlayer: 649962,
+    tcgPlayer: "649962",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: mickeyMouseTrueFriendI18n,

@@ -31,6 +31,7 @@ export interface DeckFormatRule {
   kind: string;
   passed: boolean;
   message: string;
+  details?: unknown;
 }
 
 export interface DeckFormatResult {
@@ -98,6 +99,24 @@ export interface GameAdapter {
   buildCardInstances(decks: ReadonlyArray<DeckBuildInput>): CardsMaps;
   /** Look up a card by its public id; returns null when unknown. */
   getCardById(publicId: string): CardSummary | null;
+  /**
+   * Resolves a game-native runtime public id (e.g. an engine cardId or instance
+   * id) to the card's canonical id — the stable cross-printing gameplay identity.
+   *
+   * Used by cross-game systems (analytics, meta stats, deck hashing) to group
+   * all printings/arts of the same card under one key. Implementations should
+   * resolve any authored/printing id to its canonical id (e.g. Cyberpunk must
+   * apply the merged-slug canonicalization; Gundam must strip the parallel-art
+   * suffix from `cardNumber`).
+   *
+   * Optional: games that have not yet adopted the unified card model leave this
+   * unimplemented. Callers MUST null-check and fall back to the raw publicId
+   * when this returns null (or is absent).
+   *
+   * @returns the canonical id, or `null` if the publicId is unknown or the
+   *          adapter does not support canonical resolution.
+   */
+  getCanonicalCardId?(publicId: string): string | null;
   /**
    * Validate a deck against a format. Returns the per-rule breakdown; throws
    * when the format id is unknown for this game.

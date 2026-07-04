@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { vincenzoSantoriniOnTheRunI18n } from "./124-vincenzo-santorini-on-the-run.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const vincenzoSantoriniOnTheRun: CharacterCard = {
   id: "yND",
   canonicalId: "ci_yND",
+  slug: "lorcana-ci_yND",
+  printings: [
+    {
+      id: "set12-124",
+      artId: "set12-124",
+      setCode: "set12",
+      collectorNumber: "124",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-124"],
   cardType: "character",
   name: "Vincenzo Santorini",
@@ -21,6 +33,7 @@ export const vincenzoSantoriniOnTheRun: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_acfc5c2bdabb45ebbc852642fb30bab7",
+    tcgPlayer: "692054",
   },
   text: [
     {

@@ -20,10 +20,11 @@ export const maxGoofChartTopperI18n: Record<Languages, I18nProperties> = {
     version: "Chartstürmer",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Max-Goof-Charaktere auszuspielen.)",
       },
       {
-        title: "NUMMER-EINS-HIT",
+        title: "Nummer-Eins-Hit",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du eine Liedkarte von deinem Ablagestapel, die 4 oder weniger kostet, kostenlos ausspielen. Lege sie danach unter dein Deck.",
       },
@@ -34,10 +35,10 @@ export const maxGoofChartTopperI18n: Record<Languages, I18nProperties> = {
     version: "En tête du hit-parade",
     text: [
       {
-        title: "Alter 4",
+        title: "<Alter> 4 {I}",
       },
       {
-        title: "NUMÉRO UN DU TOP",
+        title: "Numéro un du top",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez jouer gratuitement une carte Chanson avec un coût de 4 ou moins depuis votre défausse. Placez-la ensuite sous votre pioche.",
       },
@@ -48,10 +49,11 @@ export const maxGoofChartTopperI18n: Record<Languages, I18nProperties> = {
     version: "In Vetta alle Classifiche",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Max Pippo.)",
       },
       {
-        title: "HIT NUMERO UNO",
+        title: "Hit Numero Uno",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi giocare una carta canzone con costo 4 o inferiore dai tuoi scarti gratis, poi mettila in fondo al tuo mazzo invece che nei tuoi scarti.",
       },

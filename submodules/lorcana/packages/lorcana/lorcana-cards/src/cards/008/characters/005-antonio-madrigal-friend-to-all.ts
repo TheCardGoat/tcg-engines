@@ -4,6 +4,17 @@ import { antonioMadrigalFriendToAllI18n } from "./005-antonio-madrigal-friend-to
 export const antonioMadrigalFriendToAll: CharacterCard = {
   id: "07V",
   canonicalId: "ci_07V",
+  slug: "lorcana-ci_07V",
+  printings: [
+    {
+      id: "set8-005",
+      artId: "set8-005",
+      setCode: "set8",
+      collectorNumber: "5",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-005"],
   cardType: "character",
   name: "Antonio Madrigal",
@@ -20,7 +31,7 @@ export const antonioMadrigalFriendToAll: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2564aee724494e5f99b9688aad48753f",
-    tcgPlayer: 631703,
+    tcgPlayer: "631703",
   },
   text: [
     {

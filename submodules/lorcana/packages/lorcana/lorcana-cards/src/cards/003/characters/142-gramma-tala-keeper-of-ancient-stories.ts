@@ -4,6 +4,17 @@ import { grammaTalaKeeperOfAncientStoriesI18n } from "./142-gramma-tala-keeper-o
 export const grammaTalaKeeperOfAncientStories: CharacterCard = {
   id: "1sm",
   canonicalId: "ci_1sm",
+  slug: "lorcana-ci_1sm",
+  printings: [
+    {
+      id: "set3-142",
+      artId: "set3-142",
+      setCode: "set3",
+      collectorNumber: "142",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-142"],
   cardType: "character",
   name: "Gramma Tala",
@@ -20,7 +31,7 @@ export const grammaTalaKeeperOfAncientStories: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2b3c2bc74af94a07ae07634fb74f237b",
-    tcgPlayer: 538361,
+    tcgPlayer: "538361",
   },
   text: [
     {

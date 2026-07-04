@@ -7,14 +7,17 @@ export const gd03ReccoaSShadow104: CommandCard = {
   color: "blue",
   traits: ["titans", "jupitris"],
   id: "GD03-104",
-  externalId: "gundam:gd03-104",
-  slug: "reccoa-s-shadow-gd03-104",
+  canonicalId: "GD03-104",
+  externalIds: { bandai: "gundam:gd03-104" },
+  slug: "reccoa-s-shadow/gd03-104",
   displayName: "Reccoa's Shadow",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-104",
   printings: [
     {
       id: "GD03-104",
+      artId: "GD03-104",
+      setCode: "GD03",
       collectorNumber: "GD03-104",
       cardNumber: "GD03-104",
       set: {
@@ -29,6 +32,7 @@ export const gd03ReccoaSShadow104: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-104"],
   selectedPrintingId: "GD03-104",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-104.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-104.webp?260424",

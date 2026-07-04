@@ -9,21 +9,19 @@ import { useLorcanaBoardPresenter } from "@/features/simulator/context/game-cont
 import LoreBadge from "@/design-system/simulator/display/LoreBadge.svelte";
 import SimulatorSupportReminder from "@/features/simulator/support/SimulatorSupportReminder.svelte";
 import { resolvePatronTierConfig } from "@/features/simulator/model/player-tier.js";
-import {
-	Settings,
-	Bug,
-	Flag,
-	Trash2,
-	Layers,
-	Hand,
-	PaintBucket,
-	EyeOff,
-	Smartphone,
-	Star,
-	Gem,
-	Sparkles,
-	ShieldCheck,
-} from "@lucide/svelte";
+import Bug from "@lucide/svelte/icons/bug";
+import EyeOff from "@lucide/svelte/icons/eye-off";
+import Flag from "@lucide/svelte/icons/flag";
+import Gem from "@lucide/svelte/icons/gem";
+import Hand from "@lucide/svelte/icons/hand";
+import Layers from "@lucide/svelte/icons/layers";
+import PaintBucket from "@lucide/svelte/icons/paint-bucket";
+import Settings from "@lucide/svelte/icons/settings";
+import ShieldCheck from "@lucide/svelte/icons/shield-check";
+import Smartphone from "@lucide/svelte/icons/smartphone";
+import Sparkles from "@lucide/svelte/icons/sparkles";
+import Star from "@lucide/svelte/icons/star";
+import Trash2 from "@lucide/svelte/icons/trash-2";
 import type { Snippet } from "svelte";
 import PlayerTimer from "./PlayerTimer.svelte";
 

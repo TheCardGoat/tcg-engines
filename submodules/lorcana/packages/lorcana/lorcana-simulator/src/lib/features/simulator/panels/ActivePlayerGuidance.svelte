@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { ArrowDownToLine, ArrowUpToLine, Crosshair } from "@lucide/svelte";
+  import ArrowDownToLine from "@lucide/svelte/icons/arrow-down-to-line";
+  import ArrowUpToLine from "@lucide/svelte/icons/arrow-up-to-line";
+  import Crosshair from "@lucide/svelte/icons/crosshair";
   import { m } from "$lib/i18n/messages.js";
   import type {
     ActivePlayerGuidanceItem,
@@ -9,6 +11,7 @@
   import type { LorcanaCardSnapshot } from "@/features/simulator/model/contracts.js";
   import NamedCardSearchInput from "@/features/simulator/panels/NamedCardSearchInput.svelte";
   import ResolutionAmountControls from "@/features/simulator/panels/ResolutionAmountControls.svelte";
+  import CardTextToken from "@/features/simulator/panels/CardTextToken.svelte";
   import CardTextWithSymbols from "@/design-system/simulator/cards/CardTextWithSymbols.svelte";
 
   interface ActivePlayerGuidanceProps {
@@ -58,6 +61,28 @@
     ) {
       simulatorCardContext.setExternalPreviewCard(null);
     }
+  }
+
+  function handleReferencePreviewOpen(card: LorcanaCardSnapshot | null): void {
+    if (card && !card.isMasked) {
+      simulatorCardContext?.openGlobalPreview(card);
+    }
+  }
+
+  function handleReferencePreviewKeydown(
+    event: KeyboardEvent,
+    card: LorcanaCardSnapshot | null,
+  ): void {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    event.preventDefault();
+    handleReferencePreviewOpen(card);
+  }
+
+  function hasPreviewableReferenceText(text: string | null | undefined): boolean {
+    return /[\p{L}\p{N}]/u.test(text ?? "");
   }
 
   function hasSelectedTargetSlot(item: ActivePlayerGuidanceItem): boolean {
@@ -134,10 +159,40 @@
                 onmouseleave={() => handleReferencePreviewLeave(item.inlineReference?.card ?? null)}
                 onfocus={() => handleReferencePreviewEnter(item.inlineReference?.card ?? null)}
                 onblur={() => handleReferencePreviewLeave(item.inlineReference?.card ?? null)}
+                onclick={() => handleReferencePreviewOpen(item.inlineReference?.card ?? null)}
+                onkeydown={(event) => handleReferencePreviewKeydown(event, item.inlineReference?.card ?? null)}
+                title={item.inlineReference.card ? `Preview ${item.inlineReference.label}` : undefined}
               >
-                <CardTextWithSymbols text={item.inlineReference.label} />
+                {#if item.inlineReference.card}
+                  <CardTextToken
+                    card={item.inlineReference.card}
+                    text={item.inlineReference.label}
+                    onHover={() => handleReferencePreviewEnter(item.inlineReference?.card ?? null)}
+                    onLeave={() => handleReferencePreviewLeave(item.inlineReference?.card ?? null)}
+                  />
+                {:else}
+                  <CardTextWithSymbols text={item.inlineReference.label} />
+                {/if}
               </span>
-              <CardTextWithSymbols text={item.inlineReference.suffix ?? ""} />
+              {#if item.inlineReference.suffix && hasPreviewableReferenceText(item.inlineReference.suffix)}
+                <!-- svelte-ignore a11y_no_noninteractive_tabindex a11y_no_static_element_interactions -->
+                <span
+                  class="guidance-message-reference guidance-message-reference--ability"
+                  role={item.inlineReference.card ? "button" : undefined}
+                  tabindex={item.inlineReference.card ? 0 : undefined}
+                  onmouseenter={() => handleReferencePreviewEnter(item.inlineReference?.card ?? null)}
+                  onmouseleave={() => handleReferencePreviewLeave(item.inlineReference?.card ?? null)}
+                  onfocus={() => handleReferencePreviewEnter(item.inlineReference?.card ?? null)}
+                  onblur={() => handleReferencePreviewLeave(item.inlineReference?.card ?? null)}
+                  onclick={() => handleReferencePreviewOpen(item.inlineReference?.card ?? null)}
+                  onkeydown={(event) => handleReferencePreviewKeydown(event, item.inlineReference?.card ?? null)}
+                  title={item.inlineReference.card ? `Preview ${item.inlineReference.label}` : undefined}
+                >
+                  <CardTextWithSymbols text={item.inlineReference.suffix} />
+                </span>
+              {:else}
+                <CardTextWithSymbols text={item.inlineReference.suffix ?? ""} />
+              {/if}
             {:else}
               <CardTextWithSymbols text={item.message} />
             {/if}
@@ -145,11 +200,29 @@
 
           {#if item.abilityDescription && !hasSelectedTargetSlot(item)}
             <p class="guidance-ability-description">
-              <CardTextWithSymbols text={item.abilityDescription} />
+              {#if item.inlineReference?.card}
+                <!-- svelte-ignore a11y_no_noninteractive_tabindex a11y_no_static_element_interactions -->
+                <span
+                  class="guidance-ability-reference"
+                  role="button"
+                  tabindex="0"
+                  onmouseenter={() => handleReferencePreviewEnter(item.inlineReference?.card ?? null)}
+                  onmouseleave={() => handleReferencePreviewLeave(item.inlineReference?.card ?? null)}
+                  onfocus={() => handleReferencePreviewEnter(item.inlineReference?.card ?? null)}
+                  onblur={() => handleReferencePreviewLeave(item.inlineReference?.card ?? null)}
+                  onclick={() => handleReferencePreviewOpen(item.inlineReference?.card ?? null)}
+                  onkeydown={(event) => handleReferencePreviewKeydown(event, item.inlineReference?.card ?? null)}
+                  title={`Preview ${item.inlineReference.label}`}
+                >
+                  <CardTextWithSymbols text={item.abilityDescription} />
+                </span>
+              {:else}
+                <CardTextWithSymbols text={item.abilityDescription} />
+              {/if}
             </p>
           {/if}
 
-          {#if item.targetSlots && item.targetSlots.length > 0 && hasSelectedTargetSlot(item)}
+          {#if item.targetSlots && item.targetSlots.length > 0}
             <div class="guidance-target-slots" aria-label="Selected targets">
               {#each item.targetSlots as slot (slot.id)}
                 <div
@@ -208,7 +281,17 @@
                   disabled={action.disabled}
                   onclick={action.onClick}
                 >
-                  <CardTextWithSymbols text={action.label} />
+                  {#if action.card}
+                    <CardTextToken
+                      card={action.card}
+                      text={action.label}
+                      interactive={false}
+                      onHover={() => handleReferencePreviewEnter(action.card ?? null)}
+                      onLeave={() => handleReferencePreviewLeave(action.card ?? null)}
+                    />
+                  {:else}
+                    <CardTextWithSymbols text={action.label} />
+                  {/if}
                 </button>
               {/each}
             </div>
@@ -403,7 +486,20 @@
     cursor: help;
   }
 
-  .guidance-message-reference:focus-visible {
+  .guidance-message-reference--ability {
+    color: #f8fbff;
+    text-decoration-color: rgba(247, 220, 134, 0.62);
+  }
+
+  .guidance-message-reference:hover,
+  .guidance-message-reference:focus-visible,
+  .guidance-ability-reference:hover,
+  .guidance-ability-reference:focus-visible {
+    color: #fff1b8;
+  }
+
+  .guidance-message-reference:focus-visible,
+  .guidance-ability-reference:focus-visible {
     outline: 2px solid rgba(247, 220, 134, 0.9);
     outline-offset: 2px;
     border-radius: 4px;
@@ -418,6 +514,14 @@
     letter-spacing: 0.01em;
     line-height: 1.35;
     white-space: pre-line;
+  }
+
+  .guidance-ability-reference {
+    color: inherit;
+    cursor: help;
+    text-decoration: underline;
+    text-decoration-color: rgba(200, 220, 248, 0.4);
+    text-underline-offset: 0.16em;
   }
 
   .guidance-target-slots {

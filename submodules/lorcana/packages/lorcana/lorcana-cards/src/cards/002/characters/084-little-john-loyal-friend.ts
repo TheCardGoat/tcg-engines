@@ -4,6 +4,17 @@ import { littleJohnLoyalFriendI18n } from "./084-little-john-loyal-friend.i18n";
 export const littleJohnLoyalFriend: CharacterCard = {
   id: "A4r",
   canonicalId: "ci_A4r",
+  slug: "lorcana-ci_A4r",
+  printings: [
+    {
+      id: "set2-084",
+      artId: "set2-084",
+      setCode: "set2",
+      collectorNumber: "84",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-084"],
   cardType: "character",
   name: "Little John",
@@ -21,7 +32,7 @@ export const littleJohnLoyalFriend: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_dd74aaf06b6e48c59d8b8e4aea1dcad4",
-    tcgPlayer: 527747,
+    tcgPlayer: "527747",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: littleJohnLoyalFriendI18n,

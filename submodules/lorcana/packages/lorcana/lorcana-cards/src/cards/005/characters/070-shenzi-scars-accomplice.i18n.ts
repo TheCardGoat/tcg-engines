@@ -19,12 +19,12 @@ export const shenziScarsAccompliceI18n: Record<Languages, I18nProperties> = {
     version: "Scars Komplizin",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "LEICHTE BEUTE",
+        title: "Leichte Beute",
         description:
-          "Solange dieser Charakter einen beschädigten Charakter herausfordert, erhält er +2.",
+          "Solange dieser Charakter einen beschädigten Charakter herausfordert, erhält er +2 {S}.",
       },
     ],
   },
@@ -33,12 +33,12 @@ export const shenziScarsAccompliceI18n: Record<Languages, I18nProperties> = {
     version: "Complice de Scar",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "UN CASSE-CROÛTE FACILE",
+        title: "Un casse-croûte facile",
         description:
-          "Tant que ce personnage défie un personnage ayant au moins un dommage sur lui, il gagne +2.",
+          "Tant que ce personnage défie un personnage ayant au moins un dommage sur lui, il gagne +2 {S}.",
       },
     ],
   },
@@ -47,11 +47,11 @@ export const shenziScarsAccompliceI18n: Record<Languages, I18nProperties> = {
     version: "Complice di Scar",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "PREDE FACILI",
-        description: "Mentre sfida un personaggio danneggiato, questo personaggio riceve +2.",
+        title: "Prede Facili",
+        description: "Mentre sfida un personaggio danneggiato, questo personaggio riceve +2 {S}.",
       },
     ],
   },

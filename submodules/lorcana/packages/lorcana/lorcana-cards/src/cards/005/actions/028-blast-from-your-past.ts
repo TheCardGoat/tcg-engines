@@ -4,6 +4,17 @@ import { blastFromYourPastI18n } from "./028-blast-from-your-past.i18n";
 export const blastFromYourPast: ActionCard = {
   id: "hV2",
   canonicalId: "ci_hV2",
+  slug: "lorcana-ci_hV2",
+  printings: [
+    {
+      id: "set5-028",
+      artId: "set5-028",
+      setCode: "set5",
+      collectorNumber: "28",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-028"],
   cardType: "action",
   name: "Blast from Your Past",
@@ -16,7 +27,7 @@ export const blastFromYourPast: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1fafea8238334475ae8ed9ece3728309",
-    tcgPlayer: 561468,
+    tcgPlayer: "561468",
   },
   text: "Name a card. Return all character cards with that name from your discard to your hand.",
   actionSubtype: "song",

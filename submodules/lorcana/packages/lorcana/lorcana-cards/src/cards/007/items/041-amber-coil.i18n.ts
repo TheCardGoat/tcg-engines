@@ -15,7 +15,7 @@ export const amberCoilI18n: Record<Languages, I18nProperties> = {
     name: "Bernstein-Reif",
     text: [
       {
-        title: "HEILENDE AURA",
+        title: "Heilende Aura",
         description:
           "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
       },
@@ -25,7 +25,7 @@ export const amberCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spirale d’ambre",
     text: [
       {
-        title: "AURA GUÉRISSEUSE",
+        title: "Aura guérisseuse",
         description:
           "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, vous pouvez choisir un personnage et lui retirer jusqu'à 2 dommages.",
       },
@@ -35,7 +35,7 @@ export const amberCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spira d'Ambra",
     text: [
       {
-        title: "AURA CURATIVA",
+        title: "Aura Curativa",
         description:
           "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, puoi rimuovere fino a 2 danni da un personaggio a tua scelta.",
       },

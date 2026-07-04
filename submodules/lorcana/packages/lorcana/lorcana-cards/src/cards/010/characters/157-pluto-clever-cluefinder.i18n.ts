@@ -17,9 +17,9 @@ export const plutoCleverCluefinderI18n: Record<Languages, I18nProperties> = {
     version: "Schlauer Spurensucher",
     text: [
       {
-        title: "AUF DER SPUR",
+        title: "Auf der Spur",
         description:
-          "— Falls du mindestens einen Detektiv im Spiel hast, nimm 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand. Falls nicht, lege sie auf dein Deck.",
+          "{E} — Falls du mindestens einen Detektiv im Spiel hast, nimm 1 Gegenstandskarte aus deinem Ablagestapel zurück auf deine Hand. Falls nicht, lege sie auf dein Deck.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const plutoCleverCluefinderI18n: Record<Languages, I18nProperties> = {
     version: "Fin dénicheur d'indices",
     text: [
       {
-        title: "SUR LA PISTE",
+        title: "Sur la piste",
         description:
-          "— Si vous avez un personnage Détective en jeu, renvoyez dans votre main une carte Objet de votre défausse. Sinon, placez-la sur votre pioche.",
+          "{E} — Si vous avez un personnage Détective en jeu, renvoyez dans votre main une carte Objet de votre défausse. Sinon, placez-la sur votre pioche.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const plutoCleverCluefinderI18n: Record<Languages, I18nProperties> = {
     version: "Brillante Fiutaindizi",
     text: [
       {
-        title: "SULLA PISTA",
+        title: "Sulla Pista",
         description:
-          "— Se hai in gioco un personaggio Detective, riprendi in mano una carta oggetto dai tuoi scarti. Altrimenti, mettila in cima al tuo mazzo.",
+          "{E} — Se hai in gioco un personaggio Detective, riprendi in mano una carta oggetto dai tuoi scarti. Altrimenti, mettila in cima al tuo mazzo.",
       },
     ],
   },

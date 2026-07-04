@@ -4,6 +4,17 @@ import { pouncingPracticeI18n } from "./176-pouncing-practice.i18n";
 export const pouncingPractice: ActionCard = {
   id: "kf3",
   canonicalId: "ci_kf3",
+  slug: "lorcana-ci_kf3",
+  printings: [
+    {
+      id: "set8-176",
+      artId: "set8-176",
+      setCode: "set8",
+      collectorNumber: "176",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-176"],
   cardType: "action",
   name: "Pouncing Practice",
@@ -16,7 +27,7 @@ export const pouncingPractice: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_80199d9b642b481ba9a0b3435f1756de",
-    tcgPlayer: 631469,
+    tcgPlayer: "631469",
   },
   text: "Chosen character gets -2 {S} this turn. Chosen character of yours gains Evasive this turn. (They can challenge characters with Evasive.)",
   abilities: [

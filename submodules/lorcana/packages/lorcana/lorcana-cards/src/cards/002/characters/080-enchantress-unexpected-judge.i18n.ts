@@ -16,8 +16,8 @@ export const enchantressUnexpectedJudgeI18n: Record<Languages, I18nProperties> =
     version: "Unerwartetes Urteil",
     text: [
       {
-        title: "WAHRE GESTALT",
-        description: "Während dieser Charakter herausgefordert wird, erhält er +2.",
+        title: "Wahre Gestalt",
+        description: "Während dieser Charakter herausgefordert wird, erhält er +2 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const enchantressUnexpectedJudgeI18n: Record<Languages, I18nProperties> =
     version: "Juge inattendue",
     text: [
       {
-        title: "VÉRITABLE APPARENCE",
-        description: "Tant que ce personnage est défié, il gagne +2.",
+        title: "Véritable apparence",
+        description: "Tant que ce personnage est défié, il gagne +2 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const enchantressUnexpectedJudgeI18n: Record<Languages, I18nProperties> =
     version: "Unexpected Judge",
     text: [
       {
-        title: "TRUE FORM",
-        description: "While being challenged, this character gets +2.",
+        title: "True Form",
+        description: "While being challenged, this character gets +2 {S}.",
       },
     ],
   },

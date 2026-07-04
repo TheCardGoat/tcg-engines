@@ -7,14 +7,17 @@ export const st07TacticalVisionary014: CommandCard = {
   color: "green",
   traits: [],
   id: "ST07-014",
-  externalId: "gundam:st07-014",
-  slug: "tactical-visionary-st07-014",
+  canonicalId: "ST07-014",
+  externalIds: { bandai: "gundam:st07-014" },
+  slug: "tactical-visionary/st07-014",
   displayName: "Tactical Visionary",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-014",
   printings: [
     {
       id: "ST07-014",
+      artId: "ST07-014",
+      setCode: "ST07",
       collectorNumber: "ST07-014",
       cardNumber: "ST07-014",
       set: {
@@ -30,6 +33,8 @@ export const st07TacticalVisionary014: CommandCard = {
     },
     {
       id: "ST07-014_p1",
+      artId: "ST07-014_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-014_p1",
       cardNumber: "ST07-014",
       set: {
@@ -45,6 +50,8 @@ export const st07TacticalVisionary014: CommandCard = {
     },
     {
       id: "ST07-014_p2",
+      artId: "ST07-014_p2",
+      setCode: "ST07",
       collectorNumber: "ST07-014_p2",
       cardNumber: "ST07-014",
       set: {
@@ -60,6 +67,8 @@ export const st07TacticalVisionary014: CommandCard = {
     },
     {
       id: "ST07-014_p3",
+      artId: "ST07-014_p3",
+      setCode: "ST07",
       collectorNumber: "ST07-014_p3",
       cardNumber: "ST07-014",
       set: {
@@ -74,6 +83,7 @@ export const st07TacticalVisionary014: CommandCard = {
       productName: "Store Tournament Winner Pack 03",
     },
   ],
+  reprints: ["ST07-014", "ST07-014_p1", "ST07-014_p2", "ST07-014_p3"],
   selectedPrintingId: "ST07-014",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-014.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-014.webp?260424",

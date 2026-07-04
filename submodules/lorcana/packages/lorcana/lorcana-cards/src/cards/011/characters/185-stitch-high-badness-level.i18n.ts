@@ -17,9 +17,9 @@ export const stitchHighBadnessLevelI18n: Record<Languages, I18nProperties> = {
     version: "Hoher Bös-o-meter Stand",
     text: [
       {
-        title: "VERSTÄRKT",
+        title: "Verstärkt",
         description:
-          "Solange du mindestens einen Lilo-Charakter im Spiel hast, erhält dieser Charakter Herausfordern +3. (Während der Charakter herausfordert, erhält er +3.)",
+          "Solange du mindestens einen Lilo-Charakter im Spiel hast, erhält dieser Charakter <Herausfordern> +3. (Während der Charakter herausfordert, erhält er +3 {S}.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const stitchHighBadnessLevelI18n: Record<Languages, I18nProperties> = {
     version: "Au niveau de méchanceté élevé",
     text: [
       {
-        title: "SURVOLTÉ",
+        title: "Survolté",
         description:
-          "Tant que vous avez un personnage Lilo en jeu, ce personnage-ci gagne Offensif +3.",
+          "Tant que vous avez un personnage Lilo en jeu, ce personnage-ci gagne <Offensif> +3.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const stitchHighBadnessLevelI18n: Record<Languages, I18nProperties> = {
     version: "Alto Livello di Cattiveria",
     text: [
       {
-        title: "SU DI GIRI",
+        title: "Su di Giri",
         description:
-          "Mentre hai in gioco un personaggio chiamato Lilo, questo personaggio ottiene Sfidante +3.",
+          "Mentre hai in gioco un personaggio chiamato Lilo, questo personaggio ottiene <Sfidante> +3. (Riceve +3 {S} mentre sta sfidando.)",
       },
     ],
   },

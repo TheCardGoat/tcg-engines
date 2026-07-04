@@ -6,7 +6,7 @@ export const simbaReturnedKingEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Returned King",
     text: [
       {
-        title: "Challenger +4 (When challenging, this character gets +4 {S}.)",
+        title: "Challenger +4",
       },
       {
         title: "POUNCE",
@@ -20,10 +20,10 @@ export const simbaReturnedKingEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Zurückgekehrter König",
     text: [
       {
-        title: "Herausfordern +4",
+        title: "<Herausfordern> +4 (Während dieser Charakter herausfordert, erhält er +4 {S}.)",
       },
       {
-        title: "KATZENSPRUNG",
+        title: "Katzensprung",
         description:
           "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
       },
@@ -34,7 +34,7 @@ export const simbaReturnedKingEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Roi de retour",
     text: [
       {
-        title: "Offensif +4",
+        title: "<Offensif> +4",
       },
       {
         title: "BOND",
@@ -48,12 +48,12 @@ export const simbaReturnedKingEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Returned King",
     text: [
       {
-        title: "Challenger +4",
+        title: "<Challenger> +4 (While challenging, this character gets +4 {S}.)",
       },
       {
-        title: "POUNCE",
+        title: "Pounce",
         description:
-          "During your turn, this character gains Evasive. (They can challenge characters with Evasive.)",
+          "During your turn, this character gains <Evasive>. (They can challenge characters with Evasive.)",
       },
     ],
   },

@@ -6,9 +6,9 @@ export const belleApprenticeInventorI18n: Record<Languages, I18nProperties> = {
     version: "Apprentice Inventor",
     text: [
       {
-        title: "WHAT A MESS",
+        title: "WHAT",
         description:
-          "During your turn, you may banish chosen item of yours to play this character for free.",
+          "A MESS During your turn, you may banish chosen item of yours to play this character for free.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const belleApprenticeInventorI18n: Record<Languages, I18nProperties> = {
     version: "Apprentice Inventor",
     text: [
       {
-        title: "WHAT A MESS",
+        title: "What a Mess",
         description:
           "During your turn, you may banish chosen item of yours to play this character for free.",
       },
@@ -28,7 +28,7 @@ export const belleApprenticeInventorI18n: Record<Languages, I18nProperties> = {
     version: "Apprentice Inventor",
     text: [
       {
-        title: "WHAT A MESS",
+        title: "What a Mess",
         description:
           "During your turn, you may banish chosen item of yours to play this character for free.",
       },
@@ -39,7 +39,7 @@ export const belleApprenticeInventorI18n: Record<Languages, I18nProperties> = {
     version: "Apprentice Inventor",
     text: [
       {
-        title: "WHAT A MESS",
+        title: "What a Mess",
         description:
           "During your turn, you may banish chosen item of yours to play this character for free.",
       },

@@ -9,21 +9,16 @@ export const drFacilierSavvyOpportunistI18n: Record<Languages, I18nProperties> =
   de: {
     name: "Dr. Facilier",
     version: "Gerissener Opportunist",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Dr. Facilier",
     version: "Opportuniste bien renseigné",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Dr. Facilier",
     version: "Savvy Opportunist",
-    text: [
-      {
-        title: "Evasive",
-        description: "(Only characters with Evasive can challenge this character.)",
-      },
-    ],
+    text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
 };

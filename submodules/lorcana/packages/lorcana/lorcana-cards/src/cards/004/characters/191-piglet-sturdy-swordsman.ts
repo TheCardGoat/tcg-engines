@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { pigletSturdySwordsmanI18n } from "./191-piglet-sturdy-swordsman.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const pigletSturdySwordsman: CharacterCard = {
   id: "ATc",
   canonicalId: "ci_W5R",
+  slug: "lorcana-ci_W5R",
+  printings: [
+    {
+      id: "set4-191",
+      artId: "set4-191",
+      setCode: "set4",
+      collectorNumber: "191",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-191"],
   cardType: "character",
   name: "Piglet",
@@ -21,7 +33,7 @@ export const pigletSturdySwordsman: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_8ac9f95c19af4213b7c6aed341965206",
-    tcgPlayer: 550721,
+    tcgPlayer: "550721",
   },
   text: [
     {

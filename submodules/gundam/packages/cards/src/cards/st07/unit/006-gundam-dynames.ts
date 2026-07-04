@@ -7,14 +7,17 @@ export const st07GundamDynames006: UnitCard = {
   color: "green",
   traits: ["cb", "gn drive"],
   id: "ST07-006",
-  externalId: "gundam:st07-006",
-  slug: "gundam-dynames-st07-006",
+  canonicalId: "ST07-006",
+  externalIds: { bandai: "gundam:st07-006" },
+  slug: "gundam-dynames/st07-006",
   displayName: "Gundam Dynames",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-006",
   printings: [
     {
       id: "ST07-006",
+      artId: "ST07-006",
+      setCode: "ST07",
       collectorNumber: "ST07-006",
       cardNumber: "ST07-006",
       set: {
@@ -30,6 +33,8 @@ export const st07GundamDynames006: UnitCard = {
     },
     {
       id: "ST07-006_p1",
+      artId: "ST07-006_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-006_p1",
       cardNumber: "ST07-006",
       set: {
@@ -44,6 +49,7 @@ export const st07GundamDynames006: UnitCard = {
       productName: "Celestial Drive [ST07] Bonus Pack",
     },
   ],
+  reprints: ["ST07-006", "ST07-006_p1"],
   selectedPrintingId: "ST07-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-006.webp?260424",

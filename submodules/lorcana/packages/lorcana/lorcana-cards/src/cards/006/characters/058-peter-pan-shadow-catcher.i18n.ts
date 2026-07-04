@@ -17,7 +17,7 @@ export const peterPanShadowCatcherI18n: Record<Languages, I18nProperties> = {
     version: "Schattenfänger",
     text: [
       {
-        title: "HAB DICH!",
+        title: "Hab dich!",
         description:
           "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erschöpfe einen gegnerischen Charakter deiner Wahl.",
       },
@@ -28,7 +28,7 @@ export const peterPanShadowCatcherI18n: Record<Languages, I18nProperties> = {
     version: "Attrapant son ombre",
     text: [
       {
-        title: "JE T'AI EUE!",
+        title: "Je t'ai eue!",
         description:
           "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage adverse et épuisez-le.",
       },
@@ -39,7 +39,7 @@ export const peterPanShadowCatcherI18n: Record<Languages, I18nProperties> = {
     version: "Acciuffatore di Ombre",
     text: [
       {
-        title: "PRESA!",
+        title: "Presa!",
         description:
           "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, impegna un personaggio avversario a tua scelta.",
       },

@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { todKnowsAllTheTricksI18n } from "./092-tod-knows-all-the-tricks.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const todKnowsAllTheTricks: CharacterCard = {
-  id: "WP5",
+  id: "cKN",
   canonicalId: "ci_0ez",
+  slug: "lorcana-ci_0ez",
+  printings: [
+    {
+      id: "set11-092",
+      artId: "set11-092",
+      setCode: "set11",
+      collectorNumber: "92",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-092"],
   cardType: "character",
   name: "Tod",
@@ -22,7 +34,7 @@ export const todKnowsAllTheTricks: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2319774247e242a19dfa6a0fe584fff0",
-    tcgPlayer: 677163,
+    tcgPlayer: "677163",
   },
   text: [
     {

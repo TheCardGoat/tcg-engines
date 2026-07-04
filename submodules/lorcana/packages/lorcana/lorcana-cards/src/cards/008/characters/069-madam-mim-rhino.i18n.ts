@@ -20,10 +20,11 @@ export const madamMimRhinoI18n: Record<Languages, I18nProperties> = {
     version: "Nashorn",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Madame-Mim-Charaktere auszuspielen.)",
       },
       {
-        title: "AUS DEM WEG, ICH KOMME!",
+        title: "Aus dem Weg, ich komme!",
         description:
           "Wenn du diesen Charakter ausspielst, musst du ihn verbannen oder einen deiner anderen Charaktere wählen und zurück auf deine Hand nehmen.",
       },
@@ -34,10 +35,11 @@ export const madamMimRhinoI18n: Record<Languages, I18nProperties> = {
     version: "En rhinocéros",
     text: [
       {
-        title: "Alter 2",
+        title:
+          "<Alter> 2 (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages Madame Mime.)",
       },
       {
-        title: "FAITES PLACE, JE PASSE!",
+        title: "Faites place, je passe!",
         description:
           "Lorsque vous jouez ce personnage, bannissez-le ou renvoyez l'un de vos autres personnages en jeu dans votre main.",
       },
@@ -48,10 +50,11 @@ export const madamMimRhinoI18n: Record<Languages, I18nProperties> = {
     version: "Rinoceronte",
     text: [
       {
-        title: "Trasformazione 2",
+        title:
+          "<Trasformazione> 2 (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Maga Magò.)",
       },
       {
-        title: "FATE LARGO, ARRIVO!",
+        title: "Fate Largo, Arrivo!",
         description:
           "Quando giochi questo personaggio, esilialo o riprendi in mano un tuo altro personaggio a tua scelta.",
       },

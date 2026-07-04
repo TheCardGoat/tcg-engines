@@ -17,9 +17,9 @@ export const bashfulAdoringKnightI18n: Record<Languages, I18nProperties> = {
     version: "Ritter der Bewunderung",
     text: [
       {
-        title: "DIE PRINZESSIN BEEINDRUCKEN",
+        title: "Die Prinzessin beeindrucken",
         description:
-          "Solange du mindestens einen Schneewittchen-Charakter im Spiel hast, erhält dieser Charakter Beschützen. (Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
+          "Solange du mindestens einen Schneewittchen-Charakter im Spiel hast, erhält dieser Charakter <Beschützen>. (Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const bashfulAdoringKnightI18n: Record<Languages, I18nProperties> = {
     version: "Chevalier servant",
     text: [
       {
-        title: "IMPRESSIONNER LA PRINCESSE",
+        title: "Impressionner la Princesse",
         description:
-          "Tant que vous avez un personnage Blanche-Neige en jeu, ce personnage-ci gagne Rempart. (Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
+          "Tant que vous avez un personnage Blanche-Neige en jeu, ce personnage-ci gagne <Rempart>. (Lorsqu'un adversaire défie l'un de vos personnages, il doit, si possible, choisir l'un de vos personnages avec Rempart.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const bashfulAdoringKnightI18n: Record<Languages, I18nProperties> = {
     version: "Cavaliere Adorante",
     text: [
       {
-        title: "FARE COLPO SULLA PRINCIPESSA",
+        title: "Fare Colpo sulla Principessa",
         description:
-          "Mentre hai in gioco un personaggio chiamato Biancaneve, questo personaggio ottiene Guardiano. (Un personaggio avversario che sfida uno dei tuoi personaggi deve sceglierne uno con Guardiano, se possibile.)",
+          "Mentre hai in gioco un personaggio chiamato Biancaneve, questo personaggio ottiene <Guardiano>. (Un personaggio avversario che sfida uno dei tuoi personaggi deve sceglierne uno con Guardiano, se possibile.)",
       },
     ],
   },

@@ -16,7 +16,7 @@ export const sleepyNoddingOffI18n: Record<Languages, I18nProperties> = {
     version: "Am Dösen",
     text: [
       {
-        title: "GÄHN!",
+        title: "Gähn!",
         description: "Dieser Charakter kommt erschöpft ins Spiel.",
       },
     ],
@@ -26,7 +26,7 @@ export const sleepyNoddingOffI18n: Record<Languages, I18nProperties> = {
     version: "Tombe de fatigue",
     text: [
       {
-        title: "BAAAILLE...",
+        title: "Baaaille...",
         description: "Ce personnage entre en jeu épuisé.",
       },
     ],
@@ -36,7 +36,7 @@ export const sleepyNoddingOffI18n: Record<Languages, I18nProperties> = {
     version: "Nodding Off",
     text: [
       {
-        title: "YAWN!",
+        title: "Yawn!",
         description: "This character enters play exerted.",
       },
     ],

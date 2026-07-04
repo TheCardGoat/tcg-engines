@@ -4,6 +4,17 @@ import { kidaAtlanteanI18n } from "./006-kida-atlantean.i18n";
 export const kidaAtlantean: CharacterCard = {
   id: "6Uk",
   canonicalId: "ci_6Uk",
+  slug: "lorcana-ci_6Uk",
+  printings: [
+    {
+      id: "set3-006",
+      artId: "set3-006",
+      setCode: "set3",
+      collectorNumber: "6",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-006"],
   cardType: "character",
   name: "Kida",
@@ -21,7 +32,7 @@ export const kidaAtlantean: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_0f90f3b193fa44789e5abeb293636e4f",
-    tcgPlayer: 536275,
+    tcgPlayer: "536275",
   },
   classifications: ["Storyborn", "Hero", "Princess"],
   i18n: kidaAtlanteanI18n,

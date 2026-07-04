@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goofyFlyingGoofI18n } from "./123-goofy-flying-goof.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const goofyFlyingGoof: CharacterCard = {
   id: "GQo",
   canonicalId: "ci_GQo",
+  slug: "lorcana-ci_GQo",
+  printings: [
+    {
+      id: "set6-123",
+      artId: "set6-123",
+      setCode: "set6",
+      collectorNumber: "123",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-123"],
   cardType: "character",
   name: "Goofy",
@@ -21,7 +33,7 @@ export const goofyFlyingGoof: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_bb6785f344ac4b43812ed03ffe3793af",
-    tcgPlayer: 593008,
+    tcgPlayer: "593008",
   },
   text: [
     {

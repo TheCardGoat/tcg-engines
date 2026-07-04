@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { meekoSkittishScroungerI18n } from "./046-meeko-skittish-scrounger.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const meekoSkittishScrounger: CharacterCard = {
   id: "9zz",
   canonicalId: "ci_9zz",
+  slug: "lorcana-ci_9zz",
+  printings: [
+    {
+      id: "set11-046",
+      artId: "set11-046",
+      setCode: "set11",
+      collectorNumber: "46",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-046"],
   cardType: "character",
   name: "Meeko",
@@ -21,7 +33,7 @@ export const meekoSkittishScrounger: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_5be7a45f5453485dbebcd37b436210d9",
-    tcgPlayer: 674701,
+    tcgPlayer: "674701",
   },
   text: [
     {

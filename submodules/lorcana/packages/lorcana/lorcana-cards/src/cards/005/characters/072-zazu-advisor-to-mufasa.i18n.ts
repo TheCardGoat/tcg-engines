@@ -9,16 +9,16 @@ export const zazuAdvisorToMufasaI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Zazu",
     version: "Mufasas Berater",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Zazu",
     version: "Conseiller de Mufasa",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Zazu",
     version: "Consigliere di Mufasa",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

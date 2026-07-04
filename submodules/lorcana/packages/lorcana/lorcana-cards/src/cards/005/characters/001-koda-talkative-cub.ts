@@ -4,6 +4,17 @@ import { kodaTalkativeCubI18n } from "./001-koda-talkative-cub.i18n";
 export const kodaTalkativeCub: CharacterCard = {
   id: "4iY",
   canonicalId: "ci_4iY",
+  slug: "lorcana-ci_4iY",
+  printings: [
+    {
+      id: "set5-001",
+      artId: "set5-001",
+      setCode: "set5",
+      collectorNumber: "1",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-001"],
   cardType: "character",
   name: "Koda",
@@ -20,7 +31,7 @@ export const kodaTalkativeCub: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7202d58f49f84525b3a9364c319772f3",
-    tcgPlayer: 560505,
+    tcgPlayer: "560505",
   },
   text: [
     {

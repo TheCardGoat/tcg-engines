@@ -17,7 +17,7 @@ export const pascalInquisitivePetI18n: Record<Languages, I18nProperties> = {
     version: "Neugieriges Haustier",
     text: [
       {
-        title: "FARBENFROHE TAKTIK",
+        title: "Farbenfrohe Taktik",
         description:
           "Wenn du diesen Charakter ausspielst, schaue dir die obersten 3 Karten deines Decks an und lege sie in beliebiger Reihenfolge zurück.",
       },
@@ -28,7 +28,7 @@ export const pascalInquisitivePetI18n: Record<Languages, I18nProperties> = {
     version: "Animal de compagnie curieux",
     text: [
       {
-        title: "TACTIQUE COLORÉE",
+        title: "Tactique colorée",
         description:
           "Lorsque vous jouez ce personnage, regardez les 3 premières carte de votre pioche. Remettez-les sur le dessus de votre pioche dans l'ordre de votre choix.",
       },
@@ -39,7 +39,7 @@ export const pascalInquisitivePetI18n: Record<Languages, I18nProperties> = {
     version: "Animaletto Curioso",
     text: [
       {
-        title: "TATTICHE COLORATE",
+        title: "Tattiche Colorate",
         description:
           "Quando giochi questo personaggio, guarda le prime 3 carte del tuo mazzo e rimettile in cima al mazzo in qualsiasi ordine.",
       },

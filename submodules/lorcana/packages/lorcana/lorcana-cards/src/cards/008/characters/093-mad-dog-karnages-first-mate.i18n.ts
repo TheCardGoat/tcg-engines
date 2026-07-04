@@ -17,9 +17,9 @@ export const madDogKarnagesFirstMateI18n: Record<Languages, I18nProperties> = {
     version: "Kanailles Erster Offizier",
     text: [
       {
-        title: "IST DAS DENN WIRKLICH SICHER, KÄPT'N?",
+        title: "Ist das denn wirklich sicher, Käpt'n?",
         description:
-          "Wenn du einen Don-Kanaille-Charakter im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Wenn du einen Don-Kanaille-Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const madDogKarnagesFirstMateI18n: Record<Languages, I18nProperties> = {
     version: "Second de Don Carnage",
     text: [
       {
-        title: "VOUS ÊTES SÛR QUE C'EST SANS DANGER, CAPITAINE?",
+        title: "Vous êtes sûr que c'est sans danger, capitaine?",
         description:
-          "Jouer ce personnage vous coûte 1 de moins si vous avez un personnage nommé Don Carnage en jeu.",
+          "Jouer ce personnage vous coûte 1 {I} de moins si vous avez un personnage nommé Don Carnage en jeu.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const madDogKarnagesFirstMateI18n: Record<Languages, I18nProperties> = {
     version: "Braccio Destro di Massacre",
     text: [
       {
-        title: "SEI SICURO CHE NON SIA PERICOLOSO, CAPITANO?",
+        title: "Sei Sicuro che non sia Pericoloso, Capitano?",
         description:
-          "Se hai in gioco un personaggio chiamato Don Massacre, paga 1 in meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio chiamato Don Massacre, paga 1 {I} in meno per giocare questo personaggio.",
       },
     ],
   },

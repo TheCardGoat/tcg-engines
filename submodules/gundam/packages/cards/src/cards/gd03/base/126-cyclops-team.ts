@@ -6,14 +6,17 @@ export const gd03CyclopsTeam126: BaseCard = {
   type: "base",
   traits: ["zeon", "cyclops team"],
   id: "GD03-126",
-  externalId: "gundam:gd03-126",
-  slug: "cyclops-team-gd03-126",
+  canonicalId: "GD03-126",
+  externalIds: { bandai: "gundam:gd03-126" },
+  slug: "cyclops-team/gd03-126",
   displayName: "Cyclops Team",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-126",
   printings: [
     {
       id: "GD03-126",
+      artId: "GD03-126",
+      setCode: "GD03",
       collectorNumber: "GD03-126",
       cardNumber: "GD03-126",
       set: {
@@ -28,6 +31,7 @@ export const gd03CyclopsTeam126: BaseCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-126"],
   selectedPrintingId: "GD03-126",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-126.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-126.webp?260424",

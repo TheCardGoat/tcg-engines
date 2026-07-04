@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gyroGearlooseEccentricInventorI18n } from "./123-gyro-gearloose-eccentric-inventor.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const gyroGearlooseEccentricInventor: CharacterCard = {
   id: "mYr",
   canonicalId: "ci_mYr",
+  slug: "lorcana-ci_mYr",
+  printings: [
+    {
+      id: "set8-123",
+      artId: "set8-123",
+      setCode: "set8",
+      collectorNumber: "123",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-123"],
   cardType: "character",
   name: "Gyro Gearloose",
@@ -21,7 +33,7 @@ export const gyroGearlooseEccentricInventor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3e2e03e343f64fa9ad398cb733b154bd",
-    tcgPlayer: 631429,
+    tcgPlayer: "631429",
   },
   text: [
     {

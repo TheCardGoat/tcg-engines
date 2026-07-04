@@ -4,6 +4,17 @@ import { beastWoundedI18n } from "./103-beast-wounded.i18n";
 export const beastWounded: CharacterCard = {
   id: "f3O",
   canonicalId: "ci_f3O",
+  slug: "lorcana-ci_f3O",
+  printings: [
+    {
+      id: "set4-103",
+      artId: "set4-103",
+      setCode: "set4",
+      collectorNumber: "103",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-103"],
   cardType: "character",
   name: "Beast",
@@ -20,7 +31,7 @@ export const beastWounded: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c3acd1c879e645779501109c65580c93",
-    tcgPlayer: 550588,
+    tcgPlayer: "550588",
   },
   text: [
     {

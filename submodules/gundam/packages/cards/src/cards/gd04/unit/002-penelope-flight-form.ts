@@ -7,14 +7,17 @@ export const gd04PenelopeFlightForm002: UnitCard = {
   color: "blue",
   traits: ["earth federation"],
   id: "GD04-002",
-  externalId: "gundam:gd04-002",
-  slug: "penelope-flight-form-gd04-002",
+  canonicalId: "GD04-002",
+  externalIds: { bandai: "gundam:gd04-002" },
+  slug: "penelope-flight-form/gd04-002",
   displayName: "Penelope (Flight Form)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-002",
   printings: [
     {
       id: "GD04-002",
+      artId: "GD04-002",
+      setCode: "GD04",
       collectorNumber: "GD04-002",
       cardNumber: "GD04-002",
       set: {
@@ -30,6 +33,8 @@ export const gd04PenelopeFlightForm002: UnitCard = {
     },
     {
       id: "GD04-002_p1",
+      artId: "GD04-002_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-002_p1",
       cardNumber: "GD04-002",
       set: {
@@ -44,6 +49,7 @@ export const gd04PenelopeFlightForm002: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-002", "GD04-002_p1"],
   selectedPrintingId: "GD04-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-002.webp?260424",

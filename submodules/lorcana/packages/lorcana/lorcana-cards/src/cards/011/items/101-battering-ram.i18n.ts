@@ -18,12 +18,12 @@ export const batteringRamI18n: Record<Languages, I18nProperties> = {
     name: "Rammbock",
     text: [
       {
-        title: "VOLLE KRAFT",
-        description: "— Füge einem beschädigten Charakter deiner Wahl 1 Schaden zu.",
+        title: "Volle Kraft",
+        description: "{E} — Füge einem beschädigten Charakter deiner Wahl 1 Schaden zu.",
       },
       {
-        title: "DURCHBRUCH,",
-        description: "Verbanne diesen Gegenstand — Verbanne einen Ort deiner Wahl.",
+        title: "Durchbruch",
+        description: "{E}, Verbanne diesen Gegenstand — Verbanne einen Ort deiner Wahl.",
       },
     ],
   },
@@ -31,13 +31,13 @@ export const batteringRamI18n: Record<Languages, I18nProperties> = {
     name: "Bélier",
     text: [
       {
-        title: "PLEINE PUISSANCE",
+        title: "Pleine puissance",
         description:
-          "— Choisissez un personnage ayant au moins un dommage et infligez-lui 1 dommage.",
+          "{E} — Choisissez un personnage ayant au moins un dommage et infligez-lui 1 dommage.",
       },
       {
-        title: "PERCÉE,",
-        description: "Bannissez cet objet — Choisissez un lieu et bannissez-le.",
+        title: "Percée",
+        description: "{E}, Bannissez cet objet — Choisissez un lieu et bannissez-le.",
       },
     ],
   },
@@ -45,12 +45,12 @@ export const batteringRamI18n: Record<Languages, I18nProperties> = {
     name: "Ariete d'Assedio",
     text: [
       {
-        title: "PIENA POTENZA",
-        description: "— Infliggi 1 danno a un personaggio danneggiato a tua scelta.",
+        title: "Piena Potenza",
+        description: "{E} — Infliggi 1 danno a un personaggio danneggiato a tua scelta.",
       },
       {
-        title: "FARE BRECCIA,",
-        description: "esilia questo oggetto — Esilia un luogo a tua scelta.",
+        title: "Fare Breccia",
+        description: "{E}, esilia questo oggetto — Esilia un luogo a tua scelta.",
       },
     ],
   },

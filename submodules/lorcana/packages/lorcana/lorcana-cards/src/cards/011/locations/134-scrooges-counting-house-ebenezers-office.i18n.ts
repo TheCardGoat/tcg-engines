@@ -20,11 +20,12 @@ export const scroogesCountingHouseEbenezersOfficeI18n: Record<Languages, I18nPro
     version: "Ebenezers Büro",
     text: [
       {
-        title: "Stärken 2",
+        title:
+          "<Stärken> 2 {I} (Einmal während deines Zuges darfst du 2 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "GUTES GESCHÄFT",
-        description: "Dieser Ort erhält für jede Karte unter ihm +1 und +1.",
+        title: "Gutes Geschäft",
+        description: "Dieser Ort erhält für jede Karte unter ihm +1 {W} und +1 {L}.",
       },
     ],
   },
@@ -33,13 +34,12 @@ export const scroogesCountingHouseEbenezersOfficeI18n: Record<Languages, I18nPro
     version: "Bureau d'Ebenezer",
     text: [
       {
-        title: "Boost 2",
-        description:
-          "(Une fois durant votre tour, vous pouvez payer 2 pour placer la carte du dessus de votre pioche sous ce lieu, face cachée.)",
+        title:
+          "<Boost> 2 {I} (Une fois durant votre tour, vous pouvez payer 2 {I} pour placer la carte du dessus de votre pioche sous ce lieu, face cachée.)",
       },
       {
-        title: "BONNES AFFAIRES",
-        description: "Ce lieu gagne +1 et +1 pour chaque carte sous lui.",
+        title: "Bonnes affaires",
+        description: "Ce lieu gagne +1 {W} et +1 {L} pour chaque carte sous lui.",
       },
     ],
   },
@@ -48,13 +48,12 @@ export const scroogesCountingHouseEbenezersOfficeI18n: Record<Languages, I18nPro
     version: "Scrivania di Ebenezer",
     text: [
       {
-        title: "Potenziamento 2",
-        description:
-          "(Una volta durante il tuo turno, puoi pagare 2 per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo luogo.)",
+        title:
+          "<Potenziamento> 2 {I} (Una volta durante il tuo turno, puoi pagare 2 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo luogo.)",
       },
       {
-        title: "BUONI AFFARI",
-        description: "Questo luogo riceve +1 e +1 per ogni carta sotto di sé.",
+        title: "Buoni Affari",
+        description: "Questo luogo riceve +1 {W} e +1 {L} per ogni carta sotto di sé.",
       },
     ],
   },

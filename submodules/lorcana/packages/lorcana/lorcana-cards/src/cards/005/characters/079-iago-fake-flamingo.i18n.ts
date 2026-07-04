@@ -20,12 +20,12 @@ export const iagoFakeFlamingoI18n: Record<Languages, I18nProperties> = {
     version: "Falscher Flamingo",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "GETARNT",
+        title: "Getarnt",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 weniger für die nächste Aktion, die du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 {I} weniger für die nächste Aktion, die du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const iagoFakeFlamingoI18n: Record<Languages, I18nProperties> = {
     version: "Faux flamant rose",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "DÉGUISÉ",
+        title: "Déguisé",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, la prochaine action que vous jouez ce tour-ci vous coûte 2 de moins.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, la prochaine action que vous jouez ce tour-ci vous coûte 2 {I} de moins.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const iagoFakeFlamingoI18n: Record<Languages, I18nProperties> = {
     version: "Finto Fenicottero",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "IN INCOGNITO",
+        title: "In Incognito",
         description:
-          "Ogni volta che questo personaggio va all'avventura, paga 2 in meno per giocare la tua prossima azione per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, paga 2 {I} in meno per giocare la tua prossima azione per questo turno.",
       },
     ],
   },

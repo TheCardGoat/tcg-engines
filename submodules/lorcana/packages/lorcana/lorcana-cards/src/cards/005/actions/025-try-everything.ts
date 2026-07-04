@@ -4,6 +4,17 @@ import { tryEverythingI18n } from "./025-try-everything.i18n";
 export const tryEverything: ActionCard = {
   id: "2yZ",
   canonicalId: "ci_2yZ",
+  slug: "lorcana-ci_2yZ",
+  printings: [
+    {
+      id: "set5-025",
+      artId: "set5-025",
+      setCode: "set5",
+      collectorNumber: "25",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-025"],
   cardType: "action",
   name: "Try Everything",
@@ -16,7 +27,7 @@ export const tryEverything: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_43b3128f2b504d7b9364db3803511c13",
-    tcgPlayer: 559171,
+    tcgPlayer: "559171",
   },
   text: "Remove up to 3 damage from chosen character and ready them. They can't quest or challenge for the rest of this turn.",
   actionSubtype: "song",
@@ -28,7 +39,10 @@ export const tryEverything: ActionCard = {
             steps: [
               {
                 type: "remove-damage",
-                amount: { type: "up-to", value: 3 },
+                amount: {
+                  type: "up-to",
+                  value: 3,
+                },
                 target: {
                   selector: "chosen",
                   count: 1,

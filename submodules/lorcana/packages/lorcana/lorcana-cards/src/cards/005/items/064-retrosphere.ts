@@ -4,6 +4,17 @@ import { retrosphereI18n } from "./064-retrosphere.i18n";
 export const retrosphere: ItemCard = {
   id: "LA9",
   canonicalId: "ci_LA9",
+  slug: "lorcana-ci_LA9",
+  printings: [
+    {
+      id: "set5-064",
+      artId: "set5-064",
+      setCode: "set5",
+      collectorNumber: "64",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-064"],
   cardType: "item",
   name: "Retrosphere",
@@ -16,7 +27,7 @@ export const retrosphere: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0aa70773df3a4f87ab5b96825787497d",
-    tcgPlayer: 561475,
+    tcgPlayer: "561475",
   },
   text: [
     {

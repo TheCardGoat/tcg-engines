@@ -15,9 +15,9 @@ export const kristoffsLuteI18n: Record<Languages, I18nProperties> = {
     name: "Kristoffs Laute",
     text: [
       {
-        title: "MOMENT DER INSPIRATION, 2",
+        title: "Moment der Inspiration",
         description:
-          "— Decke die oberste Karte deines Decks auf. Du darfst sie ausspielen, als wäre sie auf deiner Hand. Wenn du dies nicht tust, lege die Karte auf deinen Ablagestapel.",
+          "{E}, 2 {I} — Decke die oberste Karte deines Decks auf. Du darfst sie ausspielen, als wäre sie auf deiner Hand. Wenn du dies nicht tust, lege die Karte auf deinen Ablagestapel.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const kristoffsLuteI18n: Record<Languages, I18nProperties> = {
     name: "Luth de Kristoff",
     text: [
       {
-        title: "MOMENT D'INSPIRATION, 2",
+        title: "Moment d'inspiration",
         description:
-          "— Révélez la carte du dessus de votre pioche. Vous pouvez la jouer comme si elle était dans votre main. Sinon, placez-la dans votre défausse.",
+          "{E}, 2 {I} — Révélez la carte du dessus de votre pioche. Vous pouvez la jouer comme si elle était dans votre main. Sinon, placez-la dans votre défausse.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const kristoffsLuteI18n: Record<Languages, I18nProperties> = {
     name: "Liuto di Kristoff",
     text: [
       {
-        title: "MOMENTO DI ISPIRAZIONE, 2",
+        title: "Momento di Ispirazione",
         description:
-          "— Rivela la prima carta del tuo mazzo. Puoi giocarla come se fosse nella tua mano. Altrimenti, mettila nei tuoi scarti.",
+          "{E}, 2 {I} — Rivela la prima carta del tuo mazzo. Puoi giocarla come se fosse nella tua mano. Altrimenti, mettila nei tuoi scarti.",
       },
     ],
   },

@@ -248,7 +248,7 @@ export function resolveDealDamageEffect(
     resolvedInput.targets.length > 1 ? snapshotBoardTriggerCandidates(ctx) : undefined;
   const registry = getOrBuildMoveRegistry(ctx);
   const dealtAnyDamage = applyDamage(ctx, cardPlayed, resolvedInput, {
-    applyResist: true,
+    applyResist: _effect.ignoreResist !== true,
     emitDealDamage: true,
     outcomeDamageType: "effect",
     checkDamageRestriction: true,

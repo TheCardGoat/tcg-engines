@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { demonaScourgeOfTheWyvernClanI18n } from "./055-demona-scourge-of-the-wyvern-clan.i18n";
+
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const demonaScourgeOfTheWyvernClan: CharacterCard = {
   id: "e6l",
   canonicalId: "ci_Sox",
+  slug: "lorcana-ci_Sox",
+  printings: [
+    {
+      id: "set10-055",
+      artId: "set10-055",
+      setCode: "set10",
+      collectorNumber: "55",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-055"],
   cardType: "character",
   name: "Demona",
@@ -21,7 +33,7 @@ export const demonaScourgeOfTheWyvernClan: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ed9fc60aa63a4eafa4116188e41910f2",
-    tcgPlayer: 658215,
+    tcgPlayer: "658215",
   },
   text: [
     {

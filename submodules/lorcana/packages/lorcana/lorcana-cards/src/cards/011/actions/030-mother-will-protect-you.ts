@@ -4,6 +4,17 @@ import { motherWillProtectYouI18n } from "./030-mother-will-protect-you.i18n";
 export const motherWillProtectYou: ActionCard = {
   id: "30F",
   canonicalId: "ci_30F",
+  slug: "lorcana-ci_30F",
+  printings: [
+    {
+      id: "set11-030",
+      artId: "set11-030",
+      setCode: "set11",
+      collectorNumber: "30",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-030"],
   cardType: "action",
   name: "Mother Will Protect You",
@@ -16,7 +27,7 @@ export const motherWillProtectYou: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_026951e834c74886a9c05341b713b3fa",
-    tcgPlayer: 677133,
+    tcgPlayer: "677133",
   },
   text: "Chosen character can't be challenged until the start of your next turn.",
   actionSubtype: "song",

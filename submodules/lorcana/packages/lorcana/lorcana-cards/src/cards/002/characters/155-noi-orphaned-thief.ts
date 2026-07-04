@@ -4,6 +4,17 @@ import { noiOrphanedThiefI18n } from "./155-noi-orphaned-thief.i18n";
 export const noiOrphanedThief: CharacterCard = {
   id: "blI",
   canonicalId: "ci_blI",
+  slug: "lorcana-ci_blI",
+  printings: [
+    {
+      id: "set2-155",
+      artId: "set2-155",
+      setCode: "set2",
+      collectorNumber: "155",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-155"],
   cardType: "character",
   name: "Noi",
@@ -20,7 +31,7 @@ export const noiOrphanedThief: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1e4c0158e3ac4e989d2886cf87564dd5",
-    tcgPlayer: 527766,
+    tcgPlayer: "527766",
   },
   text: [
     {

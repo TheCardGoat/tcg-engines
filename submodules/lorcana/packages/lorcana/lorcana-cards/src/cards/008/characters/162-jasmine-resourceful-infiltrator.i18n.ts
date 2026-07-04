@@ -17,9 +17,9 @@ export const jasmineResourcefulInfiltratorI18n: Record<Languages, I18nProperties
     version: "Einfallsreiche Infiltratorin",
     text: [
       {
-        title: "GENAU, WAS DU BRAUCHST",
+        title: "Genau, was du brauchst",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du einem anderen Charakter deiner Wahl bis zu Beginn deines nächsten Zuges Robust +1 geben. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+          "Wenn du diesen Charakter ausspielst, darfst du einem anderen Charakter deiner Wahl bis zu Beginn deines nächsten Zuges <Robust> +1 geben. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const jasmineResourcefulInfiltratorI18n: Record<Languages, I18nProperties
     version: "Infiltrée pleine de ressources",
     text: [
       {
-        title: "JUSTE CE QU'IL VOUS FAUT",
+        title: "Juste ce qu'il vous faut",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez choisir un autre personnage qui gagne Résistance +1 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez choisir un autre personnage qui gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const jasmineResourcefulInfiltratorI18n: Record<Languages, I18nProperties
     version: "Spia Piena di Risorse",
     text: [
       {
-        title: "PROPRIO CIÒ CHE TI SERVE",
+        title: "Proprio Ciò che ti Serve",
         description:
-          "Quando giochi questo personaggio, puoi dare Resistere +1 a un altro personaggio a tua scelta fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, puoi dare <Resistere> +1 a un altro personaggio a tua scelta fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { namaariMorningMistI18n } from "./189-namaari-morning-mist.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const namaariMorningMist: CharacterCard = {
   id: "EAX",
   canonicalId: "ci_PU4",
+  slug: "lorcana-ci_PU4",
+  printings: [
+    {
+      id: "set2-189",
+      artId: "set2-189",
+      setCode: "set2",
+      collectorNumber: "189",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-189"],
   cardType: "character",
   name: "Namaari",
@@ -21,7 +33,7 @@ export const namaariMorningMist: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_8b02499c992945e2990cb669d7468256",
-    tcgPlayer: 527798,
+    tcgPlayer: "527798",
   },
   text: [
     {

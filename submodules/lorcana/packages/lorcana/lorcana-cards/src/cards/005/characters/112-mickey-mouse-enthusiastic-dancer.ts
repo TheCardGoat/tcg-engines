@@ -4,6 +4,17 @@ import { mickeyMouseEnthusiasticDancerI18n } from "./112-mickey-mouse-enthusiast
 export const mickeyMouseEnthusiasticDancer: CharacterCard = {
   id: "lzK",
   canonicalId: "ci_lzK",
+  slug: "lorcana-ci_lzK",
+  printings: [
+    {
+      id: "set5-112",
+      artId: "set5-112",
+      setCode: "set5",
+      collectorNumber: "112",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-112"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseEnthusiasticDancer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bc7acdf1831f4c71bbab9e1c2c16f0ff",
-    tcgPlayer: 557293,
+    tcgPlayer: "557293",
   },
   text: [
     {

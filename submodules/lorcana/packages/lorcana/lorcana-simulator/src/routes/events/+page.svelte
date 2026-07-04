@@ -12,8 +12,11 @@
   import { Separator } from "$lib/components/ui/separator";
   import PageMeta from "$lib/components/seo/PageMeta.svelte";
   import EmptyState from "$lib/components/tracker/EmptyState.svelte";
-  import * as m from "$lib/paraglide/messages.js";
-  import { Gift, Trophy, Users, Calendar } from "@lucide/svelte";
+  import { m } from "$lib/i18n/messages.js";
+  import Calendar from "@lucide/svelte/icons/calendar";
+  import Gift from "@lucide/svelte/icons/gift";
+  import Trophy from "@lucide/svelte/icons/trophy";
+  import Users from "@lucide/svelte/icons/users";
 
   let { data }: { data: PageData } = $props();
 

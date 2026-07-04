@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { aladdinVigilantGuardI18n } from "./170-aladdin-vigilant-guard.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const aladdinVigilantGuard: CharacterCard = {
-  id: "728",
-  canonicalId: "ci_728",
+  id: "J7u",
+  canonicalId: "ci_iLG",
+  slug: "lorcana-ci_iLG",
+  printings: [
+    {
+      id: "set8-170",
+      artId: "set8-170",
+      setCode: "set8",
+      collectorNumber: "170",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-170"],
   cardType: "character",
   name: "Aladdin",
@@ -21,7 +33,7 @@ export const aladdinVigilantGuard: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_809fee72df7a4e4e837973d452e858f6",
-    tcgPlayer: 631466,
+    tcgPlayer: "631466",
   },
   text: [
     {

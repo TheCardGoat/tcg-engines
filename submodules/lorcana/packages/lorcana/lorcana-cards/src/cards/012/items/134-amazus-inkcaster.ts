@@ -4,6 +4,17 @@ import { amazusInkcasterI18n } from "./134-amazus-inkcaster.i18n";
 export const amazusInkcaster: ItemCard = {
   id: "fvP",
   canonicalId: "ci_fvP",
+  slug: "lorcana-ci_fvP",
+  printings: [
+    {
+      id: "set12-134",
+      artId: "set12-134",
+      setCode: "set12",
+      collectorNumber: "134",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-134"],
   cardType: "item",
   name: "Amazu's Inkcaster",
@@ -16,6 +27,7 @@ export const amazusInkcaster: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_30c8fa2e8ce74eda9ca073a92c353b43",
+    tcgPlayer: "692057",
   },
   text: [
     {

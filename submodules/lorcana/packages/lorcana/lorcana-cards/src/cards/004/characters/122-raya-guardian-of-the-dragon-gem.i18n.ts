@@ -17,7 +17,7 @@ export const rayaGuardianOfTheDragonGemI18n: Record<Languages, I18nProperties> =
     version: "Wächterin des Drachenjuwels",
     text: [
       {
-        title: "WIR MÜSSEN UNS ZUSAMMENTUN",
+        title: "Wir müssen uns zusammentun",
         description:
           "Wenn du diesen Charakter ausspielst, mache einen deiner Charaktere an einem Ort bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
@@ -28,7 +28,7 @@ export const rayaGuardianOfTheDragonGemI18n: Record<Languages, I18nProperties> =
     version: "Gardienne de la Pierre de Dragon",
     text: [
       {
-        title: "NOUS DEVONS NOUS RÉCONCILIER",
+        title: "Nous devons nous réconcilier",
         description:
           "Lorsque vous jouez ce personnage, choisissez un de vos personnages sur un lieu et redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
@@ -39,7 +39,7 @@ export const rayaGuardianOfTheDragonGemI18n: Record<Languages, I18nProperties> =
     version: "Guardiana della Gemma Drago",
     text: [
       {
-        title: "DOBBIAMO UNIRE LE FORZE",
+        title: "Dobbiamo Unire le Forze",
         description:
           "Quando giochi questo personaggio, prepara un tuo personaggio a tua scelta che si trova in un luogo. Non può andare all'avventura per il resto di questo turno.",
       },

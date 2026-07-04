@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { lexingtonSmallInStatureI18n } from "./183-lexington-small-in-stature.i18n";
+
 import { alert } from "../../../helpers/abilities/alert";
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const lexingtonSmallInStature: CharacterCard = {
   id: "1Mx",
   canonicalId: "ci_1Mx",
+  slug: "lorcana-ci_1Mx",
+  printings: [
+    {
+      id: "set10-183",
+      artId: "set10-183",
+      setCode: "set10",
+      collectorNumber: "183",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-183"],
   cardType: "character",
   name: "Lexington",
@@ -22,7 +34,7 @@ export const lexingtonSmallInStature: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_59040c22431844d18165c4f7e1c5ac2a",
-    tcgPlayer: 658745,
+    tcgPlayer: "658745",
   },
   text: [
     {

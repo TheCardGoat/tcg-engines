@@ -24,16 +24,17 @@ export const auroraLoreGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Wächterin der Legenden",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Aurora-Charaktere auszuspielen.)",
       },
       {
-        title: "BEWAHRERIN",
+        title: "Bewahrerin",
         description: "Gegnerische Karten können deine Gegenstände nicht auswählen.",
       },
       {
-        title: "KÖNIGLICHES SORTIMENT",
+        title: "Königliches Sortiment",
         description:
-          "einen deiner Gegenstände — Schaue dir die oberste Karte deines Decks an und lege sie anschließend entweder auf dein Deck oder darunter.",
+          "{E} einen deiner Gegenstände — Schaue dir die oberste Karte deines Decks an und lege sie anschließend entweder auf dein Deck oder darunter.",
       },
     ],
   },
@@ -42,17 +43,18 @@ export const auroraLoreGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Gardienne de Lore",
     text: [
       {
-        title: "Alter 2",
+        title:
+          "<Alter> 2 (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages Aurore.)",
       },
       {
-        title: "SAUVEUSE",
+        title: "Sauveuse",
         description:
           "Vos adversaires ne peuvent pas choisir vos objets avec leurs capacités et effets de cartes.",
       },
       {
-        title: "INVENTAIRE ROYAL",
+        title: "Inventaire Royal",
         description:
-          "l'un de vos objets — Regardez la première carte de votre pioche. Remettez-la soit sur le dessus, soit en-dessous.",
+          "{E} l'un de vos objets — Regardez la première carte de votre pioche. Remettez-la soit sur le dessus, soit en-dessous.",
       },
     ],
   },
@@ -61,16 +63,17 @@ export const auroraLoreGuardianI18n: Record<Languages, I18nProperties> = {
     version: "Guardiana della Leggenda",
     text: [
       {
-        title: "Trasformazione 2",
+        title:
+          "<Trasformazione> 2 (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Aurora.)",
       },
       {
-        title: "CONSERVATRICE",
+        title: "Conservatrice",
         description: "Gli avversari non possono scegliere i tuoi oggetti per abilità o effetti.",
       },
       {
-        title: "INVENTARIO REALE",
+        title: "Inventario Reale",
         description:
-          "uno dei tuoi oggetti — Guarda la prima carta del tuo mazzo e mettila in cima o in fondo al tuo mazzo.",
+          "{E} uno dei tuoi oggetti — Guarda la prima carta del tuo mazzo e mettila in cima o in fondo al tuo mazzo.",
       },
     ],
   },

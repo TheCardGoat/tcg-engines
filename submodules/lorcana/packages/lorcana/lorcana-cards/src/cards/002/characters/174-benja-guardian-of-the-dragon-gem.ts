@@ -4,6 +4,17 @@ import { benjaGuardianOfTheDragonGemI18n } from "./174-benja-guardian-of-the-dra
 export const benjaGuardianOfTheDragonGem: CharacterCard = {
   id: "z98",
   canonicalId: "ci_pfZ",
+  slug: "lorcana-ci_pfZ",
+  printings: [
+    {
+      id: "set2-174",
+      artId: "set2-174",
+      setCode: "set2",
+      collectorNumber: "174",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-174", "set9-180"],
   cardType: "character",
   name: "Benja",
@@ -20,12 +31,12 @@ export const benjaGuardianOfTheDragonGem: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_66a2a59da61b4b54a92f25b54c375d93",
-    tcgPlayer: 650113,
+    tcgPlayer: "650113",
   },
   text: [
     {
-      title: "WE HAVE A CHOICE",
-      description: "When you play this character, you may banish chosen item.",
+      title: "WE HAVE",
+      description: "A CHOICE When you play this character, you may banish chosen item.",
     },
   ],
   classifications: ["Storyborn", "Mentor", "King"],

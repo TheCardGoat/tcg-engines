@@ -3,8 +3,19 @@ import { ursulaDeceiverI18n } from "./090-ursula-deceiver.i18n";
 
 export const ursulaDeceiver: CharacterCard = {
   id: "JSz",
-  canonicalId: "ci_MxG",
-  reprints: ["set3-090", "set9-090"],
+  canonicalId: "ci_Y9v",
+  slug: "lorcana-ci_Y9v",
+  printings: [
+    {
+      id: "set3-090",
+      artId: "set3-090",
+      setCode: "set3",
+      collectorNumber: "90",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set3-d23-003", "set3-090", "set9-090"],
   cardType: "character",
   name: "Ursula",
   version: "Deceiver",
@@ -20,7 +31,7 @@ export const ursulaDeceiver: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_af9ce05b294a4ecdb8e7401fff74a992",
-    tcgPlayer: 650029,
+    tcgPlayer: "650029",
   },
   text: [
     {

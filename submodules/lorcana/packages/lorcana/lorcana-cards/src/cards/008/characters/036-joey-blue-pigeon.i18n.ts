@@ -17,9 +17,9 @@ export const joeyBluePigeonI18n: Record<Languages, I18nProperties> = {
     version: "Blaue Taube",
     text: [
       {
-        title: "ICH HAB GENAU DAS RICHTIGE",
+        title: "Ich hab genau das Richtige",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, darfst du bis zu 1 Schaden von jedem deiner Charaktere mit Beschützen entfernen.",
+          "Jedes Mal, wenn dieser Charakter erkundet, darfst du bis zu 1 Schaden von jedem deiner Charaktere mit <Beschützen> entfernen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const joeyBluePigeonI18n: Record<Languages, I18nProperties> = {
     version: "Pigeon bleu",
     text: [
       {
-        title: "J'AI CE QU'IL TE FAUT",
+        title: "J'ai ce qu'il te faut",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez retirer jusqu'à 1 dommage de chacun de vos personnages avec Rempart.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez retirer jusqu'à 1 dommage de chacun de vos personnages avec <Rempart>.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const joeyBluePigeonI18n: Record<Languages, I18nProperties> = {
     version: "Piccione Blu",
     text: [
       {
-        title: "HO PROPRIO QUELLO CHE SERVE",
+        title: "Ho Proprio Quello che Serve",
         description:
-          "Ogni volta che questo personaggio va all'avventura, puoi rimuovere fino a 1 danno da ogni tuo personaggio con Guardiano.",
+          "Ogni volta che questo personaggio va all'avventura, puoi rimuovere fino a 1 danno da ogni tuo personaggio con <Guardiano>.",
       },
     ],
   },

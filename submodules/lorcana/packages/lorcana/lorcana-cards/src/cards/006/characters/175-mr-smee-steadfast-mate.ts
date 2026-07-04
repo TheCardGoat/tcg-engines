@@ -4,6 +4,17 @@ import { mrSmeeSteadfastMateI18n } from "./175-mr-smee-steadfast-mate.i18n";
 export const mrSmeeSteadfastMate: CharacterCard = {
   id: "iTQ",
   canonicalId: "ci_iTQ",
+  slug: "lorcana-ci_iTQ",
+  printings: [
+    {
+      id: "set6-175",
+      artId: "set6-175",
+      setCode: "set6",
+      collectorNumber: "175",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-175"],
   cardType: "character",
   name: "Mr. Smee",
@@ -20,7 +31,7 @@ export const mrSmeeSteadfastMate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7ee0b368f69e45f7832d164a926951ff",
-    tcgPlayer: 583849,
+    tcgPlayer: "583849",
   },
   text: [
     {

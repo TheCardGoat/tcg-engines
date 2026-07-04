@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { pegasusGiftForHerculesI18n } from "./084-pegasus-gift-for-hercules.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const pegasusGiftForHercules: CharacterCard = {
   id: "PD1",
   canonicalId: "ci_Sj7",
+  slug: "lorcana-ci_Sj7",
+  printings: [
+    {
+      id: "set4-084",
+      artId: "set4-084",
+      setCode: "set4",
+      collectorNumber: "84",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-084", "set9-084"],
   cardType: "character",
   name: "Pegasus",
@@ -20,8 +32,8 @@ export const pegasusGiftForHercules: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_5623b1aaf330477aa9d14cd755597509",
-    tcgPlayer: 650149,
+    lorcast: "crd_6da933a64900487e99028f2a59b09754",
+    tcgPlayer: "686340",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Ally"],

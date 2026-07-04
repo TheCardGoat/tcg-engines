@@ -7,14 +7,17 @@ export const gd04GnX075: UnitCard = {
   color: "white",
   traits: ["un"],
   id: "GD04-075",
-  externalId: "gundam:gd04-075",
-  slug: "gn-x-gd04-075",
+  canonicalId: "GD04-075",
+  externalIds: { bandai: "gundam:gd04-075" },
+  slug: "gn-x/gd04-075",
   displayName: "GN-X",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-075",
   printings: [
     {
       id: "GD04-075",
+      artId: "GD04-075",
+      setCode: "GD04",
       collectorNumber: "GD04-075",
       cardNumber: "GD04-075",
       set: {
@@ -29,6 +32,7 @@ export const gd04GnX075: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-075"],
   selectedPrintingId: "GD04-075",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-075.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-075.webp?260424",

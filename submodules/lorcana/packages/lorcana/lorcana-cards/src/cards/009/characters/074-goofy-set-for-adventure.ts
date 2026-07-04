@@ -3,7 +3,18 @@ import { goofySetForAdventureI18n } from "./074-goofy-set-for-adventure.i18n";
 
 export const goofySetForAdventure: CharacterCard = {
   id: "RnM",
-  canonicalId: "ci_vZ9",
+  canonicalId: "ci_uui",
+  slug: "lorcana-ci_uui",
+  printings: [
+    {
+      id: "set9-074",
+      artId: "set9-074",
+      setCode: "set9",
+      collectorNumber: "74",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-074"],
   cardType: "character",
   name: "Goofy",
@@ -20,7 +31,7 @@ export const goofySetForAdventure: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bc96b5e1045e45a38da57c302c634ba2",
-    tcgPlayer: 650147,
+    tcgPlayer: "650147",
   },
   text: [
     {

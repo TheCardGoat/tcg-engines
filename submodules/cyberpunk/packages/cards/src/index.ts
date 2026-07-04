@@ -5,16 +5,20 @@ export { deckLists } from "./decks/index.ts";
 export * from "./alpha/index.ts";
 export * from "./spoiler/index.ts";
 export * from "./promo/index.ts";
+export * from "./PRM01/index.ts";
 export * from "./boxtoppersretail/index.ts";
 export * from "./theheistretailstarterdeck/index.ts";
+export * from "./embracingpowerretailstarterdeck/index.ts";
 export * from "./welcometonightcityretail/index.ts";
 
 import { cards, rawCards } from "./generated.ts";
+import { prm01Cards } from "./PRM01/index.ts";
 import { alphaCards } from "./alpha/index.ts";
 import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
 import { promoCards } from "./promo/index.ts";
 import { spoilerCards } from "./spoiler/index.ts";
 import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
+import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
 import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
 
 export function getCardBySlug(slug: string): CardDefinition | undefined {
@@ -25,14 +29,16 @@ export function getRawCardBySlug(slug: string): RawCardRecord | undefined {
   return rawCards.find((card) => card.slug === slug);
 }
 
-export const structuredCards = [
+export const structuredCards: StructuredCardDefinition[] = [
   ...alphaCards,
   ...spoilerCards,
   ...promoCards,
+  ...prm01Cards,
   ...boxToppersRetailCards,
   ...theHeistRetailStarterDeckCards,
+  ...embracingPowerRetailStarterDeckCards,
   ...welcomeToNightCityRetailCards,
-] satisfies StructuredCardDefinition[];
+];
 
 export function getStructuredCardBySlug(slug: string): StructuredCardDefinition | undefined {
   return structuredCards.find((card) => card.slug === slug);
@@ -49,6 +55,45 @@ export function getStructuredSpoilerCardBySlug(slug: string) {
 export function getStructuredPromoCardBySlug(slug: string) {
   return promoCards.find((card) => card.slug === slug);
 }
+
+export function getStructuredPrm01CardBySlug(slug: string) {
+  return prm01Cards.find((card) => card.slug === slug);
+}
+
+// Cross-set card merge — single source of truth shared with the platform card
+// catalog and the deck-save validator so canonical selection + printing sets
+// cannot drift. See `src/merged.ts`.
+export {
+  getMergedCyberpunkCards,
+  getMergedCyberpunkCardsById,
+  mergeDuplicateCards,
+  pickCanonicalAndMergePrintings,
+  setPriority,
+  SET_PRIORITY,
+  type MergeableCard,
+  type MergeablePrinting,
+} from "./merged.ts";
+
+// Atelier (alt-art acquisition/rental) data projection for the platform
+// deckbuilder + atelier backend. See `src/atelier.ts`.
+export {
+  CYBERPUNK_ALT_ART_SET_CODES,
+  CYBERPUNK_RARITY_RANK,
+  CYBERPUNK_RARITY_TO_CODE,
+  cyberpunkPrintingEffectiveRarityCode,
+  cyberpunkRarityCode,
+  defaultCyberpunkPrintingId,
+  getCyberpunkCanonicalForCardId,
+  getCyberpunkCardDisplay,
+  getCyberpunkPrintingImageUrl,
+  getCyberpunkPrintingInfo,
+  getCyberpunkPrintingInfosForCanonical,
+  isCyberpunkAlternateArtPrinting,
+  isCyberpunkPrintingOfCanonical,
+  type CyberpunkPrintingInfo,
+  type CyberpunkPrintingSetRef,
+  type CyberpunkRarityCode,
+} from "./atelier.ts";
 
 export { cardBundle, createCardCatalog, type CardCatalog, BUNDLE_DSL_VERSION } from "./bundle.ts";
 export {

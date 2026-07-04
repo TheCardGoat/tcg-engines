@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailGorillaArms = {
+export const welcomeToNightCityRetailGorillaArms = defineCyberpunkCard({
   id: "500ae9b9-0afa-4b82-87ed-61c72583139c",
-  externalId: "cb-gorilla-arms",
   slug: "gorilla-arms",
-  name: "Gorilla Arms",
-  displayName: "Gorilla Arms",
   rulesText:
     "(Equip to a friendly Unit or face-up Legend.)\nThe first time this Unit steals 1 or more Gigs each turn, steal a rival Gig with a value not shared by a friendly Gig.",
+  name: "Gorilla Arms",
+  displayName: "Gorilla Arms",
+  canonicalId: "gorilla-arms",
   color: "yellow",
   classifications: ["Cyberware"],
   set: {
@@ -15,29 +16,12 @@ export const welcomeToNightCityRetailGorillaArms = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "060",
-  printings: [
-    {
-      id: "e1959b9e-d32d-43be-94c3-a595809e0c28",
-      collectorNumber: "060",
-      setCode: "welcometonightcityretail",
-      rarity: "Common",
-    },
-    {
-      id: "73b6b3d3-6a7f-44ed-a267-add6ae389b5a",
-      collectorNumber: "β060",
-      setCode: "welcometonightcitybeta",
-      rarity: "Common",
-    },
-  ],
-  selectedPrintingId: "e1959b9e-d32d-43be-94c3-a595809e0c28",
   artist: "TOPDOG Entertainment",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/060.webp",
   rarity: "Common",
   legality: "legal",
   hasSellTag: true,
   ram: 3,
-  timingTriggers: [],
-  keywords: [],
   type: "gear",
   cost: 4,
   power: 3,
@@ -80,7 +64,6 @@ export const welcomeToNightCityRetailGorillaArms = {
       ],
     },
   ],
-  reminderText: [],
   attachment: {
     text: "Equip to a unit or face-up legend.",
     target: {
@@ -91,4 +74,4 @@ export const welcomeToNightCityRetailGorillaArms = {
       face: "faceUp",
     },
   },
-} satisfies StructuredCardDefinition;
+}) satisfies GearCardDefinition;

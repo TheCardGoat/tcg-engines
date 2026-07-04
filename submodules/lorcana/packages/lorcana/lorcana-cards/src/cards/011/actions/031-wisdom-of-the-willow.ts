@@ -4,6 +4,17 @@ import { wisdomOfTheWillowI18n } from "./031-wisdom-of-the-willow.i18n";
 export const wisdomOfTheWillow: ActionCard = {
   id: "aZ8",
   canonicalId: "ci_aZ8",
+  slug: "lorcana-ci_aZ8",
+  printings: [
+    {
+      id: "set11-031",
+      artId: "set11-031",
+      setCode: "set11",
+      collectorNumber: "31",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-031"],
   cardType: "action",
   name: "Wisdom of the Willow",
@@ -16,7 +27,7 @@ export const wisdomOfTheWillow: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9efb436da763484ba54c2b75e1e0fcd9",
-    tcgPlayer: 674831,
+    tcgPlayer: "674831",
   },
   text: "For the rest of this turn, whenever one of your characters quests, you may draw a card.",
   abilities: [

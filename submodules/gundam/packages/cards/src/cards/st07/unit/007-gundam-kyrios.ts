@@ -7,14 +7,17 @@ export const st07GundamKyrios007: UnitCard = {
   color: "green",
   traits: ["cb", "gn drive"],
   id: "ST07-007",
-  externalId: "gundam:st07-007",
-  slug: "gundam-kyrios-st07-007",
+  canonicalId: "ST07-007",
+  externalIds: { bandai: "gundam:st07-007" },
+  slug: "gundam-kyrios/st07-007",
   displayName: "Gundam Kyrios",
   set: { code: "ST07", name: "Celestial Drive [ST07]", packageId: "616007" },
   printNumber: "ST07-007",
   printings: [
     {
       id: "ST07-007",
+      artId: "ST07-007",
+      setCode: "ST07",
       collectorNumber: "ST07-007",
       cardNumber: "ST07-007",
       set: {
@@ -30,6 +33,8 @@ export const st07GundamKyrios007: UnitCard = {
     },
     {
       id: "ST07-007_p1",
+      artId: "ST07-007_p1",
+      setCode: "ST07",
       collectorNumber: "ST07-007_p1",
       cardNumber: "ST07-007",
       set: {
@@ -44,6 +49,7 @@ export const st07GundamKyrios007: UnitCard = {
       productName: "Celestial Drive [ST07] Bonus Pack",
     },
   ],
+  reprints: ["ST07-007", "ST07-007_p1"],
   selectedPrintingId: "ST07-007",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-007.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-007.webp?260424",

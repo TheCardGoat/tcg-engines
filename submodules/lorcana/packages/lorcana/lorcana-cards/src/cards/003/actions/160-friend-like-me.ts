@@ -4,6 +4,17 @@ import { friendLikeMeI18n } from "./160-friend-like-me.i18n";
 export const friendLikeMe: ActionCard = {
   id: "wbB",
   canonicalId: "ci_wbB",
+  slug: "lorcana-ci_wbB",
+  printings: [
+    {
+      id: "set3-160",
+      artId: "set3-160",
+      setCode: "set3",
+      collectorNumber: "160",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-160"],
   cardType: "action",
   name: "Friend Like Me",
@@ -16,7 +27,7 @@ export const friendLikeMe: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dda178292c7746de913c4dacee008ac9",
-    tcgPlayer: 536285,
+    tcgPlayer: "536285",
   },
   text: "Each player puts the top 3 cards of their deck into their inkwell facedown and exerted.",
   actionSubtype: "song",

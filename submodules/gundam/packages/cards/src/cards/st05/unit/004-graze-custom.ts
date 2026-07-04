@@ -7,14 +7,17 @@ export const st05GrazeCustom004: UnitCard = {
   color: "purple",
   traits: ["tekkadan"],
   id: "ST05-004",
-  externalId: "gundam:st05-004",
-  slug: "graze-custom-st05-004",
+  canonicalId: "ST05-004",
+  externalIds: { bandai: "gundam:st05-004" },
+  slug: "graze-custom/st05-004",
   displayName: "Graze Custom",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-004",
   printings: [
     {
       id: "ST05-004",
+      artId: "ST05-004",
+      setCode: "ST05",
       collectorNumber: "ST05-004",
       cardNumber: "ST05-004",
       set: {
@@ -30,6 +33,8 @@ export const st05GrazeCustom004: UnitCard = {
     },
     {
       id: "ST05-004_p1",
+      artId: "ST05-004_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-004_p1",
       cardNumber: "ST05-004",
       set: {
@@ -44,6 +49,7 @@ export const st05GrazeCustom004: UnitCard = {
       productName: "Iron Bloom [ST05] Bonus Pack",
     },
   ],
+  reprints: ["ST05-004", "ST05-004_p1"],
   selectedPrintingId: "ST05-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-004.webp?260424",

@@ -4,6 +4,17 @@ import { fatCatCriminalBusinessmanI18n } from "./187-fat-cat-criminal-businessma
 export const fatCatCriminalBusinessman: CharacterCard = {
   id: "Cui",
   canonicalId: "ci_Cui",
+  slug: "lorcana-ci_Cui",
+  printings: [
+    {
+      id: "set12-187",
+      artId: "set12-187",
+      setCode: "set12",
+      collectorNumber: "187",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-187"],
   cardType: "character",
   name: "Fat Cat",
@@ -20,6 +31,7 @@ export const fatCatCriminalBusinessman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c013142af45943e4b43314298fc1a043",
+    tcgPlayer: "692197",
   },
   text: [
     {

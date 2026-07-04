@@ -1,15 +1,39 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { svenOfficialIceDeliverer as canonicalSvenOfficialIceDeliverer } from "../../001";
+import { svenOfficialIceDelivererI18n } from "./056-sven-official-ice-deliverer.i18n";
 
 export const svenOfficialIceDeliverer: CharacterCard = {
-  ...canonicalSvenOfficialIceDeliverer,
-  id: "GzC",
+  id: "Psw",
+  canonicalId: "ci_Nok",
+  slug: "lorcana-ci_Nok",
+  printings: [
+    {
+      id: "set9-056",
+      artId: "set9-056",
+      setCode: "set9",
+      collectorNumber: "56",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-055", "set9-056"],
+  cardType: "character",
+  name: "Sven",
+  version: "Official Ice Deliverer",
+  inkType: ["amethyst"],
+  franchise: "Frozen",
   set: "009",
   cardNumber: 56,
   rarity: "uncommon",
+  cost: 6,
+  strength: 5,
+  willpower: 7,
+  lore: 1,
+  inkable: true,
+  vanilla: true,
   externalIds: {
     lorcast: "crd_7b8e4758284944abbee5ba2f79d2b353",
-    tcgPlayer: 650000,
+    tcgPlayer: "650000",
   },
+  classifications: ["Storyborn", "Ally"],
+  i18n: svenOfficialIceDelivererI18n,
 };

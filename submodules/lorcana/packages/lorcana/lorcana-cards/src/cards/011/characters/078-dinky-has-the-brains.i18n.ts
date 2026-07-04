@@ -17,7 +17,7 @@ export const dinkyHasTheBrainsI18n: Record<Languages, I18nProperties> = {
     version: "Der mit dem Verstand",
     text: [
       {
-        title: "SCHNAPP IHN!",
+        title: "Schnapp ihn!",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle gegnerischen Mitspielenden je einen ihrer Charaktere und fügen diesem 1 Schaden zu.",
       },
@@ -28,7 +28,7 @@ export const dinkyHasTheBrainsI18n: Record<Languages, I18nProperties> = {
     version: "A le cerveau",
     text: [
       {
-        title: "ATTRAPE-LE!",
+        title: "Attrape-le!",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire choisit l'un de ses personnages et lui inflige 1 dommage.",
       },
@@ -39,7 +39,7 @@ export const dinkyHasTheBrainsI18n: Record<Languages, I18nProperties> = {
     version: "Quello con il Cervello",
     text: [
       {
-        title: "PRENDILO!",
+        title: "Prendilo!",
         description:
           "Quando giochi questo personaggio, ogni avversario sceglie uno dei suoi personaggi e gli infligge 1 danno.",
       },

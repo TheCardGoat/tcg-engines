@@ -251,19 +251,27 @@ const damageIndicatorClass = $derived(
       >
       <!-- Card Art Area (fills entire card) -->
       <div class="absolute inset-0 flex items-center justify-center">
-        {#if card?.set && card?.cardNumber}
-          <!-- Real Card Image -->
-          <div data-testid={`${card.set}-${card.cardNumber}-${imageFormat}`} class="card-image-wrapper absolute inset-0 z-[1]" class:loaded={imageLoaded}>
-            <CardImage
-              set={card.set}
-              number={card.cardNumber}
-              crop={imageFormat}
-              alt={getCardLabel()}
-              class="card-image w-full h-full object-cover"
-              onLoad={handleImageLoad}
-              onError={handleImageError}
-            />
-          </div>
+        {#if card && !card.isMasked}
+          {@const imageSet = card.imageSet ?? card.set}
+          {@const imageCardNumber = card.imageCardNumber ?? card.cardNumber}
+          {#if imageSet && imageCardNumber}
+            <!-- Real Card Image -->
+            <div
+              data-testid={`${imageSet}-${imageCardNumber}-${imageFormat}`}
+              class="card-image-wrapper absolute inset-0 z-[1]"
+              class:loaded={imageLoaded}
+            >
+              <CardImage
+                set={imageSet}
+                number={imageCardNumber}
+                crop={imageFormat}
+                alt={getCardLabel()}
+                class="card-image w-full h-full object-cover"
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+              />
+            </div>
+          {/if}
         {/if}
 
         <!-- Placeholder (shown while loading, on error, or when no image) -->
@@ -360,13 +368,13 @@ const damageIndicatorClass = $derived(
 
   <!-- Playable Glow -->
   {#if isPlayable && !isValidTarget}
-    <div class="playable-glow absolute -inset-0.5 pointer-events-none animate-playable-pulse"></div>
+    <div class="playable-glow absolute inset-0 pointer-events-none animate-playable-pulse"></div>
   {/if}
 
   <!-- Valid Target Indicator -->
   {#if isValidTarget && !isSelected}
     <div
-      class="valid-target-indicator absolute -inset-1 pointer-events-none z-20"
+      class="valid-target-indicator absolute inset-1 pointer-events-none z-20"
       aria-hidden="true"
     ></div>
   {/if}
@@ -528,7 +536,9 @@ const damageIndicatorClass = $derived(
 
   .valid-target-indicator {
     border: 2px dashed rgba(186, 230, 253, 0.95);
-    box-shadow: 0 0 18px rgba(56, 189, 248, 0.42);
+    box-shadow:
+      inset 0 0 10px rgba(56, 189, 248, 0.35),
+      0 0 10px rgba(56, 189, 248, 0.22);
     animation: valid-target-breathe 1.6s ease-in-out infinite;
   }
 

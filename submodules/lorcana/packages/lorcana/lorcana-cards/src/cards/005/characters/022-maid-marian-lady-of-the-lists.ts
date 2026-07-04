@@ -4,6 +4,17 @@ import { maidMarianLadyOfTheListsI18n } from "./022-maid-marian-lady-of-the-list
 export const maidMarianLadyOfTheLists: CharacterCard = {
   id: "w0u",
   canonicalId: "ci_w0u",
+  slug: "lorcana-ci_w0u",
+  printings: [
+    {
+      id: "set5-022",
+      artId: "set5-022",
+      setCode: "set5",
+      collectorNumber: "22",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-022"],
   cardType: "character",
   name: "Maid Marian",
@@ -20,7 +31,7 @@ export const maidMarianLadyOfTheLists: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0140dc8d8b8444878839e0c94f358497",
-    tcgPlayer: 561948,
+    tcgPlayer: "561948",
   },
   text: [
     {

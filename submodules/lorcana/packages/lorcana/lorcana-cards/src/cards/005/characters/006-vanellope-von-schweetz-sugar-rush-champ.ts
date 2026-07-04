@@ -4,6 +4,17 @@ import { vanellopeVonSchweetzSugarRushChampI18n } from "./006-vanellope-von-schw
 export const vanellopeVonSchweetzSugarRushChamp: CharacterCard = {
   id: "Xwz",
   canonicalId: "ci_Xwz",
+  slug: "lorcana-ci_Xwz",
+  printings: [
+    {
+      id: "set5-006",
+      artId: "set5-006",
+      setCode: "set5",
+      collectorNumber: "6",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-006"],
   cardType: "character",
   name: "Vanellope von Schweetz",
@@ -21,7 +32,7 @@ export const vanellopeVonSchweetzSugarRushChamp: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_d3dd900e88304c778c319c8facd2c8f2",
-    tcgPlayer: 555241,
+    tcgPlayer: "555241",
   },
   classifications: ["Storyborn", "Hero", "Princess", "Racer"],
   i18n: vanellopeVonSchweetzSugarRushChampI18n,

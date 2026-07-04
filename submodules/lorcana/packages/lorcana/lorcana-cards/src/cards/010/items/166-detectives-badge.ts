@@ -4,6 +4,17 @@ import { detectivesBadgeI18n } from "./166-detectives-badge.i18n";
 export const detectivesBadge: ItemCard = {
   id: "os1",
   canonicalId: "ci_os1",
+  slug: "lorcana-ci_os1",
+  printings: [
+    {
+      id: "set10-166",
+      artId: "set10-166",
+      setCode: "set10",
+      collectorNumber: "166",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-166"],
   cardType: "item",
   name: "Detective's Badge",
@@ -16,7 +27,7 @@ export const detectivesBadge: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_423d5717f2d347448441e9da6d022847",
-    tcgPlayer: 660340,
+    tcgPlayer: "660340",
   },
   text: [
     {

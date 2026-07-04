@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mrIncredibleSuperStrongI18n } from "./127-mr-incredible-super-strong.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const mrIncredibleSuperStrong: CharacterCard = {
-  id: "qoz",
+  id: "556",
   canonicalId: "ci_qoz",
+  slug: "lorcana-ci_qoz",
+  printings: [
+    {
+      id: "set12-127",
+      artId: "set12-127",
+      setCode: "set12",
+      collectorNumber: "127",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-127"],
   cardType: "character",
   name: "Mr. Incredible",
@@ -20,7 +32,8 @@ export const mrIncredibleSuperStrong: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_22adb1813838413ab42f071c073d4a04",
+    lorcast: "crd_549170e882a24974be95e3cbaf53f34e",
+    tcgPlayer: "692225",
   },
   text: [
     {

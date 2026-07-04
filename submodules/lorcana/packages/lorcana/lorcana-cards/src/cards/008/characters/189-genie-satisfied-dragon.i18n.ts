@@ -17,9 +17,9 @@ export const genieSatisfiedDragonI18n: Record<Languages, I18nProperties> = {
     version: "Zufriedener Drache",
     text: [
       {
-        title: "INSEKTENFÄNGER",
+        title: "Insektenfänger",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const genieSatisfiedDragonI18n: Record<Languages, I18nProperties> = {
     version: "Dragon satisfait",
     text: [
       {
-        title: "CHASSEUR D'INSECTES",
+        title: "Chasseur d'insectes",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier des personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const genieSatisfiedDragonI18n: Record<Languages, I18nProperties> = {
     version: "Drago Soddisfatto",
     text: [
       {
-        title: "ACCHIAPPA INSETTI",
+        title: "Acchiappa Insetti",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

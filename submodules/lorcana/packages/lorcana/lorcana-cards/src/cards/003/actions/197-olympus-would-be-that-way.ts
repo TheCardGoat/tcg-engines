@@ -4,6 +4,17 @@ import { olympusWouldBeThatWayI18n } from "./197-olympus-would-be-that-way.i18n"
 export const olympusWouldBeThatWay: ActionCard = {
   id: "N1o",
   canonicalId: "ci_N1o",
+  slug: "lorcana-ci_N1o",
+  printings: [
+    {
+      id: "set3-197",
+      artId: "set3-197",
+      setCode: "set3",
+      collectorNumber: "197",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-197"],
   cardType: "action",
   name: "Olympus Would Be That Way",
@@ -16,7 +27,7 @@ export const olympusWouldBeThatWay: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_68b76d76c7b1460cbae204778e1da3f2",
-    tcgPlayer: 539117,
+    tcgPlayer: "539117",
   },
   text: "Your characters get +3 {S} while challenging a location this turn.",
   abilities: [

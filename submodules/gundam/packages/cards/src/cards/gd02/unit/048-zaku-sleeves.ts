@@ -7,14 +7,17 @@ export const gd02ZakuSleeves048: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD02-048",
-  externalId: "gundam:gd02-048",
-  slug: "zaku-sleeves-gd02-048",
+  canonicalId: "GD02-048",
+  externalIds: { bandai: "gundam:gd02-048" },
+  slug: "zaku-iii-sleeves/gd02-048",
   displayName: "Zaku Ⅲ (Sleeves)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-048",
   printings: [
     {
       id: "GD02-048",
+      artId: "GD02-048",
+      setCode: "GD02",
       collectorNumber: "GD02-048",
       cardNumber: "GD02-048",
       set: {
@@ -30,6 +33,8 @@ export const gd02ZakuSleeves048: UnitCard = {
     },
     {
       id: "GD02-048_p1",
+      artId: "GD02-048_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-048_p1",
       cardNumber: "GD02-048",
       set: {
@@ -45,6 +50,8 @@ export const gd02ZakuSleeves048: UnitCard = {
     },
     {
       id: "GD02-048_p2",
+      artId: "GD02-048_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-048_p2",
       cardNumber: "GD02-048",
       set: {
@@ -59,6 +66,7 @@ export const gd02ZakuSleeves048: UnitCard = {
       productName: "Store Tournament Winner Pack 02",
     },
   ],
+  reprints: ["GD02-048", "GD02-048_p1", "GD02-048_p2"],
   selectedPrintingId: "GD02-048",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-048.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-048.webp?260424",

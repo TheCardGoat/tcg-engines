@@ -4,6 +4,17 @@ import { lordDingwallBullheadedI18n } from "./186-lord-dingwall-bullheaded.i18n"
 export const lordDingwallBullheaded: CharacterCard = {
   id: "NF5",
   canonicalId: "ci_NF5",
+  slug: "lorcana-ci_NF5",
+  printings: [
+    {
+      id: "set12-186",
+      artId: "set12-186",
+      setCode: "set12",
+      collectorNumber: "186",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-186"],
   cardType: "character",
   name: "Lord Dingwall",
@@ -20,6 +31,7 @@ export const lordDingwallBullheaded: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9ef9a2258e3e4f7686f71bd39f88d777",
+    tcgPlayer: "692083",
   },
   text: [
     {

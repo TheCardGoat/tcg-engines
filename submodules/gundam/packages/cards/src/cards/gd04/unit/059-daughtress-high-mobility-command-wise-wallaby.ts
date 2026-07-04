@@ -7,14 +7,17 @@ export const gd04DaughtressHighMobilityCommandWiseWallaby059: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD04-059",
-  externalId: "gundam:gd04-059",
-  slug: "daughtress-high-mobility-command-wise-wallaby-gd04-059",
+  canonicalId: "GD04-059",
+  externalIds: { bandai: "gundam:gd04-059" },
+  slug: "daughtress-high-mobility-command-wise-wallaby/gd04-059",
   displayName: "Daughtress High Mobility Command Wise Wallaby",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-059",
   printings: [
     {
       id: "GD04-059",
+      artId: "GD04-059",
+      setCode: "GD04",
       collectorNumber: "GD04-059",
       cardNumber: "GD04-059",
       set: {
@@ -29,6 +32,7 @@ export const gd04DaughtressHighMobilityCommandWiseWallaby059: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-059"],
   selectedPrintingId: "GD04-059",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-059.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-059.webp?260424",

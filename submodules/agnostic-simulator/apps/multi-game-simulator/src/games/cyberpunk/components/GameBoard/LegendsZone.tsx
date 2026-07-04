@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Card } from "./Card";
-import { simEntityAnchor, simZoneAnchor } from "./animationAnchors";
 import { ZoneBadge } from "./ZoneBadge";
 import {
   PLAYER_SIDE_TO_ID,
@@ -85,10 +84,10 @@ export function LegendsZone({ legends = [], opponent = false, side }: LegendsZon
     <div
       className={`${classes.zone} ${opponent ? classes.opponent : ""}`}
       data-testid="legends-zone"
+      data-zone-id={opponent ? "opp-legendArea" : "p-legendArea"}
       data-side={side}
       data-count={legends.length}
       data-face-down-count={faceDownCount}
-      {...simZoneAnchor({ id: zoneName, side, visibility: "private", role: "battlefield" })}
     >
       <div className={classes.slots}>
         {Array.from({ length: 3 }).map((_, i) => {
@@ -142,12 +141,6 @@ function LegendSlot({
           "data-card-name": legend.name,
           "data-card-type": legend.cardType,
           "data-card-color": legend.color,
-          ...simEntityAnchor({
-            entityId: legend.cardId,
-            zoneId: zoneName,
-            side,
-            face: "public",
-          }),
         }
       : {};
 
@@ -165,6 +158,7 @@ function LegendSlot({
       }
       data-peeked={legend?.peeked ? "true" : "false"}
       data-actionable={isActionable ? "true" : "false"}
+      data-call-legend-actionable={canCallLegend ? "true" : "false"}
       data-selection-candidate={isSelectedCallLegendCandidate ? "true" : "false"}
       {...publicLegendAttrs}
     >

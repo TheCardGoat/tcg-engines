@@ -4,6 +4,17 @@ import { emeraldCoilI18n } from "./120-emerald-coil.i18n";
 export const emeraldCoil: ItemCard = {
   id: "jH6",
   canonicalId: "ci_jH6",
+  slug: "lorcana-ci_jH6",
+  printings: [
+    {
+      id: "set7-120",
+      artId: "set7-120",
+      setCode: "set7",
+      collectorNumber: "120",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-120"],
   cardType: "item",
   name: "Emerald Coil",
@@ -16,7 +27,7 @@ export const emeraldCoil: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6109e70026c649f2baca4f9656b66510",
-    tcgPlayer: 619471,
+    tcgPlayer: "619471",
   },
   text: [
     {

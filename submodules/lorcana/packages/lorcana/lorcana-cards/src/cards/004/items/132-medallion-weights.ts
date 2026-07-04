@@ -4,6 +4,17 @@ import { medallionWeightsI18n } from "./132-medallion-weights.i18n";
 export const medallionWeights: ItemCard = {
   id: "Tcn",
   canonicalId: "ci_BIF",
+  slug: "lorcana-ci_BIF",
+  printings: [
+    {
+      id: "set4-132",
+      artId: "set4-132",
+      setCode: "set4",
+      collectorNumber: "132",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-132", "set9-134"],
   cardType: "item",
   name: "Medallion Weights",
@@ -16,7 +27,7 @@ export const medallionWeights: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_568ccd26d0fa49ac94a67b49e599930d",
-    tcgPlayer: 650069,
+    tcgPlayer: "650069",
   },
   text: [
     {

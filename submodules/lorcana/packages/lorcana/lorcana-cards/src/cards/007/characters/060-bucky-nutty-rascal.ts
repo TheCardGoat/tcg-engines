@@ -4,6 +4,17 @@ import { buckyNuttyRascalI18n } from "./060-bucky-nutty-rascal.i18n";
 export const buckyNuttyRascal: CharacterCard = {
   id: "SiS",
   canonicalId: "ci_SiS",
+  slug: "lorcana-ci_SiS",
+  printings: [
+    {
+      id: "set7-060",
+      artId: "set7-060",
+      setCode: "set7",
+      collectorNumber: "60",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-060"],
   cardType: "character",
   name: "Bucky",
@@ -20,7 +31,7 @@ export const buckyNuttyRascal: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e8ae850c18614645b9458dbca01b1f14",
-    tcgPlayer: 619438,
+    tcgPlayer: "619438",
   },
   text: [
     {

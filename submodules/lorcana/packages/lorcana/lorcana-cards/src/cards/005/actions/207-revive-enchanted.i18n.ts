@@ -3,7 +3,7 @@ import type { I18nProperties, Languages } from "@tcg/lorcana-types";
 export const reviveEnchantedI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Revive",
-    text: "Play a character with cost 5 or less from your discard for free.",
+    text: "Play a character card with cost 5 or less from your discard for free.",
   },
   de: {
     name: "Wiedererwachen",

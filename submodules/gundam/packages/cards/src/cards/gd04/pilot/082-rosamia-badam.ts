@@ -7,14 +7,17 @@ export const gd04RosamiaBadam082: PilotCard = {
   color: "blue",
   traits: ["titans", "cyber-newtype"],
   id: "GD04-082",
-  externalId: "gundam:gd04-082",
-  slug: "rosamia-badam-gd04-082",
+  canonicalId: "GD04-082",
+  externalIds: { bandai: "gundam:gd04-082" },
+  slug: "rosamia-badam/gd04-082",
   displayName: "Rosamia Badam",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-082",
   printings: [
     {
       id: "GD04-082",
+      artId: "GD04-082",
+      setCode: "GD04",
       collectorNumber: "GD04-082",
       cardNumber: "GD04-082",
       set: {
@@ -29,6 +32,7 @@ export const gd04RosamiaBadam082: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-082"],
   selectedPrintingId: "GD04-082",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-082.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-082.webp?260424",

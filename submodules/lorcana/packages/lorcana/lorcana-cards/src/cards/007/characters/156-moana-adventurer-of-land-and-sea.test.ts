@@ -14,7 +14,7 @@ describe("Moana - Adventurer of Land and Sea (set 007)", () => {
 
     expect(moanaAdventurerOfLandAndSea).toMatchObject({
       id: "xp6",
-      canonicalId: "ci_ncl",
+      canonicalId: "ci_MeA",
       reprints: ["set7-156"],
       cardType: "character",
       name: "Moana",

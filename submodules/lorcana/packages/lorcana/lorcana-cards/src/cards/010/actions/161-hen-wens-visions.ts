@@ -4,6 +4,17 @@ import { henWensVisionsI18n } from "./161-hen-wens-visions.i18n";
 export const henWensVisions: ActionCard = {
   id: "337",
   canonicalId: "ci_337",
+  slug: "lorcana-ci_337",
+  printings: [
+    {
+      id: "set10-161",
+      artId: "set10-161",
+      setCode: "set10",
+      collectorNumber: "161",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-161"],
   cardType: "action",
   name: "Hen Wen's Visions",
@@ -16,7 +27,7 @@ export const henWensVisions: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e118a4c9805c426687bc202180e54e46",
-    tcgPlayer: 657891,
+    tcgPlayer: "657891",
   },
   text: "Look at the top 4 cards of your deck. Put 1 on the top of your deck and the rest on the bottom in any order.",
   abilities: [

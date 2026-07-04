@@ -6,14 +6,17 @@ export const gd04ArmoryOne128: BaseCard = {
   type: "base",
   traits: ["zaft", "stronghold"],
   id: "GD04-128",
-  externalId: "gundam:gd04-128",
-  slug: "armory-one-gd04-128",
+  canonicalId: "GD04-128",
+  externalIds: { bandai: "gundam:gd04-128" },
+  slug: "armory-one/gd04-128",
   displayName: "Armory One",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-128",
   printings: [
     {
       id: "GD04-128",
+      artId: "GD04-128",
+      setCode: "GD04",
       collectorNumber: "GD04-128",
       cardNumber: "GD04-128",
       set: {
@@ -28,6 +31,7 @@ export const gd04ArmoryOne128: BaseCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-128"],
   selectedPrintingId: "GD04-128",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-128.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-128.webp?260424",

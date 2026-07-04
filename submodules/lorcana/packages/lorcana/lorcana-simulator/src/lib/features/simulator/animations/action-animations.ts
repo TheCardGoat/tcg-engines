@@ -12,6 +12,10 @@ import {
   toLocalRect,
 } from "@/features/simulator/animations/animation-shared.js";
 
+export const ACTION_CARD_STAGE_WIDTH = 122;
+export const ACTION_CARD_STAGE_HEIGHT = 171;
+const ACTION_CARD_STAGE_HORIZONTAL_ANCHOR = 0.9;
+
 export interface ResolvedActionAnimationTarget {
   cardId: string;
   wasBanished: boolean;
@@ -92,7 +96,29 @@ export function deriveResolvedActionAnimationsFromPacket(
   return resolved;
 }
 
-function resolveActionCardSourceRect(
+export function getActionCardStageRect(layerWidth: number, layerHeight: number): BoardLocalRect {
+  const x = clamp(
+    layerWidth * ACTION_CARD_STAGE_HORIZONTAL_ANCHOR - ACTION_CARD_STAGE_WIDTH / 2,
+    24,
+    layerWidth - ACTION_CARD_STAGE_WIDTH - 24,
+  );
+  const y = clamp(
+    layerHeight * 0.5 - ACTION_CARD_STAGE_HEIGHT / 2,
+    24,
+    layerHeight - ACTION_CARD_STAGE_HEIGHT - 24,
+  );
+
+  return {
+    x,
+    y,
+    width: ACTION_CARD_STAGE_WIDTH,
+    height: ACTION_CARD_STAGE_HEIGHT,
+    centerX: x + ACTION_CARD_STAGE_WIDTH / 2,
+    centerY: y + ACTION_CARD_STAGE_HEIGHT / 2,
+  };
+}
+
+export function resolveActionCardSourceRect(
   cardId: string,
   actorSide: LorcanaPlayerSide,
   boardAnchors: BoardAnchorSnapshot | null,
@@ -107,6 +133,10 @@ function resolveActionCardSourceRect(
   });
 
   return rect ? toLocalRect(rect, boardAnchors.boardRect) : null;
+}
+
+function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
 }
 
 function resolvePlayTargetRect(

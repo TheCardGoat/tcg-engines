@@ -7,14 +7,17 @@ export const gd01DearkaElthman095: PilotCard = {
   color: "red",
   traits: ["zaft", "coordinator"],
   id: "GD01-095",
-  externalId: "gundam:gd01-095",
-  slug: "dearka-elthman-gd01-095",
+  canonicalId: "GD01-095",
+  externalIds: { bandai: "gundam:gd01-095" },
+  slug: "dearka-elthman/gd01-095",
   displayName: "Dearka Elthman",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-095",
   printings: [
     {
       id: "GD01-095",
+      artId: "GD01-095",
+      setCode: "GD01",
       collectorNumber: "GD01-095",
       cardNumber: "GD01-095",
       set: {
@@ -29,6 +32,7 @@ export const gd01DearkaElthman095: PilotCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-095"],
   selectedPrintingId: "GD01-095",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-095.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-095.webp?260424",

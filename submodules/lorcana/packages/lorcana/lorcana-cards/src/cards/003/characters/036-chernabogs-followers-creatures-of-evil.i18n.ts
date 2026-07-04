@@ -16,7 +16,7 @@ export const chernabogsFollowersCreaturesOfEvilI18n: Record<Languages, I18nPrope
     version: "Geschöpfe des Bösen",
     text: [
       {
-        title: "RASTLOSE SEELEN",
+        title: "Rastlose Seelen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du ihn verbannen, um 1 Karte zu ziehen.",
       },
@@ -27,7 +27,7 @@ export const chernabogsFollowersCreaturesOfEvilI18n: Record<Languages, I18nPrope
     version: "Créatures du mal",
     text: [
       {
-        title: "ÂMES SANS REPOS",
+        title: "Âmes sans repos",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez le bannir pour piocher une carte.",
       },
@@ -38,7 +38,7 @@ export const chernabogsFollowersCreaturesOfEvilI18n: Record<Languages, I18nPrope
     version: "Creature del Male",
     text: [
       {
-        title: "ANIME INQUIETE",
+        title: "Anime Inquiete",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi esiliarlo per pescare una carta.",
       },

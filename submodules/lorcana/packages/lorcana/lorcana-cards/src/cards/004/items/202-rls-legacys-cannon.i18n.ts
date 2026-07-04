@@ -14,8 +14,9 @@ export const rlsLegacysCannonI18n: Record<Languages, I18nProperties> = {
     name: "Kanone der RLS Legacy",
     text: [
       {
-        title: "BAA-BUMM!, 2,",
-        description: "Wirf 1 Karte ab — Füge einem Charakter oder Ort deiner Wahl 2 Schaden zu.",
+        title: "Baa-Bumm!",
+        description:
+          "{E}, 2 {I}, Wirf 1 Karte ab — Füge einem Charakter oder Ort deiner Wahl 2 Schaden zu.",
       },
     ],
   },
@@ -23,9 +24,9 @@ export const rlsLegacysCannonI18n: Record<Languages, I18nProperties> = {
     name: "Canon du RLS Héritage",
     text: [
       {
-        title: "BA-BOUM!, 2,",
+        title: "Ba-Boum!",
         description:
-          "Défaussez une carte — Choisissez un personnage ou un lieu et infligez-lui 2 dommages.",
+          "{E}, 2 {I}, Défaussez une carte — Choisissez un personnage ou un lieu et infligez-lui 2 dommages.",
       },
     ],
   },
@@ -33,9 +34,9 @@ export const rlsLegacysCannonI18n: Record<Languages, I18nProperties> = {
     name: "Cannone della RLS Legacy",
     text: [
       {
-        title: "BA-BUM!, 2,",
+        title: "Ba-Bum!",
         description:
-          "scarta una carta — Infliggi 2 danni a un personaggio o a un luogo a tua scelta.",
+          "{E}, 2 {I}, scarta una carta — Infliggi 2 danni a un personaggio o a un luogo a tua scelta.",
       },
     ],
   },

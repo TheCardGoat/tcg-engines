@@ -4,6 +4,17 @@ import { sunglassesI18n } from "./202-sunglasses.i18n";
 export const sunglasses: ItemCard = {
   id: "5mj",
   canonicalId: "ci_5mj",
+  slug: "lorcana-ci_5mj",
+  printings: [
+    {
+      id: "set6-202",
+      artId: "set6-202",
+      setCode: "set6",
+      collectorNumber: "202",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-202"],
   cardType: "item",
   name: "Sunglasses",
@@ -16,7 +27,7 @@ export const sunglasses: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2ae2d2f7e846489a802db83587a26fc3",
-    tcgPlayer: 587753,
+    tcgPlayer: "587753",
   },
   text: [
     {

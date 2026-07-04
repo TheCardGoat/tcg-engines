@@ -54,10 +54,7 @@ export class WindowCyberpunkHarnessClient implements CyberpunkHarnessClient {
       result = fn(this.getEngine(), arg);
       this.getSimulator().forceRender();
     });
-    if (result === undefined) {
-      return undefined as T;
-    }
-    return result;
+    return result as T;
   }
 
   private hasHarness(): boolean {
@@ -91,6 +88,7 @@ interface CyberpunkHarnessWindow {
 interface CyberpunkSimulatorBridge {
   engine: unknown;
   forceRender: () => void;
+  dispatch: (action: EngineAction) => unknown;
   getDispatchLog: () => ReadonlyArray<{ action: EngineAction; result: unknown }>;
   clearDispatchLog: () => void;
   getHumanSide: () => CyberpunkSide;

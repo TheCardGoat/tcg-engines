@@ -4,6 +4,17 @@ import { nickWildeWilyFoxI18n } from "./154-nick-wilde-wily-fox.i18n";
 export const nickWildeWilyFox: CharacterCard = {
   id: "0FC",
   canonicalId: "ci_0FC",
+  slug: "lorcana-ci_0FC",
+  printings: [
+    {
+      id: "set2-154",
+      artId: "set2-154",
+      setCode: "set2",
+      collectorNumber: "154",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-154"],
   cardType: "character",
   name: "Nick Wilde",
@@ -20,13 +31,13 @@ export const nickWildeWilyFox: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e9c693252fcc405988a7aab7ec8d7a19",
-    tcgPlayer: 527534,
+    tcgPlayer: "527534",
   },
   text: [
     {
-      title: "IT'S CALLED A HUSTLE",
+      title: "IT'S CALLED",
       description:
-        "When you play this character, you may return an item card named Pawpsicle from your discard to your hand.",
+        "A HUSTLE When you play this character, you may return an item card named Pawpsicle from your discard to your hand.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

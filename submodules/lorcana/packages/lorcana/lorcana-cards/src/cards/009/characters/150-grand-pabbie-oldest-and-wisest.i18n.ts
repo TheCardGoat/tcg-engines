@@ -17,7 +17,7 @@ export const grandPabbieOldestAndWisestI18n: Record<Languages, I18nProperties> =
     version: "Ältester und Weisester",
     text: [
       {
-        title: "ALTE WEISHEIT",
+        title: "Alte Weisheit",
         description:
           "Jedes Mal, wenn du 1 oder mehr Schaden von einem deiner Charaktere entfernst, sammelst du 2 Legenden.",
       },
@@ -28,7 +28,7 @@ export const grandPabbieOldestAndWisestI18n: Record<Languages, I18nProperties> =
     version: "Le plus vieux et le plus sage",
     text: [
       {
-        title: "SAVOIR ANCIEN",
+        title: "Savoir ancien",
         description:
           "Chaque fois que vous retirez au moins 1 jeton Dommage de l'un de vos personnages, gagnez 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const grandPabbieOldestAndWisestI18n: Record<Languages, I18nProperties> =
     version: "Oldest and Wisest",
     text: [
       {
-        title: "ANCIENT INSIGHT",
+        title: "Ancient Insight",
         description:
           "Whenever you remove 1 or more damage from one of your characters, gain 2 lore.",
       },

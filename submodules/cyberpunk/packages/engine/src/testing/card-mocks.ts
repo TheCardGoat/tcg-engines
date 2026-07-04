@@ -73,8 +73,8 @@ function commonFields(params: BaseMockParams): CommonFields {
   const name = params.name ?? `Mock Card ${id}`;
   return {
     id,
-    externalId: `mock:${slug}`,
     slug,
+    canonicalId: slug,
     name,
     subname: null,
     displayName: name,

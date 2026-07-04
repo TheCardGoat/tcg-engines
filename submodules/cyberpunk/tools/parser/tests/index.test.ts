@@ -7,8 +7,9 @@ import {
   generateStructuredCardFiles,
   loadGeneratedCards,
   parseAlphaCards,
-  parseBoxToppersRetailCards,
+  parseEmbracingPowerRetailStarterDeckCards,
   parsePromoCards,
+  parsePrm01Cards,
   parseSpoilerCards,
   parseStructuredCards,
   parseTheHeistRetailStarterDeckCards,
@@ -24,18 +25,21 @@ test("parser builds structured cards from generated source", async () => {
   const alphaCards = parseAlphaCards(generatedCards);
   const spoilerCards = parseSpoilerCards(generatedCards);
   const promoCards = parsePromoCards(generatedCards);
-  const boxToppersRetailCards = parseBoxToppersRetailCards(generatedCards);
+  const prm01Cards = parsePrm01Cards(generatedCards);
   const theHeistRetailStarterDeckCards = parseTheHeistRetailStarterDeckCards(generatedCards);
+  const embracingPowerRetailStarterDeckCards =
+    parseEmbracingPowerRetailStarterDeckCards(generatedCards);
   const welcomeToNightCityRetailCards = parseWelcomeToNightCityRetailCards(generatedCards);
   const cards = parseStructuredCards(generatedCards);
 
   expect(alphaCards).toHaveLength(28);
   expect(spoilerCards).toHaveLength(27);
   expect(promoCards).toHaveLength(1);
-  expect(boxToppersRetailCards).toHaveLength(5);
-  expect(theHeistRetailStarterDeckCards).toHaveLength(4);
-  expect(welcomeToNightCityRetailCards).toHaveLength(48);
-  expect(cards).toHaveLength(113);
+  expect(prm01Cards).toHaveLength(1);
+  expect(theHeistRetailStarterDeckCards).toHaveLength(5);
+  expect(embracingPowerRetailStarterDeckCards).toHaveLength(5);
+  expect(welcomeToNightCityRetailCards).toHaveLength(69);
+  expect(cards).toHaveLength(136);
 
   const armoredMinotaur = alphaCards.find((card) => card.slug === "armored-minotaur");
   expect(armoredMinotaur?.abilities).toHaveLength(1);
@@ -195,19 +199,22 @@ test("parser builds structured cards from generated source", async () => {
   );
   expect(yorinobu).toMatchObject({
     id: "23fc1451-7374-4c21-87ae-bb05d49f2836",
-    externalId: "cyberpunk:yorinobu-arasaka-embracing-destruction",
+    slug: "yorinobu-arasaka-embracing-destruction",
+    canonicalId: "yorinobu-arasaka-embracing-destruction",
     printings: [
       {
         id: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6",
+        artId: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6",
         collectorNumber: "α001",
         setCode: "alpha",
-        rarity: null,
+        rarity: "",
       },
       {
         id: "0df78ba5-116a-4794-b975-7bbf85b95d3b",
+        artId: "0df78ba5-116a-4794-b975-7bbf85b95d3b",
         collectorNumber: "α031",
         setCode: "alpha",
-        rarity: null,
+        rarity: "",
       },
     ],
     selectedPrintingId: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6",
@@ -220,6 +227,7 @@ test("generator writes set card files and root indexes", async () => {
   await writeFile(
     resolve(outputDir, "alpha/legends/yorinobu-arasaka-embracing-destruction.ts"),
     [
+      `import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";`,
       `export const oldYorinobu = {`,
       `  id: "stable-existing-yori-id",`,
       `  slug: "yorinobu-arasaka-embracing-destruction",`,
@@ -230,7 +238,7 @@ test("generator writes set card files and root indexes", async () => {
       `  printings: [],`,
       `  selectedPrintingId: null,`,
       `  abilities: [AbilityBuilder.triggered().build()],`,
-      `};`,
+      `} satisfies AlphaCardDefinition;`,
       "",
     ].join("\n"),
   );
@@ -242,10 +250,11 @@ test("generator writes set card files and root indexes", async () => {
   expect(result.alphaCards).toHaveLength(28);
   expect(result.spoilerCards).toHaveLength(27);
   expect(result.promoCards).toHaveLength(1);
-  expect(result.boxToppersRetailCards).toHaveLength(5);
-  expect(result.theHeistRetailStarterDeckCards).toHaveLength(4);
-  expect(result.welcomeToNightCityRetailCards).toHaveLength(48);
-  expect(result.retailCards).toHaveLength(57);
+  expect(result.prm01Cards).toHaveLength(1);
+  expect(result.theHeistRetailStarterDeckCards).toHaveLength(5);
+  expect(result.embracingPowerRetailStarterDeckCards).toHaveLength(5);
+  expect(result.welcomeToNightCityRetailCards).toHaveLength(69);
+  expect(result.retailCards).toHaveLength(79);
   expect(
     result.alphaCards.find((card) => card.slug === "yorinobu-arasaka-embracing-destruction")?.id,
   ).toBe("stable-existing-yori-id");
@@ -253,10 +262,6 @@ test("generator writes set card files and root indexes", async () => {
   const alphaIndex = await readFile(resolve(outputDir, "alpha/index.ts"), "utf8");
   const spoilerIndex = await readFile(resolve(outputDir, "spoiler/index.ts"), "utf8");
   const promoIndex = await readFile(resolve(outputDir, "promo/index.ts"), "utf8");
-  const boxToppersRetailIndex = await readFile(
-    resolve(outputDir, "boxtoppersretail/index.ts"),
-    "utf8",
-  );
   const theHeistRetailStarterDeckIndex = await readFile(
     resolve(outputDir, "theheistretailstarterdeck/index.ts"),
     "utf8",
@@ -273,32 +278,38 @@ test("generator writes set card files and root indexes", async () => {
     resolve(outputDir, "promo/legends/lucyna-kushinada.ts"),
     "utf8",
   );
+  const metadataFile = await readFile(resolve(outputDir, "card-metadata.ts"), "utf8");
   const yorinobuFile = await readFile(
     resolve(outputDir, "alpha/legends/yorinobu-arasaka-embracing-destruction.ts"),
     "utf8",
   );
 
-  expect(alphaIndex).toContain("export const alphaCards = [");
+  expect(alphaIndex).toContain("import type { StructuredCardDefinition } from");
+  expect(alphaIndex).toContain("export const alphaCards: StructuredCardDefinition[] = [");
   expect(alphaIndex).toContain("...alphaUnits");
-  expect(spoilerIndex).toContain("export const spoilerCards = [");
+  expect(spoilerIndex).toContain("import type { StructuredCardDefinition } from");
+  expect(spoilerIndex).toContain("export const spoilerCards: StructuredCardDefinition[] = [");
   expect(spoilerIndex).toContain("...spoilerPrograms");
-  expect(promoIndex).toContain("export const promoCards = [");
-  expect(boxToppersRetailIndex).toContain("import type { BoxToppersRetailCardDefinition } from");
-  expect(boxToppersRetailIndex).toContain("export const boxToppersRetailCards = [");
+  expect(promoIndex).toContain("import type { StructuredCardDefinition } from");
+  expect(promoIndex).toContain("export const promoCards: StructuredCardDefinition[] = [");
+  expect(theHeistRetailStarterDeckIndex).toContain("import type { StructuredCardDefinition } from");
   expect(theHeistRetailStarterDeckIndex).toContain(
-    "import type { TheHeistRetailStarterDeckCardDefinition } from",
+    "export const theHeistRetailStarterDeckCards: StructuredCardDefinition[] = [",
   );
-  expect(theHeistRetailStarterDeckIndex).toContain(
-    "export const theHeistRetailStarterDeckCards = [",
-  );
+  expect(welcomeToNightCityRetailIndex).toContain("import type { StructuredCardDefinition } from");
   expect(welcomeToNightCityRetailIndex).toContain(
-    "import type { WelcomeToNightCityRetailCardDefinition } from",
+    "export const welcomeToNightCityRetailCards: StructuredCardDefinition[] = [",
   );
-  expect(welcomeToNightCityRetailIndex).toContain("export const welcomeToNightCityRetailCards = [");
   expect(yorinobuFile).toContain('id: "stable-existing-yori-id"');
   expect(yorinobuFile).toContain("AbilityBuilder.triggered().build()");
-  expect(yorinobuFile).toContain('collectorNumber: "α001"');
-  expect(yorinobuFile).toContain('selectedPrintingId: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6"');
+  expect(yorinobuFile).not.toContain("printings:");
+  expect(yorinobuFile).not.toContain("selectedPrintingId:");
+  expect(yorinobuFile).toContain("defineCyberpunkCard({");
+  expect(yorinobuFile).toContain("import type { LegendCardDefinition } from");
+  expect(yorinobuFile).toContain("satisfies LegendCardDefinition;");
+  expect(metadataFile).toContain('"alpha:yorinobu-arasaka-embracing-destruction"');
+  expect(metadataFile).toContain('collectorNumber: "α001"');
+  expect(metadataFile).toContain('selectedPrintingId: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6"');
   expect(spoilerGoroFile).toContain('rule: "blocker"');
-  expect(promoLucynaFile).toContain("abilities: []");
+  expect(promoLucynaFile).not.toContain("abilities: []");
 });

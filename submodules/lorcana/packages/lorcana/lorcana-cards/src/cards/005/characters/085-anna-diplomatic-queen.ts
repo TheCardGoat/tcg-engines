@@ -4,6 +4,17 @@ import { annaDiplomaticQueenI18n } from "./085-anna-diplomatic-queen.i18n";
 export const annaDiplomaticQueen: CharacterCard = {
   id: "Tqp",
   canonicalId: "ci_Tqp",
+  slug: "lorcana-ci_Tqp",
+  printings: [
+    {
+      id: "set5-085",
+      artId: "set5-085",
+      setCode: "set5",
+      collectorNumber: "85",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-085"],
   cardType: "character",
   name: "Anna",
@@ -20,7 +31,7 @@ export const annaDiplomaticQueen: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e572046b12da49769e2e492828d61636",
-    tcgPlayer: 561472,
+    tcgPlayer: "561472",
   },
   text: [
     {

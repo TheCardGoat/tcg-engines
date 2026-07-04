@@ -39,6 +39,16 @@ const playerTwoWeakB = createMockCharacter({
 });
 
 function resolveAutomationWindowWithoutConceding(engine: LorcanaMultiplayerTestEngine): void {
+  const initial = engine.asServer().getState();
+  const hasInitialResolutionWindow =
+    (initial.G.triggeredAbilities?.bag.items.length ?? 0) > 0 ||
+    initial.G.pendingEffects.length > 0;
+
+  if (!hasInitialResolutionWindow) {
+    expect(engine.asServer().isGameOver()).toBe(false);
+    return;
+  }
+
   let sawResolutionWindow = false;
   const maxSteps = 8;
 

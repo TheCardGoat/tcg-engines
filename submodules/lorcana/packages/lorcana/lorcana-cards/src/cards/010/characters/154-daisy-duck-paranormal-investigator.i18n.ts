@@ -22,13 +22,15 @@ export const daisyDuckParanormalInvestigatorI18n: Record<Languages, I18nProperti
     version: "Paranormale Ermittlerin",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Daisy-Duck-Charaktere auszuspielen.)",
       },
       {
-        title: "Unterstützen",
+        title:
+          "<Unterstützen> (Jedes Mal, wenn dieser Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
       {
-        title: "MERKWÜRDIGE GESCHEHNISSE",
+        title: "Merkwürdige Geschehnisse",
         description:
           "Solange dieser Charakter erschöpft ist, betreten gegnerische Karten ihre Tintenvorräte erschöpft.",
       },
@@ -39,13 +41,15 @@ export const daisyDuckParanormalInvestigatorI18n: Record<Languages, I18nProperti
     version: "Investigatrice du paranormal",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Daisy.)",
       },
       {
-        title: "Soutien",
+        title:
+          "<Soutien> (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
       {
-        title: "ÉTRANGES PHÉNOMÈNES",
+        title: "Étranges phénomènes",
         description:
           "Tant que ce personnage est épuisé, les cartes entrent épuisées dans la réserve d'encre de vos adversaires.",
       },
@@ -56,13 +60,15 @@ export const daisyDuckParanormalInvestigatorI18n: Record<Languages, I18nProperti
     version: "Investigatrice del Paranormale",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Paperina.)",
       },
       {
-        title: "Aiutante",
+        title:
+          "<Aiutante> (Ogni volta che questo personaggio va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
       {
-        title: "STRANI FENOMENI",
+        title: "Strani Fenomeni",
         description:
           "Mentre questo personaggio è impegnato, le carte entrano nei calamai degli avversari impegnate.",
       },

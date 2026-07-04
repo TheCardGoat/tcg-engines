@@ -7,14 +7,17 @@ export const gd04DamageControl113: CommandCard = {
   color: "purple",
   traits: [],
   id: "GD04-113",
-  externalId: "gundam:gd04-113",
-  slug: "damage-control-gd04-113",
+  canonicalId: "GD04-113",
+  externalIds: { bandai: "gundam:gd04-113" },
+  slug: "damage-control/gd04-113",
   displayName: "Damage Control",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-113",
   printings: [
     {
       id: "GD04-113",
+      artId: "GD04-113",
+      setCode: "GD04",
       collectorNumber: "GD04-113",
       cardNumber: "GD04-113",
       set: {
@@ -29,6 +32,7 @@ export const gd04DamageControl113: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-113"],
   selectedPrintingId: "GD04-113",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-113.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-113.webp?260424",

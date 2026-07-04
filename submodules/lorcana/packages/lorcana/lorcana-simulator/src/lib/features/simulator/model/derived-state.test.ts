@@ -45,6 +45,7 @@ function createStubEngine(options: {
       ({
         playerOrder: [],
       }) as unknown as ReturnType<LorcanaEngineBase["getBoard"]>,
+    getCardDefinitionByInstanceId: () => undefined,
     getClientPlayerId: () => "player_one",
     canUndo: () => false,
   } as unknown as LorcanaEngineBase;
@@ -155,6 +156,30 @@ const cards = {
     cardType: "character",
     keywords: ["Bodyguard"],
     text: "This character enters play exerted.",
+    facePresentation: "faceUp",
+  },
+  maleficentDiablo: {
+    cardId: "maleficentDiablo",
+    definitionId: "def-maleficent-diablo",
+    isMasked: false,
+    label: "Maleficent & Diablo - Evil Incarnate",
+    ownerId: "player_one",
+    ownerSide: "playerOne",
+    zoneId: "hand",
+    cardType: "character",
+    keywords: ["Shift"],
+    shiftInkCost: 5,
+    facePresentation: "faceUp",
+  },
+  maleficentTarget: {
+    cardId: "maleficentTarget",
+    definitionId: "def-maleficent-target",
+    isMasked: false,
+    label: "Maleficent - Exultant Spellcaster",
+    ownerId: "player_one",
+    ownerSide: "playerOne",
+    zoneId: "play",
+    cardType: "character",
     facePresentation: "faceUp",
   },
 } satisfies CardSnapshotMap;
@@ -317,6 +342,54 @@ describe("buildExecutableMoves", () => {
       params: { cardId: "forcedBodyguard" },
       label: "Forced Bodyguard",
     });
+  });
+
+  it("uses concise option labels for Maleficent & Diablo's paid and deck-bottom Shift choices", () => {
+    const engine = createStubEngine({
+      moveOptions: {
+        maleficentDiablo: [
+          {
+            kind: "card",
+            cardId: toCardInstanceId("maleficentTarget"),
+          },
+          {
+            kind: "card",
+            cardId: toCardInstanceId("maleficentTarget"),
+            selectableCosts: [
+              {
+                kind: "putOnDeckBottom",
+                count: 3,
+                candidateCardIds: [
+                  toCardInstanceId("discard-1"),
+                  toCardInstanceId("discard-2"),
+                  toCardInstanceId("discard-3"),
+                ],
+                zone: "discard",
+                cardType: "character",
+              },
+            ],
+          },
+        ],
+      },
+    });
+
+    const entries = buildExecutableMoves(
+      engine,
+      cards,
+      [createAvailableMove("shiftCard", ["maleficentDiablo"])],
+      [],
+    );
+
+    expect(entries.map((entry) => entry.presentation)).toEqual([
+      expect.objectContaining({
+        categoryId: "shift-card",
+        optionLabel: "Shift: 5 ink",
+      }),
+      expect.objectContaining({
+        categoryId: "shift-card",
+        optionLabel: "Put 3 on Deck Bottom",
+      }),
+    ]);
   });
 
   it("expands only the selected category instead of rebuilding unrelated categories", () => {

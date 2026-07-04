@@ -4,6 +4,17 @@ import { stitchExperiment626I18n } from "./166-stitch-experiment-626.i18n";
 export const stitchExperiment626: CharacterCard = {
   id: "fkl",
   canonicalId: "ci_jjP",
+  slug: "lorcana-ci_jjP",
+  printings: [
+    {
+      id: "set8-166",
+      artId: "set8-166",
+      setCode: "set8",
+      collectorNumber: "166",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-166"],
   cardType: "character",
   name: "Stitch",
@@ -20,7 +31,7 @@ export const stitchExperiment626: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_1a6358dd0385477eb83213749cb5d38f",
-    tcgPlayer: 633104,
+    tcgPlayer: "633104",
   },
   text: [
     {

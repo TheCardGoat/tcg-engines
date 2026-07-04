@@ -4,6 +4,17 @@ import { dormouseEasilyAgitatedI18n } from "./103-dormouse-easily-agitated.i18n"
 export const dormouseEasilyAgitated: CharacterCard = {
   id: "L4w",
   canonicalId: "ci_L4w",
+  slug: "lorcana-ci_L4w",
+  printings: [
+    {
+      id: "set8-103",
+      artId: "set8-103",
+      setCode: "set8",
+      collectorNumber: "103",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-103"],
   cardType: "character",
   name: "Dormouse",
@@ -20,7 +31,7 @@ export const dormouseEasilyAgitated: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ff4402de300941a0a708629ab5f59aae",
-    tcgPlayer: 631416,
+    tcgPlayer: "631416",
   },
   text: [
     {

@@ -17,7 +17,7 @@ export const theFrozenVineMonstrousPlantI18n: Record<Languages, I18nProperties> 
     version: "Monströse Pflanze",
     text: [
       {
-        title: "HARTNÄCKIGES PROBLEM",
+        title: "Hartnäckiges Problem",
         description:
           "Wenn dieser Ort verbannt wird, falls du mindestens einen erschöpften Charakter an diesem Ort hattest, nimm diese Karte aus deinem Ablagestapel zurück auf deine Hand.",
       },
@@ -28,7 +28,7 @@ export const theFrozenVineMonstrousPlantI18n: Record<Languages, I18nProperties> 
     version: "Monstrueux végétal",
     text: [
       {
-        title: "PROBLÈME PERSISTANT",
+        title: "Problème persistant",
         description:
           "Lorsque ce lieu est banni, s'il y avait un personnage épuisé sur lui, renvoyez dans votre main cette carte-ci de votre défausse.",
       },
@@ -39,7 +39,7 @@ export const theFrozenVineMonstrousPlantI18n: Record<Languages, I18nProperties> 
     version: "Pianta Mostruosa",
     text: [
       {
-        title: "PROBLEMA PERSISTENTE",
+        title: "Problema Persistente",
         description:
           "Quando questo luogo viene esiliato, se c'era un personaggio impegnato in questo luogo, riprendi in mano questa carta dai tuoi scarti.",
       },

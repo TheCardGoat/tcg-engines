@@ -4,6 +4,17 @@ import { gaetanMoliereTheMoleI18n } from "./158-gaetan-moliere-the-mole.i18n";
 export const gaetanMoliereTheMole: CharacterCard = {
   id: "ex2",
   canonicalId: "ci_ex2",
+  slug: "lorcana-ci_ex2",
+  printings: [
+    {
+      id: "set7-158",
+      artId: "set7-158",
+      setCode: "set7",
+      collectorNumber: "158",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-158"],
   cardType: "character",
   name: "Gaetan Moliere",
@@ -21,7 +32,7 @@ export const gaetanMoliereTheMole: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_097da6b8bdc94d0f8accc703735147e5",
-    tcgPlayer: 619496,
+    tcgPlayer: "619496",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: gaetanMoliereTheMoleI18n,

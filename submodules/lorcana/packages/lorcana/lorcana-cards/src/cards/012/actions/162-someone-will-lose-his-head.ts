@@ -4,6 +4,17 @@ import { someoneWillLoseHisHeadI18n } from "./162-someone-will-lose-his-head.i18
 export const someoneWillLoseHisHead: ActionCard = {
   id: "20z",
   canonicalId: "ci_20z",
+  slug: "lorcana-ci_20z",
+  printings: [
+    {
+      id: "set12-162",
+      artId: "set12-162",
+      setCode: "set12",
+      collectorNumber: "162",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-162"],
   cardType: "action",
   name: "Someone Will Lose His Head",
@@ -16,6 +27,7 @@ export const someoneWillLoseHisHead: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b6e75e30d325452bba95859c5d667442",
+    tcgPlayer: "692071",
   },
   text: "Each opposing character gets -2 {S} this turn.",
   actionSubtype: "song",

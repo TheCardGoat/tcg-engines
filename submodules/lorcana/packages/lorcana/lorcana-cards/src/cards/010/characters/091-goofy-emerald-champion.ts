@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { goofyEmeraldChampionI18n } from "./091-goofy-emerald-champion.i18n";
 
 export const goofyEmeraldChampion: CharacterCard = {
-  id: "ogQ",
-  canonicalId: "ci_ogQ",
+  id: "1EB",
+  canonicalId: "ci_NDq",
+  slug: "lorcana-ci_NDq",
+  printings: [
+    {
+      id: "set10-091",
+      artId: "set10-091",
+      setCode: "set10",
+      collectorNumber: "91",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-091"],
   cardType: "character",
   name: "Goofy",
@@ -19,7 +30,7 @@ export const goofyEmeraldChampion: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_eade7bfcfdcf4189a0cc13d7ca4bb7ae",
-    tcgPlayer: 658463,
+    tcgPlayer: "658463",
   },
   text: [
     {

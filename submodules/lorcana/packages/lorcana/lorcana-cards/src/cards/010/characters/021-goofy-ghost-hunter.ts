@@ -4,6 +4,17 @@ import { goofyGhostHunterI18n } from "./021-goofy-ghost-hunter.i18n";
 export const goofyGhostHunter: CharacterCard = {
   id: "LuA",
   canonicalId: "ci_A5H",
+  slug: "lorcana-ci_A5H",
+  printings: [
+    {
+      id: "set10-021",
+      artId: "set10-021",
+      setCode: "set10",
+      collectorNumber: "21",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-021"],
   cardType: "character",
   name: "Goofy",
@@ -19,7 +30,7 @@ export const goofyGhostHunter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6283ca50c61544b7a6226fadbc7f0a17",
-    tcgPlayer: 660359,
+    tcgPlayer: "660359",
   },
   text: [
     {

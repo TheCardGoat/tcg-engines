@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { blueFairyGuidingLightI18n } from "./071-blue-fairy-guiding-light.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { support } from "../../../helpers/abilities/support";
 
 export const blueFairyGuidingLight: CharacterCard = {
   id: "IbB",
   canonicalId: "ci_IbB",
+  slug: "lorcana-ci_IbB",
+  printings: [
+    {
+      id: "set8-071",
+      artId: "set8-071",
+      setCode: "set8",
+      collectorNumber: "71",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-071"],
   cardType: "character",
   name: "Blue Fairy",
@@ -22,7 +34,7 @@ export const blueFairyGuidingLight: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b36358ea2e404178ab14c1815fce6bb5",
-    tcgPlayer: 631398,
+    tcgPlayer: "631398",
   },
   text: [
     {

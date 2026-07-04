@@ -17,9 +17,9 @@ export const theQueenDivinerEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Wahrsagerin",
     text: [
       {
-        title: "DAS ZAUBERBUCH BEFRAGEN",
+        title: "Das Zauberbuch befragen",
         description:
-          "— Schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Falls dieser Gegenstand 3 oder weniger kostet, darfst du ihn stattdessen kostenlos und erschöpft ausspielen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+          "{E} — Schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Falls dieser Gegenstand 3 oder weniger kostet, darfst du ihn stattdessen kostenlos und erschöpft ausspielen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const theQueenDivinerEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Devineresse",
     text: [
       {
-        title: "CONSULTE LE GRIMOIRE MAGIQUE",
+        title: "Consulte le grimoire magique",
         description:
-          "— Regardez les 4 premières cartes de votre pioche. Vous pouvez révéler une carte Objet et l'ajouter à votre main. Si cet objet coûte 3 ou moins, vous pouvez le jouer gratuitement à la place, épuisé. Remettez le reste des cartes sous votre pioche, dans l'ordre de votre choix.",
+          "{E} — Regardez les 4 premières cartes de votre pioche. Vous pouvez révéler une carte Objet et l'ajouter à votre main. Si cet objet coûte 3 ou moins, vous pouvez le jouer gratuitement à la place, épuisé. Remettez le reste des cartes sous votre pioche, dans l'ordre de votre choix.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const theQueenDivinerEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Divinatrice",
     text: [
       {
-        title: "CONSULTARE IL GRIMORIO",
+        title: "Consultare il Grimorio",
         description:
-          "— Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta oggetto e aggiungerla alla tua mano. Se quell'oggetto costa 3 o meno, puoi invece giocarlo gratis ed entra in gioco impegnato. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+          "{E} — Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta oggetto e aggiungerla alla tua mano. Se quell'oggetto costa 3 o meno, puoi invece giocarlo gratis ed entra in gioco impegnato. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },
     ],
   },

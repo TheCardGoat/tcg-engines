@@ -17,9 +17,9 @@ export const honeyLemonChemistryWhizI18n: Record<Languages, I18nProperties> = {
     version: "Chemikerin",
     text: [
       {
-        title: "ZIEMLICH COOL, HÄ?",
+        title: "Ziemlich cool, hä?",
         description:
-          "Jedes Mal, wenn du mithilfe von Gestaltwandel eine Flutgestalt ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
+          "Jedes Mal, wenn du mithilfe von <Gestaltwandel> eine Flutgestalt ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const honeyLemonChemistryWhizI18n: Record<Languages, I18nProperties> = {
     version: "Magicienne de la chimie",
     text: [
       {
-        title: "MERVEILLEUX, NON?",
+        title: "Merveilleux, non?",
         description:
-          "Chaque fois que vous jouez un personnage Floodborn en utilisant sa capacité Alter, vous pouvez choisir un personnage et lui retirer jusqu'à 2 dommages.",
+          "Chaque fois que vous jouez un personnage Floodborn en utilisant sa capacité <Alter>, vous pouvez choisir un personnage et lui retirer jusqu'à 2 dommages.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const honeyLemonChemistryWhizI18n: Record<Languages, I18nProperties> = {
     version: "Maga della Chimica",
     text: [
       {
-        title: "È INCREDIBILE, EH?",
+        title: "È Incredibile, Eh?",
         description:
-          "Ogni volta che giochi un personaggio Imbevuto, se hai usato Trasformazione per giocarlo, puoi rimuovere fino a 2 danni da un personaggio a tua scelta.",
+          "Ogni volta che giochi un personaggio Imbevuto, se hai usato <Trasformazione> per giocarlo, puoi rimuovere fino a 2 danni da un personaggio a tua scelta.",
       },
     ],
   },

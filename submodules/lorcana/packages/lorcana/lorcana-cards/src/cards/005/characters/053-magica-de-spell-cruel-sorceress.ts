@@ -4,6 +4,17 @@ import { magicaDeSpellCruelSorceressI18n } from "./053-magica-de-spell-cruel-sor
 export const magicaDeSpellCruelSorceress: CharacterCard = {
   id: "8Yk",
   canonicalId: "ci_8Yk",
+  slug: "lorcana-ci_8Yk",
+  printings: [
+    {
+      id: "set5-053",
+      artId: "set5-053",
+      setCode: "set5",
+      collectorNumber: "53",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-053"],
   cardType: "character",
   name: "Magica De Spell",
@@ -20,7 +31,7 @@ export const magicaDeSpellCruelSorceress: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5a958c7371a3467fbb486adb3bd370ce",
-    tcgPlayer: 560549,
+    tcgPlayer: "560549",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { coconutBasketI18n } from "./166-coconut-basket.i18n";
 export const coconutBasket: ItemCard = {
   id: "dG9",
   canonicalId: "ci_eG9",
+  slug: "lorcana-ci_eG9",
+  printings: [
+    {
+      id: "set1-166",
+      artId: "set1-166",
+      setCode: "set1",
+      collectorNumber: "166",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-166", "set9-169"],
   cardType: "item",
   name: "Coconut Basket",
@@ -16,7 +27,7 @@ export const coconutBasket: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a175d05b419e4250bd62273eeb6d48c5",
-    tcgPlayer: 650103,
+    tcgPlayer: "650103",
   },
   text: [
     {
@@ -30,7 +41,10 @@ export const coconutBasket: ItemCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           target: {
             selector: "chosen",
             count: 1,

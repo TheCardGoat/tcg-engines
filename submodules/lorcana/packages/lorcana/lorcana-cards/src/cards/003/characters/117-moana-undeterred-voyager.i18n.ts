@@ -9,16 +9,16 @@ export const moanaUndeterredVoyagerI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Vaiana",
     version: "Unerschrockene Seefahrerin",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Vaiana",
     version: "Voyageuse jamais découragée",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Vaiana",
     version: "Viaggiatrice Imperterrita",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

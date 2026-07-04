@@ -3,7 +3,9 @@ import {
   theHeistRetailStarterDeckCards,
   welcomeToNightCityRetailCards,
 } from "@tcg/cyberpunk-cards";
-import { test, expect } from "../fixtures/test";
+import { test, expect } from "@playwright/test";
+import { expectDomAttribute } from "@tcg/simulator-testing";
+import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 
 const retailCards = [
   ...boxToppersRetailCards,
@@ -16,24 +18,29 @@ const mountedRetailCards = [
   ...retailCards.filter((card) => card.type === "legend").slice(0, 3),
 ];
 
-test("retailCardCatalog renders every official retail card", async ({ simulator }) => {
+test("retailCardCatalog renders every official retail card", async ({ page }) => {
   const pageErrors: string[] = [];
-  simulator.page.on("pageerror", (error) => pageErrors.push(error.message));
-  try {
-    await simulator.gotoFixture("retailCardCatalog");
-  } catch (error) {
-    throw new Error(
-      `retailCardCatalog failed to mount: ${pageErrors.join(" | ") || String(error)}`,
-    );
+  page.on("pageerror", (error) => pageErrors.push(error.message));
+
+  const pom = await createPlaywrightCyberpunkSimulatorPom(page, {
+    fixture: { scenarioId: "retailCardCatalog" },
+  });
+
+  if (pageErrors.length > 0) {
+    throw new Error(`retailCardCatalog failed to mount: ${pageErrors.join(" | ")}`);
   }
-  const player = await simulator.getActivePlayerId();
+
+  const player = await pom.getActivePlayerId();
+  const trashCards = await pom.getCardsInZone("trash", player);
+  const legendCards = await pom.getCardsInZone("legendArea", player);
   const mountedDefinitionIds = new Set([
-    ...(await simulator.getTrashDefinitionIds(player)),
-    ...(await simulator.getLegendAreaDefinitionIds(player)),
+    ...trashCards.map((card) => card.definitionId),
+    ...legendCards.map((card) => card.definitionId),
   ]);
 
   expect(retailCards).toHaveLength(34);
-  await expect(simulator.playerBoard.trashZone).toHaveAttribute(
+  await expectDomAttribute(
+    pom.playerBoard.trashZone(),
     "data-count",
     String(nonLegendRetailCards.length),
   );
@@ -44,5 +51,9 @@ test("retailCardCatalog renders every official retail card", async ({ simulator 
     );
   }
 
-  await expect(simulator.playerBoard.trashZone.locator('[data-testid="trash-card"]')).toBeVisible();
+  const renderedTrashCards = await pom.playerBoard
+    .trashZone()
+    .locator('[data-testid="card"]')
+    .count();
+  expect(renderedTrashCards).toBeGreaterThan(0);
 });

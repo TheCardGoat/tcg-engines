@@ -4,6 +4,17 @@ import { queenOfHeartsLosingHerTemperI18n } from "./122-queen-of-hearts-losing-h
 export const queenOfHeartsLosingHerTemper: CharacterCard = {
   id: "Fnw",
   canonicalId: "ci_Fnw",
+  slug: "lorcana-ci_Fnw",
+  printings: [
+    {
+      id: "set7-122",
+      artId: "set7-122",
+      setCode: "set7",
+      collectorNumber: "122",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-122"],
   cardType: "character",
   name: "Queen of Hearts",
@@ -20,7 +31,7 @@ export const queenOfHeartsLosingHerTemper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8e76340248ad450587db93be8aeeb437",
-    tcgPlayer: 619473,
+    tcgPlayer: "619473",
   },
   text: [
     {

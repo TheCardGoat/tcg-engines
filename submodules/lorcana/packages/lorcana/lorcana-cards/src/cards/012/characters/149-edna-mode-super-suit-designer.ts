@@ -4,6 +4,17 @@ import { ednaModeSuperSuitDesignerI18n } from "./149-edna-mode-super-suit-design
 export const ednaModeSuperSuitDesigner: CharacterCard = {
   id: "1Nh",
   canonicalId: "ci_1Nh",
+  slug: "lorcana-ci_1Nh",
+  printings: [
+    {
+      id: "set12-149",
+      artId: "set12-149",
+      setCode: "set12",
+      collectorNumber: "149",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-149"],
   cardType: "character",
   name: "Edna Mode",
@@ -20,6 +31,7 @@ export const ednaModeSuperSuitDesigner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_911059054d6c417eac48594ab4b94e7c",
+    tcgPlayer: "692182",
   },
   text: [
     {

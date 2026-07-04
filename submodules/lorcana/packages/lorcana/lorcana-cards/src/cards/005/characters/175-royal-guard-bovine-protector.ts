@@ -4,6 +4,17 @@ import { royalGuardBovineProtectorI18n } from "./175-royal-guard-bovine-protecto
 export const royalGuardBovineProtector: CharacterCard = {
   id: "MJS",
   canonicalId: "ci_MJS",
+  slug: "lorcana-ci_MJS",
+  printings: [
+    {
+      id: "set5-175",
+      artId: "set5-175",
+      setCode: "set5",
+      collectorNumber: "175",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-175"],
   cardType: "character",
   name: "Royal Guard",
@@ -21,7 +32,7 @@ export const royalGuardBovineProtector: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_905b7c293d554cbebda90ca9782af3bf",
-    tcgPlayer: 561476,
+    tcgPlayer: "561476",
   },
   classifications: ["Storyborn"],
   i18n: royalGuardBovineProtectorI18n,

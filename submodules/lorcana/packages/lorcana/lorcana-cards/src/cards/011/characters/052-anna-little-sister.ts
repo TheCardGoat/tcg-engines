@@ -4,6 +4,17 @@ import { annaLittleSisterI18n } from "./052-anna-little-sister.i18n";
 export const annaLittleSister: CharacterCard = {
   id: "Xmi",
   canonicalId: "ci_3CK",
+  slug: "lorcana-ci_3CK",
+  printings: [
+    {
+      id: "set11-052",
+      artId: "set11-052",
+      setCode: "set11",
+      collectorNumber: "52",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-052"],
   cardType: "character",
   name: "Anna",
@@ -20,7 +31,7 @@ export const annaLittleSister: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9702c37c04864acd9912592d55d9dce0",
-    tcgPlayer: 677145,
+    tcgPlayer: "677145",
   },
   text: [
     {

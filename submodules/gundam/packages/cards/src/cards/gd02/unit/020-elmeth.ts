@@ -7,14 +7,17 @@ export const gd02Elmeth020: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD02-020",
-  externalId: "gundam:gd02-020",
-  slug: "elmeth-gd02-020",
+  canonicalId: "GD02-020",
+  externalIds: { bandai: "gundam:gd02-020" },
+  slug: "elmeth/gd02-020",
   displayName: "Elmeth",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-020",
   printings: [
     {
       id: "GD02-020",
+      artId: "GD02-020",
+      setCode: "GD02",
       collectorNumber: "GD02-020",
       cardNumber: "GD02-020",
       set: {
@@ -30,6 +33,8 @@ export const gd02Elmeth020: UnitCard = {
     },
     {
       id: "GD02-020_p1",
+      artId: "GD02-020_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-020_p1",
       cardNumber: "GD02-020",
       set: {
@@ -44,6 +49,7 @@ export const gd02Elmeth020: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-020", "GD02-020_p1"],
   selectedPrintingId: "GD02-020",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-020.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-020.webp?260424",

@@ -4,6 +4,17 @@ import { innerStrengthI18n } from "./129-inner-strength.i18n";
 export const innerStrength: ActionCard = {
   id: "7xf",
   canonicalId: "ci_7xf",
+  slug: "lorcana-ci_7xf",
+  printings: [
+    {
+      id: "set12-129",
+      artId: "set12-129",
+      setCode: "set12",
+      collectorNumber: "129",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-129"],
   cardType: "action",
   name: "Inner Strength",
@@ -14,6 +25,10 @@ export const innerStrength: ActionCard = {
   rarity: "common",
   cost: 1,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_d664fec9b6454d22b3ab0ffd04634295",
+    tcgPlayer: "692177",
+  },
   text: "Chosen character gets +1 {S} this turn. Draw a card.",
   abilities: [
     {
@@ -36,7 +51,11 @@ export const innerStrength: ActionCard = {
               cardTypes: ["character"],
             },
           },
-          { type: "draw", amount: 1, target: "CONTROLLER" },
+          {
+            type: "draw",
+            amount: 1,
+            target: "CONTROLLER",
+          },
         ],
       },
     },

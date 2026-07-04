@@ -16,9 +16,9 @@ export const crikeeLuckyCricketI18n: Record<Languages, I18nProperties> = {
     version: "Glücksgrille",
     text: [
       {
-        title: "GLÜCK BRINGEN",
+        title: "Glück bringen",
         description:
-          "Wenn du diesen Charakter ausspielst, erhalten deine anderen Charaktere in diesem Zug +3.",
+          "Wenn du diesen Charakter ausspielst, erhalten deine anderen Charaktere in diesem Zug +3 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const crikeeLuckyCricketI18n: Record<Languages, I18nProperties> = {
     version: "Criquet porte-bonheur",
     text: [
       {
-        title: "PROPAGEANT LA BONNE FORTUNE",
+        title: "Propageant la bonne fortune",
         description:
-          "Lorsque vous jouez ce personnage, vos autres personnages gagnent +3 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, vos autres personnages gagnent +3 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const crikeeLuckyCricketI18n: Record<Languages, I18nProperties> = {
     version: "Grillo Fortunato",
     text: [
       {
-        title: "PORTARE FORTUNA",
+        title: "Portare Fortuna",
         description:
-          "Quando giochi questo personaggio, i tuoi altri personaggi ricevono +3 per questo turno.",
+          "Quando giochi questo personaggio, i tuoi altri personaggi ricevono +3 {S} per questo turno.",
       },
     ],
   },

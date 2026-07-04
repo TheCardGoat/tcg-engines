@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { cogsworthGrandfatherClockI18n } from "./142-cogsworth-grandfather-clock.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { ward } from "../../../helpers/abilities/ward";
 
 export const cogsworthGrandfatherClock: CharacterCard = {
   id: "oib",
   canonicalId: "ci_oib",
+  slug: "lorcana-ci_oib",
+  printings: [
+    {
+      id: "set2-142",
+      artId: "set2-142",
+      setCode: "set2",
+      collectorNumber: "142",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-142"],
   cardType: "character",
   name: "Cogsworth",
@@ -22,7 +34,7 @@ export const cogsworthGrandfatherClock: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d98a2d4cddac4630b7e3364443381093",
-    tcgPlayer: 517595,
+    tcgPlayer: "517595",
   },
   text: [
     {

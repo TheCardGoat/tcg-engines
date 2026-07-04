@@ -17,7 +17,7 @@ export const donaldDuckLivelyPirateI18n: Record<Languages, I18nProperties> = {
     version: "Lebhafter Pirat",
     text: [
       {
-        title: "ENTE DER AKTION",
+        title: "Ente der Aktion",
         description:
           "Jedes Mal, wenn dieser Charakter herausgefordert wird, darfst du 1 Aktionskarte, die keine Liedkarte ist, aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
@@ -28,7 +28,7 @@ export const donaldDuckLivelyPirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirate plein d'entrain",
     text: [
       {
-        title: "CANARD D'ACTION",
+        title: "Canard d'action",
         description:
           "Chaque fois que ce personnage est défié, vous pouvez renvoyer une carte Action qui n'est pas une chanson de votre défausse dans votre main.",
       },
@@ -39,7 +39,7 @@ export const donaldDuckLivelyPirateI18n: Record<Languages, I18nProperties> = {
     version: "Pirata Vivace",
     text: [
       {
-        title: "PAPERO D'AZIONE",
+        title: "Papero d'Azione",
         description:
           "Ogni volta che questo personaggio viene sfidato, puoi riprendere in mano una carta azione che non è una carta canzone dai tuoi scarti.",
       },

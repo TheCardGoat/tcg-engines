@@ -4,6 +4,17 @@ import { weCouldBeImmortalsI18n } from "./162-we-could-be-immortals.i18n";
 export const weCouldBeImmortals: ActionCard = {
   id: "Q0V",
   canonicalId: "ci_ABG",
+  slug: "lorcana-ci_ABG",
+  printings: [
+    {
+      id: "set6-162",
+      artId: "set6-162",
+      setCode: "set6",
+      collectorNumber: "162",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-162"],
   cardType: "action",
   name: "We Could Be Immortals",
@@ -16,7 +27,7 @@ export const weCouldBeImmortals: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c75fe9ce070a454696dd8d42c6931c68",
-    tcgPlayer: 592012,
+    tcgPlayer: "592012",
   },
   text: "Your Inventor characters gain Resist +6 this turn. Then, put this card into your inkwell facedown and exerted.",
   actionSubtype: "song",

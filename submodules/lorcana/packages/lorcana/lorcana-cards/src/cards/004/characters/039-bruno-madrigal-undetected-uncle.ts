@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { brunoMadrigalUndetectedUncleI18n } from "./039-bruno-madrigal-undetected-uncle.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const brunoMadrigalUndetectedUncle: CharacterCard = {
   id: "Hx7",
-  canonicalId: "ci_1KP",
-  reprints: ["set4-039", "set9-000"],
+  canonicalId: "ci_gZa",
+  slug: "lorcana-ci_gZa",
+  printings: [
+    {
+      id: "set4-039",
+      artId: "set4-039",
+      setCode: "set4",
+      collectorNumber: "39",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set4-d23-004", "set4-039", "set9-000"],
   cardType: "character",
   name: "Bruno Madrigal",
   version: "Undetected Uncle",
@@ -21,7 +33,7 @@ export const brunoMadrigalUndetectedUncle: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2cbda843e29c4e6392ccddd6858eeb7d",
-    tcgPlayer: 651127,
+    tcgPlayer: "651127",
   },
   text: [
     {

@@ -33,7 +33,7 @@ import { SubmitErrorToast } from "../src/components/ui/SubmitErrorToast.tsx";
 import { TargetingProvider } from "../src/components/ui/targeting-context.tsx";
 import { DualModeProvider } from "../src/components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "../src/components/ui/pending-effect-selection-context.tsx";
-import { GameBoard } from "../src/components/ui/GameBoard.tsx";
+import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "../src/components/ui/GameTable.tsx";
 import { PhaseRibbon } from "../src/components/ui/PhaseRibbon.tsx";
 import { PriorityActionButton } from "../src/components/ui/PriorityActionButton.tsx";
@@ -154,7 +154,6 @@ function BotBenchMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
   const activePlayer = state.ctx.status.activePlayer;
   const layoutMode = useLayoutMode();
   const isMobile = layoutMode === "mobile";
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <BotBenchGameProvider
@@ -167,11 +166,7 @@ function BotBenchMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
           <TargetingProvider>
             <PendingEffectSelectionProvider>
               <DualModeProvider>
-                <GameBoard
-                  isMobile={isMobile}
-                  drawerOpen={drawerOpen}
-                  onDrawerOpenChange={setDrawerOpen}
-                >
+                <GundamBoardLayout>
                   <GameTable>
                     <PlayerSeatContainer side="top" />
                     {!isMobile && (
@@ -189,7 +184,7 @@ function BotBenchMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
                     <MatchOverviewModalContainer />
                     <SubmitErrorToast />
                   </GameTable>
-                </GameBoard>
+                </GundamBoardLayout>
                 <pre data-testid="bot-bench-state" hidden>
                   {JSON.stringify({
                     stateId: state.ctx._stateID,

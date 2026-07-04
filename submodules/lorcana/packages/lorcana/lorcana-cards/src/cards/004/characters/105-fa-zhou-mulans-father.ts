@@ -4,6 +4,17 @@ import { faZhouMulansFatherI18n } from "./105-fa-zhou-mulans-father.i18n";
 export const faZhouMulansFather: CharacterCard = {
   id: "m9e",
   canonicalId: "ci_m9e",
+  slug: "lorcana-ci_m9e",
+  printings: [
+    {
+      id: "set4-105",
+      artId: "set4-105",
+      setCode: "set4",
+      collectorNumber: "105",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-105"],
   cardType: "character",
   name: "Fa Zhou",
@@ -20,7 +31,7 @@ export const faZhouMulansFather: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8fe17bb9974247b18e4180d4e4df3ab0",
-    tcgPlayer: 550590,
+    tcgPlayer: "550590",
   },
   text: [
     {

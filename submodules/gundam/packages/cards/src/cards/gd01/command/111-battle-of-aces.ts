@@ -7,14 +7,17 @@ export const gd01BattleOfAces111: CommandCard = {
   color: "red",
   traits: ["-"],
   id: "GD01-111",
-  externalId: "gundam:gd01-111",
-  slug: "battle-of-aces-gd01-111",
+  canonicalId: "GD01-111",
+  externalIds: { bandai: "gundam:gd01-111" },
+  slug: "battle-of-aces/gd01-111",
   displayName: "Battle of Aces",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-111",
   printings: [
     {
       id: "GD01-111",
+      artId: "GD01-111",
+      setCode: "GD01",
       collectorNumber: "GD01-111",
       cardNumber: "GD01-111",
       set: {
@@ -30,6 +33,8 @@ export const gd01BattleOfAces111: CommandCard = {
     },
     {
       id: "GD01-111_p1",
+      artId: "GD01-111_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-111_p1",
       cardNumber: "GD01-111",
       set: {
@@ -45,6 +50,8 @@ export const gd01BattleOfAces111: CommandCard = {
     },
     {
       id: "GD01-111_p2",
+      artId: "GD01-111_p2",
+      setCode: "GD03",
       collectorNumber: "GD01-111_p2",
       cardNumber: "GD01-111",
       set: {
@@ -60,6 +67,8 @@ export const gd01BattleOfAces111: CommandCard = {
     },
     {
       id: "GD01-111_p3",
+      artId: "GD01-111_p3",
+      setCode: "ST09",
       collectorNumber: "GD01-111_p3",
       cardNumber: "GD01-111",
       set: {
@@ -74,6 +83,7 @@ export const gd01BattleOfAces111: CommandCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["GD01-111", "GD01-111_p1", "GD01-111_p2", "GD01-111_p3"],
   selectedPrintingId: "GD01-111",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-111.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-111.webp?260424",

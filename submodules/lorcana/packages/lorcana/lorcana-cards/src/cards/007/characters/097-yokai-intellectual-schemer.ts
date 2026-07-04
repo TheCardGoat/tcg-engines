@@ -4,6 +4,17 @@ import { yokaiIntellectualSchemerI18n } from "./097-yokai-intellectual-schemer.i
 export const yokaiIntellectualSchemer: CharacterCard = {
   id: "zT9",
   canonicalId: "ci_zT9",
+  slug: "lorcana-ci_zT9",
+  printings: [
+    {
+      id: "set7-097",
+      artId: "set7-097",
+      setCode: "set7",
+      collectorNumber: "97",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-097"],
   cardType: "character",
   name: "Yokai",
@@ -20,7 +31,7 @@ export const yokaiIntellectualSchemer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f9a3516262004948b7bd488cc55af5b9",
-    tcgPlayer: 618139,
+    tcgPlayer: "618139",
   },
   text: [
     {

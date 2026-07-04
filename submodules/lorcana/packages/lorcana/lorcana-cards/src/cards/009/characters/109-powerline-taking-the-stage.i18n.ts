@@ -9,21 +9,16 @@ export const powerlineTakingTheStageI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Powerline",
     version: "Auf der Bühne",
-    text: [
-      {
-        title: "Singen 4",
-        description: "(Die Kosten dieses Charakters gelten als 4 für das Singen von Liedern.)",
-      },
-    ],
+    text: "<Singen> 4 (Die Kosten dieses Charakters gelten als 4 für das Singen von Liedern.)",
   },
   fr: {
     name: "Powerline",
     version: "Montant sur scène",
-    text: "Mélomane 4 (Ce personnage est considéré comme ayant un coût de 4 pour chanter des chansons.)",
+    text: "<Mélomane> 4 (Ce personnage est considéré comme ayant un coût de 4 pour chanter des chansons.)",
   },
   it: {
     name: "Powerline",
     version: "Sul Palco",
-    text: "Melodioso 4",
+    text: "<Melodioso> 4",
   },
 };

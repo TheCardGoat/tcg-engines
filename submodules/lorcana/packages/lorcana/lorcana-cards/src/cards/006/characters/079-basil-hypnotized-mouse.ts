@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { basilHypnotizedMouseI18n } from "./079-basil-hypnotized-mouse.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const basilHypnotizedMouse: CharacterCard = {
   id: "Fyz",
   canonicalId: "ci_Fyz",
+  slug: "lorcana-ci_Fyz",
+  printings: [
+    {
+      id: "set6-079",
+      artId: "set6-079",
+      setCode: "set6",
+      collectorNumber: "79",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-079"],
   cardType: "character",
   name: "Basil",
@@ -21,7 +33,7 @@ export const basilHypnotizedMouse: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e2546a2e03c8442aba30fd09105e54db",
-    tcgPlayer: 587197,
+    tcgPlayer: "587197",
   },
   text: "Evasive",
   classifications: ["Dreamborn", "Hero", "Detective"],

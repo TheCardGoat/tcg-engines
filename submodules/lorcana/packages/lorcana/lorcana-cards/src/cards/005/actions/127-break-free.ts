@@ -4,6 +4,17 @@ import { breakFreeI18n } from "./127-break-free.i18n";
 export const breakFree: ActionCard = {
   id: "W2A",
   canonicalId: "ci_W2A",
+  slug: "lorcana-ci_W2A",
+  printings: [
+    {
+      id: "set5-127",
+      artId: "set5-127",
+      setCode: "set5",
+      collectorNumber: "127",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-127"],
   cardType: "action",
   name: "Break Free",
@@ -16,7 +27,7 @@ export const breakFree: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8f78f01a16b947d8808ca0d350cb5c31",
-    tcgPlayer: 559717,
+    tcgPlayer: "559717",
   },
   text: "Deal 1 damage to chosen character of yours. They gain Rush and get +1 {S} this turn. (They can challenge the turn they're played.)",
   abilities: [

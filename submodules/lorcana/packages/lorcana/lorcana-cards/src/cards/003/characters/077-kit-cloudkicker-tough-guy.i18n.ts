@@ -17,9 +17,9 @@ export const kitCloudkickerToughGuyI18n: Record<Languages, I18nProperties> = {
     version: "Harter Bursche",
     text: [
       {
-        title: "WOLKENSURFEN",
+        title: "Wolkensurfen",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter deiner Wahl, mit 2 oder weniger, zurück auf die zugehörige Hand schicken.",
+          "Wenn du diesen Charakter ausspielst, darfst du einen gegnerischen Charakter deiner Wahl, mit 2 oder weniger {S}, zurück auf die zugehörige Hand schicken.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const kitCloudkickerToughGuyI18n: Record<Languages, I18nProperties> = {
     version: "Dur à cuire",
     text: [
       {
-        title: "SURFEUR DES AIRS",
+        title: "Surfeur des airs",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse ayant 2 ou moins et le renvoyer dans la main de son propriétaire.",
+          "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse ayant 2 {S} ou moins et le renvoyer dans la main de son propriétaire.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const kitCloudkickerToughGuyI18n: Record<Languages, I18nProperties> = {
     version: "Tipo Tosto",
     text: [
       {
-        title: "SURF TRA LE NUVOLE",
+        title: "Surf tra le Nuvole",
         description:
-          "Quando giochi questo personaggio, puoi far tornare un personaggio avversario a tua scelta con 2 o inferiore in mano al suo giocatore.",
+          "Quando giochi questo personaggio, puoi far tornare un personaggio avversario a tua scelta con {S} 2 o inferiore in mano al suo giocatore.",
       },
     ],
   },

@@ -6,9 +6,9 @@ export const edLaughingHyenaI18n: Record<Languages, I18nProperties> = {
     version: "Laughing Hyena",
     text: [
       {
-        title: "CAUSE A PANIC",
+        title: "CAUSE",
         description:
-          "When you play this character, you may deal 2 damage to chosen damaged character.",
+          "A PANIC When you play this character, you may deal 2 damage to chosen damaged character.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const edLaughingHyenaI18n: Record<Languages, I18nProperties> = {
     version: "Lachende Hyäne",
     text: [
       {
-        title: "PANIK AUSLÖSEN",
+        title: "Panik auslösen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einem beschädigten Charakter deiner Wahl 2 Schaden zufügen.",
       },
@@ -28,7 +28,7 @@ export const edLaughingHyenaI18n: Record<Languages, I18nProperties> = {
     version: "Hyène rieuse",
     text: [
       {
-        title: "VAGUE DE PEUR",
+        title: "Vague de peur",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage ayant au moins un dommage sur lui et lui infliger 2 dommages.",
       },
@@ -39,7 +39,7 @@ export const edLaughingHyenaI18n: Record<Languages, I18nProperties> = {
     version: "Iena Ridens",
     text: [
       {
-        title: "SCATENARE IL PANICO",
+        title: "Scatenare il Panico",
         description:
           "Quando giochi questo personaggio, puoi infliggere 2 danni a un personaggio danneggiato a tua scelta.",
       },

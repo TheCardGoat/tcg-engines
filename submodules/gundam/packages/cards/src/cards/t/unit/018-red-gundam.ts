@@ -6,14 +6,17 @@ export const tRedGundam018: UnitCard = {
   type: "unit",
   traits: ["clan"],
   id: "T-018",
-  externalId: "gundam:t-018",
-  slug: "red-gundam-t-018",
+  canonicalId: "T-018",
+  externalIds: { bandai: "gundam:t-018" },
+  slug: "red-gundam/t-018",
   displayName: "Red Gundam",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "T-018",
   printings: [
     {
       id: "T-018",
+      artId: "T-018",
+      setCode: "GD03",
       collectorNumber: "T-018",
       cardNumber: "T-018",
       set: {
@@ -29,6 +32,8 @@ export const tRedGundam018: UnitCard = {
     },
     {
       id: "T-018_p1",
+      artId: "T-018_p1",
+      setCode: "PC02A",
       collectorNumber: "T-018_p1",
       cardNumber: "T-018",
       set: {
@@ -44,6 +49,7 @@ export const tRedGundam018: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam GQuuuuuuX-[PC02A]",
     },
   ],
+  reprints: ["T-018", "T-018_p1"],
   selectedPrintingId: "T-018",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-018.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-018.webp?260424",

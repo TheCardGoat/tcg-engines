@@ -16,7 +16,7 @@ export const maleficentSorceressI18n: Record<Languages, I18nProperties> = {
     version: "Hexerin",
     text: [
       {
-        title: "WIRKE MEINEN ZAUBER!",
+        title: "Wirke meinen Zauber!",
         description: "Wenn du diesen Charakter ausspielst, darfst du 1 Karte ziehen.",
       },
     ],
@@ -36,7 +36,7 @@ export const maleficentSorceressI18n: Record<Languages, I18nProperties> = {
     version: "Incantatrice",
     text: [
       {
-        title: "OSCURA FORZA",
+        title: "Oscura Forza",
         description: "Quando giochi questo personaggio, puoi pescare una carta.",
       },
     ],

@@ -4,6 +4,17 @@ import { aliceCourageousKeyholderI18n } from "./127-alice-courageous-keyholder.i
 export const aliceCourageousKeyholder: CharacterCard = {
   id: "x8u",
   canonicalId: "ci_x8u",
+  slug: "lorcana-ci_x8u",
+  printings: [
+    {
+      id: "set8-127",
+      artId: "set8-127",
+      setCode: "set8",
+      collectorNumber: "127",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-127"],
   cardType: "character",
   name: "Alice",
@@ -20,7 +31,7 @@ export const aliceCourageousKeyholder: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4269fd204f144eb4b5044df82a899bd1",
-    tcgPlayer: 631433,
+    tcgPlayer: "631433",
   },
   text: [
     {

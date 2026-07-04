@@ -15,9 +15,9 @@ export const tinyTimsCrutchI18n: Record<Languages, I18nProperties> = {
     name: "Krücke des kleinen Tim",
     text: [
       {
-        title: "AN DEINER SEITE",
+        title: "An deiner Seite",
         description:
-          "— Ein Charakter deiner Wahl erhält in diesem Zug Unterstützen. (Jedes Mal, wenn der Charakter erkundet, darfst du seine in diesem Zug zur eines anderen Charakters deiner Wahl addieren.)",
+          "{E} — Ein Charakter deiner Wahl erhält in diesem Zug <Unterstützen>. (Jedes Mal, wenn der Charakter erkundet, darfst du seine {S} in diesem Zug zur {S} eines anderen Charakters deiner Wahl addieren.)",
       },
     ],
   },
@@ -25,8 +25,9 @@ export const tinyTimsCrutchI18n: Record<Languages, I18nProperties> = {
     name: "Béquille de Tiny Tim",
     text: [
       {
-        title: "À VOS CÔTÉS",
-        description: "— Choisissez un personnage qui gagne Soutien pour le reste de ce tour.",
+        title: "À vos côtés",
+        description:
+          "{E} — Choisissez un personnage qui gagne <Soutien> pour le reste de ce tour. (Lorsque ce personnage est envoyé à l'aventure, vous pouvez ajouter sa {S} à celle d'un autre personnage au choix pour le reste de ce tour.)",
       },
     ],
   },
@@ -34,9 +35,9 @@ export const tinyTimsCrutchI18n: Record<Languages, I18nProperties> = {
     name: "Stampella del Piccolo Tim",
     text: [
       {
-        title: "AL TUO FIANCO",
+        title: "Al Tuo Fianco",
         description:
-          "— Un personaggio a tua scelta ottiene Aiutante per questo turno. (Ogni volta che va all'avventura, puoi aggiungere la sua alla di un altro personaggio a tua scelta per questo turno.)",
+          "{E} — Un personaggio a tua scelta ottiene <Aiutante> per questo turno. (Ogni volta che va all'avventura, puoi aggiungere la sua {S} alla {S} di un altro personaggio a tua scelta per questo turno.)",
       },
     ],
   },

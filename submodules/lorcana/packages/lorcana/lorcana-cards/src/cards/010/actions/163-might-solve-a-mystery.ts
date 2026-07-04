@@ -4,6 +4,17 @@ import { mightSolveAMysteryI18n } from "./163-might-solve-a-mystery.i18n";
 export const mightSolveAMystery: ActionCard = {
   id: "lhB",
   canonicalId: "ci_lhB",
+  slug: "lorcana-ci_lhB",
+  printings: [
+    {
+      id: "set10-163",
+      artId: "set10-163",
+      setCode: "set10",
+      collectorNumber: "163",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-163"],
   cardType: "action",
   name: "Might Solve a Mystery",
@@ -16,7 +27,7 @@ export const mightSolveAMystery: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3f49acb68d7d44f4a8f98b555b7e47dd",
-    tcgPlayer: 658459,
+    tcgPlayer: "658459",
   },
   text: "Look at the top 4 cards of your deck. You may reveal up to 1 character card and up to 1 item card and put them into your hand. Put the rest on the bottom of your deck in any order.",
   actionSubtype: "song",

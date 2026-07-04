@@ -17,7 +17,7 @@ export const madamMimSnakeI18n: Record<Languages, I18nProperties> = {
     version: "Schlange",
     text: [
       {
-        title: "NA WARTE!",
+        title: "Na warte!",
         description:
           "Wenn du diesen Charakter ausspielst, musst du ihn verbannen oder einen deiner anderen Charaktere wählen und zurück auf deine Hand nehmen.",
       },
@@ -28,7 +28,7 @@ export const madamMimSnakeI18n: Record<Languages, I18nProperties> = {
     version: "En serpent",
     text: [
       {
-        title: "ATTENDEZ UN PEU",
+        title: "Attendez un peu",
         description:
           "Lorsque vous jouez ce personnage, bannissez-le ou renvoyez l'un de vos autres personnages en jeu dans votre main.",
       },
@@ -39,7 +39,7 @@ export const madamMimSnakeI18n: Record<Languages, I18nProperties> = {
     version: "Serpente",
     text: [
       {
-        title: "ASPETTA E VEDRAI",
+        title: "Aspetta e Vedrai",
         description:
           "Quando giochi questo personaggio, esilialo o riprendi in mano un tuo altro personaggio a tua scelta.",
       },

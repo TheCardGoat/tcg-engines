@@ -4,6 +4,17 @@ import { genieMainAttractionI18n } from "./049-genie-main-attraction.i18n";
 export const genieMainAttraction: CharacterCard = {
   id: "zYB",
   canonicalId: "ci_zYB",
+  slug: "lorcana-ci_zYB",
+  printings: [
+    {
+      id: "set5-049",
+      artId: "set5-049",
+      setCode: "set5",
+      collectorNumber: "49",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-049"],
   cardType: "character",
   name: "Genie",
@@ -20,7 +31,7 @@ export const genieMainAttraction: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e0a935e3f8394d2b881f48d3c9c46b05",
-    tcgPlayer: 561953,
+    tcgPlayer: "561953",
   },
   text: [
     {

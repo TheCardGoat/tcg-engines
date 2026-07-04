@@ -4,6 +4,17 @@ import { iceBlockI18n } from "./168-ice-block.i18n";
 export const iceBlock: ItemCard = {
   id: "uYP",
   canonicalId: "ci_uYP",
+  slug: "lorcana-ci_uYP",
+  printings: [
+    {
+      id: "set4-168",
+      artId: "set4-168",
+      setCode: "set4",
+      collectorNumber: "168",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-168"],
   cardType: "item",
   name: "Ice Block",
@@ -16,7 +27,7 @@ export const iceBlock: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_53adf0c7c527414ab222421a8b5e4ef3",
-    tcgPlayer: 550615,
+    tcgPlayer: "550615",
   },
   text: [
     {

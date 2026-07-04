@@ -6,11 +6,10 @@ export const genieMagicalResearcherEpicI18n: Record<Languages, I18nProperties> =
     version: "Magical Researcher",
     text: [
       {
-        title: "Boost 1 {I}",
+        title: "Boost 1",
       },
       {
-        title: "INCREASING WISDOM",
-        description: "This character gets +1 {L} for each card under him.",
+        title: "{I} INCREASING WISDOM This character gets +1 {L} for each card under him.",
       },
     ],
   },
@@ -19,11 +18,12 @@ export const genieMagicalResearcherEpicI18n: Record<Languages, I18nProperties> =
     version: "Magischer Forscher",
     text: [
       {
-        title: "Stärken 1",
+        title:
+          "<Stärken> 1 {I} (Einmal während deines Zuges darfst du 1 {I} bezahlen, um die oberste Karte deines Decks verdeckt unter diesen Charakter zu legen.)",
       },
       {
-        title: "WACHSENDE WEISHEIT",
-        description: "Dieser Charakter erhält für jede Karte unter ihm +1.",
+        title: "Wachsende Weisheit",
+        description: "Dieser Charakter erhält für jede Karte unter ihm +1 {L}.",
       },
     ],
   },
@@ -32,11 +32,12 @@ export const genieMagicalResearcherEpicI18n: Record<Languages, I18nProperties> =
     version: "Chercheur en magie",
     text: [
       {
-        title: "Boost 1",
+        title:
+          "<Boost> 1 {I} (Une fois durant votre tour, vous pouvez payer 1 {I} pour placer la carte du dessus de votre pioche sous cette carte, face cachée.)",
       },
       {
-        title: "SAGESSE CROISSANTE",
-        description: "Ce personnage gagne +1 pour chaque carte sous lui.",
+        title: "Sagesse croissante",
+        description: "Ce personnage gagne +1 {L} pour chaque carte sous lui.",
       },
     ],
   },
@@ -45,11 +46,12 @@ export const genieMagicalResearcherEpicI18n: Record<Languages, I18nProperties> =
     version: "Ricercatore Magico",
     text: [
       {
-        title: "Potenziamento 1",
+        title:
+          "<Potenziamento> 1 {I} (Una volta durante il tuo turno, puoi pagare 1 {I} per mettere la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.)",
       },
       {
-        title: "SAGGEZZA IN AUMENTO",
-        description: "Questo personaggio riceve +1 per ogni carta sotto di sé.",
+        title: "Saggezza in Aumento",
+        description: "Questo personaggio riceve +1 {L} per ogni carta sotto di sé.",
       },
     ],
   },

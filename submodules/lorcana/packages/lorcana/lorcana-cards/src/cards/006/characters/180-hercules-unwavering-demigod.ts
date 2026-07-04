@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { herculesUnwaveringDemigodI18n } from "./180-hercules-unwavering-demigod.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const herculesUnwaveringDemigod: CharacterCard = {
   id: "jJs",
   canonicalId: "ci_jJs",
+  slug: "lorcana-ci_jJs",
+  printings: [
+    {
+      id: "set6-180",
+      artId: "set6-180",
+      setCode: "set6",
+      collectorNumber: "180",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-180"],
   cardType: "character",
   name: "Hercules",
@@ -21,7 +33,7 @@ export const herculesUnwaveringDemigod: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1c5e7d4a006c4736baf5e602734fec5b",
-    tcgPlayer: 593011,
+    tcgPlayer: "593011",
   },
   text: "Challenger +2 (While challenging, this character gets +2 {S}).",
   classifications: ["Dreamborn", "Hero", "Prince"],

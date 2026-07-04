@@ -24,15 +24,15 @@ export const mauiHalfsharkI18n: Record<Languages, I18nProperties> = {
     version: "Halb-Hai",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "CHUUUUHUUUU!",
+        title: "Chuuuuhuuuu!",
         description:
           "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, darfst du 1 Aktionskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
       {
-        title: "WEGWEISEND",
+        title: "Wegweisend",
         description: "Jedes Mal, wenn du eine Aktion ausspielst, sammelst du 1 Legende.",
       },
     ],
@@ -42,15 +42,15 @@ export const mauiHalfsharkI18n: Record<Languages, I18nProperties> = {
     version: "Demi-requin",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "CHEEEEHOOOO!",
+        title: "Cheeeehoooo!",
         description:
           "Chaque fois que ce personnage en défie un autre, vous pouvez renvoyer une carte Action de votre défausse dans votre main.",
       },
       {
-        title: "GUIDAGE",
+        title: "Guidage",
         description: "Chaque fois que vous jouez une action, gagnez 1 éclat de Lore.",
       },
     ],
@@ -60,15 +60,15 @@ export const mauiHalfsharkI18n: Record<Languages, I18nProperties> = {
     version: "Mezzo Squalo",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "TAAAHOOO!",
+        title: "Taaahooo!",
         description:
           "Ogni volta che questo personaggio sfida un altro personaggio, puoi riprendere in mano una carta azione dai tuoi scarti.",
       },
       {
-        title: "ORIENTARSI",
+        title: "Orientarsi",
         description: "Ogni volta che giochi un'azione, ottieni 1 leggenda.",
       },
     ],

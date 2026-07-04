@@ -52,6 +52,12 @@ export function assertCompatibleDsl(bundleVersion: number): void {
   }
 }
 
+// Keyword-ability factories — canonical builders for `kind: "keyword"`
+// abilities so the parser and every card file import from one place.
+export * from "./keyword-abilities.ts";
+
+import type { BaseCardDefinition } from "@tcg/card-model";
+
 export type CardType = "legend" | "unit" | "gear" | "program";
 
 export type RawCardType = "Legend" | "Unit" | "Gear" | "Program";
@@ -60,9 +66,16 @@ export type CardColor = "blue" | "green" | "red" | "yellow";
 
 export type RawCardColor = "Blue" | "Green" | "Red" | "Yellow";
 
-export type TimingTrigger = "play" | "attack" | "flip" | "call";
+/**
+ * Die side-counts used by the Gig system. Duplicated locally (rather than
+ * imported from the engine) so the types package stays engine-free and cards
+ * can author `sides`-based Gig filters without a runtime dependency.
+ */
+export type DieType = "d4" | "d6" | "d8" | "d10" | "d12" | "d20";
 
-export type RawTimingTrigger = "Play" | "Attack" | "Flip" | "Call";
+export type TimingTrigger = "play" | "attack" | "flip" | "call" | "defeated";
+
+export type RawTimingTrigger = "Play" | "Attack" | "Flip" | "Call" | "Defeated";
 
 /**
  * Subset of {@link RuleModifier} that names the card *keywords* — rules that
@@ -83,6 +96,8 @@ export type RawCardKeyword = "Blocker" | "Go Solo" | "Adrenaline" | "Quick";
 export type RawHighlightedLabel = RawTimingTrigger | RawCardKeyword | (string & {});
 
 export type KnownCardClassification =
+  | "6th Street"
+  | "AI"
   | "Aldecado"
   | "Arasaka"
   | "Braindance"
@@ -91,9 +106,12 @@ export type KnownCardClassification =
   | "Doll"
   | "Drone"
   | "Extreme"
+  | "Fixer"
   | "Ganger"
   | "Implant"
+  | "Maine's Crew"
   | "Maelstrom"
+  | "Medtech"
   | "Merc"
   | "Militech"
   | "Mox"
@@ -109,7 +127,9 @@ export type KnownCardClassification =
   | "Rocker"
   | "Rockerboy"
   | "Samurai"
+  | "Scavenger"
   | "Tech"
+  | "Techie"
   | "Trauma Team"
   | "Tyger Claws"
   | "Valentino"
@@ -122,12 +142,15 @@ export type CardClassification = KnownCardClassification;
 
 export const KNOWN_SET_CODES = [
   "alpha",
+  "PRM01",
+  "arasakademodeck",
   "promo",
   "spoiler",
   "boxtoppersretail",
   "boxtoppersbeta",
   "embracingpowerbetastarterdeck",
   "embracingpowerretailstarterdeck",
+  "mercdemodeck",
   "theheistbetastarterdeck",
   "theheistretailstarterdeck",
   "welcometonightcitybeta",
@@ -146,11 +169,56 @@ export type KnownPrintFinish = "foil" | "standard";
 
 export type PrintFinish = KnownPrintFinish;
 
-export type CardRarity = string;
+/**
+ * Cyberpunk in-game rarities. Cards and printings authored from the official
+ * data carry exactly these Title-Case values (or `null` when no rarity is
+ * supplied). This is intentionally separate from {@link AltArtRarityCode},
+ * which is the atelier pricing taxonomy — not a card rarity.
+ */
+export type CardRarity =
+  | "Common"
+  | "Uncommon"
+  | "Rare"
+  | "Epic"
+  | "Secret"
+  | "Iconic Secret"
+  | "Nova Rare";
+
+/**
+ * Atelier pricing-code taxonomy used by the platform alt-art
+ * acquisition/rental system. This is NOT a Cyberpunk card rarity — it is the
+ * set of price-bucket keys shared across games so the platform can apply a
+ * single pricing table. Defined locally in the game submodule because game
+ * workspaces cannot depend on `@tcg/api-core`. The literal values are
+ * intentionally identical to `platform/.../engagement.ts::AltArtRarityCode` so
+ * the platform adapter accepts them via structural typing — do not rename or
+ * reorder these without updating the platform schema.
+ *
+ * Cyberpunk card rarities (Common/Uncommon/Rare/Epic) are mapped into these
+ * pricing codes by `@tcg/cyberpunk-cards/src/atelier.ts`.
+ */
+export type AltArtRarityCode =
+  | "common"
+  | "uncommon"
+  | "rare"
+  | "super_rare"
+  | "legendary"
+  | "epic"
+  | "iconic"
+  | "enchanted"
+  | "promo"
+  | "special";
 
 export interface CardIdentity {
+  /**
+   * Authored / source id — a per-set UUID, NOT a canonical key. The same
+   * gameplay card reprinted across spoiler/alpha/retail carries DIFFERENT `id`
+   * values, so grouping or deduping by raw `id` over-counts reprints (RFC §3
+   * "Cyberpunk id trap"). Source-only: never use this as a cross-set identity.
+   * The canonical identity is `canonicalId` (the merged slug — see
+   * `CardCatalogMetadata.canonicalId` / `getMergedCyberpunkCardsById`).
+   */
   id: string;
-  externalId: string;
   slug: string;
   name: string;
   subname?: string | null;
@@ -170,14 +238,47 @@ export interface CardSet {
   name: string;
 }
 
+/**
+ * A single physical printing of a Cyberpunk card.
+ *
+ * Satisfies the cross-game `Printing` contract (`@tcg/card-model`):
+ *  - `artId` is platform-derived and 1:1 with `id` today (`artId = id`) —
+ *    Cyberpunk does not reuse illustrations across sets yet (RFC §4, §7). Set
+ *    by the merge layer, not authored per literal.
+ *  - `rarity` is a game-native string. Cyberpunk printings may carry no rarity
+ *    (represented as the empty string `""`), which the atelier prices as
+ *    `"common"` via `cyberpunkRarityCode`.
+ *  - `imageUrl` is the deterministic CDN URL for this printing, derived from
+ *    `(setCode, collectorNumber)` (see `getCyberpunkPrintingImageUrl`).
+ */
 export interface CardPrinting {
   id: string;
+  artId: string;
   collectorNumber: string;
   setCode: SetCode;
-  rarity: CardRarity | null;
+  rarity: string;
+  imageUrl: string;
 }
 
-export interface CardCatalogMetadata extends CardIdentity, CardText {
+/**
+ * Catalog metadata for a Cyberpunk card. Literally `extends BaseCardDefinition`
+ * (RFC ADR-11) so the cross-game `GameCardPayload` union and platform features
+ * can read the unified identity fields (`canonicalId`, `slug`, `name`,
+ * `printings[]`, `externalIds?`) without per-game branching.
+ */
+export interface CardCatalogMetadata extends BaseCardDefinition, CardIdentity, CardText {
+  /**
+   * Canonical gameplay identity — the merged slug (one per gameplay card across
+   * every reprint). Populated by the merge layer
+   * (`getMergedCyberpunkCardsById` / `submodules/cyberpunk/packages/cards/src/merged.ts`),
+   * NOT derived from raw `id`. The raw `id` is per-set and source-only (see
+   * `CardIdentity.id`, RFC §3); `canonicalId == slug` post-merge. Uniqueness
+   * anchor: `(gameSlug, canonicalId)`.
+   *
+   * (Redeclared here only to attach the Cyberpunk-specific doc; the field is
+   * inherited from `BaseCardDefinition`.)
+   */
+  canonicalId: string;
   color: CardColor;
   classifications: CardClassification[];
   set: CardSet;
@@ -193,7 +294,7 @@ export interface CardCatalogMetadata extends CardIdentity, CardText {
 
 export interface CardDefinitionBase extends CardCatalogMetadata {
   type: CardType;
-  ram: number;
+  ram: number | null;
   timingTriggers: TimingTrigger[];
   keywords: CardKeyword[];
 }
@@ -267,7 +368,7 @@ export interface RawCardRecord {
   keywords: RawHighlightedLabel[];
   cost?: number | null;
   power?: number | null;
-  ram: number;
+  ram: number | null;
   artist: string;
   print_number: string;
   printings: RawCardPrinting[];
@@ -300,8 +401,10 @@ export type RuleModifier =
   | "cantBeBlocked"
   | "mustAttack"
   | "canAttackOnPlayedTurnAgainstUnits"
+  | "canAttackRivalOnPlayedTurn"
   | "adrenaline"
-  | "quick";
+  | "quick"
+  | "stealsOneFewerGig";
 
 export interface PerCountValue {
   type: "perCount";
@@ -328,6 +431,19 @@ export interface BoundTargetDSL {
   selector: "bound";
   id: string;
   index?: number;
+  /**
+   * Optional sub-filter on the captured binding. When present, the bound card
+   * ids are narrowed to those whose card type matches (e.g. capture 3 trashed
+   * cards, then keep only the Units). Purely opt-in — existing bound targets
+   * without this field behave exactly as before.
+   */
+  cardTypes?: CardType[];
+  /**
+   * Offer the bound ids as a player choice (suspends into a `chooseTarget`
+   * pending choice) instead of applying the effect to all of them. Lets a
+   * card say "choose a Unit from among the just-trashed cards."
+   */
+  selection?: TargetSelectionDSL;
 }
 
 /**
@@ -342,6 +458,7 @@ export type ContextKey = "triggerCard" | "triggeredGigs" | "discardedCards";
 export interface ContextTargetDSL {
   selector: "context";
   key: ContextKey;
+  selection?: TargetSelectionDSL;
 }
 
 export interface TargetSelectionDSL {
@@ -361,8 +478,10 @@ export interface CardTargetDSL {
   face?: CardFace;
   minCost?: number;
   maxCost?: number;
+  maxCostOf?: TargetDSL;
   minPower?: number;
   maxPower?: number;
+  maxPowerOfGigValueOf?: TargetDSL;
   excludeSelf?: boolean;
   hasAttachedCards?: boolean;
   attachedTo?: TargetDSL;
@@ -384,9 +503,32 @@ export interface GigTargetDSL {
   sameValueAs?: TargetDSL;
   valueNotSharedBy?: TargetDSL;
   sameSidesAs?: TargetDSL;
+  /**
+   * Filter dice by their side-count (e.g. "a d6"). Omitting the field keeps
+   * backwards-compatible behavior (no sides filter).
+   */
+  sides?: DieType | DieType[];
   minValue?: number;
   maxValue?: number;
+  /**
+   * Filter dice by the parity of their face value. Used by cards that count
+   * "even" or "odd" Gig values (e.g. Jackie Welles — Ride or Die Choom).
+   * Omitting the field keeps backwards-compatible behavior (no parity filter).
+   */
+  valueParity?: "even" | "odd";
   selection?: TargetSelectionDSL;
+}
+
+/**
+ * Resolves to the attacking card in the current attack state (the Unit that
+ * declared the direct attack or fight). Returns an empty array when no attack
+ * is in progress. Optional `classifications` / `cardTypes` filters narrow the
+ * resolved attacker (e.g. only AI/Drone/Vehicle attackers).
+ */
+export interface AttackerTargetDSL {
+  selector: "attacker";
+  cardTypes?: CardType[];
+  classifications?: CardClassification[];
 }
 
 export type TargetDSL =
@@ -395,7 +537,8 @@ export type TargetDSL =
   | BoundTargetDSL
   | ContextTargetDSL
   | CardTargetDSL
-  | GigTargetDSL;
+  | GigTargetDSL
+  | AttackerTargetDSL;
 
 export interface StreetCredCondition {
   condition: "streetCred";
@@ -414,6 +557,31 @@ export interface StreetCredComparisonCondition {
   controller: RelativePlayer;
   comparison: Comparison;
   other: RelativePlayer;
+}
+
+export interface GigCountComparisonCondition {
+  condition: "gigCountComparison";
+  controller: RelativePlayer;
+  comparison: Comparison;
+  other: RelativePlayer;
+}
+
+export interface StreetCredDifferenceCondition {
+  condition: "streetCredDifference";
+  controller: RelativePlayer;
+  comparison: Comparison;
+  other: RelativePlayer;
+  value: number;
+}
+
+export interface StreetCredParityCondition {
+  condition: "streetCredParity";
+  controller: RelativePlayer;
+  parity: "even" | "odd";
+}
+
+export interface AllFriendlyLegendsFaceUpCondition {
+  condition: "allFriendlyLegendsFaceUp";
 }
 
 export interface CardStateCondition {
@@ -503,9 +671,55 @@ export interface CostMatchesGigCondition {
   controller: RelativePlayer;
 }
 
+/**
+ * Compare a card stat (effective power or printed cost) of a resolved target
+ * against a literal number. Used by cards that condition on "this Unit has
+ * power 5+" etc. Only the first resolved card is evaluated.
+ */
+export interface CardStatCondition {
+  condition: "cardStat";
+  target: TargetDSL;
+  property: "power" | "cost";
+  comparison: Comparison;
+  value: number;
+}
+
+/**
+ * True when any resolved target card's printed `name` matches `name` exactly.
+ * Used by cards that condition on the host being a specific named character
+ * (e.g. Dying Night — V's Pistol's "if this Unit is named V" clause). Matches
+ * `defOf(card).name`, so legends that use `name: "V"` + `subname: "…"` match
+ * while similarly-named cards like "Viktor Vektor" do not.
+ */
+export interface CardNameCondition {
+  condition: "cardName";
+  target: TargetDSL;
+  name: string;
+}
+
+/**
+ * True when the resolved target is non-empty. Used by cards that condition an
+ * effect on the existence of a game object (e.g. "if the attacker is an AI,
+ * Drone, or Vehicle, draw 1").
+ */
+export interface TargetExistsCondition {
+  condition: "targetExists";
+  target: TargetDSL;
+}
+
+export interface GigSidesCondition {
+  condition: "gigSides";
+  target: TargetDSL;
+  sides: DieType | DieType[];
+}
+
 export type Condition =
   | StreetCredCondition
   | StreetCredComparisonCondition
+  | GigCountComparisonCondition
+  | StreetCredDifferenceCondition
+  | StreetCredParityCondition
+  | AllFriendlyLegendsFaceUpCondition
   | CardStateCondition
   | TurnCondition
   | OvertimeCondition
@@ -520,7 +734,11 @@ export type Condition =
   | HasEquippedUnitsOrLegendsCondition
   | MatchingGigCondition
   | FightKindCondition
-  | CostMatchesGigCondition;
+  | CostMatchesGigCondition
+  | CardStatCondition
+  | CardNameCondition
+  | TargetExistsCondition
+  | GigSidesCondition;
 
 export interface SpendCost {
   cost: "spend";
@@ -562,7 +780,12 @@ export interface ReturnToHandEffect extends EffectBase {
 export interface DrawEffect extends EffectBase {
   effect: "draw";
   player: RelativePlayer;
-  amount: number;
+  /**
+   * Number of cards to draw. Supports `PerCountValue` (e.g. "draw 1 for each
+   * friendly Gig with an odd value") in addition to a plain literal. Plain
+   * numbers remain the common case.
+   */
+  amount: number | PerCountValue;
 }
 
 export interface ModifyGigEffect extends EffectBase {
@@ -693,6 +916,13 @@ export interface TrashFromDeckEffect extends EffectBase {
   effect: "trashFromDeck";
   player: RelativePlayer;
   amount: number;
+  /**
+   * Optional binding key that receives the ids of the cards trashed by this
+   * effect. A later effect in the same ability can read them via
+   * `{ selector: "bound", id: <outputBinding> }` (e.g. "Trash 3. Add a Unit
+   * from among them to your hand."). Purely opt-in.
+   */
+  outputBinding?: string;
 }
 
 export interface SellFromDeckEffect extends EffectBase {
@@ -717,6 +947,11 @@ export interface DelayedEffect extends EffectBase {
 export interface DefeatAtEndOfTurnIfAttacksEffect extends EffectBase {
   effect: "defeatAtEndOfTurnIfAttacks";
   target: TargetDSL;
+}
+
+export interface PreventNextRivalFightDefeatEffect extends EffectBase {
+  effect: "preventNextRivalFightDefeat";
+  duration: "turn";
 }
 
 /**
@@ -757,6 +992,24 @@ export interface GrantCostModifierEffect extends EffectBase {
   uses?: number;
 }
 
+export interface RerollGigEffect extends EffectBase {
+  effect: "rerollGig";
+  target: TargetDSL;
+}
+
+export interface RevealTopCardTypeEffect extends EffectBase {
+  effect: "revealTopCardType";
+  player: RelativePlayer;
+  cardTypes: CardType[];
+}
+
+export interface RevealTopCardAndModifyPowerByCostEffect extends EffectBase {
+  effect: "revealTopCardAndModifyPowerByCost";
+  player: RelativePlayer;
+  target: TargetDSL;
+  duration: "turn" | "continuous";
+}
+
 export type Effect =
   | DefeatEffect
   | SpendEffect
@@ -781,11 +1034,15 @@ export type Effect =
   | IfYouDoEffect
   | DelayedEffect
   | DefeatAtEndOfTurnIfAttacksEffect
+  | PreventNextRivalFightDefeatEffect
   | MultiplyPowerEffect
   | CopyGigValueEffect
   | ForEachFriendlyGigPairEffect
   | CallLegendEffect
-  | GrantCostModifierEffect;
+  | GrantCostModifierEffect
+  | RerollGigEffect
+  | RevealTopCardTypeEffect
+  | RevealTopCardAndModifyPowerByCostEffect;
 
 export interface PlayTrigger {
   trigger: "play";
@@ -838,7 +1095,7 @@ export interface CardDefeatedEvent {
 export interface BlockerActivatedEvent {
   event: "blockerActivated";
   player: EventPlayer;
-  target: CardTargetDSL;
+  target: TargetDSL;
 }
 
 export interface TurnEndedEvent {
@@ -859,6 +1116,12 @@ export interface GigValueChangedEvent {
   player: RelativePlayer;
   target: GigTargetDSL;
   direction?: "increase" | "decrease";
+}
+
+export interface GigRolledEvent {
+  event: "gigRolled";
+  player: RelativePlayer;
+  target: GigTargetDSL;
 }
 
 /**
@@ -898,6 +1161,7 @@ export interface EventTrigger {
     | BlockerActivatedEvent
     | TurnEndedEvent
     | GigStolenEvent
+    | GigRolledEvent
     | GigValueChangedEvent
     | FightResolvedEvent;
 }
@@ -960,7 +1224,12 @@ export interface StructuredCardData {
   costModifier?: CostModifier | null;
 }
 
-export type StructuredCardDefinition = CardDefinition & StructuredCardData;
+export type StructuredCardDefinition = CardDefinition;
+
+export interface LegendCardDefinition extends StructuredCardData {}
+export interface UnitCardDefinition extends StructuredCardData {}
+export interface GearCardDefinition extends StructuredCardData {}
+export interface ProgramCardDefinition extends StructuredCardData {}
 
 export type AlphaCardDefinition = StructuredCardDefinition & {
   set: CardSet & {
@@ -980,6 +1249,12 @@ export type PromoCardDefinition = StructuredCardDefinition & {
   };
 };
 
+export type Prm01CardDefinition = StructuredCardDefinition & {
+  set: CardSet & {
+    code: "PRM01";
+  };
+};
+
 export type BoxToppersRetailCardDefinition = StructuredCardDefinition & {
   set: CardSet & {
     code: "boxtoppersretail";
@@ -989,6 +1264,12 @@ export type BoxToppersRetailCardDefinition = StructuredCardDefinition & {
 export type TheHeistRetailStarterDeckCardDefinition = StructuredCardDefinition & {
   set: CardSet & {
     code: "theheistretailstarterdeck";
+  };
+};
+
+export type EmbracingPowerRetailStarterDeckCardDefinition = StructuredCardDefinition & {
+  set: CardSet & {
+    code: "embracingpowerretailstarterdeck";
   };
 };
 
@@ -1002,8 +1283,10 @@ export interface StructuredCardDefinitionBySetCode {
   alpha: AlphaCardDefinition;
   spoiler: SpoilerCardDefinition;
   promo: PromoCardDefinition;
+  PRM01: Prm01CardDefinition;
   boxtoppersretail: BoxToppersRetailCardDefinition;
   theheistretailstarterdeck: TheHeistRetailStarterDeckCardDefinition;
+  embracingpowerretailstarterdeck: EmbracingPowerRetailStarterDeckCardDefinition;
   welcometonightcityretail: WelcomeToNightCityRetailCardDefinition;
 }
 

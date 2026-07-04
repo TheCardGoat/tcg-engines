@@ -4,6 +4,17 @@ import { buzzLightyearSpaceRangerI18n } from "./076-buzz-lightyear-space-ranger.
 export const buzzLightyearSpaceRanger: CharacterCard = {
   id: "Gb4",
   canonicalId: "ci_Gb4",
+  slug: "lorcana-ci_Gb4",
+  printings: [
+    {
+      id: "set12-076",
+      artId: "set12-076",
+      setCode: "set12",
+      collectorNumber: "76",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-076"],
   cardType: "character",
   name: "Buzz Lightyear",
@@ -20,7 +31,8 @@ export const buzzLightyearSpaceRanger: CharacterCard = {
   inkable: true,
   vanilla: true,
   externalIds: {
-    lorcast: "crd_7a1dc3b9b23041a78c7e1b46ff4a2f2c",
+    lorcast: "crd_dc61d69860c541f6bca41a4a9b8c17f1",
+    tcgPlayer: "692208",
   },
   classifications: ["Storyborn", "Hero", "Toy", "Captain"],
   i18n: buzzLightyearSpaceRangerI18n,

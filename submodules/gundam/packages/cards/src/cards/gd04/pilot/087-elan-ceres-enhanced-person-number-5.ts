@@ -7,14 +7,17 @@ export const gd04ElanCeresEnhancedPersonNumber5087: PilotCard = {
   color: "green",
   traits: ["academy"],
   id: "GD04-087",
-  externalId: "gundam:gd04-087",
-  slug: "elan-ceres-enhanced-person-number-5-gd04-087",
+  canonicalId: "GD04-087",
+  externalIds: { bandai: "gundam:gd04-087" },
+  slug: "elan-ceres-enhanced-person-number-5/gd04-087",
   displayName: "Elan Ceres (Enhanced Person Number 5)",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-087",
   printings: [
     {
       id: "GD04-087",
+      artId: "GD04-087",
+      setCode: "GD04",
       collectorNumber: "GD04-087",
       cardNumber: "GD04-087",
       set: {
@@ -29,6 +32,7 @@ export const gd04ElanCeresEnhancedPersonNumber5087: PilotCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-087"],
   selectedPrintingId: "GD04-087",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-087.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-087.webp?260424",

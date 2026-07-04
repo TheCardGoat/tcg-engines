@@ -4,6 +4,17 @@ import { sugarRushSpeedwayFinishLineI18n } from "./035-sugar-rush-speedway-finis
 export const sugarRushSpeedwayFinishLine: LocationCard = {
   id: "kh2",
   canonicalId: "ci_jO7",
+  slug: "lorcana-ci_jO7",
+  printings: [
+    {
+      id: "set6-035",
+      artId: "set6-035",
+      setCode: "set6",
+      collectorNumber: "35",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-035"],
   cardType: "location",
   name: "Sugar Rush Speedway",
@@ -20,7 +31,7 @@ export const sugarRushSpeedwayFinishLine: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_60630688715e45079236d447087a9a83",
-    tcgPlayer: 592001,
+    tcgPlayer: "592001",
   },
   text: [
     {

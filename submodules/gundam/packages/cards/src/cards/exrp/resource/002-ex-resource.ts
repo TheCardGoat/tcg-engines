@@ -6,14 +6,17 @@ export const exrpExResource002: ResourceCard = {
   type: "resource",
   traits: [],
   id: "EXRP-002",
-  externalId: "gundam:exrp-002",
-  slug: "ex-resource-exrp-002",
+  canonicalId: "EXRP-002",
+  externalIds: { bandai: "gundam:exrp-002" },
+  slug: "ex-resource/exrp-002",
   displayName: "EX Resource",
   set: { code: "EXRP", name: "Official Card Case Set 01", packageId: "616901" },
   printNumber: "EXRP-002",
   printings: [
     {
       id: "EXRP-002",
+      artId: "EXRP-002",
+      setCode: "EXRP",
       collectorNumber: "EXRP-002",
       cardNumber: "EXRP-002",
       set: {
@@ -28,6 +31,7 @@ export const exrpExResource002: ResourceCard = {
       productName: "Official Card Case Set 01",
     },
   ],
+  reprints: ["EXRP-002"],
   selectedPrintingId: "EXRP-002",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/exrp/EXRP-002.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXRP-002.webp?260424",

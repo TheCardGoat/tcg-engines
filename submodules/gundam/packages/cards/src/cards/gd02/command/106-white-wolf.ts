@@ -7,14 +7,17 @@ export const gd02WhiteWolf106: CommandCard = {
   color: "green",
   traits: ["earth federation"],
   id: "GD02-106",
-  externalId: "gundam:gd02-106",
-  slug: "white-wolf-gd02-106",
+  canonicalId: "GD02-106",
+  externalIds: { bandai: "gundam:gd02-106" },
+  slug: "white-wolf/gd02-106",
   displayName: "White Wolf",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-106",
   printings: [
     {
       id: "GD02-106",
+      artId: "GD02-106",
+      setCode: "GD02",
       collectorNumber: "GD02-106",
       cardNumber: "GD02-106",
       set: {
@@ -30,6 +33,8 @@ export const gd02WhiteWolf106: CommandCard = {
     },
     {
       id: "GD02-106_p1",
+      artId: "GD02-106_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-106_p1",
       cardNumber: "GD02-106",
       set: {
@@ -45,6 +50,8 @@ export const gd02WhiteWolf106: CommandCard = {
     },
     {
       id: "GD02-106_p2",
+      artId: "GD02-106_p2",
+      setCode: "GD02",
       collectorNumber: "GD02-106_p2",
       cardNumber: "GD02-106",
       set: {
@@ -59,6 +66,7 @@ export const gd02WhiteWolf106: CommandCard = {
       productName: "Store Tournament Winner Pack 02",
     },
   ],
+  reprints: ["GD02-106", "GD02-106_p1", "GD02-106_p2"],
   selectedPrintingId: "GD02-106",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-106.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-106.webp?260424",

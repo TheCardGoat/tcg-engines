@@ -6,14 +6,17 @@ export const gd04Freeden127: BaseCard = {
   type: "base",
   traits: ["vulture", "warship"],
   id: "GD04-127",
-  externalId: "gundam:gd04-127",
-  slug: "freeden-gd04-127",
+  canonicalId: "GD04-127",
+  externalIds: { bandai: "gundam:gd04-127" },
+  slug: "freeden-ii/gd04-127",
   displayName: "Freeden Ⅱ",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-127",
   printings: [
     {
       id: "GD04-127",
+      artId: "GD04-127",
+      setCode: "GD04",
       collectorNumber: "GD04-127",
       cardNumber: "GD04-127",
       set: {
@@ -28,6 +31,7 @@ export const gd04Freeden127: BaseCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-127"],
   selectedPrintingId: "GD04-127",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-127.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-127.webp?260424",

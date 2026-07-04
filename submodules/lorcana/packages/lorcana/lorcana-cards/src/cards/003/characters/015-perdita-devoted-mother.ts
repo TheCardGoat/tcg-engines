@@ -4,6 +4,17 @@ import { perditaDevotedMotherI18n } from "./015-perdita-devoted-mother.i18n";
 export const perditaDevotedMother: CharacterCard = {
   id: "fgK",
   canonicalId: "ci_fgK",
+  slug: "lorcana-ci_fgK",
+  printings: [
+    {
+      id: "set3-015",
+      artId: "set3-015",
+      setCode: "set3",
+      collectorNumber: "15",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-015"],
   cardType: "character",
   name: "Perdita",
@@ -20,7 +31,7 @@ export const perditaDevotedMother: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a1c95bf6c8744ccaa5ff363453aa8716",
-    tcgPlayer: 538722,
+    tcgPlayer: "538722",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { auroraRegalPrincessI18n } from "./140-aurora-regal-princess.i18n";
 export const auroraRegalPrincess: CharacterCard = {
   id: "tuh",
   canonicalId: "ci_LLH",
+  slug: "lorcana-ci_LLH",
+  printings: [
+    {
+      id: "set1-140",
+      artId: "set1-140",
+      setCode: "set1",
+      collectorNumber: "140",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-140", "set9-161"],
   cardType: "character",
   name: "Aurora",
@@ -21,7 +32,7 @@ export const auroraRegalPrincess: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_3935700ef8a04122935f3a9289dfa4af",
-    tcgPlayer: 650095,
+    tcgPlayer: "650095",
   },
   classifications: ["Storyborn", "Hero", "Princess"],
   i18n: auroraRegalPrincessI18n,

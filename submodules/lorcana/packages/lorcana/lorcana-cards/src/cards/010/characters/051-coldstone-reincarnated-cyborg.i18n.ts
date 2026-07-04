@@ -17,7 +17,7 @@ export const coldstoneReincarnatedCyborgI18n: Record<Languages, I18nProperties> 
     version: "Wiedergeborener Cyborg",
     text: [
       {
-        title: "DIE ZAUBERFORMEL IST GESPROCHEN",
+        title: "Die Zauberformel ist gesprochen",
         description:
           "Wenn du diesen Charakter ausspielst und mindestens 2 Gargoyle-Charakterkarten in deinem Ablagestapel hast, sammelst du 2 Legenden.",
       },
@@ -28,7 +28,7 @@ export const coldstoneReincarnatedCyborgI18n: Record<Languages, I18nProperties> 
     version: "Réincarné en cyborg",
     text: [
       {
-        title: "J'AI PRONONCÉ LES INCANTATIONS",
+        title: "J'ai prononcé les incantations",
         description:
           "Lorsque vous jouez ce personnage, si vous avez 2 cartes Personnage Gargouille ou plus dans votre défausse, gagnez 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const coldstoneReincarnatedCyborgI18n: Record<Languages, I18nProperties> 
     version: "Cyborg Reincarnato",
     text: [
       {
-        title: "IL SORTILEGIO È STATO FATTO",
+        title: "Il Sortilegio è Stato Fatto",
         description:
           "Quando giochi questo personaggio, se hai 2 o più carte personaggio Gargoyle nei tuoi scarti, ottieni 2 leggenda.",
       },

@@ -18,10 +18,11 @@ export const theTroubadourMusicalNarratorI18n: Record<Languages, I18nProperties>
     version: "Musikalischer Erzähler",
     text: [
       {
-        title: "Robust +1",
+        title:
+          "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
       },
       {
-        title: "Singen 4",
+        title: "<Singen> 4 (Die Kosten dieses Charakters gelten als 4 für das Singen von Liedern.)",
       },
     ],
   },
@@ -30,10 +31,11 @@ export const theTroubadourMusicalNarratorI18n: Record<Languages, I18nProperties>
     version: "Narrateur-musicien",
     text: [
       {
-        title: "Résistance +1",
+        title: "<Résistance> +1",
       },
       {
-        title: "Mélomane 4",
+        title:
+          "<Mélomane> 4 (Ce personnage est considéré comme ayant un coût de 4 pour chanter des chansons.)",
       },
     ],
   },
@@ -42,10 +44,10 @@ export const theTroubadourMusicalNarratorI18n: Record<Languages, I18nProperties>
     version: "Narratore Musicante",
     text: [
       {
-        title: "Resistere +1",
+        title: "<Resistere> +1",
       },
       {
-        title: "Melodioso 4",
+        title: "<Melodioso> 4",
       },
     ],
   },

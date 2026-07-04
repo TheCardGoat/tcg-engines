@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rayaLeaderOfHeartI18n } from "./123-raya-leader-of-heart.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const rayaLeaderOfHeart: CharacterCard = {
   id: "rSb",
   canonicalId: "ci_rSb",
+  slug: "lorcana-ci_rSb",
+  printings: [
+    {
+      id: "set2-123",
+      artId: "set2-123",
+      setCode: "set2",
+      collectorNumber: "123",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-123"],
   cardType: "character",
   name: "Raya",
@@ -21,7 +33,7 @@ export const rayaLeaderOfHeart: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5b613c1368aa4c94a43c012f9a73394e",
-    tcgPlayer: 527530,
+    tcgPlayer: "527530",
   },
   text: [
     {

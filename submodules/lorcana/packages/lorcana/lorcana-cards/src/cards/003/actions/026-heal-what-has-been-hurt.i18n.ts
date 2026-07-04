@@ -11,10 +11,27 @@ export const healWhatHasBeenHurtI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Guéris les blessures",
-    text: "Choisissez un personnage et retirez-lui jusqu'à 3 jetons Dommage. Piochez une carte.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage et retirez-lui jusqu'à 3 jetons Dommage. Piochez une carte.",
+      },
+    ],
   },
   it: {
     name: "Incanto della Guarigione",
-    text: "(Un personaggio con costo 3 o superiore può per giocare questa canzone gratis.) Rimuovi fino a 3 danni da un personaggio a tua scelta. Pesca una carta.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per giocare questa canzone gratis.)",
+      },
+      {
+        title: "Rimuovi fino a 3 danni da un personaggio a tua scelta. Pesca una carta.",
+      },
+    ],
   },
 };

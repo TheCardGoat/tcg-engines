@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from "vite-plus/test";
-import { screen, waitFor } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 
 import { renderSimulator } from "../../test/renderSimulator.tsx";
@@ -19,33 +19,22 @@ describe("Main-phase · Non-Link unit can't attack the turn it deploys", () => {
     renderSimulator(loadNewlyDeployedCannotAttackDemo);
 
     const hand = screen.getByRole("list", { name: /your hand/i });
-    const rxId = hand.querySelector<HTMLElement>("[data-card-id]")?.dataset.cardId;
+    const rxInHand = within(hand).getByRole("listitem", { name: /RX-78-2/i });
+    const rxId = rxInHand.querySelector<HTMLElement>("[data-card-id]")?.dataset.cardId;
     expect(rxId).toBeTruthy();
 
-    await user.click(screen.getByText(/Actions \/ Log/i));
-    const paymentCandidate = document.querySelector<HTMLElement>(
-      "[data-testid^='interaction-payment:action:deployUnit:']",
-    );
-    const entityCandidate = document.querySelector<HTMLElement>(
-      "[data-testid^='interaction-candidate:action:deployUnit:']",
-    );
-    const selectable = paymentCandidate ?? entityCandidate;
-
-    // Deploy through the shared interaction surface.
-    if (selectable) await user.click(selectable);
-    await user.click(screen.getByTestId("interaction-submit:action:deployUnit"));
+    await user.click(rxInHand);
 
     // Unit lands on the battle area.
     await waitFor(() => {
-      expect(findCardsById(rxId!).length).toBeGreaterThanOrEqual(1);
+      expect(findCardsById(rxId!, { excludeWithin: hand }).length).toBeGreaterThanOrEqual(1);
     });
-    await user.click(screen.getByText(/Actions \/ Log/i));
 
     // Attack targeting overlay shouldn't already be open.
     expect(screen.queryByText(/select target/i)).toBeNull();
 
     // Click the newly-deployed unit.
-    const rxOnBoard = findCardsById(rxId!)[0]!;
+    const rxOnBoard = findCardsById(rxId!, { excludeWithin: hand })[0]!;
     await user.click(rxOnBoard);
 
     // Flush microtasks and confirm the attack-targeting overlay did not
@@ -59,6 +48,6 @@ describe("Main-phase · Non-Link unit can't attack the turn it deploys", () => {
     expect(screen.queryByRole("button", { name: /^confirm$/i })).toBeNull();
 
     // Unit still on the board.
-    expect(findCardsById(rxId!)).toHaveLength(1);
+    expect(findCardsById(rxId!, { excludeWithin: hand })).toHaveLength(1);
   });
 });

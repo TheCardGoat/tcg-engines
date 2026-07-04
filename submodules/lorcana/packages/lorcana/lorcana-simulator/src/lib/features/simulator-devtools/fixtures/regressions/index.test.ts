@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { LORCANA_SIMULATOR_FIXTURES } from "../index.js";
+import { isKnownLorcanaFixtureId } from "../index.js";
 import {
   getLorcanaRegressionFixture,
   LORCANA_REGRESSION_FIXTURES,
@@ -12,7 +12,7 @@ describe("regression fixture registry", () => {
 
     expect(LORCANA_REGRESSION_FIXTURES[regressionFixture.id]).toBe(regressionFixture);
     expect(LORCANA_REGRESSION_FIXTURE_LIST).toContain(regressionFixture);
-    expect(LORCANA_SIMULATOR_FIXTURES[regressionFixture.id]).toBeUndefined();
+    expect(isKnownLorcanaFixtureId(regressionFixture.id)).toBe(false);
   });
 
   it("throws for unknown regression fixture ids", () => {

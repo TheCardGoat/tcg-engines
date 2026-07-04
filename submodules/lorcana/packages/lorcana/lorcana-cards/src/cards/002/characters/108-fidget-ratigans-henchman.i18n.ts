@@ -9,21 +9,16 @@ export const fidgetRatigansHenchmanI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Greifer",
     version: "Rattenzahns Handlanger",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Fidget",
     version: "Homme de main de Ratigan",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Fidget",
     version: "Ratigan's Henchman",
-    text: [
-      {
-        title: "Evasive",
-        description: "(Only characters with Evasive can challenge this character.)",
-      },
-    ],
+    text: "<Evasive> (Only characters with Evasive can challenge this character.)",
   },
 };

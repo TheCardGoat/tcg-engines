@@ -4,6 +4,17 @@ import { floraStrongwilledFairyI18n } from "./141-flora-strong-willed-fairy.i18n
 export const floraStrongwilledFairy: CharacterCard = {
   id: "RW9",
   canonicalId: "ci_RW9",
+  slug: "lorcana-ci_RW9",
+  printings: [
+    {
+      id: "set12-141",
+      artId: "set12-141",
+      setCode: "set12",
+      collectorNumber: "141",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-141"],
   cardType: "character",
   name: "Flora",
@@ -20,6 +31,7 @@ export const floraStrongwilledFairy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_aaea685bf107411087af5025359f986f",
+    tcgPlayer: "692062",
   },
   text: [
     {

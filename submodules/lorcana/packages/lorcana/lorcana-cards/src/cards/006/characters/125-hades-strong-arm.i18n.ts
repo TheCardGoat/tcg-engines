@@ -16,8 +16,9 @@ export const hadesStrongArmI18n: Record<Languages, I18nProperties> = {
     version: "Starker Arm",
     text: [
       {
-        title: "WAS WIRST DU TUN?, 3,",
-        description: "Verbanne einen deiner Charaktere — Verbanne einen Charakter deiner Wahl.",
+        title: "Was wirst du tun?",
+        description:
+          "{E}, 3 {I}, Verbanne einen deiner Charaktere — Verbanne einen Charakter deiner Wahl.",
       },
     ],
   },
@@ -26,8 +27,9 @@ export const hadesStrongArmI18n: Record<Languages, I18nProperties> = {
     version: "Forçant la main",
     text: [
       {
-        title: "C'EST LA VIE, 3,",
-        description: "bannissez l'un de vos personnages — Choisissez et bannissez un personnage.",
+        title: "C'est la vie",
+        description:
+          "{E}, 3 {I}, bannissez l'un de vos personnages — Choisissez et bannissez un personnage.",
       },
     ],
   },
@@ -36,8 +38,9 @@ export const hadesStrongArmI18n: Record<Languages, I18nProperties> = {
     version: "Braccio Armato",
     text: [
       {
-        title: "COSA FARAI MAI?, 3,",
-        description: "esilia uno dei tuoi personaggi — Esilia un personaggio a tua scelta.",
+        title: "Cosa Farai Mai?",
+        description:
+          "{E}, 3 {I}, esilia uno dei tuoi personaggi — Esilia un personaggio a tua scelta.",
       },
     ],
   },

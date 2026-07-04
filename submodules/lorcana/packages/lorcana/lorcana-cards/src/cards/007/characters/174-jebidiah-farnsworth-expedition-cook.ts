@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { jebidiahFarnsworthExpeditionCookI18n } from "./174-jebidiah-farnsworth-expedition-cook.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const jebidiahFarnsworthExpeditionCook: CharacterCard = {
   id: "FOI",
   canonicalId: "ci_FOI",
+  slug: "lorcana-ci_FOI",
+  printings: [
+    {
+      id: "set7-174",
+      artId: "set7-174",
+      setCode: "set7",
+      collectorNumber: "174",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-174"],
   cardType: "character",
   name: "Jebidiah Farnsworth",
@@ -21,7 +33,7 @@ export const jebidiahFarnsworthExpeditionCook: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2c68909051f6499f8a6cab0f663e7bba",
-    tcgPlayer: 619506,
+    tcgPlayer: "619506",
   },
   text: [
     {

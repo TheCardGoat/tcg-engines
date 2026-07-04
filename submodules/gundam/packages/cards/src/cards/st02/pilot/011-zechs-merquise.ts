@@ -7,14 +7,17 @@ export const st02ZechsMerquise011: PilotCard = {
   color: "blue",
   traits: ["oz"],
   id: "ST02-011",
-  externalId: "gundam:st02-011",
-  slug: "zechs-merquise-st02-011",
+  canonicalId: "ST02-011",
+  externalIds: { bandai: "gundam:st02-011" },
+  slug: "zechs-merquise/st02-011",
   displayName: "Zechs Merquise",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-011",
   printings: [
     {
       id: "ST02-011",
+      artId: "ST02-011",
+      setCode: "ST02",
       collectorNumber: "ST02-011",
       cardNumber: "ST02-011",
       set: {
@@ -30,6 +33,8 @@ export const st02ZechsMerquise011: PilotCard = {
     },
     {
       id: "ST02-011_p1",
+      artId: "ST02-011_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-011_p1",
       cardNumber: "ST02-011",
       set: {
@@ -45,6 +50,8 @@ export const st02ZechsMerquise011: PilotCard = {
     },
     {
       id: "ST02-011_p2",
+      artId: "ST02-011_p2",
+      setCode: "ST02",
       collectorNumber: "ST02-011_p2",
       cardNumber: "ST02-011",
       set: {
@@ -59,6 +66,7 @@ export const st02ZechsMerquise011: PilotCard = {
       productName: "Championship Participation Pack 01",
     },
   ],
+  reprints: ["ST02-011", "ST02-011_p1", "ST02-011_p2"],
   selectedPrintingId: "ST02-011",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-011.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-011.webp?260424",

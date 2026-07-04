@@ -4,6 +4,17 @@ import { healingDecanterI18n } from "./030-healing-decanter.i18n";
 export const healingDecanter: ItemCard = {
   id: "5HB",
   canonicalId: "ci_5HB",
+  slug: "lorcana-ci_5HB",
+  printings: [
+    {
+      id: "set5-030",
+      artId: "set5-030",
+      setCode: "set5",
+      collectorNumber: "30",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-030"],
   cardType: "item",
   name: "Healing Decanter",
@@ -16,7 +27,7 @@ export const healingDecanter: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_af887c9fbbbf4e12bf91a9d221681e71",
-    tcgPlayer: 560645,
+    tcgPlayer: "560645",
   },
   text: [
     {
@@ -30,7 +41,10 @@ export const healingDecanter: ItemCard = {
         exert: true,
       },
       effect: {
-        amount: { type: "up-to", value: 2 },
+        amount: {
+          type: "up-to",
+          value: 2,
+        },
         target: "CHOSEN_CHARACTER",
         type: "remove-damage",
       },

@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { letsGetDangerousI18n } from "./198-lets-get-dangerous.i18n";
 
 export const letsGetDangerous: ActionCard = {
-  id: "PQZ",
+  id: "uJN",
   canonicalId: "ci_iht",
+  slug: "lorcana-ci_iht",
+  printings: [
+    {
+      id: "set11-198",
+      artId: "set11-198",
+      setCode: "set11",
+      collectorNumber: "198",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-198"],
   cardType: "action",
   name: "Let's Get Dangerous",
@@ -16,7 +27,7 @@ export const letsGetDangerous: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_656cd1bfb0084f92bfd003ca69b3b3c9",
-    tcgPlayer: 677171,
+    tcgPlayer: "677171",
   },
   text: "Each player shuffles their deck and then reveals the top card. Each player who reveals a character card may play that character for free. Otherwise, put the revealed cards on the bottom of their player's deck.",
   actionSubtype: "song",
@@ -42,7 +53,10 @@ export const letsGetDangerous: ActionCard = {
                 min: 0,
                 max: 1,
                 cost: "free",
-                filter: { type: "card-type", cardType: "character" },
+                filter: {
+                  type: "card-type",
+                  cardType: "character",
+                },
               },
               {
                 zone: "deck-bottom",
@@ -62,7 +76,10 @@ export const letsGetDangerous: ActionCard = {
                 min: 0,
                 max: 1,
                 cost: "free",
-                filter: { type: "card-type", cardType: "character" },
+                filter: {
+                  type: "card-type",
+                  cardType: "character",
+                },
               },
               {
                 zone: "deck-bottom",

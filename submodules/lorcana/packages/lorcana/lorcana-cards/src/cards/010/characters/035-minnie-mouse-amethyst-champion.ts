@@ -4,6 +4,17 @@ import { minnieMouseAmethystChampionI18n } from "./035-minnie-mouse-amethyst-cha
 export const minnieMouseAmethystChampion: CharacterCard = {
   id: "8af",
   canonicalId: "ci_8af",
+  slug: "lorcana-ci_8af",
+  printings: [
+    {
+      id: "set10-035",
+      artId: "set10-035",
+      setCode: "set10",
+      collectorNumber: "35",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-035"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -19,7 +30,7 @@ export const minnieMouseAmethystChampion: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7667c79b34784802930a659a5c904ccf",
-    tcgPlayer: 659760,
+    tcgPlayer: "659760",
   },
   text: [
     {

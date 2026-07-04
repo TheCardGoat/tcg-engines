@@ -17,9 +17,9 @@ export const megaraPartOfThePlanI18n: Record<Languages, I18nProperties> = {
     version: "Teil des Plans",
     text: [
       {
-        title: "UMSTRITTENE ALLIANZ",
+        title: "Umstrittene Allianz",
         description:
-          "Solange du mindestens einen Hades-Charakter im Spiel hast, erhält dieser Charakter Herausfordern +2. (Während der Charakter herausfordert, erhält er +2.)",
+          "Solange du mindestens einen Hades-Charakter im Spiel hast, erhält dieser Charakter <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const megaraPartOfThePlanI18n: Record<Languages, I18nProperties> = {
     version: "Fait partie du plan",
     text: [
       {
-        title: "ALLIANCE FRAGILE",
+        title: "Alliance fragile",
         description:
-          "Tant que vous avez un personnage nommé Hadès en jeu, ce personnage-ci gagne Offensif +2.",
+          "Tant que vous avez un personnage nommé Hadès en jeu, ce personnage-ci gagne <Offensif> +2.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const megaraPartOfThePlanI18n: Record<Languages, I18nProperties> = {
     version: "Parte del Piano",
     text: [
       {
-        title: "ALLEANZA CONTROVERSA",
+        title: "Alleanza Controversa",
         description:
-          "Mentre hai in gioco un personaggio chiamato Ade, questo personaggio ottiene Sfidante +2.",
+          "Mentre hai in gioco un personaggio chiamato Ade, questo personaggio ottiene <Sfidante> +2. (Riceve +2 {S} mentre sta sfidando.)",
       },
     ],
   },

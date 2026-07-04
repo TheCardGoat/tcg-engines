@@ -4,6 +4,17 @@ import { mulanReadyForBattleI18n } from "./108-mulan-ready-for-battle.i18n";
 export const mulanReadyForBattle: CharacterCard = {
   id: "rjK",
   canonicalId: "ci_rjK",
+  slug: "lorcana-ci_rjK",
+  printings: [
+    {
+      id: "set11-108",
+      artId: "set11-108",
+      setCode: "set11",
+      collectorNumber: "108",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-108"],
   cardType: "character",
   name: "Mulan",
@@ -20,7 +31,7 @@ export const mulanReadyForBattle: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_96a789fd5e1943adbb12361ff791aec9",
-    tcgPlayer: 675497,
+    tcgPlayer: "675497",
   },
   text: [
     {

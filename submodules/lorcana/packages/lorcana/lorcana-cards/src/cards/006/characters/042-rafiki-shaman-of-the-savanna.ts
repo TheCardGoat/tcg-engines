@@ -4,6 +4,17 @@ import { rafikiShamanOfTheSavannaI18n } from "./042-rafiki-shaman-of-the-savanna
 export const rafikiShamanOfTheSavanna: CharacterCard = {
   id: "9vV",
   canonicalId: "ci_9vV",
+  slug: "lorcana-ci_9vV",
+  printings: [
+    {
+      id: "set6-042",
+      artId: "set6-042",
+      setCode: "set6",
+      collectorNumber: "42",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-042"],
   cardType: "character",
   name: "Rafiki",
@@ -21,7 +32,7 @@ export const rafikiShamanOfTheSavanna: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_2f12cdedeefb448eb412128fb4a80fc7",
-    tcgPlayer: 587269,
+    tcgPlayer: "587269",
   },
   classifications: ["Storyborn", "Mentor", "Sorcerer"],
   i18n: rafikiShamanOfTheSavannaI18n,

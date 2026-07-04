@@ -61,7 +61,7 @@ export type {
 } from "./expressions";
 export { isUpToAmount, isVariableAmount, unwrapAmount } from "./expressions";
 
-export type { MillEffect } from "./abilities/effect-types";
+export type { MillEffect, PlayFromDiscardEffect } from "./abilities/effect-types";
 
 // Re-export deck format validation
 export * from "./decks";

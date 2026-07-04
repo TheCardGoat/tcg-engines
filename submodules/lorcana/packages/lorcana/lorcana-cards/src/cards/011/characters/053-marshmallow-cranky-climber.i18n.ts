@@ -17,7 +17,7 @@ export const marshmallowCrankyClimberI18n: Record<Languages, I18nProperties> = {
     version: "Griesgrämiger Kletterer",
     text: [
       {
-        title: "EISIGE EXPLOSION",
+        title: "Eisige Explosion",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, können alle gegnerischen Mitspielenden zu Beginn ihres nächsten Zuges nur 1 ihrer Charaktere bereit machen.",
       },
@@ -28,7 +28,7 @@ export const marshmallowCrankyClimberI18n: Record<Languages, I18nProperties> = {
     version: "Grimpeur irritable",
     text: [
       {
-        title: "SOUFFLE GLACÉ",
+        title: "Souffle glacé",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, aucun adversaire ne peut redresser plus de 1 personnage au début de son prochain tour.",
       },
@@ -39,7 +39,7 @@ export const marshmallowCrankyClimberI18n: Record<Languages, I18nProperties> = {
     version: "Arrampicatore Irascibile",
     text: [
       {
-        title: "COLPO GHIACCIATO",
+        title: "Colpo Ghiacciato",
         description:
           "Ogni volta che questo personaggio va all'avventura, ogni avversario non può preparare più di 1 dei suoi personaggi all'inizio del suo prossimo turno.",
       },

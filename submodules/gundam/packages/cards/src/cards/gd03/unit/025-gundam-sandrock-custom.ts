@@ -7,14 +7,17 @@ export const gd03GundamSandrockCustom025: UnitCard = {
   color: "green",
   traits: ["g team"],
   id: "GD03-025",
-  externalId: "gundam:gd03-025",
-  slug: "gundam-sandrock-custom-gd03-025",
+  canonicalId: "GD03-025",
+  externalIds: { bandai: "gundam:gd03-025" },
+  slug: "gundam-sandrock-custom/gd03-025",
   displayName: "Gundam Sandrock Custom",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-025",
   printings: [
     {
       id: "GD03-025",
+      artId: "GD03-025",
+      setCode: "GD03",
       collectorNumber: "GD03-025",
       cardNumber: "GD03-025",
       set: {
@@ -29,6 +32,7 @@ export const gd03GundamSandrockCustom025: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-025"],
   selectedPrintingId: "GD03-025",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-025.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-025.webp?260424",

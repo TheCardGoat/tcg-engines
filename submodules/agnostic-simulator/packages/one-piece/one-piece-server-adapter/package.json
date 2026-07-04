@@ -20,12 +20,12 @@
     "format": "bun x oxfmt --write ./src",
     "lint": "bun x oxlint --fix ./src",
     "check-types": "tsc --noEmit",
-    "test": "vp test run --passWithNoTests"
+    "test": "vp test run --configLoader runner --passWithNoTests"
   },
   "dependencies": {
-    "@tcg/op-cards": "link:../../../../one-piece-simulator/packages/cards",
-    "@tcg/op-engine": "link:../../../../one-piece-simulator/packages/engine",
-    "@tcg/op-types": "link:../../../../one-piece-simulator/packages/types",
+    "@tcg/op-cards": "link:../../../../one-piece/packages/cards",
+    "@tcg/op-engine": "link:../../../../one-piece/packages/engine",
+    "@tcg/op-types": "link:../../../../one-piece/packages/types",
     "@tcg/protocol": "link:../../protocol",
     "@tcg/shared": "link:../../shared"
   },

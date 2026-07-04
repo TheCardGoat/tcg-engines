@@ -14,8 +14,9 @@ export const poohPirateShipI18n: Record<Languages, I18nProperties> = {
     name: "Puuh-Piratenschiff",
     text: [
       {
-        title: "WIR WERDEN IHN RETTEN, 3",
-        description: "— Nimm einen Piraten aus deinem Ablagestapel zurück auf deine Hand.",
+        title: "Wir werden ihn retten",
+        description:
+          "{E}, 3 {I} — Nimm einen Piraten aus deinem Ablagestapel zurück auf deine Hand.",
       },
     ],
   },
@@ -23,8 +24,9 @@ export const poohPirateShipI18n: Record<Languages, I18nProperties> = {
     name: "Bateau pirate de Winnie",
     text: [
       {
-        title: "SAUVETAGE EN COURS, 3",
-        description: "— Renvoyez un personnage Pirate de votre défausse dans votre main.",
+        title: "Sauvetage en cours",
+        description:
+          "{E}, 3 {I} — Renvoyez un personnage Pirate de votre défausse dans votre main.",
       },
     ],
   },
@@ -32,8 +34,8 @@ export const poohPirateShipI18n: Record<Languages, I18nProperties> = {
     name: "Nave Pirata di Pooh",
     text: [
       {
-        title: "OPEREREMO UN SALVATAGGIO, 3",
-        description: "— Riprendi in mano una carta personaggio Pirata dai tuoi scarti.",
+        title: "Opereremo un Salvataggio",
+        description: "{E}, 3 {I} — Riprendi in mano una carta personaggio Pirata dai tuoi scarti.",
       },
     ],
   },

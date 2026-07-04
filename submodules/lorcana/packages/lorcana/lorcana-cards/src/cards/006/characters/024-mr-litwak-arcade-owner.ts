@@ -4,6 +4,17 @@ import { mrLitwakArcadeOwnerI18n } from "./024-mr-litwak-arcade-owner.i18n";
 export const mrLitwakArcadeOwner: CharacterCard = {
   id: "WCV",
   canonicalId: "ci_WCV",
+  slug: "lorcana-ci_WCV",
+  printings: [
+    {
+      id: "set6-024",
+      artId: "set6-024",
+      setCode: "set6",
+      collectorNumber: "24",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-024"],
   cardType: "character",
   name: "Mr. Litwak",
@@ -20,7 +31,7 @@ export const mrLitwakArcadeOwner: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_19217586b3924276aa8996d318f83139",
-    tcgPlayer: 593030,
+    tcgPlayer: "593030",
   },
   text: [
     {
@@ -48,7 +59,15 @@ export const mrLitwakArcadeOwner: CharacterCard = {
         event: "play",
         on: "YOUR_OTHER_CHARACTERS",
         timing: "whenever",
-        restrictions: [{ type: "once-per-turn" }, { type: "during-turn", whose: "your" }],
+        restrictions: [
+          {
+            type: "once-per-turn",
+          },
+          {
+            type: "during-turn",
+            whose: "your",
+          },
+        ],
       },
       type: "triggered",
     },

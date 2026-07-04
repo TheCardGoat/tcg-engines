@@ -26,8 +26,7 @@ export const mrIncredibleSuperStrongI18n: Record<Languages, I18nProperties> = {
     version: "Superstark",
     text: [
       {
-        title:
-          "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Mr.-Incredible-Charaktere auszuspielen.)",
+        title: "<Gestaltwandel> 3 {I}",
       },
       {
         title: "Immer vereint",
@@ -45,8 +44,7 @@ export const mrIncredibleSuperStrongI18n: Record<Languages, I18nProperties> = {
     version: "Super fort",
     text: [
       {
-        title:
-          "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé M. Indestructible.)",
+        title: "<Alter> 3 {I}",
       },
       {
         title: "Toujours unis",
@@ -65,8 +63,7 @@ export const mrIncredibleSuperStrongI18n: Record<Languages, I18nProperties> = {
     version: "Super Forte",
     text: [
       {
-        title:
-          "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Mr. Incredibile.)",
+        title: "<Trasformazione> 3 {I}",
       },
       {
         title: "Sempre Uniti",

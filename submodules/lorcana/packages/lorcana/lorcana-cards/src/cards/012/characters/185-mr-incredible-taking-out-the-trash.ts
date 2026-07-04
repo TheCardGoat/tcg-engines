@@ -4,6 +4,17 @@ import { mrIncredibleTakingOutTheTrashI18n } from "./185-mr-incredible-taking-ou
 export const mrIncredibleTakingOutTheTrash: CharacterCard = {
   id: "Y1z",
   canonicalId: "ci_Y1z",
+  slug: "lorcana-ci_Y1z",
+  printings: [
+    {
+      id: "set12-185",
+      artId: "set12-185",
+      setCode: "set12",
+      collectorNumber: "185",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-185"],
   cardType: "character",
   name: "Mr. Incredible",
@@ -20,6 +31,7 @@ export const mrIncredibleTakingOutTheTrash: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_78bb9b0a1716482995a63d5cd9a0d042",
+    tcgPlayer: "690212",
   },
   text: [
     {

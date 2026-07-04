@@ -4,6 +4,17 @@ import { gyroevacI18n } from "./100-gyro-evac.i18n";
 export const gyroevac: ItemCard = {
   id: "EdK",
   canonicalId: "ci_EdK",
+  slug: "lorcana-ci_EdK",
+  printings: [
+    {
+      id: "set12-100",
+      artId: "set12-100",
+      setCode: "set12",
+      collectorNumber: "100",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-100"],
   cardType: "item",
   name: "Gyro-Evac",
@@ -16,6 +27,7 @@ export const gyroevac: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_50ad67bd180c4d4a95abcf5ab4eb42bc",
+    tcgPlayer: "690714",
   },
   text: [
     {

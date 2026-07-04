@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { arielSingingMermaidI18n } from "./003-ariel-singing-mermaid.i18n";
+
 import { singer } from "../../../helpers/abilities/singer";
 
 export const arielSingingMermaid: CharacterCard = {
   id: "nfQ",
   canonicalId: "ci_k8k",
+  slug: "lorcana-ci_k8k",
+  printings: [
+    {
+      id: "set4-003",
+      artId: "set4-003",
+      setCode: "set4",
+      collectorNumber: "3",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-003", "set9-015"],
   cardType: "character",
   name: "Ariel",
@@ -21,7 +33,7 @@ export const arielSingingMermaid: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4b656001901d4c34829cfe124d5c166b",
-    tcgPlayer: 647652,
+    tcgPlayer: "647652",
   },
   text: "Singer 7",
   classifications: ["Storyborn", "Hero", "Princess"],

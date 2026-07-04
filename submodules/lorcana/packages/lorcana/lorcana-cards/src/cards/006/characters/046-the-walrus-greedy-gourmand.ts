@@ -4,6 +4,17 @@ import { theWalrusGreedyGourmandI18n } from "./046-the-walrus-greedy-gourmand.i1
 export const theWalrusGreedyGourmand: CharacterCard = {
   id: "2Yy",
   canonicalId: "ci_2Yy",
+  slug: "lorcana-ci_2Yy",
+  printings: [
+    {
+      id: "set6-046",
+      artId: "set6-046",
+      setCode: "set6",
+      collectorNumber: "46",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-046"],
   cardType: "character",
   name: "The Walrus",
@@ -21,7 +32,7 @@ export const theWalrusGreedyGourmand: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_65425d8d8a8447d98f4571b7e42c8782",
-    tcgPlayer: 588074,
+    tcgPlayer: "588074",
   },
   classifications: ["Storyborn"],
   i18n: theWalrusGreedyGourmandI18n,

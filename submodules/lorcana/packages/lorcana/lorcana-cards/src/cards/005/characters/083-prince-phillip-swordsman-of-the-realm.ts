@@ -4,6 +4,17 @@ import { princePhillipSwordsmanOfTheRealmI18n } from "./083-prince-phillip-sword
 export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
   id: "kzz",
   canonicalId: "ci_kzz",
+  slug: "lorcana-ci_kzz",
+  printings: [
+    {
+      id: "set5-083",
+      artId: "set5-083",
+      setCode: "set5",
+      collectorNumber: "83",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-083"],
   cardType: "character",
   name: "Prince Phillip",
@@ -20,7 +31,7 @@ export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ab1aec84c58d45afb0773657b0990323",
-    tcgPlayer: 561958,
+    tcgPlayer: "561958",
   },
   text: [
     {
@@ -43,7 +54,12 @@ export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
           owner: "opponent",
           selector: "chosen",
           zones: ["play"],
-          filter: [{ type: "has-classification", classification: "Dragon" }],
+          filter: [
+            {
+              type: "has-classification",
+              classification: "Dragon",
+            },
+          ],
         },
         type: "banish",
       },
@@ -70,7 +86,11 @@ export const princePhillipSwordsmanOfTheRealm: CharacterCard = {
         on: "SELF",
         timing: "whenever",
         defender: {
-          filters: [{ type: "damaged" }],
+          filters: [
+            {
+              type: "damaged",
+            },
+          ],
         },
       },
       type: "triggered",

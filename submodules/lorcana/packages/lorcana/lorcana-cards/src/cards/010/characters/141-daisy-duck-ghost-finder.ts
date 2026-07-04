@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { support } from "../../../helpers/abilities/support";
 import { daisyDuckGhostFinderI18n } from "./141-daisy-duck-ghost-finder.i18n";
+
+import { support } from "../../../helpers/abilities/support";
 
 export const daisyDuckGhostFinder: CharacterCard = {
   id: "IZj",
   canonicalId: "ci_2P5",
+  slug: "lorcana-ci_2P5",
+  printings: [
+    {
+      id: "set10-141",
+      artId: "set10-141",
+      setCode: "set10",
+      collectorNumber: "141",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-141"],
   cardType: "character",
   name: "Daisy Duck",
@@ -20,7 +32,7 @@ export const daisyDuckGhostFinder: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8076e7de5c3a4681b8a91629932092e5",
-    tcgPlayer: 660363,
+    tcgPlayer: "660363",
   },
   text: "Support",
   classifications: ["Dreamborn", "Hero", "Detective"],

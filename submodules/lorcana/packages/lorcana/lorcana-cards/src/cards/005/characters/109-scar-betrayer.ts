@@ -4,6 +4,17 @@ import { scarBetrayerI18n } from "./109-scar-betrayer.i18n";
 export const scarBetrayer: CharacterCard = {
   id: "MEi",
   canonicalId: "ci_MEi",
+  slug: "lorcana-ci_MEi",
+  printings: [
+    {
+      id: "set5-109",
+      artId: "set5-109",
+      setCode: "set5",
+      collectorNumber: "109",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-109"],
   cardType: "character",
   name: "Scar",
@@ -20,7 +31,7 @@ export const scarBetrayer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0e2b19d48e8447f19582feef97a52725",
-    tcgPlayer: 561962,
+    tcgPlayer: "561962",
   },
   text: [
     {
@@ -40,7 +51,12 @@ export const scarBetrayer: CharacterCard = {
             owner: "any",
             zones: ["play"],
             cardTypes: ["character"],
-            filter: [{ type: "has-name", name: "Mufasa" }],
+            filter: [
+              {
+                type: "has-name",
+                name: "Mufasa",
+              },
+            ],
           },
           type: "banish",
         },

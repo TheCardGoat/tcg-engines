@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rafikiMysteriousSageI18n } from "./054-rafiki-mysterious-sage.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const rafikiMysteriousSage: CharacterCard = {
   id: "HXN",
   canonicalId: "ci_HXN",
+  slug: "lorcana-ci_HXN",
+  printings: [
+    {
+      id: "set1-054",
+      artId: "set1-054",
+      setCode: "set1",
+      collectorNumber: "54",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-054"],
   cardType: "character",
   name: "Rafiki",
@@ -21,7 +33,7 @@ export const rafikiMysteriousSage: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3939d10a183b4eb48b843a68c74ed87b",
-    tcgPlayer: 501405,
+    tcgPlayer: "501405",
   },
   text: "Rush",
   classifications: ["Dreamborn", "Mentor", "Sorcerer"],

@@ -4,6 +4,17 @@ import { tobyDoggedCompanionI18n } from "./131-toby-dogged-companion.i18n";
 export const tobyDoggedCompanion: CharacterCard = {
   id: "Mb2",
   canonicalId: "ci_Mb2",
+  slug: "lorcana-ci_Mb2",
+  printings: [
+    {
+      id: "set7-131",
+      artId: "set7-131",
+      setCode: "set7",
+      collectorNumber: "131",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-131"],
   cardType: "character",
   name: "Toby",
@@ -21,7 +32,7 @@ export const tobyDoggedCompanion: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_1cc513a07b96473ebf95f9369c01c25d",
-    tcgPlayer: 618708,
+    tcgPlayer: "618708",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: tobyDoggedCompanionI18n,

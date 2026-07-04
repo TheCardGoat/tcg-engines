@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { rafikiMysticalFighterI18n } from "./054-rafiki-mystical-fighter.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const rafikiMysticalFighter: CharacterCard = {
   id: "YW7",
   canonicalId: "ci_s33",
+  slug: "lorcana-ci_s33",
+  printings: [
+    {
+      id: "set3-054",
+      artId: "set3-054",
+      setCode: "set3",
+      collectorNumber: "54",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-054", "set9-036"],
   cardType: "character",
   name: "Rafiki",
@@ -21,7 +33,7 @@ export const rafikiMysticalFighter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f0b125bab638401e834b91dc4577a894",
-    tcgPlayer: 649983,
+    tcgPlayer: "649983",
   },
   text: [
     {

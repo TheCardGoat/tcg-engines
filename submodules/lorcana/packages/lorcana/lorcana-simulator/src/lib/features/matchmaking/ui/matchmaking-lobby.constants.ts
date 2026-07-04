@@ -1,5 +1,6 @@
 import type {
   QueueStatsFormat,
+  QueueStatsMatchType,
   QueueStatsMode,
   QueueStatsPartition,
 } from "../api/queue-stats-api.js";
@@ -22,7 +23,7 @@ export const HERO_NAV_MOBILE_TAB_BTN =
 export const HERO_NAV_MOBILE_TAB_BTN_ACTIVE =
   "border-white/10 bg-white text-slate-950 hover:bg-white hover:text-slate-950";
 
-export const ENGINE_REPO_URL = "https://github.com/theCardGoat/lorcana-engine";
+export const ENGINE_REPO_URL = "https://github.com/TheCardGoat/tcg-engines";
 export const LORCANA_ENGINE_DISCLAIMER_URL =
   "https://github.com/TheCardGoat/lorcana-engine/blob/main/DISCLAIMER.md";
 export const COMMUNITY_DISCORD_URL = "https://discord.gg/FxxWaJW2rP";
@@ -36,9 +37,16 @@ export type QueueCardDefinition = {
   format: QueueStatsFormat;
   labelKey:
     | "sim.matchmaking.matchmaking.formats.infinity"
-    | "sim.matchmaking.matchmaking.formats.ccROF";
+    | "sim.matchmaking.matchmaking.formats.ccROF"
+    | "sim.matchmaking.matchmaking.formats.earlyAccess";
   accentClass: string;
+  matchTypes?: ReadonlyArray<QueueStatsMatchType>;
 };
+
+export type QueueFormatLabelKey =
+  | "sim.matchmaking.matchmaking.formats.infinity"
+  | "sim.matchmaking.matchmaking.formats.ccROF"
+  | "sim.matchmaking.matchmaking.formats.earlyAccess";
 
 export const QUEUE_CARD_DEFINITIONS: QueueCardDefinition[] = [
   {
@@ -51,7 +59,50 @@ export const QUEUE_CARD_DEFINITIONS: QueueCardDefinition[] = [
     labelKey: "sim.matchmaking.matchmaking.formats.infinity",
     accentClass: "from-sky-400/20 via-sky-400/8 to-transparent",
   },
+  {
+    format: "attack-of-the-vine",
+    labelKey: "sim.matchmaking.matchmaking.formats.earlyAccess",
+    accentClass: "from-emerald-300/20 via-emerald-300/8 to-transparent",
+  },
 ];
+
+export function queueFormatLabelKey(format: QueueStatsFormat): QueueCardDefinition["labelKey"] {
+  switch (format) {
+    case "infinity":
+      return "sim.matchmaking.matchmaking.formats.infinity";
+    case "attack-of-the-vine":
+      return "sim.matchmaking.matchmaking.formats.earlyAccess";
+    case "core-constructed":
+      return "sim.matchmaking.matchmaking.formats.ccROF";
+    default: {
+      const exhaustive: never = format;
+      return exhaustive;
+    }
+  }
+}
+
+export function isQueuePartitionSupported(
+  format: QueueStatsFormat,
+  mode: QueueStatsMode,
+  matchType: "ranked" | "casual" | "testing",
+): boolean {
+  if (format !== "attack-of-the-vine") {
+    return true;
+  }
+
+  return matchType === "casual" || (matchType === "testing" && mode === "1");
+}
+
+export function firstSupportedQueueFormat(
+  mode: QueueStatsMode,
+  matchType: "ranked" | "casual" | "testing",
+): QueueStatsFormat {
+  return (
+    QUEUE_CARD_DEFINITIONS.find((definition) =>
+      isQueuePartitionSupported(definition.format, mode, matchType),
+    )?.format ?? "infinity"
+  );
+}
 
 /** Number of ranked matches required before a player's MMR is considered established. */
 export const PLACEMENT_THRESHOLD = 20;
@@ -105,16 +156,13 @@ export function createQueueJoinLabel(
   mode: QueueStatsMode,
   translate: (
     key:
-      | QueueCardDefinition["labelKey"]
+      | QueueFormatLabelKey
       | "sim.matchmaking.matchmaking.joinQueue"
       | "sim.matchmaking.matchmaking.tabs.bo1"
       | "sim.matchmaking.matchmaking.tabs.bo3",
   ) => string,
 ): string {
-  const formatKey =
-    format === "infinity"
-      ? "sim.matchmaking.matchmaking.formats.infinity"
-      : "sim.matchmaking.matchmaking.formats.ccROF";
+  const formatKey = queueFormatLabelKey(format);
   const modeKey =
     mode === "1" ? "sim.matchmaking.matchmaking.tabs.bo1" : "sim.matchmaking.matchmaking.tabs.bo3";
 

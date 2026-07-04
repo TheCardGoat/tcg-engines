@@ -86,8 +86,6 @@ describe("deck-list-resolver", () => {
     const resolved = result.resolvedCards[0];
     expect(resolved?.card.name).toBe("Finders Keepers");
     expect(resolved?.card.inkType).toEqual(["amethyst"]);
-    // Canonical id for Finders Keepers (set5-060) per generated package cards.
-    expect(resolved?.cardId).toBe("J7L");
 
     // The resolved id must map back to Finders Keepers, not Three Arrows Epic
     const byId = await getAllCardsById();

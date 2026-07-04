@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { merlinSelfappointedMentorI18n } from "./153-merlin-self-appointed-mentor.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const merlinSelfappointedMentor: CharacterCard = {
   id: "m4N",
   canonicalId: "ci_m4N",
+  slug: "lorcana-ci_m4N",
+  printings: [
+    {
+      id: "set1-153",
+      artId: "set1-153",
+      setCode: "set1",
+      collectorNumber: "153",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-153"],
   cardType: "character",
   name: "Merlin",
@@ -21,7 +33,7 @@ export const merlinSelfappointedMentor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_47e91685dd1f4021908561ca134dfe94",
-    tcgPlayer: 503354,
+    tcgPlayer: "503354",
   },
   text: "Support",
   classifications: ["Dreamborn", "Mentor", "Sorcerer"],

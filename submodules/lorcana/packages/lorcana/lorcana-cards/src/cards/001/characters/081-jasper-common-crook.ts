@@ -4,6 +4,17 @@ import { jasperCommonCrookI18n } from "./081-jasper-common-crook.i18n";
 export const jasperCommonCrook: CharacterCard = {
   id: "gsE",
   canonicalId: "ci_gsE",
+  slug: "lorcana-ci_gsE",
+  printings: [
+    {
+      id: "set1-081",
+      artId: "set1-081",
+      setCode: "set1",
+      collectorNumber: "81",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-081"],
   cardType: "character",
   name: "Jasper",
@@ -20,7 +31,7 @@ export const jasperCommonCrook: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1dd05220d5994e3181153d33340718fc",
-    tcgPlayer: 507498,
+    tcgPlayer: "507498",
   },
   text: [
     {

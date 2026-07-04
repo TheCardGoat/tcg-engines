@@ -16,9 +16,9 @@ export const wreckitRalphBackSeatDriverI18n: Record<Languages, I18nProperties> =
     version: "Rücksitzfahrer",
     text: [
       {
-        title: "AUFGELADEN",
+        title: "Aufgeladen",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein Rennfahrer deiner Wahl in diesem Zug +4.",
+          "Wenn du diesen Charakter ausspielst, erhält ein Rennfahrer deiner Wahl in diesem Zug +4 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const wreckitRalphBackSeatDriverI18n: Record<Languages, I18nProperties> =
     version: "Copilote envahissant",
     text: [
       {
-        title: "CHARGÉ À BLOC",
+        title: "Chargé à bloc",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage Pilote qui gagne +4 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage Pilote qui gagne +4 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const wreckitRalphBackSeatDriverI18n: Record<Languages, I18nProperties> =
     version: "Passeggero Invadente",
     text: [
       {
-        title: "CARICO",
+        title: "Carico",
         description:
-          "Quando giochi questo personaggio, un personaggio Pilota a tua scelta riceve +4 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio Pilota a tua scelta riceve +4 {S} per questo turno.",
       },
     ],
   },

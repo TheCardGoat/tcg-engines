@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { yzmaAboveItAllI18n } from "./068-yzma-above-it-all.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const yzmaAboveItAll: CharacterCard = {
   id: "JoL",
   canonicalId: "ci_JoL",
+  slug: "lorcana-ci_JoL",
+  printings: [
+    {
+      id: "set7-068",
+      artId: "set7-068",
+      setCode: "set7",
+      collectorNumber: "68",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-068"],
   cardType: "character",
   name: "Yzma",
@@ -22,7 +34,7 @@ export const yzmaAboveItAll: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_181371118d864cd08cfc849f7b795a5d",
-    tcgPlayer: 619443,
+    tcgPlayer: "619443",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const st05McgillisFareed012: PilotCard = {
   color: "white",
   traits: ["gjallarhorn"],
   id: "ST05-012",
-  externalId: "gundam:st05-012",
-  slug: "mcgillis-fareed-st05-012",
+  canonicalId: "ST05-012",
+  externalIds: { bandai: "gundam:st05-012" },
+  slug: "mcgillis-fareed/st05-012",
   displayName: "McGillis Fareed",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-012",
   printings: [
     {
       id: "ST05-012",
+      artId: "ST05-012",
+      setCode: "ST05",
       collectorNumber: "ST05-012",
       cardNumber: "ST05-012",
       set: {
@@ -30,6 +33,8 @@ export const st05McgillisFareed012: PilotCard = {
     },
     {
       id: "ST05-012_p1",
+      artId: "ST05-012_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-012_p1",
       cardNumber: "ST05-012",
       set: {
@@ -44,6 +49,7 @@ export const st05McgillisFareed012: PilotCard = {
       productName: "Iron Bloom [ST05] Bonus Pack",
     },
   ],
+  reprints: ["ST05-012", "ST05-012_p1"],
   selectedPrintingId: "ST05-012",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-012.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-012.webp?260424",

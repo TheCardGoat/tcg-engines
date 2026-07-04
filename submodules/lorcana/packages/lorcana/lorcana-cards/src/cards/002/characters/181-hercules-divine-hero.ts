@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { herculesDivineHeroI18n } from "./181-hercules-divine-hero.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 import { shift } from "../../../helpers/abilities/shift";
 
 export const herculesDivineHero: CharacterCard = {
-  id: "D18",
+  id: "rNY",
   canonicalId: "ci_1UQ",
+  slug: "lorcana-ci_1UQ",
+  printings: [
+    {
+      id: "set2-181",
+      artId: "set2-181",
+      setCode: "set2",
+      collectorNumber: "181",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-181"],
   cardType: "character",
   name: "Hercules",
@@ -22,7 +34,7 @@ export const herculesDivineHero: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_42ef053d7aab445fa7b0a2bf2e028864",
-    tcgPlayer: 528113,
+    tcgPlayer: "528113",
   },
   text: [
     {

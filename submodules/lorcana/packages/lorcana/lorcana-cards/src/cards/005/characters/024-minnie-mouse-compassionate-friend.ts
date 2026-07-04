@@ -4,6 +4,17 @@ import { minnieMouseCompassionateFriendI18n } from "./024-minnie-mouse-compassio
 export const minnieMouseCompassionateFriend: CharacterCard = {
   id: "pv2",
   canonicalId: "ci_pv2",
+  slug: "lorcana-ci_pv2",
+  printings: [
+    {
+      id: "set5-024",
+      artId: "set5-024",
+      setCode: "set5",
+      collectorNumber: "24",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-024"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -19,7 +30,7 @@ export const minnieMouseCompassionateFriend: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_edb33beb5360472080df4b6d2a6878a2",
-    tcgPlayer: 561949,
+    tcgPlayer: "561949",
   },
   text: [
     {
@@ -34,7 +45,10 @@ export const minnieMouseCompassionateFriend: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           target: {
             selector: "chosen",
             count: 1,

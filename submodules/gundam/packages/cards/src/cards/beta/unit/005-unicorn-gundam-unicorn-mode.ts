@@ -7,14 +7,17 @@ export const betaUnicornGundamUnicornMode005: UnitCard = {
   color: "blue",
   traits: ["civilian"],
   id: "GD01-005_p2",
-  externalId: "gundam:gd01-005_p2",
-  slug: "unicorn-gundam-unicorn-mode-gd01-005-p2",
+  canonicalId: "GD01-005",
+  externalIds: { bandai: "gundam:gd01-005_p2" },
+  slug: "unicorn-gundam-unicorn-mode/gd01-005",
   displayName: "Unicorn Gundam (Unicorn Mode)",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-005_p2",
   printings: [
     {
       id: "GD01-005",
+      artId: "GD01-005",
+      setCode: "GD01",
       collectorNumber: "GD01-005",
       cardNumber: "GD01-005",
       set: {
@@ -30,6 +33,8 @@ export const betaUnicornGundamUnicornMode005: UnitCard = {
     },
     {
       id: "GD01-005_p1",
+      artId: "GD01-005_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-005_p1",
       cardNumber: "GD01-005",
       set: {
@@ -45,6 +50,8 @@ export const betaUnicornGundamUnicornMode005: UnitCard = {
     },
     {
       id: "GD01-005_p2",
+      artId: "GD01-005_p2",
+      setCode: "BETA",
       collectorNumber: "GD01-005_p2",
       cardNumber: "GD01-005",
       set: {
@@ -60,6 +67,8 @@ export const betaUnicornGundamUnicornMode005: UnitCard = {
     },
     {
       id: "GD01-005_p3",
+      artId: "GD01-005_p3",
+      setCode: "GD01",
       collectorNumber: "GD01-005_p3",
       cardNumber: "GD01-005",
       set: {
@@ -74,6 +83,7 @@ export const betaUnicornGundamUnicornMode005: UnitCard = {
       productName: "GUNDAM CARD GAME Booster Pack Launch Event",
     },
   ],
+  reprints: ["GD01-005", "GD01-005_p1", "GD01-005_p2", "GD01-005_p3"],
   selectedPrintingId: "GD01-005_p2",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-005_p2.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-005_p2.webp?260424",

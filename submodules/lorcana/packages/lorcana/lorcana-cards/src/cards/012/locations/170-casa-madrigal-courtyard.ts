@@ -4,6 +4,17 @@ import { casaMadrigalCourtyardI18n } from "./170-casa-madrigal-courtyard.i18n";
 export const casaMadrigalCourtyard: LocationCard = {
   id: "xbQ",
   canonicalId: "ci_xbQ",
+  slug: "lorcana-ci_xbQ",
+  printings: [
+    {
+      id: "set12-170",
+      artId: "set12-170",
+      setCode: "set12",
+      collectorNumber: "170",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-170"],
   cardType: "location",
   name: "Casa Madrigal",
@@ -20,12 +31,13 @@ export const casaMadrigalCourtyard: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_69c16dd8004b4fbf8051c91ac50bc6cb",
+    tcgPlayer: "690720",
   },
   text: [
     {
       title: "HEALING HOME",
       description:
-        "Whenever a character quests while here, you may remove up to 2 damage from the. Then, you may remove up to 2 damage from this location.",
+        "Whenever a character quests while here, you may remove up to 2 damage from them. Then, you may remove up to 2 damage from this location.",
     },
   ],
   abilities: [

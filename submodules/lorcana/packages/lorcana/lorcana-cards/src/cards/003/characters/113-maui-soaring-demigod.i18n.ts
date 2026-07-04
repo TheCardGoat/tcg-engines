@@ -20,12 +20,12 @@ export const mauiSoaringDemigodI18n: Record<Languages, I18nProperties> = {
     version: "Aufstrebender Halbgott",
     text: [
       {
-        title: "Impulsiv",
+        title: "<Impulsiv>",
       },
       {
-        title: "IN MEINEM BAUCH",
+        title: "In meinem Bauch",
         description:
-          "Jedes Mal, wenn einer deiner HeiHei-Charaktere erkundet, verliert dieser Charakter Impulsiv und erhält +1 in diesem Zug.",
+          "Jedes Mal, wenn einer deiner HeiHei-Charaktere erkundet, verliert dieser Charakter <Impulsiv> und erhält +1 {L} in diesem Zug.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const mauiSoaringDemigodI18n: Record<Languages, I18nProperties> = {
     version: "Demi-dieu planant",
     text: [
       {
-        title: "Combattant",
+        title: "<Combattant>",
       },
       {
-        title: "DANS MON VENTRE",
+        title: "Dans mon ventre",
         description:
-          "Chaque fois que l'un de vos personnages Heihei est envoyé à l'aventure, ce personnage gagne +1 et perd Combattant pour le reste de ce tour.",
+          "Chaque fois que l'un de vos personnages Heihei est envoyé à l'aventure, ce personnage gagne +1 {L} et perd <Combattant> pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const mauiSoaringDemigodI18n: Record<Languages, I18nProperties> = {
     version: "Semidio Alato",
     text: [
       {
-        title: "Attaccabrighe",
+        title: "<Attaccabrighe>",
       },
       {
-        title: "NEL MIO STOMACO",
+        title: "Nel Mio Stomaco",
         description:
-          "Ogni volta che un tuo personaggio chiamato Heihei va all'avventura, questo personaggio ottiene +1 e perde Attaccabrighe per questo turno.",
+          "Ogni volta che un tuo personaggio chiamato Heihei va all'avventura, questo personaggio ottiene +1 {L} e perde <Attaccabrighe> per questo turno.",
       },
     ],
   },

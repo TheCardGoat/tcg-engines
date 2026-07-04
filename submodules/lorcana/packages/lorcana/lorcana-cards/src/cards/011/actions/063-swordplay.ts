@@ -4,6 +4,17 @@ import { swordplayI18n } from "./063-swordplay.i18n";
 export const swordplay: ActionCard = {
   id: "7uF",
   canonicalId: "ci_7uF",
+  slug: "lorcana-ci_7uF",
+  printings: [
+    {
+      id: "set11-063",
+      artId: "set11-063",
+      setCode: "set11",
+      collectorNumber: "63",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-063"],
   cardType: "action",
   name: "Swordplay",
@@ -16,7 +27,7 @@ export const swordplay: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_79bedff3158647f791e28faa270773b5",
-    tcgPlayer: 675299,
+    tcgPlayer: "675299",
   },
   text: "Chosen character gains Challenger +3 this turn. (They get +3 {S} while challenging.)",
   abilities: [

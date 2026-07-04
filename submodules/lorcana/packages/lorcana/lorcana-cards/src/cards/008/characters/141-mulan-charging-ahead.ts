@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mulanChargingAheadI18n } from "./141-mulan-charging-ahead.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 
 export const mulanChargingAhead: CharacterCard = {
-  id: "KZj",
+  id: "GUa",
   canonicalId: "ci_KZj",
+  slug: "lorcana-ci_KZj",
+  printings: [
+    {
+      id: "set8-141",
+      artId: "set8-141",
+      setCode: "set8",
+      collectorNumber: "141",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-141"],
   cardType: "character",
   name: "Mulan",
@@ -20,8 +32,8 @@ export const mulanChargingAhead: CharacterCard = {
   lore: 0,
   inkable: false,
   externalIds: {
-    lorcast: "crd_460e1f2d54244710902cf898533beaa8",
-    tcgPlayer: 631442,
+    lorcast: "crd_47c0a77fd61a4c98a3d2e4608bcbc844",
+    tcgPlayer: "672467",
   },
   text: [
     {

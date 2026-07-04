@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { almaMadrigalKeeperOfTheFlameI18n } from "./058-alma-madrigal-keeper-of-the-flame.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const almaMadrigalKeeperOfTheFlame: CharacterCard = {
   id: "HdV",
   canonicalId: "ci_HdV",
+  slug: "lorcana-ci_HdV",
+  printings: [
+    {
+      id: "set12-058",
+      artId: "set12-058",
+      setCode: "set12",
+      collectorNumber: "58",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-058"],
   cardType: "character",
   name: "Alma Madrigal",
@@ -21,6 +33,7 @@ export const almaMadrigalKeeperOfTheFlame: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c464c4847629458e811da161a49a3aaf",
+    tcgPlayer: "692035",
   },
   text: [
     {

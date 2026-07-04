@@ -20,10 +20,10 @@ export const arielEtherealVoiceI18n: Record<Languages, I18nProperties> = {
     version: "Ätherische Stimme",
     text: [
       {
-        title: "Stärken 1",
+        title: "<Stärken> 1 {I}",
       },
       {
-        title: "ANORDNUNG ZUM AUFTRITT",
+        title: "Anordnung zum Auftritt",
         description:
           "Einmal während deines Zuges, wenn du ein Lied ausspielst und falls dieser Charakter mindestens eine Karte unter sich hat, darfst du 1 Karte ziehen.",
       },
@@ -34,10 +34,10 @@ export const arielEtherealVoiceI18n: Record<Languages, I18nProperties> = {
     version: "Voix éthérée",
     text: [
       {
-        title: "Boost 1",
+        title: "<Boost> 1 {I}",
       },
       {
-        title: "COMMANDE SPÉCIALE",
+        title: "Commande spéciale",
         description:
           "Une fois durant votre tour, lorsque vous jouez une chanson, s'il y a une carte sous ce personnage, vous pouvez piocher une carte.",
       },
@@ -48,10 +48,10 @@ export const arielEtherealVoiceI18n: Record<Languages, I18nProperties> = {
     version: "Voce Eterea",
     text: [
       {
-        title: "Potenziamento 1",
+        title: "<Potenziamento> 1 {I}",
       },
       {
-        title: "RICHIESTA DI ESIBIZIONE",
+        title: "Richiesta di Esibizione",
         description:
           "Una volta durante il tuo turno, ogni volta che giochi una canzone, se c'è una carta sotto a questo personaggio, puoi pescare una carta.",
       },

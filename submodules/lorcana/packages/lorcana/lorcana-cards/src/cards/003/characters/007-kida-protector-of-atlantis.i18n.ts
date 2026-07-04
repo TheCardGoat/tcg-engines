@@ -20,12 +20,13 @@ export const kidaProtectorOfAtlantisI18n: Record<Languages, I18nProperties> = {
     version: "Wächterin von Atlantis",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Kida-Charaktere auszuspielen.)",
       },
       {
-        title: "VIELLEICHT KÖNNEN WIR UNSERE ZUKUNFT RETTEN",
+        title: "Vielleicht können wir unsere Zukunft retten",
         description:
-          "Wenn du diesen Charakter ausspielst, gib allen Charakteren bis zu Beginn deines nächsten Zuges -3.",
+          "Wenn du diesen Charakter ausspielst, gib allen Charakteren bis zu Beginn deines nächsten Zuges -3 {S}.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const kidaProtectorOfAtlantisI18n: Record<Languages, I18nProperties> = {
     version: "Protectrice de l'Atlantide",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Kida.)",
       },
       {
-        title: "PEUT-ÊTRE POURRONS-NOUS SAUVER NOTRE AVENIR",
+        title: "Peut-être pourrons-nous sauver notre avenir",
         description:
-          "Lorsque vous jouez ce personnage, tous les personnages subissent -3 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, tous les personnages subissent -3 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const kidaProtectorOfAtlantisI18n: Record<Languages, I18nProperties> = {
     version: "Protettrice di Atlantide",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Kida.)",
       },
       {
-        title: "FORSE RIUSCIREMO",
+        title: "Forse Riusciremo a Salvare il Nostro Futuro",
         description:
-          "A SALVARE IL NOSTRO FUTURO Quando giochi questo personaggio, tutti i personaggi ricevono -3 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, tutti i personaggi ricevono -3 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

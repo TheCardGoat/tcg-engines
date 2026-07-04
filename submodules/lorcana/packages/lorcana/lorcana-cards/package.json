@@ -26,6 +26,10 @@
       "types": "./src/cards/index.ts",
       "default": "./src/cards/index.ts"
     },
+    "./pack-simulator": {
+      "types": "./src/pack-simulator/index.ts",
+      "default": "./src/pack-simulator/index.ts"
+    },
     "./cards/sync": {
       "types": "./src/cards/sync.ts",
       "default": "./src/cards/sync.ts"
@@ -77,13 +81,17 @@
     "./cards/012": {
       "types": "./src/cards/012/index.ts",
       "default": "./src/cards/012/index.ts"
+    },
+    "./cards/013": {
+      "types": "./src/cards/013/index.ts",
+      "default": "./src/cards/013/index.ts"
     }
   },
   "scripts": {
     "build": "tsc --noEmit && mkdir -p dist",
     "typecheck": "tsc --noEmit",
     "check-types": "tsc --noEmit",
-    "format": "bun x oxfmt --write ./src",
+    "format": "vp fmt ./src",
     "lint": "vp lint ./src",
     "test": "bun test src --bail=10 --only-failures",
     "test:watch": "bun test --watch src",
@@ -101,6 +109,7 @@
     "update-translations": "bun run fetch:all-locales && bun run generate-localization"
   },
   "dependencies": {
+    "@tcg/card-model": "link:../../../../agnostic-simulator/packages/card-model",
     "@tcg/lorcana-engine": "workspace:*",
     "@tcg/lorcana-types": "workspace:*",
     "@tcg/shared": "workspace:*"

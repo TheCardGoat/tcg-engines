@@ -61,6 +61,26 @@ export function isLocation(card: LorcanaCardDefinition): boolean {
 // Keyword Utilities (Updated for AbilityDefinition)
 // ============================================================================
 
+const PRINTED_KEYWORD_TITLES = new Set([
+  "Alert",
+  "Bodyguard",
+  "Boost",
+  "Challenger",
+  "Evasive",
+  "Reckless",
+  "Resist",
+  "Rush",
+  "Shift",
+  "Singer",
+  "Sing Together",
+  "Support",
+  "Vanish",
+  "Ward",
+]);
+const PRINTED_KEYWORD_TITLE_PREFIXES = [...PRINTED_KEYWORD_TITLES].sort(
+  (a, b) => b.length - a.length,
+);
+
 /**
  * Helper to get all keyword abilities from a card
  */
@@ -71,11 +91,40 @@ function getKeywordAbilities(card: LorcanaCardDefinition): KeywordAbilityDefinit
   return card.abilities.filter((a): a is KeywordAbilityDefinition => a.type === "keyword");
 }
 
+function normalizePrintedKeywordTitle(title: string): string | undefined {
+  return PRINTED_KEYWORD_TITLE_PREFIXES.find(
+    (keyword) => title === keyword || title.startsWith(`${keyword} `),
+  );
+}
+
+function hasPrintedKeywordText(card: LorcanaCardDefinition, keyword: string): boolean {
+  return getPrintedKeywordTitles(card).includes(keyword);
+}
+
+export function getPrintedKeywordTitles(card: LorcanaCardDefinition): string[] {
+  if (typeof card.text === "string") {
+    const keyword = normalizePrintedKeywordTitle(card.text);
+    return keyword ? [keyword] : [];
+  }
+
+  if (!Array.isArray(card.text)) {
+    return [];
+  }
+
+  return card.text.flatMap((entry) => {
+    const keyword = normalizePrintedKeywordTitle(entry.title);
+    return keyword ? [keyword] : [];
+  });
+}
+
 /**
  * Check if a card has a specific keyword
  */
 export function hasKeyword(card: LorcanaCardDefinition, keyword: string): boolean {
-  return getKeywordAbilities(card).some((k) => k.keyword === keyword);
+  return (
+    getKeywordAbilities(card).some((k) => k.keyword === keyword) ||
+    hasPrintedKeywordText(card, keyword)
+  );
 }
 
 /**
@@ -266,7 +315,22 @@ export function hasMimicry(card: LorcanaCardDefinition): boolean {
       ability.type === "static" &&
       typeof ability.text === "string" &&
       /\bMIMICRY\b/i.test(ability.text) &&
-      /as if this character had any name/i.test(ability.text),
+      (/as if this character had any name/i.test(ability.text) ||
+        /shift any character on top of this character/i.test(ability.text)),
+  );
+}
+
+export function hasAdvancedMimicry(card: LorcanaCardDefinition): boolean {
+  if (!Array.isArray(card.abilities)) {
+    return false;
+  }
+
+  return card.abilities.some(
+    (ability) =>
+      ability.type === "static" &&
+      typeof ability.text === "string" &&
+      /\bADVANCED MIMICRY\b/i.test(ability.text) &&
+      /shift any character on top of this character/i.test(ability.text),
   );
 }
 

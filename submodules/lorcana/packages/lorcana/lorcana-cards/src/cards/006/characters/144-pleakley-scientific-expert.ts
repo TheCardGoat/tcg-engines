@@ -4,6 +4,17 @@ import { pleakleyScientificExpertI18n } from "./144-pleakley-scientific-expert.i
 export const pleakleyScientificExpert: CharacterCard = {
   id: "ron",
   canonicalId: "ci_ron",
+  slug: "lorcana-ci_ron",
+  printings: [
+    {
+      id: "set6-144",
+      artId: "set6-144",
+      setCode: "set6",
+      collectorNumber: "144",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-144"],
   cardType: "character",
   name: "Pleakley",
@@ -20,7 +31,7 @@ export const pleakleyScientificExpert: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b513512cb8c04917ae7d0cbe7e1aa355",
-    tcgPlayer: 588341,
+    tcgPlayer: "588341",
   },
   text: [
     {

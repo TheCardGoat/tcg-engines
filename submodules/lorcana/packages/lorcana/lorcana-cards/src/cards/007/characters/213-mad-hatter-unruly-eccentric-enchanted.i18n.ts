@@ -17,7 +17,7 @@ export const madHatterUnrulyEccentricEnchantedI18n: Record<Languages, I18nProper
     version: "Unruly Eccentric",
     text: [
       {
-        title: "UNBIRTHDAY PRESENT",
+        title: "Unbirthday Present",
         description:
           "Whenever a damaged character challenges another character, you may draw a card.",
       },
@@ -28,7 +28,7 @@ export const madHatterUnrulyEccentricEnchantedI18n: Record<Languages, I18nProper
     version: "Unruly Eccentric",
     text: [
       {
-        title: "UNBIRTHDAY PRESENT",
+        title: "Unbirthday Present",
         description:
           "Whenever a damaged character challenges another character, you may draw a card.",
       },
@@ -39,7 +39,7 @@ export const madHatterUnrulyEccentricEnchantedI18n: Record<Languages, I18nProper
     version: "Unruly Eccentric",
     text: [
       {
-        title: "UNBIRTHDAY PRESENT",
+        title: "Unbirthday Present",
         description:
           "Whenever a damaged character challenges another character, you may draw a card.",
       },

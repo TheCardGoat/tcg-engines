@@ -4,6 +4,17 @@ import { almaMadrigalFamilyMatriarchI18n } from "./002-alma-madrigal-family-matr
 export const almaMadrigalFamilyMatriarch: CharacterCard = {
   id: "AOO",
   canonicalId: "ci_AOO",
+  slug: "lorcana-ci_AOO",
+  printings: [
+    {
+      id: "set4-002",
+      artId: "set4-002",
+      setCode: "set4",
+      collectorNumber: "2",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-002"],
   cardType: "character",
   name: "Alma Madrigal",
@@ -20,7 +31,7 @@ export const almaMadrigalFamilyMatriarch: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a853bb92fbe7486ea510a97f6a8494e2",
-    tcgPlayer: 550553,
+    tcgPlayer: "550553",
   },
   text: [
     {

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { archimedesResourcefulOwlI18n } from "./113-archimedes-resourceful-owl.i18n";
 
 export const archimedesResourcefulOwl: CharacterCard = {
-  id: "qnh",
-  canonicalId: "ci_qnh",
+  id: "7dV",
+  canonicalId: "ci_OeD",
+  slug: "lorcana-ci_OeD",
+  printings: [
+    {
+      id: "set8-113",
+      artId: "set8-113",
+      setCode: "set8",
+      collectorNumber: "113",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-113"],
   cardType: "character",
   name: "Archimedes",
@@ -20,7 +31,7 @@ export const archimedesResourcefulOwl: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bf2471b2597f495db6b088a5705d4502",
-    tcgPlayer: 631423,
+    tcgPlayer: "631423",
   },
   text: [
     {

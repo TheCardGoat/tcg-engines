@@ -16,7 +16,7 @@ export const arielWhoseitCollectorI18n: Record<Languages, I18nProperties> = {
     version: "Krimskrams-Sammlerin",
     text: [
       {
-        title: "SIEHST DU DEN KRAM?",
+        title: "Siehst du den Kram?",
         description:
           "Jedes Mal, wenn du einen Gegenstand ausspielst, darfst du diesen Charakter bereit machen.",
       },
@@ -37,7 +37,7 @@ export const arielWhoseitCollectorI18n: Record<Languages, I18nProperties> = {
     version: "Whoseit Collector",
     text: [
       {
-        title: "LOOK AT THIS STUFF",
+        title: "Look at This Stuff",
         description: "Whenever you play an item, you may ready this character.",
       },
     ],

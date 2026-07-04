@@ -4,6 +4,17 @@ import { dontBeNervousI18n } from "./065-dont-be-nervous.i18n";
 export const dontBeNervous: ActionCard = {
   id: "2F6",
   canonicalId: "ci_2F6",
+  slug: "lorcana-ci_2F6",
+  printings: [
+    {
+      id: "set12-065",
+      artId: "set12-065",
+      setCode: "set12",
+      collectorNumber: "65",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-065"],
   cardType: "action",
   name: "Don't Be Nervous",
@@ -16,6 +27,7 @@ export const dontBeNervous: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2718faa7b40f4af8b29f6d467dbc81bc",
+    tcgPlayer: "692162",
   },
   text: "Search your deck for a Princess character card, reveal that card to all players, and put it into your hand. Then, shuffle your deck. If you have 2 or more Seven Dwarfs characters in play, draw 2 cards and gain 2 lore.",
   abilities: [

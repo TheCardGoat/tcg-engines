@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { annaIceBreakerI18n } from "./072-anna-ice-breaker.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const annaIceBreaker: CharacterCard = {
-  id: "5hH",
-  canonicalId: "ci_5hH",
+  id: "WJH",
+  canonicalId: "ci_U6J",
+  slug: "lorcana-ci_U6J",
+  printings: [
+    {
+      id: "set7-072",
+      artId: "set7-072",
+      setCode: "set7",
+      collectorNumber: "72",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-072"],
   cardType: "character",
   name: "Anna",
@@ -21,7 +33,7 @@ export const annaIceBreaker: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b46a014c04334b358578cee5fbd9444f",
-    tcgPlayer: 619444,
+    tcgPlayer: "619444",
   },
   text: [
     {

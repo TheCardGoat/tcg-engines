@@ -17,9 +17,15 @@ export const simbaFightingPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Kämpfender Prinz",
     text: [
       {
-        title: "DANK AB ODER KÄMPF",
+        title: "Dank ab oder kämpf",
         description:
-          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du eine Möglichkeit auswählen: • Ziehe 2 Karten. Wähle danach 2 Karten aus deiner Hand und wirf sie ab. • Füge einem Charakter deiner Wahl 2 Schaden zu.",
+          "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du eine Möglichkeit auswählen:",
+      },
+      {
+        title: "• Ziehe 2 Karten. Wähle danach 2 Karten aus deiner Hand und wirf sie ab.",
+      },
+      {
+        title: "• Füge einem Charakter deiner Wahl 2 Schaden zu.",
       },
     ],
   },
@@ -28,9 +34,15 @@ export const simbaFightingPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Prince combattif",
     text: [
       {
-        title: "TU TE SOUMETS OU TU TE BATS",
+        title: "Tu te soumets ou tu te bats",
         description:
-          "Chaque fois que vous jouez ce personnage ou qu'il en bannit un autre via un défi durant votre tour, choisissez entre: • Piochez 2 cartes, puis choisissez et défaussez 2 cartes. • Choisissez un personnage et infligez-lui 2 dommages.",
+          "Chaque fois que vous jouez ce personnage ou qu'il en bannit un autre via un défi durant votre tour, choisissez entre:",
+      },
+      {
+        title: "• Piochez 2 cartes, puis choisissez et défaussez 2 cartes.",
+      },
+      {
+        title: "• Choisissez un personnage et infligez-lui 2 dommages.",
       },
     ],
   },
@@ -39,9 +51,15 @@ export const simbaFightingPrinceI18n: Record<Languages, I18nProperties> = {
     version: "Principe Combattente",
     text: [
       {
-        title: "O TI FAI DA PARTE, O DOVRAI AFFRONTARMI",
+        title: "O ti Fai da Parte, o Dovrai Affrontarmi",
         description:
-          "Quando giochi questo personaggio e ogni volta che esilia un altro personaggio in una sfida durante il tuo turno, scegli uno: • Pesca 2 carte, poi scegli e scarta 2 carte. • Infliggi 2 danni a un personaggio a tua scelta.",
+          "Quando giochi questo personaggio e ogni volta che esilia un altro personaggio in una sfida durante il tuo turno, scegli uno:",
+      },
+      {
+        title: "• Pesca 2 carte, poi scegli e scarta 2 carte.",
+      },
+      {
+        title: "• Infliggi 2 danni a un personaggio a tua scelta.",
       },
     ],
   },

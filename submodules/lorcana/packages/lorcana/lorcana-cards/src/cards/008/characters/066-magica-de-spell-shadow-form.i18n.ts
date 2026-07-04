@@ -20,10 +20,10 @@ export const magicaDeSpellShadowFormI18n: Record<Languages, I18nProperties> = {
     version: "Schattenform",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "TANZ DER DUNKELHEIT",
+        title: "Tanz der Dunkelheit",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen deiner anderen Charaktere wählen und zurück auf deine Hand nehmen, um eine Karte zu ziehen.",
       },
@@ -34,10 +34,10 @@ export const magicaDeSpellShadowFormI18n: Record<Languages, I18nProperties> = {
     version: "Sous forme d’ombre",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "DANSE DES TÉNÈBRES",
+        title: "Danse des ténèbres",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir et renvoyer l'un de vos personnages dans votre main pour piocher une carte.",
       },
@@ -48,10 +48,10 @@ export const magicaDeSpellShadowFormI18n: Record<Languages, I18nProperties> = {
     version: "In Forma d'Ombra",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "DANZA DELLE OMBRE",
+        title: "Danza delle Ombre",
         description:
           "Quando giochi questo personaggio, puoi riprendere in mano un tuo altro personaggio a tua scelta per pescare una carta.",
       },

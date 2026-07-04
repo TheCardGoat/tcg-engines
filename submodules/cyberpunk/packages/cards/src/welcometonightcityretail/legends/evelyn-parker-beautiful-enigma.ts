@@ -1,13 +1,14 @@
-import type { StructuredCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const welcomeToNightCityRetailEvelynParkerBeautifulEnigma = {
+export const welcomeToNightCityRetailEvelynParkerBeautifulEnigma = defineCyberpunkCard({
   id: "55807eb7-8a8e-44a9-97a2-c8ac993e7b43",
-  externalId: "cb-evelyn-parker-beautiful-enigma",
   slug: "evelyn-parker-beautiful-enigma",
+  rulesText:
+    "When a friendly CORPO or GANGER Unit steals 1 or more Gigs, ready 1 Eddie.\n1 €$, {Spend} A rival Unit must attack next turn if it can.",
   name: "Evelyn Parker — Beautiful Enigma",
   displayName: "Evelyn Parker — Beautiful Enigma",
-  rulesText:
-    "When a friendly CORPO or GANGER Unit steals 1 or more Gigs, ready 1 Eddie.\n1 €$, [Spend Icon:] A rival Unit must attack next turn if it can.",
+  canonicalId: "evelyn-parker-beautiful-enigma",
   color: "blue",
   classifications: ["Doll"],
   set: {
@@ -15,29 +16,12 @@ export const welcomeToNightCityRetailEvelynParkerBeautifulEnigma = {
     name: "Welcome to Night City — Retail",
   },
   printNumber: "107",
-  printings: [
-    {
-      id: "ba766c1d-d929-4a22-bc91-7400784536c8",
-      collectorNumber: "107",
-      setCode: "welcometonightcityretail",
-      rarity: "Rare",
-    },
-    {
-      id: "080b22ac-9c3d-48ee-ad4f-4e9579f22adc",
-      collectorNumber: "β107",
-      setCode: "welcometonightcitybeta",
-      rarity: "Rare",
-    },
-  ],
-  selectedPrintingId: "ba766c1d-d929-4a22-bc91-7400784536c8",
   artist: "Daniel Valaisis",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/107.webp",
   rarity: "Rare",
   legality: "legal",
   hasSellTag: true,
   ram: 2,
-  timingTriggers: [],
-  keywords: [],
   type: "legend",
   cost: null,
   power: null,
@@ -55,6 +39,16 @@ export const welcomeToNightCityRetailEvelynParkerBeautifulEnigma = {
             controller: "rival",
           },
           minAmount: 1,
+          // Card text: "When a friendly CORPO or GANGER Unit steals 1 or more
+          // Gigs" — restrict the thief (event source) to a friendly Corpo or
+          // Ganger Unit so non-Corpo/Ganger thieves (e.g. a Program or Legend)
+          // don't satisfy the trigger.
+          source: {
+            selector: "card",
+            controller: "friendly",
+            cardTypes: ["unit"],
+            classifications: ["Corpo", "Ganger"],
+          },
         },
       },
       source: {
@@ -118,5 +112,4 @@ export const welcomeToNightCityRetailEvelynParkerBeautifulEnigma = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies StructuredCardDefinition;
+}) satisfies LegendCardDefinition;

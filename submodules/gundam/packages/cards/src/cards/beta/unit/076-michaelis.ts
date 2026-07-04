@@ -7,14 +7,17 @@ export const betaMichaelis076: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-076_p1",
-  externalId: "gundam:gd01-076_p1",
-  slug: "michaelis-gd01-076-p1",
+  canonicalId: "GD01-076",
+  externalIds: { bandai: "gundam:gd01-076_p1" },
+  slug: "michaelis/gd01-076",
   displayName: "Michaelis",
   set: { code: "BETA", name: "Edition Beta", packageId: "616000" },
   printNumber: "GD01-076_p1",
   printings: [
     {
       id: "GD01-076",
+      artId: "GD01-076",
+      setCode: "GD01",
       collectorNumber: "GD01-076",
       cardNumber: "GD01-076",
       set: {
@@ -30,6 +33,8 @@ export const betaMichaelis076: UnitCard = {
     },
     {
       id: "GD01-076_p1",
+      artId: "GD01-076_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-076_p1",
       cardNumber: "GD01-076",
       set: {
@@ -44,6 +49,7 @@ export const betaMichaelis076: UnitCard = {
       productName: "Edition Beta",
     },
   ],
+  reprints: ["GD01-076", "GD01-076_p1"],
   selectedPrintingId: "GD01-076_p1",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-076_p1.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-076_p1.webp?260424",

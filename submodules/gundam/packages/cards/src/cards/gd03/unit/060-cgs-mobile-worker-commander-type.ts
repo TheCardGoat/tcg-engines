@@ -7,14 +7,17 @@ export const gd03CgsMobileWorkerCommanderType060: UnitCard = {
   color: "purple",
   traits: ["tekkadan"],
   id: "GD03-060",
-  externalId: "gundam:gd03-060",
-  slug: "cgs-mobile-worker-commander-type-gd03-060",
+  canonicalId: "GD03-060",
+  externalIds: { bandai: "gundam:gd03-060" },
+  slug: "cgs-mobile-worker-commander-type/gd03-060",
   displayName: "CGS Mobile Worker (Commander Type)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-060",
   printings: [
     {
       id: "GD03-060",
+      artId: "GD03-060",
+      setCode: "GD03",
       collectorNumber: "GD03-060",
       cardNumber: "GD03-060",
       set: {
@@ -30,6 +33,8 @@ export const gd03CgsMobileWorkerCommanderType060: UnitCard = {
     },
     {
       id: "GD03-060_p1",
+      artId: "GD03-060_p1",
+      setCode: "PC01A",
       collectorNumber: "GD03-060_p1",
       cardNumber: "GD03-060",
       set: {
@@ -45,6 +50,7 @@ export const gd03CgsMobileWorkerCommanderType060: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam IRON-BLOODED ORPHANS-[PC01A]",
     },
   ],
+  reprints: ["GD03-060", "GD03-060_p1"],
   selectedPrintingId: "GD03-060",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-060.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-060.webp?260424",

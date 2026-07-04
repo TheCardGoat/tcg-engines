@@ -6,10 +6,10 @@ export const isabelaMadrigalCaringCultivatorEnchantedI18n: Record<Languages, I18
     version: "Caring Cultivator",
     text: [
       {
-        title: "<Shift> 4 {I}",
+        title: "Shift 4 {I}",
       },
       {
-        title: "Do No Wrong",
+        title: "DO NO WRONG",
         description:
           "Whenever you remove damage from one of your characters, gain 1 lore for each 1 damage removed.",
       },

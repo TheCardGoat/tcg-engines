@@ -4,6 +4,17 @@ import { chiefTuiWeavingATaleI18n } from "./161-chief-tui-weaving-a-tale.i18n";
 export const chiefTuiWeavingATale: CharacterCard = {
   id: "qN1",
   canonicalId: "ci_qN1",
+  slug: "lorcana-ci_qN1",
+  printings: [
+    {
+      id: "set11-161",
+      artId: "set11-161",
+      setCode: "set11",
+      collectorNumber: "161",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-161"],
   cardType: "character",
   name: "Chief Tui",
@@ -20,7 +31,7 @@ export const chiefTuiWeavingATale: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1bd99dad44d341dda6d1f73ffb2bc529",
-    tcgPlayer: 676227,
+    tcgPlayer: "676227",
   },
   text: [
     {

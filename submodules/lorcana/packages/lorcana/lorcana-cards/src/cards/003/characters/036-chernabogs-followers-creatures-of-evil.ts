@@ -4,6 +4,17 @@ import { chernabogsFollowersCreaturesOfEvilI18n } from "./036-chernabogs-followe
 export const chernabogsFollowersCreaturesOfEvil: CharacterCard = {
   id: "gNW",
   canonicalId: "ci_gNW",
+  slug: "lorcana-ci_gNW",
+  printings: [
+    {
+      id: "set3-036",
+      artId: "set3-036",
+      setCode: "set3",
+      collectorNumber: "36",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-036"],
   cardType: "character",
   name: "Chernabog's Followers",
@@ -20,7 +31,7 @@ export const chernabogsFollowersCreaturesOfEvil: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bda38dbbd3974a5bb53bc91853faa172",
-    tcgPlayer: 539067,
+    tcgPlayer: "539067",
   },
   text: [
     {

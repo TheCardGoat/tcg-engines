@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { stitchHighBadnessLevelI18n } from "./185-stitch-high-badness-level.i18n";
 
 export const stitchHighBadnessLevel: CharacterCard = {
-  id: "xeg",
-  canonicalId: "ci_xeg",
+  id: "BEc",
+  canonicalId: "ci_u0n",
+  slug: "lorcana-ci_u0n",
+  printings: [
+    {
+      id: "set11-185",
+      artId: "set11-185",
+      setCode: "set11",
+      collectorNumber: "185",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-185"],
   cardType: "character",
   name: "Stitch",
@@ -20,7 +31,7 @@ export const stitchHighBadnessLevel: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7e2cac54dd5d4e0ea2db87cf752df00a",
-    tcgPlayer: 673335,
+    tcgPlayer: "673335",
   },
   text: [
     {

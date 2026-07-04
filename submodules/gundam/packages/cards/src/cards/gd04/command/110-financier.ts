@@ -7,14 +7,17 @@ export const gd04Financier110: CommandCard = {
   color: "red",
   traits: [],
   id: "GD04-110",
-  externalId: "gundam:gd04-110",
-  slug: "financier-gd04-110",
+  canonicalId: "GD04-110",
+  externalIds: { bandai: "gundam:gd04-110" },
+  slug: "financier/gd04-110",
   displayName: "Financier",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-110",
   printings: [
     {
       id: "GD04-110",
+      artId: "GD04-110",
+      setCode: "GD04",
       collectorNumber: "GD04-110",
       cardNumber: "GD04-110",
       set: {
@@ -30,6 +33,8 @@ export const gd04Financier110: CommandCard = {
     },
     {
       id: "GD04-110_p1",
+      artId: "GD04-110_p1",
+      setCode: "GD04",
       collectorNumber: "GD04-110_p1",
       cardNumber: "GD04-110",
       set: {
@@ -44,6 +49,7 @@ export const gd04Financier110: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-110", "GD04-110_p1"],
   selectedPrintingId: "GD04-110",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-110.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-110.webp?260424",

@@ -4,6 +4,17 @@ import { mattiasArendelleGeneralI18n } from "./155-mattias-arendelle-general.i18
 export const mattiasArendelleGeneral: CharacterCard = {
   id: "YLV",
   canonicalId: "ci_YLV",
+  slug: "lorcana-ci_YLV",
+  printings: [
+    {
+      id: "set7-155",
+      artId: "set7-155",
+      setCode: "set7",
+      collectorNumber: "155",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-155"],
   cardType: "character",
   name: "Mattias",
@@ -20,7 +31,7 @@ export const mattiasArendelleGeneral: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f9e60e9ffff4477d8c4715bd38fb90a2",
-    tcgPlayer: 619494,
+    tcgPlayer: "619494",
   },
   text: [
     {

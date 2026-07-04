@@ -4,6 +4,17 @@ import { pepaMadrigalSensitiveSisterI18n } from "./037-pepa-madrigal-sensitive-s
 export const pepaMadrigalSensitiveSister: CharacterCard = {
   id: "gZm",
   canonicalId: "ci_gZm",
+  slug: "lorcana-ci_gZm",
+  printings: [
+    {
+      id: "set7-037",
+      artId: "set7-037",
+      setCode: "set7",
+      collectorNumber: "37",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-037"],
   cardType: "character",
   name: "Pepa Madrigal",
@@ -20,7 +31,7 @@ export const pepaMadrigalSensitiveSister: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dc149fc0470a4fc2a5cde6ba7dffbdd7",
-    tcgPlayer: 619428,
+    tcgPlayer: "619428",
   },
   text: [
     {
@@ -42,7 +53,11 @@ export const pepaMadrigalSensitiveSister: CharacterCard = {
       trigger: {
         event: "sing",
         on: "YOUR_CHARACTERS",
-        restrictions: [{ type: "once-per-song" }],
+        restrictions: [
+          {
+            type: "once-per-song",
+          },
+        ],
         timing: "whenever",
       },
       type: "triggered",

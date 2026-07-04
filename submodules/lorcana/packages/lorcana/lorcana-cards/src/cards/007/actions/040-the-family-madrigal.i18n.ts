@@ -11,10 +11,28 @@ export const theFamilyMadrigalI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "La Famille Madrigal",
-    text: "Regardez les 5 premières cartes de votre pioche. Vous pouvez révéler jusqu'à 1 carte Personnage Madrigal et 1 carte Chanson parmi elles. Placez les cartes révélées dans votre main. Placez les autres cartes sur votre pioche, dans l'ordre de votre choix.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Regardez les 5 premières cartes de votre pioche. Vous pouvez révéler jusqu'à 1 carte Personnage Madrigal et 1 carte Chanson parmi elles. Placez les cartes révélées dans votre main. Placez les autres cartes sur votre pioche, dans l'ordre de votre choix.",
+      },
+    ],
   },
   it: {
     name: "La Famiglia Madrigal",
-    text: "(Un personaggio con costo 5 o superiore può per cantare questa canzone gratis.) Guarda le prime 5 carte del tuo mazzo. Puoi rivelare fino a 1 carta personaggio Madrigal e fino a 1 carta canzone e aggiungerle alla tua mano. Metti il resto in cima al tuo mazzo in qualsiasi ordine.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 5 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Guarda le prime 5 carte del tuo mazzo. Puoi rivelare fino a 1 carta personaggio Madrigal e fino a 1 carta canzone e aggiungerle alla tua mano. Metti il resto in cima al tuo mazzo in qualsiasi ordine.",
+      },
+    ],
   },
 };

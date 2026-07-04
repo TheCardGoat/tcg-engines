@@ -4,6 +4,17 @@ import { mufasaKingOfThePrideLandsI18n } from "./155-mufasa-king-of-the-pride-la
 export const mufasaKingOfThePrideLands: CharacterCard = {
   id: "4nl",
   canonicalId: "ci_FBP",
+  slug: "lorcana-ci_FBP",
+  printings: [
+    {
+      id: "set1-155",
+      artId: "set1-155",
+      setCode: "set1",
+      collectorNumber: "155",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-155", "set9-144"],
   cardType: "character",
   name: "Mufasa",
@@ -21,7 +32,7 @@ export const mufasaKingOfThePrideLands: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_b7423a2c84b542a58d2605d3a6c28b2b",
-    tcgPlayer: 650079,
+    tcgPlayer: "650079",
   },
   classifications: ["Storyborn", "Mentor", "King"],
   i18n: mufasaKingOfThePrideLandsI18n,

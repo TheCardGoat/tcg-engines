@@ -4,6 +4,17 @@ import { puaPotbelliedBuddyI18n } from "./053-pua-potbellied-buddy.i18n";
 export const puaPotbelliedBuddy: CharacterCard = {
   id: "rYO",
   canonicalId: "ci_rYO",
+  slug: "lorcana-ci_rYO",
+  printings: [
+    {
+      id: "set3-053",
+      artId: "set3-053",
+      setCode: "set3",
+      collectorNumber: "53",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-053"],
   cardType: "character",
   name: "Pua",
@@ -20,7 +31,7 @@ export const puaPotbelliedBuddy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_835c907af9be4b9d93b301eb3324b83e",
-    tcgPlayer: 538216,
+    tcgPlayer: "538216",
   },
   text: [
     {

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { yzmaAlchemistI18n } from "./060-yzma-alchemist.i18n";
 
 export const yzmaAlchemist: CharacterCard = {
-  id: "WU8",
-  canonicalId: "ci_WU8",
+  id: "t2a",
+  canonicalId: "ci_BVo",
+  slug: "lorcana-ci_BVo",
+  printings: [
+    {
+      id: "set1-060",
+      artId: "set1-060",
+      setCode: "set1",
+      collectorNumber: "60",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-060"],
   cardType: "character",
   name: "Yzma",
@@ -20,7 +31,7 @@ export const yzmaAlchemist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fd1e38170964420294911187ef450c55",
-    tcgPlayer: 492715,
+    tcgPlayer: "492715",
   },
   text: [
     {

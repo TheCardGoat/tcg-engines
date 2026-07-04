@@ -39,6 +39,23 @@ export function resolveRemoveDamageEffect(
       : undefined;
 
   let healedAmount = 0;
+  let aggregateRemaining =
+    effect.distribution === "aggregate"
+      ? (selectedAmount ??
+        Math.max(
+          0,
+          Math.max(
+            ...resolvedInput.targets.map((targetId) => {
+              const resolvedAmount = resolvedInput.amountByTarget?.[targetId];
+              return typeof resolvedAmount === "number" && Number.isFinite(resolvedAmount)
+                ? Math.max(0, resolvedAmount)
+                : 0;
+            }),
+            0,
+          ),
+        ))
+      : undefined;
+
   for (const targetId of resolvedInput.targets) {
     const meta = ctx.cards.require(targetId).meta ?? {};
     const currentDamage = Number(meta.damage ?? 0);
@@ -49,10 +66,18 @@ export function resolveRemoveDamageEffect(
         : 0;
     const maxByEffect = Math.max(0, Math.min(amountCap, currentDamage));
     const allowsUpTo = isUpToAmount(effect.amount);
-    const requestedAmount = allowsUpTo ? (selectedAmount ?? maxByEffect) : maxByEffect;
+    const requestedAmount =
+      aggregateRemaining !== undefined
+        ? Math.min(aggregateRemaining, maxByEffect)
+        : allowsUpTo
+          ? (selectedAmount ?? maxByEffect)
+          : maxByEffect;
     const resolvedHealAmount = Math.max(0, Math.min(requestedAmount, maxByEffect, currentDamage));
     const nextDamage = Math.max(0, currentDamage - resolvedHealAmount);
     healedAmount += resolvedHealAmount;
+    if (aggregateRemaining !== undefined) {
+      aggregateRemaining = Math.max(0, aggregateRemaining - resolvedHealAmount);
+    }
 
     const shouldReady = effect.thenReady && resolvedHealAmount > 0;
 

@@ -20,39 +20,33 @@ export const hadesKingOfOlympusEnchantedI18n: Record<Languages, I18nProperties> 
     version: "König des Olymps",
     text: [
       {
-        title: "Gestaltwandel 6",
+        title:
+          "<Gestaltwandel> 6 (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Hades Charaktere auszuspielen.)",
       },
       {
-        title: "FINSTERE VERSCHWÖRUNG",
+        title: "Finstere Verschwörung",
         description:
-          "Dieser Charakter erhält +1 für jede weitere Schurkin und jeden weiteren Schurken, die du im Spiel hast.",
+          "Dieser Charakter erhält +1 {L} für jede weitere Schurkin und jeden weiteren Schurken, die du im Spiel hast.",
       },
     ],
   },
   fr: {
     name: "HADES",
     version: "Roi de l'Olympe",
-    text: [
-      {
-        title: "Alter 6",
-      },
-      {
-        title: "SINISTRE COMPLOT",
-        description:
-          "Ce personnage a + 1 pour chaque autre personnage Méchant que vous avez en jeu.",
-      },
-    ],
+    text: "<Alter> 6 (Vous pouvez payer 6 {I} pour jouer ce personnage sur l'un de vos personnages Hadès.)\\SINISTRE COMPLOT\\ Ce personnage a + 1 {L} pour chaque autre personnage Méchant que vous avez en jeu.",
   },
   it: {
     name: "Hades",
     version: "King of Olympus",
     text: [
       {
-        title: "Shift 6",
+        title:
+          "<Shift> 6 (You may pay 6 {I} to play this on top of one of your characters named Hades.)",
       },
       {
-        title: "SINISTER PLOT",
-        description: "This character gets +1 for each other Villain character you have in play.",
+        title: "Sinister Plot",
+        description:
+          "This character gets +1 {L} for each other Villain character you have in play.",
       },
     ],
   },

@@ -17,7 +17,7 @@ export const johnSilverFerociousFriendI18n: Record<Languages, I18nProperties> = 
     version: "Gefährlicher Freund",
     text: [
       {
-        title: "DU MUSST DEINEN KURS SELBER BESTIMMEN",
+        title: "Du musst deinen Kurs selber bestimmen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einem deiner anderen Charaktere 1 Schaden zufügen. Wenn du dies tust, mache den Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
@@ -28,7 +28,7 @@ export const johnSilverFerociousFriendI18n: Record<Languages, I18nProperties> = 
     version: "Ami féroce",
     text: [
       {
-        title: "CHOISIS TON PROPRE CAP",
+        title: "Choisis ton propre cap",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un autre de vos personnages. Infligez-lui 1 dommage et redressez-le. Ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
@@ -39,7 +39,7 @@ export const johnSilverFerociousFriendI18n: Record<Languages, I18nProperties> = 
     version: "Amico Feroce",
     text: [
       {
-        title: "TRACCIARE LA TUA ROTTA",
+        title: "Tracciare la Tua Rotta",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi infliggere 1 danno a un tuo altro personaggio a tua scelta. Se lo fai, prepara quel personaggio. Non può andare all'avventura per il resto di questo turno.",
       },

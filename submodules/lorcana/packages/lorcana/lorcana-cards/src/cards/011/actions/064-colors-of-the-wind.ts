@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { colorsOfTheWindI18n } from "./064-colors-of-the-wind.i18n";
 
 export const colorsOfTheWind: ActionCard = {
-  id: "kDg",
+  id: "IUQ",
   canonicalId: "ci_Wdy",
+  slug: "lorcana-ci_Wdy",
+  printings: [
+    {
+      id: "set11-064",
+      artId: "set11-064",
+      setCode: "set11",
+      collectorNumber: "64",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-064"],
   cardType: "action",
   name: "Colors of the Wind",
@@ -16,7 +27,7 @@ export const colorsOfTheWind: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8ef1d474eb68402e8d35e2aa3bce689a",
-    tcgPlayer: 677161,
+    tcgPlayer: "677161",
   },
   text: "Each player reveals the top card of their deck. Draw a card for each different ink type of cards revealed this way.",
   actionSubtype: "song",

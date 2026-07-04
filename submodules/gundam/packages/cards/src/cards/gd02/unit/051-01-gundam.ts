@@ -7,14 +7,17 @@ export const gd0201Gundam051: UnitCard = {
   color: "red",
   traits: ["earth federation"],
   id: "GD02-051",
-  externalId: "gundam:gd02-051",
-  slug: "01-gundam-gd02-051",
+  canonicalId: "GD02-051",
+  externalIds: { bandai: "gundam:gd02-051" },
+  slug: "01-gundam/gd02-051",
   displayName: "01 Gundam",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-051",
   printings: [
     {
       id: "GD02-051",
+      artId: "GD02-051",
+      setCode: "GD02",
       collectorNumber: "GD02-051",
       cardNumber: "GD02-051",
       set: {
@@ -29,6 +32,7 @@ export const gd0201Gundam051: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-051"],
   selectedPrintingId: "GD02-051",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-051.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-051.webp?260424",

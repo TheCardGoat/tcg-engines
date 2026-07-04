@@ -4,6 +4,17 @@ import { shenziHeadHyenaI18n } from "./091-shenzi-head-hyena.i18n";
 export const shenziHeadHyena: CharacterCard = {
   id: "Ggo",
   canonicalId: "ci_Ggo",
+  slug: "lorcana-ci_Ggo",
+  printings: [
+    {
+      id: "set5-091",
+      artId: "set5-091",
+      setCode: "set5",
+      collectorNumber: "91",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-091"],
   cardType: "character",
   name: "Shenzi",
@@ -20,7 +31,7 @@ export const shenziHeadHyena: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a4bc1bcb3ca54062af8854d9ee7a920f",
-    tcgPlayer: 561169,
+    tcgPlayer: "561169",
   },
   text: [
     {

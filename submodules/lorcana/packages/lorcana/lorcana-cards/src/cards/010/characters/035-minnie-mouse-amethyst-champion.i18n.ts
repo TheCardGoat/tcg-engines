@@ -17,7 +17,7 @@ export const minnieMouseAmethystChampionI18n: Record<Languages, I18nProperties> 
     version: "Amethyst-Champion",
     text: [
       {
-        title: "MYSTISCHES GLEICHGEWICHT",
+        title: "Mystisches Gleichgewicht",
         description:
           "Jedes Mal, wenn einer deiner anderen Amethyst-Charaktere durch eine Herausforderung verbannt wird, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const minnieMouseAmethystChampionI18n: Record<Languages, I18nProperties> 
     version: "Championne Améthyste",
     text: [
       {
-        title: "ÉQUILIBRE MYSTIQUE",
+        title: "Équilibre mystique",
         description:
           "Chaque fois que l'un de vos autres personnages Améthyste est banni via un défi, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const minnieMouseAmethystChampionI18n: Record<Languages, I18nProperties> 
     version: "Campionessa d'Ametista",
     text: [
       {
-        title: "EQUILIBRIO MISTICO",
+        title: "Equilibrio Mistico",
         description:
           "Ogni volta che uno dei tuoi altri personaggi Ametista viene esiliato in una sfida, puoi pescare una carta.",
       },

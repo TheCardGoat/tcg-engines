@@ -7,14 +7,17 @@ export const st06AmateYuzurihaMachu009: PilotCard = {
   color: "red",
   traits: ["clan", "newtype"],
   id: "ST06-009",
-  externalId: "gundam:st06-009",
-  slug: "amate-yuzuriha-machu-st06-009",
+  canonicalId: "ST06-009",
+  externalIds: { bandai: "gundam:st06-009" },
+  slug: "amate-yuzuriha-machu/st06-009",
   displayName: "Amate Yuzuriha (Machu)",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-009",
   printings: [
     {
       id: "ST06-009",
+      artId: "ST06-009",
+      setCode: "ST06",
       collectorNumber: "ST06-009",
       cardNumber: "ST06-009",
       set: {
@@ -30,6 +33,8 @@ export const st06AmateYuzurihaMachu009: PilotCard = {
     },
     {
       id: "ST06-009_p1",
+      artId: "ST06-009_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-009_p1",
       cardNumber: "ST06-009",
       set: {
@@ -45,6 +50,8 @@ export const st06AmateYuzurihaMachu009: PilotCard = {
     },
     {
       id: "ST06-009_p2",
+      artId: "ST06-009_p2",
+      setCode: "ST06",
       collectorNumber: "ST06-009_p2",
       cardNumber: "ST06-009",
       set: {
@@ -60,6 +67,8 @@ export const st06AmateYuzurihaMachu009: PilotCard = {
     },
     {
       id: "ST06-009_p3",
+      artId: "ST06-009_p3",
+      setCode: "ST06",
       collectorNumber: "ST06-009_p3",
       cardNumber: "ST06-009",
       set: {
@@ -75,6 +84,8 @@ export const st06AmateYuzurihaMachu009: PilotCard = {
     },
     {
       id: "ST06-009_p4",
+      artId: "ST06-009_p4",
+      setCode: "ST06",
       collectorNumber: "ST06-009_p4",
       cardNumber: "ST06-009",
       set: {
@@ -89,6 +100,7 @@ export const st06AmateYuzurihaMachu009: PilotCard = {
       productName: "WORLD CHAMPIONSHIPS 26-27 Season 1Upper Ranks Prize",
     },
   ],
+  reprints: ["ST06-009", "ST06-009_p1", "ST06-009_p2", "ST06-009_p3", "ST06-009_p4"],
   selectedPrintingId: "ST06-009",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-009.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-009.webp?260424",

@@ -17,9 +17,9 @@ export const finnickTinyTerrorI18n: Record<Languages, I18nProperties> = {
     version: "Kleiner Schrecken",
     text: [
       {
-        title: "LAUF LIEBER WEG",
+        title: "Lauf lieber weg",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du 2 bezahlen, um einen gegnerischen Charakter deiner Wahl, mit 2 oder weniger, zurück auf die zugehörige Hand zu schicken.",
+          "Wenn du diesen Charakter ausspielst, darfst du 2 {I} bezahlen, um einen gegnerischen Charakter deiner Wahl, mit 2 oder weniger {S}, zurück auf die zugehörige Hand zu schicken.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const finnickTinyTerrorI18n: Record<Languages, I18nProperties> = {
     version: "Petite terreur",
     text: [
       {
-        title: "TU FERAIS MIEUX DE DÉGUERPIR",
+        title: "Tu ferais mieux de déguerpir",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez payer 2 pour choisir un personnage adverse ayant 2 ou moins et le renvoyer dans la main de son propriétaire.",
+          "Lorsque vous jouez ce personnage, vous pouvez payer 2 {I} pour choisir un personnage adverse ayant 2 {S} ou moins et le renvoyer dans la main de son propriétaire.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const finnickTinyTerrorI18n: Record<Languages, I18nProperties> = {
     version: "Minuscolo Terrore",
     text: [
       {
-        title: "MEGLIO SE SCAPPI",
+        title: "Meglio se Scappi",
         description:
-          "Quando giochi questo personaggio, puoi pagare 2 per far riprendere in mano al suo giocatore un personaggio avversario a tua scelta con 2 o inferiore.",
+          "Quando giochi questo personaggio, puoi pagare 2 {I} per far riprendere in mano al suo giocatore un personaggio avversario a tua scelta con 2 {S} o inferiore.",
       },
     ],
   },

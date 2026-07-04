@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goofyExtremeAthleteI18n } from "./139-goofy-extreme-athlete.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const goofyExtremeAthlete: CharacterCard = {
   id: "3Ct",
   canonicalId: "ci_3Ct",
+  slug: "lorcana-ci_3Ct",
+  printings: [
+    {
+      id: "set7-139",
+      artId: "set7-139",
+      setCode: "set7",
+      collectorNumber: "139",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-139"],
   cardType: "character",
   name: "Goofy",
@@ -20,7 +32,7 @@ export const goofyExtremeAthlete: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f51072d030ba4e7b892f9ae48175f4cb",
-    tcgPlayer: 619484,
+    tcgPlayer: "619484",
   },
   text: [
     {

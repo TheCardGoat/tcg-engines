@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { cinderellaDreamComeTrueI18n } from "./155-cinderella-dream-come-true.i18n";
 
 export const cinderellaDreamComeTrue: CharacterCard = {
-  id: "J1F",
+  id: "krh",
   canonicalId: "ci_fz8",
+  slug: "lorcana-ci_fz8",
+  printings: [
+    {
+      id: "set10-155",
+      artId: "set10-155",
+      setCode: "set10",
+      collectorNumber: "155",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-155"],
   cardType: "character",
   name: "Cinderella",
@@ -20,7 +31,7 @@ export const cinderellaDreamComeTrue: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_3c235410b79145c080fa8e3b000a2c60",
-    tcgPlayer: 660029,
+    tcgPlayer: "660029",
   },
   text: [
     {
@@ -62,13 +73,6 @@ export const cinderellaDreamComeTrue: CharacterCard = {
               type: "put-into-inkwell",
               exerted: false,
             },
-            // Printed text: "...put a card from your hand into your inkwell
-            // facedown TO draw a card." The draw is the consequence of the
-            // put — when the put fails (e.g. empty hand), the draw must not
-            // happen. Mirrors the pattern used by Edna Mode, Fashion Designer
-            // (012/#054 NO CAPES!) and the engine's `if-you-do` conditional
-            // gate. Without this gate, accepting the optional with an empty
-            // hand still drew a card (player report 2026-05-06).
             {
               type: "conditional",
               condition: {

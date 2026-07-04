@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gastonArrogantHunterI18n } from "./110-gaston-arrogant-hunter.i18n";
+
 import { reckless } from "../../../helpers/abilities/reckless";
 
 export const gastonArrogantHunter: CharacterCard = {
   id: "sHc",
-  canonicalId: "ci_pKT",
+  canonicalId: "ci_5JP",
+  slug: "lorcana-ci_5JP",
+  printings: [
+    {
+      id: "set1-110",
+      artId: "set1-110",
+      setCode: "set1",
+      collectorNumber: "110",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-110", "set9-115"],
   cardType: "character",
   name: "Gaston",
@@ -21,7 +33,7 @@ export const gastonArrogantHunter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6f87816bd3e042a4852e68f2d23a5807",
-    tcgPlayer: 650051,
+    tcgPlayer: "650051",
   },
   text: "Reckless",
   classifications: ["Storyborn", "Villain"],

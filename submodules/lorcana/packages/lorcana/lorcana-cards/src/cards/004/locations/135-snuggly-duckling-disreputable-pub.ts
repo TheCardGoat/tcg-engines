@@ -4,6 +4,17 @@ import { snugglyDucklingDisreputablePubI18n } from "./135-snuggly-duckling-disre
 export const snugglyDucklingDisreputablePub: LocationCard = {
   id: "dKT",
   canonicalId: "ci_0Wx",
+  slug: "lorcana-ci_0Wx",
+  printings: [
+    {
+      id: "set4-135",
+      artId: "set4-135",
+      setCode: "set4",
+      collectorNumber: "135",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-135"],
   cardType: "location",
   name: "Snuggly Duckling",
@@ -20,7 +31,7 @@ export const snugglyDucklingDisreputablePub: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_016db7e8b21348aca4b407fb6d2ce26d",
-    tcgPlayer: 550838,
+    tcgPlayer: "550838",
   },
   text: [
     {

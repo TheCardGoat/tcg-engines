@@ -7,14 +7,17 @@ export const gd01CharSGelgoog023: UnitCard = {
   color: "green",
   traits: ["zeon"],
   id: "GD01-023",
-  externalId: "gundam:gd01-023",
-  slug: "char-s-gelgoog-gd01-023",
+  canonicalId: "GD01-023",
+  externalIds: { bandai: "gundam:gd01-023" },
+  slug: "char-s-gelgoog/gd01-023",
   displayName: "Char's Gelgoog",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-023",
   printings: [
     {
       id: "GD01-023",
+      artId: "GD01-023",
+      setCode: "GD01",
       collectorNumber: "GD01-023",
       cardNumber: "GD01-023",
       set: {
@@ -30,6 +33,8 @@ export const gd01CharSGelgoog023: UnitCard = {
     },
     {
       id: "GD01-023_p1",
+      artId: "GD01-023_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-023_p1",
       cardNumber: "GD01-023",
       set: {
@@ -44,6 +49,7 @@ export const gd01CharSGelgoog023: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-023", "GD01-023_p1"],
   selectedPrintingId: "GD01-023",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-023.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-023.webp?260424",

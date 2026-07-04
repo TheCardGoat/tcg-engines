@@ -4,6 +4,17 @@ import { arthurDeterminedSquireI18n } from "./168-arthur-determined-squire.i18n"
 export const arthurDeterminedSquire: CharacterCard = {
   id: "LcR",
   canonicalId: "ci_LcR",
+  slug: "lorcana-ci_LcR",
+  printings: [
+    {
+      id: "set8-168",
+      artId: "set8-168",
+      setCode: "set8",
+      collectorNumber: "168",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-168"],
   cardType: "character",
   name: "Arthur",
@@ -20,7 +31,7 @@ export const arthurDeterminedSquire: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c79a6e612467451ca809ce7ed1a9889f",
-    tcgPlayer: 631763,
+    tcgPlayer: "631763",
   },
   text: [
     {

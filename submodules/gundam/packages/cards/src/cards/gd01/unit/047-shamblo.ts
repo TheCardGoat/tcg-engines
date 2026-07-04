@@ -7,14 +7,17 @@ export const gd01Shamblo047: UnitCard = {
   color: "red",
   traits: ["zeon"],
   id: "GD01-047",
-  externalId: "gundam:gd01-047",
-  slug: "shamblo-gd01-047",
+  canonicalId: "GD01-047",
+  externalIds: { bandai: "gundam:gd01-047" },
+  slug: "shamblo/gd01-047",
   displayName: "Shamblo",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-047",
   printings: [
     {
       id: "GD01-047",
+      artId: "GD01-047",
+      setCode: "GD01",
       collectorNumber: "GD01-047",
       cardNumber: "GD01-047",
       set: {
@@ -30,6 +33,8 @@ export const gd01Shamblo047: UnitCard = {
     },
     {
       id: "GD01-047_p1",
+      artId: "GD01-047_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-047_p1",
       cardNumber: "GD01-047",
       set: {
@@ -45,6 +50,8 @@ export const gd01Shamblo047: UnitCard = {
     },
     {
       id: "GD01-047_p2",
+      artId: "GD01-047_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-047_p2",
       cardNumber: "GD01-047",
       set: {
@@ -59,6 +66,7 @@ export const gd01Shamblo047: UnitCard = {
       productName: "Championship Participation Pack 01",
     },
   ],
+  reprints: ["GD01-047", "GD01-047_p1", "GD01-047_p2"],
   selectedPrintingId: "GD01-047",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-047.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-047.webp?260424",

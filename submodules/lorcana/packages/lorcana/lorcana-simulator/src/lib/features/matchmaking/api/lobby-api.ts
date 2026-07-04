@@ -32,6 +32,13 @@ export interface LobbyMatchResponse {
   gameId: string;
 }
 
+export interface LobbyMatchResultResponse {
+  object: "lobby_match_result";
+  roomCode: string;
+  matchId: string;
+  gameId: string;
+}
+
 export class LobbyApiError extends Error {
   readonly roomCode?: string;
   readonly matchId?: string;
@@ -131,6 +138,16 @@ export async function leaveLobbyRoom(roomCode: string): Promise<void> {
 export async function getLobbyRoomStatus(roomCode: string): Promise<LobbyRoomResponse | null> {
   return requestJsonOrNull<LobbyRoomResponse>(
     `${getApiOrigin()}/v1/games/lorcana/play/lobby/rooms/${encodeURIComponent(roomCode.toUpperCase())}`,
+    undefined,
+    [404],
+  );
+}
+
+export async function getLobbyMatchResult(
+  roomCode: string,
+): Promise<LobbyMatchResultResponse | null> {
+  return requestJsonOrNull<LobbyMatchResultResponse>(
+    `${getApiOrigin()}/v1/games/lorcana/play/lobby/rooms/${encodeURIComponent(roomCode.toUpperCase())}/result`,
     undefined,
     [404],
   );

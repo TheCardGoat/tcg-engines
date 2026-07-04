@@ -4,6 +4,17 @@ import { theHuntsmanReluctantEnforcerI18n } from "./194-the-huntsman-reluctant-e
 export const theHuntsmanReluctantEnforcer: CharacterCard = {
   id: "GSI",
   canonicalId: "ci_GSI",
+  slug: "lorcana-ci_GSI",
+  printings: [
+    {
+      id: "set2-194",
+      artId: "set2-194",
+      setCode: "set2",
+      collectorNumber: "194",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-194"],
   cardType: "character",
   name: "The Huntsman",
@@ -20,7 +31,7 @@ export const theHuntsmanReluctantEnforcer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_98f78d167b2e41d58e796d0124e5f9bf",
-    tcgPlayer: 527293,
+    tcgPlayer: "527293",
   },
   text: [
     {

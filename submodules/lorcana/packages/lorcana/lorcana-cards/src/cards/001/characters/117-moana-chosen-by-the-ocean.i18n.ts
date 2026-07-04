@@ -16,7 +16,7 @@ export const moanaChosenByTheOceanI18n: Record<Languages, I18nProperties> = {
     version: "Vom Ozean auserwählt",
     text: [
       {
-        title: "DU BIST NICHT, WAS MAN SIEHT",
+        title: "Du bist nicht, was man sieht",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Te-Kā-Charakter deiner Wahl verbannen.",
       },
@@ -38,7 +38,7 @@ export const moanaChosenByTheOceanI18n: Record<Languages, I18nProperties> = {
     version: "Chosen by the Ocean",
     text: [
       {
-        title: "THIS IS NOT WHO YOU ARE",
+        title: "This is Not Who You Are",
         description: "When you play this character, you may banish chosen character named Te Kā.",
       },
     ],

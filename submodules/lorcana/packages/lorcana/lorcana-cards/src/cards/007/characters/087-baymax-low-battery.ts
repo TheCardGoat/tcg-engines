@@ -4,6 +4,17 @@ import { baymaxLowBatteryI18n } from "./087-baymax-low-battery.i18n";
 export const baymaxLowBattery: CharacterCard = {
   id: "7jV",
   canonicalId: "ci_7jV",
+  slug: "lorcana-ci_7jV",
+  printings: [
+    {
+      id: "set7-087",
+      artId: "set7-087",
+      setCode: "set7",
+      collectorNumber: "87",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-087"],
   cardType: "character",
   name: "Baymax",
@@ -20,7 +31,7 @@ export const baymaxLowBattery: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_adb8a67a679f4e2199a7dc7a9c7a98a1",
-    tcgPlayer: 619453,
+    tcgPlayer: "619453",
   },
   text: [
     {

@@ -16,8 +16,8 @@ export const theGreatIlluminaryRadiantBallroomI18n: Record<Languages, I18nProper
     version: "Strahlender Ballsaal",
     text: [
       {
-        title: "HERZLICHER EMPFANG",
-        description: "Charaktere mit Unterstützen an diesem Ort erhalten +1 und +2.",
+        title: "Herzlicher Empfang",
+        description: "Charaktere mit <Unterstützen> an diesem Ort erhalten +1 {L} und +2 {W}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const theGreatIlluminaryRadiantBallroomI18n: Record<Languages, I18nProper
     version: "Salle de bal resplendissante",
     text: [
       {
-        title: "ACCUEIL CHALEUREUX",
-        description: "Les personnages sur ce lieu avec Soutien gagnent +1 et +2.",
+        title: "Accueil chaleureux",
+        description: "Les personnages sur ce lieu avec <Soutien> gagnent +1 {L} et +2 {W}.",
       },
     ],
   },
@@ -36,8 +36,9 @@ export const theGreatIlluminaryRadiantBallroomI18n: Record<Languages, I18nProper
     version: "Sfavillante Salone delle Feste",
     text: [
       {
-        title: "CALDO BENVENUTO I",
-        description: "personaggi con Aiutante ricevono +1 e +2 mentre si trovano in questo luogo.",
+        title: "Caldo Benvenuto",
+        description:
+          "I personaggi con <Aiutante> ricevono +1 {L} e +2 {W} mentre si trovano in questo luogo.",
       },
     ],
   },

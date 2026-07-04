@@ -20,12 +20,12 @@ export const minnieMouseMusicalArtistI18n: Record<Languages, I18nProperties> = {
     version: "Musikalische Künstlerin",
     text: [
       {
-        title: "Singen 3",
+        title: "<Singen> 3 (Die Kosten dieses Charakters gelten als 3 für das Singen von Liedern.)",
       },
       {
-        title: "ENTOURAGE",
+        title: "Entourage",
         description:
-          "Jedes Mal, wenn du einen Charakter mit Beschützen ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
+          "Jedes Mal, wenn du einen Charakter mit <Beschützen> ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen.",
       },
     ],
   },
@@ -34,12 +34,13 @@ export const minnieMouseMusicalArtistI18n: Record<Languages, I18nProperties> = {
     version: "Artiste musicale",
     text: [
       {
-        title: "Mélomane 3",
+        title:
+          "<Mélomane> 3 (Ce personnage est considéré comme ayant un coût de 3 pour chanter des chansons.)",
       },
       {
-        title: "GARDE DU CORPS",
+        title: "Garde du corps",
         description:
-          "Chaque fois que vous jouez un personnage avec Rempart, vous pouvez choisir un personnage et lui retirer jusqu'à 2 jetons Dommage.",
+          "Chaque fois que vous jouez un personnage avec <Rempart>, vous pouvez choisir un personnage et lui retirer jusqu'à 2 jetons Dommage.",
       },
     ],
   },
@@ -48,12 +49,12 @@ export const minnieMouseMusicalArtistI18n: Record<Languages, I18nProperties> = {
     version: "Musicista",
     text: [
       {
-        title: "Melodioso 3",
+        title: "<Melodioso> 3",
       },
       {
-        title: "ENTOURAGE",
+        title: "Entourage",
         description:
-          "Ogni volta che giochi un personaggio con Guardiano, puoi rimuovere fino a 2 danni da un personaggio a tua scelta.",
+          "Ogni volta che giochi un personaggio con <Guardiano>, puoi rimuovere fino a 2 danni da un personaggio a tua scelta.",
       },
     ],
   },

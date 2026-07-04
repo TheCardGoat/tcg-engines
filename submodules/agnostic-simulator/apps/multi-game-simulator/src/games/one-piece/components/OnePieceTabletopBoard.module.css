@@ -1,0 +1,2051 @@
+.shell {
+  width: 100%;
+  min-height: 100svh;
+  color: var(--text);
+  background: oklch(0.18 0.018 48);
+}
+
+.boardSlot {
+  width: 100%;
+  height: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+.shell :global(.mobile-shell-mobile) {
+  height: 100svh;
+  overflow: hidden;
+}
+
+.shell :global(.mobile-shell-mobile) .boardSlot {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.shell :global(.mobile-shell-mobile) .tabletop {
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+.shell :global(.mobile-shell-mobile) .playmat {
+  height: 100%;
+  overflow: hidden;
+}
+
+.tabletop {
+  width: 100%;
+  height: 100%;
+  min-height: 100svh;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.playmat {
+  --op-zone-bg: rgb(48 39 31 / 38%);
+  --op-zone-bg-strong: rgb(38 31 26 / 48%);
+  --op-zone-border: rgb(37 29 23 / 46%);
+  --op-zone-highlight: rgb(255 244 220 / 18%);
+
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 1px minmax(0, 1fr);
+  width: 100%;
+  height: calc(100svh - 16px);
+  min-height: 620px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgb(73 51 31 / 13%) 1px, transparent 1px),
+    linear-gradient(180deg, rgb(73 51 31 / 13%) 1px, transparent 1px),
+    radial-gradient(ellipse at 8% 7%, rgb(122 46 32 / 22%), transparent 30%),
+    radial-gradient(ellipse at 93% 92%, rgb(18 79 93 / 20%), transparent 32%),
+    linear-gradient(180deg, rgb(255 238 210 / 34%), rgb(113 185 190 / 22%)),
+    url("../assets/one-piece-map-background.jpeg");
+  background-size:
+    30px 30px,
+    30px 30px,
+    auto,
+    auto,
+    auto,
+    cover;
+  background-position:
+    0 0,
+    0 0,
+    center,
+    center,
+    center,
+    center;
+  border: 1px solid rgb(42 32 24 / 32%);
+  border-radius: 8px;
+  box-shadow: 0 24px 70px rgb(9 18 26 / 28%);
+}
+
+.playmat::before,
+.playmat::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.playmat::before {
+  background:
+    radial-gradient(ellipse at -6% 10%, rgb(48 5 13 / 24%), transparent 24%),
+    radial-gradient(ellipse at 107% 98%, rgb(9 34 44 / 22%), transparent 25%),
+    linear-gradient(
+      90deg,
+      rgb(18 13 12 / 10%),
+      transparent 15%,
+      transparent 85%,
+      rgb(18 13 12 / 10%)
+    );
+  mix-blend-mode: multiply;
+}
+
+.playmat::after {
+  opacity: 0.42;
+  background:
+    linear-gradient(
+      180deg,
+      transparent calc(50% - 1px),
+      rgb(29 22 18 / 40%) 50%,
+      transparent calc(50% + 1px)
+    ),
+    radial-gradient(ellipse at 50% 50%, transparent 46%, rgb(20 16 15 / 12%) 100%);
+}
+
+.phaseRibbon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  z-index: 5;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 16px;
+  color: oklch(0.98 0.01 77);
+  background:
+    linear-gradient(90deg, rgb(24 16 14 / 94%), rgb(57 30 24 / 9%)), oklch(0.24 0.03 35 / 92%);
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgb(16 9 7 / 28%);
+  transform: translateY(-50%);
+}
+
+.phaseRibbon span,
+.phaseRibbon strong {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.centerRule {
+  z-index: 1;
+  min-height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(36 25 19 / 52%), transparent);
+}
+
+.playerMat {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  min-height: 0;
+  padding: 8px clamp(78px, 7vw, 116px);
+}
+
+.playerMat[data-seat="opponent"] {
+  grid-template-rows: 84px minmax(0, 1fr);
+}
+
+.playerMat[data-seat="player"] {
+  grid-template-rows: minmax(0, 1fr) 84px;
+}
+
+.boardRow {
+  display: grid;
+  grid-template-columns: minmax(78px, 8vw) minmax(390px, 1fr) minmax(94px, 9vw);
+  gap: clamp(10px, 1.2vw, 18px);
+  align-items: stretch;
+  min-width: 0;
+  min-height: 0;
+}
+
+.stackColumn,
+.battleLane {
+  min-width: 0;
+}
+
+.stackColumn {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  align-content: center;
+  min-height: 0;
+}
+
+.battleLane {
+  display: grid;
+  gap: 10px;
+  align-content: center;
+  min-height: 0;
+}
+
+.playerMat[data-seat="opponent"] .battleLane {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.playerMat[data-seat="player"] .battleLane {
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.commandRail {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 200px minmax(240px, 1fr);
+  gap: 12px;
+  align-items: center;
+  width: min(100%, 640px);
+  min-height: 104px;
+  padding: 6px 8px;
+  justify-self: center;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgb(255 255 255 / 38%), rgb(255 255 255 / 16%)), rgb(241 243 245 / 28%);
+  border: 1px solid rgb(48 38 28 / 20%);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 24%),
+    0 10px 20px rgb(35 22 14 / 10%);
+}
+
+.playerMat[data-seat="opponent"] .commandLeader {
+  order: 2;
+}
+
+.playerMat[data-seat="opponent"] .donMeter {
+  order: 1;
+}
+
+.playerMat[data-seat="opponent"] .commandRail {
+  grid-template-columns: minmax(240px, 1fr) 200px;
+}
+
+.commandLeader {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 5px 8px;
+  align-items: center;
+  min-width: 176px;
+  min-height: 0;
+  padding: 6px;
+  overflow: hidden;
+  background: var(--op-zone-bg-strong);
+  border: 1px solid var(--op-zone-border);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 var(--op-zone-highlight),
+    0 10px 22px rgb(21 16 12 / 16%);
+}
+
+.commandHeader {
+  position: static;
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  color: rgb(35 28 22 / 84%);
+}
+
+.commandHeader span {
+  overflow: hidden;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.commandHeader strong {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  font-size: 12px;
+  line-height: 1;
+  color: oklch(0.98 0.012 80);
+  background: var(--game-accent);
+  border-radius: 999px;
+}
+
+.commandLeaderZone {
+  grid-row: 1 / span 2;
+  flex: 0 0 auto;
+  width: 76px;
+  min-height: 94px;
+  padding: 5px;
+  background:
+    radial-gradient(circle at 50% 40%, rgb(255 255 255 / 24%), transparent 48%), var(--op-zone-bg);
+  border-color: var(--op-zone-border);
+  box-shadow:
+    inset 0 0 0 1px var(--op-zone-highlight),
+    0 8px 18px rgb(44 18 18 / 18%);
+}
+
+.commandLeaderZone :global(.sim-card-face) {
+  box-shadow: 0 8px 14px rgb(32 16 14 / 18%);
+}
+
+.leaderMeta {
+  display: grid;
+  grid-column: 2;
+  gap: 4px;
+  min-width: 0;
+}
+
+.leaderMeta span {
+  display: inline-flex;
+  min-width: 0;
+  min-height: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 7px;
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 850;
+  line-height: 1;
+  color: rgb(35 28 22 / 84%);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: rgb(255 255 255 / 42%);
+  border: 1px solid rgb(48 38 28 / 16%);
+  border-radius: 999px;
+}
+
+.leaderMeta span:last-child {
+  color: oklch(0.98 0.012 80);
+  background: var(--game-accent);
+  border-color: rgb(255 255 255 / 32%);
+}
+
+.donMeter {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 7px 8px;
+  overflow: hidden;
+  color: rgb(35 28 22 / 86%);
+  background: var(--op-zone-bg);
+  border: 1px solid var(--op-zone-border);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 var(--op-zone-highlight),
+    0 8px 18px rgb(21 16 12 / 12%);
+}
+
+.donMeterHeader,
+.donMeterStats {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.donMeterHeader span {
+  font-size: 12px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.donMeterHeader strong {
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1;
+  color: var(--game-accent);
+}
+
+.donPips {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(10px, 1fr));
+  gap: 5px;
+  min-width: 0;
+}
+
+.donPip {
+  display: block;
+  height: 20px;
+  border: 1px solid rgb(48 38 28 / 18%);
+  border-radius: 6px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 30%);
+}
+
+.donPip[data-state="active"] {
+  background:
+    radial-gradient(circle at 50% 38%, rgb(255 255 255 / 28%), transparent 38%), oklch(0.72 0.14 74);
+  border-color: rgb(109 78 16 / 28%);
+}
+
+.donPip[data-state="rested"] {
+  background: oklch(0.62 0.045 40 / 72%);
+  border-color: rgb(48 38 28 / 26%);
+  transform: rotate(-8deg);
+  transform-origin: center;
+}
+
+.donPip[data-state="empty"] {
+  background: rgb(255 255 255 / 20%);
+  border-style: dashed;
+}
+
+.donMeterStats {
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.donMeterStats span {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 850;
+  color: rgb(35 28 22 / 64%);
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.donMeterStats span[data-state="active"] {
+  color: oklch(0.42 0.105 55);
+}
+
+.donMeterStats span[data-state="rested"] {
+  color: rgb(35 28 22 / 52%);
+}
+
+.characterZone {
+  position: relative;
+  display: grid;
+  min-height: clamp(118px, 16vh, 154px);
+  padding: 10px 16px;
+  overflow: hidden;
+  background: var(--op-zone-bg);
+  border: 1px solid var(--op-zone-border);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 var(--op-zone-highlight),
+    0 12px 26px rgb(21 16 12 / 12%);
+}
+
+.characterZoneHeader {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.characterZoneHeader span {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: clamp(30px, 4vw, 54px);
+  font-weight: 900;
+  line-height: 1;
+  color: rgb(255 255 255 / 78%);
+  text-align: center;
+  text-shadow: 0 3px 10px rgb(10 10 10 / 28%);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.characterZoneHeader :global(.tabletop-counter-badge) {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 950;
+  color: oklch(0.98 0.012 80);
+  background: var(--game-accent);
+  border-radius: 999px;
+  box-shadow: 0 6px 12px rgb(35 16 12 / 26%);
+}
+
+.characterZoneCards {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  min-height: 86px;
+}
+
+.characterZoneCards :global(.card-row) {
+  margin-top: 0;
+  scrollbar-width: none;
+}
+
+.characterZoneCards :global(.card-row::-webkit-scrollbar) {
+  display: none;
+}
+
+.singleZone {
+  display: grid;
+  place-items: center;
+  width: 86px;
+  min-height: 106px;
+  padding: 8px;
+  overflow: hidden;
+  background: var(--op-zone-bg);
+  border: 1px solid var(--op-zone-border);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 var(--op-zone-highlight),
+    0 8px 18px rgb(21 16 12 / 12%);
+}
+
+.singleZone :global(.empty-zone) {
+  padding-inline: 6px;
+}
+
+.singleZone :global(.empty-zone span) {
+  overflow-wrap: anywhere;
+  text-align: center;
+  white-space: normal;
+}
+
+.zoneTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  color: rgb(35 28 22 / 82%);
+}
+
+.zoneTitle span {
+  overflow: hidden;
+  font-size: clamp(13px, 1.7vw, 22px);
+  font-weight: 850;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.zoneTitle :global(.tabletop-counter-badge) {
+  display: grid;
+  min-width: 24px;
+  height: 24px;
+  place-items: center;
+  font-size: 12px;
+  color: oklch(0.98 0.01 77);
+  background: var(--game-accent);
+  border-radius: 999px;
+}
+
+.handDock {
+  position: relative;
+  z-index: 3;
+  min-width: 0;
+  min-height: 80px;
+}
+
+.playerMat[data-seat="opponent"] .handDock {
+  justify-self: start;
+  width: min(420px, 48vw);
+  margin-left: clamp(10px, 7vw, 98px);
+}
+
+.playerMat[data-seat="player"] .handDock {
+  justify-self: center;
+  width: min(440px, 48vw);
+}
+
+.donArea {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+}
+
+.donArea > div:first-child {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 850;
+  color: rgb(35 28 22 / 86%);
+  background: rgb(255 255 255 / 48%);
+  border: 1px solid rgb(48 38 28 / 18%);
+  border-radius: 999px;
+}
+
+.lifeCounter {
+  position: absolute;
+  z-index: 4;
+  display: grid;
+  width: clamp(66px, 6.5vw, 88px);
+  aspect-ratio: 1;
+  place-items: center;
+  color: oklch(0.98 0.012 80);
+  background:
+    radial-gradient(circle at 50% 42%, rgb(255 255 255 / 18%), transparent 36%), var(--game-accent);
+  border: 3px solid rgb(255 255 255 / 72%);
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgb(54 31 18 / 18%);
+}
+
+.playerMat[data-seat="opponent"] .lifeCounter {
+  top: 14px;
+  right: clamp(22px, 6vw, 90px);
+}
+
+.playerMat[data-seat="player"] .lifeCounter {
+  bottom: 16px;
+  left: clamp(10px, 4vw, 54px);
+}
+
+.lifeCounter span {
+  font-size: clamp(30px, 3.3vw, 46px);
+  font-weight: 950;
+  line-height: 0.9;
+}
+
+.lifeCounter strong {
+  margin-top: -10px;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.playmat :global(.sim-card-face[data-face="hidden"]) {
+  overflow: hidden;
+  color: transparent;
+  background:
+    radial-gradient(
+      circle at 50% 44%,
+      transparent 0 20%,
+      rgb(212 181 77 / 72%) 21% 22%,
+      transparent 23%
+    ),
+    radial-gradient(
+      circle at 50% 44%,
+      transparent 0 32%,
+      rgb(212 181 77 / 52%) 33% 34%,
+      transparent 35%
+    ),
+    linear-gradient(135deg, transparent 46%, rgb(212 181 77 / 58%) 47% 49%, transparent 50%),
+    linear-gradient(90deg, rgb(11 38 78), rgb(16 52 96));
+  border-color: rgb(228 199 92 / 78%);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 18%),
+    0 8px 16px rgb(7 19 34 / 16%);
+}
+
+.playmat :global(.sim-card-face[data-face="hidden"] > *) {
+  opacity: 0;
+}
+
+.playmat :global(.sim-card-face[data-face="hidden"]::before) {
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  content: "";
+  border: 1px solid rgb(228 199 92 / 54%);
+  border-radius: 6px;
+}
+
+.playmat :global(.deck-stack-zone),
+.playmat :global(.discard-pile-zone) {
+  background: rgb(241 243 245 / 32%);
+  border-color: rgb(48 38 28 / 18%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%);
+}
+
+.playmat :global(.deck-stack-zone-layers),
+.playmat :global(.discard-pile-zone-layers) {
+  background: rgb(24 35 56 / 22%);
+  border-color: rgb(255 255 255 / 24%);
+}
+
+.playmat :global(.tabletop-pile-count) {
+  color: oklch(0.98 0.01 77);
+  background: oklch(0.24 0.04 35 / 92%);
+  border-color: rgb(255 255 255 / 30%);
+}
+
+.playmat :global(.tabletop-pile-label) {
+  font-weight: 850;
+  color: rgb(35 28 22 / 78%);
+}
+
+.selectedCard {
+  position: absolute;
+  right: clamp(18px, 5vw, 80px);
+  bottom: 16px;
+  z-index: 5;
+  display: grid;
+  width: min(280px, calc(100% - 28px));
+  gap: 3px;
+  padding: 10px 12px;
+  color: var(--board-text);
+  background: rgb(250 251 250 / 88%);
+  border: 1px solid rgb(48 38 28 / 18%);
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgb(54 31 18 / 14%);
+}
+
+.selectedCard span {
+  font-size: 10px;
+  font-weight: 850;
+  color: var(--game-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.selectedCard strong {
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectedCard p {
+  margin: 0;
+  overflow: hidden;
+  font-size: 12px;
+  color: var(--muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tabletopControls {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  z-index: 6;
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  transform: translateY(-50%);
+}
+
+.practiceActionTray {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  max-width: min(240px, 20vw);
+  max-height: min(48vh, 420px);
+  overflow: auto;
+}
+
+.practiceActionControl {
+  justify-content: center;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 12px;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.1;
+  color: oklch(0.98 0.012 80);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background:
+    radial-gradient(circle at 92% 50%, oklch(0.78 0.08 80 / 18%), transparent 34%),
+    linear-gradient(135deg, oklch(0.34 0.09 222), oklch(0.2 0.058 224));
+  border: 1px solid rgb(255 255 255 / 38%);
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgb(7 18 28 / 18%);
+}
+
+.turnEndControl {
+  display: grid;
+  width: clamp(82px, 8vw, 112px);
+  aspect-ratio: 1;
+  place-items: center;
+  padding: 0 12px;
+  font-size: clamp(15px, 1.8vw, 24px);
+  font-weight: 950;
+  line-height: 1.05;
+  color: oklch(0.98 0.012 80);
+  text-align: center;
+  cursor: default;
+  background:
+    radial-gradient(circle at 50% 45%, rgb(255 255 255 / 18%), transparent 38%),
+    radial-gradient(circle, oklch(0.32 0.067 222), oklch(0.18 0.051 223));
+  border: 2px solid rgb(255 255 255 / 55%);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0 3px rgb(10 26 38 / 34%),
+    0 12px 24px rgb(7 18 28 / 24%);
+}
+
+.sidebar {
+  --sidebar-width: 344px;
+  --board-surface: oklch(0.18 0.035 255 / 98%);
+  --board-surface-soft: oklch(0.24 0.033 252 / 84%);
+  --board-text: oklch(0.96 0.014 84);
+  --board-muted: oklch(0.73 0.032 83);
+  --board-border: oklch(0.52 0.045 250 / 52%);
+  --board-border-strong: oklch(0.66 0.13 28 / 62%);
+  --game-accent: oklch(0.58 0.17 26);
+  --game-accent-soft: oklch(0.58 0.17 26 / 16%);
+  --log-bg: oklch(0.14 0.028 255 / 92%);
+  --log-bg-gradient: oklch(0.58 0.17 26 / 10%);
+  --log-border: oklch(0.54 0.07 250 / 45%);
+  --log-tag-border: oklch(0.58 0.045 250 / 54%);
+  --log-tag-hover-bg: oklch(0.32 0.05 252 / 66%);
+  --log-tag-active-bg: oklch(0.58 0.17 26 / 17%);
+  --log-scrollbar: oklch(0.58 0.17 26 / 42%);
+  height: 100svh;
+  overflow: hidden;
+  color: var(--board-text);
+  background:
+    radial-gradient(ellipse at 10% -10%, oklch(0.42 0.15 25 / 42%), transparent 38%),
+    radial-gradient(ellipse at 120% 18%, oklch(0.52 0.08 72 / 18%), transparent 34%),
+    linear-gradient(180deg, oklch(0.19 0.038 255), oklch(0.14 0.03 252));
+  border-color: oklch(0.51 0.08 28 / 62%);
+  box-shadow:
+    inset -1px 0 0 oklch(0.78 0.07 80 / 16%),
+    16px 0 42px oklch(0.12 0.025 255 / 24%);
+}
+
+.sidebar :global([data-slot="sidebar-header"]) {
+  padding: 14px 14px 12px;
+  background:
+    linear-gradient(135deg, oklch(0.36 0.13 25 / 76%), transparent 58%),
+    linear-gradient(180deg, oklch(0.26 0.043 255 / 88%), oklch(0.19 0.034 252 / 62%));
+  border-bottom: 1px solid oklch(0.68 0.09 28 / 38%);
+}
+
+.sidebar :global([data-slot="sidebar-content"]) {
+  gap: 8px;
+  padding: 10px;
+  overflow: hidden auto;
+  background:
+    linear-gradient(180deg, transparent, oklch(0.11 0.024 255 / 30%)),
+    linear-gradient(90deg, oklch(0.78 0.07 80 / 5%) 1px, transparent 1px),
+    linear-gradient(180deg, oklch(0.78 0.07 80 / 5%) 1px, transparent 1px);
+  background-size:
+    auto,
+    28px 28px,
+    28px 28px;
+}
+
+.sidebar :global([data-slot="sidebar-group"]) {
+  flex: 0 0 auto;
+  padding: 10px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, oklch(0.35 0.035 252 / 44%), oklch(0.2 0.032 254 / 62%)),
+    oklch(0.2 0.03 254 / 86%);
+  border: 1px solid oklch(0.57 0.05 250 / 46%);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 oklch(0.96 0.014 84 / 10%),
+    0 10px 18px oklch(0.1 0.025 255 / 16%);
+}
+
+.sidebar :global([data-slot="sidebar-group"] + [data-slot="sidebar-group"]) {
+  margin-top: 0;
+}
+
+.sidebar :global([data-slot="sidebar-footer"]) {
+  padding: 10px;
+  background: oklch(0.12 0.025 255 / 78%);
+  border-top: 1px solid oklch(0.58 0.045 250 / 42%);
+}
+
+.sidebarTitleBlock {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+
+.sidebarMark {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 950;
+  color: oklch(0.98 0.012 80);
+  background:
+    radial-gradient(circle at 50% 34%, oklch(0.98 0.05 80 / 20%), transparent 38%),
+    linear-gradient(145deg, oklch(0.64 0.19 26), oklch(0.43 0.14 25));
+  border: 1px solid oklch(0.8 0.075 78 / 34%);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 oklch(0.98 0.012 80 / 24%),
+    0 10px 18px oklch(0.1 0.025 255 / 28%);
+}
+
+.sidebarTitleCopy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sidebarTitleCopy span {
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+  color: oklch(0.78 0.07 80);
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sidebarTitleBlock h1 {
+  margin: 0;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--board-text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebarTitleBlock p,
+.sidebarFootnote {
+  margin: 0;
+  overflow: hidden;
+  font-size: 11px;
+  color: oklch(0.77 0.026 84 / 82%);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebarLiveBadge {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+  color: oklch(0.95 0.045 80);
+  text-transform: uppercase;
+  background: oklch(0.25 0.045 255 / 76%);
+  border: 1px solid oklch(0.78 0.07 80 / 28%);
+  border-radius: 999px;
+}
+
+.sidebarGroupLabel {
+  margin-bottom: 8px;
+  color: oklch(0.77 0.07 80);
+  letter-spacing: 0.14em;
+}
+
+.sidebarStats {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 64px 86px;
+  gap: 6px;
+  margin: 0;
+}
+
+.sidebarStats div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  min-height: 56px;
+  padding: 8px 9px;
+  background:
+    linear-gradient(180deg, oklch(0.32 0.045 253 / 72%), oklch(0.2 0.032 255 / 84%)),
+    var(--board-surface-soft);
+  border: 1px solid oklch(0.58 0.045 250 / 44%);
+  border-radius: 8px;
+}
+
+.sidebarStats dt {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin: 0;
+  font-size: 10px;
+  font-weight: 850;
+  line-height: 1;
+  color: var(--board-muted);
+  text-transform: uppercase;
+}
+
+.sidebarStats dd {
+  margin: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 950;
+  line-height: 1;
+  color: var(--board-text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.seatList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.seatFrame {
+  min-width: 0;
+}
+
+.seatFrame :global(.seat-summary) {
+  gap: 7px;
+  height: 78px;
+  padding: 9px;
+  color: var(--board-text);
+  background:
+    linear-gradient(180deg, oklch(0.3 0.04 253 / 72%), oklch(0.18 0.028 255 / 84%)),
+    var(--board-surface-soft);
+  border-color: oklch(0.56 0.045 250 / 46%);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 0 oklch(0.96 0.014 84 / 9%);
+}
+
+.seatFrame[data-seat-active="true"] :global(.seat-summary) {
+  background:
+    radial-gradient(circle at 96% 20%, oklch(0.58 0.17 26 / 22%), transparent 34%),
+    linear-gradient(180deg, oklch(0.35 0.046 253 / 82%), oklch(0.2 0.032 255 / 92%));
+  border-color: oklch(0.66 0.15 26 / 72%);
+  box-shadow:
+    inset 0 1px 0 oklch(0.96 0.014 84 / 12%),
+    0 0 0 1px oklch(0.58 0.17 26 / 18%),
+    0 10px 20px oklch(0.11 0.028 255 / 22%);
+}
+
+.seatFrame :global(.seat-summary p) {
+  line-height: 1.1;
+}
+
+.seatFrame :global(.seat-summary > div:first-child) {
+  align-items: flex-start;
+}
+
+.seatFrame :global(.seat-summary > div:first-child > div) {
+  min-width: 0;
+}
+
+.seatFrame :global(.seat-summary > div:first-child p) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.seatFrame :global(.seat-summary [class*="rounded-md"]) {
+  color: var(--board-text);
+  background: oklch(0.13 0.025 255 / 54%);
+  border-color: oklch(0.62 0.05 250 / 42%);
+}
+
+.actionMenu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.actionMenu :global([data-slot="sidebar-menu-item"]:first-child) {
+  grid-column: 1 / -1;
+}
+
+.actionButton,
+.actionButtonPrimary {
+  justify-content: center;
+  height: 32px;
+  padding-inline: 10px;
+  color: var(--board-text);
+  background: oklch(0.16 0.028 255 / 66%);
+  border: 1px solid oklch(0.58 0.045 250 / 48%);
+}
+
+.actionButtonPrimary {
+  height: 38px;
+  color: oklch(0.98 0.012 80);
+  background:
+    radial-gradient(circle at 92% 50%, oklch(0.78 0.08 80 / 18%), transparent 34%),
+    linear-gradient(135deg, oklch(0.57 0.17 26), oklch(0.38 0.13 25));
+  border-color: oklch(0.84 0.08 80 / 34%);
+}
+
+.actionMenu :global([data-slot="sidebar-menu-button"]:disabled) {
+  opacity: 0.74;
+}
+
+.sidebarLog {
+  height: 144px;
+  min-height: 0;
+  padding: 8px;
+  overflow: hidden;
+  background: oklch(0.12 0.025 255 / 58%);
+  border: 1px solid oklch(0.56 0.045 250 / 42%);
+  border-radius: 8px;
+}
+
+.sidebarLog :global([data-testid="event-log"]) {
+  height: 100%;
+}
+
+.eventLogGroup {
+  flex: 0 0 200px;
+  min-height: 0;
+}
+
+.eventLogGroup :global([data-slot="sidebar-group-content"]) {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.sidebarFooter {
+  flex: 0 0 auto;
+}
+
+.sidebarFootnote {
+  display: flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  color: oklch(0.78 0.03 84 / 84%);
+  background: oklch(0.21 0.03 255 / 72%);
+  border: 1px solid oklch(0.54 0.045 250 / 42%);
+  border-radius: 8px;
+}
+
+.characterZone :global([data-card-states~="rested"]),
+.singleZone[data-card-states~="rested"] :global(.sim-card-face) {
+  transform: rotate(8deg);
+}
+
+@media (width <= 1100px) {
+  .shell :global(.mobile-shell-mobile) {
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .boardSlot {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .tabletop {
+    height: 100%;
+    min-height: 0;
+    padding: 8px;
+    overflow: auto;
+  }
+
+  .playmat {
+    height: 100%;
+    min-height: 600px;
+    overflow: hidden;
+  }
+
+  .boardRow {
+    grid-template-columns: 78px minmax(420px, 1fr) 94px;
+  }
+
+  .commandRail {
+    width: min(100%, 600px);
+    grid-template-columns: 192px minmax(220px, 1fr);
+  }
+
+  .playerMat[data-seat="opponent"] .commandRail {
+    grid-template-columns: minmax(220px, 1fr) 192px;
+  }
+
+  .handDock {
+    min-height: 72px;
+  }
+
+  .selectedCard {
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .tabletopControls {
+    right: 12px;
+  }
+}
+
+@media (width <= 640px) {
+  .playmat {
+    min-width: 920px;
+  }
+}
+
+.shell {
+  --op-panel-width: clamp(284px, 22vw, 340px);
+  width: 100%;
+  min-height: 100svh;
+  color: oklch(0.2 0.018 72);
+  background:
+    radial-gradient(ellipse at 20% 0%, oklch(0.6 0.14 27 / 28%), transparent 34%),
+    linear-gradient(180deg, oklch(0.21 0.025 52), oklch(0.16 0.018 48));
+}
+
+.shellFrame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--op-panel-width);
+  gap: 10px;
+  width: 100%;
+  height: 100svh;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.shellFrame[data-sidebar-open="false"] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.boardSlot {
+  min-width: 0;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.rightRail {
+  position: relative;
+  z-index: 8;
+  min-width: 0;
+  min-height: 0;
+}
+
+.rightRail .sidebar {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.rightRail :global([data-slot="sidebar-wrapper"]),
+.rightRail :global([data-slot="sidebar"]) {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.rightRail :global([data-slot="sidebar"]) {
+  border-radius: 8px;
+}
+
+.railToggle,
+.expandRailButton,
+.floatingLogToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: oklch(0.96 0.014 84);
+  background: oklch(0.18 0.03 255 / 92%);
+  border: 1px solid oklch(0.64 0.07 80 / 36%);
+  border-radius: 8px;
+  box-shadow: 0 10px 22px oklch(0.11 0.025 255 / 24%);
+}
+
+.railToggle {
+  position: absolute;
+  top: 10px;
+  left: -42px;
+  z-index: 10;
+  width: 34px;
+  height: 34px;
+}
+
+.expandRailButton {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 20;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.tabletop {
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+}
+
+.playmat {
+  height: 100%;
+  min-height: 620px;
+  border-color: oklch(0.28 0.025 53 / 64%);
+}
+
+.playerMat {
+  display: grid;
+  gap: clamp(8px, 1vw, 14px);
+  min-height: 0;
+  padding: clamp(10px, 1vw, 16px) clamp(14px, 1.35vw, 22px);
+}
+
+.playerMat[data-seat="player"] {
+  grid-template-columns:
+    minmax(74px, 0.58fr) minmax(118px, 0.84fr) minmax(360px, 3fr)
+    minmax(104px, 0.75fr) minmax(84px, 0.62fr);
+  grid-template-rows: minmax(0, 1fr) minmax(82px, 0.43fr);
+  grid-template-areas:
+    "life command characters stage deck"
+    "trash command hand hand hand";
+}
+
+.playerMat[data-seat="opponent"] {
+  grid-template-columns:
+    minmax(84px, 0.62fr) minmax(104px, 0.75fr) minmax(360px, 3fr)
+    minmax(118px, 0.84fr) minmax(74px, 0.58fr);
+  grid-template-rows: minmax(82px, 0.43fr) minmax(0, 1fr);
+  grid-template-areas:
+    "deck stage hand hand trash"
+    "deck stage characters command life";
+}
+
+.centerRule {
+  align-self: center;
+}
+
+.lifeCounter {
+  position: relative;
+  inset: auto;
+  grid-area: life;
+  align-self: stretch;
+  justify-self: center;
+  width: min(100%, 92px);
+  min-width: 64px;
+  min-height: 0;
+  aspect-ratio: auto;
+  border-radius: 8px;
+}
+
+.playerMat[data-seat="opponent"] .lifeCounter,
+.playerMat[data-seat="player"] .lifeCounter {
+  inset: auto;
+  transform: none;
+}
+
+.deckSlot,
+.trashSlot,
+.stageSlot,
+.characterSlot,
+.commandRail,
+.handDock {
+  min-width: 0;
+  min-height: 0;
+}
+
+.deckSlot {
+  grid-area: deck;
+}
+
+.trashSlot {
+  grid-area: trash;
+}
+
+.stageSlot {
+  grid-area: stage;
+}
+
+.characterSlot {
+  grid-area: characters;
+}
+
+.handDock {
+  grid-area: hand;
+  width: 100%;
+  min-height: 0;
+  justify-self: stretch;
+}
+
+.playerMat[data-seat="opponent"] .handDock,
+.playerMat[data-seat="player"] .handDock {
+  width: 100%;
+  margin: 0;
+  justify-self: stretch;
+}
+
+.deckSlot,
+.trashSlot,
+.stageSlot {
+  display: grid;
+  place-items: center;
+}
+
+.deckSlot :global(.deck-stack-zone),
+.trashSlot :global(.discard-pile-zone),
+.stageSlot .singleZone {
+  width: min(100%, 92px);
+  min-height: min(100%, 118px);
+}
+
+.commandRail {
+  grid-area: command;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1.2fr) minmax(74px, 0.8fr);
+  align-self: stretch;
+  justify-self: stretch;
+  width: 100%;
+  min-height: 0;
+  padding: 7px;
+  gap: 8px;
+}
+
+.playerMat[data-seat="opponent"] .commandRail {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(74px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.playerMat[data-seat="opponent"] .commandLeader {
+  order: 2;
+}
+
+.playerMat[data-seat="opponent"] .donMeter {
+  order: 1;
+}
+
+.commandLeader {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-content: stretch;
+  min-width: 0;
+  min-height: 0;
+}
+
+.commandHeader,
+.leaderMeta {
+  grid-column: 1;
+}
+
+.commandLeaderZone {
+  grid-column: 1;
+  grid-row: 2;
+  width: min(100%, 88px);
+  min-height: 0;
+  align-self: stretch;
+  justify-self: center;
+}
+
+.donMeter {
+  align-content: center;
+}
+
+.donPips {
+  grid-template-columns: repeat(5, minmax(10px, 1fr));
+}
+
+.characterZone {
+  height: 100%;
+  min-height: 0;
+  padding: 10px 14px;
+}
+
+.characterZoneHeader span {
+  font-size: clamp(22px, 3.1vw, 44px);
+}
+
+.characterZoneCards {
+  align-self: center;
+  min-height: 92px;
+}
+
+.handDock :global(.compact-hand-zone),
+.characterZoneCards :global(.compact-hand-zone) {
+  height: 100%;
+}
+
+.tabletopControls {
+  right: clamp(12px, 1.8vw, 24px);
+}
+
+.selectedCard {
+  right: clamp(14px, 1.6vw, 24px);
+  bottom: clamp(12px, 1.3vw, 18px);
+}
+
+.sidebar {
+  --sidebar-width: 100%;
+}
+
+.sidebarHeader {
+  position: relative;
+}
+
+.sidebarTitleCopy span {
+  font-size: 0;
+}
+
+.sidebarTitleCopy span::before {
+  content: "One Piece Simulator";
+  font-size: 10px;
+}
+
+.sidebar :global([data-slot="sidebar-content"]) {
+  overflow: hidden auto;
+}
+
+.floatingLog {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 30;
+  display: grid;
+  width: min(390px, calc(100vw - 36px));
+  max-height: min(440px, calc(100svh - 36px));
+  overflow: hidden;
+  color: oklch(0.96 0.014 84);
+  background: oklch(0.14 0.028 255 / 94%);
+  border: 1px solid oklch(0.62 0.055 250 / 48%);
+  border-radius: 8px;
+  box-shadow: 0 18px 40px oklch(0.08 0.02 255 / 42%);
+}
+
+.floatingLog[data-expanded="false"] {
+  width: auto;
+}
+
+.floatingLogToggle {
+  gap: 8px;
+  justify-content: flex-start;
+  min-height: 38px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 850;
+  background:
+    linear-gradient(90deg, oklch(0.58 0.17 26 / 18%), transparent), oklch(0.16 0.03 255 / 96%);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.floatingLogToggle strong {
+  display: grid;
+  min-width: 22px;
+  height: 22px;
+  place-items: center;
+  margin-left: auto;
+  font-size: 11px;
+  color: oklch(0.98 0.012 80);
+  background: oklch(0.58 0.17 26);
+  border-radius: 999px;
+}
+
+.floatingLog[data-expanded="false"] .floatingLogToggle strong {
+  margin-left: 0;
+}
+
+.floatingLogBody {
+  height: 320px;
+  min-height: 0;
+  padding: 8px;
+  overflow: hidden;
+  border-top: 1px solid oklch(0.62 0.055 250 / 32%);
+}
+
+.floatingLogBody :global([data-testid="event-log"]) {
+  height: 100%;
+}
+
+@media (width <= 1180px) {
+  .shellFrame {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rightRail {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: min(var(--op-panel-width), calc(100vw - 20px));
+  }
+
+  .railToggle {
+    left: -40px;
+  }
+}
+
+@media (width <= 760px) {
+  .shellFrame {
+    padding: 8px;
+  }
+
+  .playmat {
+    min-width: 980px;
+  }
+
+  .floatingLog {
+    left: 10px;
+    top: 10px;
+    bottom: auto;
+  }
+}
+
+.shellFrame {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.playmat {
+  min-height: 0;
+  grid-template-rows: minmax(0, 0.45fr) 1px minmax(0, 0.55fr);
+}
+
+.playerMat {
+  gap: clamp(10px, 1.1vw, 18px);
+  padding: clamp(12px, 1.1vw, 18px) clamp(18px, 1.7vw, 28px);
+}
+
+.playerMat[data-seat="player"] {
+  grid-template-columns:
+    minmax(92px, 0.52fr) minmax(112px, 0.62fr) minmax(150px, 0.74fr)
+    minmax(150px, 0.88fr) minmax(0, 2.8fr) minmax(126px, 0.72fr)
+    minmax(132px, 0.78fr);
+  grid-template-rows: minmax(0, 1fr) minmax(176px, 0.5fr);
+  grid-template-areas:
+    "life command characters characters characters deck deck"
+    "trash stage don hand hand hand action";
+}
+
+.playerMat[data-seat="opponent"] {
+  grid-template-columns:
+    minmax(92px, 0.52fr) minmax(112px, 0.62fr) minmax(150px, 0.74fr)
+    minmax(150px, 0.88fr) minmax(0, 2.8fr) minmax(126px, 0.72fr)
+    minmax(132px, 0.78fr);
+  grid-template-rows: minmax(130px, 0.42fr) minmax(0, 1fr);
+  grid-template-areas:
+    "action hand hand hand don stage trash"
+    "deck deck characters characters characters command life";
+}
+
+.lifeArea {
+  position: relative;
+  z-index: 4;
+  grid-area: life;
+  align-self: stretch;
+  justify-self: stretch;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--op-zone-border);
+  border-radius: 8px;
+  background: var(--op-zone-bg-strong);
+  box-shadow:
+    inset 0 1px 0 var(--op-zone-highlight),
+    0 10px 22px rgb(21 16 12 / 14%);
+}
+
+.lifeCard {
+  position: absolute;
+  top: calc(8px + ((100% - 118px) * var(--life-index) / var(--life-total)));
+  left: 50%;
+  width: min(76px, calc(100% - 18px));
+  aspect-ratio: 5 / 7;
+  border: 2px solid rgb(228 199 92 / 74%);
+  border-radius: 7px;
+  background:
+    radial-gradient(
+      circle at 50% 44%,
+      transparent 0 20%,
+      rgb(212 181 77 / 72%) 21% 22%,
+      transparent 23%
+    ),
+    radial-gradient(
+      circle at 50% 44%,
+      transparent 0 32%,
+      rgb(212 181 77 / 52%) 33% 34%,
+      transparent 35%
+    ),
+    linear-gradient(135deg, transparent 46%, rgb(212 181 77 / 58%) 47% 49%, transparent 50%),
+    linear-gradient(90deg, rgb(11 38 78), rgb(16 52 96));
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 18%),
+    0 8px 15px rgb(7 19 34 / 20%);
+  transform: translateX(-50%);
+  z-index: calc(10 - var(--life-index));
+}
+
+.lifeAreaLabel {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  z-index: 20;
+  font-size: 10px;
+  font-weight: 950;
+  line-height: 1;
+  color: oklch(0.98 0.012 80);
+  text-transform: uppercase;
+  text-shadow: 0 2px 7px rgb(7 12 22 / 42%);
+  transform: translateX(-50%);
+}
+
+.lifeAreaCount {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  z-index: 20;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  font-size: 20px;
+  font-weight: 950;
+  line-height: 1;
+  color: oklch(0.98 0.012 80);
+  background: var(--game-accent);
+  border: 2px solid rgb(255 255 255 / 68%);
+  border-radius: 999px;
+  box-shadow: 0 7px 14px rgb(35 16 12 / 26%);
+  transform: translateX(-50%);
+}
+
+.playerMat[data-seat="opponent"] .lifeCard {
+  top: calc(8px + ((100% - 118px) * (var(--life-total) - var(--life-index)) / var(--life-total)));
+}
+
+.playerMat[data-seat="player"] .lifeCard {
+  top: calc(8px + ((100% - 118px) * (var(--life-total) - var(--life-index)) / var(--life-total)));
+  z-index: calc(10 + var(--life-index));
+}
+
+.deckSlot {
+  grid-area: deck;
+}
+
+.trashSlot {
+  grid-area: trash;
+}
+
+.stageSlot {
+  grid-area: stage;
+}
+
+.commandRail {
+  grid-area: command;
+  grid-template-rows: minmax(0, 1fr);
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.donSlot {
+  z-index: 4;
+  display: grid;
+  grid-area: don;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+}
+
+.donSlot .donMeter {
+  width: 100%;
+  min-height: 86px;
+}
+
+.playerMat[data-seat="opponent"] .donSlot {
+  justify-self: center;
+  width: min(100%, 150px);
+}
+
+.stageSlot .singleZone,
+.deckSlot :global(.deck-stack-zone),
+.trashSlot :global(.discard-pile-zone) {
+  width: min(100%, 132px);
+  height: min(100%, 172px);
+  min-height: 0;
+}
+
+.deckSlot :global(.deck-stack-zone),
+.trashSlot :global(.discard-pile-zone) {
+  position: relative;
+  align-content: stretch;
+  justify-items: stretch;
+  padding: 6px 6px 16px !important;
+  background: var(--op-zone-bg) !important;
+  border-color: var(--op-zone-border) !important;
+  box-shadow:
+    inset 0 1px 0 var(--op-zone-highlight),
+    0 8px 18px rgb(21 16 12 / 12%) !important;
+}
+
+.stageSlot .singleZone {
+  width: min(100%, 144px);
+}
+
+.commandLeader {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-self: center;
+  justify-self: center;
+  width: min(100%, 132px);
+  height: min(100%, 172px);
+  gap: 4px;
+  padding: 8px;
+}
+
+.commandLeader .commandHeader,
+.commandLeader .leaderMeta {
+  grid-column: 1;
+}
+
+.commandLeaderZone {
+  grid-row: 2;
+  justify-self: center;
+  width: auto;
+  height: 100%;
+  aspect-ratio: 5 / 7;
+}
+
+.characterZone {
+  padding: 12px 18px;
+}
+
+.characterZoneCards :global(.card-row) {
+  align-items: center;
+  min-height: 152px;
+}
+
+.characterZoneCards :global(.card-row .sim-card-face) {
+  width: 108px !important;
+  min-height: 152px !important;
+}
+
+.handDock {
+  overflow: visible;
+}
+
+.handDock :global(.card-row) {
+  align-items: end;
+  justify-content: center;
+  height: 164px;
+  overflow: visible;
+}
+
+.handDock :global(.card-row .sim-card-face) {
+  width: 126px !important;
+  height: 177px !important;
+  min-height: 0 !important;
+}
+
+.playerMat[data-seat="opponent"] .handDock :global(.card-row) {
+  align-items: start;
+  height: 100px;
+}
+
+.playerMat[data-seat="opponent"] .handDock :global(.card-row .sim-card-face) {
+  width: 84px !important;
+  height: 94px !important;
+  min-height: 0 !important;
+}
+
+.playmat :global([data-card-states~="rested"]),
+.playmat :global(.sim-card-face),
+.playmat :global(.sim-card-art),
+.playmat :global(.sim-card-image),
+.playmat :global(.card-row > *),
+.deckSlot,
+.deckSlot :global(*),
+.playmat :global(.deck-stack-zone-layers > *),
+.playmat :global(.discard-pile-zone-layers > *) {
+  transform: none !important;
+}
+
+.deckSlot :global(.deck-stack-zone-layers),
+.trashSlot :global(.discard-pile-zone-layers) {
+  inset: 6px 6px 16px !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.deckSlot :global(.deck-stack-zone > .sim-card-face),
+.trashSlot :global(.discard-pile-zone > .sim-card-face) {
+  position: absolute;
+  inset: 6px 6px 16px;
+  z-index: 1;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.playerMat[data-seat="player"] .handDock :global(.card-row > *:nth-child(1)) {
+  transform: translateY(12px) rotate(-7deg) !important;
+}
+
+.playerMat[data-seat="player"] .handDock :global(.card-row > *:nth-child(2)) {
+  transform: translateY(3px) rotate(-3deg) !important;
+}
+
+.playerMat[data-seat="player"] .handDock :global(.card-row > *:nth-child(3)) {
+  transform: translateY(0) rotate(0deg) !important;
+}
+
+.playerMat[data-seat="player"] .handDock :global(.card-row > *:nth-child(4)) {
+  transform: translateY(3px) rotate(3deg) !important;
+}
+
+.playerMat[data-seat="player"] .handDock :global(.card-row > *:nth-child(5)) {
+  transform: translateY(12px) rotate(7deg) !important;
+}
+
+.playerMat[data-seat="opponent"] .handDock :global(.card-row > *:nth-child(1)) {
+  transform: translateY(-4px) rotate(5deg) !important;
+}
+
+.playerMat[data-seat="opponent"] .handDock :global(.card-row > *:nth-child(2)) {
+  transform: translateY(2px) rotate(2deg) !important;
+}
+
+.playerMat[data-seat="opponent"] .handDock :global(.card-row > *:nth-child(3)) {
+  transform: translateY(5px) rotate(0deg) !important;
+}
+
+.playerMat[data-seat="opponent"] .handDock :global(.card-row > *:nth-child(4)) {
+  transform: translateY(2px) rotate(-2deg) !important;
+}
+
+.playerMat[data-seat="opponent"] .handDock :global(.card-row > *:nth-child(5)) {
+  transform: translateY(-4px) rotate(-5deg) !important;
+}
+
+.stageSlot .singleZone > :global(*),
+.commandLeaderZone > :global(*) {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
+.deckSlot :global(.sim-card-face),
+.trashSlot :global(.sim-card-face),
+.stageSlot :global(.sim-card-face),
+.commandLeaderZone :global(.sim-card-face) {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.deckSlot :global(.sim-card-art),
+.trashSlot :global(.sim-card-art),
+.stageSlot :global(.sim-card-art),
+.commandLeaderZone :global(.sim-card-art),
+.deckSlot :global(.sim-card-image),
+.trashSlot :global(.sim-card-image),
+.stageSlot :global(.sim-card-image),
+.commandLeaderZone :global(.sim-card-image) {
+  width: 100%;
+  height: 100%;
+}
+
+.hoverCardPreview {
+  position: absolute;
+  top: 50%;
+  right: clamp(28px, 2vw, 40px);
+  z-index: 24;
+  display: grid;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  width: min(330px, 25vw);
+  min-height: 166px;
+  padding: 12px;
+  pointer-events: none;
+  color: rgb(35 28 22 / 92%);
+  background: rgb(250 251 250 / 94%);
+  border: 1px solid rgb(48 38 28 / 18%);
+  border-radius: 8px;
+  box-shadow: 0 18px 40px rgb(16 18 20 / 22%);
+  transform: translateY(-50%);
+}
+
+.hoverCardPreviewImage {
+  width: 108px;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 10px 22px rgb(16 18 20 / 22%);
+}
+
+.hoverCardPreviewText {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.hoverCardPreviewText span {
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--game-accent);
+  text-transform: uppercase;
+}
+
+.hoverCardPreviewText strong {
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 950;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+}
+
+.hoverCardPreviewText p,
+.hoverCardPreviewText small {
+  margin: 0;
+  overflow: hidden;
+  color: rgb(35 28 22 / 68%);
+  text-overflow: ellipsis;
+}
+
+.hoverCardPreviewText p {
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.hoverCardPreviewText small {
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.tabletopControls {
+  top: auto;
+  right: clamp(28px, 2vw, 38px);
+  bottom: clamp(24px, 1.7vw, 34px);
+  grid-area: action;
+  transform: none;
+}
+
+.turnEndControl {
+  width: clamp(88px, 7vw, 118px);
+}
+
+.floatingLog {
+  left: 14px;
+  top: 14px;
+  bottom: auto;
+}
+
+@media (width <= 1040px) {
+  .playmat {
+    min-width: 1120px;
+  }
+}

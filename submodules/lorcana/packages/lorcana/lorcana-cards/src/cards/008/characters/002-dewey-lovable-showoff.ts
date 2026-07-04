@@ -4,6 +4,17 @@ import { deweyLovableShowoffI18n } from "./002-dewey-lovable-showoff.i18n";
 export const deweyLovableShowoff: CharacterCard = {
   id: "nfh",
   canonicalId: "ci_nfh",
+  slug: "lorcana-ci_nfh",
+  printings: [
+    {
+      id: "set8-002",
+      artId: "set8-002",
+      setCode: "set8",
+      collectorNumber: "2",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-002"],
   cardType: "character",
   name: "Dewey",
@@ -21,7 +32,7 @@ export const deweyLovableShowoff: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_31ad785c8eab4eba82f08ec3420584b2",
-    tcgPlayer: 633428,
+    tcgPlayer: "633428",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: deweyLovableShowoffI18n,

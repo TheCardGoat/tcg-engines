@@ -61,15 +61,8 @@ describe("Main-phase · click-during-pending-choice gate · rule 5-2", () => {
       (G as GundamG).pendingEffects.push(entry);
     });
 
-    fireEvent.click(screen.getByText(/Actions \/ Log/i));
-
-    // Pending-choice interaction shows up in the shared action surface after
-    // the engine state update.
     await waitFor(() => {
-      expect(
-        document.querySelector("[data-testid='interaction-card:action:resolveEffect']"),
-      ).not.toBeNull();
-      expect(screen.queryByText(/select target/i)).not.toBeNull();
+      expect(screen.queryByText(/Choose 1 enemy Unit\. Rest it\./i)).not.toBeNull();
     });
 
     // Click the viewer's own Unit on the battle area.
@@ -86,10 +79,7 @@ describe("Main-phase · click-during-pending-choice gate · rule 5-2", () => {
 
     // Pending-choice interaction is still open — the click did not advance
     // or dismiss the resolution.
-    expect(
-      document.querySelector("[data-testid='interaction-card:action:resolveEffect']"),
-    ).not.toBeNull();
-    expect(screen.queryByText(/select target/i)).not.toBeNull();
+    expect(screen.queryByText(/Choose 1 enemy Unit\. Rest it\./i)).not.toBeNull();
   });
 
   it.skip("stages a legal target and resolves only after Confirm", async () => {

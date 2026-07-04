@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { buzzLightyearJungleRangerI18n } from "./091-buzz-lightyear-jungle-ranger.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const buzzLightyearJungleRanger: CharacterCard = {
-  id: "KHv",
+  id: "Y1s",
   canonicalId: "ci_KHv",
+  slug: "lorcana-ci_KHv",
+  printings: [
+    {
+      id: "set12-091",
+      artId: "set12-091",
+      setCode: "set12",
+      collectorNumber: "91",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-091"],
   cardType: "character",
   name: "Buzz Lightyear",
@@ -21,6 +33,7 @@ export const buzzLightyearJungleRanger: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_0b928f0cd5d2473482e07a609205c26b",
+    tcgPlayer: "690216",
   },
   text: [
     {

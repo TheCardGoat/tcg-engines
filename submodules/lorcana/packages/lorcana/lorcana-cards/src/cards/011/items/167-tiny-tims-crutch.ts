@@ -4,6 +4,17 @@ import { tinyTimsCrutchI18n } from "./167-tiny-tims-crutch.i18n";
 export const tinyTimsCrutch: ItemCard = {
   id: "WxQ",
   canonicalId: "ci_WxQ",
+  slug: "lorcana-ci_WxQ",
+  printings: [
+    {
+      id: "set11-167",
+      artId: "set11-167",
+      setCode: "set11",
+      collectorNumber: "167",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-167"],
   cardType: "item",
   name: "Tiny Tim's Crutch",
@@ -16,7 +27,7 @@ export const tinyTimsCrutch: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f87c783d2fe2456687533d4b5f641131",
-    tcgPlayer: 676231,
+    tcgPlayer: "676231",
   },
   text: [
     {

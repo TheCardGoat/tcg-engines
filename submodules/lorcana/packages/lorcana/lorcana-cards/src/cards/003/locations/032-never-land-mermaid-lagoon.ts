@@ -4,6 +4,17 @@ import { neverLandMermaidLagoonI18n } from "./032-never-land-mermaid-lagoon.i18n
 export const neverLandMermaidLagoon: LocationCard = {
   id: "E8P",
   canonicalId: "ci_E8P",
+  slug: "lorcana-ci_E8P",
+  printings: [
+    {
+      id: "set3-032",
+      artId: "set3-032",
+      setCode: "set3",
+      collectorNumber: "32",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-032"],
   cardType: "location",
   name: "Never Land",
@@ -21,7 +32,7 @@ export const neverLandMermaidLagoon: LocationCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_b9ecaeeeee5a467ea41b58edda3b8f13",
-    tcgPlayer: 534089,
+    tcgPlayer: "534089",
   },
   i18n: neverLandMermaidLagoonI18n,
 };

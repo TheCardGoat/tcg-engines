@@ -50,6 +50,7 @@ export function resolveExertEffect(
       {
         cardId: targetId,
         source: "effect",
+        zone: ctx.framework.zones.getCardZone(targetId)?.split(":")[0],
       },
       {
         event: "exert",

@@ -17,7 +17,7 @@ export const faZhouWarHeroI18n: Record<Languages, I18nProperties> = {
     version: "Kriegsheld",
     text: [
       {
-        title: "ÜBUNGSAUFGABEN",
+        title: "Übungsaufgaben",
         description:
           "Jedes Mal, wenn einer deiner Charaktere einen anderen Charakter herausfordert, falls es die zweite Herausforderung in diesem Zug ist, sammelst du 3 Legenden.",
       },
@@ -28,7 +28,7 @@ export const faZhouWarHeroI18n: Record<Languages, I18nProperties> = {
     version: "Héros de guerre",
     text: [
       {
-        title: "EXERCICES D'ENTRAÎNEMENT",
+        title: "Exercices d'entraînement",
         description:
           "Chaque fois que l'un de vos personnages en défie un autre, s'il s'agit du deuxième défi de ce tour, gagnez 3 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const faZhouWarHeroI18n: Record<Languages, I18nProperties> = {
     version: "Eroe di Guerra",
     text: [
       {
-        title: "ESERCIZI DI ADDESTRAMENTO",
+        title: "Esercizi di Addestramento",
         description:
           "Ogni volta che uno dei tuoi personaggi sfida un altro personaggio, se è la seconda sfida di questo turno, ottieni 3 leggenda.",
       },

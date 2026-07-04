@@ -7,14 +7,14 @@ export const lastditchEffortI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Letzter Versuch",
-    text: "Erschöpfe einen gegnerischen Charakter deiner Wahl. Wähle danach einen deiner Charaktere, er erhält in diesem Zug Herausfordern +2. (Während der Charakter herausfordert, erhält er +2).",
+    text: "Erschöpfe einen gegnerischen Charakter deiner Wahl. Wähle danach einen deiner Charaktere, er erhält in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}).",
   },
   fr: {
     name: "Effort désespéré",
-    text: "Choisissez un personnage adverse et épuisez-le. Choisissez ensuite l'un de vos personnages qui gagne Offensif +2 jusqu'à la fin du tour.",
+    text: "Choisissez un personnage adverse et épuisez-le. Choisissez ensuite l'un de vos personnages qui gagne <Offensif> +2 jusqu'à la fin du tour.",
   },
   it: {
     name: "Ultimo Tentativo Disperato",
-    text: "Impegna un personaggio avversario a tua scelta. Poi un tuo personaggio a tua scelta ottiene Sfidante +2 per questo turno.",
+    text: "Impegna un personaggio avversario a tua scelta. Poi un tuo personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)",
   },
 };

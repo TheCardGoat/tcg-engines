@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { shenziScarsAccompliceI18n } from "./070-shenzi-scars-accomplice.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const shenziScarsAccomplice: CharacterCard = {
   id: "NoM",
   canonicalId: "ci_NoM",
+  slug: "lorcana-ci_NoM",
+  printings: [
+    {
+      id: "set5-070",
+      artId: "set5-070",
+      setCode: "set5",
+      collectorNumber: "70",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-070"],
   cardType: "character",
   name: "Shenzi",
@@ -21,7 +33,7 @@ export const shenziScarsAccomplice: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e736ff0f31bb455992c5ba93c4875444",
-    tcgPlayer: 561955,
+    tcgPlayer: "561955",
   },
   text: [
     {

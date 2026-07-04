@@ -4,6 +4,17 @@ import { boomerHasTheBeakI18n } from "./076-boomer-has-the-beak.i18n";
 export const boomerHasTheBeak: CharacterCard = {
   id: "8Pv",
   canonicalId: "ci_8Pv",
+  slug: "lorcana-ci_8Pv",
+  printings: [
+    {
+      id: "set11-076",
+      artId: "set11-076",
+      setCode: "set11",
+      collectorNumber: "76",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-076"],
   cardType: "character",
   name: "Boomer",
@@ -20,7 +31,7 @@ export const boomerHasTheBeak: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_db6ccc6d3dde4e4890ff8a1fd391e905",
-    tcgPlayer: 676197,
+    tcgPlayer: "676197",
   },
   text: [
     {

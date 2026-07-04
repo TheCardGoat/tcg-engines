@@ -20,10 +20,11 @@ export const aladdinHeroicOutlawEnchantedI18n: Record<Languages, I18nProperties>
     version: "Heldenhafter Bandit",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Aladdin-Charaktere auszuspielen.)",
       },
       {
-        title: "DREISTE HELDENTAT",
+        title: "Dreiste Heldentat",
         description:
           "Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 2 Legenden und alle gegnerischen Mitspielenden verlieren je 2.",
       },
@@ -34,7 +35,8 @@ export const aladdinHeroicOutlawEnchantedI18n: Record<Languages, I18nProperties>
     version: "Hors-la-loi héroïque",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Aladdin.)",
       },
       {
         title: "EXPLOIT AUDACIEUX",
@@ -48,10 +50,11 @@ export const aladdinHeroicOutlawEnchantedI18n: Record<Languages, I18nProperties>
     version: "Heroic Outlaw",
     text: [
       {
-        title: "Shift 5",
+        title:
+          "<Shift> 5 (You may pay 5 {I} to play this on top of one of your characters named Aladdin.)",
       },
       {
-        title: "DARING EXPLOIT",
+        title: "Daring Exploit",
         description:
           "During your turn, whenever this character banishes another character in a challenge, you gain 2 lore and each opponent loses 2 lore.",
       },

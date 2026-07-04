@@ -21,14 +21,14 @@ export const perditaPlayfulMotherI18n: Record<Languages, I18nProperties> = {
     version: "Verspielte Mutter",
     text: [
       {
-        title: "WER KOMMT ALS NÄCHSTES?",
+        title: "Wer kommt als Nächstes?",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 weniger für den nächsten Welpen, den du in diesem Zug ausspielst.",
+          "Jedes Mal, wenn dieser Charakter erkundet, zahlst du 2 {I} weniger für den nächsten Welpen, den du in diesem Zug ausspielst.",
       },
       {
-        title: "HABT KEINE ANGST",
+        title: "Habt keine Angst",
         description:
-          "Deine Welpen erhalten Behütet. (Gegnerische Mitspielende können diese Charaktere nicht auswählen, außer um sie herauszufordern.)",
+          "Deine Welpen erhalten <Behütet>. (Gegnerische Mitspielende können diese Charaktere nicht auswählen, außer um sie herauszufordern.)",
       },
     ],
   },
@@ -37,14 +37,14 @@ export const perditaPlayfulMotherI18n: Record<Languages, I18nProperties> = {
     version: "Mère joueuse",
     text: [
       {
-        title: "À QUI LE TOUR?",
+        title: "À qui le tour?",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, le prochain personnage Chiot que vous jouez ce tour-ci vous coûte 2 de moins.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, le prochain personnage Chiot que vous jouez ce tour-ci vous coûte 2 {I} de moins.",
       },
       {
-        title: "N'AIE PAS PEUR",
+        title: "N'aie pas peur",
         description:
-          "Vos personnages Chiot gagnent Hors d'atteinte. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)",
+          "Vos personnages Chiot gagnent <Hors d'atteinte>. (Les adversaires ne peuvent pas choisir ces personnages, hormis pour un défi.)",
       },
     ],
   },
@@ -53,14 +53,14 @@ export const perditaPlayfulMotherI18n: Record<Languages, I18nProperties> = {
     version: "Madre Giocosa",
     text: [
       {
-        title: "A CHI TOCCA?",
+        title: "A chi Tocca?",
         description:
-          "Ogni volta che questo personaggio va all'avventura, paga 2 in meno per giocare il tuo prossimo personaggio Cucciolo per questo turno.",
+          "Ogni volta che questo personaggio va all'avventura, paga 2 {I} in meno per giocare il tuo prossimo personaggio Cucciolo per questo turno.",
       },
       {
-        title: "NON AVER PAURA I",
+        title: "Non aver Paura",
         description:
-          "tuoi personaggi Cucciolo ottengono Protetto. (Gli avversari non possono sceglierli se non per sfidarli.)",
+          "I tuoi personaggi Cucciolo ottengono <Protetto>. (Gli avversari non possono sceglierli se non per sfidarli.)",
       },
     ],
   },

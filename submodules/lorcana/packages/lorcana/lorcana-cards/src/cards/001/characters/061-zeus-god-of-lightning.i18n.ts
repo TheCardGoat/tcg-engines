@@ -18,10 +18,10 @@ export const zeusGodOfLightningI18n: Record<Languages, I18nProperties> = {
     version: "Gott der Blitze",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "Herausfordern +4",
+        title: "<Herausfordern> +4 (Während dieser Charakter herausfordert, erhält er +4 {S}.)",
       },
     ],
   },
@@ -30,10 +30,10 @@ export const zeusGodOfLightningI18n: Record<Languages, I18nProperties> = {
     version: "Dieu de la Foudre",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "Offensif +4",
+        title: "<Offensif> +4",
       },
     ],
   },
@@ -42,10 +42,10 @@ export const zeusGodOfLightningI18n: Record<Languages, I18nProperties> = {
     version: "God of Lightning",
     text: [
       {
-        title: "Rush",
+        title: "<Rush> (This character can challenge the turn they're played.)",
       },
       {
-        title: "Challenger +4",
+        title: "<Challenger> +4 (While challenging, this character gets +4 {S}.)",
       },
     ],
   },

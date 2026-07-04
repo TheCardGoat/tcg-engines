@@ -15,9 +15,9 @@ export const trainingDummyI18n: Record<Languages, I18nProperties> = {
     name: "Übungspuppe",
     text: [
       {
-        title: "HANDLE MIT VORSICHT, 2",
+        title: "Handle mit Vorsicht",
         description:
-          "— Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges Beschützen. (Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
+          "{E}, 2 {I} — Ein Charakter deiner Wahl erhält bis zu Beginn deines nächsten Zuges <Beschützen>. (Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const trainingDummyI18n: Record<Languages, I18nProperties> = {
     name: "Mannequin d'entraînement",
     text: [
       {
-        title: "NE SECOUE PAS TROP LA BELLE, 2",
+        title: "Ne secoue pas trop la belle",
         description:
-          "— Choisissez un personnage qui gagne Rempart jusqu'au début de votre prochain tour. (Lorsqu'il vous défie, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
+          "{E}, 2 {I} — Choisissez un personnage qui gagne <Rempart> jusqu'au début de votre prochain tour. (Lorsqu'il vous défie, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const trainingDummyI18n: Record<Languages, I18nProperties> = {
     name: "Manichino da Allenamento",
     text: [
       {
-        title: "TRATTARE CON CURA, 2",
+        title: "Trattare con Cura",
         description:
-          "— Un personaggio a tua scelta ottiene Guardiano fino all'inizio del tuo prossimo turno. (Un personaggio avversario che sfida uno dei tuoi personaggi deve sceglierne uno con Guardiano, se possibile.)",
+          "{E}, 2 {I} — Un personaggio a tua scelta ottiene <Guardiano> fino all'inizio del tuo prossimo turno. (Un personaggio avversario che sfida uno dei tuoi personaggi deve sceglierne uno con Guardiano, se possibile.)",
       },
     ],
   },

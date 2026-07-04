@@ -9,16 +9,16 @@ export const vanellopeVonSchweetzSpunkySpeedsterI18n: Record<Languages, I18nProp
   de: {
     name: "Vanellope von Schweetz",
     version: "Flotter Flitzer",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Vanellope von Schweetz",
     version: "Bolide culotté",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Vanellope von Schweetz",
     version: "Velocista Grintosa",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

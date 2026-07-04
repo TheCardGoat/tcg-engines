@@ -4,7 +4,7 @@ export const theHuntsmanOnTheQueensOrdersI18n: Record<Languages, I18nProperties>
   en: {
     name: "The Huntsman",
     version: "On the Queen's Orders",
-    text: "<Ward>",
+    text: "Ward",
   },
   de: {
     name: "Jägersmann",

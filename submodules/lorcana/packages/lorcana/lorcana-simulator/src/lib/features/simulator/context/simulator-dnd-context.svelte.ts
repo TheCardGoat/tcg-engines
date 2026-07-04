@@ -152,7 +152,7 @@ export function canDragHandCard(args: {
 }): boolean {
   const { card, playableCardIds, ownerSide, turnSide } = args;
   if (
-    (card.zoneId !== "hand" && card.zoneId !== "limbo") ||
+    (card.zoneId !== "hand" && card.zoneId !== "limbo" && card.zoneId !== "discard") ||
     !ownerSide ||
     card.ownerSide !== ownerSide ||
     turnSide !== ownerSide

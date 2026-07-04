@@ -4,6 +4,17 @@ import { sidPhillipsToySurgeonI18n } from "./126-sid-phillips-toy-surgeon.i18n";
 export const sidPhillipsToySurgeon: CharacterCard = {
   id: "lRX",
   canonicalId: "ci_lRX",
+  slug: "lorcana-ci_lRX",
+  printings: [
+    {
+      id: "set12-126",
+      artId: "set12-126",
+      setCode: "set12",
+      collectorNumber: "126",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-126"],
   cardType: "character",
   name: "Sid Phillips",
@@ -20,6 +31,7 @@ export const sidPhillipsToySurgeon: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_332a65ff58c44154824ef79683a29116",
+    tcgPlayer: "690245",
   },
   text: [
     {

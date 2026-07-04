@@ -6,14 +6,17 @@ export const rpResource009: ResourceCard = {
   type: "resource",
   traits: [],
   id: "RP-009",
-  externalId: "gundam:rp-009",
-  slug: "resource-rp-009",
+  canonicalId: "RP-009",
+  externalIds: { bandai: "gundam:rp-009" },
+  slug: "resource/rp-009",
   displayName: "Resource",
   set: { code: "RP", name: "Gen Con 2025", packageId: "616901" },
   printNumber: "RP-009",
   printings: [
     {
       id: "RP-009",
+      artId: "RP-009",
+      setCode: "RP",
       collectorNumber: "RP-009",
       cardNumber: "RP-009",
       set: {
@@ -28,6 +31,7 @@ export const rpResource009: ResourceCard = {
       productName: "Gen Con 2025",
     },
   ],
+  reprints: ["RP-009"],
   selectedPrintingId: "RP-009",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/rp/RP-009.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/RP-009.webp?260424",

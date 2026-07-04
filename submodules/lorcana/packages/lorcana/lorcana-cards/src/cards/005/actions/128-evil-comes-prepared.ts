@@ -4,6 +4,17 @@ import { evilComesPreparedI18n } from "./128-evil-comes-prepared.i18n";
 export const evilComesPrepared: ActionCard = {
   id: "Vin",
   canonicalId: "ci_Yvo",
+  slug: "lorcana-ci_Yvo",
+  printings: [
+    {
+      id: "set5-128",
+      artId: "set5-128",
+      setCode: "set5",
+      collectorNumber: "128",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-128"],
   cardType: "action",
   name: "Evil Comes Prepared",
@@ -16,7 +27,7 @@ export const evilComesPrepared: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_07fed6332fd14403b062bc4f1aed3e63",
-    tcgPlayer: 561964,
+    tcgPlayer: "561964",
   },
   text: "Ready chosen character of yours. They can't quest for the rest of this turn. If a Villain character is chosen, gain 1 lore.",
   abilities: [

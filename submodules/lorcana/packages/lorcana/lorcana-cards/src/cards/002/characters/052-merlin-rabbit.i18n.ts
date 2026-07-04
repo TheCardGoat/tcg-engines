@@ -16,7 +16,7 @@ export const merlinRabbitI18n: Record<Languages, I18nProperties> = {
     version: "Hase",
     text: [
       {
-        title: "HOPPEDI HIPPEDI!",
+        title: "Hoppedi Hippedi!",
         description:
           "Wenn du diesen Charakter ausspielst und wenn er das Spiel verlässt, darfst du 1 Karte ziehen.",
       },
@@ -27,7 +27,7 @@ export const merlinRabbitI18n: Record<Languages, I18nProperties> = {
     version: "En lapin",
     text: [
       {
-        title: "HOPPITY HIP!",
+        title: "Hoppity Hip!",
         description:
           "Lorsque vous jouez ce personnage et lorsqu'il quitte la zone de jeu, vous pouvez piocher une carte.",
       },
@@ -38,7 +38,7 @@ export const merlinRabbitI18n: Record<Languages, I18nProperties> = {
     version: "Coniglio",
     text: [
       {
-        title: "HOPPITI HIP!",
+        title: "Hoppiti Hip!",
         description:
           "Quando giochi questo personaggio e quando lascia il gioco, puoi pescare una carta.",
       },

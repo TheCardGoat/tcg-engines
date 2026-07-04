@@ -1,5 +1,7 @@
 import { describe, expect, it } from "bun:test";
 
+import type { LorcanaCardSnapshot } from "@/features/simulator/model/contracts.js";
+import { canDragHandCard } from "./simulator-dnd-context.svelte.js";
 import { dispatchDropIntent } from "./simulator-dnd-dispatch.js";
 
 function createDropActionGame(
@@ -21,6 +23,28 @@ function createDropActionGame(
 }
 
 describe("dispatchDropIntent", () => {
+  it("classifies playable discard cards as hand-style play drags", () => {
+    const card: LorcanaCardSnapshot = {
+      cardId: "playable-discard",
+      definitionId: "look-what-youve-done",
+      facePresentation: "faceUp",
+      isMasked: false,
+      label: "Look What You've Done",
+      ownerId: "player_one",
+      ownerSide: "playerOne",
+      zoneId: "discard",
+    };
+
+    expect(
+      canDragHandCard({
+        card,
+        playableCardIds: ["playable-discard"],
+        ownerSide: "playerOne",
+        turnSide: "playerOne",
+      }),
+    ).toBe(true);
+  });
+
   it("auto-plays a hand card dropped on play when only one variant exists", () => {
     const calls: string[] = [];
 

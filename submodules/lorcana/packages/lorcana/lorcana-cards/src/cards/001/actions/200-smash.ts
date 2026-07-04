@@ -4,6 +4,17 @@ import { smashI18n } from "./200-smash.i18n";
 export const smash: ActionCard = {
   id: "fcn",
   canonicalId: "ci_0iV",
+  slug: "lorcana-ci_0iV",
+  printings: [
+    {
+      id: "set1-200",
+      artId: "set1-200",
+      setCode: "set1",
+      collectorNumber: "200",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-200", "set9-198"],
   cardType: "action",
   name: "Smash",
@@ -16,7 +27,7 @@ export const smash: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_108a4980fc8d4e3f84faf7b7ffc18cc0",
-    tcgPlayer: 650131,
+    tcgPlayer: "650131",
   },
   text: "Deal 3 damage to chosen character.",
   abilities: [

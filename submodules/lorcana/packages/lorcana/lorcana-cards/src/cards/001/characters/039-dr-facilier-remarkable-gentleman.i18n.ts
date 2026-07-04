@@ -17,7 +17,7 @@ export const drFacilierRemarkableGentlemanI18n: Record<Languages, I18nProperties
     version: "Bemerkenswerter Gentleman",
     text: [
       {
-        title: "TRÄUME WERDEN WAHR",
+        title: "Träume werden wahr",
         description:
           "Jedes Mal, wenn du ein Lied ausspielst, darfst du dir die obersten 2 Karten deines Decks anschauen. Lege 1 davon auf dein Deck und die andere unter dein Deck.",
       },
@@ -39,7 +39,7 @@ export const drFacilierRemarkableGentlemanI18n: Record<Languages, I18nProperties
     version: "Remarkable Gentleman",
     text: [
       {
-        title: "DREAMS MADE REAL",
+        title: "Dreams Made Real",
         description:
           "Whenever you play a song, you may look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
       },

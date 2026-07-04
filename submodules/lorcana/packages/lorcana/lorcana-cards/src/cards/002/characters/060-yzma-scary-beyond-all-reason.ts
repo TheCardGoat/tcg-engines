@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { yzmaScaryBeyondAllReasonI18n } from "./060-yzma-scary-beyond-all-reason.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const yzmaScaryBeyondAllReason: CharacterCard = {
   id: "mCu",
   canonicalId: "ci_mCu",
+  slug: "lorcana-ci_mCu",
+  printings: [
+    {
+      id: "set2-060",
+      artId: "set2-060",
+      setCode: "set2",
+      collectorNumber: "60",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-060"],
   cardType: "character",
   name: "Yzma",
@@ -21,7 +33,7 @@ export const yzmaScaryBeyondAllReason: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b687a800e99b4465a744086c0eb9c93f",
-    tcgPlayer: 527739,
+    tcgPlayer: "527739",
   },
   text: [
     {

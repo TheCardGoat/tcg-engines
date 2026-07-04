@@ -19,10 +19,11 @@ export const nickWildeSlyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Schlitzohr",
     text: [
       {
-        title: "Gestaltwandel 1",
+        title:
+          "<Gestaltwandel> 1 (Du kannst 1 {I} zahlen, um diesen Charakter auf einen deiner Nick-Wilde-Charaktere auszuspielen.)",
       },
       {
-        title: "DU KANNST MIR NICHTS ANHABEN",
+        title: "Du kannst mir nichts anhaben",
         description:
           "Solange du mindestens einen Gegenstand im Spiel hast, kann dieser Charakter nicht herausgefordert werden.",
       },
@@ -33,10 +34,11 @@ export const nickWildeSlyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Renard narquois",
     text: [
       {
-        title: "Alter 1",
+        title:
+          "<Alter> 1 (Vous pouvez payer 1 {I} pour jouer ce personnage sur l'un de vos personnages Nick Wilde.)",
       },
       {
-        title: "TU M'AURAS PAS",
+        title: "Tu m'auras pas",
         description: "Tant que vous avez un objet en jeu, ce personnage ne peut pas être défié.",
       },
     ],
@@ -46,10 +48,11 @@ export const nickWildeSlyFoxI18n: Record<Languages, I18nProperties> = {
     version: "Volpe Acuta",
     text: [
       {
-        title: "Trasformazione 1",
+        title:
+          "<Trasformazione> 1 (Puoi pagare 1 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Nick Wilde.)",
       },
       {
-        title: "NON PUOI TOCCARMI",
+        title: "Non Puoi Toccarmi",
         description: "Mentre hai in gioco un oggetto, questo personaggio non può essere sfidato.",
       },
     ],

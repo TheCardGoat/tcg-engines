@@ -4,6 +4,17 @@ import { minnieMouseZippingAroundI18n } from "./115-minnie-mouse-zipping-around.
 export const minnieMouseZippingAround: CharacterCard = {
   id: "tsF",
   canonicalId: "ci_tsF",
+  slug: "lorcana-ci_tsF",
+  printings: [
+    {
+      id: "set2-115",
+      artId: "set2-115",
+      setCode: "set2",
+      collectorNumber: "115",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-115"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -20,7 +31,7 @@ export const minnieMouseZippingAround: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_08ee7216354243869129fd8d6491168e",
-    tcgPlayer: 524290,
+    tcgPlayer: "524290",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: minnieMouseZippingAroundI18n,

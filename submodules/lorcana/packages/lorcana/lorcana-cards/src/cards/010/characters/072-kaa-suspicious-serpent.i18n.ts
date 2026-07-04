@@ -9,16 +9,16 @@ export const kaaSuspiciousSerpentI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Kaa",
     version: "Suspekte Schlange",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "Kaa",
     version: "Serpent suspicieux",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Kaa",
     version: "Serpente Sospettoso",
-    text: "Protetto",
+    text: "<Protetto>",
   },
 };

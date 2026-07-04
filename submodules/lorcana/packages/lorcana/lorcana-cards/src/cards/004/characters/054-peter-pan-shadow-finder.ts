@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { peterPanShadowFinderI18n } from "./054-peter-pan-shadow-finder.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { rush } from "../../../helpers/abilities/rush";
 
 export const peterPanShadowFinder: CharacterCard = {
   id: "mNf",
   canonicalId: "ci_mNf",
+  slug: "lorcana-ci_mNf",
+  printings: [
+    {
+      id: "set4-054",
+      artId: "set4-054",
+      setCode: "set4",
+      collectorNumber: "54",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-054"],
   cardType: "character",
   name: "Peter Pan",
@@ -22,7 +34,7 @@ export const peterPanShadowFinder: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_2d0021113d084cee92cd6b33f104c1b4",
-    tcgPlayer: 549458,
+    tcgPlayer: "549458",
   },
   text: [
     {

@@ -6,7 +6,7 @@ export const casaMadrigalCourtyardI18n: Record<Languages, I18nProperties> = {
     version: "Courtyard",
     text: [
       {
-        title: "Healing Home",
+        title: "HEALING HOME",
         description:
           "Whenever a character quests while here, you may remove up to 2 damage from them. Then, you may remove up to 2 damage from this location.",
       },

@@ -4,6 +4,17 @@ import { voyageI18n } from "./131-voyage.i18n";
 export const voyage: ActionCard = {
   id: "Xj3",
   canonicalId: "ci_Xj3",
+  slug: "lorcana-ci_Xj3",
+  printings: [
+    {
+      id: "set3-131",
+      artId: "set3-131",
+      setCode: "set3",
+      collectorNumber: "131",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-131"],
   cardType: "action",
   name: "Voyage",
@@ -16,7 +27,7 @@ export const voyage: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cc0c5bf9ccbf4884926461d06eed76b0",
-    tcgPlayer: 537384,
+    tcgPlayer: "537384",
   },
   text: "Move up to 2 characters of yours to the same location for free.",
   abilities: [

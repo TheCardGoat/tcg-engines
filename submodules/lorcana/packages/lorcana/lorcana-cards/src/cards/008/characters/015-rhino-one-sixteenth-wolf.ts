@@ -4,6 +4,17 @@ import { rhinoOnesixteenthWolfI18n } from "./015-rhino-one-sixteenth-wolf.i18n";
 export const rhinoOnesixteenthWolf: CharacterCard = {
   id: "dQB",
   canonicalId: "ci_dQB",
+  slug: "lorcana-ci_dQB",
+  printings: [
+    {
+      id: "set8-015",
+      artId: "set8-015",
+      setCode: "set8",
+      collectorNumber: "15",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-015"],
   cardType: "character",
   name: "Rhino",
@@ -20,7 +31,7 @@ export const rhinoOnesixteenthWolf: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2a18b29a3b7a4034b98a6207ec515377",
-    tcgPlayer: 631359,
+    tcgPlayer: "631359",
   },
   text: [
     {

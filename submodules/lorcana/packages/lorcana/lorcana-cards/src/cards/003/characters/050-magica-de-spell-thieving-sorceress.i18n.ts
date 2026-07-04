@@ -17,9 +17,9 @@ export const magicaDeSpellThievingSorceressI18n: Record<Languages, I18nPropertie
     version: "Diebische Hexe",
     text: [
       {
-        title: "TELEKINESE",
+        title: "Telekinese",
         description:
-          "— Schicke einen Gegenstand deiner Wahl auf die zugehörige Hand zurück, der genauso viel oder weniger kostet wie der -Wert dieses Charakters beträgt.",
+          "{E} — Schicke einen Gegenstand deiner Wahl auf die zugehörige Hand zurück, der genauso viel oder weniger kostet wie der {S}-Wert dieses Charakters beträgt.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const magicaDeSpellThievingSorceressI18n: Record<Languages, I18nPropertie
     version: "Sorcière en plein larcin",
     text: [
       {
-        title: "TÉLÉKINÉSIE",
+        title: "Télékinésie",
         description:
-          "— Choisissez un objet ayant un coût inférieur ou égal à la de ce personnage et renvoyez-le dans la main de son propriétaire.",
+          "{E} — Choisissez un objet ayant un coût inférieur ou égal à la {S} de ce personnage et renvoyez-le dans la main de son propriétaire.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const magicaDeSpellThievingSorceressI18n: Record<Languages, I18nPropertie
     version: "Strega Ladruncola",
     text: [
       {
-        title: "TELECINESI",
+        title: "Telecinesi",
         description:
-          "— Fai tornare un oggetto a tua scelta con costo pari o inferiore alla di questo personaggio in mano al suo giocatore.",
+          "{E} — Fai tornare un oggetto a tua scelta con costo pari o inferiore alla {S} di questo personaggio in mano al suo giocatore.",
       },
     ],
   },

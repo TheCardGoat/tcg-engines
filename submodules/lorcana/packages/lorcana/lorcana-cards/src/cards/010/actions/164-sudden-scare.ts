@@ -4,6 +4,17 @@ import { suddenScareI18n } from "./164-sudden-scare.i18n";
 export const suddenScare: ActionCard = {
   id: "U5K",
   canonicalId: "ci_zXX",
+  slug: "lorcana-ci_zXX",
+  printings: [
+    {
+      id: "set10-164",
+      artId: "set10-164",
+      setCode: "set10",
+      collectorNumber: "164",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-164"],
   cardType: "action",
   name: "Sudden Scare",
@@ -15,7 +26,7 @@ export const suddenScare: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7101d6f7aaba488e9a508b0d40172743",
-    tcgPlayer: 660271,
+    tcgPlayer: "660271",
   },
   text: "Put chosen opposing character into their player's inkwell facedown. That player puts the top card of their deck into their inkwell facedown.",
   abilities: [

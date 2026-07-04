@@ -20,12 +20,12 @@ export const arielTreasureCollectorI18n: Record<Languages, I18nProperties> = {
     version: "Schatzsammlerin",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "DIE, DIE SCHON ALLES HAT",
+        title: "Die, die schon alles hat",
         description:
-          "Wenn du mehr Gegenstände als jede gegnerische Person im Spiel hast, erhält dieser Charakter +2.",
+          "Wenn du mehr Gegenstände als jede gegnerische Person im Spiel hast, erhält dieser Charakter +2 {L}.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const arielTreasureCollectorI18n: Record<Languages, I18nProperties> = {
     version: "Collectionneuse de trésors",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "TROP GÂTÉE PAR LA VIE",
+        title: "Trop gâtée par la vie",
         description:
-          "Tant que vous avez plus d'objets en jeu que chaque adversaire, ce personnage gagne +2.",
+          "Tant que vous avez plus d'objets en jeu que chaque adversaire, ce personnage gagne +2 {L}.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const arielTreasureCollectorI18n: Record<Languages, I18nProperties> = {
     version: "Collezionista di Tesori",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "UNA CHE HA TUTTO ORMAI",
+        title: "Una Che Ha Tutto Ormai",
         description:
-          "Mentre hai in gioco più oggetti di ogni avversario, questo personaggio riceve +2.",
+          "Mentre hai in gioco più oggetti di ogni avversario, questo personaggio riceve +2 {L}.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const gd02OlbaFrost093: PilotCard = {
   color: "red",
   traits: ["new une"],
   id: "GD02-093",
-  externalId: "gundam:gd02-093",
-  slug: "olba-frost-gd02-093",
+  canonicalId: "GD02-093",
+  externalIds: { bandai: "gundam:gd02-093" },
+  slug: "olba-frost/gd02-093",
   displayName: "Olba Frost",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-093",
   printings: [
     {
       id: "GD02-093",
+      artId: "GD02-093",
+      setCode: "GD02",
       collectorNumber: "GD02-093",
       cardNumber: "GD02-093",
       set: {
@@ -29,6 +32,7 @@ export const gd02OlbaFrost093: PilotCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-093"],
   selectedPrintingId: "GD02-093",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-093.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-093.webp?260424",

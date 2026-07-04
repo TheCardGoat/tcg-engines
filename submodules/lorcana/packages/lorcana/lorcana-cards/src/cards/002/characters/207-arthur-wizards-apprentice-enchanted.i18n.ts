@@ -17,7 +17,7 @@ export const arthurWizardsApprenticeEnchantedI18n: Record<Languages, I18nPropert
     version: "Zauberlehrling",
     text: [
       {
-        title: "SCHÜLER",
+        title: "Schüler",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen deiner anderen Charaktere wählen und zurück auf deine Hand nehmen, um 2 Legenden zu sammeln.",
       },
@@ -28,7 +28,7 @@ export const arthurWizardsApprenticeEnchantedI18n: Record<Languages, I18nPropert
     version: "Apprenti de l'Enchanteur",
     text: [
       {
-        title: "ÉTUDIANT",
+        title: "Étudiant",
         description:
           "Lorsque ce personnage est envoyé à l'aventure, vous pouvez renvoyer l'un de vos autres personnages en jeu dans votre main pour gagner 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const arthurWizardsApprenticeEnchantedI18n: Record<Languages, I18nPropert
     version: "Wizard's Apprentice",
     text: [
       {
-        title: "STUDENT",
+        title: "Student",
         description:
           "Whenever this character quests, you may return another chosen character of yours to your hand to gain 2 lore.",
       },

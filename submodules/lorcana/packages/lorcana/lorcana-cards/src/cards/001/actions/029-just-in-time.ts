@@ -4,6 +4,17 @@ import { justInTimeI18n } from "./029-just-in-time.i18n";
 export const justInTime: ActionCard = {
   id: "TAp",
   canonicalId: "ci_TAp",
+  slug: "lorcana-ci_TAp",
+  printings: [
+    {
+      id: "set1-029",
+      artId: "set1-029",
+      setCode: "set1",
+      collectorNumber: "29",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-029"],
   cardType: "action",
   name: "Just in Time",
@@ -16,7 +27,7 @@ export const justInTime: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_4d9c8fd7ab2241d9893ca3ad6a31daed",
-    tcgPlayer: 492737,
+    tcgPlayer: "492737",
   },
   text: "You may play a character with cost 5 or less for free.",
   abilities: [

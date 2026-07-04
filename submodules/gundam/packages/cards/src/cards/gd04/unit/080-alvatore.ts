@@ -7,14 +7,17 @@ export const gd04Alvatore080: UnitCard = {
   color: "white",
   traits: ["un"],
   id: "GD04-080",
-  externalId: "gundam:gd04-080",
-  slug: "alvatore-gd04-080",
+  canonicalId: "GD04-080",
+  externalIds: { bandai: "gundam:gd04-080" },
+  slug: "alvatore/gd04-080",
   displayName: "Alvatore",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-080",
   printings: [
     {
       id: "GD04-080",
+      artId: "GD04-080",
+      setCode: "GD04",
       collectorNumber: "GD04-080",
       cardNumber: "GD04-080",
       set: {
@@ -29,6 +32,7 @@ export const gd04Alvatore080: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-080"],
   selectedPrintingId: "GD04-080",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-080.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-080.webp?260424",

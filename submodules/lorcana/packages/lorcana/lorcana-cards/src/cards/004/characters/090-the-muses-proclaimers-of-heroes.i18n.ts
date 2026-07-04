@@ -20,12 +20,12 @@ export const theMusesProclaimersOfHeroesI18n: Record<Languages, I18nProperties> 
     version: "Besingerinnen von Helden",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "JEDES WORT IST WAHR!",
+        title: "Jedes Wort ist wahr!",
         description:
-          "Jedes Mal, wenn du ein Lied ausspielst, darfst du einen Charakter deiner Wahl, mit 2 oder weniger, zurück auf die zugehörige Hand schicken.",
+          "Jedes Mal, wenn du ein Lied ausspielst, darfst du einen Charakter deiner Wahl, mit 2 oder weniger {S}, zurück auf die zugehörige Hand schicken.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const theMusesProclaimersOfHeroesI18n: Record<Languages, I18nProperties> 
     version: "Proclamatrices de héros",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "DU GOSPEL PUR",
+        title: "Du Gospel pur",
         description:
-          "Chaque fois que vous jouez une chanson, vous pouvez choisir un personnage avec 2 ou moins et le renvoyer dans la main de son propriétaire.",
+          "Chaque fois que vous jouez une chanson, vous pouvez choisir un personnage avec 2 {S} ou moins et le renvoyer dans la main de son propriétaire.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const theMusesProclaimersOfHeroesI18n: Record<Languages, I18nProperties> 
     version: "Proclamatrici di Eroi",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "QUESTA",
+        title: "Questa È la Realtà",
         description:
-          "È LA REALTÀ Ogni volta che giochi una canzone, puoi far riprendere in mano al suo giocatore un personaggio a tua scelta con 2 o inferiore.",
+          "Ogni volta che giochi una canzone, puoi far riprendere in mano al suo giocatore un personaggio a tua scelta con 2 {S} o inferiore.",
       },
     ],
   },

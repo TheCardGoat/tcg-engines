@@ -17,7 +17,7 @@ export const tweedledeeTweedledumStrangeStorytellersI18n: Record<Languages, I18n
     version: "Seltsame Geschichtenerzähler",
     text: [
       {
-        title: "NOCH EINE GESCHICHTE",
+        title: "Noch eine Geschichte",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen beschädigten Charakter deiner Wahl zurück auf die zugehörige Hand schicken.",
       },
@@ -28,7 +28,7 @@ export const tweedledeeTweedledumStrangeStorytellersI18n: Record<Languages, I18n
     version: "Étranges conteurs",
     text: [
       {
-        title: "ENCORE UNE AUTRE HISTOIRE",
+        title: "Encore une autre histoire",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir un personnage avec au moins un dommage et le renvoyer dans la main de son propriétaire.",
       },
@@ -39,7 +39,7 @@ export const tweedledeeTweedledumStrangeStorytellersI18n: Record<Languages, I18n
     version: "Strani Cantastorie",
     text: [
       {
-        title: "SECONDO NUMERO",
+        title: "Secondo Numero",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi far riprendere in mano al suo giocatore un personaggio danneggiato a tua scelta.",
       },

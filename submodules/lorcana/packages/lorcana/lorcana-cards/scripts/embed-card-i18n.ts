@@ -311,8 +311,8 @@ export function resolveLocalizedEntry(
   card: Pick<CanonicalCard, "id" | "canonicalId" | "name" | "version">,
   auxKv: Pick<CardsAuxKv, "representativeShortIdByCanonicalId">,
   localizationData: LocalizationData,
-  locale: NonEnglishLanguage,
-): LocalizedCardData {
+  _locale: NonEnglishLanguage,
+): LocalizedCardData | undefined {
   // Always prefer the representative shortId's entry so all printings of the
   // same canonical card get identical localized text (name/version/rulesText).
   const representativeShortId = auxKv.representativeShortIdByCanonicalId[card.canonicalId];
@@ -329,10 +329,7 @@ export function resolveLocalizedEntry(
     return directEntry;
   }
 
-  const cardLabel = card.version ? `${card.name} - ${card.version}` : card.name;
-  throw new Error(
-    `Missing ${locale} localization for card ${card.id} (${card.canonicalId}, ${cardLabel})`,
-  );
+  return undefined;
 }
 
 export function embedI18nInCanonicalCards(
@@ -344,25 +341,17 @@ export function embedI18nInCanonicalCards(
 
   for (const [printingId, card] of Object.entries(canonicalCards)) {
     const enProps = buildEnglishI18nProperties(card);
+    const deEntry = resolveLocalizedEntry(card, auxKv, localizationByLanguage.de, "de");
+    const frEntry = resolveLocalizedEntry(card, auxKv, localizationByLanguage.fr, "fr");
+    const itEntry = resolveLocalizedEntry(card, auxKv, localizationByLanguage.it, "it");
+
     cardsWithI18n[printingId] = {
       ...card,
       i18n: {
         en: enProps,
-        de: buildLocalizedI18nProperties(
-          resolveLocalizedEntry(card, auxKv, localizationByLanguage.de, "de"),
-          "de",
-          enProps.text,
-        ),
-        fr: buildLocalizedI18nProperties(
-          resolveLocalizedEntry(card, auxKv, localizationByLanguage.fr, "fr"),
-          "fr",
-          enProps.text,
-        ),
-        it: buildLocalizedI18nProperties(
-          resolveLocalizedEntry(card, auxKv, localizationByLanguage.it, "it"),
-          "it",
-          enProps.text,
-        ),
+        de: deEntry ? buildLocalizedI18nProperties(deEntry, "de", enProps.text) : enProps,
+        fr: frEntry ? buildLocalizedI18nProperties(frEntry, "fr", enProps.text) : enProps,
+        it: itEntry ? buildLocalizedI18nProperties(itEntry, "it", enProps.text) : enProps,
       } satisfies Record<Languages, I18nProperties>,
     };
   }

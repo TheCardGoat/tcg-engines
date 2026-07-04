@@ -4,6 +4,17 @@ import { liShangGeneralsSonI18n } from "./111-li-shang-generals-son.i18n";
 export const liShangGeneralsSon: CharacterCard = {
   id: "Wbs",
   canonicalId: "ci_Wbs",
+  slug: "lorcana-ci_Wbs",
+  printings: [
+    {
+      id: "set4-111",
+      artId: "set4-111",
+      setCode: "set4",
+      collectorNumber: "111",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-111"],
   cardType: "character",
   name: "Li Shang",
@@ -21,7 +32,7 @@ export const liShangGeneralsSon: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_bbec90ced5704bd6b427c55fcfc0e3bf",
-    tcgPlayer: 550593,
+    tcgPlayer: "550593",
   },
   classifications: ["Storyborn", "Hero"],
   i18n: liShangGeneralsSonI18n,

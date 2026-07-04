@@ -17,7 +17,7 @@ export const cobraBubblesDedicatedOfficialI18n: Record<Languages, I18nProperties
     version: "Engagierter Beamter",
     text: [
       {
-        title: "AURA DER AUTORITÄT",
+        title: "Aura der Autorität",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, wähle einen gegnerischen Charakter. Er kann in seinem nächsten Zug nicht herausfordern und muss erkunden, wenn möglich.",
       },
@@ -28,7 +28,7 @@ export const cobraBubblesDedicatedOfficialI18n: Record<Languages, I18nProperties
     version: "Fonctionnaire dévoué",
     text: [
       {
-        title: "AURA D'AUTORITÉ",
+        title: "Aura d'autorité",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un personnage adverse qui ne peut pas défier et doit, s'il le peut, être envoyé à l'aventure durant son prochain tour.",
       },
@@ -39,7 +39,7 @@ export const cobraBubblesDedicatedOfficialI18n: Record<Languages, I18nProperties
     version: "Dedito Agente",
     text: [
       {
-        title: "AURA DI AUTORITÀ",
+        title: "Aura di Autorità",
         description:
           "Ogni volta che questo personaggio va all'avventura, un personaggio avversario a tua scelta non può sfidare e deve andare all'avventura durante il suo prossimo turno, se possibile.",
       },

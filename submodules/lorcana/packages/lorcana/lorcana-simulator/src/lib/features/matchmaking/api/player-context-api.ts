@@ -40,6 +40,7 @@ export interface ProfileDeckSummary {
   colorMask: number;
   updatedAt: string;
   validFormats: LorcanaFormatId[];
+  formatLegality?: DeckFormatResult[];
 }
 
 export interface ProfileMatchmakingContext {

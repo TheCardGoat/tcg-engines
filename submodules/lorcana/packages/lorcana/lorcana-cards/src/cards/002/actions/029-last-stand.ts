@@ -4,6 +4,17 @@ import { lastStandI18n } from "./029-last-stand.i18n";
 export const lastStand: ActionCard = {
   id: "Eg2",
   canonicalId: "ci_Eg2",
+  slug: "lorcana-ci_Eg2",
+  printings: [
+    {
+      id: "set2-029",
+      artId: "set2-029",
+      setCode: "set2",
+      collectorNumber: "29",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-029"],
   cardType: "action",
   name: "Last Stand",
@@ -16,7 +27,7 @@ export const lastStand: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a7f5bdc867ac4e5da287d746420e7448",
-    tcgPlayer: 520861,
+    tcgPlayer: "520861",
   },
   text: "Banish chosen character who was challenged this turn.",
   abilities: [

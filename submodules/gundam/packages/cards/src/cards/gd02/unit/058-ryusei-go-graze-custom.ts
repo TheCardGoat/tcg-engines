@@ -7,14 +7,17 @@ export const gd02RyuseiGoGrazeCustom058: UnitCard = {
   color: "purple",
   traits: ["tekkadan"],
   id: "GD02-058",
-  externalId: "gundam:gd02-058",
-  slug: "ryusei-go-graze-custom-gd02-058",
+  canonicalId: "GD02-058",
+  externalIds: { bandai: "gundam:gd02-058" },
+  slug: "ryusei-go-graze-custom-ii/gd02-058",
   displayName: "Ryusei-Go (Graze Custom Ⅱ)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-058",
   printings: [
     {
       id: "GD02-058",
+      artId: "GD02-058",
+      setCode: "GD02",
       collectorNumber: "GD02-058",
       cardNumber: "GD02-058",
       set: {
@@ -30,6 +33,8 @@ export const gd02RyuseiGoGrazeCustom058: UnitCard = {
     },
     {
       id: "GD02-058_p1",
+      artId: "GD02-058_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-058_p1",
       cardNumber: "GD02-058",
       set: {
@@ -44,6 +49,7 @@ export const gd02RyuseiGoGrazeCustom058: UnitCard = {
       productName: "NEWTYPE CHALLENGE 2026 MISSION 3 Upper Ranks Prize",
     },
   ],
+  reprints: ["GD02-058", "GD02-058_p1"],
   selectedPrintingId: "GD02-058",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-058.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-058.webp?260424",

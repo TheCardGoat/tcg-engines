@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMouseInspirationalWarriorI18n } from "./200-mickey-mouse-inspirational-warrior.i18n";
 
 export const mickeyMouseInspirationalWarrior: CharacterCard = {
-  id: "Bv8",
+  id: "4xt",
   canonicalId: "ci_mDz",
+  slug: "lorcana-ci_mDz",
+  printings: [
+    {
+      id: "set7-200",
+      artId: "set7-200",
+      setCode: "set7",
+      collectorNumber: "200",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-200"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -19,7 +30,7 @@ export const mickeyMouseInspirationalWarrior: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ec8ba95c2c20470ab00ef4f03c8db8ee",
-    tcgPlayer: 619749,
+    tcgPlayer: "619749",
   },
   text: [
     {

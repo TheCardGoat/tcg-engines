@@ -16,9 +16,9 @@ export const ratigansPartySeedyBackRoomEnchantedI18n: Record<Languages, I18nProp
     version: "Zwielichtiges Hinterzimmer",
     text: [
       {
-        title: "FEIER DER MISSETÄTER",
+        title: "Feier der Missetäter",
         description:
-          "Solange du mindestens einen beschädigten Charakter an diesem Ort hast, erhält dieser Ort +2.",
+          "Solange du mindestens einen beschädigten Charakter an diesem Ort hast, erhält dieser Ort +2 {L}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const ratigansPartySeedyBackRoomEnchantedI18n: Record<Languages, I18nProp
     version: "Arrière-salle sordide",
     text: [
       {
-        title: "FÊTE DES PARIAS",
+        title: "Fête des parias",
         description:
-          "Tant que vous avez un personnage ayant au moins un dommage sur lui sur ce lieu, ce lieu gagne +2.",
+          "Tant que vous avez un personnage ayant au moins un dommage sur lui sur ce lieu, ce lieu gagne +2 {L}.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const ratigansPartySeedyBackRoomEnchantedI18n: Record<Languages, I18nProp
     version: "Stanzino Squallido",
     text: [
       {
-        title: "LA BALDORIA DEI BALORDI",
+        title: "La Baldoria dei Balordi",
         description:
-          "Mentre hai un personaggio danneggiato in questo luogo, questo luogo riceve +2.",
+          "Mentre hai un personaggio danneggiato in questo luogo, questo luogo riceve +2 {L}.",
       },
     ],
   },

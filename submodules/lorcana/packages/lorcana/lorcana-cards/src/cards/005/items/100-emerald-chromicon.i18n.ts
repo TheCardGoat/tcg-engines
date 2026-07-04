@@ -15,7 +15,7 @@ export const emeraldChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Smaragd Chromikon",
     text: [
       {
-        title: "SMARAGDFARBENES LICHT",
+        title: "Smaragdfarbenes Licht",
         description:
           "Jedes Mal, wenn einer deiner Charaktere im Zug einer gegnerischen Person verbannt wird, darfst du einen Charakter deiner Wahl zurück auf die zugehörige Hand schicken.",
       },
@@ -25,7 +25,7 @@ export const emeraldChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Chromicône d'Émeraude",
     text: [
       {
-        title: "LUEUR D'ÉMERAUDE",
+        title: "Lueur d'émeraude",
         description:
           "Durant le tour de vos adversaires, chaque fois que l'un de vos personnages est banni, vous pouvez choisir un personnage et le renvoyer dans la main de son propriétaire.",
       },
@@ -35,7 +35,7 @@ export const emeraldChromiconI18n: Record<Languages, I18nProperties> = {
     name: "Cromicon di Smeraldo",
     text: [
       {
-        title: "LUCE DI SMERALDO",
+        title: "Luce di Smeraldo",
         description:
           "Durante il turno degli avversari, ogni volta che uno dei tuoi personaggi viene esiliato, puoi far riprendere in mano al suo giocatore un personaggio a tua scelta.",
       },

@@ -4,6 +4,17 @@ import { panicImmortalSidekickI18n } from "./082-panic-immortal-sidekick.i18n";
 export const panicImmortalSidekick: CharacterCard = {
   id: "AcX",
   canonicalId: "ci_AcX",
+  slug: "lorcana-ci_AcX",
+  printings: [
+    {
+      id: "set4-082",
+      artId: "set4-082",
+      setCode: "set4",
+      collectorNumber: "82",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-082"],
   cardType: "character",
   name: "Panic",
@@ -20,7 +31,7 @@ export const panicImmortalSidekick: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3b8a6e3644374d98828747b29622e053",
-    tcgPlayer: 550579,
+    tcgPlayer: "550579",
   },
   text: [
     {
@@ -35,8 +46,14 @@ export const panicImmortalSidekick: CharacterCard = {
       condition: {
         type: "and",
         conditions: [
-          { type: "is-exerted" },
-          { type: "has-named-character", name: "Pain", controller: "you" },
+          {
+            type: "is-exerted",
+          },
+          {
+            type: "has-named-character",
+            name: "Pain",
+            controller: "you",
+          },
         ],
       },
       effect: {
@@ -47,7 +64,12 @@ export const panicImmortalSidekick: CharacterCard = {
           owner: "you",
           zones: ["play"],
           cardTypes: ["character"],
-          filter: [{ type: "has-classification", classification: "Villain" }],
+          filter: [
+            {
+              type: "has-classification",
+              classification: "Villain",
+            },
+          ],
         },
         type: "restriction",
       },

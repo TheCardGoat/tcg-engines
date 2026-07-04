@@ -29,7 +29,6 @@ import {
   interactionViewHasAttackers,
 } from "../../engine/interactionViewHelpers";
 import { CardImage } from "./CardImage";
-import { simEntityAnchor, simZoneAnchor } from "./animationAnchors";
 import { useDragDrop } from "./DragDropContext";
 import { useMoveSelection } from "./MoveSelectionContext";
 import { useZoneDroppable } from "./useZoneDroppable";
@@ -59,7 +58,6 @@ export interface LastSoldCard {
 function GigDieCell({
   die,
   side,
-  ownerSide,
   selectionActive,
   interactive,
   selected,
@@ -69,7 +67,6 @@ function GigDieCell({
 }: {
   die: GigDieView;
   side: "rival" | "friendly";
-  ownerSide: Side;
   selectionActive: boolean;
   interactive: boolean;
   selected?: boolean;
@@ -100,21 +97,24 @@ function GigDieCell({
     "data-selected": selected ? "true" : "false",
     "data-selection-role": selectionHint?.role,
     "data-log-highlight": logHighlighted ? "true" : "false",
-    ...simEntityAnchor({
-      entityId: die.id,
-      zoneId: `${ownerSide === "player" ? "p" : "opp"}-gigs`,
-      side: ownerSide,
-      face: "public" as const,
-    }),
   };
   const content = (
-    <DieDisplay
-      dieType={die.dieType}
-      faceValue={die.faceValue}
-      label={die.label}
-      side={side}
-      size="md"
-    />
+    <span
+      data-testid="card"
+      data-card-kind="die"
+      data-entity-id={die.id}
+      data-face={die.faceValue}
+      style={{ display: "contents" }}
+      aria-hidden
+    >
+      <DieDisplay
+        dieType={die.dieType}
+        faceValue={die.faceValue}
+        label={die.label}
+        side={side}
+        size="md"
+      />
+    </span>
   );
 
   if (interactive && onClick) {
@@ -182,17 +182,12 @@ function GigLane({
     <div
       className={`${classes.cell} ${gridClass} ${classes.gigLane}`}
       data-testid="gig-row"
+      data-zone-id={ownerSide === "opponent" ? "opp-gigArea" : "p-gigArea"}
       data-side={ownerSide}
       data-count={gigCount}
       data-street-cred={streetCred}
       data-win-condition={hasWinCondition ? "true" : "false"}
       data-selection-active={interactive ? "true" : "false"}
-      {...simZoneAnchor({
-        id: `${ownerSide === "player" ? "p" : "opp"}-gigs`,
-        side: ownerSide,
-        visibility: "public",
-        role: "resource",
-      })}
       aria-label={`${label}: ${gigCount} Gigs, ${streetCred} Street Cred${hasWinCondition ? ", win condition active" : ""}`}
     >
       <div className={classes.gigScore} aria-hidden="true">
@@ -213,7 +208,6 @@ function GigLane({
               key={die.id}
               die={die}
               side={side}
-              ownerSide={ownerSide}
               selectionActive={interactive}
               interactive={interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))}
               selected={selectedDieIds?.has(die.id)}

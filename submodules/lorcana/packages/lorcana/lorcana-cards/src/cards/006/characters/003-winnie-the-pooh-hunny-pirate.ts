@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { winnieThePoohHunnyPirateI18n } from "./003-winnie-the-pooh-hunny-pirate.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const winnieThePoohHunnyPirate: CharacterCard = {
   id: "R7L",
   canonicalId: "ci_R7L",
+  slug: "lorcana-ci_R7L",
+  printings: [
+    {
+      id: "set6-003",
+      artId: "set6-003",
+      setCode: "set6",
+      collectorNumber: "3",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-003"],
   cardType: "character",
   name: "Winnie the Pooh",
@@ -21,7 +33,7 @@ export const winnieThePoohHunnyPirate: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_59aa66bcac7b43528a3c9c01f4bc1124",
-    tcgPlayer: 593050,
+    tcgPlayer: "593050",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { snowannaRainbeauCoolCompetitorI18n } from "./110-snowanna-rainbeau-cool-competitor.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const snowannaRainbeauCoolCompetitor: CharacterCard = {
   id: "3sJ",
   canonicalId: "ci_3sJ",
+  slug: "lorcana-ci_3sJ",
+  printings: [
+    {
+      id: "set5-110",
+      artId: "set5-110",
+      setCode: "set5",
+      collectorNumber: "110",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-110"],
   cardType: "character",
   name: "Snowanna Rainbeau",
@@ -21,7 +33,7 @@ export const snowannaRainbeauCoolCompetitor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_0af4496693f64685885b27455c69e385",
-    tcgPlayer: 555268,
+    tcgPlayer: "555268",
   },
   text: "Rush",
   classifications: ["Storyborn", "Ally", "Racer"],

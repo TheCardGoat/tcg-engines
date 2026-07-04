@@ -1,4 +1,4 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { ProgramCardDefinition } from "@tcg/cyberpunk-types";
 import { alphaCorporateSurveillance } from "./corporate-surveillance.ts";
 import { alphaFloorIt } from "./floor-it.ts";
 import { alphaIndustrialAssembly } from "./industrial-assembly.ts";
@@ -14,4 +14,4 @@ export const alphaPrograms = [
   alphaFloorIt,
   alphaIndustrialAssembly,
   alphaRebootOptics,
-] satisfies AlphaCardDefinition[];
+] satisfies ProgramCardDefinition[];

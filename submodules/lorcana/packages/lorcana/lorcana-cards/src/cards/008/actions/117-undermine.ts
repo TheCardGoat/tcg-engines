@@ -4,6 +4,17 @@ import { undermineI18n } from "./117-undermine.i18n";
 export const undermine: ActionCard = {
   id: "p0c",
   canonicalId: "ci_p0c",
+  slug: "lorcana-ci_p0c",
+  printings: [
+    {
+      id: "set8-117",
+      artId: "set8-117",
+      setCode: "set8",
+      collectorNumber: "117",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-117"],
   cardType: "action",
   name: "Undermine",
@@ -16,7 +27,7 @@ export const undermine: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_056bd71d4a064d9a890c5558a88de654",
-    tcgPlayer: 631426,
+    tcgPlayer: "631426",
   },
   text: "Chosen opponent chooses and discards a card. Chosen character gets +2 {S} this turn.",
   abilities: [

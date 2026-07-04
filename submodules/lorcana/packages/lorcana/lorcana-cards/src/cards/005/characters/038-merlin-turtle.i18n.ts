@@ -17,7 +17,7 @@ export const merlinTurtleI18n: Record<Languages, I18nProperties> = {
     version: "Schildkröte",
     text: [
       {
-        title: "GIB MIR ZEIT ZUM DENKEN",
+        title: "Gib mir Zeit zum Denken",
         description:
           "Wenn du diesen Charakter ausspielst und wenn er das Spiel verlässt, schaue dir die obersten 2 Karten deines Decks an. Lege 1 davon auf dein Deck und die andere darunter.",
       },
@@ -28,7 +28,7 @@ export const merlinTurtleI18n: Record<Languages, I18nProperties> = {
     version: "En tortue",
     text: [
       {
-        title: "LAISSEZ-MOI Y RÉFLÉCHIR",
+        title: "Laissez-moi y réfléchir",
         description:
           "Lorsque vous jouez ce personnage, et lorsqu'il quitte le jeu, regardez les 2 cartes du dessus de votre pioche. Remettez-en une sur le dessus de votre pioche et l'autre en dessous.",
       },
@@ -39,7 +39,7 @@ export const merlinTurtleI18n: Record<Languages, I18nProperties> = {
     version: "Tartaruga",
     text: [
       {
-        title: "DAMMI TEMPO DI PENSARE",
+        title: "Dammi Tempo di Pensare",
         description:
           "Quando giochi questo personaggio e quando lascia il gioco, guarda le prime 2 carte del tuo mazzo. Mettine una in cima e l'altra in fondo al tuo mazzo.",
       },

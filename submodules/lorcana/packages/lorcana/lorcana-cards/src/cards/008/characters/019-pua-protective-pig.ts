@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { puaProtectivePigI18n } from "./019-pua-protective-pig.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const puaProtectivePig: CharacterCard = {
   id: "Ai2",
   canonicalId: "ci_Ai2",
+  slug: "lorcana-ci_Ai2",
+  printings: [
+    {
+      id: "set8-019",
+      artId: "set8-019",
+      setCode: "set8",
+      collectorNumber: "19",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-019"],
   cardType: "character",
   name: "Pua",
@@ -21,7 +33,7 @@ export const puaProtectivePig: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_dec273aa1bbc492dafa914363265979c",
-    tcgPlayer: 631363,
+    tcgPlayer: "631363",
   },
   text: [
     {

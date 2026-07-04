@@ -19,11 +19,11 @@ export const stabbingtonBrotherWithoutAPatchI18n: Record<Languages, I18nProperti
     version: "Ohne Augenklappe",
     text: [
       {
-        title: "Rasant",
+        title: "<Rasant>",
       },
       {
-        title: "SCHNAPP SIE!",
-        description: "Deine anderen Stabbington-Bruder-Charaktere erhalten Rasant.",
+        title: "Schnapp sie!",
+        description: "Deine anderen Stabbington-Bruder-Charaktere erhalten <Rasant>.",
       },
     ],
   },
@@ -32,11 +32,11 @@ export const stabbingtonBrotherWithoutAPatchI18n: Record<Languages, I18nProperti
     version: "Celui sans cache-œil",
     text: [
       {
-        title: "Charge",
+        title: "<Charge>",
       },
       {
-        title: "ATTRAPE-LES!",
-        description: "Vos autres personnages Un frère Stabbington gagnent Charge.",
+        title: "Attrape-les!",
+        description: "Vos autres personnages Un frère Stabbington gagnent <Charge>.",
       },
     ],
   },
@@ -45,11 +45,11 @@ export const stabbingtonBrotherWithoutAPatchI18n: Record<Languages, I18nProperti
     version: "Senza la Benda",
     text: [
       {
-        title: "Lesto",
+        title: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
       },
       {
-        title: "PRENDILI!",
-        description: "I tuoi altri personaggi chiamati Fratello Stabbington ottengono Lesto.",
+        title: "Prendili!",
+        description: "I tuoi altri personaggi chiamati Fratello Stabbington ottengono <Lesto>.",
       },
     ],
   },

@@ -15,9 +15,9 @@ export const rubyCoilI18n: Record<Languages, I18nProperties> = {
     name: "Rubin-Reif",
     text: [
       {
-        title: "KARMINROTER FUNKE",
+        title: "Karminroter Funke",
         description:
-          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, gib einem Charakter deiner Wahl in diesem Zug +2.",
+          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, gib einem Charakter deiner Wahl in diesem Zug +2 {S}.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const rubyCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spirale de Rubis",
     text: [
       {
-        title: "ÉTINCELLE POURPRE",
+        title: "Étincelle pourpre",
         description:
-          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage qui gagne +2 pour le reste de ce tour.",
+          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage qui gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const rubyCoilI18n: Record<Languages, I18nProperties> = {
     name: "Spira di Rubino",
     text: [
       {
-        title: "SCINTILLA SCARLATTA",
+        title: "Scintilla Scarlatta",
         description:
-          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio a tua scelta riceve +2 per questo turno.",
+          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio a tua scelta riceve +2 {S} per questo turno.",
       },
     ],
   },

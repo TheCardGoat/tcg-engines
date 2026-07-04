@@ -4,6 +4,17 @@ import { incrediboyBuddyPineI18n } from "./177-incrediboy-buddy-pine.i18n";
 export const incrediboyBuddyPine: CharacterCard = {
   id: "mD0",
   canonicalId: "ci_mD0",
+  slug: "lorcana-ci_mD0",
+  printings: [
+    {
+      id: "set12-177",
+      artId: "set12-177",
+      setCode: "set12",
+      collectorNumber: "177",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-177"],
   cardType: "character",
   name: "Incrediboy",
@@ -19,7 +30,8 @@ export const incrediboyBuddyPine: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_6a9d1a4cd8c74378a3e6081adf6c0797",
+    lorcast: "crd_705137b1ace0487ba1f71ee39019989a",
+    tcgPlayer: "692216",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const gd02SaylaSLightTypeGuncannon046: UnitCard = {
   color: "red",
   traits: ["earth federation"],
   id: "GD02-046",
-  externalId: "gundam:gd02-046",
-  slug: "sayla-s-light-type-guncannon-gd02-046",
+  canonicalId: "GD02-046",
+  externalIds: { bandai: "gundam:gd02-046" },
+  slug: "sayla-s-light-type-guncannon/gd02-046",
   displayName: "Sayla's Light-Type Guncannon",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-046",
   printings: [
     {
       id: "GD02-046",
+      artId: "GD02-046",
+      setCode: "GD02",
       collectorNumber: "GD02-046",
       cardNumber: "GD02-046",
       set: {
@@ -29,6 +32,7 @@ export const gd02SaylaSLightTypeGuncannon046: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-046"],
   selectedPrintingId: "GD02-046",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-046.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-046.webp?260424",

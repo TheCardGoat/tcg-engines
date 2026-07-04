@@ -4,6 +4,17 @@ import { brunoMadrigalOasisOracleI18n } from "./154-bruno-madrigal-oasis-oracle.
 export const brunoMadrigalOasisOracle: CharacterCard = {
   id: "6Lw",
   canonicalId: "ci_6Lw",
+  slug: "lorcana-ci_6Lw",
+  printings: [
+    {
+      id: "set12-154",
+      artId: "set12-154",
+      setCode: "set12",
+      collectorNumber: "154",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-154"],
   cardType: "character",
   name: "Bruno Madrigal",
@@ -19,7 +30,8 @@ export const brunoMadrigalOasisOracle: CharacterCard = {
   lore: 1,
   inkable: true,
   externalIds: {
-    lorcast: "crd_da0f9560eccf4967bb614cd049667f83",
+    lorcast: "crd_60e4bcd50631400eac4cf9544951e4ad",
+    tcgPlayer: "692213",
   },
   text: [
     {

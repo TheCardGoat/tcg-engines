@@ -4,6 +4,17 @@ import { amethystChromiconI18n } from "./066-amethyst-chromicon.i18n";
 export const amethystChromicon: ItemCard = {
   id: "12k",
   canonicalId: "ci_12k",
+  slug: "lorcana-ci_12k",
+  printings: [
+    {
+      id: "set5-066",
+      artId: "set5-066",
+      setCode: "set5",
+      collectorNumber: "66",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-066"],
   cardType: "item",
   name: "Amethyst Chromicon",
@@ -16,7 +27,7 @@ export const amethystChromicon: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_6506bc6d995f48a6b643477a796faba1",
-    tcgPlayer: 560096,
+    tcgPlayer: "560096",
   },
   text: [
     {

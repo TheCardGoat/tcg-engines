@@ -4,6 +4,17 @@ import { ursulasTrickeryI18n } from "./096-ursulas-trickery.i18n";
 export const ursulasTrickery: ActionCard = {
   id: "zNr",
   canonicalId: "ci_zNr",
+  slug: "lorcana-ci_zNr",
+  printings: [
+    {
+      id: "set4-096",
+      artId: "set4-096",
+      setCode: "set4",
+      collectorNumber: "96",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-096"],
   cardType: "action",
   name: "Ursula’s Trickery",
@@ -16,7 +27,7 @@ export const ursulasTrickery: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ab7661f7212743ee9509dc6f2546baa6",
-    tcgPlayer: 550586,
+    tcgPlayer: "550586",
   },
   text: "Each opponent may choose and discard a card. For each opponent who doesn't, you draw a card.",
   abilities: [

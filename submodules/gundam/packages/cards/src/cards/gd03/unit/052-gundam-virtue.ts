@@ -7,14 +7,17 @@ export const gd03GundamVirtue052: UnitCard = {
   color: "purple",
   traits: ["cb", "gn drive"],
   id: "GD03-052",
-  externalId: "gundam:gd03-052",
-  slug: "gundam-virtue-gd03-052",
+  canonicalId: "GD03-052",
+  externalIds: { bandai: "gundam:gd03-052" },
+  slug: "gundam-virtue/gd03-052",
   displayName: "Gundam Virtue",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-052",
   printings: [
     {
       id: "GD03-052",
+      artId: "GD03-052",
+      setCode: "GD03",
       collectorNumber: "GD03-052",
       cardNumber: "GD03-052",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamVirtue052: UnitCard = {
     },
     {
       id: "GD03-052_p1",
+      artId: "GD03-052_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-052_p1",
       cardNumber: "GD03-052",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamVirtue052: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-052", "GD03-052_p1"],
   selectedPrintingId: "GD03-052",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-052.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-052.webp?260424",

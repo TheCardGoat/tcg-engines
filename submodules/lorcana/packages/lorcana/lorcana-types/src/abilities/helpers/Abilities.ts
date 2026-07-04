@@ -74,12 +74,18 @@ export const Abilities = {
    *
    * @example Abilities.Shift({ cost: { ink: 5 } })
    * @example Abilities.Shift({ cost: { ink: 3 }, shiftTarget: "Elsa" })
+   * @example Abilities.Shift({ cost: { ink: 2 }, shiftClassification: "Puppy" })
    */
-  Shift: (params: { cost: AbilityCost; shiftTarget?: string }): ShiftKeywordAbility => ({
+  Shift: (params: {
+    cost: AbilityCost;
+    shiftTarget?: string;
+    shiftClassification?: string;
+  }): ShiftKeywordAbility => ({
     cost: params.cost,
     keyword: "Shift",
     type: "keyword",
     ...(params.shiftTarget && { shiftTarget: params.shiftTarget }),
+    ...(params.shiftClassification && { shiftClassification: params.shiftClassification }),
   }),
 
   /**

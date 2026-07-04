@@ -14,9 +14,9 @@ export const scroogesTopHatI18n: Record<Languages, I18nProperties> = {
     name: "Dagoberts Zylinder",
     text: [
       {
-        title: "WIRTSCHAFTLICHES FACHWISSEN",
+        title: "Wirtschaftliches Fachwissen",
         description:
-          "— Du zahlst 1 weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
+          "{E} — Du zahlst 1 {I} weniger für den nächsten Gegenstand, den du in diesem Zug ausspielst.",
       },
     ],
   },
@@ -24,8 +24,9 @@ export const scroogesTopHatI18n: Record<Languages, I18nProperties> = {
     name: "Haut-de-forme de Picsou",
     text: [
       {
-        title: "SENS DES AFFAIRES",
-        description: "— Le prochain objet que vous jouez durant ce tour vous coûte 1 de moins.",
+        title: "Sens des affaires",
+        description:
+          "{E} — Le prochain objet que vous jouez durant ce tour vous coûte 1 {I} de moins.",
       },
     ],
   },
@@ -33,8 +34,9 @@ export const scroogesTopHatI18n: Record<Languages, I18nProperties> = {
     name: "Cilindro di Paperone",
     text: [
       {
-        title: "ESPERIENZA NEGLI AFFARI",
-        description: "— Paga 1 in meno per giocare il tuo prossimo oggetto per questo turno.",
+        title: "Esperienza negli Affari",
+        description:
+          "{E} — Paga 1 {I} in meno per giocare il tuo prossimo oggetto per questo turno.",
       },
     ],
   },

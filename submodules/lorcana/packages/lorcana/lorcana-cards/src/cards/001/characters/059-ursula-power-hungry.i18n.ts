@@ -17,7 +17,7 @@ export const ursulaPowerHungryI18n: Record<Languages, I18nProperties> = {
     version: "Machtgierig",
     text: [
       {
-        title: "DAS IST ZU EINFACH!",
+        title: "Das ist zu einfach!",
         description:
           "Wenn du diesen Charakter ausspielst, verlieren alle gegnerischen Mitspielenden je 1 Legende. Du darfst für jede auf diese Weise verlorene Legende 1 Karte ziehen.",
       },
@@ -39,7 +39,7 @@ export const ursulaPowerHungryI18n: Record<Languages, I18nProperties> = {
     version: "Power Hungry",
     text: [
       {
-        title: "IT'S TOO EASY!",
+        title: "It's Too Easy!",
         description:
           "When you play this character, each opponent loses 1 lore. You may draw a card for each 1 lore lost this way.",
       },

@@ -4,6 +4,17 @@ import { robinHoodDesertWandererI18n } from "./137-robin-hood-desert-wanderer.i1
 export const robinHoodDesertWanderer: CharacterCard = {
   id: "6Vl",
   canonicalId: "ci_6Vl",
+  slug: "lorcana-ci_6Vl",
+  printings: [
+    {
+      id: "set12-137",
+      artId: "set12-137",
+      setCode: "set12",
+      collectorNumber: "137",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-137"],
   cardType: "character",
   name: "Robin Hood",
@@ -21,6 +32,7 @@ export const robinHoodDesertWanderer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_493b48e5adba46f1aeff1ddb9eaffd47",
+    tcgPlayer: "692059",
   },
   classifications: ["Dreamborn", "Hero"],
   i18n: robinHoodDesertWandererI18n,

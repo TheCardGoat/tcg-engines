@@ -20,12 +20,13 @@ export const mittensSassyStreetCatI18n: Record<Languages, I18nProperties> = {
     version: "Freche Straßenkatze",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "NICHTS ZU DANKEN",
+        title: "Nichts zu danken",
         description:
-          "Einmal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhalten deine anderen Charaktere mit Beschützen in diesem Zug +1.",
+          "Einmal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhalten deine anderen Charaktere mit <Beschützen> in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const mittensSassyStreetCatI18n: Record<Languages, I18nProperties> = {
     version: "Chatte de gouttière insolente",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "NE ME REMERCIE PAS",
+        title: "Ne me remercie pas",
         description:
-          "Une seule fois durant votre tour, lorsqu'une carte est placée dans votre réserve d'encre, vos autres personnages avec Rempart gagnent +1 pour le reste de ce tour.",
+          "Une seule fois durant votre tour, lorsqu'une carte est placée dans votre réserve d'encre, vos autres personnages avec <Rempart> gagnent +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +50,12 @@ export const mittensSassyStreetCatI18n: Record<Languages, I18nProperties> = {
     version: "Insolente Gatta di Strada",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "NON SERVE RINGRAZIARE",
+        title: "Non Serve Ringraziare",
         description:
-          "Una volta durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, i tuoi altri personaggi con Guardiano ricevono +1 per questo turno.",
+          "Una volta durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, i tuoi altri personaggi con <Guardiano> ricevono +1 {L} per questo turno.",
       },
     ],
   },

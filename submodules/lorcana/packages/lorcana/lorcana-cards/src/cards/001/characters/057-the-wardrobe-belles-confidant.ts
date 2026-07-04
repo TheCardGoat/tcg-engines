@@ -4,6 +4,17 @@ import { theWardrobeBellesConfidantI18n } from "./057-the-wardrobe-belles-confid
 export const theWardrobeBellesConfidant: CharacterCard = {
   id: "FRs",
   canonicalId: "ci_FRs",
+  slug: "lorcana-ci_FRs",
+  printings: [
+    {
+      id: "set1-057",
+      artId: "set1-057",
+      setCode: "set1",
+      collectorNumber: "57",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-057"],
   cardType: "character",
   name: "The Wardrobe",
@@ -21,7 +32,7 @@ export const theWardrobeBellesConfidant: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_0ab2ecd7d121461e8053278706d889d5",
-    tcgPlayer: 485363,
+    tcgPlayer: "485363",
   },
   classifications: ["Dreamborn", "Ally"],
   i18n: theWardrobeBellesConfidantI18n,

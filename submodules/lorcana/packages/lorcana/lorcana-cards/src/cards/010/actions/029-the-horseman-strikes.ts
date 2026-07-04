@@ -3,7 +3,18 @@ import { theHorsemanStrikesI18n } from "./029-the-horseman-strikes.i18n";
 
 export const theHorsemanStrikes: ActionCard = {
   id: "bIQ",
-  canonicalId: "ci_0mj",
+  canonicalId: "ci_rO0",
+  slug: "lorcana-ci_rO0",
+  printings: [
+    {
+      id: "set10-029",
+      artId: "set10-029",
+      setCode: "set10",
+      collectorNumber: "29",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-029"],
   cardType: "action",
   name: "The Horseman Strikes!",
@@ -16,7 +27,7 @@ export const theHorsemanStrikes: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_faf17cc51b9748daa7187f81103430d0",
-    tcgPlayer: 660013,
+    tcgPlayer: "660013",
   },
   text: "Draw a card. You may banish chosen character with Evasive.",
   abilities: [

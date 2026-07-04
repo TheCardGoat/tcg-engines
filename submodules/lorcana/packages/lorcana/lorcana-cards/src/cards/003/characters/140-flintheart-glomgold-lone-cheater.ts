@@ -4,6 +4,17 @@ import { flintheartGlomgoldLoneCheaterI18n } from "./140-flintheart-glomgold-lon
 export const flintheartGlomgoldLoneCheater: CharacterCard = {
   id: "BVy",
   canonicalId: "ci_BVy",
+  slug: "lorcana-ci_BVy",
+  printings: [
+    {
+      id: "set3-140",
+      artId: "set3-140",
+      setCode: "set3",
+      collectorNumber: "140",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-140"],
   cardType: "character",
   name: "Flintheart Glomgold",
@@ -20,7 +31,7 @@ export const flintheartGlomgoldLoneCheater: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1121277f1b454321be2740185a61c1c7",
-    tcgPlayer: 538237,
+    tcgPlayer: "538237",
   },
   text: [
     {

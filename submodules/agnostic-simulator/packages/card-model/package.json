@@ -1,0 +1,28 @@
+{
+  "name": "@tcg/card-model",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cross-game catalog card model — base definition, printing, and external-source contracts.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vp test run --configLoader runner"
+  },
+  "devDependencies": {
+    "@tcg/cyberpunk-types": "link:../../../cyberpunk/packages/types",
+    "@tcg/gundam-types": "link:../../../gundam/packages/types",
+    "@tcg/lorcana-types": "link:../../../lorcana/packages/lorcana/lorcana-types",
+    "@tcg/op-types": "link:../../../one-piece/packages/types",
+    "@tcg/star-wars-unlimited-types": "link:../../../star-wars-unlimited/packages/types",
+    "@tcg/typescript-config": "link:../typescript-config",
+    "@types/node": "^22.13.4"
+  }
+}

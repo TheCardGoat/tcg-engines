@@ -20,14 +20,14 @@ export const darkwingsChairSetI18n: Record<Languages, I18nProperties> = {
     name: "Darkwings Stuhl-Set",
     text: [
       {
-        title: "GEHEIMER EINGANG",
+        title: "Geheimer Eingang",
         description:
           "Wenn du diesen Gegenstand ausspielst, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
       {
-        title: "PLÖTZLICHE DREHUNG,",
+        title: "Plötzliche Drehung",
         description:
-          "Verbanne diesen Gegenstand — Entferne bis zu 2 Schaden von einem Charakter deiner Wahl. Falls du einen Darkwing-Duck-Charakter gewählt hast, entferne stattdessen bis zu 4 Schaden.",
+          "{E}, Verbanne diesen Gegenstand — Entferne bis zu 2 Schaden von einem Charakter deiner Wahl. Falls du einen Darkwing-Duck-Charakter gewählt hast, entferne stattdessen bis zu 4 Schaden.",
       },
     ],
   },
@@ -35,14 +35,14 @@ export const darkwingsChairSetI18n: Record<Languages, I18nProperties> = {
     name: "Fauteuils de Myster Mask",
     text: [
       {
-        title: "ENTRÉE SECRÈTE",
+        title: "Entrée secrète",
         description:
           "Lorsque vous jouez cet objet, vous pouvez placer la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
       {
-        title: "ROTATION SOUDAINE,",
+        title: "Rotation soudaine",
         description:
-          "Bannissez cet objet — Choisissez un personnage et retirez-lui jusqu'à 2 dommages. Si vous choisissez un personnage Myster Mask ainsi, retirez-lui jusqu'à 4 dommages à la place.",
+          "{E}, Bannissez cet objet — Choisissez un personnage et retirez-lui jusqu'à 2 dommages. Si vous choisissez un personnage Myster Mask ainsi, retirez-lui jusqu'à 4 dommages à la place.",
       },
     ],
   },
@@ -50,14 +50,14 @@ export const darkwingsChairSetI18n: Record<Languages, I18nProperties> = {
     name: "Set di Sedie di Darkwing",
     text: [
       {
-        title: "ENTRATA SEGRETA",
+        title: "Entrata Segreta",
         description:
           "Quando giochi questo oggetto, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },
       {
-        title: "ROTAZIONE IMPROVVISA,",
+        title: "Rotazione Improvvisa",
         description:
-          "esilia questo oggetto — Rimuovi fino a 2 danni da un personaggio a tua scelta. Se viene scelto un personaggio chiamato Darkwing Duck, rimuovi invece fino a 4 danni.",
+          "{E}, esilia questo oggetto — Rimuovi fino a 2 danni da un personaggio a tua scelta. Se viene scelto un personaggio chiamato Darkwing Duck, rimuovi invece fino a 4 danni.",
       },
     ],
   },

@@ -4,6 +4,17 @@ import { lyleTiberiusRourkeCunningMercenaryI18n } from "./078-lyle-tiberius-rour
 export const lyleTiberiusRourkeCunningMercenary: CharacterCard = {
   id: "1Ni",
   canonicalId: "ci_1Ni",
+  slug: "lorcana-ci_1Ni",
+  printings: [
+    {
+      id: "set3-078",
+      artId: "set3-078",
+      setCode: "set3",
+      collectorNumber: "78",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-078"],
   cardType: "character",
   name: "Lyle Tiberius Rourke",
@@ -20,7 +31,7 @@ export const lyleTiberiusRourkeCunningMercenary: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_04851c839e844359bfe6a0fa70158d38",
-    tcgPlayer: 536279,
+    tcgPlayer: "536279",
   },
   text: [
     {

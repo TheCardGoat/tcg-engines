@@ -17,7 +17,7 @@ export const goGoTomagoMechanicalEngineerI18n: Record<Languages, I18nProperties>
     version: "Maschineningenieurin",
     text: [
       {
-        title: "DAS BRAUCH ICH!",
+        title: "Das brauch ich!",
         description:
           "Wenn du eine Flutgestalt auf diesen Charakter ausspielst, darfst du die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat legen.",
       },
@@ -28,7 +28,7 @@ export const goGoTomagoMechanicalEngineerI18n: Record<Languages, I18nProperties>
     version: "Ingénieure en mécanique",
     text: [
       {
-        title: "J'AI BESOIN DE ÇA!",
+        title: "J'ai besoin de ça!",
         description:
           "Lorsque vous jouez un personnage Floodborn sur cette carte, vous pouvez placer la première carte de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
@@ -39,7 +39,7 @@ export const goGoTomagoMechanicalEngineerI18n: Record<Languages, I18nProperties>
     version: "Ingegnere Meccanico",
     text: [
       {
-        title: "MI SERVE!",
+        title: "Mi Serve!",
         description:
           "Quando giochi un personaggio Imbevuto sopra a questa carta, puoi aggiungere la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },

@@ -7,14 +7,17 @@ export const st06SugaiSGelgoogGq008: UnitCard = {
   color: "green",
   traits: ["clan"],
   id: "ST06-008",
-  externalId: "gundam:st06-008",
-  slug: "sugai-s-gelgoog-gq-st06-008",
+  canonicalId: "ST06-008",
+  externalIds: { bandai: "gundam:st06-008" },
+  slug: "sugai-s-gelgoog-gq/st06-008",
   displayName: "Sugai's Gelgoog (GQ)",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-008",
   printings: [
     {
       id: "ST06-008",
+      artId: "ST06-008",
+      setCode: "ST06",
       collectorNumber: "ST06-008",
       cardNumber: "ST06-008",
       set: {
@@ -30,6 +33,8 @@ export const st06SugaiSGelgoogGq008: UnitCard = {
     },
     {
       id: "ST06-008_p1",
+      artId: "ST06-008_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-008_p1",
       cardNumber: "ST06-008",
       set: {
@@ -44,6 +49,7 @@ export const st06SugaiSGelgoogGq008: UnitCard = {
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
+  reprints: ["ST06-008", "ST06-008_p1"],
   selectedPrintingId: "ST06-008",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-008.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-008.webp?260424",

@@ -4,6 +4,17 @@ import { repairI18n } from "./162-repair.i18n";
 export const repair: ActionCard = {
   id: "2j4",
   canonicalId: "ci_2j4",
+  slug: "lorcana-ci_2j4",
+  printings: [
+    {
+      id: "set3-162",
+      artId: "set3-162",
+      setCode: "set3",
+      collectorNumber: "162",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-162"],
   cardType: "action",
   name: "Repair",
@@ -16,7 +27,7 @@ export const repair: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e2433a86940b43e8ac63f6eeddedf085",
-    tcgPlayer: 538305,
+    tcgPlayer: "538305",
   },
   text: "Remove up to 3 damage from one of your locations or characters.",
   abilities: [
@@ -24,7 +35,10 @@ export const repair: ActionCard = {
       type: "action",
       effect: {
         type: "remove-damage",
-        amount: { type: "up-to", value: 3 },
+        amount: {
+          type: "up-to",
+          value: 3,
+        },
         target: {
           cardTypes: ["location", "character"],
           count: 1,

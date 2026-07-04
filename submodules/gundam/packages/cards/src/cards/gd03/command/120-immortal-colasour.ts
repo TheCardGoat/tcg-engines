@@ -7,14 +7,17 @@ export const gd03ImmortalColasour120: CommandCard = {
   color: "white",
   traits: ["superpower bloc", "un"],
   id: "GD03-120",
-  externalId: "gundam:gd03-120",
-  slug: "immortal-colasour-gd03-120",
+  canonicalId: "GD03-120",
+  externalIds: { bandai: "gundam:gd03-120" },
+  slug: "immortal-colasour/gd03-120",
   displayName: "Immortal Colasour",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-120",
   printings: [
     {
       id: "GD03-120",
+      artId: "GD03-120",
+      setCode: "GD03",
       collectorNumber: "GD03-120",
       cardNumber: "GD03-120",
       set: {
@@ -29,6 +32,7 @@ export const gd03ImmortalColasour120: CommandCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-120"],
   selectedPrintingId: "GD03-120",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-120.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-120.webp?260424",

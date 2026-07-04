@@ -99,6 +99,7 @@ export type {
   GrantDiscardInkabilityEffect,
   ModifyStatEffect,
   NameACardEffect,
+  PlayFromDiscardEffect,
   PropertyModificationEffect,
   PutOnTopEffect,
   RevealUntilMatchEffect,
@@ -114,6 +115,7 @@ export type {
 } from "./modifier-effects";
 // Movement effects
 export type {
+  EnablePlayFromDiscardEffect,
   EnablePlayFromUnderEffect,
   GrantAbilitiesWhileHereEffect,
   MoveCostReductionEffect,

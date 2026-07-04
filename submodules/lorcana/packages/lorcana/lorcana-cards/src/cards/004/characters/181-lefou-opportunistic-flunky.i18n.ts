@@ -17,7 +17,7 @@ export const lefouOpportunisticFlunkyI18n: Record<Languages, I18nProperties> = {
     version: "Beeinflussbarer Lakai",
     text: [
       {
-        title: "ICH HABE VOM BESTEN GELERNT",
+        title: "Ich habe vom Besten gelernt",
         description:
           "In deinem Zug kannst du diesen Charakter kostenlos ausspielen, wenn ein gegnerischer Charakter in diesem Zug durch eine Herausforderung verbannt wurde.",
       },
@@ -28,7 +28,7 @@ export const lefouOpportunisticFlunkyI18n: Record<Languages, I18nProperties> = {
     version: "Laquais opportuniste",
     text: [
       {
-        title: "J'AI APPRIS AUPRÈS DU MEILLEUR",
+        title: "J'ai appris auprès du meilleur",
         description:
           "Durant votre tour, si un personnage adverse a été banni via un défi, vous pouvez jouer ce personnage gratuitement.",
       },
@@ -39,7 +39,7 @@ export const lefouOpportunisticFlunkyI18n: Record<Languages, I18nProperties> = {
     version: "Lacchè Opportunista",
     text: [
       {
-        title: "HO IMPARATO DAL MIGLIORE",
+        title: "Ho Imparato dal Migliore",
         description:
           "Durante il tuo turno, puoi giocare questo personaggio gratis se un personaggio avversario è stato esiliato in una sfida in questo turno.",
       },

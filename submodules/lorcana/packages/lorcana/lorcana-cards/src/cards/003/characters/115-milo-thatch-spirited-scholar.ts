@@ -4,6 +4,17 @@ import { miloThatchSpiritedScholarI18n } from "./115-milo-thatch-spirited-schola
 export const miloThatchSpiritedScholar: CharacterCard = {
   id: "tGe",
   canonicalId: "ci_tGe",
+  slug: "lorcana-ci_tGe",
+  printings: [
+    {
+      id: "set3-115",
+      artId: "set3-115",
+      setCode: "set3",
+      collectorNumber: "115",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-115"],
   cardType: "character",
   name: "Milo Thatch",
@@ -20,7 +31,7 @@ export const miloThatchSpiritedScholar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_c219f80dc2d34bea9b7a9bfdb4e04528",
-    tcgPlayer: 536282,
+    tcgPlayer: "536282",
   },
   text: [
     {

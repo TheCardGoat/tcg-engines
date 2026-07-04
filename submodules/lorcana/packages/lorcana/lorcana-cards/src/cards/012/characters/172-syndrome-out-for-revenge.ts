@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { syndromeOutForRevengeI18n } from "./172-syndrome-out-for-revenge.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const syndromeOutForRevenge: CharacterCard = {
-  id: "wqr",
+  id: "jT4",
   canonicalId: "ci_wqr",
+  slug: "lorcana-ci_wqr",
+  printings: [
+    {
+      id: "set12-172",
+      artId: "set12-172",
+      setCode: "set12",
+      collectorNumber: "172",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-172"],
   cardType: "character",
   name: "Syndrome",
@@ -20,7 +32,8 @@ export const syndromeOutForRevenge: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_551b17ff6ce94d239237332a2c902086",
+    lorcast: "crd_4ca85bb2c2274683bb7f2015997479c5",
+    tcgPlayer: "692228",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { heffalumpsAndWoozlesI18n } from "./095-heffalumps-and-woozles.i18n";
 export const heffalumpsAndWoozles: ActionCard = {
   id: "Iby",
   canonicalId: "ci_Iby",
+  slug: "lorcana-ci_Iby",
+  printings: [
+    {
+      id: "set6-095",
+      artId: "set6-095",
+      setCode: "set6",
+      collectorNumber: "95",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-095"],
   cardType: "action",
   name: "Heffalumps and Woozles",
@@ -16,7 +27,7 @@ export const heffalumpsAndWoozles: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b87dd2f01e364f679975158dd2637a6d",
-    tcgPlayer: 587355,
+    tcgPlayer: "587355",
   },
   text: "Chosen opposing character can't quest during their next turn. Draw a card.",
   actionSubtype: "song",

@@ -21,13 +21,13 @@ export const mortyFieldmouseTinyTimI18n: Record<Languages, I18nProperties> = {
     version: "kleiner Tim",
     text: [
       {
-        title: "FESTTAGSGEIST",
+        title: "Festtagsgeist",
         description:
           "Einmal während deines Zuges, wenn du eine Karte unter einen deiner anderen Charaktere legst, lege die oberste Karte deines Decks verdeckt unter diesen Charakter.",
       },
       {
-        title: "URLAUBSSTIMMUNG",
-        description: "Dieser Charakter erhält für jede Karte unter ihm +1.",
+        title: "Urlaubsstimmung",
+        description: "Dieser Charakter erhält für jede Karte unter ihm +1 {L}.",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const mortyFieldmouseTinyTimI18n: Record<Languages, I18nProperties> = {
     version: "Tiny Tim",
     text: [
       {
-        title: "ESPRIT DES FÊTES",
+        title: "Esprit des fêtes",
         description:
           "Une fois durant votre tour, lorsque vous placez une carte sous l'un de vos autres personnages, placez la carte du dessus de votre pioche, face cachée, sous ce personnage-ci.",
       },
       {
-        title: "AMBIANCE DES FÊTES",
-        description: "Ce personnage gagne +1 pour chaque carte sous lui.",
+        title: "Ambiance des fêtes",
+        description: "Ce personnage gagne +1 {L} pour chaque carte sous lui.",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const mortyFieldmouseTinyTimI18n: Record<Languages, I18nProperties> = {
     version: "Il Piccolo Tim",
     text: [
       {
-        title: "SPIRITO FESTIVO",
+        title: "Spirito Festivo",
         description:
           "Una volta durante il tuo turno, ogni volta che metti una carta sotto a uno dei tuoi altri personaggi, metti la prima carta del tuo mazzo a faccia in giù sotto a questo personaggio.",
       },
       {
-        title: "ALLEGRIA NATALIZIA",
-        description: "Questo personaggio riceve +1 per ogni carta sotto di sé.",
+        title: "Allegria Natalizia",
+        description: "Questo personaggio riceve +1 {L} per ogni carta sotto di sé.",
       },
     ],
   },

@@ -16,9 +16,9 @@ export const mickeyMouseNightWatchI18n: Record<Languages, I18nProperties> = {
     version: "Nachtwächter",
     text: [
       {
-        title: "UNTERSTÜTZUNG",
+        title: "Unterstützung",
         description:
-          "Deine Pluto-Charaktere erhalten Robust +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+          "Deine Pluto-Charaktere erhalten <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
       },
     ],
   },
@@ -27,8 +27,8 @@ export const mickeyMouseNightWatchI18n: Record<Languages, I18nProperties> = {
     version: "Veilleur de nuit",
     text: [
       {
-        title: "RENFORT",
-        description: "Vos personnages Pluto gagnent Résistance +1.",
+        title: "Renfort",
+        description: "Vos personnages Pluto gagnent <Résistance> +1.",
       },
     ],
   },
@@ -37,8 +37,8 @@ export const mickeyMouseNightWatchI18n: Record<Languages, I18nProperties> = {
     version: "Sentinella Notturna",
     text: [
       {
-        title: "SCORTA I",
-        description: "tuoi personaggi chiamati Pluto ottengono Resistere +1.",
+        title: "Scorta",
+        description: "I tuoi personaggi chiamati Pluto ottengono <Resistere> +1.",
       },
     ],
   },

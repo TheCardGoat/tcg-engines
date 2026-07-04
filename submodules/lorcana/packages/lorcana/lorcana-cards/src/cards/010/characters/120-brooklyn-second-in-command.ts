@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { brooklynSecondInCommandI18n } from "./120-brooklyn-second-in-command.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { stoneByDay } from "../../../helpers/abilities/stoneByDay";
 
 export const brooklynSecondInCommand: CharacterCard = {
   id: "jg3",
   canonicalId: "ci_jg3",
+  slug: "lorcana-ci_jg3",
+  printings: [
+    {
+      id: "set10-120",
+      artId: "set10-120",
+      setCode: "set10",
+      collectorNumber: "120",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-120"],
   cardType: "character",
   name: "Brooklyn",
@@ -22,7 +34,7 @@ export const brooklynSecondInCommand: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_07d54e366c0548e6890cee09e3eaa032",
-    tcgPlayer: 659241,
+    tcgPlayer: "659241",
   },
   text: [
     {

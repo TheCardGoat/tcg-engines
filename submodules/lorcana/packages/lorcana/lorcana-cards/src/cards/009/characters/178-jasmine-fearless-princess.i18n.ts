@@ -22,14 +22,14 @@ export const jasmineFearlessPrincessI18n: Record<Languages, I18nProperties> = {
     version: "Furchtlose Prinzessin",
     text: [
       {
-        title: "WAGE DEN SPRUNG",
+        title: "Wage den Sprung",
         description:
-          "In deinem Zug erhält dieser Charakter Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "In deinem Zug erhält dieser Charakter <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
       {
-        title: "JETZT IST MEINE CHANCE",
+        title: "Jetzt ist meine Chance",
         description:
-          "Wähle eine Karte aus deiner Hand und wirf sie ab — Dieser Charakter erhält in diesem Zug Herausfordern +3. (Während der Charakter herausfordert, erhält er +3.)",
+          "Wähle eine Karte aus deiner Hand und wirf sie ab — Dieser Charakter erhält in diesem Zug <Herausfordern> +3. (Während der Charakter herausfordert, erhält er +3 {S}.)",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const jasmineFearlessPrincessI18n: Record<Languages, I18nProperties> = {
     version: "Princesse intrépide",
     text: [
       {
-        title: "FAIRE LE SAUT",
+        title: "Faire le saut",
         description:
-          "Durant votre tour, ce personnage gagne Insaisissable. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, ce personnage gagne <Insaisissable>. (Il peut défier des personnages avec Insaisissable.)",
       },
       {
-        title: "C'EST LE MOMENT OU JAMAIS",
+        title: "C'est le moment ou jamais",
         description:
-          "Défaussez une carte — Ce personnage gagne Offensif +3 pour le reste de ce tour.",
+          "Défaussez une carte — Ce personnage gagne <Offensif> +3 pour le reste de ce tour.",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const jasmineFearlessPrincessI18n: Record<Languages, I18nProperties> = {
     version: "Principessa Impavida",
     text: [
       {
-        title: "SALTARE",
+        title: "Saltare",
         description:
-          "Durante il tuo turno, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
       {
-        title: "ORA",
+        title: "Ora è il Mio Momento",
         description:
-          "È IL MIO MOMENTO Scegli e scarta una carta — Questo personaggio ottiene Sfidante +3 per questo turno.",
+          "Scegli e scarta una carta — Questo personaggio ottiene <Sfidante> +3 per questo turno. (Riceve +3 {S} mentre sta sfidando.)",
       },
     ],
   },

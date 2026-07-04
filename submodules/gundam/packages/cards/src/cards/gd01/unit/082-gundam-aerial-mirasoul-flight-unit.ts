@@ -7,14 +7,17 @@ export const gd01GundamAerialMirasoulFlightUnit082: UnitCard = {
   color: "white",
   traits: ["academy"],
   id: "GD01-082",
-  externalId: "gundam:gd01-082",
-  slug: "gundam-aerial-mirasoul-flight-unit-gd01-082",
+  canonicalId: "GD01-082",
+  externalIds: { bandai: "gundam:gd01-082" },
+  slug: "gundam-aerial-mirasoul-flight-unit/gd01-082",
   displayName: "Gundam Aerial (Mirasoul Flight Unit)",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-082",
   printings: [
     {
       id: "GD01-082",
+      artId: "GD01-082",
+      setCode: "GD01",
       collectorNumber: "GD01-082",
       cardNumber: "GD01-082",
       set: {
@@ -29,6 +32,7 @@ export const gd01GundamAerialMirasoulFlightUnit082: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-082"],
   selectedPrintingId: "GD01-082",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-082.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-082.webp?260424",

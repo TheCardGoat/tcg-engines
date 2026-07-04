@@ -4,7 +4,7 @@ import {
   getSupporterDisplayConfig,
   isVisibleSupporterTier,
   normalizeSupporterTier,
-} from "./supporter-display";
+} from "./supporter-display.js";
 
 describe("supporter display", () => {
   it("keeps free, bot, missing and unknown tiers plain", () => {

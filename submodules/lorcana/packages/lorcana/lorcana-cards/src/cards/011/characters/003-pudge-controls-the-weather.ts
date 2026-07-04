@@ -4,6 +4,17 @@ import { pudgeControlsTheWeatherI18n } from "./003-pudge-controls-the-weather.i1
 export const pudgeControlsTheWeather: CharacterCard = {
   id: "IAp",
   canonicalId: "ci_IAp",
+  slug: "lorcana-ci_IAp",
+  printings: [
+    {
+      id: "set11-003",
+      artId: "set11-003",
+      setCode: "set11",
+      collectorNumber: "3",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-003"],
   cardType: "character",
   name: "Pudge",
@@ -20,7 +31,7 @@ export const pudgeControlsTheWeather: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a862524392a1444389f95109d49ddd31",
-    tcgPlayer: 674818,
+    tcgPlayer: "674818",
   },
   text: [
     {

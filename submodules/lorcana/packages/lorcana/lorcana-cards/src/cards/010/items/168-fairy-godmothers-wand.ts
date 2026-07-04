@@ -4,6 +4,17 @@ import { fairyGodmothersWandI18n } from "./168-fairy-godmothers-wand.i18n";
 export const fairyGodmothersWand: ItemCard = {
   id: "yp6",
   canonicalId: "ci_yp6",
+  slug: "lorcana-ci_yp6",
+  printings: [
+    {
+      id: "set10-168",
+      artId: "set10-168",
+      setCode: "set10",
+      collectorNumber: "168",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-168"],
   cardType: "item",
   name: "Fairy Godmother's Wand",
@@ -16,7 +27,7 @@ export const fairyGodmothersWand: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ddf2f3b6243d46b693fa4c08113e8930",
-    tcgPlayer: 658786,
+    tcgPlayer: "658786",
   },
   text: [
     {

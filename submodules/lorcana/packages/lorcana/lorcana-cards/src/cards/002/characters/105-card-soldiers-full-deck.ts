@@ -4,6 +4,17 @@ import { cardSoldiersFullDeckI18n } from "./105-card-soldiers-full-deck.i18n";
 export const cardSoldiersFullDeck: CharacterCard = {
   id: "V2r",
   canonicalId: "ci_lN7",
+  slug: "lorcana-ci_lN7",
+  printings: [
+    {
+      id: "set2-105",
+      artId: "set2-105",
+      setCode: "set2",
+      collectorNumber: "105",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-105", "set9-122"],
   cardType: "character",
   name: "Card Soldiers",
@@ -21,7 +32,7 @@ export const cardSoldiersFullDeck: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_9da81e46cc0d47c186f220e4007b0fd4",
-    tcgPlayer: 650057,
+    tcgPlayer: "650057",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: cardSoldiersFullDeckI18n,

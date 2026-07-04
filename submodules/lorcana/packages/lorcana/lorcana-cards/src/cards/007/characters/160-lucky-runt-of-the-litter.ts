@@ -4,6 +4,17 @@ import { luckyRuntOfTheLitterI18n } from "./160-lucky-runt-of-the-litter.i18n";
 export const luckyRuntOfTheLitter: CharacterCard = {
   id: "Kl0",
   canonicalId: "ci_Kl0",
+  slug: "lorcana-ci_Kl0",
+  printings: [
+    {
+      id: "set7-160",
+      artId: "set7-160",
+      setCode: "set7",
+      collectorNumber: "160",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-160"],
   cardType: "character",
   name: "Lucky",
@@ -20,7 +31,7 @@ export const luckyRuntOfTheLitter: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6f2802da6557456c8a34693d3650784f",
-    tcgPlayer: 619498,
+    tcgPlayer: "619498",
   },
   text: [
     {

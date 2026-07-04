@@ -4,6 +4,17 @@ import { davidImpressiveSurferI18n } from "./008-david-impressive-surfer.i18n";
 export const davidImpressiveSurfer: CharacterCard = {
   id: "Xi4",
   canonicalId: "ci_Xi4",
+  slug: "lorcana-ci_Xi4",
+  printings: [
+    {
+      id: "set6-008",
+      artId: "set6-008",
+      setCode: "set6",
+      collectorNumber: "8",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-008"],
   cardType: "character",
   name: "David",
@@ -20,7 +31,7 @@ export const davidImpressiveSurfer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4e3967f948654fc9a2d9595743e1709f",
-    tcgPlayer: 592006,
+    tcgPlayer: "592006",
   },
   text: [
     {

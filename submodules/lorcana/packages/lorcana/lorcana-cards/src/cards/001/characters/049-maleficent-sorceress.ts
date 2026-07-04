@@ -4,6 +4,17 @@ import { maleficentSorceressI18n } from "./049-maleficent-sorceress.i18n";
 export const maleficentSorceress: CharacterCard = {
   id: "H9N",
   canonicalId: "ci_H9N",
+  slug: "lorcana-ci_H9N",
+  printings: [
+    {
+      id: "set1-049",
+      artId: "set1-049",
+      setCode: "set1",
+      collectorNumber: "49",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-049"],
   cardType: "character",
   name: "Maleficent",
@@ -20,7 +31,7 @@ export const maleficentSorceress: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ff8bf99d2bd84183bcc4b5d7a18360f0",
-    tcgPlayer: 494103,
+    tcgPlayer: "494103",
   },
   text: [
     {

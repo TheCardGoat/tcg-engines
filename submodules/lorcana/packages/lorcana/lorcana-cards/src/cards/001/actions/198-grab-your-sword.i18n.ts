@@ -11,7 +11,15 @@ export const grabYourSwordI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "TUONS LA BÊTE !",
-    text: "Infligez 2 dommages à chaque personnage adverse.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 5 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Infligez 2 dommages à chaque personnage adverse.",
+      },
+    ],
   },
   it: {
     name: "Grab Your Sword",

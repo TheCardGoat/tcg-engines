@@ -4,6 +4,17 @@ import { plateArmorI18n } from "./201-plate-armor.i18n";
 export const plateArmor: ItemCard = {
   id: "12X",
   canonicalId: "ci_12X",
+  slug: "lorcana-ci_12X",
+  printings: [
+    {
+      id: "set5-201",
+      artId: "set5-201",
+      setCode: "set5",
+      collectorNumber: "201",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-201"],
   cardType: "item",
   name: "Plate Armor",
@@ -16,7 +27,7 @@ export const plateArmor: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_170330e953034b0b84419cfff824f737",
-    tcgPlayer: 561195,
+    tcgPlayer: "561195",
   },
   text: [
     {

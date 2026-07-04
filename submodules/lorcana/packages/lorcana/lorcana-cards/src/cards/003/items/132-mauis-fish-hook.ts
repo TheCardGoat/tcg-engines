@@ -4,6 +4,17 @@ import { mauisFishHookI18n } from "./132-mauis-fish-hook.i18n";
 export const mauisFishHook: ItemCard = {
   id: "chG",
   canonicalId: "ci_chG",
+  slug: "lorcana-ci_chG",
+  printings: [
+    {
+      id: "set3-132",
+      artId: "set3-132",
+      setCode: "set3",
+      collectorNumber: "132",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-132"],
   cardType: "item",
   name: "Maui's Fish Hook",
@@ -16,7 +27,7 @@ export const mauisFishHook: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2ad6131751ce45c681919a185cbe640a",
-    tcgPlayer: 538333,
+    tcgPlayer: "538333",
   },
   text: [
     {

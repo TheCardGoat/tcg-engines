@@ -4,6 +4,17 @@ import { donaldDuckFirstMateI18n } from "./080-donald-duck-first-mate.i18n";
 export const donaldDuckFirstMate: CharacterCard = {
   id: "LAI",
   canonicalId: "ci_LAI",
+  slug: "lorcana-ci_LAI",
+  printings: [
+    {
+      id: "set6-080",
+      artId: "set6-080",
+      setCode: "set6",
+      collectorNumber: "80",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-080"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckFirstMate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_466a67ed11c64db5962523365e633f0d",
-    tcgPlayer: 593002,
+    tcgPlayer: "593002",
   },
   text: [
     {

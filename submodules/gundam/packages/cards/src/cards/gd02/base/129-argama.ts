@@ -6,14 +6,17 @@ export const gd02Argama129: BaseCard = {
   type: "base",
   traits: ["aeug", "warship"],
   id: "GD02-129",
-  externalId: "gundam:gd02-129",
-  slug: "argama-gd02-129",
+  canonicalId: "GD02-129",
+  externalIds: { bandai: "gundam:gd02-129" },
+  slug: "argama/gd02-129",
   displayName: "Argama",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-129",
   printings: [
     {
       id: "GD02-129",
+      artId: "GD02-129",
+      setCode: "GD02",
       collectorNumber: "GD02-129",
       cardNumber: "GD02-129",
       set: {
@@ -29,6 +32,8 @@ export const gd02Argama129: BaseCard = {
     },
     {
       id: "GD02-129_p1",
+      artId: "GD02-129_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-129_p1",
       cardNumber: "GD02-129",
       set: {
@@ -43,6 +48,7 @@ export const gd02Argama129: BaseCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-129", "GD02-129_p1"],
   selectedPrintingId: "GD02-129",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-129.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-129.webp?260424",

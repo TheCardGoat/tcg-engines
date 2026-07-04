@@ -17,7 +17,7 @@ export const morphSpaceGooEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Weltraum-Schleim",
     text: [
       {
-        title: "MIMIKRY",
+        title: "Mimikry",
         description:
           "Du kannst jeden Charakter mit der Gestaltwandel-Fähigkeit auf diesen Charakter ausspielen, als würde dieser Charakter jeden Namen haben.",
       },
@@ -28,9 +28,9 @@ export const morphSpaceGooEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Gluant de l'espace",
     text: [
       {
-        title: "MIMÉTISME",
+        title: "Mimétisme",
         description:
-          "Vous pouvez jouer n'importe quel personnage avec Alter sur ce personnage, quel que soit son nom.",
+          "Vous pouvez jouer n'importe quel personnage avec <Alter> sur ce personnage, quel que soit son nom.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const morphSpaceGooEnchantedI18n: Record<Languages, I18nProperties> = {
     version: "Blob Spaziale",
     text: [
       {
-        title: "IMITAZIONE",
+        title: "Imitazione",
         description:
-          "Puoi giocare qualsiasi personaggio con Trasformazione su questo personaggio, come se avesse qualsiasi nome.",
+          "Puoi giocare qualsiasi personaggio con <Trasformazione> su questo personaggio, come se avesse qualsiasi nome.",
       },
     ],
   },

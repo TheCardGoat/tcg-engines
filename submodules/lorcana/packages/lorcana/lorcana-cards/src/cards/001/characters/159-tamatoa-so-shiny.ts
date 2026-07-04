@@ -4,6 +4,17 @@ import { tamatoaSoShinyI18n } from "./159-tamatoa-so-shiny.i18n";
 export const tamatoaSoShiny: CharacterCard = {
   id: "Z2D",
   canonicalId: "ci_Z2D",
+  slug: "lorcana-ci_Z2D",
+  printings: [
+    {
+      id: "set1-159",
+      artId: "set1-159",
+      setCode: "set1",
+      collectorNumber: "159",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-159"],
   cardType: "character",
   name: "Tamatoa",
@@ -20,7 +31,7 @@ export const tamatoaSoShiny: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_43467fa51d7b4bcc9ebe110d9fe9e3b9",
-    tcgPlayer: 508881,
+    tcgPlayer: "508881",
   },
   text: [
     {

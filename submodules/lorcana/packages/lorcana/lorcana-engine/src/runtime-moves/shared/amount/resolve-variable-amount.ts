@@ -669,6 +669,11 @@ function evaluateAggregate(
       }
       return 0;
 
+    case "last-effect-target-count":
+      return sanitizeNumber(
+        context.eventSnapshot?.lastEffectTargetCount ?? context.eventSnapshot?.triggerAmount,
+      );
+
     case "filtered-count": {
       const count = listCardsInScope(
         context,

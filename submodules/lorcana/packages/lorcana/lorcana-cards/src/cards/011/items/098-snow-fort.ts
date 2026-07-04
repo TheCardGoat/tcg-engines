@@ -4,6 +4,17 @@ import { snowFortI18n } from "./098-snow-fort.i18n";
 export const snowFort: ItemCard = {
   id: "o61",
   canonicalId: "ci_o61",
+  slug: "lorcana-ci_o61",
+  printings: [
+    {
+      id: "set11-098",
+      artId: "set11-098",
+      setCode: "set11",
+      collectorNumber: "98",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-098"],
   cardType: "item",
   name: "Snow Fort",
@@ -16,7 +27,7 @@ export const snowFort: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_626e78520f89461d8982834bdc9ac172",
-    tcgPlayer: 673761,
+    tcgPlayer: "673761",
   },
   text: [
     {

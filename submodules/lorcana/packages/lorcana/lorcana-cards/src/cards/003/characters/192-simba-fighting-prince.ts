@@ -1,5 +1,7 @@
-import type { CharacterCard, Effect } from "@tcg/lorcana-types";
+import type { CharacterCard } from "@tcg/lorcana-types";
 import { simbaFightingPrinceI18n } from "./192-simba-fighting-prince.i18n";
+
+import type { Effect } from "@tcg/lorcana-types";
 
 const stepDownOrFightEffect: Effect = {
   chooser: "CONTROLLER",
@@ -46,6 +48,17 @@ const stepDownOrFightEffect: Effect = {
 export const simbaFightingPrince: CharacterCard = {
   id: "7KP",
   canonicalId: "ci_7KP",
+  slug: "lorcana-ci_7KP",
+  printings: [
+    {
+      id: "set3-192",
+      artId: "set3-192",
+      setCode: "set3",
+      collectorNumber: "192",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-192"],
   cardType: "character",
   name: "Simba",
@@ -62,7 +75,7 @@ export const simbaFightingPrince: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_95033988f96048348b305ef2c6293ac6",
-    tcgPlayer: 539115,
+    tcgPlayer: "539115",
   },
   text: [
     {

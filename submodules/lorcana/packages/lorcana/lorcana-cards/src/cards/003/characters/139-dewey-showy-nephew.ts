@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { deweyShowyNephewI18n } from "./139-dewey-showy-nephew.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const deweyShowyNephew: CharacterCard = {
   id: "Cbz",
   canonicalId: "ci_V2m",
+  slug: "lorcana-ci_V2m",
+  printings: [
+    {
+      id: "set3-139",
+      artId: "set3-139",
+      setCode: "set3",
+      collectorNumber: "139",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-139", "set9-139"],
   cardType: "character",
   name: "Dewey",
@@ -21,7 +33,7 @@ export const deweyShowyNephew: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0367a7c71bef46c39719f0c5c0b0dc3b",
-    tcgPlayer: 650074,
+    tcgPlayer: "650074",
   },
   text: "Support",
   classifications: ["Dreamborn", "Ally"],

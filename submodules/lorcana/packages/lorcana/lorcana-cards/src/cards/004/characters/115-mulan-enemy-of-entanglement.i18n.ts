@@ -16,9 +16,9 @@ export const mulanEnemyOfEntanglementI18n: Record<Languages, I18nProperties> = {
     version: "Feindin der Verstrickung",
     text: [
       {
-        title: "ZEIT ZU GLÄNZEN",
+        title: "Zeit zu glänzen",
         description:
-          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter in diesem Zug +2.",
+          "Jedes Mal, wenn du eine Aktion ausspielst, erhält dieser Charakter in diesem Zug +2 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const mulanEnemyOfEntanglementI18n: Record<Languages, I18nProperties> = {
     version: "Ennemie de l'envoutement",
     text: [
       {
-        title: "IL EST TEMPS DE BRILLER",
+        title: "Il est temps de briller",
         description:
-          "Chaque fois que vous jouez une action, ce personnage gagne +2 pour le reste de ce tour.",
+          "Chaque fois que vous jouez une action, ce personnage gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const mulanEnemyOfEntanglementI18n: Record<Languages, I18nProperties> = {
     version: "Nemica del Groviglio",
     text: [
       {
-        title: "MOMENTO DI GLORIA",
+        title: "Momento di Gloria",
         description:
-          "Ogni volta che giochi un'azione, questo personaggio riceve +2 per questo turno.",
+          "Ogni volta che giochi un'azione, questo personaggio riceve +2 {S} per questo turno.",
       },
     ],
   },

@@ -4,28 +4,55 @@ import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
 
 import { cx } from "../class-names";
 import { useStickToBottom } from "../hooks/useStickToBottom";
+import classes from "./EventLogPanel.module.css";
 
 export interface EventLogPanelProps {
-  entries: SimulatorEventLogEntry[];
-  highlightedEntityIds?: string[];
-  onHighlightEntity?: (entityIds: string[]) => void;
+  entries: readonly SimulatorEventLogEntry[];
+  highlightedEntityIds?: readonly string[];
+  onHighlightEntity?: (entityIds: readonly string[]) => void;
   onEntryClick?: (entry: SimulatorEventLogEntry) => void;
+  embedded?: boolean;
 }
 
 type TagFilter = "all" | "move" | "combat" | "ability" | "system";
 
-const TAG_COLORS: Record<string, string> = {
-  move: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-  combat: "bg-red-500/20 text-red-300 border-red-500/30",
-  ability: "bg-purple-500/20 text-purple-300 border-purple-500/30",
-  system: "bg-gray-500/20 text-gray-300 border-gray-500/30",
-};
+const TAG_ORDER: TagFilter[] = ["all", "move", "combat", "ability", "system"];
+
+function speakerClass(seatId: string | undefined): string | undefined {
+  if (!seatId) return classes.system;
+  if (seatId === "player" || seatId === "p1") return classes.player;
+  if (seatId === "opponent" || seatId === "p2") return classes.opponent;
+  return classes.system;
+}
+
+function speakerLabel(seatId: string | undefined): string {
+  if (!seatId) return "SYS";
+  if (seatId === "player" || seatId === "p1") return "P1";
+  if (seatId === "opponent" || seatId === "p2") return "P2";
+  return seatId.slice(0, 3).toUpperCase();
+}
+
+function tagClass(tag: string): string | undefined {
+  switch (tag) {
+    case "move":
+      return classes.tagMove;
+    case "combat":
+      return classes.tagCombat;
+    case "ability":
+      return classes.tagAbility;
+    case "system":
+      return classes.tagSystem;
+    default:
+      return undefined;
+  }
+}
 
 export function EventLogPanel({
   entries,
   highlightedEntityIds = [],
   onHighlightEntity,
   onEntryClick,
+  embedded = false,
 }: EventLogPanelProps) {
   const [activeFilter, setActiveFilter] = useState<TagFilter>("all");
   const [expandedTurns, setExpandedTurns] = useState<Set<number>>(new Set());
@@ -56,120 +83,94 @@ export function EventLogPanel({
     { thresholdPx: 48 },
   );
 
-  const filterChipClass = (isActive: boolean) =>
-    cx(
-      "inline-flex min-h-7 items-center rounded-full border px-2.5 py-1 text-[11px] font-extrabold leading-none transition-colors",
-      isActive
-        ? "border-[var(--game-accent)] bg-[var(--game-accent)]/20 text-[var(--game-accent)]"
-        : "border-[var(--board-border)] bg-[var(--board-surface)] text-[var(--board-muted)] hover:text-[var(--board-text)]",
-    );
-
-  const turnHeaderClass =
-    "sticky top-0 z-10 grid w-full grid-cols-[1fr_auto] items-center gap-2 border-b border-[var(--board-border)] bg-[var(--board-surface)] px-3 py-2 text-left";
-
-  const entryClass = (_entry: SimulatorEventLogEntry, isHighlighted: boolean) =>
-    cx(
-      "event-log-entry grid w-full justify-items-start gap-1 px-3 py-2 text-left transition-colors [content-visibility:auto] [contain-intrinsic-size:0_48px]",
-      isHighlighted && "bg-[var(--game-accent)]/10",
-    );
-
   return (
     <section
-      className="event-log-panel grid min-h-0 grid-rows-[auto_1fr] overflow-hidden rounded-lg border border-[var(--board-border)] bg-[var(--board-surface-soft)]"
+      className={`${classes.panel} ${embedded ? classes.panelEmbedded : ""}`}
       aria-label="Event log"
+      data-testid="event-log"
+      data-count={entries.length}
     >
-      <div className="event-log-header grid gap-2 border-b border-[var(--board-border)] p-3">
-        <div className="flex items-center justify-between">
-          <h3 className="text-xs font-black uppercase tracking-normal text-[var(--board-text)]">
-            Event Log
-          </h3>
-          <span className="text-[11px] font-bold text-[var(--board-muted)]">
-            {entries.length} entries
-          </span>
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {(["all", "move", "combat", "ability", "system"] as TagFilter[]).map((tag) => (
-            <button
-              key={tag}
-              className={filterChipClass(activeFilter === tag)}
-              onClick={() => setActiveFilter(tag)}
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
+      <div className={classes.header}>
+        <h3 className={classes.title}>Event log</h3>
+        <span className={classes.count}>{entries.length} entries</span>
+      </div>
+
+      <div className={classes.filters}>
+        {TAG_ORDER.map((tag) => (
+          <button
+            key={tag}
+            type="button"
+            className={cx(classes.filter, activeFilter === tag && classes.filterActive)}
+            onClick={() => setActiveFilter(tag)}
+          >
+            {tag}
+          </button>
+        ))}
       </div>
 
       <div
         ref={scrollRef}
-        className="event-log-entries min-h-0 overflow-y-auto"
+        className={classes.scroll}
         onScroll={onScroll}
         role="log"
         aria-live="polite"
         aria-atomic="false"
       >
         {sortedTurns.length === 0 ? (
-          <div className="grid place-items-center py-8">
-            <p className="text-xs font-bold text-[var(--board-muted)]">
-              No events match the current filter.
-            </p>
+          <div className={classes.empty}>
+            {entries.length === 0 ? "No events yet." : "No events match the current filter."}
           </div>
         ) : (
           sortedTurns.map((turn) => {
             const turnEntries = grouped.get(turn) ?? [];
             const isExpanded = expandedTurns.has(turn) || expandedTurns.size === 0;
             return (
-              <div key={turn} className="event-log-turn-group grid w-full">
+              <div key={turn} className={classes.turnGroup}>
                 <button
-                  className={turnHeaderClass}
+                  type="button"
+                  className={classes.turnHeader}
                   onClick={() => toggleTurn(turn)}
                   aria-expanded={isExpanded}
                 >
-                  <span className="text-[11px] font-black uppercase text-[var(--board-text)]">
-                    Turn {turn}
-                  </span>
-                  <span className="text-[10px] font-bold text-[var(--board-muted)]">
-                    {turnEntries.length} events
-                  </span>
+                  <span className={classes.turnLine} />
+                  <span>Turn {turn}</span>
+                  <span className={classes.turnLine} />
                 </button>
                 {isExpanded &&
-                  turnEntries.map((entry) => {
+                  turnEntries.map((entry, index) => {
+                    const prev = turnEntries[index - 1];
+                    const groupedWithPrev =
+                      prev !== undefined &&
+                      speakerClass(prev.seatId) === speakerClass(entry.seatId);
                     const isHighlighted =
                       entry.entityIds &&
                       entry.entityIds.some((id) => highlightedEntityIds.includes(id));
                     return (
                       <button
                         key={entry.id}
-                        className={entryClass(entry, !!isHighlighted)}
+                        type="button"
+                        className={cx(
+                          classes.entry,
+                          speakerClass(entry.seatId),
+                          groupedWithPrev && classes.entryGrouped,
+                          isHighlighted && classes.entryHighlighted,
+                        )}
                         onClick={() => {
                           if (entry.entityIds) onHighlightEntity?.(entry.entityIds);
                           onEntryClick?.(entry);
                         }}
                       >
-                        <div className="flex flex-wrap items-center gap-1.5">
+                        <span className={classes.speaker}>{speakerLabel(entry.seatId)}</span>
+                        <div className={classes.meta}>
                           {entry.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className={cx(
-                                "inline-flex min-h-5 items-center rounded-full border px-1.5 py-0.5 text-[10px] font-extrabold leading-none",
-                                TAG_COLORS[tag] ?? TAG_COLORS.system,
-                              )}
-                            >
+                            <span key={tag} className={cx(classes.tag, tagClass(tag))}>
                               {tag}
                             </span>
                           ))}
-                          <span className="text-[10px] font-bold text-[var(--board-muted)]">
-                            {entry.phase}
-                          </span>
+                          <span className={classes.phase}>{entry.phase}</span>
                         </div>
-                        <p className="text-left text-xs leading-snug text-[var(--board-text)]">
-                          {entry.message}
-                        </p>
-                        {entry.seatId && (
-                          <p className="text-left text-[10px] font-bold text-[var(--board-muted)]">
-                            Player: {entry.seatId}
-                          </p>
-                        )}
+                        <p className={classes.message}>{entry.message}</p>
+                        {entry.seatId && <p className={classes.seat}>Player: {entry.seatId}</p>}
                       </button>
                     );
                   })}

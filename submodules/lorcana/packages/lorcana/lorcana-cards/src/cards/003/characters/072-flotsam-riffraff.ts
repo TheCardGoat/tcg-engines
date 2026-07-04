@@ -4,6 +4,17 @@ import { flotsamRiffraffI18n } from "./072-flotsam-riffraff.i18n";
 export const flotsamRiffraff: CharacterCard = {
   id: "zgb",
   canonicalId: "ci_zgb",
+  slug: "lorcana-ci_zgb",
+  printings: [
+    {
+      id: "set3-072",
+      artId: "set3-072",
+      setCode: "set3",
+      collectorNumber: "72",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-072"],
   cardType: "character",
   name: "Flotsam",
@@ -20,7 +31,7 @@ export const flotsamRiffraff: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ba452763794342109447ecb7b492d919",
-    tcgPlayer: 532924,
+    tcgPlayer: "532924",
   },
   text: [
     {

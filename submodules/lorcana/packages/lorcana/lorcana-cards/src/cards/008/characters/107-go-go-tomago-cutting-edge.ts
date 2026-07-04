@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { goGoTomagoCuttingEdgeI18n } from "./107-go-go-tomago-cutting-edge.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const goGoTomagoCuttingEdge: CharacterCard = {
   id: "Di2",
   canonicalId: "ci_Di2",
+  slug: "lorcana-ci_Di2",
+  printings: [
+    {
+      id: "set8-107",
+      artId: "set8-107",
+      setCode: "set8",
+      collectorNumber: "107",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-107"],
   cardType: "character",
   name: "Go Go Tomago",
@@ -22,7 +34,7 @@ export const goGoTomagoCuttingEdge: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_85baf02feabb47349db98e61d2437f71",
-    tcgPlayer: 631687,
+    tcgPlayer: "631687",
   },
   text: [
     {

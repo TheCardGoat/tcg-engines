@@ -1,6 +1,6 @@
 <script lang="ts">
 import { onDestroy, untrack } from "svelte";
-import { X } from "@lucide/svelte";
+import X from "@lucide/svelte/icons/x";
 import type {
 	AvailableMovesSelectionEntry,
 	AvailableMovesSelectionState,
@@ -334,10 +334,31 @@ function handleSelectionEntryClick(
 function getEntryCard(
 	entry: AvailableMovesSelectionEntry,
 ): LorcanaCardSnapshot | null {
-	if ((entry.kind === "card" || entry.kind === "scry-card") && entry.cardId) {
+	if (entry.cardId) {
 		return cardSnapshots[entry.cardId] ?? null;
 	}
 	return null;
+}
+
+function getCardSnapshot(cardId: string | null | undefined): LorcanaCardSnapshot | null {
+	return cardId ? (cardSnapshots[cardId] ?? null) : null;
+}
+
+function getActionSelectionSourceCard(
+	state: AvailableMovesSelectionState,
+): LorcanaCardSnapshot | null {
+	return state.mode === "action" ? getCardSnapshot(state.sourceCardId) : null;
+}
+
+function shouldRenderActionSelectionPlayMessage(state: AvailableMovesSelectionState): boolean {
+	return (
+		state.mode === "action" &&
+		state.phase === "choose-option" &&
+		(state.categoryId === "play-card" ||
+			state.categoryId === "shift-card" ||
+			state.categoryId === "sing-card") &&
+		getActionSelectionSourceCard(state) !== null
+	);
 }
 
 function getStringParam(
@@ -553,6 +574,7 @@ onDestroy(() => {
     {/if}
 
     {#if selectionState}
+      {@const actionSelectionSourceCard = getActionSelectionSourceCard(selectionState)}
       {@const SelectionCategoryIcon = getMoveCategoryIcon(selectionState.categoryId)}
       <div class="detail-header">
         {#if selectionState.canBack}
@@ -574,12 +596,35 @@ onDestroy(() => {
             <span class="move-category-icon-shell move-category-icon-shell--detail" aria-hidden="true">
               <SelectionCategoryIcon class="move-category-icon" />
             </span>
-            <p class="detail-title__text">{selectionState.title}</p>
+            <p class="detail-title__text">
+              {#if actionSelectionSourceCard && selectionState.title === actionSelectionSourceCard.label}
+                <CardTextToken
+                  card={actionSelectionSourceCard}
+                  interactive={false}
+                  onHover={() => onCardHover(actionSelectionSourceCard)}
+                  onLeave={onCardLeave}
+                />
+              {:else}
+                {selectionState.title}
+              {/if}
+            </p>
           </div>
           {#if selectionState.mode === "resolution-scry" && selectionState.headerSubtitle}
             <p class="detail-title__subtext">{selectionState.headerSubtitle}</p>
           {/if}
-          <p class="detail-message">{selectionState.message}</p>
+          <p class="detail-message">
+            {#if shouldRenderActionSelectionPlayMessage(selectionState) && actionSelectionSourceCard}
+              Choose how to play
+              <CardTextToken
+                card={actionSelectionSourceCard}
+                interactive={false}
+                onHover={() => onCardHover(actionSelectionSourceCard)}
+                onLeave={onCardLeave}
+              />.
+            {:else}
+              {selectionState.message}
+            {/if}
+          </p>
         </div>
 
         {#if onCancelSelection}
@@ -598,9 +643,21 @@ onDestroy(() => {
       {#if selectionState.mode === "action" && (selectionState.sourceLabel || selectionState.targetLabel || selectionState.selectedMoveLabel)}
         <div class="selection-summary">
           {#if selectionState.sourceLabel}
+            {@const sourceSummaryCard = getCardSnapshot(selectionState.sourceCardId)}
             <div class="selection-summary__row">
               <span class="selection-summary__label">{m["sim.actions.selectionSummary.source"]({})}</span>
-              <span class="selection-summary__value">{selectionState.sourceLabel}</span>
+              <span class="selection-summary__value">
+                {#if sourceSummaryCard}
+                  <CardTextToken
+                    card={sourceSummaryCard}
+                    interactive={false}
+                    onHover={() => onCardHover(sourceSummaryCard)}
+                    onLeave={onCardLeave}
+                  />
+                {:else}
+                  {selectionState.sourceLabel}
+                {/if}
+              </span>
             </div>
           {/if}
           {#if selectionState.targetLabel}

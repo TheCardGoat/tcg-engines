@@ -107,6 +107,9 @@ export function getLorcanaCardFormatLookup(): (shortId: string) => CardFormatDat
       fullName: getCardFullName(card),
       sets: [...setCodes] as LorcanaSetCode[],
       inkTypes: card.inkType,
+      cardType: card.cardType,
+      classifications: card.cardType === "character" ? card.classifications : undefined,
+      deckConstructionRules: card.deckConstructionRules,
       cardCopyLimit: card.cardCopyLimit,
       rotationStates: collectRotationStates(allPrintingIds),
     };

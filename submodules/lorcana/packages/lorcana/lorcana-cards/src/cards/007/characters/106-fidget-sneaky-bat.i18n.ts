@@ -20,12 +20,12 @@ export const fidgetSneakyBatI18n: Record<Languages, I18nProperties> = {
     version: "Hinterhältige Fledermaus",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "ICH HABE MICH UM ALLES GEKÜMMERT",
+        title: "Ich habe mich um alles gekümmert",
         description:
-          "Jedes Mal, wenn dieser Charakter erkundet, wähle einen deiner anderen Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges Wendig.",
+          "Jedes Mal, wenn dieser Charakter erkundet, wähle einen deiner anderen Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges <Wendig>.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const fidgetSneakyBatI18n: Record<Languages, I18nProperties> = {
     version: "Chauve-souris furtive",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "J'AI TOUT CE QU'IL VOUS FALLAIT",
+        title: "J'ai tout ce qu'il vous fallait",
         description:
-          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un autre de vos personnages qui gagne Insaisissable jusqu'au début de votre prochain tour.",
+          "Chaque fois que ce personnage est envoyé à l'aventure, choisissez un autre de vos personnages qui gagne <Insaisissable> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const fidgetSneakyBatI18n: Record<Languages, I18nProperties> = {
     version: "Pipistrello Furtivo",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "HO PRESO TUTTO",
+        title: "Ho Preso Tutto",
         description:
-          "Ogni volta che questo personaggio va all'avventura, un tuo altro personaggio a tua scelta ottiene Sfuggente fino all'inizio del tuo prossimo turno.",
+          "Ogni volta che questo personaggio va all'avventura, un tuo altro personaggio a tua scelta ottiene <Sfuggente> fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

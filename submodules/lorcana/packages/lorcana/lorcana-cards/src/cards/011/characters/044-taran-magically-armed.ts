@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { taranMagicallyArmedI18n } from "./044-taran-magically-armed.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const taranMagicallyArmed: CharacterCard = {
   id: "8Qz",
   canonicalId: "ci_8Qz",
+  slug: "lorcana-ci_8Qz",
+  printings: [
+    {
+      id: "set11-044",
+      artId: "set11-044",
+      setCode: "set11",
+      collectorNumber: "44",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-044"],
   cardType: "character",
   name: "Taran",
@@ -21,18 +33,9 @@ export const taranMagicallyArmed: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b0231e5ba8c34691ac5bf29e6fc96c46",
-    tcgPlayer: 673420,
+    tcgPlayer: "673420",
   },
-  text: [
-    {
-      title: "Rush",
-    },
-    {
-      title: "WEAKEN THE CAULDRON",
-      description:
-        "When you play this character, put up to 2 cards from chosen player's discard on the bottom of their deck in any order.",
-    },
-  ],
+  text: "Rush WEAKEN THE CAULDRON When you play this character, put up to 2 cards from chosen player's discard on the bottom of their deck in any order.",
   classifications: ["Storyborn", "Hero"],
   abilities: [
     rush,

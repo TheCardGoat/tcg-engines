@@ -4,6 +4,17 @@ import { minnieMouseBelovedPrincessI18n } from "./013-minnie-mouse-beloved-princ
 export const minnieMouseBelovedPrincess: CharacterCard = {
   id: "c9i",
   canonicalId: "ci_c9i",
+  slug: "lorcana-ci_c9i",
+  printings: [
+    {
+      id: "set1-013",
+      artId: "set1-013",
+      setCode: "set1",
+      collectorNumber: "13",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-013"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -20,7 +31,7 @@ export const minnieMouseBelovedPrincess: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_e40a35d966914476b267935d79337667",
-    tcgPlayer: 493498,
+    tcgPlayer: "493498",
   },
   classifications: ["Dreamborn", "Princess"],
   i18n: minnieMouseBelovedPrincessI18n,

@@ -9,16 +9,16 @@ export const generalLiHeadOfTheImperialArmyI18n: Record<Languages, I18nPropertie
   de: {
     name: "General Li",
     version: "Oberhaupt der kaiserlichen Armee",
-    text: "Robust +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+    text: "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
   },
   fr: {
     name: "Général Li",
     version: "À la tête de l'armée impériale",
-    text: "Résistance +1",
+    text: "<Résistance> +1",
   },
   it: {
     name: "Generale Li",
     version: "Comandante dell'Esercito Imperiale",
-    text: "Resistere +1",
+    text: "<Resistere> +1",
   },
 };

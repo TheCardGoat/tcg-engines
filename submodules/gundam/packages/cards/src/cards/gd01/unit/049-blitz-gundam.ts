@@ -7,14 +7,17 @@ export const gd01BlitzGundam049: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD01-049",
-  externalId: "gundam:gd01-049",
-  slug: "blitz-gundam-gd01-049",
+  canonicalId: "GD01-049",
+  externalIds: { bandai: "gundam:gd01-049" },
+  slug: "blitz-gundam/gd01-049",
   displayName: "Blitz Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-049",
   printings: [
     {
       id: "GD01-049",
+      artId: "GD01-049",
+      setCode: "GD01",
       collectorNumber: "GD01-049",
       cardNumber: "GD01-049",
       set: {
@@ -30,6 +33,8 @@ export const gd01BlitzGundam049: UnitCard = {
     },
     {
       id: "GD01-049_p1",
+      artId: "GD01-049_p1",
+      setCode: "ST09",
       collectorNumber: "GD01-049_p1",
       cardNumber: "GD01-049",
       set: {
@@ -44,6 +49,7 @@ export const gd01BlitzGundam049: UnitCard = {
       productName: "Destiny Ignition [ST09]",
     },
   ],
+  reprints: ["GD01-049", "GD01-049_p1"],
   selectedPrintingId: "GD01-049",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-049.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-049.webp?260424",

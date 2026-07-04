@@ -15,9 +15,9 @@ export const goldCoinI18n: Record<Languages, I18nProperties> = {
     name: "Goldmünze",
     text: [
       {
-        title: "GLITZERNDER EINSTIEG, 1,",
+        title: "Glitzernder Einstieg",
         description:
-          "Verbanne diesen Gegenstand — Wähle einen deiner Charaktere und mache ihn bereit. Er kann in diesem Zug nicht mehr erkunden.",
+          "{E}, 1 {I}, Verbanne diesen Gegenstand — Wähle einen deiner Charaktere und mache ihn bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const goldCoinI18n: Record<Languages, I18nProperties> = {
     name: "Pièce d’or",
     text: [
       {
-        title: "ACCÈS ÉTINCELANT,",
+        title: "Accès étincelant",
         description:
-          "1, bannissez cet objet — Choisissez l'un de vos personnages et redressez-le. Ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+          "{E}, 1 {I}, bannissez cet objet — Choisissez l'un de vos personnages et redressez-le. Ce personnage ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const goldCoinI18n: Record<Languages, I18nProperties> = {
     name: "Moneta d'Oro",
     text: [
       {
-        title: "ACCESSO SCINTILLANTE, 1,",
+        title: "Accesso Scintillante",
         description:
-          "esilia questo oggetto — Prepara un tuo personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno.",
+          "{E}, 1 {I}, esilia questo oggetto — Prepara un tuo personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno.",
       },
     ],
   },

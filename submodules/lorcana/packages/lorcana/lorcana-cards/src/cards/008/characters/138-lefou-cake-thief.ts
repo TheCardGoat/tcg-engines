@@ -4,6 +4,17 @@ import { lefouCakeThiefI18n } from "./138-lefou-cake-thief.i18n";
 export const lefouCakeThief: CharacterCard = {
   id: "Peq",
   canonicalId: "ci_Peq",
+  slug: "lorcana-ci_Peq",
+  printings: [
+    {
+      id: "set8-138",
+      artId: "set8-138",
+      setCode: "set8",
+      collectorNumber: "138",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-138"],
   cardType: "character",
   name: "LeFou",
@@ -20,7 +31,7 @@ export const lefouCakeThief: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b89e331f531c40c7a269911b0ca4a92b",
-    tcgPlayer: 631440,
+    tcgPlayer: "631440",
   },
   text: [
     {

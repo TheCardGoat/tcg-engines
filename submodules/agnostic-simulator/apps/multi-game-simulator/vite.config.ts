@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const configDir = dirname(fileURLToPath(import.meta.url));
 const isVitest = process.env.VITEST === "true";
+const mantineCoreEntry = fileURLToPath(import.meta.resolve("@mantine/core"));
+const mantineHooksEntry = fileURLToPath(import.meta.resolve("@mantine/hooks"));
 
 export default defineConfig({
   base: process.env.VITE_BASE_URL || "/",
@@ -64,6 +66,14 @@ export default defineConfig({
         replacement: resolve(configDir, "src/games/gundam/$1"),
       },
       {
+        find: /^@mantine\/core$/,
+        replacement: mantineCoreEntry,
+      },
+      {
+        find: /^@mantine\/hooks$/,
+        replacement: mantineHooksEntry,
+      },
+      {
         find: /^@tcg\/cyberpunk-engine$/,
         replacement: resolve(configDir, "../../../cyberpunk/packages/engine/src/index.ts"),
       },
@@ -111,6 +121,32 @@ export default defineConfig({
         replacement: resolve(configDir, "../../../gundam/packages/types/src/index.ts"),
       },
       {
+        find: /^@tcg\/op-cards$/,
+        replacement: resolve(configDir, "../../../one-piece/packages/cards/src/index.ts"),
+      },
+      {
+        find: /^@tcg\/op-engine$/,
+        replacement: resolve(
+          configDir,
+          "../../../one-piece/packages/engine/src/index.ts",
+        ),
+      },
+      {
+        find: /^@tcg\/op-engine\/practice-st01$/,
+        replacement: resolve(
+          configDir,
+          "../../../one-piece/packages/engine/src/practice-st01.ts",
+        ),
+      },
+      {
+        find: /^@tcg\/op-types$/,
+        replacement: resolve(configDir, "../../../one-piece/packages/types/src/index.ts"),
+      },
+      {
+        find: /^@tcg\/op-utils$/,
+        replacement: resolve(configDir, "../../../one-piece/packages/utils/src/index.ts"),
+      },
+      {
         find: /^@tcg\/engine-core$/,
         replacement: resolve(configDir, "../../packages/engine-core/src/index.ts"),
       },
@@ -124,6 +160,10 @@ export default defineConfig({
           configDir,
           "../../packages/game-page-contract/src/connection-diagnostic.ts",
         ),
+      },
+      {
+        find: /^@tcg\/gateway-client$/,
+        replacement: resolve(configDir, "../../packages/gateway-client/src/index.ts"),
       },
       {
         find: /^@tcg\/protocol$/,

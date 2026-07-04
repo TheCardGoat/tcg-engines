@@ -4,6 +4,17 @@ import { lingImperialSoldierI18n } from "./183-ling-imperial-soldier.i18n";
 export const lingImperialSoldier: CharacterCard = {
   id: "HyV",
   canonicalId: "ci_HyV",
+  slug: "lorcana-ci_HyV",
+  printings: [
+    {
+      id: "set4-183",
+      artId: "set4-183",
+      setCode: "set4",
+      collectorNumber: "183",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-183"],
   cardType: "character",
   name: "Ling",
@@ -20,7 +31,7 @@ export const lingImperialSoldier: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b99de29dfb744a0184319f957208d126",
-    tcgPlayer: 548195,
+    tcgPlayer: "548195",
   },
   text: [
     {

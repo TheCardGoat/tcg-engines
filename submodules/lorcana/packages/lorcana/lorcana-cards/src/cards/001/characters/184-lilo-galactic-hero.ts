@@ -4,6 +4,17 @@ import { liloGalacticHeroI18n } from "./184-lilo-galactic-hero.i18n";
 export const liloGalacticHero: CharacterCard = {
   id: "NhZ",
   canonicalId: "ci_NhZ",
+  slug: "lorcana-ci_NhZ",
+  printings: [
+    {
+      id: "set1-184",
+      artId: "set1-184",
+      setCode: "set1",
+      collectorNumber: "184",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-184"],
   cardType: "character",
   name: "Lilo",
@@ -21,7 +32,7 @@ export const liloGalacticHero: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_6a986375d35444ad9660332cda624a14",
-    tcgPlayer: 508920,
+    tcgPlayer: "508920",
   },
   classifications: ["Dreamborn", "Hero"],
   i18n: liloGalacticHeroI18n,

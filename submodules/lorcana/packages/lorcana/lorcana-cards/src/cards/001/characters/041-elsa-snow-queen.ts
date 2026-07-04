@@ -4,6 +4,17 @@ import { elsaSnowQueenI18n } from "./041-elsa-snow-queen.i18n";
 export const elsaSnowQueen: CharacterCard = {
   id: "b3D",
   canonicalId: "ci_77P",
+  slug: "lorcana-ci_77P",
+  printings: [
+    {
+      id: "set1-041",
+      artId: "set1-041",
+      setCode: "set1",
+      collectorNumber: "41",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-041", "set9-053"],
   cardType: "character",
   name: "Elsa",
@@ -20,7 +31,7 @@ export const elsaSnowQueen: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2b5958e1524648629b663fb210bb7f76",
-    tcgPlayer: 647660,
+    tcgPlayer: "647660",
   },
   text: [
     {

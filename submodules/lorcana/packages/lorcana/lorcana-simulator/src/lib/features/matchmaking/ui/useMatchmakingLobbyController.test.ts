@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it, mock } from "bun:test";
 
+import type {
+  LobbyMatchResultResponse,
+  LobbyRoomResponse,
+} from "@/features/matchmaking/api/lobby-api.js";
 import type { MatchmakingContext, ProfileDeckSummary } from "../api/player-context-api.js";
 
 const testGlobals = globalThis as any;
@@ -87,6 +91,25 @@ const fetchGatewayTicket = mock(async () => ({
   ticket: "ticket-123",
   authToken: "auth-token-456",
 }));
+const getLobbyRoomStatus = mock(async (): Promise<LobbyRoomResponse | null> => null);
+const getLobbyMatchResult = mock(async (): Promise<LobbyMatchResultResponse | null> => null);
+const createLobbyRoom = mock(async () => ({
+  object: "lobby_room",
+  roomCode: "ABC123",
+}));
+const joinLobbyRoom = mock(async () => ({
+  object: "lobby_room",
+  roomCode: "ABC123",
+  status: "ready",
+}));
+const cancelLobbyRoom = mock(async () => {});
+const startLobbyRoom = mock(async () => ({
+  object: "lobby_match",
+  matchId: "match-1",
+  gameId: "game-1",
+}));
+const leaveLobbyRoom = mock(async () => {});
+const goto = mock(async () => {});
 const authSession = {
   isAuthenticated: true,
   isLoading: false,
@@ -145,10 +168,30 @@ mock.module("$lib/analytics/analytics.js", () => ({
   ANALYTICS_TEXT_MAX_LENGTH: 100,
 }));
 mock.module("$app/navigation", () => ({
-  goto: async () => {},
+  goto,
 }));
 mock.module("$lib/auth/session.svelte.js", () => ({
   authSession,
+}));
+mock.module("@/features/matchmaking/api/lobby-api.js", () => ({
+  LobbyApiError: class LobbyApiError extends Error {
+    readonly roomCode?: string;
+    readonly matchId?: string;
+
+    constructor(message: string, roomCode?: string, matchId?: string) {
+      super(message);
+      this.name = "LobbyApiError";
+      this.roomCode = roomCode;
+      this.matchId = matchId;
+    }
+  },
+  createLobbyRoom,
+  joinLobbyRoom,
+  cancelLobbyRoom,
+  startLobbyRoom,
+  leaveLobbyRoom,
+  getLobbyRoomStatus,
+  getLobbyMatchResult,
 }));
 
 class FakeGatewayClientStore {
@@ -314,6 +357,16 @@ describe("createMatchmakingLobbyController", () => {
     trackEvent.mockClear();
     openWindow.mockClear();
     fetchGatewayTicket.mockClear();
+    createLobbyRoom.mockClear();
+    joinLobbyRoom.mockClear();
+    cancelLobbyRoom.mockClear();
+    startLobbyRoom.mockClear();
+    leaveLobbyRoom.mockClear();
+    getLobbyRoomStatus.mockReset();
+    getLobbyRoomStatus.mockResolvedValue(null);
+    getLobbyMatchResult.mockReset();
+    getLobbyMatchResult.mockResolvedValue(null);
+    goto.mockClear();
     FakeGatewayClientStore.instances = [];
     authSession.isAuthenticated = true;
     authSession.isLoading = false;
@@ -647,6 +700,29 @@ describe("createMatchmakingLobbyController", () => {
     expect(controller.queue.selectedQueueMode).toBe("3");
   });
 
+  it("keeps Early Access available outside ranked and falls back when ranked is selected", () => {
+    const controller = createControllerWithFlags({
+      rankedEnabled: true,
+      testingQueueEnabled: true,
+    });
+
+    expect(controller.queue.queueCards.map((card) => card.definition.format)).toContain(
+      "attack-of-the-vine",
+    );
+
+    controller.selectQueueFormat("attack-of-the-vine");
+    expect(controller.queue.activeQueueFormat).toBe("attack-of-the-vine");
+    expect(controller.queue.joinLabel).toContain("Early Access");
+
+    controller.selectMatchType("ranked");
+
+    expect(controller.queue.selectedMatchType).toBe("ranked");
+    expect(controller.queue.activeQueueFormat).not.toBe("attack-of-the-vine");
+    expect(controller.queue.queueCards.map((card) => card.definition.format)).not.toContain(
+      "attack-of-the-vine",
+    );
+  });
+
   it("rejects selectQueueMode('1') while ranked is selected", () => {
     const controller = createControllerWithFlags({ rankedEnabled: true });
     controller.selectMatchType("ranked");
@@ -669,5 +745,77 @@ describe("createMatchmakingLobbyController", () => {
     const url = calls[0]![0]!;
     expect(url).toContain("opponentFixtureId=amber-amethyst-control");
     expect(url).toContain("strategyId=board-control-lore-race");
+  });
+
+  it("recovers a started lobby match when hydrating a consumed room", async () => {
+    getLobbyMatchResult.mockResolvedValue({
+      object: "lobby_match_result",
+      roomCode: "ABC123",
+      matchId: "match-1",
+      gameId: "game-1",
+    });
+    const controller = createController();
+
+    await controller.hydrateRoom("abc123");
+
+    expect(getLobbyMatchResult).toHaveBeenCalledWith("abc123");
+    expect(controller.lobby.status).toBe("match_found");
+    expect(controller.lobby.activeMatchId).toBeNull();
+    expect(controller.lobby.navigatingToMatch).toBe(true);
+    expect(goto).toHaveBeenCalledWith("/matches/match-1/games/game-1");
+  });
+
+  it("recovers a started lobby match when hydrating a matched room", async () => {
+    getLobbyRoomStatus.mockResolvedValue({
+      object: "lobby_room",
+      roomCode: "ABC123",
+      status: "matched",
+      bestOf: 1,
+      isCreator: true,
+      creatorDisplayName: "Host",
+      joinerDisplayName: "Tester",
+    });
+    getLobbyMatchResult.mockResolvedValue({
+      object: "lobby_match_result",
+      roomCode: "ABC123",
+      matchId: "match-3",
+      gameId: "game-3",
+    });
+    const controller = createController();
+
+    await controller.hydrateRoom("ABC123");
+
+    expect(getLobbyMatchResult).toHaveBeenCalledWith("ABC123");
+    expect(controller.lobby.status).toBe("match_found");
+    expect(controller.lobby.navigatingToMatch).toBe(true);
+    expect(goto).toHaveBeenCalledWith("/matches/match-3/games/game-3");
+  });
+
+  it("recovers a started lobby match while polling a joined room", async () => {
+    getLobbyRoomStatus.mockResolvedValueOnce({
+      object: "lobby_room",
+      roomCode: "ABC123",
+      status: "ready",
+      bestOf: 1,
+      isJoiner: true,
+      creatorDisplayName: "Host",
+      joinerDisplayName: "Tester",
+    });
+    getLobbyMatchResult.mockResolvedValue({
+      object: "lobby_match_result",
+      roomCode: "ABC123",
+      matchId: "match-2",
+      gameId: "game-2",
+    });
+    const controller = createController();
+    await controller.hydrateRoom("ABC123");
+    getLobbyRoomStatus.mockResolvedValue(null);
+
+    await controller.pollRoomStatus();
+
+    expect(getLobbyRoomStatus).toHaveBeenCalledWith("ABC123");
+    expect(getLobbyMatchResult).toHaveBeenCalledWith("ABC123");
+    expect(controller.lobby.status).toBe("match_found");
+    expect(goto).toHaveBeenCalledWith("/matches/match-2/games/game-2");
   });
 });

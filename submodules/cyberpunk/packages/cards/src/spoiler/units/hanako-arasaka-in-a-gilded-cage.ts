@@ -1,14 +1,15 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerHanakoArasakaInAGildedCage = {
+export const spoilerHanakoArasakaInAGildedCage = defineCyberpunkCard({
   id: "315450ca-6472-4bdc-a018-bb0a8f3e0467",
-  externalId: "cyberpunk:hanako-arasaka-in-a-gilded-cage",
   slug: "hanako-arasaka-in-a-gilded-cage",
-  name: "Hanako Arasaka",
-  subname: "In A Gilded Cage",
-  displayName: "Hanako Arasaka - In A Gilded Cage",
   rulesText:
     "PLAY Reveal the top 4 cards of your deck. Then choose a friendly Gig. Add all cards with cost equal to that Gig's value to your hand. Trash the rest.",
+  subname: "In A Gilded Cage",
+  name: "Hanako Arasaka",
+  displayName: "Hanako Arasaka - In A Gilded Cage",
+  canonicalId: "hanako-arasaka-in-a-gilded-cage",
   color: "yellow",
   classifications: ["Arasaka", "Corpo", "Netrunner"],
   set: {
@@ -16,15 +17,6 @@ export const spoilerHanakoArasakaInAGildedCage = {
     name: "Spoiler Set",
   },
   printNumber: "126",
-  printings: [
-    {
-      id: "7f5ce7f0-de3e-42e5-91e6-96c05e6c1d23",
-      collectorNumber: "126",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "7f5ce7f0-de3e-42e5-91e6-96c05e6c1d23",
   artist: "Akram",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/126.webp",
   rarity: null,
@@ -32,7 +24,6 @@ export const spoilerHanakoArasakaInAGildedCage = {
   hasSellTag: false,
   ram: 2,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 3,
   power: 0,
@@ -81,5 +72,4 @@ export const spoilerHanakoArasakaInAGildedCage = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

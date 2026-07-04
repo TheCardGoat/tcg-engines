@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { theHornedKingTriumphantGhoulI18n } from "./049-the-horned-king-triumphant-ghoul.i18n";
 
 export const theHornedKingTriumphantGhoul: CharacterCard = {
-  id: "MWo",
+  id: "uvN",
   canonicalId: "ci_747",
+  slug: "lorcana-ci_747",
+  printings: [
+    {
+      id: "set10-049",
+      artId: "set10-049",
+      setCode: "set10",
+      collectorNumber: "49",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-049"],
   cardType: "character",
   name: "The Horned King",
@@ -20,7 +31,7 @@ export const theHornedKingTriumphantGhoul: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ffc221e006704b97a8b62c29180b33b2",
-    tcgPlayer: 658323,
+    tcgPlayer: "658323",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { onlySoMuchRoomI18n } from "./041-only-so-much-room.i18n";
 export const onlySoMuchRoom: ActionCard = {
   id: "fR9",
   canonicalId: "ci_fR9",
+  slug: "lorcana-ci_fR9",
+  printings: [
+    {
+      id: "set8-041",
+      artId: "set8-041",
+      setCode: "set8",
+      collectorNumber: "41",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-041"],
   cardType: "action",
   name: "Only So Much Room",
@@ -16,7 +27,7 @@ export const onlySoMuchRoom: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2085340ba83e4380a30c2451823aa80e",
-    tcgPlayer: 631379,
+    tcgPlayer: "631379",
   },
   text: "Return chosen character with 2 {S} or less to their player's hand. Return a character card from your discard to your hand.",
   abilities: [

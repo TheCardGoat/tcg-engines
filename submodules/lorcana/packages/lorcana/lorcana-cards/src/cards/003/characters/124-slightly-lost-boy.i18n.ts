@@ -20,12 +20,12 @@ export const slightlyLostBoyI18n: Record<Languages, I18nProperties> = {
     version: "Verwunschenes Kind",
     text: [
       {
-        title: "DER FUCHS",
+        title: "Der Fuchs",
         description:
-          "Wenn du einen Peter-Pan-Charakter im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Wenn du einen Peter-Pan-Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const slightlyLostBoyI18n: Record<Languages, I18nProperties> = {
     version: "Enfant perdu",
     text: [
       {
-        title: "LE RENARD",
+        title: "Le renard",
         description:
-          "Si vous avez un personnage Peter Pan en jeu, jouer ce personnage vous coûte 1 de moins.",
+          "Si vous avez un personnage Peter Pan en jeu, jouer ce personnage vous coûte 1 {I} de moins.",
       },
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const slightlyLostBoyI18n: Record<Languages, I18nProperties> = {
     version: "Bimbo Sperduto",
     text: [
       {
-        title: "LA VOLPE",
+        title: "La Volpe",
         description:
-          "Se hai in gioco un personaggio chiamato Peter Pan, paga 1 in meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio chiamato Peter Pan, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
     ],
   },

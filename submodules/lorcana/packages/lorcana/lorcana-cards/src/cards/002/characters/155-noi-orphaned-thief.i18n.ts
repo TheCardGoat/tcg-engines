@@ -17,9 +17,9 @@ export const noiOrphanedThiefI18n: Record<Languages, I18nProperties> = {
     version: "Verwaiste Diebin",
     text: [
       {
-        title: "VERSTECKEN SPIELEN",
+        title: "Verstecken spielen",
         description:
-          "Solange du mindestens einen Gegenstand im Spiel hast, erhält dieser Charakter Robust +1 und Behütet. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1. Gegnerische Karten können ihn nicht auswählen, außer um ihn herauszufordern.)",
+          "Solange du mindestens einen Gegenstand im Spiel hast, erhält dieser Charakter <Robust> +1 und <Behütet>. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1. Gegnerische Karten können ihn nicht auswählen, außer um ihn herauszufordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const noiOrphanedThiefI18n: Record<Languages, I18nProperties> = {
     version: "Voleuse orpheline",
     text: [
       {
-        title: "CACHE-CACHE",
+        title: "Cache-cache",
         description:
-          "Tant que vous avez un objet en jeu, ce personnage gagne Résistance +1 et Hors d'atteinte. (Les dommages qui lui sont infligés sont réduits de 1. Les adversaires ne peuvent pas choisir ce personnage, hormis pour un défi.)",
+          "Tant que vous avez un objet en jeu, ce personnage gagne <Résistance> +1 et <Hors d'atteinte>. (Les dommages qui lui sont infligés sont réduits de 1. Les adversaires ne peuvent pas choisir ce personnage, hormis pour un défi.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const noiOrphanedThiefI18n: Record<Languages, I18nProperties> = {
     version: "Orphaned Thief",
     text: [
       {
-        title: "HIDE AND SEEK",
+        title: "Hide and Seek",
         description:
-          "While you have an item in play, this character gains Resist +1 and Ward. (Damage dealt to this character is reduced by 1. Opponents can't choose this character except to challenge.)",
+          "While you have an item in play, this character gains <Resist> +1 and <Ward>. (Damage dealt to this character is reduced by 1. Opponents can't choose this character except to challenge.)",
       },
     ],
   },

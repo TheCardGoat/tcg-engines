@@ -4,6 +4,17 @@ import { liloBundledUpI18n } from "./195-lilo-bundled-up.i18n";
 export const liloBundledUp: CharacterCard = {
   id: "Vf6",
   canonicalId: "ci_Vf6",
+  slug: "lorcana-ci_Vf6",
+  printings: [
+    {
+      id: "set11-195",
+      artId: "set11-195",
+      setCode: "set11",
+      collectorNumber: "195",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-195"],
   cardType: "character",
   name: "Lilo",
@@ -20,7 +31,7 @@ export const liloBundledUp: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_f86297c4c6f940cc8135cd806d96105a",
-    tcgPlayer: 676247,
+    tcgPlayer: "676247",
   },
   text: [
     {

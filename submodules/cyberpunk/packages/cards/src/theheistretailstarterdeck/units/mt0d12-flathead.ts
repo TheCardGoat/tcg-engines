@@ -1,12 +1,14 @@
-import type { TheHeistRetailStarterDeckCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
+import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts";
 
-export const theHeistRetailStarterDeckMt0d12Flathead = {
+export const theHeistRetailStarterDeckMt0d12Flathead = defineCyberpunkCard({
   id: "619429c9-132f-496e-8aa0-414e850c87ec",
-  externalId: "cb-mt0d12-flathead",
   slug: "mt0d12-flathead",
+  rulesText: "If you have less ☆ (Street Cred) than a Rival, this Unit can't be blocked.",
   name: "MT0D12 Flathead",
   displayName: "MT0D12 Flathead",
-  rulesText: "If you have less ☆ (Street Cred) than a Rival, this Unit can't be blocked.",
+  canonicalId: "mt0d12-flathead",
   color: "blue",
   classifications: ["Drone", "Militech"],
   set: {
@@ -14,38 +16,33 @@ export const theHeistRetailStarterDeckMt0d12Flathead = {
     name: "The Heist — Retail Starter Deck",
   },
   printNumber: "015",
-  printings: [
-    {
-      id: "5f0d9dac-2547-4ecb-896e-0c603968422a",
-      collectorNumber: "015",
-      setCode: "theheistretailstarterdeck",
-      rarity: "Uncommon",
-    },
-    {
-      id: "d4a627d7-2ea9-4080-9f54-435a7d77fb27",
-      collectorNumber: "β015",
-      setCode: "theheistbetastarterdeck",
-      rarity: "Uncommon",
-    },
-  ],
-  selectedPrintingId: "5f0d9dac-2547-4ecb-896e-0c603968422a",
   artist: "Federico Sabbatini",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/theheistretailstarterdeck/015.webp",
   rarity: "Uncommon",
   legality: "legal",
   hasSellTag: true,
   ram: 3,
-  timingTriggers: [],
-  keywords: [],
   type: "unit",
   cost: 5,
   power: 7,
   abilities: [
-    {
-      kind: "static",
-      text: "If you have less ☆ (Street Cred) than a Rival, this Unit can't be blocked.",
-      effects: [],
-    },
+    AbilityBuilder.static()
+      .text("If you have less ☆ (Street Cred) than a Rival, this Unit can't be blocked.")
+      .effect(
+        effect.grantRule({
+          target: target.self(),
+          rule: "cantBeBlocked",
+          duration: "continuous",
+          conditions: [
+            {
+              condition: "streetCredComparison",
+              controller: "friendly",
+              comparison: "lt",
+              other: "rival",
+            },
+          ],
+        }),
+      )
+      .build(),
   ],
-  reminderText: [],
-} satisfies TheHeistRetailStarterDeckCardDefinition;
+}) satisfies UnitCardDefinition;

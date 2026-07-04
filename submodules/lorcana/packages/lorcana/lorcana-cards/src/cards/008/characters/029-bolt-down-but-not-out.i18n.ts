@@ -16,7 +16,7 @@ export const boltDownButNotOutI18n: Record<Languages, I18nProperties> = {
     version: "Am Boden, aber nicht am Ende",
     text: [
       {
-        title: "DEINE SUPERKRÄFTE FUNKTIONIEREN NICHT",
+        title: "Deine Superkräfte funktionieren nicht",
         description: "Dieser Charakter kommt erschöpft ins Spiel.",
       },
     ],
@@ -26,7 +26,7 @@ export const boltDownButNotOutI18n: Record<Languages, I18nProperties> = {
     version: "Abattu mais pas vaincu",
     text: [
       {
-        title: "TOUS TES POUVOIRS ONT DISPARU",
+        title: "Tous tes pouvoirs ont disparu",
         description: "Ce personnage entre en jeu épuisé.",
       },
     ],
@@ -36,7 +36,7 @@ export const boltDownButNotOutI18n: Record<Languages, I18nProperties> = {
     version: "Abbattuto ma Non Sconfitto",
     text: [
       {
-        title: "I TUOI POTERI NON FUNZIONANO",
+        title: "I Tuoi Poteri non Funzionano",
         description: "Questo personaggio entra in gioco impegnato.",
       },
     ],

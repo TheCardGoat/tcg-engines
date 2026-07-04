@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mrArrowLegacysFirstMateI18n } from "./182-mr-arrow-legacys-first-mate.i18n";
+
 import { resist } from "../../../helpers/abilities/resist";
 
 export const mrArrowLegacysFirstMate: CharacterCard = {
   id: "Sh0",
   canonicalId: "ci_Sh0",
+  slug: "lorcana-ci_Sh0",
+  printings: [
+    {
+      id: "set6-182",
+      artId: "set6-182",
+      setCode: "set6",
+      collectorNumber: "182",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-182"],
   cardType: "character",
   name: "Mr. Arrow",
@@ -21,7 +33,7 @@ export const mrArrowLegacysFirstMate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7bea7155c9164c43949d5e4031b5d810",
-    tcgPlayer: 587970,
+    tcgPlayer: "587970",
   },
   text: "Resist +1",
   classifications: ["Storyborn", "Ally", "Alien"],

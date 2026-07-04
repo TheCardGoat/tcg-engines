@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { liloEscapeArtistI18n } from "./002-lilo-escape-artist.i18n";
 
 export const liloEscapeArtist: CharacterCard = {
-  id: "ZCd",
-  canonicalId: "ci_ZCd",
+  id: "wvZ",
+  canonicalId: "ci_QQH",
+  slug: "lorcana-ci_QQH",
+  printings: [
+    {
+      id: "set6-002",
+      artId: "set6-002",
+      setCode: "set6",
+      collectorNumber: "2",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-002"],
   cardType: "character",
   name: "Lilo",
@@ -20,7 +31,7 @@ export const liloEscapeArtist: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f17c60d077554d25b50fd934061b2e32",
-    tcgPlayer: 592015,
+    tcgPlayer: "592015",
   },
   text: [
     {

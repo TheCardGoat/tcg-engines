@@ -7,14 +7,17 @@ export const gd02ComradesComeFirst116: CommandCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD02-116",
-  externalId: "gundam:gd02-116",
-  slug: "comrades-come-first-gd02-116",
+  canonicalId: "GD02-116",
+  externalIds: { bandai: "gundam:gd02-116" },
+  slug: "comrades-come-first/gd02-116",
   displayName: "Comrades Come First",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-116",
   printings: [
     {
       id: "GD02-116",
+      artId: "GD02-116",
+      setCode: "GD02",
       collectorNumber: "GD02-116",
       cardNumber: "GD02-116",
       set: {
@@ -29,6 +32,7 @@ export const gd02ComradesComeFirst116: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-116"],
   selectedPrintingId: "GD02-116",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-116.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-116.webp?260424",

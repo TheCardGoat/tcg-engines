@@ -70,7 +70,9 @@ export type PlayCardCost =
   | {
       cost: "shift";
       shiftTarget: CardInstanceId;
+      additionalShiftTargets?: CardInstanceId[];
       discardCards?: CardInstanceId[];
+      deckBottomTargets?: CardInstanceId[];
     }
   | { cost: "sing"; singer: CardInstanceId }
   | { cost: "singTogether"; singers: CardInstanceId[] }

@@ -6,14 +6,17 @@ export const gd03Hotarubi129: BaseCard = {
   type: "base",
   traits: ["tekkadan", "warship"],
   id: "GD03-129",
-  externalId: "gundam:gd03-129",
-  slug: "hotarubi-gd03-129",
+  canonicalId: "GD03-129",
+  externalIds: { bandai: "gundam:gd03-129" },
+  slug: "hotarubi/gd03-129",
   displayName: "Hotarubi",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-129",
   printings: [
     {
       id: "GD03-129",
+      artId: "GD03-129",
+      setCode: "GD03",
       collectorNumber: "GD03-129",
       cardNumber: "GD03-129",
       set: {
@@ -28,6 +31,7 @@ export const gd03Hotarubi129: BaseCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-129"],
   selectedPrintingId: "GD03-129",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-129.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-129.webp?260424",

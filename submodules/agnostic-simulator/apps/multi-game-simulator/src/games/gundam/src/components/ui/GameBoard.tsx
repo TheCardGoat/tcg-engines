@@ -9,17 +9,17 @@ import { MatchSidebarRailContainer } from "../containers/MatchSidebarRailContain
 import { MobileSidebarDrawer } from "./MobileSidebarDrawer.tsx";
 
 export interface GameBoardProps {
-  children: ReactNode;
-  isMobile: boolean;
-  drawerOpen: boolean;
-  onDrawerOpenChange: (open: boolean) => void;
+  readonly children: ReactNode;
+  readonly isMobile: boolean;
+  readonly drawerOpen: boolean;
+  readonly onDrawerOpenChange: (open: boolean) => void;
 }
 
 export function GameBoard({ children, isMobile, drawerOpen, onDrawerOpenChange }: GameBoardProps) {
   if (isMobile) {
     return (
-      <main className="flex flex-1 min-h-0 min-w-0 overflow-x-hidden">
-        <div className="flex flex-col flex-1 min-h-0 min-w-0 overflow-x-hidden">
+      <main className="flex min-h-0 min-w-0 flex-1 overflow-x-hidden">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden">
           <MobileTopHudContainer onOpenDrawer={() => onDrawerOpenChange(true)} />
           {children}
           <MobileActionBarContainer />
@@ -31,10 +31,8 @@ export function GameBoard({ children, isMobile, drawerOpen, onDrawerOpenChange }
     );
   }
 
-  // Desktop: keep the sidebar in normal flex layout so opening it
-  // resizes the battlefield instead of covering it with a modal sheet.
   return (
-    <main className="flex flex-1 min-h-0">
+    <main className="flex min-h-0 flex-1">
       {drawerOpen ? (
         <MatchSidebarContainer onCollapse={() => onDrawerOpenChange(false)} />
       ) : (

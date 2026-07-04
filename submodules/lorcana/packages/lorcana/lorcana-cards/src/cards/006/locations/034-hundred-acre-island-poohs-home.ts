@@ -4,6 +4,17 @@ import { hundredAcreIslandPoohsHomeI18n } from "./034-hundred-acre-island-poohs-
 export const hundredAcreIslandPoohsHome: LocationCard = {
   id: "QM4",
   canonicalId: "ci_QM4",
+  slug: "lorcana-ci_QM4",
+  printings: [
+    {
+      id: "set6-034",
+      artId: "set6-034",
+      setCode: "set6",
+      collectorNumber: "34",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-034"],
   cardType: "location",
   name: "Hundred Acre Island",
@@ -20,7 +31,7 @@ export const hundredAcreIslandPoohsHome: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2fd6877d711c45f68ad61690d224306a",
-    tcgPlayer: 591985,
+    tcgPlayer: "591985",
   },
   text: [
     {

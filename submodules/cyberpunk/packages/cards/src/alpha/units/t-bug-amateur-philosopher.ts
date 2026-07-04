@@ -1,12 +1,13 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const alphaTBugAmateurPhilosopher = {
+export const alphaTBugAmateurPhilosopher = defineCyberpunkCard({
   id: "07d0d80a-6a86-40b7-9dd5-8401700667ec",
-  externalId: "cyberpunk:t-bug-amateur-philosopher",
   slug: "t-bug-amateur-philosopher",
-  name: "T-Bug",
   subname: "Amateur Philosopher",
+  name: "T-Bug",
   displayName: "T-Bug - Amateur Philosopher",
+  canonicalId: "t-bug-amateur-philosopher",
   color: "yellow",
   classifications: ["Netrunner", "Merc"],
   set: {
@@ -14,26 +15,13 @@ export const alphaTBugAmateurPhilosopher = {
     name: "Alpha Kit Set",
   },
   printNumber: "α015",
-  printings: [
-    {
-      id: "826619c7-98c3-4d2d-a278-a2e089469682",
-      collectorNumber: "α015",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "826619c7-98c3-4d2d-a278-a2e089469682",
   artist: "CD PROJEKT RED",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a015.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,
   ram: 1,
-  timingTriggers: [],
-  keywords: [],
   type: "unit",
   cost: 3,
   power: 5,
-  abilities: [],
-  reminderText: [],
-} satisfies AlphaCardDefinition;
+}) satisfies UnitCardDefinition;

@@ -4,6 +4,17 @@ import { dumptruckKarnagesSecondMateI18n } from "./185-dumptruck-karnages-second
 export const dumptruckKarnagesSecondMate: CharacterCard = {
   id: "ufJ",
   canonicalId: "ci_ufJ",
+  slug: "lorcana-ci_ufJ",
+  printings: [
+    {
+      id: "set8-185",
+      artId: "set8-185",
+      setCode: "set8",
+      collectorNumber: "185",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-185"],
   cardType: "character",
   name: "Dumptruck",
@@ -20,7 +31,7 @@ export const dumptruckKarnagesSecondMate: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_43f09ed39a77426a8a351ed3446d180a",
-    tcgPlayer: 631770,
+    tcgPlayer: "631770",
   },
   text: [
     {

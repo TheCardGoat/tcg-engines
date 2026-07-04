@@ -17,7 +17,7 @@ export const kakamoraPirateChiefI18n: Record<Languages, I18nProperties> = {
     version: "Piraten-Häuptling",
     text: [
       {
-        title: "KOKOSNUSS-ANFÜHRER",
+        title: "Kokosnuss-Anführer",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 Karte ziehen. Wähle danach 1 Karte aus deiner Hand und wirf sie ab, um einem Charakter oder Ort deiner Wahl 1 Schaden zuzufügen. Wenn du so einen Piraten abgeworfen hast, füge dem Charakter oder Ort deiner Wahl stattdessen 3 Schaden zu.",
       },
@@ -28,7 +28,7 @@ export const kakamoraPirateChiefI18n: Record<Languages, I18nProperties> = {
     version: "Chef pirate",
     text: [
       {
-        title: "À LA TÊTE DES NOIX DE COCO",
+        title: "à la tête des Noix de coco",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure,vous pouvez piocher une carte puis défausser une carte. Si vous le faites, choisissez un personnage ou un lieu et infligez-lui 1 dommage. Si vous avez défaussé un personnage Pirate de cette façon, infligez 3 dommages à la place.",
       },
@@ -39,7 +39,7 @@ export const kakamoraPirateChiefI18n: Record<Languages, I18nProperties> = {
     version: "Capo Pirata",
     text: [
       {
-        title: "CAPO NOCE DI COCCO",
+        title: "Capo Noce di Cocco",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi pescare una carta, poi scegli e scarta una carta per infliggere 1 danno a un personaggio o a un luogo a tua scelta. Se hai scartato una carta personaggio Pirata, infliggi invece 3 danni.",
       },

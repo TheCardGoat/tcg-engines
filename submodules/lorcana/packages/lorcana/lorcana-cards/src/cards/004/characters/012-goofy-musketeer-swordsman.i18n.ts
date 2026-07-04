@@ -17,9 +17,9 @@ export const goofyMusketeerSwordsmanI18n: Record<Languages, I18nProperties> = {
     version: "Musketier-Schwertkämpfer",
     text: [
       {
-        title: "EN GAWRSH!",
+        title: "En Gawrsh!",
         description:
-          "Jedes Mal, wenn du einen Charakter mit Beschützen ausspielst, mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
+          "Jedes Mal, wenn du einen Charakter mit <Beschützen> ausspielst, mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const goofyMusketeerSwordsmanI18n: Record<Languages, I18nProperties> = {
     version: "Mousquetaire épéiste",
     text: [
       {
-        title: "EN GARDE, HYUCK!",
+        title: "En garde, hyuck!",
         description:
-          "Chaque fois que vous jouez un personnage avec Rempart, redressez ce personnage-ci. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+          "Chaque fois que vous jouez un personnage avec <Rempart>, redressez ce personnage-ci. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const goofyMusketeerSwordsmanI18n: Record<Languages, I18nProperties> = {
     version: "Spadaccino Moschettiere",
     text: [
       {
-        title: "IN GWHARDIA!",
+        title: "In Gwhardia!",
         description:
-          "Ogni volta che giochi un personaggio con Guardiano, prepara questo personaggio. Non può andare all'avventura per il resto di questo turno.",
+          "Ogni volta che giochi un personaggio con <Guardiano>, prepara questo personaggio. Non può andare all'avventura per il resto di questo turno.",
       },
     ],
   },

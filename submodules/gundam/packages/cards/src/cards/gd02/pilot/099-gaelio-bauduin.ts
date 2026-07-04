@@ -7,14 +7,17 @@ export const gd02GaelioBauduin099: PilotCard = {
   color: "white",
   traits: ["gjallarhorn"],
   id: "GD02-099",
-  externalId: "gundam:gd02-099",
-  slug: "gaelio-bauduin-gd02-099",
+  canonicalId: "GD02-099",
+  externalIds: { bandai: "gundam:gd02-099" },
+  slug: "gaelio-bauduin/gd02-099",
   displayName: "Gaelio Bauduin",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-099",
   printings: [
     {
       id: "GD02-099",
+      artId: "GD02-099",
+      setCode: "GD02",
       collectorNumber: "GD02-099",
       cardNumber: "GD02-099",
       set: {
@@ -29,6 +32,7 @@ export const gd02GaelioBauduin099: PilotCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-099"],
   selectedPrintingId: "GD02-099",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-099.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-099.webp?260424",

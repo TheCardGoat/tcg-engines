@@ -4,6 +4,17 @@ import { daisyDuckMultitalentedPirateI18n } from "./108-daisy-duck-multitalented
 export const daisyDuckMultitalentedPirate: CharacterCard = {
   id: "K6M",
   canonicalId: "ci_K6M",
+  slug: "lorcana-ci_K6M",
+  printings: [
+    {
+      id: "set7-108",
+      artId: "set7-108",
+      setCode: "set7",
+      collectorNumber: "108",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-108"],
   cardType: "character",
   name: "Daisy Duck",
@@ -19,7 +30,7 @@ export const daisyDuckMultitalentedPirate: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_ea132f418f484b7fa0514107132a8b54",
-    tcgPlayer: 619465,
+    tcgPlayer: "619465",
   },
   text: [
     {

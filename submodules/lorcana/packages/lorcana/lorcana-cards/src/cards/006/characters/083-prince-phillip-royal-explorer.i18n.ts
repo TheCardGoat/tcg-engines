@@ -9,16 +9,16 @@ export const princePhillipRoyalExplorerI18n: Record<Languages, I18nProperties> =
   de: {
     name: "Prinz Phillip",
     version: "Königlicher Entdecker",
-    text: "Behütet",
+    text: "<Behütet>",
   },
   fr: {
     name: "Prince Philippe",
     version: "Explorateur royal",
-    text: "Hors d'atteinte",
+    text: "<Hors d'atteinte>",
   },
   it: {
     name: "Principe Filippo",
     version: "Esploratore Reale",
-    text: "Protetto",
+    text: "<Protetto>",
   },
 };

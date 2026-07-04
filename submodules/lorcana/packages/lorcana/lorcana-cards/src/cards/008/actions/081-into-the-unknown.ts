@@ -4,6 +4,17 @@ import { intoTheUnknownI18n } from "./081-into-the-unknown.i18n";
 export const intoTheUnknown: ActionCard = {
   id: "8Sv",
   canonicalId: "ci_TcE",
+  slug: "lorcana-ci_TcE",
+  printings: [
+    {
+      id: "set8-081",
+      artId: "set8-081",
+      setCode: "set8",
+      collectorNumber: "81",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-081"],
   cardType: "action",
   name: "Into the Unknown",
@@ -16,7 +27,7 @@ export const intoTheUnknown: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1f6ec070467643d195c82c92cf93c955",
-    tcgPlayer: 632720,
+    tcgPlayer: "632720",
   },
   text: "Put chosen exerted character into their player's inkwell facedown and exerted.",
   actionSubtype: "song",

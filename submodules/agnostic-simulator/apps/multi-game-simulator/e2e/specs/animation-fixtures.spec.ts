@@ -1,4 +1,4 @@
-import { test, expect } from "../fixtures/test";
+import { test, expect } from "@playwright/test";
 
 test.describe("animation fixtures", () => {
   const visibleHandCards = '[data-zone-id="human-hand"] [data-entity-id]:visible';

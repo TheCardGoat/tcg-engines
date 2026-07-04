@@ -37,8 +37,10 @@ export function writeSetIndex(dir: string, exports: string[]): void {
 export function renderCatalogMetadataLines(card: Card): string[] {
   const lines: string[] = [];
   if (card.id !== undefined) lines.push(`  id: ${JSON.stringify(card.id)},`);
-  if (card.externalId !== undefined)
-    lines.push(`  externalId: ${JSON.stringify(card.externalId)},`);
+  if (card.canonicalId !== undefined)
+    lines.push(`  canonicalId: ${JSON.stringify(card.canonicalId)},`);
+  if (card.externalIds !== undefined)
+    lines.push(`  externalIds: ${JSON.stringify(card.externalIds)},`);
   if (card.slug !== undefined) lines.push(`  slug: ${JSON.stringify(card.slug)},`);
   if (card.displayName !== undefined)
     lines.push(`  displayName: ${JSON.stringify(card.displayName)},`);

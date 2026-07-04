@@ -4,6 +4,17 @@ import { rhinoMotivationalSpeakerI18n } from "./001-rhino-motivational-speaker.i
 export const rhinoMotivationalSpeaker: CharacterCard = {
   id: "ZwR",
   canonicalId: "ci_ZwR",
+  slug: "lorcana-ci_ZwR",
+  printings: [
+    {
+      id: "set7-001",
+      artId: "set7-001",
+      setCode: "set7",
+      collectorNumber: "1",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-001"],
   cardType: "character",
   name: "Rhino",
@@ -20,7 +31,7 @@ export const rhinoMotivationalSpeaker: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_b817b45c424b49b98e7978f1dcf3d7db",
-    tcgPlayer: 619407,
+    tcgPlayer: "619407",
   },
   text: [
     {

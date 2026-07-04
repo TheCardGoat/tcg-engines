@@ -19,12 +19,13 @@ export const rhinoPowerHamsterI18n: Record<Languages, I18nProperties> = {
     version: "Energiegeladener Hamster",
     text: [
       {
-        title: "Gestaltwandel 2",
+        title:
+          "<Gestaltwandel> 2 (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Dino-Charaktere auszuspielen.)",
       },
       {
-        title: "EPISCHER BALL DER GROSSARTIGKEIT",
+        title: "Epischer Ball der Grossartigkeit",
         description:
-          "Solange dieser Charakter unbeschädigt ist, erhält er Robust +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
+          "Solange dieser Charakter unbeschädigt ist, erhält er <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
       },
     ],
   },
@@ -33,11 +34,12 @@ export const rhinoPowerHamsterI18n: Record<Languages, I18nProperties> = {
     version: "Hamster survolté",
     text: [
       {
-        title: "Alter 2",
+        title:
+          "<Alter> 2 (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages Rhino.)",
       },
       {
-        title: "BOULE SUPER GÉNIALE",
-        description: "Tant que ce personnage n'a aucun dommage sur lui, il gagne Résistance +2.",
+        title: "Boule super géniale",
+        description: "Tant que ce personnage n'a aucun dommage sur lui, il gagne <Résistance> +2.",
       },
     ],
   },
@@ -46,11 +48,12 @@ export const rhinoPowerHamsterI18n: Record<Languages, I18nProperties> = {
     version: "Criceto Potenziato",
     text: [
       {
-        title: "Trasformazione 2",
+        title:
+          "<Trasformazione> 2 (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Rhino.)",
       },
       {
-        title: "PALLA EPICA",
-        description: "E PAZZESCA Mentre questo personaggio non ha danno, ottiene Resistere +2.",
+        title: "Palla Epica e Pazzesca",
+        description: "Mentre questo personaggio non ha danno, ottiene <Resistere> +2.",
       },
     ],
   },

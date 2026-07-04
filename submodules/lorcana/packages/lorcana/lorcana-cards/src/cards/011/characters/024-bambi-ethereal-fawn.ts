@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { bambiEtherealFawnI18n } from "./024-bambi-ethereal-fawn.i18n";
+
 import { boost } from "../../../helpers/abilities/boost";
 
 export const bambiEtherealFawn: CharacterCard = {
   id: "Ab7",
   canonicalId: "ci_Ab7",
+  slug: "lorcana-ci_Ab7",
+  printings: [
+    {
+      id: "set11-024",
+      artId: "set11-024",
+      setCode: "set11",
+      collectorNumber: "24",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-024"],
   cardType: "character",
   name: "Bambi",
@@ -21,7 +33,7 @@ export const bambiEtherealFawn: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_33a165a8153e4ba587d52961bca86f79",
-    tcgPlayer: 676190,
+    tcgPlayer: "676190",
   },
   text: [
     {

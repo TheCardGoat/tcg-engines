@@ -9,21 +9,16 @@ export const marchHareAbsurdHostI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Der Märzhase",
     version: "Alberner Gastgeber",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Le Lièvre de Mars",
     version: "Hôte absurde",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Leprotto Bisestile",
     version: "Ospite Assurdo",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

@@ -9,16 +9,16 @@ export const rabbitFedUpI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Rabbit",
     version: "Genervt",
-    text: "Herausfordern +3",
+    text: "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
   },
   fr: {
     name: "Coco Lapin",
     version: "En a assez",
-    text: "Offensif +3",
+    text: "<Offensif> +3",
   },
   it: {
     name: "Tappo",
     version: "Stufo",
-    text: "Sfidante +3",
+    text: "<Sfidante> +3",
   },
 };

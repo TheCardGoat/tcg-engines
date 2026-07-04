@@ -4,6 +4,17 @@ import { fangCrossbowI18n } from "./166-fang-crossbow.i18n";
 export const fangCrossbow: ItemCard = {
   id: "B1T",
   canonicalId: "ci_B1T",
+  slug: "lorcana-ci_B1T",
+  printings: [
+    {
+      id: "set2-166",
+      artId: "set2-166",
+      setCode: "set2",
+      collectorNumber: "166",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-166"],
   cardType: "item",
   name: "Fang Crossbow",
@@ -16,7 +27,7 @@ export const fangCrossbow: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_8944266c591440ad9bcb0a6723cf0645",
-    tcgPlayer: 520860,
+    tcgPlayer: "520860",
   },
   text: [
     {

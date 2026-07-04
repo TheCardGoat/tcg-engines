@@ -4,6 +4,17 @@ import { hadesStrongArmI18n } from "./125-hades-strong-arm.i18n";
 export const hadesStrongArm: CharacterCard = {
   id: "XQk",
   canonicalId: "ci_XQk",
+  slug: "lorcana-ci_XQk",
+  printings: [
+    {
+      id: "set6-125",
+      artId: "set6-125",
+      setCode: "set6",
+      collectorNumber: "125",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-125"],
   cardType: "character",
   name: "Hades",
@@ -20,7 +31,7 @@ export const hadesStrongArm: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_aace3808bd9f445195dceec7b4fe87e9",
-    tcgPlayer: 588070,
+    tcgPlayer: "588070",
   },
   text: [
     {

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { simbaReturnedKingI18n } from "./189-simba-returned-king.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const simbaReturnedKing: CharacterCard = {
-  id: "mW3",
+  id: "rWf",
   canonicalId: "ci_11m",
+  slug: "lorcana-ci_11m",
+  printings: [
+    {
+      id: "set1-189",
+      artId: "set1-189",
+      setCode: "set1",
+      collectorNumber: "189",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-189"],
   cardType: "character",
   name: "Simba",
@@ -21,7 +33,7 @@ export const simbaReturnedKing: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_80cf71e223cf491796609458b2866665",
-    tcgPlayer: 510162,
+    tcgPlayer: "510162",
   },
   text: [
     {

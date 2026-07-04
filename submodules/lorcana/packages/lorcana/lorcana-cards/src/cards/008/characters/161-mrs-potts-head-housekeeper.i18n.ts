@@ -16,8 +16,8 @@ export const mrsPottsHeadHousekeeperI18n: Record<Languages, I18nProperties> = {
     version: "Hausdame",
     text: [
       {
-        title: "AUFRÄUMEN,",
-        description: "Verbanne einen deiner Gegenstände — Ziehe 1 Karte.",
+        title: "Aufräumen",
+        description: "{E}, Verbanne einen deiner Gegenstände — Ziehe 1 Karte.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const mrsPottsHeadHousekeeperI18n: Record<Languages, I18nProperties> = {
     version: "Gouvernante en chef",
     text: [
       {
-        title: "NETTOYAGE,",
-        description: "Bannissez l'un de vos objets — Piochez une carte.",
+        title: "Nettoyage",
+        description: "{E}, Bannissez l'un de vos objets — Piochez une carte.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const mrsPottsHeadHousekeeperI18n: Record<Languages, I18nProperties> = {
     version: "Prima Governante",
     text: [
       {
-        title: "PULIZIA,",
-        description: "esilia uno dei tuoi oggetti — Pesca una carta.",
+        title: "Pulizia",
+        description: "{E}, esilia uno dei tuoi oggetti — Pesca una carta.",
       },
     ],
   },

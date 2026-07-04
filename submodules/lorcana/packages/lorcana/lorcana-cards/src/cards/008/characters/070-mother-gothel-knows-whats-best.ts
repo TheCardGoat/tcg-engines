@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { motherGothelKnowsWhatsBestI18n } from "./070-mother-gothel-knows-whats-best.i18n";
 
 export const motherGothelKnowsWhatsBest: CharacterCard = {
-  id: "pK5",
+  id: "mMQ",
   canonicalId: "ci_AXE",
+  slug: "lorcana-ci_AXE",
+  printings: [
+    {
+      id: "set8-070",
+      artId: "set8-070",
+      setCode: "set8",
+      collectorNumber: "70",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-070"],
   cardType: "character",
   name: "Mother Gothel",
@@ -20,7 +31,7 @@ export const motherGothelKnowsWhatsBest: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a44f1da598c94ec18b4060bb1e932c66",
-    tcgPlayer: 632208,
+    tcgPlayer: "632208",
   },
   text: [
     {

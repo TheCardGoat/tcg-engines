@@ -17,7 +17,7 @@ export const julietaMadrigalExcellentCookI18n: Record<Languages, I18nProperties>
     version: "Exzellente Köchin",
     text: [
       {
-        title: "EIGENES REZEPT",
+        title: "Eigenes Rezept",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl entfernen. Falls du dadurch mindestens einen Schaden entfernt hast, darfst du 1 Karte ziehen.",
       },
@@ -28,7 +28,7 @@ export const julietaMadrigalExcellentCookI18n: Record<Languages, I18nProperties>
     version: "Cuisinière hors pair",
     text: [
       {
-        title: "SPÉCIALITÉ DE LA CHEFFE",
+        title: "Spécialité de la cheffe",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et lui retirer jusqu'à 2 jetons Dommage. Si vous en avez retiré au moins un de cette façon, vous pouvez piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const julietaMadrigalExcellentCookI18n: Record<Languages, I18nProperties>
     version: "Cuoca Sopraffina",
     text: [
       {
-        title: "RICETTA TIPICA",
+        title: "Ricetta Tipica",
         description:
           "Quando giochi questo personaggio, puoi rimuovere fino a 2 danni da un personaggio a tua scelta. Se hai rimosso almeno un danno in questo modo, puoi pescare una carta.",
       },

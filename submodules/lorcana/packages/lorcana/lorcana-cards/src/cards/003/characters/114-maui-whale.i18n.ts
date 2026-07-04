@@ -20,12 +20,13 @@ export const mauiWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Wal",
     text: [
       {
-        title: "DIESE MISSION IST VERFLUCHT",
+        title: "Diese Mission ist verflucht",
         description: "Dieser Charakter wird zu Beginn deines Zuges nicht bereit gemacht.",
       },
       {
-        title: "ICH GEB DIR DECKUNG 2",
-        description: "— Mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
+        title: "Ich geb dir Deckung",
+        description:
+          "2 {I} — Mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
     ],
   },
@@ -34,13 +35,13 @@ export const mauiWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Baleine",
     text: [
       {
-        title: "CETTE MISSION EST FICHUE",
+        title: "Cette mission est fichue",
         description: "Ce personnage ne se redresse pas au début de votre tour.",
       },
       {
-        title: "NE",
+        title: "Ne t'inquiète pas, je suis là",
         description:
-          "T'INQUIÈTE PAS, JE SUIS LÀ 2 — Redressez ce personnage, il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+          "2 {I} — Redressez ce personnage, il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
     ],
   },
@@ -49,14 +50,13 @@ export const mauiWhaleI18n: Record<Languages, I18nProperties> = {
     version: "Balena",
     text: [
       {
-        title: "LA MISSIONE",
-        description:
-          "È MALEDETTA Questo personaggio non si può preparare all'inizio del tuo turno.",
+        title: "La Missione è Maledetta",
+        description: "Questo personaggio non si può preparare all'inizio del tuo turno.",
       },
       {
-        title: "TI GUARDO LE SPALLE 2",
+        title: "Ti Guardo le Spalle",
         description:
-          "— Prepara questo personaggio. Non può andare all'avventura per il resto di questo turno.",
+          "2 {I} — Prepara questo personaggio. Non può andare all'avventura per il resto di questo turno.",
       },
     ],
   },

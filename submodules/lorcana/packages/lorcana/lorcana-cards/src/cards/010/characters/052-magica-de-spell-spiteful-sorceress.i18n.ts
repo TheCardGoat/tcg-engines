@@ -17,7 +17,7 @@ export const magicaDeSpellSpitefulSorceressI18n: Record<Languages, I18nPropertie
     version: "Boshafte Zauberin",
     text: [
       {
-        title: "MYSTISCHE MANIPULATION",
+        title: "Mystische Manipulation",
         description:
           "Jedes Mal, wenn du eine Karte unter einen deiner Charaktere oder Orte legst, darfst du 1 Schadensmarker von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
       },
@@ -28,7 +28,7 @@ export const magicaDeSpellSpitefulSorceressI18n: Record<Languages, I18nPropertie
     version: "Sorcière rancunière",
     text: [
       {
-        title: "MANIPULATION MYSTIQUE",
+        title: "Manipulation mystique",
         description:
           "Chaque fois que vous placez une carte sous l'un de vos personnages ou de vos lieux, vous pouvez choisir un personnage et déplacer 1 de ses dommages sur un personnage adverse de votre choix.",
       },
@@ -39,7 +39,7 @@ export const magicaDeSpellSpitefulSorceressI18n: Record<Languages, I18nPropertie
     version: "Strega Maligna",
     text: [
       {
-        title: "MANIPOLAZIONE MISTICA",
+        title: "Manipolazione Mistica",
         description:
           "Ogni volta che metti una carta sotto a uno dei tuoi personaggi o luoghi, puoi spostare 1 segnalino danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
       },

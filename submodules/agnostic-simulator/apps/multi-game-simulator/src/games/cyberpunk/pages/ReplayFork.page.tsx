@@ -3,7 +3,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import type { MatchState } from "@tcg/cyberpunk-engine";
 import { createLiveMatchViewerEngine } from "../engine/live/liveState";
 import { DEFAULT_SCENARIO, getStrategyById, type AISideConfig, type Side } from "../engine";
-import { BoardPage } from "./Board.page";
+import { BoardSharedPage } from "./BoardShared.page";
 import { loadCyberpunkReplay } from "../replay/loadReplay";
 import type { CyberpunkReplayOrchestrator } from "../replay/replayOrchestrator";
 import classes from "./Replay.module.css";
@@ -91,7 +91,7 @@ export function ReplayForkPage() {
 
   return (
     <main className={classes.page}>
-      <BoardPage
+      <BoardSharedPage
         key={`fork:${orchestrator.currentStep}:${humanSide}`}
         scenarioId={DEFAULT_SCENARIO}
         initialEngineBuilder={() =>

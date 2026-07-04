@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tiggerInTheCrowsNestI18n } from "./126-tigger-in-the-crows-nest.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const tiggerInTheCrowsNest: CharacterCard = {
   id: "puw",
   canonicalId: "ci_yVQ",
+  slug: "lorcana-ci_yVQ",
+  printings: [
+    {
+      id: "set6-126",
+      artId: "set6-126",
+      setCode: "set6",
+      collectorNumber: "126",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-126"],
   cardType: "character",
   name: "Tigger",
@@ -21,7 +33,7 @@ export const tiggerInTheCrowsNest: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_865641f3cac34a65a36bb2404f4e39dd",
-    tcgPlayer: 592037,
+    tcgPlayer: "592037",
   },
   text: [
     {

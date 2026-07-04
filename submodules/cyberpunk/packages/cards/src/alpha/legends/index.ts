@@ -1,4 +1,4 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { LegendCardDefinition } from "@tcg/cyberpunk-types";
 import { alphaGoroTakemuraHandsUnclean } from "./goro-takemura-hands-unclean.ts";
 import { alphaJackieWellesPourOneOutForMe } from "./jackie-welles-pour-one-out-for-me.ts";
 import { alphaSaburoArasakaStubbornPatriach } from "./saburo-arasaka-stubborn-patriach.ts";
@@ -20,4 +20,4 @@ export const alphaLegends = [
   alphaVCorporateExile,
   alphaViktorVektorSitDownAndRelax,
   alphaYorinobuArasakaEmbracingDestruction,
-] satisfies AlphaCardDefinition[];
+] satisfies LegendCardDefinition[];

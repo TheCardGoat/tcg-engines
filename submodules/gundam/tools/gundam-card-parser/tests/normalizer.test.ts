@@ -108,7 +108,8 @@ describe("normalizeUnit", () => {
 
     expect(card).toMatchObject({
       id: "GD01-042",
-      externalId: "gundam:gd01-042",
+      canonicalId: "GD01-042",
+      externalIds: { bandai: "gundam:gd01-042" },
       slug: "gundam-aerial-gd01-042",
       displayName: "Gundam Aerial",
       rulesText: "Deploy effect.",
@@ -126,6 +127,8 @@ describe("normalizeUnit", () => {
     expect(card.printings).toEqual([
       {
         id: "GD01-042",
+        artId: "GD01-042",
+        setCode: "GD01",
         collectorNumber: "GD01-042",
         cardNumber: "GD01-042",
         set: {

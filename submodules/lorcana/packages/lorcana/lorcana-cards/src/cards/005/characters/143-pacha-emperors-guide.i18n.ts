@@ -20,12 +20,12 @@ export const pachaEmperorsGuideI18n: Record<Languages, I18nProperties> = {
     version: "Reiseführer des Königs",
     text: [
       {
-        title: "NÜTZLICHE HINWEISE",
+        title: "Nützliche Hinweise",
         description:
           "Zu Beginn deines Zuges, wenn du mindestens einen Gegenstand im Spiel hast, sammelst du 1 Legende.",
       },
       {
-        title: "PERFEKTE WEGBESCHREIBUNG",
+        title: "Perfekte Wegbeschreibung",
         description:
           "Zu Beginn deines Zuges, wenn du mindestens einen Ort im Spiel hast, sammelst du 1 Legende.",
       },
@@ -36,12 +36,12 @@ export const pachaEmperorsGuideI18n: Record<Languages, I18nProperties> = {
     version: "Guide de l'Empereur",
     text: [
       {
-        title: "MATÉRIEL PRATIQUE",
+        title: "Matériel pratique",
         description:
           "Au début de votre tour, si vous avez un objet en jeu, gagnez 1 éclat de Lore.",
       },
       {
-        title: "INDICATIONS PARFAITES",
+        title: "Indications parfaites",
         description: "Au début de votre tour, si vous avez un lieu en jeu, gagnez 1 éclat de Lore.",
       },
     ],
@@ -51,11 +51,11 @@ export const pachaEmperorsGuideI18n: Record<Languages, I18nProperties> = {
     version: "Guida dell'Imperatore",
     text: [
       {
-        title: "UTILI PROVVISTE",
+        title: "Utili Provviste",
         description: "All'inizio del tuo turno, se hai in gioco un oggetto, ottieni 1 leggenda.",
       },
       {
-        title: "INDICAZIONI IMPECCABILI",
+        title: "Indicazioni Impeccabili",
         description: "All'inizio del tuo turno, se hai in gioco un luogo, ottieni 1 leggenda.",
       },
     ],

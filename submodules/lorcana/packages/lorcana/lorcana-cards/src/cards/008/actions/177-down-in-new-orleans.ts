@@ -4,6 +4,17 @@ import { downInNewOrleansI18n } from "./177-down-in-new-orleans.i18n";
 export const downInNewOrleans: ActionCard = {
   id: "AvD",
   canonicalId: "ci_AvD",
+  slug: "lorcana-ci_AvD",
+  printings: [
+    {
+      id: "set8-177",
+      artId: "set8-177",
+      setCode: "set8",
+      collectorNumber: "177",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-177"],
   cardType: "action",
   name: "Down in New Orleans",
@@ -15,8 +26,7 @@ export const downInNewOrleans: ActionCard = {
   cost: 6,
   inkable: false,
   externalIds: {
-    lorcast: "crd_eaa05e5b86e743a08331ddbbc5f19f4b",
-    tcgPlayer: 631845,
+    lorcast: "crd_3334bebad6e7424c80c2b8c0e157f654",
   },
   text: "Look at the top 3 cards of your deck. You may reveal a character, item, or location card with cost 6 or less and play it for free. Put the rest on the bottom of your deck in any order.",
   actionSubtype: "song",

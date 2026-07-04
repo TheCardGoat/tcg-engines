@@ -7,18 +7,18 @@ export const weeDingwallScrappyLadI18n: Record<Languages, I18nProperties> = {
     text: "Challenger +2",
   },
   de: {
-    name: "Wee Dingwall",
-    version: "Scrappy Lad",
-    text: "Challenger +2",
+    name: "Klein-Dingwall",
+    version: "Wildes Kerlchen",
+    text: "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)",
   },
   fr: {
-    name: "Wee Dingwall",
-    version: "Scrappy Lad",
-    text: "Challenger +2",
+    name: "Le Petit Dingwall",
+    version: "Garçon bagarreur",
+    text: "<Offensif> +2",
   },
   it: {
-    name: "Wee Dingwall",
-    version: "Scrappy Lad",
-    text: "Challenger +2",
+    name: "Piccolo Dingwall",
+    version: "Ragazzino Combattivo",
+    text: "<Sfidante> +2",
   },
 };

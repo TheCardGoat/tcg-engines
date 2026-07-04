@@ -1,5 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMouseMusketeerCaptainI18n } from "./016-mickey-mouse-musketeer-captain.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { shift } from "../../../helpers/abilities/shift";
 import { support } from "../../../helpers/abilities/support";
@@ -7,6 +8,17 @@ import { support } from "../../../helpers/abilities/support";
 export const mickeyMouseMusketeerCaptain: CharacterCard = {
   id: "OVa",
   canonicalId: "ci_OVa",
+  slug: "lorcana-ci_OVa",
+  printings: [
+    {
+      id: "set4-016",
+      artId: "set4-016",
+      setCode: "set4",
+      collectorNumber: "16",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-016"],
   cardType: "character",
   name: "Mickey Mouse",
@@ -22,7 +34,7 @@ export const mickeyMouseMusketeerCaptain: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a8b84c38955448fc8e9851870f2829de",
-    tcgPlayer: 549534,
+    tcgPlayer: "549534",
   },
   text: [
     {

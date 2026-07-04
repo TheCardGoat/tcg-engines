@@ -11,10 +11,26 @@ export const partOfYourWorldI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "PARTIR LÀ-BAS",
-    text: "Reprenez en main une carte personnage de votre défausse.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Reprenez en main une carte personnage de votre défausse.",
+      },
+    ],
   },
   it: {
     name: "Vivere Là",
-    text: "(Un personaggio con costo 3 o superiore può per cantare questa canzone gratis.) Riprendi in mano una carta personaggio dai tuoi scarti.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Riprendi in mano una carta personaggio dai tuoi scarti.",
+      },
+    ],
   },
 };

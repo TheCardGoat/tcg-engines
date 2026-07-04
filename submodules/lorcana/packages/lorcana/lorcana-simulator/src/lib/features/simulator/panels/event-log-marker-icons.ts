@@ -1,15 +1,13 @@
-import {
-  Droplets,
-  Eye,
-  Flag,
-  Footprints,
-  Hand,
-  MapPinned,
-  SkipForward,
-  Sparkles,
-  Swords,
-  Zap,
-} from "@lucide/svelte";
+import Droplets from "@lucide/svelte/icons/droplets";
+import Eye from "@lucide/svelte/icons/eye";
+import Flag from "@lucide/svelte/icons/flag";
+import Footprints from "@lucide/svelte/icons/footprints";
+import Hand from "@lucide/svelte/icons/hand";
+import MapPinned from "@lucide/svelte/icons/map-pinned";
+import SkipForward from "@lucide/svelte/icons/skip-forward";
+import Sparkles from "@lucide/svelte/icons/sparkles";
+import Swords from "@lucide/svelte/icons/swords";
+import Zap from "@lucide/svelte/icons/zap";
 import type { Component } from "svelte";
 import type { EventLogMarkerId } from "@/features/simulator/model/event-log-formatting.js";
 

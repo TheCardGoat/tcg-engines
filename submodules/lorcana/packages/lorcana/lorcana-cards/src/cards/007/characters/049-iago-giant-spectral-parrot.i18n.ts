@@ -19,12 +19,11 @@ export const iagoGiantSpectralParrotI18n: Record<Languages, I18nProperties> = {
     version: "Riesiger spektraler Papagei",
     text: [
       {
-        title: "Wendig",
+        title: "<Wendig>",
       },
       {
-        title: "Verschwinden",
-        description:
-          "(Jedes Mal, wenn dieser Charakter von einer Aktion einer gegnerischen Person ausgewählt wird, verbanne ihn.)",
+        title:
+          "<Verschwinden> (Jedes Mal, wenn dieser Charakter von einer Aktion einer gegnerischen Person ausgewählt wird, verbanne ihn.)",
       },
     ],
   },
@@ -33,11 +32,11 @@ export const iagoGiantSpectralParrotI18n: Record<Languages, I18nProperties> = {
     version: "Gigantesque perroquet spectral",
     text: [
       {
-        title: "Insaisissable",
+        title: "<Insaisissable>",
       },
       {
-        title: "Dissipation",
-        description: "(Lorsqu'un adversaire choisit ce personnage avec une action, bannissez-le.)",
+        title:
+          "<Dissipation> (Lorsqu'un adversaire choisit ce personnage avec une action, bannissez-le.)",
       },
     ],
   },
@@ -46,11 +45,11 @@ export const iagoGiantSpectralParrotI18n: Record<Languages, I18nProperties> = {
     version: "Pappagallo Spettrale Gigante",
     text: [
       {
-        title: "Sfuggente",
+        title: "<Sfuggente>",
       },
       {
-        title: "Svanire",
-        description: "(Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
+        title:
+          "<Svanire> (Quando un avversario sceglie questo personaggio per un'azione, esilialo.)",
       },
     ],
   },

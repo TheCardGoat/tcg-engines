@@ -1,3 +1,4 @@
+export { jollyRogerHooksShipP1Promo } from "./p1-027-jolly-roger-hooks-ship-promo";
 export { neverLandMermaidLagoon } from "./032-never-land-mermaid-lagoon";
 export { prideLandsPrideRock } from "./033-pride-lands-pride-rock";
 export { tianasPalaceJazzRestaurant } from "./034-tianas-palace-jazz-restaurant";

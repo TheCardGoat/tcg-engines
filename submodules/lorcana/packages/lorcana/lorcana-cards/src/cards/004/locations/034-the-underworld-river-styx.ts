@@ -4,6 +4,17 @@ import { theUnderworldRiverStyxI18n } from "./034-the-underworld-river-styx.i18n
 export const theUnderworldRiverStyx: LocationCard = {
   id: "hKJ",
   canonicalId: "ci_hKJ",
+  slug: "lorcana-ci_hKJ",
+  printings: [
+    {
+      id: "set4-034",
+      artId: "set4-034",
+      setCode: "set4",
+      collectorNumber: "34",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-034"],
   cardType: "location",
   name: "The Underworld",
@@ -20,13 +31,13 @@ export const theUnderworldRiverStyx: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0c75f068ac98487f9544d1bce3858b39",
-    tcgPlayer: 550564,
+    tcgPlayer: "550564",
   },
   text: [
     {
-      title: "SAVE A SOUL",
+      title: "SAVE",
       description:
-        "Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
+        "A SOUL Whenever a character quests while here, you may pay 3 {I} to return a character card from your discard to your hand.",
     },
   ],
   abilities: [

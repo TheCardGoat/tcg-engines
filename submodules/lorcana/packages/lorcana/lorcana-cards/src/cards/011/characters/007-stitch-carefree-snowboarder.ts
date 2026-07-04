@@ -4,6 +4,17 @@ import { stitchCarefreeSnowboarderI18n } from "./007-stitch-carefree-snowboarder
 export const stitchCarefreeSnowboarder: CharacterCard = {
   id: "7zq",
   canonicalId: "ci_vWQ",
+  slug: "lorcana-ci_vWQ",
+  printings: [
+    {
+      id: "set11-007",
+      artId: "set11-007",
+      setCode: "set11",
+      collectorNumber: "7",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-007"],
   cardType: "character",
   name: "Stitch",

@@ -17,7 +17,7 @@ export const ladyTremaineOverbearingMatriarchI18n: Record<Languages, I18nPropert
     version: "Überhebliches Familienoberhaupt",
     text: [
       {
-        title: "NICHT FÜR DICH",
+        title: "Nicht für dich",
         description:
           "Wenn du diesen Charakter ausspielst, verlieren alle gegnerischen Mitspielenden, die mehr Legenden als du haben, je 1 Legende.",
       },
@@ -28,7 +28,7 @@ export const ladyTremaineOverbearingMatriarchI18n: Record<Languages, I18nPropert
     version: "Marâtre autoritaire",
     text: [
       {
-        title: "PAS POUR TOI",
+        title: "Pas pour toi",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire ayant plus d'éclats de Lore que vous perd 1 éclat de Lore.",
       },
@@ -39,7 +39,7 @@ export const ladyTremaineOverbearingMatriarchI18n: Record<Languages, I18nPropert
     version: "Overbearing Matriarch",
     text: [
       {
-        title: "NOT FOR YOU",
+        title: "Not For You",
         description:
           "When you play this character, each opponent with more lore than you loses 1 lore.",
       },

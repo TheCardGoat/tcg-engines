@@ -7,14 +7,17 @@ export const gd03RedGundam039: UnitCard = {
   color: "red",
   traits: ["clan"],
   id: "GD03-039",
-  externalId: "gundam:gd03-039",
-  slug: "red-gundam-gd03-039",
+  canonicalId: "GD03-039",
+  externalIds: { bandai: "gundam:gd03-039" },
+  slug: "red-gundam/gd03-039",
   displayName: "Red Gundam",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-039",
   printings: [
     {
       id: "GD03-039",
+      artId: "GD03-039",
+      setCode: "GD03",
       collectorNumber: "GD03-039",
       cardNumber: "GD03-039",
       set: {
@@ -30,6 +33,8 @@ export const gd03RedGundam039: UnitCard = {
     },
     {
       id: "GD03-039_p1",
+      artId: "GD03-039_p1",
+      setCode: "GD04",
       collectorNumber: "GD03-039_p1",
       cardNumber: "GD03-039",
       set: {
@@ -44,6 +49,7 @@ export const gd03RedGundam039: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD03-039", "GD03-039_p1"],
   selectedPrintingId: "GD03-039",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-039.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-039.webp?260424",

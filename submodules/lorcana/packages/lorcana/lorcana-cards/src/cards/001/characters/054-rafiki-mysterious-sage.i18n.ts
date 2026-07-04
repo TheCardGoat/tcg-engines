@@ -9,21 +9,16 @@ export const rafikiMysteriousSageI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Rafiki",
     version: "Geheimnisvoller Weiser",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "RAFIKI",
     version: "Mystérieux sage",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Rafiki",
     version: "Mysterious Sage",
-    text: [
-      {
-        title: "Rush",
-        description: "(This character can challenge the turn they're played.)",
-      },
-    ],
+    text: "<Rush> (This character can challenge the turn they're played.)",
   },
 };

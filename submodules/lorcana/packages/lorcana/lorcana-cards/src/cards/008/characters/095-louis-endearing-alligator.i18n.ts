@@ -21,13 +21,13 @@ export const louisEndearingAlligatorI18n: Record<Languages, I18nProperties> = {
     version: "Liebenswerter Alligator",
     text: [
       {
-        title: "SENSIBLE SEELE",
+        title: "Sensible Seele",
         description: "Dieser Charakter kommt erschöpft ins Spiel.",
       },
       {
-        title: "FREUNDLICHER, ALS ER AUSSIEHT",
+        title: "Freundlicher, als er aussieht",
         description:
-          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl in seinem nächsten Zug Impulsiv. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
+          "Wenn du diesen Charakter ausspielst, erhält ein gegnerischer Charakter deiner Wahl in seinem nächsten Zug <Impulsiv>. (Der Charakter kann nicht erkunden und muss herausfordern, wenn möglich.)",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const louisEndearingAlligatorI18n: Record<Languages, I18nProperties> = {
     version: "Alligator attachant",
     text: [
       {
-        title: "ÂME SENSIBLE",
+        title: "Âme sensible",
         description: "Ce personnage entre en jeu épuisé.",
       },
       {
-        title: "PLUS SYMPA QU'IL N'Y PARAÎT",
+        title: "Plus sympa qu'il n'y paraît",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui gagne Combattant durant son prochain tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage adverse qui gagne <Combattant> durant son prochain tour.",
       },
     ],
   },
@@ -51,13 +51,13 @@ export const louisEndearingAlligatorI18n: Record<Languages, I18nProperties> = {
     version: "Tenero Alligatore",
     text: [
       {
-        title: "ANIMO SENSIBILE",
+        title: "Animo Sensibile",
         description: "Questo personaggio entra in gioco impegnato.",
       },
       {
-        title: "PIÙ AMICHEVOLE DI QUANTO SEMBRI",
+        title: "Più Amichevole di Quanto Sembri",
         description:
-          "Quando giochi questo personaggio, un personaggio avversario a tua scelta ottiene Attaccabrighe durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
+          "Quando giochi questo personaggio, un personaggio avversario a tua scelta ottiene <Attaccabrighe> durante il suo prossimo turno. (Non può andare all'avventura e deve sfidare, se possibile.)",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const gd04DestinedBattle107: CommandCard = {
   color: "green",
   traits: [],
   id: "GD04-107",
-  externalId: "gundam:gd04-107",
-  slug: "destined-battle-gd04-107",
+  canonicalId: "GD04-107",
+  externalIds: { bandai: "gundam:gd04-107" },
+  slug: "destined-battle/gd04-107",
   displayName: "Destined Battle",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-107",
   printings: [
     {
       id: "GD04-107",
+      artId: "GD04-107",
+      setCode: "GD04",
       collectorNumber: "GD04-107",
       cardNumber: "GD04-107",
       set: {
@@ -29,6 +32,7 @@ export const gd04DestinedBattle107: CommandCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-107"],
   selectedPrintingId: "GD04-107",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-107.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-107.webp?260424",

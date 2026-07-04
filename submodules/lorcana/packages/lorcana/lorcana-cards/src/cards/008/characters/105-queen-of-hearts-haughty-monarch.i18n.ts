@@ -17,9 +17,9 @@ export const queenOfHeartsHaughtyMonarchI18n: Record<Languages, I18nProperties> 
     version: "Hochmütige Monarchin",
     text: [
       {
-        title: "ZÄHLT AB!",
+        title: "Zählt ab!",
         description:
-          "Solange mindestens 5 Charaktere im Spiel beschädigt sind, erhält dieser Charakter +3.",
+          "Solange mindestens 5 Charaktere im Spiel beschädigt sind, erhält dieser Charakter +3 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const queenOfHeartsHaughtyMonarchI18n: Record<Languages, I18nProperties> 
     version: "Monarque hautaine",
     text: [
       {
-        title: "COMPTEZ-VOUS!",
+        title: "Comptez-vous!",
         description:
-          "Tant qu'il y a 5 personnages ou plus en jeu ayant au moins un dommage, ce personnage-ci gagne +3.",
+          "Tant qu'il y a 5 personnages ou plus en jeu ayant au moins un dommage, ce personnage-ci gagne +3 {L}.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const queenOfHeartsHaughtyMonarchI18n: Record<Languages, I18nProperties> 
     version: "Monarca Altezzosa",
     text: [
       {
-        title: "CONTA!",
+        title: "Conta!",
         description:
-          "Mentre sono in gioco 5 o più personaggi con danno, questo personaggio riceve +3.",
+          "Mentre sono in gioco 5 o più personaggi con danno, questo personaggio riceve +3 {L}.",
       },
     ],
   },

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kidaCrystalScionI18n } from "./160-kida-crystal-scion.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const kidaCrystalScion: CharacterCard = {
   id: "21E",
   canonicalId: "ci_21E",
+  slug: "lorcana-ci_21E",
+  printings: [
+    {
+      id: "set12-160",
+      artId: "set12-160",
+      setCode: "set12",
+      collectorNumber: "160",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-160"],
   cardType: "character",
   name: "Kida",
@@ -20,7 +32,8 @@ export const kidaCrystalScion: CharacterCard = {
   lore: 2,
   inkable: true,
   externalIds: {
-    lorcast: "crd_9e3dda7a33de4861a5f81b5bea034db3",
+    lorcast: "crd_8197b190acad44c7a28b50a83fb573f1",
+    tcgPlayer: "692227",
   },
   text: [
     {

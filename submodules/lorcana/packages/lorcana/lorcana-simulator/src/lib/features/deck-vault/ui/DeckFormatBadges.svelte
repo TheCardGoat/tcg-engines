@@ -19,6 +19,11 @@
       title: "Core Constructed — Current rotating format",
       style: "bg-amber-400/15 text-amber-300 border-amber-400/30",
     },
+    "attack-of-the-vine": {
+      label: "AOTV",
+      title: "Attack of the Vine — Early-access Set 13 queue",
+      style: "bg-lime-400/15 text-lime-300 border-lime-400/30",
+    },
     "archazias-island": {
       label: "Archazia's",
       title: "Archazia's Island — Sets SSK–FAB",

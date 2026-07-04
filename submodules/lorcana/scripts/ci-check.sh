@@ -128,7 +128,7 @@ else
   echo "ci check failed: $script_name"
 fi
 echo "full log: $log_path"
-echo "last 200 lines:"
-tail -n 200 "$log_path"
+echo "last 1000 lines:"
+tail -n 1000 "$log_path"
 
 exit "$status"

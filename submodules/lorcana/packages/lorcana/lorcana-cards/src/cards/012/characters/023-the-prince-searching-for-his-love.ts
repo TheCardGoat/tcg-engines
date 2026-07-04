@@ -4,6 +4,17 @@ import { thePrinceSearchingForHisLoveI18n } from "./023-the-prince-searching-for
 export const thePrinceSearchingForHisLove: CharacterCard = {
   id: "jgX",
   canonicalId: "ci_jgX",
+  slug: "lorcana-ci_jgX",
+  printings: [
+    {
+      id: "set12-023",
+      artId: "set12-023",
+      setCode: "set12",
+      collectorNumber: "23",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-023"],
   cardType: "character",
   name: "The Prince",
@@ -21,6 +32,7 @@ export const thePrinceSearchingForHisLove: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_25eee8741de44224946fe827a0debb09",
+    tcgPlayer: "692234",
   },
   classifications: ["Storyborn", "Hero", "Prince"],
   i18n: thePrinceSearchingForHisLoveI18n,

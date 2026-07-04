@@ -1,12 +1,14 @@
 import { describe, expect, it } from "bun:test";
 import {
+  ALT_ART_CALIBRATION_TARGET,
+  ALT_ART_TOP_RARITY_BY_GAME,
   getCosmeticProgressMultiplier,
   getEventTicketMultiplier,
   getPatronGrantInkmarks,
   getSupporterPerks,
   hasActiveAlternateArtAccess,
   normalizeSupporterPerkTier,
-} from "./supporter-perks";
+} from "./supporter-perks.js";
 
 describe("supporter perk config", () => {
   it("returns no paid perks for free or unknown tiers", () => {
@@ -43,5 +45,24 @@ describe("supporter perk config", () => {
     expect(hasActiveAlternateArtAccess("tier3")).toBe(false);
     expect(hasActiveAlternateArtAccess("tier4")).toBe(true);
     expect(hasActiveAlternateArtAccess("tier6")).toBe(true);
+  });
+});
+
+describe("alt-art cross-game calibration anchor", () => {
+  it("pins the top-rarity permanent-marks target at 120", () => {
+    expect(ALT_ART_CALIBRATION_TARGET.topRarityPermanentMarks).toBe(120);
+  });
+
+  it("declares the rarity code every game's top tier maps onto", () => {
+    expect(ALT_ART_CALIBRATION_TARGET.topRarityCode).toBe("enchanted");
+  });
+
+  it("maps every known game's rarest alt-art onto the calibration rarity code", () => {
+    for (const [game, code] of Object.entries(ALT_ART_TOP_RARITY_BY_GAME)) {
+      expect(code).toBe(ALT_ART_CALIBRATION_TARGET.topRarityCode);
+    }
+    // Both supported games are present and both resolve to "enchanted".
+    expect(ALT_ART_TOP_RARITY_BY_GAME.lorcana).toBe("enchanted");
+    expect(ALT_ART_TOP_RARITY_BY_GAME.cyberpunk).toBe("enchanted");
   });
 });

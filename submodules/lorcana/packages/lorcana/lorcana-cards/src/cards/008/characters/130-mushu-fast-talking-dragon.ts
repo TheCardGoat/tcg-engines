@@ -4,6 +4,17 @@ import { mushuFasttalkingDragonI18n } from "./130-mushu-fast-talking-dragon.i18n
 export const mushuFasttalkingDragon: CharacterCard = {
   id: "Ffp",
   canonicalId: "ci_Ffp",
+  slug: "lorcana-ci_Ffp",
+  printings: [
+    {
+      id: "set8-130",
+      artId: "set8-130",
+      setCode: "set8",
+      collectorNumber: "130",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-130"],
   cardType: "character",
   name: "Mushu",
@@ -20,7 +31,7 @@ export const mushuFasttalkingDragon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ea0d142942ae47fb8d5840fedf77bd08",
-    tcgPlayer: 631435,
+    tcgPlayer: "631435",
   },
   text: [
     {

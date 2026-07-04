@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { stitchAlienBuccaneerI18n } from "./072-stitch-alien-buccaneer.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const stitchAlienBuccaneer: CharacterCard = {
-  id: "z1V",
-  canonicalId: "ci_z1V",
+  id: "zea",
+  canonicalId: "ci_bae",
+  slug: "lorcana-ci_bae",
+  printings: [
+    {
+      id: "set6-072",
+      artId: "set6-072",
+      setCode: "set6",
+      collectorNumber: "72",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-072"],
   cardType: "character",
   name: "Stitch",
@@ -21,7 +33,7 @@ export const stitchAlienBuccaneer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_efcb250575354ffd8cdce9e8c45d52bf",
-    tcgPlayer: 578176,
+    tcgPlayer: "578176",
   },
   text: [
     {

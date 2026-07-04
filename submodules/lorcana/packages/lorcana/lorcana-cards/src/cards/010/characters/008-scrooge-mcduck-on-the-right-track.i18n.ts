@@ -17,9 +17,9 @@ export const scroogeMcduckOnTheRightTrackI18n: Record<Languages, I18nProperties>
     version: "Auf dem richtigen Weg",
     text: [
       {
-        title: "SAGENHAFTER REICHTUM",
+        title: "Sagenhafter Reichtum",
         description:
-          "Wenn du diesen Charakter ausspielst, wähle einen Charakter, der eine Karte unter sich hat. Jener erhält in diesem Zug +1.",
+          "Wenn du diesen Charakter ausspielst, wähle einen Charakter, der eine Karte unter sich hat. Jener erhält in diesem Zug +1 {L}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const scroogeMcduckOnTheRightTrackI18n: Record<Languages, I18nProperties>
     version: "Sur la bonne piste",
     text: [
       {
-        title: "FABULEUSE FORTUNE",
+        title: "Fabuleuse fortune",
         description:
-          "Lorsque vous jouez ce personnage, choisissez un personnage avec une carte sous lui qui gagne +1 pour le reste de ce tour.",
+          "Lorsque vous jouez ce personnage, choisissez un personnage avec une carte sous lui qui gagne +1 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const scroogeMcduckOnTheRightTrackI18n: Record<Languages, I18nProperties>
     version: "Sulla Strada Giusta",
     text: [
       {
-        title: "INCREDIBILE RICCHEZZA",
+        title: "Incredibile Ricchezza",
         description:
-          "Quando giochi questo personaggio, un personaggio a tua scelta con una carta sotto di sé riceve +1 per questo turno.",
+          "Quando giochi questo personaggio, un personaggio a tua scelta con una carta sotto di sé riceve +1 {L} per questo turno.",
       },
     ],
   },

@@ -7,14 +7,17 @@ export const gd01ZeonRemnantForces115: CommandCard = {
   color: "red",
   traits: ["-"],
   id: "GD01-115",
-  externalId: "gundam:gd01-115",
-  slug: "zeon-remnant-forces-gd01-115",
+  canonicalId: "GD01-115",
+  externalIds: { bandai: "gundam:gd01-115" },
+  slug: "zeon-remnant-forces/gd01-115",
   displayName: "Zeon Remnant Forces",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-115",
   printings: [
     {
       id: "GD01-115",
+      artId: "GD01-115",
+      setCode: "GD01",
       collectorNumber: "GD01-115",
       cardNumber: "GD01-115",
       set: {
@@ -29,6 +32,7 @@ export const gd01ZeonRemnantForces115: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-115"],
   selectedPrintingId: "GD01-115",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-115.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-115.webp?260424",

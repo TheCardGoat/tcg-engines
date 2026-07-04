@@ -4,6 +4,17 @@ import { liShangValorousGeneralI18n } from "./112-li-shang-valorous-general.i18n
 export const liShangValorousGeneral: CharacterCard = {
   id: "4HP",
   canonicalId: "ci_4HP",
+  slug: "lorcana-ci_4HP",
+  printings: [
+    {
+      id: "set4-112",
+      artId: "set4-112",
+      setCode: "set4",
+      collectorNumber: "112",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-112"],
   cardType: "character",
   name: "Li Shang",
@@ -20,7 +31,7 @@ export const liShangValorousGeneral: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4a59e793877041acaa1b8bf5543d85b0",
-    tcgPlayer: 547766,
+    tcgPlayer: "547766",
   },
   text: [
     {

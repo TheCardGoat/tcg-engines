@@ -7,14 +7,17 @@ export const gd03EmmaSheen099: PilotCard = {
   color: "white",
   traits: ["aeug"],
   id: "GD03-099",
-  externalId: "gundam:gd03-099",
-  slug: "emma-sheen-gd03-099",
+  canonicalId: "GD03-099",
+  externalIds: { bandai: "gundam:gd03-099" },
+  slug: "emma-sheen/gd03-099",
   displayName: "Emma Sheen",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-099",
   printings: [
     {
       id: "GD03-099",
+      artId: "GD03-099",
+      setCode: "GD03",
       collectorNumber: "GD03-099",
       cardNumber: "GD03-099",
       set: {
@@ -29,6 +32,7 @@ export const gd03EmmaSheen099: PilotCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-099"],
   selectedPrintingId: "GD03-099",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-099.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-099.webp?260424",

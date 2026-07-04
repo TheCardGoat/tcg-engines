@@ -17,7 +17,7 @@ export const wreckitRalphAdmiralUnderpantsI18n: Record<Languages, I18nProperties
     version: "Admiral Unterbuxe",
     text: [
       {
-        title: "ICH HABE DIE COOLSTE FREUNDIN",
+        title: "Ich habe die coolste Freundin",
         description:
           "Wenn du diesen Charakter ausspielst, nimm 1 Charakterkarte aus deinem Ablagestapel zurück auf deine Hand. Falls jene Karte eine Prinzessin-Charakterkarte ist, sammelst du 2 Legenden.",
       },
@@ -28,7 +28,7 @@ export const wreckitRalphAdmiralUnderpantsI18n: Record<Languages, I18nProperties
     version: "Amiral Couche-culotte",
     text: [
       {
-        title: "LA MEILLEURE AMIE DU MONDE",
+        title: "La meilleure amie du monde",
         description:
           "Lorsque vous jouez ce personnage, renvoyez une carte Personnage de votre défausse dans votre main. S'il s'agit d'un personnage Princesse, gagnez 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const wreckitRalphAdmiralUnderpantsI18n: Record<Languages, I18nProperties
     version: "Ammiraglio Mutandoni",
     text: [
       {
-        title: "HO L'AMICA PIÙ STRAORDINARIA",
+        title: "Ho l'Amica più Straordinaria",
         description:
           "Quando giochi questo personaggio, riprendi in mano una carta personaggio dai tuoi scarti. Se quella carta è una carta personaggio Principessa, ottieni 2 leggenda.",
       },

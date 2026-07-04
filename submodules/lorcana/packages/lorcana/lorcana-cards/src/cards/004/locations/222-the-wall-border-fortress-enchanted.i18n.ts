@@ -17,7 +17,7 @@ export const theWallBorderFortressEnchantedI18n: Record<Languages, I18nPropertie
     version: "Grenzfestung",
     text: [
       {
-        title: "DAS REICH SCHÜTZEN",
+        title: "Das Reich schützen",
         description:
           "Solange du mindestens einen erschöpften Charakter an diesem Ort hast, können deine anderen Orte nicht herausgefordert werden.",
       },
@@ -28,7 +28,7 @@ export const theWallBorderFortressEnchantedI18n: Record<Languages, I18nPropertie
     version: "Fortification frontalière",
     text: [
       {
-        title: "PROTÉGER LE ROYAUME",
+        title: "Protéger le royaume",
         description:
           "Tant que vous avez un personnage épuisé sur ce lieu, vos autres lieux ne peuvent pas être défiés.",
       },
@@ -39,7 +39,7 @@ export const theWallBorderFortressEnchantedI18n: Record<Languages, I18nPropertie
     version: "Fortezza di Confine",
     text: [
       {
-        title: "PROTEGGERE IL REGNO",
+        title: "Proteggere il Regno",
         description:
           "Mentre hai un personaggio impegnato in questo luogo, i tuoi altri luoghi non possono essere sfidati.",
       },

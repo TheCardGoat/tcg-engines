@@ -7,14 +7,17 @@ export const st03FullFrontal010: PilotCard = {
   color: "red",
   traits: ["neo zeon", "cyber-newtype"],
   id: "ST03-010",
-  externalId: "gundam:st03-010",
-  slug: "full-frontal-st03-010",
+  canonicalId: "ST03-010",
+  externalIds: { bandai: "gundam:st03-010" },
+  slug: "full-frontal/st03-010",
   displayName: "Full Frontal",
   set: { code: "ST03", name: "Zeon's Rush [ST03]", packageId: "616003" },
   printNumber: "ST03-010",
   printings: [
     {
       id: "ST03-010",
+      artId: "ST03-010",
+      setCode: "ST03",
       collectorNumber: "ST03-010",
       cardNumber: "ST03-010",
       set: {
@@ -30,6 +33,8 @@ export const st03FullFrontal010: PilotCard = {
     },
     {
       id: "ST03-010_p1",
+      artId: "ST03-010_p1",
+      setCode: "ST03",
       collectorNumber: "ST03-010_p1",
       cardNumber: "ST03-010",
       set: {
@@ -44,6 +49,7 @@ export const st03FullFrontal010: PilotCard = {
       productName: "Zeon's Rush [ST03] Bonus Pack",
     },
   ],
+  reprints: ["ST03-010", "ST03-010_p1"],
   selectedPrintingId: "ST03-010",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st03/ST03-010.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST03-010.webp?260424",

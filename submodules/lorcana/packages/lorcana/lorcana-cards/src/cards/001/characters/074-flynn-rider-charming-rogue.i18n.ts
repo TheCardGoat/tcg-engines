@@ -17,7 +17,7 @@ export const flynnRiderCharmingRogueI18n: Record<Languages, I18nProperties> = {
     version: "Charmanter Gauner",
     text: [
       {
-        title: "WER KANN HIERZU SCHON NEIN SAGEN?",
+        title: "Wer kann hierzu schon Nein sagen?",
         description:
           "Jedes Mal, wenn dieser Charakter herausgefordert wird, wählt die herausfordernde Person 1 Karte aus ihrer Hand und wirft sie ab.",
       },
@@ -39,7 +39,7 @@ export const flynnRiderCharmingRogueI18n: Record<Languages, I18nProperties> = {
     version: "Charming Rogue",
     text: [
       {
-        title: "HERE COMES THE SMOLDER",
+        title: "Here Comes the Smolder",
         description:
           "Whenever this character is challenged, the challenging player chooses and discards a card.",
       },

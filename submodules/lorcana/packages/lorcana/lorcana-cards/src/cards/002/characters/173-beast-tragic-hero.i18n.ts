@@ -20,12 +20,13 @@ export const beastTragicHeroI18n: Record<Languages, I18nProperties> = {
     version: "Tragischer Held",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Biest-Charaktere auszuspielen.)",
       },
       {
-        title: "VIELLEICHT IST ES SO BESSER",
+        title: "Vielleicht ist es so besser",
         description:
-          "Ziehe zu Beginn deines Zuges 1 Karte, falls dieser Charakter unbeschädigt ist. Ist er beschädigt, erhält er in diesem Zug +4.",
+          "Ziehe zu Beginn deines Zuges 1 Karte, falls dieser Charakter unbeschädigt ist. Ist er beschädigt, erhält er in diesem Zug +4 {S}.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const beastTragicHeroI18n: Record<Languages, I18nProperties> = {
     version: "Héros tragique",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages La Bête.)",
       },
       {
-        title: "C'EST PEUT-ÊTRE MIEUX COMME ÇA",
+        title: "C'est peut-être mieux comme ça",
         description:
-          "Si ce personnage n'a aucun jeton dommage sur lui au début de votre tour, piochez une carte. Sinon, il gagne +4 pour le reste de ce tour.",
+          "Si ce personnage n'a aucun jeton dommage sur lui au début de votre tour, piochez une carte. Sinon, il gagne +4 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const beastTragicHeroI18n: Record<Languages, I18nProperties> = {
     version: "Tragic Hero",
     text: [
       {
-        title: "Shift 3",
+        title:
+          "<Shift> 3 (You may pay 3 {I} to play this on top of one of your characters named Beast.)",
       },
       {
-        title: "IT'S BETTER THIS WAY",
+        title: "It's Better This Way",
         description:
-          "At the start of your turn, if this character has no damage, draw a card. Otherwise, he gets +4 this turn.",
+          "At the start of your turn, if this character has no damage, draw a card. Otherwise, he gets +4 {S} this turn.",
       },
     ],
   },

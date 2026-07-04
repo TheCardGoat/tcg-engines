@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { genieWishFulfilledI18n } from "./053-genie-wish-fulfilled.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const genieWishFulfilled: CharacterCard = {
   id: "B2Y",
   canonicalId: "ci_M3n",
+  slug: "lorcana-ci_M3n",
+  printings: [
+    {
+      id: "set6-053",
+      artId: "set6-053",
+      setCode: "set6",
+      collectorNumber: "53",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-053"],
   cardType: "character",
   name: "Genie",
@@ -21,7 +33,7 @@ export const genieWishFulfilled: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9a41d700cf2749da8eed29420df7467c",
-    tcgPlayer: 593007,
+    tcgPlayer: "593007",
   },
   text: [
     {

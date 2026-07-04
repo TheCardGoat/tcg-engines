@@ -4,6 +4,17 @@ import { kakamoraMenacingSailorI18n } from "./111-kakamora-menacing-sailor.i18n"
 export const kakamoraMenacingSailor: CharacterCard = {
   id: "rbY",
   canonicalId: "ci_rbY",
+  slug: "lorcana-ci_rbY",
+  printings: [
+    {
+      id: "set3-111",
+      artId: "set3-111",
+      setCode: "set3",
+      collectorNumber: "111",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-111"],
   cardType: "character",
   name: "Kakamora",
@@ -20,7 +31,7 @@ export const kakamoraMenacingSailor: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d119988be09743af8639f30e658caa8c",
-    tcgPlayer: 538365,
+    tcgPlayer: "538365",
   },
   text: [
     {

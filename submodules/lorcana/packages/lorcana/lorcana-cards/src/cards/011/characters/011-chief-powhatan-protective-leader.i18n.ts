@@ -19,10 +19,11 @@ export const chiefPowhatanProtectiveLeaderI18n: Record<Languages, I18nProperties
     version: "Beschützender Anführer",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "STEHT SEINEN MANN",
+        title: "Steht seinen Mann",
         description: "Dieser Charakter kann nicht herausfordern.",
       },
     ],
@@ -32,10 +33,11 @@ export const chiefPowhatanProtectiveLeaderI18n: Record<Languages, I18nProperties
     version: "Chef protecteur",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "TIENT SA POSITION",
+        title: "Tient sa position",
         description: "Ce personnage ne peut pas défier.",
       },
     ],
@@ -45,10 +47,10 @@ export const chiefPowhatanProtectiveLeaderI18n: Record<Languages, I18nProperties
     version: "Leader Protettivo",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "MANTENERE LA POSIZIONE",
+        title: "Mantenere la Posizione",
         description: "Questo personaggio non può sfidare.",
       },
     ],

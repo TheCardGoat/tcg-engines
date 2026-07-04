@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { maleficentFormidableQueenI18n } from "./035-maleficent-formidable-queen.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const maleficentFormidableQueen: CharacterCard = {
   id: "IEz",
   canonicalId: "ci_IEz",
+  slug: "lorcana-ci_IEz",
+  printings: [
+    {
+      id: "set5-035",
+      artId: "set5-035",
+      setCode: "set5",
+      collectorNumber: "35",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-035"],
   cardType: "character",
   name: "Maleficent",
@@ -21,7 +33,7 @@ export const maleficentFormidableQueen: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d3bfcff390e54c9bbd1027b57320d621",
-    tcgPlayer: 561950,
+    tcgPlayer: "561950",
   },
   text: [
     {

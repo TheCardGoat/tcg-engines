@@ -4,6 +4,17 @@ import { merlinsCottageTheWizardsHomeI18n } from "./170-merlins-cottage-the-wiza
 export const merlinsCottageTheWizardsHome: LocationCard = {
   id: "yVb",
   canonicalId: "ci_yVb",
+  slug: "lorcana-ci_yVb",
+  printings: [
+    {
+      id: "set5-170",
+      artId: "set5-170",
+      setCode: "set5",
+      collectorNumber: "170",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-170"],
   cardType: "location",
   name: "Merlin's Cottage",
@@ -20,7 +31,7 @@ export const merlinsCottageTheWizardsHome: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cc13be0e046742f4ae3e0aaffb5d3f9e",
-    tcgPlayer: 559715,
+    tcgPlayer: "559715",
   },
   text: [
     {

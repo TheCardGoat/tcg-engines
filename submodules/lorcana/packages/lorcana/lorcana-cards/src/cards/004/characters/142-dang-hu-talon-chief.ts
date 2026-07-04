@@ -4,6 +4,17 @@ import { dangHuTalonChiefI18n } from "./142-dang-hu-talon-chief.i18n";
 export const dangHuTalonChief: CharacterCard = {
   id: "52U",
   canonicalId: "ci_52U",
+  slug: "lorcana-ci_52U",
+  printings: [
+    {
+      id: "set4-142",
+      artId: "set4-142",
+      setCode: "set4",
+      collectorNumber: "142",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-142"],
   cardType: "character",
   name: "Dang Hu",
@@ -20,7 +31,7 @@ export const dangHuTalonChief: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0e74340fa12045cb9bdb4824d72f2ad3",
-    tcgPlayer: 549247,
+    tcgPlayer: "549247",
   },
   text: [
     {

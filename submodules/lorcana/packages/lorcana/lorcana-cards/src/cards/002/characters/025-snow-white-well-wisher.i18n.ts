@@ -20,10 +20,11 @@ export const snowWhiteWellWisherI18n: Record<Languages, I18nProperties> = {
     version: "Am Wunschbrunnen",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Schneewittchen-Charaktere auszuspielen.)",
       },
       {
-        title: "EUER WUNSCH WIRD GEWÄHRT",
+        title: "Euer Wunsch wird gewährt",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du eine Charakterkarte aus deinem Ablagestapel zurück auf deine Hand nehmen.",
       },
@@ -34,10 +35,11 @@ export const snowWhiteWellWisherI18n: Record<Languages, I18nProperties> = {
     version: "Fait un vœu",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Blanche-Neige.)",
       },
       {
-        title: "MES VŒUX SE RÉALISENT",
+        title: "Mes vœux se réalisent",
         description:
           "Lorsque ce personnage est envoyé à l'aventure, vous pouvez reprendre en main une carte personnage de votre défausse.",
       },
@@ -48,10 +50,11 @@ export const snowWhiteWellWisherI18n: Record<Languages, I18nProperties> = {
     version: "Well Wisher",
     text: [
       {
-        title: "Shift 4",
+        title:
+          "<Shift> 4 (You may pay 4 {I} to play this on top of one of your characters named Snow White.)",
       },
       {
-        title: "WISHES COME TRUE",
+        title: "Wishes Come True",
         description:
           "Whenever this character quests, you may return a character card from your discard to your hand.",
       },

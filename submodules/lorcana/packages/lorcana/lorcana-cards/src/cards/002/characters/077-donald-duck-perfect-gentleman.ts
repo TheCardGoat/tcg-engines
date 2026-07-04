@@ -4,6 +4,17 @@ import { donaldDuckPerfectGentlemanI18n } from "./077-donald-duck-perfect-gentle
 export const donaldDuckPerfectGentleman: CharacterCard = {
   id: "fS0",
   canonicalId: "ci_rpq",
+  slug: "lorcana-ci_rpq",
+  printings: [
+    {
+      id: "set2-077",
+      artId: "set2-077",
+      setCode: "set2",
+      collectorNumber: "77",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-077", "set9-085"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckPerfectGentleman: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_0fbd5245e47044bc842780f9340d4ddd",
-    tcgPlayer: 650025,
+    tcgPlayer: "650025",
   },
   text: [
     {

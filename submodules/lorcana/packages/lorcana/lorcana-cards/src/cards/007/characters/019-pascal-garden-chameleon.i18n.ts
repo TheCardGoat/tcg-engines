@@ -9,16 +9,16 @@ export const pascalGardenChameleonI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Pascal",
     version: "Gartenchamäleon",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Pascal",
     version: "Caméléon de jardin",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Pascal",
     version: "Camaleonte da Giardino",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

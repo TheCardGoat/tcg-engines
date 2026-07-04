@@ -5,9 +5,9 @@ export const ursulasCauldronI18n: Record<Languages, I18nProperties> = {
     name: "Ursula’s Cauldron",
     text: [
       {
-        title: "PEER INTO THE DEPTHS",
+        title: "Peer Into the Depths",
         description:
-          "— Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
+          "{E} — Look at the top 2 cards of your deck. Put one on the top of your deck and the other on the bottom.",
       },
     ],
   },
@@ -15,9 +15,9 @@ export const ursulasCauldronI18n: Record<Languages, I18nProperties> = {
     name: "Ursulas Kessel",
     text: [
       {
-        title: "BLICKE IN DIE TIEFE",
+        title: "Blicke in die Tiefe",
         description:
-          "— Schaue dir die obersten 2 Karten deines Decks an. Lege 1 davon auf dein Deck und die andere unter dein Deck.",
+          "{E} — Schaue dir die obersten 2 Karten deines Decks an. Lege 1 davon auf dein Deck und die andere unter dein Deck.",
       },
     ],
   },
@@ -27,7 +27,7 @@ export const ursulasCauldronI18n: Record<Languages, I18nProperties> = {
       {
         title: "SURVEILLANCE DES PROFONDEURS",
         description:
-          "— Regardez les 2 premières cartes de votre pioche. Remettez-en une sur le dessus de votre pioche et l'autre en dessous.",
+          "{E} — Regardez les 2 premières cartes de votre pioche. Remettez-en une sur le dessus de votre pioche et l'autre en dessous.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const ursulasCauldronI18n: Record<Languages, I18nProperties> = {
     name: "Il Calderone di Ursula",
     text: [
       {
-        title: "SCRUTARE NEGLI ABISSI",
+        title: "Scrutare negli Abissi",
         description:
-          "— Guarda le prime 2 carte del tuo mazzo. Mettine una in cima al tuo mazzo e l'altra in fondo.",
+          "{E} — Guarda le prime 2 carte del tuo mazzo. Mettine una in cima al tuo mazzo e l'altra in fondo.",
       },
     ],
   },

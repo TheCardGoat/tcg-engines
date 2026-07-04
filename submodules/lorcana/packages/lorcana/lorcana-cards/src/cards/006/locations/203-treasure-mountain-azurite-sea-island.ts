@@ -4,6 +4,17 @@ import { treasureMountainAzuriteSeaIslandI18n } from "./203-treasure-mountain-az
 export const treasureMountainAzuriteSeaIsland: LocationCard = {
   id: "3j2",
   canonicalId: "ci_To9",
+  slug: "lorcana-ci_To9",
+  printings: [
+    {
+      id: "set6-203",
+      artId: "set6-203",
+      setCode: "set6",
+      collectorNumber: "203",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-203"],
   cardType: "location",
   name: "Treasure Mountain",
@@ -20,7 +31,7 @@ export const treasureMountainAzuriteSeaIsland: LocationCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c343d1fc29f3491f95bb460c90e081a7",
-    tcgPlayer: 593162,
+    tcgPlayer: "593162",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { mulanImperialSoldierI18n } from "./118-mulan-imperial-soldier.i18n";
 export const mulanImperialSoldier: CharacterCard = {
   id: "4Na",
   canonicalId: "ci_4Na",
+  slug: "lorcana-ci_4Na",
+  printings: [
+    {
+      id: "set1-118",
+      artId: "set1-118",
+      setCode: "set1",
+      collectorNumber: "118",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-118"],
   cardType: "character",
   name: "Mulan",
@@ -20,7 +31,7 @@ export const mulanImperialSoldier: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_45037644be034dad9ec46ffdabcde550",
-    tcgPlayer: 485365,
+    tcgPlayer: "485365",
   },
   text: [
     {

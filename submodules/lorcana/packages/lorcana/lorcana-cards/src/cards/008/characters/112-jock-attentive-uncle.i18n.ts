@@ -17,7 +17,7 @@ export const jockAttentiveUncleI18n: Record<Languages, I18nProperties> = {
     version: "Aufmerksamer Onkel",
     text: [
       {
-        title: "STIMME DER ERFAHRUNG",
+        title: "Stimme der Erfahrung",
         description:
           "Wenn du diesen Charakter ausspielst und du mindestens 3 weitere Charaktere im Spiel hast, sammelst du 2 Legenden.",
       },
@@ -28,7 +28,7 @@ export const jockAttentiveUncleI18n: Record<Languages, I18nProperties> = {
     version: "Oncle attentif",
     text: [
       {
-        title: "LA VOIX DE L'EXPÉRIENCE",
+        title: "La voix de l'expérience",
         description:
           "Lorsque vous jouez ce personnage, si vous avez 3 autres personnages en jeu ou plus, gagnez 2 éclats de Lore.",
       },
@@ -39,7 +39,7 @@ export const jockAttentiveUncleI18n: Record<Languages, I18nProperties> = {
     version: "Zio Premuroso",
     text: [
       {
-        title: "VOCE DELL'ESPERIENZA",
+        title: "Voce dell'Esperienza",
         description:
           "Quando giochi questo personaggio, se hai in gioco 3 o più altri personaggi, ottieni 2 leggenda.",
       },

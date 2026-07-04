@@ -4,6 +4,17 @@ import { pedroMadrigalFamilyPatriarchI18n } from "./005-pedro-madrigal-family-pa
 export const pedroMadrigalFamilyPatriarch: CharacterCard = {
   id: "XlE",
   canonicalId: "ci_XlE",
+  slug: "lorcana-ci_XlE",
+  printings: [
+    {
+      id: "set12-005",
+      artId: "set12-005",
+      setCode: "set12",
+      collectorNumber: "5",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-005"],
   cardType: "character",
   name: "Pedro Madrigal",
@@ -20,6 +31,7 @@ export const pedroMadrigalFamilyPatriarch: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_91ca0b124f3a401faaf0926a24588af5",
+    tcgPlayer: "692007",
   },
   text: [
     {

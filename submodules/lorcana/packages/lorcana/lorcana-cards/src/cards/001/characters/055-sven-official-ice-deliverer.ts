@@ -4,6 +4,17 @@ import { svenOfficialIceDelivererI18n } from "./055-sven-official-ice-deliverer.
 export const svenOfficialIceDeliverer: CharacterCard = {
   id: "L7t",
   canonicalId: "ci_Nok",
+  slug: "lorcana-ci_Nok",
+  printings: [
+    {
+      id: "set1-055",
+      artId: "set1-055",
+      setCode: "set1",
+      collectorNumber: "55",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-055", "set9-056"],
   cardType: "character",
   name: "Sven",
@@ -21,7 +32,7 @@ export const svenOfficialIceDeliverer: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_7b8e4758284944abbee5ba2f79d2b353",
-    tcgPlayer: 650000,
+    tcgPlayer: "650000",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: svenOfficialIceDelivererI18n,

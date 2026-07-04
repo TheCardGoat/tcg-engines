@@ -20,12 +20,12 @@ export const belleOfTheBallI18n: Record<Languages, I18nProperties> = {
     version: "Vom Ball",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "IN DIE FEIER GELEITET",
+        title: "In die Feier geleitet",
         description:
-          "Wenn du diesen Charakter ausspielst, erhalten deine anderen Charaktere bis zu Beginn deines nächsten Zuges Behütet.",
+          "Wenn du diesen Charakter ausspielst, erhalten deine anderen Charaktere bis zu Beginn deines nächsten Zuges <Behütet>.",
       },
     ],
   },
@@ -34,12 +34,12 @@ export const belleOfTheBallI18n: Record<Languages, I18nProperties> = {
     version: "Du bal",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "INVITÉE",
+        title: "Invitée à la fête",
         description:
-          "À LA FÊTE Lorsque vous jouez ce personnage, vos autres personnages gagnent Hors d'atteinte jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, vos autres personnages gagnent <Hors d'atteinte> jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -48,12 +48,12 @@ export const belleOfTheBallI18n: Record<Languages, I18nProperties> = {
     version: "Reginetta del Ballo",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "ACCOMPAGNATA ALLA FESTA",
+        title: "Accompagnata alla Festa",
         description:
-          "Quando giochi questo personaggio, i tuoi altri personaggi ottengono Protetto fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, i tuoi altri personaggi ottengono <Protetto> fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

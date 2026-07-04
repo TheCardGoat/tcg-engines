@@ -20,11 +20,11 @@ export const bambiLittlePrinceEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Kleiner Prinz",
     text: [
       {
-        title: "SAG HALLO",
+        title: "Sag Hallo",
         description: "Wenn du diesen Charakter ausspielst, sammelst du 1 Legende.",
       },
       {
-        title: "SEHR SCHÜCHTERN",
+        title: "Sehr schüchtern",
         description:
           "Jedes Mal, wenn eine gegnerische Person einen Charakter ausspielt, nimm diesen Charakter zurück auf deine Hand.",
       },
@@ -35,11 +35,11 @@ export const bambiLittlePrinceEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Petit prince",
     text: [
       {
-        title: "DIS-LUI BONJOUR",
+        title: "Dis-lui bonjour",
         description: "Lorsque vous jouez ce personnage, gagnez 1 éclat de Lore.",
       },
       {
-        title: "UN PEU TIMIDE",
+        title: "Un peu timide",
         description:
           "Lorsqu'un adversaire joue un personnage, renvoyez ce personnage-ci dans votre main.",
       },
@@ -50,11 +50,11 @@ export const bambiLittlePrinceEnchantedI18n: Record<Languages, I18nProperties> =
     version: "Principino",
     text: [
       {
-        title: "SALUTA",
+        title: "Saluta",
         description: "Quando giochi questo personaggio, ottieni 1 leggenda.",
       },
       {
-        title: "È UN PO' TIMIDO",
+        title: "È un po' Timido",
         description:
           "Quando un avversario gioca un personaggio, riprendi in mano questo personaggio.",
       },

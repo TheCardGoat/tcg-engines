@@ -4,6 +4,17 @@ import { teKElementalTerrorI18n } from "./054-te-k-elemental-terror.i18n";
 export const teKElementalTerror: CharacterCard = {
   id: "8UQ",
   canonicalId: "ci_8UQ",
+  slug: "lorcana-ci_8UQ",
+  printings: [
+    {
+      id: "set7-054",
+      artId: "set7-054",
+      setCode: "set7",
+      collectorNumber: "54",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-054"],
   cardType: "character",
   name: "Te Kā",
@@ -20,7 +31,7 @@ export const teKElementalTerror: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_97ba744205d341099f6b8a54f12eee71",
-    tcgPlayer: 618257,
+    tcgPlayer: "618257",
   },
   text: [
     {

@@ -20,12 +20,13 @@ export const shereKhanFierceAndFuriousI18n: Record<Languages, I18nProperties> = 
     version: "Wild und Wütend",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Shir-Khan-Charaktere auszuspielen.)",
       },
       {
-        title: "WILDER ZORN 1,",
+        title: "Wilder Zorn",
         description:
-          "Füge diesem Charakter 1 Schaden zu — Mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
+          "1 {I}, Füge diesem Charakter 1 Schaden zu — Mache diesen Charakter bereit. Er kann in diesem Zug nicht mehr erkunden.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const shereKhanFierceAndFuriousI18n: Record<Languages, I18nProperties> = 
     version: "Furieusement féroce",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Shere Khan.)",
       },
       {
-        title: "RAGE SAUVAGE 1,",
+        title: "Rage sauvage",
         description:
-          "Infligez 1 dommage à ce personnage — Redressez ce personnage. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+          "1 {I}, Infligez 1 dommage à ce personnage — Redressez ce personnage. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const shereKhanFierceAndFuriousI18n: Record<Languages, I18nProperties> = 
     version: "Feroce e Furioso",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Shere Khan.)",
       },
       {
-        title: "COLLERA SELVAGGIA 1,",
+        title: "Collera Selvaggia",
         description:
-          "infliggi 1 danno a questo personaggio — Prepara questo personaggio. Non può andare all'avventura per il resto di questo turno.",
+          "1 {I}, infliggi 1 danno a questo personaggio — Prepara questo personaggio. Non può andare all'avventura per il resto di questo turno.",
       },
     ],
   },

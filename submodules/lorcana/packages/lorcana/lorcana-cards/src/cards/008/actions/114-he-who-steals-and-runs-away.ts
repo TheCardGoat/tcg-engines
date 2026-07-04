@@ -4,6 +4,17 @@ import { heWhoStealsAndRunsAwayI18n } from "./114-he-who-steals-and-runs-away.i1
 export const heWhoStealsAndRunsAway: ActionCard = {
   id: "STB",
   canonicalId: "ci_STB",
+  slug: "lorcana-ci_STB",
+  printings: [
+    {
+      id: "set8-114",
+      artId: "set8-114",
+      setCode: "set8",
+      collectorNumber: "114",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-114"],
   cardType: "action",
   name: "He Who Steals and Runs Away",
@@ -16,7 +27,7 @@ export const heWhoStealsAndRunsAway: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b575a1f23d864e64841909db44f25221",
-    tcgPlayer: 631683,
+    tcgPlayer: "631683",
   },
   text: "Banish chosen item. Draw a card.",
   abilities: [

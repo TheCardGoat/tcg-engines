@@ -4,6 +4,17 @@ import { banzaiTauntingHyenaI18n } from "./087-banzai-taunting-hyena.i18n";
 export const banzaiTauntingHyena: CharacterCard = {
   id: "xWf",
   canonicalId: "ci_xWf",
+  slug: "lorcana-ci_xWf",
+  printings: [
+    {
+      id: "set5-087",
+      artId: "set5-087",
+      setCode: "set5",
+      collectorNumber: "87",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-087"],
   cardType: "character",
   name: "Banzai",
@@ -20,7 +31,7 @@ export const banzaiTauntingHyena: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2f8df927b41b4664aa7f6b810df6da4a",
-    tcgPlayer: 561162,
+    tcgPlayer: "561162",
   },
   text: [
     {

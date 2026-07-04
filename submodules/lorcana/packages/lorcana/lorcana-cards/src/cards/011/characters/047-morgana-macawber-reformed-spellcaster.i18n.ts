@@ -20,10 +20,11 @@ export const morganaMacawberReformedSpellcasterI18n: Record<Languages, I18nPrope
     version: "Reformierte Zauberkundige",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Morgana-Makaber-Charaktere auszuspielen.)",
       },
       {
-        title: "NUR FÜR DICH",
+        title: "Nur für dich",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du je 1 Schaden von jedem Charakter zu einem gegnerischen Charakter deiner Wahl verschieben.",
       },
@@ -34,10 +35,11 @@ export const morganaMacawberReformedSpellcasterI18n: Record<Languages, I18nPrope
     version: "Ensorceleuse repentie",
     text: [
       {
-        title: "Alter 4",
+        title:
+          "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Morgana.)",
       },
       {
-        title: "RIEN QUE POUR TOI",
+        title: "Rien que pour toi",
         description:
           "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage adverse et déplacer 1 dommage de chaque autre personnage sur lui.",
       },
@@ -48,10 +50,11 @@ export const morganaMacawberReformedSpellcasterI18n: Record<Languages, I18nPrope
     version: "Incantatrice Ravveduta",
     text: [
       {
-        title: "Trasformazione 4",
+        title:
+          "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Morgana Macawber.)",
       },
       {
-        title: "SOLO PER TE",
+        title: "Solo Per Te",
         description:
           "Quando giochi questo personaggio, puoi scegliere un personaggio avversario e spostare 1 danno da ogni altro personaggio a esso.",
       },

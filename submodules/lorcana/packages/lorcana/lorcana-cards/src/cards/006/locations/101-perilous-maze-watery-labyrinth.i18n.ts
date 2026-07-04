@@ -17,7 +17,7 @@ export const perilousMazeWateryLabyrinthI18n: Record<Languages, I18nProperties> 
     version: "Wasserlabyrinth",
     text: [
       {
-        title: "VERLOREN IN DEN WELLEN",
+        title: "Verloren in den Wellen",
         description:
           "Jedes Mal, wenn einer deiner Charaktere an diesem Ort herausgefordert wird, wählen alle gegnerischen Mitspielenden je 1 Karte aus ihrer Hand und werfen sie ab.",
       },
@@ -28,7 +28,7 @@ export const perilousMazeWateryLabyrinthI18n: Record<Languages, I18nProperties> 
     version: "Dédale aquatique",
     text: [
       {
-        title: "PERDUS DANS LES VAGUES",
+        title: "Perdus dans les vagues",
         description:
           "Chaque fois qu'un personnage sur ce lieu est défié, chaque adversaire défausse une carte de sa main au choix.",
       },
@@ -39,7 +39,7 @@ export const perilousMazeWateryLabyrinthI18n: Record<Languages, I18nProperties> 
     version: "Dedalo Acquatico",
     text: [
       {
-        title: "PERSI TRA LE ONDE",
+        title: "Persi tra le Onde",
         description:
           "Ogni volta che un personaggio viene sfidato mentre si trova in questo luogo, ogni avversario sceglie e scarta una carta.",
       },

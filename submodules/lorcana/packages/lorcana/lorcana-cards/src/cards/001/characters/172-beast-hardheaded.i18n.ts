@@ -16,7 +16,7 @@ export const beastHardheadedI18n: Record<Languages, I18nProperties> = {
     version: "Dickköpfig",
     text: [
       {
-        title: "ZERFETZEN",
+        title: "Zerfetzen",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einen Gegenstand deiner Wahl verbannen.",
       },
@@ -37,7 +37,7 @@ export const beastHardheadedI18n: Record<Languages, I18nProperties> = {
     version: "Testarda",
     text: [
       {
-        title: "ROMPERE",
+        title: "Rompere",
         description: "Quando giochi questo personaggio, puoi esiliare un oggetto a tua scelta.",
       },
     ],

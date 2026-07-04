@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kristoffReindeerKeeperI18n } from "./013-kristoff-reindeer-keeper.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const kristoffReindeerKeeper: CharacterCard = {
-  id: "AZZ",
-  canonicalId: "ci_AZZ",
+  id: "blx",
+  canonicalId: "ci_8g7",
+  slug: "lorcana-ci_8g7",
+  printings: [
+    {
+      id: "set5-013",
+      artId: "set5-013",
+      setCode: "set5",
+      collectorNumber: "13",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-013"],
   cardType: "character",
   name: "Kristoff",
@@ -21,7 +33,7 @@ export const kristoffReindeerKeeper: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_6cba76453f834205a7edf1e8222907c7",
-    tcgPlayer: 555689,
+    tcgPlayer: "555689",
   },
   text: [
     {

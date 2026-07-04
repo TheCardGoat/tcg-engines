@@ -4,6 +4,17 @@ import { snowWhiteLostInTheForestI18n } from "./023-snow-white-lost-in-the-fores
 export const snowWhiteLostInTheForest: CharacterCard = {
   id: "sl6",
   canonicalId: "ci_sl6",
+  slug: "lorcana-ci_sl6",
+  printings: [
+    {
+      id: "set2-023",
+      artId: "set2-023",
+      setCode: "set2",
+      collectorNumber: "23",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-023"],
   cardType: "character",
   name: "Snow White",
@@ -20,7 +31,7 @@ export const snowWhiteLostInTheForest: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_abb29b66e814454ab886f18985102a9d",
-    tcgPlayer: 527721,
+    tcgPlayer: "527721",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const snowWhiteLostInTheForest: CharacterCard = {
       effect: {
         chooser: "CONTROLLER",
         effect: {
-          amount: { type: "up-to", value: 2 },
+          amount: {
+            type: "up-to",
+            value: 2,
+          },
           target: {
             selector: "chosen",
             count: 1,

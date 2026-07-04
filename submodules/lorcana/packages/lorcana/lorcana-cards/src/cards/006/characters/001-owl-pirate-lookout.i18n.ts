@@ -17,9 +17,9 @@ export const owlPirateLookoutI18n: Record<Languages, I18nProperties> = {
     version: "Piraten-Ausguck",
     text: [
       {
-        title: "GUT ERKANNT",
+        title: "Gut Erkannt",
         description:
-          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -1.",
+          "Jedes Mal während deines Zuges, wenn eine Karte in deinen Tintenvorrat gelegt wird, erhält ein gegnerischer Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -1 {S}.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const owlPirateLookoutI18n: Record<Languages, I18nProperties> = {
     version: "Vigie pirate",
     text: [
       {
-        title: "BIEN VU",
+        title: "Bien vu",
         description:
-          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage adverse qui subit -1 jusqu'au début de votre prochain tour.",
+          "Durant votre tour, chaque fois qu'une carte est placée dans votre réserve d'encre, choisissez un personnage adverse qui subit -1 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const owlPirateLookoutI18n: Record<Languages, I18nProperties> = {
     version: "Vedetta Pirata",
     text: [
       {
-        title: "CHE OCCHIO!",
+        title: "Che Occhio!",
         description:
-          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio avversario a tua scelta riceve -1 fino all'inizio del tuo prossimo turno.",
+          "Durante il tuo turno, ogni volta che una carta viene aggiunta al tuo calamaio, un personaggio avversario a tua scelta riceve -1 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

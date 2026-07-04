@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { judyHoppsSnowballPatrolI18n } from "./194-judy-hopps-snowball-patrol.i18n";
+
 import { underdog } from "../../../helpers/abilities/underdog";
 import { resist } from "../../../helpers/abilities/resist";
 
 export const judyHoppsSnowballPatrol: CharacterCard = {
-  id: "1pX",
+  id: "gqN",
   canonicalId: "ci_7Tl",
+  slug: "lorcana-ci_7Tl",
+  printings: [
+    {
+      id: "set11-194",
+      artId: "set11-194",
+      setCode: "set11",
+      collectorNumber: "194",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-194"],
   cardType: "character",
   name: "Judy Hopps",
@@ -22,7 +34,7 @@ export const judyHoppsSnowballPatrol: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b7a2a60eb9d34fd986cf0bd44e2a1f1a",
-    tcgPlayer: 677156,
+    tcgPlayer: "677156",
   },
   text: [
     {

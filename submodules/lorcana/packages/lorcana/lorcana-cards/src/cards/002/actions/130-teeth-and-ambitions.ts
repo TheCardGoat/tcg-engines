@@ -4,6 +4,17 @@ import { teethAndAmbitionsI18n } from "./130-teeth-and-ambitions.i18n";
 export const teethAndAmbitions: ActionCard = {
   id: "4lC",
   canonicalId: "ci_4lC",
+  slug: "lorcana-ci_4lC",
+  printings: [
+    {
+      id: "set2-130",
+      artId: "set2-130",
+      setCode: "set2",
+      collectorNumber: "130",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-130"],
   cardType: "action",
   name: "Teeth and Ambitions",
@@ -16,7 +27,7 @@ export const teethAndAmbitions: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_5fede8ed6d6845b7be83496ccb0fb2f8",
-    tcgPlayer: 527248,
+    tcgPlayer: "527248",
   },
   text: "Deal 2 damage to chosen character of yours to deal 2 damage to another chosen character.",
   actionSubtype: "song",

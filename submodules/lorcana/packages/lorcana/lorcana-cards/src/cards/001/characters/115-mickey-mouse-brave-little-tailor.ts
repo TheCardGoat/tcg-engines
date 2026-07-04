@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mickeyMouseBraveLittleTailorI18n } from "./115-mickey-mouse-brave-little-tailor.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const mickeyMouseBraveLittleTailor: CharacterCard = {
   id: "vrS",
   canonicalId: "ci_vrS",
-  reprints: ["set1-115"],
+  slug: "lorcana-ci_vrS",
+  printings: [
+    {
+      id: "set1-115",
+      artId: "set1-115",
+      setCode: "set1",
+      collectorNumber: "115",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
+  reprints: ["set1-d23-001", "set1-115"],
   cardType: "character",
   name: "Mickey Mouse",
   version: "Brave Little Tailor",
@@ -20,7 +32,7 @@ export const mickeyMouseBraveLittleTailor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a0a1e1bb99794f04991929ced6001ae8",
-    tcgPlayer: 559532,
+    tcgPlayer: "559532",
   },
   text: "Evasive",
   classifications: ["Dreamborn", "Hero"],

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { archimedesExasperatedOwlI18n } from "./039-archimedes-exasperated-owl.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const archimedesExasperatedOwl: CharacterCard = {
   id: "KbE",
   canonicalId: "ci_0lB",
+  slug: "lorcana-ci_0lB",
+  printings: [
+    {
+      id: "set5-039",
+      artId: "set5-039",
+      setCode: "set5",
+      collectorNumber: "39",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-039"],
   cardType: "character",
   name: "Archimedes",
@@ -21,7 +33,7 @@ export const archimedesExasperatedOwl: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fc8acdf39f114f398bca3f962a072274",
-    tcgPlayer: 561467,
+    tcgPlayer: "561467",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Ally"],

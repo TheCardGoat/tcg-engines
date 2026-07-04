@@ -4,6 +4,17 @@ import { genieSatisfiedDragonI18n } from "./189-genie-satisfied-dragon.i18n";
 export const genieSatisfiedDragon: CharacterCard = {
   id: "0kv",
   canonicalId: "ci_0kv",
+  slug: "lorcana-ci_0kv",
+  printings: [
+    {
+      id: "set8-189",
+      artId: "set8-189",
+      setCode: "set8",
+      collectorNumber: "189",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-189"],
   cardType: "character",
   name: "Genie",
@@ -20,7 +31,7 @@ export const genieSatisfiedDragon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1a915d634d8048febe7e324fa0c4730b",
-    tcgPlayer: 633426,
+    tcgPlayer: "633426",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { yzmaExasperatedSchemerI18n } from "./101-yzma-exasperated-schemer.i18n"
 export const yzmaExasperatedSchemer: CharacterCard = {
   id: "yjH",
   canonicalId: "ci_yjH",
+  slug: "lorcana-ci_yjH",
+  printings: [
+    {
+      id: "set7-101",
+      artId: "set7-101",
+      setCode: "set7",
+      collectorNumber: "101",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-101"],
   cardType: "character",
   name: "Yzma",
@@ -20,13 +31,13 @@ export const yzmaExasperatedSchemer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f373768f95114e078fb4d77cd3cdead2",
-    tcgPlayer: 619459,
+    tcgPlayer: "619459",
   },
   text: [
     {
-      title: "HOW SHALL I DO IT?",
+      title: "HOW SHALL",
       description:
-        "When you play this character, you may draw a card, then choose and discard a card.",
+        "I DO IT? When you play this character, you may draw a card, then choose and discard a card.",
     },
   ],
   classifications: ["Storyborn", "Villain", "Sorcerer"],

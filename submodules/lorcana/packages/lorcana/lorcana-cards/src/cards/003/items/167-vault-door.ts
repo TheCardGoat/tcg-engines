@@ -4,6 +4,17 @@ import { vaultDoorI18n } from "./167-vault-door.i18n";
 export const vaultDoor: ItemCard = {
   id: "tAF",
   canonicalId: "ci_tAF",
+  slug: "lorcana-ci_tAF",
+  printings: [
+    {
+      id: "set3-167",
+      artId: "set3-167",
+      setCode: "set3",
+      collectorNumber: "167",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-167"],
   cardType: "item",
   name: "Vault Door",
@@ -16,7 +27,7 @@ export const vaultDoor: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d4897bfa5fb047a894e6f69c3feebc1f",
-    tcgPlayer: 537394,
+    tcgPlayer: "537394",
   },
   text: [
     {

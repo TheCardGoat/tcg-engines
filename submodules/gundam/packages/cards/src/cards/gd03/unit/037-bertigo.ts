@@ -7,14 +7,17 @@ export const gd03Bertigo037: UnitCard = {
   color: "red",
   traits: ["sra"],
   id: "GD03-037",
-  externalId: "gundam:gd03-037",
-  slug: "bertigo-gd03-037",
+  canonicalId: "GD03-037",
+  externalIds: { bandai: "gundam:gd03-037" },
+  slug: "bertigo/gd03-037",
   displayName: "Bertigo",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-037",
   printings: [
     {
       id: "GD03-037",
+      artId: "GD03-037",
+      setCode: "GD03",
       collectorNumber: "GD03-037",
       cardNumber: "GD03-037",
       set: {
@@ -30,6 +33,8 @@ export const gd03Bertigo037: UnitCard = {
     },
     {
       id: "GD03-037_p1",
+      artId: "GD03-037_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-037_p1",
       cardNumber: "GD03-037",
       set: {
@@ -44,6 +49,7 @@ export const gd03Bertigo037: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-037", "GD03-037_p1"],
   selectedPrintingId: "GD03-037",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-037.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-037.webp?260424",

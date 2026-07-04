@@ -4,6 +4,17 @@ import { lumiereNimbleCandelabraI18n } from "./128-lumiere-nimble-candelabra.i18
 export const lumiereNimbleCandelabra: CharacterCard = {
   id: "p7H",
   canonicalId: "ci_p7H",
+  slug: "lorcana-ci_p7H",
+  printings: [
+    {
+      id: "set8-128",
+      artId: "set8-128",
+      setCode: "set8",
+      collectorNumber: "128",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-128"],
   cardType: "character",
   name: "Lumiere",
@@ -20,7 +31,7 @@ export const lumiereNimbleCandelabra: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a5ab1a4a40304395b5363fff5858b9a8",
-    tcgPlayer: 631434,
+    tcgPlayer: "631434",
   },
   text: [
     {

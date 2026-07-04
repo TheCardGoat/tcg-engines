@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { minnieMouseGhostHunterI18n } from "./181-minnie-mouse-ghost-hunter.i18n";
 
 export const minnieMouseGhostHunter: CharacterCard = {
-  id: "0cC",
+  id: "wNl",
   canonicalId: "ci_CEB",
+  slug: "lorcana-ci_CEB",
+  printings: [
+    {
+      id: "set10-181",
+      artId: "set10-181",
+      setCode: "set10",
+      collectorNumber: "181",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-181"],
   cardType: "character",
   name: "Minnie Mouse",
@@ -19,7 +30,7 @@ export const minnieMouseGhostHunter: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1ad6e15d73174d7ab0d55b27d770e14d",
-    tcgPlayer: 660364,
+    tcgPlayer: "660364",
   },
   text: [
     {

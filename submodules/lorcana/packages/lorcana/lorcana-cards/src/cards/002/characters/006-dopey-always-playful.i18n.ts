@@ -15,22 +15,22 @@ export const dopeyAlwaysPlayfulI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Seppl",
     version: "Immer verspielt",
-    text: "Sonderling\\ Wenn dieser Charakter verbannt wird, erhalten deine anderen Sieben Zwerge bis zu Beginn deines nächsten Zuges +2.",
+    text: "Sonderling\\ Wenn dieser Charakter verbannt wird, erhalten deine anderen Sieben Zwerge bis zu Beginn deines nächsten Zuges +2 {S}.",
   },
   fr: {
     name: "Simplet",
     version: "Toujours enjoué",
     text: [
       {
-        title: "UN CAS À PART",
+        title: "Un cas à part",
         description:
-          "Lorsque ce personnage est banni, vos autres personnages Sept Nains gagnent +2 jusqu'au début de votre prochain tour.",
+          "Lorsque ce personnage est banni, vos autres personnages Sept Nains gagnent +2 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
   it: {
     name: "Dopey",
     version: "Always Playful",
-    text: "Odd One Out\\ When this character is banished, your other Seven Dwarfs characters get +2 until the start of your next turn.",
+    text: "Odd One Out\\ When this character is banished, your other Seven Dwarfs characters get +2 {S} until the start of your next turn.",
   },
 };

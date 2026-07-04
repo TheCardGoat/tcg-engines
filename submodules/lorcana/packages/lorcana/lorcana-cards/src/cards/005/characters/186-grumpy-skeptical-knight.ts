@@ -4,6 +4,17 @@ import { grumpySkepticalKnightI18n } from "./186-grumpy-skeptical-knight.i18n";
 export const grumpySkepticalKnight: CharacterCard = {
   id: "VFd",
   canonicalId: "ci_VFd",
+  slug: "lorcana-ci_VFd",
+  printings: [
+    {
+      id: "set5-186",
+      artId: "set5-186",
+      setCode: "set5",
+      collectorNumber: "186",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-186"],
   cardType: "character",
   name: "Grumpy",
@@ -20,7 +31,7 @@ export const grumpySkepticalKnight: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9ec070844bb24ee997efeb9e7bf9dac2",
-    tcgPlayer: 559666,
+    tcgPlayer: "559666",
   },
   text: [
     {

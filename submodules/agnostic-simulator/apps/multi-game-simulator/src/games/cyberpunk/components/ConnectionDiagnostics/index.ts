@@ -1,2 +1,2 @@
-export { ConnectionDiagnosticPopover } from "./ConnectionDiagnosticPopover";
-export type { ConnectionDiagnosticPopoverProps } from "./ConnectionDiagnosticPopover";
+export { ConnectionPanel } from "./ConnectionPanel";
+export type { ConnectionPanelProps } from "./ConnectionPanel";

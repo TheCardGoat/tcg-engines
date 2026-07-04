@@ -15,13 +15,34 @@ export const goofySetForAdventureEpicI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Goofy",
     version: "Set for Adventure",
+    text: [
+      {
+        title: "Family Vacation",
+        description:
+          "Once during your turn, whenever this character moves to a location, you may move one of your other characters to that location for free. If you do, draw a card.",
+      },
+    ],
   },
   fr: {
     name: "Goofy",
     version: "Set for Adventure",
+    text: [
+      {
+        title: "Family Vacation",
+        description:
+          "Once during your turn, whenever this character moves to a location, you may move one of your other characters to that location for free. If you do, draw a card.",
+      },
+    ],
   },
   it: {
     name: "Goofy",
     version: "Set for Adventure",
+    text: [
+      {
+        title: "Family Vacation",
+        description:
+          "Once during your turn, whenever this character moves to a location, you may move one of your other characters to that location for free. If you do, draw a card.",
+      },
+    ],
   },
 };

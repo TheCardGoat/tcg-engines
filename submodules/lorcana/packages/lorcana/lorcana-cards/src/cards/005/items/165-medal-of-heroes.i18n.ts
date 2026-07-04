@@ -15,9 +15,9 @@ export const medalOfHeroesI18n: Record<Languages, I18nProperties> = {
     name: "Medaille der Helden",
     text: [
       {
-        title: "MEINEN",
+        title: "Meinen Glückwunsch, Soldat",
         description:
-          "GLÜCKWUNSCH, SOLDAT, 2, Verbanne diesen Gegenstand — Wähle einen deiner Charaktere und gib ihm in diesem Zug +2.",
+          "{E}, 2 {I}, Verbanne diesen Gegenstand — Wähle einen deiner Charaktere und gib ihm in diesem Zug +2 {L}.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const medalOfHeroesI18n: Record<Languages, I18nProperties> = {
     name: "Médaille des Héros",
     text: [
       {
-        title: "JE TE",
+        title: "Je te félicite, soldat",
         description:
-          "FÉLICITE, SOLDAT, 2, bannissez cet objet — Choisissez l'un de vos personnages qui gagne +2 pour le reste de ce tour.",
+          "{E}, 2 {I}, bannissez cet objet — Choisissez l'un de vos personnages qui gagne +2 {L} pour le reste de ce tour.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const medalOfHeroesI18n: Record<Languages, I18nProperties> = {
     name: "Medaglia degli Eroi",
     text: [
       {
-        title: "CONGRATULAZIONI, SOLDATO, 2,",
+        title: "Congratulazioni, Soldato",
         description:
-          "esilia questo oggetto — Un tuo personaggio a tua scelta riceve +2 per questo turno.",
+          "{E}, 2 {I}, esilia questo oggetto — Un tuo personaggio a tua scelta riceve +2 {L} per questo turno.",
       },
     ],
   },

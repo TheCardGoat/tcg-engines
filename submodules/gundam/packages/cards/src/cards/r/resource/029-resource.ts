@@ -6,14 +6,17 @@ export const rResource029: ResourceCard = {
   type: "resource",
   traits: [],
   id: "R-029",
-  externalId: "gundam:r-029",
-  slug: "resource-r-029",
+  canonicalId: "R-029",
+  externalIds: { bandai: "gundam:r-029" },
+  slug: "resource/r-029",
   displayName: "Resource",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "R-029",
   printings: [
     {
       id: "R-029",
+      artId: "R-029",
+      setCode: "GD03",
       collectorNumber: "R-029",
       cardNumber: "R-029",
       set: {
@@ -29,6 +32,8 @@ export const rResource029: ResourceCard = {
     },
     {
       id: "R-029_p1",
+      artId: "R-029_p1",
+      setCode: "GD03",
       collectorNumber: "R-029_p1",
       cardNumber: "R-029",
       set: {
@@ -43,6 +48,7 @@ export const rResource029: ResourceCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["R-029", "R-029_p1"],
   selectedPrintingId: "R-029",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/r/R-029.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/R-029.webp?260424",

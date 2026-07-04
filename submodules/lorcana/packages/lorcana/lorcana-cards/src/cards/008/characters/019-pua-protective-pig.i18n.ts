@@ -19,10 +19,11 @@ export const puaProtectivePigI18n: Record<Languages, I18nProperties> = {
     version: "Beschützendes Schwein",
     text: [
       {
-        title: "Beschützen",
+        title:
+          "<Beschützen> (Du darfst diesen Charakter erschöpft ausspielen. Gegnerische Charaktere müssen beim Herausfordern deiner Charaktere zuerst deine Charaktere mit Beschützen wählen, wenn möglich.)",
       },
       {
-        title: "GRATIS OBST",
+        title: "Gratis Obst",
         description: "Wenn dieser Charakter verbannt wird, darfst du 1 Karte ziehen.",
       },
     ],
@@ -32,10 +33,11 @@ export const puaProtectivePigI18n: Record<Languages, I18nProperties> = {
     version: "Cochon protecteur",
     text: [
       {
-        title: "Rempart",
+        title:
+          "<Rempart> (Ce personnage peut entrer en jeu épuisé. Lorsqu'il défie l'un de vos personnages, un personnage adverse doit, s'il le peut, choisir l'un de vos personnages avec Rempart.)",
       },
       {
-        title: "FRUITS GRATUITS",
+        title: "Fruits gratuits",
         description: "Lorsque ce personnage est banni, vous pouvez piocher une carte.",
       },
     ],
@@ -45,10 +47,10 @@ export const puaProtectivePigI18n: Record<Languages, I18nProperties> = {
     version: "Maiale Protettivo",
     text: [
       {
-        title: "Guardiano",
+        title: "<Guardiano>",
       },
       {
-        title: "FRUTTA GRATIS",
+        title: "Frutta Gratis",
         description: "Quando questo personaggio viene esiliato, puoi pescare una carta.",
       },
     ],

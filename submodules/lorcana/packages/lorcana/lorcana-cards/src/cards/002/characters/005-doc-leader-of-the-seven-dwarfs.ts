@@ -4,6 +4,17 @@ import { docLeaderOfTheSevenDwarfsI18n } from "./005-doc-leader-of-the-seven-dwa
 export const docLeaderOfTheSevenDwarfs: CharacterCard = {
   id: "bgG",
   canonicalId: "ci_bgG",
+  slug: "lorcana-ci_bgG",
+  printings: [
+    {
+      id: "set2-005",
+      artId: "set2-005",
+      setCode: "set2",
+      collectorNumber: "5",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-005"],
   cardType: "character",
   name: "Doc",
@@ -20,7 +31,7 @@ export const docLeaderOfTheSevenDwarfs: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2fec41cf370c44e4a11f2024d8375c4c",
-    tcgPlayer: 526602,
+    tcgPlayer: "526602",
   },
   text: [
     {

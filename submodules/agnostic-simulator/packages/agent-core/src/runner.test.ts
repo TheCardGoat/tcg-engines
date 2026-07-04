@@ -6,7 +6,7 @@ import {
   registerAgent,
   registerProvider,
   takeTurn,
-} from "./index";
+} from "./index.js";
 import { INTERACTION_PROTOCOL_VERSION } from "@tcg/protocol";
 import type { EngineInteractionView, InteractionSubmission } from "@tcg/protocol";
 import type {
@@ -15,7 +15,7 @@ import type {
   AgentProvider,
   GameAgent,
   GameAgentToolContext,
-} from "./types";
+} from "./types.js";
 
 // ─── Test fixtures ──────────────────────────────────────────────────────────
 

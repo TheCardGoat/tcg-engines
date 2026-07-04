@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { madamMimFoxI18n } from "./046-madam-mim-fox.i18n";
+
 import { rush } from "../../../helpers/abilities/rush";
 
 export const madamMimFox: CharacterCard = {
   id: "XBE",
   canonicalId: "ci_XBE",
+  slug: "lorcana-ci_XBE",
+  printings: [
+    {
+      id: "set2-046",
+      artId: "set2-046",
+      setCode: "set2",
+      collectorNumber: "46",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-046"],
   cardType: "character",
   name: "Madam Mim",
@@ -21,7 +33,7 @@ export const madamMimFox: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_3c23dd0191ce4f80897a8f50d75bc7bc",
-    tcgPlayer: 521719,
+    tcgPlayer: "521719",
   },
   text: [
     {

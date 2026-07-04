@@ -17,19 +17,40 @@ export const headsHeldHighI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Himmelwärts jauchzt das Herz",
-    text: "Gemeinsam singen 6 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 6 oder mehr kosten,, damit sie dieses Lied kostenlos singen.) Entferne bis zu 3 Schaden von beliebig vielen Charakteren deiner Wahl. Gib allen gegnerischen Charakteren in diesem Zug -3.",
+    text: [
+      {
+        title:
+          "<Gemeinsam singen> 6 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 6 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)",
+      },
+      {
+        title:
+          "Entferne bis zu 3 Schaden von beliebig vielen Charakteren deiner Wahl. Gib allen gegnerischen Charakteren in diesem Zug -3 {S}.",
+      },
+    ],
   },
   fr: {
     name: "Nous sommes là pour vous aider",
-    text: "À l'unisson 6 (Vous pouvez n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 6 ou plus pour chanter cette chanson gratuitement.) Choisissez n'importe quel nombre de personnages et retirez jusqu'à 3 dommages de chacun. Tous les personnages adverses subissent -3 pour le reste de ce tour.",
+    text: [
+      {
+        title:
+          "<À l'unisson> 6 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 6 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez n'importe quel nombre de personnages et retirez jusqu'à 3 dommages de chacun. Tous les personnages adverses subissent -3 {S} pour le reste de ce tour.",
+      },
+    ],
   },
   it: {
     name: "Petto in Fuor",
     text: [
       {
-        title: "Cantare Insieme 6",
-        description:
-          "(Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 6 o superiore può per cantare questa canzone gratis.) Rimuovi fino a 3 danni da un qualsiasi numero di personaggi a tua scelta. Tutti i personaggi avversari ricevono -3 per questo turno.",
+        title:
+          "<Cantare Insieme> 6 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 6 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Rimuovi fino a 3 danni da un qualsiasi numero di personaggi a tua scelta. Tutti i personaggi avversari ricevono -3 {S} per questo turno.",
       },
     ],
   },

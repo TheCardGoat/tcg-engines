@@ -4,6 +4,17 @@ import { copperChampionOfTheForestI18n } from "./084-copper-champion-of-the-fore
 export const copperChampionOfTheForest: CharacterCard = {
   id: "dzM",
   canonicalId: "ci_dzM",
+  slug: "lorcana-ci_dzM",
+  printings: [
+    {
+      id: "set11-084",
+      artId: "set11-084",
+      setCode: "set11",
+      collectorNumber: "84",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-084"],
   cardType: "character",
   name: "Copper",
@@ -20,7 +31,7 @@ export const copperChampionOfTheForest: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1828e2a9c3c547abbcd95f8c4fdc211f",
-    tcgPlayer: 676202,
+    tcgPlayer: "676202",
   },
   text: [
     {

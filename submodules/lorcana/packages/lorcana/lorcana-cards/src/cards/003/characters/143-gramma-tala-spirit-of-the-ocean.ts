@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { grammaTalaSpiritOfTheOceanI18n } from "./143-gramma-tala-spirit-of-the-ocean.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const grammaTalaSpiritOfTheOcean: CharacterCard = {
   id: "0Rd",
   canonicalId: "ci_l6C",
+  slug: "lorcana-ci_l6C",
+  printings: [
+    {
+      id: "set3-143",
+      artId: "set3-143",
+      setCode: "set3",
+      collectorNumber: "143",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-143"],
   cardType: "character",
   name: "Gramma Tala",
@@ -21,7 +33,7 @@ export const grammaTalaSpiritOfTheOcean: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7ad03b4873f042bcae4da820a7061ba4",
-    tcgPlayer: 539275,
+    tcgPlayer: "539275",
   },
   text: [
     {

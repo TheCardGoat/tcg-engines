@@ -4,6 +4,17 @@ import { annaBravingTheStormI18n } from "./137-anna-braving-the-storm.i18n";
 export const annaBravingTheStorm: CharacterCard = {
   id: "ISN",
   canonicalId: "ci_fSd",
+  slug: "lorcana-ci_fSd",
+  printings: [
+    {
+      id: "set4-137",
+      artId: "set4-137",
+      setCode: "set4",
+      collectorNumber: "137",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-137", "set9-146"],
   cardType: "character",
   name: "Anna",
@@ -20,7 +31,7 @@ export const annaBravingTheStorm: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d911158c4175449e9814484f3c5adb06",
-    tcgPlayer: 650153,
+    tcgPlayer: "650153",
   },
   text: [
     {

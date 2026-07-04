@@ -9,16 +9,16 @@ export const pegasusGiftForHerculesI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Pegasus",
     version: "Geschenk für Hercules",
-    text: "Wendig",
+    text: "<Wendig>",
   },
   fr: {
     name: "Pégase",
     version: "Présent pour Hercule",
-    text: "Insaisissable",
+    text: "<Insaisissable>",
   },
   it: {
     name: "Pegaso",
     version: "Dono per Ercole",
-    text: "Sfuggente",
+    text: "<Sfuggente>",
   },
 };

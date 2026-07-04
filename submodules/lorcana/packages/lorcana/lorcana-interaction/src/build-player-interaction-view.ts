@@ -440,8 +440,9 @@ function splitMoveToLocationSelection(
   board: LorcanaProjectedBoardView,
   selectedCardIds: readonly CardInstanceId[],
   fixedLocationId: CardInstanceId | null = null,
+  autoResolvedSubjectId: CardInstanceId | null = null,
 ): { subjects: CardInstanceId[]; location: CardInstanceId | null } {
-  const subjects: CardInstanceId[] = [];
+  const subjects: CardInstanceId[] = autoResolvedSubjectId ? [autoResolvedSubjectId] : [];
   let location: CardInstanceId | null = fixedLocationId;
 
   for (const cardId of selectedCardIds) {
@@ -453,6 +454,16 @@ function splitMoveToLocationSelection(
   }
 
   return { subjects, location };
+}
+
+function getAutoResolvedMoveToLocationSubjectId(
+  context: TargetResolutionSelectionContext,
+): CardInstanceId | null {
+  if (context.expectedSlottedKind !== "move-to-location") {
+    return null;
+  }
+  const subjectIndex = SLOTTED_TARGET_SLOT_KEYS["move-to-location"].indexOf("subject");
+  return isAutoResolvedSlotIndex(context, subjectIndex) ? context.sourceCardId : null;
 }
 
 function getProjectedAtLocationId(
@@ -642,7 +653,12 @@ function buildTargetInteractions(
       : null;
   const moveToLocationSelection =
     context.expectedSlottedKind === "move-to-location"
-      ? splitMoveToLocationSelection(board, selectedCardIds, fixedMoveToLocationId)
+      ? splitMoveToLocationSelection(
+          board,
+          selectedCardIds,
+          fixedMoveToLocationId,
+          getAutoResolvedMoveToLocationSubjectId(context),
+        )
       : null;
   const moveToLocationSelectionCount =
     moveToLocationSelection !== null
@@ -701,12 +717,18 @@ function buildTargetPayload(
   if (context.expectedSlottedKind && selectedCards.length > 0) {
     if (context.expectedSlottedKind === "move-to-location" && board) {
       const fixedLocationId = getFixedMoveToLocationId(board, context);
-      const base = splitMoveToLocationSelection(board, baseSelectedCards, fixedLocationId);
+      const autoResolvedSubjectId = getAutoResolvedMoveToLocationSubjectId(context);
+      const base = splitMoveToLocationSelection(
+        board,
+        baseSelectedCards,
+        fixedLocationId,
+        autoResolvedSubjectId,
+      );
       const next = splitMoveToLocationSelection(board, selectedCards, fixedLocationId);
       return {
         targets: {
           kind: "move-to-location",
-          subject: [...base.subjects, ...next.subjects],
+          subject: [...new Set([...base.subjects, ...next.subjects])],
           location: fixedLocationId
             ? [fixedLocationId]
             : next.location
@@ -768,10 +790,15 @@ function buildTargetSubmissionPayload(
   selectedPlayers: readonly PlayerId[],
   board?: LorcanaProjectedBoardView,
 ): ResolutionExecutionOptions {
-  if (context.expectedSlottedKind && selectedCards.length > 0) {
+  if (context.expectedSlottedKind) {
     if (context.expectedSlottedKind === "move-to-location" && board) {
       const fixedLocationId = getFixedMoveToLocationId(board, context);
-      const selected = splitMoveToLocationSelection(board, selectedCards, fixedLocationId);
+      const selected = splitMoveToLocationSelection(
+        board,
+        selectedCards,
+        fixedLocationId,
+        getAutoResolvedMoveToLocationSubjectId(context),
+      );
       return {
         targets: {
           kind: "move-to-location",
@@ -783,6 +810,10 @@ function buildTargetSubmissionPayload(
               : [],
         },
       };
+    }
+
+    if (selectedCards.length === 0) {
+      return { targets: [] };
     }
 
     const slotKeys = SLOTTED_TARGET_SLOT_KEYS[context.expectedSlottedKind];

@@ -6,14 +6,17 @@ export const st02CorsicaBase016: BaseCard = {
   type: "base",
   traits: ["oz", "stronghold"],
   id: "ST02-016",
-  externalId: "gundam:st02-016",
-  slug: "corsica-base-st02-016",
+  canonicalId: "ST02-016",
+  externalIds: { bandai: "gundam:st02-016" },
+  slug: "corsica-base/st02-016",
   displayName: "Corsica Base",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "ST02-016",
   printings: [
     {
       id: "ST02-016",
+      artId: "ST02-016",
+      setCode: "ST02",
       collectorNumber: "ST02-016",
       cardNumber: "ST02-016",
       set: {
@@ -29,6 +32,8 @@ export const st02CorsicaBase016: BaseCard = {
     },
     {
       id: "ST02-016_p1",
+      artId: "ST02-016_p1",
+      setCode: "ST02",
       collectorNumber: "ST02-016_p1",
       cardNumber: "ST02-016",
       set: {
@@ -43,6 +48,7 @@ export const st02CorsicaBase016: BaseCard = {
       productName: "Wings of Advance [ST02] Bonus Pack",
     },
   ],
+  reprints: ["ST02-016", "ST02-016_p1"],
   selectedPrintingId: "ST02-016",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st02/ST02-016.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST02-016.webp?260424",

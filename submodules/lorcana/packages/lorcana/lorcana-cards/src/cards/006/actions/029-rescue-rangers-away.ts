@@ -3,7 +3,18 @@ import { rescueRangersAwayI18n } from "./029-rescue-rangers-away.i18n";
 
 export const rescueRangersAway: ActionCard = {
   id: "wx1",
-  canonicalId: "ci_wx1",
+  canonicalId: "ci_kMt",
+  slug: "lorcana-ci_kMt",
+  printings: [
+    {
+      id: "set6-029",
+      artId: "set6-029",
+      setCode: "set6",
+      collectorNumber: "29",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-029"],
   cardType: "action",
   name: "Rescue Rangers Away!",
@@ -16,7 +27,7 @@ export const rescueRangersAway: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_be7a93b4b99b4a8b9da63fd956fa3c86",
-    tcgPlayer: 578172,
+    tcgPlayer: "578172",
   },
   text: "Count the number of characters you have in play. Chosen character loses {S} equal to that number until the start of your next turn.",
   abilities: [

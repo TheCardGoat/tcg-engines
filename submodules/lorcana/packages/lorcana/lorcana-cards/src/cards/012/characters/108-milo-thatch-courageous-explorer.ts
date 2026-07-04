@@ -4,6 +4,17 @@ import { miloThatchCourageousExplorerI18n } from "./108-milo-thatch-courageous-e
 export const miloThatchCourageousExplorer: CharacterCard = {
   id: "tm6",
   canonicalId: "ci_tm6",
+  slug: "lorcana-ci_tm6",
+  printings: [
+    {
+      id: "set12-108",
+      artId: "set12-108",
+      setCode: "set12",
+      collectorNumber: "108",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-108"],
   cardType: "character",
   name: "Milo Thatch",
@@ -20,6 +31,7 @@ export const miloThatchCourageousExplorer: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_81621f1cf94c4b109b89dfdba4289025",
+    tcgPlayer: "692172",
   },
   text: [
     {
@@ -28,6 +40,7 @@ export const miloThatchCourageousExplorer: CharacterCard = {
         "During your turn, if 2 or more cards were put into your discard this turn, this character gets +1 {L}.",
     },
   ],
+  classifications: ["Dreamborn", "Hero"],
   abilities: [
     {
       id: "tm6-1",
@@ -36,18 +49,27 @@ export const miloThatchCourageousExplorer: CharacterCard = {
       condition: {
         type: "and",
         conditions: [
-          { type: "your-turn" },
+          {
+            type: "your-turn",
+          },
           {
             type: "turn-metric",
             metric: "discard-cards-entered",
             ownerScope: "you",
-            comparison: { operator: "gte", value: 2 },
+            comparison: {
+              operator: "gte",
+              value: 2,
+            },
           },
         ],
       },
-      effect: { type: "modify-stat", stat: "lore", modifier: 1, target: "SELF" },
+      effect: {
+        type: "modify-stat",
+        stat: "lore",
+        modifier: 1,
+        target: "SELF",
+      },
     },
   ],
-  classifications: ["Dreamborn", "Hero"],
   i18n: miloThatchCourageousExplorerI18n,
 };

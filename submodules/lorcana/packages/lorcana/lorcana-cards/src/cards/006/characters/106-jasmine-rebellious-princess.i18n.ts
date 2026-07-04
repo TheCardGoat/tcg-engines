@@ -16,7 +16,7 @@ export const jasmineRebelliousPrincessI18n: Record<Languages, I18nProperties> = 
     version: "Rebellische Prinzessin",
     text: [
       {
-        title: "DU WIRST ES NIEMALS VERMISSEN",
+        title: "Du wirst es niemals vermissen",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const jasmineRebelliousPrincessI18n: Record<Languages, I18nProperties> = 
     version: "Princesse rebelle",
     text: [
       {
-        title: "IMMANQUABLE",
+        title: "Immanquable",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, chaque adversaire perd 1 éclat de Lore.",
       },
@@ -38,7 +38,7 @@ export const jasmineRebelliousPrincessI18n: Record<Languages, I18nProperties> = 
     version: "Principessa Ribelle",
     text: [
       {
-        title: "NON TE NE ACCORGERAI NEMMENO",
+        title: "Non te ne accorgerai nemmeno",
         description:
           "Ogni volta che questo personaggio va all'avventura, ogni avversario perde 1 leggenda.",
       },

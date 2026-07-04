@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theQueenCommandingPresenceI18n } from "./026-the-queen-commanding-presence.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const theQueenCommandingPresence: CharacterCard = {
   id: "A9v",
   canonicalId: "ci_A9v",
+  slug: "lorcana-ci_A9v",
+  printings: [
+    {
+      id: "set2-026",
+      artId: "set2-026",
+      setCode: "set2",
+      collectorNumber: "26",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-026"],
   cardType: "character",
   name: "The Queen",
@@ -21,7 +33,7 @@ export const theQueenCommandingPresence: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fe74bbe0dddc45fc8ecb07ba325f1e69",
-    tcgPlayer: 516386,
+    tcgPlayer: "516386",
   },
   text: [
     {

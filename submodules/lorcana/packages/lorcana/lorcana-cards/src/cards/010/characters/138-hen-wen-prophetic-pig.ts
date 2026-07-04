@@ -4,6 +4,17 @@ import { henWenPropheticPigI18n } from "./138-hen-wen-prophetic-pig.i18n";
 export const henWenPropheticPig: CharacterCard = {
   id: "nAF",
   canonicalId: "ci_nAF",
+  slug: "lorcana-ci_nAF",
+  printings: [
+    {
+      id: "set10-138",
+      artId: "set10-138",
+      setCode: "set10",
+      collectorNumber: "138",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-138"],
   cardType: "character",
   name: "Hen Wen",
@@ -20,7 +31,7 @@ export const henWenPropheticPig: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_48058e5daf3b4a409e525f826f96ddb1",
-    tcgPlayer: 657890,
+    tcgPlayer: "657890",
   },
   text: [
     {

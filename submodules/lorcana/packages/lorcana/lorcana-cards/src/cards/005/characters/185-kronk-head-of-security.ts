@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { kronkHeadOfSecurityI18n } from "./185-kronk-head-of-security.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const kronkHeadOfSecurity: CharacterCard = {
   id: "qAr",
   canonicalId: "ci_qAr",
+  slug: "lorcana-ci_qAr",
+  printings: [
+    {
+      id: "set5-185",
+      artId: "set5-185",
+      setCode: "set5",
+      collectorNumber: "185",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-185"],
   cardType: "character",
   name: "Kronk",
@@ -21,7 +33,7 @@ export const kronkHeadOfSecurity: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a1439f505f594dcfb80bb8aa6d495e20",
-    tcgPlayer: 555273,
+    tcgPlayer: "555273",
   },
   text: [
     {

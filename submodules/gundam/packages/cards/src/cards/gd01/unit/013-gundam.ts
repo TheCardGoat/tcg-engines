@@ -7,14 +7,17 @@ export const gd01Gundam013: UnitCard = {
   color: "blue",
   traits: ["earth federation", "white base team"],
   id: "GD01-013",
-  externalId: "gundam:gd01-013",
-  slug: "gundam-gd01-013",
+  canonicalId: "GD01-013",
+  externalIds: { bandai: "gundam:gd01-013" },
+  slug: "gundam/gd01-013",
   displayName: "Gundam",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-013",
   printings: [
     {
       id: "GD01-013",
+      artId: "GD01-013",
+      setCode: "GD01",
       collectorNumber: "GD01-013",
       cardNumber: "GD01-013",
       set: {
@@ -30,6 +33,8 @@ export const gd01Gundam013: UnitCard = {
     },
     {
       id: "GD01-013_p1",
+      artId: "GD01-013_p1",
+      setCode: "BETA",
       collectorNumber: "GD01-013_p1",
       cardNumber: "GD01-013",
       set: {
@@ -45,6 +50,8 @@ export const gd01Gundam013: UnitCard = {
     },
     {
       id: "GD01-013_p2",
+      artId: "GD01-013_p2",
+      setCode: "GD01",
       collectorNumber: "GD01-013_p2",
       cardNumber: "GD01-013",
       set: {
@@ -60,6 +67,8 @@ export const gd01Gundam013: UnitCard = {
     },
     {
       id: "GD01-013_p3",
+      artId: "GD01-013_p3",
+      setCode: "GD01",
       collectorNumber: "GD01-013_p3",
       cardNumber: "GD01-013",
       set: {
@@ -74,6 +83,7 @@ export const gd01Gundam013: UnitCard = {
       productName: "WORLD CHAMPIONSHIPS 26-27 Participation Pack 26-27 Vol.1",
     },
   ],
+  reprints: ["GD01-013", "GD01-013_p1", "GD01-013_p2", "GD01-013_p3"],
   selectedPrintingId: "GD01-013",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-013.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-013.webp?260424",

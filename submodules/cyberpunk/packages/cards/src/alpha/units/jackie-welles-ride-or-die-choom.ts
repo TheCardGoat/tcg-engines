@@ -1,15 +1,16 @@
-import type { AlphaCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts";
 
-export const alphaJackieWellesRideOrDieChoom = {
+export const alphaJackieWellesRideOrDieChoom = defineCyberpunkCard({
   id: "2aa9e8cf-e425-4ebf-97dd-85a21f5b4424",
-  externalId: "cyberpunk:jackie-welles-ride-or-die-choom",
   slug: "jackie-welles-ride-or-die-choom",
-  name: "Jackie Welles",
-  subname: "Ride Or Die Choom",
-  displayName: "Jackie Welles - Ride Or Die Choom",
   rulesText:
     "This unit has +2 power for each of your friendly gigs. (Units steal an extra gig for every 10 power.)",
+  subname: "Ride Or Die Choom",
+  name: "Jackie Welles",
+  displayName: "Jackie Welles - Ride Or Die Choom",
+  canonicalId: "jackie-welles-ride-or-die-choom",
   color: "yellow",
   classifications: ["Merc"],
   set: {
@@ -17,23 +18,12 @@ export const alphaJackieWellesRideOrDieChoom = {
     name: "Alpha Kit Set",
   },
   printNumber: "α013",
-  printings: [
-    {
-      id: "a9d250d6-bc4a-4d54-81e8-ea1ab6261d76",
-      collectorNumber: "α013",
-      setCode: "alpha",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "a9d250d6-bc4a-4d54-81e8-ea1ab6261d76",
   artist: "Ilya Kuvshinov",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a013.webp",
   rarity: null,
   legality: "legal",
   hasSellTag: false,
   ram: 3,
-  timingTriggers: [],
-  keywords: [],
   type: "unit",
   cost: 6,
   power: 6,
@@ -54,4 +44,4 @@ export const alphaJackieWellesRideOrDieChoom = {
       .build(),
   ],
   reminderText: ["Units steal an extra gig for every 10 power."],
-} satisfies AlphaCardDefinition;
+}) satisfies UnitCardDefinition;

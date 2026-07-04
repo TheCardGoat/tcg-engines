@@ -7,14 +7,17 @@ export const gd03GundamFlightForm036: UnitCard = {
   color: "red",
   traits: ["mafty"],
   id: "GD03-036",
-  externalId: "gundam:gd03-036",
-  slug: "gundam-flight-form-gd03-036",
+  canonicalId: "GD03-036",
+  externalIds: { bandai: "gundam:gd03-036" },
+  slug: "gundam-flight-form/gd03-036",
   displayName: "Ξ Gundam (Flight Form)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-036",
   printings: [
     {
       id: "GD03-036",
+      artId: "GD03-036",
+      setCode: "GD03",
       collectorNumber: "GD03-036",
       cardNumber: "GD03-036",
       set: {
@@ -30,6 +33,8 @@ export const gd03GundamFlightForm036: UnitCard = {
     },
     {
       id: "GD03-036_p1",
+      artId: "GD03-036_p1",
+      setCode: "GD03",
       collectorNumber: "GD03-036_p1",
       cardNumber: "GD03-036",
       set: {
@@ -44,6 +49,7 @@ export const gd03GundamFlightForm036: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-036", "GD03-036_p1"],
   selectedPrintingId: "GD03-036",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-036.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-036.webp?260424",

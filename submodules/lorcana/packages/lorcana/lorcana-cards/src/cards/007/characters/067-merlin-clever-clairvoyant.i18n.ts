@@ -17,7 +17,7 @@ export const merlinCleverClairvoyantI18n: Record<Languages, I18nProperties> = {
     version: "Kluger Hellseher",
     text: [
       {
-        title: "PRESTODIGITONIUM",
+        title: "Prestodigitonium",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, benenne eine Karte und decke danach die oberste Karte deines Decks auf. Falls es die benannte Karte ist, darfst du jene verdeckt und erschöpft in deinen Tintenvorrat legen. Falls nicht, lege sie zurück auf dein Deck.",
       },
@@ -28,7 +28,7 @@ export const merlinCleverClairvoyantI18n: Record<Languages, I18nProperties> = {
     version: "Enchanteur clairvoyant",
     text: [
       {
-        title: "PRESTIDIGITONIUM",
+        title: "Prestidigitonium",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, nommez une carte et révélez la carte du dessus de votre pioche. S'il s'agit de la carte nommée, placez-la dans votre réserve d'encre, face cachée et épuisée. Sinon, replacez-la sur votre pioche.",
       },
@@ -39,7 +39,7 @@ export const merlinCleverClairvoyantI18n: Record<Languages, I18nProperties> = {
     version: "Chiaroveggente Brillante",
     text: [
       {
-        title: "PRESTIDIGITORIUM",
+        title: "Prestidigitorium",
         description:
           "Ogni volta che questo personaggio va all'avventura, nomina una carta, poi rivela la prima carta del tuo mazzo. Se è la carta nominata, aggiungila al tuo calamaio, a faccia in giù e impegnata. Altrimenti, mettila in cima al tuo mazzo.",
       },

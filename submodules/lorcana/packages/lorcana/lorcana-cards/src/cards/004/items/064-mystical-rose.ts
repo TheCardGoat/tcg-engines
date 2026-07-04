@@ -4,6 +4,17 @@ import { mysticalRoseI18n } from "./064-mystical-rose.i18n";
 export const mysticalRose: ItemCard = {
   id: "BsF",
   canonicalId: "ci_BsF",
+  slug: "lorcana-ci_BsF",
+  printings: [
+    {
+      id: "set4-064",
+      artId: "set4-064",
+      setCode: "set4",
+      collectorNumber: "64",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-064"],
   cardType: "item",
   name: "Mystical Rose",
@@ -16,7 +27,7 @@ export const mysticalRose: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1f22214638bd46d089a6751e57dfd829",
-    tcgPlayer: 547683,
+    tcgPlayer: "547683",
   },
   text: [
     {
@@ -62,7 +73,10 @@ export const mysticalRose: ItemCard = {
             },
             then: {
               type: "move-damage",
-              amount: { type: "up-to", value: 3 },
+              amount: {
+                type: "up-to",
+                value: 3,
+              },
               from: {
                 selector: "chosen",
                 count: 1,

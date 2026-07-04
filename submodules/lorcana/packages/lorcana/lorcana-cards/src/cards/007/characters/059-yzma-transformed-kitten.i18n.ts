@@ -17,7 +17,7 @@ export const yzmaTransformedKittenI18n: Record<Languages, I18nProperties> = {
     version: "Verwandeltes Kätzchen",
     text: [
       {
-        title: "GEWONNEN",
+        title: "Gewonnen",
         description:
           "Wenn dieser Charakter verbannt wird und du mehr Karten als jede gegnerische Person auf der Hand hast, darfst du diese Karte zurück auf deine Hand nehmen.",
       },
@@ -28,7 +28,7 @@ export const yzmaTransformedKittenI18n: Record<Languages, I18nProperties> = {
     version: "Changée en chaton",
     text: [
       {
-        title: "J'AI GAGNÉ",
+        title: "J'ai gagné",
         description:
           "Lorsque ce personnage est banni, si vous avez plus de cartes en main que chaque adversaire, vous pouvez renvoyer cette carte dans votre main.",
       },
@@ -39,7 +39,7 @@ export const yzmaTransformedKittenI18n: Record<Languages, I18nProperties> = {
     version: "Trasformata in Gattina",
     text: [
       {
-        title: "HO VINTO",
+        title: "Ho Vinto",
         description:
           "Quando questo personaggio viene esiliato, se hai in mano più carte di ogni avversario, puoi riprendere in mano questa carta.",
       },

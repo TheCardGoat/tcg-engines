@@ -4,6 +4,17 @@ import { bounceI18n } from "./097-bounce.i18n";
 export const bounce: ActionCard = {
   id: "FHZ",
   canonicalId: "ci_FHZ",
+  slug: "lorcana-ci_FHZ",
+  printings: [
+    {
+      id: "set2-097",
+      artId: "set2-097",
+      setCode: "set2",
+      collectorNumber: "97",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-097"],
   cardType: "action",
   name: "Bounce",
@@ -16,7 +27,7 @@ export const bounce: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_af02f016a89c4174baa02ff8a5355f4e",
-    tcgPlayer: 517599,
+    tcgPlayer: "517599",
   },
   text: "Return chosen character of yours to your hand to return another chosen character to their player's hand.",
   abilities: [

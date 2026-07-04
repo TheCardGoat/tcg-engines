@@ -37,7 +37,6 @@ const POWER_THREE_MOCK_UNIT_IMAGE =
 export const powerThreeMockUnit = {
   ...c.alphaRuthlessLowlife,
   id: "scenario-royce-power-three-mock",
-  externalId: "scenario:royce-power-three-mock",
   slug: "scenario-royce-power-three-mock",
   name: "Power-3 Mock Unit",
   displayName: "Power-3 Mock Unit",
@@ -102,6 +101,8 @@ export const startBase: PlayerFixture = {
 export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   gameStart: "scenario:gameStart",
   retailCardCatalog: "scenario:retailCardCatalog",
+  retailPr2295Cards: "scenario:retailPr2295Cards",
+  retailNewCardAbilities: "scenario:retailNewCardAbilities",
   openingMain: "scenario:openingMain",
   attackStep: "scenario:attackStep",
   defensiveStep: "scenario:defensiveStep",
@@ -212,6 +213,7 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   legendViktorVektorSitDownAndRelaxRetail: "scenario:legendViktorVektorSitDownAndRelaxRetail",
   progPeaceOffering: "scenario:progPeaceOffering",
   progCarnageAtTheColosseum: "scenario:progCarnageAtTheColosseum",
+  progCarnageAtTheColosseumCostReduction: "scenario:progCarnageAtTheColosseumCostReduction",
 };
 
 export function scenarioSeed(id: ScenarioId): string {

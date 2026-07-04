@@ -12,7 +12,18 @@ const discardFodderI18n = {
 
 const discardFodder: ActionCard = {
   id: "perilous-maze-discard-fodder",
+  printings: [
+    {
+      id: "perilous-maze-discard-fodder",
+      artId: "perilous-maze-discard-fodder",
+      setCode: "TST",
+      collectorNumber: "1",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   canonicalId: "ci_perilous_maze_discard_fodder",
+  slug: "lorcana-ci_perilous_maze_discard_fodder",
   cardType: "action",
   name: "Discard Fodder",
   i18n: discardFodderI18n,

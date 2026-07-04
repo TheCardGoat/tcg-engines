@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { bagheeraGuardianJaguarI18n } from "./198-bagheera-guardian-jaguar.i18n";
+
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 
 export const bagheeraGuardianJaguar: CharacterCard = {
   id: "n5M",
   canonicalId: "ci_n5M",
+  slug: "lorcana-ci_n5M",
+  printings: [
+    {
+      id: "set7-198",
+      artId: "set7-198",
+      setCode: "set7",
+      collectorNumber: "198",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-198"],
   cardType: "character",
   name: "Bagheera",
@@ -21,7 +33,7 @@ export const bagheeraGuardianJaguar: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_cb99ab75225f41d49a1a33be32c8a170",
-    tcgPlayer: 619522,
+    tcgPlayer: "619522",
   },
   text: [
     {

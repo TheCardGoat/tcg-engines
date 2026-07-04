@@ -4,6 +4,17 @@ import { quickShotI18n } from "./203-quick-shot.i18n";
 export const quickShot: ActionCard = {
   id: "4ke",
   canonicalId: "ci_4ke",
+  slug: "lorcana-ci_4ke",
+  printings: [
+    {
+      id: "set8-203",
+      artId: "set8-203",
+      setCode: "set8",
+      collectorNumber: "203",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-203"],
   cardType: "action",
   name: "Quick Shot",
@@ -16,7 +27,7 @@ export const quickShot: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_312b989c72124b8ba3e6722d4ffa16b6",
-    tcgPlayer: 631484,
+    tcgPlayer: "631484",
   },
   text: "Deal 1 damage to chosen character. Draw a card.",
   abilities: [

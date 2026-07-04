@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { tipoJuniorChipmunkI18n } from "./089-tipo-junior-chipmunk.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const tipoJuniorChipmunk: CharacterCard = {
   id: "xfC",
   canonicalId: "ci_xfC",
+  slug: "lorcana-ci_xfC",
+  printings: [
+    {
+      id: "set8-089",
+      artId: "set8-089",
+      setCode: "set8",
+      collectorNumber: "89",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-089"],
   cardType: "character",
   name: "Tipo",
@@ -21,7 +33,7 @@ export const tipoJuniorChipmunk: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_00b83f7a91894fae8af0a95226aafe17",
-    tcgPlayer: 632711,
+    tcgPlayer: "632711",
   },
   text: "Evasive",
   classifications: ["Storyborn", "Ally"],

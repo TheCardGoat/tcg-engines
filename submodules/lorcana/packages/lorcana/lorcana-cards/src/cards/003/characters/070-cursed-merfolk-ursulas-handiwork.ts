@@ -4,6 +4,17 @@ import { cursedMerfolkUrsulasHandiworkI18n } from "./070-cursed-merfolk-ursulas-
 export const cursedMerfolkUrsulasHandiwork: CharacterCard = {
   id: "c1H",
   canonicalId: "ci_8Dp",
+  slug: "lorcana-ci_8Dp",
+  printings: [
+    {
+      id: "set3-070",
+      artId: "set3-070",
+      setCode: "set3",
+      collectorNumber: "70",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-070", "set9-071"],
   cardType: "character",
   name: "Cursed Merfolk",
@@ -20,7 +31,7 @@ export const cursedMerfolkUrsulasHandiwork: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_c571350ccb314e4aac4f3e79d9a29c87",
-    tcgPlayer: 650013,
+    tcgPlayer: "650013",
   },
   text: [
     {

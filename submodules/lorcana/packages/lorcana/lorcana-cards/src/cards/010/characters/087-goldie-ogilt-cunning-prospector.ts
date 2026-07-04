@@ -4,6 +4,17 @@ import { goldieOgiltCunningProspectorI18n } from "./087-goldie-ogilt-cunning-pro
 export const goldieOgiltCunningProspector: CharacterCard = {
   id: "pYT",
   canonicalId: "ci_pYT",
+  slug: "lorcana-ci_pYT",
+  printings: [
+    {
+      id: "set10-087",
+      artId: "set10-087",
+      setCode: "set10",
+      collectorNumber: "87",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-087"],
   cardType: "character",
   name: "Goldie O'Gilt",
@@ -20,7 +31,7 @@ export const goldieOgiltCunningProspector: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_eaa7f672c1fe4c099ec6fda242d6aa13",
-    tcgPlayer: 658880,
+    tcgPlayer: "658880",
   },
   text: [
     {

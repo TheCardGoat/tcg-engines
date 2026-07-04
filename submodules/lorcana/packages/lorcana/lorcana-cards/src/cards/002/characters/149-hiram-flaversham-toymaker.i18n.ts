@@ -17,7 +17,7 @@ export const hiramFlavershamToymakerI18n: Record<Languages, I18nProperties> = {
     version: "Spielzeugmacher",
     text: [
       {
-        title: "HANDWERKER",
+        title: "Handwerker",
         description:
           "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, darfst du einen deiner Gegenstände verbannen, um 2 Karten zu ziehen.",
       },
@@ -28,7 +28,7 @@ export const hiramFlavershamToymakerI18n: Record<Languages, I18nProperties> = {
     version: "Fabricant de jouets",
     text: [
       {
-        title: "MAÎTRE ARTISAN",
+        title: "Maître artisan",
         description:
           "Lorsque vous jouez ce personnage ou lorsque vous l'envoyez à l'aventure, vous pouvez bannir l'un de vos objets pour piocher 2 cartes.",
       },
@@ -39,7 +39,7 @@ export const hiramFlavershamToymakerI18n: Record<Languages, I18nProperties> = {
     version: "Toymaker",
     text: [
       {
-        title: "ARTIFICER",
+        title: "Artificer",
         description:
           "When you play this character and whenever he quests, you may banish one of your items to draw 2 cards.",
       },

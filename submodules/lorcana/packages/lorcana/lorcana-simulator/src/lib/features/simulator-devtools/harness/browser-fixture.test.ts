@@ -48,8 +48,8 @@ describe("browser-fixture", () => {
     expect(hydratedFixture.skipPreGame).toBe(true);
   });
 
-  it("preserves registered simulator fixture metadata when serialized", () => {
-    const preGameFixture = getLorcanaFixture("pre-game");
+  it("preserves registered simulator fixture metadata when serialized", async () => {
+    const preGameFixture = await getLorcanaFixture("pre-game");
     const hydratedFixture = deserializeInlineFixture(serializeInlineFixture(preGameFixture));
 
     expect(hydratedFixture.id).toBe(preGameFixture.id);

@@ -4,6 +4,17 @@ import { shereKhanInfamousTigerI18n } from "./092-shere-khan-infamous-tiger.i18n
 export const shereKhanInfamousTiger: CharacterCard = {
   id: "Y6a",
   canonicalId: "ci_Y6a",
+  slug: "lorcana-ci_Y6a",
+  printings: [
+    {
+      id: "set7-092",
+      artId: "set7-092",
+      setCode: "set7",
+      collectorNumber: "92",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-092"],
   cardType: "character",
   name: "Shere Khan",
@@ -20,12 +31,12 @@ export const shereKhanInfamousTiger: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_7a9520920a6d4267a8bcd80653a43c60",
-    tcgPlayer: 619455,
+    tcgPlayer: "619455",
   },
   text: [
     {
-      title: "WHAT A PITY",
-      description: "When you play this character, discard your hand.",
+      title: "WHAT",
+      description: "A PITY When you play this character, discard your hand.",
     },
   ],
   classifications: ["Storyborn", "Villain"],

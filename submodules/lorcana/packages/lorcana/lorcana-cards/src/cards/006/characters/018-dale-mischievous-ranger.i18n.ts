@@ -17,9 +17,9 @@ export const daleMischievousRangerI18n: Record<Languages, I18nProperties> = {
     version: "Schelmischer Ritter des Rechts",
     text: [
       {
-        title: "ICH STEH AUF STREICHE",
+        title: "Ich steh auf Streiche",
         description:
-          "Wenn du diesen Charakter ausspielst, darfst du die obersten 3 Karten deines Decks auf deinen Ablagestapel legen, um einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -3 zu geben.",
+          "Wenn du diesen Charakter ausspielst, darfst du die obersten 3 Karten deines Decks auf deinen Ablagestapel legen, um einem Charakter deiner Wahl bis zu Beginn deines nächsten Zuges -3 {S} zu geben.",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const daleMischievousRangerI18n: Record<Languages, I18nProperties> = {
     version: "Ranger malicieux",
     text: [
       {
-        title: "BLAGUEUR À LA NOIX",
+        title: "Blagueur à la noix",
         description:
-          "Lorsque vous jouez ce personnage, vous pouvez placer les trois premières cartes de votre pioche dans votre défausse pour choisir un personnage qui subit -3 jusqu'au début de votre prochain tour.",
+          "Lorsque vous jouez ce personnage, vous pouvez placer les trois premières cartes de votre pioche dans votre défausse pour choisir un personnage qui subit -3 {S} jusqu'au début de votre prochain tour.",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const daleMischievousRangerI18n: Record<Languages, I18nProperties> = {
     version: "Agente Speciale Dispettoso",
     text: [
       {
-        title: "MATTO PER GLI SCHERZI",
+        title: "Matto per gli Scherzi",
         description:
-          "Quando giochi questo personaggio, puoi mettere le prime 3 carte del tuo mazzo nei tuoi scarti per dare a un personaggio a tua scelta -3 fino all'inizio del tuo prossimo turno.",
+          "Quando giochi questo personaggio, puoi mettere le prime 3 carte del tuo mazzo nei tuoi scarti per dare a un personaggio a tua scelta -3 {S} fino all'inizio del tuo prossimo turno.",
       },
     ],
   },

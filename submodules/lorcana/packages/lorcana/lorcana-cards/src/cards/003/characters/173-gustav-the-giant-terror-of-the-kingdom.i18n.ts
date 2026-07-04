@@ -22,12 +22,12 @@ export const gustavTheGiantTerrorOfTheKingdomI18n: Record<Languages, I18nPropert
     version: "Schrecken des Königreichs",
     text: [
       {
-        title: "GEFESSELT",
+        title: "Gefesselt",
         description:
           "Dieser Charakter kommt erschöpft ins Spiel und wird zu Beginn deines Zuges nicht bereit gemacht.",
       },
       {
-        title: "BEFREIEN",
+        title: "Befreien",
         description:
           "Jedes Mal, wenn einer deiner anderen Charaktere in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, darfst du diesen Charakter bereit machen.",
       },
@@ -38,12 +38,12 @@ export const gustavTheGiantTerrorOfTheKingdomI18n: Record<Languages, I18nPropert
     version: "Terreur du royaume",
     text: [
       {
-        title: "LIGOTÉ",
+        title: "Ligoté",
         description:
           "Ce personnage entre en jeu épuisé et ne se redresse pas au début de votre tour.",
       },
       {
-        title: "LIBÉRÉ",
+        title: "Libéré",
         description:
           "Chaque fois que l'un de vos autres personnages en bannit un autre via un défi durant votre tour, vous pouvez redresser ce personnage.",
       },
@@ -54,12 +54,12 @@ export const gustavTheGiantTerrorOfTheKingdomI18n: Record<Languages, I18nPropert
     version: "Terrore del Regno",
     text: [
       {
-        title: "LEGATO",
+        title: "Legato",
         description:
           "Questo personaggio entra in gioco impegnato e non si può preparare all'inizio del tuo turno.",
       },
       {
-        title: "LIBERARSI",
+        title: "Liberarsi",
         description:
           "Durante il tuo turno, ogni volta che uno dei tuoi altri personaggi esilia un altro personaggio in una sfida, puoi preparare questo personaggio.",
       },

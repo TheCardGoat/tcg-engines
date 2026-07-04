@@ -16,8 +16,8 @@ export const arielOnHumanLegsI18n: Record<Languages, I18nProperties> = {
     version: "Auf menschlichen Beinen",
     text: [
       {
-        title: "VERSTUMMT",
-        description: "Dieser Charakter kann nicht, um Lieder zu singen.",
+        title: "Verstummt",
+        description: "Dieser Charakter kann nicht {E}, um Lieder zu singen.",
       },
     ],
   },
@@ -27,7 +27,7 @@ export const arielOnHumanLegsI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "SANS VOIX",
-        description: "Ce personnage ne peut pas être pour chanter des chansons.",
+        description: "Ce personnage ne peut pas être {E} pour chanter des chansons.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const arielOnHumanLegsI18n: Record<Languages, I18nProperties> = {
     version: "On Human Legs",
     text: [
       {
-        title: "VOICELESS",
-        description: "This character can't to sing songs.",
+        title: "Voiceless",
+        description: "This character can't {E} to sing songs.",
       },
     ],
   },

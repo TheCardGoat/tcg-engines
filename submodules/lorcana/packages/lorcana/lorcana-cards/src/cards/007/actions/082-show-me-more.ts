@@ -2,8 +2,19 @@ import type { ActionCard } from "@tcg/lorcana-types";
 import { showMeMoreI18n } from "./082-show-me-more.i18n";
 
 export const showMeMore: ActionCard = {
-  id: "475",
+  id: "tKK",
   canonicalId: "ci_Jte",
+  slug: "lorcana-ci_Jte",
+  printings: [
+    {
+      id: "set7-082",
+      artId: "set7-082",
+      setCode: "set7",
+      collectorNumber: "82",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-082"],
   cardType: "action",
   name: "Show Me More!",
@@ -16,7 +27,7 @@ export const showMeMore: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_29df1d46e9f9463f9058c264f7b3bbd5",
-    tcgPlayer: 619739,
+    tcgPlayer: "619739",
   },
   text: "Each player draws 3 cards.",
   abilities: [

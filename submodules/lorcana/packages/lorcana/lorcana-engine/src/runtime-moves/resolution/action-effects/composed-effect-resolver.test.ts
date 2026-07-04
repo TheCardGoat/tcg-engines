@@ -911,6 +911,89 @@ describe("resolveActionEffect", () => {
     );
   });
 
+  it("lets a select-target step seed same-name filters for later sequence steps", () => {
+    const source = "source" as CardInstanceId;
+    const chosen = "chosen" as CardInstanceId;
+    const otherSameName = "other-same-name" as CardInstanceId;
+    const otherName = "other-name" as CardInstanceId;
+    const { ctx, state } = createResolverTestContext({
+      definitions: {
+        [source]: { id: "source", cardType: "action" },
+        [chosen]: {
+          id: "chosen",
+          cardType: "character",
+          name: "Shared Name",
+          strength: 2,
+          willpower: 4,
+        },
+        [otherSameName]: {
+          id: "other-same-name",
+          cardType: "character",
+          name: "Shared Name",
+          strength: 2,
+          willpower: 4,
+        },
+        [otherName]: {
+          id: "other-name",
+          cardType: "character",
+          name: "Other Name",
+          strength: 2,
+          willpower: 4,
+        },
+      },
+      zoneCards: {
+        [`play:${PLAYER_ONE}`]: [chosen],
+        [`play:${PLAYER_TWO}`]: [otherSameName, otherName],
+      },
+    });
+
+    const resolved = resolveActionEffect(
+      ctx,
+      createCardPlayedPayload(source, PLAYER_ONE),
+      {
+        type: "sequence",
+        steps: [
+          {
+            type: "select-target",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+          {
+            type: "banish",
+            target: {
+              selector: "all",
+              count: "all",
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
+              filter: {
+                sameNameAsChosenCard: true,
+                excludeChosenCard: true,
+              },
+            },
+          },
+        ],
+      },
+      {
+        targets: [chosen],
+      },
+    );
+
+    expect(resolved.status).toBe("resolved");
+    expect(state.moveCalls).toEqual([
+      {
+        cardId: otherSameName,
+        zone: "discard",
+        playerId: PLAYER_TWO,
+      },
+    ]);
+  });
+
   it("puts chosen hand cards on top of the deck in the provided order", () => {
     const source = "source" as CardInstanceId;
     const deckBase = "deck-base" as CardInstanceId;
@@ -1521,6 +1604,58 @@ describe("resolveActionEffect", () => {
 
     expect(result.status).toBe("resolved");
     expect(state.moveCalls).toEqual([{ cardId: copyB, playerId: PLAYER_ONE, zone: "play" }]);
+  });
+
+  it("plays only the trigger-subject card when the play-card filter requires it", () => {
+    const source = "source" as CardInstanceId;
+    const triggerSubject = "trigger-subject" as CardInstanceId;
+    const otherDiscard = "other-discard" as CardInstanceId;
+    const { ctx, state } = createResolverTestContext({
+      definitions: {
+        [source]: { id: "source", cardType: "action" },
+        [triggerSubject]: {
+          id: "trigger-subject",
+          cardType: "character",
+          name: "Discarded Friend",
+          cost: 2,
+          willpower: 3,
+        },
+        [otherDiscard]: {
+          id: "other-discard",
+          cardType: "character",
+          name: "Other Friend",
+          cost: 2,
+          willpower: 3,
+        },
+      },
+      zoneCards: {
+        [`discard:${PLAYER_ONE}`]: [otherDiscard, triggerSubject],
+      },
+    });
+
+    const result = resolveActionEffect(
+      ctx,
+      createCardPlayedPayload(source, PLAYER_ONE),
+      {
+        type: "play-card",
+        from: "discard",
+        cardType: "character",
+        cost: "free",
+        filter: {
+          sameInstanceAsTriggerSubject: true,
+        },
+      },
+      {
+        eventSnapshot: {
+          subjectCardId: triggerSubject,
+        },
+      },
+    );
+
+    expect(result.status).toBe("resolved");
+    expect(state.moveCalls).toEqual([
+      { cardId: triggerSubject, playerId: PLAYER_ONE, zone: "play" },
+    ]);
   });
 
   it("restores event snapshot after if-you-do play-card so chosen-card-cost offset uses the banished card (Retro Evolution Device)", () => {

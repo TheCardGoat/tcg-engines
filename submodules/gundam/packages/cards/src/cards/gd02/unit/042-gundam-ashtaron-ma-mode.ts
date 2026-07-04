@@ -7,14 +7,17 @@ export const gd02GundamAshtaronMaMode042: UnitCard = {
   color: "red",
   traits: ["new une"],
   id: "GD02-042",
-  externalId: "gundam:gd02-042",
-  slug: "gundam-ashtaron-ma-mode-gd02-042",
+  canonicalId: "GD02-042",
+  externalIds: { bandai: "gundam:gd02-042" },
+  slug: "gundam-ashtaron-ma-mode/gd02-042",
   displayName: "Gundam Ashtaron (MA Mode)",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-042",
   printings: [
     {
       id: "GD02-042",
+      artId: "GD02-042",
+      setCode: "GD02",
       collectorNumber: "GD02-042",
       cardNumber: "GD02-042",
       set: {
@@ -29,6 +32,7 @@ export const gd02GundamAshtaronMaMode042: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-042"],
   selectedPrintingId: "GD02-042",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-042.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-042.webp?260424",

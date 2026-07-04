@@ -4,6 +4,17 @@ import { prideLandsJungleOasisI18n } from "./034-pride-lands-jungle-oasis.i18n";
 export const prideLandsJungleOasis: LocationCard = {
   id: "sC1",
   canonicalId: "ci_sC1",
+  slug: "lorcana-ci_sC1",
+  printings: [
+    {
+      id: "set5-034",
+      artId: "set5-034",
+      setCode: "set5",
+      collectorNumber: "34",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-034"],
   cardType: "location",
   name: "Pride Lands",
@@ -20,7 +31,7 @@ export const prideLandsJungleOasis: LocationCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_210e4fd42fff4273b7ed916683431def",
-    tcgPlayer: 561189,
+    tcgPlayer: "561189",
   },
   text: [
     {

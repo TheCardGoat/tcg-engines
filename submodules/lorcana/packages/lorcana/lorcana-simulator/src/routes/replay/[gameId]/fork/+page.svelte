@@ -22,7 +22,7 @@
   import { createHumanVsAiContext } from "@/features/simulator-devtools/vs-ai/context.js";
   import { trackEvent } from "$lib/analytics/analytics.js";
   import { logError } from "$lib/telemetry/logs.js";
-  import { GitFork } from "@lucide/svelte";
+  import GitFork from "@lucide/svelte/icons/git-fork";
 
   let { data } = $props();
 

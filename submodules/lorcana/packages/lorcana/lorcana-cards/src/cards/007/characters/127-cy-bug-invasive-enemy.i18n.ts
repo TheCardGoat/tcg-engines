@@ -16,8 +16,8 @@ export const cybugInvasiveEnemyI18n: Record<Languages, I18nProperties> = {
     version: "Invasiver Feind",
     text: [
       {
-        title: "SCHWARMINTELLIGENZ",
-        description: "Dieser Charakter erhält +1 für jeden deiner anderen Charaktere im Spiel.",
+        title: "Schwarmintelligenz",
+        description: "Dieser Charakter erhält +1 {S} für jeden deiner anderen Charaktere im Spiel.",
       },
     ],
   },
@@ -26,8 +26,9 @@ export const cybugInvasiveEnemyI18n: Record<Languages, I18nProperties> = {
     version: "Ennemi invasif",
     text: [
       {
-        title: "ESPRIT DE RUCHE",
-        description: "Ce personnage gagne +1 pour chaque autre personnage que vous avez en jeu.",
+        title: "Esprit de ruche",
+        description:
+          "Ce personnage gagne +1 {S} pour chaque autre personnage que vous avez en jeu.",
       },
     ],
   },
@@ -36,8 +37,9 @@ export const cybugInvasiveEnemyI18n: Record<Languages, I18nProperties> = {
     version: "Nemico Infestante",
     text: [
       {
-        title: "MENTE ALVEARE",
-        description: "Questo personaggio riceve +1 per ogni altro personaggio che hai in gioco.",
+        title: "Mente Alveare",
+        description:
+          "Questo personaggio riceve +1 {S} per ogni altro personaggio che hai in gioco.",
       },
     ],
   },

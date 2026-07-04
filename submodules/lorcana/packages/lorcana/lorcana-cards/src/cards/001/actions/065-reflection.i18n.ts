@@ -11,10 +11,28 @@ export const reflectionI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Réflexion",
-    text: "Regardez les 3 premières cartes de votre pioche. Remettez-les sur le dessus de votre pioche, dans l'ordre de votre choix.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 1 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Regardez les 3 premières cartes de votre pioche. Remettez-les sur le dessus de votre pioche, dans l'ordre de votre choix.",
+      },
+    ],
   },
   it: {
     name: "Riflesso",
-    text: "(Un personaggio con costo 1 o superiore può per cantare questa canzone gratis.) Guarda le prime 3 carte del tuo mazzo. Rimettile in cima al tuo mazzo in qualsiasi ordine.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 1 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Guarda le prime 3 carte del tuo mazzo. Rimettile in cima al tuo mazzo in qualsiasi ordine.",
+      },
+    ],
   },
 };

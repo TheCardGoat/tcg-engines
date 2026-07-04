@@ -24,14 +24,15 @@ export const genieWonderfulTricksterI18n: Record<Languages, I18nProperties> = {
     version: "Wunderbarer Zauberkünstler",
     text: [
       {
-        title: "Gestaltwandel 5",
+        title:
+          "<Gestaltwandel> 5 (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Dschinni-Charaktere auszuspielen.)",
       },
       {
-        title: "DEINE BELOHNUNG WARTET",
+        title: "Deine Belohnung wartet",
         description: "Jedes Mal, wenn du eine Karte ausspielst, ziehe 1 Karte.",
       },
       {
-        title: "VERBOTENER SCHATZ",
+        title: "Verbotener Schatz",
         description:
           "Am Ende deines Zuges, lege alle Karten aus deiner Hand in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -42,14 +43,15 @@ export const genieWonderfulTricksterI18n: Record<Languages, I18nProperties> = {
     version: "Farceur merveilleux",
     text: [
       {
-        title: "Alter 5",
+        title:
+          "<Alter> 5 (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Génie.)",
       },
       {
-        title: "TA RÉCOMPENSE T'ATTEND",
+        title: "Ta récompense t'attend",
         description: "Chaque fois que vous jouez une carte, piochez une carte.",
       },
       {
-        title: "TRÉSOR INTERDIT",
+        title: "Trésor interdit",
         description:
           "À la fin de votre tour, placez toutes les cartes de votre main sous votre pioche dans l'ordre de votre choix.",
       },
@@ -60,14 +62,15 @@ export const genieWonderfulTricksterI18n: Record<Languages, I18nProperties> = {
     version: "Incredibile Prestigiatore",
     text: [
       {
-        title: "Trasformazione 5",
+        title:
+          "<Trasformazione> 5 (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Genio.)",
       },
       {
-        title: "IL TUO PREMIO TI ATTENDE",
+        title: "Il Tuo Premio ti Attende",
         description: "Ogni volta che giochi una carta, pesca una carta.",
       },
       {
-        title: "TESORO PROIBITO",
+        title: "Tesoro Proibito",
         description:
           "Alla fine del tuo turno, metti tutte le carte nella tua mano in fondo al tuo mazzo in qualsiasi ordine.",
       },

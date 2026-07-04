@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { luisaMadrigalPushingThroughI18n } from "./062-luisa-madrigal-pushing-through.i18n";
+
 import { challenger } from "../../../helpers/abilities/challenger";
 
 export const luisaMadrigalPushingThrough: CharacterCard = {
   id: "3ym",
   canonicalId: "ci_3ym",
+  slug: "lorcana-ci_3ym",
+  printings: [
+    {
+      id: "set12-062",
+      artId: "set12-062",
+      setCode: "set12",
+      collectorNumber: "62",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-062"],
   cardType: "character",
   name: "Luisa Madrigal",
@@ -21,6 +33,7 @@ export const luisaMadrigalPushingThrough: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e3a969791b0146e9af4d258746a3289f",
+    tcgPlayer: "692036",
   },
   text: "Challenger +2",
   classifications: ["Storyborn", "Ally", "Madrigal"],

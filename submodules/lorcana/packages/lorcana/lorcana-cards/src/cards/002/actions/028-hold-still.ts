@@ -4,6 +4,17 @@ import { holdStillI18n } from "./028-hold-still.i18n";
 export const holdStill: ActionCard = {
   id: "T4i",
   canonicalId: "ci_T4i",
+  slug: "lorcana-ci_T4i",
+  printings: [
+    {
+      id: "set2-028",
+      artId: "set2-028",
+      setCode: "set2",
+      collectorNumber: "28",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-028"],
   cardType: "action",
   name: "Hold Still",
@@ -16,14 +27,17 @@ export const holdStill: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7672e43ea7ac4d9a8a51e463a77b6358",
-    tcgPlayer: 527726,
+    tcgPlayer: "527726",
   },
   text: "Remove up to 4 damage from chosen character.",
   abilities: [
     {
       type: "action",
       effect: {
-        amount: { type: "up-to", value: 4 },
+        amount: {
+          type: "up-to",
+          value: 4,
+        },
         target: "CHOSEN_CHARACTER",
         type: "remove-damage",
       },

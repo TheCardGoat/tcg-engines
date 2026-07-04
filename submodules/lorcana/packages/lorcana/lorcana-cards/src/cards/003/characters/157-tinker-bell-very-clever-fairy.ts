@@ -4,6 +4,17 @@ import { tinkerBellVeryCleverFairyI18n } from "./157-tinker-bell-very-clever-fai
 export const tinkerBellVeryCleverFairy: CharacterCard = {
   id: "bd1",
   canonicalId: "ci_bd1",
+  slug: "lorcana-ci_bd1",
+  printings: [
+    {
+      id: "set3-157",
+      artId: "set3-157",
+      setCode: "set3",
+      collectorNumber: "157",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set3-157"],
   cardType: "character",
   name: "Tinker Bell",
@@ -20,7 +31,7 @@ export const tinkerBellVeryCleverFairy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_62d821004e3d483a8d3d91a220cada53",
-    tcgPlayer: 536268,
+    tcgPlayer: "536268",
   },
   text: [
     {

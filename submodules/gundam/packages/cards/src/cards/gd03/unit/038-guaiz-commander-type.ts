@@ -7,14 +7,17 @@ export const gd03GuaizCommanderType038: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD03-038",
-  externalId: "gundam:gd03-038",
-  slug: "guaiz-commander-type-gd03-038",
+  canonicalId: "GD03-038",
+  externalIds: { bandai: "gundam:gd03-038" },
+  slug: "guaiz-commander-type/gd03-038",
   displayName: "GuAIZ (Commander Type)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-038",
   printings: [
     {
       id: "GD03-038",
+      artId: "GD03-038",
+      setCode: "GD03",
       collectorNumber: "GD03-038",
       cardNumber: "GD03-038",
       set: {
@@ -29,6 +32,7 @@ export const gd03GuaizCommanderType038: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-038"],
   selectedPrintingId: "GD03-038",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-038.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-038.webp?260424",

@@ -16,7 +16,7 @@ export const pepaMadrigalSensitiveSisterI18n: Record<Languages, I18nProperties> 
     version: "Sensible Schwester",
     text: [
       {
-        title: "SONNENSCHEIN, SONNENSCHEIN",
+        title: "Sonnenschein, Sonnenschein",
         description:
           "Jedes Mal, wenn einer oder mehrere deiner Charaktere ein Lied singen, sammelst du 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const pepaMadrigalSensitiveSisterI18n: Record<Languages, I18nProperties> 
     version: "Sœur sensible",
     text: [
       {
-        title: "ÉCLAIRCIE, ÉCLAIRCIE",
+        title: "Éclaircie, éclaircie",
         description:
           "Chaque fois qu'un ou plusieurs de vos personnages chantent une chanson, gagnez 1 éclat de Lore.",
       },
@@ -38,7 +38,7 @@ export const pepaMadrigalSensitiveSisterI18n: Record<Languages, I18nProperties> 
     version: "Sorella Sensibile",
     text: [
       {
-        title: "CIELI TERSI, CIELI TERSI",
+        title: "Cieli Tersi, Cieli Tersi",
         description:
           "Ogni volta che uno o più dei tuoi personaggi canta una canzone, ottieni 1 leggenda.",
       },

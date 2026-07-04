@@ -4,6 +4,17 @@ import { weKnowTheWayI18n } from "./061-we-know-the-way.i18n";
 export const weKnowTheWay: ActionCard = {
   id: "2Wp",
   canonicalId: "ci_2Wp",
+  slug: "lorcana-ci_2Wp",
+  printings: [
+    {
+      id: "set5-061",
+      artId: "set5-061",
+      setCode: "set5",
+      collectorNumber: "61",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-061"],
   cardType: "action",
   name: "We Know the Way",
@@ -16,7 +27,7 @@ export const weKnowTheWay: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_74fab45eaa32470b9ca3c830ab920f93",
-    tcgPlayer: 560658,
+    tcgPlayer: "560658",
   },
   text: "Shuffle chosen card from your discard into your deck. Reveal the top card of your deck. If it has the same name as the chosen card, you may play the revealed card for free. Otherwise, put it into your hand.",
   actionSubtype: "song",
@@ -38,12 +49,19 @@ export const weKnowTheWay: ActionCard = {
             target: "CONTROLLER",
             routes: [
               {
-                condition: { type: "revealed-matches-chosen-name" },
-                destination: { zone: "play", cost: "free" },
+                condition: {
+                  type: "revealed-matches-chosen-name",
+                },
+                destination: {
+                  zone: "play",
+                  cost: "free",
+                },
                 optional: true,
               },
             ],
-            fallback: { zone: "hand" },
+            fallback: {
+              zone: "hand",
+            },
           },
         ],
         type: "sequence",

@@ -62,6 +62,19 @@ export const onePieceServerAdapter: GameAdapter = {
     return null;
   },
 
+  /**
+   * One Piece identity canonicalization. Per ADR-9, One Piece has no reprint
+   * data yet, so the canonical id is the public id itself. This is a
+   * forward-looking placeholder: once OP reprint data exists, this should
+   * resolve printings to their shared gameplay canonical id.
+   *
+   * Never returns null — the identity is always a valid canonical id when the
+   * publicId is non-empty.
+   */
+  getCanonicalCardId(publicId: string): string | null {
+    return publicId;
+  },
+
   validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult {
     if (formatId !== "standard") {
       throw new Error(`Unknown One Piece format: ${formatId}`);

@@ -4,6 +4,17 @@ import { recoveredPageI18n } from "./030-recovered-page.i18n";
 export const recoveredPage: ItemCard = {
   id: "3sY",
   canonicalId: "ci_3sY",
+  slug: "lorcana-ci_3sY",
+  printings: [
+    {
+      id: "set10-030",
+      artId: "set10-030",
+      setCode: "set10",
+      collectorNumber: "30",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-030"],
   cardType: "item",
   name: "Recovered Page",
@@ -16,7 +27,7 @@ export const recoveredPage: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_f682ac8152d24a3192669d92bb1f22d0",
-    tcgPlayer: 658330,
+    tcgPlayer: "658330",
   },
   text: [
     {

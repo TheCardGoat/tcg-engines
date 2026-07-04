@@ -7,14 +7,17 @@ export const gd04RozenZulu039: UnitCard = {
   color: "red",
   traits: ["neo zeon"],
   id: "GD04-039",
-  externalId: "gundam:gd04-039",
-  slug: "rozen-zulu-gd04-039",
+  canonicalId: "GD04-039",
+  externalIds: { bandai: "gundam:gd04-039" },
+  slug: "rozen-zulu/gd04-039",
   displayName: "Rozen Zulu",
   set: { code: "GD04", name: "Phantom Aria [GD04]", packageId: "616104" },
   printNumber: "GD04-039",
   printings: [
     {
       id: "GD04-039",
+      artId: "GD04-039",
+      setCode: "GD04",
       collectorNumber: "GD04-039",
       cardNumber: "GD04-039",
       set: {
@@ -29,6 +32,7 @@ export const gd04RozenZulu039: UnitCard = {
       productName: "Phantom Aria [GD04]",
     },
   ],
+  reprints: ["GD04-039"],
   selectedPrintingId: "GD04-039",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-039.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-039.webp?260424",

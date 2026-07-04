@@ -4,6 +4,17 @@ import { olafRecappingTheStoryI18n } from "./156-olaf-recapping-the-story.i18n";
 export const olafRecappingTheStory: CharacterCard = {
   id: "obo",
   canonicalId: "ci_obo",
+  slug: "lorcana-ci_obo",
+  printings: [
+    {
+      id: "set8-156",
+      artId: "set8-156",
+      setCode: "set8",
+      collectorNumber: "156",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-156"],
   cardType: "character",
   name: "Olaf",
@@ -20,7 +31,7 @@ export const olafRecappingTheStory: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_af73ab0ecfb241e08c2ab10bc74ea708",
-    tcgPlayer: 631454,
+    tcgPlayer: "631454",
   },
   text: [
     {

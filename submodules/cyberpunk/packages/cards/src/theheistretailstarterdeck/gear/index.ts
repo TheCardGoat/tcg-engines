@@ -1,3 +1,3 @@
-import type { TheHeistRetailStarterDeckCardDefinition } from "@tcg/cyberpunk-types";
+import type { GearCardDefinition } from "@tcg/cyberpunk-types";
 
-export const theHeistRetailStarterDeckGear = [] satisfies TheHeistRetailStarterDeckCardDefinition[];
+export const theHeistRetailStarterDeckGear = [] satisfies GearCardDefinition[];

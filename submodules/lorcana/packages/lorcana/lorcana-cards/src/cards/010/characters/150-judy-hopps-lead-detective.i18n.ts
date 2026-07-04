@@ -20,12 +20,13 @@ export const judyHoppsLeadDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Hauptkommissarin",
     text: [
       {
-        title: "Gestaltwandel 4",
+        title:
+          "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Judy-Hopps-Charaktere auszuspielen.)",
       },
       {
-        title: "LATERALES DENKEN",
+        title: "Laterales Denken",
         description:
-          "In deinem Zug erhalten deine Detektive Alarmiert und Robust +2. (Sie können herausfordern, als hätten sie Wendig. Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 2.)",
+          "In deinem Zug erhalten deine Detektive <Alarmiert> und <Robust> +2. (Sie können herausfordern, als hätten sie Wendig. Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 2.)",
       },
     ],
   },
@@ -34,12 +35,12 @@ export const judyHoppsLeadDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Détective en charge",
     text: [
       {
-        title: "Alter 4",
+        title: "<Alter> 4 {I}",
       },
       {
-        title: "PENSÉE LATÉRALE",
+        title: "Pensée latérale",
         description:
-          "Durant votre tour, vos personnages Détective gagnent Agilité et Résistance +2.",
+          "Durant votre tour, vos personnages Détective gagnent <Agilité> et <Résistance> +2.",
       },
     ],
   },
@@ -48,12 +49,12 @@ export const judyHoppsLeadDetectiveI18n: Record<Languages, I18nProperties> = {
     version: "Capo Detective",
     text: [
       {
-        title: "Trasformazione 4",
+        title: "<Trasformazione> 4 {I}",
       },
       {
-        title: "PENSIERO LATERALE",
+        title: "Pensiero Laterale",
         description:
-          "Durante il tuo turno, i tuoi personaggi Detective ottengono Vigile e Resistere +2.",
+          "Durante il tuo turno, i tuoi personaggi Detective ottengono <Vigile> e <Resistere> +2.",
       },
     ],
   },

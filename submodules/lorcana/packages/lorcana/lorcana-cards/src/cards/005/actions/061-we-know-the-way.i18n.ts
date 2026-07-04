@@ -11,10 +11,28 @@ export const weKnowTheWayI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "L'explorateur",
-    text: "Choisissez une carte de votre défausse et mélangez-la dans votre pioche. Révélez la carte du dessus de votre pioche. Si la carte révélée a le même nom que la carte choisie, vous pouvez la jouer gratuitement. Sinon, ajoutez-la à votre main.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez une carte de votre défausse et mélangez-la dans votre pioche. Révélez la carte du dessus de votre pioche. Si la carte révélée a le même nom que la carte choisie, vous pouvez la jouer gratuitement. Sinon, ajoutez-la à votre main.",
+      },
+    ],
   },
   it: {
     name: "La Strada di Casa",
-    text: "(Un personaggio con costo 3 o superiore può per cantare questa canzone gratis.) Rimescola nel tuo mazzo una carta a tua scelta dai tuoi scarti. Rivela la prima carta del tuo mazzo. Se ha lo stesso nome della carta scelta, puoi giocare la carta rivelata gratis. Altrimenti, aggiungila alla tua mano.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Rimescola nel tuo mazzo una carta a tua scelta dai tuoi scarti. Rivela la prima carta del tuo mazzo. Se ha lo stesso nome della carta scelta, puoi giocare la carta rivelata gratis. Altrimenti, aggiungila alla tua mano.",
+      },
+    ],
   },
 };

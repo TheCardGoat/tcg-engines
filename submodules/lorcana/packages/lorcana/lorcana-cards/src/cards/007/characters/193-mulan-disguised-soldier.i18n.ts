@@ -6,9 +6,9 @@ export const mulanDisguisedSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Disguised Soldier",
     text: [
       {
-        title: "WHERE DO I SIGN IN?",
+        title: "WHERE DO",
         description:
-          "When you play this character, you may draw a card, then choose and discard a card.",
+          "I SIGN IN? When you play this character, you may draw a card, then choose and discard a card.",
       },
     ],
   },
@@ -17,7 +17,7 @@ export const mulanDisguisedSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Disguised Soldier",
     text: [
       {
-        title: "WHERE DO I SIGN IN?",
+        title: "Where Do I Sign In?",
         description:
           "When you play this character, you may draw a card, then choose and discard a card.",
       },
@@ -28,7 +28,7 @@ export const mulanDisguisedSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Disguised Soldier",
     text: [
       {
-        title: "WHERE DO I SIGN IN?",
+        title: "Where Do I Sign In?",
         description:
           "When you play this character, you may draw a card, then choose and discard a card.",
       },
@@ -39,7 +39,7 @@ export const mulanDisguisedSoldierI18n: Record<Languages, I18nProperties> = {
     version: "Disguised Soldier",
     text: [
       {
-        title: "WHERE DO I SIGN IN?",
+        title: "Where Do I Sign In?",
         description:
           "When you play this character, you may draw a card, then choose and discard a card.",
       },

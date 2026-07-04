@@ -6,14 +6,17 @@ export const gd01MiningAsteroidPalau128: BaseCard = {
   type: "base",
   traits: ["neo zeon", "stronghold"],
   id: "GD01-128",
-  externalId: "gundam:gd01-128",
-  slug: "mining-asteroid-palau-gd01-128",
+  canonicalId: "GD01-128",
+  externalIds: { bandai: "gundam:gd01-128" },
+  slug: "mining-asteroid-palau/gd01-128",
   displayName: "Mining Asteroid Palau",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-128",
   printings: [
     {
       id: "GD01-128",
+      artId: "GD01-128",
+      setCode: "GD01",
       collectorNumber: "GD01-128",
       cardNumber: "GD01-128",
       set: {
@@ -28,6 +31,7 @@ export const gd01MiningAsteroidPalau128: BaseCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-128"],
   selectedPrintingId: "GD01-128",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-128.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-128.webp?260424",

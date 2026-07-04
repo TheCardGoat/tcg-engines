@@ -4,6 +4,17 @@ import { daleMischievousRangerI18n } from "./018-dale-mischievous-ranger.i18n";
 export const daleMischievousRanger: CharacterCard = {
   id: "gNk",
   canonicalId: "ci_gNk",
+  slug: "lorcana-ci_gNk",
+  printings: [
+    {
+      id: "set6-018",
+      artId: "set6-018",
+      setCode: "set6",
+      collectorNumber: "18",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-018"],
   cardType: "character",
   name: "Dale",
@@ -20,7 +31,7 @@ export const daleMischievousRanger: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a0d0572121974dd1afc318bb0fd0907e",
-    tcgPlayer: 578170,
+    tcgPlayer: "578170",
   },
   text: [
     {
@@ -45,27 +56,23 @@ export const daleMischievousRanger: CharacterCard = {
         chooser: "CONTROLLER",
         type: "optional",
         effect: {
-          type: "sequence",
-          steps: [
-            {
-              type: "mill",
-              amount: 3,
-              target: "CONTROLLER",
+          type: "pay-cost",
+          cost: {
+            millTopDeck: 3,
+          },
+          effect: {
+            type: "modify-stat",
+            stat: "strength",
+            modifier: -3,
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "any",
+              zones: ["play"],
+              cardTypes: ["character"],
             },
-            {
-              type: "modify-stat",
-              stat: "strength",
-              modifier: -3,
-              target: {
-                selector: "chosen",
-                count: 1,
-                owner: "any",
-                zones: ["play"],
-                cardTypes: ["character"],
-              },
-              duration: "until-start-of-next-turn",
-            },
-          ],
+            duration: "until-start-of-next-turn",
+          },
         },
       },
     },

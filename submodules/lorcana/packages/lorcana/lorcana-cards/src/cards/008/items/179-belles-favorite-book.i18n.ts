@@ -15,9 +15,9 @@ export const bellesFavoriteBookI18n: Record<Languages, I18nProperties> = {
     name: "Belles Lieblingsbuch",
     text: [
       {
-        title: "KAPITEL DREI,",
+        title: "Kapitel drei",
         description:
-          "Verbanne einen deiner anderen Gegenstände — Lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat.",
+          "{E}, Verbanne einen deiner anderen Gegenstände — Lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat.",
       },
     ],
   },
@@ -25,9 +25,9 @@ export const bellesFavoriteBookI18n: Record<Languages, I18nProperties> = {
     name: "Le livre préféré de Belle",
     text: [
       {
-        title: "CHAPITRE TROIS,",
+        title: "Chapitre trois",
         description:
-          "Bannissez un autre de vos objets — Placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
+          "{E}, Bannissez un autre de vos objets — Placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
       },
     ],
   },
@@ -35,9 +35,9 @@ export const bellesFavoriteBookI18n: Record<Languages, I18nProperties> = {
     name: "Libro Preferito di Belle",
     text: [
       {
-        title: "CAPITOLO TRE,",
+        title: "Capitolo Tre",
         description:
-          "esilia uno dei tuoi altri oggetti — Aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
+          "{E}, esilia uno dei tuoi altri oggetti — Aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
       },
     ],
   },

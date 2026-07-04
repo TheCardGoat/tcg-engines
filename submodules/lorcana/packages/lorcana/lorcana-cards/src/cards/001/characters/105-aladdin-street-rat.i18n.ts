@@ -16,7 +16,7 @@ export const aladdinStreetRatI18n: Record<Languages, I18nProperties> = {
     version: "Straßenjunge",
     text: [
       {
-        title: "MIR WIRD SCHON WAS EINFALLEN",
+        title: "Mir wird schon was einfallen",
         description:
           "Wenn du diesen Charakter ausspielst, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
       },
@@ -37,7 +37,7 @@ export const aladdinStreetRatI18n: Record<Languages, I18nProperties> = {
     version: "Street Rat",
     text: [
       {
-        title: "IMPROVISE",
+        title: "Improvise",
         description: "When you play this character, each opponent loses 1 lore.",
       },
     ],

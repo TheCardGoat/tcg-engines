@@ -19,13 +19,13 @@ export const microbotsI18n: Record<Languages, I18nProperties> = {
     name: "Microbots",
     text: [
       {
-        title: "UNBEGRENZTE MÖGLICHKEITEN",
+        title: "Unbegrenzte Möglichkeiten",
         description: "Dein Deck darf beliebig viele Kopien von Microbots enthalten.",
       },
       {
-        title: "INSPIRIERTE TECHNIK",
+        title: "Inspirierte Technik",
         description:
-          "Wenn du diesen Gegenstand ausspielst, gib einem Charakter deiner Wahl in diesem Zug -1 für jeden Microbots-Gegenstand den du im Spiel hast.",
+          "Wenn du diesen Gegenstand ausspielst, gib einem Charakter deiner Wahl in diesem Zug -1 {S} für jeden Microbots-Gegenstand den du im Spiel hast.",
       },
     ],
   },
@@ -33,14 +33,14 @@ export const microbotsI18n: Record<Languages, I18nProperties> = {
     name: "microrobots",
     text: [
       {
-        title: "DES APPLICATIONS ILLIMITÉES",
+        title: "Des applications illimitées",
         description:
           "Vous pouvez avoir n'importe quel nombre de copies de Microrobots dans votre deck.",
       },
       {
-        title: "TECHNOLOGIE INSPIRÉE",
+        title: "Technologie inspirée",
         description:
-          "Lorsque vous jouez cet objet, choisissez un personnage qui subit -1 pour chaque Objet Microrobots que vous avez en jeu.",
+          "Lorsque vous jouez cet objet, choisissez un personnage qui subit -1 {S} pour chaque Objet Microrobots que vous avez en jeu.",
       },
     ],
   },
@@ -48,13 +48,13 @@ export const microbotsI18n: Record<Languages, I18nProperties> = {
     name: "Microbot",
     text: [
       {
-        title: "APPLICAZIONI ILLIMITATE",
+        title: "Applicazioni Illimitate",
         description: "Puoi avere un qualsiasi numero di carte chiamate Microbot nel tuo mazzo.",
       },
       {
-        title: "TECNOLOGIA ISPIRATA",
+        title: "Tecnologia Ispirata",
         description:
-          "Quando giochi questo oggetto, un personaggio a tua scelta riceve -1 per questo turno per ogni oggetto chiamato Microbot che hai in gioco.",
+          "Quando giochi questo oggetto, un personaggio a tua scelta riceve -1 {S} per questo turno per ogni oggetto chiamato Microbot che hai in gioco.",
       },
     ],
   },

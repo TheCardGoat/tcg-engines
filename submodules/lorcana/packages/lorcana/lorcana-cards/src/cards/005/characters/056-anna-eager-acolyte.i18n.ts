@@ -17,7 +17,7 @@ export const annaEagerAcolyteI18n: Record<Languages, I18nProperties> = {
     version: "Eifrige Gehilfin",
     text: [
       {
-        title: "WACHSENDE KRÄFTE",
+        title: "Wachsende Kräfte",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle gegnerischen Mitspielenden je einen ihrer bereiten Charaktere und erschöpfen ihn.",
       },
@@ -28,7 +28,7 @@ export const annaEagerAcolyteI18n: Record<Languages, I18nProperties> = {
     version: "Apprentie impatiente",
     text: [
       {
-        title: "DES POUVOIRS EN ÉVOLUTION",
+        title: "Des pouvoirs en évolution",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire choisit l'un de ses personnages redressés et l'épuise.",
       },
@@ -39,7 +39,7 @@ export const annaEagerAcolyteI18n: Record<Languages, I18nProperties> = {
     version: "Discepola Entusiasta",
     text: [
       {
-        title: "POTERI CRESCENTI",
+        title: "Poteri Crescenti",
         description:
           "Quando giochi questo personaggio, ogni avversario sceglie e impegna uno dei suoi personaggi preparati.",
       },

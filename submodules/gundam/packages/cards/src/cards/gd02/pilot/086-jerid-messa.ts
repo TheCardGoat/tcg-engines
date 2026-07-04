@@ -7,14 +7,17 @@ export const gd02JeridMessa086: PilotCard = {
   color: "blue",
   traits: ["titans"],
   id: "GD02-086",
-  externalId: "gundam:gd02-086",
-  slug: "jerid-messa-gd02-086",
+  canonicalId: "GD02-086",
+  externalIds: { bandai: "gundam:gd02-086" },
+  slug: "jerid-messa/gd02-086",
   displayName: "Jerid Messa",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-086",
   printings: [
     {
       id: "GD02-086",
+      artId: "GD02-086",
+      setCode: "GD02",
       collectorNumber: "GD02-086",
       cardNumber: "GD02-086",
       set: {
@@ -29,6 +32,7 @@ export const gd02JeridMessa086: PilotCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-086"],
   selectedPrintingId: "GD02-086",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-086.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-086.webp?260424",

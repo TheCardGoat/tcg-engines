@@ -16,7 +16,18 @@ const startingLineI18n = {
 
 const startingLine: LocationCard = {
   id: "sugar-rush-starting-line",
+  printings: [
+    {
+      id: "sugar-rush-starting-line",
+      artId: "sugar-rush-starting-line",
+      setCode: "TST",
+      collectorNumber: "1",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   canonicalId: "ci_sugar_rush_starting_line",
+  slug: "lorcana-ci_sugar_rush_starting_line",
   cardType: "location",
   name: "Sugar Rush Speedway",
   version: "Starting Line",

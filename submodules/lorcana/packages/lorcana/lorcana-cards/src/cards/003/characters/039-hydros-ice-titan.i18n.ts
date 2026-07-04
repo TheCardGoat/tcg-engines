@@ -16,8 +16,8 @@ export const hydrosIceTitanI18n: Record<Languages, I18nProperties> = {
     version: "Eis Titan",
     text: [
       {
-        title: "BLIZZARD",
-        description: "— Erschöpfe einen Charakter deiner Wahl.",
+        title: "Blizzard",
+        description: "{E} — Erschöpfe einen Charakter deiner Wahl.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const hydrosIceTitanI18n: Record<Languages, I18nProperties> = {
     version: "Titan de glace",
     text: [
       {
-        title: "BLIZZARD",
-        description: "— Choisissez un personnage et épuisez-le.",
+        title: "Blizzard",
+        description: "{E} — Choisissez un personnage et épuisez-le.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const hydrosIceTitanI18n: Record<Languages, I18nProperties> = {
     version: "Titano di Ghiaccio",
     text: [
       {
-        title: "TORMENTA",
-        description: "— Impegna un personaggio a tua scelta.",
+        title: "Tormenta",
+        description: "{E} — Impegna un personaggio a tua scelta.",
       },
     ],
   },

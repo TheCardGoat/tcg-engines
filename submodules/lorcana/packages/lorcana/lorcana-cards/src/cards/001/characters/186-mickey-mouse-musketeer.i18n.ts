@@ -19,11 +19,12 @@ export const mickeyMouseMusketeerI18n: Record<Languages, I18nProperties> = {
     version: "Musketeer",
     text: [
       {
-        title: "Bodyguard",
+        title:
+          "<Bodyguard> (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
       },
       {
-        title: "ALL FOR ONE",
-        description: "Your other Musketeer characters get +1.",
+        title: "All For One",
+        description: "Your other Musketeer characters get +1 {S}.",
       },
     ],
   },
@@ -32,11 +33,12 @@ export const mickeyMouseMusketeerI18n: Record<Languages, I18nProperties> = {
     version: "Musketeer",
     text: [
       {
-        title: "Bodyguard",
+        title:
+          "<Bodyguard> (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
       },
       {
-        title: "ALL FOR ONE",
-        description: "Your other Musketeer characters get +1.",
+        title: "All For One",
+        description: "Your other Musketeer characters get +1 {S}.",
       },
     ],
   },
@@ -45,11 +47,12 @@ export const mickeyMouseMusketeerI18n: Record<Languages, I18nProperties> = {
     version: "Musketeer",
     text: [
       {
-        title: "Bodyguard",
+        title:
+          "<Bodyguard> (This character may enter play exerted. An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
       },
       {
-        title: "ALL FOR ONE",
-        description: "Your other Musketeer characters get +1.",
+        title: "All For One",
+        description: "Your other Musketeer characters get +1 {S}.",
       },
     ],
   },

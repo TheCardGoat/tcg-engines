@@ -280,8 +280,20 @@ function buildPromptContent(
       selectionContext?.originatesFromOptional === true;
 
     if (selectionContext?.expectedSlottedKind === "move-to-location") {
-      const prefix =
-        selectionContext.targetDsl.length === 1
+      const autoResolvedSlots = new Set(selectionContext.autoResolvedSlots ?? []);
+      const [onlyTargetDsl] = selectionContext.targetDsl;
+      const onlyTargetCardTypes =
+        onlyTargetDsl && typeof onlyTargetDsl === "object" && "cardTypes" in onlyTargetDsl
+          ? onlyTargetDsl.cardTypes
+          : undefined;
+      const selectsOnlyLocation =
+        autoResolvedSlots.has("subject") ||
+        (selectionContext.targetDsl.length === 1 &&
+          Array.isArray(onlyTargetCardTypes) &&
+          onlyTargetCardTypes.includes("location"));
+      const prefix = selectsOnlyLocation
+        ? "Choose a location to move to for "
+        : selectionContext.targetDsl.length === 1
           ? "Choose a character to move for "
           : "Choose characters to move, then choose a location for ";
       return {

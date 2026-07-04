@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { rapunzelGiftedWithHealingI18n } from "./018-rapunzel-gifted-with-healing.i18n";
 
 export const rapunzelGiftedWithHealing: CharacterCard = {
-  id: "mTY",
+  id: "vmK",
   canonicalId: "ci_mTY",
+  slug: "lorcana-ci_mTY",
+  printings: [
+    {
+      id: "set1-018",
+      artId: "set1-018",
+      setCode: "set1",
+      collectorNumber: "18",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-018"],
   cardType: "character",
   name: "Rapunzel",
@@ -20,7 +31,7 @@ export const rapunzelGiftedWithHealing: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ea580b2aaa374dff847750dee360b51b",
-    tcgPlayer: 544503,
+    tcgPlayer: "544503",
   },
   text: [
     {
@@ -35,7 +46,10 @@ export const rapunzelGiftedWithHealing: CharacterCard = {
       effect: {
         steps: [
           {
-            amount: { type: "up-to", value: 3 },
+            amount: {
+              type: "up-to",
+              value: 3,
+            },
             target: "YOUR_CHOSEN_CHARACTER",
             type: "remove-damage",
           },

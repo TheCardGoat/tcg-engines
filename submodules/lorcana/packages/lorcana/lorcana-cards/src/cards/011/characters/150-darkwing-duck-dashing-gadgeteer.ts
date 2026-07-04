@@ -4,6 +4,17 @@ import { darkwingDuckDashingGadgeteerI18n } from "./150-darkwing-duck-dashing-ga
 export const darkwingDuckDashingGadgeteer: CharacterCard = {
   id: "Zlv",
   canonicalId: "ci_UY0",
+  slug: "lorcana-ci_UY0",
+  printings: [
+    {
+      id: "set11-150",
+      artId: "set11-150",
+      setCode: "set11",
+      collectorNumber: "150",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-150"],
   cardType: "character",
   name: "Darkwing Duck",
@@ -20,7 +31,7 @@ export const darkwingDuckDashingGadgeteer: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_79e8c2e58ef1439ba301da0ec23f1f08",
-    tcgPlayer: 658218,
+    tcgPlayer: "658218",
   },
   text: [
     {

@@ -4,6 +4,17 @@ import { kingsSensorCoreI18n } from "./200-kings-sensor-core.i18n";
 export const kingsSensorCore: ItemCard = {
   id: "SdR",
   canonicalId: "ci_SdR",
+  slug: "lorcana-ci_SdR",
+  printings: [
+    {
+      id: "set6-200",
+      artId: "set6-200",
+      setCode: "set6",
+      collectorNumber: "200",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-200"],
   cardType: "item",
   name: "King's Sensor Core",
@@ -16,7 +27,7 @@ export const kingsSensorCore: ItemCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4d8747b6f80e4bc5a39ace7edc6df9da",
-    tcgPlayer: 592022,
+    tcgPlayer: "592022",
   },
   text: [
     {
@@ -82,12 +93,21 @@ export const kingsSensorCore: ItemCard = {
             min: 0,
             max: 1,
             filters: [
-              { type: "card-type", cardType: "character" },
+              {
+                type: "card-type",
+                cardType: "character",
+              },
               {
                 type: "or",
                 filters: [
-                  { type: "has-classification", classification: "Prince" },
-                  { type: "has-classification", classification: "King" },
+                  {
+                    type: "has-classification",
+                    classification: "Prince",
+                  },
+                  {
+                    type: "has-classification",
+                    classification: "King",
+                  },
                 ],
               },
             ],

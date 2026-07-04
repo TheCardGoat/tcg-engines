@@ -7,14 +7,17 @@ export const gd02ShagiaFrost092: PilotCard = {
   color: "red",
   traits: ["new une"],
   id: "GD02-092",
-  externalId: "gundam:gd02-092",
-  slug: "shagia-frost-gd02-092",
+  canonicalId: "GD02-092",
+  externalIds: { bandai: "gundam:gd02-092" },
+  slug: "shagia-frost/gd02-092",
   displayName: "Shagia Frost",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-092",
   printings: [
     {
       id: "GD02-092",
+      artId: "GD02-092",
+      setCode: "GD02",
       collectorNumber: "GD02-092",
       cardNumber: "GD02-092",
       set: {
@@ -29,6 +32,7 @@ export const gd02ShagiaFrost092: PilotCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-092"],
   selectedPrintingId: "GD02-092",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-092.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-092.webp?260424",

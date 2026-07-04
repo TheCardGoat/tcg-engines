@@ -4,6 +4,17 @@ import { peterPanNeverLandPranksterI18n } from "./085-peter-pan-never-land-prank
 export const peterPanNeverLandPrankster: CharacterCard = {
   id: "QDn",
   canonicalId: "ci_QDn",
+  slug: "lorcana-ci_QDn",
+  printings: [
+    {
+      id: "set6-085",
+      artId: "set6-085",
+      setCode: "set6",
+      collectorNumber: "85",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-085"],
   cardType: "character",
   name: "Peter Pan",
@@ -20,7 +31,7 @@ export const peterPanNeverLandPrankster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_582e975ec5b64cb7be3e406585a05a6d",
-    tcgPlayer: 583853,
+    tcgPlayer: "583853",
   },
   text: [
     {
@@ -28,9 +39,9 @@ export const peterPanNeverLandPrankster: CharacterCard = {
       description: "This character enters play exerted.",
     },
     {
-      title: "CAN'T TAKE A JOKE?",
+      title: "CAN'T TAKE",
       description:
-        "While this character is exerted, each opposing player can't gain lore unless one of their characters has challenged this turn.",
+        "A JOKE? While this character is exerted, each opposing player can't gain lore unless one of their characters has challenged this turn.",
     },
   ],
   classifications: ["Storyborn", "Hero"],
@@ -58,14 +69,19 @@ export const peterPanNeverLandPrankster: CharacterCard = {
         condition: {
           type: "and",
           conditions: [
-            { type: "is-exerted" },
+            {
+              type: "is-exerted",
+            },
             {
               type: "not",
               condition: {
                 type: "turn-metric",
                 metric: "challenges-by-player",
                 playerScope: "opponent",
-                comparison: { operator: "gte", value: 1 },
+                comparison: {
+                  operator: "gte",
+                  value: 1,
+                },
               },
             },
           ],

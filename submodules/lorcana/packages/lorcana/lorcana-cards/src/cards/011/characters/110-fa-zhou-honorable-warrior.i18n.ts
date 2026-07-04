@@ -16,7 +16,7 @@ export const faZhouHonorableWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Ehrenwerter Krieger",
     text: [
       {
-        title: "KRIEGSWUNDE",
+        title: "Kriegswunde",
         description: "Dieser Charakter kommt mit 2 Schaden auf ihm ins Spiel.",
       },
     ],
@@ -26,7 +26,7 @@ export const faZhouHonorableWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerrier honorable",
     text: [
       {
-        title: "BLESSURE AU COMBAT",
+        title: "Blessure au combat",
         description: "Ce personnage entre en jeu avec 2 dommages.",
       },
     ],
@@ -36,7 +36,7 @@ export const faZhouHonorableWarriorI18n: Record<Languages, I18nProperties> = {
     version: "Guerriero Onorevole",
     text: [
       {
-        title: "FERITA DI GUERRA",
+        title: "Ferita di Guerra",
         description: "Questo personaggio entra in gioco con 2 danni.",
       },
     ],

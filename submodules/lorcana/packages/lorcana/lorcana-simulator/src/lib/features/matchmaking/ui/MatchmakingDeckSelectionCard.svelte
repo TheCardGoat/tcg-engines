@@ -92,6 +92,9 @@
 
     return `background: linear-gradient(135deg, ${stops.join(', ')})`;
   });
+  const selectedFormatLegality = $derived(
+    selectedDeck?.formatLegality?.find((result) => result.formatId === selectedQueueFormat) ?? null,
+  );
 </script>
 
 {#if isAuthenticated || error || success}
@@ -229,7 +232,11 @@
 
           {#if selectedDeck && !isDeckValidForSelectedFormat && selectedQueueFormat}
             <div class="px-3 pb-2">
-              <DeckValidationDetails deck={selectedDeck} formatId={selectedQueueFormat} />
+              <DeckValidationDetails
+                deck={selectedDeck}
+                formatId={selectedQueueFormat}
+                initialResult={selectedFormatLegality}
+              />
             </div>
           {/if}
 

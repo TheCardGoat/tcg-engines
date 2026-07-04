@@ -16,7 +16,7 @@ export const kingOfHeartsPickyRulerI18n: Record<Languages, I18nProperties> = {
     version: "Wählerischer Herrscher",
     text: [
       {
-        title: "UNZULÄSSIGER ZUSTAND",
+        title: "Unzulässiger Zustand",
         description: "Beschädigte Charaktere können deine Charaktere nicht herausfordern.",
       },
     ],
@@ -26,7 +26,7 @@ export const kingOfHeartsPickyRulerI18n: Record<Languages, I18nProperties> = {
     version: "Monarque pointilleux",
     text: [
       {
-        title: "DANS UN ÉTAT INACCEPTABLE",
+        title: "Dans un état inacceptable",
         description:
           "Les personnages avec au moins un dommage ne peuvent pas défier vos personnages.",
       },
@@ -37,8 +37,8 @@ export const kingOfHeartsPickyRulerI18n: Record<Languages, I18nProperties> = {
     version: "Monarca Schizzinoso",
     text: [
       {
-        title: "IN UNO STATO DEPLOREVOLE I",
-        description: "personaggi danneggiati non possono sfidare i tuoi personaggi.",
+        title: "In uno Stato Deplorevole",
+        description: "I personaggi danneggiati non possono sfidare i tuoi personaggi.",
       },
     ],
   },

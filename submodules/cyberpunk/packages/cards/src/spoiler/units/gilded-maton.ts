@@ -1,13 +1,14 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerGildedMaton = {
+export const spoilerGildedMaton = defineCyberpunkCard({
   id: "0901652d-99c9-46c7-9821-ca3e8208fb4d",
-  externalId: "cyberpunk:gilded-maton",
   slug: "gilded-maton",
-  name: "Gilded Matón",
-  displayName: "Gilded Matón",
   rulesText:
     "PLAY You may defeat a friendly Gear. If you do, defeat a rival Unit with cost 3 or less.",
+  name: "Gilded Matón",
+  displayName: "Gilded Matón",
+  canonicalId: "gilded-maton",
   color: "yellow",
   classifications: ["Ganger", "Valentino"],
   set: {
@@ -15,15 +16,6 @@ export const spoilerGildedMaton = {
     name: "Spoiler Set",
   },
   printNumber: "045",
-  printings: [
-    {
-      id: "0360da55-2315-456a-8155-cd25f6ee9ea7",
-      collectorNumber: "045",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "0360da55-2315-456a-8155-cd25f6ee9ea7",
   artist: "Josan Gonzalez (Deathburger)",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/045.webp",
   rarity: null,
@@ -31,7 +23,6 @@ export const spoilerGildedMaton = {
   hasSellTag: false,
   ram: 2,
   timingTriggers: ["play"],
-  keywords: [],
   type: "unit",
   cost: 4,
   power: 3,
@@ -83,5 +74,4 @@ export const spoilerGildedMaton = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

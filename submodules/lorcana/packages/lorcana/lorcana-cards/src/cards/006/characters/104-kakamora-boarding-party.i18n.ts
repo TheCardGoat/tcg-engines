@@ -9,21 +9,16 @@ export const kakamoraBoardingPartyI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Kokomora",
     version: "Entermannschaft",
-    text: "Rasant",
+    text: "<Rasant>",
   },
   fr: {
     name: "Kakamora",
     version: "Groupe d'abordage",
-    text: "Charge",
+    text: "<Charge>",
   },
   it: {
     name: "Kakamora",
     version: "Banda d'Arrembaggio",
-    text: [
-      {
-        title: "Lesto",
-        description: "(Questo personaggio può sfidare nel turno in cui è stato giocato.)",
-      },
-    ],
+    text: "<Lesto> (Questo personaggio può sfidare nel turno in cui è stato giocato.)",
   },
 };

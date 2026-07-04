@@ -21,11 +21,11 @@ export const liShangValorousGeneralI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Gestaltwandel: Wirf 1 Charakterkarte ab (Du kannst 1 Charakterkarte abwerfen, um diesen Charakter auf einen deiner Li-Shang-Charaktere auszuspielen.)",
+          "<Gestaltwandel: Wirf 1 Charakterkarte ab> (Du kannst 1 Charakterkarte abwerfen, um diesen Charakter auf einen deiner Li-Shang-Charaktere auszuspielen.)",
       },
       {
-        title: "DEN VORSTOSS ANFÜHREN",
-        description: "Deine Charaktere mit 4 oder mehr erhalten +1.",
+        title: "Den Vorstoß anführen",
+        description: "Deine Charaktere mit 4 oder mehr {S} erhalten +1 {L}.",
       },
     ],
   },
@@ -35,11 +35,11 @@ export const liShangValorousGeneralI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Alter: Défaussez une carte Personnage (Vous pouvez défausser une carte Personnage pour jouer ce personnage sur l'un de vos personnages Li Shang.)",
+          "<Alter: Défaussez une carte Personnage> (Vous pouvez défausser une carte Personnage pour jouer ce personnage sur l'un de vos personnages Li Shang.)",
       },
       {
-        title: "MENER LA CHARGE",
-        description: "Vos personnages avec 4 ou plus gagnent +1.",
+        title: "Mener la charge",
+        description: "Vos personnages avec 4 {S} ou plus gagnent +1 {L}.",
       },
     ],
   },
@@ -49,11 +49,11 @@ export const liShangValorousGeneralI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title:
-          "Trasformazione: Scarta una carta personaggio (Puoi scartare una carta personaggio per giocare questa carta sopra a uno dei tuoi personaggi chiamato Li Shang.)",
+          "<Trasformazione: Scarta una carta personaggio> (Puoi scartare una carta personaggio per giocare questa carta sopra a uno dei tuoi personaggi chiamato Li Shang.)",
       },
       {
-        title: "GUIDARE L'ASSALTO",
-        description: "I tuoi personaggi con 4 o superiore ricevono +1.",
+        title: "Guidare l'Assalto",
+        description: "I tuoi personaggi con 4 {S} o superiore ricevono +1 {L}.",
       },
     ],
   },

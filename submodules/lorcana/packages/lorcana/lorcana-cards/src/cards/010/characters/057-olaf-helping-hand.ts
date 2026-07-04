@@ -4,6 +4,17 @@ import { olafHelpingHandI18n } from "./057-olaf-helping-hand.i18n";
 export const olafHelpingHand: CharacterCard = {
   id: "D7f",
   canonicalId: "ci_D7f",
+  slug: "lorcana-ci_D7f",
+  printings: [
+    {
+      id: "set10-057",
+      artId: "set10-057",
+      setCode: "set10",
+      collectorNumber: "57",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-057"],
   cardType: "character",
   name: "Olaf",
@@ -20,7 +31,7 @@ export const olafHelpingHand: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_e9f12c944cfb48bb98fc1a02e87bb6db",
-    tcgPlayer: 659447,
+    tcgPlayer: "659447",
   },
   text: [
     {

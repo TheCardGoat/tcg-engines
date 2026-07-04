@@ -4,6 +4,17 @@ import { princeJohnFraidycatI18n } from "./146-prince-john-fraidy-cat.i18n";
 export const princeJohnFraidycat: CharacterCard = {
   id: "460",
   canonicalId: "ci_460",
+  slug: "lorcana-ci_460",
+  printings: [
+    {
+      id: "set8-146",
+      artId: "set8-146",
+      setCode: "set8",
+      collectorNumber: "146",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-146"],
   cardType: "character",
   name: "Prince John",
@@ -20,11 +31,14 @@ export const princeJohnFraidycat: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_e55251bd10c24f90a388f5dc18a2867f",
-    tcgPlayer: 631446,
+    tcgPlayer: "631446",
   },
   text: [
     {
-      title: "HELP! HELP!",
+      title: "HELP!",
+    },
+    {
+      title: "HELP!",
       description: "Whenever an opponent plays a character, deal 1 damage to this character.",
     },
   ],

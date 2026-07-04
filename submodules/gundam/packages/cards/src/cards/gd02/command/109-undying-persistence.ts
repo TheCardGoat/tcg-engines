@@ -7,14 +7,17 @@ export const gd02UndyingPersistence109: CommandCard = {
   color: "red",
   traits: ["clan", "newtype"],
   id: "GD02-109",
-  externalId: "gundam:gd02-109",
-  slug: "undying-persistence-gd02-109",
+  canonicalId: "GD02-109",
+  externalIds: { bandai: "gundam:gd02-109" },
+  slug: "undying-persistence/gd02-109",
   displayName: "Undying Persistence",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-109",
   printings: [
     {
       id: "GD02-109",
+      artId: "GD02-109",
+      setCode: "GD02",
       collectorNumber: "GD02-109",
       cardNumber: "GD02-109",
       set: {
@@ -29,6 +32,7 @@ export const gd02UndyingPersistence109: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-109"],
   selectedPrintingId: "GD02-109",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-109.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-109.webp?260424",

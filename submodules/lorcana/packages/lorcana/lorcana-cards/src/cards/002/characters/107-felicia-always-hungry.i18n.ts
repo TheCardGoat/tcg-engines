@@ -9,21 +9,16 @@ export const feliciaAlwaysHungryI18n: Record<Languages, I18nProperties> = {
   de: {
     name: "Felizita",
     version: "Immer hungrig",
-    text: "Impulsiv",
+    text: "<Impulsiv>",
   },
   fr: {
     name: "Félicia",
     version: "Toujours affamée",
-    text: "Combattant",
+    text: "<Combattant>",
   },
   it: {
     name: "Felicia",
     version: "Always Hungry",
-    text: [
-      {
-        title: "Reckless",
-        description: "(This character can't quest and must challenge each turn if able.)",
-      },
-    ],
+    text: "<Reckless> (This character can't quest and must challenge each turn if able.)",
   },
 };

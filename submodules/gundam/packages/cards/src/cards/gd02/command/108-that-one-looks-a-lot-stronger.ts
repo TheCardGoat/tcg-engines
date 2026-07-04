@@ -7,14 +7,17 @@ export const gd02ThatOneLooksALotStronger108: CommandCard = {
   color: "red",
   traits: ["-"],
   id: "GD02-108",
-  externalId: "gundam:gd02-108",
-  slug: "that-one-looks-a-lot-stronger-gd02-108",
+  canonicalId: "GD02-108",
+  externalIds: { bandai: "gundam:gd02-108" },
+  slug: "that-one-looks-a-lot-stronger/gd02-108",
   displayName: "That One Looks A Lot Stronger?",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-108",
   printings: [
     {
       id: "GD02-108",
+      artId: "GD02-108",
+      setCode: "GD02",
       collectorNumber: "GD02-108",
       cardNumber: "GD02-108",
       set: {
@@ -29,6 +32,7 @@ export const gd02ThatOneLooksALotStronger108: CommandCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-108"],
   selectedPrintingId: "GD02-108",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-108.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-108.webp?260424",

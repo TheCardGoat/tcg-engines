@@ -20,12 +20,13 @@ export const stitchAlienBuccaneerI18n: Record<Languages, I18nProperties> = {
     version: "Alien-Seeräuber",
     text: [
       {
-        title: "Gestaltwandel 3",
+        title:
+          "<Gestaltwandel> 3 (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Stitch-Charaktere auszuspielen.)",
       },
       {
-        title: "BEREIT FÜR ACTION",
+        title: "Bereit für Action",
         description:
-          "Wenn du diesen Charakter ausspielst, falls du Gestaltwandel benutzt hast, um diesen Charakter auszuspielen, darfst du 1 Aktionskarte aus deinem Ablagestapel wählen und als oberste Karte auf dein Deck legen.",
+          "Wenn du diesen Charakter ausspielst, falls du <Gestaltwandel> benutzt hast, um diesen Charakter auszuspielen, darfst du 1 Aktionskarte aus deinem Ablagestapel wählen und als oberste Karte auf dein Deck legen.",
       },
     ],
   },
@@ -34,12 +35,13 @@ export const stitchAlienBuccaneerI18n: Record<Languages, I18nProperties> = {
     version: "Boucanier alien",
     text: [
       {
-        title: "Alter 3",
+        title:
+          "<Alter> 3 (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Stitch.)",
       },
       {
-        title: "PARÉ POUR L'ACTION",
+        title: "Paré pour l'action",
         description:
-          "Si vous jouez ce personnage en utilisant sa capacité Alter, vous pouvez placer une carte Action de votre défausse sur votre pioche.",
+          "Si vous jouez ce personnage en utilisant sa capacité <Alter>, vous pouvez placer une carte Action de votre défausse sur votre pioche.",
       },
     ],
   },
@@ -48,12 +50,13 @@ export const stitchAlienBuccaneerI18n: Record<Languages, I18nProperties> = {
     version: "Bucaniere Alieno",
     text: [
       {
-        title: "Trasformazione 3",
+        title:
+          "<Trasformazione> 3 (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Stitch.)",
       },
       {
-        title: "PRONTO ALL'AZIONE",
+        title: "Pronto all'Azione",
         description:
-          "Quando giochi questo personaggio, se hai usato Trasformazione per giocarlo, puoi mettere in cima al tuo mazzo una carta azione dai tuoi scarti.",
+          "Quando giochi questo personaggio, se hai usato <Trasformazione> per giocarlo, puoi mettere in cima al tuo mazzo una carta azione dai tuoi scarti.",
       },
     ],
   },

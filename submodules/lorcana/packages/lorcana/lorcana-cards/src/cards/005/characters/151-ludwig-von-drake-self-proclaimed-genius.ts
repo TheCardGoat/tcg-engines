@@ -4,6 +4,17 @@ import { ludwigVonDrakeSelfproclaimedGeniusI18n } from "./151-ludwig-von-drake-s
 export const ludwigVonDrakeSelfproclaimedGenius: CharacterCard = {
   id: "rsj",
   canonicalId: "ci_rsj",
+  slug: "lorcana-ci_rsj",
+  printings: [
+    {
+      id: "set5-151",
+      artId: "set5-151",
+      setCode: "set5",
+      collectorNumber: "151",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-151"],
   cardType: "character",
   name: "Ludwig von Drake",
@@ -20,7 +31,7 @@ export const ludwigVonDrakeSelfproclaimedGenius: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_bf86b60333c941008da0bf213d54829b",
-    tcgPlayer: 557728,
+    tcgPlayer: "557728",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: ludwigVonDrakeSelfproclaimedGeniusI18n,

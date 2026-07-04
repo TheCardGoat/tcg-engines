@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { madamMimPurpleDragonI18n } from "./047-madam-mim-purple-dragon.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const madamMimPurpleDragon: CharacterCard = {
   id: "EHY",
   canonicalId: "ci_xvT",
+  slug: "lorcana-ci_xvT",
+  printings: [
+    {
+      id: "set2-047",
+      artId: "set2-047",
+      setCode: "set2",
+      collectorNumber: "47",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-047"],
   cardType: "character",
   name: "Madam Mim",
@@ -21,7 +33,7 @@ export const madamMimPurpleDragon: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_26dd3cd037974467a3c4078d58f4ae25",
-    tcgPlayer: 528107,
+    tcgPlayer: "528107",
   },
   text: [
     {

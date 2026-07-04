@@ -4,6 +4,17 @@ import { heiheiBumblingRoosterI18n } from "./075-heihei-bumbling-rooster.i18n";
 export const heiheiBumblingRooster: CharacterCard = {
   id: "vJ2",
   canonicalId: "ci_Vh7",
+  slug: "lorcana-ci_Vh7",
+  printings: [
+    {
+      id: "set4-075",
+      artId: "set4-075",
+      setCode: "set4",
+      collectorNumber: "75",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-075", "set9-086"],
   cardType: "character",
   name: "HeiHei",
@@ -20,7 +31,7 @@ export const heiheiBumblingRooster: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_fe534ba2bc92411385d7176097db4f43",
-    tcgPlayer: 650026,
+    tcgPlayer: "650026",
   },
   text: [
     {
@@ -34,9 +45,15 @@ export const heiheiBumblingRooster: CharacterCard = {
     {
       condition: {
         type: "comparison",
-        left: { type: "cards-in-inkwell", controller: "opponent" },
+        left: {
+          type: "cards-in-inkwell",
+          controller: "opponent",
+        },
         comparison: "greater",
-        right: { type: "cards-in-inkwell", controller: "you" },
+        right: {
+          type: "cards-in-inkwell",
+          controller: "you",
+        },
       },
       effect: {
         type: "optional",

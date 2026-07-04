@@ -7,14 +7,17 @@ export const gd03GundamKimarisTrooperTrooperMode080: UnitCard = {
   color: "white",
   traits: ["gjallarhorn", "gundam frame"],
   id: "GD03-080",
-  externalId: "gundam:gd03-080",
-  slug: "gundam-kimaris-trooper-trooper-mode-gd03-080",
+  canonicalId: "GD03-080",
+  externalIds: { bandai: "gundam:gd03-080" },
+  slug: "gundam-kimaris-trooper-trooper-mode/gd03-080",
   displayName: "Gundam Kimaris Trooper (Trooper Mode)",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-080",
   printings: [
     {
       id: "GD03-080",
+      artId: "GD03-080",
+      setCode: "GD03",
       collectorNumber: "GD03-080",
       cardNumber: "GD03-080",
       set: {
@@ -29,6 +32,7 @@ export const gd03GundamKimarisTrooperTrooperMode080: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-080"],
   selectedPrintingId: "GD03-080",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-080.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-080.webp?260424",

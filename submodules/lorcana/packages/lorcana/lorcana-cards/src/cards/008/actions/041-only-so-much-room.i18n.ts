@@ -7,14 +7,14 @@ export const onlySoMuchRoomI18n: Record<Languages, I18nProperties> = {
   },
   de: {
     name: "Nicht viel Platz",
-    text: "Schicke einen Charakter deiner Wahl mit 2 oder weniger zurück auf die zugehörige Hand. Nimm 1 Charakterkarte aus deinem Ablagestapel zurück auf deine Hand.",
+    text: "Schicke einen Charakter deiner Wahl mit 2 oder weniger {S} zurück auf die zugehörige Hand. Nimm 1 Charakterkarte aus deinem Ablagestapel zurück auf deine Hand.",
   },
   fr: {
     name: "Qu’une toute petite place",
-    text: "Choisissez un personnage avec une de 2 ou moins et renvoyez-le dans la main de son propriétaire. Renvoyez dans votre main une carte Personnage de votre défausse.",
+    text: "Choisissez un personnage avec une {S} de 2 ou moins et renvoyez-le dans la main de son propriétaire. Renvoyez dans votre main une carte Personnage de votre défausse.",
   },
   it: {
     name: "Una Data Quantità",
-    text: "Fai riprendere in mano al suo giocatore un personaggio a tua scelta con 2 o inferiore. Riprendi in mano una carta personaggio dai tuoi scarti.",
+    text: "Fai riprendere in mano al suo giocatore un personaggio a tua scelta con 2 {S} o inferiore. Riprendi in mano una carta personaggio dai tuoi scarti.",
   },
 };

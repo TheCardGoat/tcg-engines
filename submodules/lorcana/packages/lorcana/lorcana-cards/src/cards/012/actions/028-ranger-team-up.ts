@@ -4,6 +4,17 @@ import { rangerTeamupI18n } from "./028-ranger-team-up.i18n";
 export const rangerTeamup: ActionCard = {
   id: "8mb",
   canonicalId: "ci_8mb",
+  slug: "lorcana-ci_8mb",
+  printings: [
+    {
+      id: "set12-028",
+      artId: "set12-028",
+      setCode: "set12",
+      collectorNumber: "28",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-028"],
   cardType: "action",
   name: "Ranger Team-Up",
@@ -16,6 +27,7 @@ export const rangerTeamup: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ebf33c2b155d45cbbbcf8ecb24ebea14",
+    tcgPlayer: "692155",
   },
   text: "Chosen character gets +{S} equal to their {W} this turn.",
   abilities: [

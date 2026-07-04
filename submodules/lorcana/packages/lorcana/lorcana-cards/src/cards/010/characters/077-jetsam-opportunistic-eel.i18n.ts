@@ -17,7 +17,7 @@ export const jetsamOpportunisticEelI18n: Record<Languages, I18nProperties> = {
     version: "Opportunistischer Aal",
     text: [
       {
-        title: "ÜBERFALL AUS DER TIEFE",
+        title: "Überfall aus der Tiefe",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du einem gegnerischen beschädigten Charakter deiner Wahl 3 Schaden zufügen.",
       },
@@ -28,7 +28,7 @@ export const jetsamOpportunisticEelI18n: Record<Languages, I18nProperties> = {
     version: "Anguille opportuniste",
     text: [
       {
-        title: "EMBUSCADE DES PROFONDEURS",
+        title: "Embuscade des profondeurs",
         description:
           "Lorsque vous jouez ce personnage, choisissez un personnage adverse avec au moins un dommage et infligez-lui 3 dommages.",
       },
@@ -39,7 +39,7 @@ export const jetsamOpportunisticEelI18n: Record<Languages, I18nProperties> = {
     version: "Murena Opportunista",
     text: [
       {
-        title: "AGGUATO DALLE PROFONDITÀ",
+        title: "Agguato dalle Profondità",
         description:
           "Quando giochi questo personaggio, infliggi 3 danni a un personaggio avversario danneggiato a tua scelta.",
       },

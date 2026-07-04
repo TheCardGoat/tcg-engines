@@ -4,6 +4,17 @@ import { dopeyDrawnToMusicI18n } from "./038-dopey-drawn-to-music.i18n";
 export const dopeyDrawnToMusic: CharacterCard = {
   id: "A36",
   canonicalId: "ci_A36",
+  slug: "lorcana-ci_A36",
+  printings: [
+    {
+      id: "set12-038",
+      artId: "set12-038",
+      setCode: "set12",
+      collectorNumber: "38",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-038"],
   cardType: "character",
   name: "Dopey",
@@ -20,6 +31,7 @@ export const dopeyDrawnToMusic: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_a0369f5ac4404d72aeebd384f99c92fe",
+    tcgPlayer: "692016",
   },
   text: [
     {

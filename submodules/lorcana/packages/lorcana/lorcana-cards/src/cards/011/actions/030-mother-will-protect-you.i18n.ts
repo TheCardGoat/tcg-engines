@@ -11,10 +11,28 @@ export const motherWillProtectYouI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "Maman te protégera",
-    text: "Choisissez un personnage qui ne peut pas être défié jusqu'au début de votre prochain tour.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title:
+          "Choisissez un personnage qui ne peut pas être défié jusqu'au début de votre prochain tour.",
+      },
+    ],
   },
   it: {
     name: "Sai che ti proteggo",
-    text: "(Un personaggio con costo 2 o superiore può per cantare questa canzone gratis.) Un personaggio a tua scelta non può essere sfidato fino all'inizio del tuo prossimo turno.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title:
+          "Un personaggio a tua scelta non può essere sfidato fino all'inizio del tuo prossimo turno.",
+      },
+    ],
   },
 };

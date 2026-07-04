@@ -6,14 +6,17 @@ export const tLeo004: UnitCard = {
   type: "unit",
   traits: ["oz"],
   id: "T-004",
-  externalId: "gundam:t-004",
-  slug: "leo-t-004",
+  canonicalId: "T-004",
+  externalIds: { bandai: "gundam:t-004" },
+  slug: "leo/t-004",
   displayName: "Leo",
   set: { code: "ST02", name: "Wings of Advance [ST02]", packageId: "616002" },
   printNumber: "T-004",
   printings: [
     {
       id: "T-004",
+      artId: "T-004",
+      setCode: "ST02",
       collectorNumber: "T-004",
       cardNumber: "T-004",
       set: {
@@ -28,6 +31,7 @@ export const tLeo004: UnitCard = {
       productName: "Wings of Advance [ST02]",
     },
   ],
+  reprints: ["T-004"],
   selectedPrintingId: "T-004",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-004.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/T-004.webp?260424",

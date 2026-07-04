@@ -4,6 +4,17 @@ import { angelaNightWarriorI18n } from "./187-angela-night-warrior.i18n";
 export const angelaNightWarrior: CharacterCard = {
   id: "BIL",
   canonicalId: "ci_BIL",
+  slug: "lorcana-ci_BIL",
+  printings: [
+    {
+      id: "set11-187",
+      artId: "set11-187",
+      setCode: "set11",
+      collectorNumber: "187",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-187"],
   cardType: "character",
   name: "Angela",
@@ -20,7 +31,7 @@ export const angelaNightWarrior: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_d0248ffc9fe545b68653691286a005c6",
-    tcgPlayer: 676241,
+    tcgPlayer: "676241",
   },
   text: [
     {

@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { plutoTriedAndTrueI18n } from "./028-pluto-tried-and-true.i18n";
 
 export const plutoTriedAndTrue: CharacterCard = {
-  id: "ioy",
-  canonicalId: "ci_ioy",
+  id: "FRo",
+  canonicalId: "ci_BzW",
+  slug: "lorcana-ci_BzW",
+  printings: [
+    {
+      id: "set8-028",
+      artId: "set8-028",
+      setCode: "set8",
+      collectorNumber: "28",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-028"],
   cardType: "character",
   name: "Pluto",
@@ -19,7 +30,7 @@ export const plutoTriedAndTrue: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_1d9e80fa46b14aaea261d56a602224ba",
-    tcgPlayer: 631370,
+    tcgPlayer: "631370",
   },
   text: [
     {

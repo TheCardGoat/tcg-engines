@@ -7,14 +7,17 @@ export const st05GundamGusionRebake005: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "ST05-005",
-  externalId: "gundam:st05-005",
-  slug: "gundam-gusion-rebake-st05-005",
+  canonicalId: "ST05-005",
+  externalIds: { bandai: "gundam:st05-005" },
+  slug: "gundam-gusion-rebake/st05-005",
   displayName: "Gundam Gusion Rebake",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-005",
   printings: [
     {
       id: "ST05-005",
+      artId: "ST05-005",
+      setCode: "ST05",
       collectorNumber: "ST05-005",
       cardNumber: "ST05-005",
       set: {
@@ -30,6 +33,8 @@ export const st05GundamGusionRebake005: UnitCard = {
     },
     {
       id: "ST05-005_p1",
+      artId: "ST05-005_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-005_p1",
       cardNumber: "ST05-005",
       set: {
@@ -44,6 +49,7 @@ export const st05GundamGusionRebake005: UnitCard = {
       productName: "Iron Bloom [ST05] Bonus Pack",
     },
   ],
+  reprints: ["ST05-005", "ST05-005_p1"],
   selectedPrintingId: "ST05-005",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-005.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-005.webp?260424",

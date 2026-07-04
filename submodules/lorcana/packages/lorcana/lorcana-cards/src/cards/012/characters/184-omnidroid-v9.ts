@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { omnidroidV9I18n } from "./184-omnidroid-v9.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const omnidroidV9: CharacterCard = {
   id: "RM2",
   canonicalId: "ci_RM2",
+  slug: "lorcana-ci_RM2",
+  printings: [
+    {
+      id: "set12-184",
+      artId: "set12-184",
+      setCode: "set12",
+      collectorNumber: "184",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-184"],
   cardType: "character",
   name: "Omnidroid",
@@ -21,6 +33,7 @@ export const omnidroidV9: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d7153226a02845a4a71dbc705def5172",
+    tcgPlayer: "692081",
   },
   text: [
     {

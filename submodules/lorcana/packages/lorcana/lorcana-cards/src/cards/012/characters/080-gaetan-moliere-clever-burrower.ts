@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { gaetanMoliereCleverBurrowerI18n } from "./080-gaetan-moliere-clever-burrower.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 
 export const gaetanMoliereCleverBurrower: CharacterCard = {
   id: "btJ",
   canonicalId: "ci_btJ",
+  slug: "lorcana-ci_btJ",
+  printings: [
+    {
+      id: "set12-080",
+      artId: "set12-080",
+      setCode: "set12",
+      collectorNumber: "80",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-080"],
   cardType: "character",
   name: "Gaetan Moliere",
@@ -21,6 +33,7 @@ export const gaetanMoliereCleverBurrower: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_29ffb2df930744e7ba00db79014e59be",
+    tcgPlayer: "690536",
   },
   text: [
     {

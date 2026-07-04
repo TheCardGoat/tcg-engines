@@ -4,6 +4,17 @@ import { michaelDarlingPlayfulSwordsmanI18n } from "./111-michael-darling-playfu
 export const michaelDarlingPlayfulSwordsman: CharacterCard = {
   id: "SP2",
   canonicalId: "ci_SP2",
+  slug: "lorcana-ci_SP2",
+  printings: [
+    {
+      id: "set6-111",
+      artId: "set6-111",
+      setCode: "set6",
+      collectorNumber: "111",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-111"],
   cardType: "character",
   name: "Michael Darling",
@@ -21,7 +32,7 @@ export const michaelDarlingPlayfulSwordsman: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_2f6b3b92c227489ab785e1d828ea5f44",
-    tcgPlayer: 593025,
+    tcgPlayer: "593025",
   },
   classifications: ["Storyborn", "Ally", "Pirate"],
   i18n: michaelDarlingPlayfulSwordsmanI18n,

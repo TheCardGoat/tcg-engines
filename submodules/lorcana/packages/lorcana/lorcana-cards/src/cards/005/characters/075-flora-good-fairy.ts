@@ -4,6 +4,17 @@ import { floraGoodFairyI18n } from "./075-flora-good-fairy.i18n";
 export const floraGoodFairy: CharacterCard = {
   id: "ZS7",
   canonicalId: "ci_ZS7",
+  slug: "lorcana-ci_ZS7",
+  printings: [
+    {
+      id: "set5-075",
+      artId: "set5-075",
+      setCode: "set5",
+      collectorNumber: "75",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-075"],
   cardType: "character",
   name: "Flora",
@@ -20,7 +31,7 @@ export const floraGoodFairy: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b72fb20c7b664b749e55de43aae47b3c",
-    tcgPlayer: 560641,
+    tcgPlayer: "560641",
   },
   text: [
     {

@@ -7,14 +7,17 @@ export const st05Hyakuren006: UnitCard = {
   color: "purple",
   traits: ["teiwaz"],
   id: "ST05-006",
-  externalId: "gundam:st05-006",
-  slug: "hyakuren-st05-006",
+  canonicalId: "ST05-006",
+  externalIds: { bandai: "gundam:st05-006" },
+  slug: "hyakuren/st05-006",
   displayName: "Hyakuren",
   set: { code: "ST05", name: "Iron Bloom [ST05]", packageId: "616005" },
   printNumber: "ST05-006",
   printings: [
     {
       id: "ST05-006",
+      artId: "ST05-006",
+      setCode: "ST05",
       collectorNumber: "ST05-006",
       cardNumber: "ST05-006",
       set: {
@@ -30,6 +33,8 @@ export const st05Hyakuren006: UnitCard = {
     },
     {
       id: "ST05-006_p1",
+      artId: "ST05-006_p1",
+      setCode: "ST05",
       collectorNumber: "ST05-006_p1",
       cardNumber: "ST05-006",
       set: {
@@ -44,6 +49,7 @@ export const st05Hyakuren006: UnitCard = {
       productName: "Iron Bloom [ST05] Bonus Pack",
     },
   ],
+  reprints: ["ST05-006", "ST05-006_p1"],
   selectedPrintingId: "ST05-006",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st05/ST05-006.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST05-006.webp?260424",

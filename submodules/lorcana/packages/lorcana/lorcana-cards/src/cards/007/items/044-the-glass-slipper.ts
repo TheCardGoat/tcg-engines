@@ -2,8 +2,19 @@ import type { ItemCard } from "@tcg/lorcana-types";
 import { theGlassSlipperI18n } from "./044-the-glass-slipper.i18n";
 
 export const theGlassSlipper: ItemCard = {
-  id: "QwH",
+  id: "RGx",
   canonicalId: "ci_GJb",
+  slug: "lorcana-ci_GJb",
+  printings: [
+    {
+      id: "set7-044",
+      artId: "set7-044",
+      setCode: "set7",
+      collectorNumber: "44",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set7-044"],
   cardType: "item",
   name: "The Glass Slipper",
@@ -12,12 +23,12 @@ export const theGlassSlipper: ItemCard = {
   set: "007",
   cardNumber: 44,
   rarity: "rare",
+  cardCopyLimit: 2,
   cost: 2,
   inkable: false,
-  cardCopyLimit: 2,
   externalIds: {
     lorcast: "crd_aa7db27471b142cfa97cd5ca3409669d",
-    tcgPlayer: 619736,
+    tcgPlayer: "619736",
   },
   text: [
     {

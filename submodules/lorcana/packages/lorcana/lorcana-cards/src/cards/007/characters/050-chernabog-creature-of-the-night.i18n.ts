@@ -17,7 +17,7 @@ export const chernabogCreatureOfTheNightI18n: Record<Languages, I18nProperties> 
     version: "Kreatur der Nacht",
     text: [
       {
-        title: "MITTERNACHTSTREIBEN",
+        title: "Mitternachtstreiben",
         description:
           "Wenn du diesen Charakter ausspielst, wählen alle gegnerischen Mitspielenden je einen ihrer bereiten Charaktere und erschöpfen ihn. Sie werden zu Beginn ihres nächsten Zuges nicht bereit gemacht.",
       },
@@ -28,7 +28,7 @@ export const chernabogCreatureOfTheNightI18n: Record<Languages, I18nProperties> 
     version: "Créature de la nuit",
     text: [
       {
-        title: "FESTIVITÉS DE MINUIT",
+        title: "Festivités de Minuit",
         description:
           "Lorsque vous jouez ce personnage, chaque adversaire choisit l'un de ses personnages redressés et l'épuise. Les personnages épuisés de cette manière ne se redressent pas au début de leur prochain tour.",
       },
@@ -39,7 +39,7 @@ export const chernabogCreatureOfTheNightI18n: Record<Languages, I18nProperties> 
     version: "Creatura della Notte",
     text: [
       {
-        title: "ECCESSI DI MEZZANOTTE",
+        title: "Eccessi di Mezzanotte",
         description:
           "Quando giochi questo personaggio, ogni avversario sceglie e impegna uno dei suoi personaggi preparati. Non si può preparare all'inizio del suo prossimo turno.",
       },

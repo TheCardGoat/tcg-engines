@@ -17,9 +17,9 @@ export const orvilleAlbatrossAirI18n: Record<Languages, I18nProperties> = {
     version: "Albatross-Fluggesellschaft",
     text: [
       {
-        title: "WILLKOMMEN AN BORD",
+        title: "Willkommen an Bord",
         description:
-          "Solange du mindestens einen Miss-Bianca-Charakter oder einen Bernard-Charakter im Spiel hast, erhält dieser Charakter in deinem Zug Wendig. (Er kann Charaktere mit Wendig herausfordern.)",
+          "Solange du mindestens einen Miss-Bianca-Charakter oder einen Bernard-Charakter im Spiel hast, erhält dieser Charakter in deinem Zug <Wendig>. (Er kann Charaktere mit Wendig herausfordern.)",
       },
     ],
   },
@@ -28,9 +28,9 @@ export const orvilleAlbatrossAirI18n: Record<Languages, I18nProperties> = {
     version: "L'Albatros Air",
     text: [
       {
-        title: "BIENVENUE À BORD",
+        title: "Bienvenue à bord",
         description:
-          "Durant votre tour, tant que vous avez un personnage Miss Bianca ou Bernard en jeu, ce personnage-ci gagne Insaisissable. (Il peut défier des personnages avec Insaisissable.)",
+          "Durant votre tour, tant que vous avez un personnage Miss Bianca ou Bernard en jeu, ce personnage-ci gagne <Insaisissable>. (Il peut défier des personnages avec Insaisissable.)",
       },
     ],
   },
@@ -39,9 +39,9 @@ export const orvilleAlbatrossAirI18n: Record<Languages, I18nProperties> = {
     version: "Albatross Air",
     text: [
       {
-        title: "BENVENUTI A BORDO, GENTE",
+        title: "Benvenuti a Bordo, Gente",
         description:
-          "Durante il tuo turno, mentre hai in gioco un personaggio chiamato Miss Bianca o Bernie, questo personaggio ottiene Sfuggente. (Può sfidare altri personaggi con Sfuggente.)",
+          "Durante il tuo turno, mentre hai in gioco un personaggio chiamato Miss Bianca o Bernie, questo personaggio ottiene <Sfuggente>. (Può sfidare altri personaggi con Sfuggente.)",
       },
     ],
   },

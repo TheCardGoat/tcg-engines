@@ -17,7 +17,7 @@ export const magicBroomIlluminaryKeeperI18n: Record<Languages, I18nProperties> =
     version: "Hüter des Illuminarium",
     text: [
       {
-        title: "SCHÖN UND ORDENTLICH",
+        title: "Schön und ordentlich",
         description:
           "Jedes Mal, wenn du einen anderen Charakter ausspielst, darfst du diesen Charakter verbannen, um 1 Karte zu ziehen.",
       },
@@ -28,7 +28,7 @@ export const magicBroomIlluminaryKeeperI18n: Record<Languages, I18nProperties> =
     version: "Gardien de l'Illuminarium",
     text: [
       {
-        title: "PROPRE ET RANGÉ",
+        title: "Propre et rangé",
         description:
           "Chaque fois que vous jouez un autre personnage, vous pouvez bannir ce personnage-ci pour piocher une carte.",
       },
@@ -39,7 +39,7 @@ export const magicBroomIlluminaryKeeperI18n: Record<Languages, I18nProperties> =
     version: "Custode dell'Illuminarium",
     text: [
       {
-        title: "BELLO ORDINATO",
+        title: "Bello Ordinato",
         description:
           "Ogni volta che giochi un altro personaggio, puoi esiliare questo personaggio per pescare una carta.",
       },

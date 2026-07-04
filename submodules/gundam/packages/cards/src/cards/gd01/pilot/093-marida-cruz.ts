@@ -7,14 +7,17 @@ export const gd01MaridaCruz093: PilotCard = {
   color: "red",
   traits: ["neo zeon", "cyber-newtype"],
   id: "GD01-093",
-  externalId: "gundam:gd01-093",
-  slug: "marida-cruz-gd01-093",
+  canonicalId: "GD01-093",
+  externalIds: { bandai: "gundam:gd01-093" },
+  slug: "marida-cruz/gd01-093",
   displayName: "Marida Cruz",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-093",
   printings: [
     {
       id: "GD01-093",
+      artId: "GD01-093",
+      setCode: "GD01",
       collectorNumber: "GD01-093",
       cardNumber: "GD01-093",
       set: {
@@ -30,6 +33,8 @@ export const gd01MaridaCruz093: PilotCard = {
     },
     {
       id: "GD01-093_p1",
+      artId: "GD01-093_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-093_p1",
       cardNumber: "GD01-093",
       set: {
@@ -44,6 +49,7 @@ export const gd01MaridaCruz093: PilotCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-093", "GD01-093_p1"],
   selectedPrintingId: "GD01-093",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-093.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-093.webp?260424",

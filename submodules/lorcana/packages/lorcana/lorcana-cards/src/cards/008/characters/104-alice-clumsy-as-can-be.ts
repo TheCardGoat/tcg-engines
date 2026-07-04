@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { aliceClumsyAsCanBeI18n } from "./104-alice-clumsy-as-can-be.i18n";
+
 import { shift } from "../../../helpers/abilities/shift";
 
 export const aliceClumsyAsCanBe: CharacterCard = {
   id: "Xgj",
   canonicalId: "ci_Xgj",
+  slug: "lorcana-ci_Xgj",
+  printings: [
+    {
+      id: "set8-104",
+      artId: "set8-104",
+      setCode: "set8",
+      collectorNumber: "104",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-104"],
   cardType: "character",
   name: "Alice",
@@ -21,7 +33,7 @@ export const aliceClumsyAsCanBe: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2de38611ab924e2da249c2ceeb1eb89d",
-    tcgPlayer: 631417,
+    tcgPlayer: "631417",
   },
   text: [
     {

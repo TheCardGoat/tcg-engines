@@ -4,6 +4,17 @@ import { vincenzoSantoriniTheExplosivesExpertI18n } from "./197-vincenzo-santori
 export const vincenzoSantoriniTheExplosivesExpert: CharacterCard = {
   id: "QiE",
   canonicalId: "ci_QiE",
+  slug: "lorcana-ci_QiE",
+  printings: [
+    {
+      id: "set8-197",
+      artId: "set8-197",
+      setCode: "set8",
+      collectorNumber: "197",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-197"],
   cardType: "character",
   name: "Vincenzo Santorini",
@@ -20,7 +31,7 @@ export const vincenzoSantoriniTheExplosivesExpert: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bf626cba6fd7425793d1cbfb0ee6aa2b",
-    tcgPlayer: 631481,
+    tcgPlayer: "631481",
   },
   text: [
     {

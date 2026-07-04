@@ -4,6 +4,17 @@ import { hansThirteenthInLineI18n } from "./180-hans-thirteenth-in-line.i18n";
 export const hansThirteenthInLine: CharacterCard = {
   id: "jUh",
   canonicalId: "ci_jUh",
+  slug: "lorcana-ci_jUh",
+  printings: [
+    {
+      id: "set1-180",
+      artId: "set1-180",
+      setCode: "set1",
+      collectorNumber: "180",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-180"],
   cardType: "character",
   name: "Hans",
@@ -20,12 +31,13 @@ export const hansThirteenthInLine: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_4fa7d5ae1044415e8ad8c609a527498c",
-    tcgPlayer: 506823,
+    tcgPlayer: "506823",
   },
   text: [
     {
-      title: "STAGE A LITTLE ACCIDENT",
-      description: "Whenever this character quests, you may deal 1 damage to chosen character.",
+      title: "STAGE",
+      description:
+        "A LITTLE ACCIDENT Whenever this character quests, you may deal 1 damage to chosen character.",
     },
   ],
   classifications: ["Storyborn", "Villain", "Prince"],

@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theQueenCruelestOfAllI18n } from "./139-the-queen-cruelest-of-all.i18n";
+
 import { ward } from "../../../helpers/abilities/ward";
 
 export const theQueenCruelestOfAll: CharacterCard = {
   id: "W5f",
   canonicalId: "ci_W5f",
+  slug: "lorcana-ci_W5f",
+  printings: [
+    {
+      id: "set5-139",
+      artId: "set5-139",
+      setCode: "set5",
+      collectorNumber: "139",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-139"],
   cardType: "character",
   name: "The Queen",
@@ -21,7 +33,7 @@ export const theQueenCruelestOfAll: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_bc6df0ab3743447f9498d36c8f51fe73",
-    tcgPlayer: 561641,
+    tcgPlayer: "561641",
   },
   text: "Ward",
   classifications: ["Storyborn", "Villain", "Queen", "Sorcerer"],

@@ -17,7 +17,7 @@ export const goldenHarpEnchanterOfTheLandI18n: Record<Languages, I18nProperties>
     version: "Landverzauberin",
     text: [
       {
-        title: "GESTOHLEN",
+        title: "Gestohlen",
         description:
           "Am Ende deines Zuges, verbanne diesen Charakter, falls du in diesem Zug kein Lied ausgespielt hast.",
       },
@@ -28,9 +28,9 @@ export const goldenHarpEnchanterOfTheLandI18n: Record<Languages, I18nProperties>
     version: "Enchanteresse de la Vallée",
     text: [
       {
-        title: "VOLÉE À",
+        title: "Volée",
         description:
-          "la fin de votre tour, si vous n'avez pas joué de chanson durant ce tour, bannissez ce personnage.",
+          "À la fin de votre tour, si vous n'avez pas joué de chanson durant ce tour, bannissez ce personnage.",
       },
     ],
   },
@@ -39,7 +39,7 @@ export const goldenHarpEnchanterOfTheLandI18n: Record<Languages, I18nProperties>
     version: "Ammaliatrice della Valle",
     text: [
       {
-        title: "RAPITA",
+        title: "Rapita",
         description:
           "Alla fine del tuo turno, esilia questo personaggio se non hai giocato una canzone in questo turno.",
       },

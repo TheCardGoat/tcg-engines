@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { mirabelMadrigalProphecyFinderI18n } from "./019-mirabel-madrigal-prophecy-finder.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const mirabelMadrigalProphecyFinder: CharacterCard = {
   id: "tXZ",
   canonicalId: "ci_tXZ",
+  slug: "lorcana-ci_tXZ",
+  printings: [
+    {
+      id: "set4-019",
+      artId: "set4-019",
+      setCode: "set4",
+      collectorNumber: "19",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-019"],
   cardType: "character",
   name: "Mirabel Madrigal",
@@ -21,7 +33,7 @@ export const mirabelMadrigalProphecyFinder: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_42b2c061d90345869820c14b4bad81ee",
-    tcgPlayer: 549248,
+    tcgPlayer: "549248",
   },
   text: "Support",
   classifications: ["Storyborn", "Hero", "Madrigal"],

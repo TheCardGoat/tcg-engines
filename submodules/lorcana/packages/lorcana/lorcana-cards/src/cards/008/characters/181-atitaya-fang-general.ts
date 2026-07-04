@@ -4,6 +4,17 @@ import { atitayaFangGeneralI18n } from "./181-atitaya-fang-general.i18n";
 export const atitayaFangGeneral: CharacterCard = {
   id: "jID",
   canonicalId: "ci_jID",
+  slug: "lorcana-ci_jID",
+  printings: [
+    {
+      id: "set8-181",
+      artId: "set8-181",
+      setCode: "set8",
+      collectorNumber: "181",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-181"],
   cardType: "character",
   name: "Atitaya",
@@ -21,7 +32,7 @@ export const atitayaFangGeneral: CharacterCard = {
   vanilla: true,
   externalIds: {
     lorcast: "crd_a4e5d72ce815494eb8647bbe7aa33454",
-    tcgPlayer: 633101,
+    tcgPlayer: "633101",
   },
   classifications: ["Storyborn", "Ally"],
   i18n: atitayaFangGeneralI18n,

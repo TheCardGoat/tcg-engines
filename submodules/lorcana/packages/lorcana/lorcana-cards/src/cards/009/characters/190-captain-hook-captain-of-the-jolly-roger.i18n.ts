@@ -17,7 +17,7 @@ export const captainHookCaptainOfTheJollyRogerI18n: Record<Languages, I18nProper
     version: "Kapitän der Jolly Roger",
     text: [
       {
-        title: "DOPPELTE LADUNG!",
+        title: "Doppelte Ladung!",
         description:
           'Wenn du diesen Charakter ausspielst, darfst du 1 "Feuert die Kanonen!"-Aktionskarte aus deinem Ablagestapel zurück auf deine Hand nehmen.',
       },
@@ -39,7 +39,7 @@ export const captainHookCaptainOfTheJollyRogerI18n: Record<Languages, I18nProper
     version: "Captain of the Jolly Roger",
     text: [
       {
-        title: "DOUBLE THE POWDER!",
+        title: "Double the Powder!",
         description:
           "When you play this character, you may return an action card named Fire the Cannons! from your discard to your hand.",
       },

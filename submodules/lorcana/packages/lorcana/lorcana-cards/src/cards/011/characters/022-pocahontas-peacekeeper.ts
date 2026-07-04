@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { pocahontasPeacekeeperI18n } from "./022-pocahontas-peacekeeper.i18n";
 
 export const pocahontasPeacekeeper: CharacterCard = {
-  id: "5oI",
+  id: "gSL",
   canonicalId: "ci_4DB",
+  slug: "lorcana-ci_4DB",
+  printings: [
+    {
+      id: "set11-022",
+      artId: "set11-022",
+      setCode: "set11",
+      collectorNumber: "22",
+      rarity: "legendary",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-022"],
   cardType: "character",
   name: "Pocahontas",
@@ -20,7 +31,7 @@ export const pocahontasPeacekeeper: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_40a3f6d8de604ff085fa5629597780a3",
-    tcgPlayer: 673298,
+    tcgPlayer: "673298",
   },
   text: [
     {

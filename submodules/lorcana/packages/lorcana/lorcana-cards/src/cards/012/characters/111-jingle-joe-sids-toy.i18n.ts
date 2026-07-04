@@ -6,9 +6,9 @@ export const jingleJoeSidsToyI18n: Record<Languages, I18nProperties> = {
     version: "Sid's Toy",
     text: [
       {
-        title: "Turn Out the Light",
+        title: "TURN OUT THE LIGHT",
         description:
-          "During your turn, whenever one of your other Toy characters is banished, chosen character of yours gains <Evasive> until the start of your next turn.",
+          "During your turn, whenever one of your other Toy characters is banished, chosen character of yours gains Evasive until the start of your next turn.",
       },
     ],
   },

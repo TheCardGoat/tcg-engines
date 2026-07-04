@@ -7,14 +7,17 @@ export const gd01MidairModifications121: CommandCard = {
   color: "white",
   traits: ["-"],
   id: "GD01-121",
-  externalId: "gundam:gd01-121",
-  slug: "midair-modifications-gd01-121",
+  canonicalId: "GD01-121",
+  externalIds: { bandai: "gundam:gd01-121" },
+  slug: "midair-modifications/gd01-121",
   displayName: "Midair Modifications",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-121",
   printings: [
     {
       id: "GD01-121",
+      artId: "GD01-121",
+      setCode: "GD01",
       collectorNumber: "GD01-121",
       cardNumber: "GD01-121",
       set: {
@@ -29,6 +32,7 @@ export const gd01MidairModifications121: CommandCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-121"],
   selectedPrintingId: "GD01-121",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-121.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-121.webp?260424",

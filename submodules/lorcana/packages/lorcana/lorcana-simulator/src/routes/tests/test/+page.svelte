@@ -7,7 +7,7 @@
   import type { LorcanaBrowserHarness } from "@/features/simulator-devtools/harness/browser-harness";
   import type { AiPlayMode } from "@/features/simulator-devtools/vs-ai/types.js";
 
-  const routeState = $derived.by(() => resolveBrowserRouteState(page.url));
+  const routeStatePromise = $derived(resolveBrowserRouteState(page.url));
   const aiPlayMode = $derived<AiPlayMode>(
     page.url.searchParams.get("aiPlayMode") === "step" ? "step" : "auto",
   );
@@ -101,11 +101,21 @@
   }
 </script>
 
-<LorcanaBrowserHarnessView
-  browserTransport={routeState.browserTransport}
-  fixture={routeState.fixture}
-  fixtureId={routeState.fixtureId}
-  view={routeState.view}
-  aiBot={{ initialPlayMode: aiPlayMode }}
-  {visualSetup}
-/>
+{#await routeStatePromise}
+  <main class="flex min-h-screen items-center justify-center bg-zinc-950 text-sm text-zinc-300">
+    Loading fixture...
+  </main>
+{:then routeState}
+  <LorcanaBrowserHarnessView
+    browserTransport={routeState.browserTransport}
+    fixture={routeState.fixture}
+    fixtureId={routeState.fixtureId}
+    view={routeState.view}
+    aiBot={{ initialPlayMode: aiPlayMode }}
+    {visualSetup}
+  />
+{:catch error}
+  <main class="flex min-h-screen items-center justify-center bg-zinc-950 text-sm text-red-200">
+    {error instanceof Error ? error.message : "Unable to load fixture."}
+  </main>
+{/await}

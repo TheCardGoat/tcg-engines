@@ -4,6 +4,17 @@ import { beKingUndisputedI18n } from "./129-be-king-undisputed.i18n";
 export const beKingUndisputed: ActionCard = {
   id: "PNr",
   canonicalId: "ci_th8",
+  slug: "lorcana-ci_th8",
+  printings: [
+    {
+      id: "set4-129",
+      artId: "set4-129",
+      setCode: "set4",
+      collectorNumber: "129",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-129", "set9-133"],
   cardType: "action",
   name: "Be King Undisputed",
@@ -16,7 +27,7 @@ export const beKingUndisputed: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d47a329c9f87420c8c2714ea6f7fffde",
-    tcgPlayer: 650152,
+    tcgPlayer: "650152",
   },
   text: "Each opponent chooses and banishes one of their characters.",
   actionSubtype: "song",

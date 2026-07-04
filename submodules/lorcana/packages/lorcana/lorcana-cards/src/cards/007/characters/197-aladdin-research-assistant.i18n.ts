@@ -21,13 +21,13 @@ export const aladdinResearchAssistantI18n: Record<Languages, I18nProperties> = {
     version: "Wissenschaftlicher Mitarbeiter",
     text: [
       {
-        title: "HELFENDE HAND",
+        title: "Helfende Hand",
         description:
           "Jedes Mal, wenn dieser Charakter erkundet, darfst du einen Verbündeten, der 3 oder weniger kostet, kostenlos ausspielen.",
       },
       {
-        title: "STRENGT SICH AN",
-        description: "Solange dieser Charakter erschöpft ist, erhalten deine Verbündeten +1.",
+        title: "Strengt sich an",
+        description: "Solange dieser Charakter erschöpft ist, erhalten deine Verbündeten +1 {S}.",
       },
     ],
   },
@@ -36,13 +36,13 @@ export const aladdinResearchAssistantI18n: Record<Languages, I18nProperties> = {
     version: "Assistant de recherche",
     text: [
       {
-        title: "MAIN TENDUE",
+        title: "Main tendue",
         description:
           "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez jouer gratuitement un personnage Allié coûtant 3 ou moins.",
       },
       {
-        title: "SE DONNER DU MAL",
-        description: "Tant que ce personnage est épuisé, vos personnages Allié gagnent +1.",
+        title: "Se donner du mal",
+        description: "Tant que ce personnage est épuisé, vos personnages Allié gagnent +1 {S}.",
       },
     ],
   },
@@ -51,14 +51,14 @@ export const aladdinResearchAssistantI18n: Record<Languages, I18nProperties> = {
     version: "Assistente di Ricerca",
     text: [
       {
-        title: "DARE UNA MANO",
+        title: "Dare una Mano",
         description:
           "Ogni volta che questo personaggio va all'avventura, puoi giocare un personaggio Alleato con costo 3 o inferiore, gratis.",
       },
       {
-        title: "METTERCI IMPEGNO",
+        title: "Metterci Impegno",
         description:
-          "Mentre questo personaggio è impegnato, i tuoi personaggi Alleato ricevono +1.",
+          "Mentre questo personaggio è impegnato, i tuoi personaggi Alleato ricevono +1 {S}.",
       },
     ],
   },

@@ -16,9 +16,9 @@ export const pjPeteCaughtUpInTheMusicI18n: Record<Languages, I18nProperties> = {
     version: "In der Musik versunken",
     text: [
       {
-        title: "LAUT MITSINGEN!",
+        title: "Laut mitsingen!",
         description:
-          "Jedes Mal, wenn du ein Lied ausspielst, erhält dieser Charakter in diesem Zug +2.",
+          "Jedes Mal, wenn du ein Lied ausspielst, erhält dieser Charakter in diesem Zug +2 {S}.",
       },
     ],
   },
@@ -27,9 +27,9 @@ export const pjPeteCaughtUpInTheMusicI18n: Record<Languages, I18nProperties> = {
     version: "Absorbé par la musique",
     text: [
       {
-        title: "SHOUT OUT LOUD!",
+        title: "Shout Out Loud!",
         description:
-          "Chaque fois que vous jouez une chanson, ce personnage gagne +2 pour le reste de ce tour.",
+          "Chaque fois que vous jouez une chanson, ce personnage gagne +2 {S} pour le reste de ce tour.",
       },
     ],
   },
@@ -38,9 +38,9 @@ export const pjPeteCaughtUpInTheMusicI18n: Record<Languages, I18nProperties> = {
     version: "Rapito dalla Musica",
     text: [
       {
-        title: "SHOUT OUT LOUD!",
+        title: "Shout Out Loud!",
         description:
-          "Ogni volta che giochi una canzone, questo personaggio riceve +2 per questo turno.",
+          "Ogni volta che giochi una canzone, questo personaggio riceve +2 {S} per questo turno.",
       },
     ],
   },

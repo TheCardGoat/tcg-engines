@@ -16,8 +16,8 @@ export const lumiereFieryFriendI18n: Record<Languages, I18nProperties> = {
     version: "Hitzköpfiger Freund",
     text: [
       {
-        title: "GLÜHENDE ANSPRACHE",
-        description: "Deine anderen Charaktere erhalten +1.",
+        title: "Glühende Ansprache",
+        description: "Deine anderen Charaktere erhalten +1 {S}.",
       },
     ],
   },
@@ -26,8 +26,8 @@ export const lumiereFieryFriendI18n: Record<Languages, I18nProperties> = {
     version: "Ardent ami",
     text: [
       {
-        title: "FERVENT DISCOURS",
-        description: "Vos autres personnages gagnent +1.",
+        title: "Fervent discours",
+        description: "Vos autres personnages gagnent +1 {S}.",
       },
     ],
   },
@@ -36,8 +36,8 @@ export const lumiereFieryFriendI18n: Record<Languages, I18nProperties> = {
     version: "Amico Focoso",
     text: [
       {
-        title: "DISCORSO FERVENTE I",
-        description: "tuoi altri personaggi ricevono +1.",
+        title: "Discorso Fervente",
+        description: "I tuoi altri personaggi ricevono +1 {S}.",
       },
     ],
   },

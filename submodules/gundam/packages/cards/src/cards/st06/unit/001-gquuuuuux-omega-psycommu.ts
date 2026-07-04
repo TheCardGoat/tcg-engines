@@ -7,14 +7,17 @@ export const st06GquuuuuuxOmegaPsycommu001: UnitCard = {
   color: "red",
   traits: ["clan"],
   id: "ST06-001",
-  externalId: "gundam:st06-001",
-  slug: "gquuuuuux-omega-psycommu-st06-001",
+  canonicalId: "ST06-001",
+  externalIds: { bandai: "gundam:st06-001" },
+  slug: "gquuuuuux-omega-psycommu/st06-001",
   displayName: "GQuuuuuuX (Omega Psycommu)",
   set: { code: "ST06", name: "Clan Unity [ST06]", packageId: "616006" },
   printNumber: "ST06-001",
   printings: [
     {
       id: "ST06-001",
+      artId: "ST06-001",
+      setCode: "ST06",
       collectorNumber: "ST06-001",
       cardNumber: "ST06-001",
       set: {
@@ -30,6 +33,8 @@ export const st06GquuuuuuxOmegaPsycommu001: UnitCard = {
     },
     {
       id: "ST06-001_p1",
+      artId: "ST06-001_p1",
+      setCode: "ST06",
       collectorNumber: "ST06-001_p1",
       cardNumber: "ST06-001",
       set: {
@@ -45,6 +50,8 @@ export const st06GquuuuuuxOmegaPsycommu001: UnitCard = {
     },
     {
       id: "ST06-001_p2",
+      artId: "ST06-001_p2",
+      setCode: "PC02A",
       collectorNumber: "ST06-001_p2",
       cardNumber: "ST06-001",
       set: {
@@ -60,6 +67,7 @@ export const st06GquuuuuuxOmegaPsycommu001: UnitCard = {
         "Premium Card Collection GUNDAM ASSEMBLE Set -Mobile Suit Gundam GQuuuuuuX-[PC02A]",
     },
   ],
+  reprints: ["ST06-001", "ST06-001_p1", "ST06-001_p2"],
   selectedPrintingId: "ST06-001",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-001.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-001.webp?260424",

@@ -4,6 +4,17 @@ import { mosquitoBiteI18n } from "./096-mosquito-bite.i18n";
 export const mosquitoBite: ActionCard = {
   id: "wew",
   canonicalId: "ci_wew",
+  slug: "lorcana-ci_wew",
+  printings: [
+    {
+      id: "set6-096",
+      artId: "set6-096",
+      setCode: "set6",
+      collectorNumber: "96",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-096"],
   cardType: "action",
   name: "Mosquito Bite",
@@ -16,7 +27,7 @@ export const mosquitoBite: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b2f167a1614348f194ac43b390bd7fe1",
-    tcgPlayer: 592021,
+    tcgPlayer: "592021",
   },
   text: "Put 1 damage counter on chosen character.",
   abilities: [

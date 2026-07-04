@@ -118,6 +118,7 @@ export class HumanVsAiOrchestrator {
       fixture.playerOne,
       fixture.playerTwo,
       {
+        capturePatches: false,
         seed: fixture.seed,
         skipPreGame: false,
         validateSync: false,
@@ -344,9 +345,7 @@ export class HumanVsAiOrchestrator {
 
   #syncMode(): void {
     const turnNumber = this.#session.server.getTurnNumber();
-    const { actorId } = this.#session.server.enumerateAutomatedActionsForCurrentActor({
-      strategy: this.#strategyOption.strategy,
-    });
+    const actorId = this.#session.server.getCurrentActorId();
 
     const resolution = resolveHumanVsAiMode({
       state: this.state,
@@ -443,9 +442,7 @@ export class HumanVsAiOrchestrator {
     }
 
     // Check who the automation actor is after the action.
-    const { actorId: nextActorId } = this.#session.server.enumerateAutomatedActionsForCurrentActor({
-      strategy: this.#strategyOption.strategy,
-    });
+    const nextActorId = this.#session.server.getCurrentActorId();
     const resolution = resolveHumanVsAiMode({
       state: this.state,
       winner: this.#session.server.getWinner() ?? undefined,

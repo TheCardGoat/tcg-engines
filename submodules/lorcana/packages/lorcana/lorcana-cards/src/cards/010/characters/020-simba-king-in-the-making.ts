@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { simbaKingInTheMakingI18n } from "./020-simba-king-in-the-making.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const simbaKingInTheMaking: CharacterCard = {
   id: "shC",
   canonicalId: "ci_IlR",
+  slug: "lorcana-ci_IlR",
+  printings: [
+    {
+      id: "set10-020",
+      artId: "set10-020",
+      setCode: "set10",
+      collectorNumber: "20",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-020"],
   cardType: "character",
   name: "Simba",
@@ -21,7 +33,7 @@ export const simbaKingInTheMaking: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_54bfc0bd37f44871a4ef50193d58ca2c",
-    tcgPlayer: 658449,
+    tcgPlayer: "658449",
   },
   text: [
     {

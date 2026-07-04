@@ -2,8 +2,19 @@ import type { CharacterCard } from "@tcg/lorcana-types";
 import { rayaKumandranRiderI18n } from "./107-raya-kumandran-rider.i18n";
 
 export const rayaKumandranRider: CharacterCard = {
-  id: "IVl",
+  id: "etO",
   canonicalId: "ci_aR1",
+  slug: "lorcana-ci_aR1",
+  printings: [
+    {
+      id: "set6-107",
+      artId: "set6-107",
+      setCode: "set6",
+      collectorNumber: "107",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set6-107"],
   cardType: "character",
   name: "Raya",
@@ -20,7 +31,7 @@ export const rayaKumandranRider: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_b1ea1c67fc224e968a4906149590585c",
-    tcgPlayer: 592036,
+    tcgPlayer: "592036",
   },
   text: [
     {

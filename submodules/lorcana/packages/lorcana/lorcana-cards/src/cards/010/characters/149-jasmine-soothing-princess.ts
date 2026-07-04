@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { boost } from "../../../helpers/abilities/boost";
 import { jasmineSoothingPrincessI18n } from "./149-jasmine-soothing-princess.i18n";
+
+import { boost } from "../../../helpers/abilities/boost";
 
 export const jasmineSoothingPrincess: CharacterCard = {
   id: "pbv",
-  canonicalId: "ci_pbv",
+  canonicalId: "ci_pVX",
+  slug: "lorcana-ci_pVX",
+  printings: [
+    {
+      id: "set10-149",
+      artId: "set10-149",
+      setCode: "set10",
+      collectorNumber: "149",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-149"],
   cardType: "character",
   name: "Jasmine",
@@ -21,7 +33,7 @@ export const jasmineSoothingPrincess: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_19f087c81e534ceda53b510446d75965",
-    tcgPlayer: 658216,
+    tcgPlayer: "658216",
   },
   text: [
     {

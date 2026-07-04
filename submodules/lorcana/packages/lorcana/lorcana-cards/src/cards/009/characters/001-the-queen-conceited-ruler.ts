@@ -1,10 +1,22 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { theQueenConceitedRulerI18n } from "./001-the-queen-conceited-ruler.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const theQueenConceitedRuler: CharacterCard = {
-  id: "5oZ",
-  canonicalId: "ci_7pM",
+  id: "5Q6",
+  canonicalId: "ci_nPF",
+  slug: "lorcana-ci_nPF",
+  printings: [
+    {
+      id: "set9-001",
+      artId: "set9-001",
+      setCode: "set9",
+      collectorNumber: "1",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set9-001"],
   cardType: "character",
   name: "The Queen",
@@ -21,7 +33,7 @@ export const theQueenConceitedRuler: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_61593ca4abb44723ae95ab9228e27aee",
-    tcgPlayer: 650141,
+    tcgPlayer: "650141",
   },
   text: [
     {

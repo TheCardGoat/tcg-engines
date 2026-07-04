@@ -1,8 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import {
-  LorcanaMultiplayerTestEngine,
-  createMockCharacter,
-} from "@tcg/lorcana-engine/testing";
+import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-engine/testing";
 import { helgaSinclairFemmeFatale } from "./074-helga-sinclair-femme-fatale";
 
 const undamagedCharacter = createMockCharacter({

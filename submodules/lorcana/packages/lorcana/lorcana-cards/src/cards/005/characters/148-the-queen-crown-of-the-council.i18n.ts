@@ -20,10 +20,10 @@ export const theQueenCrownOfTheCouncilI18n: Record<Languages, I18nProperties> = 
     version: "Die Krone des Rats",
     text: [
       {
-        title: "Behütet",
+        title: "<Behütet>",
       },
       {
-        title: "VERSAMMLERIN DER ÜBELTÄTER",
+        title: "Versammlerin der Übeltäter",
         description:
           "Wenn du diesen Charakter ausspielst, darfst du dir die obersten 3 Karten deines Decks anschauen. Du darfst beliebig viele Die-Königin-Charakterkarten daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
       },
@@ -34,10 +34,10 @@ export const theQueenCrownOfTheCouncilI18n: Record<Languages, I18nProperties> = 
     version: "À la tête du Conseil",
     text: [
       {
-        title: "Hors d'atteinte",
+        title: "<Hors d'atteinte>",
       },
       {
-        title: "RÉUNIR LES VILAINS",
+        title: "Réunir les vilains",
         description:
           "Lorsque vous jouez ce personnage, regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler et placer dans votre main autant de cartes Personnage La Reine que vous souhaitez. Remettez le reste des cartes sous votre pioche, dans l'ordre de votre choix.",
       },
@@ -48,10 +48,10 @@ export const theQueenCrownOfTheCouncilI18n: Record<Languages, I18nProperties> = 
     version: "A Capo del Consiglio",
     text: [
       {
-        title: "Protetto",
+        title: "<Protetto>",
       },
       {
-        title: "ADUNATRICE DI CATTIVI",
+        title: "Adunatrice di Cattivi",
         description:
           "Quando giochi questo personaggio, guarda le prime 3 carte del tuo mazzo. Puoi rivelare un qualsiasi numero di carte personaggio chiamate Regina e aggiungerle alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
       },

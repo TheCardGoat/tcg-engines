@@ -40,6 +40,7 @@ import {
   type LobbyMode,
 } from "@/features/matchmaking/state/lobby-room.svelte.js";
 import {
+  getLobbyMatchResult,
   getLobbyRoomStatus,
   type LobbyRoomResponse,
 } from "@/features/matchmaking/api/lobby-api.js";
@@ -63,6 +64,9 @@ import {
   PLACEMENT_THRESHOLD,
   QUEUE_CARD_DEFINITIONS,
   createQueueJoinLabel,
+  firstSupportedQueueFormat,
+  isQueuePartitionSupported,
+  queueFormatLabelKey,
   type RankBracket,
   type RankJourneyView,
   type QueueCardView,
@@ -499,6 +503,7 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     if (this.selectedMatchType === "ranked" && this.selectedQueueMode === "1") {
       this.selectedQueueMode = "3";
     }
+    this.#ensureSupportedQueueFormat();
     this.#initialRoomCode = options.initialRoomCode ?? options.initialLobbyRoom?.roomCode ?? null;
     this.#initialLobbyRoom = options.initialLobbyRoom ?? null;
     this.#initialGatewayTicket = options.gatewayTicket ?? null;
@@ -597,7 +602,13 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
       selectedMatchType: this.selectedMatchType,
       rankedEnabled: this.rankedEnabled,
       testingQueueEnabled: this.#isTestingQueueEnabled(),
-      queueCards: QUEUE_CARD_DEFINITIONS.map((definition) => {
+      queueCards: QUEUE_CARD_DEFINITIONS.filter((definition) =>
+        isQueuePartitionSupported(
+          definition.format,
+          this.selectedQueueMode,
+          this.selectedMatchType,
+        ),
+      ).map((definition) => {
         const selectedDeck = this.playerContext.selectedDeck;
         const isRanked = this.selectedMatchType === "ranked";
         const formatStats = isRanked
@@ -782,10 +793,7 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
       return this.#t("sim.matchmaking.queue.selectDeckFirst");
     }
     if (!this.isDeckValidForSelectedFormat) {
-      const formatLabel =
-        this.selectedQueueFormat === "infinity"
-          ? this.#t("sim.matchmaking.matchmaking.formats.infinity")
-          : this.#t("sim.matchmaking.matchmaking.formats.ccROF");
+      const formatLabel = this.#t(queueFormatLabelKey(this.selectedQueueFormat));
       return this.#t("sim.matchmaking.queue.deckNotLegalForFormat", { format: formatLabel });
     }
     if (!this.playerContext.activeProfile) {
@@ -889,6 +897,9 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     try {
       const roomStatus = prefetched ?? (await getLobbyRoomStatus(roomCode));
       if (!roomStatus) {
+        if (await this.#recoverStartedLobbyMatch(roomCode)) {
+          return;
+        }
         // Room was deleted — game may have already started.
         // If the player has an active match, redirect to it.
         if (this.queueStore.activeMatchId) {
@@ -901,6 +912,12 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
         this.lobbyStore.error = "Room not found or expired.";
         this.lobbyStore.status = "error";
         return;
+      }
+
+      if (roomStatus.status === "matched") {
+        if (await this.#recoverStartedLobbyMatch(roomCode)) {
+          return;
+        }
       }
 
       if (roomStatus.isCreator) {
@@ -949,6 +966,9 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     try {
       const roomStatus = await getLobbyRoomStatus(roomCode);
       if (!roomStatus) {
+        if (await this.#recoverStartedLobbyMatch(roomCode)) {
+          return;
+        }
         // Room was deleted (404). This happens when the match was created and
         // the room was consumed. If we have a stored matchId, navigate to it.
         if (this.lobbyStore.matchId) {
@@ -968,6 +988,9 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
         this.lobbyStore.status !== "starting" &&
         this.lobbyStore.status !== "match_found"
       ) {
+        if (await this.#recoverStartedLobbyMatch(roomCode)) {
+          return;
+        }
         // If we have matchId/gameId stored, navigate immediately
         if (this.lobbyStore.matchId) {
           console.log("[matchmaking-lobby] poll detected matched room, navigating", {
@@ -987,6 +1010,27 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
       this.lobbyStore.updateFromServerResponse(roomStatus);
     } catch (err) {
       console.error("[matchmaking-lobby] failed to poll room status", err);
+    }
+  }
+
+  async #recoverStartedLobbyMatch(roomCode: string): Promise<boolean> {
+    try {
+      const result = await getLobbyMatchResult(roomCode);
+      if (!result) {
+        return false;
+      }
+
+      this.lobbyStore.matchId = result.matchId;
+      this.lobbyStore.gameId = result.gameId;
+      this.lobbyStore.status = "match_found";
+      await this.lobbyStore.navigateToMatch(result.matchId, result.gameId);
+      return true;
+    } catch (error) {
+      console.warn("[matchmaking-lobby] failed to recover started lobby match", {
+        roomCode,
+        error,
+      });
+      return false;
     }
   }
 
@@ -1032,6 +1076,7 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     }
 
     this.selectedQueueMode = mode;
+    this.#ensureSupportedQueueFormat();
     this.#deps.trackEvent("matchmaking_mode_select", { mode });
   }
 
@@ -1050,6 +1095,7 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     if (matchType === "ranked" && this.selectedQueueMode === "1") {
       this.selectedQueueMode = "3";
     }
+    this.#ensureSupportedQueueFormat();
     this.#deps.trackEvent("matchmaking_match_type_select", { matchType });
   }
 
@@ -1057,9 +1103,29 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     if (this.selectionDisabled) {
       return;
     }
+    if (!isQueuePartitionSupported(format, this.selectedQueueMode, this.selectedMatchType)) {
+      return;
+    }
 
     this.selectedQueueFormat = format;
     this.#deps.trackEvent("matchmaking_format_select", { format });
+  }
+
+  #ensureSupportedQueueFormat(): void {
+    if (
+      isQueuePartitionSupported(
+        this.selectedQueueFormat,
+        this.selectedQueueMode,
+        this.selectedMatchType,
+      )
+    ) {
+      return;
+    }
+
+    this.selectedQueueFormat = firstSupportedQueueFormat(
+      this.selectedQueueMode,
+      this.selectedMatchType,
+    );
   }
 
   async handleJoinQueue(): Promise<void> {
@@ -1554,8 +1620,16 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     try {
       const roomStatus = await getLobbyRoomStatus(this.lobbyStore.roomCode);
       if (!roomStatus) {
+        if (await this.#recoverStartedLobbyMatch(this.lobbyStore.roomCode)) {
+          return;
+        }
         this.lobbyStore.reset();
         return;
+      }
+      if (roomStatus.status === "matched") {
+        if (await this.#recoverStartedLobbyMatch(this.lobbyStore.roomCode)) {
+          return;
+        }
       }
       // Sync opponent state from server (handles missed WS events)
       if (

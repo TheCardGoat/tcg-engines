@@ -7,14 +7,17 @@ export const gd01Lagowe050: UnitCard = {
   color: "red",
   traits: ["zaft"],
   id: "GD01-050",
-  externalId: "gundam:gd01-050",
-  slug: "lagowe-gd01-050",
+  canonicalId: "GD01-050",
+  externalIds: { bandai: "gundam:gd01-050" },
+  slug: "lagowe/gd01-050",
   displayName: "LaGOWE",
   set: { code: "GD01", name: "Newtype Rising [GD01]", packageId: "616101" },
   printNumber: "GD01-050",
   printings: [
     {
       id: "GD01-050",
+      artId: "GD01-050",
+      setCode: "GD01",
       collectorNumber: "GD01-050",
       cardNumber: "GD01-050",
       set: {
@@ -30,6 +33,8 @@ export const gd01Lagowe050: UnitCard = {
     },
     {
       id: "GD01-050_p1",
+      artId: "GD01-050_p1",
+      setCode: "GD01",
       collectorNumber: "GD01-050_p1",
       cardNumber: "GD01-050",
       set: {
@@ -44,6 +49,7 @@ export const gd01Lagowe050: UnitCard = {
       productName: "Newtype Rising [GD01]",
     },
   ],
+  reprints: ["GD01-050", "GD01-050_p1"],
   selectedPrintingId: "GD01-050",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-050.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-050.webp?260424",

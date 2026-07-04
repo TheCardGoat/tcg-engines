@@ -4,6 +4,17 @@ import { lawrenceJealousManservantI18n } from "./186-lawrence-jealous-manservant
 export const lawrenceJealousManservant: CharacterCard = {
   id: "W1g",
   canonicalId: "ci_HIY",
+  slug: "lorcana-ci_HIY",
+  printings: [
+    {
+      id: "set2-186",
+      artId: "set2-186",
+      setCode: "set2",
+      collectorNumber: "186",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-186", "set9-187"],
   cardType: "character",
   name: "Lawrence",
@@ -20,7 +31,7 @@ export const lawrenceJealousManservant: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_9cba34a84bf04721aefd09dc1e87cb3a",
-    tcgPlayer: 650120,
+    tcgPlayer: "650120",
   },
   text: [
     {

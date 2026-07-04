@@ -22,14 +22,14 @@ export const mulanReadyForBattleI18n: Record<Languages, I18nProperties> = {
     version: "Bereit für die Schlacht",
     text: [
       {
-        title: "EHRENHAFTER GEIST",
+        title: "Ehrenhafter Geist",
         description:
-          "Falls du mindestens einen beschädigten Charakter im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Falls du mindestens einen beschädigten Charakter im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
       {
-        title: "KAMPFGEIST",
+        title: "Kampfgeist",
         description:
-          "Wenn du mindestens einen Charakter mit 5 oder mehr im Spiel hast, zahlst du 1 weniger, um diesen Charakter auszuspielen.",
+          "Wenn du mindestens einen Charakter mit 5 oder mehr {S} im Spiel hast, zahlst du 1 {I} weniger, um diesen Charakter auszuspielen.",
       },
     ],
   },
@@ -38,14 +38,14 @@ export const mulanReadyForBattleI18n: Record<Languages, I18nProperties> = {
     version: "Prête pour la bataille",
     text: [
       {
-        title: "ESPRIT NOBLE",
+        title: "Esprit noble",
         description:
-          "Jouer ce personnage vous coûte 1 de moins si vous avez un personnage ayant au moins un dommage en jeu.",
+          "Jouer ce personnage vous coûte 1 {I} de moins si vous avez un personnage ayant au moins un dommage en jeu.",
       },
       {
-        title: "ESPRIT COMBATIF",
+        title: "Esprit combatif",
         description:
-          "Jouer ce personnage vous coûte 1 de moins si vous avez un personnage ayant une de 5 ou plus en jeu.",
+          "Jouer ce personnage vous coûte 1 {I} de moins si vous avez un personnage ayant une {S} de 5 ou plus en jeu.",
       },
     ],
   },
@@ -54,14 +54,14 @@ export const mulanReadyForBattleI18n: Record<Languages, I18nProperties> = {
     version: "Pronta alla Battaglia",
     text: [
       {
-        title: "SPIRITO NOBILE",
+        title: "Spirito Nobile",
         description:
-          "Se hai in gioco un personaggio con danno, paga 1 in meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio con danno, paga 1 {I} in meno per giocare questo personaggio.",
       },
       {
-        title: "SPIRITO COMBATTIVO",
+        title: "Spirito Combattivo",
         description:
-          "Se hai in gioco un personaggio con 5 o superiore, paga 1 in meno per giocare questo personaggio.",
+          "Se hai in gioco un personaggio con 5 {S} o superiore, paga 1 {I} in meno per giocare questo personaggio.",
       },
     ],
   },

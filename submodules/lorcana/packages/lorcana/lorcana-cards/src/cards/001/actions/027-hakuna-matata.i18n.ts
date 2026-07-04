@@ -11,10 +11,26 @@ export const hakunaMatataI18n: Record<Languages, I18nProperties> = {
   },
   fr: {
     name: "HAKUNA MATATA",
-    text: "Retirez jusqu'à 3 jetons Dommage de chacun de vos personnages.",
+    text: [
+      {
+        title:
+          "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)",
+      },
+      {
+        title: "Retirez jusqu'à 3 jetons Dommage de chacun de vos personnages.",
+      },
+    ],
   },
   it: {
     name: "Hakuna Matata",
-    text: "(Un personaggio con costo 4 o superiore può per cantare questa canzone gratis.) Rimuovi fino a 3 danni da ogni tuo personaggio.",
+    text: [
+      {
+        title:
+          "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)",
+      },
+      {
+        title: "Rimuovi fino a 3 danni da ogni tuo personaggio.",
+      },
+    ],
   },
 };

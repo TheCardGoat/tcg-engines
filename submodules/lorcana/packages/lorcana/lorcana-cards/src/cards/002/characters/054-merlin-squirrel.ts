@@ -4,6 +4,17 @@ import { merlinSquirrelI18n } from "./054-merlin-squirrel.i18n";
 export const merlinSquirrel: CharacterCard = {
   id: "sGp",
   canonicalId: "ci_sGp",
+  slug: "lorcana-ci_sGp",
+  printings: [
+    {
+      id: "set2-054",
+      artId: "set2-054",
+      setCode: "set2",
+      collectorNumber: "54",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-054"],
   cardType: "character",
   name: "Merlin",
@@ -20,7 +31,7 @@ export const merlinSquirrel: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_68c2d4e87fa84e0bb650d5e2b9c0737b",
-    tcgPlayer: 522209,
+    tcgPlayer: "522209",
   },
   text: [
     {

@@ -1,4 +1,4 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
 import { spoilerAdamSmasherMetalOverMeat } from "./adam-smasher-metal-over-meat.ts";
 import { spoilerCaliberTotentanzSTopDog } from "./caliber-totentanz-s-top-dog.ts";
 import { spoilerElSombreronLaVenganzaLenta } from "./el-sombreron-la-venganza-lenta.ts";
@@ -38,4 +38,4 @@ export const spoilerUnits = [
   spoilerRidingNomad,
   spoilerRoyceDonTCallMeSimon,
   spoilerSandayuOdaHanakoSGuardian,
-] satisfies SpoilerCardDefinition[];
+] satisfies UnitCardDefinition[];

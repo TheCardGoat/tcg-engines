@@ -4,6 +4,17 @@ import { donaldDuckDaisysDateI18n } from "./122-donald-duck-daisys-date.i18n";
 export const donaldDuckDaisysDate: CharacterCard = {
   id: "6ro",
   canonicalId: "ci_6ro",
+  slug: "lorcana-ci_6ro",
+  printings: [
+    {
+      id: "set5-122",
+      artId: "set5-122",
+      setCode: "set5",
+      collectorNumber: "122",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set5-122"],
   cardType: "character",
   name: "Donald Duck",
@@ -19,7 +30,7 @@ export const donaldDuckDaisysDate: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_79bc467a7ad540e4b2012a26e7a247df",
-    tcgPlayer: 561485,
+    tcgPlayer: "561485",
   },
   text: [
     {

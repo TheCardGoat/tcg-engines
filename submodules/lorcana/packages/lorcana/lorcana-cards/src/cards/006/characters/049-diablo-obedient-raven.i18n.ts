@@ -16,7 +16,7 @@ export const diabloObedientRavenI18n: Record<Languages, I18nProperties> = {
     version: "Ergebener Rabe",
     text: [
       {
-        title: "FLIEG DAHIN, MEIN LIEBLING",
+        title: "Flieg dahin, mein Liebling",
         description: "Wenn dieser Charakter verbannt wird, darfst du 1 Karte ziehen.",
       },
     ],
@@ -26,7 +26,7 @@ export const diabloObedientRavenI18n: Record<Languages, I18nProperties> = {
     version: "Corbeau docile",
     text: [
       {
-        title: "VOLE, MON MIGNON!",
+        title: "Vole, mon mignon!",
         description: "Lorsque ce personnage est banni, vous pouvez piocher une carte.",
       },
     ],
@@ -36,7 +36,7 @@ export const diabloObedientRavenI18n: Record<Languages, I18nProperties> = {
     version: "Corvo Obbediente",
     text: [
       {
-        title: "VOLA, MIO DILETTO!",
+        title: "Vola, mio Diletto!",
         description: "Quando questo personaggio viene esiliato, puoi pescare una carta.",
       },
     ],

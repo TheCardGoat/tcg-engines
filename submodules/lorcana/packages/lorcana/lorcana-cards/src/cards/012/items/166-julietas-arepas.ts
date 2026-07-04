@@ -4,6 +4,17 @@ import { julietasArepasI18n } from "./166-julietas-arepas.i18n";
 export const julietasArepas: ItemCard = {
   id: "gFH",
   canonicalId: "ci_gFH",
+  slug: "lorcana-ci_gFH",
+  printings: [
+    {
+      id: "set12-166",
+      artId: "set12-166",
+      setCode: "set12",
+      collectorNumber: "166",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-166"],
   cardType: "item",
   name: "Julieta's Arepas",
@@ -16,6 +27,7 @@ export const julietasArepas: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_800457a096c74a15b1ac1d9aece16efb",
+    tcgPlayer: "692074",
   },
   text: [
     {

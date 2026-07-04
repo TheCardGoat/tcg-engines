@@ -7,14 +7,17 @@ export const gd02GundamX053: UnitCard = {
   color: "purple",
   traits: ["vulture"],
   id: "GD02-053",
-  externalId: "gundam:gd02-053",
-  slug: "gundam-x-gd02-053",
+  canonicalId: "GD02-053",
+  externalIds: { bandai: "gundam:gd02-053" },
+  slug: "gundam-x/gd02-053",
   displayName: "Gundam X",
   set: { code: "GD02", name: "Dual Impact [GD02]", packageId: "616102" },
   printNumber: "GD02-053",
   printings: [
     {
       id: "GD02-053",
+      artId: "GD02-053",
+      setCode: "GD02",
       collectorNumber: "GD02-053",
       cardNumber: "GD02-053",
       set: {
@@ -30,6 +33,8 @@ export const gd02GundamX053: UnitCard = {
     },
     {
       id: "GD02-053_p1",
+      artId: "GD02-053_p1",
+      setCode: "GD02",
       collectorNumber: "GD02-053_p1",
       cardNumber: "GD02-053",
       set: {
@@ -44,6 +49,7 @@ export const gd02GundamX053: UnitCard = {
       productName: "Dual Impact [GD02]",
     },
   ],
+  reprints: ["GD02-053", "GD02-053_p1"],
   selectedPrintingId: "GD02-053",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-053.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-053.webp?260424",

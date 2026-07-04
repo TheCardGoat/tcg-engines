@@ -7,14 +7,17 @@ export const gd03GundamBarbatos6thForm061: UnitCard = {
   color: "purple",
   traits: ["tekkadan", "gundam frame"],
   id: "GD03-061",
-  externalId: "gundam:gd03-061",
-  slug: "gundam-barbatos-6th-form-gd03-061",
+  canonicalId: "GD03-061",
+  externalIds: { bandai: "gundam:gd03-061" },
+  slug: "gundam-barbatos-6th-form/gd03-061",
   displayName: "Gundam Barbatos 6th Form",
   set: { code: "GD03", name: "Steel Requiem[GD03]", packageId: "616103" },
   printNumber: "GD03-061",
   printings: [
     {
       id: "GD03-061",
+      artId: "GD03-061",
+      setCode: "GD03",
       collectorNumber: "GD03-061",
       cardNumber: "GD03-061",
       set: {
@@ -29,6 +32,7 @@ export const gd03GundamBarbatos6thForm061: UnitCard = {
       productName: "Steel Requiem[GD03]",
     },
   ],
+  reprints: ["GD03-061"],
   selectedPrintingId: "GD03-061",
   imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-061.webp",
   sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-061.webp?260424",

@@ -4,6 +4,17 @@ import { princeAchmedRivalSuitorI18n } from "./184-prince-achmed-rival-suitor.i1
 export const princeAchmedRivalSuitor: CharacterCard = {
   id: "cUt",
   canonicalId: "ci_cUt",
+  slug: "lorcana-ci_cUt",
+  printings: [
+    {
+      id: "set8-184",
+      artId: "set8-184",
+      setCode: "set8",
+      collectorNumber: "184",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set8-184"],
   cardType: "character",
   name: "Prince Achmed",
@@ -20,7 +31,7 @@ export const princeAchmedRivalSuitor: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_7330464a904f4bc48287806c802ca7f1",
-    tcgPlayer: 631684,
+    tcgPlayer: "631684",
   },
   text: [
     {
@@ -40,7 +51,12 @@ export const princeAchmedRivalSuitor: CharacterCard = {
             owner: "any",
             zones: ["play"],
             cardTypes: ["character"],
-            filter: [{ type: "has-classification", classification: "Princess" }],
+            filter: [
+              {
+                type: "has-classification",
+                classification: "Princess",
+              },
+            ],
           },
           type: "exert",
         },

@@ -1,11 +1,23 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { angelSirenSingerI18n } from "./025-angel-siren-singer.i18n";
+
 import { underdog } from "../../../helpers/abilities/underdog";
 import { singer } from "../../../helpers/abilities/singer";
 
 export const angelSirenSinger: CharacterCard = {
   id: "FwE",
   canonicalId: "ci_HaX",
+  slug: "lorcana-ci_HaX",
+  printings: [
+    {
+      id: "set11-025",
+      artId: "set11-025",
+      setCode: "set11",
+      collectorNumber: "25",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set11-025"],
   cardType: "character",
   name: "Angel",
@@ -22,7 +34,7 @@ export const angelSirenSinger: CharacterCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_ce082b2459af4c0a94a900a468bd9096",
-    tcgPlayer: 658220,
+    tcgPlayer: "658220",
   },
   text: [
     {

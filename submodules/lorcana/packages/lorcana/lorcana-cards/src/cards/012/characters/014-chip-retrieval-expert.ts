@@ -4,6 +4,17 @@ import { chipRetrievalExpertI18n } from "./014-chip-retrieval-expert.i18n";
 export const chipRetrievalExpert: CharacterCard = {
   id: "Eav",
   canonicalId: "ci_Eav",
+  slug: "lorcana-ci_Eav",
+  printings: [
+    {
+      id: "set12-014",
+      artId: "set12-014",
+      setCode: "set12",
+      collectorNumber: "14",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set12-014"],
   cardType: "character",
   name: "Chip",
@@ -20,6 +31,7 @@ export const chipRetrievalExpert: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_af3e6cbd8d7b41be9f4e9a476358ab6a",
+    tcgPlayer: "692011",
   },
   text: [
     {

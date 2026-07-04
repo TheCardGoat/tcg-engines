@@ -4,6 +4,17 @@ import { enigmaticInkcasterI18n } from "./100-enigmatic-inkcaster.i18n";
 export const enigmaticInkcaster: ItemCard = {
   id: "Nmx",
   canonicalId: "ci_Nmx",
+  slug: "lorcana-ci_Nmx",
+  printings: [
+    {
+      id: "set10-100",
+      artId: "set10-100",
+      setCode: "set10",
+      collectorNumber: "100",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set10-100"],
   cardType: "item",
   name: "Enigmatic Inkcaster",
@@ -16,7 +27,7 @@ export const enigmaticInkcaster: ItemCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_d774288aca6149239c554da4daab38b4",
-    tcgPlayer: 659453,
+    tcgPlayer: "659453",
   },
   text: [
     {

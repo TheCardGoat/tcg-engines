@@ -1,4 +1,4 @@
-import { test, expect } from "../fixtures/test";
+import { test, expect } from "@playwright/test";
 import {
   ROOT_FIXTURE_SCENARIO_CASES,
   ROOT_FIXTURE_SCENARIO_IDS,

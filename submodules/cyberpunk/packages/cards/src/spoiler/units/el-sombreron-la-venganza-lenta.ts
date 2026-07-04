@@ -1,13 +1,14 @@
-import type { SpoilerCardDefinition } from "@tcg/cyberpunk-types";
+import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
+import { defineCyberpunkCard } from "../../define.ts";
 
-export const spoilerElSombreronLaVenganzaLenta = {
+export const spoilerElSombreronLaVenganzaLenta = defineCyberpunkCard({
   id: "e6ab6b31-cf5d-4acb-9d83-ce57f1b6718f",
-  externalId: "cyberpunk:el-sombreron-la-venganza-lenta",
   slug: "el-sombreron-la-venganza-lenta",
-  name: "El Sombrerón",
-  subname: "La Venganza Lenta",
-  displayName: "El Sombrerón - La Venganza Lenta",
   rulesText: "ATTACK While fighting a rival Unit, double this Unit's power.",
+  subname: "La Venganza Lenta",
+  name: "El Sombrerón",
+  displayName: "El Sombrerón - La Venganza Lenta",
+  canonicalId: "el-sombreron-la-venganza-lenta",
   color: "red",
   classifications: ["Ganger", "Valentino"],
   set: {
@@ -15,15 +16,6 @@ export const spoilerElSombreronLaVenganzaLenta = {
     name: "Spoiler Set",
   },
   printNumber: "019",
-  printings: [
-    {
-      id: "5a113aef-cb0e-493b-98e4-bf5326462297",
-      collectorNumber: "019",
-      setCode: "spoiler",
-      rarity: null,
-    },
-  ],
-  selectedPrintingId: "5a113aef-cb0e-493b-98e4-bf5326462297",
   artist: "Rafael de Latorre & Clonerh",
   imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/019.webp",
   rarity: null,
@@ -31,7 +23,6 @@ export const spoilerElSombreronLaVenganzaLenta = {
   hasSellTag: false,
   ram: 4,
   timingTriggers: ["attack"],
-  keywords: [],
   type: "unit",
   cost: 4,
   power: 4,
@@ -66,5 +57,4 @@ export const spoilerElSombreronLaVenganzaLenta = {
       ],
     },
   ],
-  reminderText: [],
-} satisfies SpoilerCardDefinition;
+}) satisfies UnitCardDefinition;

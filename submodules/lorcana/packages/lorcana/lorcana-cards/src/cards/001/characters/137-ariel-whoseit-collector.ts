@@ -4,6 +4,17 @@ import { arielWhoseitCollectorI18n } from "./137-ariel-whoseit-collector.i18n";
 export const arielWhoseitCollector: CharacterCard = {
   id: "5XS",
   canonicalId: "ci_5XS",
+  slug: "lorcana-ci_5XS",
+  printings: [
+    {
+      id: "set1-137",
+      artId: "set1-137",
+      setCode: "set1",
+      collectorNumber: "137",
+      rarity: "rare",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set1-137"],
   cardType: "character",
   name: "Ariel",
@@ -20,7 +31,7 @@ export const arielWhoseitCollector: CharacterCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_a23c99ed9f3243969466fb000bd139dc",
-    tcgPlayer: 502532,
+    tcgPlayer: "502532",
   },
   text: [
     {

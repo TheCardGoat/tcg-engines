@@ -4,6 +4,17 @@ import { signTheScrollI18n } from "./030-sign-the-scroll.i18n";
 export const signTheScroll: ActionCard = {
   id: "zkw",
   canonicalId: "ci_zkw",
+  slug: "lorcana-ci_zkw",
+  printings: [
+    {
+      id: "set4-030",
+      artId: "set4-030",
+      setCode: "set4",
+      collectorNumber: "30",
+      rarity: "uncommon",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set4-030"],
   cardType: "action",
   name: "Sign the Scroll",
@@ -16,7 +27,7 @@ export const signTheScroll: ActionCard = {
   inkable: false,
   externalIds: {
     lorcast: "crd_9f0c12874b204c0f99d48aa7ddb68c51",
-    tcgPlayer: 547681,
+    tcgPlayer: "547681",
   },
   text: "Each opponent may choose and discard a card. For each opponent who doesn't, you gain 2 lore.",
   abilities: [

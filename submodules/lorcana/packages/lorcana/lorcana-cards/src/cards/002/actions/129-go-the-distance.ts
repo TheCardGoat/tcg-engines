@@ -4,6 +4,17 @@ import { goTheDistanceI18n } from "./129-go-the-distance.i18n";
 export const goTheDistance: ActionCard = {
   id: "lwc",
   canonicalId: "ci_lwc",
+  slug: "lorcana-ci_lwc",
+  printings: [
+    {
+      id: "set2-129",
+      artId: "set2-129",
+      setCode: "set2",
+      collectorNumber: "129",
+      rarity: "common",
+      imageUrl: "",
+    },
+  ],
   reprints: ["set2-129"],
   cardType: "action",
   name: "Go the Distance",
@@ -16,7 +27,7 @@ export const goTheDistance: ActionCard = {
   inkable: true,
   externalIds: {
     lorcast: "crd_2d25ebdcc8874b25b749753468ba5956",
-    tcgPlayer: 527242,
+    tcgPlayer: "527242",
   },
   text: "Ready chosen damaged character of yours. They can't quest for the rest of this turn. Draw a card.",
   actionSubtype: "song",

@@ -16,7 +16,7 @@ export const ratiganNefariousCriminalEnchantedI18n: Record<Languages, I18nProper
     version: "Ruchloser Verbrecher",
     text: [
       {
-        title: "EINE WUNDERBARE VORSTELLUNG",
+        title: "Eine wunderbare Vorstellung",
         description:
           "Jedes Mal, wenn du eine Aktion ausspielst, solange dieser Charakter erschöpft ist, sammelst du 1 Legende.",
       },
@@ -27,7 +27,7 @@ export const ratiganNefariousCriminalEnchantedI18n: Record<Languages, I18nProper
     version: "Criminel néfaste",
     text: [
       {
-        title: "SPLENDIDE PERFORMANCE",
+        title: "Splendide performance",
         description:
           "Chaque fois que vous jouez une action, si ce personnage est épuisé, gagnez 1 éclat de Lore.",
       },
@@ -38,7 +38,7 @@ export const ratiganNefariousCriminalEnchantedI18n: Record<Languages, I18nProper
     version: "Efferato Criminale",
     text: [
       {
-        title: "UNA SPLENDIDA INTERPRETAZIONE",
+        title: "Una Splendida Interpretazione",
         description:
           "Ogni volta che giochi un'azione mentre questo personaggio è impegnato, ottieni 1 leggenda.",
       },
