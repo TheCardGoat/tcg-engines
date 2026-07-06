@@ -63,11 +63,23 @@ export function AiControlPanel({
   const engine = useEngine();
   const playerProjection = useSideZones("player");
   const opponentProjection = useSideZones("opponent");
-  const aiSide: Side = otherSide(engine.humanSide);
+  const defaultAiSide: Side = otherSide(engine.humanSide);
   const isTakeover = engine.aiTakeover !== null;
+  const nextAiSide =
+    (["player", "opponent"] as const).find((side) => {
+      if (!engine.aiStrategies[side]) {
+        return false;
+      }
+      const view = engine.interactionViews[side];
+      return (
+        view.status === "choosing" ||
+        (view.status === "ready" && view.actions.some((action) => action.enabled))
+      );
+    }) ?? null;
+  const aiSide: Side = nextAiSide ?? defaultAiSide;
   const controlledSide = engine.aiTakeover?.side ?? aiSide;
   const aiInteractionView = useEngineInteractionView(controlledSide);
-  const aiStrategy = engine.aiTakeover?.strategy ?? engine.aiStrategies[aiSide];
+  const aiStrategy = engine.aiTakeover?.strategy ?? engine.aiStrategies[controlledSide];
   const aiDescriptor = findStrategyDescriptor(aiStrategy);
   const remoteServerControlled = engine.isRemote && !isTakeover;
   const canTakeRemoteControl = engine.isRemote && aiStrategy !== null;
@@ -93,8 +105,8 @@ export function AiControlPanel({
       engine.releaseAiTakeover();
       return;
     }
-    if (engine.aiStrategies[aiSide]) {
-      engine.takeOverAiSide(aiSide);
+    if (engine.aiStrategies[controlledSide]) {
+      engine.takeOverAiSide(controlledSide);
       return;
     }
     engine.toggleHumanSide();
@@ -102,14 +114,14 @@ export function AiControlPanel({
 
   const onStrategyChange = (id: string | null) => {
     if (id === null) {
-      engine.setStrategy(aiSide, null);
+      engine.setStrategy(controlledSide, null);
       return;
     }
     const desc = getStrategyById(id);
     if (!desc) {
       return;
     }
-    engine.setStrategy(aiSide, desc.strategy);
+    engine.setStrategy(controlledSide, desc.strategy);
   };
 
   const copyAiDecisions = async () => {
@@ -154,7 +166,8 @@ export function AiControlPanel({
         mode={engine.aiMode}
         speed={engine.aiSpeed}
         status={status}
-        side={aiSide}
+        side={controlledSide}
+        nextAiSide={nextAiSide}
         strategies={AI_STRATEGIES}
         selectedStrategyId={aiDescriptor?.id ?? null}
         isTakeover={isTakeover}

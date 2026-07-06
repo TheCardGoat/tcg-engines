@@ -32,15 +32,15 @@ export interface ArtVariant {
  * `printings[]`, optional `externalIds`). The game-specific fields below are
  * additive on top of the base.
  *
- * Identity hierarchy: canonical (`canonicalId`) → art (`printing.artId`) →
- * printing (`printing.id`). Per ADR-9, One Piece is modeled MTG-style (real
- * canonical layer + real `printings[]`), not Pokémon-style. `canonicalId` is
- * seeded from `id` for now (ADR-9) until authoritative reprint data lands.
+ * Identity hierarchy: canonical gameplay (`canonicalId`) → art (`printing.artId`)
+ * → authored print (`id` / `printing.id`). Per ADR-9, One Piece is modeled
+ * MTG-style (real canonical layer + real `printings[]`), not Pokémon-style.
  */
 interface BaseCardProperties extends BaseCardDefinition {
   /**
-   * Authored/source id (RFC identity role #1), e.g. `OP01-013`. Today this also
-   * seeds `canonicalId` (ADR-9); it is NOT the cross-game canonical key itself.
+   * Authored/source print id (RFC identity role #1), e.g. `OP01-013` for the base
+   * print or `OP08-106_p2` for an alternate art. Reprints and alternate arts keep
+   * unique `id` values while sharing the base card's `canonicalId`.
    */
   id: string;
   color: OPColor[];

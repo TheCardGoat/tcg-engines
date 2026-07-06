@@ -1,64 +1,24 @@
 import type { LeaderCard } from "@tcg/op-types";
+import { op06Yamato022 } from "../../OP06/leaders/022-yamato.ts";
 import { eb02Yamato022I18n } from "./022-yamato.i18n.ts";
 
 export const eb02Yamato022: LeaderCard = {
-  id: "OP06-022",
-  canonicalId: "OP06-022",
-  slug: "yamato/op06-022",
+  ...op06Yamato022,
+  id: "OP06-022_HNfIWVa",
+  slug: "yamato/op06-022-hnfiwva",
   name: "Yamato",
   printings: [
     {
-      id: "OP06-022",
-      artId: "OP06-022",
+      id: "OP06-022_HNfIWVa",
+      artId: "OP06-022_HNfIWVa",
       setCode: "EB02",
       collectorNumber: "022",
       rarity: "L",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-022_HNfIWVa.jpg",
     },
   ],
-  cardType: "leader",
-  color: ["green", "yellow"],
   rarity: "L",
   setId: "EB02",
-  power: 5000,
-  life: 4,
-  traits: ["Land of Wano"],
-  attribute: "strike",
-  effect:
-    "[Double Attack] (This card deals 2 damage.)\n[Activate: Main] [Once Per Turn] If your opponent has 3 or less Life cards, give up to 2 rested DON!! cards to 1 of your Characters.",
-  effects: {
-    keywords: ["doubleAttack"],
-    effects: [
-      {
-        trigger: "activateMain",
-        conditions: [
-          {
-            condition: "lifeCount",
-            player: "opponent",
-            comparison: "lte",
-            value: 3,
-          },
-        ],
-        actions: [
-          {
-            action: "giveDon",
-            target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-            },
-            count: {
-              amount: 2,
-              upTo: true,
-            },
-            donState: "rested",
-          },
-        ],
-        oncePerTurn: true,
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: eb02Yamato022I18n,
 };

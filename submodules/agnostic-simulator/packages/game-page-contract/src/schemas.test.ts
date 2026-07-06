@@ -38,8 +38,16 @@ const sampleMatch: MatchInfo = {
   matchType: "ranked",
   status: "in_progress",
   participants: [
-    { id: "p1", seat: 0, displayName: "Alice", userId: "u1" },
-    { id: "p2", seat: 1, displayName: "Bot", isBot: true },
+    {
+      id: "p1",
+      seat: 0,
+      displayName: "Alice",
+      userId: "u1",
+      mmrAtMatch: 1420,
+      subscriptionTier: "premium",
+      isPremium: true,
+    },
+    { id: "p2", seat: 1, displayName: "Bot", isBot: true, isPremium: false },
   ],
   gameIds: ["g1"],
 };

@@ -1,8 +1,9 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useMemo, useEffect, useLayoutEffect, useState } from "react";
+import type { SimulatorTargetingIntent } from "@tcg/simulator-contract";
+import { TargetingOverlay } from "@tcg/simulator-ui";
 
 import { asMoveName, usePending, useBoardProjection } from "../../game/index.ts";
-import { AttackTargetingOverlay } from "../ui/AttackTargetingOverlay.tsx";
-import type { AttackAttacker, AttackTarget, DOMRectLike } from "../ui/types.ts";
+import type { DOMRectLike } from "../ui/types.ts";
 import { findCardByInstanceId } from "./mappers.ts";
 
 function toRectLike(r: DOMRect): DOMRectLike {
@@ -16,9 +17,14 @@ function toRectLike(r: DOMRect): DOMRectLike {
   };
 }
 
+const GUNDAM_DIRECT_ZONE_ID = "gundam-direct-opp";
+const GUNDAM_ZONE_SELECTOR = (zoneId: string) =>
+  zoneId === GUNDAM_DIRECT_ZONE_ID ? '[data-direct-target="opp"]' : `[data-zone-id="${zoneId}"]`;
+const EMPTY_CANDIDATE_IDS: readonly string[] = [];
+
 export function measureRect(id: string): DOMRectLike | null {
-  // `data-card-id` is rendered on the battle-area CardFace, the
-  // CardHoverPreview (aria-hidden), and Comms-log CardLinks (<button>).
+  // `data-sim-entity-id`/`data-card-id` are rendered on the battle-area
+  // CardFace, the CardHoverPreview (aria-hidden), and Comms-log CardLinks (<button>).
   // `querySelector` returns the first in DOM order — the sidebar log
   // precedes the board, so a naive query anchors the arrow to the log
   // link. Mirror `test/queries.ts → findCardsById`'s exclusions.
@@ -28,7 +34,9 @@ export function measureRect(id: string): DOMRectLike | null {
     typeof CSS !== "undefined" && typeof CSS.escape === "function"
       ? CSS.escape(id)
       : id.replace(/["\\\n\r\f]/g, (ch) => `\\${ch}`);
-  const nodes = document.querySelectorAll<HTMLElement>(`[data-card-id="${escaped}"]`);
+  const nodes = document.querySelectorAll<HTMLElement>(
+    `[data-sim-entity-id="${escaped}"], [data-card-id="${escaped}"]`,
+  );
   for (const el of nodes) {
     if (el.closest("[aria-hidden='true']")) continue;
     if (el.closest("[role='log']")) continue;
@@ -61,7 +69,8 @@ export function AttackTargetingOverlayContainer() {
     state.status === "collecting" && state.steps[0]?.kind === "selectTarget"
       ? state.steps[0]
       : null;
-  const candidateIds = isEnterBattleTargeting && step ? step.candidateIds : [];
+  const candidateIds: readonly string[] =
+    isEnterBattleTargeting && step ? step.candidateIds : EMPTY_CANDIDATE_IDS;
   const candidateKey = candidateIds.join(",");
 
   useEffect(() => {
@@ -104,74 +113,113 @@ export function AttackTargetingOverlayContainer() {
 
   useEffect(() => {
     if (!isEnterBattleTargeting) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") pending.cancel();
+    }
     function onResize() {
       setRects(buildRects());
     }
+    window.addEventListener("keydown", onKeyDown);
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [isEnterBattleTargeting, attackerId, candidateKey]);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [isEnterBattleTargeting, attackerId, candidateKey, pending]);
+
+  const attackerCard = attackerId ? findCardByInstanceId(view, attackerId) : null;
+  const attackerDef = attackerCard?.definition as { name?: string; ap?: number } | null | undefined;
+  const attackerRect = attackerId ? rects[attackerId] : undefined;
+  const attackerDamage = typeof attackerDef?.ap === "number" ? attackerDef.ap : 0;
+
+  const { targetRects, targetEntityIds, targetZoneIds } = useMemo(() => {
+    const nextTargetRects: Record<string, DOMRectLike> = {};
+    const nextTargetEntityIds: string[] = [];
+    const nextTargetZoneIds: string[] = [];
+
+    for (const id of candidateIds) {
+      if (id === "direct") continue;
+      const rect = rects[id];
+      if (!rect) continue;
+      nextTargetEntityIds.push(id);
+      nextTargetRects[id] = rect;
+    }
+
+    // `direct` is a sentinel from `listLegalAttackTargets` (see
+    // enter-battle.ts, `DIRECT_TARGET`). It's surfaced as a regular target
+    // anchored to the opponent's PlayerSeatPlate — the player drags the
+    // arrow over the opponent's shields/base column and clicks to commit,
+    // matching the official Gundam digital UI.
+    const directAvailable = candidateIds.includes("direct");
+    const directRect = directAvailable ? rects["direct"] : undefined;
+    if (directAvailable && directRect) {
+      nextTargetZoneIds.push(GUNDAM_DIRECT_ZONE_ID);
+      nextTargetRects["direct"] = directRect;
+    }
+
+    return {
+      targetRects: nextTargetRects,
+      targetEntityIds: nextTargetEntityIds,
+      targetZoneIds: nextTargetZoneIds,
+    };
+  }, [candidateIds, rects]);
+
+  const targetingIntents = useMemo<SimulatorTargetingIntent[]>(
+    () => [
+      {
+        id: `gundam-attack-${attackerId ?? "pending"}`,
+        sourceEntityId: attackerId ?? "",
+        targetEntityIds,
+        targetZoneIds,
+        preview: { damage: attackerDamage },
+      },
+    ],
+    [attackerDamage, attackerId, targetEntityIds, targetZoneIds],
+  );
 
   if (!isEnterBattleTargeting || !attackerId) return null;
-
-  const attackerCard = findCardByInstanceId(view, attackerId);
-  const attackerDef = attackerCard?.definition as { name?: string; ap?: number } | null | undefined;
-  const attackerRect = rects[attackerId];
   if (!attackerCard || !attackerDef || !attackerRect) return null;
-
-  const attacker: AttackAttacker = {
-    id: attackerId,
-    name: attackerDef.name ?? "Unit",
-    strength: typeof attackerDef.ap === "number" ? attackerDef.ap : 0,
-  };
-
-  const targets: AttackTarget[] = [];
-  const targetRects: Record<string, DOMRectLike> = {};
-  for (const id of candidateIds) {
-    if (id === "direct") continue;
-    const rect = rects[id];
-    if (!rect) continue;
-    const card = findCardByInstanceId(view, id);
-    const def = card?.definition as { name?: string; hp?: number } | null | undefined;
-    targets.push({
-      id,
-      name: def?.name ?? "Unit",
-      willpower: typeof def?.hp === "number" ? def.hp : 0,
-    });
-    targetRects[id] = rect;
-  }
-
-  // `direct` is a sentinel from `listLegalAttackTargets` (see
-  // enter-battle.ts, `DIRECT_TARGET`). It's surfaced as a regular target
-  // anchored to the opponent's PlayerSeatPlate — the player drags the
-  // arrow over the opponent's shields/base column and clicks to commit,
-  // matching the official Gundam digital UI.
-  const directAvailable = candidateIds.includes("direct");
-  const directRect = directAvailable ? rects["direct"] : undefined;
-  if (directAvailable && directRect) {
-    // `name` is unused for `isDirect` targets — DirectBadge renders the
-    // localized label and there's no defender card to surface. Empty
-    // string avoids leaking an English literal if the value is read later.
-    targets.push({ id: "direct", name: "", willpower: 0, isDirect: true });
-    targetRects["direct"] = directRect;
-  }
-
-  if (targets.length === 0) return null;
-
-  const hoveredTarget = hoveredTargetId
-    ? (targets.find((t) => t.id === hoveredTargetId) ?? null)
-    : null;
+  if (targetEntityIds.length === 0 && targetZoneIds.length === 0) return null;
 
   return (
-    <AttackTargetingOverlay
-      attacker={attacker}
-      attackerRect={attackerRect}
-      targets={targets}
-      targetRects={targetRects}
-      hoveredTargetId={hoveredTargetId ?? undefined}
-      hoveredTarget={hoveredTarget}
-      onTargetHover={setHoveredTargetId}
-      onConfirm={(targetId) => pending.provide("target", targetId)}
-      onCancel={() => pending.cancel()}
-    />
+    <>
+      <div
+        className="fixed inset-0 z-[400] cursor-default bg-[rgba(26,37,66,.38)]"
+        onClick={() => pending.cancel()}
+      />
+      <TargetingOverlay
+        targetingIntents={targetingIntents}
+        containerSelector=".board-bg"
+        zoneSelector={GUNDAM_ZONE_SELECTOR}
+        className="z-[403]"
+      />
+      {candidateIds.map((id) => {
+        const r = targetRects[id];
+        if (!r) return null;
+        const pad = 6;
+        const isHovered = hoveredTargetId === id;
+        return (
+          <div
+            key={id}
+            data-testid={`attack-target-${id}`}
+            onMouseEnter={() => setHoveredTargetId(id)}
+            onMouseLeave={() => setHoveredTargetId(null)}
+            onClick={(e) => {
+              e.stopPropagation();
+              pending.provide("target", id);
+            }}
+            className="fixed z-[404] cursor-crosshair"
+            style={{
+              left: r.left - pad,
+              top: r.top - pad,
+              width: r.width + pad * 2,
+              height: r.height + pad * 2,
+              outline: isHovered ? "2px solid rgba(90,141,255,.75)" : undefined,
+              outlineOffset: 2,
+            }}
+          />
+        );
+      })}
+    </>
   );
 }

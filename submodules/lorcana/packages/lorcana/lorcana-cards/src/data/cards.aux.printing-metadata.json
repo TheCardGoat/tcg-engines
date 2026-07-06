@@ -370,6 +370,28 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3197
   },
+  "set13-042": {
+    "id": "set13-042",
+    "gameCardId": "K9Q",
+    "set": "set13",
+    "cardNumber": 42,
+    "rarity": "uncommon",
+    "author": "Kapik",
+    "flavorText": "“Time for the heffalump healing touch!”",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3196
+  },
+  "set13-043": {
+    "id": "set13-043",
+    "gameCardId": "fpN",
+    "set": "set13",
+    "cardNumber": 43,
+    "rarity": "uncommon",
+    "author": "Oggy Christiansson",
+    "flavorText": "\"Well, that's just great. I guess anyone can be sultan now.\"\n—Iago",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3195
+  },
   "set13-044": {
     "id": "set13-044",
     "gameCardId": "o4M",
@@ -390,6 +412,28 @@
     "flavorText": "“Nice try, stinkweed, but there’s only one thing that can contain me.”",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3193
+  },
+  "set13-046": {
+    "id": "set13-046",
+    "gameCardId": "NS7",
+    "set": "set13",
+    "cardNumber": 46,
+    "rarity": "rare",
+    "author": "Oggy Christiansson",
+    "flavorText": "\"I've got my dinner. Where's yours, Tod?\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3192
+  },
+  "set13-047": {
+    "id": "set13-047",
+    "gameCardId": "8t3",
+    "set": "set13",
+    "cardNumber": 47,
+    "rarity": "common",
+    "author": "Heidi Neunhoffer",
+    "flavorText": "He didn't know how he was going to carry all of this fruit, but he sure was going to try.",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3191
   },
   "set13-048": {
     "id": "set13-048",
@@ -445,6 +489,27 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3186
   },
+  "set13-053": {
+    "id": "set13-053",
+    "gameCardId": "R3I",
+    "set": "set13",
+    "cardNumber": 53,
+    "rarity": "rare",
+    "author": "Pauline Voss",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3185
+  },
+  "set13-054": {
+    "id": "set13-054",
+    "gameCardId": "HAa",
+    "set": "set13",
+    "cardNumber": 54,
+    "rarity": "rare",
+    "author": "Oggy Christiansson",
+    "flavorText": "A copy with even less sense than the original.",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3184
+  },
   "set13-055": {
     "id": "set13-055",
     "gameCardId": "TBN",
@@ -455,6 +520,17 @@
     "flavorText": "You could do a lot worse than make a copy of a goddess.",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3183
+  },
+  "set13-056": {
+    "id": "set13-056",
+    "gameCardId": "gng",
+    "set": "set13",
+    "cardNumber": 56,
+    "rarity": "uncommon",
+    "author": "Giulia Riva",
+    "flavorText": "\"Tink, what do you see over there? Do you think we can get in?\"\n—Peter Pan",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3182
   },
   "set13-057": {
     "id": "set13-057",
@@ -508,6 +584,16 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3177
   },
+  "set13-062": {
+    "id": "set13-062",
+    "gameCardId": "NXy",
+    "set": "set13",
+    "cardNumber": 62,
+    "rarity": "common",
+    "author": "Valerio Buonfantino",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3176
+  },
   "set13-063": {
     "id": "set13-063",
     "gameCardId": "yFO",
@@ -551,6 +637,16 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3162
   },
+  "set13-077": {
+    "id": "set13-077",
+    "gameCardId": "S4A",
+    "set": "set13",
+    "cardNumber": 77,
+    "rarity": "rare",
+    "author": "Marcel Berg",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3161
+  },
   "set13-078": {
     "id": "set13-078",
     "gameCardId": "Fk5",
@@ -582,6 +678,28 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3158
   },
+  "set13-081": {
+    "id": "set13-081",
+    "gameCardId": "zm4",
+    "set": "set13",
+    "cardNumber": 81,
+    "rarity": "uncommon",
+    "author": "Noukah",
+    "flavorText": "“This would be a lot easier if these vines tasted better.\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3157
+  },
+  "set13-082": {
+    "id": "set13-082",
+    "gameCardId": "5au",
+    "set": "set13",
+    "cardNumber": 82,
+    "rarity": "common",
+    "author": "Kendall Hale",
+    "flavorText": "“An Explorer is a friend to all, be it plants or fish or tiny mole.”",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3156
+  },
   "set13-083": {
     "id": "set13-083",
     "gameCardId": "4I7",
@@ -603,6 +721,38 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3154
   },
+  "set13-085": {
+    "id": "set13-085",
+    "gameCardId": "OkJ",
+    "set": "set13",
+    "cardNumber": 85,
+    "rarity": "common",
+    "author": "Alejandro Hernandez",
+    "flavorText": "“I don’t know what that is, but let's send it back where it came from.”",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3153
+  },
+  "set13-086": {
+    "id": "set13-086",
+    "gameCardId": "j84",
+    "set": "set13",
+    "cardNumber": 86,
+    "rarity": "uncommon",
+    "author": "Luis Huerta",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3152
+  },
+  "set13-087": {
+    "id": "set13-087",
+    "gameCardId": "J61",
+    "set": "set13",
+    "cardNumber": 87,
+    "rarity": "common",
+    "author": "Rachel Elese",
+    "flavorText": "Minnie peered through the snarl of thorns. Was that a narrow passage into the vine? She wondered how far it might go.",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3151
+  },
   "set13-088": {
     "id": "set13-088",
     "gameCardId": "kl5",
@@ -614,6 +764,17 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3150
   },
+  "set13-089": {
+    "id": "set13-089",
+    "gameCardId": "ATq",
+    "set": "set13",
+    "cardNumber": 89,
+    "rarity": "rare",
+    "author": "Simone Giovanardi",
+    "flavorText": "The replicas the vine created glowed with an infusion of mixed ink.",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3149
+  },
   "set13-090": {
     "id": "set13-090",
     "gameCardId": "7VX",
@@ -624,6 +785,17 @@
     "flavorText": "\"And then Chief was sleeping, but the vine touched his leg, and he jumped up in the air like <this>!\"\n—Copper",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3148
+  },
+  "set13-091": {
+    "id": "set13-091",
+    "gameCardId": "yZR",
+    "set": "set13",
+    "cardNumber": 91,
+    "rarity": "uncommon",
+    "author": "Carmine Pucci",
+    "flavorText": "“She’s alive! Alive, I tell you!”\n—Dr. Bushroot",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3147
   },
   "set13-092": {
     "id": "set13-092",
@@ -666,6 +838,27 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3143
   },
+  "set13-096": {
+    "id": "set13-096",
+    "gameCardId": "rAy",
+    "set": "set13",
+    "cardNumber": 96,
+    "rarity": "common",
+    "author": "Celeste Jamneck",
+    "flavorText": "\"Okay, so this vine? Not in my plans. But I'm a resourceful god. Gotta roll with punches. Adapt. Bring out the sea serpent.\"\n—Hades",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3142
+  },
+  "set13-097": {
+    "id": "set13-097",
+    "gameCardId": "Bqs",
+    "set": "set13",
+    "cardNumber": 97,
+    "rarity": "legendary",
+    "author": "Tom Bancroft / Kristen Breshears",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3141
+  },
   "set13-098": {
     "id": "set13-098",
     "gameCardId": "QUJ",
@@ -696,6 +889,49 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3138
   },
+  "set13-109": {
+    "id": "set13-109",
+    "gameCardId": "S3p",
+    "set": "set13",
+    "cardNumber": 109,
+    "rarity": "rare",
+    "author": "Mike Parker",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3129
+  },
+  "set13-110": {
+    "id": "set13-110",
+    "gameCardId": "Znx",
+    "set": "set13",
+    "cardNumber": 110,
+    "rarity": "common",
+    "author": "Lissette Carrera",
+    "flavorText": "\"Is there anything on this menu that isn't swimming in gravy?\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3128
+  },
+  "set13-111": {
+    "id": "set13-111",
+    "gameCardId": "Cqh",
+    "set": "set13",
+    "cardNumber": 111,
+    "rarity": "uncommon",
+    "author": "Lissette Carrera / Brett Owens",
+    "flavorText": "\"Give me the chili cheese sampler, hold the chili and put the cheese on the side. Oh, and extra gravy . . . Hey! Are you listening? I'm ordering here!\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3127
+  },
+  "set13-112": {
+    "id": "set13-112",
+    "gameCardId": "W16",
+    "set": "set13",
+    "cardNumber": 112,
+    "rarity": "common",
+    "author": "Alexandria Neonakis",
+    "flavorText": "\"Look, Copper. The vine's no match for that bear!\"\n—Amos Slade",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3126
+  },
   "set13-113": {
     "id": "set13-113",
     "gameCardId": "Vst",
@@ -705,6 +941,17 @@
     "author": "Rodrigo Camilo",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3125
+  },
+  "set13-114": {
+    "id": "set13-114",
+    "gameCardId": "ABg",
+    "set": "set13",
+    "cardNumber": 114,
+    "rarity": "common",
+    "author": "Mike Parker",
+    "flavorText": "\"Hey look, I'm here! No wait, I'm over here now! Nope, back here again!\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3124
   },
   "set13-115": {
     "id": "set13-115",
@@ -758,6 +1005,27 @@
     "author": "Kapik",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3119
+  },
+  "set13-120": {
+    "id": "set13-120",
+    "gameCardId": "ZQC",
+    "set": "set13",
+    "cardNumber": 120,
+    "rarity": "rare",
+    "author": "Malia Ewart",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3118
+  },
+  "set13-121": {
+    "id": "set13-121",
+    "gameCardId": "9lN",
+    "set": "set13",
+    "cardNumber": 121,
+    "rarity": "common",
+    "author": "Lauren Levering",
+    "flavorText": "\"Come on, groove with ol' King Louie. You cats need to relax!\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3117
   },
   "set13-122": {
     "id": "set13-122",
@@ -852,6 +1120,17 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3108
   },
+  "set13-131": {
+    "id": "set13-131",
+    "gameCardId": "W1X",
+    "set": "set13",
+    "cardNumber": 131,
+    "rarity": "common",
+    "author": "Clio Schaffner",
+    "flavorText": "\"Come on, you big bully. You've gotta be faster than that!\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3107
+  },
   "set13-132": {
     "id": "set13-132",
     "gameCardId": "kAB",
@@ -861,6 +1140,69 @@
     "author": "Ian MacDonald",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3106
+  },
+  "set13-133": {
+    "id": "set13-133",
+    "gameCardId": "d3T",
+    "set": "set13",
+    "cardNumber": 133,
+    "rarity": "legendary",
+    "author": "Mike Parker",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3105
+  },
+  "set13-143": {
+    "id": "set13-143",
+    "gameCardId": "id9",
+    "set": "set13",
+    "cardNumber": 143,
+    "rarity": "common",
+    "author": "Lissette Carrera",
+    "flavorText": "Launchpad: “Don’t worry, DW, I’ll make sure we crash there safely!” \nDarkwing Duck: “That’s what I'm afraid of.”",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3095
+  },
+  "set13-144": {
+    "id": "set13-144",
+    "gameCardId": "BnV",
+    "set": "set13",
+    "cardNumber": 144,
+    "rarity": "uncommon",
+    "author": "Kendall Hale",
+    "flavorText": "“A ball! Oh boy, oh boy, a ball!”",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3094
+  },
+  "set13-145": {
+    "id": "set13-145",
+    "gameCardId": "zgm",
+    "set": "set13",
+    "cardNumber": 145,
+    "rarity": "common",
+    "author": "Matteo Marzocco",
+    "flavorText": "\"And I'm sure you filed your paperwork correctly. For once.\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3093
+  },
+  "set13-146": {
+    "id": "set13-146",
+    "gameCardId": "ZPO",
+    "set": "set13",
+    "cardNumber": 146,
+    "rarity": "rare",
+    "author": "Carmine Pucci",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3092
+  },
+  "set13-147": {
+    "id": "set13-147",
+    "gameCardId": "Lhx",
+    "set": "set13",
+    "cardNumber": 147,
+    "rarity": "legendary",
+    "author": "Simone Giovanardi",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3091
   },
   "set13-148": {
     "id": "set13-148",
@@ -873,6 +1215,17 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3090
   },
+  "set13-149": {
+    "id": "set13-149",
+    "gameCardId": "i2l",
+    "set": "set13",
+    "cardNumber": 149,
+    "rarity": "common",
+    "author": "Yrgane Ramon",
+    "flavorText": "“Adventure has a way of finding us wherever we go.”",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3089
+  },
   "set13-150": {
     "id": "set13-150",
     "gameCardId": "iGe",
@@ -884,6 +1237,28 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3088
   },
+  "set13-151": {
+    "id": "set13-151",
+    "gameCardId": "iIf",
+    "set": "set13",
+    "cardNumber": 151,
+    "rarity": "rare",
+    "author": "Carmine Pucci",
+    "flavorText": "“Now we will find the small mailman and The One Who Smells of Prunes.”",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3087
+  },
+  "set13-152": {
+    "id": "set13-152",
+    "gameCardId": "7g9",
+    "set": "set13",
+    "cardNumber": 152,
+    "rarity": "common",
+    "author": "Jiahui Eva Gao",
+    "flavorText": "\"Show them what it takes to be our top scarer!\"\n—Henry J. Waternoose III",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3086
+  },
   "set13-153": {
     "id": "set13-153",
     "gameCardId": "ioe",
@@ -893,6 +1268,39 @@
     "author": "Kendall Hale",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3085
+  },
+  "set13-154": {
+    "id": "set13-154",
+    "gameCardId": "ckw",
+    "set": "set13",
+    "cardNumber": 154,
+    "rarity": "common",
+    "author": "Marta Andreeva",
+    "flavorText": "“It’s okay, Piglet. Being scared doesn’t mean you’re not brave. In fact, I think you can only be brave if you’re scared first!”\n—Christopher Robin, Hunny Sage",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3084
+  },
+  "set13-155": {
+    "id": "set13-155",
+    "gameCardId": "JLp",
+    "set": "set13",
+    "cardNumber": 155,
+    "rarity": "common",
+    "author": "David Otalora",
+    "flavorText": "\"Oh boy, I knew climbing this vine would be worth it. There's so much to see up here!\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3083
+  },
+  "set13-156": {
+    "id": "set13-156",
+    "gameCardId": "iib",
+    "set": "set13",
+    "cardNumber": 156,
+    "rarity": "uncommon",
+    "author": "Julian del Rey",
+    "flavorText": "\"This little guy is so hideous! I love it! And the way it sucks up flood ink? Even I couldn't have planned it any better.\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3082
   },
   "set13-157": {
     "id": "set13-157",
@@ -913,6 +1321,17 @@
     "author": "Matteo Marzocco",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3080
+  },
+  "set13-159": {
+    "id": "set13-159",
+    "gameCardId": "0c7",
+    "set": "set13",
+    "cardNumber": 159,
+    "rarity": "common",
+    "author": "Matteo Marzocco",
+    "flavorText": "The vine created defenders to keep silent watch on the surrounding lands.",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3079
   },
   "set13-160": {
     "id": "set13-160",
@@ -946,6 +1365,27 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3076
   },
+  "set13-163": {
+    "id": "set13-163",
+    "gameCardId": "Ush",
+    "set": "set13",
+    "cardNumber": 163,
+    "rarity": "rare",
+    "author": "Edu Francisco",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3075
+  },
+  "set13-164": {
+    "id": "set13-164",
+    "gameCardId": "AWz",
+    "set": "set13",
+    "cardNumber": 164,
+    "rarity": "uncommon",
+    "author": "Grace Tran",
+    "flavorText": "\"It’s okay. Pile more things on. I’ll be fine.”",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3074
+  },
   "set13-165": {
     "id": "set13-165",
     "gameCardId": "UbM",
@@ -955,6 +1395,27 @@
     "author": "Carlos Luzzi",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3073
+  },
+  "set13-176": {
+    "id": "set13-176",
+    "gameCardId": "Fqd",
+    "set": "set13",
+    "cardNumber": 176,
+    "rarity": "common",
+    "author": "Mike Parker",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3062
+  },
+  "set13-177": {
+    "id": "set13-177",
+    "gameCardId": "bsG",
+    "set": "set13",
+    "cardNumber": 177,
+    "rarity": "rare",
+    "author": "Alejandro Hernandez",
+    "flavorText": "\"Wait, that's not an Aladdin glimmer—that's a vineling replica!\" \n—Shanzay, an Illumineer",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3061
   },
   "set13-178": {
     "id": "set13-178",
@@ -977,6 +1438,28 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3059
   },
+  "set13-180": {
+    "id": "set13-180",
+    "gameCardId": "kT3",
+    "set": "set13",
+    "cardNumber": 180,
+    "rarity": "common",
+    "author": "Patri Balanovsky",
+    "flavorText": "\"MY frog! It is very important!\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3058
+  },
+  "set13-181": {
+    "id": "set13-181",
+    "gameCardId": "y59",
+    "set": "set13",
+    "cardNumber": 181,
+    "rarity": "common",
+    "author": "Federico Maria Cugliari",
+    "flavorText": "“Now, look here, you overgrown weed . . .\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3057
+  },
   "set13-182": {
     "id": "set13-182",
     "gameCardId": "r0B",
@@ -987,6 +1470,38 @@
     "flavorText": "\"Three pork combos, extra bacon on the side, two chili cheese samplers, a basket of liver and onion rings, a catch of the day, and a steak cut in the shape of a trout.\"",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3056
+  },
+  "set13-183": {
+    "id": "set13-183",
+    "gameCardId": "F0D",
+    "set": "set13",
+    "cardNumber": 183,
+    "rarity": "common",
+    "author": "Javi Salas",
+    "flavorText": "\"Mom? I'm sorry to call you, but um, I think there's a pretty big problem outside the house.\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3055
+  },
+  "set13-184": {
+    "id": "set13-184",
+    "gameCardId": "0zk",
+    "set": "set13",
+    "cardNumber": 184,
+    "rarity": "uncommon",
+    "author": "Chemène de Heus",
+    "flavorText": "\"No one can hide from me. From here I can see <everything>!\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3054
+  },
+  "set13-185": {
+    "id": "set13-185",
+    "gameCardId": "dxV",
+    "set": "set13",
+    "cardNumber": 185,
+    "rarity": "common",
+    "author": "Yu Nguyen",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3053
   },
   "set13-186": {
     "id": "set13-186",
@@ -1042,6 +1557,17 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3048
   },
+  "set13-191": {
+    "id": "set13-191",
+    "gameCardId": "Ocg",
+    "set": "set13",
+    "cardNumber": 191,
+    "rarity": "rare",
+    "author": "Diego Machuca",
+    "flavorText": "\"You want that extra crispy?\"",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3047
+  },
   "set13-192": {
     "id": "set13-192",
     "gameCardId": "v6P",
@@ -1052,6 +1578,27 @@
     "flavorText": "This replica is just as good in a fight as the original—no training necessary.",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3046
+  },
+  "set13-193": {
+    "id": "set13-193",
+    "gameCardId": "mTj",
+    "set": "set13",
+    "cardNumber": 193,
+    "rarity": "common",
+    "author": "Liz Richards",
+    "flavorText": "\"You are the only one I can trust, my pet.\"\n—Maleficent",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3045
+  },
+  "set13-194": {
+    "id": "set13-194",
+    "gameCardId": "MAE",
+    "set": "set13",
+    "cardNumber": 194,
+    "rarity": "legendary",
+    "author": "Therese Vildefall",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3044
   },
   "set13-195": {
     "id": "set13-195",
@@ -1130,6 +1677,149 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3012
   },
+  "set13-227-enchanted": {
+    "id": "set13-227-enchanted",
+    "gameCardId": "3UG",
+    "set": "set13",
+    "cardNumber": 227,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Clio Schaffner",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3011
+  },
+  "set13-228-enchanted": {
+    "id": "set13-228-enchanted",
+    "gameCardId": "ZP1",
+    "set": "set13",
+    "cardNumber": 228,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Giacomo Boni",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3010
+  },
+  "set13-229-enchanted": {
+    "id": "set13-229-enchanted",
+    "gameCardId": "eNg",
+    "set": "set13",
+    "cardNumber": 229,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Mariana Moreno",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3009
+  },
+  "set13-230-enchanted": {
+    "id": "set13-230-enchanted",
+    "gameCardId": "bF7",
+    "set": "set13",
+    "cardNumber": 230,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Maxine Vee",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3008
+  },
+  "set13-231-enchanted": {
+    "id": "set13-231-enchanted",
+    "gameCardId": "4YL",
+    "set": "set13",
+    "cardNumber": 231,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Kendall Hale",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3007
+  },
+  "set13-232-enchanted": {
+    "id": "set13-232-enchanted",
+    "gameCardId": "bLm",
+    "set": "set13",
+    "cardNumber": 232,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Nuel Salinas / Palo Graglia",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3006
+  },
+  "set13-233-enchanted": {
+    "id": "set13-233-enchanted",
+    "gameCardId": "FAK",
+    "set": "set13",
+    "cardNumber": 233,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Alice Pisoni",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3005
+  },
+  "set13-234-enchanted": {
+    "id": "set13-234-enchanted",
+    "gameCardId": "5EY",
+    "set": "set13",
+    "cardNumber": 234,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Koni",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3004
+  },
+  "set13-235-enchanted": {
+    "id": "set13-235-enchanted",
+    "gameCardId": "a1i",
+    "set": "set13",
+    "cardNumber": 235,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Erica D’urso",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3003
+  },
+  "set13-236-enchanted": {
+    "id": "set13-236-enchanted",
+    "gameCardId": "33r",
+    "set": "set13",
+    "cardNumber": 236,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Rob Di Salvo",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3002
+  },
+  "set13-237-enchanted": {
+    "id": "set13-237-enchanted",
+    "gameCardId": "Lco",
+    "set": "set13",
+    "cardNumber": 237,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Natalie Dombois",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3001
+  },
+  "set13-238-enchanted": {
+    "id": "set13-238-enchanted",
+    "gameCardId": "ZTE",
+    "set": "set13",
+    "cardNumber": 238,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Kenneth Anderson",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3000
+  },
+  "set13-239-enchanted": {
+    "id": "set13-239-enchanted",
+    "gameCardId": "8NM",
+    "set": "set13",
+    "cardNumber": 239,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Jane Pica",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -2999
+  },
   "set13-240-enchanted": {
     "id": "set13-240-enchanted",
     "gameCardId": "zCZ",
@@ -1140,6 +1830,39 @@
     "author": "Eric Tan",
     "setRotationState": "CoreConstructed",
     "sortNumber": -2998
+  },
+  "set13-241-enchanted": {
+    "id": "set13-241-enchanted",
+    "gameCardId": "6a4",
+    "set": "set13",
+    "cardNumber": 241,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Rob Di Salvo",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -2997
+  },
+  "set13-242-enchanted": {
+    "id": "set13-242-enchanted",
+    "gameCardId": "nWN",
+    "set": "set13",
+    "cardNumber": 242,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Lyle Cruse",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -2996
+  },
+  "set13-243-enchanted": {
+    "id": "set13-243-enchanted",
+    "gameCardId": "dpD",
+    "set": "set13",
+    "cardNumber": 243,
+    "rarity": "enchanted",
+    "specialRarity": "enchanted",
+    "author": "Tom Whalen",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -2995
   },
   "set13-244-iconic": {
     "id": "set13-244-iconic",
@@ -1186,7 +1909,7 @@
     "promoSheetCode": "PD1",
     "author": "Oggy Christiansson",
     "flavorText": "\"I've got my dinner. Where's yours, Tod?\"",
-    "setRotationState": "InfinityConstructed",
+    "setRotationState": "CoreConstructed",
     "sortNumber": -2988
   },
   "set13-pd1-005-promo": {
@@ -1198,7 +1921,7 @@
     "specialRarity": "promo",
     "promoSheetCode": "PD1",
     "author": "Marcel Berg",
-    "setRotationState": "InfinityConstructed",
+    "setRotationState": "CoreConstructed",
     "sortNumber": -2987
   },
   "set13-pd1-006-promo": {
@@ -1222,7 +1945,7 @@
     "specialRarity": "promo",
     "promoSheetCode": "PD1",
     "author": "Carmine Pucci",
-    "setRotationState": "InfinityConstructed",
+    "setRotationState": "CoreConstructed",
     "sortNumber": -2985
   },
   "set13-pd1-008-promo": {
@@ -25203,6 +25926,17 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3130
   },
+  "set13-141": {
+    "id": "set13-141",
+    "gameCardId": "pbQ",
+    "set": "set13",
+    "cardNumber": 141,
+    "rarity": "rare",
+    "author": "Jimmy Lo",
+    "flavorText": "A deep rumble echoed through the forest as the vine ripped the castle from its foundation.",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3097
+  },
   "set13-142": {
     "id": "set13-142",
     "gameCardId": "Zwu",
@@ -25212,6 +25946,26 @@
     "author": "Wietse Treurniet",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3096
+  },
+  "set13-175": {
+    "id": "set13-175",
+    "gameCardId": "gIc",
+    "set": "set13",
+    "cardNumber": 175,
+    "rarity": "uncommon",
+    "author": "Jeremy Adams / Jaime Puga",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3063
+  },
+  "set13-207": {
+    "id": "set13-207",
+    "gameCardId": "Rb1",
+    "set": "set13",
+    "cardNumber": 207,
+    "rarity": "rare",
+    "author": "Douglas De La Hoz",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3031
   },
   "set12-034": {
     "id": "set12-034",
@@ -26259,6 +27013,17 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3202
   },
+  "set13-070": {
+    "id": "set13-070",
+    "gameCardId": "L8A",
+    "set": "set13",
+    "cardNumber": 70,
+    "rarity": "uncommon",
+    "author": "Alex Accorsi / Leonardo Giammichele",
+    "flavorText": "\"Looks like another vineling's on the loose. Let's go get it.\" \n—Venturo, an Illumineer",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3168
+  },
   "set13-071": {
     "id": "set13-071",
     "gameCardId": "7J0",
@@ -26268,6 +27033,28 @@
     "author": "Kaitlin Cuthbertson",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3167
+  },
+  "set13-072": {
+    "id": "set13-072",
+    "gameCardId": "Srm",
+    "set": "set13",
+    "cardNumber": 72,
+    "rarity": "common",
+    "author": "Andrew Theophilopoulos",
+    "flavorText": "\"Soon it'll drain every drop of ink in Lorcana . . .\"\n—Hana, an Illumineer",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3166
+  },
+  "set13-105": {
+    "id": "set13-105",
+    "gameCardId": "5EJ",
+    "set": "set13",
+    "cardNumber": 105,
+    "rarity": "common",
+    "author": "Simone Giovanardi",
+    "flavorText": "It doesn't have much flavor.",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3133
   },
   "set13-106": {
     "id": "set13-106",
@@ -26279,6 +27066,16 @@
     "flavorText": "\"Thanks for the adventure—now go have a new one! Love, Ellie\"",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3132
+  },
+  "set13-107": {
+    "id": "set13-107",
+    "gameCardId": "sMI",
+    "set": "set13",
+    "cardNumber": 107,
+    "rarity": "rare",
+    "author": "Sarah Schmidt",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3131
   },
   "set13-139": {
     "id": "set13-139",
@@ -26300,6 +27097,36 @@
     "author": "Wietse Treurniet",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3098
+  },
+  "set13-170": {
+    "id": "set13-170",
+    "gameCardId": "NTO",
+    "set": "set13",
+    "cardNumber": 170,
+    "rarity": "common",
+    "author": "Jaime Puga",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3068
+  },
+  "set13-171": {
+    "id": "set13-171",
+    "gameCardId": "3gV",
+    "set": "set13",
+    "cardNumber": 171,
+    "rarity": "uncommon",
+    "author": "Moniek Schilder",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3067
+  },
+  "set13-172": {
+    "id": "set13-172",
+    "gameCardId": "3R1",
+    "set": "set13",
+    "cardNumber": 172,
+    "rarity": "rare",
+    "author": "Rudy Hill",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3066
   },
   "set13-173": {
     "id": "set13-173",
@@ -26331,6 +27158,27 @@
     "author": "Kaitlin Cuthbertson",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3034
+  },
+  "set13-205": {
+    "id": "set13-205",
+    "gameCardId": "qNx",
+    "set": "set13",
+    "cardNumber": 205,
+    "rarity": "uncommon",
+    "author": "Lissette Carrera",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3033
+  },
+  "set13-206": {
+    "id": "set13-206",
+    "gameCardId": "Kjs",
+    "set": "set13",
+    "cardNumber": 206,
+    "rarity": "uncommon",
+    "author": "Andrew Peña / Sergio Mancinelli",
+    "flavorText": "\"Oh, this is fascinating! How does it do that?\"\n—Hana, an Illumineer",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3032
   },
   "set12-033": {
     "id": "set12-033",
@@ -28613,6 +29461,16 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3203
   },
+  "set13-064": {
+    "id": "set13-064",
+    "gameCardId": "dYy",
+    "set": "set13",
+    "cardNumber": 64,
+    "rarity": "common",
+    "author": "Amanda Duarte",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3174
+  },
   "set13-065": {
     "id": "set13-065",
     "gameCardId": "QV6",
@@ -28622,6 +29480,17 @@
     "author": "Cam Kendell",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3173
+  },
+  "set13-066": {
+    "id": "set13-066",
+    "gameCardId": "eVx",
+    "set": "set13",
+    "cardNumber": 66,
+    "rarity": "common",
+    "author": "Geoffrey Boudout",
+    "flavorText": "\"What's making that awful noise? It sounds like it's coming our way.\"\n—Shanzay, an Illumineer",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3172
   },
   "set13-067": {
     "id": "set13-067",
@@ -28644,6 +29513,26 @@
     "flavorText": "The glow of the vine-created replicas was beautiful . . . but unsettling.",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3170
+  },
+  "set13-069": {
+    "id": "set13-069",
+    "gameCardId": "vU3",
+    "set": "set13",
+    "cardNumber": 69,
+    "rarity": "common",
+    "author": "Matt Chapman",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3169
+  },
+  "set13-101": {
+    "id": "set13-101",
+    "gameCardId": "ib5",
+    "set": "set13",
+    "cardNumber": 101,
+    "rarity": "rare",
+    "author": "Kasia Brzezinska",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3137
   },
   "set13-102": {
     "id": "set13-102",
@@ -28677,6 +29566,27 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3134
   },
+  "set13-134": {
+    "id": "set13-134",
+    "gameCardId": "9IV",
+    "set": "set13",
+    "cardNumber": 134,
+    "rarity": "uncommon",
+    "author": "Kasia Brzezinska",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3104
+  },
+  "set13-135": {
+    "id": "set13-135",
+    "gameCardId": "qZ0",
+    "set": "set13",
+    "cardNumber": 135,
+    "rarity": "uncommon",
+    "author": "Ian MacDonald",
+    "flavorText": "“Please remain calm. This is not a drill.”\n—CDA Agent",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3103
+  },
   "set13-136": {
     "id": "set13-136",
     "gameCardId": "rm3",
@@ -28699,6 +29609,16 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3101
   },
+  "set13-138": {
+    "id": "set13-138",
+    "gameCardId": "5UQ",
+    "set": "set13",
+    "cardNumber": 138,
+    "rarity": "common",
+    "author": "Serena Wade",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3100
+  },
   "set13-166": {
     "id": "set13-166",
     "gameCardId": "qAT",
@@ -28710,6 +29630,26 @@
     "setRotationState": "CoreConstructed",
     "sortNumber": -3072
   },
+  "set13-167": {
+    "id": "set13-167",
+    "gameCardId": "Uhe",
+    "set": "set13",
+    "cardNumber": 167,
+    "rarity": "common",
+    "author": "Oggy Christiansson",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3071
+  },
+  "set13-168": {
+    "id": "set13-168",
+    "gameCardId": "X0p",
+    "set": "set13",
+    "cardNumber": 168,
+    "rarity": "common",
+    "author": "Brian Kesinger",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3070
+  },
   "set13-169": {
     "id": "set13-169",
     "gameCardId": "beG",
@@ -28720,6 +29660,26 @@
     "flavorText": "“Hey, careful, buddy! That’s not me. That's a vine copy of me!\"\n—Aladdin",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3069
+  },
+  "set13-198": {
+    "id": "set13-198",
+    "gameCardId": "jI0",
+    "set": "set13",
+    "cardNumber": 198,
+    "rarity": "common",
+    "author": "Viv Tanner",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3040
+  },
+  "set13-199": {
+    "id": "set13-199",
+    "gameCardId": "zjC",
+    "set": "set13",
+    "cardNumber": 199,
+    "rarity": "common",
+    "author": "Emily Abeydeera",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3039
   },
   "set13-200": {
     "id": "set13-200",
@@ -28741,6 +29701,16 @@
     "flavorText": "\"You know, this happens a lot more often than you'd think.\"",
     "setRotationState": "CoreConstructed",
     "sortNumber": -3037
+  },
+  "set13-202": {
+    "id": "set13-202",
+    "gameCardId": "MBy",
+    "set": "set13",
+    "cardNumber": 202,
+    "rarity": "rare",
+    "author": "Max Ulichney",
+    "setRotationState": "CoreConstructed",
+    "sortNumber": -3036
   },
   "set13-203": {
     "id": "set13-203",

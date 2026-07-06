@@ -230,4 +230,5 @@ export {
   type DiceDisplayMode,
   type DiceImageColor,
   type DicierStyle,
+  type AnimationPacing,
 } from "./UserConfigContext";

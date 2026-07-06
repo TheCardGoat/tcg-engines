@@ -4,7 +4,7 @@ export const liloPatientWeaverI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Lilo",
     version: "Patient Weaver",
-    text: "<Support>",
+    text: "Support",
   },
   de: {
     name: "Lilo",

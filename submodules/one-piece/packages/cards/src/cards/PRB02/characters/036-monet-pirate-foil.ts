@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op05Monet036 } from "../../OP05/characters/036-monet.ts";
 import { prb02MonetPirateFoil036I18n } from "./036-monet-pirate-foil.i18n.ts";
 
 export const prb02MonetPirateFoil036: CharacterCard = {
-  id: "OP05-036",
-  canonicalId: "OP05-036",
+  ...op05Monet036,
+  id: "OP05-036_p2",
   slug: "monet-pirate-foil",
   name: "Monet (Pirate Foil)",
   printings: [
     {
-      id: "OP05-036",
-      artId: "OP05-036",
+      id: "OP05-036_p2",
+      artId: "OP05-036_p2",
       setCode: "PRB02",
       collectorNumber: "036",
       rarity: "UC",
@@ -24,15 +25,8 @@ export const prb02MonetPirateFoil036: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP05-036_r1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["green"],
   rarity: "UC",
   setId: "PRB02",
-  cost: 3,
-  power: 1000,
-  counter: 1000,
-  traits: ["Donquixote Pirates"],
-  attribute: "special",
   artVariants: [
     {
       type: "other",
@@ -40,35 +34,5 @@ export const prb02MonetPirateFoil036: CharacterCard = {
       imageId: "OP05-036_r1",
     },
   ],
-  effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)[On Block] Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
-  effects: {
-    keywords: ["blocker"],
-    effects: [
-      {
-        trigger: "onBlock",
-        actions: [
-          {
-            action: "rest",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 4,
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb02MonetPirateFoil036I18n,
 };

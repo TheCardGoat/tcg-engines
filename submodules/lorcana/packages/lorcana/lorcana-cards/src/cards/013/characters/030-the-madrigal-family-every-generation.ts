@@ -36,8 +36,8 @@ export const theMadrigalFamilyEveryGeneration: CharacterCard = {
   },
   text: [
     {
-      title: "Madrigal Shift 3 {}",
-      description: "(You may pay 3 {} to play this on top of one of your Madrigal characters.)",
+      title: "Madrigal Shift 3 {I}",
+      description: "(You may pay 3 {I} to play this on top of one of your Madrigal characters.)",
     },
     {
       title: "FAMILY BLESSINGS",

@@ -290,6 +290,47 @@
         ]
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Amanda Duarte",
+        "card_identifier": "64/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3035,
+        "deck_building_id": "2c7262447d3546a158c309445b26dc760753a843",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Du hast jetzt Feuer",
+        "rarity": "COMMON",
+        "rules_text": "(Du kannst einen Charakter, der 2 oder mehr kostet, {E}, damit er dieses Lied kostenlos singt.)%Ein Charakter deiner Wahl erhält in diesem Zug <Rasant> und <Herausfordern> +2. (Er kann im selben Zug herausfordern, in dem er ausgespielt wird. Während er herausfordert, erhält er +2 {S}.)",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3174,
+        "subtypes": [
+          "Lied"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/64_ab51088139b124fb2ee22de8d98b5dbb3f54b457.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/64_ef8888f46648f8bc6440321f464b9ecc01f7e54c.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/64_ef8888f46648f8bc6440321f464b9ecc01f7e54c.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/64_ca36f5567e2d429beb9f7323514305162c2fd3f2.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
         "abilities": [
           "Gemeinsam singen"
         ],
@@ -328,6 +369,45 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/65_724c69cddd69b893639e227b888200c713e286b5.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/65_f8cf1eb536f4b240e1be3defb373bc1c532538df.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Geoffrey Boudout",
+        "card_identifier": "66/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3037,
+        "deck_building_id": "42bd02a1ae1b0bab87b59d8bfd527fe5875fb09a",
+        "flavor_text": "„Was verursacht dieses schreckliche Geräusch? Es klingt, als käme es auf uns zu.“%—Shanzay, eine Luminari",
+        "ink_convertible": false,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Versteinern",
+        "rarity": "COMMON",
+        "rules_text": "Erschöpfe einen gegnerischen Charakter deiner Wahl.",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3172,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/66_f0574606215bd91ac1c5e27c6ccfce3aa2c187c6.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/66_6c17fd22499bd24932b47e4fb8749ae08edbeaf7.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/66_6c17fd22499bd24932b47e4fb8749ae08edbeaf7.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/66_5e860f9e1b348e8a788947114faeae7be5efb6a9.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -406,6 +486,87 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/68_23385d656bbe4fdc947461e253f2f9179db46be0.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/68_d3340c8da90791c135c05027ec8431a7db6c792c.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Matt Chapman",
+        "card_identifier": "69/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3040,
+        "deck_building_id": "c2efd3b0e6b19ba9b102240f751a97b278550930",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Knappes Entkommen",
+        "rarity": "COMMON",
+        "rules_text": "Schicke bis zu 2 Charaktere, Gegenstände oder Orte deiner Wahl, die je 2 oder weniger kosten, auf die zugehörige Hand zurück.",
+        "searchable_keywords": [
+          "Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3169,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/69_a928a3b8712a4096346f3407871451bd8449716a.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/69_62d1a4d69d7c9d135992eb768d6a7ad60e8f5218.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/69_62d1a4d69d7c9d135992eb768d6a7ad60e8f5218.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/69_4586d557021b32d0fbca3d9e77908474dcdcca80.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Kasia Brzezinska",
+        "card_identifier": "101/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3072,
+        "deck_building_id": "51ce85578439127e6a31924f10d9582a6074fc96",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Die Blume verdorrt",
+        "rarity": "RARE",
+        "rules_text": "(Du kannst einen Charakter, der 4 oder mehr kostet, {E}, damit er dieses Lied kostenlos singt.)%Füge jedem gegnerischen beschädigten Charakter 2 Schaden zu.",
+        "searchable_keywords": [
+          "Sword in the Stone",
+          "Die Hexe und der Zauberer"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3137,
+        "subtypes": [
+          "Lied"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/101_6d6d71343bca689eac78c9cf4d4ff2bbbebc08e9.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/101_66799d2c9a9ed261b4b7dd9ec8aea479338063b0.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/101_66799d2c9a9ed261b4b7dd9ec8aea479338063b0.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/101_fc58b00922ca22ddf0befcb2eeb5c70e427c90e3.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -529,6 +690,90 @@
         ]
       },
       {
+        "abilities": [
+          "Gemeinsam singen"
+        ],
+        "additional_info": [],
+        "author": "Kasia Brzezinska",
+        "card_identifier": "134/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3105,
+        "deck_building_id": "81029ecab4e7b2eb4cb8e6a6968f977081a28bf0",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Roter-Mond-Ritual",
+        "rarity": "UNCOMMON",
+        "rules_text": "<Gemeinsam singen> 7 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 7 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)%Verbanne einen Charakter deiner Wahl.",
+        "searchable_keywords": [
+          "Turning Red",
+          "Rot"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3104,
+        "subtypes": [
+          "Lied"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/134_e0eaa2d4ec6a4870a93dc68b74dc8506da5eb73b.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/134_3df5639de8f7270c6db6e4ffb04f28d1695ab6c1.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/134_3df5639de8f7270c6db6e4ffb04f28d1695ab6c1.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/134_2d01bf4a311eedb4cdce40c083951b1fcd518b9f.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Ian MacDonald",
+        "card_identifier": "135/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3106,
+        "deck_building_id": "77fab750bdb722024b46303f2f85b9091af0a9d0",
+        "flavor_text": "„Bitte Ruhe bewahren. Dies ist keine Übung.“%—CDA-Agent",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Alarmstufe Rot",
+        "rarity": "UNCOMMON",
+        "rules_text": "Verbanne einen Charakter deiner Wahl mit 3 oder weniger {S}. Wenn du mindestens einen Monster-Charakter im Spiel hast, verliert eine gegnerische Person deiner Wahl 1 Legende.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monster AG"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3103,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/135_212a94b0db19cc01ef3f366af9177de7a7b7beca.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/135_7a4183ab45360886ffca16a12bed6abdf65203c8.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/135_7a4183ab45360886ffca16a12bed6abdf65203c8.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/135_9267ec3a8124591c8950c6410d2b25f7a3da19e6.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Kevin Sidharta",
@@ -610,6 +855,48 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Serena Wade",
+        "card_identifier": "138/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3109,
+        "deck_building_id": "7d9d987714750ae64938c9fe23514cd03e0c93f1",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Das wird ein Spaß!",
+        "rarity": "COMMON",
+        "rules_text": "(Du kannst einen Charakter, der 2 oder mehr kostet, {E}, damit er dieses Lied kostenlos singt.)%Mache einen Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
+        "searchable_keywords": [
+          "Winnie the Pooh",
+          "Winnie Puuh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3100,
+        "subtypes": [
+          "Lied"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/138_1c12aedb6cf23fff5a2bb37161d168376099a966.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/138_ebb208bc7bd7c9acd5772a98771e34f1d4008692.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/138_ebb208bc7bd7c9acd5772a98771e34f1d4008692.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/138_95c6bab61c7724d9111f3ad04dec6245b1dd4852.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Jaime Puga",
         "card_identifier": "166/207 DE 13",
         "card_sets": [
@@ -650,6 +937,88 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Oggy Christiansson",
+        "card_identifier": "167/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3138,
+        "deck_building_id": "8a301036e71a37a0d6060ae4d82a9ad5a8023f54",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Fokussierte Suche",
+        "rarity": "COMMON",
+        "rules_text": "Schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Charakterkarte namens Kevin, oder eine Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+        "searchable_keywords": [
+          "Oben",
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3071,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/167_b2c8fa6395a167c38b63b8040ef7c303f3b38cd6.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/167_81cadaa4c34a3551b9337b0b68ae2ad0a7105a14.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/167_81cadaa4c34a3551b9337b0b68ae2ad0a7105a14.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/167_70beb9bd732b3550555e36994e3a5144583dd1f9.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Brian Kesinger",
+        "card_identifier": "168/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3139,
+        "deck_building_id": "19dde67ea82278615fc9195fbbd6398035c2325b",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Soviel der Lauferei",
+        "rarity": "COMMON",
+        "rules_text": "(Du kannst einen Charakter, der 3 oder mehr kostet, {E}, damit er dieses Lied kostenlos singt.)%Lege einen Gegenstand oder Ort deiner Wahl verdeckt und erschöpft in den zugehörigen Tintenvorrat.",
+        "searchable_keywords": [
+          "Die Schöne und das Biest",
+          "Beauty and the Beast"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3070,
+        "subtypes": [
+          "Lied"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/168_7a30c1177923d4e3db7848cd59e25d9fd9e0260e.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/168_be35e70083b044f6ed5d2758b9369c701f10f2cc.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/168_be35e70083b044f6ed5d2758b9369c701f10f2cc.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/168_af8ab75fbc66aabb9d2fe361fb6755c793960a52.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Matt Chapman",
         "card_identifier": "169/207 DE 13",
         "card_sets": [
@@ -681,6 +1050,88 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/169_bfad556ef6f5d8c48684383e10f987d7725438fd.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/169_a674b4d39cedc6b8749f6922e20daa1a153e69d4.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Viv Tanner",
+        "card_identifier": "198/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3169,
+        "deck_building_id": "676f8c2057308cd64545014379a9dbb3affa272f",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Kniet vor mir nieder!",
+        "rarity": "COMMON",
+        "rules_text": "Bis zu 2 gegnerische Charaktere deiner Wahl können in ihrem nächsten Zug nicht herausfordern.",
+        "searchable_keywords": [
+          "Dornröschen",
+          "Sleeping Beauty"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3040,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/198_b807e252b6e413fd68d35ac51fee4024137c4b71.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/198_785f577426df6fdcf7b8b55f0a6361d2d2546454.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/198_785f577426df6fdcf7b8b55f0a6361d2d2546454.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/198_cafd3788e419a765fb632b2a72448e9d682fc141.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Emily Abeydeera",
+        "card_identifier": "199/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3170,
+        "deck_building_id": "26fe288ed8c481a316a3e0fab1187c295874db09",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Schützt euer Städtchen",
+        "rarity": "COMMON",
+        "rules_text": "(Du kannst einen Charakter, der 2 oder mehr kostet, {E}, damit er dieses Lied kostenlos singt.)%Deine Charaktere und Orte erhalten bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+        "searchable_keywords": [
+          "Die Schöne und das Biest",
+          "Beauty and the Beast"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3039,
+        "subtypes": [
+          "Lied"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/199_5bdb864c37b210420c0a2fd10786d4ca9010ad01.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/199_1ceae5fb315805c40098cbda01d7c985d133268f.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/199_1ceae5fb315805c40098cbda01d7c985d133268f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/199_4c1d3ea93bd60908766dc36b6926d301b2ed9b55.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -761,6 +1212,46 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/201_751de9fac5f4231148bb337924bc194ca3fe1b2e.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/201_b9d7afcd79b18d483a0ff96f3c1c424ef37953bc.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Max Ulichney",
+        "card_identifier": "202/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3173,
+        "deck_building_id": "2d2deaa86e5436ecabddc1c8b05cfb90df383afc",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Angriff der Ranke!",
+        "rarity": "RARE",
+        "rules_text": "Deine Flutgestalt-Charaktere erhalten in diesem Zug <Robust> +2 und können bereite Charaktere herausfordern. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 2.)",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monster AG"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3036,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/202_9ed6efca8110eb8ed29529562113c4c35e0821fe.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/202_5dc77ddaa3b29db1edac0b1add853df1343f26d4.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/202_5dc77ddaa3b29db1edac0b1add853df1343f26d4.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/202_646960e005ec333d2c530358fc223e78fe9f73a8.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -18322,6 +18813,100 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Kapik",
+        "card_identifier": "42/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3013,
+        "deck_building_id": "de5339b19461f002cd8f07ae1a77bec034b48560",
+        "flavor_text": "„Zeit für die heilenden Hände eines Heffalumps!“",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Lumpi",
+        "quest_value": 2,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Willkommene Heilung\\ Wenn du diesen Charakter ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
+        "searchable_keywords": [
+          "Winnie the Pooh",
+          "Winnie Puuh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3196,
+        "strength": 3,
+        "subtitle": "Honig-Druide",
+        "subtypes": [
+          "Traumgestalt",
+          "Verbündeter",
+          "Honig"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/42_7ec756e17d7df950ccc86455e207994a6f88e22c.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/42_552ea9ce3c92028d19a12b6615eeaf342a6d7ec7.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/42_552ea9ce3c92028d19a12b6615eeaf342a6d7ec7.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/42_502e8e20f59c86df716c73e2af11290813bd6aad.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 6
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Oggy Christiansson",
+        "card_identifier": "43/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3014,
+        "deck_building_id": "0686432c84248b1a2d60eedda28bb969a5823e79",
+        "flavor_text": "„Das ist ja wunderbar. Heutzutage kann wohl jeder Sultan werden.“%—Jago",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Abu",
+        "quest_value": 2,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Herrscher für einen Tag\\ Wenn dieser Charakter erkundet, verbanne ihn.",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3195,
+        "strength": 2,
+        "subtitle": "Weiser Sultan",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/43_ea7125a25baebcc86398d3b792ddce7f8fe25f37.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/43_e13d83ef4fc2c138c2fb54f0d1e032323a65d24d.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/43_e13d83ef4fc2c138c2fb54f0d1e032323a65d24d.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/43_0e42a752fdf125fc33b00863d95d094b377d55e4.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Oggy Christiansson",
         "card_identifier": "44/207 DE 13",
         "card_sets": [
@@ -18409,6 +18994,99 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/45_d76827c3957ce2cdac195a866bc3312874b0a30e.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/45_8e8432b24c89ac0b2fc455ade3a57dd2f0d716cc.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Oggy Christiansson",
+        "card_identifier": "46/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3017,
+        "deck_building_id": "1643027f994ccbc248747b84828f5bc6d46b774c",
+        "flavor_text": "„Ich habe mein Abendessen. Wo ist deins, Cap?“",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Trixi, die Füchsin",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Einschleichen\\ Wenn du diesen Charakter ausspielst, falls du mindestens einen Charakter mit <Wendig> im Spiel hast, darfst du einen Charakter, Gegenstand oder Ort deiner Wahl, der 2 oder weniger kostet, zurück auf die zugehörige Hand schicken.",
+        "searchable_keywords": [
+          "Fox and the Hound",
+          "Cap und Capper"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3192,
+        "strength": 2,
+        "subtitle": "Expertin für den Fischfang",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/46_b6c8a14b149c2b5852740dedcdd74ec4e2b31b26.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/46_58b5ec3d7ca263c1bab367958c4da037d2e625db.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/46_58b5ec3d7ca263c1bab367958c4da037d2e625db.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/46_b0d28ba978c4c2b20bb175622f8d7f3560e6d002.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Heidi Neunhoffer",
+        "card_identifier": "47/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3018,
+        "deck_building_id": "f505c7d0ef299f6af1250ff25f3d76169fcb994e",
+        "flavor_text": "Er wusste nicht, wie er all diese Früchte transportieren sollte, aber er würde es auf jeden Fall versuchen.",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Meeko",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Pocahontas"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3191,
+        "strength": 1,
+        "subtitle": "Glücklicher Waschbär",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/47_7f3b30d8e5873b26bf7f7f5c37816797322b338a.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/47_7905cadf8655b3f75c427bb685a14fddd31e0908.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/47_7905cadf8655b3f75c427bb685a14fddd31e0908.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/47_c40f703977728c5fb7fde6c956c18ea8209c7d88.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -18654,6 +19332,103 @@
         "willpower": 2
       },
       {
+        "abilities": [
+          "Herausfordern"
+        ],
+        "additional_info": [],
+        "author": "Pauline Voss",
+        "card_identifier": "53/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3024,
+        "deck_building_id": "b16f9172eddbc09912a300b2d68cce9d4ae8822e",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Großmutter Wu",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)%\\Ahnenwissen\\ Wenn du einen Charakter auf diesen Charakter gestaltwandelst, sammelst du 1 Legende.",
+        "searchable_keywords": [
+          "Turning Red",
+          "Rot"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3185,
+        "strength": 1,
+        "subtitle": "Weise Großmutter",
+        "subtypes": [
+          "Sagengestalt",
+          "Mentor",
+          "Roter Panda"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/53_965980dcb8087a907bc17a5328831d39b3e1c92b.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/53_445dcb220caf1c01e9a1725d576b47b0ab97da2b.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/53_445dcb220caf1c01e9a1725d576b47b0ab97da2b.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/53_6484d5a9332244355d2bb11f0b13bc5e70fdd490.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Oggy Christiansson",
+        "card_identifier": "54/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3025,
+        "deck_building_id": "1dbac06fad53efe48a56fbc25d8a8983d1a50efd",
+        "flavor_text": "Eine Kopie mit noch weniger Verstand als das Original.",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "HeiHei",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Pflanzliches Heilmittel\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere erkundet, darfst du 1 Schaden von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
+        "searchable_keywords": [
+          "Moana",
+          "Vaiana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3184,
+        "strength": 1,
+        "subtitle": "Von der Ranke erschaffen",
+        "subtypes": [
+          "Flutgestalt",
+          "Rankenbrut"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/54_5c4ce2b8bf5b2aa4f594d8e530a591ad684d3ee9.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/54_0ff42d9e54640a29c2cf4ed7f6c6e04817d28049.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/54_0ff42d9e54640a29c2cf4ed7f6c6e04817d28049.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/54_f7a4acfdd92147f73cbab2ee08434bfe44302924.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Julian del Rey",
@@ -18700,6 +19475,53 @@
           }
         ],
         "willpower": 6
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Giulia Riva",
+        "card_identifier": "56/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3027,
+        "deck_building_id": "210204b9749af3caa1cd8120cd7040e3b28d9eed",
+        "flavor_text": "„Naseweis, was siehst du da drüben? Glaubst du, wir können da reinkommen?“%—Peter Pan",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Naseweis",
+        "quest_value": 2,
+        "rarity": "UNCOMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3182,
+        "strength": 2,
+        "subtitle": "Findet einen Weg",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter",
+          "Fee"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/56_7cf8934099841729755d4d2f0c5ab9c6121772ae.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/56_171dde7e8710284d565a9587f131320edb112a91.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/56_171dde7e8710284d565a9587f131320edb112a91.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/56_74d3aa7bc94ee8dc8adac88d423170029d715f0d.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
       },
       {
         "abilities": [],
@@ -18955,6 +19777,59 @@
           "Gestaltwandel"
         ],
         "additional_info": [],
+        "author": "Valerio Buonfantino",
+        "card_identifier": "62/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3033,
+        "deck_building_id": "c2ebf26b3d2404e6a5568615db755bc2d9227ced",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "SAPPHIRE"
+        ],
+        "name": "Winnie Puuh & Ferkel",
+        "quest_value": 0,
+        "rarity": "SUPER",
+        "rules_text": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Winnie Puuh oder Ferkel auszuspielen.)%\\Magischer Mix\\ Dieser Charakter erhält +1 {L} für jede unterschiedliche Tintenfarbe deiner Charaktere im Spiel.",
+        "searchable_keywords": [
+          "Winnie the Pooh",
+          "Winnie Puuh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3176,
+        "strength": 3,
+        "subtitle": "Honig-Magier",
+        "subtypes": [
+          "Traumgestalt",
+          "Team",
+          "Held",
+          "Magier",
+          "Honig"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/62_372d2ca701580181ed82e4d9d5b2c05d904fd744.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/62_31d1c91e5271f97df3594e32b42939bb1a56a71a.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/62_31d1c91e5271f97df3594e32b42939bb1a56a71a.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/62_0242f9cd786036adf5afe567a8e07d36c9aaceae.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
         "author": "Eri Welli",
         "card_identifier": "63/207 DE 13",
         "card_sets": [
@@ -19147,6 +20022,54 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Marcel Berg",
+        "card_identifier": "77/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3048,
+        "deck_building_id": "df133b3d8538f431b38897a19345273c3abb31f8",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Buzz Lightyear",
+        "quest_value": 2,
+        "rarity": "RARE",
+        "rules_text": "\\Actionfigur\\ Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus. Falls du mindestens einen anderen Spielzeug-Charakter im Spiel hast, wähle stattdessen beide Möglichkeiten aus: %• Du darfst eine Aktionskarte, die 2 oder weniger kostet, von deinem Ablagestapel zurück auf deine Hand nehmen.%• Du darfst eine Aktion, die 2 oder weniger kostet, kostenlos ausspielen.",
+        "searchable_keywords": [
+          "Toy Story"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3161,
+        "strength": 4,
+        "subtitle": "Bietet Schutz",
+        "subtypes": [
+          "Sagengestalt",
+          "Held",
+          "Spielzeug",
+          "Kapitän"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/77_03300ffd1fe3d03e505262c84036e70bf9f3c9c6.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/77_938e4a89c660750da2bd3521d7947fe66ed9b6c1.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/77_938e4a89c660750da2bd3521d7947fe66ed9b6c1.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/77_5e8e66925728d11bdee9bb30c4167c363e5f2ed8.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "French Carlomagno",
         "card_identifier": "78/207 DE 13",
         "card_sets": [
@@ -19290,6 +20213,100 @@
         "willpower": 3
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Noukah",
+        "card_identifier": "81/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3052,
+        "deck_building_id": "d4b995ae6e9058a22b8f025d86e5606e0f4b410c",
+        "flavor_text": "„Das wäre sehr viel einfacher, wenn diese Ranken besser schmecken würden.“",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Cap",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Problemlösung\\ Wenn du diesen Charakter ausspielst, ziehe 2 Karten und wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
+        "searchable_keywords": [
+          "Fox and the Hound",
+          "Cap und Capper"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3157,
+        "strength": 1,
+        "subtitle": "Cleverer Fuchs",
+        "subtypes": [
+          "Sagengestalt",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/81_b8892e906db897933e480e0d2f62fd970f0efc5d.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/81_3fb820ec5a9e58c51a609aba69d9ee7d9e01e874.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/81_3fb820ec5a9e58c51a609aba69d9ee7d9e01e874.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/81_ba7a8d1f18f96be1ae91001ffd24d4f884c2ed8f.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Kendall Hale",
+        "card_identifier": "82/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3053,
+        "deck_building_id": "495ae02f6add9b84f8f440672fd23b4e20af0acb",
+        "flavor_text": "„Wir Naturforscher lieben sie alle, ob Pflanze, Fisch oder winzige Qualle.“",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Russel",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Senioren-Helfer-Abzeichen\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du ihn und einen deiner anderen Charaktere kostenlos zu dem selben Ort bewegen.",
+        "searchable_keywords": [
+          "Oben",
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3156,
+        "strength": 3,
+        "subtitle": "Junior-Naturforscher",
+        "subtypes": [
+          "Sagengestalt",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/82_ea8b7b218d8fdbbfe73c8567a480b92e43afe0d1.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/82_5ad821dd66fc998127660716dcbc62a042ad33ca.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/82_5ad821dd66fc998127660716dcbc62a042ad33ca.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/82_534bab73f9bd2954321eee0b0cd354053641af65.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
         "abilities": [
           "Behütet"
         ],
@@ -19391,6 +20408,145 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Alejandro Hernandez",
+        "card_identifier": "85/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3056,
+        "deck_building_id": "a12782cfb089f25b3615902f5e3103b26ed3d5a2",
+        "flavor_text": "„Ich weiß zwar nicht, was das ist, aber lass es uns dorthin zurückschicken, wo es herkommt.“",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Aladdin",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Beseitige es\\ Wenn du diesen Charakter ausspielst, darfst du 1 {I} bezahlen, um einen Gegenstand deiner Wahl zu verbannen.",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3153,
+        "strength": 3,
+        "subtitle": "Trägt seinen Teil bei",
+        "subtypes": [
+          "Traumgestalt",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/85_ea522bd56cbb2c73f6e5d51c4ee3fa2e6d525a14.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/85_5702cd56fef22c44b3a09f7be422d0c9748183ef.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/85_5702cd56fef22c44b3a09f7be422d0c9748183ef.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/85_f01a38a50894a8d69c5a456487dafcc664197c53.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [
+          "Wendig"
+        ],
+        "additional_info": [],
+        "author": "Luis Huerta",
+        "card_identifier": "86/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3057,
+        "deck_building_id": "d2a64cfb3f3ddcc3109363d347929f182ac36670",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Madame Mim",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "<Wendig> (Nur Charaktere mit Wendig können diesen Charakter herausfordern.)%\\Genau wie ich es mag\\ Alle Karten in deiner Hand zählen als {C}.",
+        "searchable_keywords": [
+          "Sword in the Stone",
+          "Die Hexe und der Zauberer"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3152,
+        "strength": 1,
+        "subtitle": "Kolibri",
+        "subtypes": [
+          "Traumgestalt",
+          "Schurke",
+          "Magier"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/86_1c5ea3f7078d8a440e90f7f84dd2146f576bb30e.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/86_2f1a8e5b28c444c41aa897d108aff139e476ef19.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/86_2f1a8e5b28c444c41aa897d108aff139e476ef19.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/86_1e59849131b4c68ace05ad0ed612acf90d45023b.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 1
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Rachel Elese",
+        "card_identifier": "87/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3058,
+        "deck_building_id": "3b0e8334ac0212cfffe798056686d118756c12f3",
+        "flavor_text": "Minnie spähte durch das Gewirr aus Dornen. War das ein schmaler Durchgang in die Ranke? Sie fragte sich, wie weit er wohl führen würde.",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Minnie Maus",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3151,
+        "strength": 2,
+        "subtitle": "Neugierige Abenteurerin",
+        "subtypes": [
+          "Traumgestalt",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/87_26be9e388b960e0f931ef76536d0aa839e1d3acc.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/87_c7b9d5ea2875113a08a950fe08ba4de3c3e4508e.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/87_c7b9d5ea2875113a08a950fe08ba4de3c3e4508e.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/87_1754ae2d53789739bbb5246b9f8838e25f4d11d7.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Jiahui Eva Gao",
         "card_identifier": "88/207 DE 13",
         "card_sets": [
@@ -19429,6 +20585,52 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/88_6442977804acb916039f64c7daf34516bea00411.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/88_68d43b44dcd6808990da6d84258a72744fabc3da.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Simone Giovanardi",
+        "card_identifier": "89/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3060,
+        "deck_building_id": "a4c2241d5da2c69f97eb188c5c5a5ac6fcc04503",
+        "flavor_text": "Die Kopien, welche die Ranke erschuf, leuchteten aufgrund der gemischten Tinte darin.",
+        "ink_convertible": false,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Peter Pan",
+        "quest_value": 2,
+        "rarity": "RARE",
+        "rules_text": "\\Cleverer Trick\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere herausgefordert wird, wählt die herausfordernde Person 1 Karte aus ihrer Hand und wirft sie ab.",
+        "searchable_keywords": [
+          "Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3149,
+        "strength": 1,
+        "subtitle": "Von der Ranke erschaffen",
+        "subtypes": [
+          "Flutgestalt",
+          "Rankenbrut"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/89_17cfe292120169f03f553f5101e2e4c9a57d7ce4.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/89_ce0645c828d71da5702a36b41215241eb4e521a1.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/89_ce0645c828d71da5702a36b41215241eb4e521a1.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/89_1e022e72415ec4e663bedfd4965c26f6c30842a1.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -19482,6 +20684,54 @@
           }
         ],
         "willpower": 2
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Carmine Pucci",
+        "card_identifier": "91/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3062,
+        "deck_building_id": "fd47e2e841a4ac5a64a7a48b2814d80ed3293cc2",
+        "flavor_text": "„Es funktioniert! Sie ist erschaffen!“%—Dr. Buxbaum",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Knolli",
+        "quest_value": 2,
+        "rarity": "UNCOMMON",
+        "rules_text": "<Kartoffel-Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Gegenstände namens Kartoffel auszuspielen.)",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3147,
+        "strength": 7,
+        "subtitle": "Vampir-Kartoffel",
+        "subtypes": [
+          "Sagengestalt",
+          "Monster"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/91_c282ff669b11915f999f843a9e5a4b0c06b37f04.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/91_706c2a2b83a166fb869775adbb37c14eeb9941c2.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/91_706c2a2b83a166fb869775adbb37c14eeb9941c2.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/91_174ca48c02a2fe342f28994a5e303bd4f393bf59.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 8
       },
       {
         "abilities": [
@@ -19680,6 +20930,105 @@
         "willpower": 1
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Celeste Jamneck",
+        "card_identifier": "96/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3067,
+        "deck_building_id": "cc595126cb80d2dd47a86c2cffe4407cda637a6a",
+        "flavor_text": "„Okay, also diese Ranke? Nicht Teil meines Plans. Aber ich bin ein pfiffiger Gott. Man muss sich den Umständen anpassen. Adaptieren. Lasst die Seeschlange frei.“%—Hades",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Cetus",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Hercules"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3142,
+        "strength": 6,
+        "subtitle": "Mächtige Seeschlange",
+        "subtypes": [
+          "Sagengestalt",
+          "Monster"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/96_311f5f6d54b341120cf184b9fc4c346de7d2762d.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/96_38ac28d594d9332339bd7933602b8d451510da08.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/96_38ac28d594d9332339bd7933602b8d451510da08.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/96_5ad444be32b6cf636683731a3b493101e605d442.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 7
+      },
+      {
+        "abilities": [
+          "Wendig"
+        ],
+        "additional_info": [],
+        "author": "Tom Bancroft / Kristen Breshears",
+        "card_identifier": "97/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3068,
+        "deck_building_id": "1c83fd32d4a179f9672af28642b26fba727cb8a8",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Mushu",
+        "quest_value": 1,
+        "rarity": "LEGENDARY",
+        "rules_text": "<Wendig> (Nur Charaktere mit Wendig können diesen Charakter herausfordern.)%\\Ausschlaggebend\\ Jedes Mal, wenn dieser Charakter erkundet, falls mindestens eine gegnerische Person mehr Karten auf der Hand hat als du, darfst du 1 Karte ziehen.",
+        "searchable_keywords": [
+          "Mulan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3141,
+        "strength": 3,
+        "subtitle": "Verstohlener Drache",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter",
+          "Drache"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/97_fbfd6b00a8edeff6059eaf8ccec4340e13bd14a9.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/97_f2792ffb94f62a8af62180cea3fdd41b136acaf3.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/97_f04faf9bd1e1197f071d3cd93191cc52e279fd6c.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/97_f2792ffb94f62a8af62180cea3fdd41b136acaf3.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/97_35ccf591527cfe93754753da9fd87a80c76b27bf.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/97_f04faf9bd1e1197f071d3cd93191cc52e279fd6c.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
         "abilities": [
           "Gestaltwandel"
         ],
@@ -19839,6 +21188,199 @@
         "willpower": 4
       },
       {
+        "abilities": [
+          "Gestaltwandel",
+          "Wendig"
+        ],
+        "additional_info": [],
+        "author": "Mike Parker",
+        "card_identifier": "109/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3080,
+        "deck_building_id": "31df8e8dd8ecd29b5c3c5b8f96d0d30b70ba77f9",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Flash Parr",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Flash Parr auszuspielen.)%<Wendig> (Nur Charaktere mit Wendig können diesen Charakter herausfordern.)%\\Folge mir!\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du die oberste Karte deines Decks aufdecken. Wenn du dies tust, darfst du sie ausspielen. Wenn du sie nicht ausspielst, lege die Karte auf deinen Ablagestapel. (Du bezahlst dabei alle Kosten.)",
+        "searchable_keywords": [
+          "Die Unglaublichen",
+          "Incredibles"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3129,
+        "strength": 4,
+        "subtitle": "Superschnell",
+        "subtypes": [
+          "Sagengestalt",
+          "Super",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/109_4b7d2fd151f081e7ddc1a12d01cebf5cec56316b.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/109_dd63fbe61d790c8f4d10abb700c3cd37137263ee.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/109_dd63fbe61d790c8f4d10abb700c3cd37137263ee.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/109_fc0ae7317f81690410043db84762084e3c3412f7.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Lissette Carrera",
+        "card_identifier": "110/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3081,
+        "deck_building_id": "e47415484569386f5abdc7ceb0df569827bd9275",
+        "flavor_text": "„Gibt es irgendwas auf dieser Karte, was nicht in Soße ersäuft?“",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Isma",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "\\Entsorge das\\ Wenn du diesen Charakter ausspielst, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
+        "searchable_keywords": [
+          "Emperors New Groove",
+          "Ein Königreich für ein Lama"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3128,
+        "strength": 4,
+        "subtitle": "Anspruchsvolle Kundin",
+        "subtypes": [
+          "Sagengestalt",
+          "Schurke",
+          "Magier"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/110_873e0aaa18f7bc60603b5bec082ef3dc628e9e0e.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/110_f5262aa60304f6e84580bda61165796e380bac2f.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/110_4c8666844771ed5c742ec8d7f37e91380d96fdbf.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/110_9479195d560cd0466d68afb8f30ed28aa28386ea.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Lissette Carrera / Brett Owens",
+        "card_identifier": "111/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3082,
+        "deck_building_id": "72f8e2d04c18e4a7f100720f4b75c77febd31e4b",
+        "flavor_text": "„Gib mir die Chili-Käse-Probierplatte, aber lass das Chili weg und bring den Käse separat. Oh, und extra Soße ... Hey! Hörst du mir zu? Ich bestelle gerade!“",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Kusco",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Emperors New Groove",
+          "Ein Königreich für ein Lama"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3127,
+        "strength": 5,
+        "subtitle": "Wählerischer Kunde",
+        "subtypes": [
+          "Sagengestalt",
+          "König"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/111_d209d1d50c90d522f2a2d29621cddbc331cec0b3.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/111_a91d93d3b17037a8d08340703d8f08a3bd23a416.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/111_2a67b2ff2ec156b27f29cb0d2ea90a5950b087e4.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/111_6ddb6693d03f5e6d5e4beb597b16723dbc8a3f19.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 1
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Alexandria Neonakis",
+        "card_identifier": "112/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3083,
+        "deck_building_id": "85d9eeeee6625d02386d47b29a45b0a606cb00d6",
+        "flavor_text": "„Sieh mal, Capper. Die Ranke ist diesem Bären nicht gewachsen!“%—Amos Slade",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Der Bär",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Wilde Wut\\ Solange dieser Charakter beschädigt ist, erhält er +3 {S}.",
+        "searchable_keywords": [
+          "Fox and the Hound",
+          "Cap und Capper"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3126,
+        "strength": 2,
+        "subtitle": "Territoriales Tier",
+        "subtypes": [
+          "Sagengestalt",
+          "Schurke"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/112_5f9e5d189d35c0931974c2eda42a5b042de60542.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/112_fa8e41e593ba3c99a48f8771504ea2c51f1fd50f.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/112_fa8e41e593ba3c99a48f8771504ea2c51f1fd50f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/112_5626fbe9e1d9d34294874b19663c09b6a7937142.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Rodrigo Camilo",
@@ -19884,6 +21426,56 @@
           }
         ],
         "willpower": 3
+      },
+      {
+        "abilities": [
+          "Wendig"
+        ],
+        "additional_info": [],
+        "author": "Mike Parker",
+        "card_identifier": "114/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3085,
+        "deck_building_id": "d5d7b978b41284d0bff2fb868aa85d96b2e53630",
+        "flavor_text": "„Hey, schau her, hier bin ich! Nein, warte, jetzt bin ich hier drüben! Nein, jetzt bin ich wieder hier!“",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Flash Parr",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "<Wendig> (Nur Charaktere mit Wendig können diesen Charakter herausfordern.)",
+        "searchable_keywords": [
+          "Die Unglaublichen",
+          "Incredibles"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3124,
+        "strength": 1,
+        "subtitle": "Dodgeball-Dynamo",
+        "subtypes": [
+          "Sagengestalt",
+          "Super",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/114_0cde4dd51b4904effc664e9310a90cb59d0d5273.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/114_ccb8609e3d2e987b59daf08d30db41392de1311a.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/114_ccb8609e3d2e987b59daf08d30db41392de1311a.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/114_40018b2133784383d1dfdfb46f3440502585e385.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 1
       },
       {
         "abilities": [],
@@ -20123,6 +21715,105 @@
           }
         ],
         "willpower": 5
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Malia Ewart",
+        "card_identifier": "120/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3091,
+        "deck_building_id": "3f67503b38eefa0af28313879c2550e91e5513a2",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Großmutter Wu",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "<Temporärer Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Großmutter Wu auszuspielen. Entferne am Ende deines Zuges jeglichen Schaden von diesem Charakter und nimm nur diese Karte zurück auf deine Hand.)%\\Einschüchternde Strafe\\ Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, sammelst du 2 Legenden und alle gegnerischen Mitspielenden verlieren je 2.",
+        "searchable_keywords": [
+          "Turning Red",
+          "Rot"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3118,
+        "strength": 5,
+        "subtitle": "Wilder Roter Panda",
+        "subtypes": [
+          "Sagengestalt",
+          "Mentor",
+          "Roter Panda"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/120_85f760a50bd08c273fd955f06ab81442d9e279d9.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/120_95d977c743887cede6d50c47f9ec2310507a4753.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/120_95d977c743887cede6d50c47f9ec2310507a4753.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/120_3a83b7813300a83f44a69405ae917c75c577fc29.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 7
+      },
+      {
+        "abilities": [
+          "Singen"
+        ],
+        "additional_info": [],
+        "author": "Lauren Levering",
+        "card_identifier": "121/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3092,
+        "deck_building_id": "0465e6b94bc50d62f572143379f09bdf209cfd99",
+        "flavor_text": "„Kommt schon, tanzt mit dem alten King Louie. Ihr müsst euch entspannen, Leute!“",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "King Louie",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "<Singen> 6 (Die Kosten dieses Charakters gelten als 6 für das Singen von Liedern.)",
+        "searchable_keywords": [
+          "Jungle Book",
+          "Dschungelbuch"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3117,
+        "strength": 3,
+        "subtitle": "König des Swing",
+        "subtypes": [
+          "Sagengestalt",
+          "König"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/121_779fc48dd74f88dfff0884db0958fe9a2619e0b0.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/121_b9a3d6b0d8f9a26d76c00bbc936bbf9bb723081f.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/121_b9a3d6b0d8f9a26d76c00bbc936bbf9bb723081f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/121_97758b4151dbfef18d1ddec41b0df8d857ca6c04.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
       },
       {
         "abilities": [],
@@ -20569,6 +22260,52 @@
         "willpower": 2
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Clio Schaffner",
+        "card_identifier": "131/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3102,
+        "deck_building_id": "c01c3657f28238b5e75904aaddc9d34f2cb34884",
+        "flavor_text": "„Komm schon, du großer Rabauke. Du musst schneller sein!“",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Peter Pan",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3107,
+        "strength": 2,
+        "subtitle": "Ranken-Duellant",
+        "subtypes": [
+          "Sagengestalt",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/131_d3dc8e1dbd329a02575d415a649bd03060fae60c.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/131_3cfbdd65d2d9188ad0160cd9a5ffab7b954ee1a9.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/131_3cfbdd65d2d9188ad0160cd9a5ffab7b954ee1a9.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/131_7a2acf7f9efc1cfccdf35d98cdbf96203a1e0aed.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
         "abilities": [
           "Gestaltwandel"
         ],
@@ -20622,6 +22359,307 @@
         "willpower": 7
       },
       {
+        "abilities": [
+          "Gestaltwandel",
+          "Wendig",
+          "Robust"
+        ],
+        "additional_info": [],
+        "author": "Mike Parker",
+        "card_identifier": "133/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3104,
+        "deck_building_id": "75291ebe2315f449c67c334e1e23b42baf18c958",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 8,
+        "magic_ink_colors": [
+          "RUBY",
+          "STEEL"
+        ],
+        "name": "Flash Parr & Violetta Parr",
+        "quest_value": 2,
+        "rarity": "LEGENDARY",
+        "rules_text": "<Kombo-Gestaltwandel> 6 {I} (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Flash Parr oder Violetta Parr oder auf beide zusammen auszuspielen.)%<Wendig>, <Robust> +1%\\Unglaubliche Taktiken\\ Jedes Mal, wenn dieser Charakter erkundet oder herausfordert, ziehe für jede Karte, die unter ihm liegt, je 1 Karte.",
+        "searchable_keywords": [
+          "Die Unglaublichen",
+          "Incredibles"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3105,
+        "strength": 5,
+        "subtitle": "Supergeschwister",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Super",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/133_b0fd22dc187c6f0454ac95c56b8f933269102b32.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/133_e7a3f6a54481bdd03ec5099821e94fd1b9879b85.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/133_c9bafc425b61a4c196d86bd99845c08700313794.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/133_e7a3f6a54481bdd03ec5099821e94fd1b9879b85.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/133_d607377cf0c8a68fae82ec7533b246ea95ba2b07.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/133_c9bafc425b61a4c196d86bd99845c08700313794.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Alarmiert"
+        ],
+        "additional_info": [],
+        "author": "Lissette Carrera",
+        "card_identifier": "143/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3114,
+        "deck_building_id": "95ec6ebedc826f59b048a63adcf74100a736e644",
+        "flavor_text": "Quack, der Bruchpilot: „Keine Sorge, Darkwing, ich sorge dafür, dass wir sicher dort abstürzen!“%Darkwing Duck: „Genau das macht mir Angst.“",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Quack, der Bruchpilot",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3095,
+        "strength": 3,
+        "subtitle": "Himmelspatrouille",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/143_ace7eafdde98aa2315e1fcea097dc0c054835ba4.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/143_9f58ca5a694fbd5a578bde99f277856188418c48.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/143_9f58ca5a694fbd5a578bde99f277856188418c48.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/143_58660c39f106c0a42c4246db59b221a03fcf3777.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Kendall Hale",
+        "card_identifier": "144/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3115,
+        "deck_building_id": "6ef580f9eaec6a71591ef5e53e182783818f1659",
+        "flavor_text": "„Ein Ball, ein Ball! Ich werd verrückt, ein Ball!“",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Dug",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Hol's!\\ Wenn du diesen Charakter ausspielst, falls du mindestens einen Gegenstand im Spiel hast, ziehe 1 Karte.",
+        "searchable_keywords": [
+          "Oben",
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3094,
+        "strength": 3,
+        "subtitle": "Guter Junge",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/144_cf2f7f47166d047becceaca39c8dc60d51362e07.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/144_72c6dcb2b667a83130c677adcbdef2560a28e519.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/144_72c6dcb2b667a83130c677adcbdef2560a28e519.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/144_0b670bee236ed557bf9f712b569a3e9b7aa6e1d5.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Matteo Marzocco",
+        "card_identifier": "145/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3116,
+        "deck_building_id": "e664b8ece1fef5bbb393c7c914c5f5346819ca27",
+        "flavor_text": "„Ihre Berichte haben sie bestimmt schon abgegeben. Nicht wahr?“",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Rosa",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Immer\\ Alle gegnerischen Personen spielen mit der obersten Karte ihres Decks offen.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monster AG"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3093,
+        "strength": 2,
+        "subtitle": "Hat alle im Visier",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter",
+          "Monster"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/145_a4fdf5d9d7f13a976a3320ddc2be73d45fd1b150.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/145_c62b208dae438da40a5a336cad6ab4c33a1f4b9e.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/145_c62b208dae438da40a5a336cad6ab4c33a1f4b9e.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/145_d58ef300f1365170d7bf02e550b1278022d291e3.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Carmine Pucci",
+        "card_identifier": "146/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3117,
+        "deck_building_id": "53a9dd42da2adf57bc5ad6660b60063eb8702ed5",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Merlin",
+        "quest_value": 2,
+        "rarity": "RARE",
+        "rules_text": "\\Kleine Trickserei\\ Wenn du diesen Charakter ausspielst, darfst du die unterste Karte deines Decks ziehen.%\\Nichts als Scherereien\\ Wenn dieser Charakter verbannt wird, lege diese Karte von deinem Ablagestapel unter dein Deck.",
+        "searchable_keywords": [
+          "Sword in the Stone",
+          "Die Hexe und der Zauberer"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3092,
+        "strength": 1,
+        "subtitle": "Sieht die Zukunft voraus",
+        "subtypes": [
+          "Traumgestalt",
+          "Mentor",
+          "Magier"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/146_99688c4f54fb1af3d8765b1a20bb65df75340216.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/146_d7096026bcb42ab2fb8cfd33b0de968d162d0cd5.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/146_d7096026bcb42ab2fb8cfd33b0de968d162d0cd5.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/146_6a42c9647ced5cbe7653436133ad7a8dcd006538.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Simone Giovanardi",
+        "card_identifier": "147/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3118,
+        "deck_building_id": "0e7fd1d3ea81b8d728df80d66ff5af3bdd68192a",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Quackerjack",
+        "quest_value": 2,
+        "rarity": "LEGENDARY",
+        "rules_text": "\\Böses Design\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, lege die obersten 4 Karten deines Decks auf deinen Ablagestapel. Du darfst einem Charakter deiner Wahl für jeden Gegenstand, der auf diese Weise auf deinen Ablagestapel gelegt wurde, 1 Schaden zufügen.",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3091,
+        "strength": 2,
+        "subtitle": "Verrückter Spielzeugmacher",
+        "subtypes": [
+          "Sagengestalt",
+          "Super",
+          "Schurke",
+          "Erfinder"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/147_3b7bbad996107b0d842e53945bfd6dc0ff9d6d90.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/147_34314c1dd3d3ce507da08b41caaa07627928fef4.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/147_bc9589908963f3ec12594245e0f7bbfb662e1a9e.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/147_34314c1dd3d3ce507da08b41caaa07627928fef4.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/147_37cc9160dc76c42c918e3c64a7584565a8ef7aa6.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/147_bc9589908963f3ec12594245e0f7bbfb662e1a9e.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Pauline Voss",
@@ -20663,6 +22701,53 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/148_33924304c7735befdaefe43d9705a2da6df86974.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/148_9af9184e38dfe5e717efd47e3ca9868667a29c2a.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Yrgane Ramon",
+        "card_identifier": "149/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3120,
+        "deck_building_id": "dca8ca6078ddfc283dfc286f0365e8467ea89db6",
+        "flavor_text": "„Das Abenteuer findet uns, wo immer wir auch hingehen.“",
+        "ink_convertible": false,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Ellie Fredricksen",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Immer bei dir\\ Wenn dieser Charakter verbannt wird, darfst du diese Karte verdeckt und erschöpft in deinen Tintenvorrat legen.",
+        "searchable_keywords": [
+          "Oben",
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3089,
+        "strength": 3,
+        "subtitle": "Abenteuerpartnerin",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/149_eda56c9cf59cc11c6c458cb049590b84b078e635.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/149_db12f2f3029c386d977d760a9e9880f5476a3ffb.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/149_db12f2f3029c386d977d760a9e9880f5476a3ffb.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/149_aaba1251f2c76404971195c016551cd7917ff097.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -20719,6 +22804,101 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Carmine Pucci",
+        "card_identifier": "151/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3122,
+        "deck_building_id": "79c19da2d7571887b296e7a556cb1bd078adae79",
+        "flavor_text": "„Jetzt finden wir den kleinen Briefträger und den, der nach Pflaumen riecht.“",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Alpha",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Wer will ein Leckerli?\\ Jedes Mal, wenn du einen Gegenstand ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +1 {S} und <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+        "searchable_keywords": [
+          "Oben",
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3087,
+        "strength": 3,
+        "subtitle": "Rudelführer",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/151_b827473c9cbd9e3fa33d2340403a7d69415687fc.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/151_ab33ca578c7fa326f5e04bda582b18ddb8c9f6d3.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/151_ab33ca578c7fa326f5e04bda582b18ddb8c9f6d3.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/151_21224ebbc85f42835f2e5daca4f55266b2e51509.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Jiahui Eva Gao",
+        "card_identifier": "152/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3123,
+        "deck_building_id": "4816af35d900fbc38aac3eda41ecfcbad4001ee9",
+        "flavor_text": "„Zeigen sie ihnen, was es heißt ein Meisterschrecker zu sein!“%—Henry J. Waternoose III",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Sulley",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Schreckmoment\\ Solange du 5 oder mehr Karten in deinem Tintenvorrat hast, erhält dieser Charakter +2 {S}.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monster AG"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3086,
+        "strength": 4,
+        "subtitle": "Strategischer Erschrecker",
+        "subtypes": [
+          "Sagengestalt",
+          "Held",
+          "Monster"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/152_836cd021ffa5be6e7c0fdc29ddb58904203d7d54.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/152_2d3fee25b1313ce5916b96103c48d324f9a4fff4.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/152_2d3fee25b1313ce5916b96103c48d324f9a4fff4.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/152_094fb5b0fa725f75c8fc334e72847cf42648ffe0.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Kendall Hale",
         "card_identifier": "153/207 DE 13",
         "card_sets": [
@@ -20763,6 +22943,151 @@
           }
         ],
         "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Marta Andreeva",
+        "card_identifier": "154/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3125,
+        "deck_building_id": "98f9b16055db6153b9d4e64bd2e815a8f9cdc391",
+        "flavor_text": "„Ist schon gut, Ferkel. Angst zu haben bedeutet nicht, dass du nicht mutig bist. Ich glaube sogar, dass man nur mutig sein kann, wenn man zuerst Angst hat!“%—Christopher Robin, Honig-Weiser",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Ferkel",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Winnie the Pooh",
+          "Winnie Puuh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3084,
+        "strength": 2,
+        "subtitle": "Honig-Magierlehrling",
+        "subtypes": [
+          "Traumgestalt",
+          "Verbündeter",
+          "Magier",
+          "Honig"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/154_e0597a62077546d6c751b7008df7494af65c214e.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/154_7f5d0e89fcbf05cc8f54f3120339e4ecb2db494e.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/154_7f5d0e89fcbf05cc8f54f3120339e4ecb2db494e.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/154_8aa2665cb8307190b2ab1e48018b3de966545182.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "David Otalora",
+        "card_identifier": "155/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3126,
+        "deck_building_id": "e5db4aa10f793afcb926a10cc9aed4361d8092ff",
+        "flavor_text": "„Oh Junge, ich wusste, dass es sich lohnen würde, diese Ranke hochzuklettern. Hier oben gibt es so viel zu sehen!“",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Micky Maus",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Mickey Mouse",
+          "Mickey Maus",
+          "Micky Mouse"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3083,
+        "strength": 3,
+        "subtitle": "Wissbegieriger Entdecker",
+        "subtypes": [
+          "Traumgestalt",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/155_a87a97cbf64e86e13fcfe7c032dd6cdc38c90b24.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/155_4b78a9caee76a459eca06756265f140a662f64cc.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/155_4b78a9caee76a459eca06756265f140a662f64cc.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/155_9d2b243fb46898a3a536910bd2897d42552316d6.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Behütet"
+        ],
+        "additional_info": [],
+        "author": "Julian del Rey",
+        "card_identifier": "156/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3127,
+        "deck_building_id": "83ae92739e6a362a7d610972a8e1d9ba8a64006a",
+        "flavor_text": "„Dieser kleine Kerl ist so hässlich! Ich liebe ihn! Und wie er die Flut-Tinte aufsaugt? Selbst ich hätte es nicht besser planen können.“",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Hades",
+        "quest_value": 3,
+        "rarity": "UNCOMMON",
+        "rules_text": "<Behütet> (Gegnerische Mitspielende können diesen Charakter nicht auswählen, außer um ihn herauszufordern.)",
+        "searchable_keywords": [
+          "Hercules"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3082,
+        "strength": 5,
+        "subtitle": "Akribischer Intrigant",
+        "subtypes": [
+          "Sagengestalt",
+          "Schurke"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/156_4759773296dd5d019fa2dd7b9a8c5b77954931b0.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/156_54f16374257fe877fd33adb581c9e4cbf530b9e7.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/156_54f16374257fe877fd33adb581c9e4cbf530b9e7.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/156_5e719575346d311061dead7c5fd38a17d226c58c.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
       },
       {
         "abilities": [],
@@ -20857,6 +23182,52 @@
           }
         ],
         "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Matteo Marzocco",
+        "card_identifier": "159/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3130,
+        "deck_building_id": "bcdc77d726aca330eadb5ae8c4b39b1c0747e049",
+        "flavor_text": "Die Ranke schuf Verteidiger, die die umliegenden Länder schweigend bewachten.",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Robin Hood",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "\\Scharfsichtig\\ Deine Flutgestalt-Charaktere erhalten <Alarmiert>. (Sie können herausfordern, als hätten sie Wendig.)",
+        "searchable_keywords": [
+          "Robin Hood"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3079,
+        "strength": 4,
+        "subtitle": "Von der Ranke erschaffen",
+        "subtypes": [
+          "Flutgestalt",
+          "Rankenbrut"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/159_0feb2767bc7f93fdf634fe90713ce637a96f9a8d.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/159_e5a4d7439c7018775857102aa80a7c2120ac377a.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/159_a146621d67abdcce579f9b00b42e333e1715353d.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/159_4ce48c9d619ed72379c8ae164541b85a26eff336.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
       },
       {
         "abilities": [],
@@ -20999,6 +23370,102 @@
         "willpower": 4
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Edu Francisco",
+        "card_identifier": "163/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3134,
+        "deck_building_id": "e40b1f021cb65aaad4c3a9eb81f45cb02e979c43",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Henry J. Waternoose III",
+        "quest_value": 2,
+        "rarity": "RARE",
+        "rules_text": "\\Die Bilanz\\ Solange du mehr Karten als jede gegnerische Person in deinem Tintenvorrat hast, erhält dieser Charakter +2 {L} und <Behütet>. (Gegnerische Mitspielende können diesen Charakter nicht auswählen, außer um ihn herauszufordern.)",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monster AG"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3075,
+        "strength": 5,
+        "subtitle": "Geschäftsführer",
+        "subtypes": [
+          "Sagengestalt",
+          "Schurke",
+          "Monster"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/163_8d1880326455d762b710dc50caae94dd52b4e16e.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/163_aeb0ccb4a7cf06b29fa4d13a057d9c8559de1858.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/163_aeb0ccb4a7cf06b29fa4d13a057d9c8559de1858.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/163_49730ea007729d203a6b61d67cc6ac1c72cfe016.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Grace Tran",
+        "card_identifier": "164/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3135,
+        "deck_building_id": "d4d607b0d9b6bd002867e2275808845ffbc63ca1",
+        "flavor_text": "„Ist schon okay. Stapel ruhig noch mehr Sachen drauf. Ich komme schon klar.“",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "I-Aah",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Honig-Taktiken\\ Jedes Mal, wenn dieser Charakter erkundet, wähle einen deiner Honig-Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges +1 {L} und <Behütet>. (Gegnerische Mitspielende können den Charakter nicht auswählen, außer um ihn herauszufordern.)",
+        "searchable_keywords": [
+          "Winnie the Pooh",
+          "Winnie Puuh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3074,
+        "strength": 2,
+        "subtitle": "Honig-Gelehrter",
+        "subtypes": [
+          "Traumgestalt",
+          "Verbündeter",
+          "Honig"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/164_22f44c1540df7bfd73f92b3df732c29f61c4b172.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/164_390368a030f7d96c8cc289fd0873da3d301c7d77.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/164_390368a030f7d96c8cc289fd0873da3d301c7d77.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/164_1ec70e8090cae4f2f569726ef5dd8f1f9ae56493.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
         "abilities": [
           "Gestaltwandel",
           "Behütet"
@@ -21050,6 +23517,103 @@
           }
         ],
         "willpower": 7
+      },
+      {
+        "abilities": [
+          "Gestaltwandel",
+          "Robust"
+        ],
+        "additional_info": [],
+        "author": "Mike Parker",
+        "card_identifier": "176/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3147,
+        "deck_building_id": "e1765705d9e6768f87c860c8ff62f7147c23ccaa",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Violetta Parr",
+        "quest_value": 2,
+        "rarity": "SUPER",
+        "rules_text": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Violetta Parr auszuspielen.)%<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)%\\Heldenhafte Synergie\\ Jedes Mal, wenn du diesen Charakter oder einen anderen Held-Charakter ausspielst, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen.",
+        "searchable_keywords": [
+          "Die Unglaublichen",
+          "Incredibles"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3062,
+        "strength": 4,
+        "subtitle": "Superresilient",
+        "subtypes": [
+          "Sagengestalt",
+          "Super",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/176_6c06b632074c1e51d097140923fd75f43a0e27b1.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/176_e38d0fe1b83eb48d344f8d819757e77378fda7a2.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/176_e38d0fe1b83eb48d344f8d819757e77378fda7a2.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/176_4c73ddcf7d58bbbc2d3b506938b647b4d14ea70a.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Alejandro Hernandez",
+        "card_identifier": "177/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3148,
+        "deck_building_id": "dda89e8b6c36e14ed1ebab4b881a5a2680e6a361",
+        "flavor_text": "„Halt, das ist kein Aladdin-Glimmer – das ist eine Rankenbrut!“%—Shanzay, eine Luminari",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Aladdin",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Von der Ranke versorgt\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere erkundet, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen.",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3061,
+        "strength": 3,
+        "subtitle": "Von der Ranke erschaffen",
+        "subtypes": [
+          "Flutgestalt",
+          "Rankenbrut"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/177_e247f8b08a5693ddc7980b48175a7a488145c3e7.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/177_bb60d7b94752d6a257181386f01dcb871fc2b5a4.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/177_bb60d7b94752d6a257181386f01dcb871fc2b5a4.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/177_f3db93a8a9b285f14bf3d0536423322eacef1a22.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
       },
       {
         "abilities": [],
@@ -21147,6 +23711,102 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Patri Balanovsky",
+        "card_identifier": "180/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3151,
+        "deck_building_id": "5cfc962c0a19c414e05144c8b5931c5a4ac5a2d6",
+        "flavor_text": "„MEIN Frosch! Er ist sehr wichtig!“",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Stitch",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Lilo and Stitch",
+          "Lilo und Stitch"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3058,
+        "strength": 1,
+        "subtitle": "Beschützer der Frösche",
+        "subtypes": [
+          "Sagengestalt",
+          "Held",
+          "Alien"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/180_dd8d09485773ccfe5069fedebe4fb07567107db4.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/180_4800e8864f9104b637ca38a0462b132ac1c94624.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/180_4800e8864f9104b637ca38a0462b132ac1c94624.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/180_e884a0501bcda880bab6c2aa2d1a0aa9a6e3d0ca.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Herausfordern"
+        ],
+        "additional_info": [],
+        "author": "Federico Maria Cugliari",
+        "card_identifier": "181/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3152,
+        "deck_building_id": "c2653a98a0a6035e9625604294eed111e7236593",
+        "flavor_text": "„Nun sieh mal her, du übergroßes Unkraut …“",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Sheriff von Nottingham",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
+        "searchable_keywords": [
+          "Robin Hood"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3057,
+        "strength": 6,
+        "subtitle": "Schlächter der Ranken",
+        "subtypes": [
+          "Sagengestalt",
+          "Schurke"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/181_969c6ace7d162d26aea943b1ab99ea560ea47ee2.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/181_d58710cbeeab12b2ab394f1860040ab99310cfe8.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/181_d58710cbeeab12b2ab394f1860040ab99310cfe8.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/181_2b5fa0789eb03e4d562dd22ca1cc0234e233aac1.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Celeste Jamneck",
         "card_identifier": "182/207 DE 13",
         "card_sets": [
@@ -21189,6 +23849,155 @@
           }
         ],
         "willpower": 2
+      },
+      {
+        "abilities": [
+          "Robust"
+        ],
+        "additional_info": [],
+        "author": "Javi Salas",
+        "card_identifier": "183/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3154,
+        "deck_building_id": "014929c40b64616dd276d1489e6abae1b0ebefdb",
+        "flavor_text": "„Mama? Tut mir leid, dass ich anrufe, aber ich glaube da draußen vor dem Haus ist ein riesiges Problem.“",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Violetta Parr",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+        "searchable_keywords": [
+          "Die Unglaublichen",
+          "Incredibles"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3055,
+        "strength": 3,
+        "subtitle": "Kraftfeld-Übungen",
+        "subtypes": [
+          "Sagengestalt",
+          "Super",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/183_f9f711035b0b7cb7c3bef8a82a5eca41cbb7a62c.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/183_bbb3acbb56d23307ed8e92af093d182513edabc0.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/183_bbb3acbb56d23307ed8e92af093d182513edabc0.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/183_5835509a2499e2b0fa485b0b08662cade4f56299.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [
+          "Alarmiert"
+        ],
+        "additional_info": [],
+        "author": "Chemène de Heus",
+        "card_identifier": "184/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3155,
+        "deck_building_id": "7b6983289812bf25aea321be83a5436c49ade906",
+        "flavor_text": "„Niemand kann sich vor mir verstecken. Von hier aus kann ich <alles> sehen!“",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Dr. Van Hamsterdam",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+        "searchable_keywords": [
+          "Lilo and Stitch",
+          "Lilo und Stitch"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3054,
+        "strength": 3,
+        "subtitle": "Böser Beobachter",
+        "subtypes": [
+          "Sagengestalt",
+          "Schurke",
+          "Alien",
+          "Erfinder"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/184_7bc6c77550ca1681f7632f6733df5881f7317ad4.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/184_6da10e8fef3dd5a95be3000aa4944fe35b917f90.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/184_6da10e8fef3dd5a95be3000aa4944fe35b917f90.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/184_c878dc96eb5670855df802558616c8a54453d6ce.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Yu Nguyen",
+        "card_identifier": "185/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3156,
+        "deck_building_id": "a9caf3a21bc42d70c1917881211551b5d4a559a6",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Eule",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "\\Honig-Allianz\\ Solange du mindestens einen weiteren Honig-Charakter im Spiel hast, erhält dieser Charakter <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
+        "searchable_keywords": [
+          "Winnie the Pooh",
+          "Winnie Puuh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3053,
+        "strength": 1,
+        "subtitle": "Honig-Ranger",
+        "subtypes": [
+          "Traumgestalt",
+          "Verbündeter",
+          "Honig"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/185_100c167ac771faa21728ee3f5ff565e9c2a2ec76.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/185_fc303e1dfb02d6ea5d5ad02df3d89f9688c482d5.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/185_fc303e1dfb02d6ea5d5ad02df3d89f9688c482d5.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/185_ab969fa0e5ca9e916ad87db915c1e429567aa95f.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 1
       },
       {
         "abilities": [],
@@ -21427,6 +24236,55 @@
         "willpower": 5
       },
       {
+        "abilities": [
+          "Robust"
+        ],
+        "additional_info": [],
+        "author": "Diego Machuca",
+        "card_identifier": "191/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3162,
+        "deck_building_id": "47bfcc7441b0d1a6e4b62eba3e262400eb63ebe0",
+        "flavor_text": "„Willst du das extra knusprig?“",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Kronk",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)%\\Bereit zur Abholung!\\ Einmal während deines Zuges darfst du 1 {I} bezahlen, um 1 Karte zu ziehen und danach 1 Karte aus deiner Hand auszuwählen und abzuwerfen.",
+        "searchable_keywords": [
+          "Emperors New Groove",
+          "Ein Königreich für ein Lama"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3047,
+        "strength": 1,
+        "subtitle": "Fleischbuden-Koch",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/191_83a52b17e7aeb24ce24e3b2c545da838b8f7f9b0.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/191_638fb77b72a567ddf92b205049c029165d2db98c.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/191_638fb77b72a567ddf92b205049c029165d2db98c.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/191_8ede0ffb194c616b9eff8d91990125042cb68cba.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Aubrey Archer",
@@ -21472,6 +24330,104 @@
           }
         ],
         "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Liz Richards",
+        "card_identifier": "193/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3164,
+        "deck_building_id": "b950c4382dd5a2d09aca8da64d3324da1fed030a",
+        "flavor_text": "„Du bist der Einzige, dem ich vertrauen kann, mein Liebling.“%—Malefiz",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Diablo",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Wirbel aus Federn\\ Deine Charaktere namens Malefiz erhalten <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+        "searchable_keywords": [
+          "Dornröschen",
+          "Sleeping Beauty"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3045,
+        "strength": 3,
+        "subtitle": "Beschützt seine Herrin",
+        "subtypes": [
+          "Sagengestalt",
+          "Verbündeter"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/193_af603416150eb6435b79b9e0ca0264da21048363.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/193_7399c245512c87efdea57adc7d3ee7c1229fd0cc.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/193_7399c245512c87efdea57adc7d3ee7c1229fd0cc.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/193_1c8ccff3d4351108a216db7e64d669bf3509619c.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Therese Vildefall",
+        "card_identifier": "194/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3165,
+        "deck_building_id": "551a5d47b50c911b292fea0385aaa626e2e3945f",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Scar",
+        "quest_value": 1,
+        "rarity": "LEGENDARY",
+        "rules_text": "\\Die Belohnung des Siegers\\ Jedes Mal während deines Zuges, wenn einer deiner Flutgestalt-Charaktere durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 1 Legende.%\\Die Ränge auffüllen\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere im Zug einer gegnerischen Person verbannt wird, ziehe 1 Karte.",
+        "searchable_keywords": [
+          "Lion King",
+          "Der König der Löwen"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3044,
+        "strength": 5,
+        "subtitle": "Von der Ranke erschaffen",
+        "subtypes": [
+          "Flutgestalt",
+          "Rankenbrut"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/194_0cc4012450ac096c435d423940a2b32acf04e585.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/194_bff0ccc897e1848b7a395444b1816b54513ec3fa.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/194_04f1a9159903d670b96d387d58f752ffffbb4fc6.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/194_bff0ccc897e1848b7a395444b1816b54513ec3fa.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/194_e8812a18387f8787ced2f5af60976f407b931248.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/194_04f1a9159903d670b96d387d58f752ffffbb4fc6.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
       },
       {
         "abilities": [],
@@ -21798,6 +24754,657 @@
       },
       {
         "abilities": [
+          "Gestaltwandel",
+          "Wendig"
+        ],
+        "additional_info": [],
+        "author": "Clio Schaffner",
+        "card_identifier": "227/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3198,
+        "deck_building_id": "2c0a6b1e4c9d9258a6fe1b33d9a90ee4017621bd",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "AMBER",
+          "AMETHYST"
+        ],
+        "name": "Pocahontas & Meeko",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 2 {I} (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Pocahontas oder Meeko auszuspielen.)%<Wendig>%\\Willkommene Rückkehr\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du einen deiner Charaktere, der 1 kostet, wählen und ihn zurück auf deine Hand nehmen. Wenn du dies tust, darfst du einen Charakter, der 1 kostet, kostenlos ausspielen.",
+        "searchable_keywords": [
+          "Pocahontas"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3011,
+        "strength": 2,
+        "subtitle": "Abenteuerliche Freunde",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Held",
+          "Prinzessin"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/227_b58c240c3926917f75d1e4700b5526077969b50f.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/227_3983e1f3e6e26374e1e20430131512b5293f82f6.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/227_3511d4eab5a934f2df5846ad5eef8170a6958624.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/227_42aab6d2448fa64e902025ec59ec1c9e66daddef.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Giacomo Boni",
+        "card_identifier": "228/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3199,
+        "deck_building_id": "e8ef6fb7d161431f14883c65c2c2bd995356af63",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "AMBER",
+          "EMERALD"
+        ],
+        "name": "Woody & Buzz Lightyear",
+        "quest_value": 3,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Woody oder Buzz Lightyear auszuspielen.)%\\Bis zur Unendlichkeit …\\ Wenn du diesen Charakter ausspielst, falls eine gegnerische Person deiner Wahl mehr Karten auf der Hand hat als du, ziehe so viele Karten, bis ihr die selbe Anzahl an Handkarten habt.%\\… und noch viel weiter!\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du eine Karte, die 2 oder weniger kostet, kostenlos ausspielen.",
+        "searchable_keywords": [
+          "Toy Story"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3010,
+        "strength": 4,
+        "subtitle": "Beste Freunde",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Held",
+          "Spielzeug",
+          "Kapitän"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/228_74e0a3956bcf6b9689280b4c2f95d2139a1a6733.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/228_eb15ce762920fa55f97029ecd07ce8e69eae4c03.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/228_5d896b8b2c794dbc7ebf4bf7fb2e020578a5f6f7.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/228_1a004514dd92196cb9bc6e407463a0ead520cc4f.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Mariana Moreno",
+        "card_identifier": "229/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3200,
+        "deck_building_id": "6ed86332df7a535a1225508c39a34b351f6fb976",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "AMBER",
+          "RUBY"
+        ],
+        "name": "Sulley & Buh",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Kombo-Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Sulley oder Buh oder auf beide zusammen auszuspielen.)%\\Die Macht der Freundschaft\\ Wenn dieser Charakter verbannt wird, falls unter diesem Charakter andere Charakterkarten lagen, darfst du jene von deinem Ablagestapel kostenlos ausspielen.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monster AG"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3009,
+        "strength": 6,
+        "subtitle": "Erschrecker-Freunde",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Held",
+          "Monster"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/229_141905abff34f4c6dcbf65cc96e6e8d6a2afbde7.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/229_bcccc9c1e0bb81a401483d9229cd1e9298852faa.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/229_456d752f9f9518b55d4c246b6d1567280cecc804.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/229_402c64e9d45e97183a57810878604d1a327b6975.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Maxine Vee",
+        "card_identifier": "230/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3201,
+        "deck_building_id": "4a4e001617dda5229e08b1851de828bf82bd7592",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMBER",
+          "SAPPHIRE"
+        ],
+        "name": "Die Familie Madrigal",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Madrigal-Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Madrigal-Charaktere auszuspielen.)%\\Das Wunder\\ Einmal während deines Zuges, wenn du 1 oder mehr Schaden von einem deiner Charaktere entfernst, lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat.",
+        "searchable_keywords": [
+          "Encanto"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3008,
+        "strength": 2,
+        "subtitle": "Alt und Jung zusammen",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Madrigal"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/230_fcf760900653e71261da6ad802d6235887b3c850.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/230_83cecb47f5b3da3979c286ea800daf4efcd46b86.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/230_f59de58082e18f69634d34984f3ef3a19a3e625c.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/230_c38963a5087c4147caa4d5a06e35de7f035476c9.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 8
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Kendall Hale",
+        "card_identifier": "231/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3202,
+        "deck_building_id": "303153188d57dfe81cf2e1aba27a992fa3006c73",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Merida",
+        "quest_value": 1,
+        "rarity": "ENCHANTED",
+        "rules_text": "\\Fokussierte Energie\\ Du darfst diesen Charakter erschöpft ausspielen, um 1 Karte zu ziehen.%\\Winken\\ Jedes Mal während deines Zuges, wenn du einen deiner anderen Charaktere erschöpft ausspielst, darfst du 1 Karte ziehen.",
+        "searchable_keywords": [
+          "Merida",
+          "Brave"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3007,
+        "strength": 3,
+        "subtitle": "Irrlichtbeschwörerin",
+        "subtypes": [
+          "Traumgestalt",
+          "Held",
+          "Prinzessin",
+          "Magier"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/231_e26882510e877784a7ceec10041ccde7f8cd9805.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/231_9d31dddc3eaf69041b7ef98630dd6f10e816415c.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/231_7d7a2e4cd32f41c713a0053ede4f7014653919d6.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/231_a97ec6f97b1c2590a1bded325a382c419ad222d2.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Nuel Salinas / Palo Graglia",
+        "card_identifier": "232/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3203,
+        "deck_building_id": "6ff0c3dd5e17d7049398aff4d291e295ac2170aa",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "EMERALD"
+        ],
+        "name": "Aladdin & Dschinni",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Aladdin oder Dschinni auszuspielen.)%\\Trickbetrug\\ Wenn du diesen Charakter ausspielst, darfst du beliebig viele Karten von deiner Hand in beliebiger Reihenfolge unter dein Deck legen. Wenn du dies tust, ziehe dieselbe Anzahl Karten, wie du weggelegt hast, plus 1.",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3006,
+        "strength": 3,
+        "subtitle": "Schelmische Freunde",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/232_e5ae66626dbca6e3b807919d7e81186bba313eb6.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/232_99640bdae3314b6cad7237541b02b9d6d44a0524.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/232_e63ae1ab3315f5e02b1070438fc878003a68407d.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/232_7870411ab027b984fb91153a9d3750968af27048.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Alice Pisoni",
+        "card_identifier": "233/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3204,
+        "deck_building_id": "4f80a6deac988f4017136c860cb83d2845aa1e6c",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "RUBY"
+        ],
+        "name": "Peter Pan & Naseweis",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Peter Pan oder Naseweis auszuspielen.)%\\Flieg' ins Glück\\ Deine Charaktere erhalten <Wendig>. (Nur Charaktere mit Wendig können sie herausfordern.)",
+        "searchable_keywords": [
+          "Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3005,
+        "strength": 5,
+        "subtitle": "Flinke Freunde",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Held",
+          "Fee"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/233_85912001529acaad30597e0e61d67900d77df980.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/233_9f8eca1e63e474ae2220260d29924b5c2679c0d2.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/233_c2f9304b60a99323bdad5163c8383eebfbf15e38.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/233_2b6d26cd3f7f0fc5883fe573a54cd5dd953ef713.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Koni",
+        "card_identifier": "234/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3205,
+        "deck_building_id": "c2ebf26b3d2404e6a5568615db755bc2d9227ced",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "SAPPHIRE"
+        ],
+        "name": "Winnie Puuh & Ferkel",
+        "quest_value": 0,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Winnie Puuh oder Ferkel auszuspielen.)%\\Magischer Mix\\ Dieser Charakter erhält +1 {L} für jede unterschiedliche Tintenfarbe deiner Charaktere im Spiel.",
+        "searchable_keywords": [
+          "Winnie the Pooh",
+          "Winnie Puuh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3004,
+        "strength": 3,
+        "subtitle": "Honig-Magier",
+        "subtypes": [
+          "Traumgestalt",
+          "Team",
+          "Held",
+          "Magier",
+          "Honig"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/234_920135af95454f5fe02d503329f4b456756e9a95.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/234_f9281eee76022e203141dcb67761d0c6a665bc8f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/234_cac498678ed985432c0bc9e84a643dc0728e2423.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/234_0638ff6b7df28e59ce4438d9fc4a01ca719d34b2.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Erica D’urso",
+        "card_identifier": "235/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3206,
+        "deck_building_id": "df655e5d953b09ae00c22853d7a54ddc5c8846da",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "STEEL"
+        ],
+        "name": "Malefiz & Diablo",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Malefiz oder Diablo auszuspielen.)%\\Narren!\\ Du kannst 5 Charakterkarten von deinem Ablagestapel in beliebiger Reihenfolge unter dein Deck legen, um diesen Charakter kostenlos zu gestaltwandeln.%\\Der Ruf des Raben\\ Jedes Mal, wenn dieser Charakter in deinem Zug erschöpft wird, ziehe 1 Karte.",
+        "searchable_keywords": [
+          "Dornröschen",
+          "Sleeping Beauty"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3003,
+        "strength": 6,
+        "subtitle": "Das Böse in Person",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Schurke",
+          "Magier"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/235_a4b5ad323714176046797b929cfb27051edff5af.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/235_fc13f9825cb81ac6d5d54d95d61423ca08e4633f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/235_399aa590f32f75c47196801dd7aca167a624ccb3.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/235_097d3cc8b0c74a52c29e159b04d98942e12285a3.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Gestaltwandel",
+          "Wendig"
+        ],
+        "additional_info": [],
+        "author": "Rob Di Salvo",
+        "card_identifier": "236/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3207,
+        "deck_building_id": "451a3ae846c4767c2f78502546a9d170cd17bbf7",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Cap & Capper",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 2 {I} (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Cap oder Capper auszuspielen.)%<Wendig> (Nur Charaktere mit Wendig können diesen Charakter herausfordern.)",
+        "searchable_keywords": [
+          "Fox and the Hound",
+          "Cap und Capper"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3002,
+        "strength": 3,
+        "subtitle": "Eine Freundschaft voller Vertrauen",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Held",
+          "Welpe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/236_ac4d2803ae652db21b8f88b28d77812272dab857.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/236_1d4af739f2bce53183ed3aa6b3925524431478fa.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/236_92666d2fef31d579e9866a76dbb81b2fd6f0454f.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/236_80dfb983ff9b1f358a3f89efb7cf01c5bd602541.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Natalie Dombois",
+        "card_identifier": "237/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3208,
+        "deck_building_id": "f115729d35f2cca62c96ad21ee2de1ae2ec6e6d0",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "EMERALD",
+          "RUBY"
+        ],
+        "name": "Carl Fredricksen & Russel",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Carl Fredricksen oder Russel auszuspielen.)%\\Outdoor-Kenntnisse\\ Solange dieser Charakter an einem Ort ist, erhalten alle Charaktere an diesem Ort +1 {L} und <Wendig>. (Nur Charaktere mit Wendig können sie herausfordern.)",
+        "searchable_keywords": [
+          "Oben",
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3001,
+        "strength": 6,
+        "subtitle": "Unerschrockene Entdecker",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/237_fc6114764ce6b8ca978732fb7cf15e69c76800f3.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/237_2ab763d96a29548e0d2fa21a76ae4dc24ef5f31f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/237_0aaffe52d225ebf4dd0a7052bafdce4241bddfbe.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/237_9d71d02bff3f68a02f7ca0f213de749903688792.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 6
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Kenneth Anderson",
+        "card_identifier": "238/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3209,
+        "deck_building_id": "18946699cef53f88e95079513efd6645e23daf3c",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "EMERALD",
+          "SAPPHIRE"
+        ],
+        "name": "Micky Maus & Minnie Maus",
+        "quest_value": 5,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Duo-Gestaltwandel> 0 {I} (Du kannst 0 {I} zahlen, um diesen Charakter auf zwei deiner Charaktere auszuspielen, einen namens Micky Maus und einen namens Minnie Maus.)%\\Ich denke an dich\\ Falls dieser Charakter verbannt werden würde, lege ihn stattdessen verdeckt und erschöpft in deinen Tintenvorrat.",
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3000,
+        "strength": 5,
+        "subtitle": "Abenteuerlustiges Duo",
+        "subtypes": [
+          "Traumgestalt",
+          "Team",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/238_4e6ba20cffb72dd21191064c2bacec0912566dd0.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/238_a305a840af1cdb7cbda6aab43decc7b6a21329a7.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/238_b990b1ac5a1fdbe614b11ad01965699f3b7fc79e.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/238_57eb357d4181df524770d156f69e32981feaa2e3.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Gestaltwandel"
+        ],
+        "additional_info": [],
+        "author": "Jane Pica",
+        "card_identifier": "239/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3210,
+        "deck_building_id": "863624320e68e21ad58cc391255de6de1ca968c1",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "EMERALD",
+          "STEEL"
+        ],
+        "name": "Rapunzel & Flynn Rider",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Rapunzel oder Flynn Rider auszuspielen.)%\\Cleverer Tausch\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen.%\\Neuanfang\\ Jedes Mal, wenn du in deinem Zug 1 Charakterkarte abwirfst, darfst du jenen Charakter von deinem Ablagestapel ausspielen. (Du bezahlst dabei alle Kosten.)",
+        "searchable_keywords": [
+          "Tangled",
+          "Rapunzel"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -2999,
+        "strength": 4,
+        "subtitle": "Ungleiches Paar",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Held",
+          "Prinz",
+          "Prinzessin"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/239_d7c3edb18d66903327fb62698f3f00ff604e6e41.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/239_457cb739d316417d5ba76e064992f771ffb47fb1.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/239_aa2a3adc1335efda5ada66a9faca33f099835842.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/239_c93ab578c4f2d0338953440600581b7c68adfc23.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
           "Gestaltwandel"
         ],
         "additional_info": [],
@@ -21844,6 +25451,157 @@
           }
         ],
         "willpower": 5
+      },
+      {
+        "abilities": [
+          "Gestaltwandel",
+          "Wendig",
+          "Robust"
+        ],
+        "additional_info": [],
+        "author": "Rob Di Salvo",
+        "card_identifier": "241/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3212,
+        "deck_building_id": "75291ebe2315f449c67c334e1e23b42baf18c958",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 8,
+        "magic_ink_colors": [
+          "RUBY",
+          "STEEL"
+        ],
+        "name": "Flash Parr & Violetta Parr",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Kombo-Gestaltwandel> 6 {I} (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Flash Parr oder Violetta Parr oder auf beide zusammen auszuspielen.)%<Wendig>, <Robust> +1%\\Unglaubliche Taktiken\\ Jedes Mal, wenn dieser Charakter erkundet oder herausfordert, ziehe für jede Karte, die unter ihm liegt, je 1 Karte.",
+        "searchable_keywords": [
+          "Die Unglaublichen",
+          "Incredibles"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -2997,
+        "strength": 5,
+        "subtitle": "Supergeschwister",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Super",
+          "Held"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/241_b21b51db638b800ccf1107d43ce1a74d1bedf16a.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/241_e89dc49a9f06bf83e5df913c83d66fcf6e373b55.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/241_e4d5ac20f8aa2a11a4f7d343c0c9e2ae0f28990f.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/241_7c78c59ee6f8181847aee1ed35fed7967e8ebea2.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Gestaltwandel",
+          "Behütet"
+        ],
+        "additional_info": [],
+        "author": "Lyle Cruse",
+        "card_identifier": "242/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3213,
+        "deck_building_id": "abdf26f8e51364414f54634967f810b9e6aa9545",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "SAPPHIRE",
+          "STEEL"
+        ],
+        "name": "Darkwing Duck & Quack",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Darkwing Duck oder Quack, der Bruchpilot auszuspielen.)%<Behütet> (Gegnerische Mitspielende können diesen Charakter nicht auswählen, außer um ihn herauszufordern.)%\\Siegespose\\ Jedes Mal, wenn dieser Charakter in deinem Zug durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 2 Legenden.",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -2996,
+        "strength": 5,
+        "subtitle": "Das Beste aus Sankt Erpelsburg",
+        "subtypes": [
+          "Sagengestalt",
+          "Team",
+          "Super",
+          "Held",
+          "Detektiv"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/242_8b2c16bb6135b68bc736cba5b7cbad4345315458.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/242_9f8389b9b4232f2d20076cdf1c51bee7d0269913.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/242_4ac35e0a76f8905263092f6f422f706e85664da6.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/242_3a147c65c2b1947fe5fcf1e9d8d326635cc169eb.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 7
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Tom Whalen",
+        "card_identifier": "243/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3214,
+        "deck_building_id": "551a5d47b50c911b292fea0385aaa626e2e3945f",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Scar",
+        "quest_value": 1,
+        "rarity": "ENCHANTED",
+        "rules_text": "\\Die Belohnung des Siegers\\ Jedes Mal während deines Zuges, wenn einer deiner Flutgestalt-Charaktere durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 1 Legende.%\\Die Ränge auffüllen\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere im Zug einer gegnerischen Person verbannt wird, ziehe 1 Karte.",
+        "searchable_keywords": [
+          "Lion King",
+          "Der König der Löwen"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -2995,
+        "strength": 5,
+        "subtitle": "Von der Ranke erschaffen",
+        "subtypes": [
+          "Flutgestalt",
+          "Rankenbrut"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/243_31b648e80a4815752b78305178ec3c2c4aaf67fe.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/243_4889f4e83cfa0860850378049e7318c0f6d2381e.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/243_319fcda55997df4ed9bf320c9ca52ce3efdf5ae9.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/243_1e0fc3c3fd35cd7b12c5a1bfb95e1c51b14dedc9.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
       },
       {
         "abilities": [
@@ -22022,7 +25780,7 @@
           "Fox and the Hound",
           "Cap und Capper"
         ],
-        "set_rotation_state": "InfinityConstructed",
+        "set_rotation_state": "CoreConstructed",
         "sort_number": -2988,
         "special_rarity_id": "PROMO",
         "strength": 2,
@@ -22065,7 +25823,7 @@
         "searchable_keywords": [
           "Toy Story"
         ],
-        "set_rotation_state": "InfinityConstructed",
+        "set_rotation_state": "CoreConstructed",
         "sort_number": -2987,
         "special_rarity_id": "PROMO",
         "strength": 4,
@@ -22157,7 +25915,7 @@
           "Sword in the Stone",
           "Die Hexe und der Zauberer"
         ],
-        "set_rotation_state": "InfinityConstructed",
+        "set_rotation_state": "CoreConstructed",
         "sort_number": -2985,
         "special_rarity_id": "PROMO",
         "strength": 1,
@@ -130303,6 +134061,45 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Alex Accorsi / Leonardo Giammichele",
+        "card_identifier": "70/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3041,
+        "deck_building_id": "101d70fc53f46fc7dfc20140eb77426ba46133e2",
+        "flavor_text": "„Sieht so aus, als wäre noch eine Rankenbrut unterwegs. Los, schnappen wir sie.“%—Venturo, ein Luminari",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Beschädigte Schote",
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Erneuerungsprozess\\ {E}, 1 {I} – Lege 1 Karte aus einem Ablagestapel deiner Wahl unter das zugehörige Deck.",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3168,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/70_05b40e7109d6186cc9a4a6539839961947457ae6.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/70_f984b2b99c47ea6bff9f19556ea6785bc4a21247.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/70_f984b2b99c47ea6bff9f19556ea6785bc4a21247.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/70_dde05c03698ea39115c406b13ab8e3ae28f722f1.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Kaitlin Cuthbertson",
         "card_identifier": "71/207 DE 13",
         "card_sets": [
@@ -130345,6 +134142,84 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Andrew Theophilopoulos",
+        "card_identifier": "72/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3043,
+        "deck_building_id": "ae9819cc202f9d6fe23c188a6211024ae11a1f0a",
+        "flavor_text": "„Bald wird jeder Tropfen Tinte in Lorcana verbraucht sein …“%—Hana, eine Luminari",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Die Quelle der Ranke",
+        "rarity": "SUPER",
+        "rules_text": "\\Absaugen\\ Jedes Mal, wenn ein gegnerischer Charakter erkundet, sammelst du 1 Legende, außer die ihm zugehörige Person bezahlt 1 {I}.%\\Strahlende Blüte\\ {E}, 2 {I} – Sammle 1 Legende.",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3166,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/72_9ba43669bb155be9e8042f004390f16ba1d95565.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/72_a375929236d5610f1d86a443a3c6b3e7417cb90d.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/72_a375929236d5610f1d86a443a3c6b3e7417cb90d.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/72_4f1e851ff8f5525d9830ec81d4d7854eba92a5f1.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Simone Giovanardi",
+        "card_identifier": "105/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3076,
+        "deck_building_id": "3e2e95f5ad970eadfa7e17eaf73da97024aa5359",
+        "flavor_text": "Sie hat nicht viel Geschmack.",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Kartoffel",
+        "rarity": "COMMON",
+        "rules_text": "\\Voller Potenzial\\ Dieser Gegenstand kommt erschöpft ins Spiel.",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3133,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/105_f33aa129b7fecce55915fac1f192fd76f16487f2.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/105_abafed73c7e3ec760951240630d9005855a18c1e.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/105_abafed73c7e3ec760951240630d9005855a18c1e.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/105_cb4a43b52885b918bcc28c0f2e3f7ad7e1f8c1e8.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "McKay Anderson",
         "card_identifier": "106/207 DE 13",
         "card_sets": [
@@ -130377,6 +134252,45 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/106_efd22dda18521b24335953be348d157394fa8ed4.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/106_b6077c4037890ca93fb4fe4c08c21424d167cac9.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Sarah Schmidt",
+        "card_identifier": "107/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3078,
+        "deck_building_id": "d8e4757233f112fc25c9aa3c37609d1bf1ebcbd5",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Rankenschote",
+        "rarity": "RARE",
+        "rules_text": "\\Zerbrechliche Schale\\ Dieser Gegenstand kommt erschöpft ins Spiel.%\\Regenerieren\\ {E}, 1 {I} – Wähle und verbanne einen deiner Charaktere. Du darfst einen gleichnamigen Charakter kostenlos ausspielen.",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3131,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/107_6eae0018d4a25e3b388c03fafe3e4358721a23d0.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/107_d635f07ba49a1b94a307ff7bbec53c7032a53aa8.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/107_d635f07ba49a1b94a307ff7bbec53c7032a53aa8.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/107_d7bfcbc4d10675596a929219f0aabf9fcc3378ff.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -130457,6 +134371,125 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/140_b77f17e33558a742a7306ab882cfaca70b91b667.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/140_708cd3f234508e4d37c32e3a65141db86e4f14be.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Jaime Puga",
+        "card_identifier": "170/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3141,
+        "deck_building_id": "700dad65cfbff3ff61df092d9ca4febea80e11df",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Schranktür-Portal",
+        "rarity": "SUPER",
+        "rules_text": "\\Klopf, klopf\\ Dieser Gegenstand kommt erschöpft ins Spiel.%\\Wer ist da?\\ {E}, 2 {I} – Schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Charakter-, Gegenstands- oder Ortskarte, die 6 oder weniger kostet, daraus aufdecken und kostenlos ausspielen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck. Lege diese Karte verdeckt und erschöpft in deinen Tintenvorrat.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monster AG"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3068,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/170_b1eb23b305d98c2a5e84fb4b98e6ad07451d2174.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/170_f4c018f5ba79434d19dd7bb7646546de5eaf36aa.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/170_f4c018f5ba79434d19dd7bb7646546de5eaf36aa.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/170_97e2dbf09d1c037f29e5263a7c0f871d5e45e334.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Moniek Schilder",
+        "card_identifier": "171/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3142,
+        "deck_building_id": "0467bbfe324e2cf567dec121118d1b2ef442ec81",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Hanas Tintenformer",
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Verjüngende Kraft\\ {E} – Entferne bis zu 2 Schaden von einem Charakter deiner Wahl. Falls jener Charakter mindestens eine Karte unter sich hat, erhält er bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3067,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/171_19426864e9000baf8ee1d8a6cfb8455cfb2e8454.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/171_5d4f2eaaa09e9fbe2f17c66a796673da197b83d2.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/171_5d4f2eaaa09e9fbe2f17c66a796673da197b83d2.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/171_030e4745468ed9bea1b76bde223bb98e612f6082.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Rudy Hill",
+        "card_identifier": "172/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3143,
+        "deck_building_id": "d75048848d0a2396551a5a4b1d9474f4ae07ed91",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Lachkanister",
+        "rarity": "RARE",
+        "rules_text": "\\Nachahmer\\ {E} – Lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat. Eine gegnerische Person deiner Wahl darf die oberste Karte ihres Decks verdeckt und erschöpft in ihren Tintenvorrat legen.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monster AG"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3066,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/172_e8b5aecd2fe8cf0c23f8c854d80abc403f92ae90.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/172_02b58423e90644ff0b3b390f1f77a6f67efdbd9f.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/172_02b58423e90644ff0b3b390f1f77a6f67efdbd9f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/172_727e461fbbc83f8b51aebbb237282698096d1239.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -130580,6 +134613,72 @@
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/204_9a4c72d2c4608529ebab6dd885c2e3ff70155ca4.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Lissette Carrera",
+        "card_identifier": "205/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3176,
+        "deck_building_id": "234ac3e62a1cf66551a46af54a3e2c75b87905ed",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Der Unkrautvernichter",
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Volle Kraft\\ {E}, 1 {I} – Ein Charakter deiner Wahl erhält in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}.)%\\Klarer Schnitt\\ 2 {I}, Verbanne diesen Gegenstand – Verbanne einen Rankenbrut-Charakter deiner Wahl.",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3033,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/205_d97c8263a083c4bb5422ea3e32b87c028cf93578.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/205_3fb10af5fb6e6e7314ad28ddb233acfb809a6538.jpg",
+            "variant_id": "Regular"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Andrew Peña / Sergio Mancinelli",
+        "card_identifier": "206/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3177,
+        "deck_building_id": "4097454fede41db0b77818dfb68732b5b89cfba5",
+        "flavor_text": "„Oh, das ist faszinierend! Wie funktioniert das?“%—Hana, eine Luminari",
+        "ink_convertible": false,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Absorbierende Blume",
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Metamorphose\\ {E}, 1 {I} – Falls in diesem Zug ein Charakter durch eine Herausforderung verbannt wurde, ziehe 1 Karte.",
+        "searchable_keywords": [
+          "Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3032,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/206_906f2d2343ef65f1428662318de0e0a788b706a9.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/206_346ac33b5dd52af3f03f6423700f0b0dee020a07.jpg",
+            "variant_id": "Regular"
           }
         ]
       },
@@ -139290,6 +143389,50 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Jimmy Lo",
+        "card_identifier": "141/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3112,
+        "deck_building_id": "23d3f50630bc83220eee4c82c064c4e755eee78b",
+        "flavor_text": "Ein tiefes Grollen hallte durch den Wald, als die Ranke das Schloss aus seinen Fundamenten riss.",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "move_cost": 2,
+        "name": "Das Schloss des Biests",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Unmittelbare Gefahr\\ Deine Flutgestalt-Charaktere erhalten <Rasant>. (Die Charaktere können im selben Zug herausfordern, in dem sie ausgespielt werden.)",
+        "searchable_keywords": [
+          "Die Schöne und das Biest",
+          "Beauty and the Beast"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3097,
+        "subtitle": "Von der Ranke überwuchert",
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/141_590e15311f00850f0443099304d4a332da4b4358.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/141_ae2942ca9dbdb65d44162cc785d90853fb4ba47f.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/141_ae2942ca9dbdb65d44162cc785d90853fb4ba47f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/141_3fe32950a4d074933790d047f9a94231bdfb59f6.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 7
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Wietse Treurniet",
         "card_identifier": "142/207 DE 13",
         "card_sets": [
@@ -139330,6 +143473,90 @@
           }
         ],
         "willpower": 6
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Jeremy Adams / Jaime Puga",
+        "card_identifier": "175/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3146,
+        "deck_building_id": "5d7da3bd9708d6fc2ec824a196c6e14664e80bb1",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "move_cost": 1,
+        "name": "Hundertmorgenwald",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Heimat fern der Heimat\\ Charaktere an diesem Ort erhalten +1 {W}.%\\Honig-Mission\\ Honig-Charaktere an diesem Ort erhalten +1 {L}.",
+        "searchable_keywords": [
+          "Winnie the Pooh",
+          "Winnie Puuh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3063,
+        "subtitle": "Honig-Campingplatz",
+        "subtypes": [
+          "Honig"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/175_b73d6ca8d17e35db99e8647e407ea6bbdb79d3e2.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/175_b666a5e3bb4956be07238a9996dae61d8deb40e5.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/175_b666a5e3bb4956be07238a9996dae61d8deb40e5.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/de/set13/175_6ab551a0daffbc9676b676ea1c2dd8102016f6ea.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 6
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Douglas De La Hoz",
+        "card_identifier": "207/207 DE 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3178,
+        "deck_building_id": "ca1888576739e5b86ed92cc5ce1f681d5e16f017",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "move_cost": 1,
+        "name": "Rankeneingang",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Wurzel der Macht\\ Jedes erste Mal, wenn einer deiner Flutgestalt-Charaktere in einem Zug an diesen Ort bewegt wird, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.",
+        "searchable_keywords": [
+          "Winnie the Pooh",
+          "Winnie Puuh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3031,
+        "subtitle": "Unheilvoller Durchgang",
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/de/set13/207_8f76187d5c3a6fa9ce2d55fc04af61774915ea9a.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/de/set13/207_5119d9e525877d6f2b83bee3940a704d06fedff1.jpg",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 7
       },
       {
         "abilities": [],
@@ -143924,7 +148151,7 @@
       }
     ]
   },
-  "catalog_hash": "d9c68f70970bd21d792107ba53da8d9239fdfcdb",
+  "catalog_hash": "789f7dda91e124778be67ad29bec12fe7efbdc25",
   "external_documents": [
     {
       "documents": [
@@ -144535,6 +148762,13 @@
         "terms_on_card": [
           "Hindernis",
           "Obstacle"
+        ]
+      },
+      {
+        "term_in_search_filter": "Honig",
+        "terms_on_card": [
+          "Honig",
+          "Hunny"
         ]
       }
     ]

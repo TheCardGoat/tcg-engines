@@ -1,6 +1,25 @@
 import { index, route, type RouteConfig } from "@react-router/dev/routes";
 
 export default [
-  index("routes/simulator.tsx"),
-  route("*", "routes/simulator-splat.tsx"),
+  index("routes/index.tsx"),
+  route("animation-fixtures", "routes/animation-fixtures.tsx"),
+  route(":gameSlug/simulator", "routes/simulator-game-index.tsx"),
+  route(":gameSlug/simulator/play/practice", "routes/simulator-practice-vs-ai.tsx"),
+  route(":gameSlug/simulator/tests", "routes/simulator-tests.tsx"),
+  route(":gameSlug/simulator/tests/test-engine-state", "routes/simulator-test-engine-state.tsx"),
+  route(":gameSlug/simulator/tests/:fixtureId", "routes/simulator-test-fixture.tsx"),
+  route(":gameSlug/simulator/matches/:matchId", "routes/simulator-match-landing.tsx"),
+  route(":gameSlug/simulator/matches/:matchId/games/:gameId", "routes/simulator-live-match.tsx"),
+  route(":gameSlug/simulator/replay/:gameId", "routes/simulator-replay.tsx"),
+  route(":gameSlug/simulator/replay/:gameId/fork", "routes/simulator-replay-fork.tsx"),
+  route(":gameSlug/simulator/matchmaking", "routes/simulator-matchmaking.tsx"),
+  route(":gameSlug/simulator/decks", "routes/simulator-decks.tsx"),
+  route(":gameSlug/simulator/decks/:deckId", "routes/simulator-deck-detail.tsx"),
+  route(":gameSlug/simulator/vs-ai", "routes/simulator-vs-ai.tsx"),
+  route(":gameSlug/simulator/practice", "routes/simulator-practice.tsx"),
+  route(":gameSlug/simulator/practice/:matchId", "routes/simulator-practice-match.tsx"),
+  route(":gameSlug/simulator/bot-vs-bot", "routes/simulator-bot-vs-bot.tsx"),
+  route(":gameSlug/simulator/bot-bench-ui", "routes/simulator-bot-bench-ui.tsx"),
+  route(":gameSlug/simulator/match/:matchId", "routes/simulator-legacy-gundam-match.tsx"),
+  route("*", "routes/not-found.tsx"),
 ] satisfies RouteConfig;

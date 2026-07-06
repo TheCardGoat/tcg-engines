@@ -8,7 +8,7 @@ export const carlFredricksenLovingHusbandI18n: Record<Languages, I18nProperties>
       {
         title: "TAKE MY HAND",
         description:
-          "When you play this character, you pay 2 {} less for the next character named Ellie Fredricksen you play this turn.",
+          "When you play this character, you pay 2 {I} less for the next character named Ellie Fredricksen you play this turn.",
       },
     ],
   },

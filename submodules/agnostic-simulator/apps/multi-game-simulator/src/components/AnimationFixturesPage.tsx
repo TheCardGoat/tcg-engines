@@ -7,20 +7,17 @@ import {
   IconUser,
   IconUsers,
 } from "@tabler/icons-react";
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import type { AnimationPlanStepV1, AnimationPlanV1, AnimationZoneRef } from "@tcg/protocol";
 import type {
   BoardLayout,
   SimulatorEntity,
   SimulatorTable,
   SimulatorZone,
 } from "@tcg/simulator-contract";
-import {
-  Board,
-  SimulatorAnimationLayer,
-  projectEntityForZoneViewer,
-  type SimulatorAnimationEvent,
-} from "@tcg/simulator-ui";
+import { Board, MotionAnimationSurface } from "@tcg/simulator-ui";
 import { buildMountedHref } from "../routes/router-paths.ts";
+import { useSimulatorAudio } from "../simulator/audio";
 
 type ViewerSeatId = "human-seat" | "opponent-seat" | "spectator-seat";
 type PublicCardZone = "human-battlefield" | "shared-discard" | "human-hand";
@@ -280,6 +277,16 @@ const baseZones: Record<string, SimulatorZone> = {
   },
 };
 
+const ALL_FIXTURE_ENTITIES = [
+  DRAW_CARD,
+  ...OPENING_HAND_DRAW_CARDS,
+  SECRET_ZONE_CARD,
+  ...HAND_NEIGHBOR_CARDS,
+  PUBLIC_CARD,
+  ...BATTLEFIELD_NEIGHBOR_CARDS,
+  ...DISCARD_NEIGHBOR_CARDS,
+];
+
 const boardLayout: BoardLayout = {
   title: "Animation fixture table",
   summary: "Game-agnostic zones used to validate card transfer motion.",
@@ -342,21 +349,16 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
   const [publicCardZone, setPublicCardZone] = useState<PublicCardZone>("human-battlefield");
   const [secretCardMoved, setSecretCardMoved] = useState(false);
   const [discardLayoutShifted, setDiscardLayoutShifted] = useState(false);
-  const [animationEvents, setAnimationEvents] = useState<SimulatorAnimationEvent[]>([]);
+  const [animationPlans, setAnimationPlans] = useState<AnimationPlanV1[]>([]);
   const [lastEvent, setLastEvent] = useState("Ready");
   const sequenceRef = useRef(0);
-  const soundTimersRef = useRef<number[]>([]);
+  const { scheduleAnimationSteps, cancelScheduledCues } = useSimulatorAudio();
 
   useEffect(() => {
     document.title = "Animation Fixtures | Multi-Game Simulator Harness";
   }, []);
 
-  const clearScheduledSounds = useCallback(() => {
-    soundTimersRef.current.forEach((timer) => window.clearTimeout(timer));
-    soundTimersRef.current = [];
-  }, []);
-
-  useEffect(() => clearScheduledSounds, [clearScheduledSounds]);
+  useEffect(() => () => cancelScheduledCues(), [cancelScheduledCues]);
 
   const { table, entities } = useMemo(
     () =>
@@ -369,12 +371,19 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
       ),
     [viewerSeatId, drawnCardIds, publicCardZone, secretCardMoved, discardLayoutShifted],
   );
+  const entityById = useMemo(() => {
+    return new Map([...ALL_FIXTURE_ENTITIES, ...entities].map((entity) => [entity.id, entity]));
+  }, [entities]);
+  const zoneById = useMemo(
+    () => new Map(table.zones.map((zone) => [zone.id, zone])),
+    [table.zones],
+  );
 
   const switchPerspective = () => {
     const nextViewerSeatId = viewerSeatId === HUMAN_SEAT_ID ? OPPONENT_SEAT_ID : HUMAN_SEAT_ID;
     setViewerSeatId(nextViewerSeatId);
-    setAnimationEvents([]);
-    clearScheduledSounds();
+    setAnimationPlans([]);
+    cancelScheduledCues();
     setLastEvent(nextViewerSeatId === HUMAN_SEAT_ID ? "Viewing as you" : "Viewing as opponent");
   };
 
@@ -388,25 +397,27 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
     idPrefix: string,
     durationMs: number,
     delayMs = 0,
-  ): SimulatorAnimationEvent => ({
-    id: nextTransferId(idPrefix),
-    primitive: "draw",
-    entity,
-    fromZone: baseZones.deck,
-    toZone: baseZones.hand,
-    viewer: { viewerSeatId },
-    durationMs,
-    delayMs,
-  });
+  ): AnimationPlanV1 =>
+    fixtureAnimationPlan(
+      nextTransferId(idPrefix),
+      moveEntityStep({
+        id: `${idPrefix}:${entity.id}`,
+        entityId: entity.id,
+        fromZone: baseZones.deck,
+        toZone: baseZones.hand,
+        durationMs,
+        delayMs,
+        audioCue: "card.draw",
+      }),
+    );
 
   const runDraw = () => {
-    clearScheduledSounds();
+    cancelScheduledCues();
     setDrawnCardIds((current) =>
       current.includes(DRAW_CARD.id) ? current : [...current, DRAW_CARD.id],
     );
     setLastEvent("Drawing from secret deck");
-    playCardAnimationSound("draw");
-    setAnimationEvents([createDrawTransfer(DRAW_CARD, "draw", SINGLE_DRAW_DURATION_MS)]);
+    setAnimationPlans([createDrawTransfer(DRAW_CARD, "draw", SINGLE_DRAW_DURATION_MS)]);
   };
 
   const runOpeningHandDraw = () => {
@@ -415,12 +426,12 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
       return;
     }
 
-    clearScheduledSounds();
+    cancelScheduledCues();
     setDrawnCardIds((current) =>
       Array.from(new Set([...current, ...cardsToDraw.map((card) => card.id)])),
     );
     setLastEvent("Drawing opening hand");
-    setAnimationEvents(
+    setAnimationPlans(
       cardsToDraw.map((card, index) =>
         createDrawTransfer(
           card,
@@ -430,115 +441,140 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
         ),
       ),
     );
-    soundTimersRef.current = cardsToDraw.map((_, index) =>
-      window.setTimeout(
-        () => playCardAnimationSound("draw", index),
-        index * OPENING_HAND_DRAW_STAGGER_MS,
-      ),
-    );
   };
 
   const runPublicMove = () => {
-    clearScheduledSounds();
+    cancelScheduledCues();
     const nextZone: PublicCardZone =
       publicCardZone === "human-battlefield" ? "shared-discard" : "human-battlefield";
     setPublicCardZone(nextZone);
     setLastEvent(nextZone === "shared-discard" ? "Moving to discard" : "Returning to battlefield");
-    playCardAnimationSound("move");
-    setAnimationEvents([
-      {
-        id: nextTransferId("move-zone"),
-        primitive: "zoneTransfer",
-        entity: PUBLIC_CARD,
-        fromZone:
-          publicCardZone === "human-battlefield" ? baseZones.battlefield : baseZones.discard,
-        toZone: nextZone === "human-battlefield" ? baseZones.battlefield : baseZones.discard,
-        viewer: { viewerSeatId },
-        durationMs: 760,
-      },
+    setAnimationPlans([
+      fixtureAnimationPlan(
+        nextTransferId("move-zone"),
+        moveEntityStep({
+          id: `move-zone:${PUBLIC_CARD.id}`,
+          entityId: PUBLIC_CARD.id,
+          fromZone:
+            publicCardZone === "human-battlefield" ? baseZones.battlefield : baseZones.discard,
+          toZone: nextZone === "human-battlefield" ? baseZones.battlefield : baseZones.discard,
+          durationMs: 760,
+          audioCue: "card.move",
+        }),
+      ),
     ]);
   };
 
   const runPublicToPrivateMove = () => {
-    clearScheduledSounds();
+    cancelScheduledCues();
     const fromZone =
       publicCardZone === "shared-discard" ? baseZones.discard : baseZones.battlefield;
     setPublicCardZone("human-hand");
     setLastEvent("Moving public card to private hand");
-    playCardAnimationSound("move");
-    setAnimationEvents([
-      {
-        id: nextTransferId("public-to-private"),
-        primitive: "zoneTransfer",
-        entity: PUBLIC_CARD,
-        fromZone,
-        toZone: baseZones.hand,
-        viewer: { viewerSeatId },
-        durationMs: 760,
-      },
+    setAnimationPlans([
+      fixtureAnimationPlan(
+        nextTransferId("public-to-private"),
+        moveEntityStep({
+          id: `public-to-private:${PUBLIC_CARD.id}`,
+          entityId: PUBLIC_CARD.id,
+          fromZone,
+          toZone: baseZones.hand,
+          durationMs: 760,
+          audioCue: "card.move",
+        }),
+      ),
     ]);
   };
 
   const runSharedPrimitives = () => {
-    clearScheduledSounds();
+    cancelScheduledCues();
     setSecretCardMoved(true);
     setDiscardLayoutShifted((current) => !current);
     setLastEvent("Running shared primitives");
-    setAnimationEvents([
-      {
-        id: nextTransferId("shared-primitive-layout-shift"),
-        primitive: "layoutShift",
-        entityIds: DISCARD_NEIGHBOR_CARDS.map((card) => card.id),
-        viewer: { viewerSeatId },
+    setAnimationPlans([
+      fixtureAnimationPlan(nextTransferId("shared-primitive-layout-shift"), {
+        id: "shared-primitive-layout-shift",
+        type: "layoutShift",
+        entities: DISCARD_NEIGHBOR_CARDS.map((card) => ({ kind: "entity", id: card.id })),
         durationMs: 420,
-      },
-      {
-        id: nextTransferId("empty-zone-transfer"),
-        primitive: "zoneTransfer",
-        entity: SECRET_ZONE_CARD,
-        fromZone: baseZones.secret,
-        toZone: baseZones.discard,
-        viewer: { viewerSeatId },
-        durationMs: 420,
-      },
-      {
-        id: nextTransferId("shared-primitive-zone-exit"),
-        primitive: "zoneExit",
-        entity: PUBLIC_CARD,
-        fromZone:
+        audioCue: "deck.shuffle",
+      }),
+      fixtureAnimationPlan(
+        nextTransferId("empty-zone-transfer"),
+        moveEntityStep({
+          id: `empty-zone-transfer:${SECRET_ZONE_CARD.id}`,
+          entityId: SECRET_ZONE_CARD.id,
+          fromZone: baseZones.secret,
+          toZone: baseZones.discard,
+          durationMs: 420,
+          audioCue: "card.move",
+        }),
+      ),
+      fixtureAnimationPlan(nextTransferId("shared-primitive-zone-exit"), {
+        id: `shared-primitive-zone-exit:${PUBLIC_CARD.id}`,
+        type: "exitEntity",
+        entity: { kind: "entity", id: PUBLIC_CARD.id },
+        from: zoneRef(
           publicCardZone === "human-battlefield" ? baseZones.battlefield : baseZones.discard,
-        viewer: { viewerSeatId },
+        ),
         durationMs: 420,
-      },
-      {
-        id: nextTransferId("shared-primitive-zone-enter"),
-        primitive: "zoneEnter",
-        entity: OPENING_HAND_DRAW_CARDS[1],
-        toZone: baseZones.discard,
-        viewer: { viewerSeatId },
+      }),
+      fixtureAnimationPlan(nextTransferId("shared-primitive-zone-enter"), {
+        id: `shared-primitive-zone-enter:${OPENING_HAND_DRAW_CARDS[1].id}`,
+        type: "enterEntity",
+        entity: { kind: "entity", id: OPENING_HAND_DRAW_CARDS[1].id },
+        to: zoneRef(baseZones.discard),
         delayMs: 60,
         durationMs: 420,
-      },
-      {
-        id: nextTransferId("shared-primitive-attach"),
-        primitive: "attach",
-        entity: HAND_NEIGHBOR_CARDS[1],
-        fromZone: baseZones.hand,
-        toZone: baseZones.battlefield,
-        targetEntityId: BATTLEFIELD_NEIGHBOR_CARDS[0].id,
-        viewer: { viewerSeatId },
-        delayMs: 90,
-        durationMs: 420,
-      },
-      {
-        id: nextTransferId("shared-primitive-flip"),
-        primitive: "flipReveal",
-        entity: HAND_NEIGHBOR_CARDS[0],
-        zone: baseZones.hand,
-        viewer: { viewerSeatId },
+      }),
+      fixtureAnimationPlan(
+        nextTransferId("shared-primitive-attach"),
+        moveEntityStep({
+          id: `shared-primitive-attach:${HAND_NEIGHBOR_CARDS[1].id}`,
+          entityId: HAND_NEIGHBOR_CARDS[1].id,
+          fromZone: baseZones.hand,
+          toEntityId: BATTLEFIELD_NEIGHBOR_CARDS[0].id,
+          delayMs: 90,
+          durationMs: 420,
+        }),
+      ),
+      fixtureAnimationPlan(nextTransferId("shared-primitive-flip"), {
+        id: `shared-primitive-flip:${HAND_NEIGHBOR_CARDS[0].id}`,
+        type: "effect",
+        source: { kind: "entity", id: HAND_NEIGHBOR_CARDS[0].id },
+        targets: [{ kind: "entity", id: HAND_NEIGHBOR_CARDS[0].id }],
+        label: "REVEAL",
         delayMs: 180,
         durationMs: 420,
-      },
+      }),
+      fixtureAnimationPlan(
+        nextTransferId("shared-primitive-resource"),
+        {
+          id: "shared-primitive-resource",
+          type: "resourceDelta",
+          player: { kind: "player", id: HUMAN_SEAT_ID },
+          anchor: { kind: "anchor", id: "fixture-resource-anchor" },
+          delta: 2,
+          label: "EDDIES",
+          delayMs: 220,
+          durationMs: 520,
+        },
+        [
+          {
+            id: "fixture-resource-anchor",
+            role: "custom",
+            target: zoneRef(baseZones.hand),
+          },
+        ],
+      ),
+      fixtureAnimationPlan(nextTransferId("shared-primitive-phase"), {
+        id: "shared-primitive-phase",
+        type: "phaseChange",
+        from: "main",
+        to: "end",
+        delayMs: 260,
+        durationMs: 560,
+      }),
     ]);
   };
 
@@ -547,14 +583,14 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
     setPublicCardZone("human-battlefield");
     setSecretCardMoved(false);
     setDiscardLayoutShifted(false);
-    setAnimationEvents([]);
-    clearScheduledSounds();
+    setAnimationPlans([]);
+    cancelScheduledCues();
     setLastEvent("Ready");
   };
 
   const viewerIsOwner = useMemo(() => viewerSeatId === HUMAN_SEAT_ID, [viewerSeatId]);
   const viewerIsSpectator = useMemo(() => viewerSeatId === SPECTATOR_SEAT_ID, [viewerSeatId]);
-  const transferInFlight = animationEvents.length > 0;
+  const transferInFlight = animationPlans.length > 0;
   const allOpeningHandCardsDrawn = OPENING_HAND_DRAW_CARDS.every((card) =>
     drawnCardIds.includes(card.id),
   );
@@ -716,35 +752,42 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
           className="min-h-0 min-w-0 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3 shadow-[var(--shadow)] [&_.board]:h-full [&_.board]:content-start [&_.board-block]:min-h-[96px] [&_.card-grid]:grid-cols-[repeat(auto-fit,minmax(96px,1fr))] [&_.sim-card-face[data-card-density='normal']]:min-h-[112px]"
           aria-label="Animation table"
         >
-          <SimulatorAnimationLayer
-            events={animationEvents}
-            onComplete={(completedEvent) => {
-              setAnimationEvents((current) => {
-                const nextEvents = current.filter((event) => event.id !== completedEvent.id);
-                const completedOpeningHandStep = completedEvent.id.startsWith("opening-hand-");
-                const openingHandStillAnimating = nextEvents.some((event) =>
-                  event.id.startsWith("opening-hand-"),
+          <MotionAnimationSurface
+            animationPlans={animationPlans}
+            viewerSeatId={viewerSeatId}
+            resolveEntity={(entityId) => entityById.get(entityId)}
+            resolveZone={(ref) => zoneById.get(ref.id)}
+            onAnimationStepsScheduled={scheduleAnimationSteps}
+            onPlanComplete={(completedPlanId) => {
+              setAnimationPlans((current) => {
+                const completedPlan = current.find((plan) => plan.id === completedPlanId);
+                const nextPlans = current.filter((plan) => plan.id !== completedPlanId);
+                const completedOpeningHandStep = completedPlanId.startsWith("opening-hand-");
+                const openingHandStillAnimating = nextPlans.some((plan) =>
+                  plan.id.startsWith("opening-hand-"),
                 );
-                const completedSharedPrimitive = completedEvent.id.startsWith("shared-primitive-");
-                const sharedPrimitiveStillAnimating = nextEvents.some((event) =>
-                  event.id.startsWith("shared-primitive-"),
+                const completedSharedPrimitive = completedPlanId.startsWith("shared-primitive-");
+                const sharedPrimitiveStillAnimating = nextPlans.some((plan) =>
+                  plan.id.startsWith("shared-primitive-"),
                 );
+                const completedStep = completedPlan?.steps[0];
 
                 if (
-                  completedEvent.primitive === "zoneTransfer" &&
-                  completedEvent.id.startsWith("move-zone-")
+                  completedPlanId.startsWith("move-zone-") &&
+                  completedStep?.type === "moveEntity" &&
+                  completedStep.to.kind === "zone"
                 ) {
                   setLastEvent("Move complete: public to public");
                   setPublicCardZone(
-                    completedEvent.toZone.id === "human-battlefield"
+                    completedStep.to.id === "human-battlefield"
                       ? "human-battlefield"
-                      : completedEvent.toZone.id === "human-hand"
+                      : completedStep.to.id === "human-hand"
                         ? "human-hand"
                         : "shared-discard",
                   );
                 } else if (
-                  completedEvent.primitive === "zoneTransfer" &&
-                  completedEvent.id.startsWith("public-to-private-")
+                  completedPlanId.startsWith("public-to-private-") &&
+                  completedStep?.type === "moveEntity"
                 ) {
                   setLastEvent(
                     viewerIsOwner
@@ -764,12 +807,12 @@ export default function AnimationFixturesPage({ onNavigate }: AnimationFixturesP
                   );
                 }
 
-                return nextEvents;
+                return nextPlans;
               });
             }}
           >
             <Board table={table} entities={entities} layout={boardLayout} />
-          </SimulatorAnimationLayer>
+          </MotionAnimationSurface>
         </section>
       </section>
     </main>
@@ -812,6 +855,83 @@ function FixtureButton({
   );
 }
 
+function fixtureAnimationPlan(
+  id: string,
+  step: AnimationPlanStepV1,
+  anchors: AnimationPlanV1["anchors"] = [],
+): AnimationPlanV1 {
+  return { id, version: 1, anchors, steps: [step] };
+}
+
+function moveEntityStep({
+  id,
+  entityId,
+  fromZone,
+  toZone,
+  toEntityId,
+  durationMs,
+  delayMs,
+  audioCue,
+}: {
+  id: string;
+  entityId: string;
+  fromZone: SimulatorZone;
+  toZone?: SimulatorZone;
+  toEntityId?: string;
+  durationMs: number;
+  delayMs?: number;
+  audioCue?: AnimationPlanStepV1["audioCue"];
+}): AnimationPlanStepV1 {
+  return {
+    id,
+    type: "moveEntity",
+    entity: { kind: "entity", id: entityId },
+    from: zoneRef(fromZone),
+    to: toEntityId ? { kind: "entity", id: toEntityId } : zoneRef(requiredZone(toZone)),
+    durationMs,
+    delayMs,
+    audioCue,
+  };
+}
+
+function requiredZone(zone: SimulatorZone | undefined): SimulatorZone {
+  if (!zone) {
+    throw new Error("Fixture move plan requires a destination zone.");
+  }
+  return zone;
+}
+
+function zoneRef(zone: SimulatorZone): AnimationZoneRef {
+  return {
+    kind: "zone",
+    id: zone.id,
+    ...(zone.ownerId ? { ownerId: zone.ownerId } : {}),
+  };
+}
+
+function projectFixtureEntityForZoneViewer(
+  entity: SimulatorEntity,
+  zone: SimulatorZone,
+  viewerSeatId: ViewerSeatId,
+): SimulatorEntity {
+  const isVisible =
+    zone.visibility === "public" ||
+    (zone.visibility === "private" && zone.ownerId === viewerSeatId);
+  if (isVisible) {
+    return { ...entity, face: "public" };
+  }
+  return {
+    ...entity,
+    title: "Hidden card",
+    subtitle: zone.label,
+    face: "hidden",
+    imageUrl: undefined,
+    stats: [],
+    traits: [],
+    states: Array.from(new Set([...entity.states, "hidden" as const])),
+  };
+}
+
 function createAnimationFixtureState(
   viewerSeatId: ViewerSeatId,
   drawnCardIds: string[],
@@ -821,28 +941,33 @@ function createAnimationFixtureState(
 ): { table: SimulatorTable; entities: SimulatorEntity[] } {
   const secretCards = secretCardMoved
     ? []
-    : [projectEntityForZoneViewer(SECRET_ZONE_CARD, baseZones.secret, viewerSeatId)];
+    : [projectFixtureEntityForZoneViewer(SECRET_ZONE_CARD, baseZones.secret, viewerSeatId)];
   const drawnCards = OPENING_HAND_DRAW_CARDS.filter((card) => drawnCardIds.includes(card.id));
   const nativeHandCards = [...HAND_NEIGHBOR_CARDS, ...drawnCards];
   const handCards = [
     ...nativeHandCards,
     ...(publicCardZone === "human-hand" ? [PUBLIC_CARD] : []),
-  ].map((card) => projectEntityForZoneViewer(card, baseZones.hand, viewerSeatId));
+  ].map((card) => projectFixtureEntityForZoneViewer(card, baseZones.hand, viewerSeatId));
   const battlefieldCards =
     publicCardZone === "human-battlefield"
       ? [PUBLIC_CARD, ...BATTLEFIELD_NEIGHBOR_CARDS]
       : BATTLEFIELD_NEIGHBOR_CARDS;
+  const battlefieldEntities = battlefieldCards.map((card) =>
+    projectFixtureEntityForZoneViewer(card, baseZones.battlefield, viewerSeatId),
+  );
   const discardCards =
     publicCardZone === "shared-discard"
       ? [...DISCARD_NEIGHBOR_CARDS, PUBLIC_CARD]
       : DISCARD_NEIGHBOR_CARDS;
   const shiftedDiscardCards = discardLayoutShifted ? [...discardCards].reverse() : discardCards;
-  const publicDiscardCards = secretCardMoved
-    ? [
-        ...shiftedDiscardCards,
-        projectEntityForZoneViewer(SECRET_ZONE_CARD, baseZones.discard, viewerSeatId),
-      ]
-    : shiftedDiscardCards;
+  const discardEntities = (
+    secretCardMoved
+      ? [
+          ...shiftedDiscardCards,
+          projectFixtureEntityForZoneViewer(SECRET_ZONE_CARD, baseZones.discard, viewerSeatId),
+        ]
+      : shiftedDiscardCards
+  ).map((card) => projectFixtureEntityForZoneViewer(card, baseZones.discard, viewerSeatId));
   const zones: SimulatorZone[] = [
     {
       ...baseZones.deck,
@@ -860,23 +985,17 @@ function createAnimationFixtureState(
     },
     {
       ...baseZones.battlefield,
-      count: battlefieldCards.length,
-      entityIds: battlefieldCards.map((card) => card.id),
+      count: battlefieldEntities.length,
+      entityIds: battlefieldEntities.map((card) => card.id),
     },
     {
       ...baseZones.discard,
-      count: publicDiscardCards.length,
-      entityIds: publicDiscardCards.map((card) => card.id),
+      count: discardEntities.length,
+      entityIds: discardEntities.map((card) => card.id),
     },
   ];
 
-  const entities = [
-    ...secretCards,
-    ...handCards,
-    ...BATTLEFIELD_NEIGHBOR_CARDS,
-    ...publicDiscardCards,
-    { ...PUBLIC_CARD, face: "public" as const },
-  ];
+  const entities = [...secretCards, ...handCards, ...battlefieldEntities, ...discardEntities];
 
   return {
     table: {
@@ -944,89 +1063,4 @@ function cyberpunkFixtureEntity({
     traits,
     frameStyle: { color: frameColor },
   };
-}
-
-type CardAnimationSoundKind = "draw" | "move";
-
-let cardAnimationAudioContext: AudioContext | null = null;
-
-function playCardAnimationSound(kind: CardAnimationSoundKind, sequenceOffset = 0) {
-  const context = getCardAnimationAudioContext();
-  if (!context) {
-    return;
-  }
-
-  if (context.state === "suspended") {
-    void context.resume();
-  }
-
-  const startAt = context.currentTime + Math.min(sequenceOffset * 0.012, 0.05);
-  const noiseDuration = kind === "draw" ? 0.12 : 0.17;
-  const noise = context.createBufferSource();
-  noise.buffer = createCardNoiseBuffer(context, noiseDuration);
-
-  const filter = context.createBiquadFilter();
-  filter.type = kind === "draw" ? "bandpass" : "highpass";
-  filter.frequency.setValueAtTime(kind === "draw" ? 1900 : 900, startAt);
-  filter.frequency.exponentialRampToValueAtTime(
-    kind === "draw" ? 4200 : 2100,
-    startAt + noiseDuration,
-  );
-  filter.Q.setValueAtTime(kind === "draw" ? 1.4 : 0.7, startAt);
-
-  const gain = context.createGain();
-  gain.gain.setValueAtTime(0.0001, startAt);
-  gain.gain.exponentialRampToValueAtTime(kind === "draw" ? 0.09 : 0.07, startAt + 0.012);
-  gain.gain.exponentialRampToValueAtTime(0.0001, startAt + noiseDuration);
-
-  noise.connect(filter);
-  filter.connect(gain);
-  gain.connect(context.destination);
-  noise.start(startAt);
-  noise.stop(startAt + noiseDuration + 0.02);
-
-  const click = context.createOscillator();
-  click.type = "triangle";
-  click.frequency.setValueAtTime(kind === "draw" ? 260 : 180, startAt);
-  click.frequency.exponentialRampToValueAtTime(kind === "draw" ? 140 : 90, startAt + 0.055);
-
-  const clickGain = context.createGain();
-  clickGain.gain.setValueAtTime(0.0001, startAt);
-  clickGain.gain.exponentialRampToValueAtTime(kind === "draw" ? 0.045 : 0.035, startAt + 0.008);
-  clickGain.gain.exponentialRampToValueAtTime(0.0001, startAt + 0.07);
-
-  click.connect(clickGain);
-  clickGain.connect(context.destination);
-  click.start(startAt);
-  click.stop(startAt + 0.08);
-}
-
-function getCardAnimationAudioContext(): AudioContext | null {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const audioWindow = window as typeof window & {
-    webkitAudioContext?: typeof AudioContext;
-  };
-  const AudioContextConstructor = window.AudioContext ?? audioWindow.webkitAudioContext;
-  if (!AudioContextConstructor) {
-    return null;
-  }
-
-  cardAnimationAudioContext ??= new AudioContextConstructor();
-  return cardAnimationAudioContext;
-}
-
-function createCardNoiseBuffer(context: AudioContext, duration: number): AudioBuffer {
-  const frameCount = Math.max(1, Math.floor(context.sampleRate * duration));
-  const buffer = context.createBuffer(1, frameCount, context.sampleRate);
-  const channel = buffer.getChannelData(0);
-
-  for (let index = 0; index < frameCount; index += 1) {
-    const envelope = 1 - index / frameCount;
-    channel[index] = (Math.random() * 2 - 1) * envelope;
-  }
-
-  return buffer;
 }

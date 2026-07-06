@@ -385,7 +385,7 @@ export const fixture: HarnessFixture = {
   coreComponents: [
     { name: "CardFace", responsibility: "Renders public and hidden entity faces." },
     { name: "BoardBlock", responsibility: "Maps layout blocks to zones, seats, and counters." },
-    { name: "SimulatorAnimationLayer", responsibility: "Coordinates primitive motion events." },
+    { name: "MotionAnimationSurface", responsibility: "Coordinates plan-based Motion playback." },
   ],
   eventLog,
   targetingIntents,

@@ -33,7 +33,7 @@ export const whiteRabbitsPocketWatch: ItemCard = {
     {
       title: "I'm Late!",
       description:
-        "{E}, 1 {I} — Chosen character gains <Rush> this turn. (They can challenge the turn they're played.)",
+        "{E}, 1 {I} — Chosen character gains Rush this turn. (They can challenge the turn they're played.)",
     },
   ],
   abilities: [

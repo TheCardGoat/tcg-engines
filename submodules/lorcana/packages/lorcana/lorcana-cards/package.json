@@ -102,6 +102,7 @@
     "generate": "bun scripts/generate-cards.ts && bun run format",
     "generate-cards:all": "bun scripts/generate-cards-all.ts",
     "generate-legacy-card-map": "bun scripts/generate-legacy-card-map.ts",
+    "audit:stable-ids": "bun scripts/audit-stable-card-ids.ts --strict",
     "embed-card-i18n": "bun scripts/embed-card-i18n.ts",
     "smoke-test:abilities": "bun scripts/smoke-test-card-abilities.ts",
     "generate:all": "bun run generate-cards:all",

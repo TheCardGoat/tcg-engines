@@ -32,7 +32,7 @@ export const myAdventureBook: ItemCard = {
     {
       title: "NEW MEMORIES",
       description:
-        "{E}, 1 {I} — Reveal the top card of your deck. If it's a non-character card or a character card named Kevin, put it into your hand. Otherwise, put it on the bottom of your deck.",
+        "{E}, 1{I} — Reveal the top card of your deck. If it's a non-character card or a character card named Kevin, put it into your hand. Otherwise, put it on the bottom of your deck.",
     },
   ],
   abilities: [

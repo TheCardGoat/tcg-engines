@@ -1,6 +1,10 @@
 import { useCallback, useSyncExternalStore } from "react";
 
-import type { TurnTaggedLogEntry, TurnTaggedMoveLog } from "./adapter.ts";
+import type {
+  TurnTaggedLogEntry,
+  TurnTaggedMoveLog,
+  TurnTaggedPacketAnimation,
+} from "./adapter.ts";
 import { useGundamGame } from "./context.tsx";
 import type { GameSnapshot } from "./store.ts";
 import type {
@@ -52,6 +56,10 @@ export function useLogEntries(): readonly TurnTaggedLogEntry[] {
 
 export function useMoveLogs(): readonly TurnTaggedMoveLog[] {
   return useGameSnapshot().moveLogs;
+}
+
+export function usePacketAnimations(): readonly TurnTaggedPacketAnimation[] {
+  return useGameSnapshot().packetAnimations;
 }
 
 export interface PendingMoveControls {

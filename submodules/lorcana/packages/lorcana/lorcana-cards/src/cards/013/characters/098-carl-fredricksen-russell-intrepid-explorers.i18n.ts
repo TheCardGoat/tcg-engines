@@ -35,13 +35,12 @@ export const carlFredricksenRussellIntrepidExplorersI18n: Record<Languages, I18n
     version: "Explorateurs intrépides",
     text: [
       {
-        title:
-          "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Carl Fredricksen ou Russell.)",
+        title: "<Alter> 4 {I}",
       },
       {
         title: "Savoir-faire en extérieur",
         description:
-          "Tant que ce personnage est sur un lieu, tous les personnages sur ce lieu gagnent +1 {L} et <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
+          "Tant que ce personnage est sur un lieu, tous les personnages sur ce lieu gagnent +1 {L} et <Insaisissable>.",
       },
     ],
   },

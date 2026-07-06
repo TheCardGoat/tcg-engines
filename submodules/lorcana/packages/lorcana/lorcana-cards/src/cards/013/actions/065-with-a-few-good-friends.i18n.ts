@@ -7,7 +7,7 @@ export const withAFewGoodFriendsI18n: Record<Languages, I18nProperties> = {
       {
         title: "Sing Together 6",
         description:
-          "(Any number of your or your teammates' characters with total cost 6 or more may {} to sing this song for free.)",
+          "(Any number of your or your teammates' characters with total cost 6 or more may {E} to sing this song for free.)",
       },
       {
         title:

@@ -1,11 +1,13 @@
 import {
   asPlayerId,
+  makeZoneKey,
   stripPrivateFields,
   type GameLogEntry,
   type GundamMoveLog,
   type MatchRuntime,
   type MatchStaticResources,
   type MoveHistoryEntry,
+  type PacketAnimation,
 } from "@tcg/gundam-engine";
 import {
   buildGundamInteractionView,
@@ -42,6 +44,12 @@ export interface TurnTaggedMoveLog {
   readonly turnNumber: number;
 }
 
+export interface TurnTaggedPacketAnimation {
+  readonly animation: PacketAnimation;
+  readonly stateID: number;
+  readonly turnNumber: number;
+}
+
 export interface EngineAdapter {
   readonly viewerId: ViewerId;
   readonly view: () => BoardProjection;
@@ -72,6 +80,7 @@ export interface EngineAdapter {
    */
   readonly logEntries: () => readonly TurnTaggedLogEntry[];
   readonly moveLogs: () => readonly TurnTaggedMoveLog[];
+  readonly packetAnimations: () => readonly TurnTaggedPacketAnimation[];
   /**
    * Resolve a card INSTANCE id (e.g. `player_one_deck_TEST-U-0003_12`) to
    * its definition via the runtime's static resources. Returns `null` if
@@ -110,6 +119,7 @@ export function createEngineAdapter({
   // / undo is enough — the engine itself holds no long-lived logger we can
   // subscribe to.
   const logTrail: TurnTaggedLogEntry[] = [];
+  const packetAnimationTrail: TurnTaggedPacketAnimation[] = [];
 
   const captureLog = (entries: readonly GameLogEntry[]) => {
     if (entries.length === 0) return;
@@ -119,10 +129,55 @@ export function createEngineAdapter({
     }
   };
 
+  const capturePacketAnimations = (animations: readonly PacketAnimation[], stateID: number) => {
+    if (animations.length === 0) return;
+    const turnNumber = runtime.getFilteredView({ role: "player", playerId }).status.turn;
+    for (const animation of animations) {
+      packetAnimationTrail.push({ animation, stateID, turnNumber });
+    }
+  };
+
   const isVisibleToViewer = (entry: GameLogEntry): boolean => {
     const { visibleTo } = entry;
     if (visibleTo === undefined || visibleTo === "all") return true;
     return visibleTo.includes(playerId);
+  };
+
+  const filterPacketAnimationForViewer = (
+    entry: TurnTaggedPacketAnimation,
+  ): TurnTaggedPacketAnimation | null => {
+    const { animation } = entry;
+    if (animation.data.kind !== "cardMove") {
+      return entry;
+    }
+    const { cardId, fromZone, toZone } = animation.data;
+    const view = runtime.getFilteredView({ role: "player", playerId });
+    const hiddenCardId = `__gundam_hidden_${entry.stateID}_${animation.id}`;
+    const ownerId = staticResources.cardsMaps.instances.get(cardId)?.ownerID;
+    const zoneKeysFor = (zone: string): readonly string[] =>
+      ownerId && zone ? [makeZoneKey({ zone, playerId: asPlayerId(ownerId) }), zone] : [zone];
+    const sourceZones = zoneKeysFor(fromZone).map((zoneKey) => view.zones.zones[zoneKey]);
+    const destinationZones = zoneKeysFor(toZone).map((zoneKey) => view.zones.zones[zoneKey]);
+    const zoneContainsVisibleCard = (zone: (typeof sourceZones)[number]): boolean =>
+      zone?.cards.some((card) => card.instanceId === cardId && card.definition !== null) ?? false;
+    const canSeeSource =
+      fromZone === "" ? false : sourceZones.some((zone) => zoneContainsVisibleCard(zone));
+    const canSeeDestination = destinationZones.some((zone) => zoneContainsVisibleCard(zone));
+
+    if (canSeeSource || canSeeDestination) {
+      return entry;
+    }
+
+    return {
+      ...entry,
+      animation: {
+        ...animation,
+        data: {
+          ...animation.data,
+          cardId: hiddenCardId,
+        },
+      },
+    };
   };
 
   return {
@@ -176,6 +231,7 @@ export function createEngineAdapter({
         // current ID. Writing `result.stateID` back would clobber that
         // and the very next submit would fail STALE_STATE.
         captureLog(result.logEntries);
+        capturePacketAnimations(result.animations, result.stateID);
         // Return the LIVE stateID, not `result.stateID`. If a re-entrant
         // listener advanced the runtime during the submit, the caller
         // would otherwise get a value that's already stale the moment
@@ -194,6 +250,7 @@ export function createEngineAdapter({
         // Same rationale as in `submit`: let `subscribe` refresh
         // `lastStateId` from the runtime's live stateID.
         captureLog(result.logEntries);
+        capturePacketAnimations(result.animations, result.stateID);
         return { ok: true, stateId: lastStateId };
       }
       return { ok: false, errorCode: result.errorCode, error: result.error };
@@ -204,6 +261,8 @@ export function createEngineAdapter({
     moveHistory: () => runtime.getMoveHistory(),
 
     logEntries: () => logTrail.filter((t) => isVisibleToViewer(t.entry)),
+    packetAnimations: () =>
+      packetAnimationTrail.flatMap((entry) => filterPacketAnimationForViewer(entry) ?? []),
     moveLogs: () =>
       runtime.getMoveLogHistory().map((log) => ({
         log: stripPrivateFields(log, String(viewerId)) ?? log,

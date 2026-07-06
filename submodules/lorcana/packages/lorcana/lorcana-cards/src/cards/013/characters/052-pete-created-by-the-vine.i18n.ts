@@ -8,7 +8,7 @@ export const peteCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       {
         title: "THORNY OVERGROWTH",
         description:
-          "Your Floodborn characters gain Challenger +1. (They get +1 {} while challenging.)",
+          "Your Floodborn characters gain Challenger +1. (They get +1 {S} while challenging.)",
       },
     ],
   },

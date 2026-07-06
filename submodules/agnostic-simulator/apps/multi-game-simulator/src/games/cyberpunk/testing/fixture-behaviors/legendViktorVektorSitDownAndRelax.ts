@@ -12,11 +12,7 @@ export const legendViktorVektorSitDownAndRelaxBehavior: CyberpunkFixtureBehavior
   label: "Viktor Vektor - call searches top deck for gear",
   references: ["packages/engine/src/cards/alpha/legends/viktor-vektor-sit-down-and-relax.test.ts"],
   async run(pom) {
-    const viktor = await pom.getCardInZoneByDefinitionId(
-      "legendArea",
-      CYBERPUNK_P1,
-      alphaViktorVektorSitDownAndRelax.id,
-    );
+    const viktor = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
 
     await pom.callLegend(viktor.instanceId, CYBERPUNK_P1);
 
@@ -26,6 +22,11 @@ export const legendViktorVektorSitDownAndRelaxBehavior: CyberpunkFixtureBehavior
       viktor.instanceId,
     );
     expectEqual("Viktor is face-up", calledViktor.faceDown, false);
+    expectEqual(
+      "Viktor definition after call",
+      calledViktor.definitionId,
+      alphaViktorVektorSitDownAndRelax.id,
+    );
     await pom.expectEddies(CYBERPUNK_P1, 2);
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "searchDeck");
 

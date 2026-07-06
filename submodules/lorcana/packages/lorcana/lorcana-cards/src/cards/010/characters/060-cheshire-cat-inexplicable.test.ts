@@ -1,8 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-engine/testing";
 import { cheshireCatInexplicable } from "./060-cheshire-cat-inexplicable";
+import { mickeyMouseAmberChampion } from "./023-mickey-mouse-amber-champion";
 import { theLibraryAGiftForBelle } from "../../005/locations/068-the-library-a-gift-for-belle";
 import { calhounMarineSergeant } from "../../006/characters/191-calhoun-marine-sergeant";
+import { davidProtectiveSnowboarder } from "../../011/characters/009-david-protective-snowboarder";
 
 const ally = createMockCharacter({
   id: "cheshire-ally",
@@ -182,6 +184,42 @@ describe("Cheshire Cat - Inexplicable", () => {
       expect(testEngine.asPlayerOne().getDamage(ally)).toBe(0);
       // Destination: Calhoun has Resist +1 but move-damage bypasses it — he takes 1 damage
       expect(testEngine.asPlayerTwo().getDamage(calhounMarineSergeant)).toBe(1);
+    });
+
+    it("does not banish a character when moved damage reaches printed Willpower but not Mickey's boosted Willpower", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [
+            { card: cheshireCatInexplicable, isDrying: false },
+            { card: damageSource, damage: 1 },
+          ],
+          inkwell: 2,
+          deck: [deckFiller],
+        },
+        {
+          play: [mickeyMouseAmberChampion, { card: davidProtectiveSnowboarder, damage: 3 }],
+          deck: 1,
+        },
+      );
+
+      expect(testEngine.asPlayerTwo().getCard(davidProtectiveSnowboarder).willpower).toBe(
+        davidProtectiveSnowboarder.willpower + 2,
+      );
+
+      expect(
+        testEngine.asPlayerOne().activateAbility(cheshireCatInexplicable),
+      ).toBeSuccessfulCommand();
+
+      expect(
+        testEngine.asPlayerOne().resolvePendingByCard(cheshireCatInexplicable, {
+          resolveOptional: true,
+          targets: [damageSource, davidProtectiveSnowboarder],
+          amount: 1,
+        }),
+      ).toBeSuccessfulCommand();
+
+      expect(testEngine.asPlayerTwo().getDamage(davidProtectiveSnowboarder)).toBe(4);
+      expect(testEngine.asPlayerTwo().getCardZone(davidProtectiveSnowboarder)).toBe("play");
     });
 
     it("auto-declines when no opposing characters are in play (THE-1035 G-01)", () => {

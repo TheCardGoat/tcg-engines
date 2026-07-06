@@ -290,6 +290,47 @@
         ]
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Amanda Duarte",
+        "card_identifier": "64/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3035,
+        "deck_building_id": "2c7262447d3546a158c309445b26dc760753a843",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Adesso la Tua Forza È Mitica",
+        "rarity": "COMMON",
+        "rules_text": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)%Un personaggio a tua scelta ottiene <Lesto> e <Sfidante> +2 per questo turno. (Può sfidare nel turno in cui viene giocato. Riceve +2 {S} mentre sta sfidando.)",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3174,
+        "subtypes": [
+          "Canzone"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/64_dfd5d979eb0b352e5d8a8ae5f3cb45b93bde882d.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/64_a73919d46fb2b0676216f102af19f01a4a1028de.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/64_a73919d46fb2b0676216f102af19f01a4a1028de.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/64_4f0c3df46da315018a37bf69b9fbe903d9e38498.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
         "abilities": [
           "Cantare Insieme"
         ],
@@ -327,6 +368,45 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/65_224b40fd0b142922c5a66acae6df8eb0bd4f744e.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/65_b60b8af8419bf45b63d82ef66042e09b02bbe0ca.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Geoffrey Boudout",
+        "card_identifier": "66/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3037,
+        "deck_building_id": "42bd02a1ae1b0bab87b59d8bfd527fe5875fb09a",
+        "flavor_text": "“Cosa sta facendo questo rumore terribile? Sembra che stia venendo in questa direzione.”%—Shanzay, un'Illuminatrice",
+        "ink_convertible": false,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Pietrificare",
+        "rarity": "COMMON",
+        "rules_text": "Impegna un personaggio avversario a tua scelta.",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3172,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/66_a24b2712fb390aad038c430df0ed3fb7d1a253bf.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/66_faba353d62643d8bb41e5506fda66ea820409212.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/66_faba353d62643d8bb41e5506fda66ea820409212.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/66_8d623deb5931bc08f716dab1187ae1e30ef45222.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -405,6 +485,88 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/68_0e51ad1c8dcb82fb19232be8bf2e4394836d0ebc.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/68_56caa77c805f1e879c3b585df75a30f5661fdc21.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Matt Chapman",
+        "card_identifier": "69/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3040,
+        "deck_building_id": "c2efd3b0e6b19ba9b102240f751a97b278550930",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Scampato Pericolo",
+        "rarity": "COMMON",
+        "rules_text": "Fai riprendere in mano ai loro giocatori fino a 2 personaggi, oggetti o luoghi a tua scelta con costo 2 o inferiore ciascuno.",
+        "searchable_keywords": [
+          "Peter Pan",
+          "Le avventure di Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3169,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/69_c1ccb9674d6aa6ccfc7f937bd5c825dc9c23fe3b.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/69_2ca0daf03a98250ccaa99ce58d34523b5471c493.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/69_2ca0daf03a98250ccaa99ce58d34523b5471c493.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/69_e6db7c30abf4c1be2967d87b389fe41a0ac2f718.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Kasia Brzezinska",
+        "card_identifier": "101/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3072,
+        "deck_building_id": "51ce85578439127e6a31924f10d9582a6074fc96",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Si Spampana e Muor",
+        "rarity": "RARE",
+        "rules_text": "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)%Infliggi 2 danni a ogni personaggio avversario danneggiato.",
+        "searchable_keywords": [
+          "Sword in the Stone",
+          "La Spada Nella Roccia"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3137,
+        "subtypes": [
+          "Canzone"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/101_66002c9bca9e8585ccce6b9ace430a2e61da4143.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/101_a6d744af96a774e444190472ce31e476a65e54d3.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/101_a6d744af96a774e444190472ce31e476a65e54d3.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/101_1f9fd336b094935775c9b37cac13869945199ddb.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -528,6 +690,90 @@
         ]
       },
       {
+        "abilities": [
+          "Cantare Insieme"
+        ],
+        "additional_info": [],
+        "author": "Kasia Brzezinska",
+        "card_identifier": "134/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3105,
+        "deck_building_id": "81029ecab4e7b2eb4cb8e6a6968f977081a28bf0",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Rituale della Luna Rossa",
+        "rarity": "UNCOMMON",
+        "rules_text": "<Cantare Insieme> 7 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 7 o superiore può {E} per cantare questa canzone gratis.)%Esilia un personaggio a tua scelta.",
+        "searchable_keywords": [
+          "Red",
+          "Turning Red"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3104,
+        "subtypes": [
+          "Canzone"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/134_c28262c7c728d23a620bb5489db0128bcfb7d7d1.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/134_bdb86800e083a9c2d4d555a6f2deda2f02de5c80.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/134_bdb86800e083a9c2d4d555a6f2deda2f02de5c80.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/134_4b6f404ce4bfcacbb5f62f640b319c29d52fb0c1.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Ian MacDonald",
+        "card_identifier": "135/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3106,
+        "deck_building_id": "77fab750bdb722024b46303f2f85b9091af0a9d0",
+        "flavor_text": "“Restate calmi. Questa non è un'esercitazione.”%—Agente del CDA",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Allarme Rosso",
+        "rarity": "UNCOMMON",
+        "rules_text": "Esilia un personaggio a tua scelta con 3 {S} o inferiore. Se hai in gioco un personaggio Mostro, un avversario a tua scelta perde 1 leggenda.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monsters & Co"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3103,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/135_c2144cbadf85bbd411b64a4172a941d456d5cfc0.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/135_eb1c32387da5ee0b53c749631235d5c6350a23a9.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/135_eb1c32387da5ee0b53c749631235d5c6350a23a9.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/135_dc66f078844a9c2e10ffa0751db0f6ca6680ce65.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Kevin Sidharta",
@@ -609,6 +855,47 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Serena Wade",
+        "card_identifier": "138/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3109,
+        "deck_building_id": "7d9d987714750ae64938c9fe23514cd03e0c93f1",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Se Vieni Con Me!",
+        "rarity": "COMMON",
+        "rules_text": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)%Prepara un personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno.",
+        "searchable_keywords": [
+          "Winnie the Pooh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3100,
+        "subtypes": [
+          "Canzone"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/138_0b7b57d4c128a00e228c2b14d38ae724de9d6a09.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/138_ca13c612eb25219a9da17f65e6a8d16fc42fbc79.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/138_ca13c612eb25219a9da17f65e6a8d16fc42fbc79.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/138_1a063c31f75a940f4d3ab7038eb478c4840aa8a3.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Jaime Puga",
         "card_identifier": "166/207 IT 13",
         "card_sets": [
@@ -649,6 +936,87 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Oggy Christiansson",
+        "card_identifier": "167/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3138,
+        "deck_building_id": "8a301036e71a37a0d6060ae4d82a9ad5a8023f54",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Ricerca Approfondita",
+        "rarity": "COMMON",
+        "rules_text": "Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio chiamata Kevin o una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+        "searchable_keywords": [
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3071,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/167_e4a33dd99994da1ee214a696a448b0a735c778fa.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/167_eaf4549226c2b2ef286f0c2ee0a08129a112e466.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/167_eaf4549226c2b2ef286f0c2ee0a08129a112e466.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/167_a9a546e3a92327bd4fb39ba70e5e5bb8d66d7045.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Brian Kesinger",
+        "card_identifier": "168/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3139,
+        "deck_building_id": "19dde67ea82278615fc9195fbbd6398035c2325b",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Abbiamo un Po' da Far",
+        "rarity": "COMMON",
+        "rules_text": "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)%Aggiungi un oggetto o un luogo a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato.",
+        "searchable_keywords": [
+          "La bella e la bestia",
+          "Beauty and the Beast"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3070,
+        "subtypes": [
+          "Canzone"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/168_bba9b5bcee5165db767a7aa7b9920190c72f7432.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/168_818b3f91c3967351bd8c7413c7df240d1bf88a85.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/168_818b3f91c3967351bd8c7413c7df240d1bf88a85.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/168_fb105f174fce5595994f1abcdc82b2b7af67202a.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Matt Chapman",
         "card_identifier": "169/207 IT 13",
         "card_sets": [
@@ -680,6 +1048,88 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/169_9d3262a248652aa7ea049d88eedbcac902ac9273.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/169_9f026e3b41396bf6b40de3942cdab18ae6eeeb6f.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Viv Tanner",
+        "card_identifier": "198/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3169,
+        "deck_building_id": "676f8c2057308cd64545014379a9dbb3affa272f",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Prostratevi Davanti a Me!",
+        "rarity": "COMMON",
+        "rules_text": "Fino a 2 personaggi avversari a tua scelta non possono sfidare durante il loro prossimo turno.",
+        "searchable_keywords": [
+          "Sleeping Beauty",
+          "La bella addormentata nel bosco"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3040,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/198_1c16428fc40a6619dd93b4ce5c8cae2386c22be3.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/198_99ccc6ec0b7df79fee3f513a865e62d870f9490a.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/198_99ccc6ec0b7df79fee3f513a865e62d870f9490a.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/198_95ac7964ded90e36e8bc73a8f90c8f156cdeb19e.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Emily Abeydeera",
+        "card_identifier": "199/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3170,
+        "deck_building_id": "26fe288ed8c481a316a3e0fab1187c295874db09",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Il Villaggio Rivivrà",
+        "rarity": "COMMON",
+        "rules_text": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)%I tuoi personaggi e luoghi ottengono <Resistere> +1 fino all'inizio del tuo prossimo turno. (Il danno che gli viene inflitto è ridotto di 1.)",
+        "searchable_keywords": [
+          "La bella e la bestia",
+          "Beauty and the Beast"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3039,
+        "subtypes": [
+          "Canzone"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/199_9646a88288e6c13d41c5d298cb46ca7401ccab67.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/199_c2a0a3a8939deeb3771a7913036e5c5f48f3c99b.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/199_c2a0a3a8939deeb3771a7913036e5c5f48f3c99b.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/199_22940ed2b8b0c9dc7d7a79a6e7d17bdc01103168.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -760,6 +1210,46 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/201_08231b461d57ca0d247ffe64488c8f42dd779b59.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/201_905083b5382a23711bd7d5a0c4a25fc7f8ad29fd.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Max Ulichney",
+        "card_identifier": "202/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3173,
+        "deck_building_id": "2d2deaa86e5436ecabddc1c8b05cfb90df383afc",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Viticcio all'Attacco!",
+        "rarity": "RARE",
+        "rules_text": "I tuoi personaggi Imbevuto ottengono <Resistere> +2 e possono sfidare i personaggi preparati per questo turno. (Il danno che gli viene inflitto è ridotto di 2.)",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monsters & Co"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3036,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/202_ff528adb04758b7b7d7c5d793197216a8862271b.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/202_48c48f34416ee022359b3f2e9736f287a2e4628e.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/202_48c48f34416ee022359b3f2e9736f287a2e4628e.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/202_ce1ee9543b192785d039dc74b92fec4245d2e629.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -18319,6 +18809,99 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Kapik",
+        "card_identifier": "42/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3013,
+        "deck_building_id": "de5339b19461f002cd8f07ae1a77bec034b48560",
+        "flavor_text": "“È ora del tocco curativo degli efelanti!”",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Effy",
+        "quest_value": 2,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Gradita Guarigione\\ Quando giochi questo personaggio, puoi spostare fino a 2 danni da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
+        "searchable_keywords": [
+          "Winnie the Pooh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3196,
+        "strength": 3,
+        "subtitle": "Druido del Miele",
+        "subtypes": [
+          "Immaginato",
+          "Alleato",
+          "Miele"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/42_1ddd4044543c26337330afe0342a7f32aed58e58.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/42_ebc04b41411fb83bad971f1e4e93b717a3b7da18.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/42_ebc04b41411fb83bad971f1e4e93b717a3b7da18.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/42_bb7393e0129e8958e867780b6d57bd7a0380a57c.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 6
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Oggy Christiansson",
+        "card_identifier": "43/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3014,
+        "deck_building_id": "0686432c84248b1a2d60eedda28bb969a5823e79",
+        "flavor_text": "“Ecco, siamo messi bene. Ormai può diventare sultano davvero chiunque.”%—Iago",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Abu",
+        "quest_value": 2,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Sovrano per un Giorno\\ Quando questo personaggio va all'avventura, esilialo.",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3195,
+        "strength": 2,
+        "subtitle": "Saggio Sultano",
+        "subtypes": [
+          "Classico",
+          "Alleato"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/43_14a4a6ab32d0b4f4f9146c9689259c54b8acdf8d.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/43_ea09ba38412f281977dcb1df00d7089607f1a50b.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/43_ea09ba38412f281977dcb1df00d7089607f1a50b.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/43_c84c1073cfe382e96e388496e422bd8535420532.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Oggy Christiansson",
         "card_identifier": "44/207 IT 13",
         "card_sets": [
@@ -18406,6 +18989,99 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/45_368e5cd65688bff15342e40e78a564cab9a28cf1.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/45_058e11120d17f247f2f7272cecab5364784f2850.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Oggy Christiansson",
+        "card_identifier": "46/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3017,
+        "deck_building_id": "1643027f994ccbc248747b84828f5bc6d46b774c",
+        "flavor_text": "“Io la mia cena ce l'ho. Dov'è la tua, Red?”",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Vicky",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Furtarello\\ Quando giochi questo personaggio, se hai in gioco un personaggio con <Sfuggente>, puoi far riprendere in mano al suo giocatore un personaggio, un oggetto o un luogo a tua scelta con costo 2 o inferiore.",
+        "searchable_keywords": [
+          "Fox and the Hound",
+          "Red e Toby nemiciamici"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3192,
+        "strength": 2,
+        "subtitle": "Pescatrice Esperta",
+        "subtypes": [
+          "Classico",
+          "Alleato"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/46_9912d34f67d4b4251996553ad76539eedbdd47dc.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/46_d5ed7a862d9ad47504ede7e75f5366c54062f63d.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/46_d5ed7a862d9ad47504ede7e75f5366c54062f63d.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/46_4d628d3f0069c56374ec3310f139439faf51f94b.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Heidi Neunhoffer",
+        "card_identifier": "47/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3018,
+        "deck_building_id": "f505c7d0ef299f6af1250ff25f3d76169fcb994e",
+        "flavor_text": "Non aveva idea di come sarebbe riuscito a trasportare tutti questi frutti, ma di certo ci avrebbe provato.",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Meeko",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Pocahontas"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3191,
+        "strength": 1,
+        "subtitle": "Procione Fortunato",
+        "subtypes": [
+          "Classico",
+          "Alleato"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/47_50c2453d1d62d24fe500fe25c93c414054ab596f.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/47_3dc347910c01b63504696acaf889900f15e3f0ce.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/47_3dc347910c01b63504696acaf889900f15e3f0ce.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/47_c5b3f67d10ade09748e26503e390fec0c1c405df.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -18651,6 +19327,104 @@
         "willpower": 2
       },
       {
+        "abilities": [
+          "Sfidante"
+        ],
+        "additional_info": [],
+        "author": "Pauline Voss",
+        "card_identifier": "53/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3024,
+        "deck_building_id": "b16f9172eddbc09912a300b2d68cce9d4ae8822e",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Nonna Wu",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "<Sfidante> +2 (Mentre sta sfidando, questo personaggio riceve +2 {S}.)%\\Consapevolezza Ancestrale\\ Quando trasformi un personaggio sopra a questo personaggio, ottieni 1 leggenda.",
+        "searchable_keywords": [
+          "Red",
+          "Turning Red"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3185,
+        "strength": 1,
+        "subtitle": "Nonna Saggia",
+        "subtypes": [
+          "Classico",
+          "Mentore",
+          "Panda Rosso"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/53_acd908c6b149c5b82ba25eb4049e0f9aab5fd6cd.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/53_606d0a6a85439ebd9e4fdf8c1d5dc5d65c6e7354.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/53_606d0a6a85439ebd9e4fdf8c1d5dc5d65c6e7354.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/53_9c1384338f4d415324379ee35061cb44bd99241c.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Oggy Christiansson",
+        "card_identifier": "54/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3025,
+        "deck_building_id": "1dbac06fad53efe48a56fbc25d8a8983d1a50efd",
+        "flavor_text": "Una copia con persino meno buon senso del suo originale.",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Heihei",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Rimedio Botanico\\ Ogni volta che uno dei tuoi personaggi Imbevuto va all'avventura, puoi spostare 1 danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
+        "searchable_keywords": [
+          "Moana",
+          "Vaiana",
+          "Oceania"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3184,
+        "strength": 1,
+        "subtitle": "Creato dal Viticcio",
+        "subtypes": [
+          "Imbevuto",
+          "Virgulto"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/54_129c843e44201fd74b92216abc664664bb23946c.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/54_c39f6c4f4c9cf727d8f588ce9114f4772b48f986.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/54_c39f6c4f4c9cf727d8f588ce9114f4772b48f986.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/54_a370a03a811f9459efc660b40b8343bbb61f539c.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Julian del Rey",
@@ -18697,6 +19471,54 @@
           }
         ],
         "willpower": 6
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Giulia Riva",
+        "card_identifier": "56/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3027,
+        "deck_building_id": "210204b9749af3caa1cd8120cd7040e3b28d9eed",
+        "flavor_text": "“Trilli, cosa vedi laggiù? Secondo te riusciremo a entrare?”%—Peter Pan",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Trilli",
+        "quest_value": 2,
+        "rarity": "UNCOMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Peter Pan",
+          "Le avventure di Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3182,
+        "strength": 2,
+        "subtitle": "In Cerca di una Via",
+        "subtypes": [
+          "Classico",
+          "Alleato",
+          "Fata"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/56_245f7b804f7e333b1d845dd957f2f8f3002f1aaa.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/56_3c367ceb78deb129b5a147ce81ef63a588fdc998.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/56_3c367ceb78deb129b5a147ce81ef63a588fdc998.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/56_de45d9aca9e9df7bf844aadc47ab092302197f1b.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
       },
       {
         "abilities": [],
@@ -18953,6 +19775,58 @@
           "Trasformazione"
         ],
         "additional_info": [],
+        "author": "Valerio Buonfantino",
+        "card_identifier": "62/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3033,
+        "deck_building_id": "c2ebf26b3d2404e6a5568615db755bc2d9227ced",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "SAPPHIRE"
+        ],
+        "name": "Winnie the Pooh e Pimpi",
+        "quest_value": 0,
+        "rarity": "SUPER",
+        "rules_text": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Winnie the Pooh o Pimpi.)%\\Mix Magico\\ Questo personaggio riceve +1 {L} per ogni tipo diverso di inchiostro dei personaggi che hai in gioco.",
+        "searchable_keywords": [
+          "Winnie the Pooh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3176,
+        "strength": 3,
+        "subtitle": "Maghi del Miele",
+        "subtypes": [
+          "Immaginato",
+          "Squadra",
+          "Eroe",
+          "Incantatore",
+          "Miele"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/62_8599fae095a6aa0e91eca3f4eec02a02930605a7.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/62_246ebe64608c519f9135ab5c4a3643fbcd836a87.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/62_246ebe64608c519f9135ab5c4a3643fbcd836a87.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/62_797ca7332bb87d25dde863467c28b76efdc9312f.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
         "author": "Eri Welli",
         "card_identifier": "63/207 IT 13",
         "card_sets": [
@@ -19143,6 +20017,54 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Marcel Berg",
+        "card_identifier": "77/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3048,
+        "deck_building_id": "df133b3d8538f431b38897a19345273c3abb31f8",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Buzz Lightyear",
+        "quest_value": 2,
+        "rarity": "RARE",
+        "rules_text": "\\Pupazzo Meccanico\\ Quando giochi questo personaggio, scegli uno dei seguenti. Se hai in gioco un altro personaggio Giocattolo, scegli invece entrambi:%• Puoi riprendere in mano una carta azione con costo 2 o inferiore dai tuoi scarti.%• Puoi giocare un'azione con costo 2 o inferiore gratis.",
+        "searchable_keywords": [
+          "Toy Story"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3161,
+        "strength": 4,
+        "subtitle": "Che Copre le Spalle",
+        "subtypes": [
+          "Classico",
+          "Eroe",
+          "Giocattolo",
+          "Capitano"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/77_9042675b91162cdf80c1f5c90393da7cbd12d042.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/77_336cb52d4d120d8403994380bd88862bc6089879.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/77_336cb52d4d120d8403994380bd88862bc6089879.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/77_93201886df04c8e2e902fc564507d9b68c8a7bab.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "French Carlomagno",
         "card_identifier": "78/207 IT 13",
         "card_sets": [
@@ -19284,6 +20206,99 @@
         "willpower": 3
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Noukah",
+        "card_identifier": "81/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3052,
+        "deck_building_id": "d4b995ae6e9058a22b8f025d86e5606e0f4b410c",
+        "flavor_text": "“Sarebbe tutto più semplice se questi rampicanti avessero un buon sapore.”",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Red",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Risolvere i Problemi\\ Quando giochi questo personaggio, pesca 2 carte, poi scegli e scarta una carta.",
+        "searchable_keywords": [
+          "Fox and the Hound",
+          "Red e Toby nemiciamici"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3157,
+        "strength": 1,
+        "subtitle": "Volpe Astuta",
+        "subtypes": [
+          "Classico",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/81_a5089377c38194d6da0910c1175e2b4c6ac270e3.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/81_41a92d2d5e330768ad2667b28dc30e6bda97e69b.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/81_41a92d2d5e330768ad2667b28dc30e6bda97e69b.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/81_04e02cf9e6dae20bd98151b363258ab03d58d247.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Kendall Hale",
+        "card_identifier": "82/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3053,
+        "deck_building_id": "495ae02f6add9b84f8f440672fd23b4e20af0acb",
+        "flavor_text": "“Un Esploratore è amico di ogni cosa, che sia una pianta, un pesce o una medusa.”",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Russell",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Distintivo di Assistenza agli Anziani\\ Ogni volta che questo personaggio va all'avventura, puoi spostare questo personaggio e uno dei tuoi altri personaggi nello stesso luogo, gratis.",
+        "searchable_keywords": [
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3156,
+        "strength": 3,
+        "subtitle": "Esploratore Junior della Natura Selvaggia",
+        "subtypes": [
+          "Classico",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/82_dc8ae1f0293b5c7a8b7f669d3f283c68730ca125.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/82_fcd47564052921eb9990680413994080db238272.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/82_fcd47564052921eb9990680413994080db238272.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/82_8a5d5cd85bc1fd3085f60ff52670f501a5eb1247.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
         "abilities": [
           "Protetto"
         ],
@@ -19384,6 +20399,145 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Alejandro Hernandez",
+        "card_identifier": "85/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3056,
+        "deck_building_id": "a12782cfb089f25b3615902f5e3103b26ed3d5a2",
+        "flavor_text": "“Non so cosa sia quella cosa, ma rimandiamola indietro da dove è venuta.”",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Aladdin",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Fare Piazza Pulita\\ Quando giochi questo personaggio, puoi pagare 1 {I} per esiliare un oggetto a tua scelta.",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3153,
+        "strength": 3,
+        "subtitle": "Che Fa la Sua Parte",
+        "subtypes": [
+          "Immaginato",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/85_3ba8cfca941ecd1951de62495702eb1c21ac3b98.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/85_ada5134e37a20f8a8bc2b83d3792778e533a58b8.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/85_ada5134e37a20f8a8bc2b83d3792778e533a58b8.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/85_2ef5c502b3c1e300dda4ff16ee053d1c854f5945.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [
+          "Sfuggente"
+        ],
+        "additional_info": [],
+        "author": "Luis Huerta",
+        "card_identifier": "86/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3057,
+        "deck_building_id": "d2a64cfb3f3ddcc3109363d347929f182ac36670",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Maga Magò",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "<Sfuggente> (Solo altri personaggi con Sfuggente possono sfidare questo personaggio.)%\\Proprio Come Piace a Me\\ Tutte le carte nella tua mano contano come se avessero {C}.",
+        "searchable_keywords": [
+          "Sword in the Stone",
+          "La Spada Nella Roccia"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3152,
+        "strength": 1,
+        "subtitle": "Colibrì",
+        "subtypes": [
+          "Immaginato",
+          "Cattivo",
+          "Incantatore"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/86_47e9820c6d79fd29e6444db61e92c995562058f7.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/86_85849b279c449dc2bfe39e155ae113bb093c19ef.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/86_85849b279c449dc2bfe39e155ae113bb093c19ef.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/86_f9f10ce42235553ee27172a661e59fa607c3a06b.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 1
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Rachel Elese",
+        "card_identifier": "87/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3058,
+        "deck_building_id": "3b0e8334ac0212cfffe798056686d118756c12f3",
+        "flavor_text": "Minni sbirciò nel groviglio di spine. C'era forse un piccolo varco nel viticcio? Si chiese fin dove potesse arrivare.",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Minni",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3151,
+        "strength": 2,
+        "subtitle": "Avventuriera Curiosa",
+        "subtypes": [
+          "Immaginato",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/87_9b6f6bea9450bc89de780b200bddfaeb7d2540bd.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/87_0d9a1b99810a53dc81fe0acb313c99799c83be72.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/87_0d9a1b99810a53dc81fe0acb313c99799c83be72.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/87_5063db5f8ac588683f1ec5bbea48f723a422681e.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Jiahui Eva Gao",
         "card_identifier": "88/207 IT 13",
         "card_sets": [
@@ -19421,6 +20575,53 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/88_c45937bf06a9fa729bcf8f236531a29883c0a89f.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/88_957c747a53473c9175e9268f9accb7383e82053b.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Simone Giovanardi",
+        "card_identifier": "89/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3060,
+        "deck_building_id": "a4c2241d5da2c69f97eb188c5c5a5ac6fcc04503",
+        "flavor_text": "Le repliche che il viticcio aveva creato brillavano di un'infusione di inchiostro mescolato.",
+        "ink_convertible": false,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Peter Pan",
+        "quest_value": 2,
+        "rarity": "RARE",
+        "rules_text": "\\Astuto Tranello\\ Ogni volta che uno dei tuoi personaggi Imbevuto viene sfidato, il giocatore sfidante sceglie e scarta una carta.",
+        "searchable_keywords": [
+          "Peter Pan",
+          "Le avventure di Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3149,
+        "strength": 1,
+        "subtitle": "Creato dal Viticcio",
+        "subtypes": [
+          "Imbevuto",
+          "Virgulto"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/89_1f786a14bdc40d7691ee79c686b3086599835754.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/89_0c33068a4435041d133c5cb63e8ef791ee5fbd33.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/89_0c33068a4435041d133c5cb63e8ef791ee5fbd33.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/89_956fc6d0091b88579ad673734cd5f193aae2257c.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -19474,6 +20675,54 @@
           }
         ],
         "willpower": 2
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Carmine Pucci",
+        "card_identifier": "91/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3062,
+        "deck_building_id": "fd47e2e841a4ac5a64a7a48b2814d80ed3293cc2",
+        "flavor_text": "“È viva! È viva, che ti dicevo!”%—Dr. Clorofix",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Fiorellino",
+        "quest_value": 2,
+        "rarity": "UNCOMMON",
+        "rules_text": "<Trasformazione Patata> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi oggetti chiamato Patata.)",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3147,
+        "strength": 7,
+        "subtitle": "Patata Vampiro",
+        "subtypes": [
+          "Classico",
+          "Mostro"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/91_d87abe57e7af7ba77240f124ac607ac5c60089d3.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/91_02d7a778caf8ea608d52fe02386776e9bc51c3f0.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/91_02d7a778caf8ea608d52fe02386776e9bc51c3f0.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/91_1b704264375f9ead31e7db7d64393bbb76263bcd.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 8
       },
       {
         "abilities": [
@@ -19672,6 +20921,105 @@
         "willpower": 1
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Celeste Jamneck",
+        "card_identifier": "96/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3067,
+        "deck_building_id": "cc595126cb80d2dd47a86c2cffe4407cda637a6a",
+        "flavor_text": "“Va bene, quindi questo viticcio? Non era nei miei piani. Ma sono un dio pieno di risorse. Devo essere flessibile. Adattarmi. Fate uscire il serpente marino.”%—Ade",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Ceto",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Hercules"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3142,
+        "strength": 6,
+        "subtitle": "Serpente Possente",
+        "subtypes": [
+          "Classico",
+          "Mostro"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/96_93d17f305dc97326a823b3ae9169d1559372b56f.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/96_7a6fec0b529cfa5993dc2b9a8805cb0c17784571.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/96_7a6fec0b529cfa5993dc2b9a8805cb0c17784571.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/96_411fea2f64a0fc58ff0393276833185e72178c30.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 7
+      },
+      {
+        "abilities": [
+          "Sfuggente"
+        ],
+        "additional_info": [],
+        "author": "Tom Bancroft / Kristen Breshears",
+        "card_identifier": "97/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3068,
+        "deck_building_id": "1c83fd32d4a179f9672af28642b26fba727cb8a8",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Mushu",
+        "quest_value": 1,
+        "rarity": "LEGENDARY",
+        "rules_text": "<Sfuggente> (Solo altri personaggi con Sfuggente possono sfidare questo personaggio.)%\\Spostare l'Ago della Bilancia\\ Ogni volta che questo personaggio va all'avventura, se un avversario ha in mano più carte di te, puoi pescare una carta.",
+        "searchable_keywords": [
+          "Mulan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3141,
+        "strength": 3,
+        "subtitle": "Drago Silenzioso",
+        "subtypes": [
+          "Classico",
+          "Alleato",
+          "Drago"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/97_48193a98048d2abab79b6b9ae8871773ccdc407a.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/97_c9136b824069a5d26876c171e9f0b55d62bb6c12.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/97_f04faf9bd1e1197f071d3cd93191cc52e279fd6c.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/97_c9136b824069a5d26876c171e9f0b55d62bb6c12.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/97_5e519cc84ed9f1812bdda9a417303a3fb1aaceaf.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/97_f04faf9bd1e1197f071d3cd93191cc52e279fd6c.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
         "abilities": [
           "Trasformazione"
         ],
@@ -19830,6 +21178,199 @@
         "willpower": 4
       },
       {
+        "abilities": [
+          "Trasformazione",
+          "Sfuggente"
+        ],
+        "additional_info": [],
+        "author": "Mike Parker",
+        "card_identifier": "109/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3080,
+        "deck_building_id": "31df8e8dd8ecd29b5c3c5b8f96d0d30b70ba77f9",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Flash Parr",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Flash Parr.)%<Sfuggente> (Solo altri personaggi con Sfuggente possono sfidare questo personaggio.)%\\Seguitemi!\\ Ogni volta che questo personaggio va all'avventura, puoi rivelare la prima carta del tuo mazzo. Se lo fai, puoi giocarla. Altrimenti, mettila nei tuoi scarti. (Paga tutti i costi.)",
+        "searchable_keywords": [
+          "Incredibles",
+          "Gli Incredibili"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3129,
+        "strength": 4,
+        "subtitle": "Velocissimo",
+        "subtypes": [
+          "Classico",
+          "Super",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/109_7a05654f91aa07a7afc2d2204dfbe733a99c1fc4.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/109_3883e6ebe0251afba758cf17d1a3b763014ad023.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/109_3883e6ebe0251afba758cf17d1a3b763014ad023.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/109_42b50ba95917e16fa5653daa7e07aea9b2a9c00a.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Lissette Carrera",
+        "card_identifier": "110/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3081,
+        "deck_building_id": "e47415484569386f5abdc7ceb0df569827bd9275",
+        "flavor_text": "“C'è qualcosa su questo menù che non galleggi su una brodaglia grassa?”",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Yzma",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "\\Fallo Come Si Deve\\ Quando giochi questo personaggio, ogni avversario perde 1 leggenda.",
+        "searchable_keywords": [
+          "Emperors New Groove",
+          "Le follie dell'imperatore"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3128,
+        "strength": 4,
+        "subtitle": "Cliente Pignola",
+        "subtypes": [
+          "Classico",
+          "Cattivo",
+          "Incantatore"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/110_9c6cfc775cedf18d49a51beb19294d415019d767.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/110_45eace14f329f747bb97f14ddf82777728aa9b9a.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/110_330f2de7c33ca5aeecdf275249ab4b86356a0fba.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/110_8e96691b01dc41c3592fff7c5f26809928fdd8e8.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Lissette Carrera / Brett Owens",
+        "card_identifier": "111/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3082,
+        "deck_building_id": "72f8e2d04c18e4a7f100720f4b75c77febd31e4b",
+        "flavor_text": "“Fammi l'assaggino di formaggio piccante, togli il piccante e metti il formaggio a parte. Oh, e salsa extra... Ehi! Mi stai ascoltando? Sto ordinando, qui!”",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Kuzco",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Emperors New Groove",
+          "Le follie dell'imperatore"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3127,
+        "strength": 5,
+        "subtitle": "Cliente Esigente",
+        "subtypes": [
+          "Classico",
+          "Re"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/111_2588c9834d89389392eb8d3d6f1ee1e6444a5e58.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/111_cbb5255be784a9882576dd8f970371ac28f2944c.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/111_7ee8f44bdaf5077de50de7af19b4be095501163f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/111_3d6fd42528ad296f17566c99a429701ec12e1b27.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 1
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Alexandria Neonakis",
+        "card_identifier": "112/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3083,
+        "deck_building_id": "85d9eeeee6625d02386d47b29a45b0a606cb00d6",
+        "flavor_text": "“Guarda, Toby. Il viticcio non ha speranze contro quell'orso!”%—Amos Slade",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "L'Orso",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Furia Selvaggia\\ Mentre questo personaggio ha danno, riceve +3 {S}.",
+        "searchable_keywords": [
+          "Fox and the Hound",
+          "Red e Toby nemiciamici"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3126,
+        "strength": 2,
+        "subtitle": "Animale Territoriale",
+        "subtypes": [
+          "Classico",
+          "Cattivo"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/112_72e42afa529e92d2607704cd46a3f35becd4ff7d.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/112_d330eb0219625e843e05de76d5abd3ac8ec7043a.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/112_d330eb0219625e843e05de76d5abd3ac8ec7043a.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/112_00f112fcadc58b09bdb33c8701c438a9037e4c45.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Rodrigo Camilo",
@@ -19874,6 +21415,56 @@
           }
         ],
         "willpower": 3
+      },
+      {
+        "abilities": [
+          "Sfuggente"
+        ],
+        "additional_info": [],
+        "author": "Mike Parker",
+        "card_identifier": "114/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3085,
+        "deck_building_id": "d5d7b978b41284d0bff2fb868aa85d96b2e53630",
+        "flavor_text": "“Ehi guarda, sono qui! No, aspetta, ora sono qui! No, sono di nuovo qui!”",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Flash Parr",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "<Sfuggente> (Solo altri personaggi con Sfuggente possono sfidare questo personaggio.)",
+        "searchable_keywords": [
+          "Incredibles",
+          "Gli Incredibili"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3124,
+        "strength": 1,
+        "subtitle": "Turbine del Dodgeball",
+        "subtypes": [
+          "Classico",
+          "Super",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/114_07798e3785468c7294ed5cb0474fffa8f144b0ca.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/114_331d0f27f7de14503081fe97d709e0e58dcc76ea.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/114_331d0f27f7de14503081fe97d709e0e58dcc76ea.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/114_3db03bd723959b22efb94e3321ea5c51be7c0848.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 1
       },
       {
         "abilities": [],
@@ -20113,6 +21704,105 @@
           }
         ],
         "willpower": 5
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Malia Ewart",
+        "card_identifier": "120/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3091,
+        "deck_building_id": "3f67503b38eefa0af28313879c2550e91e5513a2",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Nonna Wu",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "<Trasformazione Temporanea> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Nonna Wu. Alla fine del tuo turno, rimuovi tutto il danno da questo personaggio e riprendi in mano solo questa carta.)%\\Carica Minacciosa\\ Ogni volta che questo personaggio sfida un altro personaggio, ottieni 2 leggenda e ogni avversario perde 2 leggenda.",
+        "searchable_keywords": [
+          "Red",
+          "Turning Red"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3118,
+        "strength": 5,
+        "subtitle": "Fiera Panda Rosso",
+        "subtypes": [
+          "Classico",
+          "Mentore",
+          "Panda Rosso"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/120_a3c093e775a8b8cd43c49dc5812f73143dbcf5c2.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/120_98e55c53ddd05b8ba2f97f1a8683b3d5849e3acc.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/120_98e55c53ddd05b8ba2f97f1a8683b3d5849e3acc.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/120_01bc5628e0af8b94446ede97f8e0ea1eee5a159a.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 7
+      },
+      {
+        "abilities": [
+          "Melodioso"
+        ],
+        "additional_info": [],
+        "author": "Lauren Levering",
+        "card_identifier": "121/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3092,
+        "deck_building_id": "0465e6b94bc50d62f572143379f09bdf209cfd99",
+        "flavor_text": "“Andiamo, scioglietevi con il vecchio Re Luigi. Dovete rilassarvi, ragazzi!”",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Re Luigi",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "<Melodioso> 6 (Questo personaggio conta come di costo 6 per cantare le canzoni.)",
+        "searchable_keywords": [
+          "Il Libro della Giungla",
+          "Jungle Book"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3117,
+        "strength": 3,
+        "subtitle": "Il Re dello Swing",
+        "subtypes": [
+          "Classico",
+          "Re"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/121_ff78d98dbf47d06422f9ab28ab5438a2bcc3e749.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/121_9480ac6b0c92ca98a0bf4ed6ba9c5572829aa524.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/121_9480ac6b0c92ca98a0bf4ed6ba9c5572829aa524.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/121_e1f3dc31112543f0a54f1df8409a443bc3f25a56.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
       },
       {
         "abilities": [],
@@ -20559,6 +22249,53 @@
         "willpower": 2
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Clio Schaffner",
+        "card_identifier": "131/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3102,
+        "deck_building_id": "c01c3657f28238b5e75904aaddc9d34f2cb34884",
+        "flavor_text": "“Andiamo, prepotentone. Devi essere più veloce di così!”",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "name": "Peter Pan",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Peter Pan",
+          "Le avventure di Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3107,
+        "strength": 2,
+        "subtitle": "Duellante del Viticcio",
+        "subtypes": [
+          "Classico",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/131_3c5b053678cbe460be3795878bc84e4782e4db02.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/131_5539e4b3d42af9a6f686f8abf71c0b69ac0e6470.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/131_5539e4b3d42af9a6f686f8abf71c0b69ac0e6470.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/131_b71da660310425a84b7169237a153493bf62eda5.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
         "abilities": [
           "Trasformazione"
         ],
@@ -20612,6 +22349,306 @@
         "willpower": 7
       },
       {
+        "abilities": [
+          "Trasformazione",
+          "Sfuggente",
+          "Resistere"
+        ],
+        "additional_info": [],
+        "author": "Mike Parker",
+        "card_identifier": "133/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3104,
+        "deck_building_id": "75291ebe2315f449c67c334e1e23b42baf18c958",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 8,
+        "magic_ink_colors": [
+          "RUBY",
+          "STEEL"
+        ],
+        "name": "Flash Parr e Violetta Parr",
+        "quest_value": 2,
+        "rarity": "LEGENDARY",
+        "rules_text": "<Trasformazione Combo> 6 {I} (Puoi pagare 6 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Flash Parr, uno chiamato Violetta Parr, o uno di entrambi.)%<Sfuggente>, <Resistere> +1%\\Tattiche Incredibili\\ Ogni volta che questo personaggio va all'avventura o sfida, pesca una carta per ogni carta sotto a esso.",
+        "searchable_keywords": [
+          "Incredibles",
+          "Gli Incredibili"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3105,
+        "strength": 5,
+        "subtitle": "Super Fratelli",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Super",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/133_cf8072ebb58b4674a5a0c035b3ef0f447eaa6793.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/133_6d9e0559d89fdd2c2b03c30dd531770721ca0931.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/133_c9bafc425b61a4c196d86bd99845c08700313794.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/133_6d9e0559d89fdd2c2b03c30dd531770721ca0931.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/133_4bc396615c78a3d3c7f146684e0d2027eac53fb0.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/133_c9bafc425b61a4c196d86bd99845c08700313794.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Vigile"
+        ],
+        "additional_info": [],
+        "author": "Lissette Carrera",
+        "card_identifier": "143/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3114,
+        "deck_building_id": "95ec6ebedc826f59b048a63adcf74100a736e644",
+        "flavor_text": "Jet: “Non preoccuparti, Doppia D, ti prometto che ci schianteremo lì in sicurezza!”%Darkwing Duck: “È di questo che ho paura.”",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Jet",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3095,
+        "strength": 3,
+        "subtitle": "Pattuglia del Cielo",
+        "subtypes": [
+          "Classico",
+          "Alleato"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/143_806639488017486490181c5795a099b5c455b173.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/143_e92e25202884771a2c9577583effa35888e87908.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/143_e92e25202884771a2c9577583effa35888e87908.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/143_35d4b392efb97aad61a78542b8d32a588a8b4105.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Kendall Hale",
+        "card_identifier": "144/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3115,
+        "deck_building_id": "6ef580f9eaec6a71591ef5e53e182783818f1659",
+        "flavor_text": "“Una palla! Oh caspita, oh caspita, una palla!”",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Dug",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Prendila!\\ Quando giochi questo personaggio, se hai in gioco un oggetto, pesca una carta.",
+        "searchable_keywords": [
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3094,
+        "strength": 3,
+        "subtitle": "Bravo Cagnolino",
+        "subtypes": [
+          "Classico",
+          "Alleato"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/144_4515309a10702abddea62546db14524db86be016.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/144_4c2818a93d7cfe8b38eb53aa485f1f5f0cf30fdd.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/144_4c2818a93d7cfe8b38eb53aa485f1f5f0cf30fdd.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/144_ef298142cb351a4fe691a446bb871226fc1d599a.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Matteo Marzocco",
+        "card_identifier": "145/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3116,
+        "deck_building_id": "e664b8ece1fef5bbb393c7c914c5f5346819ca27",
+        "flavor_text": "“Avrai archiviato le tue pratiche a dovere, allora. Per una volta.”",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Roz",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Sempre\\ Ogni avversario gioca con la prima carta del suo mazzo a faccia in su.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monsters & Co"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3093,
+        "strength": 2,
+        "subtitle": "Che Tiene D'Occhio",
+        "subtypes": [
+          "Classico",
+          "Alleato",
+          "Mostro"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/145_fe7b8da9843c5f9dc12304403bae3751527a134b.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/145_e9df96b1172fc1e56ba20e5b358d6b69edfb961d.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/145_e9df96b1172fc1e56ba20e5b358d6b69edfb961d.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/145_035b01a74bdc73b1e2d713c0d35cb4212a303927.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Carmine Pucci",
+        "card_identifier": "146/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3117,
+        "deck_building_id": "53a9dd42da2adf57bc5ad6660b60063eb8702ed5",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Merlino",
+        "quest_value": 2,
+        "rarity": "RARE",
+        "rules_text": "\\Banale Trucchetto\\ Quando giochi questo personaggio, puoi pescare una carta dal fondo del tuo mazzo.%\\Tempi Oscuri e Maledettamente Scomodi\\ Quando questo personaggio viene esiliato, metti questa carta dai tuoi scarti in fondo al tuo mazzo.",
+        "searchable_keywords": [
+          "Sword in the Stone",
+          "La Spada Nella Roccia"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3092,
+        "strength": 1,
+        "subtitle": "Che si Immagina il Futuro",
+        "subtypes": [
+          "Immaginato",
+          "Mentore",
+          "Incantatore"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/146_ca84636426a6ae24462a5ea6197c47b58ea15782.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/146_d66c086cca4062f96d2fe23d719ad54595fd6c50.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/146_d66c086cca4062f96d2fe23d719ad54595fd6c50.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/146_6947fa73de25b25b5fb4853b08928acb41bc7195.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Simone Giovanardi",
+        "card_identifier": "147/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3118,
+        "deck_building_id": "0e7fd1d3ea81b8d728df80d66ff5af3bdd68192a",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Quackerjack",
+        "quest_value": 2,
+        "rarity": "LEGENDARY",
+        "rules_text": "\\Progetto Malvagio\\ Quando giochi questo personaggio e ogni volta che va all'avventura, metti le prime 4 carte del tuo mazzo nei tuoi scarti. Puoi infliggere 1 danno a un personaggio a tua scelta per ogni carta oggetto messa nei tuoi scarti in questo modo.",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3091,
+        "strength": 2,
+        "subtitle": "Giocattolaio Svitato",
+        "subtypes": [
+          "Classico",
+          "Super",
+          "Cattivo",
+          "Inventore"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/147_b2fa970767571a49a6980f9d93519ffcb2693f1e.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/147_02c2ef286d7fe95c03ff3e112c56db192113a53a.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/147_bc9589908963f3ec12594245e0f7bbfb662e1a9e.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/147_02c2ef286d7fe95c03ff3e112c56db192113a53a.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/147_94d68b79d5df0e5b682fb6b6fc7486c3958b6091.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/147_bc9589908963f3ec12594245e0f7bbfb662e1a9e.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Pauline Voss",
@@ -20653,6 +22690,52 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/148_09e4c9879e7bbd2873ff25ffe37502c357af6997.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/148_c1f2ca0a78b2d7e578b0c62a2fb10d54f40cc5cd.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Yrgane Ramon",
+        "card_identifier": "149/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3120,
+        "deck_building_id": "dca8ca6078ddfc283dfc286f0365e8467ea89db6",
+        "flavor_text": "“L'avventura riesce sempre a trovarci ovunque andiamo.”",
+        "ink_convertible": false,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Ellie Fredricksen",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Sempre con Te\\ Quando questo personaggio viene esiliato, puoi aggiungere questa carta al tuo calamaio, a faccia in giù e impegnata.",
+        "searchable_keywords": [
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3089,
+        "strength": 3,
+        "subtitle": "Compagna di Avventure",
+        "subtypes": [
+          "Classico",
+          "Alleato"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/149_3d2cb308f0e43eb92145f89713e2c7b293e6e993.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/149_a33e3d8ab5cba0c8a78c8cda6e4d41c955ef8c9b.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/149_a33e3d8ab5cba0c8a78c8cda6e4d41c955ef8c9b.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/149_7d059f630f41a7f629be2272eb520449d169dde2.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -20709,6 +22792,100 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Carmine Pucci",
+        "card_identifier": "151/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3122,
+        "deck_building_id": "79c19da2d7571887b296e7a556cb1bd078adae79",
+        "flavor_text": "“Ora troveremo il piccolo postino e Quello Che Odora di Prugne Secche.”",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Alpha",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Chi Vuole un Premio?\\ Ogni volta che giochi un oggetto, un personaggio a tua scelta riceve +1 {S} e ottiene <Resistere> +1 per questo turno. (Il danno che gli viene inflitto è ridotto di 1.)",
+        "searchable_keywords": [
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3087,
+        "strength": 3,
+        "subtitle": "Capobranco",
+        "subtypes": [
+          "Classico",
+          "Alleato"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/151_77c02ed932b62a5da5f720734d5fa39bea5cbc55.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/151_19dd4adcaf26467bf02d19e2b5a0d29b786c7581.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/151_19dd4adcaf26467bf02d19e2b5a0d29b786c7581.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/151_437f26a85a20a4d8731ec6b3b66d6707a7f3270d.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Jiahui Eva Gao",
+        "card_identifier": "152/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3123,
+        "deck_building_id": "4816af35d900fbc38aac3eda41ecfcbad4001ee9",
+        "flavor_text": "“Fargli vedere come si fa ad essere un grande spaventatore!”%—Henry J. Waternoose III",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Sulley",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Spavento Improvviso\\ Mentre hai 5 o più carte nel tuo calamaio, questo personaggio riceve +2 {S}.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monsters & Co"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3086,
+        "strength": 4,
+        "subtitle": "Spaventatore Strategico",
+        "subtypes": [
+          "Classico",
+          "Eroe",
+          "Mostro"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/152_a2b82c0d50372c99a7f5b17a41c0bf620f4a7d4c.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/152_933ce9fde710e2cf79b58b01220745d05b50c0c2.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/152_933ce9fde710e2cf79b58b01220745d05b50c0c2.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/152_51472d196ec8bc318918c5e1564dc1e19ac9b2eb.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Kendall Hale",
         "card_identifier": "153/207 IT 13",
         "card_sets": [
@@ -20753,6 +22930,145 @@
           }
         ],
         "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Marta Andreeva",
+        "card_identifier": "154/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3125,
+        "deck_building_id": "98f9b16055db6153b9d4e64bd2e815a8f9cdc391",
+        "flavor_text": "“Va tutto bene, Pimpi. Avere paura non significa non essere coraggiosi. Infatti, penso che si possa essere coraggiosi solo se prima si ha avuto paura!”%—Christopher Robin, Saggio del Miele",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Pimpi",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Winnie the Pooh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3084,
+        "strength": 2,
+        "subtitle": "Apprendista Mago del Miele",
+        "subtypes": [
+          "Immaginato",
+          "Alleato",
+          "Incantatore",
+          "Miele"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/154_fb2082fe98ce423d15a112ebdfea4cfd03bdfa15.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/154_3609cdb6f8964d70ec2718abe3b9d1ec411468c7.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/154_3609cdb6f8964d70ec2718abe3b9d1ec411468c7.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/154_6074145799b719ab95d51e0c062ef3cb262a8418.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "David Otalora",
+        "card_identifier": "155/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3126,
+        "deck_building_id": "e5db4aa10f793afcb926a10cc9aed4361d8092ff",
+        "flavor_text": "“Cavolo, sapevo che sarebbe valsa la pena di arrampicarsi su questo viticcio. C'è così tanto da vedere quassù!”",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Topolino",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3083,
+        "strength": 3,
+        "subtitle": "Esploratore Curioso",
+        "subtypes": [
+          "Immaginato",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/155_8af6f5308f25e9fe1d973ceca706e840e0730b30.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/155_d6f31c5db2ea85f0ef6df14c2f4fb8e35d770744.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/155_d6f31c5db2ea85f0ef6df14c2f4fb8e35d770744.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/155_f1bf6c781451536df5af574dc081234f971fad71.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Protetto"
+        ],
+        "additional_info": [],
+        "author": "Julian del Rey",
+        "card_identifier": "156/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3127,
+        "deck_building_id": "83ae92739e6a362a7d610972a8e1d9ba8a64006a",
+        "flavor_text": "“Questo cosetto qui è tremendo! Lo adoro! Per non parlare di come assorbe l'inchiostro della marea... Nemmeno io avrei saputo progettarlo meglio!”",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Ade",
+        "quest_value": 3,
+        "rarity": "UNCOMMON",
+        "rules_text": "<Protetto> (Gli avversari non possono scegliere questo personaggio se non per sfidarlo.)",
+        "searchable_keywords": [
+          "Hercules"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3082,
+        "strength": 5,
+        "subtitle": "Cospiratore Meticoloso",
+        "subtypes": [
+          "Classico",
+          "Cattivo"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/156_94e1fbeda61ccc12f3df5debd50a98c9b81a47c0.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/156_5b2bdd7f707cb170478c712c7d205cc1c67a8fac.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/156_5b2bdd7f707cb170478c712c7d205cc1c67a8fac.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/156_dc9718fb75cbac92325907d67c98bc33724f473f.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
       },
       {
         "abilities": [],
@@ -20847,6 +23163,52 @@
           }
         ],
         "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Matteo Marzocco",
+        "card_identifier": "159/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3130,
+        "deck_building_id": "bcdc77d726aca330eadb5ae8c4b39b1c0747e049",
+        "flavor_text": "Il viticcio aveva creato dei difensori che facessero da guardie silenti sulle terre circostanti.",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Robin Hood",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "\\Occhio Attento\\ I tuoi personaggi Imbevuto ottengono <Vigile>. (Possono sfidare come se avessero Sfuggente.)",
+        "searchable_keywords": [
+          "Robin Hood"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3079,
+        "strength": 4,
+        "subtitle": "Creato dal Viticcio",
+        "subtypes": [
+          "Imbevuto",
+          "Virgulto"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/159_43609020d07ae4727a08ba584c4df3ae4a7790fa.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/159_21e55d416dc9f7d7547659ae53c92e07318af330.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/159_53fe5e5f9fb991996db8bfde921fb2df85148ca3.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/159_052dc470deba392028193b5e83415eeb460cc9a7.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
       },
       {
         "abilities": [],
@@ -20988,6 +23350,101 @@
         "willpower": 4
       },
       {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Edu Francisco",
+        "card_identifier": "163/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3134,
+        "deck_building_id": "e40b1f021cb65aaad4c3a9eb81f45cb02e979c43",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Henry J. Waternoose III",
+        "quest_value": 2,
+        "rarity": "RARE",
+        "rules_text": "\\Il Profitto Netto\\ Mentre hai più carte nel tuo calamaio di ogni giocatore avversario, questo personaggio riceve +2 {L} e ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monsters & Co"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3075,
+        "strength": 5,
+        "subtitle": "Amministratore Delegato",
+        "subtypes": [
+          "Classico",
+          "Cattivo",
+          "Mostro"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/163_0d51aea4f17f1c6acc86470267a263060eee4419.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/163_39ce93d1c676b26a7a66ec0980c7a92b6c453f3a.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/163_39ce93d1c676b26a7a66ec0980c7a92b6c453f3a.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/163_c4a76a4019f716515e578ae92b29b9df3ca70eae.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Grace Tran",
+        "card_identifier": "164/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3135,
+        "deck_building_id": "d4d607b0d9b6bd002867e2275808845ffbc63ca1",
+        "flavor_text": "“Va bene. Aggiungi pure altre cose. Me la caverò.”",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Ih-Oh",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Tattiche del Miele\\ Ogni volta che questo personaggio va all'avventura, un tuo personaggio Miele a tua scelta riceve +1 {L} e ottiene <Protetto> fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+        "searchable_keywords": [
+          "Winnie the Pooh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3074,
+        "strength": 2,
+        "subtitle": "Erudito del Miele",
+        "subtypes": [
+          "Immaginato",
+          "Alleato",
+          "Miele"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/164_f950265142edc2518a7fc36b2df935df65fbfac9.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/164_aa5b9e20f45c39db77dedec15483bb141a2b217b.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/164_aa5b9e20f45c39db77dedec15483bb141a2b217b.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/164_684d305e6fa19af748ab00070491d991539dcacb.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
         "abilities": [
           "Trasformazione",
           "Protetto"
@@ -21039,6 +23496,103 @@
           }
         ],
         "willpower": 7
+      },
+      {
+        "abilities": [
+          "Trasformazione",
+          "Resistere"
+        ],
+        "additional_info": [],
+        "author": "Mike Parker",
+        "card_identifier": "176/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3147,
+        "deck_building_id": "e1765705d9e6768f87c860c8ff62f7147c23ccaa",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Violetta Parr",
+        "quest_value": 2,
+        "rarity": "SUPER",
+        "rules_text": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Violetta Parr.)%<Resistere> +1 (Il danno inflitto a questo personaggio è ridotto di 1.)%\\Sinergia Eroica\\ Ogni volta che giochi questo o un altro personaggio Eroe, puoi pescare una carta, poi scegli e scarta una carta.",
+        "searchable_keywords": [
+          "Incredibles",
+          "Gli Incredibili"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3062,
+        "strength": 4,
+        "subtitle": "Super Resistente",
+        "subtypes": [
+          "Classico",
+          "Super",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/176_4596e913151659b21d05c13dbd060c98adb6f626.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/176_c6656be3a687dd268217c2287ca7c7635b4e75ba.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/176_c6656be3a687dd268217c2287ca7c7635b4e75ba.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/176_7905401c732c3afbb9597864ffcefd42765fcda6.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Alejandro Hernandez",
+        "card_identifier": "177/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3148,
+        "deck_building_id": "dda89e8b6c36e14ed1ebab4b881a5a2680e6a361",
+        "flavor_text": "“Aspetta, quello non è un glimmer di Aladdin. Quello è un virgulto, una copia!”%—Shanzay, un'Illuminatrice",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Aladdin",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Il Viticcio Dà\\ Ogni volta che uno dei tuoi personaggi Imbevuto va all'avventura, puoi pescare una carta, poi scegli e scarta una carta.",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3061,
+        "strength": 3,
+        "subtitle": "Creato dal Viticcio",
+        "subtypes": [
+          "Imbevuto",
+          "Virgulto"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/177_3b8ebbae3642ba3344f79bd02ce24a2f9532abb2.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/177_adb0c4df25404b77d31057bfbe1e91aea60cde14.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/177_adb0c4df25404b77d31057bfbe1e91aea60cde14.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/177_cb5f7c84227b190610e9ea14e1db5e12d7389425.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
       },
       {
         "abilities": [],
@@ -21136,6 +23690,102 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Patri Balanovsky",
+        "card_identifier": "180/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3151,
+        "deck_building_id": "5cfc962c0a19c414e05144c8b5931c5a4ac5a2d6",
+        "flavor_text": "“MIA rana! Molto importante!”",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Stitch",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "",
+        "searchable_keywords": [
+          "Lilo & Stitch",
+          "Lilo and Stitch"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3058,
+        "strength": 1,
+        "subtitle": "Protettore delle Rane",
+        "subtypes": [
+          "Classico",
+          "Eroe",
+          "Alieno"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/180_b902ed3c727b2fe036837dee382bbd44681ea2e3.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/180_1a8ac13dd822e955af37ad0f746949188126f6ab.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/180_1a8ac13dd822e955af37ad0f746949188126f6ab.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/180_e4bb5d8d1f4cb472ef1e274c968530014f29a72d.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Sfidante"
+        ],
+        "additional_info": [],
+        "author": "Federico Maria Cugliari",
+        "card_identifier": "181/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3152,
+        "deck_building_id": "c2653a98a0a6035e9625604294eed111e7236593",
+        "flavor_text": "“Senti un po', erbaccia troppo cresciuta...”",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Sceriffo di Nottingham",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "<Sfidante> +3 (Mentre sta sfidando, questo personaggio riceve +3 {S}.)",
+        "searchable_keywords": [
+          "Robin Hood"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3057,
+        "strength": 6,
+        "subtitle": "Sterminatore di Viticci",
+        "subtypes": [
+          "Classico",
+          "Cattivo"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/181_b7f85813301cf496ef139e14836c3ac518ce225d.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/181_241f1151eda9d4577e0f4fcdea03c3736c55d18d.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/181_241f1151eda9d4577e0f4fcdea03c3736c55d18d.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/181_4bd213e38e296339926b6000850fe615f7ab6183.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Celeste Jamneck",
         "card_identifier": "182/207 IT 13",
         "card_sets": [
@@ -21178,6 +23828,154 @@
           }
         ],
         "willpower": 2
+      },
+      {
+        "abilities": [
+          "Resistere"
+        ],
+        "additional_info": [],
+        "author": "Javi Salas",
+        "card_identifier": "183/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3154,
+        "deck_building_id": "014929c40b64616dd276d1489e6abae1b0ebefdb",
+        "flavor_text": "“Mamma? Mi dispiace chiamarti ma, uhm, penso che ci sia un problema piuttosto grosso fuori casa.”",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Violetta Parr",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "<Resistere> +1 (Il danno inflitto a questo personaggio è ridotto di 1.)",
+        "searchable_keywords": [
+          "Incredibles",
+          "Gli Incredibili"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3055,
+        "strength": 3,
+        "subtitle": "Che Si Allena con i Campi di Forza",
+        "subtypes": [
+          "Classico",
+          "Super",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/183_a48b53d43a03e7e54f2ac946bbe1b9969ad1c34b.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/183_3310e125a0bbfeb193cf74451be25e890b10e86b.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/183_3310e125a0bbfeb193cf74451be25e890b10e86b.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/183_1e03c13c2951b988846ec1b66f97793a71eab95f.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [
+          "Vigile"
+        ],
+        "additional_info": [],
+        "author": "Chemène de Heus",
+        "card_identifier": "184/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3155,
+        "deck_building_id": "7b6983289812bf25aea321be83a5436c49ade906",
+        "flavor_text": "“Nessuno può nascondersi da me. Da qui posso vedere <ogni cosa>!”",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Dr. Hamsterviel",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+        "searchable_keywords": [
+          "Lilo & Stitch",
+          "Lilo and Stitch"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3054,
+        "strength": 3,
+        "subtitle": "Malvagio Osservatore",
+        "subtypes": [
+          "Classico",
+          "Cattivo",
+          "Alieno",
+          "Inventore"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/184_d2d451e21136fbba1f375aa56615770ddc2b8c8a.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/184_5fa7b4ec5206d174797c9467f4f8fdc691fdf81f.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/184_5fa7b4ec5206d174797c9467f4f8fdc691fdf81f.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/184_dd72e7531a3ed574476512f9a4deb25769359ac8.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Yu Nguyen",
+        "card_identifier": "185/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3156,
+        "deck_building_id": "a9caf3a21bc42d70c1917881211551b5d4a559a6",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Uffa",
+        "quest_value": 2,
+        "rarity": "COMMON",
+        "rules_text": "\\Alleanza del Miele\\ Mentre hai in gioco un altro personaggio Miele, questo personaggio ottiene <Resistere> +2. (Il danno che gli viene inflitto è ridotto di 2.)",
+        "searchable_keywords": [
+          "Winnie the Pooh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3053,
+        "strength": 1,
+        "subtitle": "Ranger del Miele",
+        "subtypes": [
+          "Immaginato",
+          "Alleato",
+          "Miele"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/185_0e437525f2153e0c06c77fff1deb3d3759e492d6.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/185_339a5690d4046e736141ddf0f80c512aae8fa881.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/185_339a5690d4046e736141ddf0f80c512aae8fa881.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/185_7400fb38e78f059c47352892453312a448c99765.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 1
       },
       {
         "abilities": [],
@@ -21416,6 +24214,55 @@
         "willpower": 5
       },
       {
+        "abilities": [
+          "Resistere"
+        ],
+        "additional_info": [],
+        "author": "Diego Machuca",
+        "card_identifier": "191/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3162,
+        "deck_building_id": "47bfcc7441b0d1a6e4b62eba3e262400eb63ebe0",
+        "flavor_text": "“Lo vuoi extra croccante?”",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Kronk",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "<Resistere> +1 (Il danno inflitto a questo personaggio è ridotto di 1.)%\\Pronti!\\ Una volta durante il tuo turno, puoi pagare 1 {I} per pescare una carta, poi scegli e scarta una carta.",
+        "searchable_keywords": [
+          "Emperors New Groove",
+          "Le follie dell'imperatore"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3047,
+        "strength": 1,
+        "subtitle": "Cuoco della Casa della Carne",
+        "subtypes": [
+          "Classico",
+          "Alleato"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/191_aa7ec2394bae97ad83d5835537b1352e1a565db9.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/191_5f452c40e8634de24eb2ff655531290d97ba50d2.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/191_5f452c40e8634de24eb2ff655531290d97ba50d2.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/191_6dc637dc16f5be7ba3dddc7cd1ff56956b1ebf8c.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 3
+      },
+      {
         "abilities": [],
         "additional_info": [],
         "author": "Aubrey Archer",
@@ -21461,6 +24308,104 @@
           }
         ],
         "willpower": 3
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Liz Richards",
+        "card_identifier": "193/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3164,
+        "deck_building_id": "b950c4382dd5a2d09aca8da64d3324da1fed030a",
+        "flavor_text": "“Sei l'unico di cui mi posso fidare, mio diletto.”%—Malefica",
+        "ink_convertible": true,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Diablo",
+        "quest_value": 1,
+        "rarity": "COMMON",
+        "rules_text": "\\Turbinio di Piume\\ I tuoi personaggi chiamati Malefica ottengono <Resistere> +1. (Il danno che gli viene inflitto è ridotto di 1.)",
+        "searchable_keywords": [
+          "Sleeping Beauty",
+          "La bella addormentata nel bosco"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3045,
+        "strength": 3,
+        "subtitle": "Che Protegge la Sua Padrona",
+        "subtypes": [
+          "Classico",
+          "Alleato"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/193_32b9c4ef5d1508a38113f99de02c20a2df354e99.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/193_ad5cb74c2255489a2cd67d00ddd52e9a9155e650.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/193_ad5cb74c2255489a2cd67d00ddd52e9a9155e650.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/193_d415cc03aa30a6f541ec8468d120cf2bcb63390e.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 2
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Therese Vildefall",
+        "card_identifier": "194/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3165,
+        "deck_building_id": "551a5d47b50c911b292fea0385aaa626e2e3945f",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Scar",
+        "quest_value": 1,
+        "rarity": "LEGENDARY",
+        "rules_text": "\\Il Premio del Vincitore\\ Durante il tuo turno, ogni volta che uno dei tuoi personaggi Imbevuto esilia un altro personaggio in una sfida, ottieni 1 leggenda.%\\Riempire i Ranghi\\ Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi Imbevuto viene esiliato, pesca una carta.",
+        "searchable_keywords": [
+          "Lion King",
+          "Il re leone"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3044,
+        "strength": 5,
+        "subtitle": "Creato dal Viticcio",
+        "subtypes": [
+          "Imbevuto",
+          "Virgulto"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/194_012fea2ac2e3807f14aedfee769067c5757c1869.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/194_94fa19ac7ef4d7f427df60a887c17023de516b38.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/194_04f1a9159903d670b96d387d58f752ffffbb4fc6.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/194_94fa19ac7ef4d7f427df60a887c17023de516b38.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/194_316e574142e315fcc46e3256c0dcc54ac4ae3fbe.jpg",
+            "foil_top_layer": "HighGloss",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/194_04f1a9159903d670b96d387d58f752ffffbb4fc6.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 4
       },
       {
         "abilities": [],
@@ -21788,6 +24733,656 @@
       },
       {
         "abilities": [
+          "Trasformazione",
+          "Sfuggente"
+        ],
+        "additional_info": [],
+        "author": "Clio Schaffner",
+        "card_identifier": "227/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3198,
+        "deck_building_id": "2c0a6b1e4c9d9258a6fe1b33d9a90ee4017621bd",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "AMBER",
+          "AMETHYST"
+        ],
+        "name": "Pocahontas e Meeko",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 2 {I} (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Pocahontas o Meeko.)%<Sfuggente>%\\Ritorno Gradito\\ Ogni volta che questo personaggio va all'avventura, puoi riprendere in mano un tuo personaggio a tua scelta con costo 1. Se lo fai, puoi giocare un personaggio con costo 1 gratis.",
+        "searchable_keywords": [
+          "Pocahontas"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3011,
+        "strength": 2,
+        "subtitle": "Amici Avventurosi",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Eroe",
+          "Principessa"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/227_05af66a6d68cfb60ae9f185bab1bdd755cde6b29.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/227_30297a0eaf9272ddd02db2f93db7e60ae8ce7058.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/227_2d39e30be03d9982cdfe26e5a3f435d1fb686a7c.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/227_c147d9c74e3ed127ad409a35ed4860293e7217ad.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Giacomo Boni",
+        "card_identifier": "228/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3199,
+        "deck_building_id": "e8ef6fb7d161431f14883c65c2c2bd995356af63",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "AMBER",
+          "EMERALD"
+        ],
+        "name": "Woody e Buzz Lightyear",
+        "quest_value": 3,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Woody o Buzz Lightyear.)%\\Verso l'Infinito...\\ Quando giochi questo personaggio, se un avversario a tua scelta ha più carte in mano di te, pesca carte fino ad averne lo stesso numero.%\\...E Oltre!\\ Ogni volta che questo personaggio va all'avventura, puoi giocare una carta con costo 2 o inferiore gratis.",
+        "searchable_keywords": [
+          "Toy Story"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3010,
+        "strength": 4,
+        "subtitle": "Migliori Amici",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Eroe",
+          "Giocattolo",
+          "Capitano"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/228_e14737d0148730ce7c290e1ac0cd0fdd572bac83.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/228_337cdf434a6c1c17f51fdb50f9fef38a5981fa18.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/228_eaa7f1b0b53317fb7ac9ee2d3b1a3014a3a263c5.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/228_1df61e9d845ce048542833a256c6b5cfad9556be.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Mariana Moreno",
+        "card_identifier": "229/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3200,
+        "deck_building_id": "6ed86332df7a535a1225508c39a34b351f6fb976",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "AMBER",
+          "RUBY"
+        ],
+        "name": "Sulley e Boo",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione Combo> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Sulley, uno chiamato Boo, o uno di entrambi.)%\\Il Potere dell'Amicizia\\ Quando questo personaggio viene esiliato, se tra le carte sotto a esso ci sono delle carte personaggio, puoi giocare quei personaggi dai tuoi scarti, gratis.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monsters & Co"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3009,
+        "strength": 6,
+        "subtitle": "Amici dello Spavento",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Eroe",
+          "Mostro"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/229_14839f8e247efc7dcc124e9853382de14521ee7f.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/229_1da55dfc42aaf0980293c6d6a162f625a91750e7.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/229_1aa8b953fe675e9bd1a682d1dc0c8c110464f42a.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/229_e08034d916997d87b09bb6693ed56018c1ec4cab.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Maxine Vee",
+        "card_identifier": "230/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3201,
+        "deck_building_id": "4a4e001617dda5229e08b1851de828bf82bd7592",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMBER",
+          "SAPPHIRE"
+        ],
+        "name": "La Stirpe Madrigal",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione Madrigal> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi Madrigal.)%\\Brillare di una Luce Unica\\ Una volta durante il tuo turno, ogni volta che rimuovi 1 o più danni da uno dei tuoi personaggi, aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata.",
+        "searchable_keywords": [
+          "Encanto"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3008,
+        "strength": 2,
+        "subtitle": "Tutte le Generazioni",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Madrigal"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/230_33b768e02de71569a8a490649efe3f05463e95a1.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/230_3db5d604e477399714cf4917f4db3aef646347c6.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/230_93143e625c93109d0b093efa84cc09ec12e5a3ca.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/230_b7e1cc6552d2c8b1f5d708a09d9e6738285bc5dd.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 8
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Kendall Hale",
+        "card_identifier": "231/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3202,
+        "deck_building_id": "303153188d57dfe81cf2e1aba27a992fa3006c73",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Merida",
+        "quest_value": 1,
+        "rarity": "ENCHANTED",
+        "rules_text": "\\Energia Mirata\\ Questo personaggio può entrare in gioco impegnato per farti pescare una carta.%\\Cenno\\ Durante il tuo turno, ogni volta che un tuo altro personaggio entra in gioco impegnato, puoi pescare una carta.",
+        "searchable_keywords": [
+          "Brave",
+          "Ribelle"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3007,
+        "strength": 3,
+        "subtitle": "Evocatrice di Fuochi Fatui",
+        "subtypes": [
+          "Immaginato",
+          "Eroe",
+          "Principessa",
+          "Incantatore"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/231_c5cf27b949a8866ac7e6ed2210bffde25166debc.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/231_ca872f82ccb501e698d4a3390d1f6d9df035eef7.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/231_443aa93b5f885cb4ac32a3bfddbb54ca3bc3c268.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/231_a97ec6f97b1c2590a1bded325a382c419ad222d2.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Nuel Salinas / Palo Graglia",
+        "card_identifier": "232/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3203,
+        "deck_building_id": "6ff0c3dd5e17d7049398aff4d291e295ac2170aa",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "EMERALD"
+        ],
+        "name": "Aladdin e Genio",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Aladdin o Genio.)%\\Gioco di Prestigio\\ Quando giochi questo personaggio, puoi mettere un qualsiasi numero di carte dalla tua mano in fondo al tuo mazzo in qualsiasi ordine. Se lo fai, pesca lo stesso numero di carte più 1.",
+        "searchable_keywords": [
+          "Aladdin"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3006,
+        "strength": 3,
+        "subtitle": "Amici Dispettosi",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/232_724b5ba2701837f36f6642cc489b2a70870744e9.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/232_de80ed58d62860d5f0a252b62efa9bce10606284.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/232_a620da4c7e9372e0913459246b83569b67ce25c5.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/232_bc74679c29e51a9f4bc68a0c079be9531a282a9e.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Alice Pisoni",
+        "card_identifier": "233/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3204,
+        "deck_building_id": "4f80a6deac988f4017136c860cb83d2845aa1e6c",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "RUBY"
+        ],
+        "name": "Peter Pan e Trilli",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Peter Pan o Trilli.)%\\Puoi Volar!\\ I tuoi personaggi ottengono <Sfuggente>. (Solo altri personaggi con Sfuggente possono sfidarli.)",
+        "searchable_keywords": [
+          "Peter Pan",
+          "Le avventure di Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3005,
+        "strength": 5,
+        "subtitle": "Amici Per la Pelle",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Eroe",
+          "Fata"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/233_1fc9ac7f47669191cfdf190231ad2d9bb9301887.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/233_6d79063ea5c46f92cfc4e2c3c0acba0fa2ebf19a.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/233_a1792b51739794f57448b7dd31c8891677175c8d.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/233_4a47dccb850b9ae313c0c6675683f88c7eb25c0d.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Koni",
+        "card_identifier": "234/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3205,
+        "deck_building_id": "c2ebf26b3d2404e6a5568615db755bc2d9227ced",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "SAPPHIRE"
+        ],
+        "name": "Winnie the Pooh e Pimpi",
+        "quest_value": 0,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Winnie the Pooh o Pimpi.)%\\Mix Magico\\ Questo personaggio riceve +1 {L} per ogni tipo diverso di inchiostro dei personaggi che hai in gioco.",
+        "searchable_keywords": [
+          "Winnie the Pooh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3004,
+        "strength": 3,
+        "subtitle": "Maghi del Miele",
+        "subtypes": [
+          "Immaginato",
+          "Squadra",
+          "Eroe",
+          "Incantatore",
+          "Miele"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/234_527df35fd4b60973ead7923b658ee2956d6ada36.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/234_346140a94cf3de33c145251404c2466aa4186d45.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/234_ee59355482cbcb2069a845ff689d70155358b5fc.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/234_edba2fb058b8a8ab84961759b818fec91764b11a.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Erica D’urso",
+        "card_identifier": "235/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3206,
+        "deck_building_id": "df655e5d953b09ae00c22853d7a54ddc5c8846da",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "AMETHYST",
+          "STEEL"
+        ],
+        "name": "Malefica e Diablo",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Malefica o Diablo.)%\\Idioti!\\ Puoi mettere 5 carte personaggio dai tuoi scarti in fondo al tuo mazzo in qualsiasi ordine per trasformare questo personaggio gratis.%\\Richiamo del Corvo\\ Durante il tuo turno, ogni volta che questo personaggio viene impegnato, pesca una carta.",
+        "searchable_keywords": [
+          "Sleeping Beauty",
+          "La bella addormentata nel bosco"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3003,
+        "strength": 6,
+        "subtitle": "Incarnazione del Male",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Cattivo",
+          "Incantatore"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/235_593f625023ce67ffacba2bd2afe5453db6eb0d4f.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/235_c7c06216bfe9b2f355a85fb7e37b48b2597c17d7.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/235_8d16c1f8dcd88de3a48563f34e8c1d7cde9c4e8c.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/235_13b0047af8616dc5e9ac3f517411b50159f8430a.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Trasformazione",
+          "Sfuggente"
+        ],
+        "additional_info": [],
+        "author": "Rob Di Salvo",
+        "card_identifier": "236/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3207,
+        "deck_building_id": "451a3ae846c4767c2f78502546a9d170cd17bbf7",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Red e Toby",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 2 {I} (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Red o Toby.)%<Sfuggente> (Solo altri personaggi con Sfuggente possono sfidare questo personaggio.)",
+        "searchable_keywords": [
+          "Fox and the Hound",
+          "Red e Toby nemiciamici"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3002,
+        "strength": 3,
+        "subtitle": "Ottimi Amici",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Eroe",
+          "Cucciolo"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/236_0efb44a6d65a670c406c3079411ff09275c31021.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/236_e7ba5764402f4b346dee9f38e12a9ccb8ad45f98.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/236_fc9d4a58b4fa9bc90ffd558690c1441397202148.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/236_df2e1ac3775365ff106f006e5c2cd445c33fc64a.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 3
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Natalie Dombois",
+        "card_identifier": "237/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3208,
+        "deck_building_id": "f115729d35f2cca62c96ad21ee2de1ae2ec6e6d0",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 6,
+        "magic_ink_colors": [
+          "EMERALD",
+          "RUBY"
+        ],
+        "name": "Carl Fredricksen e Russell",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Carl Fredricksen o Russell.)%\\Abilità all'Aria Aperta\\ Mentre questo personaggio si trova in un luogo, tutti i personaggi che si trovano in quel luogo ricevono +1 {L} e ottengono <Sfuggente>. (Solo altri personaggi con Sfuggente possono sfidarli.)",
+        "searchable_keywords": [
+          "Up"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3001,
+        "strength": 6,
+        "subtitle": "Esploratori Intrepidi",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/237_7b5645d5470257d11f059cef439505996f159fdd.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/237_372adde3e0c25da0b4301d512d96120f2316c886.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/237_39abffe453159614e03e82af1a7443581c92f673.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/237_fd95cb42912f85078ee011687d1761eee6fc2f43.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 6
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Kenneth Anderson",
+        "card_identifier": "238/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3209,
+        "deck_building_id": "18946699cef53f88e95079513efd6645e23daf3c",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "EMERALD",
+          "SAPPHIRE"
+        ],
+        "name": "Topolino e Minni",
+        "quest_value": 5,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione Duo> 0 {I} (Puoi pagare 0 {I} per giocare questa carta sopra a due dei tuoi personaggi, uno chiamato Topolino e uno chiamato Minni.)%\\Pensando a Te\\ Se questo personaggio verrebbe esiliato, aggiungilo invece al tuo calamaio, a faccia in giù e impegnato.",
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3000,
+        "strength": 5,
+        "subtitle": "Duo Avventuroso",
+        "subtypes": [
+          "Immaginato",
+          "Squadra",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/238_aa8d4532e82ed54ae8384b71f38fa9ce04e53691.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/238_4838c5c53d059a1fb8e546ba37f829eaa4dbc211.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/238_c669af07836cdb5c39342f67c045bb7425b737f7.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/238_6528c10e8ff7f2379e406736680c1263ba4840b0.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Trasformazione"
+        ],
+        "additional_info": [],
+        "author": "Jane Pica",
+        "card_identifier": "239/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3210,
+        "deck_building_id": "863624320e68e21ad58cc391255de6de1ca968c1",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "EMERALD",
+          "STEEL"
+        ],
+        "name": "Rapunzel e Flynn Rider",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Rapunzel o Flynn Rider.)%\\Scambio Astuto\\ Ogni volta che questo personaggio va all'avventura, puoi pescare una carta, poi scegli e scarta una carta.%\\Nuovo Inizio\\ Durante il tuo turno, ogni volta che scarti una carta personaggio, puoi giocare quel personaggio dai tuoi scarti. (Paga tutti i costi.)",
+        "searchable_keywords": [
+          "Tangled",
+          "Rapunzel - L'intreccio della torre"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -2999,
+        "strength": 4,
+        "subtitle": "Coppia Improbabile",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Eroe",
+          "Principe",
+          "Principessa"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/239_c8852cf909be9549e8f078cbbf50df4e1a602ab0.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/239_9953e4eab6ef9992a9d0700a14446f5808940285.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/239_eb6c74ee261163a7be654dca9b9e242191d77cde.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/239_a724ec6adce8472582f8b81bf441eed087c1079b.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
+      },
+      {
+        "abilities": [
           "Trasformazione"
         ],
         "additional_info": [],
@@ -21834,6 +25429,157 @@
           }
         ],
         "willpower": 5
+      },
+      {
+        "abilities": [
+          "Trasformazione",
+          "Sfuggente",
+          "Resistere"
+        ],
+        "additional_info": [],
+        "author": "Rob Di Salvo",
+        "card_identifier": "241/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3212,
+        "deck_building_id": "75291ebe2315f449c67c334e1e23b42baf18c958",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 8,
+        "magic_ink_colors": [
+          "RUBY",
+          "STEEL"
+        ],
+        "name": "Flash Parr e Violetta Parr",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione Combo> 6 {I} (Puoi pagare 6 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Flash Parr, uno chiamato Violetta Parr, o uno di entrambi.)%<Sfuggente>, <Resistere> +1%\\Tattiche Incredibili\\ Ogni volta che questo personaggio va all'avventura o sfida, pesca una carta per ogni carta sotto a esso.",
+        "searchable_keywords": [
+          "Incredibles",
+          "Gli Incredibili"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -2997,
+        "strength": 5,
+        "subtitle": "Super Fratelli",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Super",
+          "Eroe"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/241_00830f74310854e22d9230ea589eca78bd89c965.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/241_877ca9188a950fa6c3c6806786bcdf3fba5c7981.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/241_95bb367e9e14452f75b489b7e35db0a72974253d.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/241_16d2211ea633a5d360c526d90db51088951d0111.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 5
+      },
+      {
+        "abilities": [
+          "Trasformazione",
+          "Protetto"
+        ],
+        "additional_info": [],
+        "author": "Lyle Cruse",
+        "card_identifier": "242/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3213,
+        "deck_building_id": "abdf26f8e51364414f54634967f810b9e6aa9545",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 7,
+        "magic_ink_colors": [
+          "SAPPHIRE",
+          "STEEL"
+        ],
+        "name": "Darkwing Duck e Jet",
+        "quest_value": 2,
+        "rarity": "ENCHANTED",
+        "rules_text": "<Trasformazione> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Darkwing Duck o Jet.)%<Protetto> (Gli avversari non possono scegliere questo personaggio se non per sfidarlo.)%\\Posa della Vittoria\\ Durante il tuo turno, ogni volta che questo personaggio esilia un altro personaggio in una sfida, ottieni 2 leggenda.",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -2996,
+        "strength": 5,
+        "subtitle": "Il Meglio di St. Canard",
+        "subtypes": [
+          "Classico",
+          "Squadra",
+          "Super",
+          "Eroe",
+          "Detective"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/242_b3c02cd0f33050dc9a904820b16e1610b15f5f4e.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/242_3bd92656e8fa8f32ddca621254c3b865dbea5f07.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/242_302c7106932c42413e6361da31ea5bf9eb46bf7d.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/242_4a8c51835254e8ebde88879503bcadb369cc6677.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 7
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Tom Whalen",
+        "card_identifier": "243/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3214,
+        "deck_building_id": "551a5d47b50c911b292fea0385aaa626e2e3945f",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 5,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Scar",
+        "quest_value": 1,
+        "rarity": "ENCHANTED",
+        "rules_text": "\\Il Premio del Vincitore\\ Durante il tuo turno, ogni volta che uno dei tuoi personaggi Imbevuto esilia un altro personaggio in una sfida, ottieni 1 leggenda.%\\Riempire i Ranghi\\ Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi Imbevuto viene esiliato, pesca una carta.",
+        "searchable_keywords": [
+          "Lion King",
+          "Il re leone"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -2995,
+        "strength": 5,
+        "subtitle": "Creato dal Viticcio",
+        "subtypes": [
+          "Imbevuto",
+          "Virgulto"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/243_76dfa5852773b9e62d2857775efd351c7fd23b0d.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/243_5f082e60acc21912856c06679fa113dc1b8742b1.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/243_be667b633d12a60e929d5a99c73f9a17a7a52de2.jpg",
+            "foil_top_layer": "ChromeRainbowHotFoil",
+            "foil_top_layer_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/243_1e0fc3c3fd35cd7b12c5a1bfb95e1c51b14dedc9.jpg",
+            "foil_type": "Magma",
+            "hot_foil_color": "#99A2A6",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 4
       },
       {
         "abilities": [
@@ -22012,7 +25758,7 @@
           "Fox and the Hound",
           "Red e Toby nemiciamici"
         ],
-        "set_rotation_state": "InfinityConstructed",
+        "set_rotation_state": "CoreConstructed",
         "sort_number": -2988,
         "special_rarity_id": "PROMO",
         "strength": 2,
@@ -22055,7 +25801,7 @@
         "searchable_keywords": [
           "Toy Story"
         ],
-        "set_rotation_state": "InfinityConstructed",
+        "set_rotation_state": "CoreConstructed",
         "sort_number": -2987,
         "special_rarity_id": "PROMO",
         "strength": 4,
@@ -22147,7 +25893,7 @@
           "Sword in the Stone",
           "La Spada Nella Roccia"
         ],
-        "set_rotation_state": "InfinityConstructed",
+        "set_rotation_state": "CoreConstructed",
         "sort_number": -2985,
         "special_rarity_id": "PROMO",
         "strength": 1,
@@ -130017,6 +133763,45 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Alex Accorsi / Leonardo Giammichele",
+        "card_identifier": "70/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3041,
+        "deck_building_id": "101d70fc53f46fc7dfc20140eb77426ba46133e2",
+        "flavor_text": "“Sembra che un altro virgulto sia a piede libero. Andiamo a prenderlo.”%—Venturo, un Illuminatore",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Baccello Rotto",
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Processo di Rinnovamento\\ {E}, 1 {I} — Metti una carta dagli scarti di un giocatore a tua scelta in fondo al suo mazzo.",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3168,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/70_5eaca7475ec15bf3b877077b1a072cb079b54c79.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/70_57fd93ca506f0a1eb81a1433f55ba2718f4ca979.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/70_57fd93ca506f0a1eb81a1433f55ba2718f4ca979.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/70_24159b440f1501cb0eb10d6a6f91f66e80494947.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Kaitlin Cuthbertson",
         "card_identifier": "71/207 IT 13",
         "card_sets": [
@@ -130058,6 +133843,84 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Andrew Theophilopoulos",
+        "card_identifier": "72/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3043,
+        "deck_building_id": "ae9819cc202f9d6fe23c188a6211024ae11a1f0a",
+        "flavor_text": "“Presto prosciugherà ogni goccia di inchiostro di Lorcana...”%—Hana, un'Illuminatrice",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "AMETHYST"
+        ],
+        "name": "Fonte del Viticcio",
+        "rarity": "SUPER",
+        "rules_text": "\\Assorbimento\\ Ogni volta che un personaggio avversario va all'avventura, ottieni 1 leggenda a meno che il suo giocatore non paghi 1 {I}.%\\Fioritura Radiosa\\ {E}, 2 {I} — Ottieni 1 leggenda.",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3166,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/72_c9e8faf48144081846422192bd657ab8280d6680.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/72_ef51417d1c8c1c081a945579e26cdcfb6667cbd9.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/72_ef51417d1c8c1c081a945579e26cdcfb6667cbd9.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/72_1b9eed0470e494724b51dd05229470308723e6c8.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Simone Giovanardi",
+        "card_identifier": "105/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3076,
+        "deck_building_id": "3e2e95f5ad970eadfa7e17eaf73da97024aa5359",
+        "flavor_text": "Non è molto saporita.",
+        "ink_convertible": true,
+        "ink_cost": 1,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Patata",
+        "rarity": "COMMON",
+        "rules_text": "\\Piena di Potenziale\\ Questo oggetto entra in gioco impegnato.",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3133,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/105_f9d673a10898d8deb494be8c52d1b8fbf687fba5.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/105_51609d38167254d7ea36ac5ce238e0b95975a1ee.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/105_51609d38167254d7ea36ac5ce238e0b95975a1ee.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/105_f7e0ee39ccb6ee2b7d64f00a3034af831d12da3f.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "McKay Anderson",
         "card_identifier": "106/207 IT 13",
         "card_sets": [
@@ -130089,6 +133952,45 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/106_ea5ed87b1ec261ba5f3cda1aa77562b60790a6ef.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/106_1ba4109ad95e7de01cb6a10ad246c7683e1f0a63.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Sarah Schmidt",
+        "card_identifier": "107/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3078,
+        "deck_building_id": "d8e4757233f112fc25c9aa3c37609d1bf1ebcbd5",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "EMERALD"
+        ],
+        "name": "Baccello del Viticcio",
+        "rarity": "RARE",
+        "rules_text": "\\Guscio Fragile\\ Questo oggetto entra in gioco impegnato.%\\Rigenerazione\\ {E}, 1 {I} — Esilia un tuo personaggio a tua scelta. Puoi giocare un personaggio con lo stesso nome di quel personaggio, gratis.",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3131,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/107_55f6755dc5cb7ab16871260c99323756474eaade.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/107_6a3e906d971cfc7a739e9ec810a5cea6e206c823.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/107_6a3e906d971cfc7a739e9ec810a5cea6e206c823.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/107_8eeee25ee6d6c237c6505c5cf3c1f085c072a21e.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -130168,6 +134070,125 @@
           {
             "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/140_eac1963eb76fdbf53b2295ec22565b669e41612e.jpg",
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/140_7e33e886973d9560dd8ac6361ebc5895c250e9f5.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Jaime Puga",
+        "card_identifier": "170/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3141,
+        "deck_building_id": "700dad65cfbff3ff61df092d9ca4febea80e11df",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Portale dell'Armadio",
+        "rarity": "SUPER",
+        "rules_text": "\\Toc, Toc\\ Questo oggetto entra in gioco impegnato.%\\Chi È?\\ {E}, 2 {I} — Guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio, oggetto o luogo con costo 6 o inferiore e giocarla gratis. Metti il resto in fondo al tuo mazzo in qualsiasi ordine. Aggiungi questa carta al tuo calamaio, a faccia in giù e impegnata.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monsters & Co"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3068,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/170_aa7c773835fad1a3cbffa7e802386370c6b3ae4a.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/170_3cae982d9277cbb0fa675321ceff5f73589a0251.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/170_3cae982d9277cbb0fa675321ceff5f73589a0251.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/170_349ba2f72b23bb5bbe8ee8bb23affcaf797a391f.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Moniek Schilder",
+        "card_identifier": "171/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3142,
+        "deck_building_id": "0467bbfe324e2cf567dec121118d1b2ef442ec81",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Inchiostratore di Hana",
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Fioritura Rigenerante\\ {E} — Rimuovi fino a 2 danni da un personaggio a tua scelta. Se c'è una carta sotto a quel personaggio, ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno. (Il danno che gli viene inflitto è ridotto di 1.)",
+        "searchable_keywords": [
+          "Lorcana"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3067,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/171_5d21c9a14ea382a2fcf5d1afb23948e840383915.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/171_fd2d6a081b7559753e66070b3d435454cd74cc79.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/171_fd2d6a081b7559753e66070b3d435454cd74cc79.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/171_ebca44a358700a58cd730da7c00a952262c3a4c1.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Rudy Hill",
+        "card_identifier": "172/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3143,
+        "deck_building_id": "d75048848d0a2396551a5a4b1d9474f4ae07ed91",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "name": "Cilindro per le Risate",
+        "rarity": "RARE",
+        "rules_text": "\\Imitare\\ {E} — Aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata. Un avversario a tua scelta può aggiungere la prima carta del suo mazzo al suo calamaio, a faccia in giù e impegnata.",
+        "searchable_keywords": [
+          "Monsters, Inc.",
+          "Monsters & Co"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3066,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/172_dcceda9b8c81d4bc77001450634968ab5900f3b5.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/172_1b5e1d5199b2d42d4adb5dcf5c0db61c09df3768.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/172_1b5e1d5199b2d42d4adb5dcf5c0db61c09df3768.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/172_63f5098e4c838bcf4e1321eb9e49fadd7f0816d6.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
           }
@@ -130289,6 +134310,73 @@
             "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/204_7e418e666a8a443ca97e10951aa5b228173ae773.jpg",
             "foil_type": "Silver",
             "variant_id": "Foiled"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Lissette Carrera",
+        "card_identifier": "205/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3176,
+        "deck_building_id": "234ac3e62a1cf66551a46af54a3e2c75b87905ed",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Il Diserbatore",
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Piena Potenza\\ {E}, 1 {I} — Un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)%\\Taglio Netto\\ 2 {I}, esilia questo oggetto — Esilia un personaggio Virgulto a tua scelta.",
+        "searchable_keywords": [
+          "Darkwing Duck"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3033,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/205_a77c1557604496ecb9118e87b6666161ca8f1ad3.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/205_b5c93ece8882389877a0a232c6e7a60353d3f5a4.jpg",
+            "variant_id": "Regular"
+          }
+        ]
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Andrew Peña / Sergio Mancinelli",
+        "card_identifier": "206/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3177,
+        "deck_building_id": "4097454fede41db0b77818dfb68732b5b89cfba5",
+        "flavor_text": "“Oh, affascinante! Come ci riesce?”%—Hana, un'Illuminatrice",
+        "ink_convertible": false,
+        "ink_cost": 2,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "name": "Infiorescenza Assorbente",
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Metamorfosi\\ {E}, 1 {I} — Se un personaggio è stato esiliato in una sfida in questo turno, pesca una carta.",
+        "searchable_keywords": [
+          "Peter Pan",
+          "Le avventure di Peter Pan"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3032,
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/206_aa92b35a9002c5983c1dda2fcc3b3dc20d76ca88.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/206_27355c79b297172eb03eb9f751d5a6dd1c445d89.jpg",
+            "variant_id": "Regular"
           }
         ]
       },
@@ -138990,6 +143078,50 @@
       {
         "abilities": [],
         "additional_info": [],
+        "author": "Jimmy Lo",
+        "card_identifier": "141/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3112,
+        "deck_building_id": "23d3f50630bc83220eee4c82c064c4e755eee78b",
+        "flavor_text": "Un profondo rimbombo echeggiò nella foresta quando il viticcio sradicò il castello dalle sue stesse fondamenta.",
+        "ink_convertible": false,
+        "ink_cost": 4,
+        "magic_ink_colors": [
+          "RUBY"
+        ],
+        "move_cost": 2,
+        "name": "Il Castello della Bestia",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\Minaccia Imminente\\ I tuoi personaggi Imbevuto ottengono <Lesto>. (Possono sfidare nel turno in cui vengono giocati.)",
+        "searchable_keywords": [
+          "La bella e la bestia",
+          "Beauty and the Beast"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3097,
+        "subtitle": "Invaso dal Viticcio",
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/141_a0baa4fd08728c2b30f7d16c9eec530bf8790264.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/141_cc5e0ec98084647020466cc2a19c18af62960809.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/141_cc5e0ec98084647020466cc2a19c18af62960809.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/141_1f777e091f5843c5244a12ad6d6be857525f6956.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 7
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
         "author": "Wietse Treurniet",
         "card_identifier": "142/207 IT 13",
         "card_sets": [
@@ -139029,6 +143161,88 @@
           }
         ],
         "willpower": 6
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Jeremy Adams / Jaime Puga",
+        "card_identifier": "175/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3146,
+        "deck_building_id": "5d7da3bd9708d6fc2ec824a196c6e14664e80bb1",
+        "flavor_text": "",
+        "ink_convertible": false,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "SAPPHIRE"
+        ],
+        "move_cost": 1,
+        "name": "Bosco dei Cento Acri",
+        "quest_value": 1,
+        "rarity": "UNCOMMON",
+        "rules_text": "\\Come una seconda casa\\ I personaggi ricevono +1 {W} mentre si trovano in questo luogo.%\\Avventura Mielosa\\ I personaggi Miele ricevono +1 {L} mentre si trovano in questo luogo.",
+        "searchable_keywords": [
+          "Winnie the Pooh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3063,
+        "subtitle": "Accampamento del Miele",
+        "subtypes": [
+          "Miele"
+        ],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/175_1ec708d7b1973985e7d3f62a8461c67a19edb325.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/175_fc13e2976611f266e7960eafff898be0cbcf1fae.jpg",
+            "variant_id": "Regular"
+          },
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/175_fc13e2976611f266e7960eafff898be0cbcf1fae.jpg",
+            "foil_mask_url": "https://api.lorcana.ravensburger.com/images/it/set13/175_534f1d67caac358674d26e6e7a5d86944a51de72.jpg",
+            "foil_type": "Silver",
+            "variant_id": "Foiled"
+          }
+        ],
+        "willpower": 6
+      },
+      {
+        "abilities": [],
+        "additional_info": [],
+        "author": "Douglas De La Hoz",
+        "card_identifier": "207/207 IT 13",
+        "card_sets": [
+          "set13"
+        ],
+        "culture_invariant_id": 3178,
+        "deck_building_id": "ca1888576739e5b86ed92cc5ce1f681d5e16f017",
+        "flavor_text": "",
+        "ink_convertible": true,
+        "ink_cost": 3,
+        "magic_ink_colors": [
+          "STEEL"
+        ],
+        "move_cost": 1,
+        "name": "Ingresso del Viticcio",
+        "quest_value": 1,
+        "rarity": "RARE",
+        "rules_text": "\\La Radice del Potere\\ La prima volta che un personaggio Imbevuto si sposta in questo luogo ogni turno, puoi infliggere 1 danno a un personaggio a tua scelta.",
+        "searchable_keywords": [
+          "Winnie the Pooh"
+        ],
+        "set_rotation_state": "CoreConstructed",
+        "sort_number": -3031,
+        "subtitle": "Passaggio Nefasto",
+        "subtypes": [],
+        "thumbnail_url": "https://api.lorcana.ravensburger.com/images/it/set13/207_1b9becc60a154ee98368194f304f4fdf9add3f59.jpg",
+        "variants": [
+          {
+            "detail_image_url": "https://api.lorcana.ravensburger.com/images/it/set13/207_cf5e67d98db27d400565d961e65d72a6294d9c0c.jpg",
+            "variant_id": "Regular"
+          }
+        ],
+        "willpower": 7
       },
       {
         "abilities": [],
@@ -143629,7 +147843,7 @@
       }
     ]
   },
-  "catalog_hash": "9859d5ebc7949d29e1262a63ef110d9bdbb994f4",
+  "catalog_hash": "587f9ce0ed7ac9ea0900a5b09082a95956ac15c7",
   "external_documents": [
     {
       "documents": [
@@ -144219,6 +148433,13 @@
       }
     ],
     "location_subtypes": [
+      {
+        "term_in_search_filter": "Miele",
+        "terms_on_card": [
+          "Miele",
+          "Hunny"
+        ]
+      },
       {
         "term_in_search_filter": "Obstacle"
       }

@@ -1,7 +1,10 @@
 import { marked } from "marked";
 import bulletinRaw from "./bulletin.md?raw";
 
-export const bulletinHtml = marked.parse(bulletinRaw) as string;
+const [latestBulletinRaw = "", ...bulletinArchiveParts] = bulletinRaw.split(/\n---\n/);
+
+export const latestBulletinHtml = marked.parse(latestBulletinRaw) as string;
+export const bulletinArchiveHtml = marked.parse(bulletinArchiveParts.join("\n---\n")) as string;
 
 export type CommunityHighlight = {
   title: string;

@@ -33,8 +33,8 @@ test("Goro Takemura (Retail) - spend ability resolves", async ({ page }) => {
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectLegendCardSpent(CYBERPUNK_P1, goro.instanceId, true);
-  await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, unit.instanceId, "blocker", false);
-  await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, unit.instanceId, 5);
+  await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, unit.instanceId, "blocker", true);
+  await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, unit.instanceId, 6);
 
   await pom.expectStructuralState();
 });

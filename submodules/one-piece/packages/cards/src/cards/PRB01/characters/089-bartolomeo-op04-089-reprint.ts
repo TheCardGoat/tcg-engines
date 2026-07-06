@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op04Bartolomeo089 } from "../../OP04/characters/089-bartolomeo.ts";
 import { prb01BartolomeoOp04089Reprint089I18n } from "./089-bartolomeo-op04-089-reprint.i18n.ts";
 
 export const prb01BartolomeoOp04089Reprint089: CharacterCard = {
-  id: "OP04-089",
-  canonicalId: "OP04-089",
+  ...op04Bartolomeo089,
+  id: "OP04-089_r1_nUjTF12",
   slug: "bartolomeo-op04-089-reprint",
   name: "Bartolomeo (OP04-089) (Reprint)",
   printings: [
     {
-      id: "OP04-089",
-      artId: "OP04-089",
+      id: "OP04-089_r1_nUjTF12",
+      artId: "OP04-089_r1_nUjTF12",
       setCode: "PRB01",
       collectorNumber: "089",
       rarity: "R",
@@ -48,15 +49,8 @@ export const prb01BartolomeoOp04089Reprint089: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP04-089_p4.jpg",
     },
   ],
-  cardType: "character",
-  color: ["black"],
   rarity: "R",
   setId: "PRB01",
-  cost: 3,
-  power: 3000,
-  counter: 2000,
-  traits: ["Dressrosa Barto Club"],
-  attribute: "special",
   artVariants: [
     {
       type: "other",
@@ -79,10 +73,5 @@ export const prb01BartolomeoOp04089Reprint089: CharacterCard = {
       imageId: "OP04-089_p4",
     },
   ],
-  effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)Disclaimer: This card was reprinted from the original set with changes to the artist credit (note the lack of pen symbol next to the artist name).",
-  effects: {
-    keywords: ["blocker"],
-  },
   i18n: prb01BartolomeoOp04089Reprint089I18n,
 };

@@ -1,179 +1,472 @@
+import type {
+  AnimationPlanStepV1,
+  AnimationPlanV1,
+  AnimationRef,
+  SimulatorAudioCueId,
+} from "@tcg/protocol";
+import { simulatorAnimationDebug } from "@tcg/simulator-ui";
+import type { SimulatorZone } from "@tcg/simulator-contract";
 import type { CardZone } from "@tcg/cyberpunk-types";
-import type { SimulatorAnimationEvent } from "@tcg/simulator-ui";
-import type { SimulatorEntity } from "@tcg/simulator-contract";
 
 import { cyberpunkCardZoneToSimulatorZone } from "../engine/projectSimulator";
 import { PLAYER_SIDE_TO_ID, type Side } from "../engine";
-import type { AnimationScript, AnimationStep } from "./types";
+import type { AnimationScript, AnimationStep, EffectTargetStep } from "./types";
 
 export interface CyberpunkSharedAnimationContext {
   viewerSeatId: string | null;
-  resolveEntity: (cardId: string) => SimulatorEntity | null | undefined;
-  sideForPlayerId?: (playerId: string) => Side | null;
   idPrefix?: string;
+  pendingEffectSourceCardId?: string | null;
+  resultHoldMs?: number;
+  delayOffsetMs?: number;
+  durationOverrideMs?: number;
+  sideForPlayerId?: (playerId: string) => Side | null;
+  resolvingProgramSourceCardId?: string | null;
+  defeatedTargetIdsForStep?: (stepId: string) => ReadonlySet<string> | undefined;
+}
+
+interface EffectTargetResolutionInfo {
+  defeatedTargetIdsByStepId: ReadonlyMap<string, ReadonlySet<string>>;
+  cleanupStepIds: ReadonlySet<string>;
+  cleanupDelayOffsetMsByStepId: ReadonlyMap<string, number>;
 }
 
 const PLAYER_ID_TO_SIDE = new Map<string, Side>([
   [String(PLAYER_SIDE_TO_ID.player), "player"],
   [String(PLAYER_SIDE_TO_ID.opponent), "opponent"],
 ]);
+const TARGETED_PROGRAM_CLEANUP_DURATION_MS = 420;
+const EFFECT_TARGET_CLEANUP_MATCH_WINDOW_MS = 250;
 
-export function cyberpunkAnimationScriptToSimulatorEvents(
+export function cyberpunkAnimationScriptToAnimationPlans(
   script: AnimationScript,
   context: CyberpunkSharedAnimationContext,
-): SimulatorAnimationEvent[] {
-  return script.steps.flatMap(
-    (step) => cyberpunkAnimationStepToSimulatorEvent(step, context) ?? [],
-  );
-}
+): AnimationPlanV1[] {
+  const effectInfo = effectTargetResolutionInfo(script);
+  const stepPlans: AnimationPlanV1[] = [];
+  const sourceCleanupPlans: AnimationPlanV1[] = [];
 
-export function cyberpunkAnimationStepToSimulatorEvent(
-  step: AnimationStep,
-  context: CyberpunkSharedAnimationContext,
-): SimulatorAnimationEvent | null {
-  const side = resolveStepSide(step, context);
-  if (!side) {
-    return null;
+  for (const step of script.steps) {
+    const cleanupStep = effectInfo.cleanupStepIds.has(step.id);
+    const delayOffsetMs =
+      (effectInfo.cleanupDelayOffsetMsByStepId.get(step.id) ?? 0) +
+      (cleanupStep ? (context.resultHoldMs ?? 0) : 0);
+    const stepContext: CyberpunkSharedAnimationContext = {
+      ...context,
+      delayOffsetMs,
+      durationOverrideMs: cleanupStep ? TARGETED_PROGRAM_CLEANUP_DURATION_MS : undefined,
+      defeatedTargetIdsForStep: (stepId) => effectInfo.defeatedTargetIdsByStepId.get(stepId),
+    };
+    const stepPlan = cyberpunkAnimationStepToAnimationPlan(step, stepContext);
+    if (stepPlan) {
+      stepPlans.push(stepPlan);
+    }
+    const sourceCleanupPlan = sourceProgramCleanupAnimationPlan(step, stepContext);
+    if (sourceCleanupPlan) {
+      sourceCleanupPlans.push(sourceCleanupPlan);
+    }
   }
 
-  const eventBase = {
-    id: context.idPrefix ? `${context.idPrefix}:${step.id}` : step.id,
-    viewer: { viewerSeatId: context.viewerSeatId },
-    delayMs: step.startMs,
-    durationMs: step.durationMs,
+  const plans = [...stepPlans, ...sourceCleanupPlans];
+
+  simulatorAnimationDebug("cyberpunk script mapped", {
+    idPrefix: context.idPrefix,
+    pendingEffectSourceCardId: context.pendingEffectSourceCardId,
+    resultHoldMs: context.resultHoldMs,
+    cleanupStepIds: [...effectInfo.cleanupStepIds],
+    steps: script.steps.map((step) => animationStepDebugSummary(step)),
+    plans: plans.map((plan) => animationPlanDebugSummary(plan)),
+  });
+  return plans;
+}
+
+export function cyberpunkAnimationStepToAnimationPlan(
+  step: AnimationStep,
+  context: CyberpunkSharedAnimationContext,
+): AnimationPlanV1 | null {
+  const side = resolveStepSide(step, context);
+  if (!side) return null;
+
+  const id = context.idPrefix ? `${context.idPrefix}:${step.id}` : step.id;
+  const base = {
+    id: step.id,
+    delayMs: step.startMs + (context.delayOffsetMs ?? 0),
+    durationMs: context.durationOverrideMs ?? step.durationMs,
   };
 
   switch (step.kind) {
     case "cardMove": {
-      const entity = context.resolveEntity(String(step.cardId));
-      if (!entity) {
-        return null;
-      }
-      return {
-        ...eventBase,
-        primitive: "zoneTransfer",
-        entity,
-        fromZone: cyberpunkCardZoneToSimulatorZone(step.fromZone, side),
-        toZone: cyberpunkCardZoneToSimulatorZone(step.toZone, side),
-      };
+      const from = zoneRef(step.fromZone, side);
+      const to =
+        context.pendingEffectSourceCardId === String(step.cardId) &&
+        step.fromZone === "hand" &&
+        step.toZone === "trash"
+          ? resolvingProgramRef(String(step.cardId))
+          : zoneRef(step.toZone, side);
+      const durationMs =
+        context.pendingEffectSourceCardId === String(step.cardId) &&
+        step.fromZone === "hand" &&
+        step.toZone === "trash"
+          ? TARGETED_PROGRAM_CLEANUP_DURATION_MS
+          : base.durationMs;
+      return plan(id, {
+        ...base,
+        durationMs,
+        type: "moveEntity",
+        entity: entityRef(String(step.cardId)),
+        from,
+        to,
+        audioCue: cyberpunkStepAudioCue(step),
+      });
     }
     case "cardEnter": {
-      const entity = context.resolveEntity(String(step.cardId));
-      if (!entity) {
-        return null;
-      }
       if (step.reason === "cardsDrawn" && step.toZone === "hand") {
-        return {
-          ...eventBase,
-          primitive: "draw",
-          entity,
-          fromZone: cyberpunkCardZoneToSimulatorZone("deck", side),
-          toZone: cyberpunkCardZoneToSimulatorZone(step.toZone, side),
-        };
+        return plan(id, {
+          ...base,
+          type: "moveEntity",
+          entity: entityRef(String(step.cardId)),
+          from: zoneRef("deck", side),
+          to: zoneRef("hand", side),
+          audioCue: "card.draw",
+        });
       }
-      return {
-        ...eventBase,
-        primitive: "zoneEnter",
-        entity,
-        toZone: cyberpunkCardZoneToSimulatorZone(step.toZone, side),
-      };
+      return plan(id, {
+        ...base,
+        type: "enterEntity",
+        entity: entityRef(String(step.cardId)),
+        to: zoneRef(step.toZone, side),
+        audioCue: cyberpunkStepAudioCue(step),
+      });
     }
-    case "cardExit": {
-      const entity = context.resolveEntity(String(step.cardId));
-      if (!entity) {
-        return null;
-      }
-      return {
-        ...eventBase,
-        primitive: "zoneExit",
-        entity,
-        fromZone: cyberpunkCardZoneToSimulatorZone(step.fromZone, side),
-      };
-    }
-    case "cardAttach": {
-      const entity = context.resolveEntity(String(step.gearId));
-      if (!entity) {
-        return null;
-      }
-      return {
-        ...eventBase,
-        primitive: "attach",
-        entity,
-        fromZone: cyberpunkCardZoneToSimulatorZone("hand", side),
-        toZone: cyberpunkCardZoneToSimulatorZone("field", side),
-        targetEntityId: String(step.hostId),
-      };
-    }
-    case "legendReveal": {
-      const entity = context.resolveEntity(String(step.cardId));
-      if (!entity) {
-        return null;
-      }
-      return {
-        ...eventBase,
-        primitive: "flipReveal",
-        entity,
-        zone: cyberpunkCardZoneToSimulatorZone("legendArea", side),
-      };
-    }
-    case "effectTarget": {
-      const sourceEntity = context.resolveEntity(String(step.sourceCardId));
-      if (!sourceEntity) {
-        return null;
-      }
-      return {
-        ...eventBase,
-        primitive: "effectTarget",
-        sourceEntity,
-        sourceZone: cyberpunkCardZoneToSimulatorZone(currentCardZoneForEntity(sourceEntity), side),
-        targets: step.targets.map((target) => {
+    case "cardExit":
+      return plan(id, {
+        ...base,
+        type: "moveEntity",
+        entity: entityRef(String(step.cardId)),
+        from: zoneRef(step.fromZone, side),
+        to: zoneRef(step.toZone, side),
+        audioCue: cyberpunkStepAudioCue(step),
+      });
+    case "cardAttach":
+      return plan(id, {
+        ...base,
+        type: "moveEntity",
+        entity: entityRef(String(step.gearId)),
+        from: zoneRef("hand", side),
+        to: entityRef(String(step.hostId)),
+        audioCue: "card.move",
+      });
+    case "legendReveal":
+      return plan(id, {
+        ...base,
+        type: "effect",
+        source: zoneRef("legendArea", side),
+        targets: [entityRef(String(step.cardId))],
+        label: "REVEAL",
+        audioCue: "effect.trigger",
+      });
+    case "effectTarget":
+      return plan(id, {
+        ...base,
+        type: "effect",
+        source: effectSourceRef(step, context),
+        targets: step.targets.map((target): AnimationRef => {
           switch (target.kind) {
             case "card":
-              return { kind: "entity", entityId: String(target.cardId) } as const;
+              return entityRef(String(target.cardId));
             case "gig":
-              return { kind: "entity", entityId: String(target.dieId) } as const;
+              return entityRef(String(target.dieId));
             case "player":
-              return { kind: "player", seatId: String(target.playerId) } as const;
+              return { kind: "player", id: String(target.playerId) };
           }
         }),
-      };
-    }
+        label: effectTargetResultLabel(step, context),
+        durationMs: step.durationMs + (context.resultHoldMs ?? 0),
+        audioCue: "effect.trigger",
+      });
     case "cardLand":
+      return plan(id, {
+        ...base,
+        type: "effect",
+        source: entityRef(String(step.cardId)),
+        targets: [entityRef(String(step.cardId))],
+        label: "PLAYED",
+        audioCue: "card.play",
+      });
     case "combat":
-    case "gigMove":
+      return plan(id, {
+        ...base,
+        type: "combat",
+        source: entityRef(String(step.attackerId)),
+        target: step.defenderId ? entityRef(String(step.defenderId)) : playerTargetRef(step, side),
+        reason: step.reason === "attackResolved" ? "resolved" : "declared",
+        audioCue: step.reason === "attackResolved" ? "combat.hit" : "combat.start",
+      });
+    case "gigMove": {
+      const fromSide = sideForPlayerId(String(step.fromPlayerId), context);
+      const toSide = sideForPlayerId(String(step.toPlayerId), context);
+      if (!fromSide || !toSide) return null;
+      return plan(id, {
+        ...base,
+        type: "moveEntity",
+        entity: entityRef(String(step.dieId)),
+        from: gigZoneRef(step.from, fromSide),
+        to: gigZoneRef(step.to, toSide),
+        audioCue: "card.move",
+      });
+    }
     case "phaseChange":
+      return plan(id, {
+        ...base,
+        type: "phaseChange",
+        from: step.from,
+        to: step.to,
+        audioCue: "phase.change",
+      });
     case "resourceFloat":
-      return null;
+      return plan(id, {
+        ...base,
+        type: "resourceDelta",
+        player: { kind: "player", id: String(step.playerId) },
+        anchor: { kind: "anchor", id: `${side === "player" ? "p" : "opp"}-eddies` },
+        delta: step.delta,
+        label: step.resource.toUpperCase(),
+        audioCue: step.delta >= 0 ? "resource.gain" : "resource.spend",
+      });
   }
 }
 
-export function isCyberpunkAnimationStepSharedSupported(step: AnimationStep): boolean {
+function cyberpunkStepAudioCue(step: AnimationStep): SimulatorAudioCueId | undefined {
   switch (step.kind) {
     case "cardMove":
+      return step.toZone === "trash" ? "card.discard" : "card.move";
     case "cardEnter":
+      return step.reason === "cardsDrawn" && step.toZone === "hand" ? "card.draw" : "card.move";
     case "cardExit":
-    case "cardAttach":
-    case "legendReveal":
-    case "effectTarget":
-      return true;
-    case "cardLand":
-    case "combat":
-    case "gigMove":
-    case "phaseChange":
-    case "resourceFloat":
-      return false;
+      return step.toZone === "trash" ? "card.discard" : "card.move";
+    default:
+      return undefined;
   }
 }
 
-function currentCardZoneForEntity(entity: SimulatorEntity): CardZone {
-  switch (entity.kind) {
-    case "unit":
-      return "field";
-    case "leader":
-      return "legendArea";
-    default:
-      return "trash";
+function sourceProgramCleanupAnimationPlan(
+  step: AnimationStep,
+  context: CyberpunkSharedAnimationContext,
+): AnimationPlanV1 | null {
+  if (step.kind !== "effectTarget" || !isFinalResolvingProgramEffect(step, context)) {
+    return null;
   }
+  const side = resolveStepSide(step, context);
+  if (!side) {
+    return null;
+  }
+  const stepId = `${step.id}:source-cleanup`;
+  const id = context.idPrefix ? `${context.idPrefix}:${stepId}` : stepId;
+  return plan(id, {
+    id: stepId,
+    type: "moveEntity",
+    entity: entityRef(String(step.sourceCardId)),
+    from: resolvingProgramRef(String(step.sourceCardId)),
+    to: zoneRef("trash", side),
+    delayMs:
+      step.startMs + (context.delayOffsetMs ?? 0) + step.durationMs + (context.resultHoldMs ?? 0),
+    durationMs: TARGETED_PROGRAM_CLEANUP_DURATION_MS,
+    audioCue: "card.discard",
+  });
+}
+
+function effectSourceRef(
+  step: EffectTargetStep,
+  context: CyberpunkSharedAnimationContext,
+): AnimationRef {
+  if (isResolvingProgramEffect(step, context)) {
+    return resolvingProgramRef(String(step.sourceCardId));
+  }
+  return entityRef(String(step.sourceCardId));
+}
+
+function isFinalResolvingProgramEffect(
+  step: EffectTargetStep,
+  context: CyberpunkSharedAnimationContext,
+): boolean {
+  return (
+    isResolvingProgramEffect(step, context) &&
+    context.pendingEffectSourceCardId !== String(step.sourceCardId)
+  );
+}
+
+function isResolvingProgramEffect(
+  step: EffectTargetStep,
+  context: CyberpunkSharedAnimationContext,
+): boolean {
+  return context.resolvingProgramSourceCardId === String(step.sourceCardId);
+}
+
+function resolvingProgramAnchorId(cardId: string): string {
+  return `resolving-program:${cardId}`;
+}
+
+function resolvingProgramRef(cardId: string): { kind: "anchor"; id: string } {
+  return { kind: "anchor", id: resolvingProgramAnchorId(cardId) };
+}
+
+export function isCyberpunkAnimationStepSharedSupported(_step: AnimationStep): boolean {
+  return true;
+}
+
+function plan(id: string, step: AnimationPlanStepV1): AnimationPlanV1 {
+  return { id, version: 1, anchors: [], steps: [step] };
+}
+
+function entityRef(id: string): { kind: "entity"; id: string } {
+  return { kind: "entity", id };
+}
+
+function zoneRef(zone: CardZone, side: Side): { kind: "zone"; id: string; ownerId: string } {
+  return zoneRefFromSimulatorZone(cyberpunkCardZoneToSimulatorZone(zone, side));
+}
+
+function zoneRefFromSimulatorZone(zone: SimulatorZone): {
+  kind: "zone";
+  id: string;
+  ownerId: string;
+} {
+  return {
+    kind: "zone",
+    id: zone.id,
+    ownerId: zone.ownerId ?? "",
+  };
+}
+
+function gigZoneRef(
+  zone: "fixerArea" | "gigArea",
+  side: Side,
+): { kind: "zone"; id: string; ownerId: string } {
+  return {
+    kind: "zone",
+    id:
+      zone === "fixerArea"
+        ? side === "player"
+          ? "p-fixer"
+          : "opp-fixer"
+        : side === "player"
+          ? "p-gigArea"
+          : "opp-gigArea",
+    ownerId: String(PLAYER_SIDE_TO_ID[side]),
+  };
+}
+
+function playerTargetRef(
+  _step: Extract<AnimationStep, { kind: "combat" }>,
+  fallbackSide: Side,
+): AnimationRef {
+  const rivalSide = fallbackSide === "player" ? "opponent" : "player";
+  return { kind: "zone", id: rivalSide === "player" ? "p-eddieArea" : "opp-eddieArea" };
+}
+
+function animationStepDebugSummary(step: AnimationStep): Record<string, unknown> {
+  switch (step.kind) {
+    case "cardMove":
+      return {
+        id: step.id,
+        kind: step.kind,
+        cardId: String(step.cardId),
+        fromZone: step.fromZone,
+        toZone: step.toZone,
+        startMs: step.startMs,
+        durationMs: step.durationMs,
+      };
+    case "effectTarget":
+      return {
+        id: step.id,
+        kind: step.kind,
+        sourceCardId: String(step.sourceCardId),
+        targets: step.targets,
+        startMs: step.startMs,
+        durationMs: step.durationMs,
+      };
+    default:
+      return { id: step.id, kind: step.kind, startMs: step.startMs, durationMs: step.durationMs };
+  }
+}
+
+function animationPlanDebugSummary(plan: AnimationPlanV1): Record<string, unknown> {
+  return {
+    id: plan.id,
+    steps: plan.steps.map((step) => ({
+      id: step.id,
+      type: step.type,
+      delayMs: step.delayMs,
+      durationMs: step.durationMs,
+    })),
+  };
+}
+
+function effectTargetResultLabel(
+  step: EffectTargetStep,
+  context: CyberpunkSharedAnimationContext,
+): "DEFEATED" | "RESOLVED" {
+  const defeatedTargetIds = context.defeatedTargetIdsForStep?.(step.id);
+  if (!defeatedTargetIds || defeatedTargetIds.size === 0) {
+    return "RESOLVED";
+  }
+  return step.targets.some(
+    (target) => target.kind === "card" && defeatedTargetIds.has(String(target.cardId)),
+  )
+    ? "DEFEATED"
+    : "RESOLVED";
+}
+
+function effectTargetResolutionInfo(script: AnimationScript): EffectTargetResolutionInfo {
+  const defeatedTargetIdsByStepId = new Map<string, ReadonlySet<string>>();
+  const cleanupStepIds = new Set<string>();
+  const cleanupDelayOffsetMsByStepId = new Map<string, number>();
+  const effectSteps = script.steps.filter(
+    (step): step is EffectTargetStep => step.kind === "effectTarget",
+  );
+
+  for (const effectStep of effectSteps) {
+    const targetCardIds = new Set(
+      effectStep.targets
+        .filter((target) => target.kind === "card")
+        .map((target) => String(target.cardId)),
+    );
+    const defeatedTargetIds = new Set<string>();
+    const effectEndMs = effectStep.startMs + effectStep.durationMs;
+
+    for (const step of script.steps) {
+      const cleanupDelayOffsetMs = Math.max(0, effectEndMs - step.startMs);
+      const startsInCleanupWindow =
+        step.startMs >= effectStep.startMs &&
+        step.startMs <= effectEndMs + EFFECT_TARGET_CLEANUP_MATCH_WINDOW_MS;
+      if (step.kind === "cardExit" && targetCardIds.has(String(step.cardId))) {
+        if (!startsInCleanupWindow) {
+          continue;
+        }
+        if (step.exitReason === "defeated") {
+          defeatedTargetIds.add(String(step.cardId));
+        }
+        cleanupStepIds.add(step.id);
+        cleanupDelayOffsetMsByStepId.set(step.id, cleanupDelayOffsetMs);
+      }
+      if (
+        step.kind === "cardMove" &&
+        step.toZone === "trash" &&
+        targetCardIds.has(String(step.cardId)) &&
+        startsInCleanupWindow
+      ) {
+        cleanupStepIds.add(step.id);
+        cleanupDelayOffsetMsByStepId.set(step.id, cleanupDelayOffsetMs);
+      }
+    }
+
+    defeatedTargetIdsByStepId.set(effectStep.id, defeatedTargetIds);
+  }
+
+  return {
+    defeatedTargetIdsByStepId,
+    cleanupStepIds,
+    cleanupDelayOffsetMsByStepId,
+  };
 }
 
 function resolveStepSide(
@@ -183,6 +476,8 @@ function resolveStepSide(
   switch (step.kind) {
     case "gigMove":
       return sideForPlayerId(String(step.toPlayerId), context);
+    case "combat":
+      return sideForPlayerId(String(step.playerId), context);
     default:
       return sideForPlayerId(String(step.playerId), context);
   }

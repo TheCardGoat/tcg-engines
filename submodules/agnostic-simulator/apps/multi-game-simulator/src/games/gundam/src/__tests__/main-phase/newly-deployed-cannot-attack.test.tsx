@@ -31,20 +31,18 @@ describe("Main-phase · Non-Link unit can't attack the turn it deploys", () => {
     });
 
     // Attack targeting overlay shouldn't already be open.
-    expect(screen.queryByText(/select target/i)).toBeNull();
+    expect(document.querySelector("[data-testid^='attack-target-']")).toBeNull();
 
     // Click the newly-deployed unit.
     const rxOnBoard = findCardsById(rxId!, { excludeWithin: hand })[0]!;
     await user.click(rxOnBoard);
 
     // Flush microtasks and confirm the attack-targeting overlay did not
-    // open and no confirm prompt appeared. `AttackTargetingOverlay` renders
-    // a "SELECT TARGET" banner, which is the overlay-specific signal
-    // (a plain Confirm-button check alone could miss a targeting-overlay
-    // regression since the overlay isn't a confirm step).
+    // open. The shared TargetingOverlay renders attack-target click
+    // regions rather than the old "SELECT TARGET" banner.
     await Promise.resolve();
     await Promise.resolve();
-    expect(screen.queryByText(/select target/i)).toBeNull();
+    expect(document.querySelector("[data-testid^='attack-target-']")).toBeNull();
     expect(screen.queryByRole("button", { name: /^confirm$/i })).toBeNull();
 
     // Unit still on the board.

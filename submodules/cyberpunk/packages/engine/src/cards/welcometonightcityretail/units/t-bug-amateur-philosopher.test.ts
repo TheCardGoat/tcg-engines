@@ -9,10 +9,6 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("T-Bug — Amateur Philosopher", () => {
-  it("is a structured card with the expected slug", () => {
-    expect(welcomeToNightCityRetailTBugAmateurPhilosopher.slug).toBe("t-bug-amateur-philosopher");
-  });
-
   // Helper: t-bug (4 power) attacks a 5-power spent defender and is defeated.
   // Returns the engine after the fight resolves (defeated trigger fires).
   function setupDefeatedTBug() {

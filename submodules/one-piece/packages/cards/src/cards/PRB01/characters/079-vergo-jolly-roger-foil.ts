@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op03Vergo079 } from "../../OP03/characters/079-vergo.ts";
 import { prb01VergoJollyRogerFoil079I18n } from "./079-vergo-jolly-roger-foil.i18n.ts";
 
 export const prb01VergoJollyRogerFoil079: CharacterCard = {
-  id: "OP03-079",
-  canonicalId: "OP03-079",
+  ...op03Vergo079,
+  id: "OP03-079_p3",
   slug: "vergo-jolly-roger-foil",
   name: "Vergo (Jolly Roger Foil)",
   printings: [
     {
-      id: "OP03-079",
-      artId: "OP03-079",
+      id: "OP03-079_p3",
+      artId: "OP03-079_p3",
       setCode: "PRB01",
       collectorNumber: "079",
       rarity: "UC",
@@ -32,15 +33,8 @@ export const prb01VergoJollyRogerFoil079: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-079_r2.jpg",
     },
   ],
-  cardType: "character",
-  color: ["black"],
   rarity: "UC",
   setId: "PRB01",
-  cost: 5,
-  power: 5000,
-  counter: 2000,
-  traits: ["Donquixote Pirates Navy"],
-  attribute: "strike",
   artVariants: [
     {
       type: "other",
@@ -53,33 +47,5 @@ export const prb01VergoJollyRogerFoil079: CharacterCard = {
       imageId: "OP03-079_r2",
     },
   ],
-  effect: "[DON!! x1] This Character cannot be K.O.'d in battle.",
-  effects: {
-    permanentEffects: [
-      {
-        conditions: [
-          {
-            condition: "donAttached",
-            amount: 1,
-          },
-        ],
-        actions: [
-          {
-            action: "cannotBeKod",
-            target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-            duration: "permanent",
-            restriction: "inBattle",
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01VergoJollyRogerFoil079I18n,
 };

@@ -1,77 +1,24 @@
 import type { LeaderCard } from "@tcg/op-types";
+import { op07Foxy059 } from "../../OP07/leaders/059-foxy.ts";
 import { eb02Foxy059I18n } from "./059-foxy.i18n.ts";
 
 export const eb02Foxy059: LeaderCard = {
-  id: "OP07-059",
-  canonicalId: "OP07-059",
-  slug: "foxy/op07-059",
+  ...op07Foxy059,
+  id: "OP07-059_KlofiS1",
+  slug: "foxy/op07-059-klofis1",
   name: "Foxy",
   printings: [
     {
-      id: "OP07-059",
-      artId: "OP07-059",
+      id: "OP07-059_KlofiS1",
+      artId: "OP07-059_KlofiS1",
       setCode: "EB02",
       collectorNumber: "059",
       rarity: "L",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP07-059_KlofiS1.jpg",
     },
   ],
-  cardType: "leader",
-  color: ["purple"],
   rarity: "L",
   setId: "EB02",
-  power: 5000,
-  life: 5,
-  traits: ["Foxy Pirates"],
-  attribute: "special",
-  effect:
-    "[When Attacking] DON!! 3 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If you have 3 or more \"Foxy Pirates\" type Characters, select your opponent's rested Leader and up to 1 Character card. The selected cards will not become active in your opponent's next Refresh Phase.",
-  effects: {
-    effects: [
-      {
-        trigger: "whenAttacking",
-        conditions: [
-          {
-            condition: "zoneCount",
-            player: "self",
-            zone: "character",
-            comparison: "gte",
-            value: 3,
-            filters: [
-              {
-                filter: "trait",
-                value: "Foxy Pirates",
-              },
-            ],
-          },
-        ],
-        costs: [
-          {
-            cost: "returnDon",
-            amount: 3,
-          },
-        ],
-        actions: [
-          {
-            action: "freeze",
-            target: {
-              player: "opponent",
-              zones: ["leader", "character"],
-              count: {
-                amount: 2,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "state",
-                  value: "rested",
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: eb02Foxy059I18n,
 };

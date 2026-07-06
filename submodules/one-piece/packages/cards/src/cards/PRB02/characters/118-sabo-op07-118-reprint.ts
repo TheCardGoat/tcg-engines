@@ -1,64 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op07Sabo118 } from "../../OP07/characters/118-sabo.ts";
 import { prb02SaboOp07118Reprint118I18n } from "./118-sabo-op07-118-reprint.i18n.ts";
 
 export const prb02SaboOp07118Reprint118: CharacterCard = {
-  id: "OP07-118",
-  canonicalId: "OP07-118",
+  ...op07Sabo118,
+  id: "OP07-118_r1",
   slug: "sabo-op07-118-reprint",
   name: "Sabo - OP07-118 (Reprint)",
   printings: [
     {
-      id: "OP07-118",
-      artId: "OP07-118",
+      id: "OP07-118_r1",
+      artId: "OP07-118_r1",
       setCode: "PRB02",
       collectorNumber: "118",
       rarity: "SEC",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP07-118_r1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["black"],
   rarity: "SEC",
   setId: "PRB02",
-  cost: 8,
-  power: 9000,
-  traits: ["Revolutionary Army"],
-  attribute: "special",
-  effect:
-    "[On Play] You may trash 1 card from your hand: K.O. up to 1 of your opponent's Characters with a cost of 5 or less and up to 1 of your opponent's Characters with a cost of 3 or less.Disclaimer: This card was reprinted from the original set with changes to the copyright information (Note: the original print did not include \"EN\" at the end of the copyright).",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        costs: [
-          {
-            cost: "trashFromHand",
-            amount: 1,
-          },
-        ],
-        actions: [
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 5,
-                },
-              ],
-            },
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: prb02SaboOp07118Reprint118I18n,
 };

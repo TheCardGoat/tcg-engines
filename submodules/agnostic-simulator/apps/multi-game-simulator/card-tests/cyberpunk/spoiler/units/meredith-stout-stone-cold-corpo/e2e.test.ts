@@ -23,11 +23,7 @@ test("Meredith Stout - rival gig decrease recovers from trash", async ({ page })
     CYBERPUNK_P1,
     spoilerMeredithStoutStoneColdCorpo.id,
   );
-  const evelyn = await pom.getCardInZoneByDefinitionId(
-    "legendArea",
-    CYBERPUNK_P2,
-    spoilerEvelynParkerBeautifulEnigma.id,
-  );
+  const evelyn = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P2, 0);
   const p1Gig = (await pom.getGigDice(CYBERPUNK_P1))[0];
   if (!p1Gig) {
     throw new Error("Expected Meredith fixture to start with a friendly gig.");
@@ -35,6 +31,16 @@ test("Meredith Stout - rival gig decrease recovers from trash", async ({ page })
 
   await pom.expectTrashSize(CYBERPUNK_P1, 2);
   await pom.callLegend(evelyn.instanceId, CYBERPUNK_P2);
+  const calledEvelyn = await pom.getCardInZoneByInstanceId(
+    "legendArea",
+    CYBERPUNK_P2,
+    evelyn.instanceId,
+  );
+  expectEqual(
+    "Evelyn definition after call",
+    calledEvelyn.definitionId,
+    spoilerEvelynParkerBeautifulEnigma.id,
+  );
 
   await pom.expectGigValue(p1Gig.id, 1);
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToMove");

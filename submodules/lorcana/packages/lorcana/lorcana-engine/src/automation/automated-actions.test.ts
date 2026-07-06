@@ -22,6 +22,7 @@ import {
   PLAYER_TWO,
   createMockCharacter,
   createMockSong,
+  type TestFixtureCardEntry,
 } from "../testing";
 
 import { resolveServerCurrentActor } from "./actor-resolution";
@@ -50,7 +51,16 @@ function createMockActionCard(params: {
 }): ActionCard {
   return {
     id: params.id,
-    printings: [{ id: params.id, artId: params.id, setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
+    printings: [
+      {
+        id: params.id,
+        artId: params.id,
+        setCode: "TST",
+        collectorNumber: "1",
+        rarity: "common",
+        imageUrl: "",
+      },
+    ],
     canonicalId: `ci_${params.id}`,
     slug: `lorcana-ci_${params.id}`,
     cardType: "action",
@@ -80,7 +90,16 @@ function createMockItem(params: {
 }): ItemCard {
   return {
     id: params.id,
-    printings: [{ id: params.id, artId: params.id, setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
+    printings: [
+      {
+        id: params.id,
+        artId: params.id,
+        setCode: "TST",
+        collectorNumber: "1",
+        rarity: "common",
+        imageUrl: "",
+      },
+    ],
     canonicalId: `ci_${params.id}`,
     slug: `lorcana-ci_${params.id}`,
     cardType: "item",
@@ -106,7 +125,16 @@ function createMockLocation(params: {
 }): LocationCard {
   return {
     id: params.id,
-    printings: [{ id: params.id, artId: params.id, setCode: "TST", collectorNumber: "1", rarity: "common", imageUrl: "" }],
+    printings: [
+      {
+        id: params.id,
+        artId: params.id,
+        setCode: "TST",
+        collectorNumber: "1",
+        rarity: "common",
+        imageUrl: "",
+      },
+    ],
     canonicalId: `ci_${params.id}`,
     slug: `lorcana-ci_${params.id}`,
     cardType: "location",
@@ -2884,7 +2912,7 @@ describe("automated actions", () => {
       inkType: ["amber"],
     });
 
-    function createOpeningMulliganEngine(opponentDeck: LorcanaCardDefinition[]) {
+    function createOpeningMulliganEngine(opponentDeck: TestFixtureCardEntry[]) {
       const engine = LorcanaMultiplayerTestEngine.createWithFixture(
         {
           hand: [rampScout, drawEngine, earlySupport, lateFinisher],
@@ -3219,7 +3247,7 @@ describe("automated actions", () => {
       inkType: ["amber"],
     });
 
-    function createOpeningInkEngine(opponentDeck: LorcanaCardDefinition[]) {
+    function createOpeningInkEngine(opponentDeck: TestFixtureCardEntry[]) {
       return LorcanaMultiplayerTestEngine.createWithFixture(
         {
           hand: [rampScout, supportTwoDrop, drawEngine],
@@ -3305,7 +3333,7 @@ describe("automated actions", () => {
       inkType: ["amber"],
     });
 
-    function createSequencingEngine(opponentDeck: LorcanaCardDefinition[]) {
+    function createSequencingEngine(opponentDeck: TestFixtureCardEntry[]) {
       return LorcanaMultiplayerTestEngine.createWithFixture(
         {
           hand: [lowImpactPlay, lateFinisher],
@@ -3678,7 +3706,7 @@ describe("automated actions", () => {
       inkType: ["amber"],
     });
 
-    function createInkEngine(opponentDeck: LorcanaCardDefinition[]) {
+    function createInkEngine(opponentDeck: TestFixtureCardEntry[]) {
       return LorcanaMultiplayerTestEngine.createWithFixture(
         {
           hand: [silverBullet, amberOpener, emeraldSupport],

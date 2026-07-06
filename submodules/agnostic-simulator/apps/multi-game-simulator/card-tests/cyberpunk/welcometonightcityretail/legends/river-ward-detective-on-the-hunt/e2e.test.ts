@@ -2,6 +2,7 @@ import { test } from "@playwright/test";
 
 import {
   alphaKiroshiOptics,
+  alphaSwordwiseHuscle,
   welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -29,8 +30,20 @@ test("River Ward (Retail) - spend plays gear from hand for free", async ({ page 
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
   const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
-  expectEqual("River Ward eligible gear count", eligible.length, 1);
-  await pom.resolveEffectTarget([eligible[0]!], CYBERPUNK_P1);
+  const host = await pom.getCardInZoneByDefinitionId(
+    "field",
+    CYBERPUNK_P1,
+    alphaSwordwiseHuscle.id,
+  );
+  if (!eligible.includes(host.instanceId)) {
+    throw new Error("Expected River Ward to offer the friendly Unit as an attachment host.");
+  }
+  await pom.resolveEffectTarget([host.instanceId], CYBERPUNK_P1);
+
+  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+  const gearChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
+  expectEqual("River Ward eligible gear count", gearChoices.length, 1);
+  await pom.resolveEffectTarget([gearChoices[0]!], CYBERPUNK_P1);
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToPlay");
   const playChoices = await pom.getChoiceCardIds(CYBERPUNK_P1);
@@ -40,7 +53,7 @@ test("River Ward (Retail) - spend plays gear from hand for free", async ({ page 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectLegendCardSpent(CYBERPUNK_P1, river.instanceId, true);
   await pom.expectEddies(CYBERPUNK_P1, 5);
-  await pom.getCardInZoneByDefinitionId("field", CYBERPUNK_P1, alphaKiroshiOptics.id);
+  await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, host.instanceId, 1);
   const handAfter = await pom.getHandSize(CYBERPUNK_P1);
   expectEqual("River Ward hand after", handAfter, 0);
 

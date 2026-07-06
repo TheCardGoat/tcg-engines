@@ -23,6 +23,29 @@ import {
 import type { MatchSeat, MatchState, PromptOption } from "../types.ts";
 import { candidatePoolForTarget, candidatesForTarget, matchesTargetFilter } from "./targeting.ts";
 
+function effectSourceName(state: MatchState, sourceInstanceId: string): string {
+  return cardName(getCardForInstance(state, sourceInstanceId));
+}
+
+function targetNames(state: MatchState, targetIds: readonly string[]): string {
+  return targetIds.map((targetId) => cardName(getCardForInstance(state, targetId))).join(", ");
+}
+
+function durationLabel(duration: string): string {
+  switch (duration) {
+    case "thisTurn":
+      return "this turn";
+    case "thisBattle":
+      return "this battle";
+    case "untilStartOfNextTurn":
+      return "until the start of the next turn";
+    case "permanent":
+      return "permanently";
+    default:
+      return duration;
+  }
+}
+
 function promptForTargetSelection(
   state: MatchState,
   controller: MatchSeat,
@@ -192,6 +215,17 @@ export function processEffectAction(
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
       }
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} gives ${targetNames(state, targetIds)} ${action.value >= 0 ? "+" : ""}${action.value} power ${durationLabel(action.duration)}.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          targetIds,
+          visibility: "public",
+        },
+      );
       return true;
     }
     case "grantKeyword": {
@@ -215,6 +249,17 @@ export function processEffectAction(
           expiresOnTurnStartOfSeat: action.duration === "untilStartOfNextTurn" ? controller : null,
         });
       }
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} gives ${targetNames(state, targetIds)} [${action.keyword}] ${durationLabel(action.duration)}.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          targetIds,
+          visibility: "public",
+        },
+      );
       return true;
     }
     case "ko": {
@@ -257,6 +302,17 @@ export function processEffectAction(
       for (const targetId of targetIds) {
         getInstance(state, targetId).rested = true;
       }
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} rests ${targetNames(state, targetIds)}.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          targetIds,
+          visibility: "public",
+        },
+      );
       return true;
     }
     case "setActive": {
@@ -273,6 +329,17 @@ export function processEffectAction(
       for (const targetId of targetIds) {
         getInstance(state, targetId).rested = false;
       }
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} sets ${targetNames(state, targetIds)} active.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          targetIds,
+          visibility: "public",
+        },
+      );
       return true;
     }
     case "returnToHand": {
@@ -385,6 +452,17 @@ export function processEffectAction(
         player.activeDon -= amount;
       }
       getInstance(state, targetIds[0]!).attachedDon += amount;
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} gives ${amount} DON!! to ${cardName(getCardForInstance(state, targetIds[0]!))}.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          targetIds,
+          visibility: "public",
+        },
+      );
       return true;
     }
     case "trashFromField": {
@@ -422,6 +500,16 @@ export function processEffectAction(
       for (const instanceId of getPlayer(state, seat).life) {
         getInstance(state, instanceId).faceUp = false;
       }
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} turns ${getPlayer(state, seat).playerName}'s Life face-down.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          visibility: "public",
+        },
+      );
       return true;
     }
     case "activateEffect": {

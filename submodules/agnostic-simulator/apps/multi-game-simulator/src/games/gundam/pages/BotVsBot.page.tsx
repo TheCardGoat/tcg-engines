@@ -20,11 +20,11 @@ import {
   PromptContainer,
   SetupPromptContainer,
   SubmitErrorProvider,
+  GundamTargetingProvider,
 } from "../src/components/containers/index.ts";
 import { SubmitErrorToast } from "../src/components/ui/SubmitErrorToast.tsx";
 import { CardHoverPreview } from "../src/components/ui/card/CardHoverPreview.tsx";
 import { CardInspectProvider } from "../src/components/ui/card/card-inspect-context.tsx";
-import { TargetingProvider } from "../src/components/ui/targeting-context.tsx";
 import { DualModeProvider } from "../src/components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "../src/components/ui/pending-effect-selection-context.tsx";
 import { CardInspectDialog } from "../src/components/ui/CardInspectDialogContainer.tsx";
@@ -210,7 +210,7 @@ function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProp
     >
       <SubmitErrorProvider>
         <HintsProvider>
-          <TargetingProvider>
+          <GundamTargetingProvider>
             <PendingEffectSelectionProvider>
               <DualModeProvider>
                 <CardInspectProvider>
@@ -221,7 +221,7 @@ function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProp
                 </CardInspectProvider>
               </DualModeProvider>
             </PendingEffectSelectionProvider>
-          </TargetingProvider>
+          </GundamTargetingProvider>
         </HintsProvider>
       </SubmitErrorProvider>
     </SpectatorGundamGameProvider>

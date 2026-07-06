@@ -18,7 +18,19 @@ export function createMatch(config: MatchConfig): MatchState {
     winner: null,
     setup: {
       started: false,
+      joKenPo: {
+        round: 1,
+        pendingSeats: [],
+        hiddenChoices: {},
+        choices: {},
+        winner: null,
+        firstPlayerDecided: false,
+      },
       mulliganUsed: {
+        north: false,
+        south: false,
+      },
+      mulliganDecided: {
         north: false,
         south: false,
       },
@@ -44,10 +56,14 @@ export function createMatch(config: MatchConfig): MatchState {
       firstPlayer: normalizedConfig.firstPlayer,
     },
   });
+
+  emitLog(state, "system", normalizedConfig.shuffleDecks ? "Decks shuffled." : "Decks prepared.", {
+    visibility: "public",
+  });
   emitLog(
     state,
     "system",
-    `${getPlayer(state, normalizedConfig.firstPlayer).playerName} will take the first turn.`,
+    `Leaders placed: ${getPlayer(state, "south").playerName} and ${getPlayer(state, "north").playerName}.`,
     {
       visibility: "public",
     },
@@ -57,21 +73,21 @@ export function createMatch(config: MatchConfig): MatchState {
     emitLog(
       state,
       "system",
-      `${getPlayer(state, seat).playerName} draws ${normalizedConfig.openingHandSize} opening cards.`,
+      `${getPlayer(state, seat).playerName} places ${getPlayer(state, seat).life.length} Life card${getPlayer(state, seat).life.length === 1 ? "" : "s"}.`,
       {
-        visibility: "private",
-        privateMessages: {
-          [seat]: `Your opening hand: ${formatCardList(state, getPlayer(state, seat).hand)}.`,
-        },
-        judgeMessage: `${getPlayer(state, seat).playerName} opening hand: ${formatCardList(state, getPlayer(state, seat).hand)}.`,
+        visibility: "public",
       },
     );
     emitLog(
       state,
       "system",
-      `${getPlayer(state, seat).playerName} sets ${getPlayer(state, seat).life.length} life card${getPlayer(state, seat).life.length === 1 ? "" : "s"}.`,
+      `${getPlayer(state, seat).playerName} draws ${normalizedConfig.openingHandSize} opening cards.`,
       {
-        visibility: "public",
+        visibility: "private",
+        privateMessages: {
+          [seat]: `Cards drawn: ${formatCardList(state, getPlayer(state, seat).hand)}.`,
+        },
+        judgeMessage: `${getPlayer(state, seat).playerName} opening hand: ${formatCardList(state, getPlayer(state, seat).hand)}.`,
       },
     );
   }

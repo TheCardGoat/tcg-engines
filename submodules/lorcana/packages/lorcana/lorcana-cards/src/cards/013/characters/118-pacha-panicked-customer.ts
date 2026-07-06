@@ -33,7 +33,7 @@ export const pachaPanickedCustomer: CharacterCard = {
   inkable: true,
   text: [
     {
-      title: "<Reckless>",
+      title: "Reckless",
     },
     {
       title: "Adrenaline Surge",

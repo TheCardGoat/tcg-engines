@@ -73,6 +73,7 @@ export function GameBoard({
     imageUrl: c.imageUrl,
     name: c.name,
     cardId: c.cardId,
+    definitionId: c.definitionId,
     cardType: c.cardType,
     color: c.color,
     tapped: c.spent,
@@ -92,6 +93,7 @@ export function GameBoard({
       imageUrl: g.imageUrl,
       name: g.name,
       cardId: g.cardId,
+      definitionId: g.definitionId,
       cardType: g.cardType,
       cost: g.cost,
       effectiveCost: g.effectiveCost,
@@ -110,6 +112,7 @@ export function GameBoard({
     imageUrl: c.imageUrl,
     name: c.name,
     cardId: c.cardId,
+    definitionId: c.definitionId,
     cardType: c.cardType,
     color: c.color,
     faceDown: c.faceDown,
@@ -129,6 +132,7 @@ export function GameBoard({
       imageUrl: g.imageUrl,
       name: g.name,
       cardId: g.cardId,
+      definitionId: g.definitionId,
       cardType: g.cardType,
       cost: g.cost,
       effectiveCost: g.effectiveCost,
@@ -156,7 +160,7 @@ export function GameBoard({
     // Skip if right-clicking on an interactive child that handles its own menu
     // (cards, buttons, links). Only fire on empty board space.
     const target = ev.target as HTMLElement;
-    if (target.closest("button, a, [data-card-id], [role='menu'], [role='menuitem']")) {
+    if (target.closest("button, a, [data-sim-entity-id], [role='menu'], [role='menuitem']")) {
       return;
     }
     ev.preventDefault();
@@ -277,6 +281,7 @@ export function GameBoard({
           count={zones.eddies}
           cards={zones.eddieCards.map((c, i, arr) => ({
             cardId: c.cardId,
+            definitionId: c.definitionId,
             spent: c.spent,
             revealed:
               (zones.soldThisTurn && !c.spent && i === arr.length - 1) ||
@@ -307,6 +312,7 @@ export function GameBoard({
         <DeckZone count={zones.deckCount} opponent={opponent} side={side} />
         <TrashZone
           topCard={zones.trashTop ?? undefined}
+          cards={zones.trash}
           opponent={opponent}
           side={side}
           count={zones.trashCount}

@@ -101,6 +101,9 @@ export const startBase: PlayerFixture = {
 export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   gameStart: "scenario:gameStart",
   retailCardCatalog: "scenario:retailCardCatalog",
+  retailProgramTargetBench: "scenario:retailProgramTargetBench",
+  retailCombatGigBench: "scenario:retailCombatGigBench",
+  retailGearLegendBench: "scenario:retailGearLegendBench",
   retailPr2295Cards: "scenario:retailPr2295Cards",
   retailNewCardAbilities: "scenario:retailNewCardAbilities",
   openingMain: "scenario:openingMain",
@@ -211,6 +214,18 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   legendYorinobuArasakaEmbracingDestructionRetail:
     "scenario:legendYorinobuArasakaEmbracingDestructionRetail",
   legendViktorVektorSitDownAndRelaxRetail: "scenario:legendViktorVektorSitDownAndRelaxRetail",
+  legendRebeccaHavingAMomentPrm01: "scenario:legendRebeccaHavingAMomentPrm01",
+  legendTheHeistVCorporateExile: "scenario:legendTheHeistVCorporateExile",
+  legendTheHeistJackieWellesPourOneOutForMe: "scenario:legendTheHeistJackieWellesPourOneOutForMe",
+  legendEmbracingGoroTakemuraHandsUnclean: "scenario:legendEmbracingGoroTakemuraHandsUnclean",
+  legendEmbracingSaburoArasakaStubbornPatriarch:
+    "scenario:legendEmbracingSaburoArasakaStubbornPatriarch",
+  legendEmbracingYorinobuArasakaEmbracingDestruction:
+    "scenario:legendEmbracingYorinobuArasakaEmbracingDestruction",
+  unitTheHeistDexterDeshawnOneLastChance: "scenario:unitTheHeistDexterDeshawnOneLastChance",
+  unitTheHeistMt0d12Flathead: "scenario:unitTheHeistMt0d12Flathead",
+  unitEmbracingGoroTakemuraLosingHisWay: "scenario:unitEmbracingGoroTakemuraLosingHisWay",
+  unitEmbracingMinotaur: "scenario:unitEmbracingMinotaur",
   progPeaceOffering: "scenario:progPeaceOffering",
   progCarnageAtTheColosseum: "scenario:progCarnageAtTheColosseum",
   progCarnageAtTheColosseumCostReduction: "scenario:progCarnageAtTheColosseumCostReduction",

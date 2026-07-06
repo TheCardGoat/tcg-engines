@@ -134,6 +134,9 @@ export function BoardBlock({
       data-block-kind={block.kind}
       data-block-size={block.size}
       data-zone-id={zone?.id ?? ""}
+      data-sim-zone-id={zone?.id ?? ""}
+      data-sim-zone-role={zone?.role ?? "custom"}
+      data-sim-zone-visibility={zone?.visibility ?? "public"}
       data-zone-role={zone?.role ?? "custom"}
       data-zone-visibility={zone?.visibility ?? "public"}
       data-count={entityCount}

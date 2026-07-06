@@ -7,8 +7,6 @@ export const pocahontasMeekoAdventurousFriendsI18n: Record<Languages, I18nProper
     text: [
       {
         title: "Shift 2 {I}",
-        description:
-          "(You may pay 2 {I} to play this on top of one of your characters named Pocahontas or Meeko.)",
       },
       {
         title: "Evasive",
@@ -43,8 +41,7 @@ export const pocahontasMeekoAdventurousFriendsI18n: Record<Languages, I18nProper
     version: "Amis aventureux",
     text: [
       {
-        title:
-          "<Alter> 2 {I} (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages nommé Pocahontas ou Meeko.)",
+        title: "<Alter> 2 {I}",
       },
       {
         title: "<Insaisissable>",

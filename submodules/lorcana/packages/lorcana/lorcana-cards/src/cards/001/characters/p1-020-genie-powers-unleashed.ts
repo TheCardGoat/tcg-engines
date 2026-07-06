@@ -38,10 +38,10 @@ export const geniePowersUnleashedP1: CharacterCard = {
   },
   text: [
     {
-      title: "<Shift> 6",
+      title: "Shift 6",
     },
     {
-      title: "<Evasive>",
+      title: "Evasive",
     },
     {
       title: "Phenomenal Cosmic Power!",

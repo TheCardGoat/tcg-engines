@@ -6,8 +6,8 @@ export const theMadrigalFamilyEveryGenerationI18n: Record<Languages, I18nPropert
     version: "Every Generation",
     text: [
       {
-        title: "Madrigal Shift 3 {}",
-        description: "(You may pay 3 {} to play this on top of one of your Madrigal characters.)",
+        title: "Madrigal Shift 3 {I}",
+        description: "(You may pay 3 {I} to play this on top of one of your Madrigal characters.)",
       },
       {
         title: "FAMILY BLESSINGS",
@@ -36,8 +36,7 @@ export const theMadrigalFamilyEveryGenerationI18n: Record<Languages, I18nPropert
     version: "Toutes les générations",
     text: [
       {
-        title:
-          "<Alter de Madrigal> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Madrigal.)",
+        title: "<Alter de Madrigal> 3 {I}",
       },
       {
         title: "Un tel cadeau",

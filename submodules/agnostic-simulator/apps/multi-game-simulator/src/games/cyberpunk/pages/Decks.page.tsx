@@ -3,6 +3,7 @@ import { deckJsonLd, getDeckSeoProfile, getPublicDeckSeoProfiles } from "../seo/
 import { absoluteUrl } from "../seo/site";
 import { useDocumentSeo } from "../seo/useDocumentSeo";
 import classes from "./Decks.module.css";
+import { cyberpunkSimulatorPath } from "./simulatorPaths";
 
 export function DecksPage() {
   const decks = getPublicDeckSeoProfiles();
@@ -27,7 +28,11 @@ export function DecksPage() {
 
         <section className={classes.deckGrid} aria-label="Public decks">
           {decks.map((deck) => (
-            <Link key={deck.id} className={classes.deckCard} to={`/decks/${deck.id}/`}>
+            <Link
+              key={deck.id}
+              className={classes.deckCard}
+              to={cyberpunkSimulatorPath(`/decks/${deck.id}/`)}
+            >
               <span className={classes.deckLabel}>{deck.label}</span>
               <span className={classes.deckDescription}>{deck.description}</span>
               <span className={classes.deckMeta}>
@@ -64,7 +69,7 @@ export function DeckDetailPage() {
             <h1 className={classes.title}>Deck not found</h1>
             <p className={classes.lead}>The requested deck is not in the public deck index.</p>
           </header>
-          <Link className={classes.backLink} to="/decks/">
+          <Link className={classes.backLink} to={cyberpunkSimulatorPath("/decks/")}>
             Back to public decks
           </Link>
         </div>
@@ -132,10 +137,10 @@ export function DeckDetailPage() {
         </section>
 
         <div className={classes.actions}>
-          <Link className={classes.button} to="/practice">
+          <Link className={classes.button} to={cyberpunkSimulatorPath("/practice")}>
             Practice this archetype
           </Link>
-          <Link className={classes.backLink} to="/decks/">
+          <Link className={classes.backLink} to={cyberpunkSimulatorPath("/decks/")}>
             Back to public decks
           </Link>
         </div>

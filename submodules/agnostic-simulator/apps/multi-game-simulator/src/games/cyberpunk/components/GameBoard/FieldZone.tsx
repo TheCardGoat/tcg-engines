@@ -12,6 +12,7 @@ const GEAR_PEEK_MARGIN_PERCENT = 33.6;
 interface FieldUnit {
   imageUrl: string;
   name: string;
+  definitionId?: string;
   tapped?: boolean;
   gear?: CardGearAttachment[];
   /** Engine instance id, when the card is engine-driven. */
@@ -55,6 +56,7 @@ export function FieldZone({ units = [], opponent = false, side }: FieldZoneProps
       className={`${classes.zone} ${opponent ? classes.opp : ""} ${drop.isOver ? classes.dropOver : ""}`}
       data-testid="field-zone"
       data-zone-id={zoneName}
+      data-sim-zone-id={zoneName}
       data-side={side}
       data-count={units.length}
       data-drop-ready={dropReady}
@@ -75,6 +77,9 @@ export function FieldZone({ units = [], opponent = false, side }: FieldZoneProps
             }}
             data-testid="field-unit"
             data-card-id={unit.cardId}
+            data-instance-id={unit.cardId}
+            data-definition-id={unit.definitionId}
+            data-sim-entity-id={unit.cardId}
             data-card-name={unit.name}
             data-card-type={unit.cardType}
             data-card-color={unit.color}
@@ -89,6 +94,7 @@ export function FieldZone({ units = [], opponent = false, side }: FieldZoneProps
             <Card
               imageUrl={unit.imageUrl}
               name={unit.name}
+              definitionId={unit.definitionId}
               cardType={unit.cardType}
               color={unit.color}
               gear={unit.gear}

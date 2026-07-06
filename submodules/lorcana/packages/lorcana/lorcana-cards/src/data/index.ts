@@ -123,6 +123,21 @@ export interface CardPrintingMetadata {
   sortNumber?: number;
 }
 
+export interface LorcanaCardIdentityRegistryEntry {
+  printingId: string;
+  canonicalId: string;
+  shortId: string;
+  legacyShortIds?: string[];
+  status: "active" | "retired";
+  firstSeen: {
+    source: string;
+    set: string;
+    cardNumber: number;
+  };
+}
+
+export type LorcanaCardIdentityRegistry = Record<string, LorcanaCardIdentityRegistryEntry>;
+
 export interface SetDefinition {
   id: string;
   name: string;
@@ -143,6 +158,10 @@ export interface CardsAuxKv {
   representativeShortIdByCanonicalId: Record<string, string>;
   /** Map printingId -> shortId (e.g., "set11-001" -> "685") */
   printingIdToShortId: Record<string, string>;
+  /** Map printingId -> canonicalId */
+  printingIdToCanonicalId: Record<string, string>;
+  /** Map shortId -> printingId */
+  shortIdToPrintingId: Record<string, string>;
   /** Map canonicalId -> all printing IDs for that card */
   printingIdsByCanonicalId: Record<string, string[]>;
   /** Map canonicalId -> base reprint IDs (excludes enchanted/epic/iconic/promo variants) */
@@ -334,12 +353,12 @@ function toCanonicalCard(card: LorcanaCard): CanonicalCard {
     inkType: normalizeInkType(card.inkType),
     cost: card.cost,
     inkable: card.inkable,
+    ...(card.classifications?.length ? { classifications: card.classifications } : {}),
     ...(card.cardType === "character"
       ? {
           strength: card.strength,
           willpower: card.willpower,
           lore: card.lore,
-          classifications: card.classifications,
         }
       : {}),
     ...(card.cardType === "location"
@@ -394,14 +413,22 @@ function getEmbeddedLocalization(
 // Import generated auxiliary data. The canonical card records are derived from
 // generated package cards so runtime builds do not require canonical-cards.json.
 import auxKvData from "./cards.aux.kv.json";
+import identityRegistryData from "./cards.identity-registry.json";
 import printingMetadataData from "./cards.aux.printing-metadata.json";
+import legacyPrintingsData from "./printings.json";
 import setsData from "./sets.json";
 
 /** Printings from minimal metadata (replaces full printings.json) */
 export const printings = printingMetadataData as unknown as Record<string, CardPrintingMetadata>;
 
+const legacyPrintings = legacyPrintingsData as unknown as Record<string, CardPrinting>;
+
 /** Aux KV for identity/reprint/localization lookups */
 export const cardsAuxKv = auxKvData as unknown as CardsAuxKv;
+
+/** Immutable identity registry keyed by stable physical printing id. */
+export const lorcanaCardIdentityRegistry =
+  identityRegistryData as unknown as LorcanaCardIdentityRegistry;
 
 /** Sets data */
 export const sets = setsData as unknown as Record<string, SetDefinition>;
@@ -495,6 +522,188 @@ for (const [printingId, shortId] of Object.entries(cardsAuxKv.printingIdToShortI
     canonicalCards[shortId] = derivedCard;
     canonicalCardsByPrintingId[printingId] = derivedCard;
   }
+}
+
+export type LorcanaShortIdResolution =
+  | { kind: "current"; shortId: string }
+  | {
+      kind: "legacy-alias";
+      shortId: string;
+      legacyShortId: string;
+      printingId: string;
+      canonicalId: string;
+    }
+  | {
+      kind: "ambiguous";
+      shortId: string;
+      legacyPrintingId: string;
+      currentPrintingId: string;
+      legacyResolvedShortId: string;
+    }
+  | { kind: "unknown"; shortId: string };
+
+export type LorcanaStableIdentityResolution =
+  | { kind: "current"; shortId: string; printingId: string; canonicalId: string }
+  | {
+      kind: "legacy-alias";
+      shortId: string;
+      legacyShortId: string;
+      printingId: string;
+      canonicalId: string;
+    }
+  | {
+      kind: "ambiguous";
+      shortId: string;
+      legacyPrintingId: string;
+      currentPrintingId: string;
+      legacyResolvedShortId: string;
+    }
+  | { kind: "unknown"; shortId: string };
+
+interface LegacyShortIdMapping {
+  currentShortId: string;
+  printingId: string;
+}
+
+let legacyShortIdToCurrentShortId: Map<string, LegacyShortIdMapping> | null = null;
+let currentPrintingIdByShortId: Map<string, string> | null = null;
+
+function getCurrentPrintingIdByShortId(): Map<string, string> {
+  if (currentPrintingIdByShortId) return currentPrintingIdByShortId;
+
+  currentPrintingIdByShortId = new Map<string, string>();
+  for (const printing of Object.values(printings)) {
+    currentPrintingIdByShortId.set(printing.gameCardId, printing.id);
+  }
+
+  return currentPrintingIdByShortId;
+}
+
+function getLegacyShortIdToCurrentShortId(): Map<string, LegacyShortIdMapping> {
+  if (legacyShortIdToCurrentShortId) return legacyShortIdToCurrentShortId;
+
+  legacyShortIdToCurrentShortId = new Map<string, LegacyShortIdMapping>();
+  for (const legacyPrinting of Object.values(legacyPrintings)) {
+    const currentShortId =
+      cardsAuxKv.printingIdToShortId[legacyPrinting.id] ?? printings[legacyPrinting.id]?.gameCardId;
+    if (currentShortId && currentShortId !== legacyPrinting.gameCardId) {
+      legacyShortIdToCurrentShortId.set(legacyPrinting.gameCardId, {
+        currentShortId,
+        printingId: legacyPrinting.id,
+      });
+    }
+  }
+
+  return legacyShortIdToCurrentShortId;
+}
+
+/**
+ * Resolve a stored Lorcana public card id to the current short id for that printing.
+ *
+ * Older deck rows can contain gameCardIds from the legacy `printings.json` dataset.
+ * The active aux metadata may assign a different gameCardId to the same printing id,
+ * so runtime validation normalizes before looking up card data.
+ */
+export function resolveCurrentLorcanaShortId(shortId: string): string {
+  const resolution = getLorcanaShortIdResolution(shortId);
+  return resolution.kind === "legacy-alias" ? resolution.shortId : shortId;
+}
+
+export function resolveLorcanaDisplayShortId(
+  cardId: string,
+  hasShortId: (shortId: string) => boolean = (shortId) => Boolean(canonicalCards[shortId]),
+): string {
+  const representativeShortId = cardsAuxKv.representativeShortIdByCanonicalId[cardId];
+  if (representativeShortId && hasShortId(representativeShortId)) {
+    return representativeShortId;
+  }
+
+  const resolution = getLorcanaShortIdResolution(cardId);
+  if (resolution.kind === "legacy-alias" && hasShortId(resolution.shortId)) {
+    return resolution.shortId;
+  }
+
+  return cardId;
+}
+
+export function getLorcanaShortIdResolution(shortId: string): LorcanaShortIdResolution {
+  if (canonicalCards[shortId]) return { kind: "current", shortId };
+
+  const legacyMapping = getLegacyShortIdToCurrentShortId().get(shortId);
+  if (legacyMapping) {
+    const currentPrintingId = getCurrentPrintingIdByShortId().get(shortId);
+    if (currentPrintingId && currentPrintingId !== legacyMapping.printingId) {
+      return {
+        kind: "ambiguous",
+        shortId,
+        legacyPrintingId: legacyMapping.printingId,
+        currentPrintingId,
+        legacyResolvedShortId: legacyMapping.currentShortId,
+      };
+    }
+
+    return {
+      kind: "legacy-alias",
+      shortId: legacyMapping.currentShortId,
+      legacyShortId: shortId,
+      printingId: legacyMapping.printingId,
+      canonicalId:
+        cardsAuxKv.printingIdToCanonicalId[legacyMapping.printingId] ??
+        cardsAuxKv.canonicalIdByShortId[legacyMapping.currentShortId] ??
+        "",
+    };
+  }
+
+  if (canonicalCards[shortId]) return { kind: "current", shortId };
+  return { kind: "unknown", shortId };
+}
+
+export function resolveLorcanaStableIdentity(id: string): LorcanaStableIdentityResolution {
+  const directPrinting = lorcanaCardIdentityRegistry[id];
+  if (directPrinting?.status === "active") {
+    return {
+      kind: "current",
+      shortId: directPrinting.shortId,
+      printingId: directPrinting.printingId,
+      canonicalId: directPrinting.canonicalId,
+    };
+  }
+
+  const legacyMapping = getLegacyShortIdToCurrentShortId().get(id);
+  const currentPrintingId = cardsAuxKv.shortIdToPrintingId[id];
+  if (legacyMapping && currentPrintingId && currentPrintingId !== legacyMapping.printingId) {
+    return {
+      kind: "ambiguous",
+      shortId: id,
+      legacyPrintingId: legacyMapping.printingId,
+      currentPrintingId,
+      legacyResolvedShortId: legacyMapping.currentShortId,
+    };
+  }
+
+  if (currentPrintingId) {
+    const canonicalId =
+      cardsAuxKv.printingIdToCanonicalId[currentPrintingId] ?? cardsAuxKv.canonicalIdByShortId[id];
+    if (canonicalId) {
+      return { kind: "current", shortId: id, printingId: currentPrintingId, canonicalId };
+    }
+  }
+
+  const shortResolution = getLorcanaShortIdResolution(id);
+  if (shortResolution.kind === "legacy-alias") {
+    return {
+      kind: "legacy-alias",
+      shortId: shortResolution.shortId,
+      legacyShortId: shortResolution.legacyShortId,
+      printingId: shortResolution.printingId,
+      canonicalId: shortResolution.canonicalId,
+    };
+  }
+  if (shortResolution.kind === "ambiguous") {
+    return shortResolution;
+  }
+
+  return { kind: "unknown", shortId: id };
 }
 
 // ============================================================================

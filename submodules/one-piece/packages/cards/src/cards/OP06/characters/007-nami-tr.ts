@@ -1,56 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { st01Nami007 } from "../../ST01/index.ts";
 import { op06NamiTr007I18n } from "./007-nami-tr.i18n.ts";
 
 export const op06NamiTr007: CharacterCard = {
-  id: "ST01-007",
-  canonicalId: "ST01-007",
+  ...st01Nami007,
+  id: "ST01-007_p3",
   slug: "nami-tr",
   name: "Nami (TR)",
   printings: [
     {
-      id: "ST01-007",
-      artId: "ST01-007",
+      id: "ST01-007_p3",
+      artId: "ST01-007_p3",
       setCode: "OP06",
       collectorNumber: "007",
       rarity: "TR",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/ST01-007_p3.jpg",
     },
   ],
-  cardType: "character",
-  color: ["red"],
   rarity: "TR",
   setId: "OP06",
-  cost: 1,
-  power: 1000,
-  counter: 1000,
-  traits: ["Straw Hat Crew"],
-  attribute: "special",
-  effect:
-    "[Activate:Main][Once Per Turn] Give up to 1 rested DON!! card to your Leader or 1 of your Characters.",
-  effects: {
-    effects: [
-      {
-        trigger: "activateMain",
-        actions: [
-          {
-            action: "giveDon",
-            target: {
-              player: "self",
-              zones: ["leader", "character"],
-              count: {
-                amount: 1,
-              },
-            },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            donState: "rested",
-          },
-        ],
-        oncePerTurn: true,
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op06NamiTr007I18n,
 };

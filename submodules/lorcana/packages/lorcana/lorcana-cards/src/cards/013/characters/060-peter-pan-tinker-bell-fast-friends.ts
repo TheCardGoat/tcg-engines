@@ -37,8 +37,6 @@ export const peterPanTinkerBellFastFriends: CharacterCard = {
   text: [
     {
       title: "Shift 4 {I}",
-      description:
-        "(You may pay 4 {I} to play this on top of one of your characters named Peter Pan or Tinker Bell.)",
     },
     {
       title: "YOU CAN FLY!",

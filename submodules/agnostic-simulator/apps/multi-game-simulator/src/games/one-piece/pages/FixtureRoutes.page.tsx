@@ -9,6 +9,8 @@ import {
 import { OnePieceSimulatorShell } from "../components/OnePieceSimulatorShell.tsx";
 import classes from "./FixtureRoutes.module.css";
 
+const ONE_PIECE_SIMULATOR_BASE_PATH = "/one-piece/simulator";
+
 export function OnePieceFixtureIndexPage() {
   if (!import.meta.env.DEV) {
     return <OnePieceFixtureNotFound />;
@@ -33,9 +35,11 @@ export function OnePieceFixtureIndexPage() {
             <ul>
               {fixtures.map((fixture) => (
                 <li key={fixture.id}>
-                  <Link to={`/tests/${fixture.id}`}>
+                  <Link to={`${ONE_PIECE_SIMULATOR_BASE_PATH}/tests/${fixture.id}`}>
                     <span>{fixture.label}</span>
-                    <code>/tests/{fixture.id}</code>
+                    <code>
+                      {ONE_PIECE_SIMULATOR_BASE_PATH}/tests/{fixture.id}
+                    </code>
                     <p>{fixture.description}</p>
                   </Link>
                 </li>
@@ -65,7 +69,7 @@ export function OnePieceFixtureNotFound() {
       <header className={classes.header}>
         <h1>404</h1>
         <p>Fixture not found.</p>
-        <Link to="/tests">Back to fixtures</Link>
+        <Link to={`${ONE_PIECE_SIMULATOR_BASE_PATH}/tests`}>Back to fixtures</Link>
       </header>
     </main>
   );

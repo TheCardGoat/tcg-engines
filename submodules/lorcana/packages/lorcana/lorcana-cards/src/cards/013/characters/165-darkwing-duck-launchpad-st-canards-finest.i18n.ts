@@ -41,8 +41,7 @@ export const darkwingDuckLaunchpadStCanardsFinestI18n: Record<Languages, I18nPro
     version: "Les meilleurs de Bourg-les-Canards",
     text: [
       {
-        title:
-          "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Myster Mask ou Flagada Jones.)",
+        title: "<Alter> 5 {I}",
       },
       {
         title: "<Hors d'atteinte>",

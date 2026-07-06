@@ -41,6 +41,7 @@ export function DeckStackZone({
       )}
       data-testid={`${zone?.id ?? resolvedLabel}-stack`}
       data-zone-id={zone?.id}
+      data-sim-zone-id={zone?.id}
       data-zone-layout="deck-stack"
       data-count={entityCount}
       aria-label={`${resolvedLabel}, ${entityCount} ${entityCount === 1 ? "card" : "cards"}`}

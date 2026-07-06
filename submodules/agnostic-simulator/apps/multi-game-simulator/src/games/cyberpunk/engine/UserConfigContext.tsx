@@ -1,4 +1,13 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import {
+  DEFAULT_BASE_GAME_USER_CONFIG,
+  clampSoundVolume,
+  normalizeBaseGameUserConfig,
+  parseAnimationPacing,
+  type GameUserConfig,
+} from "../../../simulator/gameConfig";
+
+export type { AnimationPacing } from "../../../simulator/gameConfig";
 
 export type DiceDisplayMode = "shape" | "image" | "font";
 
@@ -16,30 +25,24 @@ export type DicierStyle =
   | "Round-Heavy"
   | "Round-Light";
 
-export interface UserConfig {
+export interface CyberpunkSpecificUserConfig {
   diceDisplayMode: DiceDisplayMode;
   diceImageColor: DiceImageColor;
   dicierStyle: DicierStyle;
-  soundVolume: number;
 }
 
+export type UserConfig = GameUserConfig<CyberpunkSpecificUserConfig>;
+
 const DEFAULTS: UserConfig = {
+  ...DEFAULT_BASE_GAME_USER_CONFIG,
   diceDisplayMode: "shape",
   diceImageColor: "yellow",
   dicierStyle: "Round-Heavy",
-  soundVolume: 35,
 };
 
 const STORAGE_KEY = "cyberpunk:userConfig";
 
 export const DEFAULT_USER_CONFIG: UserConfig = DEFAULTS;
-
-function clampSoundVolume(value: unknown): number {
-  if (typeof value !== "number" || !Number.isFinite(value)) {
-    return DEFAULTS.soundVolume;
-  }
-  return Math.max(0, Math.min(100, Math.round(value)));
-}
 
 export function parseUserConfig(raw: string | null): UserConfig {
   if (!raw) {
@@ -47,10 +50,11 @@ export function parseUserConfig(raw: string | null): UserConfig {
   }
   try {
     const parsed = JSON.parse(raw) as Partial<UserConfig>;
+    const baseConfig = normalizeBaseGameUserConfig(parsed);
     return {
       ...DEFAULTS,
       ...parsed,
-      soundVolume: clampSoundVolume(parsed.soundVolume),
+      ...baseConfig,
     };
   } catch {
     return DEFAULTS;
@@ -81,6 +85,10 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
         ...patch,
         soundVolume:
           patch.soundVolume === undefined ? prev.soundVolume : clampSoundVolume(patch.soundVolume),
+        animationPacing:
+          patch.animationPacing === undefined
+            ? prev.animationPacing
+            : parseAnimationPacing(patch.animationPacing),
       };
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));

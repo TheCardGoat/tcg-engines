@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op03CharlotteSmoothie110 } from "../../OP03/characters/110-charlotte-smoothie.ts";
 import { prb01CharlotteSmoothieFullArt110I18n } from "./110-charlotte-smoothie-full-art.i18n.ts";
 
 export const prb01CharlotteSmoothieFullArt110: CharacterCard = {
-  id: "OP03-110",
-  canonicalId: "OP03-110",
+  ...op03CharlotteSmoothie110,
+  id: "OP03-110_p4",
   slug: "charlotte-smoothie-full-art",
   name: "Charlotte Smoothie (Full Art)",
   printings: [
     {
-      id: "OP03-110",
-      artId: "OP03-110",
+      id: "OP03-110_p4",
+      artId: "OP03-110_p4",
       setCode: "PRB01",
       collectorNumber: "110",
       rarity: "R",
@@ -40,15 +41,8 @@ export const prb01CharlotteSmoothieFullArt110: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-110_p5.jpg",
     },
   ],
-  cardType: "character",
-  color: ["yellow"],
   rarity: "R",
   setId: "PRB01",
-  cost: 4,
-  power: 5000,
-  counter: 1000,
-  traits: ["Big Mom Pirates"],
-  attribute: "special",
   artVariants: [
     {
       type: "other",
@@ -66,30 +60,5 @@ export const prb01CharlotteSmoothieFullArt110: CharacterCard = {
       imageId: "OP03-110_p5",
     },
   ],
-  effect:
-    "[When Attacking] You may add 1 card from the top or bottom of your Life cards to your hand: This Character gains +2000 power during this battle.",
-  effects: {
-    effects: [
-      {
-        trigger: "whenAttacking",
-        actions: [
-          {
-            action: "modifyPower",
-            target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-            value: 2000,
-            duration: "thisBattle",
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
   i18n: prb01CharlotteSmoothieFullArt110I18n,
 };

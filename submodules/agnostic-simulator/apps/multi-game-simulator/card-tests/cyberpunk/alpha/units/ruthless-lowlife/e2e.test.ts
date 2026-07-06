@@ -30,6 +30,8 @@ test("Ruthless Lowlife - spent unit changes stolen gig to 1", async ({ page }) =
   await pom.expectFieldCardSpent(CYBERPUNK_P1, lowlife.instanceId, true);
 
   await pom.passPhase(CYBERPUNK_P1);
+  expectEqual("Ruthless active player after pass", await pom.getActivePlayerId(), CYBERPUNK_P2);
+  expectEqual("Ruthless phase after pass", await pom.getPhase(), "start");
   expectEqual("Ruthless P2 choice", await pom.getPendingChoiceType(CYBERPUNK_P2), "gainGig");
   await pom.gainGig(await pom.pickFirstAllowedDie(CYBERPUNK_P2), CYBERPUNK_P2);
 

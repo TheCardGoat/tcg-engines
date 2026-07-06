@@ -16,6 +16,8 @@ export interface CardFaceProps {
   entity: SimulatorEntity;
   density?: "mini" | "compact" | "normal" | "large" | "full";
   fill?: boolean;
+  fullImageChrome?: "default" | "edge-to-edge";
+  fullImageFit?: "cover" | "contain";
   selected?: boolean;
   draggable?: boolean;
   targetable?: boolean;
@@ -38,6 +40,8 @@ export const CardFace = memo(
       entity,
       density = "normal",
       fill = false,
+      fullImageChrome = "default",
+      fullImageFit = "contain",
       selected = false,
       draggable = false,
       targetable = false,
@@ -88,6 +92,7 @@ export const CardFace = memo(
       highlighted && "ring-2 ring-yellow-400/70 shadow-lg shadow-yellow-400/20",
       dimmed && "opacity-50",
       usesFullCardImage && "overflow-hidden",
+      usesFullCardImage && fullImageChrome === "edge-to-edge" && "border-0",
     );
 
     const artClass = cx(
@@ -140,6 +145,7 @@ export const CardFace = memo(
         data-face={isHidden ? "hidden" : "public"}
         id={`entity-${entity.id}`}
         data-entity-id={entity.id}
+        data-sim-entity-id={entity.id}
         {...Object.fromEntries(
           Object.entries(entity.dataAttributes ?? {}).filter(([, value]) => value !== undefined),
         )}
@@ -175,7 +181,7 @@ export const CardFace = memo(
               src={cardImageUrl!}
               alt={title}
               fill
-              fit="contain"
+              fit={fullImageFit}
               className="absolute inset-0 rounded-[5px] bg-black"
               loading="eager"
             />

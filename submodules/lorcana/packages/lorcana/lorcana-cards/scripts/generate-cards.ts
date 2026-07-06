@@ -15,7 +15,7 @@
  *   - Card id MUST be a 3-character short id (e.g. "wrC"). Do NOT use printing-id format (e.g. set1-098).
  *   - Identity = full name (name + " - " + subtitle). Same full name ⇒ same canonicalId. Each printing gets a unique 3-char id.
  *   - canonicalId: must begin with "ci_" (e.g. ci_xxx).
- *   - Short IDs are 3 chars (0-9, a-z, A-Z); IDs live only on cards; lookups derived from canonical-cards in code.
+ *   - Short IDs are 3 chars (0-9, a-z, A-Z); existing aux metadata preserves them by printingId.
  *
  * Scope: only EXPANSION sets are included (QUEST and gateway sets are excluded). All rarities within
  * expansion sets are included (common, uncommon, rare, super rare, legendary, plus specialRarity: enchanted, epic, iconic, promo, challenge).
@@ -85,6 +85,8 @@ import {
 const DATA_OUTPUT_DIR = path.resolve(__dirname, "../src/data");
 const CARDS_OUTPUT_DIR = path.resolve(__dirname, "../src/cards");
 const CANONICAL_CARDS_PATH = path.resolve(DATA_OUTPUT_DIR, "canonical-cards.json");
+const PRINTING_METADATA_PATH = path.resolve(DATA_OUTPUT_DIR, "cards.aux.printing-metadata.json");
+const IDENTITY_REGISTRY_PATH = path.resolve(DATA_OUTPUT_DIR, "cards.identity-registry.json");
 
 interface LoadDataResult {
   input: ReturnType<typeof loadRavensburgerJson>;
@@ -103,6 +105,13 @@ interface PrintingsPhaseResult {
   printings: Record<string, CardPrinting>;
   printingItems: PrintingItem[];
   printingIdsInOrder: string[];
+}
+
+interface IdentityRegistryEntry {
+  printingId: string;
+  canonicalId: string;
+  shortId: string;
+  status: "active" | "retired";
 }
 
 /** Match the top-level `id: "..."` line in a card TypeScript file. */
@@ -155,6 +164,88 @@ function readSourceCardIds(cardsDir: string): Record<string, string> {
 
   walk(cardsDir);
   return result;
+}
+
+function readExistingPrintingMetadataCardIds(): Record<string, string> {
+  if (!fs.existsSync(PRINTING_METADATA_PATH)) return {};
+
+  const raw = JSON.parse(fs.readFileSync(PRINTING_METADATA_PATH, "utf8")) as Record<
+    string,
+    { gameCardId?: unknown }
+  >;
+  const result: Record<string, string> = {};
+  for (const [printingId, printing] of Object.entries(raw)) {
+    if (typeof printing.gameCardId === "string" && printing.gameCardId.length > 0) {
+      result[printingId] = printing.gameCardId;
+    }
+  }
+  return result;
+}
+
+function readIdentityRegistry(): Record<string, IdentityRegistryEntry> {
+  if (!fs.existsSync(IDENTITY_REGISTRY_PATH)) return {};
+
+  return JSON.parse(fs.readFileSync(IDENTITY_REGISTRY_PATH, "utf8")) as Record<
+    string,
+    IdentityRegistryEntry
+  >;
+}
+
+function readIdentityRegistryCardIds(): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const [printingId, entry] of Object.entries(readIdentityRegistry())) {
+    if (entry.status === "active" && entry.shortId.length > 0) {
+      result[printingId] = entry.shortId;
+    }
+  }
+  return result;
+}
+
+function readIdentityRegistryCanonicalIds(): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const [printingId, entry] of Object.entries(readIdentityRegistry())) {
+    if (entry.status === "active" && entry.canonicalId.startsWith("ci_")) {
+      result[printingId] = entry.canonicalId;
+    }
+  }
+  return result;
+}
+
+function validateIdentityRegistryShortIds(
+  printingIdsInOrder: string[],
+  pipelineIdMapping: PipelineIdMapping,
+): string[] {
+  const errors: string[] = [];
+  const registryIds = readIdentityRegistryCardIds();
+  for (const printingId of printingIdsInOrder) {
+    if (!printingId) continue;
+    const registryShortId = registryIds[printingId];
+    if (!registryShortId) continue;
+    const generatedShortId = pipelineIdMapping.byPrintingId[printingId];
+    if (generatedShortId !== registryShortId) {
+      errors.push(
+        `${printingId}: registry shortId ${registryShortId} would become ${generatedShortId}`,
+      );
+    }
+  }
+  return errors;
+}
+
+function validateIdentityRegistryCanonicalIds(
+  canonicalCards: Record<string, CanonicalCard>,
+): string[] {
+  const errors: string[] = [];
+  const registryCanonicalIds = readIdentityRegistryCanonicalIds();
+  for (const [printingId, registryCanonicalId] of Object.entries(registryCanonicalIds)) {
+    const generatedCanonicalId = canonicalCards[printingId]?.canonicalId;
+    if (!generatedCanonicalId) continue;
+    if (generatedCanonicalId !== registryCanonicalId) {
+      errors.push(
+        `${printingId}: registry canonicalId ${registryCanonicalId} would become ${generatedCanonicalId}`,
+      );
+    }
+  }
+  return errors;
 }
 
 function readSourceCanonicalIds(cardsDir: string): Record<string, string> {
@@ -279,13 +370,29 @@ function buildIdMappingAndPrintings(
   const printingIdsInOrder = computePrintingIdsInOrder(printingItems);
   const existingCanonicalCards = loadExistingCanonicalCards();
   const existingSourceCardIds = readSourceCardIds(CARDS_OUTPUT_DIR);
+  const existingPrintingMetadataCardIds = readExistingPrintingMetadataCardIds();
+  const registryCardIds = readIdentityRegistryCardIds();
+  const existingCardIdsByPrintingId = {
+    ...existingSourceCardIds,
+    ...existingPrintingMetadataCardIds,
+    ...registryCardIds,
+  };
   const pipelineIdMapping = assignPrintingIds(
     printingItems,
     printingIdsInOrder,
     (card) => getFullNameFromCard(card as InputCard),
     existingCanonicalCards,
-    existingSourceCardIds,
+    existingCardIdsByPrintingId,
   );
+  const registryShortIdErrors = validateIdentityRegistryShortIds(
+    printingIdsInOrder,
+    pipelineIdMapping,
+  );
+  if (registryShortIdErrors.length > 0) {
+    throw new Error(
+      `Identity registry shortId drift detected:\n${registryShortIdErrors.join("\n")}`,
+    );
+  }
   console.log(`  ${Object.keys(pipelineIdMapping.byPrintingId).length} printing ids (3-char)`);
 
   console.log("🖨️ Generating printings...");
@@ -345,7 +452,10 @@ function buildCanonicalAndValidate(
     lorcastIndex,
     lorcastFullIndex,
     existingCanonicalCards,
-    readSourceCanonicalIds(CARDS_OUTPUT_DIR),
+    {
+      ...readSourceCanonicalIds(CARDS_OUTPUT_DIR),
+      ...readIdentityRegistryCanonicalIds(),
+    },
   );
   console.log(`  Generated ${Object.keys(canonicalCards).length} canonical cards`);
 
@@ -357,6 +467,7 @@ function buildCanonicalAndValidate(
   validationErrors.push(...validateUniqueCardIds(canonicalCards));
   validationErrors.push(...validateCanonicalIdNames(canonicalCards));
   validationErrors.push(...validateFullNameCanonicalId(canonicalCards));
+  validationErrors.push(...validateIdentityRegistryCanonicalIds(canonicalCards));
 
   // Cross-check existing TypeScript source files against the newly-generated
   // canonical data. Catches stale IDs when canonical-cards.json was updated

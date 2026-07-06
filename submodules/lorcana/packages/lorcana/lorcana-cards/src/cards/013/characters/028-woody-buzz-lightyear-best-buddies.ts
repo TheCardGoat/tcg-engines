@@ -36,9 +36,7 @@ export const woodyBuzzLightyearBestBuddies: CharacterCard = {
   },
   text: [
     {
-      title: "Shift 5 {}",
-      description:
-        "(You may pay 5 {} to play this on top of one of your characters named Woody or Buzz Lightyear.)",
+      title: "Shift 5 {I}",
     },
     {
       title: "TO INFINITY...",

@@ -8,6 +8,7 @@ export interface AiControlPanelProps {
   speed: "fast" | "balanced" | "slow";
   status: "thinking" | "paused" | "waiting" | "you-control" | "done" | "error";
   side?: "player" | "opponent";
+  nextAiSide?: "player" | "opponent" | null;
   strategies: ReadonlyArray<{ id: string; label: string }>;
   selectedStrategyId?: string | null;
   isTakeover?: boolean;
@@ -96,6 +97,7 @@ export function AiControlPanel({
   speed,
   status,
   side: sideProp,
+  nextAiSide = null,
   strategies,
   selectedStrategyId = null,
   isTakeover = false,
@@ -153,6 +155,7 @@ export function AiControlPanel({
       }`}
       data-testid="ai-control-panel"
       data-side={side}
+      data-next-ai-side={nextAiSide ?? "none"}
       data-status={status}
       data-speed={speed}
       data-mode={mode}

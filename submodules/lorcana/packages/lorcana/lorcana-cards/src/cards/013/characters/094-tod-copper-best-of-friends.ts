@@ -1,5 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { todCopperBestOfFriendsI18n } from "./094-tod-copper-best-of-friends.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
@@ -33,10 +34,10 @@ export const todCopperBestOfFriends: CharacterCard = {
   inkable: true,
   text: [
     {
-      title: "<Shift> 2 {I}",
+      title: "Shift 2 {I}",
     },
     {
-      title: "<Evasive>",
+      title: "Evasive",
     },
   ],
   classifications: ["Storyborn", "Team", "Hero", "Puppy"],

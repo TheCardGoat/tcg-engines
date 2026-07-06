@@ -17,8 +17,9 @@ export interface PracticeMatchConfig {
   playerDeck?: DeckList;
   botDeck?: DeckList;
   playerDeckName?: string;
+  playerStrategyId?: StrategyDescriptor["id"] | null;
   botStrategyId: StrategyDescriptor["id"];
-  seed: string;
+  seed: string | null;
   createdAt: number;
 }
 
@@ -26,17 +27,22 @@ type StoredSessions = Record<string, PracticeMatchConfig>;
 
 export function createPracticeMatchConfig(
   input: Partial<
-    Pick<PracticeMatchConfig, "playerDeckFixtureId" | "botDeckFixtureId" | "botStrategyId">
+    Pick<
+      PracticeMatchConfig,
+      "playerDeckFixtureId" | "botDeckFixtureId" | "playerStrategyId" | "botStrategyId" | "seed"
+    >
   > = {},
 ): PracticeMatchConfig {
   const matchId = `practice_${Date.now().toString(36)}_${randomToken()}`;
+  const seed = normalizeSeed(input.seed, matchId);
   return {
     matchId,
     source: "fixture",
     playerDeckFixtureId: input.playerDeckFixtureId ?? DEFAULT_PLAYER_PRACTICE_DECK_ID,
     botDeckFixtureId: input.botDeckFixtureId ?? DEFAULT_BOT_PRACTICE_DECK_ID,
+    playerStrategyId: input.playerStrategyId ?? null,
     botStrategyId: input.botStrategyId ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
-    seed: `practice:${matchId}`,
+    seed,
     createdAt: Date.now(),
   };
 }
@@ -45,11 +51,13 @@ export function createImportedPracticeMatchConfig(input: {
   playerDeck: DeckList;
   botDeck?: DeckList;
   botDeckFixtureId?: string;
+  playerStrategyId?: StrategyDescriptor["id"] | null;
   botStrategyId?: StrategyDescriptor["id"];
-  seed?: string;
+  seed?: string | null;
   deckName?: string;
 }): PracticeMatchConfig {
   const matchId = `practice_${Date.now().toString(36)}_${randomToken()}`;
+  const seed = normalizeSeed(input.seed, matchId);
   return {
     matchId,
     source: "card-db",
@@ -59,8 +67,9 @@ export function createImportedPracticeMatchConfig(input: {
       ? undefined
       : (input.botDeckFixtureId ?? DEFAULT_BOT_PRACTICE_DECK_ID),
     playerDeckName: input.deckName,
+    playerStrategyId: input.playerStrategyId ?? null,
     botStrategyId: input.botStrategyId ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
-    seed: input.seed ?? `practice:${matchId}`,
+    seed,
     createdAt: Date.now(),
   };
 }
@@ -129,14 +138,24 @@ function isPracticeMatchConfig(value: unknown): value is PracticeMatchConfig {
     (maybe.source === "fixture" || maybe.source === "card-db" || maybe.source === undefined) &&
     hasPlayerDeckSource(maybe) &&
     hasBotDeckSource(maybe) &&
+    isNullableStoredStrategyId(maybe.playerStrategyId) &&
     isStoredStrategyId(maybe.botStrategyId) &&
-    typeof maybe.seed === "string" &&
+    (typeof maybe.seed === "string" || maybe.seed === null) &&
     typeof maybe.createdAt === "number"
   );
 }
 
+function isNullableStoredStrategyId(value: unknown): value is StrategyDescriptor["id"] | null {
+  return value === null || value === undefined || isStoredStrategyId(value);
+}
+
 function isStoredStrategyId(value: unknown): value is StrategyDescriptor["id"] {
   return typeof value === "string" && Boolean(getAutomatedActionStrategyOption(value));
+}
+
+function normalizeSeed(seed: string | null | undefined, matchId: string): string {
+  const trimmed = seed?.trim();
+  return trimmed ? trimmed : `practice:${matchId}`;
 }
 
 function hasPlayerDeckSource(config: Partial<PracticeMatchConfig>): boolean {

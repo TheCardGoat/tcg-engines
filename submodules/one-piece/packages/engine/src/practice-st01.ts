@@ -4,7 +4,11 @@ import { allCards } from "../../cards/src/index.ts";
 registerCards(allCards);
 
 export { applyCommand, createMatch, getLegalCommands } from "./core.ts";
-export { commandFromDescriptor, greedyStrategy } from "./automation/bot-strategies.ts";
+export {
+  commandFromDescriptor,
+  greedyStrategy,
+  passOnlyStrategy,
+} from "./automation/bot-strategies.ts";
 export {
   createSt01MirrorPracticeConfig,
   createSt01PlayerConfig,
@@ -12,4 +16,9 @@ export {
   ST01_MAIN_DECK,
 } from "./starter-decks.ts";
 
-export type { LegalCommandDescriptor, MatchState } from "./types.ts";
+export type {
+  ApplyCommandResult,
+  EngineAnimation,
+  LegalCommandDescriptor,
+  MatchState,
+} from "./types.ts";

@@ -37,8 +37,6 @@ export const belleBeastCertainAsTheSun: CharacterCard = {
   text: [
     {
       title: "Shift 6 {I}",
-      description:
-        "(You may pay 6 {I} to play this on top of one of your characters named Belle or Beast.)",
     },
     {
       title: "INSPIRING DANCE",

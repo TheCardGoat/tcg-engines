@@ -37,7 +37,7 @@ export const jetsamUrsulasSpy: CharacterCard = {
   },
   text: [
     {
-      title: "<Evasive>",
+      title: "Evasive",
     },
     {
       title: "Sinister Slither",

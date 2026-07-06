@@ -33,8 +33,9 @@ export const mingLeeGiantRedPanda: CharacterCard = {
   inkable: true,
   text: [
     {
-      title:
-        "<Temporary Shift> 7 {I} (You may pay 7 {I} to play this on top of one of your characters named Ming Lee. At the end of your turn, remove all damage from this character and return only this card to your hand.)",
+      title: "Temporary Shift 7 {I}",
+      description:
+        "(You may pay 7 {I} to play this on top of one of your characters named Ming Lee. At the end of your turn, remove all damage from this character and return only this card to your hand.)",
     },
     {
       title: "Path of Destruction",

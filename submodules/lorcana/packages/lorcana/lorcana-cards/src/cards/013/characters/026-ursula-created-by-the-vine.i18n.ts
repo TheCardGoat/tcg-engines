@@ -8,7 +8,7 @@ export const ursulaCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
       {
         title: "ENERGY SAP",
         description:
-          "Whenever one of your Floodborn characters quests, chosen opposing character gets -1 {} until the start of your next turn.",
+          "Whenever one of your Floodborn characters quests, chosen opposing character gets -1 {S} until the start of your next turn.",
       },
     ],
   },

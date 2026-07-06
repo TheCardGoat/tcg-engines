@@ -77,6 +77,10 @@ type MatchmakingGatewayMessage = {
   [key: string]: unknown;
 };
 
+const AMBIGUOUS_LEGACY_DECK_MESSAGE_START = "This deck was saved with outdated card IDs";
+const RECREATE_DECK_QUEUE_MESSAGE =
+  "This deck was saved with outdated card IDs. Please recreate or re-import it before joining matchmaking.";
+
 type ImportDeckForProfileLike = typeof importDeckForProfile;
 type ImportLegacyDecksForProfileLike = typeof importLegacyDecksForProfile;
 type FetchDeckListSnapshotByDeckListIdLike = typeof fetchDeckListSnapshotByDeckListId;
@@ -768,6 +772,17 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     return deck.validFormats.includes(this.selectedQueueFormat);
   }
 
+  get selectedDeckNeedsRecreation(): boolean {
+    const deck = this.playerContext.selectedDeck;
+    const selectedFormat = this.selectedQueueFormat;
+    return (
+      deck?.formatLegality
+        ?.find((result) => result.formatId === selectedFormat)
+        ?.rules.some((rule) => rule.message.startsWith(AMBIGUOUS_LEGACY_DECK_MESSAGE_START)) ??
+      false
+    );
+  }
+
   get queueActionDisabled(): boolean {
     return (
       !this.#deps.authSession.isAuthenticated ||
@@ -791,6 +806,9 @@ class MatchmakingLobbyControllerImpl implements MatchmakingLobbyController {
     }
     if (!this.playerContext.selectedDeck) {
       return this.#t("sim.matchmaking.queue.selectDeckFirst");
+    }
+    if (this.selectedDeckNeedsRecreation) {
+      return RECREATE_DECK_QUEUE_MESSAGE;
     }
     if (!this.isDeckValidForSelectedFormat) {
       const formatLabel = this.#t(queueFormatLabelKey(this.selectedQueueFormat));

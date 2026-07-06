@@ -1,5 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { liloPatientWeaverI18n } from "./010-lilo-patient-weaver.i18n";
+
 import { support } from "../../../helpers/abilities/support";
 
 export const liloPatientWeaver: CharacterCard = {
@@ -30,7 +31,7 @@ export const liloPatientWeaver: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: true,
-  text: "<Support>",
+  text: "Support",
   classifications: ["Storyborn", "Hero"],
   abilities: [support],
   i18n: liloPatientWeaverI18n,

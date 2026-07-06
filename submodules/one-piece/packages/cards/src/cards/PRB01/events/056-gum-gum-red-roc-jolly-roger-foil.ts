@@ -1,15 +1,16 @@
 import type { EventCard } from "@tcg/op-types";
+import { op04GumGumRedRoc056 } from "../../OP04/events/056-gum-gum-red-roc.ts";
 import { prb01GumGumRedRocJollyRogerFoil056I18n } from "./056-gum-gum-red-roc-jolly-roger-foil.i18n.ts";
 
 export const prb01GumGumRedRocJollyRogerFoil056: EventCard = {
-  id: "OP04-056",
-  canonicalId: "OP04-056",
+  ...op04GumGumRedRoc056,
+  id: "OP04-056_p2_6KicMKv",
   slug: "gum-gum-red-roc-jolly-roger-foil",
   name: "Gum-Gum Red Roc (Jolly Roger Foil)",
   printings: [
     {
-      id: "OP04-056",
-      artId: "OP04-056",
+      id: "OP04-056_p2_6KicMKv",
+      artId: "OP04-056_p2_6KicMKv",
       setCode: "PRB01",
       collectorNumber: "056",
       rarity: "R",
@@ -40,12 +41,8 @@ export const prb01GumGumRedRocJollyRogerFoil056: EventCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP04-056_p2.jpg",
     },
   ],
-  cardType: "event",
-  color: ["blue"],
   rarity: "R",
   setId: "PRB01",
-  cost: 6,
-  traits: ["Straw Hat Crew"],
   artVariants: [
     {
       type: "other",
@@ -63,52 +60,5 @@ export const prb01GumGumRedRocJollyRogerFoil056: EventCard = {
       imageId: "OP04-056_p2",
     },
   ],
-  effect:
-    "[Main] Place up to 1 Character at the bottom of the owner's deck.[Trigger] Place up to 1 Character with a cost of 4 or less at the bottom of the owner's deck.",
-  effects: {
-    effects: [
-      {
-        trigger: "main",
-        actions: [
-          {
-            action: "returnToDeck",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-            position: "bottom",
-          },
-        ],
-      },
-      {
-        trigger: "trigger",
-        actions: [
-          {
-            action: "returnToDeck",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 4,
-                },
-              ],
-            },
-            position: "bottom",
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01GumGumRedRocJollyRogerFoil056I18n,
 };

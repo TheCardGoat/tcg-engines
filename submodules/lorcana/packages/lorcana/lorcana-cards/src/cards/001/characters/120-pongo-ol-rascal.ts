@@ -35,7 +35,7 @@ export const pongoOlRascal: CharacterCard = {
     lorcast: "crd_e17a4efa1eaf47e2aefdcf3b98d4f03c",
     tcgPlayer: "503321",
   },
-  text: "<Evasive>",
+  text: "Evasive",
   classifications: ["Storyborn", "Hero"],
   abilities: [evasive],
   i18n: pongoOlRascalI18n,

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 
 import { useCardLegality } from "../../../game/index.ts";
+import { useTargeting } from "@tcg/simulator-ui";
 import { useHasHover } from "../../../lib/use-has-hover.ts";
 import { useHintsEnabled } from "../../../lib/use-hints-enabled.ts";
 import type { CardColor, GameCardData, TargetingState } from "../types.ts";
@@ -9,7 +10,6 @@ import { CardImage } from "./CardImage.tsx";
 import { CardTagStrip } from "./CardTagStrip.tsx";
 import { getCardTags } from "./card-tags.ts";
 import { StatCurrentBadges } from "./StatCurrentBadges.tsx";
-import { useTargeting } from "../targeting-context.tsx";
 import { useDualMode } from "../dual-mode-context.tsx";
 import { DualModeOverlay } from "./DualModeOverlay.tsx";
 import { DamageCounterOverlay } from "./DamageCounterOverlay.tsx";
@@ -135,6 +135,7 @@ export function CardFace({
       onMouseEnter={hasHover ? () => setHovered(true) : undefined}
       onMouseLeave={hasHover ? () => setHovered(false) : undefined}
       data-card-id={card.id}
+      data-entity-id={card.id}
       data-sim-entity-id={card.id}
       data-card-type={card.cardType}
       data-targeting-state={targetingState}

@@ -24,13 +24,133 @@ import {
   getOpenCharacterSlots,
   moveCard,
 } from "../state.ts";
-import type { EngineCommand, MatchState } from "../types.ts";
+import type { EngineCommand, JoKenPoChoice, MatchSeat, MatchState } from "../types.ts";
 import { handlePlayerPromptResolution } from "./prompt.ts";
 import { hasPendingNonJudgePrompt } from "./shared.ts";
+
+interface CommandMutationContext {
+  joKenPoChoices: Partial<Record<MatchSeat, JoKenPoChoice>>;
+}
+
+export function privateChoicesForJoKenPo(state: MatchState): CommandMutationContext {
+  return {
+    joKenPoChoices: {
+      ...state.setup.joKenPo.hiddenChoices,
+      ...(state.setup.joKenPo.winner ? state.setup.joKenPo.choices : {}),
+    },
+  };
+}
+
+export function rememberPrivateJoKenPoChoices(state: MatchState, context: CommandMutationContext) {
+  const choices = context.joKenPoChoices;
+  state.setup.joKenPo.hiddenChoices =
+    state.setup.joKenPo.winner || (!choices.north && !choices.south) ? {} : { ...choices };
+}
+
+function joKenPoChoiceLabel(choice: JoKenPoChoice): string {
+  switch (choice) {
+    case "rock":
+      return "Rock";
+    case "paper":
+      return "Paper";
+    case "scissors":
+      return "Scissors";
+  }
+}
+
+function joKenPoWinner(choices: Record<MatchSeat, JoKenPoChoice>): MatchSeat | "draw" {
+  if (choices.north === choices.south) {
+    return "draw";
+  }
+
+  const southWins =
+    (choices.south === "rock" && choices.north === "scissors") ||
+    (choices.south === "paper" && choices.north === "rock") ||
+    (choices.south === "scissors" && choices.north === "paper");
+
+  return southWins ? "south" : "north";
+}
+
+function ordinalRound(round: number): string {
+  const suffix =
+    round % 10 === 1 && round % 100 !== 11
+      ? "st"
+      : round % 10 === 2 && round % 100 !== 12
+        ? "nd"
+        : round % 10 === 3 && round % 100 !== 13
+          ? "rd"
+          : "th";
+  return `${round}${suffix}`;
+}
+
+function privatePlayerName(state: MatchState, seat: MatchSeat): string {
+  const playerName = getPlayer(state, seat).playerName;
+  if (seat === "south" && playerName === "South") {
+    return "You";
+  }
+  return playerName;
+}
+
+function resolveJoKenPoRound(
+  state: MatchState,
+  choices: Partial<Record<MatchSeat, JoKenPoChoice>>,
+) {
+  if (!choices.north || !choices.south) {
+    return;
+  }
+
+  const round = state.setup.joKenPo.round;
+  const result = joKenPoWinner({
+    north: choices.north,
+    south: choices.south,
+  });
+  const choiceText = `${getPlayer(state, "south").playerName}: ${joKenPoChoiceLabel(choices.south)}. ${getPlayer(state, "north").playerName}: ${joKenPoChoiceLabel(choices.north)}.`;
+
+  if (result === "draw") {
+    state.setup.joKenPo.choices = {
+      north: choices.north,
+      south: choices.south,
+    };
+    emitLog(
+      state,
+      "system",
+      `In the ${ordinalRound(round)} Jo Ken Po round it was a draw. ${choiceText}`,
+      {
+        visibility: "public",
+      },
+    );
+    state.setup.joKenPo.round += 1;
+    state.setup.joKenPo.pendingSeats = [];
+    state.setup.joKenPo.choices = {};
+    state.setup.joKenPo.hiddenChoices = {};
+    delete choices.north;
+    delete choices.south;
+    return;
+  }
+
+  state.setup.joKenPo.winner = result;
+  state.setup.joKenPo.pendingSeats = [];
+  state.setup.joKenPo.choices = {
+    north: choices.north,
+    south: choices.south,
+  };
+  state.setup.joKenPo.hiddenChoices = {};
+  delete choices.north;
+  delete choices.south;
+  emitLog(
+    state,
+    "system",
+    `In the ${ordinalRound(round)} Jo Ken Po round ${getPlayer(state, result).playerName} won the Jo Ken Po and will decide who takes the first turn. ${choiceText}`,
+    {
+      visibility: "public",
+    },
+  );
+}
 
 export function applyQueuedCommandMutation(
   state: MatchState,
   command: EngineCommand,
+  context: CommandMutationContext = privateChoicesForJoKenPo(state),
 ): { accepted: boolean; reason: string | null } {
   let accepted = false;
   let reason: string | null = null;
@@ -44,16 +164,107 @@ export function applyQueuedCommandMutation(
   }
 
   switch (command.type) {
+    case "chooseJoKenPo": {
+      if (state.status !== "setup" || state.setup.started) {
+        reason = "Jo Ken Po is only available during setup.";
+        break;
+      }
+      if (state.setup.joKenPo.winner) {
+        reason = "Jo Ken Po is already resolved.";
+        break;
+      }
+      if (state.setup.joKenPo.pendingSeats.includes(command.seat)) {
+        reason = "This player already chose for this Jo Ken Po round.";
+        break;
+      }
+      context.joKenPoChoices[command.seat] = command.choice;
+      state.setup.joKenPo.hiddenChoices = { ...context.joKenPoChoices };
+      state.setup.joKenPo.pendingSeats.push(command.seat);
+      resolveJoKenPoRound(state, context.joKenPoChoices);
+      accepted = true;
+      break;
+    }
+    case "resolveJoKenPoTimeout": {
+      if (state.status !== "setup" || state.setup.started) {
+        reason = "Jo Ken Po is only available during setup.";
+        break;
+      }
+      if (state.setup.joKenPo.winner) {
+        reason = "Jo Ken Po is already resolved.";
+        break;
+      }
+      if (command.elapsedMs < 30000) {
+        reason = "Jo Ken Po timeout requires 30 seconds to elapse.";
+        break;
+      }
+      state.setup.joKenPo.winner = command.winner;
+      state.setup.joKenPo.pendingSeats = [];
+      state.setup.joKenPo.hiddenChoices = {};
+      state.setup.joKenPo.choices = {};
+      const timedOutNames = (command.timedOutSeats ?? [])
+        .map((seat) => getPlayer(state, seat).playerName)
+        .join(", ");
+      const reasonText =
+        command.reason === "bothPlayersTimedOut"
+          ? "Both players exceeded 30 seconds, so the system randomly decided"
+          : `${timedOutNames || "A player"} exceeded 30 seconds`;
+      emitLog(
+        state,
+        "system",
+        `${reasonText}. ${getPlayer(state, command.winner).playerName} won the Jo Ken Po and will decide who takes the first turn.`,
+        {
+          visibility: "public",
+        },
+      );
+      accepted = true;
+      break;
+    }
+    case "chooseFirstPlayer": {
+      if (state.status !== "setup" || state.setup.started) {
+        reason = "The first turn can only be chosen during setup.";
+        break;
+      }
+      if (state.setup.joKenPo.winner !== command.seat) {
+        reason = "Only the Jo Ken Po winner can choose who takes the first turn.";
+        break;
+      }
+      if (state.setup.joKenPo.firstPlayerDecided) {
+        reason = "The first turn has already been chosen.";
+        break;
+      }
+      state.config.firstPlayer = command.firstPlayer;
+      state.activeSeat = command.firstPlayer;
+      state.setup.joKenPo.firstPlayerDecided = true;
+      const chooser = getPlayer(state, command.seat).playerName;
+      const firstPlayer = getPlayer(state, command.firstPlayer).playerName;
+      emitLog(
+        state,
+        "system",
+        command.seat === command.firstPlayer
+          ? `${chooser} decided to take the first turn.`
+          : `${chooser} decided that ${firstPlayer} will take the first turn.`,
+        {
+          visibility: "public",
+        },
+      );
+      accepted = true;
+      break;
+    }
     case "mulligan": {
       if (state.status !== "setup" || state.setup.started) {
         reason = "Mulligan is only available during setup.";
         break;
       }
-      const player = getPlayer(state, command.seat);
-      if (state.setup.mulliganUsed[command.seat]) {
-        reason = "This player already used a mulligan.";
+      if (!state.setup.joKenPo.firstPlayerDecided) {
+        reason = "Resolve Jo Ken Po and choose the first player before mulligan.";
         break;
       }
+      const player = getPlayer(state, command.seat);
+      if (state.setup.mulliganDecided[command.seat]) {
+        reason = "This player already made a mulligan choice.";
+        break;
+      }
+      state.setup.mulliganDecided[command.seat] = true;
       state.setup.mulliganUsed[command.seat] = true;
       const returned = [...player.hand];
       for (const instanceId of returned) {
@@ -71,7 +282,7 @@ export function applyQueuedCommandMutation(
         getInstance(state, instanceId).zoneIndex = index;
       }
       for (let index = 0; index < state.config.openingHandSize; index += 1) {
-        drawTopCard(state, command.seat);
+        drawTopCard(state, command.seat, { suppressLog: true });
       }
       emitEvent(state, "mulligan", command.seat, {
         visibility: "private",
@@ -79,12 +290,49 @@ export function applyQueuedCommandMutation(
           seat: command.seat,
         },
       });
-      emitLog(state, command.seat, `${player.playerName} takes a mulligan.`, {
-        visibility: "private",
-        privateMessages: {
-          [command.seat]: `Your new opening hand: ${formatCardList(state, player.hand)}.`,
+      emitLog(
+        state,
+        command.seat,
+        `${player.playerName} accepted mulligan and redraws ${state.config.openingHandSize} cards.`,
+        {
+          visibility: "public",
+          privateMessages: {
+            [command.seat]: `${privatePlayerName(state, command.seat)} accepted the mulligan and your new opening hand is: ${formatCardList(state, player.hand)}.`,
+          },
+          judgeMessage: `${player.playerName} mulligan hand: ${formatCardList(state, player.hand)}.`,
         },
-        judgeMessage: `${player.playerName} mulligan hand: ${formatCardList(state, player.hand)}.`,
+      );
+      accepted = true;
+      break;
+    }
+    case "keepHand": {
+      if (state.status !== "setup" || state.setup.started) {
+        reason = "Opening hand choices are only available during setup.";
+        break;
+      }
+      if (!state.setup.joKenPo.firstPlayerDecided) {
+        reason = "Resolve Jo Ken Po and choose the first player before mulligan.";
+        break;
+      }
+      if (state.setup.mulliganDecided[command.seat]) {
+        reason = "This player already made a mulligan choice.";
+        break;
+      }
+      state.setup.mulliganDecided[command.seat] = true;
+      const player = getPlayer(state, command.seat);
+      emitEvent(state, "mulligan", command.seat, {
+        visibility: "private",
+        data: {
+          seat: command.seat,
+          keptHand: true,
+        },
+      });
+      emitLog(state, command.seat, `${player.playerName} keeps their opening hand.`, {
+        visibility: "public",
+        privateMessages: {
+          [command.seat]: "You keep your opening hand.",
+        },
+        judgeMessage: `${player.playerName} keeps their opening hand.`,
       });
       accepted = true;
       break;
@@ -98,9 +346,16 @@ export function applyQueuedCommandMutation(
         reason = "Only the first player can start the match in this draft.";
         break;
       }
+      if (!state.setup.mulliganDecided.north || !state.setup.mulliganDecided.south) {
+        reason = "Both players must choose whether to take a mulligan before starting.";
+        break;
+      }
       state.status = "active";
       state.setup.started = true;
       emitEvent(state, "gameStarted", command.seat, {
+        visibility: "public",
+      });
+      emitLog(state, "system", "Setup finished.", {
         visibility: "public",
       });
       emitLog(state, "system", "The match begins.", {

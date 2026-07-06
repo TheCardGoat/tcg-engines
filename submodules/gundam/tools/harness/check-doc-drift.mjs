@@ -18,7 +18,7 @@
 //   1 — at least one stale link or path; details printed to stderr
 
 import { readdir, readFile, stat } from "node:fs/promises";
-import { join, relative, dirname, resolve, sep } from "node:path";
+import { join, relative, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = fileURLToPath(new URL("../..", import.meta.url));
@@ -73,7 +73,7 @@ const LINK_RE = /\[[^\]]*\]\(([^)\s]+?)\)/g;
 // extension). Longer extension alternatives first — regex alternation is
 // left-to-right, so `.tsx` must precede `.ts` or it gets truncated.
 const PATH_RE =
-  /(?:^|[\s`(\[])((?:packages|apps|tools|docs|\.claude|\.github)\/[A-Za-z0-9_\-./]+\.(?:tsx|ts|md|json|mjs|cjs|yaml|yml|sh))/g;
+  /(?:^|[[\s`(])((?:packages|apps|tools|docs|\.claude|\.github)\/[A-Za-z0-9_\-./]+\.(?:tsx|ts|md|json|mjs|cjs|yaml|yml|sh))/g;
 
 // Strip fenced code blocks (``` ... ```) and inline code spans (`...`) before
 // scanning prose for bareword paths. Illustrative paths in templates or

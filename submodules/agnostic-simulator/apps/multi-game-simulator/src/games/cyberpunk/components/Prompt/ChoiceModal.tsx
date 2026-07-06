@@ -485,8 +485,14 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
                     selected ? classes.optionSelected : ""
                   } ${selectable ? "" : classes.optionUnavailable}`}
                   data-testid="search-deck-card"
+                  data-instance-id={cardId}
                   data-card-id={cardId}
-                  data-definition-id={cardId}
+                  data-definition-id={summary?.definitionId}
+                  data-card-name={summary?.name}
+                  data-card-type={summary?.type ?? undefined}
+                  data-card-color={summary?.color}
+                  data-cost={summary?.cost ?? undefined}
+                  data-power={summary?.power ?? undefined}
                   data-selected={selected ? "true" : "false"}
                   data-selectable={selectable ? "true" : "false"}
                   aria-pressed={multiSelect ? selected : undefined}
@@ -640,6 +646,7 @@ type CardType = "legend" | "unit" | "gear" | "program";
 type CardColor = "blue" | "green" | "red" | "yellow";
 
 interface CardSummary {
+  definitionId: string;
   name: string;
   type: CardType | null;
   cost: number | null;
@@ -702,6 +709,7 @@ function cardSummary(
   }
   const definition = defOf(card);
   return {
+    definitionId: card.definitionId,
     name: definition.displayName ?? definition.name,
     type: isCardType(definition.type) ? definition.type : null,
     cost: definition.cost ?? null,

@@ -6,7 +6,7 @@ import { REPLAY_FILE_VERSION } from "./replay.js";
 
 const opaqueId = z.string().min(1);
 
-export const GameTypeSchema = z.enum(["lorcana", "gundam", "cyberpunk", "riftbound"]);
+export const GameTypeSchema = z.enum(["lorcana", "gundam", "cyberpunk", "riftbound", "one-piece"]);
 
 export const CardsMapsSchema = z
   .object({
@@ -46,6 +46,7 @@ export const ParticipantSchema = z
     isMobile: z.boolean().optional(),
     mmrAtMatch: z.number().optional(),
     subscriptionTier: z.string().optional(),
+    isPremium: z.boolean().optional(),
   })
   .strict();
 

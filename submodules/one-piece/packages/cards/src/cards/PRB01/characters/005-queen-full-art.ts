@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op08QueenSp005 } from "../../OP08/characters/005-queen-sp.ts";
 import { prb01QueenFullArt005I18n } from "./005-queen-full-art.i18n.ts";
 
 export const prb01QueenFullArt005: CharacterCard = {
-  id: "ST04-005",
-  canonicalId: "ST04-005",
+  ...op08QueenSp005,
+  id: "ST04-005_p4",
   slug: "queen-full-art",
   name: "Queen (Full Art)",
   printings: [
     {
-      id: "ST04-005",
-      artId: "ST04-005",
+      id: "ST04-005_p4",
+      artId: "ST04-005_p4",
       setCode: "PRB01",
       collectorNumber: "005",
       rarity: "C",
@@ -32,15 +33,8 @@ export const prb01QueenFullArt005: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/ST04-005_r1.png",
     },
   ],
-  cardType: "character",
-  color: ["purple"],
   rarity: "C",
   setId: "PRB01",
-  cost: 5,
-  power: 6000,
-  counter: 1000,
-  traits: ["Animal Kingdom Pirates"],
-  attribute: "strike",
   artVariants: [
     {
       type: "other",
@@ -53,33 +47,5 @@ export const prb01QueenFullArt005: CharacterCard = {
       imageId: "ST04-005_r1",
     },
   ],
-  effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Draw 2 cards and trash 1 card from your hand.",
-  effects: {
-    keywords: ["blocker"],
-    effects: [
-      {
-        trigger: "onPlay",
-        costs: [
-          {
-            cost: "returnDon",
-            amount: 1,
-          },
-        ],
-        actions: [
-          {
-            action: "draw",
-            player: "self",
-            amount: 2,
-          },
-          {
-            action: "trashFromHand",
-            player: "self",
-            amount: 1,
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01QueenFullArt005I18n,
 };

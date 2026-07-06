@@ -4,10 +4,6 @@ import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 import { createMockUnit } from "../../../testing/card-mocks.ts";
 
 describe("Take Control", () => {
-  it("is a structured card with the expected slug", () => {
-    expect(welcomeToNightCityRetailTakeControl.slug).toBe("take-control");
-  });
-
   it("grants stealsOneFewerGig to the attacker and conditionally draws for AI/Drone/Vehicle", () => {
     // Printed text: "[QUICK] A rival Unit steals 1 fewer Gig this turn.
     // If that Unit is an AI, DRONE, or VEHICLE, draw 1."

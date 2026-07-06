@@ -4,7 +4,7 @@ export const pongoOlRascalI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Pongo",
     version: "Ol’ Rascal",
-    text: "<Evasive>",
+    text: "Evasive",
   },
   de: {
     name: "Pongo",

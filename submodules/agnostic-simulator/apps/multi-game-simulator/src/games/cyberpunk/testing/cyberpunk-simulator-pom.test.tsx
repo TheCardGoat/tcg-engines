@@ -45,6 +45,32 @@ describe("CyberpunkSimulatorPom jsdom driver", () => {
     }
   });
 
+  test("does not expose definition metadata for hidden cards", async () => {
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "gameStart" });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+
+      await pom.waitForReady();
+
+      const hiddenCards = Array.from(
+        view.container.querySelectorAll(
+          '[data-testid="card"][data-face="hidden"], [data-testid="hand-card"][data-face-down="true"]',
+        ),
+      );
+      expect(hiddenCards.length).toBeGreaterThan(0);
+
+      for (const card of hiddenCards) {
+        if (card.getAttribute("data-entity-id")) {
+          expect(card.getAttribute("data-instance-id")).toBeTruthy();
+        }
+        expect(card.getAttribute("data-definition-id")).toBeNull();
+        expect(card.getAttribute("data-card-name")).toBeNull();
+      }
+    } finally {
+      view.unmount();
+    }
+  });
+
   test("renders shared animation anchors on real board gig dice", async () => {
     const view = renderCyberpunkSimulatorScenario({ scenarioId: "stealGigTest" });
     try {

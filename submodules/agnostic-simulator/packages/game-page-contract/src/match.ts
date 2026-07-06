@@ -23,6 +23,12 @@ export interface Participant {
   isBot?: boolean;
   visualSettings?: ParticipantVisualSettings;
   isMobile?: boolean;
+  /** Matchmaking rating captured at match creation. */
+  mmrAtMatch?: number;
+  /** Billing/supporter tier captured at match creation. */
+  subscriptionTier?: string;
+  /** Normalized premium flag so simulators do not parse billing tier names. */
+  isPremium?: boolean;
 }
 
 export type MatchStatus = "in_progress" | "completed" | "abandoned";

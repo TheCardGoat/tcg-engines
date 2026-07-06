@@ -8,7 +8,7 @@ export default defineConfig({
     "*": "vp check --fix",
   },
   fmt: {
-    ignorePatterns: ["**/dist/**", "**/build/**", "**/.turbo/**"],
+    ignorePatterns: ["**/dist/**", "**/build/**", "**/.turbo/**", "railway.json"],
   },
   lint: { options: { typeAware: true, typeCheck: true } },
   test: {

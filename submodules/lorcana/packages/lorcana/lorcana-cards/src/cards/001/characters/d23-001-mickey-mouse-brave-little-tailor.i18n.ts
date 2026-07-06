@@ -4,7 +4,7 @@ export const mickeyMouseBraveLittleTailorD23I18n: Record<Languages, I18nProperti
   en: {
     name: "Mickey Mouse",
     version: "Brave Little Tailor",
-    text: "<Evasive>",
+    text: "Evasive",
   },
   de: {
     name: "Mickey Mouse",

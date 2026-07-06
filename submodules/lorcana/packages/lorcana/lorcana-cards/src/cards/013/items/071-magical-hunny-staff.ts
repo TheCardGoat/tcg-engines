@@ -40,6 +40,7 @@ export const magicalHunnyStaff: ItemCard = {
         "{E}, 2 {I} — Chosen Hunny character of yours gains Evasive until the start of your next turn.",
     },
   ],
+  classifications: ["Hunny"],
   abilities: [
     {
       id: "7J0-1",

@@ -39,6 +39,7 @@ export function CardStack({
       )}
       data-testid={`${zone?.id ?? stackLabel}-stack`}
       data-zone-id={zone?.id}
+      data-sim-zone-id={zone?.id}
       data-zone-layout="stack"
       data-count={entityCount}
       aria-label={`${stackLabel}, ${entityCount} cards`}

@@ -12,12 +12,12 @@ import {
   PromptContainer,
   SetupPromptContainer,
   SubmitErrorProvider,
+  GundamTargetingProvider,
 } from "./components/containers/index.ts";
 import { SubmitErrorToast } from "./components/ui/SubmitErrorToast.tsx";
 import { VsAiProvider } from "./game/bot/bot-context.tsx";
 import { CardHoverPreview } from "./components/ui/card/CardHoverPreview.tsx";
 import { CardInspectProvider } from "./components/ui/card/card-inspect-context.tsx";
-import { TargetingProvider } from "./components/ui/targeting-context.tsx";
 import { DualModeProvider } from "./components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "./components/ui/pending-effect-selection-context.tsx";
 import { CardInspectDialog } from "./components/ui/CardInspectDialogContainer.tsx";
@@ -71,7 +71,7 @@ export function SimulatorApp({ runtime, staticResources, viewerId, bot }: Simula
     <GundamGame runtime={runtime} staticResources={staticResources} viewerId={viewerId}>
       <SubmitErrorProvider>
         <HintsProvider>
-          <TargetingProvider>
+          <GundamTargetingProvider>
             <PendingEffectSelectionProvider>
               <DualModeProvider>
                 <CardInspectProvider>
@@ -83,7 +83,7 @@ export function SimulatorApp({ runtime, staticResources, viewerId, bot }: Simula
                 </CardInspectProvider>
               </DualModeProvider>
             </PendingEffectSelectionProvider>
-          </TargetingProvider>
+          </GundamTargetingProvider>
         </HintsProvider>
       </SubmitErrorProvider>
     </GundamGame>

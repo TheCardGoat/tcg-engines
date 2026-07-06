@@ -203,6 +203,36 @@
   pointer-events: auto;
 }
 
+.pendingProgramAnchor {
+  position: absolute;
+  right: clamp(10px, 1.7cqw, 22px);
+  bottom: calc(var(--hand-arc-bleed) + 17cqh + 20px);
+  z-index: 170;
+  width: clamp(70px, 7cqh, 96px);
+  pointer-events: auto;
+}
+
+.pendingProgramAnchor::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  z-index: -1;
+  border: 1px solid rgb(245 230 66 / 38%);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgb(245 230 66 / 10%), rgb(74 217 255 / 8%)), rgb(7 9 12 / 82%);
+  box-shadow:
+    0 0 18px rgb(245 230 66 / 14%),
+    inset 0 0 18px rgb(74 217 255 / 7%);
+}
+
+.pendingProgramCard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 0.714;
+  filter: drop-shadow(0 8px 16px rgb(0 0 0 / 52%));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .opponentSide,
   .playerSide {

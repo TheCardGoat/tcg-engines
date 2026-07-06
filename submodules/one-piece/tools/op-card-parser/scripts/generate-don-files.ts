@@ -16,6 +16,13 @@ const VARIANT_PATTERNS: [RegExp, ArtVariantType][] = [
   [/\(alternate art\)/i, "alternate-art"],
   [/\(alt art\)/i, "alternate-art"],
   [/\(manga rare\)/i, "manga-rare"],
+  [/\(manga\)/i, "manga-rare"],
+  [/\(wanted poster\)/i, "alternate-art"],
+  [/\(jolly roger foil\)/i, "other"],
+  [/\(pirate foil\)/i, "other"],
+  [/\(textured foil\)/i, "other"],
+  [/\(reprint\)/i, "promo"],
+  [/\(sp\)/i, "spr"],
   [/\bspr\b/i, "spr"],
 ];
 
@@ -43,6 +50,13 @@ function cleanName(name: string): string {
     .replace(/\s*\(alternate art\)/gi, "")
     .replace(/\s*\(alt art\)/gi, "")
     .replace(/\s*\(manga rare\)/gi, "")
+    .replace(/\s*\(manga\)/gi, "")
+    .replace(/\s*\(wanted poster\)/gi, "")
+    .replace(/\s*\(jolly roger foil\)/gi, "")
+    .replace(/\s*\(pirate foil\)/gi, "")
+    .replace(/\s*\(textured foil\)/gi, "")
+    .replace(/\s*\(reprint\)/gi, "")
+    .replace(/\s*\(sp\)/gi, "")
     .replace(/\s*\bspr\b/gi, "")
     .replace(/\s*\(\)/g, "")
     .trim();

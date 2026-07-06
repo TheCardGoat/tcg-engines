@@ -30,12 +30,6 @@ test("V - Streetkid (Retail) - CALL trashes 3 and recovers Braindance", async ({
   expectEqual("V-Streetkid eligible Braindance count", eligible.length, 1);
   await pom.resolveEffectTarget([eligible[0]!], CYBERPUNK_P1);
 
-  // Optional moveCard then creates chooseCardToMove
-  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToMove");
-  const moveChoices = await pom.getChoiceCardIds(CYBERPUNK_P1);
-  expectEqual("V-Streetkid move choices count", moveChoices.length, 1);
-  await pom.resolveCardToMove(moveChoices[0]!, CYBERPUNK_P1);
-
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectEddies(CYBERPUNK_P1, 4); // CALL costs 1 Eddie
   const deckAfter = await pom.getDeckSize(CYBERPUNK_P1);

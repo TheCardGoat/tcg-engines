@@ -6,7 +6,9 @@ test.describe("Practice match setup", () => {
     await expect(page.getByTestId("practice-setup-title")).toBeVisible();
     await expect(page.getByTestId("practice-setup-your-deck")).toBeVisible();
     await expect(page.getByTestId("practice-setup-bot-deck")).toBeVisible();
+    await expect(page.getByTestId("practice-setup-player-strategy")).toBeVisible();
     await expect(page.getByTestId("practice-setup-bot-strategy")).toBeVisible();
+    await expect(page.getByTestId("practice-setup-seed")).toBeVisible();
     await expect(page.getByTestId("practice-setup-start")).toBeVisible();
 
     const yourDeck = page.getByTestId("practice-setup-your-deck");
@@ -30,9 +32,14 @@ test.describe("Practice match setup", () => {
     await page.getByTestId("practice-setup-your-deck").selectOption("arasaka-print-n-play");
     await page.getByTestId("practice-setup-bot-deck").selectOption("merc-print-n-play");
     await page.getByTestId("practice-setup-bot-strategy").selectOption("greedy");
+    await page.getByTestId("practice-setup-seed").fill("e2e-practice-seed");
     await page.getByTestId("practice-setup-start").click();
 
     await expect(page).toHaveURL(/\/practice\/practice_/);
+    await expect(page.getByTestId("practice-match-seed")).toHaveAttribute(
+      "data-seed",
+      "e2e-practice-seed",
+    );
     await expect(page.getByTestId("board-wrap")).toBeVisible({ timeout: 10000 });
     await expect(page.locator('[data-testid="hand-zone"][data-side="player"]')).toBeVisible();
     await expect(page.locator('[data-testid="hand-zone"][data-side="opponent"]')).toBeVisible();

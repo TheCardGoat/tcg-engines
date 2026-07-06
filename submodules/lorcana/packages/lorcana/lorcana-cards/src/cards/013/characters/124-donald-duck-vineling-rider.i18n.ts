@@ -4,7 +4,7 @@ export const donaldDuckVinelingRiderI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Donald Duck",
     version: "Vineling Rider",
-    text: "<Rush>",
+    text: "Rush",
   },
   de: {
     name: "Donald Duck",

@@ -136,6 +136,8 @@ export type {
   MoveValidationResult,
 } from "./types/move-types.ts";
 export type { CommandErrorCode } from "./types/command.ts";
+export { GUNDAM_ENGINE_RUNTIME } from "./runtime-fingerprint.ts";
+export type { GundamEngineRuntimeFingerprint } from "./runtime-fingerprint.ts";
 export type { GundamMoveName } from "./gundam/moves/move-name.ts";
 export {
   GUNDAM_MOVE_NAMES,

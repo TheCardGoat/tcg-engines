@@ -721,6 +721,32 @@
     "flavorText": "Pena: “Sei sicuro che funzionerà?”%Panico: “Lo stiamo per scoprire!”",
     "searchableKeywords": ["Hercules"]
   },
+  "K9Q": {
+    "name": "Effy",
+    "version": "Druido del Miele",
+    "rulesText": "\\Gradita Guarigione\\ Quando giochi questo personaggio, puoi spostare fino a 2 danni da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
+    "text": [
+      {
+        "title": "Gradita Guarigione",
+        "description": "Quando giochi questo personaggio, puoi spostare fino a 2 danni da un personaggio a tua scelta a un personaggio avversario a tua scelta."
+      }
+    ],
+    "flavorText": "“È ora del tocco curativo degli efelanti!”",
+    "searchableKeywords": ["Winnie the Pooh"]
+  },
+  "fpN": {
+    "name": "Abu",
+    "version": "Saggio Sultano",
+    "rulesText": "\\Sovrano per un Giorno\\ Quando questo personaggio va all'avventura, esilialo.",
+    "text": [
+      {
+        "title": "Sovrano per un Giorno",
+        "description": "Quando questo personaggio va all'avventura, esilialo."
+      }
+    ],
+    "flavorText": "“Ecco, siamo messi bene. Ormai può diventare sultano davvero chiunque.”%—Iago",
+    "searchableKeywords": ["Aladdin"]
+  },
   "o4M": {
     "name": "Meilin Lee",
     "version": "Obbediente Solo in Apparenza",
@@ -741,6 +767,27 @@
     "text": "<Sfuggente>",
     "flavorText": "“Bel tentativo, erbaccia puzzolente, ma c'è solo una cosa in grado di contenermi.”",
     "searchableKeywords": ["Aladdin"]
+  },
+  "NS7": {
+    "name": "Vixey",
+    "version": "Expert Fisher",
+    "rulesText": "\\Stealing In\\ When you play this character, if you have a character with <Evasive> in play, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+    "text": [
+      {
+        "title": "Stealing In",
+        "description": "When you play this character, if you have a character with <Evasive> in play, you may return chosen character, item, or location with cost 2 or less to their player's hand."
+      }
+    ],
+    "flavorText": "\"I've got my dinner. Where's yours, Tod?\"",
+    "searchableKeywords": ["Fox and the Hound", "Red e Toby nemiciamici"]
+  },
+  "8t3": {
+    "name": "Meeko",
+    "version": "Procione Fortunato",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Non aveva idea di come sarebbe riuscito a trasportare tutti questi frutti, ma di certo ci avrebbe provato.",
+    "searchableKeywords": ["Pocahontas"]
   },
   "kJR": {
     "name": "Pena",
@@ -811,6 +858,35 @@
     "flavorText": "Paragonato a dei veri glimmers di Gambadilegno, era più piacevole avere a che fare con questa copia del viticcio.",
     "searchableKeywords": []
   },
+  "R3I": {
+    "name": "Nonna Wu",
+    "version": "Nonna Saggia",
+    "rulesText": "<Sfidante> +2 %\\Consapevolezza Ancestrale\\ Quando trasformi un personaggio sopra a questo personaggio, ottieni 1 leggenda.",
+    "text": [
+      {
+        "title": "<Sfidante> +2"
+      },
+      {
+        "title": "Consapevolezza Ancestrale",
+        "description": "Quando trasformi un personaggio sopra a questo personaggio, ottieni 1 leggenda."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Red", "Turning Red"]
+  },
+  "HAa": {
+    "name": "Heihei",
+    "version": "Creato dal Viticcio",
+    "rulesText": "\\Rimedio Botanico\\ Ogni volta che uno dei tuoi personaggi Imbevuto va all'avventura, puoi spostare 1 danno da un personaggio a tua scelta a un personaggio avversario a tua scelta.",
+    "text": [
+      {
+        "title": "Rimedio Botanico",
+        "description": "Ogni volta che uno dei tuoi personaggi Imbevuto va all'avventura, puoi spostare 1 danno da un personaggio a tua scelta a un personaggio avversario a tua scelta."
+      }
+    ],
+    "flavorText": "Una copia con persino meno buon senso del suo originale.",
+    "searchableKeywords": ["Moana", "Vaiana", "Oceania"]
+  },
   "TBN": {
     "name": "Era",
     "version": "Creata dal Viticcio",
@@ -823,6 +899,14 @@
     ],
     "flavorText": "Cosa può esserci di meglio che replicare una dea?",
     "searchableKeywords": ["Hercules"]
+  },
+  "gng": {
+    "name": "Trilli",
+    "version": "In Cerca di una Via",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Trilli, cosa vedi laggiù? Secondo te riusciremo a entrare?”%—Peter Pan",
+    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
   },
   "yd8": {
     "name": "Morph",
@@ -899,6 +983,22 @@
     "flavorText": "",
     "searchableKeywords": ["Winnie the Pooh"]
   },
+  "NXy": {
+    "name": "Winnie the Pooh e Pimpi",
+    "version": "Maghi del Miele",
+    "rulesText": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Winnie the Pooh o Pimpi.)%\\Mix Magico\\ Questo personaggio riceve +1 {L} per ogni tipo diverso di inchiostro dei personaggi che hai in gioco.",
+    "text": [
+      {
+        "title": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Winnie the Pooh o Pimpi.)"
+      },
+      {
+        "title": "Mix Magico",
+        "description": "Questo personaggio riceve +1 {L} per ogni tipo diverso di inchiostro dei personaggi che hai in gioco."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh"]
+  },
   "yFO": {
     "name": "Malefica e Diablo",
     "version": "Incarnazione del Male",
@@ -958,6 +1058,25 @@
     "flavorText": "“Comando Stellare, la vegetazione di questo pianeta è straordinariamente disarmante.”",
     "searchableKeywords": ["Toy Story"]
   },
+  "S4A": {
+    "name": "Buzz Lightyear",
+    "version": "Providing Cover",
+    "rulesText": "\\Action Figure\\ When you play this character, choose one of the following. If you have another Toy character in play, choose both instead:\n• You may return an action card with cost 2 or less from your discard to your hand.\n• You may play an action with cost 2 or less for free.",
+    "text": [
+      {
+        "title": "Action Figure",
+        "description": "When you play this character, choose one of the following. If you have another Toy character in play, choose both instead:"
+      },
+      {
+        "title": "• You may return an action card with cost 2 or less from your discard to your hand."
+      },
+      {
+        "title": "• You may play an action with cost 2 or less for free."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Toy Story"]
+  },
   "Fk5": {
     "name": "Castor",
     "version": "Cuoco del Miele",
@@ -1008,6 +1127,32 @@
     "flavorText": "“Ho... detto... VAI... VIA!”",
     "searchableKeywords": ["Tangled", "Rapunzel - L'intreccio della torre"]
   },
+  "zm4": {
+    "name": "Red",
+    "version": "Volpe Astuta",
+    "rulesText": "\\Risolvere i Problemi\\ Quando giochi questo personaggio, pesca 2 carte, poi scegli e scarta una carta.",
+    "text": [
+      {
+        "title": "Risolvere i Problemi",
+        "description": "Quando giochi questo personaggio, pesca 2 carte, poi scegli e scarta una carta."
+      }
+    ],
+    "flavorText": "“Sarebbe tutto più semplice se questi rampicanti avessero un buon sapore.”",
+    "searchableKeywords": ["Fox and the Hound", "Red e Toby nemiciamici"]
+  },
+  "5au": {
+    "name": "Russell",
+    "version": "Esploratore Junior della Natura Selvaggia",
+    "rulesText": "\\Distintivo di Assistenza agli Anziani\\ Ogni volta che questo personaggio va all'avventura, puoi spostare questo personaggio e uno dei tuoi altri personaggi nello stesso luogo, gratis.",
+    "text": [
+      {
+        "title": "Distintivo di Assistenza agli Anziani",
+        "description": "Ogni volta che questo personaggio va all'avventura, puoi spostare questo personaggio e uno dei tuoi altri personaggi nello stesso luogo, gratis."
+      }
+    ],
+    "flavorText": "“Un Esploratore è amico di ogni cosa, che sia una pianta, un pesce o una medusa.”",
+    "searchableKeywords": ["Up"]
+  },
   "4I7": {
     "name": "Ro",
     "version": "Furfante del Miele",
@@ -1032,6 +1177,43 @@
     "flavorText": "“Hathi! Smettila di blaterare della tua medaglia e fai qualcosa per questa vegetazione ribelle!”",
     "searchableKeywords": ["Il Libro della Giungla", "Jungle Book"]
   },
+  "OkJ": {
+    "name": "Aladdin",
+    "version": "Che Fa la Sua Parte",
+    "rulesText": "\\Fare Piazza Pulita\\ Quando giochi questo personaggio, puoi pagare 1 {I} per esiliare un oggetto a tua scelta.",
+    "text": [
+      {
+        "title": "Fare Piazza Pulita",
+        "description": "Quando giochi questo personaggio, puoi pagare 1 {I} per esiliare un oggetto a tua scelta."
+      }
+    ],
+    "flavorText": "“Non so cosa sia quella cosa, ma rimandiamola indietro da dove è venuta.”",
+    "searchableKeywords": ["Aladdin"]
+  },
+  "j84": {
+    "name": "Maga Magò",
+    "version": "Colibrì",
+    "rulesText": "<Sfuggente> %\\Proprio Come Piace a Me\\ Tutte le carte nella tua mano contano come se avessero {C}.",
+    "text": [
+      {
+        "title": "<Sfuggente>"
+      },
+      {
+        "title": "Proprio Come Piace a Me",
+        "description": "Tutte le carte nella tua mano contano come se avessero {C}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "J61": {
+    "name": "Minni",
+    "version": "Avventuriera Curiosa",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Minni sbirciò nel groviglio di spine. C'era forse un piccolo varco nel viticcio? Si chiese fin dove potesse arrivare.",
+    "searchableKeywords": []
+  },
   "kl5": {
     "name": "Kevin",
     "version": "Uccello Incapace di Volare",
@@ -1045,6 +1227,19 @@
     "flavorText": "“Stava raccogliendo cibo per i suoi piccoli e ora deve tornare da loro.”%—Dug",
     "searchableKeywords": ["Up"]
   },
+  "ATq": {
+    "name": "Peter Pan",
+    "version": "Creato dal Viticcio",
+    "rulesText": "\\Astuto Tranello\\ Ogni volta che uno dei tuoi personaggi Imbevuto viene sfidato, il giocatore sfidante sceglie e scarta una carta.",
+    "text": [
+      {
+        "title": "Astuto Tranello",
+        "description": "Ogni volta che uno dei tuoi personaggi Imbevuto viene sfidato, il giocatore sfidante sceglie e scarta una carta."
+      }
+    ],
+    "flavorText": "Le repliche che il viticcio aveva creato brillavano di un'infusione di inchiostro mescolato.",
+    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
+  },
   "7VX": {
     "name": "Toby",
     "version": "Narratore Creativo",
@@ -1052,6 +1247,14 @@
     "text": "",
     "flavorText": "“E poi Fiuto stava dormendo, ma il viticcio gli ha toccato la zampa e lui è saltato in aria <così>!”%—Toby",
     "searchableKeywords": ["Fox and the Hound", "Red e Toby nemiciamici"]
+  },
+  "yZR": {
+    "name": "Fiorellino",
+    "version": "Patata Vampiro",
+    "rulesText": "<Trasformazione Patata> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi oggetti chiamato Patata.)",
+    "text": "<Trasformazione Patata> 5 {I} (Puoi pagare 5 {I} per giocare questa carta sopra a uno dei tuoi oggetti chiamato Patata.)",
+    "flavorText": "“È viva! È viva, che ti dicevo!”%—Dr. Clorofix",
+    "searchableKeywords": ["Darkwing Duck"]
   },
   "GWn": {
     "name": "Dr. Clorofix",
@@ -1110,6 +1313,30 @@
     "flavorText": "",
     "searchableKeywords": ["Tangled", "Rapunzel - L'intreccio della torre"]
   },
+  "rAy": {
+    "name": "Ceto",
+    "version": "Serpente Possente",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Va bene, quindi questo viticcio? Non era nei miei piani. Ma sono un dio pieno di risorse. Devo essere flessibile. Adattarmi. Fate uscire il serpente marino.”%—Ade",
+    "searchableKeywords": ["Hercules"]
+  },
+  "Bqs": {
+    "name": "Mushu",
+    "version": "Drago Silenzioso",
+    "rulesText": "<Sfuggente> %\\Spostare l'Ago della Bilancia\\ Ogni volta che questo personaggio va all'avventura, se un avversario ha in mano più carte di te, puoi pescare una carta.",
+    "text": [
+      {
+        "title": "<Sfuggente>"
+      },
+      {
+        "title": "Spostare l'Ago della Bilancia",
+        "description": "Ogni volta che questo personaggio va all'avventura, se un avversario ha in mano più carte di te, puoi pescare una carta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Mulan"]
+  },
   "QUJ": {
     "name": "Carl Fredricksen e Russell",
     "version": "Esploratori Intrepidi",
@@ -1162,6 +1389,59 @@
     "flavorText": "",
     "searchableKeywords": ["Tangled", "Rapunzel - L'intreccio della torre"]
   },
+  "S3p": {
+    "name": "Flash Parr",
+    "version": "Velocissimo",
+    "rulesText": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Flash Parr.)%<Sfuggente> %\\Seguitemi!\\ Ogni volta che questo personaggio va all'avventura, puoi rivelare la prima carta del tuo mazzo. Se lo fai, puoi giocarla. Altrimenti, mettila nei tuoi scarti. (Paga tutti i costi.)",
+    "text": [
+      {
+        "title": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Flash Parr.)"
+      },
+      {
+        "title": "<Sfuggente>"
+      },
+      {
+        "title": "Seguitemi!",
+        "description": "Ogni volta che questo personaggio va all'avventura, puoi rivelare la prima carta del tuo mazzo. Se lo fai, puoi giocarla. Altrimenti, mettila nei tuoi scarti. (Paga tutti i costi.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Incredibles", "Gli Incredibili"]
+  },
+  "Znx": {
+    "name": "Yzma",
+    "version": "Cliente Pignola",
+    "rulesText": "\\Fallo Come Si Deve\\ Quando giochi questo personaggio, ogni avversario perde 1 leggenda.",
+    "text": [
+      {
+        "title": "Fallo Come Si Deve",
+        "description": "Quando giochi questo personaggio, ogni avversario perde 1 leggenda."
+      }
+    ],
+    "flavorText": "“C'è qualcosa su questo menù che non galleggi su una brodaglia grassa?”",
+    "searchableKeywords": ["Emperors New Groove", "Le follie dell'imperatore"]
+  },
+  "Cqh": {
+    "name": "Kuzco",
+    "version": "Cliente Esigente",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Fammi l'assaggino di formaggio piccante, togli il piccante e metti il formaggio a parte. Oh, e salsa extra... Ehi! Mi stai ascoltando? Sto ordinando, qui!”",
+    "searchableKeywords": ["Emperors New Groove", "Le follie dell'imperatore"]
+  },
+  "W16": {
+    "name": "L'Orso",
+    "version": "Animale Territoriale",
+    "rulesText": "\\Furia Selvaggia\\ Mentre questo personaggio ha danno, riceve +3 {S}.",
+    "text": [
+      {
+        "title": "Furia Selvaggia",
+        "description": "Mentre questo personaggio ha danno, riceve +3 {S}."
+      }
+    ],
+    "flavorText": "“Guarda, Toby. Il viticcio non ha speranze contro quell'orso!”%—Amos Slade",
+    "searchableKeywords": ["Fox and the Hound", "Red e Toby nemiciamici"]
+  },
   "Vst": {
     "name": "Carl Fredricksen",
     "version": "In Viaggio",
@@ -1178,6 +1458,14 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Up"]
+  },
+  "ABg": {
+    "name": "Flash Parr",
+    "version": "Turbine del Dodgeball",
+    "rulesText": "<Sfuggente>",
+    "text": "<Sfuggente>",
+    "flavorText": "“Ehi guarda, sono qui! No, aspetta, ora sono qui! No, sono di nuovo qui!”",
+    "searchableKeywords": ["Incredibles", "Gli Incredibili"]
   },
   "kLX": {
     "name": "Gaston",
@@ -1236,6 +1524,30 @@
     "text": "<Trasformazione Temporanea Panda Rosso> 2 {I} (Puoi pagare 2 {I} per giocare questa carta sopra a uno dei tuoi personaggi Panda Rosso. Alla fine del tuo turno, rimuovi tutto il danno da questo personaggio e riprendi in mano solo questa carta.)",
     "flavorText": "",
     "searchableKeywords": ["Red", "Turning Red"]
+  },
+  "ZQC": {
+    "name": "Nonna Wu",
+    "version": "Fiera Panda Rosso",
+    "rulesText": "<Trasformazione Temporanea> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Nonna Wu. Alla fine del tuo turno, rimuovi tutto il danno da questo personaggio e riprendi in mano solo questa carta.)%\\Carica Minacciosa\\ Ogni volta che questo personaggio sfida un altro personaggio, ottieni 2 leggenda e ogni avversario perde 2 leggenda.",
+    "text": [
+      {
+        "title": "<Trasformazione Temporanea> 4 {I} (Puoi pagare 4 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Nonna Wu. Alla fine del tuo turno, rimuovi tutto il danno da questo personaggio e riprendi in mano solo questa carta.)"
+      },
+      {
+        "title": "Carica Minacciosa",
+        "description": "Ogni volta che questo personaggio sfida un altro personaggio, ottieni 2 leggenda e ogni avversario perde 2 leggenda."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Red", "Turning Red"]
+  },
+  "9lN": {
+    "name": "Re Luigi",
+    "version": "Il Re dello Swing",
+    "rulesText": "<Melodioso> 6",
+    "text": "<Melodioso> 6",
+    "flavorText": "“Andiamo, scioglietevi con il vecchio Re Luigi. Dovete rilassarvi, ragazzi!”",
+    "searchableKeywords": ["Il Libro della Giungla", "Jungle Book"]
   },
   "C3L": {
     "name": "La Bestia",
@@ -1368,6 +1680,14 @@
     "flavorText": "“Spugna! Abbiamo dei visitatori inattesi. Dobbiamo mostrargli la nostra famosa ospitalità.”",
     "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
   },
+  "W1X": {
+    "name": "Peter Pan",
+    "version": "Duellante del Viticcio",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Andiamo, prepotentone. Devi essere più veloce di così!”",
+    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
+  },
   "kAB": {
     "name": "Belle e La Bestia",
     "version": "Come il Sole ad Est",
@@ -1388,6 +1708,89 @@
     "flavorText": "",
     "searchableKeywords": ["La bella e la bestia", "Beauty and the Beast"]
   },
+  "d3T": {
+    "name": "Flash Parr e Violetta Parr",
+    "version": "Super Fratelli",
+    "rulesText": "<Trasformazione Combo> 6 {I} (Puoi pagare 6 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Flash Parr, uno chiamato Violetta Parr, o uno di entrambi.)%<Sfuggente>, <Resistere> +1%\\Tattiche Incredibili\\ Ogni volta che questo personaggio va all'avventura o sfida, pesca una carta per ogni carta sotto a esso.",
+    "text": [
+      {
+        "title": "<Trasformazione Combo> 6 {I} (Puoi pagare 6 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Flash Parr, uno chiamato Violetta Parr, o uno di entrambi.)"
+      },
+      {
+        "title": "<Sfuggente>, <Resistere> +1"
+      },
+      {
+        "title": "Tattiche Incredibili",
+        "description": "Ogni volta che questo personaggio va all'avventura o sfida, pesca una carta per ogni carta sotto a esso."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Incredibles", "Gli Incredibili"]
+  },
+  "id9": {
+    "name": "Jet",
+    "version": "Pattuglia del Cielo",
+    "rulesText": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+    "text": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+    "flavorText": "Jet: “Non preoccuparti, Doppia D, ti prometto che ci schianteremo lì in sicurezza!”%Darkwing Duck: “È di questo che ho paura.”",
+    "searchableKeywords": ["Darkwing Duck"]
+  },
+  "BnV": {
+    "name": "Dug",
+    "version": "Bravo Cagnolino",
+    "rulesText": "\\Prendila!\\ Quando giochi questo personaggio, se hai in gioco un oggetto, pesca una carta.",
+    "text": [
+      {
+        "title": "Prendila!",
+        "description": "Quando giochi questo personaggio, se hai in gioco un oggetto, pesca una carta."
+      }
+    ],
+    "flavorText": "“Una palla! Oh caspita, oh caspita, una palla!”",
+    "searchableKeywords": ["Up"]
+  },
+  "zgm": {
+    "name": "Roz",
+    "version": "Che Tiene D'Occhio",
+    "rulesText": "\\Sempre\\ Ogni avversario gioca con la prima carta del suo mazzo a faccia in su.",
+    "text": [
+      {
+        "title": "Sempre",
+        "description": "Ogni avversario gioca con la prima carta del suo mazzo a faccia in su."
+      }
+    ],
+    "flavorText": "“Avrai archiviato le tue pratiche a dovere, allora. Per una volta.”",
+    "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
+  },
+  "ZPO": {
+    "name": "Merlin",
+    "version": "Envisioning the Future",
+    "rulesText": "\\Minor Trickery\\ When you play this character, you may draw a card from the bottom of your deck.\n\n\\Age of Inconvenience\\ When this character is banished, put this card from your discard on the bottom of your deck.",
+    "text": [
+      {
+        "title": "Minor Trickery",
+        "description": "When you play this character, you may draw a card from the bottom of your deck."
+      },
+      {
+        "title": "Age of Inconvenience",
+        "description": "When this character is banished, put this card from your discard on the bottom of your deck."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
+  },
+  "Lhx": {
+    "name": "Quackerjack",
+    "version": "Giocattolaio Svitato",
+    "rulesText": "\\Progetto Malvagio\\ Quando giochi questo personaggio e ogni volta che va all'avventura, metti le prime 4 carte del tuo mazzo nei tuoi scarti. Puoi infliggere 1 danno a un personaggio a tua scelta per ogni carta oggetto messa nei tuoi scarti in questo modo.",
+    "text": [
+      {
+        "title": "Progetto Malvagio",
+        "description": "Quando giochi questo personaggio e ogni volta che va all'avventura, metti le prime 4 carte del tuo mazzo nei tuoi scarti. Puoi infliggere 1 danno a un personaggio a tua scelta per ogni carta oggetto messa nei tuoi scarti in questo modo."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Darkwing Duck"]
+  },
   "WGT": {
     "name": "Belle",
     "version": "Sempre a Leggere",
@@ -1401,6 +1804,19 @@
     "flavorText": "“Ho appena finito una favola magnifica. C'erano una pianta di fagioli e un orco e...”",
     "searchableKeywords": ["La bella e la bestia", "Beauty and the Beast"]
   },
+  "i2l": {
+    "name": "Ellie Fredricksen",
+    "version": "Compagna di Avventure",
+    "rulesText": "\\Sempre con Te\\ Quando questo personaggio viene esiliato, puoi aggiungere questa carta al tuo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "Sempre con Te",
+        "description": "Quando questo personaggio viene esiliato, puoi aggiungere questa carta al tuo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "“L'avventura riesce sempre a trovarci ovunque andiamo.”",
+    "searchableKeywords": ["Up"]
+  },
   "iGe": {
     "name": "Signora Hasagawa",
     "version": "Fruttivendola",
@@ -1408,6 +1824,32 @@
     "text": "",
     "flavorText": "La vecchina si girò mentre l'ombra del viticcio incombeva sul suo banco della frutta. “Ciao, caro! Mango anche oggi?”",
     "searchableKeywords": ["Lilo & Stitch", "Lilo and Stitch"]
+  },
+  "iIf": {
+    "name": "Alpha",
+    "version": "Capobranco",
+    "rulesText": "\\Chi Vuole un Premio?\\ Ogni volta che giochi un oggetto, un personaggio a tua scelta riceve +1 {S} e ottiene <Resistere> +1 per questo turno.",
+    "text": [
+      {
+        "title": "Chi Vuole un Premio?",
+        "description": "Ogni volta che giochi un oggetto, un personaggio a tua scelta riceve +1 {S} e ottiene <Resistere> +1 per questo turno."
+      }
+    ],
+    "flavorText": "“Ora troveremo il piccolo postino e Quello Che Odora di Prugne Secche.”",
+    "searchableKeywords": ["Up"]
+  },
+  "7g9": {
+    "name": "Sulley",
+    "version": "Spaventatore Strategico",
+    "rulesText": "\\Spavento Improvviso\\ Mentre hai 5 o più carte nel tuo calamaio, questo personaggio riceve +2 {S}.",
+    "text": [
+      {
+        "title": "Spavento Improvviso",
+        "description": "Mentre hai 5 o più carte nel tuo calamaio, questo personaggio riceve +2 {S}."
+      }
+    ],
+    "flavorText": "“Fargli vedere come si fa ad essere un grande spaventatore!”%—Henry J. Waternoose III",
+    "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
   },
   "ioe": {
     "name": "Randall Boggs",
@@ -1425,6 +1867,30 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
+  },
+  "ckw": {
+    "name": "Pimpi",
+    "version": "Apprendista Mago del Miele",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Va tutto bene, Pimpi. Avere paura non significa non essere coraggiosi. Infatti, penso che si possa essere coraggiosi solo se prima si ha avuto paura!”%—Christopher Robin, Saggio del Miele",
+    "searchableKeywords": ["Winnie the Pooh"]
+  },
+  "JLp": {
+    "name": "Topolino",
+    "version": "Esploratore Curioso",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Cavolo, sapevo che sarebbe valsa la pena di arrampicarsi su questo viticcio. C'è così tanto da vedere quassù!”",
+    "searchableKeywords": []
+  },
+  "iib": {
+    "name": "Ade",
+    "version": "Cospiratore Meticoloso",
+    "rulesText": "<Protetto>",
+    "text": "<Protetto>",
+    "flavorText": "“Questo cosetto qui è tremendo! Lo adoro! Per non parlare di come assorbe l'inchiostro della marea... Nemmeno io avrei saputo progettarlo meglio!”",
+    "searchableKeywords": ["Hercules"]
   },
   "5gt": {
     "name": "Antonio Madrigal",
@@ -1450,6 +1916,19 @@
       }
     ],
     "flavorText": "",
+    "searchableKeywords": ["Robin Hood"]
+  },
+  "0c7": {
+    "name": "Robin Hood",
+    "version": "Creato dal Viticcio",
+    "rulesText": "\\Occhio Attento\\ I tuoi personaggi Imbevuto ottengono <Vigile>. (Possono sfidare come se avessero Sfuggente.)",
+    "text": [
+      {
+        "title": "Occhio Attento",
+        "description": "I tuoi personaggi Imbevuto ottengono <Vigile>. (Possono sfidare come se avessero Sfuggente.)"
+      }
+    ],
+    "flavorText": "Il viticcio aveva creato dei difensori che facessero da guardie silenti sulle terre circostanti.",
     "searchableKeywords": ["Robin Hood"]
   },
   "aJj": {
@@ -1490,6 +1969,32 @@
     "flavorText": "",
     "searchableKeywords": ["Up"]
   },
+  "Ush": {
+    "name": "Henry J. Waternoose III",
+    "version": "Amministratore Delegato",
+    "rulesText": "\\Il Profitto Netto\\ Mentre hai più carte nel tuo calamaio di ogni giocatore avversario, questo personaggio riceve +2 {L} e ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+    "text": [
+      {
+        "title": "Il Profitto Netto",
+        "description": "Mentre hai più carte nel tuo calamaio di ogni giocatore avversario, questo personaggio riceve +2 {L} e ottiene <Protetto>. (Gli avversari non possono sceglierlo se non per sfidarlo.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
+  },
+  "AWz": {
+    "name": "Ih-Oh",
+    "version": "Erudito del Miele",
+    "rulesText": "\\Tattiche del Miele\\ Ogni volta che questo personaggio va all'avventura, un tuo personaggio Miele a tua scelta riceve +1 {L} e ottiene <Protetto> fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo.)",
+    "text": [
+      {
+        "title": "Tattiche del Miele",
+        "description": "Ogni volta che questo personaggio va all'avventura, un tuo personaggio Miele a tua scelta riceve +1 {L} e ottiene <Protetto> fino all'inizio del tuo prossimo turno. (Gli avversari non possono sceglierlo se non per sfidarlo.)"
+      }
+    ],
+    "flavorText": "“Va bene. Aggiungi pure altre cose. Me la caverò.”",
+    "searchableKeywords": ["Winnie the Pooh"]
+  },
   "UbM": {
     "name": "Darkwing Duck e Jet",
     "version": "Il Meglio di St. Canard",
@@ -1508,6 +2013,38 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Darkwing Duck"]
+  },
+  "Fqd": {
+    "name": "Violetta Parr",
+    "version": "Super Resistente",
+    "rulesText": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Violetta Parr.)%<Resistere> +1 %\\Sinergia Eroica\\ Ogni volta che giochi questo o un altro personaggio Eroe, puoi pescare una carta, poi scegli e scarta una carta.",
+    "text": [
+      {
+        "title": "<Trasformazione> 3 {I} (Puoi pagare 3 {I} per giocare questa carta sopra a uno dei tuoi personaggi chiamato Violetta Parr.)"
+      },
+      {
+        "title": "<Resistere> +1"
+      },
+      {
+        "title": "Sinergia Eroica",
+        "description": "Ogni volta che giochi questo o un altro personaggio Eroe, puoi pescare una carta, poi scegli e scarta una carta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Incredibles", "Gli Incredibili"]
+  },
+  "bsG": {
+    "name": "Aladdin",
+    "version": "Creato dal Viticcio",
+    "rulesText": "\\Il Viticcio Dà\\ Ogni volta che uno dei tuoi personaggi Imbevuto va all'avventura, puoi pescare una carta, poi scegli e scarta una carta.",
+    "text": [
+      {
+        "title": "Il Viticcio Dà",
+        "description": "Ogni volta che uno dei tuoi personaggi Imbevuto va all'avventura, puoi pescare una carta, poi scegli e scarta una carta."
+      }
+    ],
+    "flavorText": "“Aspetta, quello non è un glimmer di Aladdin. Quello è un virgulto, una copia!”%—Shanzay, un'Illuminatrice",
+    "searchableKeywords": ["Aladdin"]
   },
   "jjR": {
     "name": "Willie il Gigante",
@@ -1538,6 +2075,22 @@
     "flavorText": "",
     "searchableKeywords": ["Lilo & Stitch", "Lilo and Stitch"]
   },
+  "kT3": {
+    "name": "Stitch",
+    "version": "Protettore delle Rane",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“MIA rana! Molto importante!”",
+    "searchableKeywords": ["Lilo & Stitch", "Lilo and Stitch"]
+  },
+  "y59": {
+    "name": "Sceriffo di Nottingham",
+    "version": "Sterminatore di Viticci",
+    "rulesText": "<Sfidante> +3",
+    "text": "<Sfidante> +3",
+    "flavorText": "“Senti un po', erbaccia troppo cresciuta...”",
+    "searchableKeywords": ["Robin Hood"]
+  },
   "r0B": {
     "name": "Mata",
     "version": "Cameriera della Casa della Carne",
@@ -1545,6 +2098,35 @@
     "text": "",
     "flavorText": "“Tre piatti di maiale con pancetta extra a parte, due assaggini di formaggio piccante, un trionfo di fegato e cipolla e una bistecca scolpita a forma di trota.”",
     "searchableKeywords": ["Emperors New Groove", "Le follie dell'imperatore"]
+  },
+  "F0D": {
+    "name": "Violetta Parr",
+    "version": "Che Si Allena con i Campi di Forza",
+    "rulesText": "<Resistere> +1",
+    "text": "<Resistere> +1",
+    "flavorText": "“Mamma? Mi dispiace chiamarti ma, uhm, penso che ci sia un problema piuttosto grosso fuori casa.”",
+    "searchableKeywords": ["Incredibles", "Gli Incredibili"]
+  },
+  "0zk": {
+    "name": "Dr. Hamsterviel",
+    "version": "Malvagio Osservatore",
+    "rulesText": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+    "text": "<Vigile> (Questo personaggio può sfidare come se avesse Sfuggente.)",
+    "flavorText": "“Nessuno può nascondersi da me. Da qui posso vedere <ogni cosa>!”",
+    "searchableKeywords": ["Lilo & Stitch", "Lilo and Stitch"]
+  },
+  "dxV": {
+    "name": "Uffa",
+    "version": "Ranger del Miele",
+    "rulesText": "\\Alleanza del Miele\\ Mentre hai in gioco un altro personaggio Miele, questo personaggio ottiene <Resistere> +2.",
+    "text": [
+      {
+        "title": "Alleanza del Miele",
+        "description": "Mentre hai in gioco un altro personaggio Miele, questo personaggio ottiene <Resistere> +2."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh"]
   },
   "uDC": {
     "name": "Megavolt",
@@ -1606,6 +2188,22 @@
     "flavorText": "“D'accordo maciste, ora basta! Vuoi un menù speciale? Fattelo <da solo>!”%—Lo Chef Irato",
     "searchableKeywords": ["Emperors New Groove", "Le follie dell'imperatore"]
   },
+  "Ocg": {
+    "name": "Kronk",
+    "version": "Cuoco della Casa della Carne",
+    "rulesText": "<Resistere> +1 %\\Pronti!\\ Una volta durante il tuo turno, puoi pagare 1 {I} per pescare una carta, poi scegli e scarta una carta.",
+    "text": [
+      {
+        "title": "<Resistere> +1"
+      },
+      {
+        "title": "Pronti!",
+        "description": "Una volta durante il tuo turno, puoi pagare 1 {I} per pescare una carta, poi scegli e scarta una carta."
+      }
+    ],
+    "flavorText": "“Lo vuoi extra croccante?”",
+    "searchableKeywords": ["Emperors New Groove", "Le follie dell'imperatore"]
+  },
   "v6P": {
     "name": "Mulan",
     "version": "Creata dal Viticcio",
@@ -1618,6 +2216,36 @@
     ],
     "flavorText": "Questa replica è brava a combattere tanto quanto l'originale. Senza bisogno di addestramento.",
     "searchableKeywords": ["Mulan"]
+  },
+  "mTj": {
+    "name": "Diablo",
+    "version": "Che Protegge la Sua Padrona",
+    "rulesText": "\\Turbinio di Piume\\ I tuoi personaggi chiamati Malefica ottengono <Resistere> +1.",
+    "text": [
+      {
+        "title": "Turbinio di Piume",
+        "description": "I tuoi personaggi chiamati Malefica ottengono <Resistere> +1."
+      }
+    ],
+    "flavorText": "“Sei l'unico di cui mi posso fidare, mio diletto.”%—Malefica",
+    "searchableKeywords": ["Sleeping Beauty", "La bella addormentata nel bosco"]
+  },
+  "MAE": {
+    "name": "Scar",
+    "version": "Creato dal Viticcio",
+    "rulesText": "\\Il Premio del Vincitore\\ Durante il tuo turno, ogni volta che uno dei tuoi personaggi Imbevuto esilia un altro personaggio in una sfida, ottieni 1 leggenda.%\\Riempire i Ranghi\\ Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi Imbevuto viene esiliato, pesca una carta.",
+    "text": [
+      {
+        "title": "Il Premio del Vincitore",
+        "description": "Durante il tuo turno, ogni volta che uno dei tuoi personaggi Imbevuto esilia un altro personaggio in una sfida, ottieni 1 leggenda."
+      },
+      {
+        "title": "Riempire i Ranghi",
+        "description": "Durante il turno di un avversario, ogni volta che uno dei tuoi personaggi Imbevuto viene esiliato, pesca una carta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lion King", "Il re leone"]
   },
   "jjL": {
     "name": "Maximus",
@@ -1670,68 +2298,6 @@
     ],
     "flavorText": "",
     "searchableKeywords": []
-  },
-  "9kq": {
-    "name": "Peter Pan",
-    "version": "Creato dal Viticcio",
-    "rulesText": "\\Astuto Tranello\\ Ogni volta che uno dei tuoi personaggi Imbevuto viene sfidato, il giocatore sfidante sceglie e scarta una carta.",
-    "text": [
-      {
-        "title": "Astuto Tranello",
-        "description": "Ogni volta che uno dei tuoi personaggi Imbevuto viene sfidato, il giocatore sfidante sceglie e scarta una carta."
-      }
-    ],
-    "flavorText": "Le repliche che il viticcio aveva creato brillavano di un'infusione di inchiostro mescolato.",
-    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
-  },
-  "iYJ": {
-    "name": "Vixey",
-    "version": "Expert Fisher",
-    "rulesText": "\\Stealing In\\ When you play this character, if you have a character with <Evasive> in play, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
-    "text": [
-      {
-        "title": "Stealing In",
-        "description": "When you play this character, if you have a character with <Evasive> in play, you may return chosen character, item, or location with cost 2 or less to their player's hand."
-      }
-    ],
-    "flavorText": "\"I've got my dinner. Where's yours, Tod?\"",
-    "searchableKeywords": ["Fox and the Hound", "Red e Toby nemiciamici"]
-  },
-  "cAP": {
-    "name": "Buzz Lightyear",
-    "version": "Providing Cover",
-    "rulesText": "\\Action Figure\\ When you play this character, choose one of the following. If you have another Toy character in play, choose both instead:\n• You may return an action card with cost 2 or less from your discard to your hand.\n• You may play an action with cost 2 or less for free.",
-    "text": [
-      {
-        "title": "Action Figure",
-        "description": "When you play this character, choose one of the following. If you have another Toy character in play, choose both instead:"
-      },
-      {
-        "title": "• You may return an action card with cost 2 or less from your discard to your hand."
-      },
-      {
-        "title": "• You may play an action with cost 2 or less for free."
-      }
-    ],
-    "flavorText": "",
-    "searchableKeywords": ["Toy Story"]
-  },
-  "7cP": {
-    "name": "Merlin",
-    "version": "Envisioning the Future",
-    "rulesText": "\\Minor Trickery\\ When you play this character, you may draw a card from the bottom of your deck.\n\n\\Age of Inconvenience\\ When this character is banished, put this card from your discard on the bottom of your deck.",
-    "text": [
-      {
-        "title": "Minor Trickery",
-        "description": "When you play this character, you may draw a card from the bottom of your deck."
-      },
-      {
-        "title": "Age of Inconvenience",
-        "description": "When this character is banished, put this card from your discard on the bottom of your deck."
-      }
-    ],
-    "flavorText": "",
-    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
   },
   "oEU": {
     "name": "Ocalina Mallard",
@@ -23684,6 +24250,19 @@
     "flavorText": "Una terra perduta nel tempo.",
     "searchableKeywords": ["Up"]
   },
+  "pbQ": {
+    "name": "Il Castello della Bestia",
+    "version": "Invaso dal Viticcio",
+    "rulesText": "\\Minaccia Imminente\\ I tuoi personaggi Imbevuto ottengono <Lesto>. (Possono sfidare nel turno in cui vengono giocati.)",
+    "text": [
+      {
+        "title": "Minaccia Imminente",
+        "description": "I tuoi personaggi Imbevuto ottengono <Lesto>. (Possono sfidare nel turno in cui vengono giocati.)"
+      }
+    ],
+    "flavorText": "Un profondo rimbombo echeggiò nella foresta quando il viticcio sradicò il castello dalle sue stesse fondamenta.",
+    "searchableKeywords": ["La bella e la bestia", "Beauty and the Beast"]
+  },
   "Zwu": {
     "name": "Casa di Carl",
     "version": "In Alta Quota",
@@ -23696,6 +24275,36 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Up"]
+  },
+  "gIc": {
+    "name": "Bosco dei Cento Acri",
+    "version": "Accampamento del Miele",
+    "rulesText": "\\Come una seconda casa\\ I personaggi ricevono +1 {W} mentre si trovano in questo luogo.%\\Avventura Mielosa\\ I personaggi Miele ricevono +1 {L} mentre si trovano in questo luogo.",
+    "text": [
+      {
+        "title": "Come una seconda casa",
+        "description": "I personaggi ricevono +1 {W} mentre si trovano in questo luogo."
+      },
+      {
+        "title": "Avventura Mielosa",
+        "description": "I personaggi Miele ricevono +1 {L} mentre si trovano in questo luogo."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh"]
+  },
+  "Rb1": {
+    "name": "Ingresso del Viticcio",
+    "version": "Passaggio Nefasto",
+    "rulesText": "\\La Radice del Potere\\ La prima volta che un personaggio Imbevuto si sposta in questo luogo ogni turno, puoi infliggere 1 danno a un personaggio a tua scelta.",
+    "text": [
+      {
+        "title": "La Radice del Potere",
+        "description": "La prima volta che un personaggio Imbevuto si sposta in questo luogo ogni turno, puoi infliggere 1 danno a un personaggio a tua scelta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh"]
   },
   "iCW": {
     "name": "La Stanza di Andy",
@@ -24725,6 +25334,19 @@
     "flavorText": "",
     "searchableKeywords": ["Pocahontas"]
   },
+  "L8A": {
+    "name": "Baccello Rotto",
+    "version": "",
+    "rulesText": "\\Processo di Rinnovamento\\ {E}, 1 {I} — Metti una carta dagli scarti di un giocatore a tua scelta in fondo al suo mazzo.",
+    "text": [
+      {
+        "title": "Processo di Rinnovamento",
+        "description": "{E}, 1 {I} — Metti una carta dagli scarti di un giocatore a tua scelta in fondo al suo mazzo."
+      }
+    ],
+    "flavorText": "“Sembra che un altro virgulto sia a piede libero. Andiamo a prenderlo.”%—Venturo, un Illuminatore",
+    "searchableKeywords": ["Lorcana"]
+  },
   "7J0": {
     "name": "Bastone Magico del Miele",
     "version": "",
@@ -24742,6 +25364,36 @@
     "flavorText": "",
     "searchableKeywords": ["Winnie the Pooh"]
   },
+  "Srm": {
+    "name": "Fonte del Viticcio",
+    "version": "",
+    "rulesText": "\\Assorbimento\\ Ogni volta che un personaggio avversario va all'avventura, ottieni 1 leggenda a meno che il suo giocatore non paghi 1 {I}.%\\Fioritura Radiosa\\ {E}, 2 {I} — Ottieni 1 leggenda.",
+    "text": [
+      {
+        "title": "Assorbimento",
+        "description": "Ogni volta che un personaggio avversario va all'avventura, ottieni 1 leggenda a meno che il suo giocatore non paghi 1 {I}."
+      },
+      {
+        "title": "Fioritura Radiosa",
+        "description": "{E}, 2 {I} — Ottieni 1 leggenda."
+      }
+    ],
+    "flavorText": "“Presto prosciugherà ogni goccia di inchiostro di Lorcana...”%—Hana, un'Illuminatrice",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "5EJ": {
+    "name": "Patata",
+    "version": "",
+    "rulesText": "\\Piena di Potenziale\\ Questo oggetto entra in gioco impegnato.",
+    "text": [
+      {
+        "title": "Piena di Potenziale",
+        "description": "Questo oggetto entra in gioco impegnato."
+      }
+    ],
+    "flavorText": "Non è molto saporita.",
+    "searchableKeywords": ["Darkwing Duck"]
+  },
   "ph9": {
     "name": "Il Libro delle Mie Avventure",
     "version": "",
@@ -24754,6 +25406,23 @@
     ],
     "flavorText": "“Grazie per l'avventura — Ora va', e vivine un'altra! Con amore, Ellie”",
     "searchableKeywords": ["Up"]
+  },
+  "sMI": {
+    "name": "Baccello del Viticcio",
+    "version": "",
+    "rulesText": "\\Guscio Fragile\\ Questo oggetto entra in gioco impegnato.%\\Rigenerazione\\ {E}, 1 {I} — Esilia un tuo personaggio a tua scelta. Puoi giocare un personaggio con lo stesso nome di quel personaggio, gratis.",
+    "text": [
+      {
+        "title": "Guscio Fragile",
+        "description": "Questo oggetto entra in gioco impegnato."
+      },
+      {
+        "title": "Rigenerazione",
+        "description": "{E}, 1 {I} — Esilia un tuo personaggio a tua scelta. Puoi giocare un personaggio con lo stesso nome di quel personaggio, gratis."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
   },
   "K9I": {
     "name": "Cilindro per le Urla",
@@ -24784,6 +25453,49 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Up"]
+  },
+  "NTO": {
+    "name": "Portale dell'Armadio",
+    "version": "",
+    "rulesText": "\\Toc, Toc\\ Questo oggetto entra in gioco impegnato.%\\Chi È?\\ {E}, 2 {I} — Guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio, oggetto o luogo con costo 6 o inferiore e giocarla gratis. Metti il resto in fondo al tuo mazzo in qualsiasi ordine. Aggiungi questa carta al tuo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "Toc, Toc",
+        "description": "Questo oggetto entra in gioco impegnato."
+      },
+      {
+        "title": "Chi È?",
+        "description": "{E}, 2 {I} — Guarda le prime 3 carte del tuo mazzo. Puoi rivelare una carta personaggio, oggetto o luogo con costo 6 o inferiore e giocarla gratis. Metti il resto in fondo al tuo mazzo in qualsiasi ordine. Aggiungi questa carta al tuo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
+  },
+  "3gV": {
+    "name": "Inchiostratore di Hana",
+    "version": "",
+    "rulesText": "\\Fioritura Rigenerante\\ {E} — Rimuovi fino a 2 danni da un personaggio a tua scelta. Se c'è una carta sotto a quel personaggio, ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno.",
+    "text": [
+      {
+        "title": "Fioritura Rigenerante",
+        "description": "{E} — Rimuovi fino a 2 danni da un personaggio a tua scelta. Se c'è una carta sotto a quel personaggio, ottiene <Resistere> +1 fino all'inizio del tuo prossimo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "3R1": {
+    "name": "Cilindro per le Risate",
+    "version": "",
+    "rulesText": "\\Imitare\\ {E} — Aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata. Un avversario a tua scelta può aggiungere la prima carta del suo mazzo al suo calamaio, a faccia in giù e impegnata.",
+    "text": [
+      {
+        "title": "Imitare",
+        "description": "{E} — Aggiungi la prima carta del tuo mazzo al tuo calamaio, a faccia in giù e impegnata. Un avversario a tua scelta può aggiungere la prima carta del suo mazzo al suo calamaio, a faccia in giù e impegnata."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
   },
   "bPp": {
     "name": "Collare Traduttore",
@@ -24823,6 +25535,36 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Mulan"]
+  },
+  "qNx": {
+    "name": "Il Diserbatore",
+    "version": "",
+    "rulesText": "\\Piena Potenza\\ {E}, 1 {I} — Un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)%\\Taglio Netto\\ 2 {I}, esilia questo oggetto — Esilia un personaggio Virgulto a tua scelta.",
+    "text": [
+      {
+        "title": "Piena Potenza",
+        "description": "{E}, 1 {I} — Un personaggio a tua scelta ottiene <Sfidante> +2 per questo turno. (Riceve +2 {S} mentre sta sfidando.)"
+      },
+      {
+        "title": "Taglio Netto",
+        "description": "2 {I}, esilia questo oggetto — Esilia un personaggio Virgulto a tua scelta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Darkwing Duck"]
+  },
+  "Kjs": {
+    "name": "Infiorescenza Assorbente",
+    "version": "",
+    "rulesText": "\\Metamorfosi\\ {E}, 1 {I} — Se un personaggio è stato esiliato in una sfida in questo turno, pesca una carta.",
+    "text": [
+      {
+        "title": "Metamorfosi",
+        "description": "{E}, 1 {I} — Se un personaggio è stato esiliato in una sfida in questo turno, pesca una carta."
+      }
+    ],
+    "flavorText": "“Oh, affascinante! Come ci riesce?”%—Hana, un'Illuminatrice",
+    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
   },
   "m5E": {
     "name": "Fune di Sicurezza",
@@ -27548,6 +28290,21 @@
     "flavorText": "You’re never not on my mind",
     "searchableKeywords": ["Red", "Turning Red"]
   },
+  "dYy": {
+    "name": "Adesso la Tua Forza È Mitica",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)%Un personaggio a tua scelta ottiene <Lesto> e <Sfidante> +2 per questo turno. (Può sfidare nel turno in cui viene giocato. Riceve +2 {S} mentre sta sfidando.)",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Un personaggio a tua scelta ottiene <Lesto> e <Sfidante> +2 per questo turno. (Può sfidare nel turno in cui viene giocato. Riceve +2 {S} mentre sta sfidando.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aladdin"]
+  },
   "QV6": {
     "name": "Stando in Compagnia",
     "version": "",
@@ -27562,6 +28319,14 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Winnie the Pooh"]
+  },
+  "eVx": {
+    "name": "Pietrificare",
+    "version": "",
+    "rulesText": "Impegna un personaggio avversario a tua scelta.",
+    "text": "Impegna un personaggio avversario a tua scelta.",
+    "flavorText": "“Cosa sta facendo questo rumore terribile? Sembra che stia venendo in questa direzione.”%—Shanzay, un'Illuminatrice",
+    "searchableKeywords": ["Lorcana"]
   },
   "AFL": {
     "name": "L'Unico e il Solo",
@@ -27578,6 +28343,29 @@
     "text": "I tuoi personaggi Imbevuto ottengono <Sfuggente> fino all'inizio del tuo prossimo turno. (Solo altri personaggi con Sfuggente possono sfidarli.)",
     "flavorText": "Il bagliore delle repliche create dal viticcio era bellissimo... ma inquietante.",
     "searchableKeywords": ["Robin Hood"]
+  },
+  "vU3": {
+    "name": "Scampato Pericolo",
+    "version": "",
+    "rulesText": "Fai riprendere in mano ai loro giocatori fino a 2 personaggi, oggetti o luoghi a tua scelta con costo 2 o inferiore ciascuno.",
+    "text": "Fai riprendere in mano ai loro giocatori fino a 2 personaggi, oggetti o luoghi a tua scelta con costo 2 o inferiore ciascuno.",
+    "flavorText": "",
+    "searchableKeywords": ["Peter Pan", "Le avventure di Peter Pan"]
+  },
+  "ib5": {
+    "name": "Si Spampana e Muor",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)%Infliggi 2 danni a ogni personaggio avversario danneggiato.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 4 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Infliggi 2 danni a ogni personaggio avversario danneggiato."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "La Spada Nella Roccia"]
   },
   "jj2": {
     "name": "Attacco Perforante",
@@ -27610,6 +28398,29 @@
     "flavorText": "Quando le probabilità di successo sembrano più remote, Topolino e Minni troveranno comunque una soluzione.",
     "searchableKeywords": []
   },
+  "9IV": {
+    "name": "Rituale della Luna Rossa",
+    "version": "",
+    "rulesText": "<Cantare Insieme> 7 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 7 o superiore può {E} per cantare questa canzone gratis.)%Esilia un personaggio a tua scelta.",
+    "text": [
+      {
+        "title": "<Cantare Insieme> 7 (Un qualsiasi numero di personaggi tuoi o dei tuoi compagni di squadra con costo totale 7 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Esilia un personaggio a tua scelta."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Red", "Turning Red"]
+  },
+  "qZ0": {
+    "name": "Allarme Rosso",
+    "version": "",
+    "rulesText": "Esilia un personaggio a tua scelta con 3 {S} o inferiore. Se hai in gioco un personaggio Mostro, un avversario a tua scelta perde 1 leggenda.",
+    "text": "Esilia un personaggio a tua scelta con 3 {S} o inferiore. Se hai in gioco un personaggio Mostro, un avversario a tua scelta perde 1 leggenda.",
+    "flavorText": "“Restate calmi. Questa non è un'esercitazione.”%—Agente del CDA",
+    "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
+  },
   "rm3": {
     "name": "ROAR!",
     "version": "",
@@ -27626,6 +28437,21 @@
     "flavorText": "La visione mostrò la città, ma non la fonte della sua energia.",
     "searchableKeywords": ["Hercules"]
   },
+  "5UQ": {
+    "name": "Se Vieni Con Me!",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)%Prepara un personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Prepara un personaggio a tua scelta. Non può andare all'avventura per il resto di questo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh"]
+  },
   "qAT": {
     "name": "Scarica di Energia",
     "version": "",
@@ -27634,6 +28460,29 @@
     "flavorText": "Sulley: “Ma cosa è successo?”%Mike: “Non ne ho idea, ma sarebbe splendido se non lo facesse più.”",
     "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
   },
+  "Uhe": {
+    "name": "Ricerca Approfondita",
+    "version": "",
+    "rulesText": "Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio chiamata Kevin o una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+    "text": "Guarda le prime 4 carte del tuo mazzo. Puoi rivelare una carta personaggio chiamata Kevin o una carta oggetto e aggiungerla alla tua mano. Metti il resto in fondo al tuo mazzo in qualsiasi ordine.",
+    "flavorText": "",
+    "searchableKeywords": ["Up"]
+  },
+  "X0p": {
+    "name": "Abbiamo un Po' da Far",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)%Aggiungi un oggetto o un luogo a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 3 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "Aggiungi un oggetto o un luogo a tua scelta al calamaio del suo giocatore, a faccia in giù e impegnato."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["La bella e la bestia", "Beauty and the Beast"]
+  },
   "beG": {
     "name": "Trasalire",
     "version": "",
@@ -27641,6 +28490,29 @@
     "text": "Un personaggio a tua scelta riceve -3 {S} per questo turno.",
     "flavorText": "“Ehi, attento amico! Quello non sono io. Quella è una mia copia creata dal viticcio!”%—Aladdin",
     "searchableKeywords": ["Aladdin"]
+  },
+  "jI0": {
+    "name": "Prostratevi Davanti a Me!",
+    "version": "",
+    "rulesText": "Fino a 2 personaggi avversari a tua scelta non possono sfidare durante il loro prossimo turno.",
+    "text": "Fino a 2 personaggi avversari a tua scelta non possono sfidare durante il loro prossimo turno.",
+    "flavorText": "",
+    "searchableKeywords": ["Sleeping Beauty", "La bella addormentata nel bosco"]
+  },
+  "zjC": {
+    "name": "Il Villaggio Rivivrà",
+    "version": "",
+    "rulesText": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)%I tuoi personaggi e luoghi ottengono <Resistere> +1 fino all'inizio del tuo prossimo turno.",
+    "text": [
+      {
+        "title": "(Un personaggio con costo 2 o superiore può {E} per cantare questa canzone gratis.)"
+      },
+      {
+        "title": "I tuoi personaggi e luoghi ottengono <Resistere> +1 fino all'inizio del tuo prossimo turno."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["La bella e la bestia", "Beauty and the Beast"]
   },
   "3rW": {
     "name": "Guarda Cosa Hai Fatto",
@@ -27657,6 +28529,14 @@
     "text": "Scarta la tua mano. Pesca 2 carte.",
     "flavorText": "“Sai, mi capita molto più spesso di quanto tu possa immaginare.”",
     "searchableKeywords": ["Tangled", "Rapunzel - L'intreccio della torre"]
+  },
+  "MBy": {
+    "name": "Viticcio all'Attacco!",
+    "version": "",
+    "rulesText": "I tuoi personaggi Imbevuto ottengono <Resistere> +2 e possono sfidare i personaggi preparati per questo turno.",
+    "text": "I tuoi personaggi Imbevuto ottengono <Resistere> +2 e possono sfidare i personaggi preparati per questo turno.",
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monsters & Co"]
   },
   "WkJ": {
     "name": "Tempesta di Vento",

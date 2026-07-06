@@ -41,8 +41,10 @@ export function SingleCardZone({
       )}
       data-testid={`${zone?.id ?? resolvedLabel}-single-card-zone`}
       data-zone-id={zone?.id}
+      data-sim-zone-id={zone?.id}
       data-zone-layout="single-card"
       data-card-id={entity?.id}
+      data-sim-entity-id={entity?.id}
       data-card-states={entity?.states.join(" ")}
       data-count={entityCount}
       aria-label={`${resolvedLabel}, ${entityCount} ${entityCount === 1 ? "card" : "cards"}`}

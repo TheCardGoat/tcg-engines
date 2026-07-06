@@ -64,6 +64,114 @@ export const unitScenarios: Scenario[] = [
         { seed: scenarioSeed("retailNewCardAbilities"), autoGainGig: false },
       ),
   },
+  {
+    id: "unitTheHeistDexterDeshawnOneLastChance",
+    group: "unit-play-trigger",
+    label: "Dexter DeShawn (The Heist) · PLAY adjusts a Gig",
+    description:
+      "P1 holds Dexter DeShawn with a friendly d6 Gig at 2. PLAY should prompt for a Gig target and adjust it by up to 1.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.theHeistRetailStarterDeckDexterDeshawnOneLastChance],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d8", faceValue: 4 }],
+        },
+        { seed: scenarioSeed("unitTheHeistDexterDeshawnOneLastChance"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitTheHeistMt0d12Flathead",
+    group: "unit-street-cred",
+    label: "MT0D12 Flathead (The Heist) · can't be blocked at lower Street Cred",
+    description:
+      "P1 has lower Street Cred than P2, so the The Heist Flathead should gain cantBeBlocked.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.theHeistRetailStarterDeckMt0d12Flathead,
+              spent: false,
+              playedThisTurn: false,
+            },
+          ],
+          legendArea: [c.alphaVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 1 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: false, playedThisTurn: false }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d8", faceValue: 7 }],
+        },
+        { seed: scenarioSeed("unitTheHeistMt0d12Flathead"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitEmbracingGoroTakemuraLosingHisWay",
+    group: "unit-attack-trigger",
+    label: "Goro Takemura (Embracing Power) · all face-up Legends attack bonus",
+    description:
+      "P1 has Goro Takemura and all friendly Legends face-up. ATTACK should grant +5 power this turn.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
+              spent: false,
+              playedThisTurn: false,
+            },
+          ],
+          legendArea: [
+            { card: c.alphaVCorporateExile, faceDown: false },
+            { card: c.alphaJackieWellesPourOneOutForMe, faceDown: false },
+          ],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitEmbracingGoroTakemuraLosingHisWay"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "unitEmbracingMinotaur",
+    group: "unit-play-trigger",
+    label: "Minotaur (Embracing Power) · higher Street Cred defeats low-power Unit",
+    description:
+      "P1 has higher Street Cred and plays Minotaur. PLAY should target and defeat a rival Unit with power 5 or less.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.embracingPowerRetailStarterDeckMinotaur],
+          eddies: 7,
+          gigArea: [{ dieType: "d8", faceValue: 6 }],
+        },
+        {
+          field: [
+            { card: c.alphaSwordwiseHuscle, spent: false },
+            { card: c.alphaArmoredMinotaur, spent: false },
+          ],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        { seed: scenarioSeed("unitEmbracingMinotaur"), autoGainGig: false },
+      ),
+  },
 
   // ── Unit: BLOCKER + can't attack (Secondhand Bombus, Corpo Security) ────
   {

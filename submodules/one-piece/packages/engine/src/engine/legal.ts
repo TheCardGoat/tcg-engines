@@ -29,14 +29,54 @@ export function getLegalCommands(
 
   if (state.status === "setup") {
     if (viewer !== "judge") {
-      if (!state.setup.mulliganUsed[viewer]) {
+      if (!state.setup.joKenPo.winner) {
+        if (!state.setup.joKenPo.pendingSeats.includes(viewer)) {
+          for (const choice of ["rock", "paper", "scissors"] as const) {
+            legal.push({
+              type: "chooseJoKenPo",
+              seat: viewer,
+              label: `Choose ${choice}`,
+              options: [{ id: choice, label: choice, value: choice }],
+            });
+          }
+        }
+        return legal;
+      }
+      if (!state.setup.joKenPo.firstPlayerDecided) {
+        if (viewer === state.setup.joKenPo.winner) {
+          legal.push({
+            type: "chooseFirstPlayer",
+            seat: viewer,
+            label: "Take the first turn",
+            targetIds: [viewer],
+          });
+          const other = viewer === "south" ? "north" : "south";
+          legal.push({
+            type: "chooseFirstPlayer",
+            seat: viewer,
+            label: `Let ${getPlayer(state, other).playerName} take the first turn`,
+            targetIds: [other],
+          });
+        }
+        return legal;
+      }
+      if (!state.setup.mulliganDecided[viewer]) {
         legal.push({
           type: "mulligan",
           seat: viewer,
           label: "Take a mulligan",
         });
+        legal.push({
+          type: "keepHand",
+          seat: viewer,
+          label: "Keep opening hand",
+        });
       }
-      if (viewer === state.config.firstPlayer) {
+      if (
+        viewer === state.config.firstPlayer &&
+        state.setup.mulliganDecided.north &&
+        state.setup.mulliganDecided.south
+      ) {
         legal.push({
           type: "startGame",
           seat: viewer,

@@ -83,6 +83,7 @@ export function createSpectatorEngineAdapter(config: EngineAdapterConfig): Engin
 
     logEntries: () =>
       runtime.getGameLogHistory().filter((tagged) => isVisibleToViewer(tagged.entry)),
+    packetAnimations: () => [],
     moveLogs: () =>
       runtime.getMoveLogHistory().map((log) => ({
         log,

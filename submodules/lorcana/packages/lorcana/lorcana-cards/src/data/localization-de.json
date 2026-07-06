@@ -721,6 +721,32 @@
     "flavorText": "Pech: „Bist du sicher, dass das klappt?“%Schwefel: „Das werden wir gleich herausfinden!“",
     "searchableKeywords": ["Hercules"]
   },
+  "K9Q": {
+    "name": "Lumpi",
+    "version": "Honig-Druide",
+    "rulesText": "\\Willkommene Heilung\\ Wenn du diesen Charakter ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
+    "text": [
+      {
+        "title": "Willkommene Heilung",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du bis zu 2 Schaden von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben."
+      }
+    ],
+    "flavorText": "„Zeit für die heilenden Hände eines Heffalumps!“",
+    "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
+  },
+  "fpN": {
+    "name": "Abu",
+    "version": "Weiser Sultan",
+    "rulesText": "\\Herrscher für einen Tag\\ Wenn dieser Charakter erkundet, verbanne ihn.",
+    "text": [
+      {
+        "title": "Herrscher für einen Tag",
+        "description": "Wenn dieser Charakter erkundet, verbanne ihn."
+      }
+    ],
+    "flavorText": "„Das ist ja wunderbar. Heutzutage kann wohl jeder Sultan werden.“%—Jago",
+    "searchableKeywords": ["Aladdin"]
+  },
   "o4M": {
     "name": "Meilin Lee",
     "version": "Vorgeblich gehorsam",
@@ -741,6 +767,27 @@
     "text": "<Wendig>",
     "flavorText": "„Netter Versuch, Stinkwurz, aber es gibt nur eine Sache, die mich aufhalten kann.“",
     "searchableKeywords": ["Aladdin"]
+  },
+  "NS7": {
+    "name": "Trixi, die Füchsin",
+    "version": "Expertin für den Fischfang",
+    "rulesText": "\\Einschleichen\\ Wenn du diesen Charakter ausspielst, falls du mindestens einen Charakter mit <Wendig> im Spiel hast, darfst du einen Charakter, Gegenstand oder Ort deiner Wahl, der 2 oder weniger kostet, zurück auf die zugehörige Hand schicken.",
+    "text": [
+      {
+        "title": "Einschleichen",
+        "description": "Wenn du diesen Charakter ausspielst, falls du mindestens einen Charakter mit <Wendig> im Spiel hast, darfst du einen Charakter, Gegenstand oder Ort deiner Wahl, der 2 oder weniger kostet, zurück auf die zugehörige Hand schicken."
+      }
+    ],
+    "flavorText": "„Ich habe mein Abendessen. Wo ist deins, Cap?“",
+    "searchableKeywords": ["Fox and the Hound", "Cap und Capper"]
+  },
+  "8t3": {
+    "name": "Meeko",
+    "version": "Glücklicher Waschbär",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Er wusste nicht, wie er all diese Früchte transportieren sollte, aber er würde es auf jeden Fall versuchen.",
+    "searchableKeywords": ["Pocahontas"]
   },
   "kJR": {
     "name": "Pech",
@@ -811,6 +858,35 @@
     "flavorText": "Im Vergleich zu den tatsächlichen Kater-Karlo-Glimmern war die Kopie der Ranke fast schon angenehm zu handhaben.",
     "searchableKeywords": []
   },
+  "R3I": {
+    "name": "Großmutter Wu",
+    "version": "Weise Großmutter",
+    "rulesText": "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)%\\Ahnenwissen\\ Wenn du einen Charakter auf diesen Charakter gestaltwandelst, sammelst du 1 Legende.",
+    "text": [
+      {
+        "title": "<Herausfordern> +2 (Während dieser Charakter herausfordert, erhält er +2 {S}.)"
+      },
+      {
+        "title": "Ahnenwissen",
+        "description": "Wenn du einen Charakter auf diesen Charakter gestaltwandelst, sammelst du 1 Legende."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Rot"]
+  },
+  "HAa": {
+    "name": "HeiHei",
+    "version": "Von der Ranke erschaffen",
+    "rulesText": "\\Pflanzliches Heilmittel\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere erkundet, darfst du 1 Schaden von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben.",
+    "text": [
+      {
+        "title": "Pflanzliches Heilmittel",
+        "description": "Jedes Mal, wenn einer deiner Flutgestalt-Charaktere erkundet, darfst du 1 Schaden von einem Charakter deiner Wahl zu einem gegnerischen Charakter deiner Wahl verschieben."
+      }
+    ],
+    "flavorText": "Eine Kopie mit noch weniger Verstand als das Original.",
+    "searchableKeywords": ["Moana", "Vaiana"]
+  },
   "TBN": {
     "name": "Hera",
     "version": "Von der Ranke erschaffen",
@@ -823,6 +899,14 @@
     ],
     "flavorText": "Es gibt Schlimmeres, als eine Kopie einer Göttin zu erschaffen.",
     "searchableKeywords": ["Hercules"]
+  },
+  "gng": {
+    "name": "Naseweis",
+    "version": "Findet einen Weg",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Naseweis, was siehst du da drüben? Glaubst du, wir können da reinkommen?“%—Peter Pan",
+    "searchableKeywords": ["Peter Pan"]
   },
   "yd8": {
     "name": "Morph",
@@ -899,6 +983,22 @@
     "flavorText": "",
     "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
   },
+  "NXy": {
+    "name": "Winnie Puuh & Ferkel",
+    "version": "Honig-Magier",
+    "rulesText": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Winnie Puuh oder Ferkel auszuspielen.)%\\Magischer Mix\\ Dieser Charakter erhält +1 {L} für jede unterschiedliche Tintenfarbe deiner Charaktere im Spiel.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Winnie Puuh oder Ferkel auszuspielen.)"
+      },
+      {
+        "title": "Magischer Mix",
+        "description": "Dieser Charakter erhält +1 {L} für jede unterschiedliche Tintenfarbe deiner Charaktere im Spiel."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
+  },
   "yFO": {
     "name": "Malefiz & Diablo",
     "version": "Das Böse in Person",
@@ -958,6 +1058,25 @@
     "flavorText": "„Star Command, die Vegetation auf diesem Planeten ist einzigartig entwaffnend.“",
     "searchableKeywords": ["Toy Story"]
   },
+  "S4A": {
+    "name": "Buzz Lightyear",
+    "version": "Bietet Schutz",
+    "rulesText": "\\Actionfigur\\ Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus. Falls du mindestens einen anderen Spielzeug-Charakter im Spiel hast, wähle stattdessen beide Möglichkeiten aus: %• Du darfst eine Aktionskarte, die 2 oder weniger kostet, von deinem Ablagestapel zurück auf deine Hand nehmen.%• Du darfst eine Aktion, die 2 oder weniger kostet, kostenlos ausspielen.",
+    "text": [
+      {
+        "title": "Actionfigur",
+        "description": "Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus. Falls du mindestens einen anderen Spielzeug-Charakter im Spiel hast, wähle stattdessen beide Möglichkeiten aus:"
+      },
+      {
+        "title": "• Du darfst eine Aktionskarte, die 2 oder weniger kostet, von deinem Ablagestapel zurück auf deine Hand nehmen."
+      },
+      {
+        "title": "• Du darfst eine Aktion, die 2 oder weniger kostet, kostenlos ausspielen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Toy Story"]
+  },
   "Fk5": {
     "name": "Gopher",
     "version": "Honig-Koch",
@@ -1008,6 +1127,32 @@
     "flavorText": "„Ich … sagte … RAUS … HIER!“",
     "searchableKeywords": ["Tangled", "Rapunzel"]
   },
+  "zm4": {
+    "name": "Cap",
+    "version": "Cleverer Fuchs",
+    "rulesText": "\\Problemlösung\\ Wenn du diesen Charakter ausspielst, ziehe 2 Karten und wähle danach 1 Karte aus deiner Hand und wirf sie ab.",
+    "text": [
+      {
+        "title": "Problemlösung",
+        "description": "Wenn du diesen Charakter ausspielst, ziehe 2 Karten und wähle danach 1 Karte aus deiner Hand und wirf sie ab."
+      }
+    ],
+    "flavorText": "„Das wäre sehr viel einfacher, wenn diese Ranken besser schmecken würden.“",
+    "searchableKeywords": ["Fox and the Hound", "Cap und Capper"]
+  },
+  "5au": {
+    "name": "Russel",
+    "version": "Junior-Naturforscher",
+    "rulesText": "\\Senioren-Helfer-Abzeichen\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du ihn und einen deiner anderen Charaktere kostenlos zu dem selben Ort bewegen.",
+    "text": [
+      {
+        "title": "Senioren-Helfer-Abzeichen",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, darfst du ihn und einen deiner anderen Charaktere kostenlos zu dem selben Ort bewegen."
+      }
+    ],
+    "flavorText": "„Wir Naturforscher lieben sie alle, ob Pflanze, Fisch oder winzige Qualle.“",
+    "searchableKeywords": ["Oben", "Up"]
+  },
   "4I7": {
     "name": "Ruh",
     "version": "Honig-Schlingel",
@@ -1032,6 +1177,43 @@
     "flavorText": "„Hathi! Hör auf, über deine Medaille zu quasseln und unternimm etwas gegen diese widerspenstige Vegetation!“",
     "searchableKeywords": ["Jungle Book", "Dschungelbuch"]
   },
+  "OkJ": {
+    "name": "Aladdin",
+    "version": "Trägt seinen Teil bei",
+    "rulesText": "\\Beseitige es\\ Wenn du diesen Charakter ausspielst, darfst du 1 {I} bezahlen, um einen Gegenstand deiner Wahl zu verbannen.",
+    "text": [
+      {
+        "title": "Beseitige es",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du 1 {I} bezahlen, um einen Gegenstand deiner Wahl zu verbannen."
+      }
+    ],
+    "flavorText": "„Ich weiß zwar nicht, was das ist, aber lass es uns dorthin zurückschicken, wo es herkommt.“",
+    "searchableKeywords": ["Aladdin"]
+  },
+  "j84": {
+    "name": "Madame Mim",
+    "version": "Kolibri",
+    "rulesText": "<Wendig> %\\Genau wie ich es mag\\ Alle Karten in deiner Hand zählen als {C}.",
+    "text": [
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Genau wie ich es mag",
+        "description": "Alle Karten in deiner Hand zählen als {C}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "J61": {
+    "name": "Minnie Maus",
+    "version": "Neugierige Abenteurerin",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Minnie spähte durch das Gewirr aus Dornen. War das ein schmaler Durchgang in die Ranke? Sie fragte sich, wie weit er wohl führen würde.",
+    "searchableKeywords": []
+  },
   "kl5": {
     "name": "Kevin",
     "version": "Flugunfähiger Vogel",
@@ -1045,6 +1227,19 @@
     "flavorText": "„Sie hat jetzt genug Futter für ihre Brut gesammelt und muss wieder zurück.“%—Dug",
     "searchableKeywords": ["Oben", "Up"]
   },
+  "ATq": {
+    "name": "Peter Pan",
+    "version": "Von der Ranke erschaffen",
+    "rulesText": "\\Cleverer Trick\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere herausgefordert wird, wählt die herausfordernde Person 1 Karte aus ihrer Hand und wirft sie ab.",
+    "text": [
+      {
+        "title": "Cleverer Trick",
+        "description": "Jedes Mal, wenn einer deiner Flutgestalt-Charaktere herausgefordert wird, wählt die herausfordernde Person 1 Karte aus ihrer Hand und wirft sie ab."
+      }
+    ],
+    "flavorText": "Die Kopien, welche die Ranke erschuf, leuchteten aufgrund der gemischten Tinte darin.",
+    "searchableKeywords": ["Peter Pan"]
+  },
   "7VX": {
     "name": "Capper",
     "version": "Kreativer Geschichtenerzähler",
@@ -1052,6 +1247,14 @@
     "text": "",
     "flavorText": "„Und dann, als Chef gerade schlief, berührte die Ranke sein Bein und er sprang <so> in die Luft!“%—Capper",
     "searchableKeywords": ["Fox and the Hound", "Cap und Capper"]
+  },
+  "yZR": {
+    "name": "Knolli",
+    "version": "Vampir-Kartoffel",
+    "rulesText": "<Kartoffel-Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Gegenstände namens Kartoffel auszuspielen.)",
+    "text": "<Kartoffel-Gestaltwandel> 5 {I} (Du kannst 5 {I} zahlen, um diesen Charakter auf einen deiner Gegenstände namens Kartoffel auszuspielen.)",
+    "flavorText": "„Es funktioniert! Sie ist erschaffen!“%—Dr. Buxbaum",
+    "searchableKeywords": ["Darkwing Duck"]
   },
   "GWn": {
     "name": "Dr. Buxbaum",
@@ -1110,6 +1313,30 @@
     "flavorText": "",
     "searchableKeywords": ["Tangled", "Rapunzel"]
   },
+  "rAy": {
+    "name": "Cetus",
+    "version": "Mächtige Seeschlange",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Okay, also diese Ranke? Nicht Teil meines Plans. Aber ich bin ein pfiffiger Gott. Man muss sich den Umständen anpassen. Adaptieren. Lasst die Seeschlange frei.“%—Hades",
+    "searchableKeywords": ["Hercules"]
+  },
+  "Bqs": {
+    "name": "Mushu",
+    "version": "Verstohlener Drache",
+    "rulesText": "<Wendig> %\\Ausschlaggebend\\ Jedes Mal, wenn dieser Charakter erkundet, falls mindestens eine gegnerische Person mehr Karten auf der Hand hat als du, darfst du 1 Karte ziehen.",
+    "text": [
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Ausschlaggebend",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, falls mindestens eine gegnerische Person mehr Karten auf der Hand hat als du, darfst du 1 Karte ziehen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Mulan"]
+  },
   "QUJ": {
     "name": "Carl Fredricksen & Russel",
     "version": "Unerschrockene Entdecker",
@@ -1162,6 +1389,59 @@
     "flavorText": "",
     "searchableKeywords": ["Tangled", "Rapunzel"]
   },
+  "S3p": {
+    "name": "Flash Parr",
+    "version": "Superschnell",
+    "rulesText": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Flash Parr auszuspielen.)%<Wendig> %\\Folge mir!\\ Jedes Mal, wenn dieser Charakter erkundet, darfst du die oberste Karte deines Decks aufdecken. Wenn du dies tust, darfst du sie ausspielen. Wenn du sie nicht ausspielst, lege die Karte auf deinen Ablagestapel. (Du bezahlst dabei alle Kosten.)",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Flash Parr auszuspielen.)"
+      },
+      {
+        "title": "<Wendig>"
+      },
+      {
+        "title": "Folge mir!",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, darfst du die oberste Karte deines Decks aufdecken. Wenn du dies tust, darfst du sie ausspielen. Wenn du sie nicht ausspielst, lege die Karte auf deinen Ablagestapel. (Du bezahlst dabei alle Kosten.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Die Unglaublichen", "Incredibles"]
+  },
+  "Znx": {
+    "name": "Isma",
+    "version": "Anspruchsvolle Kundin",
+    "rulesText": "\\Entsorge das\\ Wenn du diesen Charakter ausspielst, verlieren alle gegnerischen Mitspielenden je 1 Legende.",
+    "text": [
+      {
+        "title": "Entsorge das",
+        "description": "Wenn du diesen Charakter ausspielst, verlieren alle gegnerischen Mitspielenden je 1 Legende."
+      }
+    ],
+    "flavorText": "„Gibt es irgendwas auf dieser Karte, was nicht in Soße ersäuft?“",
+    "searchableKeywords": ["Emperors New Groove", "Ein Königreich für ein Lama"]
+  },
+  "Cqh": {
+    "name": "Kusco",
+    "version": "Wählerischer Kunde",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Gib mir die Chili-Käse-Probierplatte, aber lass das Chili weg und bring den Käse separat. Oh, und extra Soße ... Hey! Hörst du mir zu? Ich bestelle gerade!“",
+    "searchableKeywords": ["Emperors New Groove", "Ein Königreich für ein Lama"]
+  },
+  "W16": {
+    "name": "Der Bär",
+    "version": "Territoriales Tier",
+    "rulesText": "\\Wilde Wut\\ Solange dieser Charakter beschädigt ist, erhält er +3 {S}.",
+    "text": [
+      {
+        "title": "Wilde Wut",
+        "description": "Solange dieser Charakter beschädigt ist, erhält er +3 {S}."
+      }
+    ],
+    "flavorText": "„Sieh mal, Capper. Die Ranke ist diesem Bären nicht gewachsen!“%—Amos Slade",
+    "searchableKeywords": ["Fox and the Hound", "Cap und Capper"]
+  },
   "Vst": {
     "name": "Carl Fredricksen",
     "version": "Im Umzug",
@@ -1178,6 +1458,14 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Oben", "Up"]
+  },
+  "ABg": {
+    "name": "Flash Parr",
+    "version": "Dodgeball-Dynamo",
+    "rulesText": "<Wendig>",
+    "text": "<Wendig>",
+    "flavorText": "„Hey, schau her, hier bin ich! Nein, warte, jetzt bin ich hier drüben! Nein, jetzt bin ich wieder hier!“",
+    "searchableKeywords": ["Die Unglaublichen", "Incredibles"]
   },
   "kLX": {
     "name": "Gaston",
@@ -1236,6 +1524,30 @@
     "text": "<Temporärer Roter-Panda-Gestaltwandel> 2 {I} (Du kannst 2 {I} zahlen, um diesen Charakter auf einen deiner Roter-Panda-Charaktere auszuspielen. Entferne am Ende deines Zuges jeglichen Schaden von diesem Charakter und nimm nur diese Karte zurück auf deine Hand.)",
     "flavorText": "",
     "searchableKeywords": ["Turning Red", "Rot"]
+  },
+  "ZQC": {
+    "name": "Großmutter Wu",
+    "version": "Wilder Roter Panda",
+    "rulesText": "<Temporärer Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Großmutter Wu auszuspielen. Entferne am Ende deines Zuges jeglichen Schaden von diesem Charakter und nimm nur diese Karte zurück auf deine Hand.)%\\Einschüchternde Strafe\\ Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, sammelst du 2 Legenden und alle gegnerischen Mitspielenden verlieren je 2.",
+    "text": [
+      {
+        "title": "<Temporärer Gestaltwandel> 4 {I} (Du kannst 4 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Großmutter Wu auszuspielen. Entferne am Ende deines Zuges jeglichen Schaden von diesem Charakter und nimm nur diese Karte zurück auf deine Hand.)"
+      },
+      {
+        "title": "Einschüchternde Strafe",
+        "description": "Jedes Mal, wenn dieser Charakter einen anderen Charakter herausfordert, sammelst du 2 Legenden und alle gegnerischen Mitspielenden verlieren je 2."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Rot"]
+  },
+  "9lN": {
+    "name": "King Louie",
+    "version": "König des Swing",
+    "rulesText": "<Singen> 6 (Die Kosten dieses Charakters gelten als 6 für das Singen von Liedern.)",
+    "text": "<Singen> 6 (Die Kosten dieses Charakters gelten als 6 für das Singen von Liedern.)",
+    "flavorText": "„Kommt schon, tanzt mit dem alten King Louie. Ihr müsst euch entspannen, Leute!“",
+    "searchableKeywords": ["Jungle Book", "Dschungelbuch"]
   },
   "C3L": {
     "name": "Biest",
@@ -1368,6 +1680,14 @@
     "flavorText": "„Smee! Wir haben ungebetene Gäste – Zeit, ihnen unsere berühmte Gastfreundschaft zu zeigen.“",
     "searchableKeywords": ["Peter Pan"]
   },
+  "W1X": {
+    "name": "Peter Pan",
+    "version": "Ranken-Duellant",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Komm schon, du großer Rabauke. Du musst schneller sein!“",
+    "searchableKeywords": ["Peter Pan"]
+  },
   "kAB": {
     "name": "Belle & Biest",
     "version": "Wie das Licht der Sonn'",
@@ -1388,6 +1708,89 @@
     "flavorText": "",
     "searchableKeywords": ["Die Schöne und das Biest", "Beauty and the Beast"]
   },
+  "d3T": {
+    "name": "Flash Parr & Violetta Parr",
+    "version": "Supergeschwister",
+    "rulesText": "<Kombo-Gestaltwandel> 6 {I} (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Flash Parr oder Violetta Parr oder auf beide zusammen auszuspielen.)%<Wendig>, <Robust> +1%\\Unglaubliche Taktiken\\ Jedes Mal, wenn dieser Charakter erkundet oder herausfordert, ziehe für jede Karte, die unter ihm liegt, je 1 Karte.",
+    "text": [
+      {
+        "title": "<Kombo-Gestaltwandel> 6 {I} (Du kannst 6 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Flash Parr oder Violetta Parr oder auf beide zusammen auszuspielen.)"
+      },
+      {
+        "title": "<Wendig>, <Robust> +1"
+      },
+      {
+        "title": "Unglaubliche Taktiken",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet oder herausfordert, ziehe für jede Karte, die unter ihm liegt, je 1 Karte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Die Unglaublichen", "Incredibles"]
+  },
+  "id9": {
+    "name": "Quack, der Bruchpilot",
+    "version": "Himmelspatrouille",
+    "rulesText": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+    "text": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+    "flavorText": "Quack, der Bruchpilot: „Keine Sorge, Darkwing, ich sorge dafür, dass wir sicher dort abstürzen!“%Darkwing Duck: „Genau das macht mir Angst.“",
+    "searchableKeywords": ["Darkwing Duck"]
+  },
+  "BnV": {
+    "name": "Dug",
+    "version": "Guter Junge",
+    "rulesText": "\\Hol's!\\ Wenn du diesen Charakter ausspielst, falls du mindestens einen Gegenstand im Spiel hast, ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "Hol's!",
+        "description": "Wenn du diesen Charakter ausspielst, falls du mindestens einen Gegenstand im Spiel hast, ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "„Ein Ball, ein Ball! Ich werd verrückt, ein Ball!“",
+    "searchableKeywords": ["Oben", "Up"]
+  },
+  "zgm": {
+    "name": "Rosa",
+    "version": "Hat alle im Visier",
+    "rulesText": "\\Immer\\ Alle gegnerischen Personen spielen mit der obersten Karte ihres Decks offen.",
+    "text": [
+      {
+        "title": "Immer",
+        "description": "Alle gegnerischen Personen spielen mit der obersten Karte ihres Decks offen."
+      }
+    ],
+    "flavorText": "„Ihre Berichte haben sie bestimmt schon abgegeben. Nicht wahr?“",
+    "searchableKeywords": ["Monsters, Inc.", "Monster AG"]
+  },
+  "ZPO": {
+    "name": "Merlin",
+    "version": "Sieht die Zukunft voraus",
+    "rulesText": "\\Kleine Trickserei\\ Wenn du diesen Charakter ausspielst, darfst du die unterste Karte deines Decks ziehen.%\\Nichts als Scherereien\\ Wenn dieser Charakter verbannt wird, lege diese Karte von deinem Ablagestapel unter dein Deck.",
+    "text": [
+      {
+        "title": "Kleine Trickserei",
+        "description": "Wenn du diesen Charakter ausspielst, darfst du die unterste Karte deines Decks ziehen."
+      },
+      {
+        "title": "Nichts als Scherereien",
+        "description": "Wenn dieser Charakter verbannt wird, lege diese Karte von deinem Ablagestapel unter dein Deck."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
+  },
+  "Lhx": {
+    "name": "Quackerjack",
+    "version": "Verrückter Spielzeugmacher",
+    "rulesText": "\\Böses Design\\ Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, lege die obersten 4 Karten deines Decks auf deinen Ablagestapel. Du darfst einem Charakter deiner Wahl für jeden Gegenstand, der auf diese Weise auf deinen Ablagestapel gelegt wurde, 1 Schaden zufügen.",
+    "text": [
+      {
+        "title": "Böses Design",
+        "description": "Wenn du diesen Charakter ausspielst und jedes Mal, wenn er erkundet, lege die obersten 4 Karten deines Decks auf deinen Ablagestapel. Du darfst einem Charakter deiner Wahl für jeden Gegenstand, der auf diese Weise auf deinen Ablagestapel gelegt wurde, 1 Schaden zufügen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Darkwing Duck"]
+  },
   "WGT": {
     "name": "Belle",
     "version": "Liest immer",
@@ -1401,6 +1804,19 @@
     "flavorText": "„Ich habe gerade die wundervollste Geschichte zu Ende gelesen. Über eine Bohnenranke und einen Riesen …“",
     "searchableKeywords": ["Die Schöne und das Biest", "Beauty and the Beast"]
   },
+  "i2l": {
+    "name": "Ellie Fredricksen",
+    "version": "Abenteuerpartnerin",
+    "rulesText": "\\Immer bei dir\\ Wenn dieser Charakter verbannt wird, darfst du diese Karte verdeckt und erschöpft in deinen Tintenvorrat legen.",
+    "text": [
+      {
+        "title": "Immer bei dir",
+        "description": "Wenn dieser Charakter verbannt wird, darfst du diese Karte verdeckt und erschöpft in deinen Tintenvorrat legen."
+      }
+    ],
+    "flavorText": "„Das Abenteuer findet uns, wo immer wir auch hingehen.“",
+    "searchableKeywords": ["Oben", "Up"]
+  },
   "iGe": {
     "name": "Mrs. Hasagawa",
     "version": "Obstverkäuferin",
@@ -1408,6 +1824,32 @@
     "text": "",
     "flavorText": "Die alte Frau drehte sich um, als der Schatten der Ranke auf ihren Obststand fiel. „Hallo, Liebes! Möchtest du heute wieder Mangos?“",
     "searchableKeywords": ["Lilo and Stitch", "Lilo und Stitch"]
+  },
+  "iIf": {
+    "name": "Alpha",
+    "version": "Rudelführer",
+    "rulesText": "\\Wer will ein Leckerli?\\ Jedes Mal, wenn du einen Gegenstand ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +1 {S} und <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+    "text": [
+      {
+        "title": "Wer will ein Leckerli?",
+        "description": "Jedes Mal, wenn du einen Gegenstand ausspielst, erhält ein Charakter deiner Wahl in diesem Zug +1 {S} und <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)"
+      }
+    ],
+    "flavorText": "„Jetzt finden wir den kleinen Briefträger und den, der nach Pflaumen riecht.“",
+    "searchableKeywords": ["Oben", "Up"]
+  },
+  "7g9": {
+    "name": "Sulley",
+    "version": "Strategischer Erschrecker",
+    "rulesText": "\\Schreckmoment\\ Solange du 5 oder mehr Karten in deinem Tintenvorrat hast, erhält dieser Charakter +2 {S}.",
+    "text": [
+      {
+        "title": "Schreckmoment",
+        "description": "Solange du 5 oder mehr Karten in deinem Tintenvorrat hast, erhält dieser Charakter +2 {S}."
+      }
+    ],
+    "flavorText": "„Zeigen sie ihnen, was es heißt ein Meisterschrecker zu sein!“%—Henry J. Waternoose III",
+    "searchableKeywords": ["Monsters, Inc.", "Monster AG"]
   },
   "ioe": {
     "name": "Randall Boggs",
@@ -1425,6 +1867,30 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Monsters, Inc.", "Monster AG"]
+  },
+  "ckw": {
+    "name": "Ferkel",
+    "version": "Honig-Magierlehrling",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Ist schon gut, Ferkel. Angst zu haben bedeutet nicht, dass du nicht mutig bist. Ich glaube sogar, dass man nur mutig sein kann, wenn man zuerst Angst hat!“%—Christopher Robin, Honig-Weiser",
+    "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
+  },
+  "JLp": {
+    "name": "Micky Maus",
+    "version": "Wissbegieriger Entdecker",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„Oh Junge, ich wusste, dass es sich lohnen würde, diese Ranke hochzuklettern. Hier oben gibt es so viel zu sehen!“",
+    "searchableKeywords": ["Mickey Mouse", "Mickey Maus", "Micky Mouse"]
+  },
+  "iib": {
+    "name": "Hades",
+    "version": "Akribischer Intrigant",
+    "rulesText": "<Behütet>",
+    "text": "<Behütet>",
+    "flavorText": "„Dieser kleine Kerl ist so hässlich! Ich liebe ihn! Und wie er die Flut-Tinte aufsaugt? Selbst ich hätte es nicht besser planen können.“",
+    "searchableKeywords": ["Hercules"]
   },
   "5gt": {
     "name": "Antonio Madrigal",
@@ -1450,6 +1916,19 @@
       }
     ],
     "flavorText": "",
+    "searchableKeywords": ["Robin Hood"]
+  },
+  "0c7": {
+    "name": "Robin Hood",
+    "version": "Von der Ranke erschaffen",
+    "rulesText": "\\Scharfsichtig\\ Deine Flutgestalt-Charaktere erhalten <Alarmiert>. (Sie können herausfordern, als hätten sie Wendig.)",
+    "text": [
+      {
+        "title": "Scharfsichtig",
+        "description": "Deine Flutgestalt-Charaktere erhalten <Alarmiert>. (Sie können herausfordern, als hätten sie Wendig.)"
+      }
+    ],
+    "flavorText": "Die Ranke schuf Verteidiger, die die umliegenden Länder schweigend bewachten.",
     "searchableKeywords": ["Robin Hood"]
   },
   "aJj": {
@@ -1490,6 +1969,32 @@
     "flavorText": "",
     "searchableKeywords": ["Oben", "Up"]
   },
+  "Ush": {
+    "name": "Henry J. Waternoose III",
+    "version": "Geschäftsführer",
+    "rulesText": "\\Die Bilanz\\ Solange du mehr Karten als jede gegnerische Person in deinem Tintenvorrat hast, erhält dieser Charakter +2 {L} und <Behütet>.",
+    "text": [
+      {
+        "title": "Die Bilanz",
+        "description": "Solange du mehr Karten als jede gegnerische Person in deinem Tintenvorrat hast, erhält dieser Charakter +2 {L} und <Behütet>."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monster AG"]
+  },
+  "AWz": {
+    "name": "I-Aah",
+    "version": "Honig-Gelehrter",
+    "rulesText": "\\Honig-Taktiken\\ Jedes Mal, wenn dieser Charakter erkundet, wähle einen deiner Honig-Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges +1 {L} und <Behütet>. (Gegnerische Mitspielende können den Charakter nicht auswählen, außer um ihn herauszufordern.)",
+    "text": [
+      {
+        "title": "Honig-Taktiken",
+        "description": "Jedes Mal, wenn dieser Charakter erkundet, wähle einen deiner Honig-Charaktere. Jener erhält bis zu Beginn deines nächsten Zuges +1 {L} und <Behütet>. (Gegnerische Mitspielende können den Charakter nicht auswählen, außer um ihn herauszufordern.)"
+      }
+    ],
+    "flavorText": "„Ist schon okay. Stapel ruhig noch mehr Sachen drauf. Ich komme schon klar.“",
+    "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
+  },
   "UbM": {
     "name": "Darkwing Duck & Quack",
     "version": "Das Beste aus Sankt Erpelsburg",
@@ -1508,6 +2013,38 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Darkwing Duck"]
+  },
+  "Fqd": {
+    "name": "Violetta Parr",
+    "version": "Superresilient",
+    "rulesText": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Violetta Parr auszuspielen.)%<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)%\\Heldenhafte Synergie\\ Jedes Mal, wenn du diesen Charakter oder einen anderen Held-Charakter ausspielst, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen.",
+    "text": [
+      {
+        "title": "<Gestaltwandel> 3 {I} (Du kannst 3 {I} zahlen, um diesen Charakter auf einen deiner Charaktere namens Violetta Parr auszuspielen.)"
+      },
+      {
+        "title": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)"
+      },
+      {
+        "title": "Heldenhafte Synergie",
+        "description": "Jedes Mal, wenn du diesen Charakter oder einen anderen Held-Charakter ausspielst, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Die Unglaublichen", "Incredibles"]
+  },
+  "bsG": {
+    "name": "Aladdin",
+    "version": "Von der Ranke erschaffen",
+    "rulesText": "\\Von der Ranke versorgt\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere erkundet, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen.",
+    "text": [
+      {
+        "title": "Von der Ranke versorgt",
+        "description": "Jedes Mal, wenn einer deiner Flutgestalt-Charaktere erkundet, darfst du 1 Karte ziehen und danach 1 Karte aus deiner Hand auswählen und abwerfen."
+      }
+    ],
+    "flavorText": "„Halt, das ist kein Aladdin-Glimmer – das ist eine Rankenbrut!“%—Shanzay, eine Luminari",
+    "searchableKeywords": ["Aladdin"]
   },
   "jjR": {
     "name": "Willie der Riese",
@@ -1538,6 +2075,22 @@
     "flavorText": "",
     "searchableKeywords": ["Lilo and Stitch", "Lilo und Stitch"]
   },
+  "kT3": {
+    "name": "Stitch",
+    "version": "Beschützer der Frösche",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "„MEIN Frosch! Er ist sehr wichtig!“",
+    "searchableKeywords": ["Lilo and Stitch", "Lilo und Stitch"]
+  },
+  "y59": {
+    "name": "Sheriff von Nottingham",
+    "version": "Schlächter der Ranken",
+    "rulesText": "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
+    "text": "<Herausfordern> +3 (Während dieser Charakter herausfordert, erhält er +3 {S}.)",
+    "flavorText": "„Nun sieh mal her, du übergroßes Unkraut …“",
+    "searchableKeywords": ["Robin Hood"]
+  },
   "r0B": {
     "name": "Mata",
     "version": "Fleischbuden-Kellnerin",
@@ -1545,6 +2098,35 @@
     "text": "",
     "flavorText": "„Drei Portionen Rippchen mit Speck, zwei Inkapfannen mit Käse extra, einmal Leber mit Äpfeln und Zwiebeln, ein Fisch des Tages und 'n Filetsteak, das wie 'ne Forelle aussehen soll.“",
     "searchableKeywords": ["Emperors New Groove", "Ein Königreich für ein Lama"]
+  },
+  "F0D": {
+    "name": "Violetta Parr",
+    "version": "Kraftfeld-Übungen",
+    "rulesText": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+    "text": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)",
+    "flavorText": "„Mama? Tut mir leid, dass ich anrufe, aber ich glaube da draußen vor dem Haus ist ein riesiges Problem.“",
+    "searchableKeywords": ["Die Unglaublichen", "Incredibles"]
+  },
+  "0zk": {
+    "name": "Dr. Van Hamsterdam",
+    "version": "Böser Beobachter",
+    "rulesText": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+    "text": "<Alarmiert> (Dieser Charakter kann herausfordern, als hätte er Wendig.)",
+    "flavorText": "„Niemand kann sich vor mir verstecken. Von hier aus kann ich <alles> sehen!“",
+    "searchableKeywords": ["Lilo and Stitch", "Lilo und Stitch"]
+  },
+  "dxV": {
+    "name": "Eule",
+    "version": "Honig-Ranger",
+    "rulesText": "\\Honig-Allianz\\ Solange du mindestens einen weiteren Honig-Charakter im Spiel hast, erhält dieser Charakter <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)",
+    "text": [
+      {
+        "title": "Honig-Allianz",
+        "description": "Solange du mindestens einen weiteren Honig-Charakter im Spiel hast, erhält dieser Charakter <Robust> +2. (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 2.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
   },
   "uDC": {
     "name": "Megavolt",
@@ -1606,6 +2188,22 @@
     "flavorText": "„Moment Freundchen, das reicht! Du hast einen Sonderwunsch? Kochs dir selber, ich <kündige>!“%—Der wütende Koch",
     "searchableKeywords": ["Emperors New Groove", "Ein Königreich für ein Lama"]
   },
+  "Ocg": {
+    "name": "Kronk",
+    "version": "Fleischbuden-Koch",
+    "rulesText": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)%\\Bereit zur Abholung!\\ Einmal während deines Zuges darfst du 1 {I} bezahlen, um 1 Karte zu ziehen und danach 1 Karte aus deiner Hand auszuwählen und abzuwerfen.",
+    "text": [
+      {
+        "title": "<Robust> +1 (Reduziere jeglichen Schaden, der diesem Charakter zugefügt wird, um 1.)"
+      },
+      {
+        "title": "Bereit zur Abholung!",
+        "description": "Einmal während deines Zuges darfst du 1 {I} bezahlen, um 1 Karte zu ziehen und danach 1 Karte aus deiner Hand auszuwählen und abzuwerfen."
+      }
+    ],
+    "flavorText": "„Willst du das extra knusprig?“",
+    "searchableKeywords": ["Emperors New Groove", "Ein Königreich für ein Lama"]
+  },
   "v6P": {
     "name": "Mulan",
     "version": "Von der Ranke erschaffen",
@@ -1618,6 +2216,36 @@
     ],
     "flavorText": "Diese Kopie ist im Kampf genauso gut wie das Original – ganz ohne Training.",
     "searchableKeywords": ["Mulan"]
+  },
+  "mTj": {
+    "name": "Diablo",
+    "version": "Beschützt seine Herrin",
+    "rulesText": "\\Wirbel aus Federn\\ Deine Charaktere namens Malefiz erhalten <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+    "text": [
+      {
+        "title": "Wirbel aus Federn",
+        "description": "Deine Charaktere namens Malefiz erhalten <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)"
+      }
+    ],
+    "flavorText": "„Du bist der Einzige, dem ich vertrauen kann, mein Liebling.“%—Malefiz",
+    "searchableKeywords": ["Dornröschen", "Sleeping Beauty"]
+  },
+  "MAE": {
+    "name": "Scar",
+    "version": "Von der Ranke erschaffen",
+    "rulesText": "\\Die Belohnung des Siegers\\ Jedes Mal während deines Zuges, wenn einer deiner Flutgestalt-Charaktere durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 1 Legende.%\\Die Ränge auffüllen\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere im Zug einer gegnerischen Person verbannt wird, ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "Die Belohnung des Siegers",
+        "description": "Jedes Mal während deines Zuges, wenn einer deiner Flutgestalt-Charaktere durch eine Herausforderung einen anderen Charakter verbannt, sammelst du 1 Legende."
+      },
+      {
+        "title": "Die Ränge auffüllen",
+        "description": "Jedes Mal, wenn einer deiner Flutgestalt-Charaktere im Zug einer gegnerischen Person verbannt wird, ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lion King", "Der König der Löwen"]
   },
   "jjL": {
     "name": "Maximus",
@@ -1670,68 +2298,6 @@
     ],
     "flavorText": "",
     "searchableKeywords": []
-  },
-  "9kq": {
-    "name": "Peter Pan",
-    "version": "Von der Ranke erschaffen",
-    "rulesText": "\\Cleverer Trick\\ Jedes Mal, wenn einer deiner Flutgestalt-Charaktere herausgefordert wird, wählt die herausfordernde Person 1 Karte aus ihrer Hand und wirft sie ab.",
-    "text": [
-      {
-        "title": "Cleverer Trick",
-        "description": "Jedes Mal, wenn einer deiner Flutgestalt-Charaktere herausgefordert wird, wählt die herausfordernde Person 1 Karte aus ihrer Hand und wirft sie ab."
-      }
-    ],
-    "flavorText": "Die Kopien, welche die Ranke erschuf, leuchteten aufgrund der gemischten Tinte darin.",
-    "searchableKeywords": ["Peter Pan"]
-  },
-  "iYJ": {
-    "name": "Trixi, die Füchsin",
-    "version": "Expertin für den Fischfang",
-    "rulesText": "\\Einschleichen\\ Wenn du diesen Charakter ausspielst, falls du mindestens einen Charakter mit <Wendig> im Spiel hast, darfst du einen Charakter, Gegenstand oder Ort deiner Wahl, der 2 oder weniger kostet, zurück auf die zugehörige Hand schicken.",
-    "text": [
-      {
-        "title": "Einschleichen",
-        "description": "Wenn du diesen Charakter ausspielst, falls du mindestens einen Charakter mit <Wendig> im Spiel hast, darfst du einen Charakter, Gegenstand oder Ort deiner Wahl, der 2 oder weniger kostet, zurück auf die zugehörige Hand schicken."
-      }
-    ],
-    "flavorText": "„Ich habe mein Abendessen. Wo ist deins, Cap?“",
-    "searchableKeywords": ["Fox and the Hound", "Cap und Capper"]
-  },
-  "cAP": {
-    "name": "Buzz Lightyear",
-    "version": "Bietet Schutz",
-    "rulesText": "\\Actionfigur\\ Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus. Falls du mindestens einen anderen Spielzeug-Charakter im Spiel hast, wähle stattdessen beide Möglichkeiten aus: %• Du darfst eine Aktionskarte, die 2 oder weniger kostet, von deinem Ablagestapel zurück auf deine Hand nehmen.%• Du darfst eine Aktion, die 2 oder weniger kostet, kostenlos ausspielen.",
-    "text": [
-      {
-        "title": "Actionfigur",
-        "description": "Wenn du diesen Charakter ausspielst, wähle eine Möglichkeit aus. Falls du mindestens einen anderen Spielzeug-Charakter im Spiel hast, wähle stattdessen beide Möglichkeiten aus:"
-      },
-      {
-        "title": "• Du darfst eine Aktionskarte, die 2 oder weniger kostet, von deinem Ablagestapel zurück auf deine Hand nehmen."
-      },
-      {
-        "title": "• Du darfst eine Aktion, die 2 oder weniger kostet, kostenlos ausspielen."
-      }
-    ],
-    "flavorText": "",
-    "searchableKeywords": ["Toy Story"]
-  },
-  "7cP": {
-    "name": "Merlin",
-    "version": "Sieht die Zukunft voraus",
-    "rulesText": "\\Kleine Trickserei\\ Wenn du diesen Charakter ausspielst, darfst du die unterste Karte deines Decks ziehen.%\\Nichts als Scherereien\\ Wenn dieser Charakter verbannt wird, lege diese Karte von deinem Ablagestapel unter dein Deck.",
-    "text": [
-      {
-        "title": "Kleine Trickserei",
-        "description": "Wenn du diesen Charakter ausspielst, darfst du die unterste Karte deines Decks ziehen."
-      },
-      {
-        "title": "Nichts als Scherereien",
-        "description": "Wenn dieser Charakter verbannt wird, lege diese Karte von deinem Ablagestapel unter dein Deck."
-      }
-    ],
-    "flavorText": "",
-    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
   },
   "oEU": {
     "name": "Kiki Erpel",
@@ -23640,6 +24206,19 @@
     "flavorText": "Ein Ort ohne Zeit.",
     "searchableKeywords": ["Oben", "Up"]
   },
+  "pbQ": {
+    "name": "Das Schloss des Biests",
+    "version": "Von der Ranke überwuchert",
+    "rulesText": "\\Unmittelbare Gefahr\\ Deine Flutgestalt-Charaktere erhalten <Rasant>. (Die Charaktere können im selben Zug herausfordern, in dem sie ausgespielt werden.)",
+    "text": [
+      {
+        "title": "Unmittelbare Gefahr",
+        "description": "Deine Flutgestalt-Charaktere erhalten <Rasant>. (Die Charaktere können im selben Zug herausfordern, in dem sie ausgespielt werden.)"
+      }
+    ],
+    "flavorText": "Ein tiefes Grollen hallte durch den Wald, als die Ranke das Schloss aus seinen Fundamenten riss.",
+    "searchableKeywords": ["Die Schöne und das Biest", "Beauty and the Beast"]
+  },
   "Zwu": {
     "name": "Carls Haus",
     "version": "Fliegt hoch hinaus",
@@ -23652,6 +24231,36 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Oben", "Up"]
+  },
+  "gIc": {
+    "name": "Hundertmorgenwald",
+    "version": "Honig-Campingplatz",
+    "rulesText": "\\Heimat fern der Heimat\\ Charaktere an diesem Ort erhalten +1 {W}.%\\Honig-Mission\\ Honig-Charaktere an diesem Ort erhalten +1 {L}.",
+    "text": [
+      {
+        "title": "Heimat fern der Heimat",
+        "description": "Charaktere an diesem Ort erhalten +1 {W}."
+      },
+      {
+        "title": "Honig-Mission",
+        "description": "Honig-Charaktere an diesem Ort erhalten +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
+  },
+  "Rb1": {
+    "name": "Rankeneingang",
+    "version": "Unheilvoller Durchgang",
+    "rulesText": "\\Wurzel der Macht\\ Jedes erste Mal, wenn einer deiner Flutgestalt-Charaktere in einem Zug an diesen Ort bewegt wird, darfst du einem Charakter deiner Wahl 1 Schaden zufügen.",
+    "text": [
+      {
+        "title": "Wurzel der Macht",
+        "description": "Jedes erste Mal, wenn einer deiner Flutgestalt-Charaktere in einem Zug an diesen Ort bewegt wird, darfst du einem Charakter deiner Wahl 1 Schaden zufügen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
   },
   "iCW": {
     "name": "Andys Zimmer",
@@ -24681,6 +25290,19 @@
     "flavorText": "",
     "searchableKeywords": ["Pocahontas"]
   },
+  "L8A": {
+    "name": "Beschädigte Schote",
+    "version": "",
+    "rulesText": "\\Erneuerungsprozess\\ {E}, 1 {I} — Lege 1 Karte aus einem Ablagestapel deiner Wahl unter das zugehörige Deck.",
+    "text": [
+      {
+        "title": "Erneuerungsprozess",
+        "description": "{E}, 1 {I} — Lege 1 Karte aus einem Ablagestapel deiner Wahl unter das zugehörige Deck."
+      }
+    ],
+    "flavorText": "„Sieht so aus, als wäre noch eine Rankenbrut unterwegs. Los, schnappen wir sie.“%—Venturo, ein Luminari",
+    "searchableKeywords": ["Lorcana"]
+  },
   "7J0": {
     "name": "Magischer Honigstab",
     "version": "",
@@ -24698,6 +25320,36 @@
     "flavorText": "",
     "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
   },
+  "Srm": {
+    "name": "Die Quelle der Ranke",
+    "version": "",
+    "rulesText": "\\Absaugen\\ Jedes Mal, wenn ein gegnerischer Charakter erkundet, sammelst du 1 Legende, außer die ihm zugehörige Person bezahlt 1 {I}.%\\Strahlende Blüte\\ {E}, 2 {I} — Sammle 1 Legende.",
+    "text": [
+      {
+        "title": "Absaugen",
+        "description": "Jedes Mal, wenn ein gegnerischer Charakter erkundet, sammelst du 1 Legende, außer die ihm zugehörige Person bezahlt 1 {I}."
+      },
+      {
+        "title": "Strahlende Blüte",
+        "description": "{E}, 2 {I} — Sammle 1 Legende."
+      }
+    ],
+    "flavorText": "„Bald wird jeder Tropfen Tinte in Lorcana verbraucht sein …“%—Hana, eine Luminari",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "5EJ": {
+    "name": "Kartoffel",
+    "version": "",
+    "rulesText": "\\Voller Potenzial\\ Dieser Gegenstand kommt erschöpft ins Spiel.",
+    "text": [
+      {
+        "title": "Voller Potenzial",
+        "description": "Dieser Gegenstand kommt erschöpft ins Spiel."
+      }
+    ],
+    "flavorText": "Sie hat nicht viel Geschmack.",
+    "searchableKeywords": ["Darkwing Duck"]
+  },
   "ph9": {
     "name": "Mein Abenteuerbuch",
     "version": "",
@@ -24710,6 +25362,23 @@
     ],
     "flavorText": "„Danke für das Abenteuer – Los, such Dir ein Neues! In Liebe, Ellie“",
     "searchableKeywords": ["Oben", "Up"]
+  },
+  "sMI": {
+    "name": "Rankenschote",
+    "version": "",
+    "rulesText": "\\Zerbrechliche Schale\\ Dieser Gegenstand kommt erschöpft ins Spiel.%\\Regenerieren\\ {E}, 1 {I} — Wähle und verbanne einen deiner Charaktere. Du darfst einen gleichnamigen Charakter kostenlos ausspielen.",
+    "text": [
+      {
+        "title": "Zerbrechliche Schale",
+        "description": "Dieser Gegenstand kommt erschöpft ins Spiel."
+      },
+      {
+        "title": "Regenerieren",
+        "description": "{E}, 1 {I} — Wähle und verbanne einen deiner Charaktere. Du darfst einen gleichnamigen Charakter kostenlos ausspielen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
   },
   "K9I": {
     "name": "Schreikanister",
@@ -24740,6 +25409,49 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Oben", "Up"]
+  },
+  "NTO": {
+    "name": "Schranktür-Portal",
+    "version": "",
+    "rulesText": "\\Klopf, klopf\\ Dieser Gegenstand kommt erschöpft ins Spiel.%\\Wer ist da?\\ {E}, 2 {I} — Schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Charakter-, Gegenstands- oder Ortskarte, die 6 oder weniger kostet, daraus aufdecken und kostenlos ausspielen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck. Lege diese Karte verdeckt und erschöpft in deinen Tintenvorrat.",
+    "text": [
+      {
+        "title": "Klopf, klopf",
+        "description": "Dieser Gegenstand kommt erschöpft ins Spiel."
+      },
+      {
+        "title": "Wer ist da?",
+        "description": "{E}, 2 {I} — Schaue dir die obersten 3 Karten deines Decks an. Du darfst 1 Charakter-, Gegenstands- oder Ortskarte, die 6 oder weniger kostet, daraus aufdecken und kostenlos ausspielen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck. Lege diese Karte verdeckt und erschöpft in deinen Tintenvorrat."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monster AG"]
+  },
+  "3gV": {
+    "name": "Hanas Tintenformer",
+    "version": "",
+    "rulesText": "\\Verjüngende Kraft\\ {E} — Entferne bis zu 2 Schaden von einem Charakter deiner Wahl. Falls jener Charakter mindestens eine Karte unter sich hat, erhält er bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)",
+    "text": [
+      {
+        "title": "Verjüngende Kraft",
+        "description": "{E} — Entferne bis zu 2 Schaden von einem Charakter deiner Wahl. Falls jener Charakter mindestens eine Karte unter sich hat, erhält er bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der dem Charakter zugefügt wird, um 1.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "3R1": {
+    "name": "Lachkanister",
+    "version": "",
+    "rulesText": "\\Nachahmer\\ {E} — Lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat. Eine gegnerische Person deiner Wahl darf die oberste Karte ihres Decks verdeckt und erschöpft in ihren Tintenvorrat legen.",
+    "text": [
+      {
+        "title": "Nachahmer",
+        "description": "{E} — Lege die oberste Karte deines Decks verdeckt und erschöpft in deinen Tintenvorrat. Eine gegnerische Person deiner Wahl darf die oberste Karte ihres Decks verdeckt und erschöpft in ihren Tintenvorrat legen."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monster AG"]
   },
   "bPp": {
     "name": "Hundedolmetscher",
@@ -24779,6 +25491,36 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Mulan"]
+  },
+  "qNx": {
+    "name": "Der Unkrautvernichter",
+    "version": "",
+    "rulesText": "\\Volle Kraft\\ {E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}.)%\\Klarer Schnitt\\ 2 {I}, Verbanne diesen Gegenstand — Verbanne einen Rankenbrut-Charakter deiner Wahl.",
+    "text": [
+      {
+        "title": "Volle Kraft",
+        "description": "{E}, 1 {I} — Ein Charakter deiner Wahl erhält in diesem Zug <Herausfordern> +2. (Während der Charakter herausfordert, erhält er +2 {S}.)"
+      },
+      {
+        "title": "Klarer Schnitt",
+        "description": "2 {I}, Verbanne diesen Gegenstand — Verbanne einen Rankenbrut-Charakter deiner Wahl."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Darkwing Duck"]
+  },
+  "Kjs": {
+    "name": "Absorbierende Blume",
+    "version": "",
+    "rulesText": "\\Metamorphose\\ {E}, 1 {I} — Falls in diesem Zug ein Charakter durch eine Herausforderung verbannt wurde, ziehe 1 Karte.",
+    "text": [
+      {
+        "title": "Metamorphose",
+        "description": "{E}, 1 {I} — Falls in diesem Zug ein Charakter durch eine Herausforderung verbannt wurde, ziehe 1 Karte."
+      }
+    ],
+    "flavorText": "„Oh, das ist faszinierend! Wie funktioniert das?“%—Hana, eine Luminari",
+    "searchableKeywords": ["Peter Pan"]
   },
   "m5E": {
     "name": "Sicherungsseil",
@@ -27497,6 +28239,14 @@
     "flavorText": "You're never not on my mind",
     "searchableKeywords": ["Turning Red", "Rot"]
   },
+  "dYy": {
+    "name": "Du hast jetzt Feuer",
+    "version": "",
+    "rulesText": "%Ein Charakter deiner Wahl erhält in diesem Zug <Rasant> und <Herausfordern> +2. (Er kann im selben Zug herausfordern, in dem er ausgespielt wird. Während er herausfordert, erhält er +2 {S}.)",
+    "text": "Ein Charakter deiner Wahl erhält in diesem Zug <Rasant> und <Herausfordern> +2. (Er kann im selben Zug herausfordern, in dem er ausgespielt wird. Während er herausfordert, erhält er +2 {S}.)",
+    "flavorText": "",
+    "searchableKeywords": ["Aladdin"]
+  },
   "QV6": {
     "name": "Mit 'nem guten Freund",
     "version": "",
@@ -27511,6 +28261,14 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
+  },
+  "eVx": {
+    "name": "Versteinern",
+    "version": "",
+    "rulesText": "Erschöpfe einen gegnerischen Charakter deiner Wahl.",
+    "text": "Erschöpfe einen gegnerischen Charakter deiner Wahl.",
+    "flavorText": "„Was verursacht dieses schreckliche Geräusch? Es klingt, als käme es auf uns zu.“%—Shanzay, eine Luminari",
+    "searchableKeywords": ["Lorcana"]
   },
   "AFL": {
     "name": "Einzig und allein",
@@ -27527,6 +28285,22 @@
     "text": "Deine Flutgestalt-Charaktere erhalten bis zu Beginn deines nächsten Zuges <Wendig>. (Nur Charaktere mit Wendig können sie herausfordern.)",
     "flavorText": "Das Leuchten der aus Ranken erschaffenen Kopien war wunderschön, aber beunruhigend.",
     "searchableKeywords": ["Robin Hood"]
+  },
+  "vU3": {
+    "name": "Knappes Entkommen",
+    "version": "",
+    "rulesText": "Schicke bis zu 2 Charaktere, Gegenstände oder Orte deiner Wahl, die je 2 oder weniger kosten, auf die zugehörige Hand zurück.",
+    "text": "Schicke bis zu 2 Charaktere, Gegenstände oder Orte deiner Wahl, die je 2 oder weniger kosten, auf die zugehörige Hand zurück.",
+    "flavorText": "",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "ib5": {
+    "name": "Die Blume verdorrt",
+    "version": "",
+    "rulesText": "%Füge jedem gegnerischen beschädigten Charakter 2 Schaden zu.",
+    "text": "Füge jedem gegnerischen beschädigten Charakter 2 Schaden zu.",
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Die Hexe und der Zauberer"]
   },
   "jj2": {
     "name": "Durchdringende Attacke",
@@ -27552,6 +28326,29 @@
     "flavorText": "Auch wenn die Chancen noch so gering erscheinen, Micky und Minnie werden einen Weg finden.",
     "searchableKeywords": []
   },
+  "9IV": {
+    "name": "Roter-Mond-Ritual",
+    "version": "",
+    "rulesText": "<Gemeinsam singen> 7 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 7 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)%Verbanne einen Charakter deiner Wahl.",
+    "text": [
+      {
+        "title": "<Gemeinsam singen> 7 (Du kannst beliebig viele deiner Charaktere oder Charaktere deiner Teammitglieder, die zusammen 7 oder mehr kosten, {E}, damit sie dieses Lied kostenlos singen.)"
+      },
+      {
+        "title": "Verbanne einen Charakter deiner Wahl."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Rot"]
+  },
+  "qZ0": {
+    "name": "Alarmstufe Rot",
+    "version": "",
+    "rulesText": "Verbanne einen Charakter deiner Wahl mit 3 oder weniger {S}. Wenn du mindestens einen Monster-Charakter im Spiel hast, verliert eine gegnerische Person deiner Wahl 1 Legende.",
+    "text": "Verbanne einen Charakter deiner Wahl mit 3 oder weniger {S}. Wenn du mindestens einen Monster-Charakter im Spiel hast, verliert eine gegnerische Person deiner Wahl 1 Legende.",
+    "flavorText": "„Bitte Ruhe bewahren. Dies ist keine Übung.“%—CDA-Agent",
+    "searchableKeywords": ["Monsters, Inc.", "Monster AG"]
+  },
   "rm3": {
     "name": "RAHR!",
     "version": "",
@@ -27568,6 +28365,14 @@
     "flavorText": "Die Vision zeigte die Stadt, aber nicht die Quelle ihrer Macht.",
     "searchableKeywords": ["Hercules"]
   },
+  "5UQ": {
+    "name": "Das wird ein Spaß!",
+    "version": "",
+    "rulesText": "%Mache einen Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
+    "text": "Mache einen Charakter deiner Wahl bereit. Er kann in diesem Zug nicht mehr erkunden.",
+    "flavorText": "",
+    "searchableKeywords": ["Winnie the Pooh", "Winnie Puuh"]
+  },
   "qAT": {
     "name": "Stromstoß",
     "version": "",
@@ -27576,6 +28381,22 @@
     "flavorText": "Sulley: „Was war das?“%Mike: „Ich weiß es nicht, aber es wäre echt fantastisch, wenn es nie wieder passieren würde.“",
     "searchableKeywords": ["Monsters, Inc.", "Monster AG"]
   },
+  "Uhe": {
+    "name": "Fokussierte Suche",
+    "version": "",
+    "rulesText": "Schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Charakterkarte namens Kevin, oder eine Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    "text": "Schaue dir die obersten 4 Karten deines Decks an. Du darfst 1 Charakterkarte namens Kevin, oder eine Gegenstandskarte daraus aufdecken und auf deine Hand nehmen. Lege die restlichen Karten in beliebiger Reihenfolge unter dein Deck.",
+    "flavorText": "",
+    "searchableKeywords": ["Oben", "Up"]
+  },
+  "X0p": {
+    "name": "Soviel der Lauferei",
+    "version": "",
+    "rulesText": "%Lege einen Gegenstand oder Ort deiner Wahl verdeckt und erschöpft in den zugehörigen Tintenvorrat.",
+    "text": "Lege einen Gegenstand oder Ort deiner Wahl verdeckt und erschöpft in den zugehörigen Tintenvorrat.",
+    "flavorText": "",
+    "searchableKeywords": ["Die Schöne und das Biest", "Beauty and the Beast"]
+  },
   "beG": {
     "name": "Aufschrecken",
     "version": "",
@@ -27583,6 +28404,22 @@
     "text": "Ein Charakter deiner Wahl erhält in diesem Zug -3 {S}.",
     "flavorText": "„Hey, Vorsicht, Kumpel! Das bin nicht ich. Das ist eine Kopie der Ranke von mir!“%—Aladdin",
     "searchableKeywords": ["Aladdin"]
+  },
+  "jI0": {
+    "name": "Kniet vor mir nieder!",
+    "version": "",
+    "rulesText": "Bis zu 2 gegnerische Charaktere deiner Wahl können in ihrem nächsten Zug nicht herausfordern.",
+    "text": "Bis zu 2 gegnerische Charaktere deiner Wahl können in ihrem nächsten Zug nicht herausfordern.",
+    "flavorText": "",
+    "searchableKeywords": ["Dornröschen", "Sleeping Beauty"]
+  },
+  "zjC": {
+    "name": "Schützt euer Städtchen",
+    "version": "",
+    "rulesText": "%Deine Charaktere und Orte erhalten bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+    "text": "Deine Charaktere und Orte erhalten bis zu Beginn deines nächsten Zuges <Robust> +1. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 1.)",
+    "flavorText": "",
+    "searchableKeywords": ["Die Schöne und das Biest", "Beauty and the Beast"]
   },
   "3rW": {
     "name": "Sieh nur, was du getan hast",
@@ -27599,6 +28436,14 @@
     "text": "Wirf alle Karten von deiner Hand ab. Ziehe 2 Karten.",
     "flavorText": "„Weißt du, das passiert viel häufiger, als man denkt.“",
     "searchableKeywords": ["Tangled", "Rapunzel"]
+  },
+  "MBy": {
+    "name": "Angriff der Ranke!",
+    "version": "",
+    "rulesText": "Deine Flutgestalt-Charaktere erhalten in diesem Zug <Robust> +2 und können bereite Charaktere herausfordern. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 2.)",
+    "text": "Deine Flutgestalt-Charaktere erhalten in diesem Zug <Robust> +2 und können bereite Charaktere herausfordern. (Reduziere jeglichen Schaden, der ihnen zugefügt wird, um 2.)",
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monster AG"]
   },
   "WkJ": {
     "name": "Windsturm",

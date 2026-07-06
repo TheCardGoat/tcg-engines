@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op06VinsmokeReiju069 } from "../../OP06/characters/069-vinsmoke-reiju.ts";
 import { prb01VinsmokeReiju069I18n } from "./069-vinsmoke-reiju.i18n.ts";
 
 export const prb01VinsmokeReiju069: CharacterCard = {
-  id: "OP06-069",
-  canonicalId: "OP06-069",
-  slug: "vinsmoke-reiju/op06-069",
+  ...op06VinsmokeReiju069,
+  id: "OP06-069_r1",
+  slug: "vinsmoke-reiju/op06-069-r1",
   name: "Vinsmoke Reiju",
   printings: [
     {
-      id: "OP06-069",
-      artId: "OP06-069",
+      id: "OP06-069_r1",
+      artId: "OP06-069_r1",
       setCode: "PRB01",
       collectorNumber: "069",
       rarity: "SR",
@@ -24,15 +25,8 @@ export const prb01VinsmokeReiju069: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-069_p4.jpg",
     },
   ],
-  cardType: "character",
-  color: ["purple"],
   rarity: "SR",
   setId: "PRB01",
-  cost: 4,
-  power: 5000,
-  counter: 1000,
-  traits: ["The Vinsmoke Family", "GERMA 66"],
-  attribute: "special",
   artVariants: [
     {
       type: "alternate-art",
@@ -40,39 +34,5 @@ export const prb01VinsmokeReiju069: CharacterCard = {
       imageId: "OP06-069_p4",
     },
   ],
-  effect:
-    "[On Play] If the number of DON!! cards on your field is equal to or less than the number on your opponent's field and you have 5 or less cards in your hand, draw 2 cards.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        conditions: [
-          {
-            condition: "compound",
-            operator: "and",
-            conditions: [
-              {
-                condition: "donFieldComparison",
-                selfComparison: "lte",
-              },
-              {
-                condition: "handCount",
-                player: "self",
-                comparison: "lte",
-                value: 5,
-              },
-            ],
-          },
-        ],
-        actions: [
-          {
-            action: "draw",
-            player: "self",
-            amount: 2,
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01VinsmokeReiju069I18n,
 };

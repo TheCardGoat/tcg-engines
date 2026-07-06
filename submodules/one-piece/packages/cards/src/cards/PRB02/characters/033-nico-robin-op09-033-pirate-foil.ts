@@ -1,30 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op09NicoRobin033 } from "../../OP09/characters/033-nico-robin.ts";
 import { prb02NicoRobinOp09033PirateFoil033I18n } from "./033-nico-robin-op09-033-pirate-foil.i18n.ts";
 
 export const prb02NicoRobinOp09033PirateFoil033: CharacterCard = {
-  id: "OP09-033",
-  canonicalId: "OP09-033",
+  ...op09NicoRobin033,
+  id: "OP09-033_p1",
   slug: "nico-robin-op09-033-pirate-foil",
   name: "Nico Robin - OP09-033 (Pirate Foil)",
   printings: [
     {
-      id: "OP09-033",
-      artId: "OP09-033",
+      id: "OP09-033_p1",
+      artId: "OP09-033_p1",
       setCode: "PRB02",
       collectorNumber: "033",
       rarity: "C",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP09-033_p1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["green"],
   rarity: "C",
   setId: "PRB02",
-  cost: 4,
-  power: 5000,
-  counter: 1000,
-  traits: ["Straw Hat Crew ODYSSEY"],
-  attribute: "strike",
   artVariants: [
     {
       type: "other",
@@ -32,7 +26,5 @@ export const prb02NicoRobinOp09033PirateFoil033: CharacterCard = {
       imageId: "OP09-033",
     },
   ],
-  effect:
-    '[On Play] If you have 2 or more rested Characters, none of your "ODYSSEY" or "Straw Hat Crew" type Characters can be K.O.\'d by effects until the end of your opponent\'s next turn.',
   i18n: prb02NicoRobinOp09033PirateFoil033I18n,
 };

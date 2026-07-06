@@ -18,6 +18,7 @@ import {
   type SavedReplayMeta,
 } from "../replay/replayStore";
 import classes from "./Practice.module.css";
+import { cyberpunkSimulatorPath } from "./simulatorPaths";
 
 export function MatchmakingPage() {
   const [botStrategyId, setBotStrategyId] = useState<StrategyDescriptor["id"]>(
@@ -151,7 +152,10 @@ export function MatchmakingPage() {
 
           <p className={classes.help}>{strategyDescription}</p>
 
-          <Link className={classes.buttonLink} to={`/practice?botStrategyId=${botStrategyId}`}>
+          <Link
+            className={classes.buttonLink}
+            to={cyberpunkSimulatorPath(`/practice?botStrategyId=${botStrategyId}`)}
+          >
             Open practice
           </Link>
         </section>
@@ -203,7 +207,7 @@ export function MatchmakingPage() {
                     <div className={classes.savedReplayActions}>
                       <Link
                         className={classes.replayIconButton}
-                        to={`/replay/${encodeURIComponent(replay.gameId)}`}
+                        to={cyberpunkSimulatorPath(`/replay/${encodeURIComponent(replay.gameId)}`)}
                         title="Open replay"
                         aria-label="Open replay"
                       >

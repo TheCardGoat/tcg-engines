@@ -469,6 +469,9 @@ export function transformToCanonicalCard(
       const card: CanonicalItemCard = {
         ...(common as CommonCardProperties),
         cardType: "item",
+        ...(baseCard.subtypes?.length && {
+          classifications: baseCard.subtypes,
+        }),
       };
       return card;
     }
@@ -483,8 +486,6 @@ export function transformToCanonicalCard(
         moveCost: baseCard.move_cost ?? 0,
         willpower: baseCard.willpower ?? 0,
         lore: getLocationLore(baseCard),
-
-        // === ARRAY PROPERTIES ===
         ...(baseCard.subtypes?.length && {
           classifications: baseCard.subtypes,
         }),
@@ -600,7 +601,11 @@ export function transformToCanonicalCardForPrinting(
       return out;
     }
     case "item": {
-      return { ...(common as CommonCardProperties), cardType: "item" };
+      return {
+        ...(common as CommonCardProperties),
+        cardType: "item",
+        ...(card.subtypes?.length && { classifications: card.subtypes }),
+      };
     }
     case "location": {
       const out: CanonicalLocationCard = {
@@ -746,10 +751,18 @@ export function generateCanonicalCardsFromPrintings(
         setNum(a.printingId) - setNum(b.printingId) ||
         cardNum(a.printingId) - cardNum(b.printingId),
     );
-    const canonicalId = entries[0]!.card.canonicalId;
+    const existingCanonicalId = entries
+      .map(
+        ({ printingId }) =>
+          existingSourceCanonicalIds?.[printingId] ??
+          existingCanonicalCards?.[printingId]?.canonicalId,
+      )
+      .find((candidate): candidate is string => Boolean(candidate?.startsWith("ci_")));
+    const canonicalId = existingCanonicalId ?? entries[0]!.card.canonicalId;
     for (let i = 1; i < entries.length; i++) {
       entries[i]!.card.canonicalId = canonicalId;
     }
+    entries[0]!.card.canonicalId = canonicalId;
   }
 
   // Special printings are alternate art / promo printings of a same-set base card. Keep their

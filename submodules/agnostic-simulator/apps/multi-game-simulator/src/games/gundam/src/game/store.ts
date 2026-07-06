@@ -1,6 +1,11 @@
 import type { EngineInteractionView } from "@tcg/protocol";
 
-import type { EngineAdapter, TurnTaggedLogEntry, TurnTaggedMoveLog } from "./adapter.ts";
+import type {
+  EngineAdapter,
+  TurnTaggedLogEntry,
+  TurnTaggedMoveLog,
+  TurnTaggedPacketAnimation,
+} from "./adapter.ts";
 import type { BoardProjection } from "./types.ts";
 
 export interface GameSnapshot {
@@ -8,6 +13,7 @@ export interface GameSnapshot {
   readonly interactionView: EngineInteractionView;
   readonly logEntries: readonly TurnTaggedLogEntry[];
   readonly moveLogs: readonly TurnTaggedMoveLog[];
+  readonly packetAnimations: readonly TurnTaggedPacketAnimation[];
 }
 
 export interface GameStore {
@@ -52,5 +58,6 @@ function computeSnapshot(adapter: EngineAdapter): GameSnapshot {
     interactionView: adapter.interactionView(),
     logEntries: adapter.logEntries(),
     moveLogs: adapter.moveLogs(),
+    packetAnimations: adapter.packetAnimations(),
   };
 }

@@ -33,7 +33,7 @@ export const randallBoggsEnviousCoworker: CharacterCard = {
   inkable: true,
   text: [
     {
-      title: "<Evasive>",
+      title: "Evasive",
     },
     {
       title: "After-Hours Project",

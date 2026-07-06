@@ -1,79 +1,66 @@
 import { describe, expect, test } from "vite-plus/test";
-import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 
-import { cardMoveRecordsToSimulatorEvents } from "./cardMoveEvents.js";
+import { cardMoveRecordsToAnimationPlans } from "./cardMoveEvents.js";
 
-const entity: SimulatorEntity = {
-  id: "card-1",
-  title: "Test Card",
-  subtitle: "unit",
-  kind: "unit",
-  ownerId: "p1",
-  face: "public",
-  states: [],
-  stats: [],
-  traits: [],
-};
-
-function zoneDescriptor(zoneId: string, ownerId: string): SimulatorZone {
-  return {
-    id: `${zoneId}:${ownerId}`,
-    label: zoneId,
-    role: zoneId === "deck" ? "deck" : zoneId === "hand" ? "hand" : "battlefield",
-    ownerId,
-    visibility: zoneId === "deck" ? "secret" : zoneId === "hand" ? "private" : "public",
-    entityIds: [],
-    hint: zoneId,
-  };
-}
-
-describe("cardMoveRecordsToSimulatorEvents", () => {
-  test("projects deck-to-hand records as draw events", () => {
-    const events = cardMoveRecordsToSimulatorEvents(
-      [
-        {
-          id: "draw-1",
-          cardId: "card-1",
-          ownerId: "p1",
-          fromZoneId: "deck",
-          toZoneId: "hand",
-        },
-      ],
+describe("cardMoveRecordsToAnimationPlans", () => {
+  test("projects deck-to-hand records as moveEntity plans", () => {
+    const plans = cardMoveRecordsToAnimationPlans([
       {
-        viewerSeatId: "p1",
-        resolveEntity: () => entity,
-        zoneDescriptor,
+        id: "draw-1",
+        cardId: "card-1",
+        ownerId: "p1",
+        fromZoneId: "deck:p1",
+        toZoneId: "hand:p1",
+        reason: "draw",
       },
-    );
+    ]);
 
-    const event = events[0];
-    expect(event?.id).toBe("draw-1");
-    expect(event?.primitive).toBe("draw");
-    if (event?.primitive !== "draw") {
-      throw new Error("Expected draw event");
-    }
-    expect(event.fromZone.id).toBe("deck:p1");
-    expect(event.toZone.id).toBe("hand:p1");
+    expect(plans).toEqual([
+      {
+        id: "draw-1",
+        version: 1,
+        anchors: [],
+        steps: [
+          {
+            id: "draw-1:move",
+            type: "moveEntity",
+            entity: { kind: "entity", id: "card-1" },
+            from: { kind: "zone", id: "deck:p1", ownerId: "p1" },
+            to: { kind: "zone", id: "hand:p1", ownerId: "p1" },
+            delayMs: undefined,
+            durationMs: undefined,
+          },
+        ],
+      },
+    ]);
   });
 
-  test("projects other zone changes as zone transfers", () => {
-    const events = cardMoveRecordsToSimulatorEvents(
-      [
+  test("projects records without a source as enterEntity plans", () => {
+    const plans = cardMoveRecordsToAnimationPlans([
+      {
+        id: "enter-1",
+        cardId: "card-1",
+        ownerId: "p1",
+        toZoneId: "battleArea:p1",
+        delayMs: 80,
+        durationMs: 240,
+      },
+    ]);
+
+    expect(plans[0]).toMatchObject({
+      id: "enter-1",
+      version: 1,
+      anchors: [],
+      steps: [
         {
-          id: "play-1",
-          cardId: "card-1",
-          ownerId: "p1",
-          fromZoneId: "hand",
-          toZoneId: "battleArea",
+          id: "enter-1:enter",
+          type: "enterEntity",
+          entity: { kind: "entity", id: "card-1" },
+          to: { kind: "zone", id: "battleArea:p1", ownerId: "p1" },
+          delayMs: 80,
+          durationMs: 240,
         },
       ],
-      {
-        viewerSeatId: "p1",
-        resolveEntity: () => entity,
-        zoneDescriptor,
-      },
-    );
-
-    expect(events[0]?.primitive).toBe("zoneTransfer");
+    });
   });
 });

@@ -35,6 +35,7 @@ export const bigBookOfHunny: ItemCard = {
         "{E}, 2 {I} — Reveal the top card of your deck. If it's a Hunny card, put it into your hand. Otherwise, put it on the bottom of your deck.",
     },
   ],
+  classifications: ["Hunny"],
   abilities: [
     {
       id: "Es5-1",

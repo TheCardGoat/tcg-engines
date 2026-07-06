@@ -9,8 +9,10 @@ interface KeyboardNavigatorProps {
   children: React.ReactNode;
 }
 
+const ENTITY_ID_ATTRIBUTE = "data-sim-entity-id";
+
 export function KeyboardNavigator({
-  selector = "[data-entity-id]",
+  selector = `[${ENTITY_ID_ATTRIBUTE}]`,
   orientation = "horizontal",
   loop = false,
   onActivate,
@@ -30,7 +32,7 @@ export function KeyboardNavigator({
 
   const focusEntity = (entityId: string) => {
     const el = containerRef.current?.querySelector<HTMLElement>(
-      `${selector}[data-entity-id="${entityId}"]`,
+      `${selector}[${ENTITY_ID_ATTRIBUTE}="${cssAttributeValue(entityId)}"]`,
     );
     if (el) {
       el.focus();
@@ -45,7 +47,7 @@ export function KeyboardNavigator({
       if (focusables.length === 0) return;
 
       const currentIndex = activeId
-        ? focusables.findIndex((el) => el.getAttribute("data-entity-id") === activeId)
+        ? focusables.findIndex((el) => el.getAttribute(ENTITY_ID_ATTRIBUTE) === activeId)
         : -1;
 
       let nextIndex = currentIndex;
@@ -102,7 +104,7 @@ export function KeyboardNavigator({
 
       const nextEl = focusables[nextIndex];
       if (nextEl) {
-        const entityId = nextEl.getAttribute("data-entity-id");
+        const entityId = nextEl.getAttribute(ENTITY_ID_ATTRIBUTE);
         if (entityId) focusEntity(entityId);
       }
     },
@@ -122,4 +124,8 @@ export function KeyboardNavigator({
       {children}
     </div>
   );
+}
+
+function cssAttributeValue(value: string): string {
+  return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\A ");
 }

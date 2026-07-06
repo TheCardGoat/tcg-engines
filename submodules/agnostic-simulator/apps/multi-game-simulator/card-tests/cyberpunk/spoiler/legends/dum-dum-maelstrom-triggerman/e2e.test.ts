@@ -14,11 +14,7 @@ import { legendDumDumMaelstromTriggerman } from "@cyberpunk/testing/e2e-fixtures
 test("Dum Dum - call defeats gear to draw four", async ({ page }) => {
   const pom = await createPlaywrightCyberpunkSimulatorPom(page, legendDumDumMaelstromTriggerman);
 
-  const dumDum = await pom.getCardInZoneByDefinitionId(
-    "legendArea",
-    CYBERPUNK_P1,
-    spoilerDumDumMaelstromTriggerman.id,
-  );
+  const dumDum = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
   const host = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
@@ -31,6 +27,16 @@ test("Dum Dum - call defeats gear to draw four", async ({ page }) => {
   );
 
   await pom.callLegend(dumDum.instanceId, CYBERPUNK_P1);
+  const calledDumDum = await pom.getCardInZoneByInstanceId(
+    "legendArea",
+    CYBERPUNK_P1,
+    dumDum.instanceId,
+  );
+  expectEqual(
+    "Dum Dum definition after call",
+    calledDumDum.definitionId,
+    spoilerDumDumMaelstromTriggerman.id,
+  );
 
   await pom.expectEddies(CYBERPUNK_P1, 2);
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToMove");

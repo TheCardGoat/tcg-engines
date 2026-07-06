@@ -103,6 +103,16 @@ export interface CardSet {
  * illustration share the same `artId` (RFC §7 Gundam art layer, ADR-7).
  */
 export interface CardPrinting extends Printing {
+  /** Printing identity — unique within Gundam (set + collector number + finish). */
+  id: string;
+  /** Art identity shared by printings that reuse the same illustration. */
+  artId: string;
+  /** Cross-game set code for this printing. */
+  setCode: string;
+  /** Printed collector number for this printing. */
+  collectorNumber: string;
+  /** CDN/card image URL for this printing. */
+  imageUrl: string;
   /** Gameplay/deckbuilding card number shared by equivalent printings (canonical seed). */
   cardNumber: string;
   /** Richer set metadata; the cross-game `setCode` is inherited from {@link Printing}. */

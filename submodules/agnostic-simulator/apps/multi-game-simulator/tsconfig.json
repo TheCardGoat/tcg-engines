@@ -27,9 +27,7 @@
       "@e2e/*": ["./e2e/*"],
       "@gundam-simulator/*": ["./src/games/gundam/*"],
       "@tcg/op-engine": ["../../../one-piece/packages/engine/src/index.ts"],
-      "@tcg/op-engine/practice-st01": [
-        "../../../one-piece/packages/engine/src/practice-st01.ts"
-      ],
+      "@tcg/op-engine/practice-st01": ["../../../one-piece/packages/engine/src/practice-st01.ts"],
       "@tcg/simulator-testing": ["../../packages/simulator-testing/src/index.ts"],
       "@tcg/simulator-testing/testing-library": [
         "../../packages/simulator-testing/src/testing-library.ts"

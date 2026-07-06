@@ -70,8 +70,8 @@ export function PlayerSeatPlate({
     <div
       aria-label={player.name}
       // The opponent's plate doubles as the click target for a direct
-      // attack — the AttackTargetingOverlay queries this attribute to
-      // anchor its DIRECT spotlight + click region.
+      // attack — the shared targeting overlay queries this attribute to
+      // anchor its direct-target arrow and click region.
       data-direct-target={isViewer ? undefined : "opp"}
       data-sim-player-target-id={playerId}
       className={cn("w-[180px] flex-shrink-0 flex flex-col gap-3 px-hud-md py-hud-sm", className)}

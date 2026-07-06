@@ -6,9 +6,7 @@ export const peterPanTinkerBellFastFriendsI18n: Record<Languages, I18nProperties
     version: "Fast Friends",
     text: [
       {
-        title: "Shift 4 {}",
-        description:
-          "(You may pay 4 {} to play this on top of one of your characters named Peter Pan or Tinker Bell.)",
+        title: "Shift 4 {I}",
       },
       {
         title: "YOU CAN FLY!",
@@ -36,13 +34,11 @@ export const peterPanTinkerBellFastFriendsI18n: Record<Languages, I18nProperties
     version: "Amis rapides",
     text: [
       {
-        title:
-          "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Peter Pan ou La Fée Clochette.)",
+        title: "<Alter> 4 {I}",
       },
       {
         title: "Tu t'envoles!",
-        description:
-          "Vos personnages gagnent <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
+        description: "Vos personnages gagnent <Insaisissable>.",
       },
     ],
   },

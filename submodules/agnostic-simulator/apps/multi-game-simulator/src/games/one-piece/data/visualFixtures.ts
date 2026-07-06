@@ -5,9 +5,11 @@ import {
   type MatchState,
   type PlayerFixture,
 } from "@tcg/op-engine";
+import { createMatch, createSt01PlayerConfig } from "@tcg/op-engine/practice-st01";
 
 export type OnePieceVisualFixtureGroup = "core" | "privacy" | "resources";
 export type OnePieceVisualFixtureId =
+  | "fresh-game-setup"
   | "main-phase-reference"
   | "privacy-hidden-zones"
   | "resource-board-state";
@@ -48,6 +50,25 @@ export const ONE_PIECE_VISUAL_FIXTURE_GROUPS: readonly {
 ];
 
 export const ONE_PIECE_VISUAL_FIXTURES: readonly OnePieceVisualFixture[] = [
+  {
+    id: "fresh-game-setup",
+    group: "core",
+    label: "Fresh game setup",
+    description:
+      "A newly prepared ST-01 mirror game before the first turn begins: leaders, opening hands, Life, empty play areas, and full DON!! decks.",
+    buildState: () =>
+      createMatch({
+        firstPlayer: SOUTH,
+        shuffleDecks: true,
+        openingHandSize: 5,
+        skipFirstTurnDraw: true,
+        maxCharacterSlots: 5,
+        players: {
+          south: createSt01PlayerConfig("You"),
+          north: createSt01PlayerConfig("Opponent"),
+        },
+      }),
+  },
   {
     id: "main-phase-reference",
     group: "core",
@@ -190,7 +211,7 @@ export const ONE_PIECE_VISUAL_FIXTURES: readonly OnePieceVisualFixture[] = [
   },
 ];
 
-export const DEFAULT_ONE_PIECE_VISUAL_FIXTURE_ID: OnePieceVisualFixtureId = "main-phase-reference";
+export const DEFAULT_ONE_PIECE_VISUAL_FIXTURE_ID: OnePieceVisualFixtureId = "fresh-game-setup";
 
 export function getOnePieceVisualFixture(id: string): OnePieceVisualFixture | undefined {
   return ONE_PIECE_VISUAL_FIXTURES.find((fixture) => fixture.id === id);

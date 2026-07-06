@@ -100,6 +100,10 @@ class TestingLibraryDomElement implements SimulatorDomElement {
     return this.firstElement().getAttribute(name);
   }
 
+  async getAttributeAll(name: string): Promise<ReadonlyArray<string | null>> {
+    return this.elements().map((element) => element.getAttribute(name));
+  }
+
   async textContent(): Promise<string> {
     return this.firstElement().textContent ?? "";
   }

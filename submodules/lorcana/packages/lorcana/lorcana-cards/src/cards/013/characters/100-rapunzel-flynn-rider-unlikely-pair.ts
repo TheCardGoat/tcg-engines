@@ -37,8 +37,6 @@ export const rapunzelFlynnRiderUnlikelyPair: CharacterCard = {
   text: [
     {
       title: "Shift 3 {I}",
-      description:
-        "(You may pay 3 {I} to play this on top of one of your characters named Rapunzel or Flynn Rider.)",
     },
     {
       title: "CLEVER SWAP",

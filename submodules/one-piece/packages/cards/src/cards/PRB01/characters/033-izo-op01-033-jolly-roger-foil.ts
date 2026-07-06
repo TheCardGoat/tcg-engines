@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op01Izo033 } from "../../OP01/characters/033-izo.ts";
 import { prb01IzoOp01033JollyRogerFoil033I18n } from "./033-izo-op01-033-jolly-roger-foil.i18n.ts";
 
 export const prb01IzoOp01033JollyRogerFoil033: CharacterCard = {
-  id: "OP01-033",
-  canonicalId: "OP01-033",
+  ...op01Izo033,
+  id: "OP01-033_p3",
   slug: "izo-op01-033-jolly-roger-foil",
   name: "Izo (OP01-033) (Jolly Roger Foil)",
   printings: [
     {
-      id: "OP01-033",
-      artId: "OP01-033",
+      id: "OP01-033_p3",
+      artId: "OP01-033_p3",
       setCode: "PRB01",
       collectorNumber: "033",
       rarity: "UC",
@@ -32,15 +33,8 @@ export const prb01IzoOp01033JollyRogerFoil033: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP01-033_r1.png",
     },
   ],
-  cardType: "character",
-  color: ["green"],
   rarity: "UC",
   setId: "PRB01",
-  cost: 3,
-  power: 3000,
-  counter: 2000,
-  traits: ["Former Whitebeard Pirates Land of Wano"],
-  attribute: "ranged",
   artVariants: [
     {
       type: "other",
@@ -58,33 +52,5 @@ export const prb01IzoOp01033JollyRogerFoil033: CharacterCard = {
       imageId: "OP01-033_p5",
     },
   ],
-  effect: "[On Play] Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "rest",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 4,
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01IzoOp01033JollyRogerFoil033I18n,
 };

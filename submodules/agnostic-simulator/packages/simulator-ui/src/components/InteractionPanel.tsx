@@ -194,6 +194,7 @@ export function InteractionPanel({
                       aria-pressed={selEntities.includes(entityId)}
                       data-testid={`interaction-candidate:${interaction.id}:${entityId}`}
                       data-entity-id={entityId}
+                      data-sim-entity-id={entityId}
                     >
                       {candidateLabel(entityId)}
                     </button>
@@ -219,6 +220,7 @@ export function InteractionPanel({
                       aria-pressed={selPayments.includes(entityId)}
                       data-testid={`interaction-payment:${interaction.id}:${entityId}`}
                       data-entity-id={entityId}
+                      data-sim-entity-id={entityId}
                     >
                       {candidateLabel(entityId)}
                     </button>
@@ -249,6 +251,7 @@ export function InteractionPanel({
                       aria-pressed={selOrdered.includes(entityId)}
                       data-testid={`interaction-order:${interaction.id}:${entityId}`}
                       data-entity-id={entityId}
+                      data-sim-entity-id={entityId}
                     >
                       {candidateLabel(entityId)}
                     </button>

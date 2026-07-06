@@ -418,8 +418,12 @@ export function convertToLorcanaCard(
   if ("lore" in card) values.lore = card.lore;
   values.inkable = card.inkable;
   if (card.vanilla) values.vanilla = true;
-  if (card.missingImplementation) values.missingImplementation = true;
-  if (card.missingTests) values.missingTests = true;
+  if (card.missingImplementation && existingAbilities === undefined) {
+    values.missingImplementation = true;
+  }
+  if (card.missingTests && existingAbilities === undefined) {
+    values.missingTests = true;
+  }
   if (card.externalIds) values.externalIds = card.externalIds;
   if (card.rulesText) values.text = splitCardText(card.rulesText);
   if ("classifications" in card && card.classifications?.length) {

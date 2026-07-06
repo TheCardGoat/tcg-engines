@@ -110,6 +110,7 @@ export function FixerZone({
       className={`${classes.zone} ${classes[titlePosition]} ${collapsed ? classes.collapsed : ""}`}
       data-testid="fixer-zone"
       data-zone-id={side === "opponent" ? "opp-fixer" : "p-fixer"}
+      data-sim-zone-id={side === "opponent" ? "opp-fixer" : "p-fixer"}
       data-side={side}
       data-count={dice?.length ?? slots.length}
       data-picking={isPicker ? "true" : "false"}
@@ -164,6 +165,7 @@ export function FixerZone({
                   data-testid="fixer-die"
                   data-die-type={die.dieType}
                   data-die-id={die.dieId ?? undefined}
+                  data-sim-entity-id={die.dieId ?? undefined}
                   data-candidate={candidate ? "true" : "false"}
                   disabled={isPicker && !candidate}
                   onClick={candidate && die.dieId ? () => handlePick(die.dieId!) : undefined}
@@ -173,6 +175,7 @@ export function FixerZone({
                     data-testid="card"
                     data-card-kind="die"
                     data-entity-id={die.dieId ?? undefined}
+                    data-sim-entity-id={die.dieId ?? undefined}
                     style={{ display: "contents" }}
                     aria-hidden
                   >

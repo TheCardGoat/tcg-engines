@@ -12,6 +12,7 @@ import {
   type StrategyDescriptor,
 } from "../engine";
 import classes from "./Practice.module.css";
+import { cyberpunkSimulatorPath } from "./simulatorPaths";
 
 export function PracticePage() {
   const navigate = useNavigate();
@@ -19,8 +20,12 @@ export function PracticePage() {
   const initialBotStrategyId = normalizeStrategyId(searchParams.get("botStrategyId"));
   const [playerDeckFixtureId, setPlayerDeckFixtureId] = useState(DEFAULT_PLAYER_PRACTICE_DECK_ID);
   const [botDeckFixtureId, setBotDeckFixtureId] = useState(DEFAULT_BOT_PRACTICE_DECK_ID);
+  const [playerStrategyId, setPlayerStrategyId] = useState<StrategyDescriptor["id"] | "human">(
+    "human",
+  );
   const [botStrategyId, setBotStrategyId] =
     useState<StrategyDescriptor["id"]>(initialBotStrategyId);
+  const [seed, setSeed] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,10 +45,12 @@ export function PracticePage() {
       const config = createPracticeMatchConfig({
         playerDeckFixtureId,
         botDeckFixtureId,
+        playerStrategyId: playerStrategyId === "human" ? null : playerStrategyId,
         botStrategyId,
+        seed,
       });
       savePracticeMatchConfig(config);
-      void navigate(`/practice/${config.matchId}`);
+      void navigate(cyberpunkSimulatorPath(`/practice/${config.matchId}`));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to start practice match.");
       setLoading(false);
@@ -101,6 +108,28 @@ export function PracticePage() {
             </label>
 
             <label className={classes.field}>
+              <span className={classes.label}>Your automation</span>
+              <select
+                className={classes.select}
+                data-testid="practice-setup-player-strategy"
+                name="playerStrategy"
+                value={playerStrategyId}
+                onChange={(event) =>
+                  setPlayerStrategyId(
+                    event.currentTarget.value as StrategyDescriptor["id"] | "human",
+                  )
+                }
+              >
+                <option value="human">Human</option>
+                {AI_STRATEGIES.map((strategy) => (
+                  <option key={strategy.id} value={strategy.id}>
+                    {strategy.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className={classes.field}>
               <span className={classes.label}>Bot strategy</span>
               <select
                 className={classes.select}
@@ -117,6 +146,18 @@ export function PracticePage() {
                   </option>
                 ))}
               </select>
+            </label>
+
+            <label className={classes.field}>
+              <span className={classes.label}>Seed</span>
+              <input
+                className={classes.select}
+                data-testid="practice-setup-seed"
+                name="seed"
+                value={seed}
+                placeholder="Generated when blank"
+                onChange={(event) => setSeed(event.currentTarget.value)}
+              />
             </label>
           </div>
 
@@ -145,10 +186,18 @@ export function PracticePage() {
           ) : null}
         </section>
 
-        <Link className={classes.backLink} to="/" data-testid="practice-setup-back">
+        <Link
+          className={classes.backLink}
+          to={cyberpunkSimulatorPath("/")}
+          data-testid="practice-setup-back"
+        >
           Back to board states
         </Link>
-        <Link className={classes.backLink} to="/decks" data-testid="practice-setup-browse-decks">
+        <Link
+          className={classes.backLink}
+          to={cyberpunkSimulatorPath("/decks")}
+          data-testid="practice-setup-browse-decks"
+        >
           Browse public decks
         </Link>
       </div>

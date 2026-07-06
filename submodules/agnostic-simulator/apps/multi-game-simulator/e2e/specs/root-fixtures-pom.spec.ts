@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { test } from "@playwright/test";
 
 import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
 import { ROOT_FIXTURE_SCENARIO_CASES } from "../../src/games/cyberpunk/testing/root-fixture-scenarios";

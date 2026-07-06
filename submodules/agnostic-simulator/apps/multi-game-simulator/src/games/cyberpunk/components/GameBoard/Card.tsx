@@ -3,6 +3,7 @@ import {
   IconBolt,
   IconClockPause,
   IconShield,
+  IconShieldOff,
   IconSkull,
   IconSwordOff,
   IconZoomIn,
@@ -66,12 +67,14 @@ type CardMenuAction = {
   id: CardActionHotkeyMoveId;
   label: string;
   hotkey: string;
+  abilityIndex?: number;
   run: () => void;
 };
 
 export interface CardGearAttachment {
   imageUrl: string;
   name: string;
+  definitionId?: string;
   cardId?: string;
   cardType?: EngineCardType;
   power?: number | null;
@@ -90,6 +93,7 @@ export interface CardGearAttachment {
 interface CardProps {
   imageUrl?: string;
   name?: string;
+  definitionId?: string;
   /** Card frame color — used for hover-preview accent border. */
   color?: "blue" | "green" | "red" | "yellow";
   faceDown?: boolean;
@@ -148,6 +152,7 @@ interface CardProps {
 export function Card({
   imageUrl,
   name,
+  definitionId,
   color,
   faceDown = false,
   gear = [],
@@ -555,10 +560,16 @@ export function Card({
     for (const slot of CARD_ACTION_HOTKEY_SLOTS) {
       const moveId = slot.moveId;
       if (!availableMoves.has(moveId)) continue;
+      const abilityIndex =
+        moveId === "activateAbility" && engineCtx
+          ? (interactionViewAbilityIndexForCard(engineCtx.interactionViews[side], cardId) ??
+            undefined)
+          : undefined;
       actionMenuActions.push({
         id: moveId,
         label: getCardActionLabel(moveId),
         hotkey: getCardActionHotkey(moveId),
+        abilityIndex,
         run: () => executeDirectMove(moveId, side, cardId),
       });
     }
@@ -780,10 +791,15 @@ export function Card({
   // valid highlighted target. `data-actionable` intentionally covers both.
   const isActionHint = !selectedMove && permission.kind === "armable";
   const isSelectionCandidate = Boolean(selectedMove && selectedMoveIsLegal);
+  const instanceAttrs = {
+    "data-card-id": cardId,
+    "data-instance-id": cardId,
+  };
   const publicCardAttrs = faceDown
-    ? {}
+    ? instanceAttrs
     : {
-        "data-card-id": cardId,
+        ...instanceAttrs,
+        "data-definition-id": definitionId,
         "data-card-name": name,
         "data-card-type": cardType,
         "data-card-color": color,
@@ -842,6 +858,7 @@ export function Card({
       data-interaction-state={interactionState}
       data-testid="card"
       data-entity-id={cardId}
+      data-sim-entity-id={cardId}
       data-card-kind={cardKindFromType(cardType)}
       data-zone={zone}
       data-zone-index={index}
@@ -886,6 +903,7 @@ export function Card({
             key={`${g.cardId ?? g.name}-${i}`}
             gear={g}
             side={side}
+            attachedToId={cardId}
             offsetPercent={offsetPercent}
             zIndex={gearCount - i}
           />
@@ -1087,6 +1105,7 @@ function CardActionMenu({
           aria-keyshortcuts={action.hotkey}
           data-testid={`card-action-${action.id}`}
           data-hotkey={action.hotkey}
+          data-ability-index={action.abilityIndex}
           onClick={(ev) => {
             ev.stopPropagation();
             onClose();
@@ -1113,11 +1132,13 @@ function formatPreviewKeyword(rule: string): string {
 function AttachedGear({
   gear,
   side,
+  attachedToId,
   offsetPercent,
   zIndex,
 }: {
   gear: CardGearAttachment;
   side?: Side;
+  attachedToId?: string;
   offsetPercent: number;
   zIndex: number;
 }) {
@@ -1179,10 +1200,14 @@ function AttachedGear({
       }}
       data-testid="attached-gear"
       data-card-id={gear.cardId}
+      data-instance-id={gear.cardId}
+      data-definition-id={gear.definitionId}
       data-card-name={gear.name}
       data-card-type={gear.cardType}
       data-card-kind="card"
+      data-attached-to-id={attachedToId}
       data-entity-id={gear.cardId}
+      data-sim-entity-id={gear.cardId}
       data-choice-side={selectablePermission?.side}
       data-choice-type={selectablePermission?.permission.interaction.actionId}
     >
@@ -1216,6 +1241,8 @@ function AttachedGear({
           className={classes.gearHitTarget}
           aria-label={`Select ${gear.name}`}
           data-card-id={gear.cardId}
+          data-instance-id={gear.cardId}
+          data-definition-id={gear.definitionId}
           data-card-name={gear.name}
           data-card-type={gear.cardType}
           data-choice-eligible="true"
@@ -1253,6 +1280,14 @@ function buildAbilityBadges(rules: readonly EffectiveRule[], blockedByPlayedThis
           rule: "cantAttack" as const,
           label: "Can't attack",
           Icon: IconSwordOff,
+        }
+      : null,
+    has("cantBeBlocked")
+      ? {
+          id: "cantBeBlocked",
+          rule: "cantBeBlocked" as const,
+          label: "Can't be blocked",
+          Icon: IconShieldOff,
         }
       : null,
     has("goSolo")

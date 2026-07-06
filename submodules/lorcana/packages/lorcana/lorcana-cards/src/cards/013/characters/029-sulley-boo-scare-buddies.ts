@@ -36,9 +36,7 @@ export const sulleyBooScareBuddies: CharacterCard = {
   },
   text: [
     {
-      title: "Combo Shift 4 {}",
-      description:
-        "(You may pay 4 {} to play this on top of one of your characters named Sulley, one named Boo, or one of each.)",
+      title: "Combo Shift 4 {I}",
     },
     {
       title: "THE POWER OF FRIENDSHIP",

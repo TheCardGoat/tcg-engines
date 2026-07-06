@@ -23,7 +23,7 @@ export interface BaseCardDefinition {
   /** Display name. Games may add `displayName`/`subtitle`/`version`/`i18n` alongside. */
   name: string;
   /** All printings of this card. At least one. Each carries `id` + `artId`. */
-  printings: Printing[];
+  printings: readonly Printing[];
   /**
    * Optional dictionary mapping this card to external sources (vendors, publishers,
    * canonical registries). Populated with only the sources relevant to the game.

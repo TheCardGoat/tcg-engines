@@ -1,7 +1,7 @@
 /**
  * Gallery Parser
  *
- * Loads data/inputs/wilds-unknown-gallery.json (scraped from
+ * Loads data/inputs/attack-of-the-vine-gallery.json (scraped from
  * disneylorcana.com) and synthesizes Ravensburger-shaped InputCards for
  * any gallery entry whose culture_invariant_id is absent from the
  * Ravensburger API input. This gives the pipeline a safety net for
@@ -20,7 +20,7 @@ import type { CardType, InputCard, InputCardVariant, RavensburgerInputJson } fro
 
 const DEFAULT_GALLERY_PATH = path.resolve(
   __dirname,
-  "../../data/inputs/wilds-unknown-gallery.json",
+  "../../data/inputs/attack-of-the-vine-gallery.json",
 );
 
 interface GalleryVariant {
@@ -121,8 +121,8 @@ function convertVariants(variants: GalleryVariant[]): InputCardVariant[] {
  *
  * NOTE: The gallery payload omits `move_cost` for locations. If a
  * seeded location ever needs a move cost, the scraper will have to be
- * extended. Today Wilds Unknown's 8 locations are all present in
- * Ravensburger, so this isn't a live gap.
+ * extended. Today this fallback is only expected to fill cards that
+ * are still absent from Ravensburger's catalog.
  */
 export function galleryToInputCard(g: GalleryCard): InputCard & { cardType: CardType } {
   const cardTypeSingular: CardType =

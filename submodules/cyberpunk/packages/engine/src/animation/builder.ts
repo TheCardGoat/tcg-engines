@@ -1,5 +1,8 @@
 import type { GameEvent } from "../types/game-events.ts";
 import type { CardInstanceId, GigDieId } from "../types/branded.ts";
+import type { CardZone } from "@tcg/cyberpunk-types";
+import type { CommandEnvelope, MatchState } from "../types/index.ts";
+import type { MoveLog } from "../logging/move-log.ts";
 import { ANIMATION_DURATIONS_MS } from "./durations.ts";
 import {
   type AnimationScript,
@@ -11,6 +14,8 @@ import {
 interface ExitDecision {
   reason: CardExitReason;
   originEventType: "cardDefeated" | "cardSold";
+  fromZone: CardZone;
+  toZone: CardZone;
 }
 
 interface PreScan {
@@ -23,16 +28,43 @@ interface PreScan {
   stolenGigs: Set<GigDieId>;
 }
 
+export interface BuildAnimationScriptContext {
+  readonly command: CommandEnvelope;
+  readonly fromState: MatchState;
+  readonly toState: MatchState;
+  readonly events: ReadonlyArray<GameEvent>;
+  readonly moveLogs: ReadonlyArray<MoveLog>;
+}
+
 function prescan(events: ReadonlyArray<GameEvent>): PreScan {
   const exits = new Map<CardInstanceId, ExitDecision>();
+  const moves = new Map<CardInstanceId, { fromZone: CardZone; toZone: CardZone }>();
   const attached = new Map<CardInstanceId, CardInstanceId>();
   const played = new Set<CardInstanceId>();
   const stolenGigs = new Set<GigDieId>();
   for (const ev of events) {
     if (ev.type === "cardDefeated") {
-      exits.set(ev.cardId, { reason: "defeated", originEventType: "cardDefeated" });
+      const move = moves.get(ev.cardId);
+      exits.set(ev.cardId, {
+        reason: "defeated",
+        originEventType: "cardDefeated",
+        fromZone: move?.fromZone ?? "field",
+        toZone: move?.toZone ?? "trash",
+      });
     } else if (ev.type === "cardSold") {
-      exits.set(ev.cardId, { reason: "sold", originEventType: "cardSold" });
+      const move = moves.get(ev.cardId);
+      exits.set(ev.cardId, {
+        reason: "sold",
+        originEventType: "cardSold",
+        fromZone: move?.fromZone ?? "hand",
+        toZone: move?.toZone ?? "trash",
+      });
+    } else if (ev.type === "cardMoved") {
+      moves.set(ev.cardId, { fromZone: ev.fromZone, toZone: ev.toZone });
+      const exit = exits.get(ev.cardId);
+      if (exit) {
+        exits.set(ev.cardId, { ...exit, fromZone: ev.fromZone, toZone: ev.toZone });
+      }
     } else if (ev.type === "cardAttached") {
       attached.set(ev.gearId, ev.hostId);
     } else if (ev.type === "cardPlayed") {
@@ -66,7 +98,10 @@ function prescan(events: ReadonlyArray<GameEvent>): PreScan {
  *   card (i.e. a unit landing), emit a `cardLand` step for a subtle
  *   pulse on the just-played card.
  */
-export function buildAnimationScript(events: ReadonlyArray<GameEvent>): AnimationScript {
+export function buildAnimationScript(
+  input: ReadonlyArray<GameEvent> | BuildAnimationScriptContext,
+): AnimationScript {
+  const events = isBuildAnimationScriptContext(input) ? input.events : input;
   if (events.length === 0) {
     return EMPTY_ANIMATION_SCRIPT;
   }
@@ -142,6 +177,7 @@ export function buildAnimationScript(events: ReadonlyArray<GameEvent>): Animatio
         break;
       }
       case "cardDefeated": {
+        const exit = scan.exits.get(ev.cardId);
         const duration = ANIMATION_DURATIONS_MS.cardExit;
         steps.push({
           kind: "cardExit",
@@ -150,7 +186,8 @@ export function buildAnimationScript(events: ReadonlyArray<GameEvent>): Animatio
           durationMs: duration,
           reason: "cardDefeated",
           cardId: ev.cardId,
-          fromZone: "field",
+          fromZone: exit?.fromZone ?? "field",
+          toZone: exit?.toZone ?? "trash",
           playerId: ev.playerId,
           exitReason: "defeated",
         });
@@ -158,6 +195,7 @@ export function buildAnimationScript(events: ReadonlyArray<GameEvent>): Animatio
         break;
       }
       case "cardSold": {
+        const exit = scan.exits.get(ev.cardId);
         const duration = ANIMATION_DURATIONS_MS.cardExit;
         steps.push({
           kind: "cardExit",
@@ -166,7 +204,8 @@ export function buildAnimationScript(events: ReadonlyArray<GameEvent>): Animatio
           durationMs: duration,
           reason: "cardSold",
           cardId: ev.cardId,
-          fromZone: "hand",
+          fromZone: exit?.fromZone ?? "hand",
+          toZone: exit?.toZone ?? "trash",
           playerId: ev.playerId,
           exitReason: "sold",
         });
@@ -354,4 +393,10 @@ export function buildAnimationScript(events: ReadonlyArray<GameEvent>): Animatio
     steps,
     totalDurationMs: totalEnd,
   };
+}
+
+function isBuildAnimationScriptContext(
+  input: ReadonlyArray<GameEvent> | BuildAnimationScriptContext,
+): input is BuildAnimationScriptContext {
+  return input !== null && typeof input === "object" && !Array.isArray(input) && "events" in input;
 }

@@ -37,7 +37,7 @@ export const vanellopeVonSchweetzSugarRushPrincessD23: CharacterCard = {
   },
   text: [
     {
-      title: "<Shift> 2",
+      title: "Shift 2",
     },
     {
       title: "I Hereby Decree",

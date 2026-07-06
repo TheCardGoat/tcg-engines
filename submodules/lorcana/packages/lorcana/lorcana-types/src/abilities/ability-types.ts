@@ -191,6 +191,8 @@ export interface ShiftKeywordAbility {
    * If not specified, can shift onto any character with matching name
    */
   shiftTarget?: string;
+  /** Card type this Shift can be played on top of. Defaults to character. */
+  shiftTargetCardType?: "character" | "item";
   /**
    * Target character classification that this can shift onto
    * Used for [Classification] Shift variants such as Puppy Shift.

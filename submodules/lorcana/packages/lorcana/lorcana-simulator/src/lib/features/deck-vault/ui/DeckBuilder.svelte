@@ -14,6 +14,10 @@
     updateDeckForProfile,
     type ProfileDeckSummary,
   } from "@/features/matchmaking/api/player-context-api.js";
+  import {
+    getDeckCardByPublicId,
+    resolveDeckCardPublicId,
+  } from "@/features/deck-vault/card-id-resolution.js";
   import { getAllCardsById } from "@tcg/lorcana-cards";
   import { cardsAuxKv } from "@tcg/lorcana-cards/data";
   import {
@@ -130,7 +134,7 @@
       ]);
       cardsById = catalog;
       entries = snapshot.historicDeck.map((c) => ({
-        cardPublicId: c.cardPublicId,
+        cardPublicId: resolveDeckCardPublicId(c.cardPublicId, catalog),
         quantity: c.quantity,
       }));
       artSelections = artResp.artSelections ?? {};
@@ -209,7 +213,7 @@
   const deckCards = $derived.by<DeckCard[]>(() => {
     const out: DeckCard[] = [];
     for (const e of entries) {
-      const card = cardsById[e.cardPublicId];
+      const card = getDeckCardByPublicId(e.cardPublicId, cardsById);
       if (card) out.push({ ...card, quantity: e.quantity });
     }
     return out;
@@ -310,7 +314,7 @@
   });
 
   function cardNameFor(publicId: string): string {
-    const card = cardsById[publicId];
+    const card = getDeckCardByPublicId(publicId, cardsById);
     return card ? getFullName(card) : publicId;
   }
 

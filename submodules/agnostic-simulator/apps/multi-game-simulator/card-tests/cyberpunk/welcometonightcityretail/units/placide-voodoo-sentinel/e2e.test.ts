@@ -25,27 +25,22 @@ test("Placide - Voodoo Sentinel (Retail) - discards program to bottom-deck a riv
     CYBERPUNK_P1,
     welcomeToNightCityRetailPlacideVoodooSentinel.id,
   );
-  const program = await pom.getCardInZoneByDefinitionId(
-    "hand",
-    CYBERPUNK_P1,
-    alphaCorporateSurveillance.id,
-  );
   const target = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaArmoredMinotaur.id,
+    alphaCorpoSecurity.id,
   );
 
   const deckBefore = await pom.getDeckSize(CYBERPUNK_P2);
   await pom.playCardFromHand(placide.instanceId, CYBERPUNK_P1);
 
-  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToMove");
-  const cardChoices = await pom.getChoiceCardIds(CYBERPUNK_P1);
+  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+  const cardChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
   const choiceDefinitions = await getChoiceDefinitionIds(pom, cardChoices);
   expectEqual("Placide program choice count", cardChoices.length, 1);
   expectIncludes("Placide program choices", choiceDefinitions, alphaCorporateSurveillance.id);
 
-  await pom.resolveCardToMove(program.instanceId, CYBERPUNK_P1);
+  await pom.resolveDiscardFromHand([cardChoices[0]!], CYBERPUNK_P1);
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
   const targetChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
@@ -62,7 +57,7 @@ test("Placide - Voodoo Sentinel (Retail) - discards program to bottom-deck a riv
   expectEqual("Placide rival deck size", await pom.getDeckSize(CYBERPUNK_P2), deckBefore + 1);
 
   const p2Deck = await getZoneDefinitionIds(pom, "deck", CYBERPUNK_P2);
-  expectEqual("Placide bottom-decked card", p2Deck[p2Deck.length - 1], alphaArmoredMinotaur.id);
+  expectEqual("Placide bottom-decked card", p2Deck[p2Deck.length - 1], alphaCorpoSecurity.id);
 
   await pom.expectStructuralState();
 });

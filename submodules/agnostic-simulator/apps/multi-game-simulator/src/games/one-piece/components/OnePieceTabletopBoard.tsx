@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties, type MouseEvent } from "react";
+import { useEffect, useMemo, useState, type CSSProperties, type MouseEvent } from "react";
 import type { LegalCommandDescriptor } from "@tcg/op-engine/practice-st01";
 import type { BoardToken, SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 import {
@@ -7,7 +7,6 @@ import {
   DiscardPileZone,
   SingleCardZone,
   TabletopActionButton,
-  TabletopCounterBadge,
   TurnIndicator,
 } from "@tcg/simulator-ui";
 import type { OnePieceSeatId, OnePieceStaticBoard } from "../data/staticBoard.ts";
@@ -17,12 +16,14 @@ interface OnePieceTabletopBoardProps {
   board: OnePieceStaticBoard;
   actions?: readonly LegalCommandDescriptor[];
   onAction?: (action: LegalCommandDescriptor) => void;
+  onJoKenPoTimeout?: () => void;
 }
 
 export function OnePieceTabletopBoard({
   board,
   actions = [],
   onAction,
+  onJoKenPoTimeout,
 }: OnePieceTabletopBoardProps) {
   const [hoveredId, setHoveredId] = useState<string | undefined>();
   const entityMap = useMemo(
@@ -32,17 +33,17 @@ export function OnePieceTabletopBoard({
   const hoveredEntity = hoveredId ? entityMap.get(hoveredId) : undefined;
 
   const handleCardHover = (event: MouseEvent<HTMLDivElement>) => {
-    const cardElement = (event.target as Element).closest<HTMLElement>("[data-entity-id]");
+    const cardElement = (event.target as Element).closest<HTMLElement>("[data-sim-entity-id]");
     if (!cardElement || !event.currentTarget.contains(cardElement)) {
       return;
     }
 
-    const entity = entityMap.get(cardElement.dataset.entityId ?? "");
+    const entity = entityMap.get(cardElement.dataset.simEntityId ?? "");
     setHoveredId(entity?.face === "hidden" ? undefined : entity?.id);
   };
 
   const handleCardOut = (event: MouseEvent<HTMLDivElement>) => {
-    const cardElement = (event.target as Element).closest<HTMLElement>("[data-entity-id]");
+    const cardElement = (event.target as Element).closest<HTMLElement>("[data-sim-entity-id]");
     if (!cardElement) {
       return;
     }
@@ -52,7 +53,7 @@ export function OnePieceTabletopBoard({
       return;
     }
 
-    if (cardElement.dataset.entityId === hoveredId) {
+    if (cardElement.dataset.simEntityId === hoveredId) {
       setHoveredId(undefined);
     }
   };
@@ -94,7 +95,13 @@ export function OnePieceTabletopBoard({
         />
 
         <HoveredCardPreview entity={hoveredEntity} />
-        <TabletopControls actions={actions} onAction={onAction} />
+        <TabletopControls
+          actions={actions}
+          onAction={onAction}
+          onJoKenPoTimeout={onJoKenPoTimeout}
+          activeSeatId={board.table.status.activeSeatId}
+          stateVersion={board.table.status.stateVersion}
+        />
       </div>
     </section>
   );
@@ -215,32 +222,55 @@ function DonMeter({
 }) {
   const active = tokenValue(donTokens, "Active");
   const rested = tokenValue(donTokens, "Rested");
-  const used = Math.min(10, active + rested);
-  const slots = Array.from({ length: 10 }, (_, index) =>
-    index < active ? "active" : index < used ? "rested" : "empty",
-  );
+  const activeSlots = Array.from({ length: active }, () => "active");
+  const restedSlots = Array.from({ length: rested }, () => "rested");
 
   return (
     <div className={classes.donMeter} data-testid={`${seatId}-don-area`}>
-      <div className={classes.donMeterHeader}>
-        <span>DON!!</span>
-        <strong>{donAreaCount}/10</strong>
+      <div className={classes.donAreaCard} data-kind="deck">
+        <span className={classes.donAreaLabel}>DON!! Deck </span>
+        <div className={classes.donDeckStack} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+        <strong className={classes.donAreaCount}>{donDeckCount}</strong>
       </div>
-      <div className={classes.donPips} aria-label={`${donAreaCount} DON available`}>
-        {slots.map((state, index) => (
-          <span
-            key={`${seatId}-don-${index}`}
-            className={classes.donPip}
-            data-state={state}
-            aria-label={`DON ${index + 1}: ${state}`}
-          />
-        ))}
+      <div className={classes.donAreaCard} data-kind="active">
+        <div className={classes.donAreaCardHeader}>
+          <span className={classes.donAreaLabel}>Active DON!! </span>
+          <strong>{active}</strong>
+        </div>
+        <div className={classes.donCardSlots} aria-label={`${active} active DON`}>
+          {activeSlots.map((state, index) => (
+            <span
+              key={`${seatId}-active-don-${index}`}
+              className={classes.donCardSlot}
+              data-state={state}
+              aria-label={`Active DON ${index + 1}: ${state}`}
+            />
+          ))}
+        </div>
       </div>
-      <div className={classes.donMeterStats}>
-        <span data-state="active">Active {active}</span>
-        <span data-state="rested">Rested {rested}</span>
-        <span>Deck {donDeckCount}</span>
+      <div className={classes.donAreaCard} data-kind="rested">
+        <div className={classes.donAreaCardHeader}>
+          <span className={classes.donAreaLabel}>Rested DON!! </span>
+          <strong>{rested}</strong>
+        </div>
+        <div className={classes.donCardSlots} aria-label={`${rested} rested DON`}>
+          {restedSlots.map((state, index) => (
+            <span
+              key={`${seatId}-rested-don-${index}`}
+              className={classes.donCardSlot}
+              data-state={state}
+              aria-label={`Rested DON ${index + 1}: ${state}`}
+            />
+          ))}
+        </div>
       </div>
+      <span className={classes.donMeterSummary} aria-hidden="true">
+        {donAreaCount}/10
+      </span>
     </div>
   );
 }
@@ -260,16 +290,17 @@ function CharacterArea({
     <div className={classes.characterZone} data-testid={`${zone?.ownerId}-character-area`}>
       <div className={classes.characterZoneHeader}>
         <span>Character Area</span>
-        <TabletopCounterBadge label="Characters" value={count} variant="compact" />
       </div>
       <div className={classes.characterZoneCards}>
-        <CardZone
-          zone={zone}
-          entities={entitiesForZone(zone, entityMap)}
-          entityCount={zone?.count ?? zone?.entityIds.length ?? 0}
-          emptyLabel="No characters"
-          ariaLabel={`${seatLabel} character area`}
-        />
+        {count > 0 ? (
+          <CardZone
+            zone={zone}
+            entities={entitiesForZone(zone, entityMap)}
+            entityCount={zone?.count ?? zone?.entityIds.length ?? 0}
+            emptyLabel="No characters"
+            ariaLabel={`${seatLabel} character area`}
+          />
+        ) : null}
       </div>
     </div>
   );
@@ -339,29 +370,13 @@ function LifeArea({ zone }: { zone: SimulatorZone | undefined }) {
 }
 
 function HoveredCardPreview({ entity }: { entity: SimulatorEntity | undefined }) {
-  if (!entity || entity.face === "hidden") {
+  if (!entity || entity.face === "hidden" || !entity.imageUrl) {
     return null;
   }
 
-  const power = entity.stats.find((stat) => stat.label === "Power")?.value;
-  const cost = entity.stats.find((stat) => stat.label === "Cost")?.value;
-  const details = [
-    entity.subtitle,
-    power ? `${power} power` : null,
-    cost ? `${cost} cost` : null,
-  ].filter(Boolean);
-
   return (
     <aside className={classes.hoverCardPreview} data-testid="one-piece-hover-preview">
-      {entity.imageUrl ? (
-        <img src={entity.imageUrl} alt="" className={classes.hoverCardPreviewImage} />
-      ) : null}
-      <div className={classes.hoverCardPreviewText}>
-        <span>Card details</span>
-        <strong>{entity.title}</strong>
-        {details.length > 0 ? <p>{details.join(" / ")}</p> : null}
-        {entity.traits.length > 0 ? <small>{entity.traits.join(" • ")}</small> : null}
-      </div>
+      <img src={entity.imageUrl} alt={entity.title} className={classes.hoverCardPreviewImage} />
     </aside>
   );
 }
@@ -369,37 +384,182 @@ function HoveredCardPreview({ entity }: { entity: SimulatorEntity | undefined })
 function TabletopControls({
   actions,
   onAction,
+  onJoKenPoTimeout,
+  activeSeatId,
+  stateVersion,
 }: {
   actions: readonly LegalCommandDescriptor[];
   onAction: ((action: LegalCommandDescriptor) => void) | undefined;
+  onJoKenPoTimeout: (() => void) | undefined;
+  activeSeatId: string | undefined;
+  stateVersion: number;
 }) {
-  const visibleActions = actions.filter((action) => action.seat === "south");
+  const userActions = actions.filter((action) => action.seat === "south");
+  const joKenPoActions = userActions.filter((action) => action.type === "chooseJoKenPo");
+  const firstPlayerActions = userActions.filter((action) => action.type === "chooseFirstPlayer");
+  const mulliganAction = userActions.find((action) => action.type === "mulligan");
+  const keepHandAction = userActions.find((action) => action.type === "keepHand");
+  const visibleActions = userActions.filter(
+    (action) =>
+      action.type !== "chooseJoKenPo" &&
+      action.type !== "chooseFirstPlayer" &&
+      action.type !== "mulligan" &&
+      action.type !== "keepHand",
+  );
+  const showJoKenPoModal = joKenPoActions.length > 0;
+  const showFirstPlayerModal = firstPlayerActions.length > 0;
+  const showMulliganModal = Boolean(mulliganAction && keepHandAction);
+  const playOrderLabel = activeSeatId === "player" ? "First to play" : "Second to play";
+  const [joKenPoSecondsLeft, setJoKenPoSecondsLeft] = useState(30);
+  const [joKenPoTimeoutSent, setJoKenPoTimeoutSent] = useState(false);
+  const joKenPoActionKey = joKenPoActions
+    .map((action) => action.options?.[0]?.value ?? action.label)
+    .join(":");
+  const joKenPoRoundKey = `${stateVersion}:${joKenPoActionKey}`;
+  const choiceAction = (choice: string) =>
+    joKenPoActions.find((action) => action.options?.[0]?.value === choice);
+
+  useEffect(() => {
+    if (!showJoKenPoModal) {
+      setJoKenPoSecondsLeft(30);
+      return;
+    }
+
+    setJoKenPoSecondsLeft(30);
+    setJoKenPoTimeoutSent(false);
+    const timer = window.setInterval(() => {
+      setJoKenPoSecondsLeft((current) => Math.max(0, current - 1));
+    }, 1000);
+
+    return () => window.clearInterval(timer);
+  }, [showJoKenPoModal, joKenPoRoundKey]);
+
+  useEffect(() => {
+    if (!showJoKenPoModal || joKenPoSecondsLeft > 0 || joKenPoTimeoutSent) {
+      return;
+    }
+
+    setJoKenPoTimeoutSent(true);
+    onJoKenPoTimeout?.();
+  }, [joKenPoSecondsLeft, joKenPoTimeoutSent, onJoKenPoTimeout, showJoKenPoModal]);
 
   return (
-    <div className={classes.tabletopControls} aria-label="Table controls">
-      {visibleActions.length > 0 ? (
-        <div className={classes.practiceActionTray}>
-          {visibleActions.map((action) => (
-            <TabletopActionButton
-              key={`${action.type}:${action.sourceId ?? action.promptId ?? action.label}`}
-              variant="primary"
-              className={
-                action.type === "endTurn" || action.type === "startGame"
-                  ? classes.turnEndControl
-                  : classes.practiceActionControl
-              }
-              onClick={() => onAction?.(action)}
-            >
-              {action.label}
-            </TabletopActionButton>
-          ))}
-        </div>
-      ) : (
-        <TabletopActionButton variant="primary" className={classes.turnEndControl} disabled>
-          Turn End
-        </TabletopActionButton>
+    <>
+      {showJoKenPoModal && (
+        <aside
+          className={classes.mulliganModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="one-piece-jo-ken-po-title"
+          aria-describedby="one-piece-jo-ken-po-copy"
+          data-testid="one-piece-jo-ken-po-modal"
+        >
+          <p className={classes.mulliganEyebrow}>{joKenPoSecondsLeft}s remaining</p>
+          <h2 id="one-piece-jo-ken-po-title">Jo Ken Po</h2>
+          <p id="one-piece-jo-ken-po-copy">
+            Choose before the timer ends. Results reveal when both players have chosen.
+          </p>
+          <div className={classes.joKenPoActions}>
+            {(["rock", "paper", "scissors"] as const).map((choice) => {
+              const action = choiceAction(choice);
+              return (
+                <TabletopActionButton
+                  key={choice}
+                  className={classes.mulliganSecondary}
+                  disabled={!action}
+                  onClick={() => action && onAction?.(action)}
+                >
+                  {choice === "rock" ? "Rock" : choice === "paper" ? "Paper" : "Scissors"}
+                </TabletopActionButton>
+              );
+            })}
+          </div>
+        </aside>
       )}
-    </div>
+      {showFirstPlayerModal && (
+        <aside
+          className={classes.mulliganModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="one-piece-first-player-title"
+          data-testid="one-piece-first-player-modal"
+        >
+          <p className={classes.mulliganEyebrow}>Jo Ken Po won</p>
+          <h2 id="one-piece-first-player-title">Choose First Turn</h2>
+          <div className={classes.mulliganActions}>
+            {firstPlayerActions.map((action) => (
+              <TabletopActionButton
+                key={`${action.type}:${action.targetIds?.[0] ?? action.label}`}
+                variant={action.targetIds?.[0] === "south" ? "primary" : undefined}
+                className={
+                  action.targetIds?.[0] === "south"
+                    ? classes.mulliganPrimary
+                    : classes.mulliganSecondary
+                }
+                onClick={() => onAction?.(action)}
+              >
+                {action.label}
+              </TabletopActionButton>
+            ))}
+          </div>
+        </aside>
+      )}
+      {showMulliganModal && (
+        <aside
+          className={classes.mulliganModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="one-piece-mulligan-title"
+          aria-describedby="one-piece-mulligan-copy"
+          data-testid="one-piece-mulligan-modal"
+        >
+          <p className={classes.mulliganEyebrow}>{playOrderLabel}</p>
+          <h2 id="one-piece-mulligan-title">Opening Hand</h2>
+          <p id="one-piece-mulligan-copy">
+            Decide whether to redraw your opening hand before the game begins.
+          </p>
+          <div className={classes.mulliganActions}>
+            <TabletopActionButton
+              variant="primary"
+              className={classes.mulliganPrimary}
+              onClick={() => mulliganAction && onAction?.(mulliganAction)}
+            >
+              Take Mulligan
+            </TabletopActionButton>
+            <TabletopActionButton
+              className={classes.mulliganSecondary}
+              onClick={() => keepHandAction && onAction?.(keepHandAction)}
+            >
+              Keep Hand
+            </TabletopActionButton>
+          </div>
+        </aside>
+      )}
+      <div className={classes.tabletopControls} aria-label="Table controls">
+        {visibleActions.length > 0 ? (
+          <div className={classes.practiceActionTray}>
+            {visibleActions.map((action) => (
+              <TabletopActionButton
+                key={`${action.type}:${action.sourceId ?? action.promptId ?? action.label}`}
+                variant="primary"
+                className={
+                  action.type === "endTurn" || action.type === "startGame"
+                    ? classes.turnEndControl
+                    : classes.practiceActionControl
+                }
+                onClick={() => onAction?.(action)}
+              >
+                {action.label}
+              </TabletopActionButton>
+            ))}
+          </div>
+        ) : (
+          <TabletopActionButton variant="primary" className={classes.turnEndControl} disabled>
+            Turn End
+          </TabletopActionButton>
+        )}
+      </div>
+    </>
   );
 }
 

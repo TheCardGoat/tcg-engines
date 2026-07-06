@@ -2,7 +2,8 @@
  * Data Merger
  *
  * Merges card text from Lorcast into Ravensburger data.
- * Lorcast has proper symbols ({S}, {I}, {D}) while Ravensburger text lacks them.
+ * Lorcast often has cleaner keyword formatting, but Ravensburger can be more
+ * accurate for recently released symbol placeholders.
  */
 
 import { cleanRulesText } from "../utils/text";
@@ -21,9 +22,67 @@ export interface MergeStats {
   unmatchedCards: Array<{ name: string; version: string; identifier: string }>;
 }
 
+const EMPTY_SYMBOL = "{}";
+const SYMBOL_PLACEHOLDER_REGEX = /\{(?:[A-Z]+)?\}/g;
+
+function hasEmptySymbolPlaceholder(text: string): boolean {
+  return text.includes(EMPTY_SYMBOL);
+}
+
+function hasConcreteSymbolPlaceholder(text: string): boolean {
+  return /\{[A-Z]+\}/.test(text);
+}
+
+function getSymbolPlaceholders(text: string): string[] {
+  return text.match(SYMBOL_PLACEHOLDER_REGEX) ?? [];
+}
+
+/**
+ * Lorcast occasionally ships fresh cards with empty symbol placeholders, e.g.
+ * "{}" where Ravensburger already has "{S}". Repair only matching symbol slots
+ * so we keep Lorcast text shape without discarding concrete Ravensburger icons.
+ */
+export function repairEmptySymbolsFromReference(text: string, referenceText: string): string {
+  if (!hasEmptySymbolPlaceholder(text) || !hasConcreteSymbolPlaceholder(referenceText)) {
+    return text;
+  }
+
+  const sourceSymbols = getSymbolPlaceholders(text);
+  const referenceSymbols = getSymbolPlaceholders(referenceText);
+  if (sourceSymbols.length !== referenceSymbols.length) {
+    return text;
+  }
+
+  let index = 0;
+  return text.replace(SYMBOL_PLACEHOLDER_REGEX, (symbol) => {
+    const replacement = referenceSymbols[index++];
+    if (symbol === EMPTY_SYMBOL && replacement !== EMPTY_SYMBOL) {
+      return replacement;
+    }
+    return symbol;
+  });
+}
+
+function chooseRulesText(lorcastText: string, ravensburgerText: string): string {
+  const repairedText = repairEmptySymbolsFromReference(lorcastText, ravensburgerText);
+  if (repairedText !== lorcastText) {
+    return repairedText;
+  }
+
+  if (
+    hasEmptySymbolPlaceholder(lorcastText) &&
+    !hasEmptySymbolPlaceholder(ravensburgerText) &&
+    hasConcreteSymbolPlaceholder(ravensburgerText)
+  ) {
+    return ravensburgerText;
+  }
+
+  return lorcastText;
+}
+
 /**
  * Get merged rules text for a card
- * Uses Lorcast text if available, falls back to cleaned Ravensburger text
+ * Uses Lorcast text if available and symbol-safe, falls back to cleaned Ravensburger text
  * Returns both normalized text (with {d} placeholders) and original text (with numbers)
  */
 export function getMergedRulesText(
@@ -56,9 +115,9 @@ export function getMergedRulesText(
   );
 
   if (lorcastText) {
-    // Return Lorcast text (normalized with {d}) and original Ravensburger text
+    // Return symbol-safe merged text and original Ravensburger text
     return {
-      text: lorcastText,
+      text: chooseRulesText(lorcastText, originalText),
       originalText: originalText,
       matched: true,
     };

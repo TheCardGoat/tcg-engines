@@ -1,5 +1,4 @@
-import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
-import type { SimulatorAnimationEvent } from "./events";
+import type { AnimationPlanV1, SimulatorAudioCueId } from "@tcg/protocol";
 
 export interface CardMoveAnimationRecord {
   readonly id: string;
@@ -8,63 +7,53 @@ export interface CardMoveAnimationRecord {
   readonly fromZoneId?: string;
   readonly toZoneId: string;
   readonly reason?: string;
+  readonly audioCue?: SimulatorAudioCueId;
   readonly delayMs?: number;
   readonly durationMs?: number;
 }
 
-export interface CardMoveAnimationContext {
-  readonly viewerSeatId: string | null;
-  readonly resolveEntity: (cardId: string) => SimulatorEntity | null | undefined;
-  readonly zoneDescriptor: (zoneId: string, ownerId: string) => SimulatorZone | null | undefined;
-}
-
-export function cardMoveRecordsToSimulatorEvents(
+export function cardMoveRecordsToAnimationPlans(
   records: readonly CardMoveAnimationRecord[],
-  context: CardMoveAnimationContext,
-): SimulatorAnimationEvent[] {
-  return records.flatMap((record) => cardMoveRecordToSimulatorEvent(record, context) ?? []);
-}
-
-export function cardMoveRecordToSimulatorEvent(
-  record: CardMoveAnimationRecord,
-  context: CardMoveAnimationContext,
-): SimulatorAnimationEvent | null {
-  const entity = context.resolveEntity(record.cardId);
-  const toZone = context.zoneDescriptor(record.toZoneId, record.ownerId);
-  if (!entity || !toZone) {
-    return null;
-  }
-
-  const eventBase = {
-    id: record.id,
-    viewer: { viewerSeatId: context.viewerSeatId },
-    delayMs: record.delayMs,
-    durationMs: record.durationMs,
-  };
-
-  if (!record.fromZoneId) {
-    return {
-      ...eventBase,
-      primitive: "zoneEnter",
-      entity,
-      toZone,
+): AnimationPlanV1[] {
+  return records.map((record): AnimationPlanV1 => {
+    const to = {
+      kind: "zone" as const,
+      id: record.toZoneId,
+      ownerId: record.ownerId,
     };
-  }
-
-  const fromZone = context.zoneDescriptor(record.fromZoneId, record.ownerId);
-  if (!fromZone) {
-    return null;
-  }
-
-  return {
-    ...eventBase,
-    primitive: isDrawRecord(record) ? "draw" : "zoneTransfer",
-    entity,
-    fromZone,
-    toZone,
-  };
-}
-
-function isDrawRecord(record: CardMoveAnimationRecord): boolean {
-  return record.reason === "draw" || (record.fromZoneId === "deck" && record.toZoneId === "hand");
+    const from = record.fromZoneId
+      ? {
+          kind: "zone" as const,
+          id: record.fromZoneId,
+          ownerId: record.ownerId,
+        }
+      : undefined;
+    return {
+      id: record.id,
+      version: 1,
+      anchors: [],
+      steps: [
+        from
+          ? {
+              id: `${record.id}:move`,
+              type: "moveEntity",
+              entity: { kind: "entity", id: record.cardId },
+              from,
+              to,
+              audioCue: record.audioCue,
+              delayMs: record.delayMs,
+              durationMs: record.durationMs,
+            }
+          : {
+              id: `${record.id}:enter`,
+              type: "enterEntity",
+              entity: { kind: "entity", id: record.cardId },
+              to,
+              audioCue: record.audioCue,
+              delayMs: record.delayMs,
+              durationMs: record.durationMs,
+            },
+      ],
+    };
+  });
 }

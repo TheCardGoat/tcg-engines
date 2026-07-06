@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op02Borsalino114 } from "../../OP02/characters/114-borsalino.ts";
 import { prb01BorsalinoReprint114I18n } from "./114-borsalino-reprint.i18n.ts";
 
 export const prb01BorsalinoReprint114: CharacterCard = {
-  id: "OP02-114",
-  canonicalId: "OP02-114",
+  ...op02Borsalino114,
+  id: "OP02-114_r3",
   slug: "borsalino-reprint",
   name: "Borsalino (Reprint)",
   printings: [
     {
-      id: "OP02-114",
-      artId: "OP02-114",
+      id: "OP02-114_r3",
+      artId: "OP02-114_r3",
       setCode: "PRB01",
       collectorNumber: "114",
       rarity: "SR",
@@ -24,15 +25,8 @@ export const prb01BorsalinoReprint114: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-114_p3.jpg",
     },
   ],
-  cardType: "character",
-  color: ["black"],
   rarity: "SR",
   setId: "PRB01",
-  cost: 4,
-  power: 5000,
-  counter: 1000,
-  traits: ["Navy"],
-  attribute: "special",
   artVariants: [
     {
       type: "alternate-art",
@@ -40,48 +34,5 @@ export const prb01BorsalinoReprint114: CharacterCard = {
       imageId: "OP02-114_p3",
     },
   ],
-  effect:
-    "[Opponent's Turn] This Character gains +1000 power and cannot be K.O.'d by effects.[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)Disclaimer: This card was reprinted from the original set with changes to the artist credit (note the lack of pen symbol next to the artist name).",
-  effects: {
-    keywords: ["blocker"],
-    permanentEffects: [
-      {
-        conditions: [
-          {
-            condition: "turn",
-            value: "opponent",
-          },
-        ],
-        actions: [
-          {
-            action: "modifyPower",
-            target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-            value: 1000,
-            duration: "permanent",
-          },
-          {
-            action: "cannotBeKod",
-            target: {
-              player: "self",
-              zones: ["character"],
-              count: {
-                amount: 1,
-              },
-              self: true,
-            },
-            duration: "permanent",
-            restriction: "byEffect",
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01BorsalinoReprint114I18n,
 };

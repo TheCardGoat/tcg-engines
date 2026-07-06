@@ -8,7 +8,7 @@ export const mrsIncredibleCreatedByTheVineI18n: Record<Languages, I18nProperties
       {
         title: "TORRENT",
         description:
-          "Whenever one of your Floodborn characters quests, you pay 1{} less for the next character you shift this turn.",
+          "Whenever one of your Floodborn characters quests, you pay 1{I} less for the next character you shift this turn.",
       },
     ],
   },

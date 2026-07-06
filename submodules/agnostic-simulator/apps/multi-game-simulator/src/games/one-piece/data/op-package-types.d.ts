@@ -54,7 +54,7 @@ declare module "@tcg/op-engine" {
   }
 
   export interface MatchState {
-    status: "active" | string;
+    status: string;
     activeSeat: MatchSeat;
     turnNumber: number;
     phase: MatchPhase;

@@ -4,7 +4,13 @@ export const sunYeeRedPandaSpiritI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Sun Yee",
     version: "Red Panda Spirit",
-    text: "<Temporary Red Panda Shift> 2 {I} (You may pay 2 {I} to play this on top of one of your Red Panda characters. At the end of your turn, remove all damage from this character and return only this card to your hand.)",
+    text: [
+      {
+        title: "Temporary Red Panda Shift 2 {I}",
+        description:
+          "(You may pay 2 {I} to play this on top of one of your Red Panda characters. At the end of your turn, remove all damage from this character and return only this card to your hand.)",
+      },
+    ],
   },
   de: {
     name: "Sun Yee",

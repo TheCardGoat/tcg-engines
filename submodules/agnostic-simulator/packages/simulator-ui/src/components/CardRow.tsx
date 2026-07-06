@@ -52,9 +52,11 @@ export function CardRow({
             data-card-id={entity.id}
             data-card-states={entity.states.join(" ")}
             data-entity-id={entity.id}
+            data-sim-entity-id={entity.id}
             role={ariaLabel ? "listitem" : undefined}
             aria-label={ariaLabel ? entity.title : undefined}
             layout="position"
+            layoutId={`sim-entity-${entity.id}`}
             transition={CARD_LAYOUT_TRANSITION}
           >
             <CardFace

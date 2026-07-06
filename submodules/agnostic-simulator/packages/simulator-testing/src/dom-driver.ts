@@ -83,6 +83,7 @@ export interface SimulatorDomElement {
    *  the DOM directly (e.g. jsdom). */
   clickJs(): Promise<void>;
   getAttribute(name: string): Promise<string | null>;
+  getAttributeAll(name: string): Promise<ReadonlyArray<string | null>>;
   textContent(): Promise<string>;
   isVisible(): Promise<boolean>;
   waitFor(options?: { timeoutMs?: number; state?: "attached" | "visible" }): Promise<void>;

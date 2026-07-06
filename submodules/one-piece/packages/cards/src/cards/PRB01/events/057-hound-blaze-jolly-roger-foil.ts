@@ -1,15 +1,16 @@
 import type { EventCard } from "@tcg/op-types";
+import { op05HoundBlaze057 } from "../../OP05/events/057-hound-blaze.ts";
 import { prb01HoundBlazeJollyRogerFoil057I18n } from "./057-hound-blaze-jolly-roger-foil.i18n.ts";
 
 export const prb01HoundBlazeJollyRogerFoil057: EventCard = {
-  id: "OP05-057",
-  canonicalId: "OP05-057",
+  ...op05HoundBlaze057,
+  id: "OP05-057_p2",
   slug: "hound-blaze-jolly-roger-foil",
   name: "Hound Blaze (Jolly Roger Foil)",
   printings: [
     {
-      id: "OP05-057",
-      artId: "OP05-057",
+      id: "OP05-057_p2",
+      artId: "OP05-057_p2",
       setCode: "PRB01",
       collectorNumber: "057",
       rarity: "R",
@@ -40,12 +41,8 @@ export const prb01HoundBlazeJollyRogerFoil057: EventCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP05-057_p4.jpg",
     },
   ],
-  cardType: "event",
-  color: ["blue"],
   rarity: "R",
   setId: "PRB01",
-  cost: 2,
-  traits: ["Navy"],
   artVariants: [
     {
       type: "other",
@@ -63,71 +60,5 @@ export const prb01HoundBlazeJollyRogerFoil057: EventCard = {
       imageId: "OP05-057_p4",
     },
   ],
-  effect:
-    "[Main] Up to 1 of your Leader or Character cards gains +3000 power during this turn. Then, place up to 1 Character with a cost of 2 or less at the bottom of the owner's deck.[Trigger] Return up to 1 Character with a cost of 3 or less to the owner's hand.",
-  effects: {
-    effects: [
-      {
-        trigger: "main",
-        actions: [
-          {
-            action: "modifyPower",
-            target: {
-              player: "self",
-              zones: ["leader", "character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-            value: 3000,
-            duration: "thisTurn",
-          },
-          {
-            action: "returnToDeck",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 2,
-                },
-              ],
-            },
-            position: "bottom",
-          },
-        ],
-      },
-      {
-        trigger: "trigger",
-        actions: [
-          {
-            action: "returnToHand",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 3,
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01HoundBlazeJollyRogerFoil057I18n,
 };

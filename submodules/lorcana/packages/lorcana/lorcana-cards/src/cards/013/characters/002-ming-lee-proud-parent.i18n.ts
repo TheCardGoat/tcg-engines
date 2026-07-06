@@ -8,11 +8,11 @@ export const mingLeeProudParentI18n: Record<Languages, I18nProperties> = {
       {
         title: "BIGGEST FAN",
         description:
-          "If you have a character named Meilin Lee in play, you pay 1 {} less to play this character.",
+          "If you have a character named Meilin Lee in play, you pay 1 {I} less to play this character.",
       },
       {
         title: "FOLLOW THE MUSIC",
-        description: "If you played a song this turn, you pay 1 {} less to play this character.",
+        description: "If you played a song this turn, you pay 1 {I} less to play this character.",
       },
     ],
   },

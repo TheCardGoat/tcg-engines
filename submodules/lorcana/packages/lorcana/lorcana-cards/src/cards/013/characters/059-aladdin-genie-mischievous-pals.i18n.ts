@@ -37,8 +37,7 @@ export const aladdinGenieMischievousPalsI18n: Record<Languages, I18nProperties> 
     version: "Potes facétieux",
     text: [
       {
-        title:
-          "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Aladdin ou Génie.)",
+        title: "<Alter> 3 {I}",
       },
       {
         title: "Tour de passe-passe",

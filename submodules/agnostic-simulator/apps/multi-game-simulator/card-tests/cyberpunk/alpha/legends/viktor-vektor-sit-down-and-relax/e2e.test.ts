@@ -14,11 +14,7 @@ import { legendViktorVektorSitDownAndRelax } from "@cyberpunk/testing/e2e-fixtur
 test("Viktor Vektor - call searches top deck for gear", async ({ page }) => {
   const pom = await createPlaywrightCyberpunkSimulatorPom(page, legendViktorVektorSitDownAndRelax);
 
-  const viktor = await pom.getCardInZoneByDefinitionId(
-    "legendArea",
-    CYBERPUNK_P1,
-    alphaViktorVektorSitDownAndRelax.id,
-  );
+  const viktor = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
 
   await pom.callLegend(viktor.instanceId, CYBERPUNK_P1);
 
@@ -28,6 +24,11 @@ test("Viktor Vektor - call searches top deck for gear", async ({ page }) => {
     viktor.instanceId,
   );
   expectEqual("Viktor is face-up", calledViktor.faceDown, false);
+  expectEqual(
+    "Viktor definition after call",
+    calledViktor.definitionId,
+    alphaViktorVektorSitDownAndRelax.id,
+  );
   await pom.expectEddies(CYBERPUNK_P1, 2);
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "searchDeck");
 

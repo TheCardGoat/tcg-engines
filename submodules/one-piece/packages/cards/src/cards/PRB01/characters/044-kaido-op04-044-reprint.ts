@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op04Kaido044 } from "../../OP04/characters/044-kaido.ts";
 import { prb01KaidoOp04044Reprint044I18n } from "./044-kaido-op04-044-reprint.i18n.ts";
 
 export const prb01KaidoOp04044Reprint044: CharacterCard = {
-  id: "OP04-044",
-  canonicalId: "OP04-044",
+  ...op04Kaido044,
+  id: "OP04-044_r1",
   slug: "kaido-op04-044-reprint",
   name: "Kaido (OP04-044) (Reprint)",
   printings: [
     {
-      id: "OP04-044",
-      artId: "OP04-044",
+      id: "OP04-044_r1",
+      artId: "OP04-044_r1",
       setCode: "PRB01",
       collectorNumber: "044",
       rarity: "SR",
@@ -24,14 +25,8 @@ export const prb01KaidoOp04044Reprint044: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP04-044_p4.jpg",
     },
   ],
-  cardType: "character",
-  color: ["blue"],
   rarity: "SR",
   setId: "PRB01",
-  cost: 10,
-  power: 12000,
-  traits: ["Animal Kingdom Pirates The Four Emperors"],
-  attribute: "strike",
   artVariants: [
     {
       type: "alternate-art",
@@ -39,52 +34,5 @@ export const prb01KaidoOp04044Reprint044: CharacterCard = {
       imageId: "OP04-044_p4",
     },
   ],
-  effect:
-    "[On Play] Return up to 1 Character with a cost of 8 or less and up to 1 Character with a cost of 3 or less to the owner's hand.Disclaimer: This card was reprinted from the original set with changes to the artist credit (note the lack of pen symbol next to the artist name).",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "returnToHand",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 8,
-                },
-              ],
-            },
-          },
-          {
-            action: "returnToHand",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 3,
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01KaidoOp04044Reprint044I18n,
 };

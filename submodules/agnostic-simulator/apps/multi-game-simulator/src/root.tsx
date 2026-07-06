@@ -7,6 +7,12 @@ import type { SessionResult } from "@tcg/shared/auth";
 import { platformAuthSessionContext } from "../server/context";
 import { resolveGatewayTicket } from "../server/gateway-ticket";
 import { initRootSocket } from "./lib/gateway/root-socket";
+import { apiUrl } from "./runtime/gameRuntimeApi";
+import { fetchSharedSimulatorRouteData } from "./simulator/routeData";
+import {
+  normalizeSimulatorSettings,
+  type SimulatorSettings,
+} from "./simulator/settings/simulator-settings";
 
 import "./app.css";
 import "@tcg/simulator-ui/styles/theme.css";
@@ -58,7 +64,14 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
   const gatewayTicket: GatewayTicket | null = auth?.session
     ? await resolveGatewayTicket({ request, gameSlug })
     : null;
-  return { auth, gameSlug, gatewayTicket };
+  const simulatorRouteData = await fetchSharedSimulatorRouteData({
+    request,
+    env: process.env,
+  });
+  const simulatorSettings = auth?.session
+    ? await fetchSimulatorSettings({ request, env: process.env })
+    : null;
+  return { auth, gameSlug, gatewayTicket, simulatorRouteData, simulatorSettings };
 }
 
 /**
@@ -81,4 +94,47 @@ clientLoader.hydrate = true as const;
 
 export default function Root() {
   return <Outlet />;
+}
+
+interface UserSettingsResponse {
+  gameplaySettings?: {
+    soundVolume?: number;
+  };
+}
+
+async function fetchSimulatorSettings({
+  request,
+  env,
+  fetcher = fetch,
+}: {
+  request: Request;
+  env: NodeJS.ProcessEnv;
+  fetcher?: typeof fetch;
+}): Promise<SimulatorSettings | null> {
+  try {
+    const response = await fetcher(apiUrl("platform", "/users/me/settings", env), {
+      headers: forwardedRequestHeaders(request),
+    });
+    if (!response.ok) {
+      return null;
+    }
+    const body = (await response.json()) as UserSettingsResponse;
+    const soundVolume = body.gameplaySettings?.soundVolume;
+    return soundVolume === undefined ? null : normalizeSimulatorSettings({ soundVolume });
+  } catch {
+    return null;
+  }
+}
+
+function forwardedRequestHeaders(request: Request): Headers {
+  const headers = new Headers();
+  const cookie = request.headers.get("cookie");
+  const authorization = request.headers.get("authorization");
+  if (cookie) {
+    headers.set("cookie", cookie);
+  }
+  if (authorization) {
+    headers.set("authorization", authorization);
+  }
+  return headers;
 }

@@ -10,22 +10,20 @@ async function main() {
   await page.getByTestId("practice-setup-start").click();
   await page.waitForURL(/\/practice\/practice_/);
   await page.waitForSelector('[data-testid="board-wrap"]', { timeout: 15000 });
-  await page.waitForFunction(() =>
-    Boolean((window as unknown as { __cyberpunkEngine?: unknown }).__cyberpunkEngine),
+  const seed = await page.getByTestId("practice-match-seed").getAttribute("data-seed");
+  const matchId = await page.getByTestId("practice-match-id").getAttribute("data-match-id");
+  console.log("matchId:", matchId);
+  console.log("seed:", seed);
+  console.log(
+    "player hand:",
+    await page.locator('[data-testid="hand-zone"][data-side="player"]').getAttribute("data-count"),
   );
-
-  const state = await page.evaluate(() => {
-    const e = (window as unknown as { __cyberpunkEngine?: { getState: () => unknown } })
-      .__cyberpunkEngine;
-    return e!.getState();
-  });
-  console.log("Full state keys:", Object.keys(state as object));
-  const s = state as Record<string, unknown>;
-  const G = s.G as Record<string, unknown>;
-  console.log("gamePhase:", G.gamePhase);
-  console.log("turnMetadata:", JSON.stringify(G.turnMetadata, null, 2));
-  console.log("gameEnded:", G.gameEnded);
-  console.log("winnerId:", G.winnerId);
+  console.log(
+    "opponent hand:",
+    await page
+      .locator('[data-testid="hand-zone"][data-side="opponent"]')
+      .getAttribute("data-count"),
+  );
   await browser.close();
 }
 

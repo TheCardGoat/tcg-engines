@@ -319,6 +319,8 @@ function buildAuxKv(
   const canonicalIdByShortId: Record<string, string> = {};
   const representativeShortIdByCanonicalId: Record<string, string> = {};
   const printingIdToShortId: Record<string, string> = {};
+  const printingIdToCanonicalId: Record<string, string> = {};
+  const shortIdToPrintingId: Record<string, string> = {};
   const printingIdsByCanonicalId: Record<string, string[]> = {};
   const baseReprintIdsByCanonicalId: Record<string, string[]> = {};
   const localizationShortIdByCultureInvariantId: Record<string, string> = {};
@@ -335,6 +337,8 @@ function buildAuxKv(
 
     // printingIdToShortId
     printingIdToShortId[printingId] = shortId;
+    printingIdToCanonicalId[printingId] = canonicalId;
+    shortIdToPrintingId[shortId] = printingId;
 
     // printingIdsByCanonicalId
     if (!printingIdsByCanonicalId[canonicalId]) {
@@ -402,6 +406,8 @@ function buildAuxKv(
     canonicalIdByShortId,
     representativeShortIdByCanonicalId,
     printingIdToShortId,
+    printingIdToCanonicalId,
+    shortIdToPrintingId,
     printingIdsByCanonicalId,
     baseReprintIdsByCanonicalId,
     localizationShortIdByCultureInvariantId,
@@ -461,10 +467,24 @@ function validateIds(
         `canonicalIdByShortId mismatch for ${card.id}: expected ${card.canonicalId}, got ${mappedCanonicalId}`,
       );
     }
+    const mappedPrintingCanonicalId = auxKv.printingIdToCanonicalId[printingId];
+    if (mappedPrintingCanonicalId !== card.canonicalId) {
+      errors.push(
+        `printingIdToCanonicalId mismatch for ${printingId}: expected ${card.canonicalId}, got ${mappedPrintingCanonicalId}`,
+      );
+    }
+    const mappedPrintingId = auxKv.shortIdToPrintingId[card.id];
+    if (mappedPrintingId !== printingId) {
+      errors.push(
+        `shortIdToPrintingId mismatch for ${card.id}: expected ${printingId}, got ${mappedPrintingId}`,
+      );
+    }
   }
 
   counts.uniqueShortIds = Object.keys(auxKv.canonicalIdByShortId).length;
   counts.uniquePrintingIds = Object.keys(auxKv.printingIdToShortId).length;
+  counts.printingCanonicalMappings = Object.keys(auxKv.printingIdToCanonicalId).length;
+  counts.shortPrintingMappings = Object.keys(auxKv.shortIdToPrintingId).length;
 
   return {
     status: errors.length === 0 ? "pass" : "fail",

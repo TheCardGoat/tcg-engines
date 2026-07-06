@@ -30,7 +30,7 @@ export const donaldDuckVinelingRider: CharacterCard = {
   willpower: 3,
   lore: 1,
   inkable: false,
-  text: "<Rush>",
+  text: "Rush",
   classifications: ["Storyborn", "Ally"],
   abilities: [rush],
   i18n: donaldDuckVinelingRiderI18n,

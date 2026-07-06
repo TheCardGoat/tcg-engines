@@ -16,5 +16,6 @@ export function cleanRulesText(text: string): string {
     .replace(/<br\s*\/?>/g, "\n")
     .replace(/<mark>/g, "")
     .replace(/<\/mark>/g, "")
+    .replace(/<([^>/]+)>/g, "$1")
     .trim();
 }

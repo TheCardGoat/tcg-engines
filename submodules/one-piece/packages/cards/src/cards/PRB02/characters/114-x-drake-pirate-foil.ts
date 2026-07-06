@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op10XDrake114 } from "../../OP10/characters/114-x-drake.ts";
 import { prb02XDrakePirateFoil114I18n } from "./114-x-drake-pirate-foil.i18n.ts";
 
 export const prb02XDrakePirateFoil114: CharacterCard = {
-  id: "OP10-114",
-  canonicalId: "OP10-114",
+  ...op10XDrake114,
+  id: "OP10-114_p1",
   slug: "x-drake-pirate-foil",
   name: "X.Drake (Pirate Foil)",
   printings: [
     {
-      id: "OP10-114",
-      artId: "OP10-114",
+      id: "OP10-114_p1",
+      artId: "OP10-114_p1",
       setCode: "PRB02",
       collectorNumber: "114",
       rarity: "UC",
@@ -32,15 +33,8 @@ export const prb02XDrakePirateFoil114: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP10-114_p2.jpg",
     },
   ],
-  cardType: "character",
-  color: ["yellow"],
   rarity: "UC",
   setId: "PRB02",
-  cost: 3,
-  power: 3000,
-  counter: 2000,
-  traits: ["Drake Pirates Navy Supernovas"],
-  attribute: "slash",
   artVariants: [
     {
       type: "other",
@@ -53,46 +47,5 @@ export const prb02XDrakePirateFoil114: CharacterCard = {
       imageId: "OP10-114_p2",
     },
   ],
-  effect:
-    "[Activate: Main] You may rest this Character: If the number of your Life cards is equal to or less than the number of your opponent's Life cards, rest up to 1 of your opponent's Characters with a cost of 4 or less.",
-  effects: {
-    effects: [
-      {
-        trigger: "activateMain",
-        conditions: [
-          {
-            condition: "lifeComparison",
-            selfComparison: "lte",
-          },
-        ],
-        costs: [
-          {
-            cost: "restThisCard",
-          },
-        ],
-        actions: [
-          {
-            action: "rest",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 4,
-                },
-              ],
-            },
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
   i18n: prb02XDrakePirateFoil114I18n,
 };

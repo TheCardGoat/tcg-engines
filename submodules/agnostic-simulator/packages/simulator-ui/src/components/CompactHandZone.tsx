@@ -45,6 +45,7 @@ export function CompactHandZone({
               data-card-id={entity.id}
               data-card-states={entity.states.join(" ")}
               data-entity-id={entity.id}
+              data-sim-entity-id={entity.id}
               style={{
                 left: "50%",
                 transform: `translateX(${offsetX - COMPACT_CARD_WIDTH / 2}px) translateY(${selected ? -6 : 0}px) rotate(${angle}deg) scale(${COMPACT_CARD_SCALE})`,

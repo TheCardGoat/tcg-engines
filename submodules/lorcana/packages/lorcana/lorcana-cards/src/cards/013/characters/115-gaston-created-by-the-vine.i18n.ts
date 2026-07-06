@@ -7,7 +7,7 @@ export const gastonCreatedByTheVineI18n: Record<Languages, I18nProperties> = {
     text: [
       {
         title: "DRAWING STRENGTH",
-        description: "Your Floodborn characters get +1 {}.",
+        description: "Your Floodborn characters get +1 {S}.",
       },
     ],
   },

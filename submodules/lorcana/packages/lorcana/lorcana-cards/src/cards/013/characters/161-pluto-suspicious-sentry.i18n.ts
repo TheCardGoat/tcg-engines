@@ -4,13 +4,7 @@ export const plutoSuspiciousSentryI18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Pluto",
     version: "Suspicious Sentry",
-    text: [
-      {
-        title: "Support",
-        description:
-          "(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
-      },
-    ],
+    text: "Support",
   },
   de: {
     name: "Pluto",

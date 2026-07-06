@@ -14,6 +14,7 @@ import { ConnectionPanel } from "../components/ConnectionDiagnostics";
 import { EndGameModal } from "../components/EndGameModal";
 import { GameStateProvider } from "../components/GameBoard";
 import { CyberpunkSharedAnimationLayer } from "../animation";
+import { cyberpunkRendererPackage } from "../cyberpunkRenderer";
 import {
   EngineProvider,
   useEngine,
@@ -36,7 +37,7 @@ import {
 import type { SimulatorConnectionDiagnosticInput } from "@tcg/game-page-contract/connection-diagnostic";
 import { projectMoveLogEntries } from "../engine/moveLogProjection";
 import { useSimulatorProjection } from "../engine/useSimulatorProjection";
-import { findMountedSimulatorRouteForGame } from "../../../simulator/mountedSimulators";
+import classes from "./BoardShared.module.css";
 import sidebarClasses from "./Sidebar.module.css";
 
 type RendererPackage = ComponentType<SimulatorRendererProps>;
@@ -120,8 +121,7 @@ export function BoardSharedPage(props: BoardSharedPageProps) {
     onClaimRivalDrop,
   } = props;
 
-  const rendererPackage =
-    rendererPackageProp ?? findMountedSimulatorRouteForGame("cyberpunk")?.rendererPackage;
+  const rendererPackage = rendererPackageProp ?? cyberpunkRendererPackage;
 
   return (
     <EngineProvider
@@ -196,16 +196,14 @@ function BoardSharedContent({
   );
 
   return (
-    <main className="mx-auto min-h-svh w-full max-w-[1600px] p-4 max-[900px]:p-3">
+    <main className={classes.pageShell}>
       {BoardRenderer ? (
         <MobileShell
           hasLog
+          layoutBreakpoint={900}
           sidebar={sidebar}
           board={
-            <section
-              className="h-[calc(100vh-32px)] min-w-0 overflow-hidden rounded-lg border border-[var(--board-border)] bg-[var(--board-layout-bg)] shadow-[var(--shadow)]"
-              aria-label={fixture.boardLayout.title}
-            >
+            <section className={classes.boardViewport} aria-label={fixture.boardLayout.title}>
               <BoardRenderer fixture={fixture} onSubmitInteraction={onSubmitInteraction} />
             </section>
           }
@@ -215,12 +213,10 @@ function BoardSharedContent({
       ) : (
         <MobileShell
           hasLog
+          layoutBreakpoint={900}
           sidebar={sidebar}
           board={
-            <section
-              className="min-w-0 overflow-hidden rounded-lg border border-[var(--board-border)] bg-[var(--board-layout-bg)] shadow-[var(--shadow)]"
-              aria-label={fixture.boardLayout.title}
-            >
+            <section className={classes.boardViewport} aria-label={fixture.boardLayout.title}>
               <Board
                 table={fixture.table}
                 entities={fixture.entities}

@@ -179,7 +179,7 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
     } as Effect;
 
     const eventsBefore = operations.event.getEmittedEvents().length;
-    resolveEffect(selectedEffect, ctx, operations);
+    const result = resolveEffect(selectedEffect, ctx, operations);
     const eventsAfter = operations.event.getEmittedEvents();
     for (let i = eventsBefore; i < eventsAfter.length; i++) {
       const emitted = eventsAfter[i]!;
@@ -192,6 +192,13 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
       ) {
         enqueueEventTriggers(emitted, state, operations);
       }
+    }
+    if (result.status === "resolved" && payload.ifEffects?.length) {
+      const status = executeAbilityEffects(payload.ifEffects, ctx, operations);
+      if (status === "suspended") return;
+    } else if (result.status === "noAction" && payload.elseEffects?.length) {
+      const status = executeAbilityEffects(payload.elseEffects, ctx, operations);
+      if (status === "suspended") return;
     }
 
     if (!skipGenericTargetLog) {

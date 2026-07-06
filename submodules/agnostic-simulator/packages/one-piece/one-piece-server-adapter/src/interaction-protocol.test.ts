@@ -34,4 +34,34 @@ describe("onePieceSubmissionToPayload", () => {
       "Only one of selection, cost, or order may be provided",
     );
   });
+
+  it("extracts One Piece setup values from action ids", () => {
+    const joKenPo = InteractionSubmission.parse({
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      stateVersion: 7,
+      actionId: "chooseJoKenPo:paper",
+      requestId: "one-piece:7:chooseJoKenPo:paper",
+      values: {},
+    });
+    const firstPlayer = InteractionSubmission.parse({
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      stateVersion: 8,
+      actionId: "chooseFirstPlayer:north",
+      requestId: "one-piece:8:chooseFirstPlayer:north",
+      values: {},
+    });
+
+    expect(onePieceSubmissionToPayload(joKenPo)).toEqual({
+      moveType: "chooseJoKenPo",
+      payload: {
+        choice: "paper",
+      },
+    });
+    expect(onePieceSubmissionToPayload(firstPlayer)).toEqual({
+      moveType: "chooseFirstPlayer",
+      payload: {
+        firstPlayer: "north",
+      },
+    });
+  });
 });

@@ -37,7 +37,7 @@ export const flotsamUrsulasSpy: CharacterCard = {
   },
   text: [
     {
-      title: "<Rush>",
+      title: "Rush",
     },
     {
       title: "Dexterous Lunge",

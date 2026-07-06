@@ -30,6 +30,8 @@ test("Evelyn Parker - spent unit draws when rival steals a gig", async ({ page }
   await pom.expectFieldCardSpent(CYBERPUNK_P1, evelyn.instanceId, true);
 
   await pom.passPhase(CYBERPUNK_P1);
+  expectEqual("Evelyn active player after pass", await pom.getActivePlayerId(), CYBERPUNK_P2);
+  expectEqual("Evelyn phase after pass", await pom.getPhase(), "start");
   expectEqual("Evelyn P2 choice", await pom.getPendingChoiceType(CYBERPUNK_P2), "gainGig");
   await pom.gainGig(await pom.pickFirstAllowedDie(CYBERPUNK_P2), CYBERPUNK_P2);
 

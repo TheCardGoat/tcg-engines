@@ -73,9 +73,20 @@ function handleDefeat(
 ): EffectHandlerResult {
   const targets = resolveTarget(effect.target, ctx);
   for (const id of targets) {
+    const cardBeforeMove = ctx.state.G.cardIndex[id as string];
+    const hadAttachedCards = Boolean(cardBeforeMove?.meta.attachedGearIds.length);
     ops.card.detachGear(id as CardInstanceId);
     ops.card.moveAttachedGear(id as CardInstanceId, "trash");
     ops.zone.moveCard(id as CardInstanceId, "trash");
+    if (cardBeforeMove) {
+      ops.event.emit({
+        type: "cardDefeated",
+        cardId: id as CardInstanceId,
+        defeatedBy: ctx.sourceCardId as CardInstanceId,
+        playerId: cardBeforeMove.ownerId,
+        hadAttachedCards,
+      });
+    }
 
     // GO SOLO: if the card leaves the field, remove it from the game.
     const card = ctx.state.G.cardIndex[id as string];
@@ -1041,6 +1052,13 @@ function handleIfYouDo(
     // Store ifEffects/elseEffects in the pending choice so the resolver can execute them.
     const pendingChoice = ctx.state.G.turnMetadata.pendingChoice;
     if (pendingChoice && pendingChoice.type === "chooseCardToMove") {
+      pendingChoice.payload.ifEffects = [...effect.ifEffects];
+      pendingChoice.payload.elseEffects = effect.elseEffects ? [...effect.elseEffects] : [];
+    } else if (
+      pendingChoice &&
+      pendingChoice.type === "chooseTarget" &&
+      pendingChoice.payload.type === "effectTarget"
+    ) {
       pendingChoice.payload.ifEffects = [...effect.ifEffects];
       pendingChoice.payload.elseEffects = effect.elseEffects ? [...effect.elseEffects] : [];
     }

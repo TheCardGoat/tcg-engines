@@ -2,14 +2,39 @@
  * Deck list normalization and hashing for template/synergy perspectives.
  *
  * Card order is irrelevant for hashing and templating: we use a canonical
- * order (sort by cardId, then quantity) before any hash or comparison.
+ * order (sort by stable card identity, then quantity) before any hash or comparison.
  */
 
 import { createHash } from "node:crypto";
 import type { DeckListInvalidEntry } from "./deck-list-errors";
 
 /** Single card entry in a deck list (playable list only). */
-export type DeckListCard = { cardId: string; quantity: number };
+export type DeckListCard = {
+  cardId: string;
+  canonicalId?: string;
+  printingId?: string;
+  quantity: number;
+};
+
+function deckCardIdentity(card: DeckListCard): string {
+  return card.canonicalId ?? card.cardId;
+}
+
+function copyDeckCardWithQuantity(card: DeckListCard, quantity: number): DeckListCard {
+  return {
+    ...(card.canonicalId ? { canonicalId: card.canonicalId } : {}),
+    cardId: card.cardId,
+    ...(card.printingId ? { printingId: card.printingId } : {}),
+    quantity,
+  };
+}
+
+function toHashEntry(card: DeckListCard): DeckListCard {
+  const id = deckCardIdentity(card);
+  return card.canonicalId
+    ? { cardId: id, canonicalId: id, quantity: card.quantity }
+    : { cardId: id, quantity: card.quantity };
+}
 
 /**
  * Sort entries by cardId then quantity for deterministic hashing.
@@ -17,7 +42,7 @@ export type DeckListCard = { cardId: string; quantity: number };
  */
 function toCanonicalOrder(cards: DeckListCard[]): DeckListCard[] {
   return [...cards].sort((a, b) => {
-    const id = a.cardId.localeCompare(b.cardId);
+    const id = deckCardIdentity(a).localeCompare(deckCardIdentity(b));
     return id !== 0 ? id : a.quantity - b.quantity;
   });
 }
@@ -31,7 +56,9 @@ function listEqual(a: DeckListCard[], b: DeckListCard[]): boolean {
   if (ca.length !== cb.length) return false;
   return ca.every((c, i) => {
     const b = cb[i];
-    return b !== undefined && c.cardId === b.cardId && c.quantity === b.quantity;
+    return (
+      b !== undefined && deckCardIdentity(c) === deckCardIdentity(b) && c.quantity === b.quantity
+    );
   });
 }
 
@@ -49,7 +76,7 @@ export function toTemplateForm(cards: DeckListCard[]): DeckListCard[] {
     if (c.quantity <= 0) continue;
     if (c.quantity === 1) continue;
     const q = c.quantity >= 4 ? 4 : c.quantity === 3 ? 2 : 2;
-    out.push({ cardId: c.cardId, quantity: q });
+    out.push(copyDeckCardWithQuantity(c, q));
   }
   return toCanonicalOrder(out);
 }
@@ -61,7 +88,7 @@ export function toTemplateForm(cards: DeckListCard[]): DeckListCard[] {
 export function toLorcanaFormat(cards: DeckListCard[]): string {
   if (cards.length === 0) return "";
   const ordered = toCanonicalOrder(cards);
-  return ordered.map((c) => `${c.quantity} ${c.cardId}`).join("\n");
+  return ordered.map((c) => `${c.quantity} ${deckCardIdentity(c)}`).join("\n");
 }
 
 /**
@@ -165,7 +192,7 @@ export function parseDeckListStringWithErrors(deckListString: string): {
 export function toSynergyForm(cards: DeckListCard[]): DeckListCard[] {
   const out: DeckListCard[] = [];
   for (const c of cards) {
-    if (c.quantity > 1) out.push({ cardId: c.cardId, quantity: 1 });
+    if (c.quantity > 1) out.push(copyDeckCardWithQuantity(c, 1));
   }
   return toCanonicalOrder(out);
 }
@@ -190,13 +217,17 @@ function sha256HexSync(input: string): string {
 }
 
 /**
- * Canonical hash for a card list. Order-independent: sorts by cardId then quantity first.
+ * Canonical hash for a card list. Order-independent: sorts by stable card identity then quantity first.
  * Use the same algorithm for list_hash on deck_lists so template/synergy rows are findable.
  */
 export function canonicalListHash(cards: DeckListCard[]): string {
-  const canonical = toCanonicalOrder(cards);
+  const canonical = toCanonicalOrder(cards).map(toHashEntry);
   const payload = JSON.stringify(canonical);
   return sha256HexSync(payload);
+}
+
+export function canonicalV2ListHash(gameSlug: string, cards: DeckListCard[]): string {
+  return `${gameSlug}:v2:${canonicalListHash(cards)}`;
 }
 
 /** Cached hash of the canonical empty list ([]). Use for the empty-synergy deck_list row. */

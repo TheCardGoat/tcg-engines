@@ -13,7 +13,7 @@ export const carlFredricksenOnTheMoveI18n: Record<Languages, I18nProperties> = {
       {
         title: "ADVENTURE AWAITS",
         description:
-          "Whenever this character quests while at a location, draw cards equal to that location's {}.",
+          "Whenever this character quests while at a location, draw cards equal to that location's {L}.",
       },
     ],
   },

@@ -6,7 +6,7 @@ import {
   generateCardFileContent,
   generateI18nFileContent,
 } from "./file-generator";
-import type { CanonicalCharacterCard, CanonicalCard, CardPrinting } from "../types";
+import type { CanonicalCharacterCard, CanonicalCard, CanonicalItemCard, CardPrinting } from "../types";
 
 function createMinimalCanonicalCharacter(
   overrides: Partial<CanonicalCharacterCard> = {},
@@ -47,6 +47,18 @@ function createMinimalPrinting(overrides: Partial<CardPrinting> = {}): CardPrint
     variants: [{ type: "regular" }],
     ...overrides,
   };
+}
+
+function createMinimalCanonicalItem(overrides: Partial<CanonicalItemCard> = {}): CanonicalItemCard {
+  return {
+    ...createMinimalCanonicalCharacter({
+      strength: undefined,
+      willpower: undefined,
+      lore: undefined,
+      ...overrides,
+    } as Partial<CanonicalCharacterCard>),
+    cardType: "item",
+  } as CanonicalItemCard;
 }
 
 describe("file-generator property order", () => {
@@ -100,6 +112,15 @@ describe("file-generator property order", () => {
     const card = createMinimalCanonicalCharacter();
     const result = convertToLorcanaCard(card, undefined, "001", undefined, []);
     expect("reprints" in result).toBe(false);
+  });
+
+  it("preserves non-character classifications for set mechanics", () => {
+    const card = createMinimalCanonicalItem({
+      name: "Big Book of Hunny",
+      classifications: ["Hunny"],
+    });
+    const result = convertToLorcanaCard(card, undefined, "013");
+    expect(result.classifications).toEqual(["Hunny"]);
   });
 });
 

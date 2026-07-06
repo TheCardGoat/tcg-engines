@@ -5,6 +5,7 @@ export { OpponentHandZoneContainer } from "./OpponentHandZoneContainer.tsx";
 export { PromptContainer } from "./PromptContainer.tsx";
 export { SetupPromptContainer } from "./SetupPromptContainer.tsx";
 export { AttackTargetingOverlayContainer } from "./AttackTargetingOverlayContainer.tsx";
+export { GundamTargetingProvider } from "./GundamTargetingProvider.tsx";
 export { SubmitErrorProvider, useSubmitError } from "./submit-error-context.tsx";
 export { PendingEffectsContainer } from "./PendingEffectsContainer.tsx";
 export { MatchOverviewModalContainer } from "./MatchOverviewModalContainer.tsx";

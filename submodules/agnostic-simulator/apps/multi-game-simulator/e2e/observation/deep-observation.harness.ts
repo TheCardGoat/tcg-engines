@@ -247,20 +247,12 @@ async function startPracticeMatch(
   await page.getByTestId("practice-setup-start").click();
   await page.waitForURL(/\/practice\/practice_/);
   await page.waitForSelector('[data-testid="board-wrap"]', { timeout: 15000 });
-  await page.waitForFunction(() =>
-    Boolean((window as unknown as { __cyberpunkEngine?: unknown }).__cyberpunkEngine),
-  );
 
   const url = page.url();
   const matchIdMatch = url.match(/practice\/(practice_[^/]+)/);
   const matchId = matchIdMatch ? matchIdMatch[1] : "unknown";
-
-  const seed = await page.evaluate((mid) => {
-    const raw = sessionStorage.getItem("cyberpunk.simulator.practiceMatch.sessions");
-    if (!raw) return "unknown";
-    const sessions = JSON.parse(raw);
-    return sessions[mid]?.seed ?? "unknown";
-  }, matchId);
+  const seed =
+    (await page.getByTestId("practice-match-seed").getAttribute("data-seed")) ?? "unknown";
 
   return { matchId, seed };
 }

@@ -1,75 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op06Perona093 } from "../../OP06/characters/093-perona.ts";
 import { op14eb04PeronaOp06093Sp093I18n } from "./093-perona-op06-093-sp.i18n.ts";
 
 export const op14eb04PeronaOp06093Sp093: CharacterCard = {
-  id: "OP06-093",
-  canonicalId: "OP06-093",
+  ...op06Perona093,
+  id: "OP06-093_p5",
   slug: "perona-op06-093-sp",
   name: "Perona - OP06-093 (SP)",
   printings: [
     {
-      id: "OP06-093",
-      artId: "OP06-093",
+      id: "OP06-093_p5",
+      artId: "OP06-093_p5",
       setCode: "OP14EB04",
       collectorNumber: "093",
       rarity: "SR",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-093_p5.png",
     },
   ],
-  cardType: "character",
-  color: ["black"],
   rarity: "SR",
   setId: "OP14EB04",
-  cost: 4,
-  power: 5000,
-  counter: 2000,
-  traits: ["Thriller Bark Pirates"],
-  attribute: "special",
-  effect:
-    "[On Play] If your opponent has 5 or more cards in their hand, choose one:• Your opponent trashes 1 card from their hand.• Give up to 1 of your opponent's Characters 3 cost during this turn.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        conditions: [
-          {
-            condition: "handCount",
-            player: "opponent",
-            comparison: "gte",
-            value: 5,
-          },
-        ],
-        actions: [
-          {
-            action: "choice",
-            options: [
-              [
-                {
-                  action: "trashFromHand",
-                  player: "opponent",
-                  amount: 1,
-                },
-              ],
-              [
-                {
-                  action: "modifyCost",
-                  target: {
-                    player: "opponent",
-                    zones: ["character"],
-                    count: {
-                      amount: 1,
-                      upTo: true,
-                    },
-                  },
-                  value: 3,
-                  duration: "thisTurn",
-                },
-              ],
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op14eb04PeronaOp06093Sp093I18n,
 };

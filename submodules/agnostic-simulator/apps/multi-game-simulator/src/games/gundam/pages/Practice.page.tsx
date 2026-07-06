@@ -1,9 +1,26 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { playUrl } from "../../../runtime/gameRuntimeApi";
-import { seedAggro } from "../src/data/sample-decks/seed-aggro.ts";
+import {
+  gundamDeckToHistoric,
+  resolveGundamPracticePayload,
+  type GundamPracticePayload,
+} from "../src/engine/practice/deckPayload.ts";
 import { getMatchmakingReturnUrl } from "../src/engine/live/matchContext.ts";
+import { gundamRuntimeRequestHeaders } from "../src/engine/live/runtimeHeaders.ts";
+
+const GUNDAM_SIMULATOR_BASE_PATH = "/gundam/simulator";
+
+export function buildGundamSimulatorLiveMatchPath(
+  matchId: string,
+  gameId: string,
+  queryString: string,
+): string {
+  return `${GUNDAM_SIMULATOR_BASE_PATH}/matches/${encodeURIComponent(matchId)}/games/${encodeURIComponent(
+    gameId,
+  )}?${queryString}`;
+}
 
 /**
  * `/practice` — entry point the web matchmaking page lands on when
@@ -15,7 +32,7 @@ import { getMatchmakingReturnUrl } from "../src/engine/live/matchContext.ts";
  *   2) The API creates the runtime match, primes `matches` +
  *      `match_games`, and returns `{ matchId, gameId, playerId,
  *      wsTicket, authToken }`.
- *   3) Redirect to `/match/:matchId` with the ticket carried in the
+ *   3) Redirect to `/matches/:matchId/games/:gameId` with the ticket carried in the
  *      query string so the live-match route can connect without a
  *      second auth round trip.
  *
@@ -27,24 +44,37 @@ import { getMatchmakingReturnUrl } from "../src/engine/live/matchContext.ts";
  */
 export function PracticePage() {
   const navigate = useNavigate();
+  const [search] = useSearchParams();
   const [error, setError] = useState<string | null>(null);
+  const [details, setDetails] = useState<readonly string[]>([]);
 
   useEffect(() => {
     let cancelled = false;
     setError(null);
-    launchServerPractice()
+    setDetails([]);
+    const resolved = resolveGundamPracticePayload(search);
+    if (!resolved.ok) {
+      setError(resolved.error.message);
+      setDetails(resolved.error.details);
+      return () => {
+        cancelled = true;
+      };
+    }
+    launchServerPractice(resolved.payload)
       .then((res) => {
         if (cancelled) return;
         const params = new URLSearchParams({
           ticket: res.wsTicket ?? "",
-          gameId: res.gameId,
           playerId: res.playerId,
           returnTo: getMatchmakingReturnUrl(),
         });
         if (res.authToken) params.set("authToken", res.authToken);
-        void navigate(`/match/${encodeURIComponent(res.matchId)}?${params.toString()}`, {
-          replace: true,
-        });
+        void navigate(
+          buildGundamSimulatorLiveMatchPath(res.matchId, res.gameId, params.toString()),
+          {
+            replace: true,
+          },
+        );
       })
       .catch((err) => {
         if (!cancelled) setError(err instanceof Error ? err.message : "Failed to start practice.");
@@ -52,7 +82,7 @@ export function PracticePage() {
     return () => {
       cancelled = true;
     };
-  }, [navigate]);
+  }, [navigate, search]);
 
   return (
     <main className="min-h-screen grid place-items-center text-hud-text">
@@ -62,6 +92,13 @@ export function PracticePage() {
           <>
             <div className="text-hud-lg font-bold">Couldn't start practice</div>
             <div className="text-hud-sm text-hud-text-faint max-w-md">{error}</div>
+            {details.length > 0 ? (
+              <ul className="mx-auto max-w-md list-disc text-left text-hud-xs text-hud-text-faint">
+                {details.map((detail) => (
+                  <li key={detail}>{detail}</li>
+                ))}
+              </ul>
+            ) : null}
             <a className="underline" href={getMatchmakingReturnUrl()}>
               Back to matchmaking
             </a>
@@ -89,21 +126,21 @@ interface QuickMatchResponse {
   authToken?: string | null;
 }
 
-async function launchServerPractice(): Promise<QuickMatchResponse> {
-  const playerDeck = deckToHistoric(seedAggro);
-  const botDeck = playerDeck;
+async function launchServerPractice(payload: GundamPracticePayload): Promise<QuickMatchResponse> {
+  const playerDeck = gundamDeckToHistoric(payload.playerDeck);
+  const botDeck = gundamDeckToHistoric(payload.botDeck);
   const response = await fetch(playUrl("gundam", "/quick-match"), {
     method: "POST",
     credentials: "include",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...gundamRuntimeRequestHeaders() },
     body: JSON.stringify({
       gameType: "gundam",
       authority: "server",
       playerDeck,
       botDeck,
-      botStrategyId: "greedy",
-      deckListId: `quick_gundam_seed-aggro_${Date.now()}`,
-      botDeckListId: "seed-aggro",
+      botStrategyId: payload.botStrategyId,
+      deckListId: `${payload.playerDeckListId}_${Date.now()}`,
+      botDeckListId: payload.botDeckListId,
     }),
   });
   if (!response.ok) {
@@ -122,24 +159,4 @@ async function launchServerPractice(): Promise<QuickMatchResponse> {
     throw new Error("Quick match response did not include a gateway ticket.");
   }
   return body;
-}
-
-/**
- * Collapse `seedAggro`'s `cards[] + resource{}` shape into the flat
- * `{cardPublicId, quantity}[]` the quick-match API expects. The
- * gundam server adapter classifies `R-001` as a resource at engine
- * init time (see `splitDeckByType` in
- * `gundam-server-adapter/src/gundam-engine-lifecycle.ts`), so we
- * don't have to mark the resource entries explicitly — they ride
- * along in the same array.
- */
-function deckToHistoric(
-  deck: typeof seedAggro,
-): ReadonlyArray<{ cardPublicId: string; quantity: number }> {
-  const entries: Array<{ cardPublicId: string; quantity: number }> = deck.cards.map((c) => ({
-    cardPublicId: c.cardNumber,
-    quantity: c.count,
-  }));
-  entries.push({ cardPublicId: deck.resource.cardNumber, quantity: deck.resource.count });
-  return entries;
 }

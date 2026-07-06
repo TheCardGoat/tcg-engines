@@ -1,64 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op03Shirahoshi116 } from "../../OP03/characters/116-shirahoshi.ts";
 import { op04ShirahoshiDashPack116I18n } from "./116-shirahoshi-dash-pack.i18n.ts";
 
 export const op04ShirahoshiDashPack116: CharacterCard = {
-  id: "OP03-116",
-  canonicalId: "OP03-116",
+  ...op03Shirahoshi116,
+  id: "OP03-116_VrV0c8h",
   slug: "shirahoshi-dash-pack",
   name: "Shirahoshi (Dash Pack)",
   printings: [
     {
-      id: "OP03-116",
-      artId: "OP03-116",
+      id: "OP03-116_VrV0c8h",
+      artId: "OP03-116_VrV0c8h",
       setCode: "OP04",
       collectorNumber: "116",
       rarity: "UC",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-116_VrV0c8h.jpg",
     },
   ],
-  cardType: "character",
-  color: ["yellow"],
   rarity: "UC",
   setId: "OP04",
-  cost: 5,
-  power: 0,
-  counter: 1000,
-  traits: ["Merfolk"],
-  attribute: "wisdom",
-  effect: "[On Play] Draw 3 cards and trash 2 cards from your hand. [Trigger] Play this card.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "draw",
-            player: "self",
-            amount: 3,
-          },
-          {
-            action: "trashFromHand",
-            player: "self",
-            amount: 2,
-          },
-        ],
-      },
-      {
-        trigger: "trigger",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op04ShirahoshiDashPack116I18n,
 };

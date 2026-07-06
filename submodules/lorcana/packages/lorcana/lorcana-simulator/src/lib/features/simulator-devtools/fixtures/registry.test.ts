@@ -92,7 +92,7 @@ describe("createFixtureRegistry", () => {
     const fixture = await loadLorcanaFixture("set13-card-gallery");
 
     expect(fixture?.id).toBe(set13CardGalleryFixture.id);
-    expect(fixture?.playerOne.hand).toHaveLength(150);
+    expect(fixture?.playerOne.hand).toHaveLength(241);
   });
 
   it("returns undefined for unknown lazy fixture ids", async () => {

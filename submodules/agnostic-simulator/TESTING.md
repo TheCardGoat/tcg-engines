@@ -9,7 +9,7 @@ simulator shell.
 Package tests under `packages/*` cover protocol schemas, gateway envelopes,
 game-page contracts, simulator contracts, simulator runtime helpers, shared
 deck/card/display helpers, engine-core primitives, agent-core, simulator UI
-animation helpers, and per-game adapter mappings.
+animation plan mapping and resolver helpers, and per-game adapter mappings.
 
 App jsdom tests live in `apps/multi-game-simulator/src/**` and
 `apps/multi-game-simulator/card-tests/**/*.integration.test.tsx`. They render
@@ -63,9 +63,10 @@ actions, then assert both engine state and rendered DOM state when both exist.
 For UI-driven moves, verify the dispatch spy with `expectLastDispatch(...)` so
 tests catch UI-to-engine shape drift.
 
-Use stable selectors and semantic attributes: `data-testid`, `data-side`,
-`data-mode`, and animation attributes such as `data-transfer-kind`,
-`data-from-zone-id`, and `data-to-zone-id`.
+Use stable selectors and semantic attributes such as `data-testid`,
+`data-side`, and `data-mode`. Animation semantics should be covered by
+unit/jsdom tests against plans, resolvers, and rendered state instead of
+Playwright visual assertions.
 
 ## jsdom Expectations
 
@@ -77,8 +78,10 @@ Cyberpunk jsdom fixture tests use `renderCyberpunkSimulatorScenario(...)` and
 mock sound and call `ensureJsdomAnimationSupport()` before rendering when
 needed.
 
-Use Playwright instead of jsdom for real browser layout, drag/drop, viewport,
-hover, animation proof, and routing behavior.
+Use Playwright only for functional browser behavior that cannot be validated in
+jsdom, such as routing and end-to-end simulator flows. Avoid Playwright specs
+whose purpose is animation timing, layout, viewport, hover, or other visual
+proof.
 
 ## Commands
 

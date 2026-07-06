@@ -15,6 +15,7 @@ export const buzzLightyearProvidingCoverPD1Promo: CharacterCard = {
       imageUrl: "",
     },
   ],
+  reprints: ["set13-077"],
   cardType: "character",
   name: "Buzz Lightyear",
   version: "Providing Cover",

@@ -1,51 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op07Stussy085 } from "../../OP07/characters/085-stussy.ts";
 import { op11StussySp085I18n } from "./085-stussy-sp.i18n.ts";
 
 export const op11StussySp085: CharacterCard = {
-  id: "OP07-085",
-  canonicalId: "OP07-085",
+  ...op07Stussy085,
+  id: "OP07-085_p2",
   slug: "stussy-sp",
   name: "Stussy (SP)",
   printings: [
     {
-      id: "OP07-085",
-      artId: "OP07-085",
+      id: "OP07-085_p2",
+      artId: "OP07-085_p2",
       setCode: "OP11",
       collectorNumber: "085",
       rarity: "SR",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP07-085_p2.jpg",
     },
   ],
-  cardType: "character",
-  color: ["black"],
   rarity: "SR",
   setId: "OP11",
-  cost: 9,
-  power: 9000,
-  traits: ["CP0"],
-  attribute: "special",
-  effect:
-    "[On Play]You may trash 1 of your Characters: K.O. up to 1 of your opponent's Characters.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op11StussySp085I18n,
 };

@@ -35,6 +35,7 @@ const PHASE_LABELS: Record<string, string> = {
 };
 
 const ONE_PIECE_CARD_CDN_BASE = "https://cdn.tcg.online/public/one-piece/cards";
+const MAX_EVENT_LOG_ENTRIES = 80;
 
 export function buildDefaultOnePieceBoard(): OnePieceStaticBoard {
   return buildOnePieceBoardFromFixture(getDefaultOnePieceVisualFixture());
@@ -253,6 +254,10 @@ function imageUrlForCard(cardId: string | null): string | undefined {
     return undefined;
   }
 
+  if ("imageUrl" in printing && typeof printing.imageUrl === "string") {
+    return printing.imageUrl;
+  }
+
   return onePiecePrintingImageUrl(printing);
 }
 
@@ -405,19 +410,105 @@ function eventLogFor(
       message: fixture.logPrefix ?? `Loaded visual fixture: ${fixture.label}.`,
       tags: ["system"],
     },
-    ...logs.slice(-5).map((entry, index) => ({
-      id: entry.id || `engine-log-${index}`,
-      turn: entry.turn,
-      phase: PHASE_LABELS[entry.phase] ?? entry.phase,
-      seatId: seatIdForActor(entry.actor),
-      timestamp: "2026-06-26T12:00:00.000Z",
-      message: entry.message,
-      tags: ["system"] as SimulatorEventLogEntry["tags"],
-      entityIds: [entry.sourceInstanceId, ...entry.targetIds].filter((id): id is string =>
-        Boolean(id),
-      ),
-    })),
+    ...logs.slice(-MAX_EVENT_LOG_ENTRIES).map((entry, index) => eventLogEntryFor(entry, index)),
   ];
+}
+
+function eventLogEntryFor(entry: ProjectedLogEntry, index: number): SimulatorEventLogEntry {
+  return {
+    id: entry.id || `engine-log-${index}`,
+    turn: entry.turn,
+    phase: PHASE_LABELS[entry.phase] ?? entry.phase,
+    seatId: seatIdForActor(entry.actor),
+    timestamp: "2026-06-26T12:00:00.000Z",
+    message: refineLogMessage(entry.message),
+    tags: tagsForLogEntry(entry),
+    entityIds: [entry.sourceInstanceId, ...entry.targetIds].filter((id): id is string =>
+      Boolean(id),
+    ),
+  };
+}
+
+function tagsForLogEntry(entry: ProjectedLogEntry): SimulatorEventLogEntry["tags"] {
+  const message = entry.message.toLowerCase();
+  const actor = String(entry.actor);
+  const tags = new Set<SimulatorEventLogEntry["tags"][number]>();
+
+  if (
+    message.includes("attack") ||
+    message.includes("block") ||
+    message.includes("counter") ||
+    message.includes("damage") ||
+    message.includes("k.o.") ||
+    message.includes("ko'd") ||
+    message.includes("wins by dealing")
+  ) {
+    tags.add("combat");
+  }
+
+  if (
+    message.includes("effect") ||
+    message.includes("trigger") ||
+    message.includes("prompt") ||
+    message.includes("judge review") ||
+    message.includes("unsupported") ||
+    message.includes("gives") ||
+    message.includes("sets") ||
+    message.includes("rests ")
+  ) {
+    tags.add("ability");
+  }
+
+  if (
+    message.includes("moves") ||
+    message.includes("draws") ||
+    message.includes("drawn") ||
+    message.includes("cards drawn") ||
+    message.includes("adds") ||
+    message.includes("attaches") ||
+    message.includes("plays") ||
+    message.includes("trashes") ||
+    message.includes("reveals") ||
+    message.includes("mulligan") ||
+    message.includes("opening hand")
+  ) {
+    tags.add("move");
+  }
+
+  if (
+    tags.size === 0 ||
+    actor === "system" ||
+    message.includes("match") ||
+    message.includes("turn") ||
+    message.includes("phase") ||
+    message.includes("enters") ||
+    message.includes("begins") ||
+    message.includes("created") ||
+    message.includes("start")
+  ) {
+    tags.add("system");
+  }
+
+  return Array.from(tags);
+}
+
+function refineLogMessage(message: string): string {
+  return message
+    .replace(/\bfrom character\b/g, "from Character area")
+    .replace(/\bto character\b/g, "to Character area")
+    .replace(/\bfrom deck\b/g, "from Deck")
+    .replace(/\bto deck\b/g, "to Deck")
+    .replace(/\bfrom hand\b/g, "from Hand")
+    .replace(/\bto hand\b/g, "to Hand")
+    .replace(/\bfrom leader\b/g, "from Leader area")
+    .replace(/\bto leader\b/g, "to Leader area")
+    .replace(/\bfrom life\b/g, "from Life")
+    .replace(/\bto life\b/g, "to Life")
+    .replace(/\bfrom stage\b/g, "from Stage area")
+    .replace(/\bto stage\b/g, "to Stage area")
+    .replace(/\bfrom trash\b/g, "from Trash")
+    .replace(/\bto trash\b/g, "to Trash")
+    .replace(/\bMain\b/g, "Main Phase");
 }
 
 function seatIdForActor(actor: ProjectedLogEntry["actor"]): OnePieceSeatId | undefined {

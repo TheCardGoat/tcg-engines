@@ -30,6 +30,9 @@ test("Jackie Welles (Retail) - blue gear increases a gig", async ({ page }) => {
 
   // Retail Jackie decreases a friendly Gig by up to 2 (clamped at min).
   // d4 starts at 2, decreases to 1 (min for d4).
+  await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+  await pom.resolveAdjustGig(1, CYBERPUNK_P1);
+  await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectGigValue(gig.id, 1);
   await pom.expectEddies(CYBERPUNK_P1, 2);
   // Hand: Floor It remains + 1 drawn because gig hit min value

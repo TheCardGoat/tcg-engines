@@ -1,42 +1,59 @@
 import { describe, expect, test } from "vite-plus/test";
-import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { PLAYER_SIDE_TO_ID } from "../engine/index.js";
 import type {
   CardAttachStep,
   CardEnterStep,
   CardExitStep,
-  EffectTargetStep,
   CardLandStep,
   CardMoveStep,
+  EffectTargetStep,
   LegendRevealStep,
 } from "./types.js";
 import {
-  type CyberpunkSharedAnimationContext,
-  cyberpunkAnimationScriptToSimulatorEvents,
-  cyberpunkAnimationStepToSimulatorEvent,
+  cyberpunkAnimationScriptToAnimationPlans,
+  cyberpunkAnimationStepToAnimationPlan,
   isCyberpunkAnimationStepSharedSupported,
+  type CyberpunkSharedAnimationContext,
 } from "./sharedEvents.js";
-
-const baseEntity: SimulatorEntity = {
-  id: "card-1",
-  title: "Floor It",
-  subtitle: "Program",
-  kind: "card",
-  ownerId: String(PLAYER_SIDE_TO_ID.player),
-  face: "public",
-  states: [],
-  stats: [],
-  traits: [],
-};
+import { cyberpunkImmediateSystemAudioCues } from "./CyberpunkSharedAnimationLayer.js";
 
 const context: CyberpunkSharedAnimationContext = {
   viewerSeatId: String(PLAYER_SIDE_TO_ID.player),
-  resolveEntity: (cardId: string) =>
-    cardId === "missing" ? null : { ...baseEntity, id: cardId, title: cardId },
 };
 
-describe("cyberpunkAnimationStepToSimulatorEvent", () => {
-  test("maps cardMove to a shared zoneTransfer event", () => {
+describe("cyberpunkImmediateSystemAudioCues", () => {
+  test("maps non-animated system events to shared cues", () => {
+    expect(
+      cyberpunkImmediateSystemAudioCues(
+        cyberpunkRawEntry({
+          events: [
+            { type: "turnStarted", playerId: PLAYER_SIDE_TO_ID.player, turn: 2 },
+            { type: "gameEnded", winnerId: PLAYER_SIDE_TO_ID.player, reason: "score" },
+          ],
+        }),
+        String(PLAYER_SIDE_TO_ID.player),
+      ),
+    ).toEqual(["turn.change", "game.win"]);
+  });
+
+  test("dedupes repeated system cues per entry and maps losses", () => {
+    expect(
+      cyberpunkImmediateSystemAudioCues(
+        cyberpunkRawEntry({
+          events: [
+            { type: "turnStarted", playerId: PLAYER_SIDE_TO_ID.player, turn: 2 },
+            { type: "turnStarted", playerId: PLAYER_SIDE_TO_ID.opponent, turn: 2 },
+            { type: "gameEnded", winnerId: PLAYER_SIDE_TO_ID.opponent, reason: "score" },
+          ],
+        }),
+        String(PLAYER_SIDE_TO_ID.player),
+      ),
+    ).toEqual(["turn.change", "game.loss"]);
+  });
+});
+
+describe("cyberpunkAnimationStepToAnimationPlan", () => {
+  test("maps card moves to Motion moveEntity plans", () => {
     const step: CardMoveStep = {
       id: "step-1",
       kind: "cardMove",
@@ -49,75 +66,101 @@ describe("cyberpunkAnimationStepToSimulatorEvent", () => {
       playerId: PLAYER_SIDE_TO_ID.player,
     };
 
-    const event = cyberpunkAnimationStepToSimulatorEvent(step, context);
-
-    expect(event).toMatchObject({
+    expect(cyberpunkAnimationStepToAnimationPlan(step, context)).toMatchObject({
       id: "step-1",
-      primitive: "zoneTransfer",
-      delayMs: 120,
-      durationMs: 340,
-      fromZone: { id: "p-hand", visibility: "private", role: "hand" },
-      toZone: { id: "p-field", visibility: "public", role: "battlefield" },
+      version: 1,
+      steps: [
+        {
+          id: "step-1",
+          type: "moveEntity",
+          delayMs: 120,
+          durationMs: 340,
+          entity: { kind: "entity", id: "card-1" },
+          from: { kind: "zone", id: "p-hand", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+          to: { kind: "zone", id: "p-field", ownerId: String(PLAYER_SIDE_TO_ID.player) },
+        },
+      ],
     });
   });
 
-  test("maps cardsDrawn cardEnter steps to draw events from deck to hand", () => {
-    const step: CardEnterStep = {
-      id: "step-2",
+  test("routes pending targeted Programs through the resolving program anchor", () => {
+    const step: CardMoveStep = {
+      id: "step-focus",
+      kind: "cardMove",
+      startMs: 120,
+      durationMs: 340,
+      reason: "cardMoved",
+      cardId: "program-1" as CardMoveStep["cardId"],
+      fromZone: "hand",
+      toZone: "trash",
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+
+    expect(
+      cyberpunkAnimationStepToAnimationPlan(step, {
+        ...context,
+        pendingEffectSourceCardId: "program-1",
+      }),
+    ).toMatchObject({
+      steps: [
+        {
+          type: "moveEntity",
+          entity: { kind: "entity", id: "program-1" },
+          from: { kind: "zone", id: "p-hand" },
+          to: { kind: "anchor", id: "resolving-program:program-1" },
+        },
+      ],
+    });
+  });
+
+  test("maps draw enters to deck-to-hand moves and other enters/exits to explicit steps", () => {
+    const draw: CardEnterStep = {
+      id: "draw-step",
       kind: "cardEnter",
       startMs: 80,
       durationMs: 300,
       reason: "cardsDrawn",
-      cardId: "card-2" as CardEnterStep["cardId"],
+      cardId: "drawn-card" as CardEnterStep["cardId"],
       toZone: "hand",
       playerId: PLAYER_SIDE_TO_ID.player,
     };
-
-    const event = cyberpunkAnimationStepToSimulatorEvent(step, context);
-
-    expect(event).toMatchObject({
-      primitive: "draw",
-      fromZone: { id: "p-deck", visibility: "secret", role: "deck" },
-      toZone: { id: "p-hand", visibility: "private", role: "hand" },
-    });
-  });
-
-  test("maps non-draw cardEnter and cardExit steps to enter and exit events", () => {
     const enter: CardEnterStep = {
-      id: "step-3",
+      id: "enter-step",
       kind: "cardEnter",
       startMs: 0,
       durationMs: 200,
       reason: "search",
-      cardId: "card-3" as CardEnterStep["cardId"],
+      cardId: "entered-card" as CardEnterStep["cardId"],
       toZone: "trash",
       playerId: PLAYER_SIDE_TO_ID.player,
     };
     const exit: CardExitStep = {
-      id: "step-4",
+      id: "exit-step",
       kind: "cardExit",
       startMs: 0,
       durationMs: 200,
       reason: "cardSold",
-      cardId: "card-4" as CardExitStep["cardId"],
+      cardId: "sold-card" as CardExitStep["cardId"],
       fromZone: "hand",
+      toZone: "trash",
       playerId: PLAYER_SIDE_TO_ID.player,
       exitReason: "sold",
     };
 
-    expect(cyberpunkAnimationStepToSimulatorEvent(enter, context)).toMatchObject({
-      primitive: "zoneEnter",
-      toZone: { id: "p-trash" },
+    expect(cyberpunkAnimationStepToAnimationPlan(draw, context)).toMatchObject({
+      steps: [{ type: "moveEntity", from: { id: "p-deck" }, to: { id: "p-hand" } }],
     });
-    expect(cyberpunkAnimationStepToSimulatorEvent(exit, context)).toMatchObject({
-      primitive: "zoneExit",
-      fromZone: { id: "p-hand" },
+    expect(cyberpunkAnimationStepToAnimationPlan(enter, context)).toMatchObject({
+      steps: [{ type: "enterEntity", to: { id: "p-trash" } }],
+    });
+    expect(cyberpunkAnimationStepToAnimationPlan(exit, context)).toMatchObject({
+      steps: [{ type: "moveEntity", from: { id: "p-hand" }, to: { id: "p-trash" } }],
     });
   });
 
-  test("maps attach and legend reveal steps to their shared primitives", () => {
+  test("maps attach, reveal, land, and targeted effects to shared Motion primitives", () => {
     const attach: CardAttachStep = {
-      id: "step-5",
+      id: "attach-step",
       kind: "cardAttach",
       startMs: 0,
       durationMs: 300,
@@ -127,7 +170,7 @@ describe("cyberpunkAnimationStepToSimulatorEvent", () => {
       playerId: PLAYER_SIDE_TO_ID.player,
     };
     const reveal: LegendRevealStep = {
-      id: "step-6",
+      id: "reveal-step",
       kind: "legendReveal",
       startMs: 0,
       durationMs: 300,
@@ -135,24 +178,19 @@ describe("cyberpunkAnimationStepToSimulatorEvent", () => {
       cardId: "legend-1" as LegendRevealStep["cardId"],
       playerId: PLAYER_SIDE_TO_ID.player,
     };
-
-    expect(cyberpunkAnimationStepToSimulatorEvent(attach, context)).toMatchObject({
-      primitive: "attach",
-      targetEntityId: "host-1",
-      fromZone: { id: "p-hand" },
-      toZone: { id: "p-field" },
-    });
-    expect(cyberpunkAnimationStepToSimulatorEvent(reveal, context)).toMatchObject({
-      primitive: "flipReveal",
-      zone: { id: "p-legendArea" },
-    });
-  });
-
-  test("maps effect targets to a shared source-to-target primitive", () => {
-    const step: EffectTargetStep = {
-      id: "step-target",
+    const land: CardLandStep = {
+      id: "land-step",
+      kind: "cardLand",
+      startMs: 10,
+      durationMs: 280,
+      reason: "cardPlayed",
+      cardId: "program-1" as CardLandStep["cardId"],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+    const effect: EffectTargetStep = {
+      id: "effect-step",
       kind: "effectTarget",
-      startMs: 40,
+      startMs: 30,
       durationMs: 380,
       reason: "effectTargeted",
       sourceCardId: "program-1" as EffectTargetStep["sourceCardId"],
@@ -160,60 +198,68 @@ describe("cyberpunkAnimationStepToSimulatorEvent", () => {
       playerId: PLAYER_SIDE_TO_ID.player,
     };
 
-    const event = cyberpunkAnimationStepToSimulatorEvent(step, context);
-
-    expect(event).toMatchObject({
-      id: "step-target",
-      primitive: "effectTarget",
-      delayMs: 40,
-      durationMs: 380,
-      sourceEntity: { id: "program-1" },
-      sourceZone: { id: "p-trash", visibility: "public" },
-      targets: [{ kind: "entity", entityId: "unit-1" }],
+    expect(cyberpunkAnimationStepToAnimationPlan(attach, context)).toMatchObject({
+      steps: [
+        {
+          type: "moveEntity",
+          entity: { kind: "entity", id: "gear-1" },
+          from: { id: "p-hand" },
+          to: { kind: "entity", id: "host-1" },
+        },
+      ],
+    });
+    expect(cyberpunkAnimationStepToAnimationPlan(reveal, context)).toMatchObject({
+      steps: [{ type: "effect", source: { id: "p-legendArea" }, label: "REVEAL" }],
+    });
+    expect(cyberpunkAnimationStepToAnimationPlan(land, context)).toMatchObject({
+      steps: [{ type: "effect", source: { id: "program-1" }, label: "PLAYED" }],
+    });
+    expect(cyberpunkAnimationStepToAnimationPlan(effect, context)).toMatchObject({
+      steps: [
+        {
+          type: "effect",
+          source: { kind: "entity", id: "program-1" },
+          targets: [{ kind: "entity", id: "unit-1" }],
+          label: "RESOLVED",
+        },
+      ],
     });
   });
 
-  test("leaves Cyberpunk-only emphasis and overlay steps on the script-player path", () => {
+  test("marks every script step as shared Motion-supported", () => {
     const land: CardLandStep = {
-      id: "step-7",
+      id: "land-step",
       kind: "cardLand",
       startMs: 0,
-      durationMs: 160,
+      durationMs: 240,
       reason: "cardPlayed",
-      cardId: "card-7" as CardLandStep["cardId"],
+      cardId: "program-1" as CardLandStep["cardId"],
       playerId: PLAYER_SIDE_TO_ID.player,
     };
 
-    expect(cyberpunkAnimationStepToSimulatorEvent(land, context)).toBeNull();
+    expect(isCyberpunkAnimationStepSharedSupported(land)).toBe(true);
   });
+});
 
-  test("classifies which script steps the shared layer owns", () => {
-    const move: CardMoveStep = {
-      id: "step-supported",
-      kind: "cardMove",
-      startMs: 0,
-      durationMs: 300,
-      reason: "cardMoved",
-      cardId: "card-supported" as CardMoveStep["cardId"],
-      fromZone: "hand",
-      toZone: "field",
-      playerId: PLAYER_SIDE_TO_ID.player,
-    };
-    const land: CardLandStep = {
-      id: "step-unsupported",
-      kind: "cardLand",
-      startMs: 0,
-      durationMs: 160,
-      reason: "cardPlayed",
-      cardId: "card-unsupported" as CardLandStep["cardId"],
-      playerId: PLAYER_SIDE_TO_ID.player,
-    };
+function cyberpunkRawEntry(
+  overrides: Partial<Parameters<typeof cyberpunkImmediateSystemAudioCues>[0]>,
+): Parameters<typeof cyberpunkImmediateSystemAudioCues>[0] {
+  return {
+    id: 1,
+    timestamp: 0,
+    side: "system",
+    move: "test",
+    input: {},
+    stateID: 1,
+    moveLogs: [],
+    events: [],
+    animationScript: { steps: [], totalDurationMs: 0 },
+    ...overrides,
+  };
+}
 
-    expect(isCyberpunkAnimationStepSharedSupported(move)).toBe(true);
-    expect(isCyberpunkAnimationStepSharedSupported(land)).toBe(false);
-  });
-
-  test("maps whole scripts and preserves entry prefixes", () => {
+describe("cyberpunkAnimationScriptToAnimationPlans", () => {
+  test("preserves entry prefixes", () => {
     const step: CardMoveStep = {
       id: "step-8",
       kind: "cardMove",
@@ -226,12 +272,205 @@ describe("cyberpunkAnimationStepToSimulatorEvent", () => {
       playerId: PLAYER_SIDE_TO_ID.player,
     };
 
-    const events = cyberpunkAnimationScriptToSimulatorEvents(
+    const plans = cyberpunkAnimationScriptToAnimationPlans(
       { steps: [step], totalDurationMs: 300 },
       { ...context, idPrefix: "entry-1" },
     );
 
-    expect(events).toHaveLength(1);
-    expect(events[0]?.id).toBe("entry-1:step-8");
+    expect(plans).toHaveLength(1);
+    expect(plans[0]?.id).toBe("entry-1:step-8");
+  });
+
+  test("labels defeated targeted effects and delays target cleanup transfers", () => {
+    const effect: EffectTargetStep = {
+      id: "step-target",
+      kind: "effectTarget",
+      startMs: 0,
+      durationMs: 380,
+      reason: "effectTargeted",
+      sourceCardId: "program-1" as EffectTargetStep["sourceCardId"],
+      targets: [{ kind: "card", cardId: "unit-1" as EffectTargetStep["sourceCardId"] }],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+    const defeated: CardExitStep = {
+      id: "step-defeated",
+      kind: "cardExit",
+      startMs: 380,
+      durationMs: 300,
+      reason: "cardDefeated",
+      cardId: "unit-1" as CardExitStep["cardId"],
+      fromZone: "field",
+      toZone: "trash",
+      playerId: PLAYER_SIDE_TO_ID.player,
+      exitReason: "defeated",
+    };
+
+    const plans = cyberpunkAnimationScriptToAnimationPlans(
+      { steps: [effect, defeated], totalDurationMs: 680 },
+      { ...context, resultHoldMs: 1_200 },
+    );
+
+    expect(plans).toHaveLength(2);
+    expect(plans[0]).toMatchObject({
+      steps: [{ type: "effect", label: "DEFEATED", durationMs: 1_580 }],
+    });
+    expect(plans[1]).toMatchObject({
+      steps: [
+        {
+          type: "moveEntity",
+          delayMs: 1_580,
+          from: { id: "p-field" },
+          to: { id: "p-trash" },
+        },
+      ],
+    });
+  });
+
+  test("pairs overlapping target cleanup with the result beat before moving cards", () => {
+    const effect: EffectTargetStep = {
+      id: "step-target",
+      kind: "effectTarget",
+      startMs: 300,
+      durationMs: 380,
+      reason: "effectTargeted",
+      sourceCardId: "program-1" as EffectTargetStep["sourceCardId"],
+      targets: [{ kind: "card", cardId: "unit-1" as EffectTargetStep["sourceCardId"] }],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+    const defeated: CardExitStep = {
+      id: "step-defeated",
+      kind: "cardExit",
+      startMs: 300,
+      durationMs: 300,
+      reason: "cardDefeated",
+      cardId: "unit-1" as CardExitStep["cardId"],
+      fromZone: "field",
+      toZone: "trash",
+      playerId: PLAYER_SIDE_TO_ID.opponent,
+      exitReason: "defeated",
+    };
+
+    const plans = cyberpunkAnimationScriptToAnimationPlans(
+      { steps: [effect, defeated], totalDurationMs: 680 },
+      { ...context, resultHoldMs: 1_200 },
+    );
+
+    expect(plans[0]).toMatchObject({
+      steps: [{ type: "effect", label: "DEFEATED", targets: [{ id: "unit-1" }] }],
+    });
+    expect(plans[1]).toMatchObject({
+      steps: [
+        {
+          type: "moveEntity",
+          delayMs: 1_880,
+          from: { id: "opp-field" },
+          to: { id: "opp-trash" },
+        },
+      ],
+    });
+  });
+
+  test("settles a resolving Program source into trash after the final result beat", () => {
+    const effect: EffectTargetStep = {
+      id: "step-target",
+      kind: "effectTarget",
+      startMs: 0,
+      durationMs: 380,
+      reason: "effectTargeted",
+      sourceCardId: "program-1" as EffectTargetStep["sourceCardId"],
+      targets: [{ kind: "card", cardId: "unit-1" as EffectTargetStep["sourceCardId"] }],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+    const defeated: CardExitStep = {
+      id: "step-defeated",
+      kind: "cardExit",
+      startMs: 380,
+      durationMs: 300,
+      reason: "cardDefeated",
+      cardId: "unit-1" as CardExitStep["cardId"],
+      fromZone: "field",
+      toZone: "trash",
+      playerId: PLAYER_SIDE_TO_ID.opponent,
+      exitReason: "defeated",
+    };
+
+    const plans = cyberpunkAnimationScriptToAnimationPlans(
+      { steps: [effect, defeated], totalDurationMs: 680 },
+      {
+        ...context,
+        resolvingProgramSourceCardId: "program-1",
+        resultHoldMs: 1_200,
+      },
+    );
+
+    expect(plans).toHaveLength(3);
+    expect(plans[0]).toMatchObject({
+      steps: [
+        {
+          type: "effect",
+          source: { kind: "anchor", id: "resolving-program:program-1" },
+          label: "DEFEATED",
+          durationMs: 1_580,
+        },
+      ],
+    });
+    expect(plans[1]).toMatchObject({
+      steps: [
+        {
+          type: "moveEntity",
+          entity: { kind: "entity", id: "unit-1" },
+          from: { id: "opp-field" },
+          to: { id: "opp-trash" },
+          delayMs: 1_580,
+        },
+      ],
+    });
+    expect(plans[2]).toMatchObject({
+      id: "step-target:source-cleanup",
+      steps: [
+        {
+          id: "step-target:source-cleanup",
+          type: "moveEntity",
+          entity: { kind: "entity", id: "program-1" },
+          from: { kind: "anchor", id: "resolving-program:program-1" },
+          to: { kind: "zone", id: "p-trash" },
+          delayMs: 1_580,
+          durationMs: 420,
+        },
+      ],
+    });
+  });
+
+  test("keeps a multi-step resolving Program in limbo while another target choice remains", () => {
+    const effect: EffectTargetStep = {
+      id: "step-target",
+      kind: "effectTarget",
+      startMs: 0,
+      durationMs: 380,
+      reason: "effectTargeted",
+      sourceCardId: "program-1" as EffectTargetStep["sourceCardId"],
+      targets: [{ kind: "card", cardId: "unit-1" as EffectTargetStep["sourceCardId"] }],
+      playerId: PLAYER_SIDE_TO_ID.player,
+    };
+
+    const plans = cyberpunkAnimationScriptToAnimationPlans(
+      { steps: [effect], totalDurationMs: 380 },
+      {
+        ...context,
+        pendingEffectSourceCardId: "program-1",
+        resolvingProgramSourceCardId: "program-1",
+        resultHoldMs: 1_200,
+      },
+    );
+
+    expect(plans).toHaveLength(1);
+    expect(plans[0]).toMatchObject({
+      steps: [
+        {
+          type: "effect",
+          source: { kind: "anchor", id: "resolving-program:program-1" },
+        },
+      ],
+    });
   });
 });

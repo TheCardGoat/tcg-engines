@@ -278,19 +278,35 @@ function setOf(def: Card): string | undefined {
 export function cardImageUrlOf(def: Card): string | undefined {
   const selectedPrinting = selectedPrintingOf(def);
   return (
-    selectedPrinting?.imageUrl ??
+    printingImageUrlOf(selectedPrinting) ??
     def.imageUrl ??
-    def.printings?.find((printing) => printing.imageUrl)?.imageUrl
+    printingImageUrlOf(def.printings?.find((printing) => printingImageUrlOf(printing)))
   );
 }
 
 function selectedPrintingOf(def: Card) {
   const selectedId = def.selectedPrintingId;
   if (selectedId) {
-    const selected = def.printings?.find((printing) => printing.id === selectedId);
+    const selected = def.printings?.find((printing) => printingIdOf(printing) === selectedId);
     if (selected) return selected;
   }
   return undefined;
+}
+
+function printingIdOf(printing: unknown): string | undefined {
+  return typeof printing === "object" && printing !== null && "id" in printing
+    ? typeof printing.id === "string"
+      ? printing.id
+      : undefined
+    : undefined;
+}
+
+function printingImageUrlOf(printing: unknown): string | undefined {
+  return typeof printing === "object" && printing !== null && "imageUrl" in printing
+    ? typeof printing.imageUrl === "string"
+      ? printing.imageUrl
+      : undefined
+    : undefined;
 }
 
 function subtitleForCard(def: Card): string {

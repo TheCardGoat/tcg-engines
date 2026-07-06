@@ -86,7 +86,7 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
   const { prioritySide } = useEngine();
 
   return (
-    <div className={classes.boardWrap} ref={boardWrapRef} data-testid="board-wrap">
+    <div className={classes.boardWrap} ref={boardWrapRef} data-sim-board data-testid="board-wrap">
       <div className={classes.boardShell}>
         <div
           className={classes.opponentSide}
@@ -146,6 +146,7 @@ function HumanHand({ side }: { side: Side }) {
         imageUrl: c.imageUrl,
         name: c.name,
         cardId: c.cardId,
+        definitionId: c.definitionId,
         cardType: c.cardType,
         color: c.color,
         effectiveRules: c.effectiveRules,

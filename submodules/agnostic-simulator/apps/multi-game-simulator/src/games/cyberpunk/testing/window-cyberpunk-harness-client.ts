@@ -1,13 +1,10 @@
 import { act } from "@testing-library/react";
+import type { CyberpunkTestEngine } from "@tcg/cyberpunk-engine";
 
-import type {
-  CyberpunkEngineHandle,
-  CyberpunkHarnessClient,
-  CyberpunkSide,
-} from "./cyberpunk-simulator-pom";
+import type { CyberpunkEngineHarnessClient, CyberpunkSide } from "./cyberpunk-simulator-pom";
 import type { EngineAction } from "../types/e2e";
 
-export class WindowCyberpunkHarnessClient implements CyberpunkHarnessClient {
+export class WindowCyberpunkHarnessClient implements CyberpunkEngineHarnessClient {
   async waitForReady(): Promise<void> {
     const deadline = Date.now() + 5_000;
     while (Date.now() <= deadline) {
@@ -37,18 +34,15 @@ export class WindowCyberpunkHarnessClient implements CyberpunkHarnessClient {
     this.getSimulator().clearDispatchLog();
   }
 
-  async evalEngine<T>(fn: (engine: CyberpunkEngineHandle) => T): Promise<T>;
-  async evalEngine<T, A>(fn: (engine: CyberpunkEngineHandle, arg: A) => T, arg: A): Promise<T>;
-  async evalEngine<T, A>(fn: (engine: CyberpunkEngineHandle, arg?: A) => T, arg?: A): Promise<T> {
+  async evalEngine<T>(fn: (engine: CyberpunkTestEngine) => T): Promise<T>;
+  async evalEngine<T, A>(fn: (engine: CyberpunkTestEngine, arg: A) => T, arg: A): Promise<T>;
+  async evalEngine<T, A>(fn: (engine: CyberpunkTestEngine, arg?: A) => T, arg?: A): Promise<T> {
     return fn(this.getEngine(), arg);
   }
 
-  async dispatchEngine<T>(fn: (engine: CyberpunkEngineHandle) => T): Promise<T>;
-  async dispatchEngine<T, A>(fn: (engine: CyberpunkEngineHandle, arg: A) => T, arg: A): Promise<T>;
-  async dispatchEngine<T, A>(
-    fn: (engine: CyberpunkEngineHandle, arg?: A) => T,
-    arg?: A,
-  ): Promise<T> {
+  async dispatchEngine<T>(fn: (engine: CyberpunkTestEngine) => T): Promise<T>;
+  async dispatchEngine<T, A>(fn: (engine: CyberpunkTestEngine, arg: A) => T, arg: A): Promise<T>;
+  async dispatchEngine<T, A>(fn: (engine: CyberpunkTestEngine, arg?: A) => T, arg?: A): Promise<T> {
     let result: T | undefined;
     await act(async () => {
       result = fn(this.getEngine(), arg);
@@ -62,13 +56,13 @@ export class WindowCyberpunkHarnessClient implements CyberpunkHarnessClient {
     return Boolean(win.__cyberpunkSimulator?.engine ?? win.__cyberpunkEngine);
   }
 
-  private getEngine(): CyberpunkEngineHandle {
+  private getEngine(): CyberpunkTestEngine {
     const win = window as unknown as CyberpunkHarnessWindow;
     const engine = win.__cyberpunkSimulator?.engine ?? win.__cyberpunkEngine;
     if (!engine) {
       throw new Error("window.__cyberpunkEngine is unavailable.");
     }
-    return engine as CyberpunkEngineHandle;
+    return engine as CyberpunkTestEngine;
   }
 
   private getSimulator(): CyberpunkSimulatorBridge {

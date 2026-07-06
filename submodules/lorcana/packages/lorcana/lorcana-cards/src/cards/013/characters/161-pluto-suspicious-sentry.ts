@@ -33,13 +33,7 @@ export const plutoSuspiciousSentry: CharacterCard = {
   externalIds: {
     lorcast: "crd_f867a6b5b4ef468b9a9f073194f98c9d",
   },
-  text: [
-    {
-      title: "Support",
-      description:
-        "(Whenever this character quests, you may add their {S} to another chosen character's {S} this turn.)",
-    },
-  ],
+  text: "Support",
   classifications: ["Dreamborn", "Ally"],
   abilities: [support],
   i18n: plutoSuspiciousSentryI18n,

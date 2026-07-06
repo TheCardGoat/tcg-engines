@@ -63,6 +63,7 @@ export const CONDITION_VARIANT_TYPES = [
   "or",
   "play-context",
   "played-card-has-keyword",
+  "previous-target-has-card-under",
   "put-card-under-any-this-turn",
   "put-card-under-self-this-turn",
   "resource-count",
@@ -1316,6 +1317,17 @@ export function evaluateCondition(
 
     case "has-card-under": {
       const targetId = ctx.sourceCardId;
+      if (!targetId) {
+        return false;
+      }
+
+      const cardsUnder = ctx.cards.require(targetId).meta?.cardsUnder;
+      return Array.isArray(cardsUnder) && cardsUnder.length > 0;
+    }
+
+    case "previous-target-has-card-under": {
+      const selectedTargets = getSelectedTargets(ctx);
+      const targetId = selectedTargets[selectedTargets.length - 1];
       if (!targetId) {
         return false;
       }

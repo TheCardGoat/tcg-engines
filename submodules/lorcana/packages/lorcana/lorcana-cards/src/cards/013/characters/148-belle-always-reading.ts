@@ -35,7 +35,7 @@ export const belleAlwaysReading: CharacterCard = {
   text: [
     {
       title: "DREAMING OF MORE",
-      description: "You pay 1 {} less to shift a character on top of this character.",
+      description: "You pay 1 {I} less to shift a character on top of this character.",
     },
   ],
   classifications: ["Storyborn", "Hero", "Princess"],

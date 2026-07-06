@@ -21,6 +21,7 @@ import {
 import { resolveOpponentId, zoneCount } from "./mappers.ts";
 import { useSubmitError } from "./submit-error-context.tsx";
 import { VsAiControls } from "../ui/VsAiControls.tsx";
+import { SoundVolumeControl } from "../../../../../simulator/settings";
 
 export interface MatchSidebarContainerProps {
   readonly onCollapse?: () => void;
@@ -145,7 +146,14 @@ export function MatchSidebarContainer({ onCollapse }: MatchSidebarContainerProps
       // is in the tree (i.e. non-AI fixtures). Wiring it here keeps
       // the sidebar presentational and the controls consistently
       // placed above `BATTLE DATA` on AI matches.
-      aboveBattleData={<VsAiControls />}
+      aboveBattleData={
+        <>
+          <VsAiControls />
+          <div className="border-b border-hud-border px-hud-md py-2.5">
+            <SoundVolumeControl className="text-hud-text-muted" />
+          </div>
+        </>
+      }
     />
   );
 }
