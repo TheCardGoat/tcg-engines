@@ -43,8 +43,11 @@ mock.module("./analytics.js", () => ({
   trackEvent,
   trackException: () => {},
   trackPageView: () => {},
-  truncateForAnalytics: (input: unknown) =>
-    typeof input === "string" ? input.slice(0, 100) : undefined,
+  truncateForAnalytics: (input: unknown) => {
+    if (input == null) return undefined;
+    const text = String(input);
+    return text.length === 0 ? undefined : text.slice(0, 100);
+  },
   updateConsent: () => {},
 }));
 

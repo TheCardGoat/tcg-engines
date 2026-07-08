@@ -56,8 +56,11 @@ mock.module("$lib/analytics/analytics.js", () => ({
   normalizePathForAnalytics: (p: string) => p,
   initAnalytics: () => {},
   trackPageView: () => {},
-  truncateForAnalytics: (input: unknown) =>
-    typeof input === "string" ? input.slice(0, 100) : undefined,
+  truncateForAnalytics: (input: unknown) => {
+    if (input == null) return undefined;
+    const text = String(input);
+    return text.length === 0 ? undefined : text.slice(0, 100);
+  },
   analyticsErrorFields: (error: unknown) => {
     const code = error instanceof Error ? error.name : undefined;
     const rawMessage =
