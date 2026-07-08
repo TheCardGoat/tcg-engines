@@ -36,6 +36,31 @@ export const legendScenarios: Scenario[] = [
         { seed: scenarioSeed("legendLucynaKushinada"), autoGainGig: false },
       ),
   },
+  {
+    id: "legendRebeccaHavingAMomentPrm01",
+    group: "legend-passive",
+    label: "Rebecca · Having a Moment (PRM01) · base Legend call",
+    description:
+      "P1 has Rebecca - Having a Moment face-down in the Legend area. Tests normal Legend call behavior for the no-text promo.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          legendArea: [
+            { card: c.prm01RebeccaHavingAMoment, faceDown: true },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 2,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: false }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendRebeccaHavingAMomentPrm01"), autoGainGig: false },
+      ),
+  },
 
   // ── Legend: GO SOLO (V - Corporate Exile) ────────────────────────────────
   {
@@ -1032,5 +1057,152 @@ export const legendScenarios: Scenario[] = [
       ]);
       return engine;
     },
+  },
+  {
+    id: "legendTheHeistVCorporateExile",
+    group: "legend-go-solo",
+    label: "V · Corporate Exile (The Heist) · GO SOLO",
+    description:
+      "P1 has the The Heist starter V - Corporate Exile revealed with enough eddies to Go Solo and attack.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+            { card: c.alphaYorinobuArasakaEmbracingDestruction, faceDown: false },
+          ],
+          eddies: 6,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendTheHeistVCorporateExile"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "legendTheHeistJackieWellesPourOneOutForMe",
+    group: "legend-passive",
+    label: "Jackie Welles (The Heist) · blue gear decreases a Gig",
+    description:
+      "P1 has the The Heist starter Jackie Welles revealed. Playing a blue Gear should prompt to decrease a friendly Gig and draw if it reaches minimum.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaFloorIt, c.alphaDyingNightVSPistol],
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaSaburoArasakaStubbornPatriach],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendTheHeistJackieWellesPourOneOutForMe"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "legendEmbracingGoroTakemuraHandsUnclean",
+    group: "legend-go-solo",
+    label: "Goro Takemura (Embracing Power) · GO SOLO + BLOCKER",
+    description:
+      "P1 has the Embracing Power starter Goro Takemura revealed with enough eddies to Go Solo.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 6,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendEmbracingGoroTakemuraHandsUnclean"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "legendEmbracingSaburoArasakaStubbornPatriarch",
+    group: "legend-passive",
+    label: "Saburo Arasaka (Embracing Power) · Arasaka attacker power",
+    description:
+      "P1 has the Embracing Power starter Saburo Arasaka revealed. Friendly Arasaka Units gain +1 power only while attacking.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            { card: c.alphaArmoredMinotaur, spent: false },
+            { card: c.alphaRuthlessLowlife, spent: false },
+          ],
+          legendArea: [
+            {
+              card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
+            { card: c.alphaVCorporateExile, faceDown: false },
+          ],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("legendEmbracingSaburoArasakaStubbornPatriarch"),
+          autoGainGig: false,
+        },
+      ),
+  },
+  {
+    id: "legendEmbracingYorinobuArasakaEmbracingDestruction",
+    group: "legend-attack-trigger",
+    label: "Yorinobu Arasaka (Embracing Power) · first Arasaka attack",
+    description:
+      "P1 has the Embracing Power starter Yorinobu revealed. The first friendly Arasaka attack draws, then discards below 20 Street Cred.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.alphaRuthlessLowlife, c.alphaFloorIt],
+          field: [{ card: c.alphaArmoredMinotaur, spent: false }],
+          legendArea: [
+            {
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+              faceDown: false,
+            },
+            { card: c.alphaSaburoArasakaStubbornPatriach, faceDown: false },
+          ],
+          eddies: 4,
+          gigArea: [{ dieType: "d4", faceValue: 4 }],
+        },
+        {
+          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        {
+          seed: scenarioSeed("legendEmbracingYorinobuArasakaEmbracingDestruction"),
+          autoGainGig: false,
+        },
+      ),
   },
 ];

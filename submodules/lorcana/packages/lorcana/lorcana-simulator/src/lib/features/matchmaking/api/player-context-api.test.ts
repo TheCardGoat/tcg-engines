@@ -1,5 +1,6 @@
 import { getAllCardsById } from "@tcg/lorcana-cards";
 import { aladdinHeroicOutlaw } from "@tcg/lorcana-cards/cards/001";
+import { showMeMore } from "@tcg/lorcana-cards/cards/007";
 import { getFullName } from "@tcg/lorcana-types";
 import { beforeEach, describe, expect, it, mock } from "bun:test";
 
@@ -269,5 +270,43 @@ describe("player-context-api", () => {
       { cardPublicId: historicDeckCardPublicId, quantity: 4 },
     ]);
     expect(snapshot.deckText).toBe(`4 ${getFullName(aladdinHeroicOutlaw)}`);
+  });
+
+  it("resolves legacy Lorcana gameCardId values before building deck text", async () => {
+    const fetchMock = mock(
+      async () =>
+        new Response(
+          JSON.stringify({
+            data: {
+              cards: [{ publicId: "475", quantity: 4 }],
+            },
+          }),
+        ),
+    );
+    globalThis.fetch = fetchMock as unknown as typeof fetch;
+
+    const snapshot = await fetchDeckListSnapshotByDeckListId("dl_legacy");
+
+    expect(snapshot.historicDeck).toEqual([{ cardPublicId: showMeMore.id, quantity: 4 }]);
+    expect(snapshot.deckText).toBe(`4 ${getFullName(showMeMore)}`);
+  });
+
+  it("renders recycled current ids as current cards", async () => {
+    const fetchMock = mock(
+      async () =>
+        new Response(
+          JSON.stringify({
+            data: {
+              cards: [{ publicId: "hab", quantity: 4 }],
+            },
+          }),
+        ),
+    );
+    globalThis.fetch = fetchMock as unknown as typeof fetch;
+
+    const snapshot = await fetchDeckListSnapshotByDeckListId("dl_ambiguous");
+
+    expect(snapshot.historicDeck).toEqual([{ cardPublicId: "hab", quantity: 4 }]);
+    expect(snapshot.deckText).toBe(`4 ${getFullName(cardsById.hab!)}`);
   });
 });

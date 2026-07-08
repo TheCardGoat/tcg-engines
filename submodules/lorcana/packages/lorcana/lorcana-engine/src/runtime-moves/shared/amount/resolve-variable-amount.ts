@@ -967,6 +967,29 @@ function evaluateAggregate(
               }).length,
             controller,
           );
+        case "distinct-character-ink-types":
+          return resolveOpponentScopedValue(
+            context,
+            (playerId) => {
+              const inkTypes = new Set<string>();
+              for (const cardId of context.ctx.framework.zones.getCards({
+                zone: "play",
+                playerId,
+              })) {
+                const definition = context.ctx.cards.getDefinition(cardId) as
+                  | { cardType?: string; inkType?: readonly string[] }
+                  | undefined;
+                if (definition?.cardType !== "character") {
+                  continue;
+                }
+                for (const inkType of definition.inkType ?? []) {
+                  inkTypes.add(inkType);
+                }
+              }
+              return inkTypes.size;
+            },
+            controller,
+          );
         default:
           return 0;
       }

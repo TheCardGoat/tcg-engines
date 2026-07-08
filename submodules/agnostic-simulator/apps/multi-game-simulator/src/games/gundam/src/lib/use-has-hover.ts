@@ -1,15 +1,4 @@
-import { useEffect, useState } from "react";
-
-// `any-hover` (vs. `hover`) keeps hover UI enabled on hybrid devices —
-// e.g. a touchscreen laptop with an attached mouse, where `(hover: hover)`
-// can resolve to `false` because the *primary* pointer is touch but the
-// user can still hover via the trackpad/mouse.
-const MEDIA_QUERY = "(any-hover: hover)";
-
-function readMatch(): boolean {
-  if (typeof window === "undefined" || typeof window.matchMedia !== "function") return true;
-  return window.matchMedia(MEDIA_QUERY).matches;
-}
+import { useHasHover as useSharedHasHover } from "../../../../lib/media-query.ts";
 
 /**
  * `true` when any pointing device on the system can hover (mouse / pen /
@@ -25,20 +14,5 @@ function readMatch(): boolean {
  * which keeps existing hover-styling tests passing.
  */
 export function useHasHover(): boolean {
-  const [hasHover, setHasHover] = useState<boolean>(readMatch);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
-    const mql = window.matchMedia(MEDIA_QUERY);
-    setHasHover(mql.matches);
-    const onChange = (e: MediaQueryListEvent) => setHasHover(e.matches);
-    if (typeof mql.addEventListener === "function") {
-      mql.addEventListener("change", onChange);
-      return () => mql.removeEventListener("change", onChange);
-    }
-    mql.addListener(onChange);
-    return () => mql.removeListener(onChange);
-  }, []);
-
-  return hasHover;
+  return useSharedHasHover();
 }

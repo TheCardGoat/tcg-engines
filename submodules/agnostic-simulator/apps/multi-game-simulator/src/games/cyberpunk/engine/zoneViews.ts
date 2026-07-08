@@ -40,6 +40,8 @@ export interface CardActiveEffectView {
 export interface ZoneCardView {
   /** Engine instance id — drives drag/drop ids and permission lookup. */
   cardId: string;
+  /** Public card definition id. Only projected for visible cards. */
+  definitionId: string;
   imageUrl: string;
   name: string;
   /** Card frame color from the catalog — drives faction accents in UI. */
@@ -92,6 +94,7 @@ export interface SideZoneViews {
   hand: ZoneCardView[];
   field: ZoneCardView[];
   legendArea: ZoneCardView[];
+  trash: ZoneCardView[];
   trashTop: ZoneCardView | null;
   /** Dice still in the fixer area (unrolled). One is taken per turn. */
   fixerArea: GigDieView[];
@@ -145,6 +148,7 @@ function toView(
   ];
   return {
     cardId: instance.instanceId as unknown as string,
+    definitionId: instance.definitionId,
     imageUrl: def.imageUrl,
     name: def.displayName ?? def.name,
     color: def.color as CardColor,
@@ -353,6 +357,7 @@ const EMPTY_VIEW: SideZoneViews = {
   hand: [],
   field: [],
   legendArea: [],
+  trash: [],
   trashTop: null,
   fixerArea: [],
   gigArea: [],
@@ -451,6 +456,7 @@ export function useSideZones(side: Side): SideZoneViews {
       legendArea: mapZone(player.zones.legendArea as unknown as string[], {
         includeAttached: false,
       }),
+      trash: trashCards,
       trashTop: trashCards.length > 0 ? trashCards[trashCards.length - 1]! : null,
       fixerArea: mapDice(player.fixerArea as unknown as string[]),
       gigArea,

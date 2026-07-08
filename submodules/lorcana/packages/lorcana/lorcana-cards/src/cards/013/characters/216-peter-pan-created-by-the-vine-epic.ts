@@ -15,6 +15,7 @@ export const peterPanCreatedByTheVineEpic: CharacterCard = {
       imageUrl: "",
     },
   ],
+  reprints: ["set13-089"],
   cardType: "character",
   name: "Peter Pan",
   version: "Created by the Vine",
@@ -34,7 +35,7 @@ export const peterPanCreatedByTheVineEpic: CharacterCard = {
   },
   text: [
     {
-      title: "CLEVER TRICK",
+      title: "Clever Trick",
       description:
         "Whenever one of your Floodborn characters is challenged, the challenging player chooses and discards a card.",
     },

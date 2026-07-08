@@ -32,6 +32,7 @@ import { CardImage } from "./CardImage";
 import { useDragDrop } from "./DragDropContext";
 import { useMoveSelection } from "./MoveSelectionContext";
 import { useZoneDroppable } from "./useZoneDroppable";
+import { useResolvingProgramVisuals } from "../../animation";
 import type { Phase } from "./gameStateTypes";
 import classes from "./CenterRow.module.css";
 
@@ -91,6 +92,7 @@ function GigDieCell({
     "data-testid": "gig-die",
     "data-die-type": die.dieType,
     "data-die-id": die.id,
+    "data-sim-entity-id": die.id,
     "data-face": die.faceValue,
     "data-selection-active": selectionActive ? "true" : "false",
     "data-interactive": interactive ? "true" : "false",
@@ -103,6 +105,7 @@ function GigDieCell({
       data-testid="card"
       data-card-kind="die"
       data-entity-id={die.id}
+      data-sim-entity-id={die.id}
       data-face={die.faceValue}
       style={{ display: "contents" }}
       aria-hidden
@@ -183,6 +186,7 @@ function GigLane({
       className={`${classes.cell} ${gridClass} ${classes.gigLane}`}
       data-testid="gig-row"
       data-zone-id={ownerSide === "opponent" ? "opp-gigArea" : "p-gigArea"}
+      data-sim-zone-id={ownerSide === "opponent" ? "opp-gigArea" : "p-gigArea"}
       data-side={ownerSide}
       data-count={gigCount}
       data-street-cred={streetCred}
@@ -623,6 +627,7 @@ export function PassTurnControl({
                   <button
                     type="button"
                     className={classes.confirmSecondary}
+                    data-testid="pass-confirm-cancel"
                     onClick={() => setConfirmingPassWithAttackers(false)}
                   >
                     Keep attacking
@@ -630,6 +635,7 @@ export function PassTurnControl({
                   <button
                     type="button"
                     className={classes.confirmPrimary}
+                    data-testid="pass-confirm-submit"
                     onClick={() => {
                       setConfirmingPassWithAttackers(false);
                       performAdvance();
@@ -1020,6 +1026,7 @@ export function CenterRow({ gigsOnly = false, spaciousGigs = false }: CenterRowP
   const { activeSide, gameEnded } = useGameState();
   const { humanSide, dispatch, interactionViews, matchState } = useEngine();
   const moveSelection = useMoveSelection();
+  const resolvingProgramVisuals = useResolvingProgramVisuals();
   const rivalSide = otherSide(humanSide);
   const friendly = useSideZones(humanSide);
   const rival = useSideZones(rivalSide);
@@ -1229,7 +1236,13 @@ export function CenterRow({ gigsOnly = false, spaciousGigs = false }: CenterRowP
       humanSide,
       interactionViews,
       cardIndex: matchState.G.cardIndex,
-    }) ?? selectedPlayedCardFromMoveSelection(moveSelection.selection, matchState.G.cardIndex);
+    }) ??
+    selectedPlayedCardFromMoveSelection(moveSelection.selection, matchState.G.cardIndex) ??
+    resolvingCardFromPersistedVisuals({
+      humanSide,
+      resolvingProgramVisuals,
+      cardIndex: matchState.G.cardIndex,
+    });
 
   return (
     <div
@@ -1284,29 +1297,7 @@ export function CenterRow({ gigsOnly = false, spaciousGigs = false }: CenterRowP
         }
         onAdjustGig={handleAdjustGigValue}
       />
-      {resolvingCard ? (
-        <div
-          className={classes.resolvingProgram}
-          data-testid="resolving-program"
-          data-card-id={resolvingCard.cardId}
-          data-card-type={resolvingCard.cardType}
-          aria-label={`${resolvingCard.label}: ${resolvingCard.name}`}
-        >
-          <span className={classes.resolvingProgramLabel}>{resolvingCard.label}</span>
-          <div className={classes.resolvingProgramCard}>
-            <CardImage
-              imageUrl={resolvingCard.imageUrl}
-              alt={resolvingCard.name}
-              cardType={resolvingCard.cardType}
-              color={resolvingCard.color}
-              previewDetails={{
-                name: resolvingCard.name,
-                rules: resolvingCard.rulesText ? [resolvingCard.rulesText] : undefined,
-              }}
-            />
-          </div>
-        </div>
-      ) : null}
+      {resolvingCard ? <ResolvingCardAnchor card={resolvingCard} /> : null}
       <GigLane
         label="Friendly Gigs"
         side="friendly"
@@ -1422,6 +1413,38 @@ type ResolvingCard = {
   rulesText: string | null;
 };
 
+function ResolvingCardAnchor({ card }: { card: ResolvingCard }) {
+  return (
+    <div
+      className={classes.resolvingProgram}
+      data-testid="resolving-program"
+      data-card-id={card.cardId}
+      data-sim-entity-id={card.cardId}
+      data-card-type={card.cardType}
+      aria-label={`${card.label}: ${card.name}`}
+    >
+      <span className={classes.resolvingProgramLabel}>{card.label}</span>
+      <div
+        className={classes.resolvingProgramCard}
+        data-testid="resolving-program-card"
+        data-sim-entity-id={card.cardId}
+        data-sim-anchor-id={`resolving-program:${card.cardId}`}
+      >
+        <CardImage
+          imageUrl={card.imageUrl}
+          alt={card.name}
+          cardType={card.cardType}
+          color={card.color}
+          previewDetails={{
+            name: card.name,
+            rules: card.rulesText ? [card.rulesText] : undefined,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 function resolvingCardFromInteractionViews({
   humanSide,
   interactionViews,
@@ -1490,6 +1513,40 @@ function selectedPlayedCardFromMoveSelection(
     cardId: selection.sourceCardId,
     cardType: def.type,
     label: def.type === "gear" ? "Playing gear" : "Resolving program",
+    name: def.displayName ?? def.name,
+    imageUrl: def.imageUrl,
+    color: def.color as ResolvingCard["color"],
+    rulesText: def.rulesText ?? null,
+  };
+}
+
+function resolvingCardFromPersistedVisuals({
+  humanSide,
+  resolvingProgramVisuals,
+  cardIndex,
+}: {
+  humanSide: Side;
+  resolvingProgramVisuals: ReturnType<typeof useResolvingProgramVisuals>;
+  cardIndex: Record<string, CardInstance>;
+}): ResolvingCard | null {
+  const visual =
+    resolvingProgramVisuals.find((candidate) => candidate.side === humanSide) ??
+    resolvingProgramVisuals[0];
+  if (!visual) {
+    return null;
+  }
+  const card = cardIndex[visual.cardId];
+  if (!card) {
+    return null;
+  }
+  const def = defOf(card);
+  if (def.type !== "program") {
+    return null;
+  }
+  return {
+    cardId: visual.cardId,
+    cardType: "program",
+    label: "Resolving program",
     name: def.displayName ?? def.name,
     imageUrl: def.imageUrl,
     color: def.color as ResolvingCard["color"],

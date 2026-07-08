@@ -783,6 +783,17 @@ function getControlledCharactersInPlay(
   ) as CardInstanceId[];
 }
 
+function getControlledShiftTargetsInPlay(
+  playCards: readonly string[],
+  shiftRules: ShiftRules | null,
+  getCardDefinition: (cardId: string) => LorcanaCard | undefined,
+): CardInstanceId[] {
+  const targetCardType = shiftRules?.targetCardType ?? "character";
+  return playCards.filter(
+    (cardId) => getCardDefinition(cardId)?.cardType === targetCardType,
+  ) as CardInstanceId[];
+}
+
 function normalizeActionTargets(targets: unknown): CardInstanceId[] {
   if (isSlottedTargetInput(targets)) {
     return flattenSlottedTargets(targets).filter(
@@ -1544,7 +1555,9 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
 
         const shiftCandidates = resolveShiftTargetCandidates(
           shiftRules,
-          myCharactersInPlay,
+          getControlledShiftTargetsInPlay(myPlayCards, shiftRules, (candidateId) =>
+            getCardDefinitionFromContext(ctx, candidateId),
+          ),
           (candidateId) => getCardDefinitionFromContext(ctx, candidateId),
         );
         const shiftTargetGroupValidation = validateShiftTargetGroup({
@@ -2920,15 +2933,12 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
         typeof shiftRules.inkCost === "number" &&
         availableInk >= Math.max(0, shiftRules.inkCost - shiftCostReduction.reductionAmount)
       ) {
-        const shiftCandidates = resolveShiftTargetCandidates(
-          shiftRules,
-          myCharactersInPlay,
-          (candidateId) => getCardDefinitionForEnumeration(candidateId, ctx),
-        );
         if (availableInk >= Math.max(0, shiftRules.inkCost - shiftCostReduction.reductionAmount)) {
           const shiftCandidates = resolveShiftTargetCandidates(
             shiftRules,
-            myCharactersInPlay,
+            getControlledShiftTargetsInPlay(playCards, shiftRules, (candidateId) =>
+              getCardDefinitionForEnumeration(candidateId, ctx),
+            ),
             (candidateId) => getCardDefinitionForEnumeration(candidateId, ctx),
           );
           if (shiftCandidates.length > 0) {
@@ -2945,7 +2955,9 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
       ) {
         const shiftCandidates = resolveShiftTargetCandidates(
           shiftRules,
-          myCharactersInPlay,
+          getControlledShiftTargetsInPlay(playCards, shiftRules, (candidateId) =>
+            getCardDefinitionForEnumeration(candidateId, ctx),
+          ),
           (candidateId) => getCardDefinitionForEnumeration(candidateId, ctx),
         );
         if (shiftCandidates.length > 0) {

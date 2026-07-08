@@ -100,7 +100,7 @@ export function PromptContainer() {
     const moveLabel = labelMove(moveName);
     const step = state.steps[0];
 
-    // AttackTargetingOverlay owns the UI for enterBattle target selection;
+    // AttackTargetingOverlayContainer owns enterBattle target selection;
     // suppressing the generic prompt here avoids double banners.
     if (
       moveName === "enterBattle" &&

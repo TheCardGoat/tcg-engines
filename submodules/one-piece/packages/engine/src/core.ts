@@ -8,7 +8,12 @@ import type {
   ReplayResult,
 } from "./types.ts";
 import { validateState } from "./validation.ts";
-import { applyQueuedCommandMutation } from "./engine/commands.ts";
+import { buildOnePieceAnimations } from "./animation.ts";
+import {
+  applyQueuedCommandMutation,
+  privateChoicesForJoKenPo,
+  rememberPrivateJoKenPoChoices,
+} from "./engine/commands.ts";
 import { createMatch } from "./engine/match.ts";
 import { drainResolutionQueue } from "./engine/queue.ts";
 import { createInvariantFailureResult } from "./engine/shared.ts";
@@ -24,15 +29,19 @@ export function applyCommand(state: MatchState, command: EngineCommand): ApplyCo
   const previousCapabilityCount = state.capabilityHistory.length;
   let accepted = false;
   let reason: string | null = null;
+  const privateContext = privateChoicesForJoKenPo(state);
 
   const [nextState, patches, inversePatches] = produceWithPatches(state, (draft) => {
-    draft.commandHistory.push(command);
-    const result = applyQueuedCommandMutation(draft, command);
+    if (command.type !== "chooseJoKenPo") {
+      draft.commandHistory.push(command);
+    }
+    const result = applyQueuedCommandMutation(draft, command, privateContext);
     accepted = result.accepted;
     reason = result.reason;
 
     if (accepted) {
       drainResolutionQueue(draft);
+      rememberPrivateJoKenPoChoices(draft, privateContext);
       emitEvent(draft, "commandAccepted", command.seat, {
         visibility: command.seat === "judge" ? "judge" : "public",
         data: {
@@ -63,12 +72,24 @@ export function applyCommand(state: MatchState, command: EngineCommand): ApplyCo
     );
   }
 
+  const events = nextState.eventHistory.slice(previousEventCount);
+  const logs = nextState.logHistory.slice(previousLogCount);
+  const animations = accepted
+    ? buildOnePieceAnimations({
+        command,
+        fromState: state,
+        toState: nextState,
+        events,
+      })
+    : [];
+
   return {
     state: nextState,
     accepted,
     reason,
-    events: nextState.eventHistory.slice(previousEventCount),
-    logs: nextState.logHistory.slice(previousLogCount),
+    events,
+    logs,
+    animations,
     patches,
     inversePatches,
     capabilityIssues: nextState.capabilityHistory.slice(previousCapabilityCount),

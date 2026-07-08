@@ -1,4 +1,9 @@
 import type { EngineInteractionView } from "@tcg/protocol";
+import type { GameSlug } from "@tcg/simulator-contract";
+
+import { playUrl } from "../../../../../runtime/gameRuntimeApi.ts";
+import { buildMountedHref } from "../../../../../routes/router-paths.ts";
+import { gundamRuntimeRequestHeaders, readServerRuntimeHeaders } from "./runtimeHeaders.ts";
 
 /**
  * Match-context helpers for the live-match page.
@@ -25,6 +30,22 @@ export interface LiveMatchView {
   ended: { winnerId: string | null; reason: string | null } | null;
 }
 
+export interface LiveMatchOverview {
+  readonly object: "match";
+  readonly matchId: string;
+  readonly status: "waiting" | "in_progress" | "completed" | "abandoned";
+  readonly currentGameId?: string;
+  readonly gameIds: readonly string[];
+}
+
+interface RawLiveMatchOverview {
+  readonly object?: string;
+  readonly matchId?: string;
+  readonly status?: LiveMatchOverview["status"];
+  readonly currentGameId?: string;
+  readonly gameIds?: unknown;
+}
+
 export function createInitialLiveMatchView(input: {
   matchId: string;
   gameId: string;
@@ -38,6 +59,66 @@ export function createInitialLiveMatchView(input: {
     state: null,
     ended: null,
   };
+}
+
+export function buildMatchOverviewUrl(gameSlug: GameSlug, matchId: string): string {
+  return playUrl(gameSlug, `/matches/${encodeURIComponent(matchId)}`);
+}
+
+export async function fetchLiveMatchOverview(
+  gameSlug: GameSlug,
+  matchId: string,
+  fetcher: typeof fetch = fetch,
+): Promise<LiveMatchOverview> {
+  const response = await fetcher(buildMatchOverviewUrl(gameSlug, matchId), {
+    credentials: "include",
+    headers: gundamRuntimeRequestHeaders(),
+  });
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    const message =
+      body && typeof body === "object" && "message" in body && typeof body.message === "string"
+        ? body.message
+        : `Match overview request failed (${response.status}).`;
+    throw new Error(message);
+  }
+  logRuntimeHeaderMismatch(response, "match-overview");
+  return parseLiveMatchOverview(await response.json());
+}
+
+export function parseLiveMatchOverview(value: unknown): LiveMatchOverview {
+  const raw = value as RawLiveMatchOverview;
+  if (!raw || raw.object !== "match" || !raw.matchId) {
+    throw new Error("Match overview response was not a match.");
+  }
+  return {
+    object: "match",
+    matchId: raw.matchId,
+    status: raw.status ?? "in_progress",
+    currentGameId: raw.currentGameId,
+    gameIds: Array.isArray(raw.gameIds)
+      ? raw.gameIds.filter((gameId): gameId is string => typeof gameId === "string")
+      : [],
+  };
+}
+
+export function resolveMatchOverviewDestination(
+  overview: LiveMatchOverview,
+  search: string,
+  basename = import.meta.env.BASE_URL,
+): URL {
+  const gameId = overview.currentGameId ?? overview.gameIds[0];
+  if (!gameId) {
+    throw new Error("Match overview did not include a current game.");
+  }
+  const params = new URLSearchParams(search);
+  params.delete("gameId");
+  const query = params.toString();
+  const path = `/matches/${encodeURIComponent(overview.matchId)}/games/${encodeURIComponent(gameId)}`;
+  return new URL(
+    `${buildMountedHref(path, basename)}${query ? `?${query}` : ""}`,
+    window.location.origin,
+  );
 }
 
 /**
@@ -65,5 +146,18 @@ function isAllowedReturnUrl(value: string): boolean {
     );
   } catch {
     return false;
+  }
+}
+
+function logRuntimeHeaderMismatch(response: Response, context: string): void {
+  const server = readServerRuntimeHeaders(response);
+  const client = gundamRuntimeRequestHeaders();
+  if (
+    (server.runtime && server.runtime !== client["x-tcg-client-runtime"]) ||
+    (server.engine && server.engine !== client["x-tcg-client-engine-runtime"]) ||
+    (server.cards && server.cards !== client["x-tcg-client-cards-runtime"])
+  ) {
+    // eslint-disable-next-line no-console
+    console.warn("[gundam-runtime] runtime fingerprint mismatch", { context, server, client });
   }
 }

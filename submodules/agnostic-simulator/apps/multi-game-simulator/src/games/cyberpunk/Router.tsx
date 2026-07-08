@@ -1,5 +1,4 @@
-import { useMemo } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { type RouteObject } from "react-router-dom";
 import { TestsPage, HomePage } from "./pages/Tests.page";
 import { TestFixturePage } from "./pages/TestFixture.page";
 import { CyberpunkTestStatePage } from "./pages/TestState.page";
@@ -12,9 +11,9 @@ import { LiveMatchPage } from "./pages/LiveMatch.page";
 import { LiveMatchLandingPage } from "./pages/LiveMatchLanding.page";
 import { ReplayPage } from "./pages/Replay.page";
 import { ReplayForkPage } from "./pages/ReplayFork.page";
-import { normalizeRouterBasename } from "../../routes/router-paths.ts";
+import { createSimulatorBrowserRouter, SimulatorRouterProvider } from "../../lib/router.tsx";
 
-export const cyberpunkSimulatorRoutes = [
+export const cyberpunkSimulatorRoutes: RouteObject[] = [
   // Root home — fixture chooser.
   {
     path: "/",
@@ -77,9 +76,7 @@ export const cyberpunkSimulatorRoutes = [
 ];
 
 export function createCyberpunkRouter(basename: string) {
-  return createBrowserRouter(cyberpunkSimulatorRoutes, {
-    basename: normalizeRouterBasename(basename),
-  });
+  return createSimulatorBrowserRouter(cyberpunkSimulatorRoutes, basename);
 }
 
 export interface RouterProps {
@@ -87,6 +84,5 @@ export interface RouterProps {
 }
 
 export function Router({ basename = import.meta.env.BASE_URL }: RouterProps) {
-  const router = useMemo(() => createCyberpunkRouter(basename), [basename]);
-  return <RouterProvider router={router} />;
+  return <SimulatorRouterProvider basename={basename} routes={cyberpunkSimulatorRoutes} />;
 }

@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op04Baby5032 } from "../../OP04/characters/032-baby-5.ts";
 import { prb01Baby5Op04032JollyRogerFoil032I18n } from "./032-baby-5-op04-032-jolly-roger-foil.i18n.ts";
 
 export const prb01Baby5Op04032JollyRogerFoil032: CharacterCard = {
-  id: "OP04-032",
-  canonicalId: "OP04-032",
+  ...op04Baby5032,
+  id: "OP04-032_p3_0Zy6GwW",
   slug: "baby-5-op04-032-jolly-roger-foil",
   name: "Baby 5 (OP04-032) (Jolly Roger Foil)",
   printings: [
     {
-      id: "OP04-032",
-      artId: "OP04-032",
+      id: "OP04-032_p3_0Zy6GwW",
+      artId: "OP04-032_p3_0Zy6GwW",
       setCode: "PRB01",
       collectorNumber: "032",
       rarity: "UC",
@@ -32,15 +33,8 @@ export const prb01Baby5Op04032JollyRogerFoil032: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP04-032_r1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["green"],
   rarity: "UC",
   setId: "PRB01",
-  cost: 1,
-  power: 1000,
-  counter: 2000,
-  traits: ["Donquixote Pirates"],
-  attribute: "special",
   artVariants: [
     {
       type: "other",
@@ -53,33 +47,5 @@ export const prb01Baby5Op04032JollyRogerFoil032: CharacterCard = {
       imageId: "OP04-032_r1",
     },
   ],
-  effect:
-    "[End of Your Turn] You may trash this Character: Set up to 2 of your DON!! cards as active.",
-  effects: {
-    effects: [
-      {
-        trigger: "endOfYourTurn",
-        costs: [
-          {
-            cost: "trashThisCard",
-          },
-        ],
-        actions: [
-          {
-            action: "setActive",
-            target: {
-              player: "self",
-              zones: ["costArea"],
-              count: {
-                amount: 2,
-                upTo: true,
-              },
-            },
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
   i18n: prb01Baby5Op04032JollyRogerFoil032I18n,
 };

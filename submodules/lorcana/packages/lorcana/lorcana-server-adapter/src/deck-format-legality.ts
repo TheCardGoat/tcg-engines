@@ -1,3 +1,4 @@
+import { getLorcanaShortIdResolution, resolveCurrentLorcanaShortId } from "@tcg/lorcana-cards/data";
 import {
   LORCANA_FORMATS,
   validateDeckForFormat,
@@ -6,6 +7,9 @@ import {
   type LorcanaFormatId,
 } from "@tcg/lorcana-types";
 import { getLorcanaCardFormatLookup } from "./card-format-lookup";
+
+const AMBIGUOUS_LEGACY_DECK_MESSAGE =
+  "This deck was saved with outdated card IDs that can no longer be safely matched to the correct cards. Please recreate or re-import this deck before joining matchmaking.";
 
 /**
  * Validate a deck against a Lorcana format, returning the full result with per-rule details.
@@ -18,8 +22,27 @@ export function validateDeckForLorcanaFormat(
 ): DeckFormatResult {
   const format = LORCANA_FORMATS[formatId];
   const lookup = getLorcanaCardFormatLookup();
+  const hasAmbiguousIds = cardsJson.some((row) => {
+    const resolution = getLorcanaShortIdResolution(row.cardId);
+    return resolution.kind === "ambiguous";
+  });
+
+  if (hasAmbiguousIds) {
+    return {
+      formatId,
+      valid: false,
+      rules: [
+        {
+          kind: "CARD_SET",
+          passed: false,
+          message: AMBIGUOUS_LEGACY_DECK_MESSAGE,
+        },
+      ],
+    };
+  }
+
   const deckCards: DeckCard[] = cardsJson.map((row) => ({
-    cardId: row.cardId,
+    cardId: resolveCurrentLorcanaShortId(row.cardId),
     quantity: row.quantity,
   }));
 

@@ -3,10 +3,12 @@ import { createPortal } from "react-dom";
 import {
   useUserConfig,
   useSetUserConfig,
+  type AnimationPacing,
   type DiceDisplayMode,
   type DiceImageColor,
   type DicierStyle,
 } from "../../engine";
+import { useSimulatorSettings } from "../../../../simulator/settings";
 import classes from "./UserConfigDialog.module.css";
 
 // ── option lists ────────────────────────────────────────────────────────────
@@ -40,11 +42,21 @@ const DICIER_STYLES: ReadonlyArray<{ value: DicierStyle; label: string }> = [
   { value: "Pixel", label: "Pixel" },
 ];
 
+const ANIMATION_PACING: ReadonlyArray<{ value: AnimationPacing; label: string; desc: string }> = [
+  { value: "fast", label: "Fast", desc: "Short result pause for faster repeated plays." },
+  { value: "standard", label: "Standard", desc: "Balanced result pause before cleanup." },
+  { value: "cinematic", label: "Cinematic", desc: "Longer result pause for maximum clarity." },
+];
+
 // ── dialog ──────────────────────────────────────────────────────────────────
 
 function UserConfigDialogContent({ onClose }: { onClose: () => void }) {
   const config = useUserConfig();
   const setConfig = useSetUserConfig();
+  const {
+    settings: { soundVolume },
+    setSoundVolume,
+  } = useSimulatorSettings();
 
   return (
     <div className={classes.dialog} role="dialog" aria-label="Simulator settings">
@@ -130,11 +142,36 @@ function UserConfigDialogContent({ onClose }: { onClose: () => void }) {
               min={0}
               max={100}
               step={1}
-              value={config.soundVolume}
+              value={soundVolume}
               aria-label="Sound volume"
-              onChange={(e) => setConfig({ soundVolume: e.currentTarget.valueAsNumber })}
+              onChange={(e) => setSoundVolume(e.currentTarget.valueAsNumber)}
             />
-            <span className={classes.sliderValue}>{config.soundVolume}%</span>
+            <span className={classes.sliderValue}>{soundVolume}%</span>
+          </div>
+        </fieldset>
+
+        <fieldset className={classes.fieldset}>
+          <legend className={classes.legend}>Animation Pacing</legend>
+          <div className={classes.radioGroup}>
+            {ANIMATION_PACING.map(({ value, label, desc }) => (
+              <label
+                key={value}
+                className={`${classes.radioRow} ${config.animationPacing === value ? classes.radioRowActive : ""}`}
+              >
+                <input
+                  type="radio"
+                  className={classes.radioInput}
+                  name="animationPacing"
+                  value={value}
+                  checked={config.animationPacing === value}
+                  onChange={() => setConfig({ animationPacing: value })}
+                />
+                <div className={classes.radioLabel}>
+                  <span className={classes.radioTitle}>{label}</span>
+                  <span className={classes.radioDesc}>{desc}</span>
+                </div>
+              </label>
+            ))}
           </div>
         </fieldset>
       </div>

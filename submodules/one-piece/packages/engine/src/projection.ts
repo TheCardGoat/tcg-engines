@@ -606,6 +606,7 @@ function actionForCommand(
       command.promptId,
       command.targetIds?.join("."),
       command.slotChoices?.join("."),
+      command.options?.map((option) => option.value).join("."),
     ]
       .filter(Boolean)
       .join(":"),

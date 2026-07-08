@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { PLAYER_SIDE_TO_ID, useEngine, type Side } from "../../engine";
 
+interface ClockSnapshot {
+  reserveMsRemaining: number;
+  isOnClock?: boolean;
+  lastUpdatedAtMs?: number;
+}
+
 /**
  * Shared priority clock. Each side owns a separate countdown, and only the
  * side currently holding priority ticks down. Each consumer creates an
@@ -104,7 +110,7 @@ function readServerClockSeconds(
   side: Side,
 ): number | null {
   const clock = state.ctx.clockState?.[String(PLAYER_SIDE_TO_ID[side])];
-  if (!clock || typeof clock.reserveMsRemaining !== "number") {
+  if (!isClockSnapshot(clock)) {
     return null;
   }
   return Math.ceil(clock.reserveMsRemaining / 1000);
@@ -117,7 +123,7 @@ function secondsRemainingForSide(
   fallbackSeconds: number,
 ): number {
   const clock = state.ctx.clockState?.[String(PLAYER_SIDE_TO_ID[side])];
-  if (!clock || typeof clock.reserveMsRemaining !== "number") {
+  if (!isClockSnapshot(clock)) {
     return fallbackSeconds;
   }
   const elapsedMs =
@@ -125,4 +131,11 @@ function secondsRemainingForSide(
       ? Math.max(0, now - clock.lastUpdatedAtMs)
       : 0;
   return Math.ceil((clock.reserveMsRemaining - elapsedMs) / 1000);
+}
+
+function isClockSnapshot(value: unknown): value is ClockSnapshot {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+  return typeof (value as { reserveMsRemaining?: unknown }).reserveMsRemaining === "number";
 }

@@ -4,7 +4,7 @@ export const elsaGlovesOffP1I18n: Record<Languages, I18nProperties> = {
   en: {
     name: "Elsa",
     version: "Gloves Off",
-    text: "<Challenger> +3",
+    text: "Challenger +3",
   },
   de: {
     name: "Elsa",

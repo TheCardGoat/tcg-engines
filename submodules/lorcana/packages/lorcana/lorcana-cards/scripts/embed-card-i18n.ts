@@ -63,7 +63,7 @@ export function buildEnglishI18nProperties(
   // previous parser run that handled edge cases differently.
   let text = parsed;
   if (existing && typeof existing !== "string" && typeof parsed !== "string") {
-    if (existing.length >= parsed.length) {
+    if (existing.length >= parsed.length && !hasMoreEmptySymbols(existing, parsed)) {
       text = existing;
     }
   }
@@ -73,6 +73,14 @@ export function buildEnglishI18nProperties(
     ...(card.version ? { version: card.version } : {}),
     ...(text ? { text } : {}),
   };
+}
+
+function countEmptySymbolPlaceholders(text: CardText): number {
+  return (cardTextToPlainString(text).match(/\{\}/g) ?? []).length;
+}
+
+function hasMoreEmptySymbols(existing: CardText, parsed: CardText): boolean {
+  return countEmptySymbolPlaceholders(existing) > countEmptySymbolPlaceholders(parsed);
 }
 
 /**

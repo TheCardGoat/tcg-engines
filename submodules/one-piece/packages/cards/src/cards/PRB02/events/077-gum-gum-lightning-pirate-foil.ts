@@ -1,15 +1,16 @@
 import type { EventCard } from "@tcg/op-types";
+import { op09GumGumLightning077 } from "../../OP09/events/077-gum-gum-lightning.ts";
 import { prb02GumGumLightningPirateFoil077I18n } from "./077-gum-gum-lightning-pirate-foil.i18n.ts";
 
 export const prb02GumGumLightningPirateFoil077: EventCard = {
-  id: "OP09-077",
-  canonicalId: "OP09-077",
+  ...op09GumGumLightning077,
+  id: "OP09-077_p1",
   slug: "gum-gum-lightning-pirate-foil",
   name: "Gum-Gum Lightning (Pirate Foil)",
   printings: [
     {
-      id: "OP09-077",
-      artId: "OP09-077",
+      id: "OP09-077_p1",
+      artId: "OP09-077_p1",
       setCode: "PRB02",
       collectorNumber: "077",
       rarity: "UC",
@@ -24,12 +25,8 @@ export const prb02GumGumLightningPirateFoil077: EventCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP09-077_r2.jpg",
     },
   ],
-  cardType: "event",
-  color: ["purple"],
   rarity: "UC",
   setId: "PRB02",
-  cost: 2,
-  traits: ["Straw Hat Crew The Four Emperors"],
   artVariants: [
     {
       type: "other",
@@ -37,53 +34,5 @@ export const prb02GumGumLightningPirateFoil077: EventCard = {
       imageId: "OP09-077_r2",
     },
   ],
-  effect:
-    "[Main] DON!! 2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 1 of your opponent's Characters with 6000 power or less.[Trigger] Add up to 1 DON!! card from your DON!! deck and set it as active.",
-  effects: {
-    effects: [
-      {
-        trigger: "main",
-        costs: [
-          {
-            cost: "returnDon",
-            amount: 2,
-          },
-        ],
-        actions: [
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "power",
-                  comparison: "lte",
-                  value: 6000,
-                },
-              ],
-            },
-          },
-        ],
-      },
-      {
-        trigger: "trigger",
-        actions: [
-          {
-            action: "addDon",
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            state: "active",
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb02GumGumLightningPirateFoil077I18n,
 };

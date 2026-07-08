@@ -1,7 +1,13 @@
 import { describe, expect, test } from "vite-plus/test";
 import { decodeTestSimulatorEnvelope } from "@tcg/engine-core/test-simulator";
 
-import { createTestMatchState, OnePieceTestEngine, SOUTH } from "../src/index.ts";
+import {
+  createMatch,
+  createSt01PlayerConfig,
+  createTestMatchState,
+  OnePieceTestEngine,
+  SOUTH,
+} from "../src/index.ts";
 import {
   op13GumGumGatlingGun021,
   op13Higuma013,
@@ -9,9 +15,45 @@ import {
   op13Otama043,
   op13RoronoaZoro037,
   op13WindmillVillage022,
+  st01MonkeyDLuffy001,
 } from "../../cards/src/index.ts";
 
 describe("OnePieceTestEngine fixtures", () => {
+  test("creates a fresh game with the official One Piece setup", () => {
+    const state = createMatch({
+      firstPlayer: SOUTH,
+      shuffleDecks: false,
+      openingHandSize: 5,
+      skipFirstTurnDraw: true,
+      maxCharacterSlots: 5,
+      players: {
+        south: createSt01PlayerConfig("South"),
+        north: createSt01PlayerConfig("North"),
+      },
+    });
+
+    const assertFreshPlayerSetup = (seat: "south" | "north") => {
+      const player = state.players[seat];
+      const leader = state.cards[player.leaderInstanceId]!;
+
+      expect(player.stageArea).toBeNull();
+      expect(player.trash).toEqual([]);
+      expect(player.characterArea).toEqual([null, null, null, null, null]);
+      expect(leader.zone).toBe("leader");
+      expect(leader.faceUp).toBe(true);
+      expect(leader.rested).toBe(false);
+      expect(leader.attachedDon).toBe(0);
+      expect(player.activeDon).toBe(0);
+      expect(player.restedDon).toBe(0);
+      expect(player.donDeckCount).toBe(10);
+      expect(player.hand).toHaveLength(5);
+      expect(player.life).toHaveLength(st01MonkeyDLuffy001.life);
+    };
+
+    assertFreshPlayerSetup("south");
+    assertFreshPlayerSetup("north");
+  });
+
   test("seeds deterministic zones and card state", () => {
     const state = createTestMatchState(
       {

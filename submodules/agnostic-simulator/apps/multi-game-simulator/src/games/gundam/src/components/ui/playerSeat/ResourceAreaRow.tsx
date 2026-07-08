@@ -92,6 +92,7 @@ export function ResourceAreaRow({
           flip && "order-2",
         )}
         data-sim-zone-id={`resourceArea:${playerId}`}
+        data-sim-anchor-id={`resourceArea:${playerId}`}
         data-sim-resource-anchor-id={playerId}
       >
         <span className="absolute -top-2 left-0 z-10 font-mono text-hud-2xs text-hud-accent/70 font-bold tracking-hud-label bg-hud-deep/90 border border-hud-border/30 rounded-sm px-1.5 py-0.5 pointer-events-none">

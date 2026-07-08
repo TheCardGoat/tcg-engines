@@ -4,6 +4,7 @@
     "types": ["node", "@types/bun"],
     "lib": ["esnext", "ES2023"],
     "paths": {
+      "@tcg/card-model": ["./src/index.ts"],
       "@tcg/op-types": ["../../../one-piece/packages/types/src/index.ts"]
     }
   },

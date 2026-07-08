@@ -20,7 +20,8 @@
     "./schemas": "./src/schemas.ts",
     "./payloads": "./src/payloads.ts",
     "./interactions": "./src/interactions.ts",
-    "./handler-context": "./src/handler-context.ts"
+    "./handler-context": "./src/handler-context.ts",
+    "./animations": "./src/animations.ts"
   },
   "scripts": {
     "check-types": "tsc --noEmit",

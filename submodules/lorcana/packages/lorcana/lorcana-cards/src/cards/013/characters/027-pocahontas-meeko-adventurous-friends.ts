@@ -1,5 +1,6 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
 import { pocahontasMeekoAdventurousFriendsI18n } from "./027-pocahontas-meeko-adventurous-friends.i18n";
+
 import { evasive } from "../../../helpers/abilities/evasive";
 import { shift } from "../../../helpers/abilities/shift";
 
@@ -37,8 +38,6 @@ export const pocahontasMeekoAdventurousFriends: CharacterCard = {
   text: [
     {
       title: "Shift 2 {I}",
-      description:
-        "(You may pay 2 {I} to play this on top of one of your characters named Pocahontas or Meeko.)",
     },
     {
       title: "Evasive",

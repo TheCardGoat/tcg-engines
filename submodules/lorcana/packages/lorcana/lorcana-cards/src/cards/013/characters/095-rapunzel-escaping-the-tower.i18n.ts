@@ -8,7 +8,7 @@ export const rapunzelEscapingTheTowerI18n: Record<Languages, I18nProperties> = {
       {
         title: "THE CALL OF ADVENTURE",
         description:
-          "Once during your turn, you may discard a card to give this character +1 {} and Evasive until the start of your next turn.",
+          "Once during your turn, you may discard a card to give this character +1 {L} and Evasive until the start of your next turn.",
       },
     ],
   },

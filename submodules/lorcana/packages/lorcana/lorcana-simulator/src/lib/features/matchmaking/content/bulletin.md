@@ -1,3 +1,23 @@
+## Attack of the Vine Early Access Queue
+
+**July 3, 2026**
+
+Hi everyone, I have some good news and some bad news.
+
+Good news first: the _Attack of the Vine_ early access queue is ready. All cards are available and ready to play. I would love for you to jump in, give them a try, and share your feedback.
+
+I have tested most of them myself, but there is always a chance I missed something. If anything feels off, please let me know.
+
+Now the bad news: during a 20-hour implementation marathon, I made a mistake that corrupted some player deck data. To be clear, there was no data leak and no private information was exposed. The issue was limited to deck IDs getting mixed up.
+
+Because of that, I kindly ask everyone to re-import your decks. This will make sure the correct IDs are being used going forward.
+
+Thank you for being patient with me. As some of you know, I am in a very busy phase of life right now, but I am still doing my best to keep dedicating time to the project and move things forward.
+
+I really appreciate you all.
+
+---
+
 ## Wilds Unknown: Early Access Queue Now in Normal Queues
 
 **May 9, 2026**

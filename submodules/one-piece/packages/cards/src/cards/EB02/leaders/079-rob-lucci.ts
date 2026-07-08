@@ -1,53 +1,24 @@
 import type { LeaderCard } from "@tcg/op-types";
+import { op07RobLucci079 } from "../../OP07/leaders/079-rob-lucci.ts";
 import { eb02RobLucci079I18n } from "./079-rob-lucci.i18n.ts";
 
 export const eb02RobLucci079: LeaderCard = {
-  id: "OP07-079",
-  canonicalId: "OP07-079",
-  slug: "rob-lucci/op07-079",
+  ...op07RobLucci079,
+  id: "OP07-079_q0dAX55",
+  slug: "rob-lucci/op07-079-q0dax55",
   name: "Rob Lucci",
   printings: [
     {
-      id: "OP07-079",
-      artId: "OP07-079",
+      id: "OP07-079_q0dAX55",
+      artId: "OP07-079_q0dAX55",
       setCode: "EB02",
       collectorNumber: "079",
       rarity: "L",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP07-079_q0dAX55.jpg",
     },
   ],
-  cardType: "leader",
-  color: ["black"],
   rarity: "L",
   setId: "EB02",
-  power: 5000,
-  life: 5,
-  traits: ["CP0"],
-  attribute: "strike",
-  effect:
-    "[When Attacking] You may trash 2 cards from the top of your deck: Give up to 1 of your opponent's Characters 1 cost during this turn.",
-  effects: {
-    effects: [
-      {
-        trigger: "whenAttacking",
-        actions: [
-          {
-            action: "modifyCost",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-            value: 1,
-            duration: "thisTurn",
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: eb02RobLucci079I18n,
 };

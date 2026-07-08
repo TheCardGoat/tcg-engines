@@ -88,23 +88,6 @@ export interface PromptAction {
   readonly testId?: string;
 }
 
-export interface AttackParticipant {
-  readonly id: string;
-  readonly name: string;
-}
-
-export interface AttackAttacker extends AttackParticipant {
-  readonly strength: number;
-}
-
-export interface AttackTarget extends AttackParticipant {
-  readonly willpower: number;
-  /** True for the synthetic "direct attack" target anchored to the
-   *  opponent's plate column rather than a board card. Drives the
-   *  overlay to render a "DIRECT" badge instead of a defender HP comparison. */
-  readonly isDirect?: boolean;
-}
-
 export interface DOMRectLike {
   readonly left: number;
   readonly top: number;

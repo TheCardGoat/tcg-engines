@@ -6,6 +6,7 @@ export type Viewer = MatchSeat | "judge" | "spectator";
 export type MatchStatus = "setup" | "active" | "finished";
 export type MatchPhase = "setup" | "refresh" | "draw" | "don" | "main" | "end" | "finished";
 export type CardZone = "leader" | "deck" | "hand" | "life" | "character" | "stage" | "trash";
+export type JoKenPoChoice = "rock" | "paper" | "scissors";
 export type PromptKind = "choice" | "judge";
 export type ChoiceKind = "selectTargets" | "selectCards" | "confirm" | "costPayment";
 export type EngineActor = MatchSeat | "judge" | "system";
@@ -151,7 +152,16 @@ export interface BattleState {
 
 export interface SetupState {
   started: boolean;
+  joKenPo: {
+    round: number;
+    pendingSeats: MatchSeat[];
+    hiddenChoices: Partial<Record<MatchSeat, JoKenPoChoice>>;
+    choices: Partial<Record<MatchSeat, JoKenPoChoice>>;
+    winner: MatchSeat | null;
+    firstPlayerDecided: boolean;
+  };
   mulliganUsed: Record<MatchSeat, boolean>;
+  mulliganDecided: Record<MatchSeat, boolean>;
 }
 
 export interface EngineCapabilityIssue {
@@ -264,6 +274,41 @@ export interface EngineEvent {
   payload: Record<string, string | number | boolean | string[] | null>;
 }
 
+export type EngineAnimationData =
+  | {
+      kind: "cardMove";
+      cardId: string;
+      fromZone: CardZone;
+      toZone: CardZone;
+      fromOwner: MatchSeat;
+      toOwner: MatchSeat;
+    }
+  | {
+      kind: "attack";
+      attackerId: string;
+      targetId: string;
+    }
+  | {
+      kind: "effect";
+      sourceInstanceId: string;
+      targetIds: readonly string[];
+      label: "RESOLVED";
+    }
+  | {
+      kind: "generic";
+      name: string;
+      params: Record<string, string | number | boolean | null | readonly string[]>;
+    };
+
+export interface EngineAnimation {
+  id: string;
+  type: string;
+  duration: number;
+  data: EngineAnimationData;
+  after?: string;
+  group?: string;
+}
+
 export interface GameLogEntry {
   id: string;
   turn: number;
@@ -328,7 +373,17 @@ export interface GameCommandBase {
 }
 
 export type GameCommand =
+  | ({ type: "chooseJoKenPo"; choice: JoKenPoChoice } & GameCommandBase)
+  | ({
+      type: "resolveJoKenPoTimeout";
+      winner: MatchSeat;
+      reason: "onePlayerTimedOut" | "bothPlayersTimedOut";
+      elapsedMs: number;
+      timedOutSeats?: MatchSeat[];
+    } & GameCommandBase)
+  | ({ type: "chooseFirstPlayer"; firstPlayer: MatchSeat } & GameCommandBase)
   | ({ type: "mulligan" } & GameCommandBase)
+  | ({ type: "keepHand" } & GameCommandBase)
   | ({ type: "startGame" } & GameCommandBase)
   | ({ type: "endTurn" } & GameCommandBase)
   | ({
@@ -389,6 +444,7 @@ export interface ApplyCommandResult {
   reason: string | null;
   events: EngineEvent[];
   logs: GameLogEntry[];
+  animations: EngineAnimation[];
   patches: Patch[];
   inversePatches: Patch[];
   capabilityIssues: EngineCapabilityIssue[];

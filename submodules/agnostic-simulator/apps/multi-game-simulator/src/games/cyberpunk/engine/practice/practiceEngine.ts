@@ -31,7 +31,7 @@ export function createPracticeEngine(config: PracticeMatchConfig): CyberpunkTest
       { ...playerDeck.deck, playerId: "p1", playerName: playerDeck.name },
       { ...botDeck.deck, playerId: "p2", playerName: botDeck.name },
     ],
-    seed: config.seed,
+    seed: config.seed ?? undefined,
     matchId: config.matchId,
   });
 
@@ -39,8 +39,9 @@ export function createPracticeEngine(config: PracticeMatchConfig): CyberpunkTest
 }
 
 export function createPracticeAiConfig(config: PracticeMatchConfig): AISideConfig {
-  const strategy = strategyForId(config.botStrategyId);
-  return { player: null, opponent: strategy };
+  const playerStrategy = config.playerStrategyId ? strategyForId(config.playerStrategyId) : null;
+  const botStrategy = strategyForId(config.botStrategyId);
+  return { player: playerStrategy, opponent: botStrategy };
 }
 
 function resolvePlayerDeck(

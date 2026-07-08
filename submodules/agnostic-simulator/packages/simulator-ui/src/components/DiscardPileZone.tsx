@@ -39,6 +39,7 @@ export function DiscardPileZone({
       )}
       data-testid={`${zone?.id ?? resolvedLabel}-stack`}
       data-zone-id={zone?.id}
+      data-sim-zone-id={zone?.id}
       data-zone-layout="discard-pile"
       data-count={entityCount}
       aria-label={`${resolvedLabel}, ${entityCount} ${entityCount === 1 ? "card" : "cards"}`}

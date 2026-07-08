@@ -1,15 +1,19 @@
 import { describe, expect, it } from "vite-plus/test";
+import { getAllCards } from "@tcg/op-cards";
 import { onePieceServerAdapter } from "./adapter.js";
 
 describe("onePieceServerAdapter.getCanonicalCardId", () => {
-  it("is the identity function (ADR-9: canonicalId = id until reprint data exists)", () => {
-    expect(onePieceServerAdapter.getCanonicalCardId("OP01-001")).toBe("OP01-001");
+  it("resolves card and printing ids to canonical ids", () => {
+    const card = getAllCards().find((candidate) => candidate.printings.length > 1);
+    expect(card).toBeTruthy();
+
+    expect(onePieceServerAdapter.getCanonicalCardId(card!.id)).toBe(card!.canonicalId);
+    expect(onePieceServerAdapter.getCanonicalCardId(card!.printings[1]!.id)).toBe(
+      card!.canonicalId,
+    );
   });
 
-  it("returns the raw publicId for unknown ids (identity, never null)", () => {
-    // Per ADR-9, OP has no reprint data yet, so canonical resolution never
-    // returns null — the raw publicId is the canonical id. Callers that
-    // null-check will simply take the identity branch.
-    expect(onePieceServerAdapter.getCanonicalCardId("not-a-real-op-id")).toBe("not-a-real-op-id");
+  it("returns null for unknown ids", () => {
+    expect(onePieceServerAdapter.getCanonicalCardId("not-a-real-op-id")).toBeNull();
   });
 });

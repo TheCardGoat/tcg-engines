@@ -53,6 +53,25 @@ function describeHiddenCard(state: MatchState, instanceId: string): string {
   return "a hidden card";
 }
 
+function zoneLabel(zone: CardZone): string {
+  switch (zone) {
+    case "character":
+      return "Character area";
+    case "deck":
+      return "Deck";
+    case "hand":
+      return "Hand";
+    case "leader":
+      return "Leader area";
+    case "life":
+      return "Life";
+    case "stage":
+      return "Stage area";
+    case "trash":
+      return "Trash";
+  }
+}
+
 function removeFromCurrentZone(state: MatchState, instanceId: string) {
   const instance = getInstance(state, instanceId);
   const player = getPlayer(state, instance.owner);
@@ -205,7 +224,7 @@ export function moveCard(
     emitLog(
       state,
       options.actor ?? "system",
-      `${getPlayer(state, owner).playerName} moves ${previous.description} from ${previous.zone} to ${zone}.`,
+      `${getPlayer(state, owner).playerName} moves ${previous.description} from ${zoneLabel(previous.zone)} to ${zoneLabel(zone)}.`,
       {
         sourceCardId: next.cardId,
         sourceInstanceId: instanceId,
@@ -214,7 +233,7 @@ export function moveCard(
         privateMessages: options.privateMessages,
         judgeMessage:
           options.judgeMessage ??
-          `${getPlayer(state, owner).playerName} moves ${cardName(getCardForInstance(state, instanceId))} from ${previous.zone} to ${zone}.`,
+          `${getPlayer(state, owner).playerName} moves ${cardName(getCardForInstance(state, instanceId))} from ${zoneLabel(previous.zone)} to ${zoneLabel(zone)}.`,
       },
     );
   }
@@ -390,7 +409,11 @@ export function formatCardList(state: MatchState, instanceIds: string[]): string
     .join(", ");
 }
 
-export function drawTopCard(state: MatchState, seat: MatchSeat): string | null {
+export function drawTopCard(
+  state: MatchState,
+  seat: MatchSeat,
+  options: { suppressLog?: boolean } = {},
+): string | null {
   const player = getPlayer(state, seat);
   const instanceId = player.deck.shift() ?? null;
 
@@ -403,6 +426,7 @@ export function drawTopCard(state: MatchState, seat: MatchSeat): string | null {
     publicKnowledge: false,
     actor: seat,
     visibility: "private",
+    suppressLog: options.suppressLog,
     privateMessages: {
       [seat]: `You drew ${cardName(getCardForInstance(state, instanceId))}.`,
     },
@@ -425,6 +449,17 @@ export function addDonFromDeck(
     player.restedDon += actual;
   } else {
     player.activeDon += actual;
+  }
+
+  if (actual > 0) {
+    emitLog(
+      state,
+      "system",
+      `${player.playerName} adds ${actual} DON!! from the DON!! deck to the cost area ${rested ? "rested" : "active"}.`,
+      {
+        visibility: "public",
+      },
+    );
   }
 }
 
@@ -505,9 +540,10 @@ export function buildInitialPlayerState(
       publicKnowledge: false,
     });
   }
+  reindexLinearZone(state, seat, "deck");
 
   for (let index = 0; index < config.openingHandSize; index += 1) {
-    const drawn = drawTopCard(state, seat);
+    const drawn = drawTopCard(state, seat, { suppressLog: true });
     if (!drawn) {
       break;
     }

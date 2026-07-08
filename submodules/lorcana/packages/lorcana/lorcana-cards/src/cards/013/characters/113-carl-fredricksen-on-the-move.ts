@@ -66,7 +66,9 @@ export const carlFredricksenOnTheMove: CharacterCard = {
           includeSelf: true,
           character: {
             selector: "chosen",
-            count: { upTo: 1 },
+            count: {
+              upTo: 1,
+            },
             owner: "you",
             zones: ["play"],
             cardTypes: ["character"],

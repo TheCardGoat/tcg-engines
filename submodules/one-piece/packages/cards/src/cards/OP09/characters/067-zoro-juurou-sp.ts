@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op05ZoroJuurou067 } from "../../OP05/characters/067-zoro-juurou.ts";
 import { op09ZoroJuurouSp067I18n } from "./067-zoro-juurou-sp.i18n.ts";
 
 export const op09ZoroJuurouSp067: CharacterCard = {
-  id: "OP05-067",
-  canonicalId: "OP05-067",
+  ...op05ZoroJuurou067,
+  id: "OP05-067_p4",
   slug: "zoro-juurou-sp/op05-067",
   name: "Zoro-Juurou (SP)",
   printings: [
     {
-      id: "OP05-067",
-      artId: "OP05-067",
+      id: "OP05-067_p4",
+      artId: "OP05-067_p4",
       setCode: "OP09",
       collectorNumber: "067",
       rarity: "R",
@@ -24,15 +25,8 @@ export const op09ZoroJuurouSp067: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP09-051_p2.jpg",
     },
   ],
-  cardType: "character",
-  color: ["purple"],
   rarity: "R",
   setId: "OP09",
-  cost: 3,
-  power: 4000,
-  counter: 1000,
-  traits: ["Straw Hat Crew"],
-  attribute: "slash",
   artVariants: [
     {
       type: "other",
@@ -40,32 +34,5 @@ export const op09ZoroJuurouSp067: CharacterCard = {
       imageId: "OP09-051_p2",
     },
   ],
-  effect:
-    "[When Attacking] If you have 3 or less Life cards, add up to 1 DON!! card from your DON!! deck and set it as active.",
-  effects: {
-    effects: [
-      {
-        trigger: "whenAttacking",
-        conditions: [
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 3,
-          },
-        ],
-        actions: [
-          {
-            action: "addDon",
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            state: "active",
-          },
-        ],
-      },
-    ],
-  },
   i18n: op09ZoroJuurouSp067I18n,
 };

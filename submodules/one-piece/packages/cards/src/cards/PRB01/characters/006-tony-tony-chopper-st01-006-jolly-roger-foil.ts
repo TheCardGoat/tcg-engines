@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { st01TonyTonyChopper006 } from "../../ST01/index.ts";
 import { prb01TonyTonyChopperSt01006JollyRogerFoil006I18n } from "./006-tony-tony-chopper-st01-006-jolly-roger-foil.i18n.ts";
 
 export const prb01TonyTonyChopperSt01006JollyRogerFoil006: CharacterCard = {
-  id: "ST01-006",
-  canonicalId: "ST01-006",
+  ...st01TonyTonyChopper006,
+  id: "ST01-006_p6",
   slug: "tony-tony-chopper-st01-006-jolly-roger-foil",
   name: "Tony Tony.Chopper (ST01-006) (Jolly Roger Foil)",
   printings: [
     {
-      id: "ST01-006",
-      artId: "ST01-006",
+      id: "ST01-006_p6",
+      artId: "ST01-006_p6",
       setCode: "PRB01",
       collectorNumber: "006",
       rarity: "C",
@@ -40,14 +41,8 @@ export const prb01TonyTonyChopperSt01006JollyRogerFoil006: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/ST01-006_p8.jpg",
     },
   ],
-  cardType: "character",
-  color: ["red"],
   rarity: "C",
   setId: "PRB01",
-  cost: 1,
-  power: 1000,
-  traits: ["Animal Straw Hat Crew"],
-  attribute: "strike",
   artVariants: [
     {
       type: "other",
@@ -65,10 +60,5 @@ export const prb01TonyTonyChopperSt01006JollyRogerFoil006: CharacterCard = {
       imageId: "ST01-006_p8",
     },
   ],
-  effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
-  effects: {
-    keywords: ["blocker"],
-  },
   i18n: prb01TonyTonyChopperSt01006JollyRogerFoil006I18n,
 };

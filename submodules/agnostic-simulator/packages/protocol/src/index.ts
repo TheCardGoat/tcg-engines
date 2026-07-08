@@ -8,3 +8,4 @@ export * from "./handler-context.js";
 export * from "./interactions.js";
 export * from "./games.js";
 export * from "./chat.js";
+export * from "./animations.js";

@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op08Kalgara099 } from "../../OP08/characters/099-kalgara.ts";
 import { prb02KalgaraPirateFoil099I18n } from "./099-kalgara-pirate-foil.i18n.ts";
 
 export const prb02KalgaraPirateFoil099: CharacterCard = {
-  id: "OP08-099",
-  canonicalId: "OP08-099",
+  ...op08Kalgara099,
+  id: "OP08-099_p1",
   slug: "kalgara-pirate-foil",
   name: "Kalgara (Pirate Foil)",
   printings: [
     {
-      id: "OP08-099",
-      artId: "OP08-099",
+      id: "OP08-099_p1",
+      artId: "OP08-099_p1",
       setCode: "PRB02",
       collectorNumber: "099",
       rarity: "C",
@@ -24,15 +25,8 @@ export const prb02KalgaraPirateFoil099: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP08-099_r1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["yellow"],
   rarity: "C",
   setId: "PRB02",
-  cost: 6,
-  power: 8000,
-  counter: 1000,
-  traits: ["Sky Island Shandian Warrior Jaya"],
-  attribute: "slash",
   artVariants: [
     {
       type: "other",

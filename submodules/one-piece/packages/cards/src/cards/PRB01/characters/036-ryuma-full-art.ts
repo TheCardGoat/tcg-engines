@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op06Ryuma036 } from "../../OP06/characters/036-ryuma.ts";
 import { prb01RyumaFullArt036I18n } from "./036-ryuma-full-art.i18n.ts";
 
 export const prb01RyumaFullArt036: CharacterCard = {
-  id: "OP06-036",
-  canonicalId: "OP06-036",
+  ...op06Ryuma036,
+  id: "OP06-036_p3",
   slug: "ryuma-full-art",
   name: "Ryuma (Full Art)",
   printings: [
     {
-      id: "OP06-036",
-      artId: "OP06-036",
+      id: "OP06-036_p3",
+      artId: "OP06-036_p3",
       setCode: "PRB01",
       collectorNumber: "036",
       rarity: "R",
@@ -40,14 +41,8 @@ export const prb01RyumaFullArt036: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-036_p4.jpg",
     },
   ],
-  cardType: "character",
-  color: ["green"],
   rarity: "R",
   setId: "PRB01",
-  cost: 4,
-  power: 6000,
-  traits: ["Land of Wano Thriller Bark Pirates"],
-  attribute: "slash",
   artVariants: [
     {
       type: "other",
@@ -65,65 +60,5 @@ export const prb01RyumaFullArt036: CharacterCard = {
       imageId: "OP06-036_p4",
     },
   ],
-  effect:
-    "[On Play] / [On K.O.] K.O. up to 1 of your opponent's rested Characters with a cost of 4 or less.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "state",
-                  value: "rested",
-                },
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 4,
-                },
-              ],
-            },
-          },
-        ],
-      },
-      {
-        trigger: "onKo",
-        actions: [
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "state",
-                  value: "rested",
-                },
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 4,
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01RyumaFullArt036I18n,
 };

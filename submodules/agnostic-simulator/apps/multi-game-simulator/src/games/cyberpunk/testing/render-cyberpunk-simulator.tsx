@@ -65,7 +65,7 @@ export function renderCyberpunkSimulatorScenario({
 
 export function createTestingLibraryCyberpunkSimulatorPom(
   container: HTMLElement,
-): CyberpunkSimulatorPom {
+): CyberpunkSimulatorPom<WindowCyberpunkHarnessClient> {
   return new CyberpunkSimulatorPom(
     new TestingLibraryDomDriver(container),
     new WindowCyberpunkHarnessClient(),

@@ -2,6 +2,7 @@ import { IconSparkles } from "@tabler/icons-react";
 import { useEffect, type CSSProperties } from "react";
 import { getGameDefaultIndexPath, listIndexGames } from "../simulator/games";
 import { buildMountedHref } from "../routes/router-paths.ts";
+import classes from "./GameIndex.module.css";
 
 export interface GameIndexProps {
   onNavigate: (path: string) => void;
@@ -13,114 +14,144 @@ export default function GameIndex({ onNavigate }: GameIndexProps) {
   }, []);
 
   const games = listIndexGames();
+  const hubCount = games.length + 1;
+  const routeCount = games.length + 2;
 
   return (
-    <main className="mx-auto min-h-svh w-full max-w-[1200px] p-6 max-[900px]:p-4">
-      <header className="mb-10">
-        <p className="text-[12px] font-extrabold uppercase tracking-normal text-[var(--game-accent)]">
-          multi-game simulator
-        </p>
-        <h1 className="mt-2 text-4xl font-extrabold leading-[1.08] tracking-normal text-[var(--text)] max-[900px]:text-[28px]">
-          Fixture harness for humans and agents
-        </h1>
-        <p className="mt-3 max-w-[820px] text-base leading-relaxed text-[var(--muted)]">
-          One renderer links to visual fixture hubs for One Piece, Gundam, and Cyberpunk. Engines
-          stay outside this app; adapters own state projection and move conversion.
-        </p>
-      </header>
+    <main className={classes.page}>
+      <div className={classes.shell}>
+        <aside className={classes.masthead} aria-label="Harness summary">
+          <p className={classes.eyebrow}>Back office</p>
+          <h1 className={classes.title}>Simulator fixture router</h1>
+          <p className={classes.lead}>
+            Internal routes for renderer checks, board fixtures, and adapter validation.
+          </p>
 
-      <section
-        className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4"
-        aria-label="Game index"
-      >
-        <button
-          type="button"
-          className="group relative flex flex-col gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 text-left shadow-[var(--shadow)] transition-all hover:-translate-y-0.5 hover:border-[var(--border-strong)]"
-          style={
-            {
-              "--game-accent": "#0f8f83",
-              "--game-accent-soft": "#dff8f3",
-            } as CSSProperties
-          }
-          onClick={() => onNavigate(buildMountedHref("/animation-fixtures"))}
-        >
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-lg"
-            style={{ background: "#dff8f3", color: "#0f8f83" }}
-          >
-            <IconSparkles size={20} />
-          </div>
-          <div>
-            <h2 className="text-lg font-extrabold leading-tight text-[var(--text)]">
-              Animation fixtures
-            </h2>
-            <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">
-              Draw and zone-transfer motion for shared card and zone primitives.
-            </p>
-          </div>
-          <div className="mt-auto pt-2">
-            <span
-              className="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
-              style={{ background: "#dff8f3", color: "#0f8f83" }}
-            >
-              2 animation fixtures
+          <div className={classes.metaGrid} aria-label="Harness status">
+            <span className={classes.metaItem}>
+              <span className={classes.metaValue}>{hubCount}</span>
+              <span className={classes.metaLabel}>Hubs</span>
+            </span>
+            <span className={classes.metaItem}>
+              <span className={classes.metaValue}>{routeCount}</span>
+              <span className={classes.metaLabel}>Entrypoints</span>
+            </span>
+            <span className={classes.metaItem}>
+              <span className={classes.metaValue}>Local</span>
+              <span className={classes.metaLabel}>Runtime</span>
+            </span>
+            <span className={classes.metaItem}>
+              <span className={classes.metaValue}>Dev</span>
+              <span className={classes.metaLabel}>Access</span>
             </span>
           </div>
-        </button>
-        {games.map((game) => {
-          const href = getGameDefaultIndexPath(game.slug) ?? `/${game.slug}`;
-          return (
-            <button
-              key={game.slug}
-              type="button"
-              className="group relative flex flex-col gap-3 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 text-left shadow-[var(--shadow)] transition-all hover:-translate-y-0.5 hover:border-[var(--border-strong)]"
-              style={
-                {
-                  "--game-accent": game.accentColor,
-                  "--game-accent-soft": game.accentSoft,
-                } as CSSProperties
-              }
-              onClick={() => onNavigate(href)}
-            >
-              <div
-                className="flex h-10 w-10 items-center justify-center rounded-lg"
-                style={{ background: game.accentSoft, color: game.accentColor }}
+
+          <nav className={classes.rail} aria-label="Quick routes">
+            <p className={classes.railLabel}>Quick routes</p>
+            <ul className={classes.railList}>
+              <li>
+                <a className={classes.railLink} href="/animation-fixtures">
+                  <span>Animation</span>
+                  <span>/animation-fixtures</span>
+                </a>
+              </li>
+              {games.map((game) => {
+                const href = getGameDefaultIndexPath(game.slug) ?? `/${game.slug}`;
+                return (
+                  <li key={game.slug}>
+                    <a className={classes.railLink} href={href}>
+                      <span>{game.name}</span>
+                      <span>{href.replace("/simulator/tests", "")}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </aside>
+
+        <section className={classes.content} aria-label="Fixture hubs">
+          <div className={classes.toolbar}>
+            <h2 className={classes.toolbarTitle}>Fixture hubs</h2>
+            <span className={classes.toolbarHint}>
+              Open a hub, choose a state, inspect the board
+            </span>
+          </div>
+          <ul className={classes.hubList}>
+            <li className={classes.hubItem}>
+              <a
+                href={buildMountedHref("/animation-fixtures")}
+                className={classes.hubLink}
+                style={
+                  {
+                    "--row-accent": "oklch(0.48 0.095 180)",
+                    "--row-accent-soft": "oklch(0.95 0.038 177)",
+                  } as CSSProperties
+                }
+                onClick={(event) => {
+                  event.preventDefault();
+                  onNavigate(buildMountedHref("/animation-fixtures"));
+                }}
               >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                  <line x1="8" y1="21" x2="16" y2="21" />
-                  <line x1="12" y1="17" x2="12" y2="21" />
-                </svg>
-              </div>
-              <div>
-                <h2 className="text-lg font-extrabold leading-tight text-[var(--text)]">
-                  {game.name}
-                </h2>
-                <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">
-                  {game.description}
-                </p>
-              </div>
-              <div className="mt-auto pt-2">
-                <span
-                  className="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
-                  style={{ background: game.accentSoft, color: game.accentColor }}
-                >
-                  {game.badgeLabel}
+                <span className={classes.hubIcon}>
+                  <IconSparkles size={19} />
                 </span>
-              </div>
-            </button>
-          );
-        })}
-      </section>
+                <span className={classes.hubText}>
+                  <span className={classes.hubName}>Animation fixtures</span>
+                  <span className={classes.hubDescription}>
+                    Draw and zone-transfer motion for shared card and zone primitives.
+                  </span>
+                </span>
+                <span className={classes.hubBadge}>2 animation fixtures</span>
+              </a>
+            </li>
+            {games.map((game) => {
+              const href = getGameDefaultIndexPath(game.slug) ?? `/${game.slug}`;
+              return (
+                <li key={game.slug} className={classes.hubItem}>
+                  <a
+                    href={href}
+                    className={classes.hubLink}
+                    style={
+                      {
+                        "--row-accent": game.accentColor,
+                        "--row-accent-soft": game.accentSoft,
+                      } as CSSProperties
+                    }
+                    onClick={(event) => {
+                      event.preventDefault();
+                      onNavigate(href);
+                    }}
+                  >
+                    <span className={classes.hubIcon}>
+                      <svg
+                        width="19"
+                        height="19"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                        <line x1="8" y1="21" x2="16" y2="21" />
+                        <line x1="12" y1="17" x2="12" y2="21" />
+                      </svg>
+                    </span>
+                    <span className={classes.hubText}>
+                      <span className={classes.hubName}>{game.name}</span>
+                      <span className={classes.hubDescription}>{game.description}</span>
+                    </span>
+                    <span className={classes.hubBadge}>{game.badgeLabel}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      </div>
     </main>
   );
 }

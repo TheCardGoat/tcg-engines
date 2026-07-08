@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op03Kalifa060 } from "../../OP03/characters/060-kalifa.ts";
 import { prb01KalifaFullArt060I18n } from "./060-kalifa-full-art.i18n.ts";
 
 export const prb01KalifaFullArt060: CharacterCard = {
-  id: "OP03-060",
-  canonicalId: "OP03-060",
+  ...op03Kalifa060,
+  id: "OP03-060_p3",
   slug: "kalifa-full-art",
   name: "Kalifa (Full Art)",
   printings: [
     {
-      id: "OP03-060",
-      artId: "OP03-060",
+      id: "OP03-060_p3",
+      artId: "OP03-060_p3",
       setCode: "PRB01",
       collectorNumber: "060",
       rarity: "UC",
@@ -32,15 +33,8 @@ export const prb01KalifaFullArt060: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-060_p2.jpg",
     },
   ],
-  cardType: "character",
-  color: ["purple"],
   rarity: "UC",
   setId: "PRB01",
-  cost: 4,
-  power: 4000,
-  counter: 2000,
-  traits: ["Galley-La Company Water Seven"],
-  attribute: "wisdom",
   artVariants: [
     {
       type: "other",
@@ -53,32 +47,5 @@ export const prb01KalifaFullArt060: CharacterCard = {
       imageId: "OP03-060_p2",
     },
   ],
-  effect:
-    "[When Attacking] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Draw 2 cards and trash 1 card from your hand.",
-  effects: {
-    effects: [
-      {
-        trigger: "whenAttacking",
-        costs: [
-          {
-            cost: "returnDon",
-            amount: 1,
-          },
-        ],
-        actions: [
-          {
-            action: "draw",
-            player: "self",
-            amount: 2,
-          },
-          {
-            action: "trashFromHand",
-            player: "self",
-            amount: 1,
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01KalifaFullArt060I18n,
 };

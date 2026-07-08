@@ -1,93 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op02EdwardNewgate004 } from "../../OP02/characters/004-edward-newgate.ts";
 import { op04EdwardNewgateSp004I18n } from "./004-edward-newgate-sp.i18n.ts";
 
 export const op04EdwardNewgateSp004: CharacterCard = {
-  id: "OP02-004",
-  canonicalId: "OP02-004",
+  ...op02EdwardNewgate004,
+  id: "OP02-004_p2",
   slug: "edward-newgate-sp/op02-004",
   name: "Edward.Newgate (SP)",
   printings: [
     {
-      id: "OP02-004",
-      artId: "OP02-004",
+      id: "OP02-004_p2",
+      artId: "OP02-004_p2",
       setCode: "OP04",
       collectorNumber: "004",
       rarity: "SR",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-004_p2.jpg",
     },
   ],
-  cardType: "character",
-  color: ["red"],
   rarity: "SR",
   setId: "OP04",
-  cost: 9,
-  power: 10000,
-  traits: ["The Four Emperors Whitebeard Pirates"],
-  attribute: "special",
-  effect:
-    "[On Play] Up to 1 of your Leader gains +2000 power until the start of your next turn. Then, you cannot add Life cards to your hand using your own effects during this turn. [DON!! x2] [When Attacking] K.O. up to 1 of your opponent's Characters with 3000 power or less.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "modifyPower",
-            target: {
-              player: "self",
-              zones: ["leader"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-            value: 2000,
-            duration: "untilStartOfNextTurn",
-          },
-          {
-            action: "cannotBeRemoved",
-            target: {
-              player: "self",
-              zones: ["life"],
-              count: {
-                amount: "all",
-              },
-            },
-            duration: "thisTurn",
-            bySource: "ownEffect",
-          },
-        ],
-      },
-      {
-        trigger: "whenAttacking",
-        conditions: [
-          {
-            condition: "donAttached",
-            amount: 2,
-          },
-        ],
-        actions: [
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "power",
-                  comparison: "lte",
-                  value: 3000,
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op04EdwardNewgateSp004I18n,
 };

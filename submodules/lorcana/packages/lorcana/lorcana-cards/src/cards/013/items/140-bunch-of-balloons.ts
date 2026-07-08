@@ -29,7 +29,7 @@ export const bunchOfBalloons: ItemCard = {
     {
       title: "Float Away",
       description:
-        "When you play this item, choose a location of yours. While this item is in play, that location gains <Evasive>. (Only characters with Evasive can challenge it.)",
+        "When you play this item, choose a location of yours. While this item is in play, that location gains Evasive. (Only characters with Evasive can challenge it.)",
     },
     {
       title: "Out of Sight",

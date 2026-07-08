@@ -40,6 +40,7 @@
     "@mantine/core": "9.0.0",
     "@mantine/hooks": "9.0.0",
     "@tabler/icons-react": "catalog:",
+    "@tcg/protocol": "link:../protocol",
     "@tcg/simulator-contract": "link:../simulator-contract",
     "@tcg/simulator-runtime": "link:../simulator-runtime",
     "canvas-confetti": "^1.9.4",

@@ -7,6 +7,7 @@ import { BoardSharedPage } from "./BoardShared.page";
 import { loadCyberpunkReplay } from "../replay/loadReplay";
 import type { CyberpunkReplayOrchestrator } from "../replay/replayOrchestrator";
 import classes from "./Replay.module.css";
+import { cyberpunkSimulatorPath } from "./simulatorPaths";
 
 type LoadState =
   | { status: "loading" }
@@ -62,7 +63,10 @@ export function ReplayForkPage() {
         <section className={classes.errorPanel}>
           <h1>Fork unavailable</h1>
           <p>{loadState.message}</p>
-          <Link className={classes.backLink} to={`/replay/${encodeURIComponent(gameId)}`}>
+          <Link
+            className={classes.backLink}
+            to={cyberpunkSimulatorPath(`/replay/${encodeURIComponent(gameId)}`)}
+          >
             Back to replay
           </Link>
         </section>
@@ -80,7 +84,9 @@ export function ReplayForkPage() {
           <p>Cannot fork from a terminal game state.</p>
           <Link
             className={classes.backLink}
-            to={`/replay/${encodeURIComponent(gameId)}?step=${orchestrator.currentStep}`}
+            to={cyberpunkSimulatorPath(
+              `/replay/${encodeURIComponent(gameId)}?step=${orchestrator.currentStep}`,
+            )}
           >
             Back to replay
           </Link>
@@ -110,7 +116,9 @@ export function ReplayForkPage() {
         </span>
         <Link
           className={classes.backLink}
-          to={`/replay/${encodeURIComponent(gameId)}?step=${orchestrator.currentStep}`}
+          to={cyberpunkSimulatorPath(
+            `/replay/${encodeURIComponent(gameId)}?step=${orchestrator.currentStep}`,
+          )}
         >
           Back
         </Link>

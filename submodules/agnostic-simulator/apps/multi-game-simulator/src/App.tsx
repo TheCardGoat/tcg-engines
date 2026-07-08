@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { GameSlug } from "@tcg/simulator-contract";
-import { findMountedSimulatorRoute } from "./simulator/mountedSimulators";
 import { getGameDefaultIndexPath, isGameSlug } from "./simulator/games";
 import { normalizeRouterBasename } from "./routes/router-paths.ts";
 import GameIndex from "./components/GameIndex";
-import { MountedBrowserSimulator } from "./components/MountedBrowserSimulator";
 import AnimationFixturesPage from "./components/AnimationFixturesPage";
 
 function getPath(): string {
@@ -81,8 +79,6 @@ function GameIndexRedirect({
 export default function App({ initialPath }: AppProps) {
   const [path, setPath] = useState(() => initialPath ?? getPath());
 
-  const mountedSimulatorRoute = useMemo(() => findMountedSimulatorRoute(path), [path]);
-
   const gameSlug = useMemo(() => parseGameSlug(path), [path]);
 
   const navigate = useCallback((to: string, options: NavigateOptions = {}) => {
@@ -116,16 +112,6 @@ export default function App({ initialPath }: AppProps) {
 
   if (isAnimationFixturePath(path)) {
     return <AnimationFixturesPage onNavigate={navigate} />;
-  }
-
-  if (mountedSimulatorRoute) {
-    return (
-      <MountedBrowserSimulator
-        basename={mountedSimulatorRoute.basename}
-        routes={mountedSimulatorRoute.routes}
-        Providers={mountedSimulatorRoute.Providers}
-      />
-    );
   }
 
   if (gameSlug) {

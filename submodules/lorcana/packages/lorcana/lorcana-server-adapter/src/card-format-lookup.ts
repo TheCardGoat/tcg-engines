@@ -1,5 +1,5 @@
 import { getAllCardsByIdSync } from "@tcg/lorcana-cards/cards/sync";
-import { cardsAuxKv, printings, sets } from "@tcg/lorcana-cards/data";
+import { cardsAuxKv, printings, resolveCurrentLorcanaShortId, sets } from "@tcg/lorcana-cards/data";
 import type { CardFormatData, LorcanaSetCode } from "@tcg/lorcana-types";
 
 const setCodeBySetId: Record<string, string> = {};
@@ -65,7 +65,8 @@ export function getLorcanaCardFormatLookup(): (shortId: string) => CardFormatDat
   }
 
   lookupCache = (shortId: string): CardFormatData | undefined => {
-    const card = cardsById[shortId];
+    const currentShortId = resolveCurrentLorcanaShortId(shortId);
+    const card = cardsById[currentShortId];
     if (!card) return undefined;
 
     const kvPrintingIds = cardsAuxKv.printingIdsByCanonicalId[card.canonicalId] ?? [];
@@ -83,7 +84,7 @@ export function getLorcanaCardFormatLookup(): (shortId: string) => CardFormatDat
     const fn = getCardFullName(card).toLowerCase();
     const siblings = shortIdsByFullName[fn] ?? [];
     for (const sibId of siblings) {
-      if (sibId === shortId) continue;
+      if (sibId === currentShortId) continue;
       const sibCard = cardsById[sibId];
       if (!sibCard) continue;
       const sibPrintings = cardsAuxKv.printingIdsByCanonicalId[sibCard.canonicalId] ?? [];

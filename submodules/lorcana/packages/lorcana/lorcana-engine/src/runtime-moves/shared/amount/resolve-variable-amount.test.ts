@@ -13,6 +13,7 @@ type TestCardDefinition = {
   cost?: number;
   classifications?: string[];
   name?: string;
+  inkType?: string[];
 };
 
 const PLAYER_ONE = "player-one" as PlayerId;
@@ -207,6 +208,39 @@ describe("resolveVariableAmount", () => {
     });
 
     expect(resolved).toEqual({ mode: "aggregate", value: 2 });
+  });
+
+  it("resolves distinct character ink types from your characters in play", () => {
+    const amber = "amber" as CardInstanceId;
+    const rubySteel = "ruby-steel" as CardInstanceId;
+    const item = "item" as CardInstanceId;
+    const opposingAmber = "opposing-amber" as CardInstanceId;
+
+    const ctx = createTestContext({
+      definitions: {
+        [amber]: { id: "amber", cardType: "character", inkType: ["amber"] },
+        [rubySteel]: { id: "ruby-steel", cardType: "character", inkType: ["ruby", "steel"] },
+        [item]: { id: "item", cardType: "item", inkType: ["emerald"] },
+        [opposingAmber]: { id: "opposing-amber", cardType: "character", inkType: ["amber"] },
+      },
+      zoneCards: {
+        [`play:${PLAYER_ONE}`]: [amber, rubySteel, item],
+        [`play:${PLAYER_TWO}`]: [opposingAmber],
+      },
+    });
+
+    const amount: VariableAmount = {
+      type: "count",
+      what: "distinct-character-ink-types",
+      controller: "you",
+    };
+
+    const resolved = resolveVariableAmount(amount, {
+      ctx,
+      controllerId: PLAYER_ONE,
+    });
+
+    expect(resolved).toEqual({ mode: "aggregate", value: 3 });
   });
 
   it("supports classification-character-count with excludeSelf", () => {

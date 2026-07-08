@@ -35,7 +35,7 @@ export const booHumanChild: CharacterCard = {
   text: [
     {
       title: "MAKING MEMORIES",
-      description: "While you have 5 or more cards in your inkwell, this character gets +2 {}.",
+      description: "While you have 5 or more cards in your inkwell, this character gets +2 {L}.",
     },
   ],
   classifications: ["Storyborn", "Hero"],

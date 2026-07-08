@@ -31,7 +31,13 @@ export const sunYeeRedPandaSpirit: CharacterCard = {
   willpower: 5,
   lore: 2,
   inkable: true,
-  text: "<Temporary Red Panda Shift> 2 {I} (You may pay 2 {I} to play this on top of one of your Red Panda characters. At the end of your turn, remove all damage from this character and return only this card to your hand.)",
+  text: [
+    {
+      title: "Temporary Red Panda Shift 2 {I}",
+      description:
+        "(You may pay 2 {I} to play this on top of one of your Red Panda characters. At the end of your turn, remove all damage from this character and return only this card to your hand.)",
+    },
+  ],
   classifications: ["Storyborn", "Red Panda"],
   abilities: [temporaryShift("Red Panda", 2, "classification")],
   i18n: sunYeeRedPandaSpiritI18n,

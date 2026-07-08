@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op10BasilHawkins109 } from "../../OP10/characters/109-basil-hawkins.ts";
 import { prb02BasilHawkinsOp10109Reprint109I18n } from "./109-basil-hawkins-op10-109-reprint.i18n.ts";
 
 export const prb02BasilHawkinsOp10109Reprint109: CharacterCard = {
-  id: "OP10-109",
-  canonicalId: "OP10-109",
+  ...op10BasilHawkins109,
+  id: "OP10-109_r1",
   slug: "basil-hawkins-op10-109-reprint",
   name: "Basil Hawkins - OP10-109 (Reprint)",
   printings: [
     {
-      id: "OP10-109",
-      artId: "OP10-109",
+      id: "OP10-109_r1",
+      artId: "OP10-109_r1",
       setCode: "PRB02",
       collectorNumber: "109",
       rarity: "R",
@@ -24,15 +25,8 @@ export const prb02BasilHawkinsOp10109Reprint109: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP10-109_p1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["yellow"],
   rarity: "R",
   setId: "PRB02",
-  cost: 4,
-  power: 5000,
-  counter: 1000,
-  traits: ["Hawkins Pirates Supernovas"],
-  attribute: "slash",
   artVariants: [
     {
       type: "alternate-art",
@@ -40,40 +34,5 @@ export const prb02BasilHawkinsOp10109Reprint109: CharacterCard = {
       imageId: "OP10-109_p1",
     },
   ],
-  effect:
-    '[On K.O.] Trash up to 1 card from the top of your opponent\'s Life cards.[Trigger] Draw 2 cards and trash 1 card from your hand.Disclaimer: This card was reprinted from the original set with changes to the copyright information (Note: the original print did not include "EN" at the end of the copyright).',
-  effects: {
-    effects: [
-      {
-        trigger: "onKo",
-        actions: [
-          {
-            action: "removeFromLife",
-            player: "opponent",
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            destination: "trash",
-          },
-        ],
-      },
-      {
-        trigger: "trigger",
-        actions: [
-          {
-            action: "draw",
-            player: "self",
-            amount: 2,
-          },
-          {
-            action: "trashFromHand",
-            player: "self",
-            amount: 1,
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb02BasilHawkinsOp10109Reprint109I18n,
 };

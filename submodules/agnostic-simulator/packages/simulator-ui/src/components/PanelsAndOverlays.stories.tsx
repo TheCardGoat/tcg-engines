@@ -302,7 +302,7 @@ export const TargetingOverlayStates: Story = {
           <CardFace entity={entities[0]!} />
           <CardFace entity={entities[1]!} />
           <div
-            data-zone-id="discard"
+            data-sim-zone-id="discard"
             className="rounded-lg border border-[var(--board-border)] p-8 text-[var(--board-text)]"
           >
             Discard zone

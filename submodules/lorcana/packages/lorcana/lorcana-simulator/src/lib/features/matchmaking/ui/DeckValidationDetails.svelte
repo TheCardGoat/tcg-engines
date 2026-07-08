@@ -128,6 +128,7 @@ const failedRules = $derived(
 
 const failureCount = $derived(failedRules.length);
 const validationSummary = $derived(getValidationSummary(effectiveResult, formatLabel));
+const AMBIGUOUS_LEGACY_DECK_MESSAGE_START = "This deck was saved with outdated card IDs";
 
 function isMissingMessageFallback(message: string | undefined): boolean {
 	return message != null && message.startsWith("[") && message.endsWith("]");
@@ -138,6 +139,10 @@ function assertNever(value: never): never {
 }
 
 function getRuleTitle(rule: FormatRuleResult): string {
+	if (isAmbiguousLegacyDeckRule(rule)) {
+		return "Deck needs to be recreated";
+	}
+
 	switch (rule.kind) {
 		case "DECK_SIZE":
 			return "Deck size";
@@ -158,6 +163,10 @@ function getRuleTitle(rule: FormatRuleResult): string {
 }
 
 function getRuleDescription(rule: FormatRuleResult): string {
+	if (isAmbiguousLegacyDeckRule(rule)) {
+		return "This deck was saved before a card ID repair and cannot be matched safely to the correct cards. Please recreate or re-import the deck from your deck list before joining matchmaking.";
+	}
+
 	const details = rule.details;
 	switch (rule.kind) {
 		case "DECK_SIZE":
@@ -188,6 +197,13 @@ function getRuleDescription(rule: FormatRuleResult): string {
 
 	const exhaustive: never = rule.kind;
 	return assertNever(exhaustive);
+}
+
+function isAmbiguousLegacyDeckRule(rule: FormatRuleResult): boolean {
+	return (
+		rule.kind === "CARD_SET" &&
+		rule.message.startsWith(AMBIGUOUS_LEGACY_DECK_MESSAGE_START)
+	);
 }
 
 function getValidationSummary(

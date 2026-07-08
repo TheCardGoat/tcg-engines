@@ -3,9 +3,9 @@
 ## TL;DR
 
 Playwright + POM-based end-to-end tests for the Cyberpunk simulator. Every
-action is driven through the rendered `InteractionPanel`; the dev-only engine
-bridge (`window.__cyberpunkEngine`) is used only for assertions, the dispatch
-spy, and test seat control.
+action is driven through rendered UI controls, and assertions read visible DOM
+state. Direct Cyberpunk engine state belongs in engine or jsdom integration
+tests, not Playwright.
 
 ## Quickstart
 
@@ -15,13 +15,13 @@ pnpm e2e:ui          # Playwright UI mode (recommended for debugging)
 pnpm e2e:install     # install the chromium browser (one-time per machine)
 ```
 
-The Playwright dev server boots `vp dev --port 5173` automatically (see
+The Playwright dev server boots `vp dev --port 5193` automatically (see
 [../playwright.config.ts](../playwright.config.ts)). On macOS, browser
 binaries are cached at `~/Library/Caches/ms-playwright`.
 
-The harness must run against `vp dev`, never `vp preview` — the `/cyberpunk/simulator/tests/*`
-fixture routes and the `window.__cyberpunkEngine` bridge are gated behind
-`import.meta.env.DEV`.
+The harness must run against `vp dev`, never `vp preview`. The
+`/cyberpunk/simulator/tests/*` fixture routes are development-only and should be
+used only to render visible UI states.
 
 ## Architecture
 
@@ -35,10 +35,13 @@ e2e/
     two-turns.spec.ts                     # full SETUP → MULLIGAN → 4 half-turns flow
     retail-card-catalog.spec.ts           # static render of every official retail card
     main-routes.spec.ts                   # route / navigation smoke tests
-    mobile-prompt.spec.ts                 # mobile PromptBanner rendering
     ...
   tsconfig.json                           # scoped to e2e/**/*.ts
 ```
+
+This harness intentionally excludes animation, viewport, hover, and other
+visual-only Playwright specs. Cover animation plan mapping, resolver behavior,
+and rendered semantic state in unit or jsdom tests.
 
 The entry point for every test is `createPlaywrightCyberpunkSimulatorPom`:
 
@@ -59,7 +62,7 @@ The factory:
 
 1. Navigates to `/cyberpunk/simulator/tests/${scenarioId}?ai=off&auto-advance-attack=off`.
 2. Builds a `CyberpunkSimulatorPom` backed by `PlaywrightDomDriver` and `PlaywrightCyberpunkHarnessClient`.
-3. Waits for the simulator bridge and asserts the structural state.
+3. Waits for rendered board state and asserts the structural DOM.
 
 ## Action path: InteractionPanel only
 
@@ -73,48 +76,16 @@ etc., all click elements inside the shared `InteractionPanel`. The underlying
 - `data-testid="choice-chip:${optionId}"` for option chips,
 - `data-testid="interaction-submit:${interactionId}"` for the submit button.
 
-The engine bridge is **not** used to perform moves. It remains available for:
+The engine bridge is not part of the Playwright contract. Do not use
+`page.evaluate` to inspect Cyberpunk engine state, dispatch engine moves, or
+read private setup data.
 
-- read-only engine state queries (`getPhase`, `getCardsInZone`, ...),
-- the dispatch spy (`getDispatchLog`, `clearDispatchLog`, `expectLastDispatch`),
-- flipping the human seat (`getHumanSide`, `setHumanSide`).
+## Visible Assertions
 
-## Two layers, every assertion
-
-The POM's `expect*` helpers assert the engine value first, then assert the
-rendered DOM matches via Playwright's auto-retrying matchers. A divergence
-between the two surfaces fails the test.
-
-```ts
-// expectHandSize from CyberpunkSimulatorPom:
-async expectHandSize(player: PlayerId, expected: number): Promise<void> {
-  const handSize = await this.getHandSize(player);
-  if (handSize !== expected) {
-    throw new Error(`Expected hand size ${expected}, found ${handSize}.`);
-  }
-  await expectDomAttribute(this.boardForPlayer(player).handZone(), "data-count", String(expected));
-  // ... visible card count assertion
-}
-```
-
-Use the layered helpers as your default. Drop down to one layer only when the
-other has no representation.
-
-## The dispatch spy
-
-Every action that flows through `EngineProvider.dispatch` is recorded by the
-bridge. Specs verify a UI click translated to the right engine call via
-`expectLastDispatch`:
-
-```ts
-await pom.clearDispatchLog();
-await pom.mulligan(first);
-await pom.expectLastDispatch({ type: "mulligan", as: first });
-```
-
-The recorder is gated behind `import.meta.env.DEV` (see
-`apps/multi-game-simulator/src/games/cyberpunk/engine/EngineProvider.tsx`) —
-production builds don't ship the spy or the bridge.
+The POM's `expect*` helpers should assert rendered DOM state through Playwright
+auto-retrying matchers. If an assertion requires hidden cards, private prompts,
+or raw engine fields, move it to `submodules/cyberpunk` engine tests or a jsdom
+integration test.
 
 ## POM reference
 

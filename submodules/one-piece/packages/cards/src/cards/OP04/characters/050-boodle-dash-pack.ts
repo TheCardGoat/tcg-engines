@@ -1,14 +1,15 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op03Boodle050 } from "../../OP03/characters/050-boodle.ts";
 import { op04BoodleDashPack050I18n } from "./050-boodle-dash-pack.i18n.ts";
 
 export const op04BoodleDashPack050: CharacterCard = {
-  id: "OP03-050",
-  canonicalId: "OP03-050",
+  ...op03Boodle050,
+  id: "OP03-050_OP04",
   slug: "boodle-dash-pack",
   name: "Boodle (Dash Pack)",
   printings: [
     {
-      id: "OP03-050",
+      id: "OP03-050_OP04",
       artId: "OP03-050",
       setCode: "OP04",
       collectorNumber: "050",
@@ -16,31 +17,8 @@ export const op04BoodleDashPack050: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-050.jpg",
     },
   ],
-  cardType: "character",
-  color: ["blue"],
   rarity: "UC",
   setId: "OP04",
-  cost: 2,
-  power: 0,
-  counter: 1000,
-  traits: ["East Blue"],
-  attribute: "wisdom",
-  effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On K.O.] You may trash 1 card from the top of your deck.",
-  effects: {
-    keywords: ["blocker"],
-    effects: [
-      {
-        trigger: "onKo",
-        actions: [
-          {
-            action: "trashFromDeck",
-            player: "self",
-            amount: 1,
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op04BoodleDashPack050I18n,
 };

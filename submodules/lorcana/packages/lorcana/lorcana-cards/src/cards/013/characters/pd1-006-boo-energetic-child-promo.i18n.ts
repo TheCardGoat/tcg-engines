@@ -1,6 +1,60 @@
 import type { I18nProperties, Languages } from "@tcg/lorcana-types";
-import { booEnergeticChildI18n } from "./127-boo-energetic-child.i18n";
 
 export const booEnergeticChildPD1PromoI18n: Record<Languages, I18nProperties> = {
-  ...booEnergeticChildI18n,
+  en: {
+    name: "Boo",
+    version: "Energetic Child",
+    text: [
+      {
+        title: "Rush",
+      },
+      {
+        title: "KID-TASTROPHE!",
+        description:
+          "Whenever this character challenges another character with 3 {S} or less, banish that character. (No damage is dealt in that challenge.)",
+      },
+    ],
+  },
+  de: {
+    name: "Buh",
+    version: "Energiegeladenes Kind",
+    text: [
+      {
+        title: "<Rasant>",
+      },
+      {
+        title: "Kind-tastrophe",
+        description:
+          "Jedes Mal, wenn dieser Charakter einen anderen Charakter mit 3 oder weniger {S} herausfordert, verbanne jenen Charakter. (Bevor der Schaden durch die Herausforderung berechnet wird.)",
+      },
+    ],
+  },
+  fr: {
+    name: "Bouh",
+    version: "Enfant énergique",
+    text: [
+      {
+        title: "<Charge>",
+      },
+      {
+        title: "Kid-Tastrophe!",
+        description:
+          "Chaque fois que ce personnage défie un autre personnage ayant 3 {S} ou moins, bannissez le personnage défié. (Aucun dommage n'est infligé lors de ce défi.)",
+      },
+    ],
+  },
+  it: {
+    name: "Boo",
+    version: "Energetic Child",
+    text: [
+      {
+        title: "<Rush> (This character can challenge the turn they're played.)",
+      },
+      {
+        title: "Kid-Tastrophe!",
+        description:
+          "Whenever this character challenges another character with 3 {S} or less, banish that character. (No damage is dealt in that challenge.)",
+      },
+    ],
+  },
 };

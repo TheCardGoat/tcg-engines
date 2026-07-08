@@ -1,73 +1,24 @@
 import type { LeaderCard } from "@tcg/op-types";
+import { op08King057 } from "../../OP08/leaders/057-king.ts";
 import { eb02King057I18n } from "./057-king.i18n.ts";
 
 export const eb02King057: LeaderCard = {
-  id: "OP08-057",
-  canonicalId: "OP08-057",
-  slug: "king/op08-057",
+  ...op08King057,
+  id: "OP08-057_c2YBDAN",
+  slug: "king/op08-057-c2ybdan",
   name: "King",
   printings: [
     {
-      id: "OP08-057",
-      artId: "OP08-057",
+      id: "OP08-057_c2YBDAN",
+      artId: "OP08-057_c2YBDAN",
       setCode: "EB02",
       collectorNumber: "057",
       rarity: "L",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP08-057_c2YBDAN.jpg",
     },
   ],
-  cardType: "leader",
-  color: ["purple", "black"],
   rarity: "L",
   setId: "EB02",
-  power: 5000,
-  life: 4,
-  traits: ["Animal Kingdom Pirates"],
-  attribute: "special",
-  effect:
-    "[Activate: Main] [Once Per Turn] DON!! 2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Choose one:\n• If you have 5 or less cards in your hand, draw 1 card.\n• Give up to 1 of your opponent's Characters 2 cost during this turn.",
-  effects: {
-    effects: [
-      {
-        trigger: "activateMain",
-        costs: [
-          {
-            cost: "returnDon",
-            amount: 2,
-          },
-        ],
-        actions: [
-          {
-            action: "choice",
-            options: [
-              [
-                {
-                  action: "draw",
-                  player: "self",
-                  amount: 1,
-                },
-              ],
-              [
-                {
-                  action: "modifyCost",
-                  target: {
-                    player: "opponent",
-                    zones: ["character"],
-                    count: {
-                      amount: 1,
-                      upTo: true,
-                    },
-                  },
-                  value: 2,
-                  duration: "thisTurn",
-                },
-              ],
-            ],
-          },
-        ],
-        oncePerTurn: true,
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: eb02King057I18n,
 };

@@ -157,6 +157,37 @@ describe("DeckValidationDetails", () => {
     expect(body).toContain("Cards not legal in Infinity: Test Card.");
   });
 
+  it("shows a player-facing recreate message for ambiguous legacy deck ids", () => {
+    const validation: DeckFormatResult = {
+      formatId: "core-constructed",
+      valid: false,
+      rules: [
+        {
+          kind: "CARD_SET",
+          passed: false,
+          message:
+            "This deck was saved with outdated card IDs that can no longer be safely matched to the correct cards. Please recreate or re-import this deck before joining matchmaking.",
+        },
+      ],
+    };
+
+    const { body } = render(DeckValidationDetails, {
+      props: {
+        deck,
+        formatId: "core-constructed",
+        initialResult: validation,
+        initialCatalog: {},
+      },
+    });
+
+    expect(body).toContain("Deck needs to be recreated");
+    expect(body).toContain(
+      "Please recreate or re-import the deck from your deck list before joining matchmaking.",
+    );
+    expect(body).not.toContain("Ambiguous legacy card IDs");
+    expect(body).not.toContain("hab");
+  });
+
   it("renders readable text for every deck validation invalidation kind", () => {
     const validation: DeckFormatResult = {
       formatId: "attack-of-the-vine",

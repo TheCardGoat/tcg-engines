@@ -7,17 +7,12 @@
  * Fonts
  *
  * Chrome fonts (Orbitron / Rajdhani / Share Tech Mono) come from Google Fonts
- * via <link> in index.html. The local fonts/ folder keeps card-face families
- * (Bogle, Brandon Text, Bystander). Only `bbh-sans-bogle.woff2` currently has
- * real bytes; the rest are 0-byte placeholders that will start working the
- * moment you drop real woff2s on top of them — no code changes needed.
+ * via <link> in index.html. The local fonts/ folder only ships real bytes.
  * -------------------------------------------------------------------------- */
 
 @font-face {
   font-family: "Bogle";
-  src:
-    url("./fonts/bogle.woff2") format("woff2"),
-    url("./fonts/bbh-sans-bogle.woff2") format("woff2");
+  src: url("./fonts/bbh-sans-bogle.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -27,41 +22,6 @@
   src: url("./fonts/bbh-sans-bogle.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "The Bystander Collection Sans Medium";
-  src: url("./fonts/the-bystander-collection-sans-medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Brandon Text Condensed Bold";
-  src: url("./fonts/brandon-text-condensed-bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Brandon Text Condensed Black";
-  src: url("./fonts/brandon-text-condensed-black.woff2") format("woff2");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Brandon Text Condensed Black Italic";
-  src: url("./fonts/brandon-text-condensed-black-italic.woff2") format("woff2");
-  font-weight: 900;
-  font-style: italic;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Brandon Text Condensed Medium Italic";
-  src: url("./fonts/brandon-text-condensed-medium-italic.woff2") format("woff2");
-  font-weight: 500;
-  font-style: italic;
   font-display: swap;
 }
 
@@ -346,23 +306,27 @@ body.gundam-simulator-active {
   color: var(--color-hud-accent);
 }
 
-/* Card-face helpers (Lorcana-licensed fonts, reserved for card anatomy). */
+/* Card-face helpers. */
 .card-name {
-  font-family: "The Bystander Collection Sans Medium", "Bogle", sans-serif;
+  font-family: "Bogle", var(--font-body);
 }
 .card-version {
-  font-family: "Brandon Text Condensed Bold", "Bogle", sans-serif;
+  font-family: "Bogle", var(--font-body);
+  font-weight: 700;
 }
 .card-types {
-  font-family: "Brandon Text Condensed Black Italic", "Bogle", sans-serif;
+  font-family: "Bogle", var(--font-body);
+  font-weight: 900;
   font-style: italic;
 }
 .kw-title {
-  font-family: "Brandon Text Condensed Black", "Bogle", sans-serif;
+  font-family: "Bogle", var(--font-body);
+  font-weight: 900;
   text-transform: uppercase;
 }
 .kw-reminder {
-  font-family: "Brandon Text Condensed Medium Italic", "Bogle", sans-serif;
+  font-family: "Bogle", var(--font-body);
+  font-weight: 500;
   font-style: italic;
 }
 
@@ -850,9 +814,8 @@ body.gundam-simulator-active {
 
 /* =============================================================================
  * Reduced motion — disables all CSS animations and transitions for users who
- * opt out at the OS level. JS-driven animations (the attack-arrow dashed
- * `<animate>` in `AttackTargetingOverlay.tsx`) are gated separately via the
- * `usePrefersReducedMotion` hook.
+ * opt out at the OS level. JS-driven animations should be gated separately
+ * via `usePrefersReducedMotion`.
  * ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   *,

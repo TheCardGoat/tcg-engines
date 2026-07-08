@@ -37,10 +37,10 @@ export const mickeyMousePlayfulSorcererD23: CharacterCard = {
   },
   text: [
     {
-      title: "<Shift> 3",
+      title: "Shift 3",
     },
     {
-      title: "<Resist> +1",
+      title: "Resist +1",
     },
     {
       title: "Sweep Away",

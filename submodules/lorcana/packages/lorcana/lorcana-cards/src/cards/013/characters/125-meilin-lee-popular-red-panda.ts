@@ -1,34 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { temporaryShift } from "../../../helpers/abilities/shift";
 import { meilinLeePopularRedPandaI18n } from "./125-meilin-lee-popular-red-panda.i18n";
 
-export const meilinLeePopularRedPandaAbilities: CharacterCard["abilities"] = [
-  temporaryShift("Meilin Lee", 3),
-  {
-    type: "triggered",
-    name: "KARAOKE QUEEN",
-    text: "KARAOKE QUEEN Once during your turn, whenever this character sings a song, gain 3 lore.",
-    trigger: {
-      event: "sing",
-      on: "SELF",
-      timing: "whenever",
-      restrictions: [
-        {
-          type: "during-turn",
-          whose: "your",
-        },
-        {
-          type: "once-per-turn",
-        },
-      ],
-    },
-    effect: {
-      type: "gain-lore",
-      amount: 3,
-      target: "CONTROLLER",
-    },
-  },
-];
+import { temporaryShift } from "../../../helpers/abilities/shift";
 
 export const meilinLeePopularRedPanda: CharacterCard = {
   id: "KWX",

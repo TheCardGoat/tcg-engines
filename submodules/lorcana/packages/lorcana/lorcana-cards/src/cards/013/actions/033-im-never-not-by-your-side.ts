@@ -32,8 +32,9 @@ export const imNeverNotByYourSide: ActionCard = {
   },
   text: [
     {
-      title:
-        "<Sing Together> 5 (Any number of your or your teammates' characters with total cost 5 or more may {E} to sing this song for free.)",
+      title: "Sing Together 5",
+      description:
+        "(Any number of your or your teammates' characters with total cost 5 or more may {E} to sing this song for free.)",
     },
     {
       title:

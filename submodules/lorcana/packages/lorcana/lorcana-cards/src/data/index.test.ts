@@ -5,7 +5,10 @@ import {
   canonicalCardsByPrintingId,
   getCardForPrinting,
   getLocalizedCardSync,
+  getLorcanaShortIdResolution,
   printings,
+  resolveCurrentLorcanaShortId,
+  resolveLorcanaStableIdentity,
 } from "./index";
 
 describe("getLocalizedCardSync", () => {
@@ -53,6 +56,33 @@ describe("getLocalizedCardSync", () => {
 });
 
 describe("card printing lookup integrity", () => {
+  it("resolves legacy stored gameCardIds to the current short id for the same printing", () => {
+    expect(resolveCurrentLorcanaShortId("20T")).toBe("xdR");
+    expect(resolveCurrentLorcanaShortId("5QH")).toBe("0iA");
+    expect(resolveCurrentLorcanaShortId("m95")).toBe("4lK");
+    expect(resolveCurrentLorcanaShortId("oD3")).toBe("69M");
+    expect(resolveCurrentLorcanaShortId("PX4")).toBe("3zi");
+    expect(resolveCurrentLorcanaShortId("R01")).toBe("wWJ");
+  });
+
+  it("accepts recycled ids as current cards when they exist in the active catalog", () => {
+    expect(getLorcanaShortIdResolution("hab")).toEqual({
+      kind: "current",
+      shortId: "hab",
+    });
+    expect(resolveCurrentLorcanaShortId("hab")).toBe("hab");
+  });
+
+  it("treats recycled legacy ids as ambiguous during stable identity migration", () => {
+    expect(resolveLorcanaStableIdentity("hab")).toEqual({
+      kind: "ambiguous",
+      shortId: "hab",
+      legacyPrintingId: "set10-006",
+      currentPrintingId: "set12-209-epic",
+      legacyResolvedShortId: "vZ7",
+    });
+  });
+
   it("resolves every printing metadata entry to a canonical card", () => {
     const unresolvedPrintingIds = Object.keys(printings).filter(
       (printingId) => getCardForPrinting(printingId) === undefined,

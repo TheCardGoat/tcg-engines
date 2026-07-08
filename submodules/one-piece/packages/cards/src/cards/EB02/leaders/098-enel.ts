@@ -1,49 +1,24 @@
 import type { LeaderCard } from "@tcg/op-types";
+import { op05Enel098 } from "../../OP05/leaders/098-enel.ts";
 import { eb02Enel098I18n } from "./098-enel.i18n.ts";
 
 export const eb02Enel098: LeaderCard = {
-  id: "OP05-098",
-  canonicalId: "OP05-098",
-  slug: "enel/op05-098",
+  ...op05Enel098,
+  id: "OP05-098_H7ASBF6",
+  slug: "enel/op05-098-h7asbf6",
   name: "Enel",
   printings: [
     {
-      id: "OP05-098",
-      artId: "OP05-098",
+      id: "OP05-098_H7ASBF6",
+      artId: "OP05-098_H7ASBF6",
       setCode: "EB02",
       collectorNumber: "098",
       rarity: "L",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP05-098_H7ASBF6.jpg",
     },
   ],
-  cardType: "leader",
-  color: ["yellow"],
   rarity: "L",
   setId: "EB02",
-  power: 5000,
-  life: 4,
-  traits: ["Sky Island"],
-  attribute: "special",
-  effect:
-    "[Opponent's Turn] [Once Per Turn] When your number of Life cards becomes 0, add 1 card from the top of your deck to the top of your Life cards. Then, trash 1 card from your hand.",
-  effects: {
-    permanentEffects: [
-      {
-        conditions: [
-          {
-            condition: "turn",
-            value: "opponent",
-          },
-        ],
-        actions: [
-          {
-            action: "trashFromHand",
-            player: "self",
-            amount: 1,
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: eb02Enel098I18n,
 };

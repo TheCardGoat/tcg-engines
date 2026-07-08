@@ -17,6 +17,7 @@ const LEGEND_LOG_HOVER_EVENT = "cyberpunk:legend-log-hover";
 interface LegendCard {
   imageUrl: string;
   name: string;
+  definitionId?: string;
   faceDown: boolean;
   spent?: boolean;
   /** Engine instance id, when the card is engine-driven. */
@@ -85,6 +86,7 @@ export function LegendsZone({ legends = [], opponent = false, side }: LegendsZon
       className={`${classes.zone} ${opponent ? classes.opponent : ""}`}
       data-testid="legends-zone"
       data-zone-id={opponent ? "opp-legendArea" : "p-legendArea"}
+      data-sim-zone-id={opponent ? "opp-legendArea" : "p-legendArea"}
       data-side={side}
       data-count={legends.length}
       data-face-down-count={faceDownCount}
@@ -134,15 +136,22 @@ function LegendSlot({
   const isActionable =
     permission.kind === "selectable" ||
     (selectedMove ? isSelectedCallLegendCandidate : canCallLegend);
+  const instanceAttrs = legend
+    ? {
+        "data-card-id": legend.cardId,
+        "data-instance-id": legend.cardId,
+      }
+    : {};
   const publicLegendAttrs =
     legend && !legend.faceDown
       ? {
-          "data-card-id": legend.cardId,
+          ...instanceAttrs,
+          "data-definition-id": legend.definitionId,
           "data-card-name": legend.name,
           "data-card-type": legend.cardType,
           "data-card-color": legend.color,
         }
-      : {};
+      : instanceAttrs;
 
   return (
     <div
@@ -167,6 +176,7 @@ function LegendSlot({
           imageUrl={legend.imageUrl}
           faceDown={legend.faceDown}
           name={legend.name}
+          definitionId={legend.definitionId}
           cardType={legend.cardType}
           color={legend.color}
           tapped={legend.spent}

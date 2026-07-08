@@ -23,18 +23,36 @@ interface Rect {
 export interface TargetingOverlayProps {
   targetingIntents: SimulatorTargetingIntent[];
   containerSelector?: string;
+  entitySelector?: (entityId: string) => string;
+  zoneSelector?: (zoneId: string) => string;
+  className?: string;
 }
+
+function cssEscape(value: string): string {
+  if (typeof CSS !== "undefined" && typeof CSS.escape === "function") return CSS.escape(value);
+  return value.replace(/["\\\n\r\f]/g, (ch) => `\\${ch}`);
+}
+
+const DEFAULT_ENTITY_SELECTOR = (entityId: string) => `[data-entity-id="${cssEscape(entityId)}"]`;
+const DEFAULT_ZONE_SELECTOR = (zoneId: string) => `[data-zone-id="${cssEscape(zoneId)}"]`;
 
 export function TargetingOverlay({
   targetingIntents,
   containerSelector = ".board-mat",
+  entitySelector = DEFAULT_ENTITY_SELECTOR,
+  zoneSelector = DEFAULT_ZONE_SELECTOR,
+  className,
 }: TargetingOverlayProps) {
   const [lines, setLines] = useState<TargetingLine[]>([]);
   const [containerRect, setContainerRect] = useState<DOMRect | null>(null);
   const rafRef = useRef<number | undefined>(undefined);
 
-  const getEntityRect = (entityId: string, rect: DOMRect | null): Rect | null => {
-    const el = document.querySelector(`[data-entity-id="${entityId}"]`);
+  const getEntityRect = (
+    container: Element,
+    entityId: string,
+    rect: DOMRect | null,
+  ): Rect | null => {
+    const el = container.querySelector(entitySelector(entityId));
     if (!el || !rect) return null;
     const r = el.getBoundingClientRect();
     return { left: r.left - rect.left + r.width / 2, top: r.top - rect.top + r.height / 2 };
@@ -48,11 +66,11 @@ export function TargetingOverlay({
 
     const newLines: TargetingLine[] = [];
     for (const intent of targetingIntents) {
-      const sourceCenter = getEntityRect(intent.sourceEntityId, cRect);
+      const sourceCenter = getEntityRect(container, intent.sourceEntityId, cRect);
       if (!sourceCenter) continue;
 
       for (const targetId of intent.targetEntityIds) {
-        const targetCenter = getEntityRect(targetId, cRect);
+        const targetCenter = getEntityRect(container, targetId, cRect);
         if (!targetCenter) continue;
         newLines.push({
           id: `${intent.id}-${targetId}`,
@@ -65,7 +83,7 @@ export function TargetingOverlay({
       }
 
       for (const zoneId of intent.targetZoneIds) {
-        const zoneEl = document.querySelector(`[data-zone-id="${zoneId}"]`);
+        const zoneEl = container.querySelector(zoneSelector(zoneId));
         if (!zoneEl || !cRect) continue;
         const zRect = zoneEl.getBoundingClientRect();
         newLines.push({
@@ -98,7 +116,7 @@ export function TargetingOverlay({
       resizeObserver.disconnect();
       window.removeEventListener("resize", schedule);
     };
-  }, [targetingIntents, containerSelector]);
+  }, [targetingIntents, containerSelector, entitySelector, zoneSelector]);
 
   if (!lines.length || !containerRect) return null;
 
@@ -112,7 +130,10 @@ export function TargetingOverlay({
     : { x: containerW / 2, y: containerH / 2 };
 
   return (
-    <div className="targeting-overlay pointer-events-none absolute inset-0 z-20" aria-hidden="true">
+    <div
+      className={`targeting-overlay pointer-events-none absolute inset-0${className ? ` ${className}` : " z-20"}`}
+      aria-hidden="true"
+    >
       <TargetingSpotlight
         sourceX={spotlightSource.x}
         sourceY={spotlightSource.y}

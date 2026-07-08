@@ -1,51 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op07PortgasDAce119 } from "../../OP07/characters/119-portgas-d-ace.ts";
 import { prb02PortgasDAceOp07119Reprint119I18n } from "./119-portgas-d-ace-op07-119-reprint.i18n.ts";
 
 export const prb02PortgasDAceOp07119Reprint119: CharacterCard = {
-  id: "OP07-119",
-  canonicalId: "OP07-119",
+  ...op07PortgasDAce119,
+  id: "OP07-119_r1",
   slug: "portgas-d-ace-op07-119-reprint",
   name: "Portgas.D.Ace - OP07-119 (Reprint)",
   printings: [
     {
-      id: "OP07-119",
-      artId: "OP07-119",
+      id: "OP07-119_r1",
+      artId: "OP07-119_r1",
       setCode: "PRB02",
       collectorNumber: "119",
       rarity: "SEC",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP07-119_r1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["yellow"],
   rarity: "SEC",
   setId: "PRB02",
-  cost: 10,
-  power: 10000,
-  traits: ["Whitebeard Pirates"],
-  attribute: "special",
-  effect:
-    '[On Play] Add up to 1 card from the top of your deck to the top of your Life cards. Then, if you have 2 or less Life cards, this Character gains [Rush] during this turn. (This card can attack on the turn in which it is played.)Disclaimer: This card was reprinted from the original set with changes to the copyright information (Note: the original print did not include "EN" at the end of the copyright).',
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "addToLife",
-            target: {
-              player: "self",
-              zones: ["deck"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-            position: "top",
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: prb02PortgasDAceOp07119Reprint119I18n,
 };

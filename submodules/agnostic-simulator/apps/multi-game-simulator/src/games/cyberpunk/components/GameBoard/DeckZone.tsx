@@ -19,6 +19,7 @@ export function DeckZone({ count = 40, opponent = false, side }: DeckZoneProps) 
       className={`${classes.zone} ${drop.isOver ? classes.dropOver : ""}`}
       data-testid="deck-zone"
       data-zone-id={opponent ? "opp-deck" : "p-deck"}
+      data-sim-zone-id={opponent ? "opp-deck" : "p-deck"}
       data-side={side}
       data-count={count}
     >

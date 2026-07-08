@@ -1,46 +1,58 @@
-import { Suspense, lazy, useMemo } from "react";
-import { createBrowserRouter, RouterProvider, type RouteObject } from "react-router-dom";
-import { normalizeRouterBasename } from "../../routes/router-paths.ts";
-import { BoardPrototypePage } from "./pages/BoardPrototype.page.tsx";
-import { OnePieceFixtureIndexPage, OnePieceFixturePage } from "./pages/FixtureRoutes.page.tsx";
-import { OnePieceTestStatePage } from "./pages/TestState.page.tsx";
+import { Suspense, lazy } from "react";
+import type { JSX, LazyExoticComponent } from "react";
+import type { RouteObject } from "react-router-dom";
+import { createSimulatorBrowserRouter, SimulatorRouterProvider } from "../../lib/router.tsx";
 
 const OnePiecePracticePage = lazy(async () => {
   const module = await import("./pages/Practice.page.tsx");
   return { default: module.OnePiecePracticePage };
 });
+const OnePieceFixtureIndexPage = lazy(async () => {
+  const module = await import("./pages/FixtureRoutes.page.tsx");
+  return { default: module.OnePieceFixtureIndexPage };
+});
+const OnePieceFixturePage = lazy(async () => {
+  const module = await import("./pages/FixtureRoutes.page.tsx");
+  return { default: module.OnePieceFixturePage };
+});
+const OnePieceTestStatePage = lazy(async () => {
+  const module = await import("./pages/TestState.page.tsx");
+  return { default: module.OnePieceTestStatePage };
+});
+
+function onePieceLazyPage(Page: LazyExoticComponent<() => JSX.Element>) {
+  return (
+    <Suspense fallback={null}>
+      <Page />
+    </Suspense>
+  );
+}
 
 export const onePieceSimulatorRoutes: RouteObject[] = [
   {
     path: "/",
-    element: <BoardPrototypePage />,
+    element: onePieceLazyPage(OnePiecePracticePage),
   },
   {
     path: "/play/practice",
-    element: (
-      <Suspense fallback={null}>
-        <OnePiecePracticePage />
-      </Suspense>
-    ),
+    element: onePieceLazyPage(OnePiecePracticePage),
   },
   {
     path: "/tests",
-    element: <OnePieceFixtureIndexPage />,
+    element: onePieceLazyPage(OnePieceFixtureIndexPage),
   },
   {
     path: "/tests/test-engine-state",
-    element: <OnePieceTestStatePage />,
+    element: onePieceLazyPage(OnePieceTestStatePage),
   },
   {
     path: "/tests/:fixtureId",
-    element: <OnePieceFixturePage />,
+    element: onePieceLazyPage(OnePieceFixturePage),
   },
 ];
 
 export function createOnePieceRouter(basename: string) {
-  return createBrowserRouter(onePieceSimulatorRoutes, {
-    basename: normalizeRouterBasename(basename),
-  });
+  return createSimulatorBrowserRouter(onePieceSimulatorRoutes, basename);
 }
 
 export interface RouterProps {
@@ -48,6 +60,5 @@ export interface RouterProps {
 }
 
 export function Router({ basename = "/one-piece/simulator" }: RouterProps) {
-  const router = useMemo(() => createOnePieceRouter(basename), [basename]);
-  return <RouterProvider router={router} />;
+  return <SimulatorRouterProvider basename={basename} routes={onePieceSimulatorRoutes} />;
 }

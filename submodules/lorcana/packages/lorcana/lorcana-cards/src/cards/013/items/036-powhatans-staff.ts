@@ -32,7 +32,7 @@ export const powhatansStaff: ItemCard = {
     {
       title: "STEP FORWARD",
       description:
-        "{E}, 1 {I} — The next character you play this turn enters play exerted and gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
+        "{E}, 1{I} — The next character you play this turn enters play exerted and gains Bodyguard until the start of your next turn. (An opposing character who challenges one of your characters must choose one with Bodyguard if able.)",
     },
   ],
   abilities: [

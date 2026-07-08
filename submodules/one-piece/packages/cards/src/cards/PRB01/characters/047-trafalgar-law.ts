@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op01TrafalgarLaw047 } from "../../OP01/characters/047-trafalgar-law.ts";
 import { prb01TrafalgarLaw047I18n } from "./047-trafalgar-law.i18n.ts";
 
 export const prb01TrafalgarLaw047: CharacterCard = {
-  id: "OP01-047",
-  canonicalId: "OP01-047",
-  slug: "trafalgar-law/op01-047",
+  ...op01TrafalgarLaw047,
+  id: "OP01-047_r1",
+  slug: "trafalgar-law/op01-047-r1",
   name: "Trafalgar Law",
   printings: [
     {
-      id: "OP01-047",
-      artId: "OP01-047",
+      id: "OP01-047_r1",
+      artId: "OP01-047_r1",
       setCode: "PRB01",
       collectorNumber: "047",
       rarity: "SR",
@@ -24,14 +25,8 @@ export const prb01TrafalgarLaw047: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP01-047_p4.jpg",
     },
   ],
-  cardType: "character",
-  color: ["green"],
   rarity: "SR",
   setId: "PRB01",
-  cost: 5,
-  power: 6000,
-  traits: ["Supernovas", "Heart Pirates"],
-  attribute: "slash",
   artVariants: [
     {
       type: "alternate-art",
@@ -39,40 +34,5 @@ export const prb01TrafalgarLaw047: CharacterCard = {
       imageId: "OP01-047_p4",
     },
   ],
-  effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] You may return 1 of your Characters to the owner's hand: Play up to 1 Character card with a cost of 3 or less from your hand.",
-  effects: {
-    keywords: ["blocker"],
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
-              {
-                filter: "cost",
-                comparison: "lte",
-                value: 3,
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
-              },
-            ],
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
   i18n: prb01TrafalgarLaw047I18n,
 };

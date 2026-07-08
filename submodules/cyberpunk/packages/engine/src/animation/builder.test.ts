@@ -122,6 +122,8 @@ describe("buildAnimationScript", () => {
     expect(exit.kind).toBe("cardExit");
     expect(exit.exitReason).toBe("defeated");
     expect(exit.cardId).toBe("c1");
+    expect(exit.fromZone).toBe("field");
+    expect(exit.toZone).toBe("trash");
     expect(exit.startMs).toBe(0);
     expect(exit.durationMs).toBe(ANIMATION_DURATIONS_MS.cardExit);
   });
@@ -140,7 +142,10 @@ describe("buildAnimationScript", () => {
 
     const script = buildAnimationScript(events);
     expect(script.steps).toHaveLength(1);
-    expect((script.steps[0] as CardExitStep).exitReason).toBe("sold");
+    const exit = script.steps[0] as CardExitStep;
+    expect(exit.exitReason).toBe("sold");
+    expect(exit.fromZone).toBe("hand");
+    expect(exit.toZone).toBe("trash");
   });
 
   it("sequences multiple card moves and accumulates total duration", () => {
@@ -251,6 +256,56 @@ describe("buildAnimationScript", () => {
 
     const script = buildAnimationScript(events);
     expect(script.steps.map((s) => s.kind)).toEqual(["cardMove"]);
+  });
+
+  it("choreographs a targeted program that defeats a card into trash", () => {
+    const events: GameEvent[] = [
+      {
+        type: "cardMoved",
+        cardId: cid("prog"),
+        fromZone: "hand",
+        toZone: "trash",
+        playerId: pid("p1"),
+      },
+      { type: "cardPlayed", cardId: cid("prog"), playerId: pid("p1"), cost: 3 },
+      {
+        type: "effectTargeted",
+        sourceCardId: cid("prog"),
+        targets: [{ kind: "card", cardId: cid("target") }],
+        playerId: pid("p1"),
+      },
+      {
+        type: "cardDefeated",
+        cardId: cid("target"),
+        defeatedBy: cid("prog"),
+        playerId: pid("p2"),
+      },
+      {
+        type: "cardMoved",
+        cardId: cid("target"),
+        fromZone: "field",
+        toZone: "trash",
+        playerId: pid("p2"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps.map((s) => s.kind)).toEqual(["cardMove", "effectTarget", "cardExit"]);
+    const playMove = script.steps[0] as CardMoveStep;
+    const target = script.steps[1] as EffectTargetStep;
+    const defeated = script.steps[2] as CardExitStep;
+    expect(playMove.cardId).toBe("prog");
+    expect(playMove.fromZone).toBe("hand");
+    expect(playMove.toZone).toBe("trash");
+    expect(target.sourceCardId).toBe("prog");
+    expect(target.startMs).toBe(ANIMATION_DURATIONS_MS.cardMove);
+    expect(defeated.cardId).toBe("target");
+    expect(defeated.fromZone).toBe("field");
+    expect(defeated.toZone).toBe("trash");
+    expect(defeated.startMs).toBe(
+      ANIMATION_DURATIONS_MS.cardMove + ANIMATION_DURATIONS_MS.effectTarget,
+    );
   });
 
   it("emits a cardAttach for cardAttached and suppresses the gear's cardMove", () => {

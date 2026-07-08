@@ -163,6 +163,24 @@ export class OnePieceTestEngine {
   }
 
   startGame(seat: MatchSeat = SOUTH) {
+    if (this.state.status === "setup") {
+      if (!this.state.setup.joKenPo.winner) {
+        this.exec({ type: "chooseJoKenPo", seat: SOUTH, choice: "paper" });
+        this.exec({ type: "chooseJoKenPo", seat: NORTH, choice: "rock" });
+      }
+      if (!this.state.setup.joKenPo.firstPlayerDecided) {
+        this.exec({
+          type: "chooseFirstPlayer",
+          seat: this.state.setup.joKenPo.winner ?? SOUTH,
+          firstPlayer: seat,
+        });
+      }
+      for (const setupSeat of ["south", "north"] as const) {
+        if (!this.state.setup.mulliganDecided[setupSeat]) {
+          this.exec({ type: "keepHand", seat: setupSeat });
+        }
+      }
+    }
     return this.exec({ type: "startGame", seat });
   }
 

@@ -30,6 +30,7 @@ import { BoardSharedPage } from "./BoardShared.page";
 import { loadCyberpunkReplay } from "../replay/loadReplay";
 import type { CyberpunkReplayOrchestrator } from "../replay/replayOrchestrator";
 import classes from "./Replay.module.css";
+import { cyberpunkSimulatorPath } from "./simulatorPaths";
 
 const SPEEDS = [
   { label: "0.5x", ms: 1600 },
@@ -93,7 +94,7 @@ export function ReplayPage() {
         <section className={classes.errorPanel}>
           <h1>Replay unavailable</h1>
           <p>{loadState.message}</p>
-          <Link className={classes.backLink} to="/matchmaking">
+          <Link className={classes.backLink} to={cyberpunkSimulatorPath("/matchmaking")}>
             Back to matchmaking
           </Link>
         </section>
@@ -182,7 +183,7 @@ function ReplayBoard({
         remoteDispatch={remoteDispatch}
         remoteSubmitInteraction={remoteSubmitInteraction}
         remoteMoveLogs={snapshot.moveLogs}
-        remoteReturnUrl="/matchmaking"
+        remoteReturnUrl={cyberpunkSimulatorPath("/matchmaking")}
         postGameContext={postGameContext}
         lockLocalHistoryControls
         lockLocalResetControls
@@ -202,13 +203,17 @@ function ReplayBoard({
       {showForkMenu ? (
         <div className={classes.forkMenu} role="dialog" aria-label="Choose a side to play">
           <Link
-            to={`/replay/${encodeURIComponent(orchestrator.gameId)}/fork?step=${snapshot.step}&side=playerOne`}
+            to={cyberpunkSimulatorPath(
+              `/replay/${encodeURIComponent(orchestrator.gameId)}/fork?step=${snapshot.step}&side=playerOne`,
+            )}
             reloadDocument
           >
             Play as P1
           </Link>
           <Link
-            to={`/replay/${encodeURIComponent(orchestrator.gameId)}/fork?step=${snapshot.step}&side=playerTwo`}
+            to={cyberpunkSimulatorPath(
+              `/replay/${encodeURIComponent(orchestrator.gameId)}/fork?step=${snapshot.step}&side=playerTwo`,
+            )}
             reloadDocument
           >
             Play as P2
@@ -296,7 +301,11 @@ function ReplayControls({
         <IconGripVertical size={16} />
       </span>
       <div className={classes.controlGroup}>
-        <Link className={classes.iconButton} to="/matchmaking" title="Back">
+        <Link
+          className={classes.iconButton}
+          to={cyberpunkSimulatorPath("/matchmaking")}
+          title="Back"
+        >
           <IconArrowBackUp size={18} />
         </Link>
       </div>

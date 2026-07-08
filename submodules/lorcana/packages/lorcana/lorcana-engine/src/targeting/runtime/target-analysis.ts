@@ -1,6 +1,10 @@
 import { getLogger } from "@logtape/logtape";
 import type { CardInstanceId, MoveInput, PlayerId, RuntimeValidationResult } from "#core";
-import type { LorcanaCard, LorcanaCardTarget, LorcanaTargetDSL } from "@tcg/lorcana-types";
+import type {
+  LorcanaCardDefinition,
+  LorcanaCardTarget,
+  LorcanaTargetDSL,
+} from "@tcg/lorcana-types";
 import type { MoveEnumerationContext, MoveValidationContext } from "#core";
 import type { LorcanaG } from "../../types";
 import type { DynamicAmountEventSnapshot } from "../../types/domain-events";
@@ -59,9 +63,9 @@ type PlayCardSelectionDescriptor = {
   owner: "you" | "opponent" | "any";
   sourceZone: "deck" | "hand" | "discard" | "inkwell";
   sourceZones?: readonly ("deck" | "hand" | "discard" | "inkwell")[];
-  cardType?: LorcanaCard["cardType"] | "song" | "floodborn";
+  cardType?: LorcanaCardDefinition["cardType"] | "song" | "floodborn";
   filter?: {
-    cardType?: LorcanaCard["cardType"] | "song" | "floodborn";
+    cardType?: LorcanaCardDefinition["cardType"] | "song" | "floodborn";
     maxCost?: number;
     classification?: string;
     name?: string;
@@ -150,14 +154,14 @@ const logger = getLogger(["lorcana-engine", "target-analysis"]);
 function getCardDefinition(
   ctx: ActionTargetRuntimeContext,
   cardId: string,
-): LorcanaCard | undefined {
-  const definition = ctx.cards.getDefinition(cardId) as LorcanaCard | undefined;
+): LorcanaCardDefinition | undefined {
+  const definition = ctx.cards.getDefinition(cardId);
   if (definition) {
     return definition;
   }
 
   const cardsApi = ctx.cards as {
-    require?: (cardId: string) => { definition?: LorcanaCard };
+    require?: (cardId: string) => { definition?: LorcanaCardDefinition };
   };
 
   try {
@@ -1254,7 +1258,7 @@ function resolveActionDiscardTargetCandidates(
         if (targetDescriptor.excludeSelf === true && cardId === sourceCardId) {
           return false;
         }
-        const definition = getCardDefinition(ctx, cardId) as ActionTargetCardDefinition | undefined;
+        const definition = getCardDefinition(ctx, cardId);
         if (
           targetDescriptor.actionSubtypes?.length &&
           (!definition?.actionSubtype ||
@@ -1274,13 +1278,15 @@ function resolveActionDiscardTargetCandidates(
         }
         if (
           targetDescriptor.filter?.classification &&
-          !definition?.classifications?.includes(targetDescriptor.filter.classification)
+          !definition?.classifications?.some(
+            (classification) => classification === targetDescriptor.filter?.classification,
+          )
         ) {
           return false;
         }
         if (
           targetDescriptor.filter?.keyword &&
-          (!definition || !hasKeyword(definition as LorcanaCard, targetDescriptor.filter.keyword))
+          (!definition || !hasKeyword(definition, targetDescriptor.filter.keyword))
         ) {
           return false;
         }
@@ -1461,10 +1467,7 @@ function matchesPlayCardSelectionCriteria(
     }
   }
 
-  if (
-    filter.sameInstanceAsTriggerSubject === true &&
-    eventSnapshot?.subjectCardId !== cardId
-  ) {
+  if (filter.sameInstanceAsTriggerSubject === true && eventSnapshot?.subjectCardId !== cardId) {
     return false;
   }
 

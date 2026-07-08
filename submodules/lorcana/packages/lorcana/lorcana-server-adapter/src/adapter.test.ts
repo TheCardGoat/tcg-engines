@@ -1,4 +1,5 @@
 import { describe, expect, it } from "bun:test";
+import { resolveLorcanaDeckListText } from "@tcg/lorcana-cards/deck-list-resolver";
 import { lorcanaServerAdapter } from "./adapter";
 
 /**
@@ -81,27 +82,66 @@ describe("lorcanaServerAdapter.validateDeckForFormat", () => {
     expect(earlyAccess.rules.find((rule) => rule.kind === "CARD_SET")?.passed).toBe(false);
   });
 
-  it("validates the Set 5-12 steel-ruby location deck in Core Constructed", () => {
-    const deck = [
-      { cardId: "qUy", quantity: 4 }, // Doc - Bold Knight
-      { cardId: "1uO", quantity: 4 }, // Seven Dwarfs' Mine - Secure Fortress
-      { cardId: "uh8", quantity: 4 }, // Mulan - Disguised Soldier
-      { cardId: "a5f", quantity: 4 }, // Get to Safety!
-      { cardId: "eWQ", quantity: 4 }, // Sleepy Hollow - The Bridge
-      { cardId: "M5d", quantity: 4 }, // Castle Wyvern - Above the Clouds
-      { cardId: "hOa", quantity: 4 }, // Zootopia - Police Headquarters
-      { cardId: "bEk", quantity: 4 }, // Beast - Snowfield Troublemaker
-      { cardId: "qvC", quantity: 4 }, // Gantu - Hamsterviel's Accomplice
-      { cardId: "5Yu", quantity: 4 }, // Winterspell
-      { cardId: "cXq", quantity: 4 }, // Scrooge McDuck - Ghostly Ebenezer
-      { cardId: "v2A", quantity: 4 }, // Pocahontas - Steadfast Traveler
-      { cardId: "IZd", quantity: 4 }, // Fat Cat's Club - Seedy Headquarters
-      { cardId: "mXi", quantity: 4 }, // The Island of Nomanisan - Syndrome's Headquarters
-      { cardId: "kCm", quantity: 4 }, // Jack-Jack Parr - Incredible Potential
-    ];
+  it("normalizes legacy stored public ids before format validation", () => {
+    const result = lorcanaServerAdapter.validateDeckForFormat("core-constructed", [
+      { cardId: "20T", quantity: 4 },
+      { cardId: "5QH", quantity: 4 },
+      { cardId: "m95", quantity: 4 },
+      { cardId: "oD3", quantity: 4 },
+      { cardId: "PX4", quantity: 4 },
+      { cardId: "R01", quantity: 4 },
+    ]);
+
+    const setRule = result.rules.find((rule) => rule.kind === "CARD_SET");
+
+    expect(setRule).toBeDefined();
+    expect(setRule!.message).not.toContain("Unknown cards not found in catalog");
+    expect(setRule!.passed).toBe(true);
+  });
+
+  it("validates recycled short ids as current cards instead of blocking active decks", () => {
+    const result = lorcanaServerAdapter.validateDeckForFormat("core-constructed", [
+      { cardId: "hab", quantity: 4 },
+    ]);
+
+    expect(
+      result.rules.some((rule) =>
+        rule.message.includes("This deck was saved with outdated card IDs"),
+      ),
+    ).toBe(false);
+    const setRule = result.rules.find((rule) => rule.kind === "CARD_SET");
+    expect(setRule).toBeDefined();
+    expect(setRule!.passed).toBe(true);
+  });
+
+  it("validates the imported Set 5-12 steel-ruby location deck in Core Constructed", async () => {
+    const deckText = `4 Doc - Bold Knight
+4 Seven Dwarfs' Mine - Secure Fortress
+4 Mulan - Disguised Soldier
+4 Get to Safety!
+4 Sleepy Hollow - The Bridge
+4 Castle Wyvern - Above the Clouds
+4 Zootopia - Police Headquarters
+4 Beast - Snowfield Troublemaker
+4 Gantu - Hamsterviel's Accomplice
+4 Winterspell
+4 Scrooge McDuck - Ghostly Ebenezer
+4 Pocahontas - Steadfast Traveler
+4 Fat Cat's Club - Seedy Headquarters
+4 The Island of Nomanisan - Syndrome's Headquarters
+4 Jack-Jack Parr - Incredible Potential`;
+
+    const resolution = await resolveLorcanaDeckListText(deckText);
+    const deck = resolution.resolvedCards.map((card) => ({
+      cardId: card.cardId,
+      quantity: card.quantity,
+    }));
 
     const result = lorcanaServerAdapter.validateDeckForFormat("core-constructed", deck);
 
+    expect(resolution.diagnostics.malformedLines).toEqual([]);
+    expect(resolution.diagnostics.unresolvedNames).toEqual([]);
+    expect(deck).toHaveLength(15);
     expect(result.valid).toBe(true);
   });
 });

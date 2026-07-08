@@ -33,7 +33,7 @@ export const maleficentDiabloEvilIncarnate: CharacterCard = {
   inkable: true,
   text: [
     {
-      title: "<Shift> 5 {I}",
+      title: "Shift 5 {I}",
     },
     {
       title: "Fools!",

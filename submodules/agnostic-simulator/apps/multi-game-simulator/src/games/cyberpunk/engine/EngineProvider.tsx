@@ -33,6 +33,17 @@ import { EngineContext } from "./engineContext";
 import { actionToInteractionSubmission } from "./live/actionToInteraction";
 import { otherSide, PLAYER_SIDE_TO_ID, type Side } from "./sides";
 
+function captureSimulatorAnimationRects(): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+  (
+    window as Window & {
+      __simulatorAnimationCaptureRects?: () => void;
+    }
+  ).__simulatorAnimationCaptureRects?.();
+}
+
 // Re-export so consumers that imported `EngineAction` from this module keep
 // compiling. The canonical declaration now lives in `src/types/e2e.ts` so the
 // Playwright harness can share it without dragging React into its tsconfig.
@@ -241,11 +252,15 @@ export interface RawEngineEventEntry {
   input: unknown;
   /** Engine state id after the command was applied. */
   stateID: number;
+  /** Engine state before this command was applied. Present for local/test commands. */
+  beforeState?: MatchState;
+  /** Engine state after this command was applied. Present for local/test commands. */
+  afterState?: MatchState;
   /** Raw events emitted by the engine for this successful command, in order. */
   events: ReadonlyArray<GameEvent>;
   /** Player-facing move logs synthesized for this command. */
   moveLogs: ReadonlyArray<MoveLog>;
-  /** Pre-computed animation timeline for this command — consumed by ScriptPlayer. */
+  /** Pre-computed animation timeline for this command, consumed by the shared Motion layer. */
   animationScript: AnimationScript;
 }
 
@@ -874,7 +889,7 @@ export function EngineProvider({
     });
   }, []);
 
-  const appendRawEngineEvents = useCallback((result: CommandSuccess) => {
+  const appendRawEngineEvents = useCallback((result: CommandSuccess, beforeState?: MatchState) => {
     const timestamp = Date.now();
     setRawEngineEvents((prev) => {
       const next = prev.slice();
@@ -888,6 +903,8 @@ export function EngineProvider({
         move: result.processedCommand.move,
         input: result.processedCommand.input ?? { args: {} },
         stateID: result.stateID,
+        ...(beforeState ? { beforeState } : {}),
+        afterState: result.state,
         events: result.gameEvents,
         moveLogs: result.moveLogs,
         animationScript: result.animationScript,
@@ -957,7 +974,7 @@ export function EngineProvider({
   // ── AI step execution ─────────────────────────────────────────────────────
 
   const recordStep = useCallback(
-    (side: Side, result: StepResult) => {
+    (side: Side, result: StepResult, beforeState?: MatchState) => {
       const entry: AiLogEntry = {
         id: ++logIdRef.current,
         timestamp: Date.now(),
@@ -977,7 +994,7 @@ export function EngineProvider({
         setLastAiError(null);
         if (result.result.success) {
           appendMoveLogs(result.result.moveLogs);
-          appendRawEngineEvents(result.result);
+          appendRawEngineEvents(result.result, beforeState);
           onLocalCommandCommittedRef.current?.({
             source: "ai",
             side,
@@ -996,8 +1013,9 @@ export function EngineProvider({
         return false;
       }
       try {
+        const beforeState = engineRef.current.getState();
         const result = ai.step();
-        recordStep(side, result);
+        recordStep(side, result, beforeState);
         return result.kind === "acted";
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
@@ -1144,6 +1162,8 @@ export function EngineProvider({
   const dispatch = useCallback<EngineContextValue["dispatch"]>(
     (action) => {
       const eng = engineRef.current;
+      const preMoveState = eng.getState();
+      captureSimulatorAnimationRects();
       if (remoteDispatch) {
         if (action.type === "undo" || action.type === "undoToTurnStart") {
           if (action.type === "undo" && requestRemoteUndo?.()) {
@@ -1160,7 +1180,6 @@ export function EngineProvider({
             error: "Waiting for the previous move to be confirmed",
           };
         }
-        const preMoveState = eng.getState();
         const actor = {
           side: humanSide,
           interactionView: humanSide === "player" ? playerInteractionView : opponentInteractionView,
@@ -1367,7 +1386,7 @@ export function EngineProvider({
         }
         if (result.success) {
           appendMoveLogs(result.moveLogs);
-          appendRawEngineEvents(result);
+          appendRawEngineEvents(result, preMoveState);
           onLocalCommandCommittedRef.current?.({
             source: "human",
             side: humanSide,
@@ -1615,15 +1634,10 @@ export function EngineProvider({
   };
 
   if (typeof window !== "undefined" && import.meta.env.DEV) {
-    // Dev-only test harness bridge. Lets e2e specs:
-    //   - read engine state (`engine`)
-    //   - force a React re-render after direct engine mutation (`forceRender`)
-    //   - inspect every action that flowed through the React `dispatch` so a
-    //     spec can verify a UI click resulted in the right engine call
-    //     (`dispatchLog`, `clearDispatchLog`)
-    // `__cyberpunkEngine` stays as a legacy alias for back-compat.
+    // Dev-only simulator diagnostics. Playwright E2E code must use visible
+    // controls and DOM state, while jsdom/unit harnesses may still use the
+    // simulator object for engine-owned assertions.
     const win = window as unknown as {
-      __cyberpunkEngine?: unknown;
       __cyberpunkSimulator?: {
         engine: unknown;
         forceRender: () => void;
@@ -1637,7 +1651,6 @@ export function EngineProvider({
         setHumanSide: (side: Side) => void;
       };
     };
-    win.__cyberpunkEngine = engine;
     win.__cyberpunkSimulator = {
       engine,
       forceRender,

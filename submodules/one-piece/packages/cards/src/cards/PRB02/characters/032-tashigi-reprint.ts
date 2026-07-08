@@ -1,31 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op10Tashigi032 } from "../../OP10/characters/032-tashigi.ts";
 import { prb02TashigiReprint032I18n } from "./032-tashigi-reprint.i18n.ts";
 
 export const prb02TashigiReprint032: CharacterCard = {
-  id: "OP10-032",
-  canonicalId: "OP10-032",
+  ...op10Tashigi032,
+  id: "OP10-032_r1",
   slug: "tashigi-reprint",
   name: "Tashigi (Reprint)",
   printings: [
     {
-      id: "OP10-032",
-      artId: "OP10-032",
+      id: "OP10-032_r1",
+      artId: "OP10-032_r1",
       setCode: "PRB02",
       collectorNumber: "032",
       rarity: "SR",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP10-032_r1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["green"],
   rarity: "SR",
   setId: "PRB02",
-  cost: 3,
-  power: 4000,
-  counter: 2000,
-  traits: ["Navy Punk Hazard"],
-  attribute: "special",
-  effect:
-    'If you have a green Character other than [Tashigi] that would be removed from the field by your opponent\'s effect, you may rest this Character instead.Disclaimer: This card was reprinted from the original set with changes to the copyright information (Note: the original print did not include "EN" at the end of the copyright).',
+  artVariants: undefined,
   i18n: prb02TashigiReprint032I18n,
 };

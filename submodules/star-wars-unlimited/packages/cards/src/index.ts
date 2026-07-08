@@ -15,6 +15,14 @@ export {
 
 export { createSwuPackSimulator, SwuPackSimulator } from "./pack-simulator/index.ts";
 export type { SwuPackSimulatorOptions } from "./pack-simulator/index.ts";
+export {
+  defaultSwuPrintingId,
+  getSwuCanonicalForCardId,
+  getSwuPrintingInfo,
+  getSwuPrintingInfosForCanonical,
+  isSwuPrintingOfCanonical,
+  type SwuPrintingIdentityInfo,
+} from "./identity.ts";
 
 export function getCard(id: string): SwuCard {
   const card = allCardsById.get(id);

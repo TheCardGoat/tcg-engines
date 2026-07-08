@@ -444,6 +444,13 @@ export interface HasCardUnderCondition {
 }
 
 /**
+ * Check if the previously selected target has a card under it.
+ */
+export interface PreviousTargetHasCardUnderCondition {
+  type: "previous-target-has-card-under";
+}
+
+/**
  * Check if the trigger subject (banished character) had cards under it
  * Used for "draw a card for each card that was under them"
  */
@@ -1136,6 +1143,7 @@ export type Condition =
   | IsExertedCondition
   | IsReadyCondition
   | HasCardUnderCondition
+  | PreviousTargetHasCardUnderCondition
   | TriggerSubjectHadCardUnderCondition
   | PutCardUnderSelfThisTurnCondition
   | PutCardUnderAnyThisTurnCondition

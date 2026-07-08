@@ -1,74 +1,82 @@
 #!/usr/bin/env bun
 /**
- * Scrape every card from the Wilds Unknown card gallery on
- * https://www.disneylorcana.com and write a single JSON file.
+ * Scrape every card from the official Disney Lorcana card gallery and write a
+ * single JSON file for one set.
+ * The gallery is currently a TanStack Start app. Its SSR stream embeds the full
+ * card list in a script tag; evaluating that stream with mocked browser globals
+ * gives us the same card records the client hydrates, without a headless browser
+ * or per-card requests.
  *
- * The gallery is a Nuxt 3 SPA, but the SSR payload (a devalue-encoded
- * array under <script id="__NUXT_DATA__">) already contains the full
- * card list with every field the modal exposes — no headless browser
- * or per-card requests required.
+ * Usage: bun scripts/scrape-wilds-unknown-gallery.ts [setId] [outputSlug]
  */
 
 import fs from "node:fs";
 import path from "node:path";
 
-const GALLERY_URL = "https://www.disneylorcana.com/en-US/product/wilds-unknown/card-gallery";
-const OUTPUT_PATH = path.resolve(__dirname, "../data/inputs/wilds-unknown-gallery.json");
+const DEFAULT_SET_ID = "set13";
+const DEFAULT_OUTPUT_SLUG = "attack-of-the-vine";
+const setId = process.argv[2] || DEFAULT_SET_ID;
+const outputSlug = process.argv[3] || (setId === DEFAULT_SET_ID ? DEFAULT_OUTPUT_SLUG : setId);
+const GALLERY_URL = "https://cards.disneylorcana.com/en-US/";
+const TRUSTED_GALLERY_ORIGIN = "https://cards.disneylorcana.com";
+const OUTPUT_PATH = path.resolve(__dirname, `../data/inputs/${outputSlug}-gallery.json`);
 const USER_AGENT =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
 
-// Nuxt wraps reactive values via devalue "reducers". When we hydrate
-// the payload we transparently unwrap these to their inner value.
-const REDUCER_TAGS = new Set([
-  "ShallowReactive",
-  "Reactive",
-  "Ref",
-  "ShallowRef",
-  "EmptyRef",
-  "NuxtError",
-  "Pinia",
-]);
+function extractTanStackGalleryCards(html: string): Record<string, unknown>[] {
+  const match = html.match(
+    /<script class="\$tsr" id="\$tsr-stream-barrier">([\s\S]*?)<\/script>/,
+  );
+  if (!match?.[1]) {
+    throw new Error('Could not find <script class="$tsr" id="$tsr-stream-barrier"> in page');
+  }
 
-function hydratePayload(entries: unknown[]): unknown {
-  const cache = new Map<number, unknown>();
-  const visit = (idx: number): unknown => {
-    if (cache.has(idx)) return cache.get(idx);
-    const node = entries[idx];
-    if (node === null || typeof node !== "object") {
-      cache.set(idx, node);
-      return node;
-    }
-    if (Array.isArray(node)) {
-      if (typeof node[0] === "string" && REDUCER_TAGS.has(node[0])) {
-        const unwrapped = visit(node[1] as number);
-        cache.set(idx, unwrapped);
-        return unwrapped;
-      }
-      const out: unknown[] = [];
-      cache.set(idx, out);
-      for (const ref of node) out.push(visit(ref as number));
-      return out;
-    }
-    const out: Record<string, unknown> = {};
-    cache.set(idx, out);
-    for (const [k, v] of Object.entries(node as Record<string, number>)) {
-      out[k] = visit(v);
-    }
-    return out;
-  };
-  return visit(0);
+  const self: { $_TSR?: { router?: { matches?: Array<{ l?: unknown }> } } } = {};
+  const document = { currentScript: { remove() {} } };
+  // Trust boundary: this executes the official Disney Lorcana gallery stream.
+  // Do not point this scraper at mirrors, cached copies, or user-controlled HTML.
+  Function("self", "document", `with (self) { ${match[1]} }`)(self, document);
+
+  const cards = self.$_TSR?.router?.matches
+    ?.map((route) => route.l)
+    .find(
+      (loaderData): loaderData is { cardsData: { cards: Record<string, unknown>[] } } =>
+        typeof loaderData === "object" &&
+        loaderData !== null &&
+        Array.isArray(
+          (loaderData as { cardsData?: { cards?: unknown } }).cardsData?.cards,
+        ),
+    )?.cardsData.cards;
+
+  if (!cards) {
+    throw new Error("Hydrated TanStack payload missing cardsData.cards");
+  }
+
+  return cards;
 }
 
-function extractNuxtData(html: string): unknown[] {
-  const match = html.match(/id="__NUXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
-  if (!match) {
-    throw new Error('Could not find <script id="__NUXT_DATA__"> in page');
-  }
-  const parsed = JSON.parse(match[1]) as unknown;
-  if (!Array.isArray(parsed)) {
-    throw new Error("__NUXT_DATA__ payload is not an array");
-  }
-  return parsed;
+function toCardSetIds(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((entry) => {
+    if (typeof entry === "string") return [entry];
+    if (
+      entry &&
+      typeof entry === "object" &&
+      typeof (entry as { id?: unknown }).id === "string"
+    ) {
+      return [(entry as { id: string }).id];
+    }
+    return [];
+  });
+}
+
+function toPluralCardType(value: unknown): CardRecord["cardType"] {
+  if (value === "character" || value === "characters") return "characters";
+  if (value === "action" || value === "actions") return "actions";
+  if (value === "item" || value === "items") return "items";
+  if (value === "location" || value === "locations") return "locations";
+  console.warn(`unknown card_type "${String(value)}" - classifying as actions`);
+  return "actions";
 }
 
 interface CardRecord {
@@ -111,7 +119,7 @@ function normalize(raw: Record<string, unknown>): CardRecord {
     id: raw.culture_invariant_id as number,
     name: str(raw.name),
     subtitle: optStr(raw.subtitle),
-    cardType: str(raw.card_type),
+    cardType: toPluralCardType(raw.card_type),
     inkColors: arr<string>(raw.magic_ink_colors),
     inkCost: raw.ink_cost as number,
     inkConvertible: Boolean(raw.ink_convertible),
@@ -127,7 +135,7 @@ function normalize(raw: Record<string, unknown>): CardRecord {
     additionalInfo: arr(raw.additional_info),
     author: str(raw.author),
     cardIdentifier: str(raw.card_identifier),
-    cardSets: arr<string>(raw.card_sets),
+    cardSets: toCardSetIds(raw.card_sets),
     deckBuildingId: str(raw.deck_building_id),
     searchableKeywords: arr<string>(raw.searchable_keywords),
     setRotationState: str(raw.set_rotation_state),
@@ -138,6 +146,11 @@ function normalize(raw: Record<string, unknown>): CardRecord {
 }
 
 async function main(): Promise<void> {
+  const galleryOrigin = new URL(GALLERY_URL).origin;
+  if (galleryOrigin !== TRUSTED_GALLERY_ORIGIN) {
+    throw new Error(`Refusing to evaluate gallery stream from untrusted origin ${galleryOrigin}`);
+  }
+
   console.log(`Fetching ${GALLERY_URL}`);
   const res = await fetch(GALLERY_URL, {
     headers: { "User-Agent": USER_AGENT, Accept: "text/html" },
@@ -147,30 +160,19 @@ async function main(): Promise<void> {
   }
   const html = await res.text();
 
-  const entries = extractNuxtData(html);
-  const root = hydratePayload(entries) as {
-    data?: { cards?: Record<string, Record<string, unknown>[]> };
-  };
-
-  const buckets = root.data?.cards;
-  if (!buckets || typeof buckets !== "object") {
-    throw new Error("Hydrated payload missing data.cards");
-  }
-
   const seen = new Set<number>();
   const cards: CardRecord[] = [];
-  for (const [bucket, list] of Object.entries(buckets)) {
-    if (!Array.isArray(list)) continue;
-    for (const raw of list) {
-      const id = raw.culture_invariant_id as number;
-      if (typeof id !== "number") {
-        console.warn(`  ⚠️ ${bucket}: card without culture_invariant_id`);
-        continue;
-      }
-      if (seen.has(id)) continue;
-      seen.add(id);
-      cards.push(normalize(raw));
+  for (const raw of extractTanStackGalleryCards(html)) {
+    const id = raw.culture_invariant_id as number;
+    if (typeof id !== "number") {
+      console.warn("  ⚠️ card without culture_invariant_id");
+      continue;
     }
+    const cardSets = toCardSetIds(raw.card_sets);
+    if (!cardSets.includes(setId)) continue;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    cards.push(normalize(raw));
   }
 
   cards.sort((a, b) => {

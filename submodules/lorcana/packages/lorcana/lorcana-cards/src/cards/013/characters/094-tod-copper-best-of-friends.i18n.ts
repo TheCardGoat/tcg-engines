@@ -31,8 +31,7 @@ export const todCopperBestOfFriendsI18n: Record<Languages, I18nProperties> = {
     version: "Deux copains",
     text: [
       {
-        title:
-          "<Alter> 2 {I} (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages nommé Rox ou Rouky.)",
+        title: "<Alter> 2 {I}",
       },
       {
         title: "<Insaisissable>",

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import {
+  getDeckFormats,
   validateDeckForFormat,
   LORCANA_FORMATS,
   type CardFormatData,
@@ -690,6 +691,18 @@ describe("validateDeckForFormat", () => {
       const result = validateDeckForFormat(deckCards, lookup, LORCANA_FORMATS["core-constructed"]);
 
       expect(result.rules.find((r) => r.kind === "CARD_SET")?.passed).toBe(true);
+    });
+
+    it("getDeckFormats can limit detection to supplied formats", () => {
+      const lookup = buildLookup({
+        ssk: card("ssk", { sets: ["SSK"] as LorcanaSetCode[] }),
+      });
+      const deckCards: DeckCard[] = [{ cardId: "ssk", quantity: 1 }];
+      const core = coreFormat({ minDeckSize: 1 });
+      const history = historyFormat({ allowedSets: ["TFC"] as LorcanaSetCode[], minDeckSize: 1 });
+
+      expect(getDeckFormats(deckCards, lookup, [core, history])).toEqual(["core-constructed"]);
+      expect(getDeckFormats(deckCards, lookup, [history])).toEqual([]);
     });
 
     it("attack-of-the-vine validates the new rotation window plus Set 13", () => {

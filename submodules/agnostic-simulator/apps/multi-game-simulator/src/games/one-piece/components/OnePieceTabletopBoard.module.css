@@ -118,7 +118,8 @@
 .phaseRibbon {
   position: absolute;
   top: 50%;
-  left: 10px;
+  right: calc(clamp(18px, 2vw, 34px) + 1vw);
+  left: auto;
   z-index: 5;
   display: inline-flex;
   gap: 10px;
@@ -770,6 +771,83 @@
   border: 1px solid rgb(255 255 255 / 38%);
   border-radius: 8px;
   box-shadow: 0 10px 20px rgb(7 18 28 / 18%);
+}
+
+.mulliganModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 22;
+  display: grid;
+  width: min(360px, calc(100% - 48px));
+  gap: 12px;
+  padding: 18px;
+  color: oklch(0.97 0.012 84);
+  background:
+    linear-gradient(180deg, rgb(45 35 28 / 96%), rgb(23 18 15 / 94%)), oklch(0.19 0.03 65);
+  border: 1px solid rgb(255 244 220 / 26%);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 14%),
+    0 24px 60px rgb(8 10 12 / 42%);
+  transform: translate(-50%, -50%);
+}
+
+.mulliganEyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--game-accent);
+  text-transform: uppercase;
+}
+
+.mulliganModal h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 950;
+  line-height: 1.1;
+}
+
+.mulliganModal p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.45;
+  color: oklch(0.88 0.018 84);
+}
+
+.mulliganActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.joKenPoActions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.mulliganPrimary,
+.mulliganSecondary {
+  width: 100% !important;
+  height: 42px !important;
+  min-height: 42px;
+  padding: 0 12px;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  line-height: 1.1 !important;
+  white-space: nowrap;
+}
+
+.mulliganSecondary {
+  color: oklch(0.96 0.014 84) !important;
+  background: rgb(255 244 220 / 12%) !important;
+  border-color: rgb(255 244 220 / 34%) !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%) !important;
 }
 
 .turnEndControl {
@@ -1519,11 +1597,26 @@
   box-shadow: 0 18px 40px oklch(0.08 0.02 255 / 42%);
 }
 
+.floatingSettings {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 30;
+  width: min(280px, calc(100vw - 36px));
+  padding: 10px 12px;
+  color: oklch(0.96 0.014 84);
+  background: oklch(0.14 0.028 255 / 94%);
+  border: 1px solid oklch(0.62 0.055 250 / 48%);
+  border-radius: 8px;
+  box-shadow: 0 18px 40px oklch(0.08 0.02 255 / 34%);
+}
+
 .floatingLog[data-expanded="false"] {
-  width: auto;
+  width: min(280px, calc(100vw - 28px));
 }
 
 .floatingLogToggle {
+  width: 100%;
   gap: 8px;
   justify-content: flex-start;
   min-height: 38px;
@@ -1550,7 +1643,7 @@
 }
 
 .floatingLog[data-expanded="false"] .floatingLogToggle strong {
-  margin-left: 0;
+  margin-left: auto;
 }
 
 .floatingLogBody {
@@ -1558,11 +1651,38 @@
   min-height: 0;
   padding: 8px;
   overflow: hidden;
+  scrollbar-color: oklch(0.21 0.035 255 / 86%) oklch(0.9 0.02 84 / 24%);
+  scrollbar-width: auto;
   border-top: 1px solid oklch(0.62 0.055 250 / 32%);
 }
 
 .floatingLogBody :global([data-testid="event-log"]) {
   height: 100%;
+}
+
+.floatingLogBody :global(*) {
+  scrollbar-color: oklch(0.21 0.035 255 / 86%) oklch(0.9 0.02 84 / 24%);
+  scrollbar-width: auto;
+}
+
+.floatingLogBody :global(*::-webkit-scrollbar) {
+  width: 12px;
+  height: 12px;
+}
+
+.floatingLogBody :global(*::-webkit-scrollbar-track) {
+  background: oklch(0.9 0.02 84 / 22%);
+  border-radius: 999px;
+}
+
+.floatingLogBody :global(*::-webkit-scrollbar-thumb) {
+  background: oklch(0.21 0.035 255 / 88%);
+  border: 2px solid oklch(0.9 0.02 84 / 18%);
+  border-radius: 999px;
+}
+
+.floatingLogBody :global(*::-webkit-scrollbar-thumb:hover) {
+  background: oklch(0.16 0.04 255 / 96%);
 }
 
 @media (width <= 1180px) {
@@ -1616,10 +1736,10 @@
 
 .playerMat[data-seat="player"] {
   grid-template-columns:
-    minmax(92px, 0.52fr) minmax(112px, 0.62fr) minmax(150px, 0.74fr)
-    minmax(150px, 0.88fr) minmax(0, 2.8fr) minmax(126px, 0.72fr)
+    minmax(101px, 0.57fr) minmax(112px, 0.62fr) minmax(238px, 1.19fr)
+    minmax(164px, 0.96fr) minmax(0, 2.62fr) minmax(113px, 0.65fr)
     minmax(132px, 0.78fr);
-  grid-template-rows: minmax(0, 1fr) minmax(176px, 0.5fr);
+  grid-template-rows: minmax(0, 1.03fr) minmax(158px, 0.46fr);
   grid-template-areas:
     "life command characters characters characters deck deck"
     "trash stage don hand hand hand action";
@@ -1627,10 +1747,10 @@
 
 .playerMat[data-seat="opponent"] {
   grid-template-columns:
-    minmax(92px, 0.52fr) minmax(112px, 0.62fr) minmax(150px, 0.74fr)
-    minmax(150px, 0.88fr) minmax(0, 2.8fr) minmax(126px, 0.72fr)
+    minmax(101px, 0.57fr) minmax(112px, 0.62fr) minmax(164px, 0.82fr)
+    minmax(164px, 0.96fr) minmax(220px, 2.72fr) minmax(113px, 0.65fr)
     minmax(132px, 0.78fr);
-  grid-template-rows: minmax(130px, 0.42fr) minmax(0, 1fr);
+  grid-template-rows: minmax(122px, 0.39fr) minmax(0, 1.03fr);
   grid-template-areas:
     "action hand hand hand don stage trash"
     "deck deck characters characters characters command life";
@@ -1655,9 +1775,9 @@
 
 .lifeCard {
   position: absolute;
-  top: calc(8px + ((100% - 118px) * var(--life-index) / var(--life-total)));
+  top: calc(10px + ((100% - 142px) * var(--life-index) / var(--life-total)));
   left: 50%;
-  width: min(76px, calc(100% - 18px));
+  width: min(84px, calc(100% - 12px));
   aspect-ratio: 5 / 7;
   border: 2px solid rgb(228 199 92 / 74%);
   border-radius: 7px;
@@ -1718,11 +1838,11 @@
 }
 
 .playerMat[data-seat="opponent"] .lifeCard {
-  top: calc(8px + ((100% - 118px) * (var(--life-total) - var(--life-index)) / var(--life-total)));
+  top: calc(10px + ((100% - 142px) * (var(--life-total) - var(--life-index)) / var(--life-total)));
 }
 
 .playerMat[data-seat="player"] .lifeCard {
-  top: calc(8px + ((100% - 118px) * (var(--life-total) - var(--life-index)) / var(--life-total)));
+  top: calc(10px + ((100% - 142px) * (var(--life-total) - var(--life-index)) / var(--life-total)));
   z-index: calc(10 + var(--life-index));
 }
 
@@ -1740,6 +1860,9 @@
 
 .commandRail {
   grid-area: command;
+  align-self: stretch;
+  height: 100%;
+  align-items: stretch;
   grid-template-rows: minmax(0, 1fr);
   padding: 0;
   overflow: visible;
@@ -1759,19 +1882,30 @@
 
 .donSlot .donMeter {
   width: 100%;
-  min-height: 86px;
+  min-height: min(100%, 158px);
+  overflow: visible;
 }
 
 .playerMat[data-seat="opponent"] .donSlot {
-  justify-self: center;
-  width: min(100%, 150px);
+  justify-self: end;
+  width: min(100%, 228px);
+}
+
+.playerMat[data-seat="player"] .donSlot {
+  justify-self: stretch;
+  width: min(125%, 298px);
 }
 
 .stageSlot .singleZone,
-.deckSlot :global(.deck-stack-zone),
 .trashSlot :global(.discard-pile-zone) {
   width: min(100%, 132px);
   height: min(100%, 172px);
+  min-height: 0;
+}
+
+.deckSlot :global(.deck-stack-zone) {
+  width: min(100%, 119px);
+  height: min(100%, 155px);
   min-height: 0;
 }
 
@@ -1788,6 +1922,10 @@
     0 8px 18px rgb(21 16 12 / 12%) !important;
 }
 
+.trashSlot :global(.discard-pile-zone) {
+  width: min(100%, 145px);
+}
+
 .stageSlot .singleZone {
   width: min(100%, 144px);
 }
@@ -1795,12 +1933,23 @@
 .commandLeader {
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr) auto;
-  align-self: center;
+  align-self: stretch;
   justify-self: center;
-  width: min(100%, 132px);
-  height: min(100%, 172px);
+  width: min(100%, 164px);
+  height: 100%;
+  min-height: 100%;
   gap: 4px;
   padding: 8px;
+}
+
+.playerMat[data-seat="opponent"] .commandLeader {
+  min-height: 100%;
+}
+
+.playerMat[data-seat="opponent"] .commandRail {
+  height: 100%;
+  align-self: stretch;
+  grid-template-rows: minmax(0, 1fr);
 }
 
 .commandLeader .commandHeader,
@@ -1818,6 +1967,11 @@
 
 .characterZone {
   padding: 12px 18px;
+  min-height: 103%;
+}
+
+.characterZoneCards :global(.empty-zone) {
+  display: none;
 }
 
 .characterZoneCards :global(.card-row) {
@@ -1834,27 +1988,37 @@
   overflow: visible;
 }
 
+.playerMat[data-seat="player"] .handDock {
+  justify-self: center;
+  width: min(76%, 620px);
+  transform: translate(calc(34px + 5%), 2vh);
+}
+
+.playerMat[data-seat="opponent"] .handDock {
+  transform: translateX(15%);
+}
+
 .handDock :global(.card-row) {
   align-items: end;
   justify-content: center;
-  height: 164px;
+  height: 140px;
   overflow: visible;
 }
 
 .handDock :global(.card-row .sim-card-face) {
-  width: 126px !important;
-  height: 177px !important;
+  width: 107px !important;
+  height: 150px !important;
   min-height: 0 !important;
 }
 
 .playerMat[data-seat="opponent"] .handDock :global(.card-row) {
   align-items: start;
-  height: 100px;
+  height: 85px;
 }
 
 .playerMat[data-seat="opponent"] .handDock :global(.card-row .sim-card-face) {
-  width: 84px !important;
-  height: 94px !important;
+  width: 71px !important;
+  height: 80px !important;
   min-height: 0 !important;
 }
 
@@ -1935,6 +2099,222 @@
   min-height: 0 !important;
 }
 
+.stageSlot :global(.empty-zone),
+.trashSlot :global(.empty-zone) {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 8px;
+  color: oklch(0.95 0.014 84);
+  background: rgb(23 18 15 / 20%);
+  border-color: rgb(255 244 220 / 22%);
+  box-shadow: inset 0 0 0 1px rgb(255 244 220 / 8%);
+}
+
+.stageSlot :global(.empty-zone span),
+.trashSlot :global(.empty-zone span) {
+  font-size: 12px;
+  font-weight: 900;
+  color: oklch(0.95 0.014 84 / 86%);
+  text-shadow: 0 2px 7px rgb(6 8 11 / 44%);
+}
+
+.donMeter {
+  position: relative;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  align-content: stretch;
+  padding: 6px 8px 10px;
+}
+
+.donAreaCard {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  padding: 6px 6px 14px;
+  overflow: visible;
+  color: rgb(35 28 22 / 86%);
+  background: rgb(23 18 15 / 17%);
+  border: 1px solid rgb(48 38 28 / 20%);
+  border-radius: 7px;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 22%);
+}
+
+.donAreaCard[data-kind="deck"] {
+  grid-template-rows: auto minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
+}
+
+.playerMat[data-seat="opponent"] .donAreaCard[data-kind="rested"] {
+  order: 1;
+}
+
+.playerMat[data-seat="opponent"] .donAreaCard[data-kind="active"] {
+  order: 2;
+}
+
+.playerMat[data-seat="opponent"] .donAreaCard[data-kind="deck"] {
+  order: 3;
+}
+
+.playerMat[data-seat="opponent"] .donMeterSummary {
+  left: 8px;
+  right: auto;
+}
+
+.donAreaLabel {
+  overflow: hidden;
+  font-size: 9px;
+  font-weight: 950;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.donDeckStack {
+  position: relative;
+  align-self: center;
+  width: min(68px, calc(100% - 8px));
+  aspect-ratio: 63 / 88;
+}
+
+.donDeckStack span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgb(228 199 92 / 74%);
+  border-radius: 4px;
+  background:
+    radial-gradient(
+      circle at 50% 44%,
+      transparent 0 20%,
+      rgb(212 181 77 / 72%) 21% 22%,
+      transparent 23%
+    ),
+    radial-gradient(
+      circle at 50% 44%,
+      transparent 0 32%,
+      rgb(212 181 77 / 52%) 33% 34%,
+      transparent 35%
+    ),
+    linear-gradient(135deg, transparent 46%, rgb(212 181 77 / 58%) 47% 49%, transparent 50%),
+    linear-gradient(90deg, rgb(11 38 78), rgb(16 52 96));
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 16%),
+    0 5px 10px rgb(7 19 34 / 18%);
+}
+
+.donDeckStack span:nth-child(1) {
+  transform: translate(4px, -4px);
+  opacity: 0.48;
+}
+
+.donDeckStack span:nth-child(2) {
+  transform: translate(2px, -2px);
+  opacity: 0.72;
+}
+
+.donAreaCount,
+.donAreaCard[data-kind="deck"] strong {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  min-width: 24px;
+  height: 18px;
+  place-items: center;
+  padding: 0 5px;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1;
+  color: oklch(0.98 0.012 80);
+  background: rgb(35 28 22 / 86%);
+  border: 1px solid rgb(255 244 220 / 28%);
+  border-radius: 999px;
+  box-shadow: 0 5px 10px rgb(7 10 14 / 26%);
+  transform: translate(-50%, 50%);
+}
+
+.donAreaCardHeader {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.donAreaCardHeader strong {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  min-width: 22px;
+  height: 18px;
+  place-items: center;
+  padding: 0 5px;
+  font-size: 12px;
+  font-weight: 950;
+  line-height: 1;
+  color: oklch(0.98 0.012 80);
+  background: rgb(35 28 22 / 86%);
+  border: 1px solid rgb(255 244 220 / 28%);
+  border-radius: 999px;
+  box-shadow: 0 5px 10px rgb(7 10 14 / 26%);
+  transform: translate(-50%, 50%);
+}
+
+.donCardSlots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(28px, 1fr));
+  gap: 4px;
+  align-self: stretch;
+  align-items: center;
+}
+
+.donCardSlot {
+  display: block;
+  aspect-ratio: 63 / 88;
+  min-height: 50px;
+  border: 1px dashed rgb(255 244 220 / 38%);
+  border-radius: 4px;
+  background: rgb(255 244 220 / 10%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 12%);
+}
+
+.donCardSlot[data-state="active"],
+.donCardSlot[data-state="rested"] {
+  border-style: solid;
+  border-color: rgb(228 199 92 / 74%);
+  background:
+    radial-gradient(
+      circle at 50% 44%,
+      transparent 0 20%,
+      rgb(212 181 77 / 72%) 21% 22%,
+      transparent 23%
+    ),
+    linear-gradient(135deg, transparent 46%, rgb(212 181 77 / 58%) 47% 49%, transparent 50%),
+    linear-gradient(90deg, rgb(11 38 78), rgb(16 52 96));
+}
+
+.donCardSlot[data-state="rested"] {
+  transform: rotate(90deg) scale(0.82);
+}
+
+.donMeterSummary {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  font-size: 11px;
+  font-weight: 950;
+  line-height: 1;
+  color: var(--game-accent);
+}
+
 .deckSlot :global(.sim-card-face),
 .trashSlot :global(.sim-card-face),
 .stageSlot :global(.sim-card-face),
@@ -1961,74 +2341,29 @@
   top: 50%;
   right: clamp(28px, 2vw, 40px);
   z-index: 24;
-  display: grid;
-  grid-template-columns: 108px minmax(0, 1fr);
-  gap: 12px;
-  align-items: center;
-  width: min(330px, 25vw);
-  min-height: 166px;
-  padding: 12px;
+  display: block;
+  width: clamp(242px, 17.6vw, 286px);
+  aspect-ratio: 63 / 88;
+  padding: 0;
   pointer-events: none;
-  color: rgb(35 28 22 / 92%);
-  background: rgb(250 251 250 / 94%);
-  border: 1px solid rgb(48 38 28 / 18%);
+  background: rgb(20 17 14 / 92%);
+  border: 1px solid rgb(255 244 220 / 28%);
   border-radius: 8px;
-  box-shadow: 0 18px 40px rgb(16 18 20 / 22%);
+  box-shadow: 0 22px 52px rgb(16 18 20 / 38%);
   transform: translateY(-50%);
 }
 
 .hoverCardPreviewImage {
-  width: 108px;
-  aspect-ratio: 5 / 7;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 6px;
-  box-shadow: 0 10px 22px rgb(16 18 20 / 22%);
-}
-
-.hoverCardPreviewText {
-  display: grid;
-  gap: 6px;
-  min-width: 0;
-}
-
-.hoverCardPreviewText span {
-  font-size: 10px;
-  font-weight: 900;
-  line-height: 1;
-  color: var(--game-accent);
-  text-transform: uppercase;
-}
-
-.hoverCardPreviewText strong {
-  overflow: hidden;
-  font-size: 18px;
-  font-weight: 950;
-  line-height: 1.05;
-  text-overflow: ellipsis;
-}
-
-.hoverCardPreviewText p,
-.hoverCardPreviewText small {
-  margin: 0;
-  overflow: hidden;
-  color: rgb(35 28 22 / 68%);
-  text-overflow: ellipsis;
-}
-
-.hoverCardPreviewText p {
-  font-size: 13px;
-  font-weight: 750;
-  line-height: 1.25;
-}
-
-.hoverCardPreviewText small {
-  font-size: 11px;
-  line-height: 1.25;
+  border-radius: 7px;
 }
 
 .tabletopControls {
   top: auto;
-  right: clamp(28px, 2vw, 38px);
+  right: clamp(76px, 6vw, 96px);
   bottom: clamp(24px, 1.7vw, 34px);
   grid-area: action;
   transform: none;

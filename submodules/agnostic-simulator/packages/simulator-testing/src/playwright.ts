@@ -8,6 +8,7 @@ import type {
 export interface PlaywrightLocatorLike {
   locator(selector: string): PlaywrightLocatorLike;
   first(): PlaywrightLocatorLike;
+  evaluateAll<R>(pageFunction: (elements: Element[], arg: string) => R, arg: string): Promise<R>;
   count(): Promise<number>;
   click(options?: { force?: boolean }): Promise<void>;
   dispatchEvent(type: string): Promise<void>;
@@ -101,6 +102,13 @@ class PlaywrightDomElement implements SimulatorDomElement {
 
   getAttribute(name: string): Promise<string | null> {
     return this.locatorRef.getAttribute(name);
+  }
+
+  getAttributeAll(name: string): Promise<ReadonlyArray<string | null>> {
+    return this.locatorRef.evaluateAll(
+      (elements, attributeName) => elements.map((element) => element.getAttribute(attributeName)),
+      name,
+    );
   }
 
   async textContent(): Promise<string> {

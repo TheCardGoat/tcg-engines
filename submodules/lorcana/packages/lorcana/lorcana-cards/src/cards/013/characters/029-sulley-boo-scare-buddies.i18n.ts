@@ -6,9 +6,7 @@ export const sulleyBooScareBuddiesI18n: Record<Languages, I18nProperties> = {
     version: "Scare Buddies",
     text: [
       {
-        title: "Combo Shift 4 {}",
-        description:
-          "(You may pay 4 {} to play this on top of one of your characters named Sulley, one named Boo, or one of each.)",
+        title: "Combo Shift 4 {I}",
       },
       {
         title: "THE POWER OF FRIENDSHIP",
@@ -37,8 +35,7 @@ export const sulleyBooScareBuddiesI18n: Record<Languages, I18nProperties> = {
     version: "Amis de terreur",
     text: [
       {
-        title:
-          "<Alter Combo> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Sulli ou Bouh, ou sur un de chaque.)",
+        title: "<Alter Combo> 4 {I}",
       },
       {
         title: "Le pouvoir de l'amitié",

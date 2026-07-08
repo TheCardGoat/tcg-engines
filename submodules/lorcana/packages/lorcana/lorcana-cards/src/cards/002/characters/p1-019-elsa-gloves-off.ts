@@ -35,7 +35,7 @@ export const elsaGlovesOffP1: CharacterCard = {
     lorcast: "crd_07b1ad34ad4540b3a65c189dab2dc805",
     tcgPlayer: "649992",
   },
-  text: "<Challenger> +3",
+  text: "Challenger +3",
   classifications: ["Storyborn", "Hero", "Queen", "Sorcerer"],
   abilities: [challenger(3)],
   i18n: elsaGlovesOffP1I18n,

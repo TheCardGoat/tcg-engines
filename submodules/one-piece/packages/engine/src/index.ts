@@ -27,6 +27,8 @@ export type {
   CardZone,
   ChoiceKind,
   EngineActor,
+  EngineAnimation,
+  EngineAnimationData,
   EngineCapabilityIssue,
   EngineCommand,
   EngineEvent,

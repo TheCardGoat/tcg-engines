@@ -87,4 +87,27 @@ describe("count", () => {
         .triggerAmount,
     ).toBe(1);
   });
+
+  it("counts discarded item cards", () => {
+    const ctx = createTestContext({
+      definitions: {
+        i1: { id: "i1", cardType: "item" },
+        c1: { id: "c1", cardType: "character" },
+      },
+    });
+    const effect: CountEffect = { type: "count", what: "discarded-item-cards" };
+    const resolutionInput = { eventSnapshot: { discardedCardIds: ["i1", "c1"] } } as const;
+
+    resolveCountEffect(
+      ctx,
+      createCardPlayed({ cardId: "src", playerId: PLAYER_ONE }),
+      effect,
+      resolutionInput as never,
+    );
+
+    expect(
+      (resolutionInput as { eventSnapshot: { triggerAmount?: number } }).eventSnapshot
+        .triggerAmount,
+    ).toBe(1);
+  });
 });

@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op05NicoRobin010 } from "../../OP05/characters/010-nico-robin.ts";
 import { prb01NicoRobinFullArt010I18n } from "./010-nico-robin-full-art.i18n.ts";
 
 export const prb01NicoRobinFullArt010: CharacterCard = {
-  id: "OP05-010",
-  canonicalId: "OP05-010",
+  ...op05NicoRobin010,
+  id: "OP05-010_p3",
   slug: "nico-robin-full-art",
   name: "Nico Robin (Full Art)",
   printings: [
     {
-      id: "OP05-010",
-      artId: "OP05-010",
+      id: "OP05-010_p3",
+      artId: "OP05-010_p3",
       setCode: "PRB01",
       collectorNumber: "010",
       rarity: "UC",
@@ -32,15 +33,8 @@ export const prb01NicoRobinFullArt010: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP05-010_r1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["red"],
   rarity: "UC",
   setId: "PRB01",
-  cost: 1,
-  power: 2000,
-  counter: 1000,
-  traits: ["Straw Hat Crew"],
-  attribute: "strike",
   artVariants: [
     {
       type: "other",
@@ -53,33 +47,5 @@ export const prb01NicoRobinFullArt010: CharacterCard = {
       imageId: "OP05-010_r1",
     },
   ],
-  effect: "[On Play] K.O. up to 1 of your opponent's Characters with 1000 power or less.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "power",
-                  comparison: "lte",
-                  value: 1000,
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01NicoRobinFullArt010I18n,
 };

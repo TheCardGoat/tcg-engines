@@ -37,6 +37,7 @@ export interface ShiftRules {
   discardCost?: ShiftDiscardCost;
   rawLabel?: string;
   targetMode: ShiftTargetMode;
+  targetCardType?: "character" | "item";
   temporaryShift?: boolean;
   multiShift?: {
     targetNames: string[];
@@ -653,6 +654,7 @@ export function getShiftRules(cardDef: LorcanaCardDefinition | undefined): Shift
     temporaryShift: shiftKeyword?.temporaryShift === true,
     multiShift: shiftKeyword?.multiShift,
     unsupportedReason,
+    targetCardType: shiftKeyword?.shiftTargetCardType ?? "character",
     targetMode: resolveShiftTargetMode(cardDef, shiftKeyword, fallbackLabel),
   };
 }
@@ -691,7 +693,7 @@ export function resolveShiftTargetCandidates(
     const { classification } = shiftRules.targetMode;
     const classificationTargets = candidates.filter((cardId) => {
       const candidate = getCardDefinition(cardId);
-      if (candidate?.cardType !== "character") {
+      if (candidate?.cardType !== (shiftRules.targetCardType ?? "character")) {
         return false;
       }
       return (
@@ -707,7 +709,7 @@ export function resolveShiftTargetCandidates(
   const targetNames = resolveShiftTargetNames(name);
   const nameTargets = candidates.filter((cardId) => {
     const candidate = getCardDefinition(cardId);
-    if (candidate?.cardType !== "character") {
+    if (candidate?.cardType !== (shiftRules.targetCardType ?? "character")) {
       return false;
     }
     // Mimicry: character is treated as having any name for Shift targeting

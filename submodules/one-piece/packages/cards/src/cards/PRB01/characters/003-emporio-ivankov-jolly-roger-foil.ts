@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op06EmporioIvankov003 } from "../../OP06/characters/003-emporio-ivankov.ts";
 import { prb01EmporioIvankovJollyRogerFoil003I18n } from "./003-emporio-ivankov-jolly-roger-foil.i18n.ts";
 
 export const prb01EmporioIvankovJollyRogerFoil003: CharacterCard = {
-  id: "OP06-003",
-  canonicalId: "OP06-003",
+  ...op06EmporioIvankov003,
+  id: "OP06-003_p2",
   slug: "emporio-ivankov-jolly-roger-foil",
   name: "Emporio.Ivankov (Jolly Roger Foil)",
   printings: [
     {
-      id: "OP06-003",
-      artId: "OP06-003",
+      id: "OP06-003_p2",
+      artId: "OP06-003_p2",
       setCode: "PRB01",
       collectorNumber: "003",
       rarity: "UC",
@@ -32,14 +33,8 @@ export const prb01EmporioIvankovJollyRogerFoil003: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-003_r1.png",
     },
   ],
-  cardType: "character",
-  color: ["red"],
   rarity: "UC",
   setId: "PRB01",
-  cost: 5,
-  power: 6000,
-  traits: ["Revolutionary Army"],
-  attribute: "special",
   artVariants: [
     {
       type: "other",
@@ -52,45 +47,5 @@ export const prb01EmporioIvankovJollyRogerFoil003: CharacterCard = {
       imageId: "OP06-003_r1",
     },
   ],
-  effect:
-    "[On Play] Look at 3 cards from the top of your deck and play up to 1 [Revolutionary Army] type Character card with 5000 power or less. Then, place the rest at the bottom of your deck in any order.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "search",
-            lookCount: 3,
-            source: {
-              player: "self",
-              zone: "deck",
-            },
-            revealCount: {
-              amount: 1,
-              upTo: true,
-            },
-            revealFilters: [
-              {
-                filter: "power",
-                comparison: "lte",
-                value: 5000,
-              },
-              {
-                filter: "trait",
-                value: "Revolutionary Army",
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
-              },
-            ],
-            revealDestination: "character",
-            remainderPosition: "bottom",
-          },
-        ],
-      },
-    ],
-  },
   i18n: prb01EmporioIvankovJollyRogerFoil003I18n,
 };

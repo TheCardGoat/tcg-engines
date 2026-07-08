@@ -103,15 +103,15 @@
 }
 
 .resolvingProgram {
-  position: fixed;
+  position: absolute;
   z-index: 9001;
-  left: 10vw;
-  top: 50vh;
+  top: 50%;
+  right: clamp(58px, 6.8cqw, 92px);
   display: grid;
   justify-items: center;
   gap: 3px;
   width: clamp(96px, 7.3vw, 130px);
-  transform: translate(-50%, -50%);
+  transform: translateY(-50%);
   pointer-events: none;
   animation: resolving-program-enter 180ms ease-out;
 }
@@ -142,12 +142,12 @@
 @keyframes resolving-program-enter {
   from {
     opacity: 0;
-    transform: translate(-50%, -46%) scale(0.96);
+    transform: translateY(-46%) scale(0.96);
   }
 
   to {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translateY(-50%) scale(1);
   }
 }
 

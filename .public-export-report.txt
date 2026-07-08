@@ -1,8 +1,8 @@
 Public export generated from:
   private repository: /home/runner/work/the-card-goat-online/the-card-goat-online
-  private commit: 7faf2f63a6fcae04ad740647b7a0becc9f2da03a
-  export branch: public-sync/2026-W27
-  generated at: 2026-07-03T20:07:48Z
+  private commit: 25df8ca57d08ef87492a39f169dae5fc68a5d3d8
+  export branch: public-sync/2026-W28
+  generated at: 2026-07-06T00:45:15Z
 
 Allowlisted source:
   - submodules/agnostic-simulator

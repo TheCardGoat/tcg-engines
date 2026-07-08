@@ -17,8 +17,36 @@ export function commandFromDescriptor(
   descriptor: LegalCommandDescriptor,
 ): EngineCommand | null {
   switch (descriptor.type) {
+    case "chooseJoKenPo": {
+      const choice = descriptor.options?.[0]?.value;
+      if (choice !== "rock" && choice !== "paper" && choice !== "scissors") {
+        return null;
+      }
+      return { type: "chooseJoKenPo", seat, choice };
+    }
+    case "chooseFirstPlayer": {
+      const firstPlayer = descriptor.targetIds?.[0];
+      if (firstPlayer !== "north" && firstPlayer !== "south") {
+        return null;
+      }
+      return { type: "chooseFirstPlayer", seat, firstPlayer };
+    }
+    case "resolveJoKenPoTimeout": {
+      const other = seat === "south" ? "north" : "south";
+      const otherChose = state.setup.joKenPo.pendingSeats.includes(other);
+      return {
+        type: "resolveJoKenPoTimeout",
+        seat,
+        winner: otherChose ? other : randomItem(["south", "north"]),
+        reason: otherChose ? "onePlayerTimedOut" : "bothPlayersTimedOut",
+        elapsedMs: 30000,
+        timedOutSeats: otherChose ? [seat] : ["south", "north"],
+      };
+    }
     case "mulligan":
       return { type: "mulligan", seat };
+    case "keepHand":
+      return { type: "keepHand", seat };
     case "startGame":
       return { type: "startGame", seat };
     case "endTurn":
@@ -94,6 +122,17 @@ export const randomStrategy: OnePieceBotStrategy = (state, seat, legalCommands) 
 };
 
 export const passOnlyStrategy: OnePieceBotStrategy = (state, seat, legalCommands) => {
+  const joKenPo = legalCommands.find((c) => c.seat === seat && c.type === "chooseJoKenPo");
+  if (joKenPo) return commandFromDescriptor(state, seat, joKenPo);
+
+  const chooseFirstPlayer = legalCommands.find(
+    (c) => c.seat === seat && c.type === "chooseFirstPlayer",
+  );
+  if (chooseFirstPlayer) return commandFromDescriptor(state, seat, chooseFirstPlayer);
+
+  const keepHand = legalCommands.find((c) => c.seat === seat && c.type === "keepHand");
+  if (keepHand) return commandFromDescriptor(state, seat, keepHand);
+
   // Setup phase: must start game if first player
   const startGame = legalCommands.find((c) => c.seat === seat && c.type === "startGame");
   if (startGame) return commandFromDescriptor(state, seat, startGame);
@@ -204,8 +243,24 @@ export const greedyStrategy: OnePieceBotStrategy = (state, seat, legalCommands) 
           score = 10;
           break;
         }
+        case "chooseJoKenPo": {
+          score = 120;
+          break;
+        }
+        case "chooseFirstPlayer": {
+          score = 110;
+          break;
+        }
+        case "resolveJoKenPoTimeout": {
+          score = -1;
+          break;
+        }
         case "mulligan": {
           score = 50;
+          break;
+        }
+        case "keepHand": {
+          score = 40;
           break;
         }
         case "startGame": {
@@ -318,8 +373,24 @@ export const valueRankedStrategy: OnePieceBotStrategy = (state, seat, legalComma
           score = 5;
           break;
         }
+        case "chooseJoKenPo": {
+          score = 120;
+          break;
+        }
+        case "chooseFirstPlayer": {
+          score = 110;
+          break;
+        }
+        case "resolveJoKenPoTimeout": {
+          score = -1;
+          break;
+        }
         case "mulligan": {
           score = 30;
+          break;
+        }
+        case "keepHand": {
+          score = 25;
           break;
         }
         case "startGame": {

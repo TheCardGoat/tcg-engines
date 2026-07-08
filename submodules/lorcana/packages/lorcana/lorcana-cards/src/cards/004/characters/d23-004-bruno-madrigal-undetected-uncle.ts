@@ -37,7 +37,7 @@ export const brunoMadrigalUndetectedUncleD23: CharacterCard = {
   },
   text: [
     {
-      title: "<Evasive>",
+      title: "Evasive",
     },
     {
       title: "You Just Have to See It",

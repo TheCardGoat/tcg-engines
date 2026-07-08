@@ -1,8 +1,17 @@
 export { powhatansStaff } from "./036-powhatans-staff";
+export { brokenPod } from "./070-broken-pod";
 export { magicalHunnyStaff } from "./071-magical-hunny-staff";
+export { sourceOfTheVine } from "./072-source-of-the-vine";
+export { potato } from "./105-potato";
 export { myAdventureBook } from "./106-my-adventure-book";
+export { vinePod } from "./107-vine-pod";
 export { screamCanister } from "./139-scream-canister";
 export { bunchOfBalloons } from "./140-bunch-of-balloons";
+export { closetDoorPortal } from "./170-closet-door-portal";
+export { hanasInkcaster } from "./171-hanas-inkcaster";
+export { laughCanister } from "./172-laugh-canister";
 export { translationCollar } from "./173-translation-collar";
 export { bigBookOfHunny } from "./174-big-book-of-hunny";
 export { discardedArmor } from "./204-discarded-armor";
+export { theWeedwhacker } from "./205-the-weedwhacker";
+export { absorbingBloom } from "./206-absorbing-bloom";

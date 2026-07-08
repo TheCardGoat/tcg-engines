@@ -8,6 +8,7 @@ import classes from "./EddiesZone.module.css";
 
 interface EddieCardDisplay {
   cardId?: string;
+  definitionId?: string;
   spent?: boolean;
   /** When true, the card is rendered face-up (e.g. just sold this turn). */
   revealed?: boolean;
@@ -68,6 +69,7 @@ export function EddiesZone({
       className={`${classes.zone} ${opponent ? classes.opponent : ""} ${drop.isOver ? classes.dropOver : ""}`}
       data-testid="eddies-zone"
       data-zone-id={opponent ? "opp-eddieArea" : "p-eddieArea"}
+      data-sim-zone-id={opponent ? "opp-eddieArea" : "p-eddieArea"}
       data-side={side}
       data-count={count}
       data-card-count={cardCount}
@@ -80,6 +82,7 @@ export function EddiesZone({
         className={classes.counter}
         aria-label={`Eddies ${counterLabel}`}
         data-testid="eddies-counter"
+        data-sim-anchor-id={`${opponent ? "opp" : "p"}-eddies`}
         data-available={availableCount}
         data-total={totalCount}
         data-resource="eddies"
@@ -95,6 +98,10 @@ export function EddiesZone({
             data-testid="card"
             data-card-kind="card"
             data-entity-id={card.cardId}
+            data-instance-id={card.cardId}
+            data-definition-id={card.revealed ? card.definitionId : undefined}
+            data-card-name={card.revealed ? card.name : undefined}
+            data-sim-entity-id={card.cardId}
             data-face={card.revealed ? undefined : "hidden"}
             data-spent={card.spent ? "true" : "false"}
             data-revealed={card.revealed ? "true" : "false"}

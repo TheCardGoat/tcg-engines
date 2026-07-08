@@ -1,107 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { eb01Brook046 } from "../../EB01/characters/046-brook.ts";
 import { prb02BrookEb01046Reprint046I18n } from "./046-brook-eb01-046-reprint.i18n.ts";
 
 export const prb02BrookEb01046Reprint046: CharacterCard = {
-  id: "EB01-046",
-  canonicalId: "EB01-046",
+  ...eb01Brook046,
+  id: "EB01-046_r1",
   slug: "brook-eb01-046-reprint",
   name: "Brook - EB01-046 (Reprint)",
   printings: [
     {
-      id: "EB01-046",
-      artId: "EB01-046",
+      id: "EB01-046_r1",
+      artId: "EB01-046_r1",
       setCode: "PRB02",
       collectorNumber: "046",
       rarity: "SR",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/EB01-046_r1.jpg",
     },
   ],
-  cardType: "character",
-  color: ["black"],
   rarity: "SR",
   setId: "PRB02",
-  cost: 3,
-  power: 4000,
-  counter: 1000,
-  traits: ["Straw Hat Crew"],
-  attribute: "slash",
-  effect:
-    "[On Play]/[When Attacking] Give up to 1 of your opponent's Characters -1 cost during this turn. Then, K.O. up to 1 of your opponent's Characters with a cost of 0.Disclaimer: This card was reprinted from the original set with changes to the copyright information (Note: the original print did not include \"EN\" at the end of the copyright).",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "modifyCost",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-            value: -1,
-            duration: "thisTurn",
-          },
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "eq",
-                  value: 0,
-                },
-              ],
-            },
-          },
-        ],
-      },
-      {
-        trigger: "whenAttacking",
-        actions: [
-          {
-            action: "modifyCost",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-            value: -1,
-            duration: "thisTurn",
-          },
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "eq",
-                  value: 0,
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: prb02BrookEb01046Reprint046I18n,
 };

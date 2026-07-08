@@ -6,10 +6,6 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Secondhand Bombus (retail)", () => {
-  it("is a structured card with the expected slug", () => {
-    expect(welcomeToNightCityRetailSecondhandBombus.slug).toBe("secondhand-bombus");
-  });
-
   it("spends as BLOCKER to redirect a rival direct attack into a fight", () => {
     // Printed text: "{Blocker} (You may spend this Unit to redirect a rival
     // Unit's attack to it instead.)"

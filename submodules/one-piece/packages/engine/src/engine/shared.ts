@@ -44,6 +44,7 @@ export function createInvariantFailureResult(
     reason,
     events: nextState.eventHistory.slice(previousEventCount),
     logs: nextState.logHistory.slice(previousLogCount),
+    animations: [],
     patches,
     inversePatches,
     capabilityIssues: nextState.capabilityHistory.slice(previousCapabilityCount),

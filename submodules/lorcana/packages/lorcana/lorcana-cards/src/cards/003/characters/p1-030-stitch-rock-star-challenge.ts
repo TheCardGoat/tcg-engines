@@ -36,7 +36,7 @@ export const stitchRockStarP1Challenge: CharacterCard = {
   },
   text: [
     {
-      title: "<Shift> 4",
+      title: "Shift 4",
     },
     {
       title: "Adoring Fans",

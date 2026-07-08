@@ -6,9 +6,7 @@ export const belleBeastCertainAsTheSunI18n: Record<Languages, I18nProperties> = 
     version: "Certain as the Sun",
     text: [
       {
-        title: "Shift 6 {}",
-        description:
-          "(You may pay 6 {} to play this on top of one of your characters named Belle or Beast.)",
+        title: "Shift 6 {I}",
       },
       {
         title: "INSPIRING DANCE",
@@ -17,7 +15,7 @@ export const belleBeastCertainAsTheSunI18n: Record<Languages, I18nProperties> = 
       {
         title: "APPRECIATIVE AUDIENCE 6",
         description:
-          "{} — Ready your other characters. They can't quest for the rest of this turn.",
+          "{I} — Ready your other characters. They can't quest for the rest of this turn.",
       },
     ],
   },

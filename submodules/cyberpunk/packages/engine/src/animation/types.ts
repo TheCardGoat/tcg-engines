@@ -41,6 +41,7 @@ export interface CardExitStep extends BaseStep {
   kind: "cardExit";
   cardId: CardInstanceId;
   fromZone: CardZone;
+  toZone: CardZone;
   playerId: PlayerId;
   exitReason: CardExitReason;
 }

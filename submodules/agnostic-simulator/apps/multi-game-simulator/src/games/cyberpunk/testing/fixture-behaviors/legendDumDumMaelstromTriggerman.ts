@@ -12,11 +12,7 @@ export const legendDumDumMaelstromTriggermanBehavior: CyberpunkFixtureBehavior =
   label: "Dum Dum - call defeats gear to draw four",
   references: ["packages/engine/src/cards/spoiler/legends/dum-dum-maelstrom-triggerman.test.ts"],
   async run(pom) {
-    const dumDum = await pom.getCardInZoneByDefinitionId(
-      "legendArea",
-      CYBERPUNK_P1,
-      spoilerDumDumMaelstromTriggerman.id,
-    );
+    const dumDum = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
@@ -30,6 +26,16 @@ export const legendDumDumMaelstromTriggermanBehavior: CyberpunkFixtureBehavior =
 
     await pom.callLegend(dumDum.instanceId, CYBERPUNK_P1);
 
+    const calledDumDum = await pom.getCardInZoneByInstanceId(
+      "legendArea",
+      CYBERPUNK_P1,
+      dumDum.instanceId,
+    );
+    expectEqual(
+      "Dum Dum definition after call",
+      calledDumDum.definitionId,
+      spoilerDumDumMaelstromTriggerman.id,
+    );
     await pom.expectEddies(CYBERPUNK_P1, 2);
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToMove");
     const choices = await pom.getChoiceCardIds(CYBERPUNK_P1);

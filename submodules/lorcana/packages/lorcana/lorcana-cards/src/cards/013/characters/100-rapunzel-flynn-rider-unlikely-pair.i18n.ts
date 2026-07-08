@@ -6,9 +6,7 @@ export const rapunzelFlynnRiderUnlikelyPairI18n: Record<Languages, I18nPropertie
     version: "Unlikely Pair",
     text: [
       {
-        title: "Shift 3 {}",
-        description:
-          "(You may pay 3 {} to play this on top of one of your characters named Rapunzel or Flynn Rider.)",
+        title: "Shift 3 {I}",
       },
       {
         title: "CLEVER SWAP",
@@ -47,8 +45,7 @@ export const rapunzelFlynnRiderUnlikelyPairI18n: Record<Languages, I18nPropertie
     version: "Paire improbable",
     text: [
       {
-        title:
-          "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Raiponce ou Flynn Rider.)",
+        title: "<Alter> 3 {I}",
       },
       {
         title: "Échange judicieux",
@@ -58,7 +55,7 @@ export const rapunzelFlynnRiderUnlikelyPairI18n: Record<Languages, I18nPropertie
       {
         title: "Nouveau départ",
         description:
-          "Durant votre tour, chaque fois que vous défaussez une carte Personnage, vous pouvez jouer ce personnage-là depuis votre défausse. (Vous payez tous ses coûts.)",
+          "Durant votre tour, chaque fois que vous défaussez une carte Personnage, vous pouvez jouer ce personnage-là depuis votre défausse.",
       },
     ],
   },

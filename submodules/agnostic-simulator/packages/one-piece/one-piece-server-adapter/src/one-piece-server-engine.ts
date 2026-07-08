@@ -86,8 +86,8 @@ export class OnePieceServerEngine implements ServerGameEngine {
       turnNumber: result.state.turnNumber,
       actorId,
       moveId: moveType,
-      input: { args: payload },
-      processedCommand: command,
+      input: { args: redactHiddenSetupPayload(moveType, payload) },
+      processedCommand: redactHiddenSetupCommand(command),
       timestamp,
       sourceAuthority: context.sourceAuthority,
       newStateID: stateVersion,
@@ -105,8 +105,8 @@ export class OnePieceServerEngine implements ServerGameEngine {
     return {
       success: true,
       stateID: stateVersion,
-      state: result.state,
-      patches: result.patches as readonly unknown[],
+      state: redactHiddenSetupState(result.state),
+      patches: redactHiddenSetupPatches(result.patches),
       animations: [],
       acceptedMoveRecord,
       engineLogRecords,
@@ -182,6 +182,90 @@ export class OnePieceServerEngine implements ServerGameEngine {
       };
     }
   }
+}
+
+function redactHiddenSetupPayload(
+  moveType: string,
+  payload: Record<string, unknown>,
+): Record<string, unknown> {
+  if (moveType !== "chooseJoKenPo") {
+    return payload;
+  }
+  return { choice: "hidden" };
+}
+
+function redactHiddenSetupCommand(command: EngineCommand): unknown {
+  if (command.type !== "chooseJoKenPo") {
+    return command;
+  }
+  return {
+    type: command.type,
+    seat: command.seat,
+    choice: "hidden",
+  };
+}
+
+function redactHiddenSetupState(state: MatchState): unknown {
+  const hiddenChoices = state.setup.joKenPo.hiddenChoices;
+  if (!hiddenChoices.north && !hiddenChoices.south) {
+    return state;
+  }
+
+  const redactedState = structuredClone(state) as MatchState;
+  redactedState.setup.joKenPo.hiddenChoices = redactHiddenChoiceRecord(
+    hiddenChoices,
+  ) as unknown as MatchState["setup"]["joKenPo"]["hiddenChoices"];
+  return redactedState;
+}
+
+function redactHiddenSetupPatches(patches: readonly unknown[]): readonly unknown[] {
+  return patches.map((patch) => {
+    if (!isImmerPatch(patch) || !isHiddenJoKenPoChoicePath(patch.path) || patch.op === "remove") {
+      return patch;
+    }
+
+    return {
+      ...patch,
+      value:
+        patch.path.length === 3 ? redactHiddenChoiceRecord(patch.value) : redactHiddenChoiceValue(),
+    };
+  });
+}
+
+function redactHiddenChoiceRecord(value: unknown): Partial<Record<MatchSeat, JoKenPoRedaction>> {
+  const choices = isRecord(value) ? value : {};
+  return {
+    ...(choices.north ? { north: redactHiddenChoiceValue() } : {}),
+    ...(choices.south ? { south: redactHiddenChoiceValue() } : {}),
+  };
+}
+
+function redactHiddenChoiceValue(): JoKenPoRedaction {
+  return "hidden";
+}
+
+type JoKenPoRedaction = "hidden";
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function isImmerPatch(patch: unknown): patch is {
+  op: string;
+  path: Array<string | number>;
+  value?: unknown;
+} {
+  return (
+    typeof patch === "object" &&
+    patch !== null &&
+    "op" in patch &&
+    "path" in patch &&
+    Array.isArray((patch as { path: unknown }).path)
+  );
+}
+
+function isHiddenJoKenPoChoicePath(path: Array<string | number>): boolean {
+  return path[0] === "setup" && path[1] === "joKenPo" && path[2] === "hiddenChoices";
 }
 
 function toCanonicalOnePieceMoveLog(
@@ -282,8 +366,24 @@ function buildEngineCommand(
   payload: Record<string, unknown>,
 ): EngineCommand | null {
   switch (moveType) {
+    case "chooseJoKenPo":
+      if (
+        payload.choice !== "rock" &&
+        payload.choice !== "paper" &&
+        payload.choice !== "scissors"
+      ) {
+        return null;
+      }
+      return { type: "chooseJoKenPo", seat, choice: payload.choice };
+    case "chooseFirstPlayer":
+      if (payload.firstPlayer !== "south" && payload.firstPlayer !== "north") {
+        return null;
+      }
+      return { type: "chooseFirstPlayer", seat, firstPlayer: payload.firstPlayer };
     case "mulligan":
       return { type: "mulligan", seat };
+    case "keepHand":
+      return { type: "keepHand", seat };
     case "startGame":
       return { type: "startGame", seat };
     case "endTurn":

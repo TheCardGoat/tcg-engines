@@ -28,9 +28,9 @@ import {
   PromptContainer,
   SetupPromptContainer,
   SubmitErrorProvider,
+  GundamTargetingProvider,
 } from "../src/components/containers/index.ts";
 import { SubmitErrorToast } from "../src/components/ui/SubmitErrorToast.tsx";
-import { TargetingProvider } from "../src/components/ui/targeting-context.tsx";
 import { DualModeProvider } from "../src/components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "../src/components/ui/pending-effect-selection-context.tsx";
 import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
@@ -163,7 +163,7 @@ function BotBenchMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
     >
       <SubmitErrorProvider>
         <HintsProvider>
-          <TargetingProvider>
+          <GundamTargetingProvider>
             <PendingEffectSelectionProvider>
               <DualModeProvider>
                 <GundamBoardLayout>
@@ -196,7 +196,7 @@ function BotBenchMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
                 </pre>
               </DualModeProvider>
             </PendingEffectSelectionProvider>
-          </TargetingProvider>
+          </GundamTargetingProvider>
         </HintsProvider>
       </SubmitErrorProvider>
     </BotBenchGameProvider>

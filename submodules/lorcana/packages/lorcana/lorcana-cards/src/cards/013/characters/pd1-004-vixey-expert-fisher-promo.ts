@@ -15,6 +15,7 @@ export const vixeyExpertFisherPD1Promo: CharacterCard = {
       imageUrl: "",
     },
   ],
+  reprints: ["set13-046"],
   cardType: "character",
   name: "Vixey",
   version: "Expert Fisher",
@@ -33,7 +34,7 @@ export const vixeyExpertFisherPD1Promo: CharacterCard = {
     {
       title: "Stealing In",
       description:
-        "When you play this character, if you have a character with <Evasive> in play, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
+        "When you play this character, if you have a character with Evasive in play, you may return chosen character, item, or location with cost 2 or less to their player's hand.",
     },
   ],
   classifications: ["Storyborn", "Ally"],

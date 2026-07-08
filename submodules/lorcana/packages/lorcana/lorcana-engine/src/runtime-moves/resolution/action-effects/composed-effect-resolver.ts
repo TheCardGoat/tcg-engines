@@ -2304,6 +2304,7 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
     resolveMillEffect(ctx, cardPlayed, effect as MillEffect, {
       millAmount,
       selectedPlayerIds: resolveTargetPlayerIdsForEffect(ctx, cardPlayed, effect, resolutionInput),
+      eventSnapshot: resolutionInput.eventSnapshot,
     });
     return RESOLVED_ACTION_EFFECT;
   },

@@ -3,6 +3,7 @@ import { gundamServerAdapter } from "./adapter.js";
 
 export { gundamServerAdapter } from "./adapter.js";
 export { GundamServerEngine } from "./gundam-server-engine.js";
+export { GUNDAM_RUNTIME_FINGERPRINT } from "./runtime-fingerprint.js";
 export {
   buildGundamInteractionView,
   describeGundamInteractionProcedure,

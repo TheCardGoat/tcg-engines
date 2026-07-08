@@ -3,7 +3,6 @@ import { PlaywrightDomDriver } from "@tcg/simulator-testing/playwright";
 
 import {
   CyberpunkSimulatorPom,
-  type CyberpunkEngineHandle,
   type CyberpunkHarnessClient,
   type CyberpunkSide,
 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -109,42 +108,9 @@ export class PlaywrightCyberpunkHarnessClient implements CyberpunkHarnessClient 
       sim?.clearDispatchLog();
     });
   }
-
-  evalEngine<T>(fn: (engine: CyberpunkEngineHandle) => T): Promise<T>;
-  evalEngine<T, A>(fn: (engine: CyberpunkEngineHandle, arg: A) => T, arg: A): Promise<T>;
-  evalEngine<T, A>(fn: (engine: CyberpunkEngineHandle, arg?: A) => T, arg?: A): Promise<T> {
-    return this.page.evaluate(
-      (payload: { fnSrc: string; arg: unknown }) => {
-        const handle = (window as unknown as CyberpunkHarnessWindow).__cyberpunkEngine;
-        if (!handle) {
-          throw new Error("window.__cyberpunkEngine is unavailable.");
-        }
-        // Playwright serializes test functions across the browser boundary as source text.
-        const reified = (0, eval)(`(${payload.fnSrc})`) as (engine: unknown, x: unknown) => unknown;
-        return reified(handle, payload.arg);
-      },
-      { fnSrc: fn.toString(), arg },
-    ) as Promise<T>;
-  }
-
-  async dispatchEngine<T>(fn: (engine: CyberpunkEngineHandle) => T): Promise<T>;
-  async dispatchEngine<T, A>(fn: (engine: CyberpunkEngineHandle, arg: A) => T, arg: A): Promise<T>;
-  async dispatchEngine<T, A>(
-    fn: (engine: CyberpunkEngineHandle, arg?: A) => T,
-    arg?: A,
-  ): Promise<T> {
-    const result = await this.evalEngine<T, A | undefined>(fn, arg);
-    await this.page.evaluate(async () => {
-      (window as unknown as CyberpunkHarnessWindow).__cyberpunkSimulator?.forceRender();
-      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-    });
-    return result;
-  }
 }
 
 interface CyberpunkHarnessWindow {
-  __cyberpunkEngine?: unknown;
   __cyberpunkSimulator?: {
     forceRender: () => void;
     getDispatchLog: () => ReadonlyArray<{ action: EngineAction; result: unknown }>;

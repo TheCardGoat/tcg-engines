@@ -1,5 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-engine/testing";
+import { bigBookOfHunny } from "../items/174-big-book-of-hunny";
 import { christopherRobinHunnySage } from "./061-christopher-robin-hunny-sage";
 
 const hunnyCharacter = createMockCharacter({
@@ -31,6 +32,24 @@ describe("Christopher Robin - Hunny Sage", () => {
     ).toBeSuccessfulCommand();
 
     expect(testEngine.asPlayerOne().getCardZone(hunnyCharacter)).toBe("hand");
+    expect(testEngine.asPlayerOne().getCardZone(nonHunnyCharacter)).toBe("deck");
+  });
+
+  it("can search for a non-character Hunny card", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [christopherRobinHunnySage],
+      inkwell: christopherRobinHunnySage.cost,
+      deck: [nonHunnyCharacter, bigBookOfHunny],
+    });
+
+    expect(testEngine.asPlayerOne().playCard(christopherRobinHunnySage)).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(christopherRobinHunnySage, {
+        resolveOptional: true,
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(testEngine.asPlayerOne().getCardZone(bigBookOfHunny)).toBe("hand");
     expect(testEngine.asPlayerOne().getCardZone(nonHunnyCharacter)).toBe("deck");
   });
 });

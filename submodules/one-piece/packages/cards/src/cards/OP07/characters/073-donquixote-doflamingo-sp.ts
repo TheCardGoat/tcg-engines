@@ -1,47 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op01DonquixoteDoflamingo073 } from "../../OP01/characters/073-donquixote-doflamingo.ts";
 import { op07DonquixoteDoflamingoSp073I18n } from "./073-donquixote-doflamingo-sp.i18n.ts";
 
 export const op07DonquixoteDoflamingoSp073: CharacterCard = {
-  id: "OP01-073",
-  canonicalId: "OP01-073",
+  ...op01DonquixoteDoflamingo073,
+  id: "OP01-073_p2",
   slug: "donquixote-doflamingo-sp",
   name: "Donquixote Doflamingo (SP)",
   printings: [
     {
-      id: "OP01-073",
-      artId: "OP01-073",
+      id: "OP01-073_p2",
+      artId: "OP01-073_p2",
       setCode: "OP07",
       collectorNumber: "073",
       rarity: "R",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP01-073_p2.jpg",
     },
   ],
-  cardType: "character",
-  color: ["blue"],
   rarity: "R",
   setId: "OP07",
-  cost: 3,
-  power: 4000,
-  counter: 1000,
-  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
-  attribute: "special",
-  effect:
-    "[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On Play] Look at 5 cards from the top of your deck and place them at the top or bottom of the deck in any order.",
-  effects: {
-    keywords: ["blocker"],
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "rearrangeDeck",
-            player: "self",
-            count: 5,
-            position: "topOrBottom",
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op07DonquixoteDoflamingoSp073I18n,
 };

@@ -38,10 +38,10 @@ export const cinderellaStoutheartedD23: CharacterCard = {
   },
   text: [
     {
-      title: "<Shift> 5",
+      title: "Shift 5",
     },
     {
-      title: "<Resist> +2",
+      title: "Resist +2",
     },
     {
       title: "The Singing Sword",

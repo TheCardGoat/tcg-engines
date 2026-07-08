@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { getMatchmakingReturnUrl } from "./matchContext.ts";
+import { getMatchmakingReturnUrl, resolveMatchOverviewDestination } from "./matchContext.ts";
 
 describe("getMatchmakingReturnUrl", () => {
   afterEach(() => {
@@ -28,5 +28,24 @@ describe("getMatchmakingReturnUrl", () => {
         "?returnTo=http%3A%2F%2Flocalhost%3A5173%2Fgundam%2Fmatchmaking%3Ftab%3Dpractice",
       ),
     ).toBe("http://localhost:5173/gundam/matchmaking?tab=practice");
+  });
+});
+
+describe("resolveMatchOverviewDestination", () => {
+  it("preserves the mounted simulator basename", () => {
+    const destination = resolveMatchOverviewDestination(
+      {
+        object: "match",
+        matchId: "match_1",
+        status: "in_progress",
+        currentGameId: "game_1",
+        gameIds: ["game_1"],
+      },
+      "?playerId=p1&gameId=stale",
+      "/gundam/simulator",
+    );
+
+    expect(destination.pathname).toBe("/gundam/simulator/matches/match_1/games/game_1");
+    expect(destination.search).toBe("?playerId=p1");
   });
 });

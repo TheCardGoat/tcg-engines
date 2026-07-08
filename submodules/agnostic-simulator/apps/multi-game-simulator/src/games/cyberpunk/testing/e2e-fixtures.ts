@@ -109,6 +109,20 @@ export const legendYorinobuArasakaEmbracingDestructionRetail = fixture(
 export const legendViktorVektorSitDownAndRelaxRetail = fixture(
   "legendViktorVektorSitDownAndRelaxRetail",
 );
+export const legendRebeccaHavingAMomentPrm01 = fixture("legendRebeccaHavingAMomentPrm01");
+export const legendTheHeistVCorporateExile = fixture("legendTheHeistVCorporateExile");
+export const legendTheHeistJackieWellesPourOneOutForMe = fixture(
+  "legendTheHeistJackieWellesPourOneOutForMe",
+);
+export const legendEmbracingGoroTakemuraHandsUnclean = fixture(
+  "legendEmbracingGoroTakemuraHandsUnclean",
+);
+export const legendEmbracingSaburoArasakaStubbornPatriarch = fixture(
+  "legendEmbracingSaburoArasakaStubbornPatriarch",
+);
+export const legendEmbracingYorinobuArasakaEmbracingDestruction = fixture(
+  "legendEmbracingYorinobuArasakaEmbracingDestruction",
+);
 
 /* ── Units ──────────────────────────────────────────────────────────────── */
 export const unitSecondhandBombus = fixture("unitSecondhandBombus");
@@ -161,3 +175,11 @@ export const unitRoyceDonTCallMeSimonLowCredRetail = fixture(
 );
 export const unitSandayuOdaHanakoSGuardianRetail = fixture("unitSandayuOdaHanakoSGuardianRetail");
 export const unitWraithMaraudersRetail = fixture("unitWraithMaraudersRetail");
+export const unitTheHeistDexterDeshawnOneLastChance = fixture(
+  "unitTheHeistDexterDeshawnOneLastChance",
+);
+export const unitTheHeistMt0d12Flathead = fixture("unitTheHeistMt0d12Flathead");
+export const unitEmbracingGoroTakemuraLosingHisWay = fixture(
+  "unitEmbracingGoroTakemuraLosingHisWay",
+);
+export const unitEmbracingMinotaur = fixture("unitEmbracingMinotaur");

@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op05OneLeggedToySoldier081 } from "../../OP05/characters/081-one-legged-toy-soldier.ts";
 import { prb01OneLeggedToySoldierJollyRogerFoil081I18n } from "./081-one-legged-toy-soldier-jolly-roger-foil.i18n.ts";
 
 export const prb01OneLeggedToySoldierJollyRogerFoil081: CharacterCard = {
-  id: "OP05-081",
-  canonicalId: "OP05-081",
+  ...op05OneLeggedToySoldier081,
+  id: "OP05-081_p2",
   slug: "one-legged-toy-soldier-jolly-roger-foil",
   name: "One-Legged Toy Soldier (Jolly Roger Foil)",
   printings: [
     {
-      id: "OP05-081",
-      artId: "OP05-081",
+      id: "OP05-081_p2",
+      artId: "OP05-081_p2",
       setCode: "PRB01",
       collectorNumber: "081",
       rarity: "UC",
@@ -40,15 +41,8 @@ export const prb01OneLeggedToySoldierJollyRogerFoil081: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP05-081_p4.jpg",
     },
   ],
-  cardType: "character",
-  color: ["black"],
   rarity: "UC",
   setId: "PRB01",
-  cost: 2,
-  power: 0,
-  counter: 2000,
-  traits: ["Dressrosa"],
-  attribute: "strike",
   artVariants: [
     {
       type: "other",
@@ -66,35 +60,5 @@ export const prb01OneLeggedToySoldierJollyRogerFoil081: CharacterCard = {
       imageId: "OP05-081_p4",
     },
   ],
-  effect:
-    "[Activate:Main] You may trash this Character: Give up to 1 of your opponent's Characters -3 cost during this turn.",
-  effects: {
-    effects: [
-      {
-        trigger: "activateMain",
-        costs: [
-          {
-            cost: "trashThisCard",
-          },
-        ],
-        actions: [
-          {
-            action: "modifyCost",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-            value: -3,
-            duration: "thisTurn",
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
   i18n: prb01OneLeggedToySoldierJollyRogerFoil081I18n,
 };

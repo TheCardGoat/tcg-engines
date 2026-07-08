@@ -25,6 +25,7 @@ export type {
   EngineAdapterConfig,
   TurnTaggedLogEntry,
   TurnTaggedMoveLog,
+  TurnTaggedPacketAnimation,
 } from "./adapter.ts";
 export { createEngineAdapter } from "./adapter.ts";
 
@@ -49,6 +50,7 @@ export {
   useInteractionView,
   useLogEntries,
   useMoveLogs,
+  usePacketAnimations,
   usePending,
   useStatus,
   useViewerId,

@@ -6,9 +6,7 @@ export const woodyBuzzLightyearBestBuddiesI18n: Record<Languages, I18nProperties
     version: "Best Buddies",
     text: [
       {
-        title: "Shift 5 {}",
-        description:
-          "(You may pay 5 {} to play this on top of one of your characters named Woody or Buzz Lightyear.)",
+        title: "Shift 5 {I}",
       },
       {
         title: "TO INFINITY...",
@@ -47,8 +45,7 @@ export const woodyBuzzLightyearBestBuddiesI18n: Record<Languages, I18nProperties
     version: "Meilleurs amis",
     text: [
       {
-        title:
-          "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Woody ou Buzz l'Éclair.)",
+        title: "<Alter> 5 {I}",
       },
       {
         title: "Vers l'infini...",

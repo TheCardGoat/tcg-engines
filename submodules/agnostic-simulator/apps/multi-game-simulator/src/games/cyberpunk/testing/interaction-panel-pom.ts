@@ -69,7 +69,11 @@ export class InteractionPanelPom {
   }
 
   async submitInteraction(interactionId: string): Promise<void> {
-    await this.submitButton(interactionId).clickJs();
+    const button = this.submitButton(interactionId);
+    await this.dom.waitFor(async () => (await button.getAttribute("disabled")) === null, {
+      message: `Submit button ${interactionId} did not become enabled.`,
+    });
+    await button.clickJs();
   }
 
   async submitByMoveCommand(moveCommand: string): Promise<void> {
@@ -78,7 +82,11 @@ export class InteractionPanelPom {
   }
 
   async selectCandidate(interactionId: string, entityId: string): Promise<void> {
-    await this.candidateButton(interactionId, entityId).clickJs();
+    const button = this.candidateButton(interactionId, entityId);
+    await button.clickJs();
+    await this.dom.waitFor(async () => (await button.getAttribute("aria-pressed")) === "true", {
+      message: `Candidate ${entityId} was not selected for ${interactionId}.`,
+    });
   }
 
   async selectCandidateByMoveCommand(moveCommand: string, entityId: string): Promise<void> {
@@ -87,11 +95,19 @@ export class InteractionPanelPom {
   }
 
   async selectPayment(interactionId: string, entityId: string): Promise<void> {
-    await this.paymentButton(interactionId, entityId).clickJs();
+    const button = this.paymentButton(interactionId, entityId);
+    await button.clickJs();
+    await this.dom.waitFor(async () => (await button.getAttribute("aria-pressed")) === "true", {
+      message: `Payment ${entityId} was not selected for ${interactionId}.`,
+    });
   }
 
   async selectOption(interactionId: string, optionId: string): Promise<void> {
-    await this.optionButton(interactionId, optionId).clickJs();
+    const button = this.optionButton(interactionId, optionId);
+    await button.clickJs();
+    await this.dom.waitFor(async () => (await button.getAttribute("aria-pressed")) === "true", {
+      message: `Option ${optionId} was not selected for ${interactionId}.`,
+    });
   }
 
   async selectOptionByMoveCommand(moveCommand: string, optionId: string): Promise<void> {
@@ -100,6 +116,6 @@ export class InteractionPanelPom {
   }
 
   async selectOrderEntity(interactionId: string, entityId: string): Promise<void> {
-    await this.orderButton(interactionId, entityId).clickJs();
+    await this.orderButton(interactionId, entityId).click({ force: true });
   }
 }

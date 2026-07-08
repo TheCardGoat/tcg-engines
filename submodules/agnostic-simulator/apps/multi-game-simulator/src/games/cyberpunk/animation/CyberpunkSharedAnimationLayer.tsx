@@ -1,25 +1,422 @@
-import { useMemo, type ReactNode } from "react";
-import { SimulatorAnimationLayer } from "@tcg/simulator-ui";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import type {
+  AnimationPlanStepV1,
+  AnimationPlanV1,
+  AnimationZoneRef,
+  SimulatorAudioCueId,
+} from "@tcg/protocol";
+import type { SimulatorZone } from "@tcg/simulator-contract";
+import type { CardZone } from "@tcg/cyberpunk-types";
+import { defOf } from "@tcg/cyberpunk-engine";
+import {
+  isSimulatorAnimationDebugEnabled,
+  MotionAnimationSurface,
+  simulatorAnimationDebug,
+} from "@tcg/simulator-ui";
 
-import { PLAYER_SIDE_TO_ID, useEngine } from "../engine";
-import { projectEntityForCard } from "../engine/projectSimulator";
-import { cyberpunkAnimationScriptToSimulatorEvents } from "./sharedEvents";
+import { EFFECT_RESULT_HOLD_MS_BY_PACING } from "../../../simulator/gameConfig";
+import { useSimulatorAudio } from "../../../simulator/audio";
+import { PLAYER_SIDE_TO_ID, useEngine, useUserConfig } from "../engine";
+import {
+  cyberpunkCardZoneToSimulatorZone,
+  projectEntityForCard,
+  sideForPlayerId,
+} from "../engine/projectSimulator";
+import { cyberpunkAnimationScriptToAnimationPlans } from "./sharedEvents";
+import type { Side } from "../engine";
+
+type CyberpunkMatchState = ReturnType<typeof useEngine>["matchState"];
+type CyberpunkRawEngineEventEntry = ReturnType<typeof useEngine>["rawEngineEvents"][number];
+
+export interface ResolvingProgramVisual {
+  cardId: string;
+  side: Side;
+}
+
+const ResolvingProgramVisualsContext = createContext<readonly ResolvingProgramVisual[]>([]);
+
+export function useResolvingProgramVisuals(): readonly ResolvingProgramVisual[] {
+  return useContext(ResolvingProgramVisualsContext);
+}
 
 export function CyberpunkSharedAnimationLayer({ children }: { children: ReactNode }) {
   const { humanSide, matchState, rawEngineEvents } = useEngine();
-  const viewerSeatId = String(PLAYER_SIDE_TO_ID[humanSide]);
-
-  const events = useMemo(
-    () =>
-      rawEngineEvents.flatMap((entry) =>
-        cyberpunkAnimationScriptToSimulatorEvents(entry.animationScript, {
-          viewerSeatId,
-          resolveEntity: (cardId) => projectEntityForCard(cardId, matchState, humanSide),
-          idPrefix: String(entry.id),
-        }),
-      ),
-    [matchState, rawEngineEvents, viewerSeatId, humanSide],
+  const { animationPacing } = useUserConfig();
+  const [plans, setPlans] = useState<AnimationPlanV1[]>([]);
+  const [resolvingProgramVisuals, setResolvingProgramVisuals] = useState<ResolvingProgramVisual[]>(
+    [],
   );
+  const resolvingProgramCleanupByPlanIdRef = useRef<Map<string, ResolvingProgramVisual>>(new Map());
+  const previousSummaryByPlanIdRef = useRef<Map<string, string>>(new Map());
+  const processedRawEntryIdsRef = useRef<Set<number> | null>(null);
+  const viewerSeatId = String(PLAYER_SIDE_TO_ID[humanSide]);
+  const resultHoldMs = EFFECT_RESULT_HOLD_MS_BY_PACING[animationPacing];
+  const resolveZone = useMemo(() => cyberpunkAnimationZoneResolver, []);
+  const { cancelScheduledCues, playCue, scheduleAnimationSteps } = useSimulatorAudio();
 
-  return <SimulatorAnimationLayer events={events}>{children}</SimulatorAnimationLayer>;
+  useEffect(() => {
+    const rawEntryIds = new Set(rawEngineEvents.map((entry) => entry.id));
+    const processedEntryIds = processedRawEntryIdsRef.current;
+    if (!processedEntryIds) {
+      processedRawEntryIdsRef.current = rawEntryIds;
+      if (rawEngineEvents.length > 0) {
+        simulatorAnimationDebug("cyberpunk shared layer seeded existing raw entries", {
+          rawEntryIds: [...rawEntryIds],
+        });
+      }
+      return;
+    }
+
+    const maxRawEntryId = rawEngineEvents.at(-1)?.id ?? 0;
+    const maxProcessedEntryId = Math.max(0, ...processedEntryIds);
+    if (rawEngineEvents.length === 0 || maxRawEntryId < maxProcessedEntryId) {
+      processedRawEntryIdsRef.current = rawEntryIds;
+      setPlans([]);
+      cancelScheduledCues();
+      resolvingProgramCleanupByPlanIdRef.current.clear();
+      setResolvingProgramVisuals([]);
+      simulatorAnimationDebug("cyberpunk shared layer reset animation queue", {
+        maxRawEntryId,
+        maxProcessedEntryId,
+      });
+      return;
+    }
+
+    const newEntries = rawEngineEvents.filter((entry) => !processedEntryIds.has(entry.id));
+    if (newEntries.length === 0) {
+      return;
+    }
+
+    const mappedEntryResults = newEntries.map((entry) => {
+      processedEntryIds.add(entry.id);
+      for (const cue of cyberpunkImmediateSystemAudioCues(entry, viewerSeatId)) {
+        playCue(cue);
+      }
+      const toState = entry.afterState ?? matchState;
+      const pendingEffectSourceCardId = pendingEffectSourceProgramCardIdFromState(toState);
+      const resolvingProgramSourceCardId = entry.beforeState
+        ? pendingEffectSourceProgramCardIdFromState(entry.beforeState)
+        : null;
+      const mappedPlans = cyberpunkAnimationScriptToAnimationPlans(entry.animationScript, {
+        viewerSeatId,
+        idPrefix: String(entry.id),
+        pendingEffectSourceCardId,
+        resolvingProgramSourceCardId,
+        resultHoldMs,
+      });
+      simulatorAnimationDebug("cyberpunk animation entry processed", {
+        rawEntryId: entry.id,
+        stateID: entry.stateID,
+        side: entry.side,
+        move: entry.move,
+        input: entry.input,
+        pendingEffectSourceCardId,
+        resolvingProgramSourceCardId,
+        engineEvents: entry.events,
+        moveLogs: entry.moveLogs,
+        animationScript: entry.animationScript,
+        mappedPlans,
+      });
+      return { entry, mappedPlans };
+    });
+    const mappedPlans = mappedEntryResults.flatMap((result) => result.mappedPlans);
+
+    simulatorAnimationDebug("cyberpunk shared layer queued plans", {
+      rawEntryIds: mappedEntryResults.map((result) => result.entry.id),
+      planSummaries: mappedPlans.map((plan) => animationPlanSummary(plan)),
+    });
+
+    if (mappedPlans.length > 0) {
+      const cleanupVisuals = mappedPlans.flatMap((plan) => {
+        const visual = resolvingProgramCleanupVisualFromPlan(plan);
+        if (!visual) return [];
+        resolvingProgramCleanupByPlanIdRef.current.set(plan.id, visual);
+        return [visual];
+      });
+      const persistentVisuals = mappedPlans.flatMap((plan) =>
+        resolvingProgramVisualsFromPlan(plan),
+      );
+      const visualsToMerge = [...persistentVisuals, ...cleanupVisuals];
+      if (visualsToMerge.length > 0) {
+        setResolvingProgramVisuals((current) =>
+          mergeResolvingProgramVisuals(current, visualsToMerge),
+        );
+      }
+      setPlans((current) => [...current, ...mappedPlans]);
+    }
+  }, [
+    cancelScheduledCues,
+    humanSide,
+    matchState,
+    playCue,
+    rawEngineEvents,
+    resultHoldMs,
+    viewerSeatId,
+  ]);
+
+  const handlePlanComplete = useCallback((completedPlanId: string) => {
+    setPlans((current) => current.filter((plan) => plan.id !== completedPlanId));
+    const cleanupVisual = resolvingProgramCleanupByPlanIdRef.current.get(completedPlanId);
+    if (!cleanupVisual) {
+      return;
+    }
+    resolvingProgramCleanupByPlanIdRef.current.delete(completedPlanId);
+    setResolvingProgramVisuals((current) =>
+      current.filter(
+        (visual) => visual.cardId !== cleanupVisual.cardId || visual.side !== cleanupVisual.side,
+      ),
+    );
+  }, []);
+
+  useEffect(() => {
+    if (!isSimulatorAnimationDebugEnabled()) {
+      return;
+    }
+    const summaries = new Map(plans.map((plan) => [plan.id, animationPlanSummary(plan)]));
+    const remapped = [...summaries].flatMap(([id, summary]) => {
+      const previous = previousSummaryByPlanIdRef.current.get(id);
+      return previous && previous !== summary ? [{ id, previous, current: summary }] : [];
+    });
+
+    simulatorAnimationDebug("cyberpunk shared layer remap", {
+      stateID: matchState.ctx.stateID,
+      rawEntries: rawEngineEvents.map((entry) => {
+        const toState = entry.afterState ?? matchState;
+        return {
+          id: entry.id,
+          stateID: entry.stateID,
+          beforeStateID: entry.beforeState?.ctx.stateID,
+          afterStateID: entry.afterState?.ctx.stateID,
+          pendingEffectSourceCardId: pendingEffectSourceProgramCardIdFromState(toState),
+          resolvingProgramSourceCardId: entry.beforeState
+            ? pendingEffectSourceProgramCardIdFromState(entry.beforeState)
+            : null,
+        };
+      }),
+      planSummaries: [...summaries.values()],
+      remapped,
+    });
+    previousSummaryByPlanIdRef.current = summaries;
+  }, [plans, matchState, rawEngineEvents]);
+
+  useEffect(() => () => cancelScheduledCues(), [cancelScheduledCues]);
+
+  return (
+    <ResolvingProgramVisualsContext.Provider value={resolvingProgramVisuals}>
+      <MotionAnimationSurface
+        animationPlans={plans}
+        viewerSeatId={viewerSeatId}
+        resolveEntity={(cardId) => projectEntityForCard(cardId, matchState, humanSide)}
+        resolveZone={resolveZone}
+        getCardSuppressionDelayMs={cyberpunkCardSuppressionDelayMs}
+        onAnimationStepsScheduled={scheduleAnimationSteps}
+        onPlanComplete={handlePlanComplete}
+      >
+        {children}
+      </MotionAnimationSurface>
+    </ResolvingProgramVisualsContext.Provider>
+  );
+}
+
+export function cyberpunkImmediateSystemAudioCues(
+  entry: CyberpunkRawEngineEventEntry,
+  viewerSeatId: string,
+): SimulatorAudioCueId[] {
+  const cues: SimulatorAudioCueId[] = [];
+  const seen = new Set<SimulatorAudioCueId>();
+  const addCue = (cue: SimulatorAudioCueId) => {
+    if (seen.has(cue)) {
+      return;
+    }
+    seen.add(cue);
+    cues.push(cue);
+  };
+
+  for (const event of entry.events) {
+    if (event.type === "turnStarted") {
+      addCue("turn.change");
+    } else if (event.type === "gameEnded") {
+      addCue(event.winnerId === viewerSeatId ? "game.win" : "game.loss");
+    }
+  }
+
+  return cues;
+}
+
+function mergeResolvingProgramVisuals(
+  current: readonly ResolvingProgramVisual[],
+  incoming: readonly ResolvingProgramVisual[],
+): ResolvingProgramVisual[] {
+  const byKey = new Map(current.map((visual) => [resolvingProgramVisualKey(visual), visual]));
+  for (const visual of incoming) {
+    byKey.set(resolvingProgramVisualKey(visual), visual);
+  }
+  return [...byKey.values()];
+}
+
+function resolvingProgramVisualKey(visual: ResolvingProgramVisual): string {
+  return `${visual.side}:${visual.cardId}`;
+}
+
+function resolvingProgramVisualsFromPlan(plan: AnimationPlanV1): ResolvingProgramVisual[] {
+  return plan.steps.flatMap((step) => resolvingProgramEntryVisualFromStep(step) ?? []);
+}
+
+function resolvingProgramCleanupVisualFromPlan(
+  plan: AnimationPlanV1,
+): ResolvingProgramVisual | null {
+  const step = plan.steps.find(isResolvingProgramCleanupStep);
+  if (!step) {
+    return null;
+  }
+  const side = sideFromCyberpunkAnchorId(step.to.id);
+  return side ? { cardId: step.entity.id, side } : null;
+}
+
+function resolvingProgramEntryVisualFromStep(
+  step: AnimationPlanStepV1,
+): ResolvingProgramVisual | null {
+  if (!isResolvingProgramEntryStep(step)) {
+    return null;
+  }
+  const side = sideFromCyberpunkAnchorId(step.from.id);
+  return side ? { cardId: step.entity.id, side } : null;
+}
+
+function isResolvingProgramEntryStep(step: AnimationPlanStepV1): step is Extract<
+  AnimationPlanStepV1,
+  { type: "moveEntity" }
+> & {
+  from: { id: string; kind: string };
+  to: { id: string; kind: string };
+} {
+  return (
+    step.type === "moveEntity" &&
+    step.from?.kind === "zone" &&
+    cyberpunkAnchorSuffix(step.from.id) === "hand" &&
+    step.to?.kind === "anchor" &&
+    step.to.id.startsWith("resolving-program:")
+  );
+}
+
+function isResolvingProgramCleanupStep(step: AnimationPlanStepV1): step is Extract<
+  AnimationPlanStepV1,
+  { type: "moveEntity" }
+> & {
+  from: { id: string; kind: string };
+  to: { id: string; kind: string };
+} {
+  return (
+    step.type === "moveEntity" &&
+    step.from?.kind === "anchor" &&
+    step.from.id.startsWith("resolving-program:") &&
+    step.to?.kind === "zone" &&
+    cyberpunkAnchorSuffix(step.to.id) === "trash"
+  );
+}
+
+function pendingEffectSourceProgramCardIdFromState(matchState: CyberpunkMatchState): string | null {
+  const choice = matchState.G.turnMetadata.pendingChoice;
+  if (choice?.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
+    return null;
+  }
+  const sourceCardId = choice.payload.sourceCardId;
+  if (!sourceCardId) {
+    return null;
+  }
+  const sourceCard = matchState.G.cardIndex[String(sourceCardId)];
+  return sourceCard && defOf(sourceCard).type === "program" ? String(sourceCardId) : null;
+}
+
+function animationPlanSummary(plan: AnimationPlanV1): string {
+  return `${plan.id}:${plan.steps
+    .map(
+      (step) =>
+        `${step.id}:${step.type}:delay=${step.delayMs ?? 0}:duration=${step.durationMs ?? 0}`,
+    )
+    .join("|")}`;
+}
+
+const CYBERPUNK_CARD_ZONE_BY_ANCHOR_SUFFIX: Record<string, CardZone> = {
+  deck: "deck",
+  hand: "hand",
+  field: "field",
+  trash: "trash",
+  legendArea: "legendArea",
+  eddieArea: "eddieArea",
+  gigArea: "gigArea",
+};
+
+function cyberpunkAnimationZoneResolver(ref: AnimationZoneRef): SimulatorZone | null {
+  const side = sideForCyberpunkAnimationRef(ref);
+  const ownerId = ref.ownerId ?? (side ? String(PLAYER_SIDE_TO_ID[side]) : undefined);
+  const suffix = cyberpunkAnchorSuffix(ref.id);
+  const cardZone = suffix ? CYBERPUNK_CARD_ZONE_BY_ANCHOR_SUFFIX[suffix] : undefined;
+  if (side && cardZone) {
+    return cyberpunkCardZoneToSimulatorZone(cardZone, side);
+  }
+  if (suffix === "fixer" || suffix === "program-limbo") {
+    return {
+      id: ref.id,
+      label: suffix === "fixer" ? "Fixer dice" : "Resolving Program",
+      role: "custom",
+      ownerId,
+      visibility: "public",
+      entityIds: [],
+      hint: suffix === "fixer" ? "Fixer dice" : "Program being resolved",
+      layoutHint: "stack",
+    };
+  }
+  return {
+    id: ref.id,
+    label: ref.id,
+    role: "custom",
+    ownerId,
+    visibility: "public",
+    entityIds: [],
+    hint: ref.id,
+  };
+}
+
+function cyberpunkCardSuppressionDelayMs(overlay: {
+  fromRef?: { kind: string; id: string };
+  toRef?: { kind: string; id: string };
+  delayMs: number;
+}): number {
+  if (
+    ((overlay.fromRef?.kind === "zone" &&
+      cyberpunkAnchorSuffix(overlay.fromRef.id) === "program-limbo") ||
+      (overlay.fromRef?.kind === "anchor" &&
+        overlay.fromRef.id.startsWith("resolving-program:"))) &&
+    overlay.toRef?.kind === "zone" &&
+    cyberpunkAnchorSuffix(overlay.toRef.id) === "trash"
+  ) {
+    return overlay.delayMs;
+  }
+  return 0;
+}
+
+function sideForCyberpunkAnimationRef(ref: AnimationZoneRef): Side | null {
+  return sideForPlayerId(ref.ownerId) ?? sideFromCyberpunkAnchorId(ref.id);
+}
+
+function sideFromCyberpunkAnchorId(id: string): Side | null {
+  if (id.startsWith("p-")) return "player";
+  if (id.startsWith("opp-")) return "opponent";
+  return null;
+}
+
+function cyberpunkAnchorSuffix(id: string): string | null {
+  if (id.startsWith("p-")) return id.slice(2);
+  if (id.startsWith("opp-")) return id.slice(4);
+  return null;
 }

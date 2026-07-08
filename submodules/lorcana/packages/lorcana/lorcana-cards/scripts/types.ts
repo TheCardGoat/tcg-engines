@@ -301,6 +301,9 @@ export interface CanonicalCardMetadata {
   /** Card legality in different formats */
   legalities?: CardLegalities;
 
+  /** Card classifications/subtypes, including non-character set mechanics. */
+  classifications?: string[];
+
   /** Release date (ISO 8601 format) */
   releasedAt?: string;
 
@@ -556,6 +559,12 @@ export interface CardsAuxKv {
 
   /** Map printingId -> shortId (e.g., "set11-001" -> "685") */
   printingIdToShortId: Record<string, string>;
+
+  /** Map printingId -> canonicalId */
+  printingIdToCanonicalId: Record<string, string>;
+
+  /** Map shortId -> printingId */
+  shortIdToPrintingId: Record<string, string>;
 
   /** Map canonicalId -> all printing IDs for that card */
   printingIdsByCanonicalId: Record<string, string[]>;

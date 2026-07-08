@@ -1,22 +1,28 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import type {
+  AnimationPlanStepV1,
+  AnimationPlanV1,
+  AnimationRef,
+  AnimationZoneRef,
+} from "@tcg/protocol";
 import type { Card } from "@tcg/gundam-types";
 import type { GundamMoveLog } from "@tcg/gundam-engine";
 import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 import {
-  cardMoveRecordsToSimulatorEvents,
-  SimulatorAnimationLayer,
-  VisualAnimationLayer,
+  cardMoveRecordsToAnimationPlans,
+  MotionAnimationSurface,
   type CardMoveAnimationRecord,
-  type VisualAnimationEvent,
 } from "@tcg/simulator-ui";
+import { useSimulatorAudio } from "../../../../simulator/audio";
 import {
   useBoardProjection,
   useGundamGame,
   useMoveLogs,
+  usePacketAnimations,
   useStatus,
   useViewerId,
 } from "../game/index.ts";
-import type { TurnTaggedMoveLog } from "../game/adapter.ts";
+import type { TurnTaggedPacketAnimation } from "../game/adapter.ts";
 import type { BoardProjection } from "../game/index.ts";
 import { cardImageUrlOf, findCardByInstanceId } from "../components/containers/mappers.ts";
 
@@ -28,56 +34,95 @@ export function GundamSharedAnimationLayer({ children }: { readonly children: Re
   const status = useStatus();
   const viewerSeatId = String(useViewerId());
   const moveLogs = useMoveLogs();
-  const newMoveLogs = useMoveLogsAfterPreviousSnapshot(moveLogs);
+  const packetAnimations = usePacketAnimations();
+  const moveLogSnapshot = useItemsAfterPreviousSnapshot(moveLogs);
+  const packetAnimationSnapshot = useItemsAfterPreviousSnapshot(packetAnimations);
+  const newMoveLogs = moveLogSnapshot.newItems;
+  const newPacketAnimations = packetAnimationSnapshot.newItems;
   const { adapter } = useGundamGame();
-  const phaseEvents = usePhaseChangeEvents(status);
+  const phasePlans = usePhaseChangePlans(status);
+  const { cancelScheduledCues, scheduleAnimationSteps } = useSimulatorAudio();
 
-  const cardEvents = useMemo(() => {
-    const records = newMoveLogs.flatMap(({ log }) =>
-      gundamMoveLogToCardMoveRecords(
-        log,
-        view,
-        viewerSeatId,
-        adapter.revealsPrivateMoveLogFields === true,
-      ),
+  const cardPlans = useMemo(() => {
+    const records = newPacketAnimations.flatMap((entry) =>
+      gundamPacketAnimationToCardMoveRecords(entry, view, viewerSeatId),
     );
-    return cardMoveRecordsToSimulatorEvents(records, {
-      viewerSeatId,
-      resolveEntity: (cardId) => simulatorEntityForCard(cardId, view, adapter.cardDefinitionOf),
-      zoneDescriptor: gundamZoneDescriptor,
-    });
-  }, [adapter, newMoveLogs, view, viewerSeatId]);
+    return cardMoveRecordsToAnimationPlans(records.map(gundamCanonicalCardMoveRecord));
+  }, [newPacketAnimations, view, viewerSeatId]);
 
-  const visualEvents = useMemo(
+  const visualPlans = useMemo(
     () => [
-      ...newMoveLogs.flatMap(({ log }) => gundamMoveLogToVisualEvents(log, view)),
-      ...phaseEvents,
+      ...newMoveLogs.flatMap(({ log }) => gundamMoveLogToAnimationPlans(log, view)),
+      ...phasePlans,
     ],
-    [newMoveLogs, phaseEvents, view],
+    [newMoveLogs, phasePlans, view],
   );
+  const animationPlans = useMemo(() => [...cardPlans, ...visualPlans], [cardPlans, visualPlans]);
+
+  useEffect(() => {
+    if (moveLogSnapshot.didReset || packetAnimationSnapshot.didReset) {
+      cancelScheduledCues();
+    }
+  }, [cancelScheduledCues, moveLogSnapshot.didReset, packetAnimationSnapshot.didReset]);
+
+  useEffect(() => () => cancelScheduledCues(), [cancelScheduledCues]);
 
   return (
-    <VisualAnimationLayer events={visualEvents}>
-      <SimulatorAnimationLayer events={cardEvents}>{children}</SimulatorAnimationLayer>
-    </VisualAnimationLayer>
+    <MotionAnimationSurface
+      animationPlans={animationPlans}
+      viewerSeatId={viewerSeatId}
+      resolveEntity={(cardId) => simulatorEntityForCard(cardId, view, adapter.cardDefinitionOf)}
+      resolveZone={gundamAnimationZoneResolver}
+      onAnimationStepsScheduled={scheduleAnimationSteps}
+    >
+      {children}
+    </MotionAnimationSurface>
   );
 }
 
-function useMoveLogsAfterPreviousSnapshot(
-  moveLogs: readonly TurnTaggedMoveLog[],
-): readonly TurnTaggedMoveLog[] {
-  const previousMoveLogsRef = useRef<readonly TurnTaggedMoveLog[] | null>(null);
-  const previousMoveLogs = previousMoveLogsRef.current;
+interface SnapshotDelta<T> {
+  readonly newItems: readonly T[];
+  readonly didReset: boolean;
+}
+
+function useItemsAfterPreviousSnapshot<T>(items: readonly T[]): SnapshotDelta<T> {
+  const previousItemsRef = useRef<readonly T[] | null>(null);
+  const previousItems = previousItemsRef.current;
 
   useEffect(() => {
-    previousMoveLogsRef.current = moveLogs;
-  }, [moveLogs]);
+    previousItemsRef.current = items;
+  }, [items]);
 
-  if (!previousMoveLogs || moveLogs.length <= previousMoveLogs.length) {
+  const didReset = Boolean(previousItems && items.length < previousItems.length);
+  const newItems =
+    !previousItems || items.length <= previousItems.length ? [] : items.slice(previousItems.length);
+
+  return { newItems, didReset };
+}
+
+function gundamPacketAnimationToCardMoveRecords(
+  entry: TurnTaggedPacketAnimation,
+  view: BoardProjection,
+  viewerSeatId: string,
+): CardMoveAnimationRecord[] {
+  const { animation } = entry;
+  if (animation.data.kind !== "cardMove") {
     return [];
   }
-
-  return moveLogs.slice(previousMoveLogs.length);
+  const { cardId, fromZone, toZone } = animation.data;
+  return [
+    {
+      id: animation.id,
+      cardId,
+      ownerId: ownerIdForCard(cardId, view, viewerSeatId),
+      ...(fromZone ? { fromZoneId: fromZone } : {}),
+      toZoneId: toZone,
+      ...(baseZoneId(fromZone) === "deck" && baseZoneId(toZone) === "hand"
+        ? { reason: "draw" as const }
+        : {}),
+      audioCue: gundamCardMoveAudioCue(fromZone, toZone),
+    },
+  ];
 }
 
 export function gundamMoveLogToCardMoveRecords(
@@ -110,6 +155,7 @@ export function gundamMoveLogToCardMoveRecords(
       ownerId: ownerIdForCard(cardId, view, String(log.playerId)),
       fromZoneId: moved.from,
       toZoneId: moved.to,
+      audioCue: gundamCardMoveAudioCue(moved.from, moved.to),
     });
   }
 
@@ -120,6 +166,7 @@ export function gundamMoveLogToCardMoveRecords(
       cardId: resolvedCardId,
       ownerId: ownerIdForCard(resolvedCardId, view, String(log.playerId)),
       toZoneId: "hand",
+      audioCue: "card.move",
     });
   }
 
@@ -130,6 +177,7 @@ export function gundamMoveLogToCardMoveRecords(
       cardId: resolvedCardId,
       ownerId: ownerIdForCard(resolvedCardId, view, String(log.playerId)),
       toZoneId: "trash",
+      audioCue: "card.discard",
     });
   }
 
@@ -139,6 +187,7 @@ export function gundamMoveLogToCardMoveRecords(
       cardId: String(defeated.cardId),
       ownerId: String(defeated.ownerId),
       toZoneId: "trash",
+      audioCue: "card.discard",
     });
   }
 
@@ -149,6 +198,7 @@ export function gundamMoveLogToCardMoveRecords(
       ownerId: String(shield.playerId),
       fromZoneId: "shieldArea",
       toZoneId: "hand",
+      audioCue: "card.draw",
     });
   }
 
@@ -158,6 +208,7 @@ export function gundamMoveLogToCardMoveRecords(
       cardId: String(placed.cardId),
       ownerId: String(placed.playerId),
       toZoneId: "resourceArea",
+      audioCue: "resource.gain",
     });
   }
 
@@ -182,6 +233,7 @@ export function gundamMoveLogToCardMoveRecords(
       toZoneId: "hand",
       reason: "draw",
       delayMs: index * 70,
+      audioCue: "card.draw",
     });
   });
 
@@ -196,31 +248,39 @@ function baseZoneId(zoneId: string | undefined): string | undefined {
   return zoneId?.split(":")[0];
 }
 
-function gundamMoveLogToVisualEvents(
+function gundamMoveLogToAnimationPlans(
   log: GundamMoveLog,
   view: BoardProjection,
-): VisualAnimationEvent[] {
-  const events: VisualAnimationEvent[] = [];
+): AnimationPlanV1[] {
+  const plans: AnimationPlanV1[] = [];
   const prefix = log.commandID ?? `${log.timestamp}:${log.type}`;
 
   if (log.type === "attack") {
-    events.push({
-      id: `${prefix}:combat:declared:${log.attackerId}:${log.targetId}`,
-      primitive: "combat",
-      sourceEntityId: String(log.attackerId),
-      ...(log.targetId === "direct"
-        ? { targetPlayerId: opponentOf(view, String(log.playerId)) ?? String(log.playerId) }
-        : { targetEntityId: String(log.targetId) }),
-      reason: "declared",
-    });
+    const targetPlayerId = opponentOf(view, String(log.playerId)) ?? String(log.playerId);
+    plans.push(
+      animationPlan(`${prefix}:combat:declared:${log.attackerId}:${log.targetId}`, {
+        id: `${prefix}:combat:declared`,
+        type: "combat",
+        source: entityRef(String(log.attackerId)),
+        target:
+          log.targetId === "direct"
+            ? gundamZoneRef("baseSection", targetPlayerId)
+            : entityRef(String(log.targetId)),
+        reason: "declared",
+        audioCue: "combat.start",
+      }),
+    );
   } else if (log.type === "block") {
-    events.push({
-      id: `${prefix}:combat:block:${log.blockerId}:${log.attackerId}`,
-      primitive: "combat",
-      sourceEntityId: String(log.blockerId),
-      targetEntityId: String(log.attackerId),
-      reason: "declared",
-    });
+    plans.push(
+      animationPlan(`${prefix}:combat:block:${log.blockerId}:${log.attackerId}`, {
+        id: `${prefix}:combat:block`,
+        type: "combat",
+        source: entityRef(String(log.blockerId)),
+        target: entityRef(String(log.attackerId)),
+        reason: "declared",
+        audioCue: "combat.start",
+      }),
+    );
   }
 
   for (const damage of log.outcomes?.damageDealt ?? []) {
@@ -230,44 +290,60 @@ function gundamMoveLogToVisualEvents(
     if (!sourceEntityId) {
       continue;
     }
-    events.push({
-      id: `${prefix}:combat:resolved:${sourceEntityId}:${damage.targetId}:${events.length}`,
-      primitive: "combat",
-      sourceEntityId: String(sourceEntityId),
-      targetEntityId: String(damage.targetId),
-      reason: "resolved",
-      delayMs: 120,
-    });
+    plans.push(
+      animationPlan(
+        `${prefix}:combat:resolved:${sourceEntityId}:${damage.targetId}:${plans.length}`,
+        {
+          id: `${prefix}:combat:resolved:${plans.length}`,
+          type: "combat",
+          source: entityRef(String(sourceEntityId)),
+          target: entityRef(String(damage.targetId)),
+          reason: "resolved",
+          delayMs: 120,
+          audioCue: "combat.hit",
+        },
+      ),
+    );
   }
 
   const spent = log.outcomes?.resourcesSpent;
   if (spent && (spent.regularCount > 0 || spent.exRemovedCount > 0)) {
     const total = spent.regularCount + spent.exRemovedCount;
-    events.push({
-      id: `${prefix}:resource:spent`,
-      primitive: "resourceFloat",
-      playerId: String(log.playerId),
-      delta: -total,
-      label: "RES",
-    });
+    const playerId = String(log.playerId);
+    plans.push(
+      animationPlan(`${prefix}:resource:spent`, {
+        id: `${prefix}:resource:spent`,
+        type: "resourceDelta",
+        player: { kind: "player", id: playerId },
+        anchor: { kind: "anchor", id: `resourceArea:${playerId}` },
+        delta: -total,
+        label: "RES",
+        audioCue: "resource.spend",
+      }),
+    );
   }
 
   for (const placed of log.outcomes?.resourcesPlaced ?? []) {
-    events.push({
-      id: `${prefix}:resource:placed:${placed.cardId}`,
-      primitive: "resourceFloat",
-      playerId: String(placed.playerId),
-      delta: 1,
-      label: "RES",
-      delayMs: 120,
-    });
+    const playerId = String(placed.playerId);
+    plans.push(
+      animationPlan(`${prefix}:resource:placed:${placed.cardId}`, {
+        id: `${prefix}:resource:placed:${placed.cardId}`,
+        type: "resourceDelta",
+        player: { kind: "player", id: playerId },
+        anchor: { kind: "anchor", id: `resourceArea:${playerId}` },
+        delta: 1,
+        label: "RES",
+        delayMs: 120,
+        audioCue: "resource.gain",
+      }),
+    );
   }
 
-  return events;
+  return plans;
 }
 
-function usePhaseChangeEvents(status: BoardProjection["status"]): readonly VisualAnimationEvent[] {
-  const [events, setEvents] = useState<VisualAnimationEvent[]>([]);
+function usePhaseChangePlans(status: BoardProjection["status"]): readonly AnimationPlanV1[] {
+  const [plans, setPlans] = useState<AnimationPlanV1[]>([]);
   const previousRef = useRef<string | null>(null);
   const current = statusLabel(status);
 
@@ -277,16 +353,18 @@ function usePhaseChangeEvents(status: BoardProjection["status"]): readonly Visua
     if (!previous || previous === current) {
       return;
     }
-    const event: VisualAnimationEvent = {
-      id: `phase:${status.turn}:${status.gameSegment ?? ""}:${status.phase ?? ""}:${status.step ?? ""}`,
-      primitive: "phaseChange",
+    const id = `phase:${status.turn}:${status.gameSegment ?? ""}:${status.phase ?? ""}:${status.step ?? ""}`;
+    const plan = animationPlan(id, {
+      id: `${id}:phase`,
+      type: "phaseChange",
       from: previous,
       to: current,
-    };
-    setEvents((existing) => [...existing, event].slice(-MAX_PHASE_EVENTS));
+      audioCue: "phase.change",
+    });
+    setPlans((existing) => [...existing, plan].slice(-MAX_PHASE_EVENTS));
   }, [current, status.gameSegment, status.phase, status.step, status.turn]);
 
-  return events;
+  return plans;
 }
 
 function playedCardRecord(
@@ -301,7 +379,24 @@ function playedCardRecord(
     ownerId: String(playerId),
     fromZoneId: "hand",
     toZoneId,
+    audioCue: "card.play",
   };
+}
+
+function gundamCardMoveAudioCue(
+  fromZoneId: string | undefined,
+  toZoneId: string,
+): CardMoveAnimationRecord["audioCue"] {
+  if (baseZoneId(fromZoneId) === "deck" && baseZoneId(toZoneId) === "hand") {
+    return "card.draw";
+  }
+  if (baseZoneId(toZoneId) === "trash") {
+    return "card.discard";
+  }
+  if (baseZoneId(toZoneId) === "resourceArea") {
+    return "resource.gain";
+  }
+  return "card.move";
 }
 
 function visiblePrivateValues(
@@ -473,6 +568,61 @@ function opponentOf(view: BoardProjection, playerId: string): string | null {
 
 function statusLabel(status: BoardProjection["status"]): string {
   return [status.gameSegment, status.phase, status.step].filter(Boolean).join(" / ");
+}
+
+function gundamCanonicalCardMoveRecord(record: CardMoveAnimationRecord): CardMoveAnimationRecord {
+  return {
+    ...record,
+    fromZoneId: record.fromZoneId
+      ? gundamRenderedZoneId(record.fromZoneId, record.ownerId)
+      : undefined,
+    toZoneId: gundamRenderedZoneId(record.toZoneId, record.ownerId),
+  };
+}
+
+function animationPlan(id: string, step: AnimationPlanStepV1): AnimationPlanV1 {
+  return { id, version: 1, anchors: [], steps: [step] };
+}
+
+function entityRef(id: string): AnimationRef {
+  return { kind: "entity", id };
+}
+
+function gundamZoneRef(zoneId: string, ownerId: string): AnimationZoneRef {
+  return {
+    kind: "zone",
+    id: gundamRenderedZoneId(zoneId, ownerId),
+    ownerId,
+  };
+}
+
+function gundamAnimationZoneResolver(ref: AnimationZoneRef): SimulatorZone | null {
+  const parsed = parseGundamRenderedZoneId(ref.id, ref.ownerId);
+  if (!parsed) {
+    return null;
+  }
+  return gundamZoneDescriptor(parsed.zoneId, parsed.ownerId);
+}
+
+function parseGundamRenderedZoneId(
+  zoneId: string,
+  ownerId: string | undefined,
+): { zoneId: string; ownerId: string } | null {
+  const separator = zoneId.indexOf(":");
+  if (separator > 0) {
+    return {
+      zoneId: zoneId.slice(0, separator),
+      ownerId: zoneId.slice(separator + 1),
+    };
+  }
+  if (!ownerId) {
+    return null;
+  }
+  return { zoneId, ownerId };
+}
+
+function gundamRenderedZoneId(zoneId: string, ownerId: string): string {
+  return zoneId.includes(":") ? zoneId : `${zoneId}:${ownerId}`;
 }
 
 function gundamZoneDescriptor(zoneId: string, ownerId: string): SimulatorZone {

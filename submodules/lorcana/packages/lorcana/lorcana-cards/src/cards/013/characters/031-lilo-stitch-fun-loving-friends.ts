@@ -38,17 +38,13 @@ export const liloStitchFunlovingFriends: CharacterCard = {
   },
   text: [
     {
-      title: "Shift 3 {}",
-      description:
-        "(You may pay 3 {} to play this on top of one of your characters named Lilo or Stitch.)",
+      title: "Shift 3 {I}",
     },
     {
       title: "Resist +1",
     },
     {
       title: "Support",
-      description:
-        "(Whenever this character quests, you may add their {} to another chosen character's {} this turn.)",
     },
   ],
   classifications: ["Storyborn", "Team", "Hero", "Alien"],

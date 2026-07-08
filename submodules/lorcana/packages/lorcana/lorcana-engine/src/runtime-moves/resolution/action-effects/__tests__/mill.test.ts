@@ -33,6 +33,24 @@ describe("mill", () => {
     ] as never);
   });
 
+  it("records milled card ids in the event snapshot", () => {
+    const ctx = createTestContext({
+      zoneCards: {
+        "deck:player-one": ["a", "b", "c"],
+        "discard:player-one": [],
+      },
+    });
+    const effect: MillEffect = { type: "mill", amount: 2, target: "CONTROLLER" };
+    const eventSnapshot = {};
+
+    resolveMillEffect(ctx, createCardPlayed({ cardId: "src", playerId: PLAYER_ONE }), effect, {
+      millAmount: 2,
+      eventSnapshot,
+    });
+
+    expect(eventSnapshot).toEqual({ discardedCardIds: ["c", "b"] });
+  });
+
   it("is a no-op when the amount is zero", () => {
     const ctx = createTestContext({
       zoneCards: { "deck:player-two": ["a"], "discard:player-two": [] },

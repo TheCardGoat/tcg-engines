@@ -9,6 +9,7 @@ import {
 } from "../engine";
 import { BoardSharedPage } from "./BoardShared.page";
 import classes from "./Practice.module.css";
+import { cyberpunkSimulatorPath } from "./simulatorPaths";
 
 export function PracticeMatchPage() {
   const { matchId = "" } = useParams<{ matchId: string }>();
@@ -21,6 +22,7 @@ export function PracticeMatchPage() {
   if (
     (config.playerDeckFixtureId && !getPracticeDeckFixture(config.playerDeckFixtureId)) ||
     (config.botDeckFixtureId && !getPracticeDeckFixture(config.botDeckFixtureId)) ||
+    (config.playerStrategyId && !getStrategyById(config.playerStrategyId)) ||
     !getStrategyById(config.botStrategyId)
   ) {
     return (
@@ -29,15 +31,23 @@ export function PracticeMatchPage() {
   }
 
   return (
-    <BoardSharedPage
-      key={config.matchId}
-      scenarioId={DEFAULT_SCENARIO}
-      initialEngineBuilder={() => createPracticeEngine(config)}
-      initialAi={createPracticeAiConfig(config)}
-      initialHumanSide="player"
-      initialAiMode="auto"
-      initialAiSpeed="balanced"
-    />
+    <>
+      <div data-testid="practice-match-id" data-match-id={config.matchId} hidden>
+        {config.matchId}
+      </div>
+      <div data-testid="practice-match-seed" data-seed={config.seed} hidden>
+        {config.seed}
+      </div>
+      <BoardSharedPage
+        key={config.matchId}
+        scenarioId={DEFAULT_SCENARIO}
+        initialEngineBuilder={() => createPracticeEngine(config)}
+        initialAi={createPracticeAiConfig(config)}
+        initialHumanSide="player"
+        initialAiMode="auto"
+        initialAiSpeed="balanced"
+      />
+    </>
   );
 }
 
@@ -49,7 +59,7 @@ function PracticeRecovery({ message }: { message: string }) {
           <p className={classes.eyebrow}>Cyberpunk · practice</p>
           <h1 className={classes.title}>Practice match unavailable</h1>
           <p className={classes.lead}>{message}</p>
-          <Link className={classes.backLink} to="/practice">
+          <Link className={classes.backLink} to={cyberpunkSimulatorPath("/practice")}>
             Start a new practice match
           </Link>
         </header>

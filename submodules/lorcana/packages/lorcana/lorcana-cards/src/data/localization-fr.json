@@ -593,10 +593,10 @@
   "uQO": {
     "name": "Pocahontas & Meeko",
     "version": "Amis aventureux",
-    "rulesText": "<Alter> 2 {I} (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages nommé Pocahontas ou Meeko.)%<Insaisissable>%\\Retour bienvenu\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir l'un de vos personnages coûtant 1 et le renvoyer dans votre main. Si vous le faites, vous pouvez jouer gratuitement un personnage coûtant 1.",
+    "rulesText": "<Alter> 2 {I}%<Insaisissable>%\\Retour bienvenu\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez choisir l'un de vos personnages coûtant 1 et le renvoyer dans votre main. Si vous le faites, vous pouvez jouer gratuitement un personnage coûtant 1.",
     "text": [
       {
-        "title": "<Alter> 2 {I} (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages nommé Pocahontas ou Meeko.)"
+        "title": "<Alter> 2 {I}"
       },
       {
         "title": "<Insaisissable>"
@@ -612,10 +612,10 @@
   "OZw": {
     "name": "Woody & Buzz l'Éclair",
     "version": "Meilleurs amis",
-    "rulesText": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Woody ou Buzz l'Éclair.)%\\Vers l'infini...\\ Lorsque vous jouez ce personnage, choisissez un adversaire. S'il a plus de cartes en main que vous, piochez jusqu'à en avoir le même nombre.%\\... et au-delà!\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez jouer gratuitement une carte coûtant 2 ou moins.",
+    "rulesText": "<Alter> 5 {I}%\\Vers l'infini...\\ Lorsque vous jouez ce personnage, choisissez un adversaire. S'il a plus de cartes en main que vous, piochez jusqu'à en avoir le même nombre.%\\... et au-delà!\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez jouer gratuitement une carte coûtant 2 ou moins.",
     "text": [
       {
-        "title": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Woody ou Buzz l'Éclair.)"
+        "title": "<Alter> 5 {I}"
       },
       {
         "title": "Vers l'infini...",
@@ -632,10 +632,10 @@
   "1Iy": {
     "name": "Sulli & Bouh",
     "version": "Amis de terreur",
-    "rulesText": "<Alter Combo> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Sulli ou Bouh, ou sur un de chaque.)%\\Le pouvoir de l'amitié\\ Lorsque ce personnage est banni, si une ou plusieurs cartes sous lui sont des cartes Personnage, vous pouvez jouer gratuitement ces personnages-là depuis votre défausse.",
+    "rulesText": "<Alter Combo> 4 {I}%\\Le pouvoir de l'amitié\\ Lorsque ce personnage est banni, si une ou plusieurs cartes sous lui sont des cartes Personnage, vous pouvez jouer gratuitement ces personnages-là depuis votre défausse.",
     "text": [
       {
-        "title": "<Alter Combo> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Sulli ou Bouh, ou sur un de chaque.)"
+        "title": "<Alter Combo> 4 {I}"
       },
       {
         "title": "Le pouvoir de l'amitié",
@@ -648,10 +648,10 @@
   "wAj": {
     "name": "La famille Madrigal",
     "version": "Toutes les générations",
-    "rulesText": "<Alter de Madrigal> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Madrigal.)%\\Un tel cadeau\\ Une fois durant votre tour, lorsque vous retirez 1 dommage ou plus de l'un de vos personnages, placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
+    "rulesText": "<Alter de Madrigal> 3 {I}%\\Un tel cadeau\\ Une fois durant votre tour, lorsque vous retirez 1 dommage ou plus de l'un de vos personnages, placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée.",
     "text": [
       {
-        "title": "<Alter de Madrigal> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages Madrigal.)"
+        "title": "<Alter de Madrigal> 3 {I}"
       },
       {
         "title": "Un tel cadeau",
@@ -721,6 +721,32 @@
     "flavorText": "Peine : “Tu es sûr que ça va marcher ?”%Panique : “On va vite le savoir !”",
     "searchableKeywords": ["Hercules", "Hercule"]
   },
+  "K9Q": {
+    "name": "Lumpy",
+    "version": "Druide mellifique",
+    "rulesText": "\\Soins bienvenus\\ Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et déplacer jusqu'à 2 de ses dommages sur un personnage adverse de votre choix.",
+    "text": [
+      {
+        "title": "Soins bienvenus",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez choisir un personnage et déplacer jusqu'à 2 de ses dommages sur un personnage adverse de votre choix."
+      }
+    ],
+    "flavorText": "“C'est l'heure du toucher guérisseur de l'éfélant !”",
+    "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
+  },
+  "fpN": {
+    "name": "Abu",
+    "version": "Merveilleux sultan",
+    "rulesText": "\\Souverain d'un jour\\ Lorsque ce personnage est envoyé à l'aventure, bannissez-le.",
+    "text": [
+      {
+        "title": "Souverain d'un jour",
+        "description": "Lorsque ce personnage est envoyé à l'aventure, bannissez-le."
+      }
+    ],
+    "flavorText": "“Si c'est pas fantastique. J'imagine que n'importe qui peut être sultan maintenant.”%—Iago",
+    "searchableKeywords": ["Aladdin"]
+  },
   "o4M": {
     "name": "Meilin Lee",
     "version": "Obéissante en apparence",
@@ -741,6 +767,27 @@
     "text": "<Insaisissable>",
     "flavorText": "“Bien essayé, mauvaise herbe, mais il n'y a qu'une seule chose capable de me contenir.”",
     "searchableKeywords": ["Aladdin"]
+  },
+  "NS7": {
+    "name": "Vixy",
+    "version": "Pêcheuse experte",
+    "rulesText": "\\Chapardage\\ Lorsque vous jouez ce personnage, si vous avez un personnage avec <Insaisissable> en jeu, vous pouvez choisir un personnage, un objet ou un lieu coûtant 2 ou moins et le renvoyer dans la main de son propriétaire.",
+    "text": [
+      {
+        "title": "Chapardage",
+        "description": "Lorsque vous jouez ce personnage, si vous avez un personnage avec <Insaisissable> en jeu, vous pouvez choisir un personnage, un objet ou un lieu coûtant 2 ou moins et le renvoyer dans la main de son propriétaire."
+      }
+    ],
+    "flavorText": "“J'ai attrapé mon dîner. Où est le tien, Rox ?”",
+    "searchableKeywords": ["Fox and the Hound", "Rox et Rouky"]
+  },
+  "8t3": {
+    "name": "Meeko",
+    "version": "Raton-laveur chanceux",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Il ne savait pas comment il allait transporter tous ces fruits, mais aucun doute qu'il allait essayer.",
+    "searchableKeywords": ["Pocahontas"]
   },
   "kJR": {
     "name": "Peine",
@@ -811,6 +858,35 @@
     "flavorText": "Comparé aux véritables Glimmers de Pat, il était presque plus agréable de faire face à cette copie créée par la Plante.",
     "searchableKeywords": []
   },
+  "R3I": {
+    "name": "Grand-mère Wu",
+    "version": "Grand-mère avisée",
+    "rulesText": "<Offensif> +2 %\\Compréhension ancestrale\\ Lorsque vous jouez un personnage via sa capacité Alter sur ce personnage-ci, gagnez 1 éclat de Lore.",
+    "text": [
+      {
+        "title": "<Offensif> +2"
+      },
+      {
+        "title": "Compréhension ancestrale",
+        "description": "Lorsque vous jouez un personnage via sa capacité Alter sur ce personnage-ci, gagnez 1 éclat de Lore."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Alerte rouge"]
+  },
+  "HAa": {
+    "name": "Heihei",
+    "version": "Créé par la Plante",
+    "rulesText": "\\Remède botanique\\ Chaque fois que l'un de vos personnages Floodborn est envoyé à l'aventure, vous pouvez déplacer 1 dommage d'un personnage de votre choix sur un autre personnage adverse de votre choix.",
+    "text": [
+      {
+        "title": "Remède botanique",
+        "description": "Chaque fois que l'un de vos personnages Floodborn est envoyé à l'aventure, vous pouvez déplacer 1 dommage d'un personnage de votre choix sur un autre personnage adverse de votre choix."
+      }
+    ],
+    "flavorText": "Une copie encore moins sensée que l'original.",
+    "searchableKeywords": ["Moana", "Vaiana"]
+  },
   "TBN": {
     "name": "Héra",
     "version": "Créée par la Plante",
@@ -823,6 +899,14 @@
     ],
     "flavorText": "Il y a bien pire à faire que de copier une déesse.",
     "searchableKeywords": ["Hercules", "Hercule"]
+  },
+  "gng": {
+    "name": "La Fée Clochette",
+    "version": "Se fraye un chemin",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Clochette, que vois-tu par là-bas ? Tu penses qu’on peut passer ?”%—Peter Pan",
+    "searchableKeywords": ["Peter Pan"]
   },
   "yd8": {
     "name": "Morph",
@@ -853,10 +937,10 @@
   "qev": {
     "name": "Aladdin & Génie",
     "version": "Potes facétieux",
-    "rulesText": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Aladdin ou Génie.)%\\Tour de passe-passe\\ Lorsque vous jouez ce personnage, vous pouvez placer n'importe quel nombre de cartes de votre main sous votre pioche, dans l'ordre de votre choix. Si vous le faites, piochez autant de cartes, plus 1.",
+    "rulesText": "<Alter> 3 {I}%\\Tour de passe-passe\\ Lorsque vous jouez ce personnage, vous pouvez placer n'importe quel nombre de cartes de votre main sous votre pioche, dans l'ordre de votre choix. Si vous le faites, piochez autant de cartes, plus 1.",
     "text": [
       {
-        "title": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Aladdin ou Génie.)"
+        "title": "<Alter> 3 {I}"
       },
       {
         "title": "Tour de passe-passe",
@@ -869,14 +953,14 @@
   "3n0": {
     "name": "Peter Pan & La Fée Clochette",
     "version": "Amis rapides",
-    "rulesText": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Peter Pan ou La Fée Clochette.)%\\Tu t'envoles!\\ Vos personnages gagnent <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
+    "rulesText": "<Alter> 4 {I}%\\Tu t'envoles!\\ Vos personnages gagnent <Insaisissable>.",
     "text": [
       {
-        "title": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages Peter Pan ou La Fée Clochette.)"
+        "title": "<Alter> 4 {I}"
       },
       {
         "title": "Tu t'envoles!",
-        "description": "Vos personnages gagnent <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)"
+        "description": "Vos personnages gagnent <Insaisissable>."
       }
     ],
     "flavorText": "",
@@ -899,13 +983,29 @@
     "flavorText": "",
     "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
   },
+  "NXy": {
+    "name": "Winnie l'Ourson & Porcinet",
+    "version": "Mages mellifiques",
+    "rulesText": "<Alter> 3 {I}%\\Mélange magique\\ Ce personnage gagne +1 {L} pour chaque couleur d'encre différente figurant sur les personnages que vous avez en jeu.",
+    "text": [
+      {
+        "title": "<Alter> 3 {I}"
+      },
+      {
+        "title": "Mélange magique",
+        "description": "Ce personnage gagne +1 {L} pour chaque couleur d'encre différente figurant sur les personnages que vous avez en jeu."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
+  },
   "yFO": {
     "name": "Maléfique & Diablo",
     "version": "Le mal incarné",
-    "rulesText": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Maléfique ou Diablo.)%\\Crétins!\\ Vous pouvez placer 5 cartes Personnage de votre défausse sous votre pioche, dans l'ordre de votre choix, pour jouer ce personnage gratuitement via sa capacité Alter.%\\Appel du corbeau\\ Durant votre tour, chaque fois que ce personnage est épuisé, piochez une carte.",
+    "rulesText": "<Alter> 5 {I}%\\Crétins!\\ Vous pouvez placer 5 cartes Personnage de votre défausse sous votre pioche, dans l'ordre de votre choix, pour jouer ce personnage gratuitement via sa capacité Alter.%\\Appel du corbeau\\ Durant votre tour, chaque fois que ce personnage est épuisé, piochez une carte.",
     "text": [
       {
-        "title": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages nommé Maléfique ou Diablo.)"
+        "title": "<Alter> 5 {I}"
       },
       {
         "title": "Crétins!",
@@ -958,6 +1058,25 @@
     "flavorText": "“Star Command, le feuillage de cette planète est désarmant.”",
     "searchableKeywords": ["Toy Story"]
   },
+  "S4A": {
+    "name": "Buzz l'Éclair",
+    "version": "Assure la couverture",
+    "rulesText": "\\Pantin articulé\\ Lorsque vous jouez ce personnage, choisissez l'une de ces options. Si vous avez un autre personnage Jouet en jeu, choisissez les deux à la place:%• Vous pouvez renvoyer dans votre main une carte Action coûtant 2 ou moins de votre défausse.%• Vous pouvez jouer gratuitement une action coûtant 2 ou moins.",
+    "text": [
+      {
+        "title": "Pantin articulé",
+        "description": "Lorsque vous jouez ce personnage, choisissez l'une de ces options. Si vous avez un autre personnage Jouet en jeu, choisissez les deux à la place:"
+      },
+      {
+        "title": "• Vous pouvez renvoyer dans votre main une carte Action coûtant 2 ou moins de votre défausse."
+      },
+      {
+        "title": "• Vous pouvez jouer gratuitement une action coûtant 2 ou moins."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Toy Story"]
+  },
   "Fk5": {
     "name": "Grignotin",
     "version": "Cuisinier mellifique",
@@ -1008,6 +1127,32 @@
     "flavorText": "“J’ai… dit… DEHORS !”",
     "searchableKeywords": ["Tangled", "Raiponce"]
   },
+  "zm4": {
+    "name": "Rox",
+    "version": "Renard rusé",
+    "rulesText": "\\Résolution des problèmes\\ Lorsque vous jouez ce personnage, piochez 2 cartes, puis défaussez-en une.",
+    "text": [
+      {
+        "title": "Résolution des problèmes",
+        "description": "Lorsque vous jouez ce personnage, piochez 2 cartes, puis défaussez-en une."
+      }
+    ],
+    "flavorText": "“Ce serait bien plus facile si ces plantes avaient meilleur goût.”",
+    "searchableKeywords": ["Fox and the Hound", "Rox et Rouky"]
+  },
+  "5au": {
+    "name": "Russell",
+    "version": "Explorateur de la nature junior",
+    "rulesText": "\\Badge d'assistance aux personnes âgées\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez le déplacer ainsi qu'un autre de vos personnages sur le même lieu gratuitement.",
+    "text": [
+      {
+        "title": "Badge d'assistance aux personnes âgées",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez le déplacer ainsi qu'un autre de vos personnages sur le même lieu gratuitement."
+      }
+    ],
+    "flavorText": "“Un explorateur est l’ami de tous ! L’ami des plantes, des poissons et même des petits ours.”",
+    "searchableKeywords": ["Là-haut", "Up"]
+  },
   "4I7": {
     "name": "Petit Gourou",
     "version": "Roublard mellifique",
@@ -1032,6 +1177,43 @@
     "flavorText": "“Hathi ! Arrête de jacasser à propos de ta médaille et occupe-toi plutôt de cette végétation renégate !”",
     "searchableKeywords": ["Jungle Book", "Le Livre de la Jungle"]
   },
+  "OkJ": {
+    "name": "Aladdin",
+    "version": "Joue son rôle",
+    "rulesText": "\\S'en débarrasser\\ Lorsque vous jouez ce personnage, vous pouvez payer 1 {I} pour choisir un objet et le bannir.",
+    "text": [
+      {
+        "title": "S'en débarrasser",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez payer 1 {I} pour choisir un objet et le bannir."
+      }
+    ],
+    "flavorText": "“Je ne sais pas ce que c'est, mais renvoyons ça d'où ça vient.”",
+    "searchableKeywords": ["Aladdin"]
+  },
+  "j84": {
+    "name": "Madame Mime",
+    "version": "En colibri",
+    "rulesText": "<Insaisissable> %\\Juste comme je les aime\\ Toutes les cartes de votre main sont considérées comme ayant {C}.",
+    "text": [
+      {
+        "title": "<Insaisissable>"
+      },
+      {
+        "title": "Juste comme je les aime",
+        "description": "Toutes les cartes de votre main sont considérées comme ayant {C}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "J61": {
+    "name": "Minnie",
+    "version": "Aventurière curieuse",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "Minnie jeta un œil à travers l'enchevêtrement d'épines. Était-ce un passage étroit à l'intérieur de la Plante ? Elle se demanda jusqu'où il pouvait mener.",
+    "searchableKeywords": []
+  },
   "kl5": {
     "name": "Kevin",
     "version": "Oiseau incapable de voler",
@@ -1045,6 +1227,19 @@
     "flavorText": "“Elle a rassemblé de la nourriture qu’elle va porter à ses petits.”%—Doug",
     "searchableKeywords": ["Là-haut", "Up"]
   },
+  "ATq": {
+    "name": "Peter Pan",
+    "version": "Créé par la Plante",
+    "rulesText": "\\Ruse habile\\ Chaque fois que l'un de vos personnages Floodborn est défié, le joueur qui défie défausse une carte.",
+    "text": [
+      {
+        "title": "Ruse habile",
+        "description": "Chaque fois que l'un de vos personnages Floodborn est défié, le joueur qui défie défausse une carte."
+      }
+    ],
+    "flavorText": "Les répliques créées par la Plante luisaient d'une infusion d'encres mélangées.",
+    "searchableKeywords": ["Peter Pan"]
+  },
   "7VX": {
     "name": "Rouky",
     "version": "Conteur créatif",
@@ -1052,6 +1247,14 @@
     "text": "",
     "flavorText": "“Et alors que Chef dormait, la Plante toucha sa patte, le faisant bondir en l'air comme ça !”%—Rouky",
     "searchableKeywords": ["Fox and the Hound", "Rox et Rouky"]
+  },
+  "yZR": {
+    "name": "Rosie",
+    "version": "Patate vampire",
+    "rulesText": "<Alter de Patate> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos objets nommé Patate.)",
+    "text": "<Alter de Patate> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos objets nommé Patate.)",
+    "flavorText": "“Elle est en vie ! Elle est en vie ! J’en étais sûr !”%—Dr Raidi Moudugenou",
+    "searchableKeywords": ["Myster Mask", "Darkwing Duck"]
   },
   "GWn": {
     "name": "Dr Raidi Moudugenou",
@@ -1085,10 +1288,10 @@
   "zHc": {
     "name": "Rox & Rouky",
     "version": "Deux copains",
-    "rulesText": "<Alter> 2 {I} (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages nommé Rox ou Rouky.)%<Insaisissable>",
+    "rulesText": "<Alter> 2 {I}%<Insaisissable>",
     "text": [
       {
-        "title": "<Alter> 2 {I} (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages nommé Rox ou Rouky.)"
+        "title": "<Alter> 2 {I}"
       },
       {
         "title": "<Insaisissable>"
@@ -1110,17 +1313,41 @@
     "flavorText": "",
     "searchableKeywords": ["Tangled", "Raiponce"]
   },
+  "rAy": {
+    "name": "Cétus",
+    "version": "Puissant serpent",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Bon, alors, cette plante ? Elle ne faisait pas partie de mes plans. Mais je suis un dieu plein de ressources. Va falloir faire avec. S’adapter. Sortir le serpent de mer.”%—Hadès",
+    "searchableKeywords": ["Hercules", "Hercule"]
+  },
+  "Bqs": {
+    "name": "Mushu",
+    "version": "Dragon furtif",
+    "rulesText": "<Insaisissable> %\\Faire pencher la balance\\ Chaque fois que ce personnage est envoyé à l'aventure, si un adversaire a plus de cartes en main que vous, vous pouvez piocher une carte.",
+    "text": [
+      {
+        "title": "<Insaisissable>"
+      },
+      {
+        "title": "Faire pencher la balance",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, si un adversaire a plus de cartes en main que vous, vous pouvez piocher une carte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Mulan"]
+  },
   "QUJ": {
     "name": "Carl Fredricksen & Russell",
     "version": "Explorateurs intrépides",
-    "rulesText": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Carl Fredricksen ou Russell.)%\\Savoir-faire en extérieur\\ Tant que ce personnage est sur un lieu, tous les personnages sur ce lieu gagnent +1 {L} et <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
+    "rulesText": "<Alter> 4 {I}%\\Savoir-faire en extérieur\\ Tant que ce personnage est sur un lieu, tous les personnages sur ce lieu gagnent +1 {L} et <Insaisissable>.",
     "text": [
       {
-        "title": "<Alter> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Carl Fredricksen ou Russell.)"
+        "title": "<Alter> 4 {I}"
       },
       {
         "title": "Savoir-faire en extérieur",
-        "description": "Tant que ce personnage est sur un lieu, tous les personnages sur ce lieu gagnent +1 {L} et <Insaisissable>. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)"
+        "description": "Tant que ce personnage est sur un lieu, tous les personnages sur ce lieu gagnent +1 {L} et <Insaisissable>."
       }
     ],
     "flavorText": "",
@@ -1129,10 +1356,10 @@
   "d10": {
     "name": "Mickey Mouse & Minnie",
     "version": "Duo d'aventuriers",
-    "rulesText": "<Alter Duo> 0 {I} (Vous pouvez payer 0 {I} pour jouer ce personnage sur deux de vos personnages, l'un nommé Mickey Mouse et l'autre nommé Minnie.)%\\Penser à vous\\ Si ce personnage devait être banni, placez-le dans votre réserve d'encre à la place, face cachée et épuisé.",
+    "rulesText": "<Alter Duo> 0 {I}%\\Penser à vous\\ Si ce personnage devait être banni, placez-le dans votre réserve d'encre à la place, face cachée et épuisé.",
     "text": [
       {
-        "title": "<Alter Duo> 0 {I} (Vous pouvez payer 0 {I} pour jouer ce personnage sur deux de vos personnages, l'un nommé Mickey Mouse et l'autre nommé Minnie.)"
+        "title": "<Alter Duo> 0 {I}"
       },
       {
         "title": "Penser à vous",
@@ -1145,10 +1372,10 @@
   "xno": {
     "name": "Raiponce & Flynn Rider",
     "version": "Paire improbable",
-    "rulesText": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Raiponce ou Flynn Rider.)%\\Échange judicieux\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez piocher une carte, puis défausser une carte.%\\Nouveau départ\\ Durant votre tour, chaque fois que vous défaussez une carte Personnage, vous pouvez jouer ce personnage-là depuis votre défausse. (Vous payez tous ses coûts.)",
+    "rulesText": "<Alter> 3 {I}%\\Échange judicieux\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez piocher une carte, puis défausser une carte.%\\Nouveau départ\\ Durant votre tour, chaque fois que vous défaussez une carte Personnage, vous pouvez jouer ce personnage-là depuis votre défausse.",
     "text": [
       {
-        "title": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Raiponce ou Flynn Rider.)"
+        "title": "<Alter> 3 {I}"
       },
       {
         "title": "Échange judicieux",
@@ -1156,11 +1383,64 @@
       },
       {
         "title": "Nouveau départ",
-        "description": "Durant votre tour, chaque fois que vous défaussez une carte Personnage, vous pouvez jouer ce personnage-là depuis votre défausse. (Vous payez tous ses coûts.)"
+        "description": "Durant votre tour, chaque fois que vous défaussez une carte Personnage, vous pouvez jouer ce personnage-là depuis votre défausse."
       }
     ],
     "flavorText": "",
     "searchableKeywords": ["Tangled", "Raiponce"]
+  },
+  "S3p": {
+    "name": "Flèche Parr",
+    "version": "Super véloce",
+    "rulesText": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Flèche Parr.)%<Insaisissable> %\\Suis-moi!\\ Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez révéler la carte du dessus de votre pioche. Si vous le faites, vous pouvez la jouer. Si vous ne la jouez pas, placez-la dans votre défausse. (Vous payez tous ses coûts.)",
+    "text": [
+      {
+        "title": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Flèche Parr.)"
+      },
+      {
+        "title": "<Insaisissable>"
+      },
+      {
+        "title": "Suis-moi!",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, vous pouvez révéler la carte du dessus de votre pioche. Si vous le faites, vous pouvez la jouer. Si vous ne la jouez pas, placez-la dans votre défausse. (Vous payez tous ses coûts.)"
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Les Indestructibles", "Incredibles"]
+  },
+  "Znx": {
+    "name": "Yzma",
+    "version": "Cliente exigeante",
+    "rulesText": "\\Faire les choses correctement\\ Lorsque vous jouez ce personnage, chaque adversaire perd 1 éclat de Lore.",
+    "text": [
+      {
+        "title": "Faire les choses correctement",
+        "description": "Lorsque vous jouez ce personnage, chaque adversaire perd 1 éclat de Lore."
+      }
+    ],
+    "flavorText": "“Y a-t-il quelque chose dans ce menu qui ne baigne pas dans l’huile ?”",
+    "searchableKeywords": ["Emperors New Groove", "Kuzco, l'empereur Mégalo"]
+  },
+  "Cqh": {
+    "name": "Kuzco",
+    "version": "Client difficile",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Servez-moi l’assortiment chili-fromage, sans chili, avec le fromage à part. Oh, et avec un peu d'huile... Hé ! Vous m’écoutez ? Je passe ma commande là !”",
+    "searchableKeywords": ["Emperors New Groove", "Kuzco, l'empereur Mégalo"]
+  },
+  "W16": {
+    "name": "L'ours",
+    "version": "Animal territorial",
+    "rulesText": "\\Fureur sauvage\\ Tant que ce personnage a au moins un dommage, il gagne +3 {S}.",
+    "text": [
+      {
+        "title": "Fureur sauvage",
+        "description": "Tant que ce personnage a au moins un dommage, il gagne +3 {S}."
+      }
+    ],
+    "flavorText": "“Regarde, Rouky. La Plante ne fait pas le poids face à cet ours !”%—Amos Slade",
+    "searchableKeywords": ["Fox and the Hound", "Rox et Rouky"]
   },
   "Vst": {
     "name": "Carl Fredricksen",
@@ -1178,6 +1458,14 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Là-haut", "Up"]
+  },
+  "ABg": {
+    "name": "Flèche Parr",
+    "version": "Dynamo de la balle au prisonnier",
+    "rulesText": "<Insaisissable>",
+    "text": "<Insaisissable>",
+    "flavorText": "“Hé, regarde, je suis là ! Ah non, je suis ici maintenant ! Non, de nouveau là !”",
+    "searchableKeywords": ["Les Indestructibles", "Incredibles"]
   },
   "kLX": {
     "name": "Gaston",
@@ -1236,6 +1524,30 @@
     "text": "<Alter temporaire de Panda roux> 2 {I} (Vous pouvez payer 2 {I} pour jouer ce personnage sur l'un de vos personnages Panda roux. À la fin de votre tour, retirez tous les dommages de ce personnage et renvoyez uniquement cette carte dans votre main.)",
     "flavorText": "",
     "searchableKeywords": ["Turning Red", "Alerte rouge"]
+  },
+  "ZQC": {
+    "name": "Grand-mère Wu",
+    "version": "Panda roux féroce",
+    "rulesText": "<Alter temporaire> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Grand-mère Wu. À la fin de votre tour, retirez tous les dommages de ce personnage et renvoyez uniquement cette carte dans votre main.)%\\Charge d'intimidation\\ Chaque fois que ce personnage en défie un autre, vous gagnez 2 éclats de Lore et chaque adversaire perd 2 éclats de Lore.",
+    "text": [
+      {
+        "title": "<Alter temporaire> 4 {I} (Vous pouvez payer 4 {I} pour jouer ce personnage sur l'un de vos personnages nommé Grand-mère Wu. À la fin de votre tour, retirez tous les dommages de ce personnage et renvoyez uniquement cette carte dans votre main.)"
+      },
+      {
+        "title": "Charge d'intimidation",
+        "description": "Chaque fois que ce personnage en défie un autre, vous gagnez 2 éclats de Lore et chaque adversaire perd 2 éclats de Lore."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Alerte rouge"]
+  },
+  "9lN": {
+    "name": "Roi Louie",
+    "version": "Roi du Swing",
+    "rulesText": "<Mélomane> 6 (Ce personnage est considéré comme ayant un coût de 6 pour chanter des chansons.)",
+    "text": "<Mélomane> 6 (Ce personnage est considéré comme ayant un coût de 6 pour chanter des chansons.)",
+    "flavorText": "“Allez, dansez et balancez-vous en rythme avec le Roi Louie. Faut vous détendre !”",
+    "searchableKeywords": ["Jungle Book", "Le Livre de la Jungle"]
   },
   "C3L": {
     "name": "La Bête",
@@ -1368,6 +1680,14 @@
     "flavorText": "“Mouche ! Nous avons des invités surprises. Montrons-leur notre hospitalité légendaire.”",
     "searchableKeywords": ["Peter Pan"]
   },
+  "W1X": {
+    "name": "Peter Pan",
+    "version": "Duelliste de la Plante",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Allez, grosse brute ! Il faudrait que tu sois plus rapide que ça !”",
+    "searchableKeywords": ["Peter Pan"]
+  },
   "kAB": {
     "name": "Belle & La Bête",
     "version": "Tout comme les étoiles",
@@ -1388,6 +1708,89 @@
     "flavorText": "",
     "searchableKeywords": ["La Belle et la Bête", "Beauty and the Beast"]
   },
+  "d3T": {
+    "name": "Flèche Parr & Violette Parr",
+    "version": "Super frère et sœur",
+    "rulesText": "<Alter Combo> 6 {I}%<Insaisissable>, <Résistance> +1%\\Tactiques indestructibles\\ Chaque fois que ce personnage est envoyé à l'aventure ou défie, piochez une carte pour chaque carte sous lui.",
+    "text": [
+      {
+        "title": "<Alter Combo> 6 {I}"
+      },
+      {
+        "title": "<Insaisissable>, <Résistance> +1"
+      },
+      {
+        "title": "Tactiques indestructibles",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure ou défie, piochez une carte pour chaque carte sous lui."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Les Indestructibles", "Incredibles"]
+  },
+  "id9": {
+    "name": "Flagada Jones",
+    "version": "Patrouilleur du ciel",
+    "rulesText": "<Agilité> (Ce personnage peut défier comme s'il avait Insaisissable.)",
+    "text": "<Agilité> (Ce personnage peut défier comme s'il avait Insaisissable.)",
+    "flavorText": "Flagada Jones : “Pas d’inquiétude, Double M, je vais m'assurer qu'on s'écrase là-bas sans danger.” %Myster Mask : “C'est bien ce qui me fait peur.”",
+    "searchableKeywords": ["Myster Mask", "Darkwing Duck"]
+  },
+  "BnV": {
+    "name": "Doug",
+    "version": "Un bon chien",
+    "rulesText": "\\Va chercher!\\ Lorsque vous jouez ce personnage, si vous avez un objet en jeu, piochez une carte.",
+    "text": [
+      {
+        "title": "Va chercher!",
+        "description": "Lorsque vous jouez ce personnage, si vous avez un objet en jeu, piochez une carte."
+      }
+    ],
+    "flavorText": "“Une balle ! Oh une balle ! Une baballe !”",
+    "searchableKeywords": ["Là-haut", "Up"]
+  },
+  "zgm": {
+    "name": "Germaine",
+    "version": "Toujours à l’œil",
+    "rulesText": "\\Toujours\\ Chaque adversaire joue avec la carte du dessus de sa pioche face visible.",
+    "text": [
+      {
+        "title": "Toujours",
+        "description": "Chaque adversaire joue avec la carte du dessus de sa pioche face visible."
+      }
+    ],
+    "flavorText": "“Je suppose que vous avez brillamment fait vos rapports, pour une fois.”",
+    "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
+  },
+  "ZPO": {
+    "name": "Merlin",
+    "version": "Envisage l'avenir",
+    "rulesText": "\\Petit tour\\ Lorsque vous jouez ce personnage, vous pouvez piocher la carte du dessous de votre pioche.%\\Pas le moindre confort\\ Lorsque ce personnage est banni, placez cette carte depuis votre défausse sous votre pioche.",
+    "text": [
+      {
+        "title": "Petit tour",
+        "description": "Lorsque vous jouez ce personnage, vous pouvez piocher la carte du dessous de votre pioche."
+      },
+      {
+        "title": "Pas le moindre confort",
+        "description": "Lorsque ce personnage est banni, placez cette carte depuis votre défausse sous votre pioche."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
+  },
+  "Lhx": {
+    "name": "Poker-Naze",
+    "version": "Créateur de jouets zinzin",
+    "rulesText": "\\Conception maléfique\\ Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, placez les 4 cartes du dessus de votre pioche dans votre défausse. Vous pouvez choisir un personnage et lui infliger 1 dommage pour chaque carte Objet ainsi placée dans votre défausse.",
+    "text": [
+      {
+        "title": "Conception maléfique",
+        "description": "Lorsque vous jouez ce personnage et chaque fois qu'il est envoyé à l'aventure, placez les 4 cartes du dessus de votre pioche dans votre défausse. Vous pouvez choisir un personnage et lui infliger 1 dommage pour chaque carte Objet ainsi placée dans votre défausse."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Myster Mask", "Darkwing Duck"]
+  },
   "WGT": {
     "name": "Belle",
     "version": "Toujours en train de lire",
@@ -1401,6 +1804,19 @@
     "flavorText": "“Je viens de terminer une merveilleuse histoire à propos d’un ogre, du roi, des haricots et...”",
     "searchableKeywords": ["La Belle et la Bête", "Beauty and the Beast"]
   },
+  "i2l": {
+    "name": "Ellie Fredricksen",
+    "version": "Partenaire d'aventure",
+    "rulesText": "\\Toujours avec toi\\ Lorsque ce personnage est banni, vous pouvez placer cette carte dans votre réserve d'encre, face cachée et épuisée.",
+    "text": [
+      {
+        "title": "Toujours avec toi",
+        "description": "Lorsque ce personnage est banni, vous pouvez placer cette carte dans votre réserve d'encre, face cachée et épuisée."
+      }
+    ],
+    "flavorText": "“L'aventure a le don de nous trouver où que nous allions.”",
+    "searchableKeywords": ["Là-haut", "Up"]
+  },
   "iGe": {
     "name": "Madame Hasagawa",
     "version": "Marchande de fruits",
@@ -1408,6 +1824,32 @@
     "text": "",
     "flavorText": "La vieille femme se retourna lorsque l'ombre de la Plante se posa sur son étal de fruits. “Bonjour ! Encore des mangues aujourd'hui ?”",
     "searchableKeywords": ["Lilo et Stitch", "Lilo and Stitch"]
+  },
+  "iIf": {
+    "name": "Alpha",
+    "version": "Chef de meute",
+    "rulesText": "\\Qui veut une friandise?\\ Chaque fois que vous jouez un objet, choisissez un personnage qui gagne +1 {S} et <Résistance> +1 pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "Qui veut une friandise?",
+        "description": "Chaque fois que vous jouez un objet, choisissez un personnage qui gagne +1 {S} et <Résistance> +1 pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "“À présent, nous allons retrouver le petit postier et le mangeur de pruneau.”",
+    "searchableKeywords": ["Là-haut", "Up"]
+  },
+  "7g9": {
+    "name": "Sulli",
+    "version": "Terreur stratège",
+    "rulesText": "\\Coup d'effroi\\ Tant que vous avez 5 cartes ou plus dans votre réserve d'encre, ce personnage gagne +2 {S}.",
+    "text": [
+      {
+        "title": "Coup d'effroi",
+        "description": "Tant que vous avez 5 cartes ou plus dans votre réserve d'encre, ce personnage gagne +2 {S}."
+      }
+    ],
+    "flavorText": "“Passez donc leur faire une petite démonstration… histoire de leur montrer ce qu’est une terreur d’élite !”%—Henri J. Waternousse III",
+    "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
   },
   "ioe": {
     "name": "Léon Bogue",
@@ -1425,6 +1867,30 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
+  },
+  "ckw": {
+    "name": "Porcinet",
+    "version": "Apprenti mage mellifique",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Ce n'est pas grave, Porcinet. Avoir peur ne signifie pas que tu n'es pas courageux. En fait, je pense même que pour être courageux, il faut d'abord avoir peur !”%—Jean-Christophe, sage mellifique",
+    "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
+  },
+  "JLp": {
+    "name": "Mickey Mouse",
+    "version": "Explorateur inquisitif",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“Oh oh ! Je savais que ça valait la peine de grimper sur cette Plante. Il y a tellement de choses à voir d'ici !”",
+    "searchableKeywords": []
+  },
+  "iib": {
+    "name": "Hadès",
+    "version": "Comploteur méticuleux",
+    "rulesText": "<Hors d'atteinte>",
+    "text": "<Hors d'atteinte>",
+    "flavorText": "“Ce petit gars est tellement hideux, je l'adore ! Et cette façon qu’il a d’aspirer l'encre de l'inondation. Même moi, je n’aurais pas pu espérer mieux.”",
+    "searchableKeywords": ["Hercules", "Hercule"]
   },
   "5gt": {
     "name": "Antonio Madrigal",
@@ -1450,6 +1916,19 @@
       }
     ],
     "flavorText": "La copie créée par la Plante possédait la beauté, mais pas la bonté.",
+    "searchableKeywords": ["Robin des Bois", "Robin Hood"]
+  },
+  "0c7": {
+    "name": "Robin des Bois",
+    "version": "Créé par la Plante",
+    "rulesText": "\\Aux aguets\\ Vos personnages Floodborn gagnent <Agilité>. (Ils peuvent défier comme s'ils avaient Insaisissable.)",
+    "text": [
+      {
+        "title": "Aux aguets",
+        "description": "Vos personnages Floodborn gagnent <Agilité>. (Ils peuvent défier comme s'ils avaient Insaisissable.)"
+      }
+    ],
+    "flavorText": "La Plante créa des défenseurs pour veiller en silence sur les terres environnantes.",
     "searchableKeywords": ["Robin des Bois", "Robin Hood"]
   },
   "aJj": {
@@ -1490,13 +1969,39 @@
     "flavorText": "",
     "searchableKeywords": ["Là-haut", "Up"]
   },
+  "Ush": {
+    "name": "Henri J. Waternousse III",
+    "version": "Président-Directeur Général",
+    "rulesText": "\\Résultat net\\ Tant que vous avez plus de cartes dans votre réserve d'encre que chacun de vos adversaires, ce personnage gagne +2 {L} et <Hors d'atteinte>.",
+    "text": [
+      {
+        "title": "Résultat net",
+        "description": "Tant que vous avez plus de cartes dans votre réserve d'encre que chacun de vos adversaires, ce personnage gagne +2 {L} et <Hors d'atteinte>."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
+  },
+  "AWz": {
+    "name": "Bourriquet",
+    "version": "Érudit mellifique",
+    "rulesText": "\\Tactiques mellifiques\\ Chaque fois que ce personnage est envoyé à l'aventure, choisissez l'un de vos personnages Miel qui gagne +1 {L} et <Hors d'atteinte> jusqu'au début de votre prochain tour.",
+    "text": [
+      {
+        "title": "Tactiques mellifiques",
+        "description": "Chaque fois que ce personnage est envoyé à l'aventure, choisissez l'un de vos personnages Miel qui gagne +1 {L} et <Hors d'atteinte> jusqu'au début de votre prochain tour."
+      }
+    ],
+    "flavorText": "“Ça va aller. Empilez-en encore. Ça ira pour moi.”",
+    "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
+  },
   "UbM": {
     "name": "Myster Mask & Flagada Jones",
     "version": "Les meilleurs de Bourg-les-Canards",
-    "rulesText": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Myster Mask ou Flagada Jones.)%<Hors d'atteinte> %\\Pose de la victoire\\ Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, gagnez 2 éclats de Lore.",
+    "rulesText": "<Alter> 5 {I}%<Hors d'atteinte>%\\Pose de la victoire\\ Durant votre tour, chaque fois que ce personnage en bannit un autre via un défi, gagnez 2 éclats de Lore.",
     "text": [
       {
-        "title": "<Alter> 5 {I} (Vous pouvez payer 5 {I} pour jouer ce personnage sur l'un de vos personnages Myster Mask ou Flagada Jones.)"
+        "title": "<Alter> 5 {I}"
       },
       {
         "title": "<Hors d'atteinte>"
@@ -1508,6 +2013,38 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Myster Mask", "Darkwing Duck"]
+  },
+  "Fqd": {
+    "name": "Violette Parr",
+    "version": "Super résiliente",
+    "rulesText": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Violette Parr.)%<Résistance> +1 %\\Synergie héroïque\\ Chaque fois que vous jouez ce personnage ou un autre personnage Héros, vous pouvez piocher une carte puis défausser une carte.",
+    "text": [
+      {
+        "title": "<Alter> 3 {I} (Vous pouvez payer 3 {I} pour jouer ce personnage sur l'un de vos personnages nommé Violette Parr.)"
+      },
+      {
+        "title": "<Résistance> +1"
+      },
+      {
+        "title": "Synergie héroïque",
+        "description": "Chaque fois que vous jouez ce personnage ou un autre personnage Héros, vous pouvez piocher une carte puis défausser une carte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Les Indestructibles", "Incredibles"]
+  },
+  "bsG": {
+    "name": "Aladdin",
+    "version": "Créé par la Plante",
+    "rulesText": "\\Nourri par la Plante\\ Chaque fois que l'un de vos personnages Floodborn est envoyé à l'aventure, vous pouvez piocher une carte puis défausser une carte.",
+    "text": [
+      {
+        "title": "Nourri par la Plante",
+        "description": "Chaque fois que l'un de vos personnages Floodborn est envoyé à l'aventure, vous pouvez piocher une carte puis défausser une carte."
+      }
+    ],
+    "flavorText": "“Attendez ! Ce n’est pas un Glimmer d’Aladdin, c’est une pousse créée par la Plante !”%—Shanzay, une Illumineuse",
+    "searchableKeywords": ["Aladdin"]
   },
   "jjR": {
     "name": "Willie le géant",
@@ -1538,6 +2075,22 @@
     "flavorText": "",
     "searchableKeywords": ["Lilo et Stitch", "Lilo and Stitch"]
   },
+  "kT3": {
+    "name": "Stitch",
+    "version": "Protecteur des grenouilles",
+    "rulesText": "",
+    "text": "",
+    "flavorText": "“MA grenouille ! Elle est très importante !”",
+    "searchableKeywords": ["Lilo et Stitch", "Lilo and Stitch"]
+  },
+  "y59": {
+    "name": "Shérif de Nottingham",
+    "version": "Pourfendeur de Plante",
+    "rulesText": "<Offensif> +3",
+    "text": "<Offensif> +3",
+    "flavorText": "“Bon, écoute-moi bien, mauvaise herbe envahissante…”",
+    "searchableKeywords": ["Robin des Bois", "Robin Hood"]
+  },
   "r0B": {
     "name": "Mata",
     "version": "Serveuse à la Poêle à Frire",
@@ -1545,6 +2098,35 @@
     "text": "",
     "flavorText": "“Trois complètes au porc, supplément de bacon, deux chilis au fromage, un foie grillé avec un rouleau aux oignons, un poisson du jour, un steak taillé en forme de truite.”",
     "searchableKeywords": ["Emperors New Groove", "Kuzco, l'empereur Mégalo"]
+  },
+  "F0D": {
+    "name": "Violette Parr",
+    "version": "S’entraîne au champ de force",
+    "rulesText": "<Résistance> +1",
+    "text": "<Résistance> +1",
+    "flavorText": "“Maman ? Désolée de t'appeler, mais euh... je crois qu'il y a un gros problème à l’extérieur de la maison.”",
+    "searchableKeywords": ["Les Indestructibles", "Incredibles"]
+  },
+  "0zk": {
+    "name": "Dr Hämsterviel",
+    "version": "Observateur maléfique",
+    "rulesText": "<Agilité> (Ce personnage peut défier comme s'il avait Insaisissable.)",
+    "text": "<Agilité> (Ce personnage peut défier comme s'il avait Insaisissable.)",
+    "flavorText": "“Nul ne peut se cacher de moi. D'ici, je peux tout voir !”",
+    "searchableKeywords": ["Lilo et Stitch", "Lilo and Stitch"]
+  },
+  "dxV": {
+    "name": "Maître Hibou",
+    "version": "Rôdeur mellifique",
+    "rulesText": "\\Alliance mellifique\\ Tant que vous avez un autre personnage Miel en jeu, ce personnage-ci gagne <Résistance> +2.",
+    "text": [
+      {
+        "title": "Alliance mellifique",
+        "description": "Tant que vous avez un autre personnage Miel en jeu, ce personnage-ci gagne <Résistance> +2."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
   },
   "uDC": {
     "name": "Mégavolt",
@@ -1606,6 +2188,22 @@
     "flavorText": "“La coupe est pleine, j’arrête tout ! Vous voulez du spécial ? Faites-le vous même !”%—Chef cuisinier excédé",
     "searchableKeywords": ["Emperors New Groove", "Kuzco, l'empereur Mégalo"]
   },
+  "Ocg": {
+    "name": "Kronk",
+    "version": "Cuisinier à la Poêle à Frire",
+    "rulesText": "<Résistance> +1 %\\On envoie!\\ Une fois durant votre tour, vous pouvez payer 1 {I} pour piocher une carte puis défausser une carte.",
+    "text": [
+      {
+        "title": "<Résistance> +1"
+      },
+      {
+        "title": "On envoie!",
+        "description": "Une fois durant votre tour, vous pouvez payer 1 {I} pour piocher une carte puis défausser une carte."
+      }
+    ],
+    "flavorText": "“Vous le voulez encore plus croustillant ?”",
+    "searchableKeywords": ["Emperors New Groove", "Kuzco, l'empereur Mégalo"]
+  },
   "v6P": {
     "name": "Mulan",
     "version": "Créée par la Plante",
@@ -1618,6 +2216,36 @@
     ],
     "flavorText": "Cette réplique est tout aussi douée au combat que l'originale, sans avoir besoin de s’entraîner.",
     "searchableKeywords": ["Mulan"]
+  },
+  "mTj": {
+    "name": "Diablo",
+    "version": "Protège sa maîtresse",
+    "rulesText": "\\Tourbillon de plumes\\ Vos personnages nommés Maléfique gagnent <Résistance> +1.",
+    "text": [
+      {
+        "title": "Tourbillon de plumes",
+        "description": "Vos personnages nommés Maléfique gagnent <Résistance> +1."
+      }
+    ],
+    "flavorText": "“Tu es le seul en qui je puisse avoir confiance, mon mignon.”%—Maléfique",
+    "searchableKeywords": ["La Belle au bois dormant", "Sleeping Beauty"]
+  },
+  "MAE": {
+    "name": "Scar",
+    "version": "Créé par la Plante",
+    "rulesText": "\\Récompense du vainqueur\\ Durant votre tour, chaque fois que l'un de vos personnages Floodborn bannit un autre personnage via un défi, gagnez 1 éclat de Lore.%\\Renforcer les rangs\\ Durant le tour de vos adversaires, chaque fois que l'un de vos personnages Floodborn est banni, piochez une carte.",
+    "text": [
+      {
+        "title": "Récompense du vainqueur",
+        "description": "Durant votre tour, chaque fois que l'un de vos personnages Floodborn bannit un autre personnage via un défi, gagnez 1 éclat de Lore."
+      },
+      {
+        "title": "Renforcer les rangs",
+        "description": "Durant le tour de vos adversaires, chaque fois que l'un de vos personnages Floodborn est banni, piochez une carte."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lion King", "Le Roi Lion"]
   },
   "jjL": {
     "name": "Maximus",
@@ -1670,68 +2298,6 @@
     ],
     "flavorText": "",
     "searchableKeywords": []
-  },
-  "9kq": {
-    "name": "Peter Pan",
-    "version": "Créé par la Plante",
-    "rulesText": "\\Ruse habile\\ Chaque fois que l'un de vos personnages Floodborn est défié, le joueur qui défie défausse une carte.",
-    "text": [
-      {
-        "title": "Ruse habile",
-        "description": "Chaque fois que l'un de vos personnages Floodborn est défié, le joueur qui défie défausse une carte."
-      }
-    ],
-    "flavorText": "Les répliques créées par la Plante luisaient d'une infusion d'encres mélangées.",
-    "searchableKeywords": ["Peter Pan"]
-  },
-  "iYJ": {
-    "name": "Vixy",
-    "version": "Pêcheuse experte",
-    "rulesText": "\\Chapardage\\ Lorsque vous jouez ce personnage, si vous avez un personnage avec <Insaisissable> en jeu, vous pouvez choisir un personnage, un objet ou un lieu coûtant 2 ou moins et le renvoyer dans la main de son propriétaire.",
-    "text": [
-      {
-        "title": "Chapardage",
-        "description": "Lorsque vous jouez ce personnage, si vous avez un personnage avec <Insaisissable> en jeu, vous pouvez choisir un personnage, un objet ou un lieu coûtant 2 ou moins et le renvoyer dans la main de son propriétaire."
-      }
-    ],
-    "flavorText": "“J'ai attrapé mon dîner. Où est le tien, Rox ?”",
-    "searchableKeywords": ["Fox and the Hound", "Rox et Rouky"]
-  },
-  "cAP": {
-    "name": "Buzz l'Éclair",
-    "version": "Assure la couverture",
-    "rulesText": "\\Pantin articulé\\ Lorsque vous jouez ce personnage, choisissez l'une de ces options. Si vous avez un autre personnage Jouet en jeu, choisissez les deux à la place:%• Vous pouvez renvoyer dans votre main une carte Action coûtant 2 ou moins de votre défausse.%• Vous pouvez jouer gratuitement une action coûtant 2 ou moins.",
-    "text": [
-      {
-        "title": "Pantin articulé",
-        "description": "Lorsque vous jouez ce personnage, choisissez l'une de ces options. Si vous avez un autre personnage Jouet en jeu, choisissez les deux à la place:"
-      },
-      {
-        "title": "• Vous pouvez renvoyer dans votre main une carte Action coûtant 2 ou moins de votre défausse."
-      },
-      {
-        "title": "• Vous pouvez jouer gratuitement une action coûtant 2 ou moins."
-      }
-    ],
-    "flavorText": "",
-    "searchableKeywords": ["Toy Story"]
-  },
-  "7cP": {
-    "name": "Merlin",
-    "version": "Envisage l'avenir",
-    "rulesText": "\\Petit tour\\ Lorsque vous jouez ce personnage, vous pouvez piocher la carte du dessous de votre pioche.%\\Pas le moindre confort\\ Lorsque ce personnage est banni, placez cette carte depuis votre défausse sous votre pioche.",
-    "text": [
-      {
-        "title": "Petit tour",
-        "description": "Lorsque vous jouez ce personnage, vous pouvez piocher la carte du dessous de votre pioche."
-      },
-      {
-        "title": "Pas le moindre confort",
-        "description": "Lorsque ce personnage est banni, placez cette carte depuis votre défausse sous votre pioche."
-      }
-    ],
-    "flavorText": "",
-    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
   },
   "oEU": {
     "name": "Poussinette Colvert",
@@ -23704,6 +24270,19 @@
     "flavorText": "Une terre où le temps s’est arrêté.",
     "searchableKeywords": ["Là-haut", "Up"]
   },
+  "pbQ": {
+    "name": "Château de la Bête",
+    "version": "Envahi par la Plante",
+    "rulesText": "\\Menace imminente\\ Vos personnages Floodborn gagnent <Charge>. (Ces personnages peuvent défier le tour où ils sont joués.)",
+    "text": [
+      {
+        "title": "Menace imminente",
+        "description": "Vos personnages Floodborn gagnent <Charge>. (Ces personnages peuvent défier le tour où ils sont joués.)"
+      }
+    ],
+    "flavorText": "Un grondement sourd résonna dans la forêt lorsque la Plante arracha le château à ses fondations.",
+    "searchableKeywords": ["La Belle et la Bête", "Beauty and the Beast"]
+  },
   "Zwu": {
     "name": "Maison de Carl",
     "version": "Volant haut",
@@ -23716,6 +24295,36 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Là-haut", "Up"]
+  },
+  "gIc": {
+    "name": "La Forêt des Rêves Bleus",
+    "version": "Campement mellifique",
+    "rulesText": "\\Un chez-soi loin de chez soi\\ Les personnages sur ce lieu gagnent +1 {W}.%\\Quête mellifique\\ Les personnages Miel sur ce lieu gagnent +1 {L}.",
+    "text": [
+      {
+        "title": "Un chez-soi loin de chez soi",
+        "description": "Les personnages sur ce lieu gagnent +1 {W}."
+      },
+      {
+        "title": "Quête mellifique",
+        "description": "Les personnages Miel sur ce lieu gagnent +1 {L}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
+  },
+  "Rb1": {
+    "name": "Entrée de la Plante",
+    "version": "Passage inquiétant",
+    "rulesText": "\\Racine du pouvoir\\ Chaque tour, la première fois qu'un personnage Floodborn se déplace sur ce lieu, vous pouvez choisir un personnage et lui infliger 1 dommage.",
+    "text": [
+      {
+        "title": "Racine du pouvoir",
+        "description": "Chaque tour, la première fois qu'un personnage Floodborn se déplace sur ce lieu, vous pouvez choisir un personnage et lui infliger 1 dommage."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
   },
   "iCW": {
     "name": "Chambre d'Andy",
@@ -24745,6 +25354,19 @@
     "flavorText": "",
     "searchableKeywords": ["Pocahontas"]
   },
+  "L8A": {
+    "name": "Bulbe brisé",
+    "version": "",
+    "rulesText": "\\Renouvellement\\ {E}, 1 {I} — Choisissez un joueur et placez une carte de sa défausse sous sa pioche.",
+    "text": [
+      {
+        "title": "Renouvellement",
+        "description": "{E}, 1 {I} — Choisissez un joueur et placez une carte de sa défausse sous sa pioche."
+      }
+    ],
+    "flavorText": "“On dirait qu'il y a une autre Pousse en liberté. Allons la chercher.”%—Venturo, un Illumineur",
+    "searchableKeywords": ["Lorcana"]
+  },
   "7J0": {
     "name": "Bâton magique mellifique",
     "version": "",
@@ -24762,6 +25384,36 @@
     "flavorText": "",
     "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
   },
+  "Srm": {
+    "name": "Source de la Plante",
+    "version": "",
+    "rulesText": "\\Siphon\\ Chaque fois qu'un personnage adverse est envoyé à l'aventure, vous gagnez 1 éclat de Lore à moins que son propriétaire ne paie 1 {I}.%\\Floraison rayonnante\\ {E}, 2 {I} — Gagnez 1 éclat de Lore.",
+    "text": [
+      {
+        "title": "Siphon",
+        "description": "Chaque fois qu'un personnage adverse est envoyé à l'aventure, vous gagnez 1 éclat de Lore à moins que son propriétaire ne paie 1 {I}."
+      },
+      {
+        "title": "Floraison rayonnante",
+        "description": "{E}, 2 {I} — Gagnez 1 éclat de Lore."
+      }
+    ],
+    "flavorText": "“Bientôt, elle aura absorbé jusqu'à la dernière goutte d'encre de Lorcana...”%—Hana, une Illumineuse",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "5EJ": {
+    "name": "Patate",
+    "version": "",
+    "rulesText": "\\Pleine de potentiel\\ Cet objet entre en jeu épuisé.",
+    "text": [
+      {
+        "title": "Pleine de potentiel",
+        "description": "Cet objet entre en jeu épuisé."
+      }
+    ],
+    "flavorText": "Elle n'a pas beaucoup de goût.",
+    "searchableKeywords": ["Myster Mask", "Darkwing Duck"]
+  },
   "ph9": {
     "name": "Mon livre d’aventure",
     "version": "",
@@ -24774,6 +25426,23 @@
     ],
     "flavorText": "“Merci pour cette belle aventure — Il est temps pour toi d’en vivre une nouvelle ! Je t’aime, Ellie”",
     "searchableKeywords": ["Là-haut", "Up"]
+  },
+  "sMI": {
+    "name": "Bulbe de la plante",
+    "version": "",
+    "rulesText": "\\Cosse fragile\\ Cet objet entre en jeu épuisé.%\\Régénérer\\ {E}, 1 {I} — Choisissez l'un de vos personnages et bannissez-le. Vous pouvez jouer gratuitement un personnage portant le même nom que le personnage banni.",
+    "text": [
+      {
+        "title": "Cosse fragile",
+        "description": "Cet objet entre en jeu épuisé."
+      },
+      {
+        "title": "Régénérer",
+        "description": "{E}, 1 {I} — Choisissez l'un de vos personnages et bannissez-le. Vous pouvez jouer gratuitement un personnage portant le même nom que le personnage banni."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
   },
   "K9I": {
     "name": "Bonbonne de cris",
@@ -24804,6 +25473,49 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Là-haut", "Up"]
+  },
+  "NTO": {
+    "name": "Portail de la Porte du placard",
+    "version": "",
+    "rulesText": "\\Toc Toc\\ Cet objet entre en jeu épuisé.%\\Qui est là?\\ {E}, 2 {I} — Regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage, Objet ou Lieu coûtant 6 ou moins parmi elles et la jouer gratuitement. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix. Placez cette carte-ci dans votre réserve d'encre, face cachée et épuisée.",
+    "text": [
+      {
+        "title": "Toc Toc",
+        "description": "Cet objet entre en jeu épuisé."
+      },
+      {
+        "title": "Qui est là?",
+        "description": "{E}, 2 {I} — Regardez les 3 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage, Objet ou Lieu coûtant 6 ou moins parmi elles et la jouer gratuitement. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix. Placez cette carte-ci dans votre réserve d'encre, face cachée et épuisée."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
+  },
+  "3gV": {
+    "name": "Invocateur d’encre de Hana",
+    "version": "",
+    "rulesText": "\\Efflorescence régénératrice\\ {E} — Choisissez un personnage et retirez-lui jusqu'à 2 dommages. S'il y a une carte sous ce personnage, il gagne <Résistance> +1 jusqu'au début de votre prochain tour.",
+    "text": [
+      {
+        "title": "Efflorescence régénératrice",
+        "description": "{E} — Choisissez un personnage et retirez-lui jusqu'à 2 dommages. S'il y a une carte sous ce personnage, il gagne <Résistance> +1 jusqu'au début de votre prochain tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Lorcana"]
+  },
+  "3R1": {
+    "name": "Bonbonne de rire",
+    "version": "",
+    "rulesText": "\\Imitateur\\ {E} — Placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée. Choisissez un adversaire qui peut placer la carte du dessus de sa pioche dans sa réserve d'encre, face cachée et épuisée.",
+    "text": [
+      {
+        "title": "Imitateur",
+        "description": "{E} — Placez la carte du dessus de votre pioche dans votre réserve d'encre, face cachée et épuisée. Choisissez un adversaire qui peut placer la carte du dessus de sa pioche dans sa réserve d'encre, face cachée et épuisée."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
   },
   "bPp": {
     "name": "Collier traducteur",
@@ -24843,6 +25555,36 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Mulan"]
+  },
+  "qNx": {
+    "name": "La débroussailleuse",
+    "version": "",
+    "rulesText": "\\À pleine puissance\\ {E}, 1 {I} — Choisissez un personnage qui gagne <Offensif> +2 pour le reste de ce tour. %\\Coupe nette\\ 2 {I}, Bannissez cet objet — Choisissez un personnage Pousse et bannissez-le.",
+    "text": [
+      {
+        "title": "À pleine puissance",
+        "description": "{E}, 1 {I} — Choisissez un personnage qui gagne <Offensif> +2 pour le reste de ce tour."
+      },
+      {
+        "title": "Coupe nette",
+        "description": "2 {I}, Bannissez cet objet — Choisissez un personnage Pousse et bannissez-le."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Myster Mask", "Darkwing Duck"]
+  },
+  "Kjs": {
+    "name": "Fleur absorbante",
+    "version": "",
+    "rulesText": "\\Métamorphose\\ {E}, 1 {I} — Si un personnage a été banni via un défi ce tour-ci, piochez une carte.",
+    "text": [
+      {
+        "title": "Métamorphose",
+        "description": "{E}, 1 {I} — Si un personnage a été banni via un défi ce tour-ci, piochez une carte."
+      }
+    ],
+    "flavorText": "“Oh, c'est fascinant ! Comment fait-elle ça ?”%—Hana, une Illumineuse",
+    "searchableKeywords": ["Peter Pan"]
   },
   "m5E": {
     "name": "Corde de sécurité",
@@ -27563,6 +28305,21 @@
     "flavorText": "You’re never not on my mind",
     "searchableKeywords": ["Turning Red", "Alerte rouge"]
   },
+  "dYy": {
+    "name": "Enfile tes gants",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)%Choisissez un personnage qui gagne <Charge> et <Offensif> +2 pour le reste de ce tour. (Ce personnage peut défier le tour où il est joué. Lorsqu'il défie, ce personnage gagne +2 {S}.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Choisissez un personnage qui gagne <Charge> et <Offensif> +2 pour le reste de ce tour. (Ce personnage peut défier le tour où il est joué. Lorsqu'il défie, ce personnage gagne +2 {S}."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Aladdin"]
+  },
   "QV6": {
     "name": "Deux trois bons amis",
     "version": "",
@@ -27577,6 +28334,14 @@
     ],
     "flavorText": "",
     "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
+  },
+  "eVx": {
+    "name": "Pétrifier",
+    "version": "",
+    "rulesText": "Choisissez un personnage adverse et épuisez-le.",
+    "text": "Choisissez un personnage adverse et épuisez-le.",
+    "flavorText": "“D'où vient cet horrible bruit ? On dirait que ça se rapproche de nous.”%—Shanzay, une Illumineuse",
+    "searchableKeywords": ["Lorcana"]
   },
   "AFL": {
     "name": "Le seul et unique",
@@ -27593,6 +28358,29 @@
     "text": "Vos personnages Floodborn gagnent <Insaisissable> jusqu'au début de votre prochain tour. (Seuls les personnages avec Insaisissable peuvent défier ces personnages.)",
     "flavorText": "Les répliques créées par la Plante brillaient d'une lueur magnifique... mais troublante.",
     "searchableKeywords": ["Robin des Bois", "Robin Hood"]
+  },
+  "vU3": {
+    "name": "Échapper de justesse",
+    "version": "",
+    "rulesText": "Choisissez jusqu'à 2 personnages, objets ou lieux coûtant chacun 2 ou moins et renvoyez-les dans la main de leur propriétaire.",
+    "text": "Choisissez jusqu'à 2 personnages, objets ou lieux coûtant chacun 2 ou moins et renvoyez-les dans la main de leur propriétaire.",
+    "flavorText": "",
+    "searchableKeywords": ["Peter Pan"]
+  },
+  "ib5": {
+    "name": "Je dessèche une fleur",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)%Infligez 2 dommages à chaque personnage adverse ayant au moins un dommage.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 4 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Infligez 2 dommages à chaque personnage adverse ayant au moins un dommage."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Sword in the Stone", "Merlin l'Enchanteur"]
   },
   "jj2": {
     "name": "Attaque perforante",
@@ -27625,6 +28413,29 @@
     "flavorText": "Quand les chances semblent les plus minces, Mickey et Minnie vont trouver leur chemin.",
     "searchableKeywords": []
   },
+  "9IV": {
+    "name": "Rituel de la Lune Rouge",
+    "version": "",
+    "rulesText": "<À l'unisson> 7 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 7 ou plus pour chanter cette chanson gratuitement.)%Choisissez un personnage et bannissez-le.",
+    "text": [
+      {
+        "title": "<À l'unisson> 7 (Vous pouvez {E} n'importe quel nombre de vos personnages ou de personnages de vos coéquipiers coûtant au total 7 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Choisissez un personnage et bannissez-le."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Turning Red", "Alerte rouge"]
+  },
+  "qZ0": {
+    "name": "Alerte rouge",
+    "version": "",
+    "rulesText": "Choisissez un personnage ayant 3 {S} ou moins et bannissez-le. Si vous avez un personnage Monstre en jeu, choisissez un adversaire qui perd 1 éclat de Lore.",
+    "text": "Choisissez un personnage ayant 3 {S} ou moins et bannissez-le. Si vous avez un personnage Monstre en jeu, choisissez un adversaire qui perd 1 éclat de Lore.",
+    "flavorText": "“Gardez votre calme. Ceci n’est pas un exercice.”%—Agent du CDA",
+    "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
+  },
   "rm3": {
     "name": "Roar !",
     "version": "",
@@ -27641,6 +28452,21 @@
     "flavorText": "La vision montrait la ville, mais pas la source de son pouvoir.",
     "searchableKeywords": ["Hercules", "Hercule"]
   },
+  "5UQ": {
+    "name": "Ce sera génial !",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)%Choisissez un personnage et redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Choisissez un personnage et redressez-le. Il ne peut pas être envoyé à l'aventure pour le reste de ce tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["Winnie l’ourson", "Winnie the Pooh"]
+  },
   "qAT": {
     "name": "Afflux d’énergie",
     "version": "",
@@ -27649,6 +28475,29 @@
     "flavorText": "Sulli : “Qu’est-ce que c’est que ça ?”%Bob Razowski : “J’en ai pas la moindre idée, mais tant qu’à faire, j’aime autant que ça recommence pas.”",
     "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
   },
+  "Uhe": {
+    "name": "Recherche ciblée",
+    "version": "",
+    "rulesText": "Regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage nommée Kevin ou une carte Objet parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "text": "Regardez les 4 cartes du dessus de votre pioche. Vous pouvez révéler une carte Personnage nommée Kevin ou une carte Objet parmi elles et l'ajouter à votre main. Placez les autres cartes sous votre pioche, dans l'ordre de votre choix.",
+    "flavorText": "",
+    "searchableKeywords": ["Là-haut", "Up"]
+  },
+  "X0p": {
+    "name": "En route et sauve qui peut !",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)%Choisissez un objet ou un lieu et placez-le dans la réserve d'encre de son propriétaire, face cachée et épuisé.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 3 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Choisissez un objet ou un lieu et placez-le dans la réserve d'encre de son propriétaire, face cachée et épuisé."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["La Belle et la Bête", "Beauty and the Beast"]
+  },
   "beG": {
     "name": "Sursaut",
     "version": "",
@@ -27656,6 +28505,29 @@
     "text": "Choisissez un personnage qui subit -3 {S} pour le reste de ce tour.",
     "flavorText": "“Hé, fais attention ! Ce n'est pas moi. C'est une copie de moi !”%—Aladdin",
     "searchableKeywords": ["Aladdin"]
+  },
+  "jI0": {
+    "name": "Tremblez devant moi !",
+    "version": "",
+    "rulesText": "Choisissez jusqu'à 2 personnages adverses qui ne peuvent pas défier lors de leur prochain tour.",
+    "text": "Choisissez jusqu'à 2 personnages adverses qui ne peuvent pas défier lors de leur prochain tour.",
+    "flavorText": "",
+    "searchableKeywords": ["La Belle au bois dormant", "Sleeping Beauty"]
+  },
+  "zjC": {
+    "name": "Et brandissez vos oriflammes !",
+    "version": "",
+    "rulesText": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)%Vos personnages et vos lieux gagnent <Résistance> +1 jusqu'au début de votre prochain tour.",
+    "text": [
+      {
+        "title": "(Vous pouvez {E} un personnage coûtant 2 ou plus pour chanter cette chanson gratuitement.)"
+      },
+      {
+        "title": "Vos personnages et vos lieux gagnent <Résistance> +1 jusqu'au début de votre prochain tour."
+      }
+    ],
+    "flavorText": "",
+    "searchableKeywords": ["La Belle et la Bête", "Beauty and the Beast"]
   },
   "3rW": {
     "name": "Regarde ce que tu as fait",
@@ -27672,6 +28544,14 @@
     "text": "Défaussez votre main. Piochez 2 cartes.",
     "flavorText": "“Vous savez, cela arrive beaucoup plus souvent qu'on ne le pense.”",
     "searchableKeywords": ["Tangled", "Raiponce"]
+  },
+  "MBy": {
+    "name": "Invasion épineuse !",
+    "version": "",
+    "rulesText": "Vos personnages Floodborn gagnent <Résistance> +2 et peuvent défier les personnages redressés pour le reste de ce tour.",
+    "text": "Vos personnages Floodborn gagnent <Résistance> +2 et peuvent défier les personnages redressés pour le reste de ce tour.",
+    "flavorText": "",
+    "searchableKeywords": ["Monsters, Inc.", "Monstres et Cie"]
   },
   "WkJ": {
     "name": "Tempête",

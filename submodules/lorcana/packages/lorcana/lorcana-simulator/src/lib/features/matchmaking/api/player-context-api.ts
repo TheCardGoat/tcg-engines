@@ -1,4 +1,5 @@
 import { getAllCardsById } from "@tcg/lorcana-cards";
+import { getLorcanaShortIdResolution, resolveCurrentLorcanaShortId } from "@tcg/lorcana-cards/data";
 import {
   getFullName,
   LORCANA_FORMATS,
@@ -11,10 +12,16 @@ import {
 } from "@tcg/lorcana-types";
 import { getApiOrigin } from "$lib/config/public-url-config.js";
 import { requestJson, requestVoid } from "$lib/data/transport/http-client.js";
+import {
+  getDeckCardByPublicId,
+  resolveDeckCardPublicId,
+} from "@/features/deck-vault/card-id-resolution.js";
 import type { HistoricDeckEntry } from "@/features/practice-match/practice-match-api.js";
 
 type DeckBreakdownCardType = "character" | "action" | "item" | "location";
 type DeckBreakdownInkType = "amber" | "amethyst" | "emerald" | "ruby" | "sapphire" | "steel";
+const AMBIGUOUS_LEGACY_DECK_MESSAGE =
+  "This deck was saved with outdated card IDs that can no longer be safely matched to the correct cards. Please recreate or re-import this deck before joining matchmaking.";
 
 export interface MatchmakingLinkedAccount {
   providerId: string;
@@ -329,14 +336,18 @@ export async function fetchDeckListSnapshotByDeckListId(
   deckListId: string,
 ): Promise<DeckListSnapshot> {
   const payload = await fetchDeckListDetailResponse(deckListId);
-  const historicDeck = payload.data.cards.map((card) => ({
+  const cardsById = await getAllCardsById();
+  const normalizedCards = payload.data.cards.map((card) => ({
+    ...card,
+    publicId: resolveDeckCardPublicId(card.publicId, cardsById),
+  }));
+  const historicDeck = normalizedCards.map((card) => ({
     cardPublicId: card.publicId,
     quantity: card.quantity,
   }));
-  const cardsById = await getAllCardsById();
-  const deckText = payload.data.cards
+  const deckText = normalizedCards
     .map((card) => {
-      const cardDefinition = cardsById[card.publicId];
+      const cardDefinition = getDeckCardByPublicId(card.publicId, cardsById);
       const displayName = cardDefinition ? getFullName(cardDefinition) : card.publicId;
       return `${card.quantity} ${displayName}`;
     })
@@ -363,7 +374,7 @@ export async function fetchDeckListBreakdownByDeckListId(
   for (const card of payload.data.cards) {
     cardCount += card.quantity;
 
-    const cardDefinition = cardsById[card.publicId];
+    const cardDefinition = getDeckCardByPublicId(card.publicId, cardsById);
     if (!cardDefinition) {
       continue;
     }
@@ -474,7 +485,8 @@ async function buildClientCardFormatLookup(): Promise<
       };
 
       cachedLookup = (shortId: string): CardFormatData | undefined => {
-        const card = canonicalCards[shortId];
+        const currentShortId = resolveCurrentLorcanaShortId(shortId);
+        const card = canonicalCards[currentShortId];
         if (!card) return undefined;
 
         const printingIds = cardsAuxKv.printingIdsByCanonicalId[card.canonicalId] ?? [];
@@ -488,7 +500,7 @@ async function buildClientCardFormatLookup(): Promise<
         const siblings = shortIdsByFullName[fn] ?? [];
         const allPrintingIds = [...printingIds];
         for (const sibId of siblings) {
-          if (sibId === shortId) continue;
+          if (sibId === currentShortId) continue;
           const sibCard = canonicalCards[sibId];
           if (!sibCard) continue;
           const sibPrintings = cardsAuxKv.printingIdsByCanonicalId[sibCard.canonicalId] ?? [];
@@ -534,8 +546,31 @@ export async function fetchDeckValidationForFormat(
   }
 
   const payload = await fetchDeckListDetailResponse(deckListId);
-  const deckCards: DeckCard[] = payload.data.cards.map((card) => ({
-    cardId: card.publicId,
+  const cardsById = await getAllCardsById();
+  const resolvedCards = payload.data.cards.map((card) => ({
+    ...card,
+    publicId: resolveDeckCardPublicId(card.publicId, cardsById),
+  }));
+  const hasAmbiguousIds = resolvedCards.some((card) => {
+    const resolution = getLorcanaShortIdResolution(card.publicId);
+    return resolution.kind === "ambiguous";
+  });
+  if (hasAmbiguousIds) {
+    return {
+      formatId,
+      valid: false,
+      rules: [
+        {
+          kind: "CARD_SET",
+          passed: false,
+          message: AMBIGUOUS_LEGACY_DECK_MESSAGE,
+        },
+      ],
+    };
+  }
+
+  const deckCards: DeckCard[] = resolvedCards.map((card) => ({
+    cardId: resolveCurrentLorcanaShortId(card.publicId),
     quantity: card.quantity,
   }));
 

@@ -76,7 +76,7 @@ export const welcomeToNightCityRetailPanamPalmerNomadCavalry = defineCyberpunkCa
             target: {
               selector: "card",
               controller: "friendly",
-              zones: ["field"],
+              zones: ["legendArea"],
               cardTypes: ["gear"],
               attachedTo: {
                 selector: "self",

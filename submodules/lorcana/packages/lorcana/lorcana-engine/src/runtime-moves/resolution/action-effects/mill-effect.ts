@@ -1,12 +1,14 @@
-import type { PlayerId } from "#core";
+import type { CardInstanceId, PlayerId } from "#core";
 import type { MillEffect } from "@tcg/lorcana-types/abilities";
 import type { CardPlayedPayload } from "../../../types/index";
+import type { DynamicAmountEventSnapshot } from "../../../types/domain-events";
 import type { PlayCardExecutionContext } from "./types";
 import { resolveCurrentTurnPlayerId } from "../../../targeting/runtime";
 
 type ResolvedMillEffectInput = {
   millAmount?: number;
   selectedPlayerIds?: PlayerId[];
+  eventSnapshot?: DynamicAmountEventSnapshot;
 };
 
 export function isMillEffect(effect: unknown): effect is MillEffect {
@@ -83,13 +85,22 @@ export function resolveMillEffect(
       playerId,
     });
     const millCount = Math.min(deckCards.length, millAmount);
-    const cardsToMill = deckCards.slice(-millCount).reverse();
+    const cardsToMill = deckCards
+      .slice(-millCount)
+      .reverse()
+      .filter((cardId): cardId is CardInstanceId => typeof cardId === "string");
 
     for (const cardId of cardsToMill) {
       ctx.framework.zones.moveCard(cardId, {
         zone: "discard",
         playerId,
       });
+    }
+    if (cardsToMill.length > 0 && resolvedInput.eventSnapshot) {
+      resolvedInput.eventSnapshot.discardedCardIds = [
+        ...(resolvedInput.eventSnapshot.discardedCardIds ?? []),
+        ...cardsToMill,
+      ];
     }
   }
 }

@@ -54,7 +54,7 @@ const playerTwoDeck = [
   op13Otama043,
   op13TonyTonyChopper030,
   op13Otama043,
-  op13Higuma013,
+  op13Otama043,
   op13WindmillVillage022,
   op13GumGumGatlingGun021,
   op13Higuma013,
@@ -110,6 +110,58 @@ function runCommands(initial: MatchState, commands: EngineCommand[]): MatchState
   return state;
 }
 
+function startGameCommands(): EngineCommand[] {
+  return [
+    {
+      type: "chooseJoKenPo",
+      seat: "south",
+      choice: "paper",
+    },
+    {
+      type: "chooseJoKenPo",
+      seat: "north",
+      choice: "rock",
+    },
+    {
+      type: "chooseFirstPlayer",
+      seat: "south",
+      firstPlayer: "south",
+    },
+    {
+      type: "keepHand",
+      seat: "south",
+    },
+    {
+      type: "keepHand",
+      seat: "north",
+    },
+    {
+      type: "startGame",
+      seat: "south",
+    },
+  ];
+}
+
+function resolveSetupTurnChoice(initial: MatchState): MatchState {
+  return runCommands(initial, [
+    {
+      type: "chooseJoKenPo",
+      seat: "south",
+      choice: "paper",
+    },
+    {
+      type: "chooseJoKenPo",
+      seat: "north",
+      choice: "rock",
+    },
+    {
+      type: "chooseFirstPlayer",
+      seat: "south",
+      firstPlayer: "south",
+    },
+  ]);
+}
+
 function findPendingPromptByIntent(state: MatchState, intent: string) {
   return state.promptQueue.find(
     (prompt) =>
@@ -152,17 +204,26 @@ describe("@tcg/op-engine", () => {
       },
     });
     expect(spectatorView.decisions).toEqual([]);
-    expect(southView.logs.some((entry) => entry.message.includes("opening hand"))).toBe(true);
-    expect(spectatorView.logs.some((entry) => entry.message.includes("opening hand"))).toBe(false);
+    expect(southView.logs.some((entry) => entry.message.includes("Cards drawn"))).toBe(true);
+    expect(spectatorView.logs.some((entry) => entry.message.includes("Cards drawn"))).toBe(false);
   });
 
-  test("supports mulligan and starts the match with automatic DON!! setup", () => {
-    const created = createMatch(buildConfig());
+  test("supports accepting a mulligan and starts after both players choose", () => {
+    const created = resolveSetupTurnChoice(createMatch(buildConfig()));
+    const originalHand = [...created.players.south.hand];
     const mulliganed = applyCommand(created, {
       type: "mulligan",
       seat: "south",
     });
-    const started = applyCommand(mulliganed.state, {
+    const beforeNorthChoice = applyCommand(mulliganed.state, {
+      type: "startGame",
+      seat: "south",
+    });
+    const northKept = applyCommand(mulliganed.state, {
+      type: "keepHand",
+      seat: "north",
+    });
+    const started = applyCommand(northKept.state, {
       type: "startGame",
       seat: "south",
     });
@@ -170,6 +231,15 @@ describe("@tcg/op-engine", () => {
     expect(mulliganed.accepted).toBe(true);
     expect(mulliganed.patches.length).toBeGreaterThan(0);
     expect(mulliganed.inversePatches.length).toBeGreaterThan(0);
+    expect(mulliganed.state.setup.mulliganDecided.south).toBe(true);
+    expect(mulliganed.state.setup.mulliganUsed.south).toBe(true);
+    expect(mulliganed.state.players.south.hand).toHaveLength(5);
+    expect(mulliganed.state.players.south.hand).not.toEqual(originalHand);
+    expect(beforeNorthChoice.accepted).toBe(false);
+    expect(beforeNorthChoice.reason).toBe(
+      "Both players must choose whether to take a mulligan before starting.",
+    );
+    expect(northKept.accepted).toBe(true);
     expect(started.accepted).toBe(true);
     expect(started.state.status).toBe("active");
     expect(started.state.phase).toBe("main");
@@ -177,10 +247,237 @@ describe("@tcg/op-engine", () => {
     expect(
       started.state.logHistory.some((entry) => entry.message.includes("enters DON!! phase")),
     ).toBe(true);
+    expect(
+      mulliganed.state.logHistory.filter(
+        (entry) =>
+          entry.message.includes("from Deck to Hand") ||
+          entry.message.includes("from deck to hand"),
+      ),
+    ).toHaveLength(0);
+    expect(
+      mulliganed.state.logHistory.some((entry) =>
+        entry.message.includes("accepted mulligan and redraws 5 cards"),
+      ),
+    ).toBe(true);
+    expect(
+      projectStateForSeat(mulliganed.state, "south").logs.some((entry) =>
+        entry.message.includes("You accepted the mulligan and your new opening hand is:"),
+      ),
+    ).toBe(true);
+  });
+
+  test("supports refusing a mulligan without changing the opening hand", () => {
+    const created = resolveSetupTurnChoice(createMatch(buildConfig()));
+    const originalHand = [...created.players.south.hand];
+    const kept = applyCommand(created, {
+      type: "keepHand",
+      seat: "south",
+    });
+    const secondChoice = applyCommand(kept.state, {
+      type: "mulligan",
+      seat: "south",
+    });
+    const southLegal = getLegalCommands(kept.state, "south");
+
+    expect(kept.accepted).toBe(true);
+    expect(kept.state.setup.mulliganDecided.south).toBe(true);
+    expect(kept.state.setup.mulliganUsed.south).toBe(false);
+    expect(kept.state.players.south.hand).toEqual(originalHand);
+    expect(
+      kept.state.logHistory.some((entry) => entry.message.includes("keeps their opening hand")),
+    ).toBe(true);
+    expect(
+      projectStateForSeat(kept.state, "spectator").logs.some((entry) =>
+        entry.message.includes("keeps their opening hand"),
+      ),
+    ).toBe(true);
+    expect(secondChoice.accepted).toBe(false);
+    expect(secondChoice.reason).toBe("This player already made a mulligan choice.");
+    expect(southLegal.some((command) => command.type === "mulligan")).toBe(false);
+    expect(southLegal.some((command) => command.type === "keepHand")).toBe(false);
+  });
+
+  test("resolves Jo Ken Po draw, winner, and first-player setup choice", () => {
+    const created = createMatch(
+      buildConfig({
+        players: {
+          south: {
+            ...buildConfig().players.south,
+            playerName: "You",
+          },
+          north: {
+            ...buildConfig().players.north,
+            playerName: "Practice Bot",
+          },
+        },
+      }),
+    );
+    const drawnRound = runCommands(created, [
+      {
+        type: "chooseJoKenPo",
+        seat: "south",
+        choice: "rock",
+      },
+      {
+        type: "chooseJoKenPo",
+        seat: "north",
+        choice: "rock",
+      },
+    ]);
+    const wonRound = runCommands(drawnRound, [
+      {
+        type: "chooseJoKenPo",
+        seat: "south",
+        choice: "paper",
+      },
+      {
+        type: "chooseJoKenPo",
+        seat: "north",
+        choice: "rock",
+      },
+    ]);
+    const choseFirstPlayer = applyCommand(wonRound, {
+      type: "chooseFirstPlayer",
+      seat: "south",
+      firstPlayer: "north",
+    });
+
+    expect(drawnRound.setup.joKenPo.round).toBe(2);
+    expect(drawnRound.setup.joKenPo.winner).toBeNull();
+    expect(
+      drawnRound.logHistory.some((entry) =>
+        entry.message.includes("In the 1st Jo Ken Po round it was a draw"),
+      ),
+    ).toBe(true);
+    expect(wonRound.setup.joKenPo.winner).toBe("south");
+    expect(
+      wonRound.logHistory.some((entry) =>
+        entry.message.includes(
+          "In the 2nd Jo Ken Po round You won the Jo Ken Po and will decide who takes the first turn",
+        ),
+      ),
+    ).toBe(true);
+    expect(choseFirstPlayer.accepted).toBe(true);
+    expect(choseFirstPlayer.state.config.firstPlayer).toBe("north");
+    expect(choseFirstPlayer.state.activeSeat).toBe("north");
+    expect(
+      choseFirstPlayer.state.logHistory.some((entry) =>
+        entry.message.includes("You decided that Practice Bot will take the first turn."),
+      ),
+    ).toBe(true);
+  });
+
+  test("keeps pending Jo Ken Po picks hidden until both players choose", () => {
+    const created = createMatch(buildConfig());
+    const firstPick = applyCommand(created, {
+      type: "chooseJoKenPo",
+      seat: "south",
+      choice: "paper",
+    });
+    const firstPickPatchText = JSON.stringify(firstPick.patches);
+
+    expect(firstPick.accepted).toBe(true);
+    expect(firstPick.state.setup.joKenPo.pendingSeats).toEqual(["south"]);
+    expect(firstPick.state.setup.joKenPo.hiddenChoices).toEqual({ south: "paper" });
+    expect(firstPick.state.setup.joKenPo.choices).toEqual({});
+    expect(firstPick.state.commandHistory.some((command) => command.type === "chooseJoKenPo")).toBe(
+      false,
+    );
+    expect(firstPickPatchText).toContain("hiddenChoices");
+    expect(getLegalCommands(firstPick.state, "south")).toHaveLength(0);
+    expect(getLegalCommands(firstPick.state, "north").map((command) => command.type)).toEqual([
+      "chooseJoKenPo",
+      "chooseJoKenPo",
+      "chooseJoKenPo",
+    ]);
+
+    const resolved = applyCommand(firstPick.state, {
+      type: "chooseJoKenPo",
+      seat: "north",
+      choice: "rock",
+    });
+
+    expect(resolved.accepted).toBe(true);
+    expect(resolved.state.setup.joKenPo.pendingSeats).toEqual([]);
+    expect(resolved.state.setup.joKenPo.hiddenChoices).toEqual({});
+    expect(resolved.state.setup.joKenPo.choices).toEqual({
+      north: "rock",
+      south: "paper",
+    });
+    expect(
+      resolved.state.logHistory.some((entry) =>
+        entry.message.includes("South: Paper. North: Rock."),
+      ),
+    ).toBe(true);
+  });
+
+  test("resolves Jo Ken Po after restoring a hidden first pick from a snapshot", () => {
+    const firstPick = applyCommand(createMatch(buildConfig()), {
+      type: "chooseJoKenPo",
+      seat: "south",
+      choice: "paper",
+    });
+    const restored = JSON.parse(JSON.stringify(firstPick.state)) as MatchState;
+    const resolved = applyCommand(restored, {
+      type: "chooseJoKenPo",
+      seat: "north",
+      choice: "rock",
+    });
+
+    expect(resolved.accepted).toBe(true);
+    expect(resolved.state.setup.joKenPo.winner).toBe("south");
+    expect(resolved.state.setup.joKenPo.pendingSeats).toEqual([]);
+    expect(resolved.state.setup.joKenPo.hiddenChoices).toEqual({});
+    expect(resolved.state.setup.joKenPo.choices).toEqual({
+      north: "rock",
+      south: "paper",
+    });
+  });
+
+  test("resolves Jo Ken Po timeouts and logs the timeout reason", () => {
+    const oneTimedOut = applyCommand(createMatch(buildConfig()), {
+      type: "resolveJoKenPoTimeout",
+      seat: "south",
+      winner: "north",
+      reason: "onePlayerTimedOut",
+      elapsedMs: 30000,
+      timedOutSeats: ["south"],
+    });
+    const bothTimedOut = applyCommand(createMatch(buildConfig()), {
+      type: "resolveJoKenPoTimeout",
+      seat: "south",
+      winner: "south",
+      reason: "bothPlayersTimedOut",
+      elapsedMs: 30000,
+      timedOutSeats: ["south", "north"],
+    });
+    const premature = applyCommand(createMatch(buildConfig()), {
+      type: "resolveJoKenPoTimeout",
+      seat: "south",
+      winner: "south",
+      reason: "bothPlayersTimedOut",
+      elapsedMs: 29999,
+      timedOutSeats: ["south", "north"],
+    });
+
+    expect(oneTimedOut.accepted).toBe(true);
+    expect(oneTimedOut.state.setup.joKenPo.winner).toBe("north");
+    expect(
+      oneTimedOut.state.logHistory.some((entry) => entry.message.includes("exceeded 30 seconds")),
+    ).toBe(true);
+    expect(bothTimedOut.accepted).toBe(true);
+    expect(bothTimedOut.state.setup.joKenPo.winner).toBe("south");
+    expect(
+      bothTimedOut.state.logHistory.some((entry) =>
+        entry.message.includes("Both players exceeded 30 seconds"),
+      ),
+    ).toBe(true);
+    expect(premature.accepted).toBe(false);
+    expect(premature.reason).toBe("Jo Ken Po timeout requires 30 seconds to elapse.");
   });
 
   test("omits spent mulligans and judge-invalid prompt commands from legal actions", () => {
-    const created = createMatch(buildConfig());
+    const created = resolveSetupTurnChoice(createMatch(buildConfig()));
     const afterMulligan = applyCommand(created, {
       type: "mulligan",
       seat: "south",
@@ -188,13 +485,9 @@ describe("@tcg/op-engine", () => {
     const southLegal = getLegalCommands(afterMulligan, "south");
 
     expect(southLegal.some((command) => command.type === "mulligan")).toBe(false);
+    expect(southLegal.some((command) => command.type === "keepHand")).toBe(false);
 
-    const started = runCommands(createMatch(buildConfig()), [
-      {
-        type: "startGame",
-        seat: "south",
-      },
-    ]);
+    const started = runCommands(createMatch(buildConfig()), startGameCommands());
     const stageId = findCardInZone(started, "south", "hand", op13WindmillVillage022);
     const afterStage = applyCommand(started, {
       type: "playCard",
@@ -214,7 +507,31 @@ describe("@tcg/op-engine", () => {
   });
 
   test("returns reversible patches for each state transition", () => {
-    const created = createMatch(buildConfig());
+    const created = runCommands(createMatch(buildConfig()), [
+      {
+        type: "chooseJoKenPo",
+        seat: "south",
+        choice: "paper",
+      },
+      {
+        type: "chooseJoKenPo",
+        seat: "north",
+        choice: "rock",
+      },
+      {
+        type: "chooseFirstPlayer",
+        seat: "south",
+        firstPlayer: "south",
+      },
+      {
+        type: "keepHand",
+        seat: "south",
+      },
+      {
+        type: "keepHand",
+        seat: "north",
+      },
+    ]);
     const result = applyCommand(created, {
       type: "startGame",
       seat: "south",
@@ -228,12 +545,7 @@ describe("@tcg/op-engine", () => {
   });
 
   test("resolves a main event through the structured card DSL and logs it", () => {
-    const started = runCommands(createMatch(buildConfig()), [
-      {
-        type: "startGame",
-        seat: "south",
-      },
-    ]);
+    const started = runCommands(createMatch(buildConfig()), startGameCommands());
     const eventId = findCardInZone(started, "south", "hand", op13GumGumGatlingGun021);
     const result = applyCommand(started, {
       type: "playCard",
@@ -250,15 +562,15 @@ describe("@tcg/op-engine", () => {
     expect(result.logs.some((entry) => entry.message.includes("plays Gum-Gum Gatling Gun"))).toBe(
       true,
     );
+    expect(
+      result.logs.some((entry) =>
+        entry.message.includes("Gum-Gum Gatling Gun gives 1 DON!! to Monkey.D.Luffy"),
+      ),
+    ).toBe(true);
   });
 
   test("rejecting an invalid playCard leaves DON and zones unchanged", () => {
-    const started = runCommands(createMatch(buildConfig()), [
-      {
-        type: "startGame",
-        seat: "south",
-      },
-    ]);
+    const started = runCommands(createMatch(buildConfig()), startGameCommands());
     const characterId = findCardInZone(started, "south", "hand", op13Otama043);
     const beforeActiveDon = started.players.south.activeDon;
     const beforeRestedDon = started.players.south.restedDon;
@@ -279,12 +591,7 @@ describe("@tcg/op-engine", () => {
   });
 
   test("plays a stage, activates it, and projects the modified character power", () => {
-    const started = runCommands(createMatch(buildConfig()), [
-      {
-        type: "startGame",
-        seat: "south",
-      },
-    ]);
+    const started = runCommands(createMatch(buildConfig()), startGameCommands());
     const otamaId = findCardInZone(started, "south", "hand", op13Otama043);
     const afterOtama = applyCommand(started, {
       type: "playCard",
@@ -397,12 +704,7 @@ describe("@tcg/op-engine", () => {
   });
 
   test("runs attack, counter, damage prevention, and trigger prompting", () => {
-    const started = runCommands(createMatch(buildConfig()), [
-      {
-        type: "startGame",
-        seat: "south",
-      },
-    ]);
+    const started = runCommands(createMatch(buildConfig()), startGameCommands());
     const higumaId = findCardInZone(started, "south", "hand", op13Higuma013);
     const afterPlay = applyCommand(started, {
       type: "playCard",
@@ -465,7 +767,7 @@ describe("@tcg/op-engine", () => {
             op13Otama043,
             op13TonyTonyChopper030,
             op13Higuma013,
-            op13Higuma013,
+            op13GumGumGatlingGun021,
             op13WindmillVillage022,
             op13GumGumGatlingGun021,
             op13Higuma013,
@@ -474,12 +776,7 @@ describe("@tcg/op-engine", () => {
         },
       },
     });
-    const started = runCommands(createMatch(config), [
-      {
-        type: "startGame",
-        seat: "south",
-      },
-    ]);
+    const started = runCommands(createMatch(config), startGameCommands());
     const higumaId = findCardInZone(started, "south", "hand", op13Higuma013);
     const afterPlay = applyCommand(started, {
       type: "playCard",
@@ -531,6 +828,29 @@ describe("@tcg/op-engine", () => {
   test("replay is deterministic for logs and state", () => {
     const commands: EngineCommand[] = [
       {
+        type: "chooseJoKenPo",
+        seat: "south",
+        choice: "paper",
+      },
+      {
+        type: "chooseJoKenPo",
+        seat: "north",
+        choice: "rock",
+      },
+      {
+        type: "chooseFirstPlayer",
+        seat: "south",
+        firstPlayer: "south",
+      },
+      {
+        type: "keepHand",
+        seat: "south",
+      },
+      {
+        type: "keepHand",
+        seat: "north",
+      },
+      {
         type: "startGame",
         seat: "south",
       },
@@ -559,8 +879,8 @@ describe("@tcg/op-engine", () => {
             op13WindmillVillage022,
             op13GumGumGatlingGun021,
             op13Higuma013,
-            op13RoronoaZoro037,
             op13Lilith113,
+            op13RoronoaZoro037,
             op13GumGumGatlingGun021,
             op13WindmillVillage022,
             op13Otama043,
@@ -570,12 +890,7 @@ describe("@tcg/op-engine", () => {
         north: buildConfig().players.north,
       },
     });
-    const started = runCommands(createMatch(config), [
-      {
-        type: "startGame",
-        seat: "south",
-      },
-    ]);
+    const started = runCommands(createMatch(config), startGameCommands());
     const unsupportedId = findCardInZone(started, "south", "hand", op13Lilith113);
     const result = applyCommand(started, {
       type: "playCard",

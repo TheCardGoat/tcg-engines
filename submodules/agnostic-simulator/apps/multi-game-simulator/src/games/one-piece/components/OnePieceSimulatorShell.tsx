@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronsRight, ListCollapse, ListTree } from "lucide-react";
 import { EventLogPanel } from "@tcg/simulator-ui";
 import type { LegalCommandDescriptor } from "@tcg/op-engine/practice-st01";
+import { SoundVolumeControl } from "../../../simulator/settings";
 import type { OnePieceStaticBoard } from "../data/staticBoard.ts";
 import { OnePieceTabletopBoard } from "./OnePieceTabletopBoard.tsx";
 import classes from "./OnePieceTabletopBoard.module.css";
@@ -10,12 +11,14 @@ export interface OnePieceSimulatorShellProps {
   board: OnePieceStaticBoard;
   actions?: readonly LegalCommandDescriptor[];
   onAction?: (action: LegalCommandDescriptor) => void;
+  onJoKenPoTimeout?: () => void;
 }
 
 export function OnePieceSimulatorShell({
   board,
   actions = [],
   onAction,
+  onJoKenPoTimeout,
 }: OnePieceSimulatorShellProps) {
   const [logOpen, setLogOpen] = useState(false);
 
@@ -28,9 +31,18 @@ export function OnePieceSimulatorShell({
     >
       <div className={classes.shellFrame}>
         <section className={classes.boardSlot} aria-label="One Piece simulator play area">
-          <OnePieceTabletopBoard board={board} actions={actions} onAction={onAction} />
+          <OnePieceTabletopBoard
+            board={board}
+            actions={actions}
+            onAction={onAction}
+            onJoKenPoTimeout={onJoKenPoTimeout}
+          />
         </section>
       </div>
+
+      <aside className={classes.floatingSettings} aria-label="Simulator settings">
+        <SoundVolumeControl />
+      </aside>
 
       <aside className={classes.floatingLog} data-expanded={logOpen} aria-label="Event log modal">
         <button

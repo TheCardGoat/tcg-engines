@@ -204,11 +204,11 @@ Cyberpunk workspace:
 5. Start the local simulator and manually verify a fixture route in a browser.
 
    ```sh
-   vp dev --port 5173
+   vp dev --port 5193
    ```
 
    Open
-   `http://localhost:5173/cyberpunk/simulator/tests/attackStep?ai=off&auto-advance-attack=off`,
+   `http://localhost:5193/cyberpunk/simulator/tests/attackStep?ai=off&auto-advance-attack=off`,
    confirm the board renders, click `Fight`, and confirm the visible prompt
    changes to attacker selection.
 

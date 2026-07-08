@@ -36,14 +36,12 @@ export const carlFredricksenRussellIntrepidExplorers: CharacterCard = {
   },
   text: [
     {
-      title: "Shift 4 {}",
-      description:
-        "(You may pay 4 {} to play this on top of one of your characters named Carl Fredricksen or Russell.)",
+      title: "Shift 4 {I}",
     },
     {
       title: "OUTDOOR SKILLS",
       description:
-        "While this character is at a location, all characters at that location get +1 {} and gain Evasive.",
+        "While this character is at a location, all characters at that location get +1 {L} and gain Evasive.",
     },
   ],
   classifications: ["Storyborn", "Team", "Hero"],

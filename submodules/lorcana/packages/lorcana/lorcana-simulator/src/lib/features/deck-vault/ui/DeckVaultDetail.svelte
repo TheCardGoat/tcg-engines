@@ -5,6 +5,7 @@
     fetchDeckListSnapshotByDeckListId,
     type ProfileDeckSummary,
   } from "@/features/matchmaking/api/player-context-api.js";
+  import { getDeckCardByPublicId } from "@/features/deck-vault/card-id-resolution.js";
   import { getInkSymbolUrl } from "@/features/simulator/model/asset-urls.js";
   import { getAllCardsById } from "@tcg/lorcana-cards";
   import { getFullName } from "@tcg/lorcana-types";
@@ -46,7 +47,7 @@
         if (seq !== requestSequence) return;
         entries = snapshot.historicDeck
           .map((c) => {
-            const card = catalog[c.cardPublicId];
+            const card = getDeckCardByPublicId(c.cardPublicId, catalog);
             return card
               ? { publicId: c.cardPublicId, quantity: c.quantity, card }
               : null;

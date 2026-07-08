@@ -204,6 +204,7 @@ export const LORCANA_FORMATS: Record<LorcanaFormatId, LorcanaFormat> = {
     allowedSets: ["SSK", "AZS", "ARC", "ROJ", "FAB", "WIW", "WSP", "WUN"],
     bannedCardIds: [HIRAM_FLAVERSHAM_TOYMAKER, FORTISPHERE],
     requiredRotationState: "CoreConstructed",
+    excludedSets: ["013"],
   },
 
   /**
@@ -673,8 +674,9 @@ export function validateDeck(
 export function getDeckFormats(
   cards: DeckCard[],
   lookup: (id: string) => CardFormatData | undefined,
+  formats?: LorcanaFormat[],
 ): LorcanaFormatId[] {
-  return validateDeck(cards, lookup)
+  return validateDeck(cards, lookup, formats)
     .filter((result) => result.valid)
     .map((result) => result.formatId);
 }

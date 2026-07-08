@@ -115,7 +115,10 @@ export function onePieceSubmissionToPayload(submission: InteractionSubmission): 
 
   return {
     moveType: commandTypeFromActionId(submission.actionId),
-    payload: payloadForActionSubmission(submission),
+    payload: {
+      ...payloadFromActionId(submission.actionId),
+      ...payloadForActionSubmission(submission),
+    },
   };
 }
 
@@ -128,6 +131,18 @@ function stringSelectionValues(value: InteractionSubmission["values"][string]): 
 function commandTypeFromActionId(actionId: string): string {
   const separatorIndex = actionId.indexOf(":");
   return separatorIndex === -1 ? actionId : actionId.slice(0, separatorIndex);
+}
+
+function payloadFromActionId(actionId: string): NativePayload {
+  const [commandType, firstArgument] = actionId.split(":");
+  switch (commandType) {
+    case "chooseJoKenPo":
+      return firstArgument ? { choice: firstArgument } : {};
+    case "chooseFirstPlayer":
+      return firstArgument ? { firstPlayer: firstArgument } : {};
+    default:
+      return {};
+  }
 }
 
 function payloadForActionSubmission(submission: InteractionSubmission): NativePayload {

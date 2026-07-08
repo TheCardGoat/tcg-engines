@@ -2,10 +2,10 @@
 import { describe, expect, it, afterEach, beforeEach, vi } from "vite-plus/test";
 import { render, cleanup, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { TargetingContext, type TargetingContextValue } from "@tcg/simulator-ui";
 
 import { CardFace } from "./CardFace.tsx";
 import type { GameCardData } from "../types.ts";
-import { TargetingContext, type TargetingContextValue } from "../targeting-context.tsx";
 
 const CANONICAL_WIDTH = 734;
 const card: GameCardData = {

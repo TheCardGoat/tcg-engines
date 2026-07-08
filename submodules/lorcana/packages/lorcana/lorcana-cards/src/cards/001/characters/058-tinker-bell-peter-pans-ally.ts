@@ -37,12 +37,12 @@ export const tinkerBellPeterPansAlly: CharacterCard = {
   },
   text: [
     {
-      title: "<Evasive>",
+      title: "Evasive",
     },
     {
       title: "Loyal and Devoted",
       description:
-        "Your characters named Peter Pan gain <Challenger> +1. (They get +1 {S} while challenging.)",
+        "Your characters named Peter Pan gain Challenger +1. (They get +1 {S} while challenging.)",
     },
   ],
   classifications: ["Storyborn", "Ally", "Fairy"],

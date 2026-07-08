@@ -1,15 +1,16 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op05Satori105 } from "../../OP05/characters/105-satori.ts";
 import { prb01SatoriJollyRogerFoil105I18n } from "./105-satori-jolly-roger-foil.i18n.ts";
 
 export const prb01SatoriJollyRogerFoil105: CharacterCard = {
-  id: "OP05-105",
-  canonicalId: "OP05-105",
+  ...op05Satori105,
+  id: "OP05-105_p2",
   slug: "satori-jolly-roger-foil",
   name: "Satori (Jolly Roger Foil)",
   printings: [
     {
-      id: "OP05-105",
-      artId: "OP05-105",
+      id: "OP05-105_p2",
+      artId: "OP05-105_p2",
       setCode: "PRB01",
       collectorNumber: "105",
       rarity: "R",
@@ -40,16 +41,8 @@ export const prb01SatoriJollyRogerFoil105: CharacterCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP05-105_p4.jpg",
     },
   ],
-  cardType: "character",
-  color: ["yellow"],
   rarity: "R",
   setId: "PRB01",
-  cost: 5,
-  power: 5000,
-  counter: 2000,
-  trigger: "You may trash 1 card from your hand: Play this card.",
-  traits: ["Sky Island Vassals"],
-  attribute: "strike",
   artVariants: [
     {
       type: "other",
@@ -67,6 +60,5 @@ export const prb01SatoriJollyRogerFoil105: CharacterCard = {
       imageId: "OP05-105_p4",
     },
   ],
-  effect: "[Trigger] You may trash 1 card from your hand: Play this card.",
   i18n: prb01SatoriJollyRogerFoil105I18n,
 };

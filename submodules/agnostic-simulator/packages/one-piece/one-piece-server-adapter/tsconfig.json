@@ -13,6 +13,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
+      "@tcg/card-model": ["../../card-model/src/index.ts"],
       "@tcg/op-cards": ["../../../../one-piece/packages/cards/src/index.ts"],
       "@tcg/op-engine": ["../../../../one-piece/packages/engine/src/index.ts"],
       "@tcg/op-types": ["../../../../one-piece/packages/types/src/index.ts"],

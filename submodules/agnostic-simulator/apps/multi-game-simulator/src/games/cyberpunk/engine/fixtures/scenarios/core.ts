@@ -48,13 +48,251 @@ export const coreScenarios: Scenario[] = [
             ...c.welcomeToNightCityRetailCards,
           ]
             .filter((card) => card.type === "legend")
-            .slice(0, 3),
+            .slice(0, 3)
+            .map((card) => ({ card, faceDown: false })),
         },
         opponentBase,
         {
           seed: scenarioSeed("retailCardCatalog"),
           autoGainGig: false,
         },
+      ),
+  },
+  {
+    id: "retailProgramTargetBench",
+    group: "core",
+    label: "Retail bench · programs and target checks",
+    description:
+      "P1 hand stages the main retail Programs against mixed friendly and rival boards: low-cost, high-cost, ready, spent, equipped, face-up Legend, and matching Gig values. Use this to quickly validate playable prompts, target highlights, no-target edges, and Program discard behavior across many cards.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailCorporateSurveillance,
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailRebootOptics,
+            c.welcomeToNightCityRetailAfterpartyAtLizzieS,
+            c.welcomeToNightCityRetailChromeReverie,
+            c.welcomeToNightCityRetailCyberpsychosis,
+            c.welcomeToNightCityRetailTakeControl,
+          ],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
+              spent: false,
+              playedThisTurn: false,
+              attachedGears: [
+                c.welcomeToNightCityRetailKiroshiOptics,
+                c.welcomeToNightCityRetailDyingNightVSPistol,
+              ],
+            },
+            { card: c.welcomeToNightCityRetailFieldOperator, spent: false, playedThisTurn: false },
+            { card: c.welcomeToNightCityRetailMoxInciters, spent: true, playedThisTurn: false },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false },
+            { card: c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, faceDown: true },
+            { card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, faceDown: true },
+          ],
+          eddies: 12,
+          gigArea: [
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d6", faceValue: 4 },
+            { dieType: "d8", faceValue: 5 },
+          ],
+          deck: [
+            c.welcomeToNightCityRetailSketchyRipper,
+            c.welcomeToNightCityRetailIndustrialAssembly,
+            c.welcomeToNightCityRetailPeaceOffering,
+          ],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
+            {
+              card: c.welcomeToNightCityRetailSecondhandBombus,
+              spent: true,
+              playedThisTurn: false,
+            },
+            { card: c.alphaArmoredMinotaur, spent: true, playedThisTurn: false },
+            { card: c.welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailPanamPalmerNomadCavalry, faceDown: false },
+            { card: c.welcomeToNightCityRetailRoycePsychoOnTheEdge, faceDown: true },
+          ],
+          eddies: 6,
+          gigArea: [
+            { dieType: "d4", faceValue: 4 },
+            { dieType: "d10", faceValue: 9 },
+          ],
+        },
+        {
+          seed: scenarioSeed("retailProgramTargetBench"),
+          preserveDeckOrder: true,
+          autoGainGig: false,
+        },
+      ),
+  },
+  {
+    id: "retailCombatGigBench",
+    group: "core",
+    label: "Retail bench · combat and Gig pressure",
+    description:
+      "Dense combat board with ready attackers, spent defenders, BLOCKER units, large power scaling, and uneven Gig areas. Use this to validate direct attacks, blocker reactions, stolen-Gig choices, Street Cred math, and attack-trigger cards in one place.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailCarnageAtTheColosseum,
+            c.welcomeToNightCityRetailBootlegBlackSapphireShow,
+            c.welcomeToNightCityRetailPeaceOffering,
+          ],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+              spent: false,
+              playedThisTurn: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailYorinobuArasakaSteelDragon,
+              spent: false,
+              playedThisTurn: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
+              spent: false,
+              playedThisTurn: false,
+              attachedGears: [c.welcomeToNightCityRetailSatoriSwordOfSaburo],
+            },
+            {
+              card: c.welcomeToNightCityRetailEvelynParkerSchemingSiren,
+              spent: true,
+              playedThisTurn: false,
+            },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailGoroTakemuraVengefulBodyguard, faceDown: false },
+            { card: c.welcomeToNightCityRetailDumDumMaelstromTriggerman, faceDown: false },
+            { card: c.welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: true },
+          ],
+          eddies: 10,
+          gigArea: [
+            { dieType: "d4", faceValue: 4 },
+            { dieType: "d6", faceValue: 5 },
+            { dieType: "d8", faceValue: 8 },
+            { dieType: "d10", faceValue: 6 },
+          ],
+        },
+        {
+          field: [
+            {
+              card: c.welcomeToNightCityRetailSecondhandBombus,
+              spent: false,
+              playedThisTurn: false,
+            },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false, playedThisTurn: false },
+            {
+              card: c.welcomeToNightCityRetailAdamSmasherMetalOverMeat,
+              spent: true,
+              playedThisTurn: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
+              spent: true,
+              playedThisTurn: false,
+            },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailAdamSmasherEnderOfLegends, faceDown: false },
+            { card: c.welcomeToNightCityRetailSashaYakovlevaWonTLetYouDown, faceDown: true },
+          ],
+          eddies: 7,
+          gigArea: [
+            { dieType: "d4", faceValue: 2 },
+            { dieType: "d6", faceValue: 6 },
+            { dieType: "d12", faceValue: 11 },
+          ],
+        },
+        { seed: scenarioSeed("retailCombatGigBench"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "retailGearLegendBench",
+    group: "core",
+    label: "Retail bench · Gear and Legends",
+    description:
+      "Board focused on attachment density, face-up and face-down Legends, Cyberware in trash, and Gear in hand. Use it to validate equip targets, Legend call state, Gear movement/readiness, and text/image rendering for the retail Cyberware package.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailMantisBlades,
+            c.welcomeToNightCityRetailGorillaArms,
+            c.welcomeToNightCityRetailSandevistan,
+            c.welcomeToNightCityRetailOverwatchPanamSGift,
+            c.welcomeToNightCityRetailZetatechFaceplate,
+            c.welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch,
+          ],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailPlacideVoodooSentinel,
+              spent: false,
+              playedThisTurn: false,
+              attachedGears: [
+                c.welcomeToNightCityRetailMandibularUpgrade,
+                c.welcomeToNightCityRetailKiroshiOptics,
+              ],
+            },
+            {
+              card: c.welcomeToNightCityRetailModdedKusanagi,
+              spent: false,
+              playedThisTurn: false,
+              attachedGears: [c.welcomeToNightCityRetailDyingNightVSPistol],
+            },
+            {
+              card: c.welcomeToNightCityRetailMeredithStoutStoneColdCorpo,
+              spent: true,
+              playedThisTurn: false,
+            },
+          ],
+          trash: [
+            c.welcomeToNightCityRetailSatoriSwordOfSaburo,
+            c.welcomeToNightCityRetailGorillaArms,
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailEvelynParkerBeautifulEnigma, faceDown: false },
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false },
+            { card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, faceDown: true },
+          ],
+          eddies: 11,
+          gigArea: [
+            { dieType: "d4", faceValue: 3 },
+            { dieType: "d8", faceValue: 7 },
+          ],
+        },
+        {
+          hand: [c.welcomeToNightCityRetailAllIsLost, c.welcomeToNightCityRetailOverTheEdge],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailWraithMarauders,
+              spent: false,
+              playedThisTurn: false,
+            },
+            { card: c.welcomeToNightCityRetailPsychoSquad, spent: true, playedThisTurn: false },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, faceDown: false },
+            { card: c.welcomeToNightCityRetailPanamPalmerNomadCavalry, faceDown: true },
+            { card: c.welcomeToNightCityRetailRoycePsychoOnTheEdge, faceDown: true },
+          ],
+          eddies: 5,
+          gigArea: [
+            { dieType: "d6", faceValue: 2 },
+            { dieType: "d10", faceValue: 10 },
+          ],
+        },
+        { seed: scenarioSeed("retailGearLegendBench"), autoGainGig: false },
       ),
   },
   {

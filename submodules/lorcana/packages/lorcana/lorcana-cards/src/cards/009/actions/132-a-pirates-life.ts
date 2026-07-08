@@ -31,8 +31,9 @@ export const aPiratesLife: ActionCard = {
   },
   text: [
     {
-      title:
-        "<Sing Together> 6 (Any number of your or your teammates' characters with total cost 6 or more may {E} to sing this song for free.)",
+      title: "Sing Together 6",
+      description:
+        "(Any number of your or your teammates' characters with total cost 6 or more may {E} to sing this song for free.)",
     },
     {
       title: "Each opponent loses 2 lore. You gain 2 lore.",

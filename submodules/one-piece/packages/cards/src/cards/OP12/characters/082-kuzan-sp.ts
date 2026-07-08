@@ -1,80 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op10Kuzan082 } from "../../OP10/characters/082-kuzan.ts";
 import { op12KuzanSp082I18n } from "./082-kuzan-sp.i18n.ts";
 
 export const op12KuzanSp082: CharacterCard = {
-  id: "OP10-082",
-  canonicalId: "OP10-082",
+  ...op10Kuzan082,
+  id: "OP10-082_p2_0rQ9fvR",
   slug: "kuzan-sp",
   name: "Kuzan (SP)",
   printings: [
     {
-      id: "OP10-082",
-      artId: "OP10-082",
+      id: "OP10-082_p2_0rQ9fvR",
+      artId: "OP10-082_p2_0rQ9fvR",
       setCode: "OP12",
       collectorNumber: "082",
       rarity: "SR",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP10-082_p2_0rQ9fvR.jpg",
     },
   ],
-  cardType: "character",
-  color: ["black"],
   rarity: "SR",
   setId: "OP12",
-  cost: 5,
-  power: 5000,
-  traits: ["Blackbeard Pirates Former Navy"],
-  attribute: "special",
-  effect:
-    'This Character cannot be removed from the field by your opponent\'s effects.\n[Activate: Main] You may trash this Character: Draw 1 card. Then, play up to 1 "Blackbeard Pirates" type Character card with a cost of 5 or less other than [Kuzan] from your trash.',
-  effects: {
-    effects: [
-      {
-        trigger: "activateMain",
-        costs: [
-          {
-            cost: "trashThisCard",
-          },
-        ],
-        actions: [
-          {
-            action: "draw",
-            player: "self",
-            amount: 1,
-          },
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "trash",
-            },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
-              {
-                filter: "excludeName",
-                value: "Kuzan",
-              },
-              {
-                filter: "cost",
-                comparison: "lte",
-                value: 5,
-              },
-              {
-                filter: "trait",
-                value: "Blackbeard Pirates",
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
-              },
-            ],
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op12KuzanSp082I18n,
 };

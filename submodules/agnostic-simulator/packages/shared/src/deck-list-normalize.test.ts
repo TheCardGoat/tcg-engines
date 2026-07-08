@@ -6,6 +6,7 @@ import { describe, expect, it } from "bun:test";
 import {
   type DeckListCard,
   canonicalListHash,
+  canonicalV2ListHash,
   getEmptyListHash,
   isSynergyForm,
   isTemplateForm,
@@ -304,6 +305,19 @@ describe("canonicalListHash", () => {
 
   it("empty list yields deterministic hash", () => {
     expect(canonicalListHash([])).toBe(canonicalListHash([]));
+  });
+
+  it("v2 hashes are game-prefixed and ignore printing-only differences", () => {
+    const base = [{ cardId: "ci_alpha", canonicalId: "ci_alpha", quantity: 2 }];
+    const alternate = [
+      { cardId: "ci_alpha", canonicalId: "ci_alpha", printingId: "printing-alt", quantity: 2 },
+    ];
+
+    expect(canonicalV2ListHash("cyberpunk", base)).toBe(
+      canonicalV2ListHash("cyberpunk", alternate),
+    );
+    expect(canonicalV2ListHash("cyberpunk", base)).not.toBe(canonicalV2ListHash("gundam", base));
+    expect(canonicalV2ListHash("cyberpunk", base).startsWith("cyberpunk:v2:")).toBe(true);
   });
 });
 

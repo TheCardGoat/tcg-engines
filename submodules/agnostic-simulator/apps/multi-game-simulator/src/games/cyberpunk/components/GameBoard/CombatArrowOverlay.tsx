@@ -145,6 +145,10 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
   if (!shouldShow || !line || !attacker) {
     return null;
   }
+  const activeAttack = attack;
+  if (!activeAttack) {
+    return null;
+  }
 
   const label = isBlocked
     ? `${attacker.name} attacks ${originalTarget?.name ?? "the player"}; ${defender?.name ?? "Blocker"} blocks`
@@ -156,7 +160,14 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
     <div
       className={classes.overlay}
       data-testid="combat-arrow-overlay"
+      data-active="true"
+      data-attacker-id={String(activeAttack.attackerId)}
+      data-defender-id={defenderId ? String(defenderId) : undefined}
+      data-rival-id={activeAttack.rivalId ? String(activeAttack.rivalId) : undefined}
+      data-kind={activeAttack.kind}
+      data-step={activeAttack.step}
       data-blocked={isBlocked ? "true" : "false"}
+      data-redirected-by-blocker={activeAttack.redirectedByBlocker ? "true" : "false"}
       aria-label={label}
     >
       <svg className={classes.svg} aria-hidden="true">

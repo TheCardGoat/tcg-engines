@@ -10,7 +10,7 @@
  * request to the right deployable. This field exists so a partner client can
  * fail loudly if it ends up talking to the wrong backend.
  */
-export type GameType = "lorcana" | "gundam" | "cyberpunk" | "riftbound";
+export type GameType = "lorcana" | "gundam" | "cyberpunk" | "riftbound" | "one-piece";
 
 export type MatchId = string;
 export type GameId = string;

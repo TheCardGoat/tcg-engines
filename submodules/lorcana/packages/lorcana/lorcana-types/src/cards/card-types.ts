@@ -274,6 +274,9 @@ export interface BaseCardProperties extends BaseCardDefinition {
   /** Card abilities (includes keywords) */
   abilities?: AbilityDefinition[];
 
+  /** Card classifications/subtypes, including non-character set mechanics such as Hunny. */
+  classifications?: Classification[];
+
   /** Static deck construction rules granted by this card's printed text. */
   deckConstructionRules?: DeckConstructionRule[];
 

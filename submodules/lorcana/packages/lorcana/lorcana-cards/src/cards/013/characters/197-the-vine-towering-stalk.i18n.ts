@@ -6,8 +6,8 @@ export const theVineToweringStalkI18n: Record<Languages, I18nProperties> = {
     version: "Towering Stalk",
     text: [
       {
-        title: "Floodborn Shift 7 {}",
-        description: "(You may pay 7 {} to play this on top of one of your Floodborn characters.)",
+        title: "Floodborn Shift 7 {I}",
+        description: "(You may pay 7 {I} to play this on top of one of your Floodborn characters.)",
       },
       {
         title: "SATURATE",

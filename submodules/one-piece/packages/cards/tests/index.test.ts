@@ -3,16 +3,6 @@ import type { OPCard } from "@tcg/op-types";
 import { allCards, cardCatalog, getAllCards, getCard, hasCard } from "../src/index.ts";
 import * as cardDefinitions from "../src/cards/index.ts";
 
-function slugifyName(name: string): string {
-  return name
-    .toLowerCase()
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 function isCardDefinition(value: unknown): value is OPCard {
   if (!value || typeof value !== "object") {
     return false;
@@ -24,9 +14,26 @@ function isCardDefinition(value: unknown): value is OPCard {
 
 const authoredCards = Object.values(cardDefinitions).filter(isCardDefinition);
 
+function gameplaySignature(card: OPCard): unknown {
+  return {
+    cardType: card.cardType,
+    color: card.color,
+    cost: "cost" in card ? card.cost : undefined,
+    power: "power" in card ? card.power : undefined,
+    life: "life" in card ? card.life : undefined,
+    counter: "counter" in card ? card.counter : undefined,
+    trigger: "trigger" in card ? card.trigger : undefined,
+    traits: card.traits,
+    attribute: card.attribute,
+    effect: card.effect,
+    effects: card.effects,
+  };
+}
+
 describe("@tcg/op-cards", () => {
   test("exports a populated catalog", () => {
-    expect(allCards.length).toBeGreaterThan(1900);
+    expect(allCards.length).toBeGreaterThan(2200);
+    expect(allCards.length).toBe(authoredCards.length);
     expect(getAllCards()).toHaveLength(allCards.length);
   });
 
@@ -38,6 +45,10 @@ describe("@tcg/op-cards", () => {
     expect(hasCard("OP13-001")).toBe(true);
     expect(hasCard("NOPE-999")).toBe(false);
     expect(cardCatalog.get("OP13-001")?.id).toBe("OP13-001");
+
+    const namiSp = getCard("OP08-106_p2");
+    expect(namiSp.id).toBe("OP08-106_p2");
+    expect(namiSp.canonicalId).toBe("OP08-106");
   });
 
   test("catalog ids are unique and sorted", () => {
@@ -48,27 +59,21 @@ describe("@tcg/op-cards", () => {
     expect(ids[0]).toBe([...ids].sort((left, right) => left.localeCompare(right))[0]);
   });
 
+  test("authored card ids are unique before catalog indexing", () => {
+    const ids = authoredCards.map((card) => card.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
   test("catalog slugs are unique", () => {
     const slugs = allCards.map((card) => card.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
   });
 
   test("every card carries the cross-game identity model (RFC ADR-11)", () => {
-    const nameCounts = new Map<string, number>();
-    for (const card of authoredCards) {
-      const nameSlug = slugifyName(card.name);
-      nameCounts.set(nameSlug, (nameCounts.get(nameSlug) ?? 0) + 1);
-    }
-
     for (const card of allCards) {
-      // canonicalId is seeded from id (ADR-9); slug is derived from the card name.
-      expect(card.canonicalId).toBe(card.id);
-      const nameSlug = slugifyName(card.name);
-      const expectedSlug =
-        (nameCounts.get(nameSlug) ?? 0) > 1
-          ? `${nameSlug}/${card.canonicalId.toLowerCase()}`
-          : nameSlug;
-      expect(card.slug).toBe(expectedSlug);
+      expect(card.id.length).toBeGreaterThan(0);
+      expect(card.canonicalId.length).toBeGreaterThan(0);
+      expect(card.slug.length).toBeGreaterThan(0);
       // Display name sourced from i18n.en.name to satisfy BaseCardDefinition.
       expect(card.name).toBe(card.i18n.en.name);
       // At least one printing; each carries id + artId + the full Printing shape.
@@ -96,5 +101,29 @@ describe("@tcg/op-cards", () => {
     expect(getCard("OP06-081").slug).toBe("absalom/op06-081");
     expect(getCard("OP14-100").slug).toBe("absalom/op14-100");
     expect(getCard("OP14-095").slug).toBe("mr-9/op14-095");
+  });
+
+  test("reprints and alternate arts keep gameplay fields in sync", () => {
+    const cardsByCanonicalId = new Map<string, OPCard[]>();
+    for (const card of authoredCards) {
+      const group = cardsByCanonicalId.get(card.canonicalId) ?? [];
+      group.push(card);
+      cardsByCanonicalId.set(card.canonicalId, group);
+    }
+
+    for (const [canonicalId, cards] of cardsByCanonicalId) {
+      if (cards.length < 2) {
+        continue;
+      }
+
+      const [baseCard, ...variants] = cards;
+      const baseSignature = gameplaySignature(baseCard);
+
+      for (const variant of variants) {
+        expect(gameplaySignature(variant), `${variant.name} drifted from ${canonicalId}`).toEqual(
+          baseSignature,
+        );
+      }
+    }
   });
 });

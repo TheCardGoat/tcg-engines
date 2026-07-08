@@ -1,60 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op07Sengoku046 } from "../../OP07/characters/046-sengoku.ts";
 import { op14eb04SengokuOp07046Sp046I18n } from "./046-sengoku-op07-046-sp.i18n.ts";
 
 export const op14eb04SengokuOp07046Sp046: CharacterCard = {
-  id: "OP07-046",
-  canonicalId: "OP07-046",
+  ...op07Sengoku046,
+  id: "OP07-046_p2",
   slug: "sengoku-op07-046-sp",
   name: "Sengoku - OP07-046 (SP)",
   printings: [
     {
-      id: "OP07-046",
-      artId: "OP07-046",
+      id: "OP07-046_p2",
+      artId: "OP07-046_p2",
       setCode: "OP14EB04",
       collectorNumber: "046",
       rarity: "R",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP07-046_p2.png",
     },
   ],
-  cardType: "character",
-  color: ["blue"],
   rarity: "R",
   setId: "OP14EB04",
-  cost: 1,
-  power: 2000,
-  counter: 1000,
-  traits: ["Navy"],
-  attribute: "wisdom",
-  effect:
-    "[On Play] Look at 5 cards from the top of your deck; reveal up to 1 {The Seven Warlords of the Sea} type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "search",
-            lookCount: 5,
-            source: {
-              player: "self",
-              zone: "deck",
-            },
-            revealCount: {
-              amount: 1,
-              upTo: true,
-            },
-            revealFilters: [
-              {
-                filter: "trait",
-                value: "The Seven Warlords of the Sea",
-              },
-            ],
-            revealDestination: "hand",
-            remainderPosition: "bottom",
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op14eb04SengokuOp07046Sp046I18n,
 };

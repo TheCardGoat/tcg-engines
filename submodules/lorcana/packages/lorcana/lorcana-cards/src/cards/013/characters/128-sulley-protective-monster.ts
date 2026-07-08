@@ -37,7 +37,7 @@ export const sulleyProtectiveMonster: CharacterCard = {
     {
       title: "Riled Up",
       description:
-        "While all cards in your inkwell are exerted, this character gains <Rush>. (They can challenge the turn they're played.)",
+        "While all cards in your inkwell are exerted, this character gains Rush. (They can challenge the turn they're played.)",
     },
   ],
   classifications: ["Storyborn", "Hero", "Monster"],

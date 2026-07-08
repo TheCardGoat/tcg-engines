@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const configDir = dirname(fileURLToPath(import.meta.url));
 const isVitest = process.env.VITEST === "true";
+const immerEntry = fileURLToPath(import.meta.resolve("immer"));
 const mantineCoreEntry = fileURLToPath(import.meta.resolve("@mantine/core"));
 const mantineHooksEntry = fileURLToPath(import.meta.resolve("@mantine/hooks"));
 
@@ -74,6 +75,10 @@ export default defineConfig({
         replacement: mantineHooksEntry,
       },
       {
+        find: /^immer$/,
+        replacement: immerEntry,
+      },
+      {
         find: /^@tcg\/cyberpunk-engine$/,
         replacement: resolve(configDir, "../../../cyberpunk/packages/engine/src/index.ts"),
       },
@@ -126,17 +131,11 @@ export default defineConfig({
       },
       {
         find: /^@tcg\/op-engine$/,
-        replacement: resolve(
-          configDir,
-          "../../../one-piece/packages/engine/src/index.ts",
-        ),
+        replacement: resolve(configDir, "../../../one-piece/packages/engine/src/index.ts"),
       },
       {
         find: /^@tcg\/op-engine\/practice-st01$/,
-        replacement: resolve(
-          configDir,
-          "../../../one-piece/packages/engine/src/practice-st01.ts",
-        ),
+        replacement: resolve(configDir, "../../../one-piece/packages/engine/src/practice-st01.ts"),
       },
       {
         find: /^@tcg\/op-types$/,
@@ -145,6 +144,10 @@ export default defineConfig({
       {
         find: /^@tcg\/op-utils$/,
         replacement: resolve(configDir, "../../../one-piece/packages/utils/src/index.ts"),
+      },
+      {
+        find: /^@tcg\/engine-core\/test-simulator$/,
+        replacement: resolve(configDir, "../../packages/engine-core/src/test-simulator.ts"),
       },
       {
         find: /^@tcg\/engine-core$/,

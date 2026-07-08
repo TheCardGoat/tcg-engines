@@ -58,6 +58,7 @@ import {
 } from "../engine/live/matchContext";
 import { CYBERPUNK_GAME_SLUG } from "../engine/live/apiOrigin";
 import { apiUrl } from "../../../runtime/gameRuntimeApi";
+import { useSimulatorRoute } from "../../../simulator/providers";
 import { LiveHttpError, type LiveFeedbackSeverity } from "../engine/live/httpFeedback";
 import { createLiveMatchViewerEngine } from "../engine/live/liveState";
 import {
@@ -194,7 +195,10 @@ interface ClientAuthorityEngineLogRecord {
 }
 
 export function LiveMatchPage() {
-  const { matchId = "", gameId = "" } = useParams<{ matchId: string; gameId: string }>();
+  const simulatorRoute = useSimulatorRoute();
+  const params = useParams<{ matchId: string; gameId: string }>();
+  const matchId = simulatorRoute.matchId ?? params.matchId ?? "";
+  const gameId = simulatorRoute.gameId ?? params.gameId ?? "";
   const location = useLocation();
   const [loadState, setLoadState] = useState<LoadState>({ status: "loading" });
   const [gatewayJoin, setGatewayJoin] = useState<GatewayJoinState | null>(null);

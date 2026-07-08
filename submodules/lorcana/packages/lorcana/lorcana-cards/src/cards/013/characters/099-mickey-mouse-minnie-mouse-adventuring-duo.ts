@@ -1,6 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { duoShift } from "../../../helpers/abilities/shift";
 import { mickeyMouseMinnieMouseAdventuringDuoI18n } from "./099-mickey-mouse-minnie-mouse-adventuring-duo.i18n";
+
+import { duoShift } from "../../../helpers/abilities/shift";
 
 export const mickeyMouseMinnieMouseAdventuringDuo: CharacterCard = {
   id: "d10",
@@ -29,14 +30,17 @@ export const mickeyMouseMinnieMouseAdventuringDuo: CharacterCard = {
   willpower: 5,
   lore: 5,
   inkable: true,
+  externalIds: {
+    lorcast: "crd_a02034ec2089499f81f2038b33ca473a",
+  },
   text: [
     {
-      title: "<Duo Shift> 0 {I}",
+      title: "Duo Shift 0 {I}",
       description:
         "(You may pay 0 {I} to play this on top of two of your characters, one named Mickey Mouse and one named Minnie Mouse.)",
     },
     {
-      title: "Thinking of You",
+      title: "THINKING OF YOU",
       description:
         "If this character would be banished, put them into your inkwell facedown and exerted instead.",
     },

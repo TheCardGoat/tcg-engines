@@ -1,4 +1,10 @@
-import type { PlayerPrompt, PlayCardCandidate } from "../view/player-prompt.ts";
+import type {
+  ChoicePrompt,
+  MoveInputSpec,
+  PlayerPrompt,
+  PlayerPromptStatus,
+  PlayCardCandidate,
+} from "../view/player-prompt.ts";
 import type { CyberpunkTestEngine, CardRef } from "./test-engine.ts";
 import type { PlayerId } from "../types/branded.ts";
 import { P1 } from "./test-state.ts";
@@ -669,6 +675,24 @@ export function expectCardToMoveDestination(
 // ── General prompt helpers ──────────────────────────────────────────────
 
 /**
+ * Assert the current prompt status for a player.
+ */
+export function expectPromptStatus(
+  engine: CyberpunkTestEngine,
+  expectedStatus: PlayerPromptStatus,
+  opts?: { as?: PlayerId },
+): PlayerPrompt {
+  const playerId = opts?.as ?? P1;
+  const prompt = engine.getPrompt(playerId);
+  if (prompt.status !== expectedStatus) {
+    throw new Error(
+      `Expected prompt status "${expectedStatus}" for ${playerId as string}, but got "${prompt.status}"`,
+    );
+  }
+  return prompt;
+}
+
+/**
  * Assert that the prompt contains a specific move.
  */
 export function expectMoveAvailable(
@@ -687,6 +711,31 @@ export function expectMoveAvailable(
 }
 
 /**
+ * Assert that a move is available and return its typed input spec.
+ */
+export function expectMoveInputSpec<T extends MoveInputSpec["type"]>(
+  engine: CyberpunkTestEngine,
+  moveId: string,
+  expectedType: T,
+  opts?: { as?: PlayerId },
+): Extract<MoveInputSpec, { type: T }> {
+  const playerId = opts?.as ?? P1;
+  const prompt = engine.getPrompt(playerId);
+  const move = prompt.availableMoves.find((m) => m.moveId === moveId);
+  if (!move) {
+    throw new Error(
+      `Expected move "${moveId}" to be available, but only found: [${prompt.availableMoves.map((m) => m.moveId).join(", ")}]`,
+    );
+  }
+  if (move.inputSpec.type !== expectedType) {
+    throw new Error(
+      `Expected move "${moveId}" inputSpec "${expectedType}", but got "${move.inputSpec.type}"`,
+    );
+  }
+  return move.inputSpec as Extract<MoveInputSpec, { type: T }>;
+}
+
+/**
  * Assert that the prompt does **not** contain a specific move.
  */
 export function expectMoveNotAvailable(
@@ -700,4 +749,23 @@ export function expectMoveNotAvailable(
   if (move) {
     throw new Error(`Expected move "${moveId}" to NOT be available, but it was present`);
   }
+}
+
+/**
+ * Assert that the prompt has a choice of the expected type and return it.
+ */
+export function expectChoicePrompt<T extends ChoicePrompt["type"]>(
+  engine: CyberpunkTestEngine,
+  expectedType: T,
+  opts?: { as?: PlayerId },
+): Extract<ChoicePrompt, { type: T }> {
+  const playerId = opts?.as ?? P1;
+  const prompt = engine.getPrompt(playerId);
+  if (!prompt.choice) {
+    throw new Error(`Expected prompt choice "${expectedType}", but no choice was present`);
+  }
+  if (prompt.choice.type !== expectedType) {
+    throw new Error(`Expected prompt choice "${expectedType}", but got "${prompt.choice.type}"`);
+  }
+  return prompt.choice as Extract<ChoicePrompt, { type: T }>;
 }

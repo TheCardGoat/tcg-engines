@@ -38,7 +38,7 @@ test("retailCardCatalog renders every official retail card", async ({ page }) =>
     ...legendCards.map((card) => card.definitionId),
   ]);
 
-  expect(retailCards).toHaveLength(34);
+  expect(retailCards).toHaveLength(79);
   await expectDomAttribute(
     pom.playerBoard.trashZone(),
     "data-count",

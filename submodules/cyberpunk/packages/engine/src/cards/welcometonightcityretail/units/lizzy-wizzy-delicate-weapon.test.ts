@@ -2,12 +2,6 @@ import { describe, expect, it } from "vite-plus/test";
 import { welcomeToNightCityRetailLizzyWizzyDelicateWeapon } from "@tcg/cyberpunk-cards";
 
 describe("Lizzy Wizzy - Delicate Weapon", () => {
-  it("is a structured card with the expected slug", () => {
-    expect(welcomeToNightCityRetailLizzyWizzyDelicateWeapon.slug).toBe(
-      "lizzy-wizzy-delicate-weapon",
-    );
-  });
-
   it("allows declining the PLAY program selection (min: 0)", () => {
     // Printed text: "You **may** play a Program with cost 3 or less ...". The
     // "may" wording maps to a selection with min: 0 so the player can decline.

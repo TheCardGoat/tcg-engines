@@ -36,8 +36,7 @@ export const mickeyMouseMinnieMouseAdventuringDuoI18n: Record<Languages, I18nPro
     version: "Duo d'aventuriers",
     text: [
       {
-        title:
-          "<Alter Duo> 0 {I} (Vous pouvez payer 0 {I} pour jouer ce personnage sur deux de vos personnages, l'un nommé Mickey Mouse et l'autre nommé Minnie.)",
+        title: "<Alter Duo> 0 {I}",
       },
       {
         title: "Penser à vous",

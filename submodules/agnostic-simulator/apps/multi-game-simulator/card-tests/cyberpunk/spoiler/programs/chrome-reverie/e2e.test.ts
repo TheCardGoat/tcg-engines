@@ -22,11 +22,7 @@ test("Chrome Reverie - cant-attack target and free legend call", async ({ page }
     CYBERPUNK_P2,
     alphaCorpoSecurity.id,
   );
-  const riverWard = await pom.getCardInZoneByDefinitionId(
-    "legendArea",
-    CYBERPUNK_P1,
-    spoilerRiverWardDetectiveOnTheHunt.id,
-  );
+  const riverWard = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
 
   expectEqual("River Ward starts face-down", riverWard.faceDown, true);
   await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 1);
@@ -64,6 +60,11 @@ test("Chrome Reverie - cant-attack target and free legend call", async ({ page }
     riverWard.instanceId,
   );
   expectEqual("River Ward is face-up after free call", calledRiverWard.faceDown, false);
+  expectEqual(
+    "River Ward definition after free call",
+    calledRiverWard.definitionId,
+    spoilerRiverWardDetectiveOnTheHunt.id,
+  );
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 0);
   await pom.expectHandSize(CYBERPUNK_P1, 1);

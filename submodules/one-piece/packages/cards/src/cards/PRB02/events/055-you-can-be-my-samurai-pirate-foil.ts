@@ -1,15 +1,16 @@
 import type { EventCard } from "@tcg/op-types";
+import { op01YouCanBeMySamurai055 } from "../../OP01/events/055-you-can-be-my-samurai.ts";
 import { prb02YouCanBeMySamuraiPirateFoil055I18n } from "./055-you-can-be-my-samurai-pirate-foil.i18n.ts";
 
 export const prb02YouCanBeMySamuraiPirateFoil055: EventCard = {
-  id: "OP01-055",
-  canonicalId: "OP01-055",
+  ...op01YouCanBeMySamurai055,
+  id: "OP01-055_p1",
   slug: "you-can-be-my-samurai-pirate-foil",
   name: "You Can Be My Samurai!! (Pirate Foil)",
   printings: [
     {
-      id: "OP01-055",
-      artId: "OP01-055",
+      id: "OP01-055_p1",
+      artId: "OP01-055_p1",
       setCode: "PRB02",
       collectorNumber: "055",
       rarity: "C",
@@ -24,12 +25,8 @@ export const prb02YouCanBeMySamuraiPirateFoil055: EventCard = {
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP01-055_r1.jpg",
     },
   ],
-  cardType: "event",
-  color: ["green"],
   rarity: "C",
   setId: "PRB02",
-  cost: 1,
-  traits: ["Land of Wano Kouzuki Clan"],
   artVariants: [
     {
       type: "other",
@@ -37,33 +34,5 @@ export const prb02YouCanBeMySamuraiPirateFoil055: EventCard = {
       imageId: "OP01-055_r1",
     },
   ],
-  effect: "[Main] You may rest 2 of your Characters: Draw 2 cards.",
-  effects: {
-    effects: [
-      {
-        trigger: "main",
-        costs: [
-          {
-            cost: "restCards",
-            amount: 2,
-            filters: [
-              {
-                filter: "cardCategory",
-                value: "character",
-              },
-            ],
-          },
-        ],
-        actions: [
-          {
-            action: "draw",
-            player: "self",
-            amount: 2,
-          },
-        ],
-        optional: true,
-      },
-    ],
-  },
   i18n: prb02YouCanBeMySamuraiPirateFoil055I18n,
 };

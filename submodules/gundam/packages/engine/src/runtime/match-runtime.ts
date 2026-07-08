@@ -63,6 +63,7 @@ import { deriveGundamRuntimeCard } from "../gundam/config.ts";
 import { filterMatchView } from "./view-filter.ts";
 import { checkTimeout, settleClocks, updateClockForWaitingState } from "./time-control.ts";
 import { projectGundamMoveLogs } from "./move-log-factory.ts";
+import { buildPacketAnimations } from "./packet-animations.ts";
 
 // ── Supporting types ───────────────────────────────────────────────────────
 
@@ -339,8 +340,6 @@ export class MatchRuntime {
         previousActivePlayerID,
       );
 
-      // 7. No packet animations for Gundam (reserved for future)
-      const animations: PacketAnimation[] = [];
       const moveLogs = projectGundamMoveLogs({
         command: envelope,
         playerId,
@@ -352,6 +351,7 @@ export class MatchRuntime {
         stateID: nextState.ctx._stateID,
         turnNumber: nextState.ctx.status.turn,
       }));
+      const animations: PacketAnimation[] = buildPacketAnimations({ moveLogs: taggedMoveLogs });
 
       // 8. Manage undo stack (per-player: different player's move clears stack)
       const isUndoable = moveDef.undoable !== false;
@@ -836,7 +836,7 @@ export class MatchRuntime {
     const zoneOps = createZoneOperations(
       draft.ctx.zones,
       gundamZones,
-      randomApi.random,
+      () => randomApi.random(),
       draft.ctx._stateID,
     );
 
@@ -889,7 +889,7 @@ export class MatchRuntime {
     const zoneOps = createZoneOperations(
       draft.ctx.zones,
       gundamZones,
-      randomApi.random,
+      () => randomApi.random(),
       draft.ctx._stateID,
     );
 

@@ -29,6 +29,7 @@ import {
 } from "../src/engine/live/liveGateway.ts";
 import type { GatewayHandle } from "@tcg/gateway-client";
 import { getGatewayManager } from "../../../lib/gateway/gateway-manager.ts";
+import { useSimulatorRoute } from "../../../simulator/providers";
 import { reduceLiveGatewayMessage } from "../src/engine/live/liveMessages.ts";
 import {
   createInitialLiveMatchView,
@@ -49,11 +50,11 @@ import {
   PromptContainer,
   SetupPromptContainer,
   SubmitErrorProvider,
+  GundamTargetingProvider,
 } from "../src/components/containers/index.ts";
 import { SubmitErrorToast } from "../src/components/ui/SubmitErrorToast.tsx";
 import { CardHoverPreview } from "../src/components/ui/card/CardHoverPreview.tsx";
 import { CardInspectProvider } from "../src/components/ui/card/card-inspect-context.tsx";
-import { TargetingProvider } from "../src/components/ui/targeting-context.tsx";
 import { DualModeProvider } from "../src/components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "../src/components/ui/pending-effect-selection-context.tsx";
 import { CardInspectDialog } from "../src/components/ui/CardInspectDialogContainer.tsx";
@@ -92,13 +93,12 @@ const exchangeDiscordActivityCode: DiscordAuthorizationCodeExchange = async ({
 };
 
 /**
- * `/match/:matchId` — server-authoritative live match.
+ * `/matches/:matchId/games/:gameId` — server-authoritative live match.
  *
  * URL contract: query string carries the gateway credentials the
  * practice route already minted via quick-match (or, if the user is
  * authenticated, we fall back to `/v1/gateway/ticket`).
  *
- *   - `gameId` (required): the runtime game id quick-match returned
  *   - `playerId` (required): the seat this browser controls
  *   - `ticket` and/or `authToken` (one required): gateway credential
  *   - `returnTo` (optional): where the "back to matchmaking" link goes
@@ -118,10 +118,11 @@ const exchangeDiscordActivityCode: DiscordAuthorizationCodeExchange = async ({
  *      MatchOverviewModalContainer surfaces the result.
  */
 export function LiveMatchPage() {
-  const params = useParams<{ matchId: string }>();
-  const matchId = params.matchId ?? "";
+  const simulatorRoute = useSimulatorRoute();
+  const params = useParams<{ matchId: string; gameId?: string }>();
+  const matchId = simulatorRoute.matchId ?? params.matchId ?? "";
   const [search] = useSearchParams();
-  const gameId = search.get("gameId") ?? "";
+  const gameId = simulatorRoute.gameId ?? params.gameId ?? search.get("gameId") ?? "";
   const playerId = search.get("playerId") ?? "";
   const initialTicket = search.get("ticket");
   const initialAuthToken = search.get("authToken");
@@ -464,7 +465,7 @@ interface LiveSimulatorShellProps {
   readonly copyFeedback: "copied" | "failed" | null;
 }
 
-function LiveSimulatorShell({
+export function LiveSimulatorShell({
   runtime,
   staticResources,
   viewerId,
@@ -512,7 +513,7 @@ function LiveSimulatorShell({
     >
       <SubmitErrorProvider>
         <HintsProvider>
-          <TargetingProvider>
+          <GundamTargetingProvider>
             <PendingEffectSelectionProvider>
               <DualModeProvider>
                 <CardInspectProvider>
@@ -535,7 +536,7 @@ function LiveSimulatorShell({
                 </CardInspectProvider>
               </DualModeProvider>
             </PendingEffectSelectionProvider>
-          </TargetingProvider>
+          </GundamTargetingProvider>
         </HintsProvider>
       </SubmitErrorProvider>
     </LiveGundamGameProvider>

@@ -50,6 +50,78 @@ describe("validateCyberpunkDeck", () => {
     ]);
   });
 
+  const validLegends = [
+    entry(card("legend-1", "Goro", "Legend", "Green", 2)),
+    entry(card("legend-2", "Saburo", "Legend", "Green", 2)),
+    entry(card("legend-3", "Yorinobu", "Legend", "Red", 2)),
+  ];
+  const validMainDeck = Array.from({ length: CYBERPUNK_MAIN_DECK_MIN }, (_, index) =>
+    entry(card(`unit-${index}`, `Unit ${index}`, "Unit", "Green", 1)),
+  );
+
+  for (const scenario of [
+    {
+      name: "exactly three Legends",
+      legends: validLegends.slice(0, 2),
+      mainDeck: validMainDeck,
+      expectedCode: "legend-count",
+    },
+    {
+      name: "unique Legend names",
+      legends: [
+        entry(card("legend-1", "Goro", "Legend", "Green", 2)),
+        entry(card("legend-2", "Goro", "Legend", "Green", 2)),
+        entry(card("legend-3", "Yorinobu", "Legend", "Red", 2)),
+      ],
+      mainDeck: validMainDeck,
+      expectedCode: "legend-name-unique",
+    },
+    {
+      name: "at least 40 main deck cards",
+      legends: validLegends,
+      mainDeck: validMainDeck.slice(0, CYBERPUNK_MAIN_DECK_MIN - 1),
+      expectedCode: "main-deck-min",
+    },
+    {
+      name: "no more than 50 main deck cards",
+      legends: validLegends,
+      mainDeck: Array.from({ length: CYBERPUNK_MAIN_DECK_MAX + 1 }, (_, index) =>
+        entry(card(`unit-${index}`, `Unit ${index}`, "Unit", "Green", 1)),
+      ),
+      expectedCode: "main-deck-max",
+    },
+    {
+      name: "no more than three copies of a card",
+      legends: validLegends,
+      mainDeck: [entry(card("unit-1", "Unit 1", "Unit", "Green", 1), 4), ...validMainDeck],
+      expectedCode: "copy-limit",
+    },
+    {
+      name: "RAM by matching Legend color",
+      legends: validLegends,
+      mainDeck: [
+        entry(card("red-over-limit", "Red Over Limit", "Unit", "Red", 3)),
+        ...validMainDeck.slice(1),
+      ],
+      expectedCode: "ram-limit",
+    },
+  ] satisfies Array<{
+    name: string;
+    legends: CyberpunkDeckValidationEntry[];
+    mainDeck: CyberpunkDeckValidationEntry[];
+    expectedCode: ReturnType<typeof validateCyberpunkDeck>["issues"][number]["code"];
+  }>) {
+    it(`reports the guide rule for ${scenario.name}`, () => {
+      const result = validateCyberpunkDeck({
+        legends: scenario.legends,
+        mainDeck: scenario.mainDeck,
+      });
+
+      expect(result.isValid).toBe(false);
+      expect(result.issues.some((issue) => issue.code === scenario.expectedCode)).toBe(true);
+    });
+  }
+
   it("reports decks above the main deck maximum", () => {
     const result = validateCyberpunkDeck({
       legends: [

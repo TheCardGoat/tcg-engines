@@ -144,7 +144,13 @@ export function processCommand(
 
   const undoable = move.undoable !== false;
 
-  const animationScript = buildAnimationScript(events);
+  const animationScript = buildAnimationScript({
+    command,
+    fromState: state,
+    toState: newState as MatchState,
+    events,
+    moveLogs,
+  });
 
   const result: CommandSuccess = {
     success: true,

@@ -35,7 +35,7 @@ export const mickeyMouseBraveLittleTailorD23: CharacterCard = {
     lorcast: "crd_a0a1e1bb99794f04991929ced6001ae8",
     tcgPlayer: "559532",
   },
-  text: "<Evasive>",
+  text: "Evasive",
   classifications: ["Dreamborn", "Hero"],
   abilities: [evasive],
   i18n: mickeyMouseBraveLittleTailorD23I18n,

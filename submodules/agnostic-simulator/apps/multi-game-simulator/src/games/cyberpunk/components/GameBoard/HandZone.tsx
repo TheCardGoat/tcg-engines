@@ -12,6 +12,7 @@ import { DEFAULT_PLAYER_ZONE_WIDTH, computePlayerHandLayout } from "./handLayout
 interface HandCard {
   imageUrl: string;
   name: string;
+  definitionId?: string;
   cardId?: string;
   cardType?: EngineCardType;
   color?: "blue" | "green" | "red" | "yellow";
@@ -115,6 +116,7 @@ export function HandZone({
       className={`${classes.zone} ${faceDown ? classes.opponentZone : classes.playerZone}`}
       data-testid="hand-zone"
       data-zone-id={zoneName}
+      data-sim-zone-id={zoneName}
       data-active-fan="true"
       data-side={side}
       data-face-down={faceDown ? "true" : "false"}
@@ -192,6 +194,8 @@ export function HandZone({
           card && !faceDown
             ? {
                 "data-card-id": card.cardId,
+                "data-instance-id": card.cardId,
+                "data-definition-id": card.definitionId,
                 "data-card-name": card.name,
                 "data-card-type": card.cardType,
                 "data-card-color": card.color,
@@ -211,6 +215,7 @@ export function HandZone({
             data-selected={card?.cardId && card.cardId === selectedCardId ? "true" : "false"}
             data-staged-program={stagedProgram ? "true" : undefined}
             {...publicCardAttrs}
+            data-sim-entity-id={card?.cardId}
             data-ready={card && !faceDown ? "true" : undefined}
             style={{
               ...positionStyle,
@@ -223,6 +228,8 @@ export function HandZone({
                 data-testid="card"
                 data-card-kind="card"
                 data-entity-id={card?.cardId}
+                data-instance-id={card?.cardId}
+                data-sim-entity-id={card?.cardId}
                 data-face="hidden"
                 style={{ display: "contents" }}
                 aria-hidden
@@ -233,6 +240,7 @@ export function HandZone({
               <Card
                 imageUrl={card?.imageUrl}
                 name={card?.name}
+                definitionId={card?.definitionId}
                 cardType={card?.cardType}
                 color={card?.color}
                 zone={zoneName}

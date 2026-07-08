@@ -15,6 +15,7 @@ export const merlinEnvisioningTheFuturePD1Promo: CharacterCard = {
       imageUrl: "",
     },
   ],
+  reprints: ["set13-146"],
   cardType: "character",
   name: "Merlin",
   version: "Envisioning the Future",

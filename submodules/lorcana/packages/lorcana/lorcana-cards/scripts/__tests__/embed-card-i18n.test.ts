@@ -43,6 +43,8 @@ function createAuxKv(overrides: Partial<CardsAuxKv> = {}): CardsAuxKv {
     canonicalIdByShortId: {},
     representativeShortIdByCanonicalId: { ci_shared: "abc" },
     printingIdToShortId: {},
+    printingIdToCanonicalId: {},
+    shortIdToPrintingId: {},
     printingIdsByCanonicalId: {},
     baseReprintIdsByCanonicalId: {},
     localizationShortIdByCultureInvariantId: {},
@@ -79,6 +81,34 @@ describe("buildEnglishI18nProperties", () => {
       version: "Alt",
       text: "Banish chosen character.",
     });
+  });
+
+  it("does not preserve stale structured text with empty symbol placeholders", () => {
+    expect(
+      buildEnglishI18nProperties(
+        createCanonicalCard({
+          rulesText: "HUNNY AURA When you play this character, chosen Hunny character gets +1 {L} this turn.",
+          i18n: {
+            en: {
+              name: "Rabbit",
+              text: [
+                {
+                  title: "HUNNY AURA",
+                  description:
+                    "When you play this character, chosen Hunny character gets +1 {} this turn.",
+                },
+              ],
+            },
+          } as CanonicalCard["i18n"],
+        }),
+      ).text,
+    ).toEqual([
+      {
+        title: "HUNNY AURA",
+        description:
+          "When you play this character, chosen Hunny character gets +1 {L} this turn.",
+      },
+    ]);
   });
 });
 

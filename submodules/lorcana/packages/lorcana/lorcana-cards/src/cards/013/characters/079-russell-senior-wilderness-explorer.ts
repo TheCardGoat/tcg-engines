@@ -37,16 +37,14 @@ export const russellSeniorWildernessExplorer: CharacterCard = {
   text: [
     {
       title: "Shift 3 {I}",
-      description:
-        "(You may pay 3 {I} to play this on top of one of your characters named Russell.)",
     },
     {
       title: "BASE CAMP",
-      description: "Your characters at locations get +1 {S}.",
+      description: "Your characters at locations get +1{S}.",
     },
     {
       title: "GOOD LEADERSHIP",
-      description: "Whenever one of your characters with 4 {S} or more quests, gain 1 lore.",
+      description: "Whenever one of your characters with 4{S} or more quests, gain 1 lore.",
     },
   ],
   classifications: ["Floodborn", "Hero"],

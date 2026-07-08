@@ -68,8 +68,10 @@ export function CardGrid({
             className="min-w-0 justify-self-start"
             data-card-layout-id={entity.id}
             data-entity-id={entity.id}
+            data-sim-entity-id={entity.id}
             role={ariaLabel ? "listitem" : undefined}
             layout="position"
+            layoutId={`sim-entity-${entity.id}`}
             transition={CARD_LAYOUT_TRANSITION}
           >
             <CardFace

@@ -58,7 +58,11 @@ export const priyaMangalSeriousMusicLover: CharacterCard = {
           owner: "you",
           zones: ["discard"],
           cardType: "action",
-          filters: [{ type: "is-song" }],
+          filters: [
+            {
+              type: "is-song",
+            },
+          ],
         },
         comparison: {
           operator: "gte",

@@ -1,76 +1,24 @@
 import type { CharacterCard } from "@tcg/op-types";
+import { op06ONami101 } from "../../OP06/characters/101-o-nami.ts";
 import { op07ONamiSp101I18n } from "./101-o-nami-sp.i18n.ts";
 
 export const op07ONamiSp101: CharacterCard = {
-  id: "OP06-101",
-  canonicalId: "OP06-101",
+  ...op06ONami101,
+  id: "OP06-101_p2",
   slug: "o-nami-sp",
   name: "O-Nami (SP)",
   printings: [
     {
-      id: "OP06-101",
-      artId: "OP06-101",
+      id: "OP06-101_p2",
+      artId: "OP06-101_p2",
       setCode: "OP07",
       collectorNumber: "101",
       rarity: "R",
       imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-101_p2.jpg",
     },
   ],
-  cardType: "character",
-  color: ["yellow"],
   rarity: "R",
   setId: "OP07",
-  cost: 2,
-  power: 3000,
-  counter: 1000,
-  traits: ["Straw Hat Crew"],
-  attribute: "special",
-  effect:
-    "[On Play] Up to 1 of your Leader or Character cards gains [Banish] during this turn. (When this card deals damage, the target card is trashed without activating its Trigger.) [Trigger] K.O. up to 1 of your opponent's Characters with a cost of 5 or less.",
-  effects: {
-    effects: [
-      {
-        trigger: "onPlay",
-        actions: [
-          {
-            action: "grantKeyword",
-            target: {
-              player: "self",
-              zones: ["leader", "character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-            },
-            keyword: "banish",
-            duration: "thisTurn",
-          },
-        ],
-      },
-      {
-        trigger: "trigger",
-        actions: [
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 5,
-                },
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
+  artVariants: undefined,
   i18n: op07ONamiSp101I18n,
 };

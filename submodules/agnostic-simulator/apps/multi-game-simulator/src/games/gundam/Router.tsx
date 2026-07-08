@@ -1,11 +1,13 @@
-import { useMemo } from "react";
-import { Navigate, createBrowserRouter, RouterProvider, type RouteObject } from "react-router-dom";
-import { normalizeRouterBasename } from "../../routes/router-paths.ts";
+import { Navigate, type RouteObject } from "react-router-dom";
+import { createSimulatorBrowserRouter, SimulatorRouterProvider } from "../../lib/router.tsx";
 import { BotBenchUiPage } from "./pages/BotBenchUi.page";
 import { BotVsBotPage } from "./pages/BotVsBot.page";
 import { GundamFixtureIndexPage } from "./pages/FixtureRoutes.page";
+import { LiveMatchLandingPage } from "./pages/LiveMatchLanding.page";
 import { LiveMatchPage } from "./pages/LiveMatch.page";
 import { PracticePage } from "./pages/Practice.page";
+import { ReplayPage } from "./pages/Replay.page";
+import { ReplayForkPage } from "./pages/ReplayFork.page";
 import { GundamTestStatePage } from "./pages/TestState.page";
 import { VsAiPage } from "./pages/VsAi.page";
 
@@ -31,6 +33,10 @@ export const gundamSimulatorRoutes: RouteObject[] = [
     element: <PracticePage />,
   },
   {
+    path: "/play/practice",
+    element: <PracticePage />,
+  },
+  {
     path: "/bot-vs-bot",
     element: <BotVsBotPage />,
   },
@@ -42,12 +48,26 @@ export const gundamSimulatorRoutes: RouteObject[] = [
     path: "/match/:matchId",
     element: <LiveMatchPage />,
   },
+  {
+    path: "/matches/:matchId",
+    element: <LiveMatchLandingPage />,
+  },
+  {
+    path: "/matches/:matchId/games/:gameId",
+    element: <LiveMatchPage />,
+  },
+  {
+    path: "/replay/:gameId",
+    element: <ReplayPage />,
+  },
+  {
+    path: "/replay/:gameId/fork",
+    element: <ReplayForkPage />,
+  },
 ];
 
 export function createGundamRouter(basename: string) {
-  return createBrowserRouter(gundamSimulatorRoutes, {
-    basename: normalizeRouterBasename(basename),
-  });
+  return createSimulatorBrowserRouter(gundamSimulatorRoutes, basename);
 }
 
 export interface RouterProps {
@@ -55,6 +75,5 @@ export interface RouterProps {
 }
 
 export function Router({ basename = "/gundam/simulator" }: RouterProps) {
-  const router = useMemo(() => createGundamRouter(basename), [basename]);
-  return <RouterProvider router={router} />;
+  return <SimulatorRouterProvider basename={basename} routes={gundamSimulatorRoutes} />;
 }

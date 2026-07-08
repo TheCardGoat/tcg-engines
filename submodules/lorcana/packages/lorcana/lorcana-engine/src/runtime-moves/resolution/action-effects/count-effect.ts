@@ -89,20 +89,21 @@ export function resolveCountEffect(
     return;
   }
 
-  if (effect.what === "discarded-action-cards") {
+  if (effect.what === "discarded-action-cards" || effect.what === "discarded-item-cards") {
     const discardedCardIds =
       (resolutionInput.eventSnapshot.discardedCardIds as CardInstanceId[] | undefined) ?? [];
-    let actionCount = 0;
+    let count = 0;
+    const expectedType = effect.what === "discarded-action-cards" ? "action" : "item";
 
     for (const cardId of discardedCardIds) {
       const definition = ctx.cards.getDefinition(cardId) as CardTypeLike | undefined;
-      if (definition?.cardType === "action") {
-        actionCount += 1;
+      if (definition?.cardType === expectedType) {
+        count += 1;
       }
     }
 
-    resolutionInput.eventSnapshot.triggerAmount = actionCount * multiplier;
-    markLastEffectPerformed(resolutionInput.eventSnapshot, actionCount > 0);
+    resolutionInput.eventSnapshot.triggerAmount = count * multiplier;
+    markLastEffectPerformed(resolutionInput.eventSnapshot, count > 0);
     return;
   }
 

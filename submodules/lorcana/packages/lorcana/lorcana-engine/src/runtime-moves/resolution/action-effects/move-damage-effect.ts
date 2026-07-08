@@ -1,14 +1,16 @@
 import type { CardInstanceId, PlayerId } from "#core";
-import type { MoveDamageEffect } from "@tcg/lorcana-types";
+import type { LorcanaCardDefinition, MoveDamageEffect } from "@tcg/lorcana-types";
 import { isUpToAmount, unwrapAmount } from "@tcg/lorcana-types";
 import type { CardPlayedPayload } from "../../../types";
 import type { ActionResolutionInput, PlayCardExecutionContext } from "./types";
 import { effectTargetUsesSelectionContext, getEffectTargetSelectionInput } from "./selection-state";
 import { normalizeSelectedTargets, resolveEffectTargets } from "../../../targeting/runtime";
 import { isSlotted } from "../../../targeting/slotted-targets";
+import { createProjectionState, getEffectiveWillpower } from "../../../rules/derived-state";
 import { applyReplacementEffects } from "../../effects/replacement-effects";
 import { moveCardOutOfPlayWithStack } from "../../state/shift-stack";
 import { getKeywordsBeforeBanish } from "../../shared/banish-snapshot";
+import { getOrBuildMoveRegistry } from "../../rules/move-registry-cache";
 import {
   emitTriggeredLorcanaEvent,
   snapshotTriggeredCandidatesForCard,
@@ -287,13 +289,19 @@ function applyMoveDamage(
     // Some printed effects immediately move that damage away in the same
     // instruction sequence, so they opt out and let the full effect finish.
     const destDefinition = ctx.cards.getDefinition(destinationId) as
-      | ({ willpower?: number; cardType?: string } & Record<string, unknown>)
+      | LorcanaCardDefinition
       | undefined;
-    const willpower = destDefinition?.willpower;
+    const derivedState = createProjectionState(ctx.framework.state, ctx.G);
+    const registry = getOrBuildMoveRegistry(ctx);
+    const getDef = (cardId: CardInstanceId) => ctx.cards.getDefinition(cardId);
+    const effectiveWillpower =
+      destDefinition?.cardType === "character" || destDefinition?.cardType === "location"
+        ? getEffectiveWillpower(destDefinition, derivedState, destinationId, getDef, registry)
+        : undefined;
     if (
       effect.deferLethalBanish !== true &&
-      typeof willpower === "number" &&
-      newDamage >= willpower
+      typeof effectiveWillpower === "number" &&
+      newDamage >= effectiveWillpower
     ) {
       const ownerId = ctx.framework.zones.getCardOwner(destinationId) as PlayerId | undefined;
       if (ownerId) {

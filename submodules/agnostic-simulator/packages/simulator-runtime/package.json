@@ -29,6 +29,10 @@
     "./gateway": {
       "types": "./src/gateway.ts",
       "default": "./src/gateway.ts"
+    },
+    "./live-transition": {
+      "types": "./src/live-transition.ts",
+      "default": "./src/live-transition.ts"
     }
   },
   "scripts": {

@@ -1,60 +1,7 @@
 import type { CharacterCard } from "@tcg/lorcana-types";
-import { rush } from "../../../helpers/abilities/rush";
 import { booEnergeticChildI18n } from "./127-boo-energetic-child.i18n";
 
-export const booEnergeticChildAbilities: CharacterCard["abilities"] = [
-  rush,
-  {
-    type: "triggered",
-    name: "KID-TASTROPHE!",
-    text: "KID-TASTROPHE! Whenever this character challenges another character with 3 {S} or less, banish that character. (No damage is dealt in that challenge.)",
-    trigger: {
-      event: "challenge",
-      on: "SELF",
-      timing: "whenever",
-      defender: {
-        filters: [
-          {
-            type: "strength-comparison",
-            comparison: "less-or-equal",
-            value: 3,
-          },
-        ],
-      },
-    },
-    effect: {
-      type: "sequence",
-      steps: [
-        {
-          type: "create-replacement-effect",
-          duration: "this-turn",
-          replacement: {
-            type: "prevent-damage",
-            eventKinds: ["challenge-damage"],
-            targetRef: "source",
-            consumeOnApply: true,
-          },
-        },
-        {
-          type: "create-replacement-effect",
-          duration: "this-turn",
-          replacement: {
-            type: "prevent-damage",
-            eventKinds: ["challenge-damage"],
-            targetRef: "defender",
-            consumeOnApply: true,
-          },
-        },
-        {
-          type: "banish",
-          target: {
-            reference: "defender",
-          },
-        },
-      ],
-    },
-  },
-];
+import { rush } from "../../../helpers/abilities/rush";
 
 export const booEnergeticChild: CharacterCard = {
   id: "YmS",
@@ -98,6 +45,49 @@ export const booEnergeticChild: CharacterCard = {
     },
   ],
   classifications: ["Storyborn", "Hero"],
-  abilities: booEnergeticChildAbilities,
+  abilities: [
+    rush,
+    {
+      id: "X9A-2",
+      name: "KID-TASTROPHE!",
+      text: "KID-TASTROPHE! Whenever this character challenges another character with 3 {S} or less, banish that character. (No damage is dealt in that challenge.)",
+      type: "triggered",
+      trigger: {
+        event: "challenge",
+        on: "SELF",
+        timing: "whenever",
+        defender: {
+          filters: [
+            {
+              type: "strength-comparison",
+              comparison: "less-or-equal",
+              value: 3,
+            },
+          ],
+        },
+      },
+      effect: {
+        type: "sequence",
+        steps: [
+          {
+            type: "create-replacement-effect",
+            duration: "this-turn",
+            replacement: {
+              type: "prevent-damage",
+              eventKinds: ["challenge-damage"],
+              targetRef: "source",
+              consumeOnApply: true,
+            },
+          },
+          {
+            type: "banish",
+            target: {
+              ref: "defender",
+            },
+          },
+        ],
+      },
+    },
+  ],
   i18n: booEnergeticChildI18n,
 };

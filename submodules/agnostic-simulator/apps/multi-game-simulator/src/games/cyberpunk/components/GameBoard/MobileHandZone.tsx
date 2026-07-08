@@ -70,6 +70,7 @@ export function MobileHandZone({
       className={`${classes.zone} ${variantClass}`}
       data-testid="hand-zone"
       data-zone-id={zoneName}
+      data-sim-zone-id={zoneName}
       data-active-fan="true"
       data-side={side}
       data-face-down={faceDown ? "true" : "false"}
@@ -147,6 +148,7 @@ export function MobileHandZone({
               data-ready={card && !faceDown ? "true" : undefined}
               data-selected={card?.cardId && card.cardId === selectedCardId ? "true" : "false"}
               {...publicCardAttrs}
+              data-sim-entity-id={card?.cardId}
               style={{ zIndex: card?.cardId === selectedCardId ? 200 : i + 1 }}
             >
               {faceDown ? (

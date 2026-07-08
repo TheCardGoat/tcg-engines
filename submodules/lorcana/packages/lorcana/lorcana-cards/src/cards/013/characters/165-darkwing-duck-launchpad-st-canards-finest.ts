@@ -34,10 +34,10 @@ export const darkwingDuckLaunchpadStCanardsFinest: CharacterCard = {
   inkable: true,
   text: [
     {
-      title: "<Shift> 5 {I}",
+      title: "Shift 5 {I}",
     },
     {
-      title: "<Ward>",
+      title: "Ward",
     },
     {
       title: "Victory Pose",

@@ -341,6 +341,7 @@ function FieldHelperCluster({
         <div className={classes.popoverZone}>
           <TrashZone
             topCard={zones.trashTop ?? undefined}
+            cards={zones.trash}
             opponent={opponent}
             side={side}
             count={zones.trashCount}
@@ -785,6 +786,7 @@ export function MobileBoard({
               imageUrl: c.imageUrl,
               name: c.name,
               cardId: c.cardId,
+              definitionId: c.definitionId,
               cardType: c.cardType,
               color: c.color,
               effectiveRules: c.effectiveRules,
