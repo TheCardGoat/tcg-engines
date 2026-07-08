@@ -82,4 +82,93 @@ describe("AnimationPlanV1Schema", () => {
 
     expect(result.success).toBe(false);
   });
+
+  test("accepts generic steal audio and move labels", () => {
+    const plan = {
+      id: "steal-1",
+      version: 1,
+      steps: [
+        {
+          id: "move-gig",
+          type: "moveEntity",
+          entity: { kind: "entity", id: "gig-d6" },
+          from: { kind: "zone", id: "opp-gigs", ownerId: "player-2" },
+          to: { kind: "zone", id: "p-gigs", ownerId: "player-1" },
+          label: "GIG STOLEN",
+          audioCue: "resource.steal",
+        },
+      ],
+    };
+
+    expect(AnimationPlanV1Schema.parse(plan)).toEqual({ ...plan, anchors: [] });
+  });
+
+  test("accepts explicit card face overrides for staged reveals", () => {
+    const plan = {
+      id: "legend-reveal-1",
+      version: 1,
+      steps: [
+        {
+          id: "legend-to-center",
+          type: "moveEntity",
+          entity: { kind: "entity", id: "legend-1" },
+          from: { kind: "zone", id: "p-legendArea", ownerId: "player-1" },
+          to: { kind: "anchor", id: "resolving-program:legend-1" },
+          sourceFace: "hidden",
+          destinationFace: "hidden",
+        },
+        {
+          id: "legend-flip",
+          type: "spotlightEntity",
+          entity: { kind: "entity", id: "legend-1" },
+          at: { kind: "anchor", id: "resolving-program:legend-1" },
+          sourceFace: "hidden",
+          destinationFace: "public",
+          audioCue: "effect.trigger",
+        },
+      ],
+    };
+
+    expect(AnimationPlanV1Schema.parse(plan)).toEqual({ ...plan, anchors: [] });
+  });
+
+  test("accepts blocked combat reason", () => {
+    const plan = {
+      id: "block-1",
+      version: 1,
+      steps: [
+        {
+          id: "blocker-redirect",
+          type: "combat",
+          source: { kind: "entity", id: "blocker" },
+          target: { kind: "entity", id: "attacker" },
+          reason: "blocked",
+          attackKind: "fight",
+          label: "BLOCK",
+          detailLabel: "REDIRECTED",
+          audioCue: "effect.trigger",
+        },
+      ],
+    };
+
+    expect(AnimationPlanV1Schema.parse(plan)).toEqual({ ...plan, anchors: [] });
+  });
+
+  test("rejects unknown combat reasons", () => {
+    const result = AnimationPlanV1Schema.safeParse({
+      id: "block-1",
+      version: 1,
+      steps: [
+        {
+          id: "bad-combat",
+          type: "combat",
+          source: { kind: "entity", id: "blocker" },
+          target: { kind: "entity", id: "attacker" },
+          reason: "redirected",
+        },
+      ],
+    });
+
+    expect(result.success).toBe(false);
+  });
 });

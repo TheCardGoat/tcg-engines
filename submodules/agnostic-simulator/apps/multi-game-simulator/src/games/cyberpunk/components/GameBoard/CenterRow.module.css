@@ -947,44 +947,72 @@
   inset: 0;
   align-items: stretch;
   justify-content: flex-start;
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
-  gap: 5px;
-  padding: 9px 5px 8px;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 4px;
+  padding: 7px 5px 6px;
   background:
-    linear-gradient(180deg, rgb(245 230 66 / 10%), transparent 48%),
-    linear-gradient(270deg, rgb(245 230 66 / 14%), transparent 40%);
+    linear-gradient(180deg, rgb(7 9 12 / 86%), rgb(7 9 12 / 72%)),
+    linear-gradient(270deg, rgb(245 230 66 / 14%), transparent 46%);
+}
+
+.passDocked .phaseLabel {
+  display: flex;
+  min-height: 16px;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 3px 3px;
+  border: 1px solid rgb(245 230 66 / 28%);
+  background: rgb(245 230 66 / 7%);
+  color: rgb(245 230 66 / 88%);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .passDocked .phaseStrip {
-  gap: 2px;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: start;
+  gap: 3px;
 }
 
 .passDocked .phaseStep {
-  min-height: 18px;
+  min-height: 16px;
   font-size: 7px;
-  letter-spacing: 0.04em;
-  padding-inline: 3px;
-  white-space: normal;
-  overflow-wrap: anywhere;
+  letter-spacing: 0.06em;
+  padding: 2px 3px;
+  white-space: nowrap;
+}
+
+.passDocked .phaseStep:not(.phaseActive) {
+  background: rgb(7 9 12 / 38%);
 }
 
 .passBtnDocked {
   width: 100%;
-  min-height: 45px;
-  padding: 8px 4px;
+  min-height: 34px;
+  padding: 6px 4px;
   font-size: 10px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   line-height: 1.05;
-  white-space: nowrap;
+  white-space: normal;
   text-align: center;
 }
 
 .undoBtnDocked {
   width: 100%;
+  min-height: 21px;
+  padding: 3px 4px;
+  font-size: 8px;
+  letter-spacing: 0.08em;
 }
 
 .passDocked .passBtn:disabled {
-  opacity: 0.45;
+  border-color: rgb(245 230 66 / 28%);
+  background: rgb(24 27 18 / 72%);
+  color: rgb(245 230 66 / 62%);
+  opacity: 1;
   cursor: not-allowed;
   box-shadow: none;
 }

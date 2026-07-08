@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaRuthlessLowlife,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
@@ -23,17 +23,17 @@ test("Saburo Arasaka - Stubborn Patriarch (Retail) - Arasaka attacker power", as
   const minotaur = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaArmoredMinotaur.id,
+    embracingPowerRetailStarterDeckMinotaur.id,
   );
   const lowlife = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaRuthlessLowlife.id,
+    welcomeToNightCityRetailMoxInciters.id,
   );
   const defender = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
 
   await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, minotaur.instanceId, 9);

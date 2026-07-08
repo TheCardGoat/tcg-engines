@@ -30,7 +30,6 @@ import { PendingEffectSelectionProvider } from "../src/components/ui/pending-eff
 import { CardInspectDialog } from "../src/components/ui/CardInspectDialogContainer.tsx";
 import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "../src/components/ui/GameTable.tsx";
-import { PhaseRibbon } from "../src/components/ui/PhaseRibbon.tsx";
 import { HintsProvider } from "../src/lib/use-hints-enabled.ts";
 import { SpectatorGundamGameProvider } from "../src/engine/spectator/SpectatorGundamGameProvider.tsx";
 
@@ -187,7 +186,6 @@ function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotShellProp
         {!isMobile && (
           <div className="relative h-0">
             <div className="centerline -top-px" />
-            <PhaseRibbon />
           </div>
         )}
         <PlayerSeatContainer side="bottom" />

@@ -114,7 +114,7 @@ export const coreScenarios: Scenario[] = [
               spent: true,
               playedThisTurn: false,
             },
-            { card: c.alphaArmoredMinotaur, spent: true, playedThisTurn: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true, playedThisTurn: false },
             { card: c.welcomeToNightCityRetailDelamainCab, spent: false, playedThisTurn: false },
           ],
           legendArea: [
@@ -318,11 +318,11 @@ export const coreScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
           ],
           eddies: 8,
-          deck: [c.alphaRuthlessLowlife, c.alphaRebootOptics],
+          deck: [c.welcomeToNightCityRetailMoxInciters, c.welcomeToNightCityRetailRebootOptics],
           gigArea: [{ dieType: "d6", faceValue: 2 }],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: true }],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
           gigArea: [{ dieType: "d4", faceValue: 1 }],
         },
         {
@@ -357,21 +357,21 @@ export const coreScenarios: Scenario[] = [
       }),
   },
   {
-    id: "defensiveStep",
+    id: "reactStep",
     group: "core",
-    label: "Defensive · Block decision",
+    label: "React · Block decision",
     description:
-      "P2 attacks; P1 is in the defensive step with `useBlocker` + resolve available. select-action mode with constrained verbs.",
+      "P2 attacks; P1 is in the React step with `useBlocker` + resolve available. select-action mode with constrained verbs.",
     build: () => {
       const engine = CyberpunkTestEngine.createWithFixture(playerBase, opponentBase, {
-        seed: scenarioSeed("defensiveStep"),
+        seed: scenarioSeed("reactStep"),
         autoGainGig: false,
       });
       if (engine.getState().G.turnMetadata.activePlayerId === P1) {
         engine.completeTurn({ as: P1 });
         skipGainGig(engine);
       }
-      engine.attackRival(c.alphaArmoredMinotaur, { as: P2 });
+      engine.attackRival(c.embracingPowerRetailStarterDeckMinotaur, { as: P2 });
       engine.resolveAttack({ as: P2 });
       return engine;
     },
@@ -393,7 +393,15 @@ export const coreScenarios: Scenario[] = [
           type: "chooseCardToPlay",
           chooserId: P1,
           effectId: "demo-choose-card",
-          payload: { cardIds: handIds, free: true },
+          payload: {
+            cardIds: handIds,
+            free: true,
+            boundTargets: {},
+            sourceCardId: handIds[0]!,
+            sourcePlayerId: P1,
+            abilityIndex: 0,
+            ifEffects: [],
+          },
         },
         { as: P1 },
       );
@@ -427,24 +435,27 @@ export const coreScenarios: Scenario[] = [
       CyberpunkTestEngine.createWithFixture(
         {
           field: [
-            { card: c.alphaSecondhandBombus, spent: false },
-            { card: c.alphaSwordwiseHuscle, spent: false },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
             {
-              card: c.alphaTBugAmateurPhilosopher,
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
               attachedGears: [
-                c.alphaSatoriSwordOfSaburo,
-                c.alphaKiroshiOptics,
-                c.alphaDyingNightVSPistol,
+                c.welcomeToNightCityRetailSatoriSwordOfSaburo,
+                c.welcomeToNightCityRetailKiroshiOptics,
+                c.welcomeToNightCityRetailDyingNightVSPistol,
               ],
             },
-            { card: c.alphaArmoredMinotaur, spent: false },
-            { card: c.alphaJackieWellesRideOrDieChoom, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
+            { card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: false },
           ],
           legendArea: [
-            { card: c.alphaVCorporateExile, faceDown: true },
-            { card: c.alphaGoroTakemuraHandsUnclean, faceDown: true },
-            { card: c.alphaYorinobuArasakaEmbracingDestruction, faceDown: true },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: true },
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
+            {
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+              faceDown: true,
+            },
           ],
           eddies: 8,
           gigArea: [

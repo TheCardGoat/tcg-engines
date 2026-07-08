@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaKiroshiOptics,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -33,7 +33,7 @@ test("River Ward (Retail) - spend plays gear from hand for free", async ({ page 
   const host = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaSwordwiseHuscle.id,
+    welcomeToNightCityRetailSwordwiseHuscle.id,
   );
   if (!eligible.includes(host.instanceId)) {
     throw new Error("Expected River Ward to offer the friendly Unit as an attachment host.");

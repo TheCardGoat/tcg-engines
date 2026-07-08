@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaCorpoSecurity, welcomeToNightCityRetailRidingNomad } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailRidingNomad,
+} from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Riding Nomad", () => {
@@ -10,17 +13,17 @@ describe("Riding Nomad", () => {
         eddies: 6,
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailRidingNomad, { as: P1 });
-    engine.attackUnit(welcomeToNightCityRetailRidingNomad, alphaCorpoSecurity, {
+    engine.attackUnit(welcomeToNightCityRetailRidingNomad, welcomeToNightCityRetailCorpoSecurity, {
       as: P1,
     });
 
     expect(engine.getAttackState()?.defenderId).toBe(
-      engine.findCardId(alphaCorpoSecurity, "field", P2),
+      engine.findCardId(welcomeToNightCityRetailCorpoSecurity, "field", P2),
     );
   });
 
@@ -31,13 +34,19 @@ describe("Riding Nomad", () => {
         eddies: 6,
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: false }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false }],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailRidingNomad, { as: P1 });
     const failure = engine.expectFailure(() =>
-      engine.attackUnit(welcomeToNightCityRetailRidingNomad, alphaCorpoSecurity, { as: P1 }),
+      engine.attackUnit(
+        welcomeToNightCityRetailRidingNomad,
+        welcomeToNightCityRetailCorpoSecurity,
+        {
+          as: P1,
+        },
+      ),
     );
 
     expect(failure.errorCode).toBe("TARGET_READY");

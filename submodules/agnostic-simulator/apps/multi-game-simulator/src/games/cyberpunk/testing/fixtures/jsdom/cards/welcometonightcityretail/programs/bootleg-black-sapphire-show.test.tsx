@@ -1,8 +1,8 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailBootlegBlackSapphireShow,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -45,9 +45,21 @@ describe("Bootleg Black Sapphire Show (Retail) jsdom happy path", () => {
         deckBefore - 3,
       );
 
-      await pom.getCardInZoneByDefinitionId("eddieArea", CYBERPUNK_P1, alphaCorpoSecurity.id);
-      await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaRuthlessLowlife.id);
-      await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaSwordwiseHuscle.id);
+      await pom.getCardInZoneByDefinitionId(
+        "eddieArea",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailCorpoSecurity.id,
+      );
+      await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailMoxInciters.id,
+      );
+      await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
+      );
       await pom.getCardInZoneByDefinitionId(
         "trash",
         CYBERPUNK_P1,

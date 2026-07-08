@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -21,7 +21,7 @@ describe("T-Bug - Amateur Philosopher jsdom happy path", () => {
       const tBug = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaTBugAmateurPhilosopher.id,
+        welcomeToNightCityRetailTBugAmateurPhilosopher.id,
       );
 
       await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, tBug.instanceId, 5);

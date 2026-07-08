@@ -1,4 +1,4 @@
-import { alphaJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import {
@@ -15,7 +15,7 @@ export const progFloorItNoTargetsBehavior: CyberpunkFixtureBehavior = {
     const jackie = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaJackieWellesRideOrDieChoom.id,
+      welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
     );
     const program = expectDefined(
       "Floor It in hand",

@@ -1,6 +1,9 @@
 import { test } from "@playwright/test";
 
-import { alphaCorpoSecurity, alphaVCorporateExile } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  theHeistRetailStarterDeckVCorporateExile,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -16,12 +19,12 @@ test("V - Corporate Exile - GO SOLO", async ({ page }) => {
   const v = await pom.getCardInZoneByDefinitionId(
     "legendArea",
     CYBERPUNK_P1,
-    alphaVCorporateExile.id,
+    theHeistRetailStarterDeckVCorporateExile.id,
   );
   const defender = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
 
   await pom.expectEddies(CYBERPUNK_P1, 6);

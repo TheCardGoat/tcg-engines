@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -16,7 +16,7 @@ test("Zetatech Faceplate (Retail) - spend trigger adjusts a gig and draws", asyn
   const host = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaSwordwiseHuscle.id,
+    welcomeToNightCityRetailSwordwiseHuscle.id,
   );
   const d8 = expectDefined(
     "Zetatech Retail friendly d8",

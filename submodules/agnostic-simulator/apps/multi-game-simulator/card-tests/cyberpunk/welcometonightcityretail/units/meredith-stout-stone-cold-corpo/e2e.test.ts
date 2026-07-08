@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaKiroshiOptics,
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailMeredithStoutStoneColdCorpo,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -29,8 +29,16 @@ test("Meredith Stout (Retail) - structural state on rival turn", async ({ page }
 
   await pom.expectTrashSize(CYBERPUNK_P1, 2);
   const trashDefinitions = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P1);
-  expectIncludes("Meredith trash definitions", trashDefinitions, alphaKiroshiOptics.id);
-  expectIncludes("Meredith trash definitions", trashDefinitions, alphaRuthlessLowlife.id);
+  expectIncludes(
+    "Meredith trash definitions",
+    trashDefinitions,
+    welcomeToNightCityRetailKiroshiOptics.id,
+  );
+  expectIncludes(
+    "Meredith trash definitions",
+    trashDefinitions,
+    welcomeToNightCityRetailMoxInciters.id,
+  );
   expectEqual("Meredith active player is P2", await pom.getActivePlayerId(), CYBERPUNK_P2);
 
   await pom.expectStructuralState();

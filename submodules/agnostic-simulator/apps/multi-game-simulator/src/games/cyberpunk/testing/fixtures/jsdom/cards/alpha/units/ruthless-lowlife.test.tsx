@@ -1,5 +1,8 @@
 import { describe, test } from "vite-plus/test";
-import { alphaArmoredMinotaur, alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailMoxInciters,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -18,12 +21,12 @@ describe("Ruthless Lowlife jsdom happy path", () => {
       const attacker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
       const lowlife = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaRuthlessLowlife.id,
+        welcomeToNightCityRetailMoxInciters.id,
       );
       const p1GigToSteal = (await pom.getGigDice(CYBERPUNK_P1))[0];
       if (!p1GigToSteal) {

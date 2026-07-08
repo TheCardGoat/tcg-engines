@@ -2122,6 +2122,35 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "cb23a651-dd1d-48f8-aca3-8d33fef79fdd",
   },
+  "welcometonightcityretail:augmented-negotiators": {
+    i18n: {
+      en: {
+        name: "Augmented Negotiators",
+        displayName: "Augmented Negotiators",
+        rulesText:
+          "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nWhen this Unit uses {Blocker}, a Rival discards 1.",
+      },
+    },
+    printings: [
+      {
+        id: "a195323a-e29e-4c05-8e6c-7f1638c8264c",
+        artId: "a195323a-e29e-4c05-8e6c-7f1638c8264c",
+        collectorNumber: "043",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/043.webp",
+      },
+      {
+        id: "28973c43-529c-487e-aa05-ac99280d66c3",
+        artId: "28973c43-529c-487e-aa05-ac99280d66c3",
+        collectorNumber: "β043",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b043.webp",
+      },
+    ],
+    selectedPrintingId: "a195323a-e29e-4c05-8e6c-7f1638c8264c",
+  },
   "welcometonightcityretail:bootleg-black-sapphire-show": {
     i18n: {
       en: {
@@ -3012,6 +3041,34 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       },
     ],
     selectedPrintingId: "e54e06c0-3f9c-412a-8dea-942eebecd687",
+  },
+  "welcometonightcityretail:jacked-in-voodoo-boy": {
+    i18n: {
+      en: {
+        name: "Jacked-In Voodoo Boy",
+        displayName: "Jacked-In Voodoo Boy",
+        rulesText: "This Unit can't attack unless you played a Program this turn.",
+      },
+    },
+    printings: [
+      {
+        id: "8e2f2d0c-0e92-4744-a510-a9c7ac371d81",
+        artId: "8e2f2d0c-0e92-4744-a510-a9c7ac371d81",
+        collectorNumber: "115",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/115.webp",
+      },
+      {
+        id: "f18a73a9-fa29-4351-ad96-8e7c1dd0e8a1",
+        artId: "f18a73a9-fa29-4351-ad96-8e7c1dd0e8a1",
+        collectorNumber: "β115",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b115.webp",
+      },
+    ],
+    selectedPrintingId: "8e2f2d0c-0e92-4744-a510-a9c7ac371d81",
   },
   "welcometonightcityretail:kerry-eurodyne-the-last-rockerboy": {
     i18n: {

@@ -14,7 +14,11 @@ import type { Operations } from "./operations/index.ts";
 import type { GameEvent } from "./types/game-events.ts";
 import type { CardInstanceId, PlayerId } from "./types/branded.ts";
 import { matchTriggers } from "./triggers/index.ts";
-import { resolveTarget, evaluateCondition } from "./effects/target-resolver.ts";
+import {
+  resolveTarget,
+  evaluateCondition,
+  validateTargetOptions,
+} from "./effects/target-resolver.ts";
 import { resolveEffect } from "./effects/handlers/index.ts";
 import type { ResolutionContext } from "./effects/target-resolver.ts";
 import { defOf } from "./state/lookups.ts";
@@ -58,6 +62,7 @@ function enqueueTriggerEventsSince(
       event.type === "gigValueChanged" ||
       event.type === "legendFlipped" ||
       event.type === "legendCalled" ||
+      event.type === "cardPlayed" ||
       event.type === "cardSpent"
     ) {
       enqueueEventTriggers(event, state, operations);
@@ -130,7 +135,7 @@ export function enqueueEventTriggers(
       continue;
     }
 
-    if (!allRequiredEffectsHaveTargets(ability, ctx)) {
+    if (!abilityHasRequiredEffectTargets(ability, ctx)) {
       if (isProgramPlayAbility(cardId, ability, state)) {
         emitNoValidTargetsLog(cardId, playerId, state, operations);
         continue;
@@ -309,6 +314,20 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
     return;
   }
 
+  if (!abilityHasRequiredEffectTargets(ability, ctx, current.nextEffectIndex)) {
+    emitNoValidTargetsLog(current.sourceCardId, current.sourcePlayerId, state, operations);
+    state.G.turnMetadata.currentTrigger = undefined;
+    continueTriggerResolution(state, operations);
+    return;
+  }
+
+  if (!allResolvableRequiredSelectableBindingsHaveTargets(ability, current.boundTargets, ctx)) {
+    emitNoValidTargetsLog(current.sourceCardId, current.sourcePlayerId, state, operations);
+    state.G.turnMetadata.currentTrigger = undefined;
+    continueTriggerResolution(state, operations);
+    return;
+  }
+
   const pendingBinding = getPendingSelectableBinding(ability, current.boundTargets);
   if (pendingBinding) {
     const selection = getSelection(pendingBinding.target);
@@ -328,7 +347,8 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
       min === 1 &&
       max === 1 &&
       !current.optional &&
-      !isProgramPlayAbility(current.sourceCardId, ability, state)
+      !isProgramPlayAbility(current.sourceCardId, ability, state) &&
+      !requiresExplicitSelectableBinding(ability, pendingBinding.id)
     ) {
       current.boundTargets[pendingBinding.id] = [targets[0]!];
       resumeCurrentTrigger(state, operations);
@@ -354,13 +374,6 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
         selectedBindingId: pendingBinding.id,
       },
     });
-    return;
-  }
-
-  if (!allRequiredEffectsHaveTargets(ability, ctx, current.nextEffectIndex)) {
-    emitNoValidTargetsLog(current.sourceCardId, current.sourcePlayerId, state, operations);
-    state.G.turnMetadata.currentTrigger = undefined;
-    continueTriggerResolution(state, operations);
     return;
   }
 
@@ -1105,7 +1118,7 @@ function effectHasTarget(effect: Effect, ctx: ResolutionContext): boolean {
   return true;
 }
 
-function allRequiredEffectsHaveTargets(
+export function abilityHasRequiredEffectTargets(
   ability: Ability,
   ctx: ResolutionContext,
   startIndex = 0,
@@ -1168,6 +1181,10 @@ function isOptionalTrigger(state: MatchState, cardId: CardInstanceId, ability: A
   const card = state.G.cardIndex[cardId as string];
   if (!card) return false;
   const def = defOf(card);
+  const hasPayCost =
+    ability.costs?.some((cost) => cost.cost === "payCardCost" || cost.cost === "payEddies") ===
+    true;
+  if (ability.trigger && hasPayCost && /\bmay pay\b/i.test(ability.text)) return true;
   return (
     card.zone === "hand" &&
     def.type === "program" &&
@@ -1183,6 +1200,35 @@ function isProgramPlayAbility(
   const card = state.G.cardIndex[cardId as string];
   if (!card) return false;
   return defOf(card).type === "program";
+}
+
+function requiresExplicitSelectableBinding(ability: Ability, bindingId: string): boolean {
+  if ((ability.bindings ?? []).length <= 1) {
+    return false;
+  }
+  return ability.effects.some((effect) => {
+    if (effect.effect !== "playCard" && effect.effect !== "attachCard") {
+      return false;
+    }
+    if (boundTargetId(effect.target) === bindingId) {
+      return true;
+    }
+    return "attachTo" in effect && boundTargetId(effect.attachTo) === bindingId;
+  });
+}
+
+function boundTargetId(target: unknown): string | null {
+  if (
+    target &&
+    typeof target === "object" &&
+    "selector" in target &&
+    target.selector === "bound" &&
+    "id" in target &&
+    typeof target.id === "string"
+  ) {
+    return target.id;
+  }
+  return null;
 }
 
 type AbilityTargetBinding = NonNullable<Ability["bindings"]>[number];
@@ -1204,6 +1250,21 @@ function getPendingSelectableBinding(
   return ability.bindings?.find(
     (binding) => isSelectableBinding(binding) && boundTargets[binding.id] === undefined,
   );
+}
+
+function allResolvableRequiredSelectableBindingsHaveTargets(
+  ability: Ability,
+  boundTargets: Record<string, string[]>,
+  ctx: ResolutionContext,
+): boolean {
+  for (const binding of ability.bindings ?? []) {
+    if (!isSelectableBinding(binding) || boundTargets[binding.id] !== undefined) continue;
+
+    const selection = getSelection(binding.target);
+    const min = selection?.min ?? 1;
+    if (validateTargetOptions(binding.target, ctx, min) === "invalid") return false;
+  }
+  return true;
 }
 
 function findFollowingAdjustGig(

@@ -6,13 +6,13 @@ import {
   expectCallableLegend,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerEvelynParkerBeautifulEnigma,
-  spoilerAfterpartyAtLizzieS,
+  welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const evelyn = spoilerEvelynParkerBeautifulEnigma;
-const braindanceProgram = spoilerAfterpartyAtLizzieS; // Braindance classification
+const evelyn = welcomeToNightCityRetailEvelynParkerBeautifulEnigma;
+const braindanceProgram = welcomeToNightCityRetailAfterpartyAtLizzieS; // Braindance classification
 const p1LeadGigs = [
   { dieType: "d4" as const, faceValue: 1 },
   { dieType: "d8" as const, faceValue: 1 },

@@ -32,7 +32,7 @@ export interface AttackState {
   fightResult?: FightResult;
 }
 
-export type AttackStep = "offensive" | "defensive" | "fight" | "defeat" | "steal";
+export type AttackStep = "attack" | "react" | "fight" | "steal";
 
 export type FightResult = "attackerWins" | "defenderWins" | "mutual";
 
@@ -105,6 +105,7 @@ export interface TurnMetadata {
   activePlayerId: PlayerId;
   previousTurnNoGigTaken: boolean;
   gigTakenThisTurn: boolean;
+  playedCardTypesThisTurn: Partial<Record<string, CardType[]>>;
   overtimeActive: boolean;
   suspendedEndTurn?: {
     playerId: PlayerId;
@@ -184,6 +185,7 @@ export interface ChooseTargetPendingChoice {
     contextTargets?: Record<string, string[]>;
     boundTargets?: Record<string, string[]>;
     selectedBindingId?: string;
+    targetPurpose?: "attachHost";
   };
 }
 
@@ -255,6 +257,11 @@ export interface ChooseCardToPlayPendingChoice {
     free?: boolean;
     attachTo?: unknown;
     resolvedAttachToId?: string;
+    boundTargets?: Record<string, string[]>;
+    sourceCardId?: CardInstanceId;
+    sourcePlayerId?: PlayerId;
+    abilityIndex?: number;
+    ifEffects?: Effect[];
   };
 }
 

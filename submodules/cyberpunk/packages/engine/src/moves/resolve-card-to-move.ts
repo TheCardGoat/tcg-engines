@@ -103,15 +103,23 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
       // Bottom-deck flow: remove from current zone, append to bottom of owner's deck.
       const owner = card.ownerId;
       const fromZone = card.zone;
+      const attachedGearIds = [...card.meta.attachedGearIds];
+      if (card.meta.attachedToId) {
+        operations.card.detachGear(cardId as CardInstanceId);
+      }
       const player = state.G.players[owner as string];
       if (player) {
-        const fromList = player.zones[card.zone];
-        const idx = fromList.indexOf(cardId as CardInstanceId);
-        if (idx !== -1) fromList.splice(idx, 1);
+        for (const movedId of [cardId as CardInstanceId, ...attachedGearIds]) {
+          const movedCard = state.G.cardIndex[movedId as string];
+          if (!movedCard) continue;
+          const fromList = player.zones[movedCard.zone];
+          const idx = fromList.indexOf(movedId);
+          if (idx !== -1) fromList.splice(idx, 1);
+        }
       }
-      operations.zone.moveCardsToBottom(owner, [cardId as CardInstanceId]);
+      operations.zone.moveCardsToBottom(owner, [cardId as CardInstanceId, ...attachedGearIds]);
       card.zone = "deck";
-      card.meta = createDefaultMetaForZone("deck");
+      card.meta = createDefaultMetaForZone("deck", { attachedGearIds });
       operations.event.emit({
         type: "cardMoved",
         cardId: cardId as CardInstanceId,
@@ -119,12 +127,27 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
         toZone: "deck",
         playerId: owner,
       } as any);
+      for (const gearId of attachedGearIds) {
+        const gear = state.G.cardIndex[gearId as string];
+        if (!gear) continue;
+        const gearFromZone = gear.zone;
+        gear.zone = "deck";
+        gear.meta = createDefaultMetaForZone("deck", { attachedToId: cardId as CardInstanceId });
+        operations.event.emit({
+          type: "cardMoved",
+          cardId: gearId,
+          fromZone: gearFromZone,
+          toZone: "deck",
+          playerId: owner,
+        } as any);
+      }
     } else {
       // Generic move to a destination zone (e.g. discard to trash).
       const destZone = (destination ?? "trash") as import("@tcg/cyberpunk-types").CardZone;
       if (card.meta.attachedToId) {
         operations.card.detachGear(cardId as CardInstanceId);
       }
+      operations.card.moveAttachedGear(cardId as CardInstanceId, destZone);
       operations.zone.moveCard(cardId as CardInstanceId, destZone, card.ownerId);
     }
 

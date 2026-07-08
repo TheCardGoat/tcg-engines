@@ -8,20 +8,20 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaCorporateSurveillance,
-  alphaKiroshiOptics,
-  alphaRebootOptics,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  spoilerMamanBrigitte,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailMamanBrigitteSpiritOfDeath,
 } from "@tcg/cyberpunk-cards";
 
-const maman = spoilerMamanBrigitte;
-const firstProgram = alphaRebootOptics;
-const secondProgram = alphaCorporateSurveillance;
-const unequippedRivalUnit = alphaRuthlessLowlife;
-const equippedRivalUnit = alphaSwordwiseHuscle;
-const rivalGear = alphaKiroshiOptics;
+const maman = welcomeToNightCityRetailMamanBrigitteSpiritOfDeath;
+const firstProgram = welcomeToNightCityRetailRebootOptics;
+const secondProgram = welcomeToNightCityRetailCorporateSurveillance;
+const unequippedRivalUnit = welcomeToNightCityRetailMoxInciters;
+const equippedRivalUnit = welcomeToNightCityRetailSwordwiseHuscle;
+const rivalGear = welcomeToNightCityRetailKiroshiOptics;
 
 describe("Maman Brigitte", () => {
   describe("UI prompt", () => {

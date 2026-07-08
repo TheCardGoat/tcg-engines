@@ -170,6 +170,7 @@ export interface AttackResolvedEvent {
 
 export interface BlockerActivatedEvent {
   type: "blockerActivated";
+  attackerId: CardInstanceId;
   blockerId: CardInstanceId;
   originalTarget: CardInstanceId | null;
   playerId: PlayerId;

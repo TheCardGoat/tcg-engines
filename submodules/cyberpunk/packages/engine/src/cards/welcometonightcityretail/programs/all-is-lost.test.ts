@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
   welcomeToNightCityRetailAllIsLost,
-  alphaCorpoSecurity,
-  alphaKiroshiOptics,
-  alphaMantisBlades,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMantisBlades,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 
@@ -14,7 +14,11 @@ describe("All is Lost", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailAllIsLost],
-        deck: [alphaCorpoSecurity, alphaKiroshiOptics, alphaMantisBlades],
+        deck: [
+          welcomeToNightCityRetailCorpoSecurity,
+          welcomeToNightCityRetailKiroshiOptics,
+          welcomeToNightCityRetailMantisBlades,
+        ],
         eddies: 2,
       },
       {},
@@ -36,11 +40,11 @@ describe("All is Lost", () => {
     engine.resolveEffectTargetIds(eligible, { as: P1 });
 
     const hand = engine.getCardsInZone("hand", P1).map((c) => c.definitionId);
-    expect(hand).toContain(alphaCorpoSecurity.id);
+    expect(hand).toContain(welcomeToNightCityRetailCorpoSecurity.id);
     // Gear was among the trashed but is NOT a Unit, so it stays in trash.
-    expect(hand).not.toContain(alphaKiroshiOptics.id);
+    expect(hand).not.toContain(welcomeToNightCityRetailKiroshiOptics.id);
     const trash = engine.getCardsInZone("trash", P1).map((c) => c.definitionId);
-    expect(trash).toContain(alphaKiroshiOptics.id);
-    expect(trash).toContain(alphaMantisBlades.id);
+    expect(trash).toContain(welcomeToNightCityRetailKiroshiOptics.id);
+    expect(trash).toContain(welcomeToNightCityRetailMantisBlades.id);
   });
 });

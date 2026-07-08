@@ -306,6 +306,93 @@ body.gundam-simulator-active {
   color: var(--color-hud-accent);
 }
 
+/* Gundam adapter overrides for shared simulator-ui primitives. The shared
+ * defaults are tuned for darker boards; these keep the white/blue Gundam
+ * cockpit identity while restoring readable contrast on bright surfaces. */
+.gundam-ai-control-panel [class*="panel"] {
+  color: var(--color-hud-text);
+}
+.gundam-ai-control-panel [class*="statusRow"] {
+  border-color: rgba(45, 107, 255, 0.42);
+  background:
+    linear-gradient(90deg, rgba(45, 107, 255, 0.13), rgba(255, 255, 255, 0.82) 62%),
+    rgba(255, 255, 255, 0.9);
+  box-shadow: inset 3px 0 0 rgba(45, 107, 255, 0.85);
+}
+.gundam-ai-control-panel [class*="statusName"] {
+  color: var(--color-hud-text);
+  font-weight: 800;
+}
+.gundam-ai-control-panel [class*="statusSub"],
+.gundam-ai-control-panel [class*="label"] {
+  color: var(--color-hud-text-muted);
+  opacity: 1;
+}
+.gundam-ai-control-panel [class*="pillThinking"] {
+  color: var(--color-hud-accent-deep);
+  background: rgba(45, 107, 255, 0.1);
+}
+.gundam-ai-control-panel [class*="pillPaused"],
+.gundam-ai-control-panel [class*="pillWaiting"] {
+  color: var(--color-hud-text-muted);
+  background: rgba(60, 74, 107, 0.08);
+}
+.gundam-ai-control-panel [class*="segmented"] {
+  border-color: rgba(45, 107, 255, 0.34);
+  background: rgba(255, 255, 255, 0.86);
+}
+.gundam-ai-control-panel [class*="segmentBtn"] {
+  color: var(--color-hud-text-muted);
+  font-weight: 800;
+}
+.gundam-ai-control-panel [class*="segmentBtn"]:not(:last-child) {
+  border-right-color: rgba(45, 107, 255, 0.22);
+}
+.gundam-ai-control-panel [class*="segmentActive"] {
+  color: var(--color-hud-accent-deep);
+  background: rgba(45, 107, 255, 0.16);
+}
+.gundam-ai-control-panel [class*="select"],
+.gundam-ai-control-panel [class*="btn"] {
+  color: var(--color-hud-text);
+  border-color: rgba(45, 107, 255, 0.34);
+  background: rgba(255, 255, 255, 0.72);
+}
+.gundam-ai-control-panel [class*="btnPrimary"] {
+  color: var(--color-hud-accent-deep);
+  border-color: rgba(45, 107, 255, 0.7);
+  background: rgba(45, 107, 255, 0.1);
+}
+.gundam-ai-control-panel [class*="btnTakeover"] {
+  color: var(--color-hud-danger-deep);
+  border-color: rgba(255, 45, 122, 0.78);
+  background: rgba(255, 45, 122, 0.06);
+}
+
+.gundam-zone-primitive {
+  --board-surface-soft: rgba(255, 255, 255, 0.86);
+  --board-text: var(--color-hud-text);
+  --board-muted: var(--color-hud-text-muted);
+  --board-border: rgba(45, 107, 255, 0.42);
+  --card-bg: #fbfcfe;
+  --card-border: rgba(45, 107, 255, 0.56);
+  --card-art-a: #e8f1ff;
+  --card-art-b: #c6dcff;
+  --card-art-c: #ffffff;
+  box-shadow: 0 1px 6px rgba(26, 37, 66, 0.12);
+}
+.gundam-zone-primitive .sim-card-face[data-face="hidden"] .sim-card-art span {
+  color: var(--color-hud-text-dim);
+}
+.gundam-zone-primitive .tabletop-pile-count {
+  border-color: rgba(255, 255, 255, 0.85);
+  background: var(--color-hud-text-muted);
+  color: #ffffff;
+}
+.gundam-zone-primitive .tabletop-pile-label {
+  color: var(--color-hud-text-muted);
+}
+
 /* Card-face helpers. */
 .card-name {
   font-family: "Bogle", var(--font-body);

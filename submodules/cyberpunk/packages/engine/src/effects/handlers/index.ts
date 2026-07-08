@@ -43,6 +43,10 @@ import { DIE_MAX_VALUES } from "../../types/gig-die.ts";
 import { defOf } from "../../state/lookups.ts";
 import { createDefaultMetaForZone } from "../../types/card-instance.ts";
 import { SeededRNG } from "../../state/rng.ts";
+import {
+  computeEffectiveCost,
+  consumeCostModifierUse,
+} from "../../moves/compute-effective-cost.ts";
 
 export type EffectHandlerResult =
   | { status: "resolved" }
@@ -75,8 +79,8 @@ function handleDefeat(
   for (const id of targets) {
     const cardBeforeMove = ctx.state.G.cardIndex[id as string];
     const hadAttachedCards = Boolean(cardBeforeMove?.meta.attachedGearIds.length);
-    ops.card.detachGear(id as CardInstanceId);
-    ops.card.moveAttachedGear(id as CardInstanceId, "trash");
+    if (cardBeforeMove?.meta.attachedToId) ops.card.detachGear(id as CardInstanceId);
+    ops.card.moveAttachedGear(id as CardInstanceId, "trash", { detachAfterMove: true });
     ops.zone.moveCard(id as CardInstanceId, "trash");
     if (cardBeforeMove) {
       ops.event.emit({
@@ -126,7 +130,11 @@ function handleReturnToHand(
   for (const id of targets) {
     const card = ctx.state.G.cardIndex[id];
     if (!card) continue;
-    ops.card.moveAttachedGear(id as CardInstanceId, "trash");
+    if (card.meta.attachedToId) {
+      ops.card.detachGear(id as CardInstanceId);
+    } else {
+      ops.card.moveAttachedGear(id as CardInstanceId, "hand");
+    }
     ops.zone.moveCard(id as CardInstanceId, "hand", card.ownerId);
   }
   return { status: "resolved" };
@@ -707,15 +715,20 @@ function handleMoveCard(
       // Remove from current zone, then append to the bottom of the owner's deck.
       const owner = card.ownerId;
       const fromZone = card.zone;
+      const attachedGearIds = [...card.meta.attachedGearIds];
       const player = ctx.state.G.players[owner as string];
       if (player) {
-        const fromList = player.zones[card.zone];
-        const idx = fromList.indexOf(id as CardInstanceId);
-        if (idx !== -1) fromList.splice(idx, 1);
+        for (const movedId of [id as CardInstanceId, ...attachedGearIds]) {
+          const movedCard = ctx.state.G.cardIndex[movedId as string];
+          if (!movedCard) continue;
+          const fromList = player.zones[movedCard.zone];
+          const idx = fromList.indexOf(movedId);
+          if (idx !== -1) fromList.splice(idx, 1);
+        }
       }
-      ops.zone.moveCardsToBottom(owner, [id as CardInstanceId]);
+      ops.zone.moveCardsToBottom(owner, [id as CardInstanceId, ...attachedGearIds]);
       card.zone = "deck";
-      card.meta = createDefaultMetaForZone("deck");
+      card.meta = createDefaultMetaForZone("deck", { attachedGearIds });
       ops.event.emit({
         type: "cardMoved",
         cardId: id as CardInstanceId,
@@ -723,6 +736,20 @@ function handleMoveCard(
         toZone: "deck",
         playerId: owner,
       } as any);
+      for (const gearId of attachedGearIds) {
+        const gear = ctx.state.G.cardIndex[gearId as string];
+        if (!gear) continue;
+        const gearFromZone = gear.zone;
+        gear.zone = "deck";
+        gear.meta = createDefaultMetaForZone("deck", { attachedToId: id as CardInstanceId });
+        ops.event.emit({
+          type: "cardMoved",
+          cardId: gearId,
+          fromZone: gearFromZone,
+          toZone: "deck",
+          playerId: owner,
+        } as any);
+      }
     } else {
       ops.zone.moveCard(id as CardInstanceId, effect.destination as CardZone, card.ownerId);
     }
@@ -768,6 +795,11 @@ function handlePlayCard(
       free: effect.free,
       attachTo: effect.attachTo,
       resolvedAttachToId,
+      boundTargets: ctx.boundTargets,
+      sourceCardId: ctx.sourceCardId,
+      sourcePlayerId: ctx.sourcePlayerId,
+      abilityIndex: ctx.abilityIndex,
+      ifEffects: [],
     },
   });
   return { status: "suspended", pendingChoice: effect };
@@ -778,10 +810,6 @@ function handleAttachCard(
   ctx: ResolutionContext,
   ops: Operations,
 ): EffectHandlerResult {
-  // `attachCard` is the explicit equip semantic that `playCard + attachTo`
-  // expresses by overload. Same runtime — same chooseCardToPlay pending
-  // choice — but a distinct DSL surface so card authors don't have to
-  // know that "play with an attach target" means "equip."
   const targets = resolveTarget(effect.target, ctx);
   if (targets.length === 0) return { status: "resolved" };
 
@@ -789,18 +817,61 @@ function handleAttachCard(
   const resolvedAttachToId = attachTargets[0];
   if (!resolvedAttachToId) return { status: "resolved" };
 
-  ops.game.setPendingChoice({
-    type: "chooseCardToPlay",
-    chooserId: ctx.sourcePlayerId,
-    effectId: "",
-    payload: {
-      cardIds: targets as CardInstanceId[],
-      free: effect.free,
-      attachTo: effect.attachTo,
-      resolvedAttachToId,
+  if (!isDirectAttachTarget(effect.target)) {
+    ops.game.setPendingChoice({
+      type: "chooseCardToPlay",
+      chooserId: ctx.sourcePlayerId,
+      effectId: "",
+      payload: {
+        cardIds: targets as CardInstanceId[],
+        free: effect.free,
+        attachTo: effect.attachTo,
+        resolvedAttachToId,
+      },
+    });
+    return { status: "suspended", pendingChoice: effect };
+  }
+
+  const cardId = targets[0] as CardInstanceId;
+  const card = ctx.state.G.cardIndex[cardId as string];
+  if (!card) return { status: "resolved" };
+  const def = defOf(card);
+  if (def.type !== "gear") return { status: "resolved" };
+
+  const playerId = ctx.sourcePlayerId;
+  const cost = effect.free ? 0 : computeEffectiveCost(ctx.state, cardId, playerId);
+  if (!effect.free) {
+    ops.game.spendEddies(playerId, cost, "playCard");
+    consumeCostModifierUse(ctx.state, cardId, playerId);
+  }
+
+  ops.zone.moveCard(cardId, "field", playerId);
+  ops.card.attachGear(cardId, resolvedAttachToId as CardInstanceId);
+
+  const cardPlayedEvent = {
+    type: "cardPlayed" as const,
+    cardId,
+    playerId,
+    cost,
+  };
+  ops.event.emit(cardPlayedEvent);
+
+  const attachedToCard = ctx.state.G.cardIndex[resolvedAttachToId as string];
+  ops.event.emit({
+    type: "actionLog",
+    messageKey: "move.playCard.gear",
+    params: {
+      cardName: def.displayName,
+      cost,
+      ...(attachedToCard ? { attachedToName: defOf(attachedToCard).displayName } : {}),
     },
+    playerId,
   });
-  return { status: "suspended", pendingChoice: effect };
+  return { status: "resolved" };
+}
+
+function isDirectAttachTarget(target: TargetDSL): boolean {
+  return target.selector === "bound" && target.id !== "__selectedEffectTarget";
 }
 
 function handleRemoveFromGame(
@@ -1049,11 +1120,13 @@ function handleIfYouDo(
     return { status: "resolved" };
   }
   if (doResult.status === "suspended") {
-    // Store ifEffects/elseEffects in the pending choice so the resolver can execute them.
+    // Store follow-up effects in the pending choice so the resolver can execute them.
     const pendingChoice = ctx.state.G.turnMetadata.pendingChoice;
     if (pendingChoice && pendingChoice.type === "chooseCardToMove") {
       pendingChoice.payload.ifEffects = [...effect.ifEffects];
       pendingChoice.payload.elseEffects = effect.elseEffects ? [...effect.elseEffects] : [];
+    } else if (pendingChoice && pendingChoice.type === "chooseCardToPlay") {
+      pendingChoice.payload.ifEffects = [...effect.ifEffects];
     } else if (
       pendingChoice &&
       pendingChoice.type === "chooseTarget" &&
@@ -1339,6 +1412,9 @@ export function resolveEffect(
           abilityIndex: ctx.abilityIndex,
           contextTargets: ctx.contextTargets,
           boundTargets: ctx.boundTargets,
+          ...(effect.effect === "attachCard" && effect.attachTo === target
+            ? { targetPurpose: "attachHost" as const }
+            : {}),
         },
       });
       return { status: "suspended", pendingChoice: effect };

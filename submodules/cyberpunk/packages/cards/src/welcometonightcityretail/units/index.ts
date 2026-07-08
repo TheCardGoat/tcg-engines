@@ -1,6 +1,7 @@
 import type { UnitCardDefinition } from "@tcg/cyberpunk-types";
 import { welcomeToNightCityRetail6thStreetRecruits } from "./6th-street-recruits.ts";
 import { welcomeToNightCityRetailAdamSmasherMetalOverMeat } from "./adam-smasher-metal-over-meat.ts";
+import { welcomeToNightCityRetailAugmentedNegotiators } from "./augmented-negotiators.ts";
 import { welcomeToNightCityRetailCaliberTotentanzSTopDog } from "./caliber-totentanz-s-top-dog.ts";
 import { welcomeToNightCityRetailCorpoSecurity } from "./corpo-security.ts";
 import { welcomeToNightCityRetailDelamainCab } from "./delamain-cab.ts";
@@ -10,6 +11,7 @@ import { welcomeToNightCityRetailEvelynParkerSchemingSiren } from "./evelyn-park
 import { welcomeToNightCityRetailFieldOperator } from "./field-operator.ts";
 import { welcomeToNightCityRetailGildedMatoN } from "./gilded-mato-n.ts";
 import { welcomeToNightCityRetailHanakoArasakaInAGildedCage } from "./hanako-arasaka-in-a-gilded-cage.ts";
+import { welcomeToNightCityRetailJackedInVoodooBoy } from "./jacked-in-voodoo-boy.ts";
 import { welcomeToNightCityRetailJackieWellesRideOrDieChoom } from "./jackie-welles-ride-or-die-choom.ts";
 import { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "./kerry-eurodyne-the-last-rockerboy.ts";
 import { welcomeToNightCityRetailLaLloronaGhostOfThePast } from "./la-llorona-ghost-of-the-past.ts";
@@ -38,6 +40,7 @@ import { welcomeToNightCityRetailYorinobuArasakaSteelDragon } from "./yorinobu-a
 
 export { welcomeToNightCityRetail6thStreetRecruits } from "./6th-street-recruits.ts";
 export { welcomeToNightCityRetailAdamSmasherMetalOverMeat } from "./adam-smasher-metal-over-meat.ts";
+export { welcomeToNightCityRetailAugmentedNegotiators } from "./augmented-negotiators.ts";
 export { welcomeToNightCityRetailCaliberTotentanzSTopDog } from "./caliber-totentanz-s-top-dog.ts";
 export { welcomeToNightCityRetailCorpoSecurity } from "./corpo-security.ts";
 export { welcomeToNightCityRetailDelamainCab } from "./delamain-cab.ts";
@@ -47,6 +50,7 @@ export { welcomeToNightCityRetailEvelynParkerSchemingSiren } from "./evelyn-park
 export { welcomeToNightCityRetailFieldOperator } from "./field-operator.ts";
 export { welcomeToNightCityRetailGildedMatoN } from "./gilded-mato-n.ts";
 export { welcomeToNightCityRetailHanakoArasakaInAGildedCage } from "./hanako-arasaka-in-a-gilded-cage.ts";
+export { welcomeToNightCityRetailJackedInVoodooBoy } from "./jacked-in-voodoo-boy.ts";
 export { welcomeToNightCityRetailJackieWellesRideOrDieChoom } from "./jackie-welles-ride-or-die-choom.ts";
 export { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "./kerry-eurodyne-the-last-rockerboy.ts";
 export { welcomeToNightCityRetailLaLloronaGhostOfThePast } from "./la-llorona-ghost-of-the-past.ts";
@@ -76,6 +80,7 @@ export { welcomeToNightCityRetailYorinobuArasakaSteelDragon } from "./yorinobu-a
 export const welcomeToNightCityRetailUnits = [
   welcomeToNightCityRetail6thStreetRecruits,
   welcomeToNightCityRetailAdamSmasherMetalOverMeat,
+  welcomeToNightCityRetailAugmentedNegotiators,
   welcomeToNightCityRetailCaliberTotentanzSTopDog,
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailDelamainCab,
@@ -85,6 +90,7 @@ export const welcomeToNightCityRetailUnits = [
   welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailGildedMatoN,
   welcomeToNightCityRetailHanakoArasakaInAGildedCage,
+  welcomeToNightCityRetailJackedInVoodooBoy,
   welcomeToNightCityRetailJackieWellesRideOrDieChoom,
   welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
   welcomeToNightCityRetailLaLloronaGhostOfThePast,

@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaCorpoSecurity, welcomeToNightCityRetailPeaceOffering } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailPeaceOffering,
+} from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 
 describe("Peace Offering", () => {
@@ -7,7 +10,7 @@ describe("Peace Offering", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailPeaceOffering],
-        deck: [alphaCorpoSecurity],
+        deck: [welcomeToNightCityRetailCorpoSecurity],
         eddies: 1,
         gigArea: [
           { dieType: "d4", faceValue: 3 },
@@ -25,7 +28,7 @@ describe("Peace Offering", () => {
 
     expect(engine.getHandCount(P1)).toBe(handBefore);
     expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     expect(
       engine

@@ -7,21 +7,21 @@ import {
   expectCallableLegend,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerGoroTakemuraVengefulBodyguard,
-  alphaCorpoSecurity,
-  alphaSwordwiseHuscle,
-  alphaRuthlessLowlife,
-  alphaArmoredMinotaur,
+  welcomeToNightCityRetailGoroTakemuraVengefulBodyguard,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailMoxInciters,
+  embracingPowerRetailStarterDeckMinotaur,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
 registerMatchers();
 
-const goro = spoilerGoroTakemuraVengefulBodyguard;
-const corpoSec = alphaCorpoSecurity; // cost 2, power 2 — eligible target
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5 — eligible target / P1 attacker
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1 — P2 attacker
-const minotaur = alphaArmoredMinotaur; // cost 6, power 9 — ineligible (cost > 4)
+const goro = welcomeToNightCityRetailGoroTakemuraVengefulBodyguard;
+const corpoSec = welcomeToNightCityRetailCorpoSecurity; // cost 2, power 2 — eligible target
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5 — eligible target / P1 attacker
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1 — P2 attacker
+const minotaur = embracingPowerRetailStarterDeckMinotaur; // cost 6, power 9 — ineligible (cost > 4)
 
 const CALL_COST = 1;
 const PAIRED_GIGS: { dieType: "d6" | "d8"; faceValue: number }[] = [
@@ -196,7 +196,7 @@ describe("Goro Takemura - Vengeful Bodyguard", () => {
       engine.completeTurn();
       engine.attackRival(huscle, { as: P2 }); // triggers Goro → corpoSec gets BLOCKER
       // Single valid target is auto-selected for mandatory abilities.
-      engine.resolveAttack({ as: P2 }); // offensive → defensive step
+      engine.resolveAttack({ as: P2 }); // offensive → React step
 
       engine.useBlocker(corpoSec, { as: P1 });
 
@@ -226,8 +226,8 @@ describe("Goro Takemura - Vengeful Bodyguard", () => {
       expect(hasGoroEffects(engine, corpoSecId)).toBe(true);
 
       // Resolve the attack then end P2's turn so turn-duration effects clean up
-      engine.resolveAttack({ as: P2 }); // offensive → defensive
-      engine.resolveAttack({ as: P1, pass: true }); // defensive → resolve (P1 passes)
+      engine.resolveAttack({ as: P2 }); // attack → react
+      engine.resolveAttack({ as: P1, pass: true }); // react → resolve (P1 passes)
       engine.resolveAttack({ as: P2 }); // steal: direct attack steals gig
 
       // P2 is in main phase — pass once to end P2's turn

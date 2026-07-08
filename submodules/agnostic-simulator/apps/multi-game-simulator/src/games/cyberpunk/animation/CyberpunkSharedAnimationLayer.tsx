@@ -28,7 +28,7 @@ import { useSimulatorAudio } from "../../../simulator/audio";
 import { PLAYER_SIDE_TO_ID, useEngine, useUserConfig } from "../engine";
 import {
   cyberpunkCardZoneToSimulatorZone,
-  projectEntityForCard,
+  projectEntityForAnimationEntity,
   sideForPlayerId,
 } from "../engine/projectSimulator";
 import { cyberpunkAnimationScriptToAnimationPlans } from "./sharedEvents";
@@ -40,6 +40,7 @@ type CyberpunkRawEngineEventEntry = ReturnType<typeof useEngine>["rawEngineEvent
 export interface ResolvingProgramVisual {
   cardId: string;
   side: Side;
+  face: "hidden" | "public";
 }
 
 const ResolvingProgramVisualsContext = createContext<readonly ResolvingProgramVisual[]>([]);
@@ -106,11 +107,15 @@ export function CyberpunkSharedAnimationLayer({ children }: { children: ReactNod
       const resolvingProgramSourceCardId = entry.beforeState
         ? pendingEffectSourceProgramCardIdFromState(entry.beforeState)
         : null;
+      const stagedEffectSourceCardIds = stagedEffectSourceCardIdsFromEntry(entry, toState);
+      const stagedEffectSourceLabels = stagedEffectSourceLabelsFromEntry(entry, toState);
       const mappedPlans = cyberpunkAnimationScriptToAnimationPlans(entry.animationScript, {
         viewerSeatId,
         idPrefix: String(entry.id),
         pendingEffectSourceCardId,
         resolvingProgramSourceCardId,
+        stagedEffectSourceCardIds,
+        stagedEffectSourceLabels,
         resultHoldMs,
       });
       simulatorAnimationDebug("cyberpunk animation entry processed", {
@@ -121,6 +126,8 @@ export function CyberpunkSharedAnimationLayer({ children }: { children: ReactNod
         input: entry.input,
         pendingEffectSourceCardId,
         resolvingProgramSourceCardId,
+        stagedEffectSourceCardIds: [...stagedEffectSourceCardIds],
+        stagedEffectSourceLabels: [...stagedEffectSourceLabels],
         engineEvents: entry.events,
         moveLogs: entry.moveLogs,
         animationScript: entry.animationScript,
@@ -215,7 +222,9 @@ export function CyberpunkSharedAnimationLayer({ children }: { children: ReactNod
       <MotionAnimationSurface
         animationPlans={plans}
         viewerSeatId={viewerSeatId}
-        resolveEntity={(cardId) => projectEntityForCard(cardId, matchState, humanSide)}
+        resolveEntity={(entityId) =>
+          projectEntityForAnimationEntity(entityId, matchState, humanSide)
+        }
         resolveZone={resolveZone}
         getCardSuppressionDelayMs={cyberpunkCardSuppressionDelayMs}
         onAnimationStepsScheduled={scheduleAnimationSteps}
@@ -268,28 +277,40 @@ function resolvingProgramVisualKey(visual: ResolvingProgramVisual): string {
 }
 
 function resolvingProgramVisualsFromPlan(plan: AnimationPlanV1): ResolvingProgramVisual[] {
-  return plan.steps.flatMap((step) => resolvingProgramEntryVisualFromStep(step) ?? []);
+  return plan.steps.flatMap((step) => resolvingProgramEntryVisualFromStep(plan, step) ?? []);
 }
 
 function resolvingProgramCleanupVisualFromPlan(
   plan: AnimationPlanV1,
 ): ResolvingProgramVisual | null {
   const step = plan.steps.find(isResolvingProgramCleanupStep);
-  if (!step) {
+  if (step) {
+    const side = sideFromCyberpunkAnchorId(step.to.id);
+    return side ? { cardId: step.entity.id, side, face: step.destinationFace ?? "public" } : null;
+  }
+  const spotlight = plan.steps.find(isResolvingSpotlightStep);
+  if (!spotlight) {
     return null;
   }
-  const side = sideFromCyberpunkAnchorId(step.to.id);
-  return side ? { cardId: step.entity.id, side } : null;
+  const side = plan.actorId ? sideForPlayerId(plan.actorId) : null;
+  return side
+    ? { cardId: spotlight.entity.id, side, face: spotlight.sourceFace ?? "public" }
+    : null;
 }
 
 function resolvingProgramEntryVisualFromStep(
+  plan: AnimationPlanV1,
   step: AnimationPlanStepV1,
 ): ResolvingProgramVisual | null {
-  if (!isResolvingProgramEntryStep(step)) {
-    return null;
+  if (isResolvingProgramEntryStep(step)) {
+    const side = sideFromCyberpunkAnchorId(step.from.id);
+    return side ? { cardId: step.entity.id, side, face: step.destinationFace ?? "public" } : null;
   }
-  const side = sideFromCyberpunkAnchorId(step.from.id);
-  return side ? { cardId: step.entity.id, side } : null;
+  if (isResolvingSpotlightStep(step)) {
+    const side = plan.actorId ? sideForPlayerId(plan.actorId) : null;
+    return side ? { cardId: step.entity.id, side, face: step.sourceFace ?? "public" } : null;
+  }
+  return null;
 }
 
 function isResolvingProgramEntryStep(step: AnimationPlanStepV1): step is Extract<
@@ -324,6 +345,19 @@ function isResolvingProgramCleanupStep(step: AnimationPlanStepV1): step is Extra
   );
 }
 
+function isResolvingSpotlightStep(step: AnimationPlanStepV1): step is Extract<
+  AnimationPlanStepV1,
+  { type: "spotlightEntity" }
+> & {
+  at: { id: string; kind: string };
+} {
+  return (
+    step.type === "spotlightEntity" &&
+    step.at.kind === "anchor" &&
+    step.at.id.startsWith("resolving-program:")
+  );
+}
+
 function pendingEffectSourceProgramCardIdFromState(matchState: CyberpunkMatchState): string | null {
   const choice = matchState.G.turnMetadata.pendingChoice;
   if (choice?.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
@@ -335,6 +369,70 @@ function pendingEffectSourceProgramCardIdFromState(matchState: CyberpunkMatchSta
   }
   const sourceCard = matchState.G.cardIndex[String(sourceCardId)];
   return sourceCard && defOf(sourceCard).type === "program" ? String(sourceCardId) : null;
+}
+
+function stagedEffectSourceCardIdsFromEntry(
+  entry: CyberpunkRawEngineEventEntry,
+  matchState: CyberpunkMatchState,
+): ReadonlySet<string> {
+  const staged = new Set<string>();
+  for (const step of entry.animationScript.steps) {
+    if (step.kind !== "effectTarget") {
+      continue;
+    }
+    const sourceCardId = String(step.sourceCardId);
+    const sourceCard = matchState.G.cardIndex[sourceCardId];
+    if (!sourceCard) {
+      continue;
+    }
+    const def = defOf(sourceCard);
+    if (def.type === "gear" || def.type === "legend" || triggerLabelForCard(sourceCard)) {
+      staged.add(sourceCardId);
+    }
+  }
+  return staged;
+}
+
+function stagedEffectSourceLabelsFromEntry(
+  entry: CyberpunkRawEngineEventEntry,
+  matchState: CyberpunkMatchState,
+): ReadonlyMap<string, string> {
+  const labels = new Map<string, string>();
+  for (const step of entry.animationScript.steps) {
+    if (step.kind !== "effectTarget") {
+      continue;
+    }
+    const sourceCardId = String(step.sourceCardId);
+    const sourceCard = matchState.G.cardIndex[sourceCardId];
+    if (!sourceCard) {
+      continue;
+    }
+    const triggerLabel = triggerLabelForCard(sourceCard);
+    if (triggerLabel) {
+      labels.set(sourceCardId, triggerLabel.toUpperCase());
+    }
+  }
+  return labels;
+}
+
+function triggerLabelForCard(
+  card: NonNullable<CyberpunkMatchState["G"]["cardIndex"][string]>,
+): string | null {
+  const trigger = defOf(card).abilities.find((ability) => ability.kind === "triggered")?.trigger
+    ?.trigger;
+  switch (trigger) {
+    case "play":
+      return "Play trigger";
+    case "attack":
+      return "Attack trigger";
+    case "call":
+    case "flip":
+      return "Call trigger";
+    case "defeated":
+      return "Defeated trigger";
+    default:
+      return null;
+  }
 }
 
 function animationPlanSummary(plan: AnimationPlanV1): string {

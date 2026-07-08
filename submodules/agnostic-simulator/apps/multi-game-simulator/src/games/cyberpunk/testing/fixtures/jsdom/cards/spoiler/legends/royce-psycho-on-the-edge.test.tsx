@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { spoilerRoycePsychoOnTheEdge } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailRoycePsychoOnTheEdge } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -19,7 +19,7 @@ describe("Royce Psycho jsdom happy path", () => {
       const royce = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        spoilerRoycePsychoOnTheEdge.id,
+        welcomeToNightCityRetailRoycePsychoOnTheEdge.id,
       );
 
       const legendView = await pom.getCardView(royce.instanceId, CYBERPUNK_P1);

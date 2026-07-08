@@ -1,6 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
 
-import { m } from "../../../lib/i18n/messages.ts";
 import { useLayoutMode } from "../../../lib/use-layout-mode.ts";
 import { cn } from "../../../lib/utils.ts";
 import { GameCard } from "../GameCard.tsx";
@@ -137,18 +136,6 @@ export function PlayZone({
               }}
             />
           ))}
-        </div>
-
-        <div
-          className="font-display absolute left-[14px] top-1/2 text-hud-xs font-extrabold tracking-hud-wide"
-          style={{
-            transform: "translateY(-50%) rotate(180deg)",
-            writingMode: "vertical-rl",
-            color: isTop ? "rgba(255,45,122,.7)" : "rgba(76,195,255,.7)",
-            textShadow: isTop ? "0 0 6px rgba(255,45,122,.3)" : "0 0 6px rgba(76,195,255,.3)",
-          }}
-        >
-          {isTop ? m["sim.seat.playZone.hostileLabel"]() : m["sim.seat.playZone.pilotLabel"]()}
         </div>
 
         <div className="flex-1 flex gap-2.5 justify-center items-center flex-wrap pl-8">

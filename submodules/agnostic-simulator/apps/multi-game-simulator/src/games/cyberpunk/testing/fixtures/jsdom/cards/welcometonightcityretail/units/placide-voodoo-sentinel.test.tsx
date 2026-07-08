@@ -1,8 +1,8 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaCorporateSurveillance,
-  alphaCorpoSecurity,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailPlacideVoodooSentinel,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -36,12 +36,12 @@ describe("Placide - Voodoo Sentinel (Retail) jsdom happy path", () => {
       const program = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        alphaCorporateSurveillance.id,
+        welcomeToNightCityRetailCorporateSurveillance.id,
       );
       const target = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
 
       const deckBefore = await pom.getDeckSize(CYBERPUNK_P2);
@@ -51,7 +51,11 @@ describe("Placide - Voodoo Sentinel (Retail) jsdom happy path", () => {
       const cardChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
       const choiceDefinitions = await getChoiceDefinitionIds(pom, cardChoices);
       expectEqual("Placide program choice count", cardChoices.length, 1);
-      expectIncludes("Placide program choices", choiceDefinitions, alphaCorporateSurveillance.id);
+      expectIncludes(
+        "Placide program choices",
+        choiceDefinitions,
+        welcomeToNightCityRetailCorporateSurveillance.id,
+      );
 
       await pom.resolveDiscardFromHand([program.instanceId], CYBERPUNK_P1);
 
@@ -59,8 +63,16 @@ describe("Placide - Voodoo Sentinel (Retail) jsdom happy path", () => {
       const targetChoices = await pom.getEligibleTargetIds(CYBERPUNK_P1);
       const targetDefinitions = await getChoiceDefinitionIds(pom, targetChoices);
       expectEqual("Placide target count", targetChoices.length, 2);
-      expectIncludes("Placide target choices", targetDefinitions, alphaArmoredMinotaur.id);
-      expectIncludes("Placide target choices", targetDefinitions, alphaCorpoSecurity.id);
+      expectIncludes(
+        "Placide target choices",
+        targetDefinitions,
+        embracingPowerRetailStarterDeckMinotaur.id,
+      );
+      expectIncludes(
+        "Placide target choices",
+        targetDefinitions,
+        welcomeToNightCityRetailCorpoSecurity.id,
+      );
 
       await pom.resolveEffectTarget([target.instanceId], CYBERPUNK_P1);
 
@@ -70,7 +82,11 @@ describe("Placide - Voodoo Sentinel (Retail) jsdom happy path", () => {
       expectEqual("Placide rival deck size", await pom.getDeckSize(CYBERPUNK_P2), deckBefore + 1);
 
       const p2Deck = await getZoneDefinitionIds(pom, "deck", CYBERPUNK_P2);
-      expectEqual("Placide bottom-decked card", p2Deck[p2Deck.length - 1], alphaCorpoSecurity.id);
+      expectEqual(
+        "Placide bottom-decked card",
+        p2Deck[p2Deck.length - 1],
+        welcomeToNightCityRetailCorpoSecurity.id,
+      );
       await pom.expectStructuralState();
     } finally {
       view.unmount();

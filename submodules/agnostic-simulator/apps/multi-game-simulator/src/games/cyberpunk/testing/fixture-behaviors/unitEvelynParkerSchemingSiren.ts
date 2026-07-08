@@ -1,4 +1,7 @@
-import { alphaArmoredMinotaur, alphaEvelynParkerSchemingSiren } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailEvelynParkerSchemingSiren,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -17,7 +20,7 @@ export const unitEvelynParkerSchemingSirenBehavior: CyberpunkFixtureBehavior = {
     const evelyn = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaEvelynParkerSchemingSiren.id,
+      welcomeToNightCityRetailEvelynParkerSchemingSiren.id,
     );
     const p2GigToSteal = (await pom.getGigDice(CYBERPUNK_P2))[0];
     if (!p2GigToSteal) {
@@ -39,7 +42,7 @@ export const unitEvelynParkerSchemingSirenBehavior: CyberpunkFixtureBehavior = {
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
     const p1GigToSteal = (await pom.getGigDice(CYBERPUNK_P1))[0];
     if (!p1GigToSteal) {

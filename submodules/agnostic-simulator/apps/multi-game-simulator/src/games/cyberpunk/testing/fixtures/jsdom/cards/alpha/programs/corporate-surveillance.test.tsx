@@ -1,5 +1,8 @@
 import { describe, test } from "vite-plus/test";
-import { alphaCorporateSurveillance, alphaCorpoSecurity } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailCorpoSecurity,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -20,7 +23,7 @@ describe("Corporate Surveillance jsdom happy path", () => {
       const program = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        alphaCorporateSurveillance.id,
+        welcomeToNightCityRetailCorporateSurveillance.id,
       );
       await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
@@ -32,15 +35,23 @@ describe("Corporate Surveillance jsdom happy path", () => {
       const corpos = await pom.getCardsInZone("field", CYBERPUNK_P2);
       expectEqual(
         "spent Corpo Security count",
-        corpos.filter((card) => card.definitionId === alphaCorpoSecurity.id && card.spent).length,
+        corpos.filter(
+          (card) => card.definitionId === welcomeToNightCityRetailCorpoSecurity.id && card.spent,
+        ).length,
         1,
       );
       expectEqual(
         "ready Corpo Security count",
-        corpos.filter((card) => card.definitionId === alphaCorpoSecurity.id && !card.spent).length,
+        corpos.filter(
+          (card) => card.definitionId === welcomeToNightCityRetailCorpoSecurity.id && !card.spent,
+        ).length,
         1,
       );
-      await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P1, alphaCorporateSurveillance.id);
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailCorporateSurveillance.id,
+      );
     } finally {
       view.unmount();
     }

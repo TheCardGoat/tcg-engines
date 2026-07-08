@@ -9,20 +9,20 @@ import {
   expectAttachTarget,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerGorillaArms,
-  alphaSwordwiseHuscle,
-  alphaRuthlessLowlife,
-  alphaTBugAmateurPhilosopher,
+  welcomeToNightCityRetailGorillaArms,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 import type { ActionLogEvent } from "@cyberpunk-engine/types/game-events.ts";
 
 registerMatchers();
 
-const gear = spoilerGorillaArms; // cost 4, power 4, gigStolen event trigger
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5, unit
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1, unit
-const tBug = alphaTBugAmateurPhilosopher; // cost 3, power 5, unit
+const gear = welcomeToNightCityRetailGorillaArms; // cost 4, power 4, gigStolen event trigger
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5, unit
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1, unit
+const tBug = welcomeToNightCityRetailTBugAmateurPhilosopher; // cost 3, power 5, unit
 
 describe("Gorilla Arms", () => {
   describe("UI prompt", () => {
@@ -187,8 +187,8 @@ describe("Gorilla Arms", () => {
         expect(directGig).toBeDefined();
 
         engine.attackRival(host);
-        engine.resolveAttack(); // offensive → defensive
-        engine.resolveAttack({ as: P2, pass: true }); // defensive → steal
+        engine.resolveAttack(); // attack → react
+        engine.resolveAttack({ as: P2, pass: true }); // react → steal
         const stealResult = engine.resolveAttack({ gigIdsToSteal: [directGig!.id as string] }); // steal: take chosen gig
 
         expect(engine.getGigCount(P1)).toBe(p1Before + 2);
@@ -260,8 +260,8 @@ describe("Gorilla Arms", () => {
 
       engine.completeTurn(); // hand off to P2
       engine.attackRival(lowlife, { as: P2 });
-      engine.resolveAttack({ as: P2 }); // offensive → defensive
-      engine.resolveAttack({ as: P1, pass: true }); // defensive → steal
+      engine.resolveAttack({ as: P2 }); // attack → react
+      engine.resolveAttack({ as: P1, pass: true }); // react → steal
       engine.resolveAttack({ as: P2 }); // steal: take gigs
 
       // Gorilla-arms's ability must not have fired. firstTimeEachTurn
@@ -298,8 +298,8 @@ describe("Gorilla Arms", () => {
       const gearInst = engine.getCard(gear);
 
       engine.attackRival(lowlife);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → steal
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → steal
       engine.resolveAttack(); // steal: take gigs
 
       const fired = engine

@@ -66,6 +66,12 @@ export interface UseBlockerLog extends MoveLogBase {
   attackerName: string;
 }
 
+export interface ReactPassLog extends MoveLogBase {
+  type: "reactPass";
+  attackerId: CardInstanceId;
+  attackerName: string;
+}
+
 export interface PassPhaseLog extends MoveLogBase {
   type: "passPhase";
   fromPhase: string;
@@ -198,6 +204,7 @@ export type MoveLog =
   | AttackUnitLog
   | AttackRivalLog
   | UseBlockerLog
+  | ReactPassLog
   | PassPhaseLog
   | PhaseChangedLog
   | GainGigLog

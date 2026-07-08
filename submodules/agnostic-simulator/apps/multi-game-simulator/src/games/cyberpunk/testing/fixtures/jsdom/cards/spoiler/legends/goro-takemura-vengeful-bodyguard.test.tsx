@@ -1,8 +1,8 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  spoilerGoroTakemuraVengefulBodyguard,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailGoroTakemuraVengefulBodyguard,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
@@ -28,17 +28,17 @@ describe("Goro Takemura jsdom happy path", () => {
       const goro = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        spoilerGoroTakemuraVengefulBodyguard.id,
+        welcomeToNightCityRetailGoroTakemuraVengefulBodyguard.id,
       );
       const corpoSecurity = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
       const attacker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
@@ -53,8 +53,8 @@ describe("Goro Takemura jsdom happy path", () => {
       await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, corpoSecurity.instanceId, 3);
       await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, corpoSecurity.instanceId, "blocker", true);
 
-      const offensiveAttack = expectDefined("Goro defensive attack", await pom.getAttackState());
-      expectEqual("Goro defensive attacker", offensiveAttack.attackerId, attacker.instanceId);
+      const attackState = expectDefined("Goro React attack", await pom.getAttackState());
+      expectEqual("Goro React attacker", attackState.attackerId, attacker.instanceId);
 
       await pom.resolveAttack(CYBERPUNK_P2);
       await pom.useBlocker(corpoSecurity.instanceId, CYBERPUNK_P1);

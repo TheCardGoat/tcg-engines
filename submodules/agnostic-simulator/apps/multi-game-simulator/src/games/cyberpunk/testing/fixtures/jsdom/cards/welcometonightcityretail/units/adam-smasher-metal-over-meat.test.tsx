@@ -1,10 +1,10 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaJackieWellesRideOrDieChoom,
-  alphaSecondhandBombus,
-  alphaSwordwiseHuscle,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailAdamSmasherMetalOverMeat,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -47,13 +47,17 @@ describe("Adam Smasher (Retail) jsdom happy path", () => {
       );
 
       const p1Trash = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P1);
-      expectIncludes("Adam P1 trash", p1Trash, alphaSwordwiseHuscle.id);
-      expectIncludes("Adam P1 trash", p1Trash, alphaSecondhandBombus.id);
+      expectIncludes("Adam P1 trash", p1Trash, welcomeToNightCityRetailSwordwiseHuscle.id);
+      expectIncludes("Adam P1 trash", p1Trash, welcomeToNightCityRetailSecondhandBombus.id);
 
       const p2Trash = await getZoneDefinitionIds(pom, "trash", CYBERPUNK_P2);
-      expectIncludes("Adam P2 trash", p2Trash, alphaCorpoSecurity.id);
-      expectIncludes("Adam P2 trash", p2Trash, alphaArmoredMinotaur.id);
-      expectIncludes("Adam P2 trash", p2Trash, alphaJackieWellesRideOrDieChoom.id);
+      expectIncludes("Adam P2 trash", p2Trash, welcomeToNightCityRetailCorpoSecurity.id);
+      expectIncludes("Adam P2 trash", p2Trash, embracingPowerRetailStarterDeckMinotaur.id);
+      expectIncludes(
+        "Adam P2 trash",
+        p2Trash,
+        welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
+      );
       await pom.expectStructuralState();
     } finally {
       view.unmount();

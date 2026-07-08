@@ -8,8 +8,8 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
 });
 
 import {
-  spoilerAfterpartyAtLizzieS,
-  spoilerEvelynParkerBeautifulEnigma,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
+  welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -35,7 +35,7 @@ describe("legendEvelynParkerBeautifulEnigma fixture behavior", () => {
       const evelyn = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        spoilerEvelynParkerBeautifulEnigma.id,
+        welcomeToNightCityRetailEvelynParkerBeautifulEnigma.id,
       );
 
       await pom.activateAbility(evelyn.instanceId, 1, CYBERPUNK_P1);
@@ -48,7 +48,8 @@ describe("legendEvelynParkerBeautifulEnigma fixture behavior", () => {
       const definitions = await Promise.all(
         revealed.map((cardId) => pom.getCardDefinitionId(cardId)),
       );
-      const afterpartyId = revealed[definitions.indexOf(spoilerAfterpartyAtLizzieS.id)];
+      const afterpartyId =
+        revealed[definitions.indexOf(welcomeToNightCityRetailAfterpartyAtLizzieS.id)];
       if (!afterpartyId) {
         throw new Error("Expected Evelyn search to reveal Afterparty at Lizzie's.");
       }
@@ -58,7 +59,11 @@ describe("legendEvelynParkerBeautifulEnigma fixture behavior", () => {
       await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
       await pom.expectHandSize(CYBERPUNK_P1, 2);
       expectEqual("Evelyn deck after search", await pom.getDeckSize(CYBERPUNK_P1), 38);
-      await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, spoilerAfterpartyAtLizzieS.id);
+      await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailAfterpartyAtLizzieS.id,
+      );
 
       await pom.expectStructuralState();
     } finally {

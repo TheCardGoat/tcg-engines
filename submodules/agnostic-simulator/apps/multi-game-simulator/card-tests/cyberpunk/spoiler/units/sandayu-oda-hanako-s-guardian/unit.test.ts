@@ -9,14 +9,14 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  spoilerSandayuOdaHanakoSGuardian,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
 } from "@tcg/cyberpunk-cards";
 
-const sandayu = spoilerSandayuOdaHanakoSGuardian; // unit, cost 7, power 8
-const lowlife = alphaRuthlessLowlife; // unit, power 1
-const huscle = alphaSwordwiseHuscle; // unit, power 5
+const sandayu = welcomeToNightCityRetailSandayuOdaHanakoSGuardian; // unit, cost 7, power 8
+const lowlife = welcomeToNightCityRetailMoxInciters; // unit, power 1
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // unit, power 5
 
 describe("Sandayu Oda - Hanako's Guardian", () => {
   describe("UI prompt", () => {

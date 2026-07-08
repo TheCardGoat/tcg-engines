@@ -10,19 +10,19 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaArmoredMinotaur,
-  alphaSwordwiseHuscle,
-  alphaRuthlessLowlife,
-  alphaEmergencyAtlus,
-  alphaDelamainCab,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailEmergencyAtlus,
+  welcomeToNightCityRetailDelamainCab,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const minotaur = alphaArmoredMinotaur; // unit, power 9, cost 6
-const huscle = alphaSwordwiseHuscle; // unit, power 5
-const lowlife = alphaRuthlessLowlife; // unit, power 1
-const atlus = alphaEmergencyAtlus; // unit, power 7
-const delamain = alphaDelamainCab; // unit, power 7
+const minotaur = embracingPowerRetailStarterDeckMinotaur; // unit, power 9, cost 6
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // unit, power 5
+const lowlife = welcomeToNightCityRetailMoxInciters; // unit, power 1
+const atlus = welcomeToNightCityRetailEmergencyAtlus; // unit, power 7
+const delamain = welcomeToNightCityRetailDelamainCab; // unit, power 7
 
 function expectMinotaurTargetChoice(engine: CyberpunkTestEngine, expectedCount: number): void {
   const choice = engine.getState().G.turnMetadata.pendingChoice;

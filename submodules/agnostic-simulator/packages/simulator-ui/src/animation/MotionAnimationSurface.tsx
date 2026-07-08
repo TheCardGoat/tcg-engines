@@ -184,6 +184,9 @@ export function MotionAnimationSurface<TState = unknown>({
   const scheduleCardSuppression = useCallback(
     (overlays: readonly CardOverlayState[]) => {
       for (const overlay of overlays) {
+        if (overlay.suppressEntity === false) {
+          continue;
+        }
         const delayMs = Math.max(0, getCardSuppressionDelayMsRef.current?.(overlay) ?? 0);
         if (delayMs <= 0) {
           suppressCardOverlay(overlay.id);
@@ -328,7 +331,7 @@ export function MotionAnimationSurface<TState = unknown>({
             key={overlay.id}
             overlay={overlay}
             reduced={Boolean(prefersReducedMotion)}
-            visible={suppressedCardOverlayIds.has(overlay.id)}
+            visible={overlay.suppressEntity === false || suppressedCardOverlayIds.has(overlay.id)}
             onComplete={completeCard}
           />
         ))}

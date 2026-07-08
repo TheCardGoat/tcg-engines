@@ -8,9 +8,9 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
 });
 
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaRuthlessLowlife,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import {
@@ -39,17 +39,17 @@ describe("legendSaburoArasakaStubbornPatriach fixture behavior", () => {
       const minotaur = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
       const lowlife = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaRuthlessLowlife.id,
+        welcomeToNightCityRetailMoxInciters.id,
       );
       const defender = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
 
       await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, minotaur.instanceId, 9);

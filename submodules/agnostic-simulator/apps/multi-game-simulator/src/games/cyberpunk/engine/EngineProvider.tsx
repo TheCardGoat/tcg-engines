@@ -141,7 +141,6 @@ export interface AiTakeoverState {
 }
 
 const EVENT_LOG_CAP = 200;
-const MOVE_LOG_CAP = 200;
 const RAW_ENGINE_EVENT_CAP = 300;
 const CHAT_LOG_CAP = 200;
 
@@ -328,10 +327,7 @@ export interface EngineContextValue {
   aiTakeover: AiTakeoverState | null;
   /** Recent decisions, newest last. Capped at EVENT_LOG_CAP. */
   eventLog: ReadonlyArray<AiLogEntry>;
-  /**
-   * Engine-emitted move logs, projected through the local viewer (humanSide).
-   * Newest last, capped at {@link MOVE_LOG_CAP}.
-   */
+  /** Engine-emitted move logs, projected through the local viewer (humanSide). */
   moveLogs: ReadonlyArray<MoveLogEntry>;
   /**
    * Dev-facing raw engine events emitted by successful commands.
@@ -885,7 +881,7 @@ export function EngineProvider({
               : "opponent";
         next.push({ id: ++moveLogIdRef.current, side, log });
       }
-      return next.length > MOVE_LOG_CAP ? next.slice(next.length - MOVE_LOG_CAP) : next;
+      return next;
     });
   }, []);
 

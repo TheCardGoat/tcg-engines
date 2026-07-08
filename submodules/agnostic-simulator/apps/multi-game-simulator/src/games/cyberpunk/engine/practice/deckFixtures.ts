@@ -89,13 +89,13 @@ const redYellowBase = [
   "meredith-stout-stone-cold-corpo",
   "gorilla-arms",
   "afterparty-at-lizzie-s",
-  "ruthless-lowlife",
+  "6th-street-recruits",
   "cyberpsychosis",
 ] as const;
 
 const mixedOpsBase = [
   "corpo-security",
-  "ruthless-lowlife",
+  "6th-street-recruits",
   "secondhand-bombus",
   "swordwise-huscle",
   "t-bug-amateur-philosopher",
@@ -149,7 +149,7 @@ export const PRACTICE_DECK_FIXTURES: readonly PracticeDeckFixture[] = [
     legends: [
       "yorinobu-arasaka-embracing-destruction",
       "goro-takemura-hands-unclean",
-      "saburo-arasaka-stubborn-patriach",
+      "saburo-arasaka-stubborn-patriarch",
     ],
     mainDeckBase: [
       "mantis-blades",
@@ -158,7 +158,7 @@ export const PRACTICE_DECK_FIXTURES: readonly PracticeDeckFixture[] = [
       "corporate-surveillance",
       "industrial-assembly",
       "corpo-security",
-      "ruthless-lowlife",
+      "6th-street-recruits",
       "swordwise-huscle",
       "emergency-atlus",
       "goro-takemura-losing-his-way",
@@ -170,7 +170,7 @@ export const PRACTICE_DECK_FIXTURES: readonly PracticeDeckFixture[] = [
       "corpo-security",
       "swordwise-huscle",
       "emergency-atlus",
-      "armored-minotaur",
+      "minotaur",
     ],
   }),
   makeFixture({

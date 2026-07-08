@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaVCorporateExile,
+  boxTopperRetailVCorporateExile,
   embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
+  welcomeToNightCityRetailCorpoSecurity,
 } from "@tcg/cyberpunk-cards";
 import { getEffectivePower } from "../../../active-effects/index.ts";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
@@ -18,10 +18,10 @@ describe("Goro Takemura - Losing His Way", () => {
             playedThisTurn: false,
           },
         ],
-        legendArea: [{ card: alphaVCorporateExile, faceDown: false }],
+        legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: false }],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
       },
     );
 
@@ -30,9 +30,13 @@ describe("Goro Takemura - Losing His Way", () => {
       "field",
       P1,
     );
-    engine.attackUnit(embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay, alphaCorpoSecurity, {
-      as: P1,
-    });
+    engine.attackUnit(
+      embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
 
     expect(getEffectivePower(engine.getState(), goroId)).toBe(
       embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay.power + 5,
@@ -49,10 +53,10 @@ describe("Goro Takemura - Losing His Way", () => {
             playedThisTurn: false,
           },
         ],
-        legendArea: [{ card: alphaVCorporateExile, faceDown: true }],
+        legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: true }],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
       },
     );
 
@@ -61,9 +65,13 @@ describe("Goro Takemura - Losing His Way", () => {
       "field",
       P1,
     );
-    engine.attackUnit(embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay, alphaCorpoSecurity, {
-      as: P1,
-    });
+    engine.attackUnit(
+      embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
 
     expect(getEffectivePower(engine.getState(), goroId)).toBe(
       embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay.power,

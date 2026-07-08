@@ -9,12 +9,13 @@ import { MOVE_IDS, type MoveId } from "../moves/index.ts";
 import type { CardClassification, CardType, Effect } from "@tcg/cyberpunk-types";
 import { enumerateMoves } from "../command/processor.ts";
 import { getEffectiveRules } from "../active-effects/index.ts";
+import { getMustAttackCardIds, hasPlayedProgramThisTurn } from "../moves/attack-requirements.ts";
 import { getOpponentId } from "../state/initial-state.ts";
 import { defOf } from "../state/lookups.ts";
 import { projectRevealedCardView, type FilteredCardView } from "./filter.ts";
 import { DIE_MAX_VALUES } from "../types/gig-die.ts";
-import { isDefensiveStep } from "../moves/is-defensive-step.ts";
-import { canPayCosts } from "../moves/activate-ability.ts";
+import { isReactStep } from "../moves/is-react-step.ts";
+import { canActivateAbility, canHostActivatedAbility } from "../moves/activate-ability.ts";
 import { computeEffectiveCost } from "../moves/compute-effective-cost.ts";
 import { availableEddies } from "../moves/eddie-resources.ts";
 
@@ -160,6 +161,7 @@ export interface ChooseTargetChoicePrompt {
     canDecline?: boolean;
     cards?: FilteredCardView[];
     source?: EffectSourcePrompt;
+    targetPurpose?: "attachHost";
   };
 }
 
@@ -441,7 +443,7 @@ function getPlayCardCandidates(state: MatchState, playerId: PlayerId): PlayCardC
   const player = state.G.players[playerId as string];
   if (!player) return [];
   const candidates: PlayCardCandidate[] = [];
-  const isDefending = isDefensiveStep(state, playerId);
+  const isDefending = isReactStep(state, playerId);
   for (const id of player.zones.hand) {
     const card = state.G.cardIndex[id as string];
     if (!card) continue;
@@ -449,7 +451,7 @@ function getPlayCardCandidates(state: MatchState, playerId: PlayerId): PlayCardC
     const cost = computeEffectiveCost(state, id, playerId);
     if (cost > availableEddies(state, playerId)) continue;
 
-    // During defensive step, only QUICK cards can be played as reactions.
+    // During react step, only QUICK cards can be played as reactions.
     if (isDefending && !def.keywords.includes("quick")) continue;
 
     if (def.type === "gear") {
@@ -518,12 +520,18 @@ function getReadyAttackers(
 ): string[] {
   const player = state.G.players[playerId as string];
   if (!player) return [];
-  return player.zones.field
+  const attackers = player.zones.field
     .filter((id) => {
       const card = state.G.cardIndex[id as string];
       if (!card || card.meta.spent) return false;
       const rules = getEffectiveRules(state, id as string);
       if (rules.includes("cantAttack")) return false;
+      if (
+        rules.includes("requiresProgramPlayedThisTurn") &&
+        !hasPlayedProgramThisTurn(state, playerId)
+      ) {
+        return false;
+      }
       if (card.meta.playedThisTurn) {
         if (rules.includes("adrenaline")) {
           // Adrenaline units can attack both units and the rival on the played turn
@@ -547,6 +555,9 @@ function getReadyAttackers(
       return def.type === "unit" || def.keywords.includes("goSolo");
     })
     .map((id) => id as string);
+  const mustAttackIds = new Set(getMustAttackCardIds(state, playerId).map((id) => id as string));
+  if (mustAttackIds.size === 0) return attackers;
+  return attackers.filter((id) => mustAttackIds.has(id));
 }
 
 function getSpentDefenders(state: MatchState, playerId: PlayerId): string[] {
@@ -606,7 +617,7 @@ function getActivatableAbilities(
 ): { cardId: string; abilityIndex: number }[] {
   if (state.G.gamePhase !== "main") return [];
 
-  const isDefending = isDefensiveStep(state, playerId);
+  const isDefending = isReactStep(state, playerId);
   if (state.G.attackState && !isDefending) return [];
   if (!isDefending && (state.G.turnMetadata.activePlayerId as string) !== (playerId as string))
     return [];
@@ -620,7 +631,7 @@ function getActivatableAbilities(
       const card = state.G.cardIndex[cardId as string];
       if (!card) continue;
       const def = defOf(card);
-      if (def.type === "legend" && card.meta.faceDown) continue;
+      if (!canHostActivatedAbility(card, def, zone)) continue;
 
       const abilities = (def as import("@tcg/cyberpunk-types").StructuredCardDefinition).abilities;
       if (!abilities) continue;
@@ -631,7 +642,7 @@ function getActivatableAbilities(
           const isQuick = ability.keyword === "quick" || def.keywords.includes("quick");
           if (!isQuick) continue;
         }
-        if (!canPayCosts(ability, state, cardId, playerId)) continue;
+        if (!canActivateAbility(ability, state, cardId, playerId)) continue;
         out.push({ cardId: cardId as string, abilityIndex: i });
       }
     }
@@ -695,6 +706,7 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
             .map((id) => projectRevealedCardView(state, id))
             .filter((c): c is FilteredCardView => c !== null),
           source,
+          targetPurpose: choice.payload.targetPurpose,
         },
       };
     }

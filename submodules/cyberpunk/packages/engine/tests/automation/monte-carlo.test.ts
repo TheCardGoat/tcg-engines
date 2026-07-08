@@ -12,7 +12,7 @@ import {
   monteCarloStrategy,
   randomStrategy,
 } from "../../src/automation/index.ts";
-import { runRollout } from "../../src/automation/search/shared.ts";
+import { enumerateCandidateActions, runRollout } from "../../src/automation/search/shared.ts";
 import { createTestCatalog, createTestDecks, createTestPlayers } from "./fixtures.ts";
 
 function makeContext(seed: string) {
@@ -89,6 +89,23 @@ describe("monteCarloStrategy", () => {
     strategy.decideAction(ctx);
     // At least one rollout should have produced at least one decision.
     expect(invocations).toBeGreaterThan(0);
+  });
+
+  test("ties fall back to the rollout policy decision", () => {
+    const { ctx } = makeContext("mc-tie-seed-0");
+    const candidates = enumerateCandidateActions(ctx.prompt);
+    const greedyDecision = greedyStrategy.decideAction(ctx);
+    expect(candidates.length).toBeGreaterThan(1);
+    expect(candidates[0]?.move).toBe("mulligan");
+    expect(greedyDecision).toMatchObject({ kind: "command", move: "keepHand" });
+
+    const tied = createMonteCarloStrategy({
+      rolloutsPerAction: 1,
+      maxRolloutSteps: 0,
+      rolloutStrategy: greedyStrategy,
+    });
+
+    expect(tied.decideAction(ctx)).toMatchObject({ kind: "command", move: "keepHand" });
   });
 });
 

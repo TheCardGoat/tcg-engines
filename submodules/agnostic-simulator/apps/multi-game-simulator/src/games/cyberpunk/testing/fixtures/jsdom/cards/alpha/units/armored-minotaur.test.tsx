@@ -1,5 +1,8 @@
 import { describe, test } from "vite-plus/test";
-import { alphaArmoredMinotaur, alphaCorpoSecurity } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -17,14 +20,20 @@ describe("Armored Minotaur jsdom happy path", () => {
       const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
       await pom.waitForReady();
 
-      await pom.playCardFromHand(alphaArmoredMinotaur);
+      await pom.playCardFromHand(embracingPowerRetailStarterDeckMinotaur);
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
 
-      const corpo = await pom.getCard(alphaCorpoSecurity, { zone: "field", player: CYBERPUNK_P2 });
+      const corpo = await pom.getCard(welcomeToNightCityRetailCorpoSecurity, {
+        zone: "field",
+        player: CYBERPUNK_P2,
+      });
       await pom.resolveEffectTarget([corpo.instanceId], CYBERPUNK_P1);
 
-      await pom.getCard(alphaArmoredMinotaur, { zone: "field" });
-      await pom.getCard(alphaCorpoSecurity, { zone: "trash", player: CYBERPUNK_P2 });
+      await pom.getCard(embracingPowerRetailStarterDeckMinotaur, { zone: "field" });
+      await pom.getCard(welcomeToNightCityRetailCorpoSecurity, {
+        zone: "trash",
+        player: CYBERPUNK_P2,
+      });
       expectEqual("Armored Minotaur field size", await pom.getFieldSize(CYBERPUNK_P1), 2);
     } finally {
       view.unmount();

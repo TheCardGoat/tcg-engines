@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
-  alphaRuthlessLowlife,
   theHeistRetailStarterDeckDexterDeshawnOneLastChance,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFieldOperator,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
@@ -15,7 +15,11 @@ describe("Dexter DeShawn - One Last Chance", () => {
     });
 
     engine.playCard(theHeistRetailStarterDeckDexterDeshawnOneLastChance, { as: P1 });
-    engine.resolveEffectTargetIds([engine.findGigIdByType(P1, "d6")], { as: P1 });
+    engine.resolveEffectTargetIds([engine.findGigIdByType(P1, "d6")], {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Dexter still needs the selected Gig's new face value",
+    });
     engine.resolveAdjustGig(3, { as: P1 });
 
     expect(engine.getGigDice(P1).find((die) => die.dieType === "d6")?.faceValue).toBe(3);
@@ -38,7 +42,11 @@ describe("Dexter DeShawn - One Last Chance", () => {
     );
 
     engine.attackRival(theHeistRetailStarterDeckDexterDeshawnOneLastChance, { as: P1 });
-    engine.resolveEffectTargetIds([engine.findGigIdByType(P2, "d8")], { as: P1 });
+    engine.resolveEffectTargetIds([engine.findGigIdByType(P2, "d8")], {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Dexter still needs the selected Gig's new face value",
+    });
     engine.resolveAdjustGig(5, { as: P1 });
 
     expect(engine.getGigDice(P2).find((die) => die.dieType === "d8")?.faceValue).toBe(5);
@@ -47,7 +55,7 @@ describe("Dexter DeShawn - One Last Chance", () => {
   it("draws 2 when defeated with a 10+ Street Cred difference", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        deck: [alphaRuthlessLowlife, alphaRuthlessLowlife],
+        deck: [welcomeToNightCityRetailFieldOperator, welcomeToNightCityRetailCorpoSecurity],
         field: [
           {
             card: theHeistRetailStarterDeckDexterDeshawnOneLastChance,
@@ -61,15 +69,19 @@ describe("Dexter DeShawn - One Last Chance", () => {
         ],
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true, powerModifier: 4 }],
+        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true, powerModifier: 4 }],
         gigArea: [{ dieType: "d4", faceValue: 1 }],
       },
       { preserveDeckOrder: true },
     );
 
-    engine.attackUnit(theHeistRetailStarterDeckDexterDeshawnOneLastChance, alphaCorpoSecurity, {
-      as: P1,
-    });
+    engine.attackUnit(
+      theHeistRetailStarterDeckDexterDeshawnOneLastChance,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
     engine.executeMove("resolveEffectTarget", { args: { pass: true } }, P1);
     engine.resolveFullFight({ as: P1 });
 

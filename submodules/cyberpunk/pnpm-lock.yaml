@@ -153,6 +153,9 @@ importers:
       '@tcg/cyberpunk-types':
         specifier: workspace:*
         version: link:../../packages/types
+      '@tcg/cyberpunk-utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
     devDependencies:
       '@types/node':
         specifier: ^25.5.0

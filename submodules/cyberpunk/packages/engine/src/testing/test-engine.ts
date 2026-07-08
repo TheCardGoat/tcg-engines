@@ -69,6 +69,88 @@ export interface ResolveTargets {
 
 interface PlayCardOpts extends MoveOpts, ResolveTargets {}
 
+interface ExpectedCardOpts extends MoveOpts {
+  zone?: CardZone;
+}
+
+type ResolveEffectTargetOpts = MoveOpts & {
+  zone?: CardZone;
+} & (
+    | {
+        allowPendingChoice?: false;
+        expectation?: string;
+      }
+    | {
+        allowPendingChoice: true;
+        reason: string;
+      }
+  );
+
+type EffectTargetChoice = Extract<PendingChoice, { type: "chooseTarget" }> & {
+  payload: Extract<PendingChoice, { type: "chooseTarget" }>["payload"] & {
+    type: "effectTarget";
+  };
+};
+
+function describeCardDefinition(card: StructuredCardDefinition): string {
+  return card.displayName ?? card.name ?? card.slug ?? card.id;
+}
+
+function describeCardId(state: MatchState, cardId: string): string {
+  const instance = state.G.cardIndex[cardId];
+  if (!instance) return cardId;
+  const definition = getCardRegistry().get(instance.definitionId);
+  return `${definition ? describeCardDefinition(definition) : instance.definitionId} (${instance.zone}, ${instance.ownerId as string})`;
+}
+
+function describeCardRef(state: MatchState, card: CardRef): string {
+  if (typeof card === "string") return describeCardId(state, card);
+  if ("instanceId" in card && "zone" in card) return describeCardId(state, card.instanceId);
+  return describeCardDefinition(card);
+}
+
+function resolveEligibleEffectTargetId(
+  state: MatchState,
+  choice: EffectTargetChoice,
+  target: CardRef,
+  opts?: ExpectedCardOpts,
+): string {
+  const eligibleIds = choice.payload.eligibleIds ?? [];
+  if (typeof target === "string") {
+    if (eligibleIds.includes(target)) return target;
+    throwExpectedEffectTargetError(state, choice, target);
+  }
+
+  if ("instanceId" in target && "zone" in target) {
+    const targetId = target.instanceId as string;
+    if (eligibleIds.includes(targetId)) return targetId;
+    throwExpectedEffectTargetError(state, choice, target);
+  }
+
+  const matchingIds = eligibleIds.filter((id) => state.G.cardIndex[id]?.definitionId === target.id);
+  const matchingZoneId = opts?.zone
+    ? matchingIds.find((id) => state.G.cardIndex[id]?.zone === opts.zone)
+    : undefined;
+  const targetId = matchingZoneId ?? matchingIds[0];
+  if (targetId) return targetId;
+
+  throwExpectedEffectTargetError(state, choice, target);
+}
+
+function throwExpectedEffectTargetError(
+  state: MatchState,
+  choice: EffectTargetChoice,
+  target: CardRef,
+): never {
+  const eligibleIds = choice.payload.eligibleIds ?? [];
+  throw new Error(
+    `Expected current effect target choice to include ${describeCardRef(
+      state,
+      target,
+    )}, but eligible targets were [${eligibleIds.map((id) => describeCardId(state, id)).join(", ")}].`,
+  );
+}
+
 /**
  * Error thrown when a move fails during test execution.
  * Use `engine.expectFailure()` to catch and inspect these.
@@ -458,33 +540,112 @@ export class CyberpunkTestEngine {
     return this.exec("resolveEffectTarget", { args: { targetIds } }, playerId);
   }
 
-  resolveEffectTarget(targets: CardRef | CardRef[], opts?: MoveOpts): CommandSuccess {
+  resolveEffectTarget(
+    targets: CardRef | CardRef[],
+    opts?: ResolveEffectTargetOpts,
+  ): CommandSuccess {
     const state = this.getState();
     const choice = state.G.turnMetadata.pendingChoice;
     if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
-      throw new Error("No chooseTarget effectTarget pending choice to resolve");
+      this.expectEffectTargetChoice(targets, { as: opts?.as, zone: opts?.zone });
+      throw new Error("Expected an effect target choice, but no resolvable choice was available.");
     }
-    const playerId = opts?.as ?? choice.chooserId;
+    const effectChoice = choice as EffectTargetChoice;
+    const playerId = opts?.as ?? effectChoice.chooserId;
     const refs = Array.isArray(targets) ? targets : [targets];
-    const eligibleIds = choice.payload.eligibleIds ?? [];
-    const targetIds = refs.map((card) => {
-      if (typeof card !== "string" && !("instanceId" in card)) {
-        const eligible = eligibleIds.find((id) => state.G.cardIndex[id]?.definitionId === card.id);
-        if (eligible) return eligible as string;
-      }
-      return resolveCardRef(state, card) as string;
-    });
-    return this.exec("resolveEffectTarget", { args: { targetIds } }, playerId);
+    this.expectEffectTargetChoice(refs, { as: playerId, zone: opts?.zone });
+    const targetIds = refs.map((card) =>
+      resolveEligibleEffectTargetId(state, effectChoice, card, {
+        as: playerId,
+        zone: opts?.zone,
+      }),
+    );
+    const result = this.exec("resolveEffectTarget", { args: { targetIds } }, playerId);
+    this.expectEffectResolutionComplete(opts);
+    return result;
   }
 
-  resolveEffectTargetIds(targetIds: ReadonlyArray<string>, opts?: MoveOpts): CommandSuccess {
+  resolveEffectTargetIds(
+    targetIds: ReadonlyArray<string>,
+    opts?: ResolveEffectTargetOpts,
+  ): CommandSuccess {
     const state = this.getState();
     const choice = state.G.turnMetadata.pendingChoice;
     if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
       throw new Error("No chooseTarget effectTarget pending choice to resolve");
     }
     const playerId = opts?.as ?? choice.chooserId;
-    return this.exec("resolveEffectTarget", { args: { targetIds: targetIds.slice() } }, playerId);
+    const eligibleIds = new Set(choice.payload.eligibleIds ?? []);
+    const missingIds = targetIds.filter((id) => !eligibleIds.has(id));
+    if (missingIds.length > 0) {
+      throw new Error(
+        `Expected current effect target choice to include [${missingIds
+          .map((id) => describeCardId(state, id))
+          .join(", ")}], but eligible targets were [${[...eligibleIds]
+          .map((id) => describeCardId(state, id))
+          .join(", ")}].`,
+      );
+    }
+    const result = this.exec(
+      "resolveEffectTarget",
+      { args: { targetIds: targetIds.slice() } },
+      playerId,
+    );
+    this.expectEffectResolutionComplete(opts);
+    return result;
+  }
+
+  expectEffectTargetChoice(targets: CardRef | CardRef[], opts?: ExpectedCardOpts): void {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
+      throw new Error(
+        `Expected an effect target choice, but got ${choice?.type ?? "no pending choice"}.`,
+      );
+    }
+    if (opts?.as && choice.chooserId !== opts.as) {
+      throw new Error(
+        `Expected effect target choice for ${opts.as as string}, but chooser was ${
+          choice.chooserId as string
+        }.`,
+      );
+    }
+
+    const effectChoice = choice as EffectTargetChoice;
+    const refs = Array.isArray(targets) ? targets : [targets];
+    const playerId = opts?.as ?? choice.chooserId;
+    for (const target of refs) {
+      resolveEligibleEffectTargetId(state, effectChoice, target, {
+        as: playerId,
+        zone: opts?.zone,
+      });
+    }
+  }
+
+  expectNoPendingChoice(): void {
+    const choice = this.getState().G.turnMetadata.pendingChoice;
+    if (choice) {
+      throw new Error(`Expected no pending choice, but found ${choice.type}.`);
+    }
+  }
+
+  private expectEffectResolutionComplete(opts?: ResolveEffectTargetOpts): void {
+    const choice = this.getState().G.turnMetadata.pendingChoice;
+    if (opts?.allowPendingChoice) {
+      if (!choice) {
+        throw new Error(
+          `Expected another pending choice after resolving the effect target because ${opts.reason}, but no pending choice was open.`,
+        );
+      }
+      return;
+    }
+    if (choice) {
+      throw new Error(
+        `Expected effect target resolution to finish the interaction${
+          opts?.expectation ? ` (${opts.expectation})` : ""
+        }, but found another pending choice: ${choice.type}. If this effect intentionally requires another player decision, pass { allowPendingChoice: true, reason: "..." } and describe the next step.`,
+      );
+    }
   }
 
   resolveCardTypeChoice(cardType: CardType, opts?: MoveOpts): CommandSuccess {
@@ -704,6 +865,21 @@ export class CyberpunkTestEngine {
     return inst;
   }
 
+  expectAttachedGear(host: CardRef, gear: CardRef, opts?: MoveOpts): void {
+    const playerId = opts?.as ?? this.getActivePlayerId();
+    const hostCard = this.getCard(host, "field", playerId);
+    const gearCard = this.getCard(gear, "field", playerId);
+    if (!hostCard.meta.attachedGearIds.includes(gearCard.instanceId)) {
+      throw new Error(
+        `Expected ${gearCard.definitionId} (${gearCard.instanceId as string}) to be attached to ${
+          hostCard.definitionId
+        } (${hostCard.instanceId as string}), but attached gear was [${hostCard.meta.attachedGearIds.join(
+          ", ",
+        )}].`,
+      );
+    }
+  }
+
   getCardsInZone(zone: CardZone, playerId: PlayerId): CardInstance[] {
     const state = this.getState();
     const player = state.G.players[playerId as string];
@@ -863,26 +1039,25 @@ export class CyberpunkTestEngine {
 
   /**
    * Resolve all steps of a unit-vs-unit fight:
-   *   offensive → defensive → fight → defeat.
+   *   attack → react → fight.
    */
   resolveFullFight(opts?: { as?: PlayerId }): void {
     const attacker = opts?.as ?? this.getActivePlayerId();
     const defender = this.getOpponentOf(attacker);
-    this.resolveAttack({ as: attacker }); // offensive → defensive
-    this.resolveAttack({ as: defender, pass: true }); // defensive → fight
-    this.resolveAttack({ as: attacker }); // fight → defeat
-    this.resolveAttack({ as: attacker }); // defeat → cleared
+    this.resolveAttack({ as: attacker }); // attack → react
+    this.resolveAttack({ as: defender, pass: true }); // react → fight
+    this.resolveAttack({ as: attacker }); // fight → cleared
   }
 
   /**
    * Resolve all steps of a direct attack / steal:
-   *   offensive → defensive → steal.
+   *   attack → react → steal.
    */
   resolveFullSteal(opts?: { as?: PlayerId }): void {
     const attacker = opts?.as ?? this.getActivePlayerId();
     const defender = this.getOpponentOf(attacker);
-    this.resolveAttack({ as: attacker }); // offensive → defensive
-    this.resolveAttack({ as: defender, pass: true }); // defensive → steal
+    this.resolveAttack({ as: attacker }); // attack → react
+    this.resolveAttack({ as: defender, pass: true }); // react → steal
     this.resolveAttack({ as: attacker }); // steal → cleared
   }
 

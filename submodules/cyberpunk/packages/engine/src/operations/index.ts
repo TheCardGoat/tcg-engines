@@ -12,6 +12,7 @@ import { createDefaultMetaForZone, type CardMeta } from "../types/card-instance.
 import type { DieType } from "../types/gig-die.ts";
 import type { MoveLog } from "../logging/move-log.ts";
 import { spendReadyLegendsForEddies } from "../moves/eddie-resources.ts";
+import { defOf } from "../state/lookups.ts";
 
 export interface Operations {
   readonly zone: ZoneOperations;
@@ -41,7 +42,11 @@ export interface CardOperations {
   setMeta(cardId: CardInstanceId, patch: Partial<CardMeta>): void;
   attachGear(gearId: CardInstanceId, hostId: CardInstanceId): void;
   detachGear(gearId: CardInstanceId): void;
-  moveAttachedGear(hostId: CardInstanceId, toZone: CardZone): void;
+  moveAttachedGear(
+    hostId: CardInstanceId,
+    toZone: CardZone,
+    opts?: { detachAfterMove?: boolean },
+  ): void;
   setPlayedThisTurn(cardId: CardInstanceId, value: boolean): void;
   setAttackedThisTurn(cardId: CardInstanceId, value: boolean): void;
 }
@@ -154,43 +159,44 @@ export function createOperations(
       if (!playerState) return [];
 
       const drawn: CardInstanceId[] = [];
-      for (let i = 0; i < count; i++) {
-        const cardId = playerState.zones.deck.shift();
-        if (!cardId) break;
-        const card = G.cardIndex[cardId as string];
-        if (card) {
-          card.zone = "hand";
-          card.meta = createDefaultMetaForZone("hand");
-        }
-        playerState.zones.hand.push(cardId);
-        drawn.push(cardId);
-      }
-
-      if (drawn.length > 0) {
+      const emitDrawnCards = () => {
+        if (drawn.length === 0) return;
         events.push({
           type: "cardsDrawn",
           playerId,
           count: drawn.length,
-          cardIds: drawn,
+          cardIds: [...drawn],
         });
+      };
 
-        if (playerState.zones.deck.length === 0 && !G.gameEnded) {
+      for (let i = 0; i < count; i++) {
+        if (playerState.zones.deck.length === 0) {
           const opponentId = Object.keys(G.players).find((id) => id !== playerId) as
             | PlayerId
             | undefined;
-          if (opponentId) {
-            G.gameEnded = true;
-            G.winnerId = opponentId;
-            G.winReason = "deck_out_victory";
-            G.gamePhase = "end";
-            events.push({
-              type: "gameEnded",
-              winnerId: opponentId,
-              reason: "deck_out_victory",
-            });
+          if (opponentId && !G.gameEnded) {
+            emitDrawnCards();
+            game.endGame(opponentId, "deck_out_victory");
           }
+          break;
         }
+
+        const cardId = playerState.zones.deck.shift();
+        if (!cardId) break;
+        const cardInst = G.cardIndex[cardId as string];
+        if (cardInst) {
+          cardInst.zone = "hand";
+          cardInst.meta = createDefaultMetaForZone("hand", {
+            attachedGearIds: [...cardInst.meta.attachedGearIds],
+            attachedToId: cardInst.meta.attachedToId,
+          });
+        }
+        playerState.zones.hand.push(cardId);
+        drawn.push(cardId);
+        card.moveAttachedGear(cardId, "hand");
       }
+
+      if (!G.gameEnded) emitDrawnCards();
 
       return drawn;
     },
@@ -289,14 +295,21 @@ export function createOperations(
       gear.meta.attachedToId = null;
     },
 
-    moveAttachedGear(hostId, toZone) {
+    moveAttachedGear(hostId, toZone, opts) {
       const host = G.cardIndex[hostId as string];
       if (!host) return;
 
       const gearIds = [...host.meta.attachedGearIds];
       for (const gearId of gearIds) {
-        card.detachGear(gearId);
         zone.moveCard(gearId, toZone, host.ownerId);
+        if (opts?.detachAfterMove) {
+          card.detachGear(gearId);
+        } else {
+          const gear = G.cardIndex[gearId as string];
+          if (gear) {
+            gear.meta.attachedToId = hostId;
+          }
+        }
       }
     },
 
@@ -437,6 +450,7 @@ export function createOperations(
       p.soldThisTurn = false;
       p.calledLegendThisTurn = false;
       p.calledLegendThisRivalTurn = false;
+      G.turnMetadata.playedCardTypesThisTurn[playerId as string] = [];
 
       G.turnMetadata.abilityFiredThisTurn = [];
       G.turnMetadata.triggerQueue = [];
@@ -535,6 +549,15 @@ export function createOperations(
 
   const event: EventOperations = {
     emit(event) {
+      if (event.type === "cardPlayed") {
+        const card = G.cardIndex[event.cardId as string];
+        if (card) {
+          const playedCardTypes =
+            G.turnMetadata.playedCardTypesThisTurn[event.playerId as string] ?? [];
+          playedCardTypes.push(defOf(card).type);
+          G.turnMetadata.playedCardTypesThisTurn[event.playerId as string] = playedCardTypes;
+        }
+      }
       events.push(event);
     },
     getEmittedEvents() {

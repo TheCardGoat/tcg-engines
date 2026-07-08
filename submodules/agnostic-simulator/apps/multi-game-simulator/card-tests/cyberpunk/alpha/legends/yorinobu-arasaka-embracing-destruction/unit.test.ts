@@ -8,17 +8,17 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaYorinobuArasakaEmbracingDestruction,
-  alphaSwordwiseHuscle,
-  alphaDelamainCab,
-  alphaRuthlessLowlife,
+  embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailDelamainCab,
+  welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
 import { defOf } from "@cyberpunk-engine/state/lookups.ts";
 
-const yorinobu = alphaYorinobuArasakaEmbracingDestruction;
-const huscle = alphaSwordwiseHuscle;
-const delamain = alphaDelamainCab;
-const lowlife = alphaRuthlessLowlife;
+const yorinobu = embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction;
+const huscle = welcomeToNightCityRetailSwordwiseHuscle;
+const delamain = welcomeToNightCityRetailDelamainCab;
+const lowlife = welcomeToNightCityRetailMoxInciters;
 
 describe("Yorinobu Arasaka - Embracing Destruction", () => {
   describe("UI prompt", () => {
@@ -198,8 +198,8 @@ describe("Yorinobu Arasaka - Embracing Destruction", () => {
       expect(engine.getHandCount(P1)).toBe(handBefore + 1);
 
       // Resolve the first attack fully before declaring the second.
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> steal
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> steal
       engine.resolveAttack(); // steal: steal
 
       // Second Arasaka attack same turn: should NOT trigger again.
@@ -230,8 +230,8 @@ describe("Yorinobu Arasaka - Embracing Destruction", () => {
       expect(engine.getHandCount(P1)).toBe(handT1 + 1);
 
       // Resolve attack and end turn.
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> steal
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> steal
       engine.resolveAttack(); // steal: steal
       engine.passPhase(); // end P1 main phase
 

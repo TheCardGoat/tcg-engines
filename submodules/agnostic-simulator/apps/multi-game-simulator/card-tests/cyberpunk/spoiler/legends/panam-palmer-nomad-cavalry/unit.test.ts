@@ -6,16 +6,16 @@ import {
   expectCallableLegend,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerPanamPalmerNomadCavalry,
-  spoilerGorillaArms,
-  spoilerRidingNomad,
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailPanamPalmerNomadCavalry,
+  welcomeToNightCityRetailGorillaArms,
+  welcomeToNightCityRetailRidingNomad,
+  welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
 
-const panam = spoilerPanamPalmerNomadCavalry;
-const gorillaArms = spoilerGorillaArms;
-const ridingNomad = spoilerRidingNomad;
-const lowlife = alphaRuthlessLowlife; // P2 attacker
+const panam = welcomeToNightCityRetailPanamPalmerNomadCavalry;
+const gorillaArms = welcomeToNightCityRetailGorillaArms;
+const ridingNomad = welcomeToNightCityRetailRidingNomad;
+const lowlife = welcomeToNightCityRetailMoxInciters; // P2 attacker
 
 const CALL_COST = 1; // Panam's RAM cost
 

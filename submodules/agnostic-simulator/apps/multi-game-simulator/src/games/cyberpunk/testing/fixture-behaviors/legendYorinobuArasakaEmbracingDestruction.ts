@@ -1,4 +1,7 @@
-import { alphaArmoredMinotaur, alphaCorpoSecurity } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -13,12 +16,12 @@ export const legendYorinobuArasakaEmbracingDestructionBehavior: CyberpunkFixture
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
     const defender = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
 
     await pom.expectHandSize(CYBERPUNK_P1, 2);

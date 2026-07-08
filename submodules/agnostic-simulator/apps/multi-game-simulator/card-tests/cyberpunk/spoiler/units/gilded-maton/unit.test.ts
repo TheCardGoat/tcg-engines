@@ -9,20 +9,20 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaEmergencyAtlus,
-  alphaKiroshiOptics,
-  alphaMantisBlades,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  spoilerGildedMaton,
+  welcomeToNightCityRetailEmergencyAtlus,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailGildedMatoN,
 } from "@tcg/cyberpunk-cards";
 
-const maton = spoilerGildedMaton;
-const friendlyGear = alphaKiroshiOptics;
-const unattachedFriendlyGear = alphaMantisBlades;
-const cheapRivalUnit = alphaRuthlessLowlife;
-const otherCheapRivalUnit = alphaSwordwiseHuscle;
-const expensiveRivalUnit = alphaEmergencyAtlus;
+const maton = welcomeToNightCityRetailGildedMatoN;
+const friendlyGear = welcomeToNightCityRetailKiroshiOptics;
+const unattachedFriendlyGear = welcomeToNightCityRetailMantisBlades;
+const cheapRivalUnit = welcomeToNightCityRetailMoxInciters;
+const otherCheapRivalUnit = welcomeToNightCityRetailSwordwiseHuscle;
+const expensiveRivalUnit = welcomeToNightCityRetailEmergencyAtlus;
 
 describe("Gilded Matón", () => {
   describe("UI prompt", () => {

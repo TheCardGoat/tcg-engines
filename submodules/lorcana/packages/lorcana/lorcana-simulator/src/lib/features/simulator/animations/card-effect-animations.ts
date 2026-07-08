@@ -48,7 +48,7 @@ export interface ResolvedCardEffectAnimation {
   id: string;
   cardId: string;
   effectKind: CardEffectKind;
-  sourceRect: BoardLocalRect;
+  sourceRect: BoardLocalRect | null;
   damageTargets: ResolvedCardEffectDamageTarget[];
   durationMs: number;
 }
@@ -121,10 +121,6 @@ export function resolveQueuedCardEffectAnimation(
     resolveAnchorRect(previousAnchors, animation.source) ??
     resolveAnchorRect(nextAnchors, animation.source);
 
-  if (!sourceRect) {
-    return null;
-  }
-
   const boardRect = nextAnchors.boardRect;
   const damageTargets = animation.damageTargets
     .map((target) => {
@@ -144,11 +140,15 @@ export function resolveQueuedCardEffectAnimation(
     })
     .filter((target): target is ResolvedCardEffectDamageTarget => target !== null);
 
+  if (!sourceRect && damageTargets.length === 0) {
+    return null;
+  }
+
   return {
     id: animation.id,
     cardId: animation.cardId,
     effectKind: animation.effectKind,
-    sourceRect: toLocalRect(sourceRect, boardRect),
+    sourceRect: sourceRect ? toLocalRect(sourceRect, boardRect) : null,
     damageTargets,
     durationMs: animation.durationMs,
   };

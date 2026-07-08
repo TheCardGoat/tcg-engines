@@ -188,6 +188,7 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
         emitted.type === "gigDieRolled" ||
         emitted.type === "legendFlipped" ||
         emitted.type === "legendCalled" ||
+        emitted.type === "cardPlayed" ||
         emitted.type === "cardSpent"
       ) {
         enqueueEventTriggers(emitted, state, operations);

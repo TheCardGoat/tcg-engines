@@ -8,9 +8,9 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
 });
 
 import {
-  alphaKiroshiOptics,
-  alphaTBugAmateurPhilosopher,
-  spoilerDumDumMaelstromTriggerman,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailDumDumMaelstromTriggerman,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -36,17 +36,17 @@ describe("legendDumDumMaelstromTriggerman fixture behavior", () => {
       const dumDum = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        spoilerDumDumMaelstromTriggerman.id,
+        welcomeToNightCityRetailDumDumMaelstromTriggerman.id,
       );
       const host = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaTBugAmateurPhilosopher.id,
+        welcomeToNightCityRetailTBugAmateurPhilosopher.id,
       );
       const kiroshi = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaKiroshiOptics.id,
+        welcomeToNightCityRetailKiroshiOptics.id,
       );
 
       await pom.callLegend(dumDum.instanceId, CYBERPUNK_P1);

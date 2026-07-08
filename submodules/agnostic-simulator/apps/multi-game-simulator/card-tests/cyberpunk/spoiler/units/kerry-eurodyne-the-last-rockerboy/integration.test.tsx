@@ -7,7 +7,7 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { spoilerKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -32,7 +32,7 @@ describe("unitKerryEurodyneTheLastRockerboy fixture behavior", () => {
       const kerry = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        spoilerKerryEurodyneTheLastRockerboy.id,
+        welcomeToNightCityRetailKerryEurodyneTheLastRockerboy.id,
       );
       const abilityCandidates = await pom.getMoveCandidateIds(CYBERPUNK_P1, "activateAbility");
       if (!abilityCandidates.includes(`${kerry.instanceId}:0`)) {

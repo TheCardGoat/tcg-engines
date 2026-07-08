@@ -1,6 +1,9 @@
 import { test } from "@playwright/test";
 
-import { alphaArmoredMinotaur, alphaEvelynParkerSchemingSiren } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailEvelynParkerSchemingSiren,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -16,7 +19,7 @@ test("Evelyn Parker - spent unit draws when rival steals a gig", async ({ page }
   const evelyn = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaEvelynParkerSchemingSiren.id,
+    welcomeToNightCityRetailEvelynParkerSchemingSiren.id,
   );
   const p2GigToSteal = (await pom.getGigDice(CYBERPUNK_P2))[0];
   if (!p2GigToSteal) {
@@ -40,7 +43,7 @@ test("Evelyn Parker - spent unit draws when rival steals a gig", async ({ page }
   const minotaur = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaArmoredMinotaur.id,
+    embracingPowerRetailStarterDeckMinotaur.id,
   );
   const p1GigToSteal = (await pom.getGigDice(CYBERPUNK_P1))[0];
   if (!p1GigToSteal) {

@@ -9,11 +9,11 @@ import {
   expectAttachTarget,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaSatoriSwordOfSaburo,
-  alphaCorpoSecurity,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  alphaTBugAmateurPhilosopher,
+  welcomeToNightCityRetailSatoriSwordOfSaburo,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
 } from "@tcg/cyberpunk-cards";
 import {
   enMessages,
@@ -23,9 +23,9 @@ import {
 
 registerMatchers();
 
-const gear = alphaSatoriSwordOfSaburo; // cost 2, power 1, attack: conditional draw on fightOutcome win
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1, unit
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5, unit
+const gear = welcomeToNightCityRetailSatoriSwordOfSaburo; // cost 2, power 1, attack: conditional draw on fightOutcome win
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1, unit
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5, unit
 
 describe("Satori - Sword of Saburo", () => {
   describe("UI prompt", () => {
@@ -193,23 +193,25 @@ describe("Satori - Sword of Saburo", () => {
           hand: [lowlife],
           field: [
             {
-              card: alphaTBugAmateurPhilosopher,
+              card: welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
               attachedGears: [gear],
             },
           ],
           deck: 30,
         },
-        { field: [{ card: alphaCorpoSecurity, spent: true }] },
+        { field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }] },
       );
 
       const handBefore = engine.getHandCount(P1);
       const handIdsBefore = new Set(engine.getCardsInZone("hand", P1).map((c) => c.instanceId));
       const deckBefore = engine.getCardsInZone("deck", P1).length;
-      engine.attackUnit(alphaTBugAmateurPhilosopher, alphaCorpoSecurity);
+      engine.attackUnit(
+        welcomeToNightCityRetailTBugAmateurPhilosopher,
+        welcomeToNightCityRetailCorpoSecurity,
+      );
       engine.resolveAttack({ as: P1 });
       engine.resolveAttack({ as: P2, pass: true });
-      engine.resolveAttack({ as: P1 });
       const finalResult = engine.resolveAttack({ as: P1 });
 
       expect(engine.getHandCount(P1)).toBe(handBefore + 1);
@@ -218,7 +220,9 @@ describe("Satori - Sword of Saburo", () => {
         true,
       );
       expect(
-        engine.getCardsInZone("trash", P2).some((c) => c.definitionId === alphaCorpoSecurity.id),
+        engine
+          .getCardsInZone("trash", P2)
+          .some((c) => c.definitionId === welcomeToNightCityRetailCorpoSecurity.id),
       ).toBe(true);
 
       const triggerLog = finalResult.moveLogs.find(

@@ -400,6 +400,7 @@ export type RuleModifier =
   | "cantAttack"
   | "cantBeBlocked"
   | "mustAttack"
+  | "requiresProgramPlayedThisTurn"
   | "canAttackOnPlayedTurnAgainstUnits"
   | "canAttackRivalOnPlayedTurn"
   | "adrenaline"

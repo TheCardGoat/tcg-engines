@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailZetatechFaceplate,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
@@ -9,7 +9,7 @@ describe("Zetatech Faceplate", () => {
   it("attaches to a friendly unit and is the source for spend-triggered Gig adjustment", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailZetatechFaceplate],
-      field: [{ card: alphaSwordwiseHuscle, spent: false }],
+      field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
       eddies: 2,
       gigArea: [
         { dieType: "d4", faceValue: 1 },
@@ -18,9 +18,17 @@ describe("Zetatech Faceplate", () => {
       ],
     });
 
-    engine.attachGear(welcomeToNightCityRetailZetatechFaceplate, alphaSwordwiseHuscle, { as: P1 });
+    engine.attachGear(
+      welcomeToNightCityRetailZetatechFaceplate,
+      welcomeToNightCityRetailFieldOperator,
+      {
+        as: P1,
+      },
+    );
 
-    expect(engine.getCard(alphaSwordwiseHuscle, "field", P1).meta.attachedGearIds).toHaveLength(1);
+    expect(
+      engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P1).meta.attachedGearIds,
+    ).toHaveLength(1);
   });
 
   it("draws only behind the three-different-Gig-values condition", () => {

@@ -1,4 +1,4 @@
-import { alphaCorpoSecurity } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailCorpoSecurity } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import {
@@ -15,7 +15,7 @@ export const progFloorItBehavior: CyberpunkFixtureBehavior = {
     const rivalTarget = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
     await pom.expectFieldCardSpent(CYBERPUNK_P2, rivalTarget.instanceId, true);
 

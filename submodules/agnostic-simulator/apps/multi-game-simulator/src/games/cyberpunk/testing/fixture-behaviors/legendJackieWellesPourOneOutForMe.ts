@@ -1,4 +1,7 @@
-import { alphaDyingNightVSPistol, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailDyingNightVSPistol,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -11,12 +14,12 @@ export const legendJackieWellesPourOneOutForMeBehavior: CyberpunkFixtureBehavior
     const gear = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      alphaDyingNightVSPistol.id,
+      welcomeToNightCityRetailDyingNightVSPistol.id,
     );
     const host = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     const gig = (await pom.getGigDice(CYBERPUNK_P1))[0]!;
 

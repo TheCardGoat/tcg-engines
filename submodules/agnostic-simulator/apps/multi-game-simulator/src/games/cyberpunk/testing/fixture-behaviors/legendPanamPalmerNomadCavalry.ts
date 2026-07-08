@@ -1,7 +1,7 @@
 import {
-  alphaMantisBlades,
-  alphaSwordwiseHuscle,
-  spoilerPanamPalmerNomadCavalry,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailPanamPalmerNomadCavalry,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "../cyberpunk-simulator-pom";
@@ -15,17 +15,17 @@ export const legendPanamPalmerNomadCavalryBehavior: CyberpunkFixtureBehavior = {
     const panam = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      spoilerPanamPalmerNomadCavalry.id,
+      welcomeToNightCityRetailPanamPalmerNomadCavalry.id,
     );
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
     const mantis = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      alphaMantisBlades.id,
+      welcomeToNightCityRetailMantisBlades.id,
     );
 
     await pom.expectLegendCardAttachedGearCount(CYBERPUNK_P1, panam.instanceId, 1);

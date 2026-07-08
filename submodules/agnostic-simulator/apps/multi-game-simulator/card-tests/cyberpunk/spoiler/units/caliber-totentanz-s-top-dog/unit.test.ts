@@ -9,19 +9,19 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerCaliberTotentanzSTopDog,
-  alphaArmoredMinotaur,
-  alphaMt0d12Flathead,
-  alphaCorpoSecurity,
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailCaliberTotentanzSTopDog,
+  embracingPowerRetailStarterDeckMinotaur,
+  theHeistRetailStarterDeckMt0d12Flathead,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
 import { createMockUnit } from "@cyberpunk-engine/testing/index.ts";
 
-const caliber = spoilerCaliberTotentanzSTopDog; // unit, cost 5, power 6 — DEFEATED: rival discards 1 (+1 if cost matches a friendly Gig)
-const minotaur = alphaArmoredMinotaur; // unit, power 9 — defeats caliber in a fight
-const flathead = alphaMt0d12Flathead; // unit, cost 5 — matches the friendly d6 showing 5
-const corpoSecurity = alphaCorpoSecurity; // unit, cost 2 — does not match the friendly d6 showing 5
-const lowlife = alphaRuthlessLowlife;
+const caliber = welcomeToNightCityRetailCaliberTotentanzSTopDog; // unit, cost 5, power 6 — DEFEATED: rival discards 1 (+1 if cost matches a friendly Gig)
+const minotaur = embracingPowerRetailStarterDeckMinotaur; // unit, power 9 — defeats caliber in a fight
+const flathead = theHeistRetailStarterDeckMt0d12Flathead; // unit, cost 5 — matches the friendly d6 showing 5
+const corpoSecurity = welcomeToNightCityRetailCorpoSecurity; // unit, cost 2 — does not match the friendly d6 showing 5
+const lowlife = welcomeToNightCityRetailMoxInciters;
 
 describe("Caliber - Totentanz's Top Dog", () => {
   describe("UI prompt", () => {

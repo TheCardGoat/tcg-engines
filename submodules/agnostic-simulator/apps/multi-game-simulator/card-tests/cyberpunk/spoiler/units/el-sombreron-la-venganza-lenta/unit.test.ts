@@ -8,16 +8,16 @@ import {
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  spoilerElSombreronLaVenganzaLenta,
-  alphaCorpoSecurity,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailElSombreroNLaVenganzaLenta,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 
 registerMatchers();
 
-const elSombreron = spoilerElSombreronLaVenganzaLenta; // unit, cost 4, power 4 — ATTACK: while fighting a rival Unit, double power
-const huscle = alphaSwordwiseHuscle; // unit, power 5 — fight target
-const corpoSecurity = alphaCorpoSecurity; // unit, power 2 — lower-power fight target
+const elSombreron = welcomeToNightCityRetailElSombreroNLaVenganzaLenta; // unit, cost 4, power 4 — ATTACK: while fighting a rival Unit, double power
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // unit, power 5 — fight target
+const corpoSecurity = welcomeToNightCityRetailCorpoSecurity; // unit, power 2 — lower-power fight target
 
 describe("El Sombrerón - La Venganza Lenta", () => {
   describe("UI prompt", () => {
@@ -97,7 +97,6 @@ describe("El Sombrerón - La Venganza Lenta", () => {
     engine.attackUnit(elSombreron, corpoSecurity);
     engine.resolveAttack({ as: P1 });
     engine.resolveAttack({ as: P2, pass: true });
-    engine.resolveAttack({ as: P1 });
     engine.resolveAttack({ as: P1 });
 
     expect(engine.getCard(elSombreron, "field", P1).zone).toBe("field");

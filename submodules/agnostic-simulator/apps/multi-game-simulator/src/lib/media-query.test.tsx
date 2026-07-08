@@ -54,4 +54,10 @@ describe("shared media query hooks", () => {
     const { getByTestId } = render(<ReducedMotionProbe />);
     expect(getByTestId("value").textContent).toBe("true");
   });
+
+  it("reads touch-only hover capability before the first effect runs", () => {
+    setMatches(false);
+    const { getByTestId } = render(<HoverProbe />);
+    expect(getByTestId("value").textContent).toBe("false");
+  });
 });

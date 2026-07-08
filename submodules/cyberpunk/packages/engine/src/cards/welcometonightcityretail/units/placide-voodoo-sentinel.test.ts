@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorporateSurveillance,
-  alphaCorpoSecurity,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailPlacideVoodooSentinel,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
@@ -10,11 +10,14 @@ describe("Placide - Voodoo Sentinel", () => {
   it("on play asks to discard a Program before moving a rival unit", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        hand: [welcomeToNightCityRetailPlacideVoodooSentinel, alphaCorporateSurveillance],
+        hand: [
+          welcomeToNightCityRetailPlacideVoodooSentinel,
+          welcomeToNightCityRetailCorporateSurveillance,
+        ],
         eddies: 8,
       },
       {
-        field: [alphaCorpoSecurity],
+        field: [welcomeToNightCityRetailCorpoSecurity],
       },
     );
 

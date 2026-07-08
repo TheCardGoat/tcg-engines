@@ -9,6 +9,7 @@ import type {
   CardExitStep,
   CardLandStep,
   CardMoveStep,
+  CombatRedirectStep,
   CombatStep,
   EffectTargetStep,
   GigMoveStep,
@@ -475,6 +476,29 @@ describe("buildAnimationScript", () => {
     expect(step.moveKind).toBe("steal");
   });
 
+  it("emits a resourceFloat step for gigValueChanged with previous and new values", () => {
+    const events: GameEvent[] = [
+      {
+        type: "gigValueChanged",
+        dieId: dieId("d10-1"),
+        previousValue: 10,
+        newValue: 8,
+        playerId: pid("p1"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+    expect(script.steps).toHaveLength(1);
+    const step = script.steps[0] as ResourceFloatStep;
+    expect(step.kind).toBe("resourceFloat");
+    expect(step.reason).toBe("gigValueChanged");
+    expect(step.resource).toBe("gig");
+    expect(step.dieId).toBe("d10-1");
+    expect(step.delta).toBe(-2);
+    expect(step.previousValue).toBe(10);
+    expect(step.newValue).toBe(8);
+  });
+
   it("emits combat steps for attackDeclared and attackResolved with the right reason", () => {
     const events: GameEvent[] = [
       {
@@ -507,6 +531,97 @@ describe("buildAnimationScript", () => {
     expect(resolved.durationMs).toBe(ANIMATION_DURATIONS_MS.combatResolve);
   });
 
+  it("emits a combatRedirect step for blockerActivated", () => {
+    const events: GameEvent[] = [
+      {
+        type: "blockerActivated",
+        attackerId: cid("atk"),
+        blockerId: cid("blocker"),
+        originalTarget: null,
+        playerId: pid("p2"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps).toHaveLength(1);
+    const redirect = script.steps[0] as CombatRedirectStep;
+    expect(redirect.kind).toBe("combatRedirect");
+    expect(redirect.reason).toBe("blockerActivated");
+    expect(redirect.attackerId).toBe("atk");
+    expect(redirect.blockerId).toBe("blocker");
+    expect(redirect.originalTargetId).toBeNull();
+    expect(redirect.playerId).toBe("p2");
+    expect(redirect.durationMs).toBe(ANIMATION_DURATIONS_MS.combatDeclare);
+  });
+
+  it("orders fight impact before defeated cards move to trash", () => {
+    const events: GameEvent[] = [
+      {
+        type: "cardMoved",
+        cardId: cid("def"),
+        fromZone: "field",
+        toZone: "trash",
+        playerId: pid("p2"),
+      },
+      {
+        type: "cardDefeated",
+        cardId: cid("def"),
+        defeatedBy: cid("atk"),
+        playerId: pid("p2"),
+      },
+      {
+        type: "attackResolved",
+        attackerId: cid("atk"),
+        defenderId: cid("def"),
+        attackKind: "fight",
+        result: "attackerWins",
+        playerId: pid("p1"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps.map((step) => step.kind)).toEqual(["combat", "cardExit"]);
+    const impact = script.steps[0] as CombatStep;
+    const defeated = script.steps[1] as CardExitStep;
+    expect(impact.reason).toBe("attackResolved");
+    expect(impact.startMs).toBe(0);
+    expect(defeated.reason).toBe("cardDefeated");
+    expect(defeated.startMs).toBe(ANIMATION_DURATIONS_MS.combatResolve);
+  });
+
+  it("orders direct impact before stolen Gig movement", () => {
+    const events: GameEvent[] = [
+      {
+        type: "gigStolen",
+        dieId: dieId("d6-1"),
+        fromPlayerId: pid("p2"),
+        toPlayerId: pid("p1"),
+        sourceCardId: cid("atk"),
+      },
+      {
+        type: "attackResolved",
+        attackerId: cid("atk"),
+        defenderId: null,
+        attackKind: "direct",
+        result: "gigsStolen",
+        gigsStolen: 1,
+        playerId: pid("p1"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps.map((step) => step.kind)).toEqual(["combat", "gigMove"]);
+    const impact = script.steps[0] as CombatStep;
+    const stolen = script.steps[1] as GigMoveStep;
+    expect(impact.reason).toBe("attackResolved");
+    expect(impact.gigsStolen).toBe(1);
+    expect(stolen.reason).toBe("gigStolen");
+    expect(stolen.startMs).toBe(ANIMATION_DURATIONS_MS.combatResolve);
+  });
+
   it("emits a phaseChange step for phaseChanged", () => {
     const events: GameEvent[] = [
       { type: "phaseChanged", from: "start", to: "main", playerId: pid("p1") },
@@ -519,5 +634,23 @@ describe("buildAnimationScript", () => {
     expect(phase.from).toBe("start");
     expect(phase.to).toBe("main");
     expect(phase.durationMs).toBe(ANIMATION_DURATIONS_MS.phaseChange);
+  });
+
+  it("emits a turn phaseChange step for main-to-start turn handoffs", () => {
+    const events: GameEvent[] = [
+      { type: "phaseChanged", from: "main", to: "start", playerId: pid("p1") },
+      { type: "turnStarted", playerId: pid("p2"), turnNumber: 2 },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps).toHaveLength(1);
+    const phase = script.steps[0] as PhaseChangeStep;
+    expect(phase.kind).toBe("phaseChange");
+    expect(phase.from).toBe("main");
+    expect(phase.to).toBe("start");
+    expect(phase.variant).toBe("turn");
+    expect(phase.turnPlayerId).toBe(pid("p2"));
+    expect(phase.turnNumber).toBe(2);
   });
 });

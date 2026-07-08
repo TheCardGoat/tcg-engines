@@ -14,12 +14,14 @@ export interface CardOverlayState {
   id: string;
   planId: string;
   stepId: string;
-  kind: "move" | "enter" | "exit";
+  kind: "move" | "enter" | "exit" | "spotlight";
   entity: SimulatorEntity;
   from: Rect;
   to: Rect;
   fromRef?: AnimationRef;
   toRef?: AnimationRef;
+  label?: string;
+  suppressEntity?: boolean;
   sourceFace: CardFaceKind;
   destinationFace: CardFaceKind;
   delayMs: number;
@@ -33,12 +35,16 @@ export interface BeamOverlayState {
   kind: "effect" | "combat";
   source: Rect;
   sourceRef?: AnimationRef;
+  sourceLabel?: string;
   targets: readonly {
     ref: AnimationRef;
     rect: Rect;
+    label?: string;
   }[];
   label?: string;
-  reason?: "declared" | "resolved";
+  detailLabel?: string;
+  reason?: "declared" | "blocked" | "resolved";
+  attackKind?: "direct" | "fight";
   delayMs: number;
   durationMs: number;
 }
@@ -50,6 +56,8 @@ export interface ResourceOverlayState {
   anchor: Rect;
   delta: number;
   label?: string;
+  fromValue?: number;
+  toValue?: number;
   delayMs: number;
   durationMs: number;
 }
@@ -60,6 +68,10 @@ export interface PhaseOverlayState {
   stepId: string;
   from: string;
   to: string;
+  variant: "phase" | "turn";
+  playerId?: string;
+  viewerSeatId: string | null;
+  turnNumber?: number;
   center: { x: number; y: number };
   delayMs: number;
   durationMs: number;

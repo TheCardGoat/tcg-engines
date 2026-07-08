@@ -7,7 +7,7 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaGoroTakemuraLosingHisWay } from "@tcg/cyberpunk-cards";
+import { embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -30,7 +30,7 @@ describe("unitGoroTakemuraLosingHisWay fixture behavior", () => {
       const goro = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaGoroTakemuraLosingHisWay.id,
+        embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay.id,
       );
 
       await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 0);
@@ -43,7 +43,7 @@ describe("unitGoroTakemuraLosingHisWay fixture behavior", () => {
         throw new Error("Expected Goro to start a direct attack.");
       }
       expectEqual("Goro attack kind", attack.kind, "direct");
-      expectEqual("Goro attack step", attack.step, "offensive");
+      expectEqual("Goro attack step", attack.step, "attack");
       await pom.expectFieldCardSpent(CYBERPUNK_P1, goro.instanceId, true);
 
       await pom.resolveAttack(CYBERPUNK_P1);

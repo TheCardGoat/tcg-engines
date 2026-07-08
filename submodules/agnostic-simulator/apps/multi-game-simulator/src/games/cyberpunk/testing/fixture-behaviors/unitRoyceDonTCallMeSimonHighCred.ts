@@ -1,7 +1,7 @@
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  spoilerRoyceDonTCallMeSimon,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailRoyceDonTCallMeSimon,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
@@ -25,7 +25,7 @@ export const unitRoyceDonTCallMeSimonHighCredBehavior: CyberpunkFixtureBehavior 
     const royce = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      spoilerRoyceDonTCallMeSimon.id,
+      welcomeToNightCityRetailRoyceDonTCallMeSimon.id,
     );
 
     expectEqual("Royce high P1 Street Cred", await pom.getStreetCred(CYBERPUNK_P1), 10);
@@ -35,9 +35,17 @@ export const unitRoyceDonTCallMeSimonHighCredBehavior: CyberpunkFixtureBehavior 
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
     const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
     const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
-    expectIncludes("Royce high eligible targets", eligibleDefinitions, alphaCorpoSecurity.id);
+    expectIncludes(
+      "Royce high eligible targets",
+      eligibleDefinitions,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
     expectIncludes("Royce high eligible targets", eligibleDefinitions, POWER_THREE_MOCK_ID);
-    expectExcludes("Royce high eligible targets", eligibleDefinitions, alphaArmoredMinotaur.id);
+    expectExcludes(
+      "Royce high eligible targets",
+      eligibleDefinitions,
+      embracingPowerRetailStarterDeckMinotaur.id,
+    );
 
     const mockId = eligible[eligibleDefinitions.indexOf(POWER_THREE_MOCK_ID)];
     if (!mockId) {

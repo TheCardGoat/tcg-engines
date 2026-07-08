@@ -1,7 +1,7 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailSandayuOdaHanakoSGuardian,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -34,12 +34,12 @@ describe("Sandayu Oda jsdom happy path (Retail)", () => {
       const corpo = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
       const minotaur = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
 
       await pom.playCardFromHand(sandayuInHand.instanceId, CYBERPUNK_P1);
@@ -48,8 +48,16 @@ describe("Sandayu Oda jsdom happy path (Retail)", () => {
       const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
       const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
       expectEqual("Sandayu spend target count", eligible.length, 2);
-      expectIncludes("Sandayu spend targets", eligibleDefinitions, alphaCorpoSecurity.id);
-      expectIncludes("Sandayu spend targets", eligibleDefinitions, alphaArmoredMinotaur.id);
+      expectIncludes(
+        "Sandayu spend targets",
+        eligibleDefinitions,
+        welcomeToNightCityRetailCorpoSecurity.id,
+      );
+      expectIncludes(
+        "Sandayu spend targets",
+        eligibleDefinitions,
+        embracingPowerRetailStarterDeckMinotaur.id,
+      );
 
       await pom.resolveEffectTarget([corpo.instanceId, minotaur.instanceId], CYBERPUNK_P1);
 

@@ -7,7 +7,7 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -33,7 +33,7 @@ describe("gearGorillaArms fixture behavior", () => {
       const attacker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaTBugAmateurPhilosopher.id,
+        welcomeToNightCityRetailTBugAmateurPhilosopher.id,
       );
       const firstD4 = expectDefined(
         "Gorilla Arms first rival d4",

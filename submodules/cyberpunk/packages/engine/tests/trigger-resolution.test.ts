@@ -57,7 +57,7 @@ describe("manual trigger resolution", () => {
       "Dying Night - V's Pistol",
       "Kiroshi Optics",
     ]);
-    expect(engine.getState().G.attackState?.step).toBe("offensive");
+    expect(engine.getState().G.attackState?.step).toBe("attack");
   });
 
   it("lets the controller choose Dying Night's rival Gear target", () => {

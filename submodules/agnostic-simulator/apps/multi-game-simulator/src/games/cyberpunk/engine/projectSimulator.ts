@@ -448,6 +448,32 @@ export function projectEntityForCard(
   return projectCardEntity(instance, matchState, viewerSide, []);
 }
 
+export function projectEntityForAnimationEntity(
+  entityId: string,
+  matchState: MatchState,
+  viewerSide: Side,
+): SimulatorEntity | null {
+  const cardEntity = projectEntityForCard(entityId, matchState, viewerSide);
+  if (cardEntity) {
+    return cardEntity;
+  }
+
+  const die = matchState.G.gigDice[entityId];
+  if (!die) {
+    return null;
+  }
+
+  const ownerEntry = Object.entries(matchState.G.players).find(
+    ([, player]) =>
+      cardIds(player.gigArea).includes(entityId) || cardIds(player.fixerArea).includes(entityId),
+  );
+  if (!ownerEntry) {
+    return null;
+  }
+
+  return projectDieEntity(die, ownerEntry[0], []);
+}
+
 function projectDieEntity(
   die: GigDie,
   ownerId: string,

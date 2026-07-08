@@ -7,7 +7,7 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { spoilerRoycePsychoOnTheEdge } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailRoycePsychoOnTheEdge } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -30,7 +30,7 @@ describe("legendRoycePsychoOnTheEdge fixture behavior", () => {
       const royce = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        spoilerRoycePsychoOnTheEdge.id,
+        welcomeToNightCityRetailRoycePsychoOnTheEdge.id,
       );
 
       const legendView = await pom.getCardView(royce.instanceId, CYBERPUNK_P1);

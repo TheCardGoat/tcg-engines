@@ -29,12 +29,14 @@ const SimulatorAudioContext = createContext<SimulatorAudioContextValue>(
 export function SimulatorAudioProvider({ children }: { readonly children: React.ReactNode }) {
   const { settings } = useSimulatorSettings();
   const timersRef = useRef<Set<ReturnType<typeof setTimeout>>>(new Set());
+  const seenStepKeysRef = useRef<Set<string>>(new Set());
 
   const cancelScheduledCues = useCallback(() => {
     for (const timer of timersRef.current) {
       clearTimeout(timer);
     }
     timersRef.current.clear();
+    seenStepKeysRef.current.clear();
   }, []);
 
   useEffect(() => {
@@ -58,8 +60,10 @@ export function SimulatorAudioProvider({ children }: { readonly children: React.
 
   const scheduleAnimationSteps = useCallback(
     (steps: readonly ScheduledAnimationStep[]) => {
-      const seenStepKeys = new Set<string>();
-      for (const { cue, delayMs } of collectScheduledSimulatorAudioCues(steps, seenStepKeys)) {
+      for (const { cue, delayMs } of collectScheduledSimulatorAudioCues(
+        steps,
+        seenStepKeysRef.current,
+      )) {
         const timer = setTimeout(() => {
           timersRef.current.delete(timer);
           playCue(cue);

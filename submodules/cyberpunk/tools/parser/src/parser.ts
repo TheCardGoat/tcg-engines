@@ -1862,6 +1862,28 @@ function parseEventAbility(card: CardDefinition, text: string): Ability {
     });
   }
 
+  if (/^When this Unit uses Blocker, a Rival discards 1\.$/i.test(text)) {
+    return triggeredAbility({
+      text,
+      trigger: {
+        trigger: "event",
+        event: {
+          event: "blockerActivated",
+          player: "friendly",
+          target: SELF_TARGET,
+        },
+      },
+      source: SELF_TARGET,
+      effects: [
+        {
+          effect: "discardFromHand",
+          player: "rival",
+          amount: 1,
+        },
+      ],
+    });
+  }
+
   throw new Error(`Unsupported event ability for ${card.slug}: ${text}`);
 }
 
@@ -1874,6 +1896,20 @@ function parseStaticAbility(card: CardDefinition, text: string): Ability {
           effect: "grantRule",
           target: SELF_TARGET,
           rule: "cantAttack",
+          duration: "continuous",
+        },
+      ],
+    });
+  }
+
+  if (/^This Unit can't attack unless you played a Program this turn\.$/i.test(text)) {
+    return staticAbility({
+      text,
+      effects: [
+        {
+          effect: "grantRule",
+          target: SELF_TARGET,
+          rule: "requiresProgramPlayedThisTurn",
           duration: "continuous",
         },
       ],

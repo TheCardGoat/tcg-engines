@@ -6,10 +6,13 @@ import {
   expectAttackCandidate,
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaRuthlessLowlife, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 
-const lowlife = alphaRuthlessLowlife;
-const huscle = alphaSwordwiseHuscle;
+const lowlife = welcomeToNightCityRetailMoxInciters;
+const huscle = welcomeToNightCityRetailSwordwiseHuscle;
 const p1LeadGigs = [
   { dieType: "d4" as const, faceValue: 1 },
   { dieType: "d8" as const, faceValue: 1 },
@@ -37,8 +40,8 @@ function setupRivalSteals(
 
   // P2 attacks P1 directly.
   engine.attackRival(huscle, { as: P2 });
-  engine.resolveAttack({ as: P2 }); // offensive -> defensive
-  engine.resolveAttack({ as: P1, pass: true }); // defensive -> steal
+  engine.resolveAttack({ as: P2 }); // attack -> react
+  engine.resolveAttack({ as: P1, pass: true }); // react -> steal
   engine.resolveAttack({ as: P2 }); // steal: steal
 
   return engine;
@@ -128,8 +131,8 @@ describe("Ruthless Lowlife", () => {
 
       // P1 attacks P2 directly (friendly steal from P1's perspective).
       engine.attackRival(huscle);
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> steal
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> steal
       engine.resolveAttack(); // steal: steal
 
       // Ruthless Lowlife triggers on rival stealing friendly gigs, not on

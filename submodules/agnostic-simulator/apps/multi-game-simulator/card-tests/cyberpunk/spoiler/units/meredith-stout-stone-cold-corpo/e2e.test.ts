@@ -1,9 +1,9 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaKiroshiOptics,
-  spoilerEvelynParkerBeautifulEnigma,
-  spoilerMeredithStoutStoneColdCorpo,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailEvelynParkerBeautifulEnigma,
+  welcomeToNightCityRetailMeredithStoutStoneColdCorpo,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -21,7 +21,7 @@ test("Meredith Stout - rival gig decrease recovers from trash", async ({ page })
   await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    spoilerMeredithStoutStoneColdCorpo.id,
+    welcomeToNightCityRetailMeredithStoutStoneColdCorpo.id,
   );
   const evelyn = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P2, 0);
   const p1Gig = (await pom.getGigDice(CYBERPUNK_P1))[0];
@@ -39,16 +39,21 @@ test("Meredith Stout - rival gig decrease recovers from trash", async ({ page })
   expectEqual(
     "Evelyn definition after call",
     calledEvelyn.definitionId,
-    spoilerEvelynParkerBeautifulEnigma.id,
+    welcomeToNightCityRetailEvelynParkerBeautifulEnigma.id,
   );
 
   await pom.expectGigValue(p1Gig.id, 1);
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseCardToMove");
   const recoverChoices = await pom.getChoiceCardIds(CYBERPUNK_P1);
   const recoverDefinitions = await getChoiceDefinitionIds(pom, recoverChoices);
-  expectIncludes("Meredith recovery choices", recoverDefinitions, alphaKiroshiOptics.id);
+  expectIncludes(
+    "Meredith recovery choices",
+    recoverDefinitions,
+    welcomeToNightCityRetailKiroshiOptics.id,
+  );
 
-  const kiroshiId = recoverChoices[recoverDefinitions.indexOf(alphaKiroshiOptics.id)];
+  const kiroshiId =
+    recoverChoices[recoverDefinitions.indexOf(welcomeToNightCityRetailKiroshiOptics.id)];
   if (!kiroshiId) {
     throw new Error("Expected Kiroshi Optics to be recoverable by Meredith.");
   }
@@ -58,7 +63,11 @@ test("Meredith Stout - rival gig decrease recovers from trash", async ({ page })
   await pom.expectHandSize(CYBERPUNK_P1, 1);
   await pom.expectTrashSize(CYBERPUNK_P1, 1);
   await pom.expectEddies(CYBERPUNK_P2, 4);
-  await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaKiroshiOptics.id);
+  await pom.getCardInZoneByDefinitionId(
+    "hand",
+    CYBERPUNK_P1,
+    welcomeToNightCityRetailKiroshiOptics.id,
+  );
   expectEqual("Meredith active player remains P2", await pom.getActivePlayerId(), CYBERPUNK_P2);
 
   await pom.expectStructuralState();

@@ -14,6 +14,8 @@
   const visualSetup = $derived.by(() =>
     page.url.searchParams.get("visual") === "hades-target-clarity"
       ? setupHadesOpponentChoice
+      : page.url.searchParams.get("visual") === "look-what-targeting-source"
+        ? setupLookWhatTargetingSource
       : false,
   );
 
@@ -98,6 +100,24 @@
     }
 
     await waitForStateChange(harness, "playerTwo", playerTwoBeforeResolve.stateID);
+  }
+
+  async function setupLookWhatTargetingSource(harness: LorcanaBrowserHarness): Promise<void> {
+    const initialBoard = await harness.getBoard("authoritative");
+    const lookWhatId = findCardIdByLabel(
+      initialBoard,
+      "player_one",
+      "hand",
+      "Look What You've Done",
+    );
+
+    const beforePlay = await harness.getBoard("playerOne");
+    const playResult = await harness.execute("playerOne", "playCard", { cardId: lookWhatId });
+    if (!playResult.success) {
+      throw new Error(`playCard failed: ${playResult.reason ?? playResult.code ?? "unknown"}`);
+    }
+
+    await waitForStateChange(harness, "playerOne", beforePlay.stateID);
   }
 </script>
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailRoyceDonTCallMeSimon,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
@@ -14,15 +14,15 @@ describe("Royce - Don't Call Me Simon", () => {
         eddies: 5,
       },
       {
-        field: [alphaCorpoSecurity],
+        field: [welcomeToNightCityRetailCorpoSecurity],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailRoyceDonTCallMeSimon, { as: P1 });
-    engine.resolveEffectTarget(alphaCorpoSecurity, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
 
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
-      alphaCorpoSecurity.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 
@@ -34,7 +34,7 @@ describe("Royce - Don't Call Me Simon", () => {
         gigArea: [{ dieType: "d4", faceValue: 1 }],
       },
       {
-        field: [alphaArmoredMinotaur],
+        field: [embracingPowerRetailStarterDeckMinotaur],
         gigArea: [{ dieType: "d8", faceValue: 8 }],
       },
     );

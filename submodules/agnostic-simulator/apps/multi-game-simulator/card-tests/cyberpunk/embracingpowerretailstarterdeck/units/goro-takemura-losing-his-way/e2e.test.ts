@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaCorpoSecurity,
+  welcomeToNightCityRetailCorpoSecurity,
   embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -24,7 +24,7 @@ test("Goro Takemura - Losing His Way (Embracing Power) - all face-up Legends att
   const defender = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
 
   await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, goro.instanceId, 4);

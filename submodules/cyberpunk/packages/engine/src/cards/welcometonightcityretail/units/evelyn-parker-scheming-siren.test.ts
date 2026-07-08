@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailEvelynParkerSchemingSiren,
+  welcomeToNightCityRetailFieldOperator,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
@@ -11,8 +12,8 @@ describe("Evelyn Parker — Scheming Siren (retail)", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         // Two cards in hand: after draw, hand grows to 3; after discard, back to 2.
-        hand: [alphaRuthlessLowlife, alphaRuthlessLowlife],
-        deck: [alphaRuthlessLowlife],
+        hand: [welcomeToNightCityRetailCorpoSecurity, welcomeToNightCityRetailFieldOperator],
+        deck: [welcomeToNightCityRetailCorpoSecurity],
         field: [
           {
             card: welcomeToNightCityRetailEvelynParkerSchemingSiren,
@@ -32,12 +33,12 @@ describe("Evelyn Parker — Scheming Siren (retail)", () => {
 
     // The discard is a player choice (no target filter → defaults to any card
     // in hand). Resolve it by discarding the first eligible card.
-    engine.resolveDiscardFromHand([alphaRuthlessLowlife], { as: P1 });
+    engine.resolveDiscardFromHand([welcomeToNightCityRetailCorpoSecurity], { as: P1 });
 
     // Drew 1, then discarded 1 → net 0 change.
     expect(engine.getCardsInZone("hand", P1)).toHaveLength(handBefore);
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 
@@ -46,7 +47,7 @@ describe("Evelyn Parker — Scheming Siren (retail)", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [],
-        deck: [alphaRuthlessLowlife],
+        deck: [welcomeToNightCityRetailCorpoSecurity],
         field: [
           {
             card: welcomeToNightCityRetailEvelynParkerSchemingSiren,
@@ -76,7 +77,7 @@ describe("Evelyn Parker — Scheming Siren (retail)", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [],
-        deck: [alphaRuthlessLowlife],
+        deck: [welcomeToNightCityRetailCorpoSecurity],
         field: [
           {
             card: welcomeToNightCityRetailEvelynParkerSchemingSiren,
@@ -98,7 +99,9 @@ describe("Evelyn Parker — Scheming Siren (retail)", () => {
     expect(engine.getGigCount(P2)).toBe(2);
 
     engine.attackRival(welcomeToNightCityRetailEvelynParkerSchemingSiren, { as: P1 });
-    engine.resolveFullSteal({ as: P1 });
+    engine.resolveAttack({ as: P1 });
+    engine.resolveAttack({ as: P2, pass: true });
+    engine.resolveAttack({ as: P1, gigIdsToSteal: [] });
 
     // 0 power → base steal of 0 (Cap A: 0-power direct attacks steal nothing).
     expect(engine.getGigCount(P1)).toBe(1);

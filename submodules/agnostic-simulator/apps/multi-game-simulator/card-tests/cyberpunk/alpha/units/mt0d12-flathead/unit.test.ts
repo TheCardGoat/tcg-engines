@@ -8,17 +8,17 @@ import {
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaMt0d12Flathead,
-  alphaCorpoSecurity,
-  alphaSwordwiseHuscle,
+  theHeistRetailStarterDeckMt0d12Flathead,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { getEffectiveRules } from "@cyberpunk-engine/active-effects/index.ts";
 
 registerMatchers();
 
-const flathead = alphaMt0d12Flathead; // cost 5, power 5
-const corpoSec = alphaCorpoSecurity; // cost 2, power 2, keywords: ["blocker"]
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5
+const flathead = theHeistRetailStarterDeckMt0d12Flathead; // cost 5, power 5
+const corpoSec = welcomeToNightCityRetailCorpoSecurity; // cost 2, power 2, keywords: ["blocker"]
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5
 /** Gig area entries that sum to street cred >= 7. */
 const HIGH_CRED_GIGS: { dieType: "d6" | "d8"; faceValue: number }[] = [
   { dieType: "d8", faceValue: 7 },
@@ -169,7 +169,7 @@ describe("MT0D12 Flathead", () => {
       expect(hasCantBeBlocked(engine, flatheadId)).toBe(true);
 
       engine.attackRival(flathead);
-      engine.resolveAttack(); // offensive -> defensive
+      engine.resolveAttack(); // attack -> react
 
       // P2 tries to block with Corpo Security — should fail
       const failure = engine.expectFailure(() => engine.useBlocker(corpoSec, { as: P2 }));
@@ -191,7 +191,7 @@ describe("MT0D12 Flathead", () => {
       expect(hasCantBeBlocked(engine, flatheadId)).toBe(false);
 
       engine.attackRival(flathead);
-      engine.resolveAttack(); // offensive -> defensive
+      engine.resolveAttack(); // attack -> react
 
       // P2 blocks with Corpo Security — should succeed
       engine.useBlocker(corpoSec, { as: P2 });
@@ -221,9 +221,9 @@ describe("MT0D12 Flathead", () => {
       const attack = engine.getAttackState();
       expect(attack!.kind).toBe("direct");
 
-      // Resolve through offensive -> defensive (pass) -> steal
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> steal
+      // Resolve through attack -> react (pass) -> steal
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> steal
       engine.resolveAttack(); // steal: steal gig
 
       expect(engine.getGigCount(P2)).toBeLessThan(p2GigsBefore);

@@ -1,7 +1,7 @@
 import {
-  alphaSwordwiseHuscle,
-  spoilerAfterpartyAtLizzieS,
-  spoilerVStreetkid,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
+  welcomeToNightCityRetailVStreetkid,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
@@ -15,19 +15,18 @@ export const legendVStreetkidBehavior: CyberpunkFixtureBehavior = {
     const v = await pom.getCardInZoneByDefinitionId(
       "legendArea",
       CYBERPUNK_P1,
-      spoilerVStreetkid.id,
+      welcomeToNightCityRetailVStreetkid.id,
     );
     const defender = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
 
     await pom.goSolo(v.instanceId, CYBERPUNK_P1);
     await pom.attackUnit(v.instanceId, defender.instanceId, CYBERPUNK_P1);
     await pom.resolveAttack(CYBERPUNK_P1);
     await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
-    await pom.resolveAttack(CYBERPUNK_P1);
     await pom.resolveAttack(CYBERPUNK_P1);
 
     expectEqual(
@@ -39,7 +38,11 @@ export const legendVStreetkidBehavior: CyberpunkFixtureBehavior = {
     await pom.expectFieldSize(CYBERPUNK_P1, 1);
     await pom.expectHandSize(CYBERPUNK_P1, 1);
     await pom.expectTrashSize(CYBERPUNK_P1, 4);
-    await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, spoilerAfterpartyAtLizzieS.id);
+    await pom.getCardInZoneByDefinitionId(
+      "hand",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailAfterpartyAtLizzieS.id,
+    );
     expectEqual("V Streetkid deck after mill", await pom.getDeckSize(CYBERPUNK_P1), 3);
   },
 };

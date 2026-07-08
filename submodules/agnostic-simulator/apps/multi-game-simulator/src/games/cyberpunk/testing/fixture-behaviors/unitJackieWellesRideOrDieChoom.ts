@@ -1,4 +1,7 @@
-import { alphaArmoredMinotaur, alphaJackieWellesRideOrDieChoom } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailJackieWellesRideOrDieChoom,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -14,12 +17,12 @@ export const unitJackieWellesRideOrDieChoomBehavior: CyberpunkFixtureBehavior = 
     const jackie = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaJackieWellesRideOrDieChoom.id,
+      welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
     );
     const minotaur = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P2,
-      alphaArmoredMinotaur.id,
+      embracingPowerRetailStarterDeckMinotaur.id,
     );
 
     await pom.expectGigCount(CYBERPUNK_P1, 3);
@@ -38,7 +41,6 @@ export const unitJackieWellesRideOrDieChoomBehavior: CyberpunkFixtureBehavior = 
     await pom.resolveAttack(CYBERPUNK_P1);
     await pom.resolveAttack(CYBERPUNK_P2, { pass: true });
     await pom.resolveAttack(CYBERPUNK_P1);
-    await pom.resolveAttack(CYBERPUNK_P1);
 
     expectEqual("Jackie attack cleared", await pom.getAttackState(), null);
     await pom.expectFieldSize(CYBERPUNK_P1, 1);
@@ -46,8 +48,12 @@ export const unitJackieWellesRideOrDieChoomBehavior: CyberpunkFixtureBehavior = 
     await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaJackieWellesRideOrDieChoom.id,
+      welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
     );
-    await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaArmoredMinotaur.id);
+    await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P2,
+      embracingPowerRetailStarterDeckMinotaur.id,
+    );
   },
 };

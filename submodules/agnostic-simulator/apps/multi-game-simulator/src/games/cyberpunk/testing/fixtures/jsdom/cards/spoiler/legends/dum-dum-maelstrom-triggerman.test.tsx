@@ -1,8 +1,8 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaKiroshiOptics,
-  alphaTBugAmateurPhilosopher,
-  spoilerDumDumMaelstromTriggerman,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailTBugAmateurPhilosopher,
+  welcomeToNightCityRetailDumDumMaelstromTriggerman,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -25,17 +25,17 @@ describe("Dum Dum jsdom happy path", () => {
       const dumDum = await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        spoilerDumDumMaelstromTriggerman.id,
+        welcomeToNightCityRetailDumDumMaelstromTriggerman.id,
       );
       const host = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaTBugAmateurPhilosopher.id,
+        welcomeToNightCityRetailTBugAmateurPhilosopher.id,
       );
       const kiroshi = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaKiroshiOptics.id,
+        welcomeToNightCityRetailKiroshiOptics.id,
       );
 
       await pom.callLegend(dumDum.instanceId, CYBERPUNK_P1);

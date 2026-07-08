@@ -5,16 +5,19 @@ import {
   P2,
   expectCallableLegend,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaJackieWellesPourOneOutForMe } from "@tcg/cyberpunk-cards";
-import { alphaEvelynParkerSchemingSiren } from "@tcg/cyberpunk-cards";
-import { alphaCorpoSecurity } from "@tcg/cyberpunk-cards";
-import { alphaDyingNightVSPistol, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { theHeistRetailStarterDeckJackieWellesPourOneOutForMe } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailEvelynParkerSchemingSiren } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailCorpoSecurity } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailDyingNightVSPistol,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 
-const jackie = alphaJackieWellesPourOneOutForMe;
-const blueUnit = alphaEvelynParkerSchemingSiren; // blue unit, cost 2
-const greenUnit = alphaCorpoSecurity; // green unit, cost 2
-const blueGear = alphaDyingNightVSPistol; // blue gear, cost 2
-const gearHost = alphaSwordwiseHuscle;
+const jackie = theHeistRetailStarterDeckJackieWellesPourOneOutForMe;
+const blueUnit = welcomeToNightCityRetailEvelynParkerSchemingSiren; // blue unit, cost 2
+const greenUnit = welcomeToNightCityRetailCorpoSecurity; // green unit, cost 2
+const blueGear = welcomeToNightCityRetailDyingNightVSPistol; // blue gear, cost 2
+const gearHost = welcomeToNightCityRetailSwordwiseHuscle;
 
 describe("Jackie Welles - Pour One Out For Me", () => {
   describe("UI prompt", () => {

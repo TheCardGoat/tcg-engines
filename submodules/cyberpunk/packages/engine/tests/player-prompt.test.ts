@@ -2,14 +2,20 @@ import { describe, expect, it } from "vite-plus/test";
 import {
   alphaRuthlessLowlife,
   alphaCorpoSecurity,
+  alphaRebootOptics,
   alphaFloorIt,
   alphaSwordwiseHuscle,
   alphaArmoredMinotaur,
   alphaSecondhandBombus,
   alphaMantisBlades,
   spoilerCarnageAtTheColosseum,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailOverwatchPanamSGift,
+  welcomeToNightCityRetailPanamPalmerNomadCavalry,
+  welcomeToNightCityRetailDumDumMaelstromTriggerman,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../src/testing/index.ts";
+import type { CardInstanceId, PlayerId } from "../src/types/branded.ts";
 import { buildPlayerPrompt } from "../src/view/player-prompt.ts";
 
 // ── Helpers ───────────────────────────────────────────────────────────
@@ -20,6 +26,23 @@ function getMoveIds(engine: CyberpunkTestEngine, playerId: typeof P1): string[] 
 
 function getInputSpec(engine: CyberpunkTestEngine, playerId: typeof P1, moveId: string) {
   return engine.getPrompt(playerId).availableMoves.find((m) => m.moveId === moveId)?.inputSpec;
+}
+
+function chooseCardToPlayPayload(
+  cardIds: CardInstanceId[],
+  sourceCardId: CardInstanceId,
+  sourcePlayerId: PlayerId = P1,
+  free?: boolean,
+) {
+  return {
+    cardIds,
+    free,
+    boundTargets: {},
+    sourceCardId,
+    sourcePlayerId,
+    abilityIndex: 0,
+    ifEffects: [],
+  };
 }
 
 function toAttackPhase(_engine: any) {
@@ -169,9 +192,10 @@ describe("Player Prompt", () => {
         type: "chooseCardToPlay",
         chooserId: P1,
         effectId: "",
-        payload: {
-          cardIds: engine.getState().G.players["p1"]!.zones.hand.slice(0, 2),
-        },
+        payload: chooseCardToPlayPayload(
+          engine.getState().G.players["p1"]!.zones.hand.slice(0, 2),
+          engine.getState().G.players["p1"]!.zones.hand[0]!,
+        ),
       });
 
       const prompt = engine.getPrompt(P1);
@@ -195,9 +219,7 @@ describe("Player Prompt", () => {
         type: "chooseCardToPlay",
         chooserId: P2,
         effectId: "",
-        payload: {
-          cardIds: [],
-        },
+        payload: chooseCardToPlayPayload([], engine.getState().G.players["p1"]!.zones.hand[0]!, P2),
       });
 
       const prompt = engine.getPrompt(P1);
@@ -220,10 +242,7 @@ describe("Player Prompt", () => {
         type: "chooseCardToPlay",
         chooserId: P1,
         effectId: "",
-        payload: {
-          cardIds: handIds,
-          free: true,
-        },
+        payload: chooseCardToPlayPayload(handIds, handIds[0]!, P1, true),
       });
 
       const prompt = engine.getPrompt(P1);
@@ -417,6 +436,42 @@ describe("Player Prompt", () => {
       }
     });
 
+    it("attack candidates are narrowed to Units that must attack", () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [welcomeToNightCityRetailMoxInciters],
+          field: [{ card: alphaCorpoSecurity, spent: true }],
+          eddies: 3,
+        },
+        {
+          field: [
+            { card: alphaRuthlessLowlife, spent: false, playedThisTurn: false },
+            { card: alphaSwordwiseHuscle, spent: false, playedThisTurn: false },
+          ],
+        },
+      );
+
+      engine.playCard(welcomeToNightCityRetailMoxInciters, { as: P1 });
+      engine.resolveEffectTarget(alphaRuthlessLowlife, { as: P1 });
+      engine.skipToNextPlayerTurn(P1);
+
+      const requiredId = engine.findCardId(alphaRuthlessLowlife, "field", P2) as string;
+      const otherId = engine.findCardId(alphaSwordwiseHuscle, "field", P2) as string;
+      const directSpec = getInputSpec(engine, P2, "attackRival");
+      const unitSpec = getInputSpec(engine, P2, "attackUnit");
+
+      expect(directSpec).toMatchObject({ type: "selectCard" });
+      if (directSpec?.type === "selectCard") {
+        expect(directSpec.candidates).toEqual([requiredId]);
+        expect(directSpec.candidates).not.toContain(otherId);
+      }
+      expect(unitSpec).toMatchObject({ type: "selectPair" });
+      if (unitSpec?.type === "selectPair") {
+        expect(unitSpec.fromCandidates).toEqual([requiredId]);
+        expect(unitSpec.fromCandidates).not.toContain(otherId);
+      }
+    });
+
     it("useBlocker candidates are ready units with blocker rule", () => {
       // ruthlessLowlife (spent, defender), corpoSecurity (blocker, ready), swordwiseHuscle (no blocker, ready)
       const engine = CyberpunkTestEngine.createWithFixture(
@@ -459,7 +514,7 @@ describe("Player Prompt", () => {
         type: "chooseCardToPlay",
         chooserId: P1,
         effectId: "",
-        payload: { cardIds: handIds },
+        payload: chooseCardToPlayPayload(handIds, handIds[0]!),
       });
 
       const spec = getInputSpec(engine, P1, "resolveCardToPlay");
@@ -468,6 +523,148 @@ describe("Player Prompt", () => {
       expect(spec!.type).toBe("selectCard");
       if (spec!.type === "selectCard") {
         expect(spec!.candidates).toEqual(handIds.map((id) => id as string));
+      }
+    });
+
+    it("does not offer activated abilities for stale field members whose card zone is hand", () => {
+      const engine = CyberpunkTestEngine.createWithFixture({
+        field: [welcomeToNightCityRetailOverwatchPanamSGift],
+        eddies: 5,
+      });
+      const cardId = engine.findCardId(welcomeToNightCityRetailOverwatchPanamSGift, "field", P1);
+      engine.getState().G.cardIndex[cardId as string]!.zone = "hand";
+
+      expect(getMoveIds(engine, P1)).not.toContain("activateAbility");
+      expect(
+        engine.executeMove(
+          "activateAbility",
+          { args: { cardId: cardId as string, abilityIndex: 1 } },
+          P1,
+        ),
+      ).toMatchObject({
+        success: false,
+        errorCode: "NOT_ON_FIELD",
+      });
+    });
+
+    it("does not offer activated abilities for non-legends in the legend area", () => {
+      const engine = CyberpunkTestEngine.createWithFixture({
+        field: [welcomeToNightCityRetailOverwatchPanamSGift],
+        eddies: 5,
+      });
+      const cardId = engine.findCardId(welcomeToNightCityRetailOverwatchPanamSGift, "field", P1);
+      const player = engine.getState().G.players[P1]!;
+      player.zones.field = player.zones.field.filter((id) => id !== cardId);
+      player.zones.legendArea = [cardId as never];
+      engine.getState().G.cardIndex[cardId as string]!.zone = "legendArea";
+
+      expect(getMoveIds(engine, P1)).not.toContain("activateAbility");
+      expect(
+        engine.executeMove(
+          "activateAbility",
+          { args: { cardId: cardId as string, abilityIndex: 1 } },
+          P1,
+        ),
+      ).toMatchObject({
+        success: false,
+        errorCode: "NOT_ON_FIELD",
+      });
+    });
+
+    it("offers activated abilities for gear attached to a legend in the legend area", () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          legendArea: [{ card: welcomeToNightCityRetailPanamPalmerNomadCavalry, faceDown: false }],
+          field: [welcomeToNightCityRetailOverwatchPanamSGift],
+          hand: [alphaRebootOptics],
+          eddies: 5,
+        },
+        {
+          field: [{ card: alphaCorpoSecurity, spent: true }],
+        },
+      );
+      const gearId = engine.findCardId(welcomeToNightCityRetailOverwatchPanamSGift, "field", P1);
+      const legendId = engine.findCardId(
+        welcomeToNightCityRetailPanamPalmerNomadCavalry,
+        "legendArea",
+        P1,
+      );
+      const player = engine.getState().G.players[P1]!;
+      player.zones.field = player.zones.field.filter((id) => id !== gearId);
+      player.zones.legendArea.push(gearId as never);
+      const gear = engine.getState().G.cardIndex[gearId as string]!;
+      const legend = engine.getState().G.cardIndex[legendId as string]!;
+      gear.zone = "legendArea";
+      gear.meta.attachedToId = legendId;
+      legend.meta.attachedGearIds.push(gearId);
+
+      const spec = getInputSpec(engine, P1, "activateAbility");
+
+      expect(spec).toBeDefined();
+      expect(spec!.type).toBe("selectAbility");
+      if (spec!.type === "selectAbility") {
+        expect(spec!.candidates).toContainEqual({ cardId: gearId as string, abilityIndex: 1 });
+      }
+      expect(
+        engine.executeMove(
+          "activateAbility",
+          { args: { cardId: gearId as string, abilityIndex: 1 } },
+          P1,
+        ),
+      ).toMatchObject({ success: true });
+    });
+
+    it("does not offer activated abilities whose required bindings have no targets", () => {
+      const engine = CyberpunkTestEngine.createWithFixture({
+        legendArea: [{ card: welcomeToNightCityRetailDumDumMaelstromTriggerman, faceDown: false }],
+        eddies: 2,
+      });
+
+      expect(getMoveIds(engine, P1)).not.toContain("activateAbility");
+    });
+
+    it("offers activated abilities once required binding targets exist", () => {
+      const engine = CyberpunkTestEngine.createWithFixture({
+        legendArea: [{ card: welcomeToNightCityRetailDumDumMaelstromTriggerman, faceDown: false }],
+        field: [alphaRuthlessLowlife],
+        eddies: 2,
+      });
+      const dumDumId = engine.findCardId(
+        welcomeToNightCityRetailDumDumMaelstromTriggerman,
+        "legendArea",
+        P1,
+      ) as string;
+
+      const spec = getInputSpec(engine, P1, "activateAbility");
+
+      expect(spec).toBeDefined();
+      expect(spec!.type).toBe("selectAbility");
+      if (spec!.type === "selectAbility") {
+        expect(spec!.candidates).toContainEqual({ cardId: dumDumId, abilityIndex: 2 });
+      }
+    });
+
+    it("does not offer activated abilities when no binding selection can satisfy follow-up effects", () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          field: [welcomeToNightCityRetailOverwatchPanamSGift],
+          hand: [alphaRuthlessLowlife],
+          eddies: 5,
+        },
+        {
+          field: [{ card: alphaArmoredMinotaur, spent: true }],
+        },
+      );
+      const overwatchId = engine.findCardId(
+        welcomeToNightCityRetailOverwatchPanamSGift,
+        "field",
+        P1,
+      ) as string;
+
+      const spec = getInputSpec(engine, P1, "activateAbility");
+
+      if (spec?.type === "selectAbility") {
+        expect(spec.candidates).not.toContainEqual({ cardId: overwatchId, abilityIndex: 1 });
       }
     });
 

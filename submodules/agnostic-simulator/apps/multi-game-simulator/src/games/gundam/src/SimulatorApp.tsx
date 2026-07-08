@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
 
 import { HintsProvider } from "./lib/use-hints-enabled.ts";
@@ -22,10 +21,9 @@ import { DualModeProvider } from "./components/ui/dual-mode-context.tsx";
 import { PendingEffectSelectionProvider } from "./components/ui/pending-effect-selection-context.tsx";
 import { CardInspectDialog } from "./components/ui/CardInspectDialogContainer.tsx";
 import { GundamSharedAnimationLayer } from "./animation/index.ts";
-import { GameBoard } from "./components/ui/GameBoard.tsx";
+import { GundamBoardLayout } from "./components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "./components/ui/GameTable.tsx";
 import { FloatingUndoButton } from "./components/ui/FloatingUndoButton.tsx";
-import { PhaseRibbon } from "./components/ui/PhaseRibbon.tsx";
 import { PriorityActionButton } from "./components/ui/PriorityActionButton.tsx";
 import type { DevRuntimeBotHandle } from "./game/dev-runtime.ts";
 import type { ViewerId } from "./game/types.ts";
@@ -40,16 +38,14 @@ export interface SimulatorAppProps {
 export function SimulatorApp({ runtime, staticResources, viewerId, bot }: SimulatorAppProps) {
   const layoutMode = useLayoutMode();
   const isMobile = layoutMode === "mobile";
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const matchTree = (
-    <GameBoard isMobile={isMobile} drawerOpen={drawerOpen} onDrawerOpenChange={setDrawerOpen}>
+    <GundamBoardLayout>
       <GameTable>
         <PlayerSeatContainer side="top" />
         {!isMobile && (
           <div className="relative h-0">
             <div className="centerline -top-px" />
-            <PhaseRibbon />
           </div>
         )}
         <PlayerSeatContainer side="bottom" />
@@ -64,7 +60,7 @@ export function SimulatorApp({ runtime, staticResources, viewerId, bot }: Simula
         <MatchOverviewModalContainer />
         <SubmitErrorToast />
       </GameTable>
-    </GameBoard>
+    </GundamBoardLayout>
   );
 
   return (

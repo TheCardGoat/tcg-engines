@@ -1,9 +1,9 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaKiroshiOptics,
-  alphaSwordwiseHuscle,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailGildedMatoN,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -34,17 +34,17 @@ describe("Gilded Maton (Retail) jsdom happy path", () => {
       const host = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
       const gear = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaKiroshiOptics.id,
+        welcomeToNightCityRetailKiroshiOptics.id,
       );
       const cheapTarget = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
 
       await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, host.instanceId, 1);
@@ -62,11 +62,15 @@ describe("Gilded Maton (Retail) jsdom happy path", () => {
       if ((await pom.getPendingChoiceType(CYBERPUNK_P1)) === "chooseTarget") {
         const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
         const eligibleDefinitions = await getChoiceDefinitionIds(pom, eligible);
-        expectIncludes("Gilded Maton eligible targets", eligibleDefinitions, alphaCorpoSecurity.id);
+        expectIncludes(
+          "Gilded Maton eligible targets",
+          eligibleDefinitions,
+          welcomeToNightCityRetailCorpoSecurity.id,
+        );
         expectExcludes(
           "Gilded Maton eligible targets",
           eligibleDefinitions,
-          alphaArmoredMinotaur.id,
+          embracingPowerRetailStarterDeckMinotaur.id,
         );
         await pom.resolveEffectTarget([cheapTarget.instanceId], CYBERPUNK_P1);
       }
@@ -77,8 +81,16 @@ describe("Gilded Maton (Retail) jsdom happy path", () => {
       await pom.expectFieldSize(CYBERPUNK_P2, 1);
       await pom.expectTrashSize(CYBERPUNK_P1, 1);
       await pom.expectTrashSize(CYBERPUNK_P2, 1);
-      await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P1, alphaKiroshiOptics.id);
-      await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaCorpoSecurity.id);
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailKiroshiOptics.id,
+      );
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P2,
+        welcomeToNightCityRetailCorpoSecurity.id,
+      );
       await pom.expectStructuralState();
     } finally {
       view.unmount();

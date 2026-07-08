@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
   embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailFieldOperator,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
@@ -15,16 +15,16 @@ describe("Minotaur", () => {
         gigArea: [{ dieType: "d8", faceValue: 6 }],
       },
       {
-        field: [{ card: alphaSwordwiseHuscle, spent: false }],
+        field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
         gigArea: [{ dieType: "d4", faceValue: 2 }],
       },
     );
 
     engine.playCard(embracingPowerRetailStarterDeckMinotaur, { as: P1 });
-    engine.resolveEffectTarget(alphaSwordwiseHuscle, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailSwordwiseHuscle, { as: P1 });
 
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
   });
 
@@ -36,7 +36,7 @@ describe("Minotaur", () => {
         gigArea: [{ dieType: "d4", faceValue: 2 }],
       },
       {
-        field: [{ card: alphaRuthlessLowlife, spent: false }],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
         gigArea: [{ dieType: "d8", faceValue: 6 }],
       },
     );
@@ -45,7 +45,7 @@ describe("Minotaur", () => {
 
     expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
     expect(engine.getCardsInZone("field", P2).map((card) => card.definitionId)).toContain(
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailFieldOperator.id,
     );
   });
 });

@@ -2,7 +2,11 @@ import type { GigDieId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseTargetPendingChoice } from "../types/match-state.ts";
 import { DIE_MAX_VALUES } from "../types/gig-die.ts";
-import { resumeCurrentTrigger } from "../ability-executor.ts";
+import {
+  continueTriggerResolution,
+  enqueueEventTriggers,
+  resumeCurrentTrigger,
+} from "../ability-executor.ts";
 import { resumeSuspendedEndTurn } from "./pass-phase.ts";
 
 export interface ResolveAdjustGigInput extends MoveInput {
@@ -90,6 +94,7 @@ export const resolveAdjustGigMove: MoveDefinition<ResolveAdjustGigInput> = {
     const dieId = choice.payload.dieId as GigDieId;
     const die = state.G.gigDice[dieId as string];
     const previousValue = die?.faceValue;
+    const eventsBefore = operations.event.getEmittedEvents().length;
     operations.gig.setGigValue(dieId, input.args.value);
     operations.game.setPendingChoice(undefined);
     operations.event.emit({
@@ -103,6 +108,12 @@ export const resolveAdjustGigMove: MoveDefinition<ResolveAdjustGigInput> = {
       },
       playerId,
     });
+    for (const emitted of operations.event.getEmittedEvents().slice(eventsBefore)) {
+      if (emitted.type === "gigValueChanged") {
+        enqueueEventTriggers(emitted, state, operations);
+      }
+    }
+    continueTriggerResolution(state, operations);
     resumeCurrentTrigger(state, operations);
     resumeSuspendedEndTurn(state, operations);
   },

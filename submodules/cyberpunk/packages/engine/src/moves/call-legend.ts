@@ -3,7 +3,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
 import { getDefinitionFor } from "../state/lookups.ts";
 import { availableEddies } from "./eddie-resources.ts";
-import { isDefensiveStep } from "./is-defensive-step.ts";
+import { isReactStep } from "./is-react-step.ts";
 
 export interface CallLegendInput extends MoveInput {
   args: {
@@ -15,12 +15,12 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
   available({ state, playerId }) {
     const player = state.G.players[playerId as string];
     if (!player) return false;
-    if (state.G.gamePhase !== "main" && !isDefensiveStep(state, playerId)) return false;
-    if (state.G.attackState && !isDefensiveStep(state, playerId)) return false;
-    if (!isDefensiveStep(state, playerId) && state.G.turnMetadata.activePlayerId !== playerId)
+    if (state.G.gamePhase !== "main" && !isReactStep(state, playerId)) return false;
+    if (state.G.attackState && !isReactStep(state, playerId)) return false;
+    if (!isReactStep(state, playerId) && state.G.turnMetadata.activePlayerId !== playerId)
       return false;
-    if (!isDefensiveStep(state, playerId) && player.calledLegendThisTurn) return false;
-    if (isDefensiveStep(state, playerId) && player.calledLegendThisRivalTurn) return false;
+    if (!isReactStep(state, playerId) && player.calledLegendThisTurn) return false;
+    if (isReactStep(state, playerId) && player.calledLegendThisRivalTurn) return false;
     if (availableEddies(state as import("../types/match-state.ts").MatchState, playerId) < 1)
       return false;
 
@@ -33,10 +33,10 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
   validate({ state, playerId, input }) {
     const player = state.G.players[playerId as string];
     if (!player) return { valid: false, error: "Player not found", errorCode: "PLAYER_NOT_FOUND" };
-    if (state.G.gamePhase !== "main" && !isDefensiveStep(state, playerId)) {
+    if (state.G.gamePhase !== "main" && !isReactStep(state, playerId)) {
       return { valid: false, error: "Not in a call legend step", errorCode: "WRONG_PHASE" };
     }
-    const isDefending = isDefensiveStep(state, playerId);
+    const isDefending = isReactStep(state, playerId);
     if (state.G.attackState && !isDefending) {
       return { valid: false, error: "Attack in progress", errorCode: "ATTACK_IN_PROGRESS" };
     }
@@ -115,7 +115,7 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
     operations.game.spendEddies(playerId, 1, "callLegend");
     operations.card.setMeta(legendId, { faceDown: false });
-    if (isDefensiveStep(state, playerId)) {
+    if (isReactStep(state, playerId)) {
       operations.game.markCalledLegendThisRivalTurn(playerId);
     } else {
       operations.game.markCalledLegendThisTurn(playerId);

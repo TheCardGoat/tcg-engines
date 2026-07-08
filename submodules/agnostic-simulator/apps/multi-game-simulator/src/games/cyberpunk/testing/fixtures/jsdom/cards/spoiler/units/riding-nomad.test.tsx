@@ -1,5 +1,9 @@
 import { describe, test } from "vite-plus/test";
-import { alphaArmoredMinotaur, alphaCorpoSecurity, spoilerRidingNomad } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailRidingNomad,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -19,24 +23,24 @@ describe("Riding Nomad jsdom happy path", () => {
       const nomadInHand = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        spoilerRidingNomad.id,
+        welcomeToNightCityRetailRidingNomad.id,
       );
       const spentTarget = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
       const readyRival = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
 
       await pom.playCardFromHand(nomadInHand.instanceId, CYBERPUNK_P1);
       const nomad = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        spoilerRidingNomad.id,
+        welcomeToNightCityRetailRidingNomad.id,
       );
       expectEqual("Riding Nomad played this turn", nomad.playedThisTurn, true);
       await pom.expectFieldCardGrantedRule(

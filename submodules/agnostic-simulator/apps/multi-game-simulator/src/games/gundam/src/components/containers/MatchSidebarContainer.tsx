@@ -123,12 +123,6 @@ export function MatchSidebarContainer({ onCollapse }: MatchSidebarContainerProps
   const onConcede = useCallback(() => {
     report(adapter.submit(asMoveName("concede"), {}));
   }, [adapter, report]);
-  const onUndo = useCallback(() => {
-    adapter.undo();
-  }, [adapter]);
-  // `useBoardProjection` above subscribes us to runtime state updates,
-  // so this re-reads on every state transition.
-  const canUndo = adapter.canUndo();
 
   return (
     <MatchSidebar
@@ -138,14 +132,12 @@ export function MatchSidebarContainer({ onCollapse }: MatchSidebarContainerProps
       priorityHolder={priorityHolder}
       log={log}
       eventLogEntries={eventLogEntries}
-      onUndo={onUndo}
-      canUndo={canUndo}
       onConcede={onConcede}
       onCollapse={onCollapse}
       // `VsAiControls` short-circuits to null when no `VsAiProvider`
       // is in the tree (i.e. non-AI fixtures). Wiring it here keeps
       // the sidebar presentational and the controls consistently
-      // placed above `BATTLE DATA` on AI matches.
+      // placed above the comms log on AI matches.
       aboveBattleData={
         <>
           <VsAiControls />

@@ -35,6 +35,22 @@ export const welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch = defi
       },
       bindings: [
         {
+          id: "selectedGear",
+          target: {
+            selector: "card",
+            controller: "friendly",
+            zones: ["trash"],
+            cardTypes: ["gear"],
+            classifications: ["Cyberware"],
+            maxCost: 2,
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
+            },
+          },
+        },
+        {
           id: "selectedUnit",
           target: {
             selector: "card",
@@ -54,17 +70,8 @@ export const welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch = defi
         {
           effect: "attachCard",
           target: {
-            selector: "card",
-            controller: "friendly",
-            zones: ["trash"],
-            cardTypes: ["gear"],
-            classifications: ["Cyberware"],
-            maxCost: 2,
-            selection: {
-              mode: "choose",
-              min: 1,
-              max: 1,
-            },
+            selector: "bound",
+            id: "selectedGear",
           },
           attachTo: {
             selector: "bound",

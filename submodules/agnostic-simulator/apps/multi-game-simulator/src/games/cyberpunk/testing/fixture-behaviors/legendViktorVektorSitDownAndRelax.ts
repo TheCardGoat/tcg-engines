@@ -1,7 +1,11 @@
 import {
-  alphaKiroshiOptics,
-  alphaMantisBlades,
-  alphaViktorVektorSitDownAndRelax,
+  welcomeToNightCityRetailKiroshiOptics,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  theHeistRetailStarterDeckViktorVektorSitDownAndRelax,
+  welcomeToNightCityRetailMandibularUpgrade,
+  welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "../cyberpunk-simulator-pom";
@@ -9,10 +13,33 @@ import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-
 
 export const legendViktorVektorSitDownAndRelaxBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "legendViktorVektorSitDownAndRelax",
-  label: "Viktor Vektor - call searches top deck for gear",
-  references: ["packages/engine/src/cards/alpha/legends/viktor-vektor-sit-down-and-relax.test.ts"],
+  label: "Viktor Vektor - call searches top deck for gear and retail unit equips trash Gear",
+  references: [
+    "packages/engine/src/cards/alpha/legends/viktor-vektor-sit-down-and-relax.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/viktor-vektor-you-might-feel-a-little-pinch.test.ts",
+  ],
   async run(pom) {
     const viktor = await pom.getCardInZoneByIndex("legendArea", CYBERPUNK_P1, 0);
+    const host = await pom.getCardInZoneByDefinitionId(
+      "field",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
+    );
+    const otherHost = await pom.getCardInZoneByDefinitionId(
+      "field",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailSecondhandBombus.id,
+    );
+    const retailViktor = await pom.getCardInZoneByDefinitionId(
+      "hand",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch.id,
+    );
+    const mandibularUpgrade = await pom.getCardInZoneByDefinitionId(
+      "trash",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailMandibularUpgrade.id,
+    );
 
     await pom.callLegend(viktor.instanceId, CYBERPUNK_P1);
 
@@ -25,9 +52,9 @@ export const legendViktorVektorSitDownAndRelaxBehavior: CyberpunkFixtureBehavior
     expectEqual(
       "Viktor definition after call",
       calledViktor.definitionId,
-      alphaViktorVektorSitDownAndRelax.id,
+      theHeistRetailStarterDeckViktorVektorSitDownAndRelax.id,
     );
-    await pom.expectEddies(CYBERPUNK_P1, 2);
+    await pom.expectEddies(CYBERPUNK_P1, 3);
     await pom.expectPendingChoiceType(CYBERPUNK_P1, "searchDeck");
 
     const revealed = await pom.getSearchDeckRevealedCardIds(CYBERPUNK_P1);
@@ -36,8 +63,8 @@ export const legendViktorVektorSitDownAndRelaxBehavior: CyberpunkFixtureBehavior
       revealed.map((cardId) => pom.getCardDefinitionId(cardId)),
     );
     const selected = [
-      revealed[revealedDefinitions.indexOf(alphaKiroshiOptics.id)]!,
-      revealed[revealedDefinitions.indexOf(alphaMantisBlades.id)]!,
+      revealed[revealedDefinitions.indexOf(welcomeToNightCityRetailKiroshiOptics.id)]!,
+      revealed[revealedDefinitions.indexOf(welcomeToNightCityRetailMantisBlades.id)]!,
     ];
     if (selected.some((cardId) => !cardId)) {
       throw new Error("Expected Viktor search to reveal Kiroshi Optics and Mantis Blades.");
@@ -46,7 +73,47 @@ export const legendViktorVektorSitDownAndRelaxBehavior: CyberpunkFixtureBehavior
     await pom.resolveSearchDeck(selected, CYBERPUNK_P1);
 
     await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
+    await pom.expectHandSize(CYBERPUNK_P1, 4);
+    expectEqual("Viktor deck after selecting two gear", await pom.getDeckSize(CYBERPUNK_P1), 34);
+
+    await pom.playCardFromHand(retailViktor.instanceId, CYBERPUNK_P1);
+
+    await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+    const eligibleGearTargets = await pom.getEligibleTargetIds(CYBERPUNK_P1);
+    if (!eligibleGearTargets.includes(mandibularUpgrade.instanceId)) {
+      throw new Error("Expected retail Viktor to let P1 select Mandibular Upgrade from trash.");
+    }
+
+    await pom.resolveEffectTarget([mandibularUpgrade.instanceId], CYBERPUNK_P1);
+
+    await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+    const eligibleAttachTargets = await pom.getEligibleTargetIds(CYBERPUNK_P1);
+    if (!eligibleAttachTargets.includes(host.instanceId)) {
+      throw new Error("Expected retail Viktor to let P1 select Swordwise Huscle as attach host.");
+    }
+    if (!eligibleAttachTargets.includes(otherHost.instanceId)) {
+      throw new Error("Expected retail Viktor to let P1 select Secondhand Bombus as attach host.");
+    }
+    if (eligibleAttachTargets.includes(retailViktor.instanceId)) {
+      throw new Error("Expected retail Viktor not to be eligible to attach Gear to itself.");
+    }
+
+    await pom.resolveEffectTarget([host.instanceId], CYBERPUNK_P1);
+
+    await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
+    await pom.expectEddies(CYBERPUNK_P1, 0);
     await pom.expectHandSize(CYBERPUNK_P1, 3);
-    expectEqual("Viktor deck after selecting two gear", await pom.getDeckSize(CYBERPUNK_P1), 37);
+    await pom.expectTrashSize(CYBERPUNK_P1, 0);
+    await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, host.instanceId, 1);
+    const attachedGear = await pom.getCardInZoneByInstanceId(
+      "field",
+      CYBERPUNK_P1,
+      mandibularUpgrade.instanceId,
+    );
+    expectEqual(
+      "Mandibular Upgrade attached to selected unit",
+      attachedGear.attachedToId,
+      host.instanceId,
+    );
   },
 };

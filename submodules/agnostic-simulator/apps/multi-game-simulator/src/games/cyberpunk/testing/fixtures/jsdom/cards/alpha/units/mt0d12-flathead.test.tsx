@@ -1,5 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
-import { alphaCorpoSecurity, alphaMt0d12Flathead } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  theHeistRetailStarterDeckMt0d12Flathead,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 
@@ -19,12 +22,12 @@ describe("MT0D12 Flathead jsdom happy path", () => {
       const flathead = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaMt0d12Flathead.id,
+        theHeistRetailStarterDeckMt0d12Flathead.id,
       );
       const blocker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
 
       await pom.attackRival(flathead.instanceId, CYBERPUNK_P1);

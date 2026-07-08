@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -22,7 +22,7 @@ describe("Gorilla Arms jsdom happy path", () => {
       const attacker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaTBugAmateurPhilosopher.id,
+        welcomeToNightCityRetailTBugAmateurPhilosopher.id,
       );
       const firstD4 = expectDefined(
         "Gorilla Arms first rival d4",

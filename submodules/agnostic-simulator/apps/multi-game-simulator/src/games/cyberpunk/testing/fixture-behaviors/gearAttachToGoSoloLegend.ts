@@ -1,4 +1,7 @@
-import { alphaMantisBlades, alphaVCorporateExile } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailMantisBlades,
+  theHeistRetailStarterDeckVCorporateExile,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "../cyberpunk-simulator-pom";
 import { type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -8,11 +11,15 @@ export const gearAttachToGoSoloLegendBehavior: CyberpunkFixtureBehavior = {
   label: "Mantis Blades - attach to a GO SOLO legend on field",
   references: ["packages/engine/src/cards/alpha/gear/mantis-blades.test.ts"],
   async run(pom) {
-    const gear = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaMantisBlades.id);
+    const gear = await pom.getCardInZoneByDefinitionId(
+      "hand",
+      CYBERPUNK_P1,
+      welcomeToNightCityRetailMantisBlades.id,
+    );
     const goSoloLegend = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaVCorporateExile.id,
+      theHeistRetailStarterDeckVCorporateExile.id,
     );
 
     await pom.expectHandSize(CYBERPUNK_P1, 1);

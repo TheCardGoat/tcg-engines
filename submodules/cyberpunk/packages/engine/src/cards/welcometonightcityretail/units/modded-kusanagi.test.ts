@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaCorpoSecurity, welcomeToNightCityRetailModdedKusanagi } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailModdedKusanagi,
+} from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Modded Kusanagi retail printing", () => {
@@ -10,15 +13,23 @@ describe("Modded Kusanagi retail printing", () => {
         eddies: 6,
       },
       {
-        field: [{ card: alphaCorpoSecurity, spent: true, playedThisTurn: false }],
+        field: [
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: true, playedThisTurn: false },
+        ],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailModdedKusanagi, { as: P1 });
 
-    engine.attackUnit(welcomeToNightCityRetailModdedKusanagi, alphaCorpoSecurity, { as: P1 });
+    engine.attackUnit(
+      welcomeToNightCityRetailModdedKusanagi,
+      welcomeToNightCityRetailCorpoSecurity,
+      {
+        as: P1,
+      },
+    );
     expect(engine.getAttackState()?.defenderId).toBe(
-      engine.findCardId(alphaCorpoSecurity, "field", P2),
+      engine.findCardId(welcomeToNightCityRetailCorpoSecurity, "field", P2),
     );
   });
 

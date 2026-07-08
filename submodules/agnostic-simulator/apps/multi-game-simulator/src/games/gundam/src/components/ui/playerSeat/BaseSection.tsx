@@ -1,7 +1,9 @@
 import type { CSSProperties } from "react";
+import { SingleCardZone } from "@tcg/simulator-ui";
 
 import { resolveCardDimensions } from "../card/card-image-format.ts";
 import { GameCard } from "../GameCard.tsx";
+import { toSimulatorEntity, toSimulatorZone } from "../card/to-simulator-entity.ts";
 import type { GameCardData } from "../types.ts";
 import { PlayZoneCardBands } from "./PlayZoneCardBands.tsx";
 
@@ -26,6 +28,17 @@ export function BaseSection({ cards, label, isTop, zoneId, compact = false }: Ba
   // arm's length on a monitor.
   const cardSize = compact ? "micro" : "tiny";
   const { displayWidth, displayHeight } = resolveCardDimensions(cardSize);
+  const entities = card ? [toSimulatorEntity(card, { zoneId })] : [];
+  const zone = toSimulatorZone(
+    zoneId,
+    label,
+    entities.map((entity) => entity.id),
+    {
+      role: "support",
+      count: cards.length,
+      layoutHint: "stack",
+    },
+  );
   const statVars: CSSProperties & Record<string, string> = {
     "--play-pill-size": "34px",
     "--play-pill-text-size": "15px",
@@ -40,7 +53,16 @@ export function BaseSection({ cards, label, isTop, zoneId, compact = false }: Ba
       style={{ width: displayWidth, height: displayHeight }}
     >
       <div role="list" className="contents">
-        {card ? (
+        {compact ? (
+          <SingleCardZone
+            zone={zone}
+            entities={entities}
+            entityCount={cards.length}
+            label={label}
+            density="mini"
+            className="!min-h-0 !w-full !border-0 !bg-transparent !p-0"
+          />
+        ) : card ? (
           <div
             role="listitem"
             aria-label={card.name}

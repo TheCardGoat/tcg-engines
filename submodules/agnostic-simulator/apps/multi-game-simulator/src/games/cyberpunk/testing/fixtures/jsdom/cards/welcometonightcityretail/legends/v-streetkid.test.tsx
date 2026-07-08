@@ -1,6 +1,6 @@
 import { describe, test } from "vite-plus/test";
 import {
-  spoilerAfterpartyAtLizzieS,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
   welcomeToNightCityRetailVStreetkid,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -44,7 +44,11 @@ describe("V - Streetkid (Retail) jsdom happy path", () => {
       const deckAfter = await pom.getDeckSize(CYBERPUNK_P1);
       expectEqual("V-Streetkid deck after", deckAfter, deckBefore - 3);
       await pom.expectHandSize(CYBERPUNK_P1, handBefore + 1);
-      await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, spoilerAfterpartyAtLizzieS.id);
+      await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailAfterpartyAtLizzieS.id,
+      );
 
       await pom.expectStructuralState();
     } finally {

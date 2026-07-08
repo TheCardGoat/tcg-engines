@@ -38,8 +38,8 @@ test("parser builds structured cards from generated source", async () => {
   expect(prm01Cards).toHaveLength(1);
   expect(theHeistRetailStarterDeckCards).toHaveLength(5);
   expect(embracingPowerRetailStarterDeckCards).toHaveLength(5);
-  expect(welcomeToNightCityRetailCards).toHaveLength(69);
-  expect(cards).toHaveLength(136);
+  expect(welcomeToNightCityRetailCards).toHaveLength(71);
+  expect(cards).toHaveLength(138);
 
   const armoredMinotaur = alphaCards.find((card) => card.slug === "armored-minotaur");
   expect(armoredMinotaur?.abilities).toHaveLength(1);
@@ -92,6 +92,27 @@ test("parser builds structured cards from generated source", async () => {
       conditions: [{ condition: "hasEvenAndOddGigValues", controller: "friendly" }],
     },
   ]);
+
+  const augmentedNegotiators = welcomeToNightCityRetailCards.find(
+    (card) => card.slug === "augmented-negotiators",
+  );
+  expect(augmentedNegotiators?.abilities[1]).toMatchObject({
+    trigger: {
+      trigger: "event",
+      event: {
+        event: "blockerActivated",
+      },
+    },
+    effects: [{ effect: "discardFromHand", player: "rival", amount: 1 }],
+  });
+
+  const jackedInVoodooBoy = welcomeToNightCityRetailCards.find(
+    (card) => card.slug === "jacked-in-voodoo-boy",
+  );
+  expect(jackedInVoodooBoy?.abilities[0]?.effects[0]).toMatchObject({
+    effect: "grantRule",
+    rule: "requiresProgramPlayedThisTurn",
+  });
 
   const chromeReverie = spoilerCards.find((card) => card.slug === "chrome-reverie");
   expect(chromeReverie?.abilities[0]?.effects).toMatchObject([
@@ -253,8 +274,8 @@ test("generator writes set card files and root indexes", async () => {
   expect(result.prm01Cards).toHaveLength(1);
   expect(result.theHeistRetailStarterDeckCards).toHaveLength(5);
   expect(result.embracingPowerRetailStarterDeckCards).toHaveLength(5);
-  expect(result.welcomeToNightCityRetailCards).toHaveLength(69);
-  expect(result.retailCards).toHaveLength(79);
+  expect(result.welcomeToNightCityRetailCards).toHaveLength(71);
+  expect(result.retailCards).toHaveLength(81);
   expect(
     result.alphaCards.find((card) => card.slug === "yorinobu-arasaka-embracing-destruction")?.id,
   ).toBe("stable-existing-yori-id");

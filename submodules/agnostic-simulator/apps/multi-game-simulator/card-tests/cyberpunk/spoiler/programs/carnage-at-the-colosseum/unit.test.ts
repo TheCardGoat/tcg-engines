@@ -9,20 +9,20 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaArmoredMinotaur,
-  alphaCorpoSecurity,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  spoilerCarnageAtTheColosseum,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailCarnageAtTheColosseum,
 } from "@tcg/cyberpunk-cards";
 import type { CommandSuccess } from "@cyberpunk-engine/types/commands.ts";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const carnage = spoilerCarnageAtTheColosseum; // program, cost 6
-const corpoSecurity = alphaCorpoSecurity; // unit, cost 2, power 2
-const lowlife = alphaRuthlessLowlife; // unit, power 1
-const huscle = alphaSwordwiseHuscle; // unit, power 5
-const minotaur = alphaArmoredMinotaur; // unit, power 9
+const carnage = welcomeToNightCityRetailCarnageAtTheColosseum; // program, cost 6
+const corpoSecurity = welcomeToNightCityRetailCorpoSecurity; // unit, cost 2, power 2
+const lowlife = welcomeToNightCityRetailMoxInciters; // unit, power 1
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // unit, power 5
+const minotaur = embracingPowerRetailStarterDeckMinotaur; // unit, power 9
 
 function actionMoveLogTexts(result: CommandSuccess): string[] {
   return result.moveLogs.flatMap((log) =>

@@ -7,7 +7,10 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaArmoredMinotaur, alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailMoxInciters,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -37,7 +40,7 @@ describe("unitRuthlessLowlife fixture behavior", () => {
       const lowlife = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaRuthlessLowlife.id,
+        welcomeToNightCityRetailMoxInciters.id,
       );
       const p2GigToSteal = (await pom.getGigDice(CYBERPUNK_P2))[0];
       if (!p2GigToSteal) {
@@ -57,7 +60,7 @@ describe("unitRuthlessLowlife fixture behavior", () => {
       const minotaur = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaArmoredMinotaur.id,
+        embracingPowerRetailStarterDeckMinotaur.id,
       );
       const p1GigToSteal = (await pom.getGigDice(CYBERPUNK_P1))[0];
       if (!p1GigToSteal) {

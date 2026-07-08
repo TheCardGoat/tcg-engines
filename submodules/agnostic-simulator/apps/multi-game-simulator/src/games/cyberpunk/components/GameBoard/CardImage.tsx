@@ -1,6 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, type MouseEvent } from "react";
 import { AspectRatio } from "@mantine/core";
+import { useHasHover } from "../../../../lib/media-query";
 import { useCardPreview, type CardPreviewDetails } from "../CardPreview/CardPreviewContext";
+import { useCardInspect } from "./CardInspectContext";
 import classes from "./CardImage.module.css";
 
 export const CARD_BACK = "https://r2.tcg.online/public/cyberpunk/cards/back/card-back.webp";
@@ -20,6 +22,8 @@ interface CardImageProps {
   color?: "blue" | "green" | "red" | "yellow";
   /** Face-up card facts shown while the hover preview image is loading or unavailable. */
   previewDetails?: CardPreviewDetails;
+  /** On touch-only devices, tap the image itself to open the card inspect modal. */
+  inspectOnTap?: boolean;
   className?: string;
   onImageLoad?: () => void;
   onImageError?: () => void;
@@ -33,6 +37,7 @@ export function CardImage({
   disablePreview = false,
   color,
   previewDetails,
+  inspectOnTap = false,
   className,
   onImageLoad,
   onImageError,
@@ -41,9 +46,38 @@ export function CardImage({
     faceDown || !imageUrl ? (cardType === "legend" ? LEGEND_CARD_BACK : CARD_BACK) : imageUrl;
   const imageRef = useRef<HTMLImageElement | null>(null);
   const { show, hide } = useCardPreview();
+  const { inspect } = useCardInspect();
+  const hasHover = useHasHover();
   // Face-down cards (deck/eddies/legend backs) don't reveal the actual card,
   // so previewing them adds no information.
   const previewable = !disablePreview && !faceDown && !!imageUrl;
+  const hoverPreviewable = previewable && hasHover;
+  const tapInspectable = previewable && inspectOnTap && !hasHover;
+  const showPreview = useCallback(() => {
+    if (!previewable) return;
+
+    show({
+      imageUrl: src,
+      alt,
+      color,
+      details: previewDetails ?? { name: alt },
+    });
+  }, [alt, color, previewDetails, previewable, show, src]);
+  const openInspect = useCallback(
+    (event: MouseEvent<HTMLElement>) => {
+      if (!tapInspectable) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      hide();
+      inspect({
+        imageUrl: src,
+        name: previewDetails?.name ?? alt,
+        color,
+      });
+    },
+    [alt, color, hide, inspect, previewDetails?.name, src, tapInspectable],
+  );
 
   useEffect(() => {
     if (!onImageLoad && !onImageError) return;
@@ -62,18 +96,11 @@ export function CardImage({
     <AspectRatio
       ratio={CARD_ASPECT_RATIO}
       className={`${classes.wrap} ${className ?? ""}`}
-      onMouseEnter={
-        previewable
-          ? () =>
-              show({
-                imageUrl: src,
-                alt,
-                color,
-                details: previewDetails ?? { name: alt },
-              })
-          : undefined
-      }
-      onMouseLeave={previewable ? () => hide() : undefined}
+      onMouseEnter={hoverPreviewable ? showPreview : undefined}
+      onMouseLeave={hoverPreviewable ? () => hide() : undefined}
+      onFocus={hoverPreviewable ? showPreview : undefined}
+      onBlur={hoverPreviewable ? () => hide() : undefined}
+      onClick={tapInspectable ? openInspect : undefined}
     >
       <img
         ref={imageRef}

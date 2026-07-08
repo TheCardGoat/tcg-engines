@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { spoilerRoycePsychoOnTheEdge } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailRoycePsychoOnTheEdge } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -13,7 +13,7 @@ test("Royce - Psycho on the Edge - gear-scaled GO SOLO", async ({ page }) => {
   const royce = await pom.getCardInZoneByDefinitionId(
     "legendArea",
     CYBERPUNK_P1,
-    spoilerRoycePsychoOnTheEdge.id,
+    welcomeToNightCityRetailRoycePsychoOnTheEdge.id,
   );
 
   const legendView = await pom.getCardView(royce.instanceId, CYBERPUNK_P1);

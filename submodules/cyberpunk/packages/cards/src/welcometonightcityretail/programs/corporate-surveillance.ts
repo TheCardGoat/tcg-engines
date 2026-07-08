@@ -44,6 +44,11 @@ export const welcomeToNightCityRetailCorporateSurveillance = defineCyberpunkCard
             zones: ["field"],
             cardTypes: ["unit"],
             maxCost: 4,
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
+            },
           },
         },
       ],

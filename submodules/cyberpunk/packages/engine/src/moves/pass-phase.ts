@@ -153,11 +153,12 @@ function finishEndTurn(
 
   defeatCardsMarkedForEndTurn(state, operations);
 
+  const opponentId = state.ctx.playerIds.find((id) => id !== playerId)!;
   operations.game.cleanupTurnEffects();
   operations.game.resetTurnFlags(playerId);
+  operations.game.resetTurnFlags(opponentId);
   state.G.turnMetadata.suspendedEndTurn = undefined;
 
-  const opponentId = state.ctx.playerIds.find((id) => id !== playerId)!;
   const noGigTaken = !state.G.turnMetadata.gigTakenThisTurn;
 
   // Overtime begins after the last player's 7th turn.
@@ -223,14 +224,6 @@ function finishEndTurn(
     return;
   }
 
-  // Empty fixer — no gig to take. Deck-out can happen after the draw above.
-  const newOpponent = state.G.players[opponentId as string];
-  const deckEmpty = (newOpponent?.zones.deck.length ?? 0) === 0;
-  if (deckEmpty) {
-    operations.game.endGame(playerId, "deck_out_victory");
-    return;
-  }
-
   operations.game.setPhase("main");
 }
 
@@ -239,7 +232,7 @@ function defeatCardsMarkedForEndTurn(state: MatchState, operations: Operations):
     const card = state.G.cardIndex[cardId as string];
     if (!card || card.zone !== "field") continue;
     const hadAttachedCards = card.meta.attachedGearIds.length > 0;
-    operations.card.moveAttachedGear(cardId, "trash");
+    operations.card.moveAttachedGear(cardId, "trash", { detachAfterMove: true });
     operations.zone.moveCard(cardId, "trash", card.controllerId);
     const event = {
       type: "cardDefeated" as const,

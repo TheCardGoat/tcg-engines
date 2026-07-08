@@ -72,7 +72,7 @@ export type ScenarioId =
   | "openingMain"
   | "attackStep"
   | "stealGigTest"
-  | "defensiveStep"
+  | "reactStep"
   | "chooseCardTarget"
   | "opponentTurn"
   | "endGame"

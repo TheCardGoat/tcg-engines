@@ -5,12 +5,14 @@ import type {
   InteractionSubmissionValue,
 } from "@tcg/protocol";
 import { Board, EventLogPanel, InteractionPanel, MobileShell } from "@tcg/simulator-ui";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import type { SimulatorRendererPackage, SimulatorRendererProps } from "@tcg/simulator-contract";
+import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
 
 import { AiControlPanel } from "../components/AiControlPanel";
 import { ChatPanel } from "../components/ChatPanel";
 import { ConnectionPanel } from "../components/ConnectionDiagnostics";
+import { CardNameToken } from "../components/CardDisplay/CardNameToken";
 import { EndGameModal } from "../components/EndGameModal";
 import { GameStateProvider } from "../components/GameBoard";
 import { CyberpunkSharedAnimationLayer } from "../animation";
@@ -39,6 +41,8 @@ import { projectMoveLogEntries } from "../engine/moveLogProjection";
 import { useSimulatorProjection } from "../engine/useSimulatorProjection";
 import classes from "./BoardShared.module.css";
 import sidebarClasses from "./Sidebar.module.css";
+
+const EVENT_LOG_ENTRY_CAP = 200;
 
 type RendererPackage = ComponentType<SimulatorRendererProps>;
 
@@ -255,7 +259,9 @@ function SidebarContent({
   onClaimRivalDrop,
 }: BoardSharedContentProps) {
   const { matchState, moveLogs, humanSide } = useEngine();
-  const eventLogEntries = projectMoveLogEntries(matchState, moveLogs, humanSide);
+  const eventLogEntries = projectMoveLogEntries(matchState, moveLogs, humanSide).slice(
+    -EVENT_LOG_ENTRY_CAP,
+  );
 
   return (
     <div className={sidebarClasses.sidebar}>
@@ -272,8 +278,55 @@ function SidebarContent({
         />
       </div>
       <div className={sidebarClasses.logPanel}>
-        <EventLogPanel embedded entries={eventLogEntries} />
+        <EventLogPanel embedded entries={eventLogEntries} renderMessage={renderEventLogMessage} />
       </div>
     </div>
   );
+}
+
+function renderEventLogMessage(entry: SimulatorEventLogEntry): ReactNode {
+  if (!entry.cardRefs || entry.cardRefs.length === 0) {
+    return entry.message;
+  }
+
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+  const refsByName = new Map<string, NonNullable<SimulatorEventLogEntry["cardRefs"]>>();
+  for (const ref of entry.cardRefs) {
+    const queue = refsByName.get(ref.name) ?? [];
+    queue.push(ref);
+    refsByName.set(ref.name, queue);
+  }
+  const names = [...refsByName.keys()].sort((a, b) => b.length - a.length);
+  const pattern = new RegExp(`\\b(${names.map(escapeRegExp).join("|")})\\b`, "g");
+
+  for (const match of entry.message.matchAll(pattern)) {
+    const matchedName = match[0];
+    const index = match.index ?? 0;
+    if (index > cursor) {
+      parts.push(entry.message.slice(cursor, index));
+    }
+    const ref = refsByName.get(matchedName)?.shift();
+    parts.push(
+      <CardNameToken
+        key={`${entry.id}:${index}:${matchedName}`}
+        cardId={ref?.id}
+        fallbackName={matchedName}
+        interactive={false}
+      />,
+    );
+    cursor = index + matchedName.length;
+  }
+
+  if (parts.length === 0) {
+    return entry.message;
+  }
+  if (cursor < entry.message.length) {
+    parts.push(entry.message.slice(cursor));
+  }
+  return parts;
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

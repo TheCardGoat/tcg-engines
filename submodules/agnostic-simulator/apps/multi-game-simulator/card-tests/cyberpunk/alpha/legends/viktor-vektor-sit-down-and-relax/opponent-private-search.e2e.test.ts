@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaKiroshiOptics } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailKiroshiOptics } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -27,7 +27,7 @@ test("Viktor Vektor - opponent private search", async ({ page }) => {
   expectEqual("P2 revealed search card count", revealed.length, 5);
 
   const definitions = await Promise.all(revealed.map((cardId) => pom.getCardDefinitionId(cardId)));
-  const kiroshiId = revealed[definitions.indexOf(alphaKiroshiOptics.id)];
+  const kiroshiId = revealed[definitions.indexOf(welcomeToNightCityRetailKiroshiOptics.id)];
   if (!kiroshiId) {
     throw new Error("Expected P2 Viktor search to reveal Kiroshi Optics.");
   }

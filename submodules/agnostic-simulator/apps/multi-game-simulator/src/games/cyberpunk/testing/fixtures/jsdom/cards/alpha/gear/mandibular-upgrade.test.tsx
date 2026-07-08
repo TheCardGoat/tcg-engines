@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -19,7 +19,7 @@ describe("Mandibular Upgrade jsdom happy path", () => {
       const blocker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
       const initialAttack = await pom.getAttackState();
       if (!initialAttack) {
@@ -27,7 +27,7 @@ describe("Mandibular Upgrade jsdom happy path", () => {
       }
 
       expectEqual("Mandibular initial attack kind", initialAttack.kind, "direct");
-      expectEqual("Mandibular initial attack step", initialAttack.step, "defensive");
+      expectEqual("Mandibular initial attack step", initialAttack.step, "react");
       expectEqual("Mandibular attack rival", initialAttack.rivalId, CYBERPUNK_P1);
       await pom.expectFieldCardGrantedRule(CYBERPUNK_P1, blocker.instanceId, "blocker", true);
       await pom.expectFieldCardSpent(CYBERPUNK_P1, blocker.instanceId, false);

@@ -320,6 +320,49 @@ describe("chooseTargetResolver", () => {
     });
   });
 
+  test("discardFromHand picks the cheapest eligible hand card", () => {
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "discardFromHand",
+        amount: 1,
+        player: "p1",
+        eligibleIds: ["h-2"],
+      },
+    };
+    const result = chooseTargetResolver(choice, stubCtx);
+    expect(result).toEqual({
+      kind: "command",
+      move: "resolveDiscardFromHand",
+      args: { cardIds: ["h-2"] },
+    });
+  });
+
+  test("effectTarget hand bindings pick the highest-cost card", () => {
+    const hand = stubCtx.view.players.p1!.zones.hand;
+    if (!Array.isArray(hand)) throw new Error("Expected p1 hand fixture");
+    const choice: ChooseTargetChoicePrompt = {
+      type: "chooseTarget",
+      chooserId: "p1",
+      payload: {
+        type: "effectTarget",
+        targetKind: "card",
+        eligibleIds: ["h-1", "h-2"],
+        min: 1,
+        max: 1,
+        canDecline: false,
+        cards: [hand[0]!, hand[1]!],
+      },
+    };
+
+    expect(chooseTargetResolver(choice, stubCtx)).toEqual({
+      kind: "command",
+      move: "resolveEffectTarget",
+      args: { targetIds: ["h-2"] },
+    });
+  });
+
   test("adjustGig increases own die toward maxFaceValue", () => {
     const choice: ChooseTargetChoicePrompt = {
       type: "chooseTarget",
@@ -567,6 +610,7 @@ describe("defaultChoiceResolvers map", () => {
       [
         "chooseCardToMove",
         "chooseCardToPlay",
+        "chooseCardType",
         "chooseEffect",
         "chooseGigsToSteal",
         "chooseTrigger",

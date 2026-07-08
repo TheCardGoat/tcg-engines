@@ -1,4 +1,4 @@
-import { spoilerKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -14,7 +14,7 @@ export const unitKerryEurodyneTheLastRockerboyBehavior: CyberpunkFixtureBehavior
     const kerry = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      spoilerKerryEurodyneTheLastRockerboy.id,
+      welcomeToNightCityRetailKerryEurodyneTheLastRockerboy.id,
     );
     const abilityCandidates = await pom.getMoveCandidateIds(CYBERPUNK_P1, "activateAbility");
     if (!abilityCandidates.includes(`${kerry.instanceId}:0`)) {

@@ -7,12 +7,15 @@ import {
   expectCardNotPlayable,
   expectAttachTarget,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaMantisBlades, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 
 registerMatchers();
 
-const gear = alphaMantisBlades; // gear, cost 1, power 2, no abilities — vanilla equip
-const huscle = alphaSwordwiseHuscle; // unit, power 5
+const gear = welcomeToNightCityRetailMantisBlades; // gear, cost 1, power 2, no abilities — vanilla equip
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // unit, power 5
 
 describe("Mantis Blades", () => {
   describe("UI prompt", () => {

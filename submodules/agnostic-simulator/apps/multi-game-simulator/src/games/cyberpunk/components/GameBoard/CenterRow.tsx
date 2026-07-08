@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { IconKeyboard } from "@tabler/icons-react";
-import { defOf, type CardInstance } from "@tcg/cyberpunk-engine";
+import { defOf, type CardInstance, type MatchState } from "@tcg/cyberpunk-engine";
+import type { CardType } from "@tcg/cyberpunk-types";
 import {
   buildInteractionSubmissionForActionId,
   type EngineInteractionView,
@@ -195,7 +196,10 @@ function GigLane({
       aria-label={`${label}: ${gigCount} Gigs, ${streetCred} Street Cred${hasWinCondition ? ", win condition active" : ""}`}
     >
       <div className={classes.gigScore} aria-hidden="true">
-        <span className={classes.gigCred}>
+        <span
+          className={classes.gigCred}
+          data-sim-anchor-id={ownerSide === "opponent" ? "opp-street-cred" : "p-street-cred"}
+        >
           <span>Street Cred</span>
           <strong>{streetCred}</strong>
         </span>
@@ -380,8 +384,8 @@ export function PassTurnControl({
   const [confirmingPassWithAttackers, setConfirmingPassWithAttackers] = useState(false);
   const isPlayerTurn = activeSide === humanSide;
   const attackInProgress = Boolean(matchState.G.attackState);
-  const isAttackerDuringDefensiveStep =
-    attackInProgress && matchState.G.attackState?.step === "defensive" && isPlayerTurn;
+  const isAttackerDuringReactStep =
+    attackInProgress && matchState.G.attackState?.step === "react" && isPlayerTurn;
   const shouldConfirmPass =
     isPlayerTurn && !attackInProgress && interactionViewHasAttackers(humanInteractionView);
   const humanChoiceInProgress = humanInteractionView.status === "choosing";
@@ -395,7 +399,7 @@ export function PassTurnControl({
     phase === "START" ||
     gameEnded ||
     humanChoiceInProgress ||
-    isAttackerDuringDefensiveStep ||
+    isAttackerDuringReactStep ||
     (!isPlayerTurn && !canStepAi && !attackInProgress);
   const undoDisabled = !canUndo || humanChoiceInProgress;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -443,9 +447,9 @@ export function PassTurnControl({
       const attack = attackStateRef.current;
       if (!attack) return;
 
-      // During the defensive step, only the defender (rival / non-active player)
+      // During the react step, only the defender (rival / non-active player)
       // may resolve. The active player must wait for the defender's response.
-      if (attack.step === "defensive") {
+      if (attack.step === "react") {
         if (isPlayerTurn) {
           // Attacker cannot act during the defender's response window.
           return;
@@ -458,7 +462,7 @@ export function PassTurnControl({
         return;
       }
 
-      // Offensive, fight, defeat, and steal steps are all resolved by the
+      // Attack, fight, and steal steps are all resolved by the
       // active player (the attacker).
       dispatch({
         type: "resolveAttack",
@@ -511,9 +515,20 @@ export function PassTurnControl({
   const label = phaseAdvanceLabel(phase, attackInProgress, canStepAi);
   const compactLabel = compactPhaseAdvanceLabel(phase, attackInProgress, canStepAi);
   const compactActionLabel = dockedPhaseAdvanceLabel(phase, attackInProgress, canStepAi);
-  const visibleLabel = docked ? dockedPhaseAdvanceLabel(phase, attackInProgress, canStepAi) : label;
+  const pendingChoiceLabel = pendingChoiceActionLabel(matchState.G.turnMetadata.pendingChoice);
+  const visibleLabel =
+    docked && humanChoiceInProgress
+      ? pendingChoiceLabel
+      : docked
+        ? dockedPhaseAdvanceLabel(phase, attackInProgress, canStepAi)
+        : label;
   const usesActionCompactLabel = compact && compactLabelStyle === "action";
-  const attackTarget = useAttackTargetSummary(matchState.G.attackState);
+  const attackTargetSummary = useAttackTargetSummary(matchState.G.attackState);
+  const attackTarget = docked ? null : attackTargetSummary;
+  const showPhaseLabel = !(docked && humanChoiceInProgress);
+  const phaseText = docked
+    ? dockedPhaseLabel(phase, matchState.G.attackState)
+    : phaseLabel(phase, matchState.G.attackState);
 
   return (
     <div
@@ -524,24 +539,26 @@ export function PassTurnControl({
       data-attack-in-progress={attackInProgress ? "true" : "false"}
       data-choice-in-progress={humanChoiceInProgress ? "true" : "false"}
     >
-      <span
-        className={`${classes.phaseLabel} ${attackTarget ? classes.phaseLabelWithTarget : ""}`}
-        data-testid="phase-hud-label"
-      >
-        <span>{phaseLabel(phase, matchState.G.attackState)}</span>
-        {attackTarget ? (
-          <span
-            className={classes.phaseAttackTarget}
-            data-testid="attack-target-summary"
-            data-attack-kind={attackTarget.kind}
-            aria-label={attackTarget.ariaLabel}
-            title={attackTarget.title}
-          >
-            <span className={classes.phaseAttackTargetLabel}>Target</span>
-            <strong>{attackTarget.value}</strong>
-          </span>
-        ) : null}
-      </span>
+      {showPhaseLabel ? (
+        <span
+          className={`${classes.phaseLabel} ${attackTarget ? classes.phaseLabelWithTarget : ""}`}
+          data-testid="phase-hud-label"
+        >
+          <span>{phaseText}</span>
+          {attackTarget ? (
+            <span
+              className={classes.phaseAttackTarget}
+              data-testid="attack-target-summary"
+              data-attack-kind={attackTarget.kind}
+              aria-label={attackTarget.ariaLabel}
+              title={attackTarget.title}
+            >
+              <span className={classes.phaseAttackTargetLabel}>Target</span>
+              <strong>{attackTarget.value}</strong>
+            </span>
+          ) : null}
+        </span>
+      ) : null}
       {attackSteps.length > 0 ? (
         <div className={classes.phaseStrip} aria-label="Attack step">
           {attackSteps.map((step) => (
@@ -558,7 +575,7 @@ export function PassTurnControl({
       ) : null}
       <button
         type="button"
-        aria-label={label}
+        aria-label={visibleLabel}
         data-testid="phase-advance"
         data-phase={phase}
         data-attack-in-progress={attackInProgress ? "true" : "false"}
@@ -926,6 +943,59 @@ function dockedPhaseAdvanceLabel(
   return "Pass";
 }
 
+type PendingChoice = NonNullable<MatchState["G"]["turnMetadata"]["pendingChoice"]>;
+
+function pendingChoiceActionLabel(choice: PendingChoice | null | undefined): string {
+  if (!choice) {
+    return "Resolve Prompt";
+  }
+  switch (choice.type) {
+    case "chooseTrigger":
+      return "Choose Trigger";
+    case "chooseGigsToSteal":
+      return choice.payload.count === 1 ? "Choose Gig" : "Choose Gigs";
+    case "chooseTarget":
+      return pendingTargetChoiceLabel(choice);
+    case "chooseEffect":
+      return "Choose Effect";
+    case "chooseCardToPlay":
+      return pendingCardToPlayLabel(choice);
+    case "chooseCardToMove":
+      return "Choose Card";
+    case "searchDeck":
+      return "Search Deck";
+    case "gainGig":
+      return "Gain Gig";
+  }
+  return "Resolve Prompt";
+}
+
+function pendingCardToPlayLabel(
+  choice: Extract<PendingChoice, { type: "chooseCardToPlay" }>,
+): string {
+  if (choice.payload.free && choice.payload.resolvedAttachToId) {
+    return "Play Gear";
+  }
+  if (choice.payload.free) {
+    return "Choose Free Card";
+  }
+  return "Choose Card";
+}
+
+function pendingTargetChoiceLabel(
+  choice: Extract<PendingChoice, { type: "chooseTarget" }>,
+): string {
+  switch (choice.payload.type) {
+    case "discardFromHand":
+      return "Discard Card";
+    case "adjustGig":
+      return "Adjust Gig";
+    case "effectTarget":
+      return "Choose Target";
+  }
+  return "Choose Target";
+}
+
 function phaseLabel(phase: Phase, attackState: { step?: string } | null = null): string {
   switch (phase) {
     case "SETUP":
@@ -947,6 +1017,13 @@ function phaseLabel(phase: Phase, attackState: { step?: string } | null = null):
   }
 }
 
+function dockedPhaseLabel(phase: Phase, attackState: { step?: string } | null = null): string {
+  if (phase !== "MAIN" || !attackState?.step) {
+    return phaseLabel(phase, null);
+  }
+  return attackState.step.toUpperCase();
+}
+
 function buildAttackPhaseSteps(
   attack: {
     attackerId?: unknown;
@@ -963,17 +1040,16 @@ function buildAttackPhaseSteps(
   const step = getVisibleAttackStep(attack, moveLogs);
   if (attack.kind === "direct") {
     return [
-      { id: "offensive", label: "Offense", active: step === "offensive" },
-      { id: "defensive", label: "Defense", active: step === "defensive" },
+      { id: "attack", label: "Attack", active: step === "attack" },
+      { id: "react", label: "React", active: step === "react" },
       { id: "steal", label: "Steal", active: step === "steal" },
     ];
   }
 
   return [
-    { id: "offensive", label: "Offense", active: step === "offensive" },
-    { id: "defensive", label: "Defense", active: step === "defensive" },
+    { id: "attack", label: "Attack", active: step === "attack" },
+    { id: "react", label: "React", active: step === "react" },
     { id: "fight", label: "Fight", active: step === "fight" },
-    { id: "defeat", label: "Defeat", active: step === "defeat" },
   ];
 }
 
@@ -986,7 +1062,7 @@ function getVisibleAttackStep(
   },
   moveLogs: ReadonlyArray<MoveLogEntry>,
 ): string | undefined {
-  if (attack.step !== "offensive" || attack.kind !== "fight") {
+  if (attack.step !== "attack" || attack.kind !== "fight") {
     return attack.step;
   }
 
@@ -999,7 +1075,7 @@ function getVisibleAttackStep(
     );
   });
 
-  return wasRedirectedByBlocker ? "defensive" : attack.step;
+  return wasRedirectedByBlocker ? "react" : attack.step;
 }
 
 interface CenterRowProps {
@@ -1405,7 +1481,8 @@ type AdjustGigOption = {
 };
 type ResolvingCard = {
   cardId: string;
-  cardType: "program" | "gear";
+  cardType: CardType;
+  faceDown?: boolean;
   label: string;
   name: string;
   imageUrl: string;
@@ -1414,6 +1491,7 @@ type ResolvingCard = {
 };
 
 function ResolvingCardAnchor({ card }: { card: ResolvingCard }) {
+  const renderedName = card.faceDown ? "Face-down card" : card.name;
   return (
     <div
       className={classes.resolvingProgram}
@@ -1421,7 +1499,7 @@ function ResolvingCardAnchor({ card }: { card: ResolvingCard }) {
       data-card-id={card.cardId}
       data-sim-entity-id={card.cardId}
       data-card-type={card.cardType}
-      aria-label={`${card.label}: ${card.name}`}
+      aria-label={`${card.label}: ${renderedName}`}
     >
       <span className={classes.resolvingProgramLabel}>{card.label}</span>
       <div
@@ -1432,13 +1510,19 @@ function ResolvingCardAnchor({ card }: { card: ResolvingCard }) {
       >
         <CardImage
           imageUrl={card.imageUrl}
-          alt={card.name}
+          faceDown={card.faceDown}
+          alt={renderedName}
           cardType={card.cardType}
+          disablePreview={card.faceDown}
           color={card.color}
-          previewDetails={{
-            name: card.name,
-            rules: card.rulesText ? [card.rulesText] : undefined,
-          }}
+          previewDetails={
+            card.faceDown
+              ? undefined
+              : {
+                  name: card.name,
+                  rules: card.rulesText ? [card.rulesText] : undefined,
+                }
+          }
         />
       </div>
     </div>
@@ -1465,29 +1549,15 @@ function resolvingCardFromInteractionView(
   cardIndex: Record<string, CardInstance>,
 ): ResolvingCard | null {
   const action = view.actions.find(
-    (candidate) => candidate.enabled && candidate.id === "resolveEffectTarget",
+    (candidate) =>
+      candidate.enabled &&
+      candidate.source?.kind === "card" &&
+      isResolvingSourceActionId(candidate.id),
   );
   if (action?.source?.kind !== "card") {
     return null;
   }
-  const cardId = action.source.instanceId;
-  const card = cardIndex[cardId];
-  if (!card) {
-    return null;
-  }
-  const def = defOf(card);
-  if (def.type !== "program") {
-    return null;
-  }
-  return {
-    cardId,
-    cardType: "program",
-    label: "Resolving program",
-    name: def.displayName ?? def.name,
-    imageUrl: def.imageUrl,
-    color: def.color as ResolvingCard["color"],
-    rulesText: def.rulesText ?? null,
-  };
+  return resolvingCardFromSourceCardId(action.source.instanceId, cardIndex);
 }
 
 function selectedPlayedCardFromMoveSelection(
@@ -1540,18 +1610,92 @@ function resolvingCardFromPersistedVisuals({
     return null;
   }
   const def = defOf(card);
-  if (def.type !== "program") {
+  if (!isResolvingCardType(def.type)) {
     return null;
   }
   return {
     cardId: visual.cardId,
-    cardType: "program",
-    label: "Resolving program",
+    cardType: def.type,
+    faceDown: visual.face === "hidden",
+    label: resolvingCardLabel(card, { persistedVisual: true }),
     name: def.displayName ?? def.name,
     imageUrl: def.imageUrl,
     color: def.color as ResolvingCard["color"],
     rulesText: def.rulesText ?? null,
   };
+}
+
+function resolvingCardFromSourceCardId(
+  cardId: string,
+  cardIndex: Record<string, CardInstance>,
+): ResolvingCard | null {
+  const card = cardIndex[cardId];
+  if (!card) {
+    return null;
+  }
+  const def = defOf(card);
+  if (!isResolvingCardType(def.type)) {
+    return null;
+  }
+  return {
+    cardId,
+    cardType: def.type,
+    label: resolvingCardLabel(card),
+    name: def.displayName ?? def.name,
+    imageUrl: def.imageUrl,
+    color: def.color as ResolvingCard["color"],
+    rulesText: def.rulesText ?? null,
+  };
+}
+
+function isResolvingSourceActionId(actionId: string): boolean {
+  return (
+    actionId === "resolveEffectTarget" ||
+    actionId === "resolveCardToMove" ||
+    actionId === "resolveSearchDeck" ||
+    actionId === "resolveCardTypeChoice"
+  );
+}
+
+function isResolvingCardType(cardType: string): cardType is CardType {
+  return (
+    cardType === "program" || cardType === "gear" || cardType === "legend" || cardType === "unit"
+  );
+}
+
+function resolvingCardLabel(
+  card: CardInstance,
+  options: { persistedVisual?: boolean } = {},
+): string {
+  const def = defOf(card);
+  if (def.type === "program") {
+    return "Resolving program";
+  }
+  if (def.type === "gear" && !triggerLabelForCard(card)) {
+    return options.persistedVisual ? "Triggering gear" : "Playing gear";
+  }
+  if (def.type === "legend" && !triggerLabelForCard(card)) {
+    return "Calling legend";
+  }
+  return triggerLabelForCard(card) ?? `${def.type} trigger`;
+}
+
+function triggerLabelForCard(card: CardInstance): string | null {
+  const trigger = defOf(card).abilities.find((ability) => ability.kind === "triggered")?.trigger
+    ?.trigger;
+  switch (trigger) {
+    case "play":
+      return "Play trigger";
+    case "attack":
+      return "Attack trigger";
+    case "call":
+    case "flip":
+      return "Call trigger";
+    case "defeated":
+      return "Defeated trigger";
+    default:
+      return null;
+  }
 }
 
 function stealChoiceContextFromInteractionViews({

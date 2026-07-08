@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaRuthlessLowlife,
+  welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailCarnageAtTheColosseum,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -30,7 +30,11 @@ test("Carnage At The Colosseum (Retail) - play defeats weaker rival unit", async
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectEddies(CYBERPUNK_P1, eddiesBefore - 4);
-  await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P2, alphaRuthlessLowlife.id);
+  await pom.getCardInZoneByDefinitionId(
+    "trash",
+    CYBERPUNK_P2,
+    welcomeToNightCityRetailMoxInciters.id,
+  );
   await pom.getCardInZoneByDefinitionId(
     "trash",
     CYBERPUNK_P1,

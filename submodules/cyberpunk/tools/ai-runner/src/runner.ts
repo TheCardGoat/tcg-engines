@@ -1,21 +1,32 @@
 import { Worker } from "node:worker_threads";
 import { fileURLToPath } from "node:url";
 import {
+  createMonteCarloStrategy,
+  defaultStrategy,
   firstLegalStrategy,
   greedyStrategy,
   mctsGreedyStrategy,
   mctsStrategy,
-  monteCarloGreedyStrategy,
-  monteCarloStrategy,
   randomStrategy,
   runAutoMatch,
   type AIStrategy,
   type AutoMatchResult,
 } from "@tcg/cyberpunk-engine";
+import type { CardCatalog, DeckList } from "@tcg/cyberpunk-engine";
 import { createTestCatalog, createTestDecks, createTestPlayers } from "./test-catalog.ts";
 import { createRealCatalog, createRealDecks } from "./real-catalog.ts";
+import {
+  createLegalDeckPool,
+  createStructuredCatalog,
+  deckListFromGenerated,
+  summarizeDeckCoverage,
+  type DeckCoverageSummary,
+  type DeckSource,
+  type GeneratedDeck,
+} from "./legal-decks.ts";
 
 export type StrategyName =
+  | "default"
   | "first-legal"
   | "random"
   | "greedy"
@@ -25,22 +36,51 @@ export type StrategyName =
   | "mcts-greedy";
 
 const STRATEGIES: Record<StrategyName, AIStrategy> = {
+  default: defaultStrategy,
   "first-legal": firstLegalStrategy,
   random: randomStrategy,
   greedy: greedyStrategy,
-  "monte-carlo": monteCarloStrategy,
-  "monte-carlo-greedy": monteCarloGreedyStrategy,
+  "monte-carlo": createMonteCarloStrategy({
+    rolloutsPerAction: 1,
+    maxRolloutSteps: 10,
+  }),
+  "monte-carlo-greedy": createMonteCarloStrategy({
+    rolloutsPerAction: 1,
+    maxRolloutSteps: 10,
+    rolloutStrategy: greedyStrategy,
+  }),
   mcts: mctsStrategy,
   "mcts-greedy": mctsGreedyStrategy,
 };
 
-export function lookupStrategy(name: string): AIStrategy {
-  const s = STRATEGIES[name as StrategyName];
+export interface SearchStrategyOptions {
+  monteCarloRollouts?: number;
+  monteCarloRolloutSteps?: number;
+}
+
+export function lookupStrategy(name: string, opts: SearchStrategyOptions = {}): AIStrategy {
+  const s = lookupSearchStrategy(name, opts) ?? STRATEGIES[name as StrategyName];
   if (!s)
     throw new Error(
       `Unknown strategy: ${name}. Pick one of: ${Object.keys(STRATEGIES).join(", ")}`,
     );
   return s;
+}
+
+function lookupSearchStrategy(name: string, opts: SearchStrategyOptions): AIStrategy | undefined {
+  const rolloutsPerAction = opts.monteCarloRollouts ?? 1;
+  const maxRolloutSteps = opts.monteCarloRolloutSteps ?? 10;
+  if (name === "monte-carlo") {
+    return createMonteCarloStrategy({ rolloutsPerAction, maxRolloutSteps });
+  }
+  if (name === "monte-carlo-greedy") {
+    return createMonteCarloStrategy({
+      rolloutsPerAction,
+      maxRolloutSteps,
+      rolloutStrategy: greedyStrategy,
+    });
+  }
+  return undefined;
 }
 
 export interface BatchOptions {
@@ -51,6 +91,27 @@ export interface BatchOptions {
   maxSteps?: number;
   /** Use real `@tcg/cyberpunk-cards` decks instead of the hand-rolled fixture. */
   realCards?: boolean;
+  deckSource?: DeckSource;
+  deckLimit?: number;
+  deckPairLimit?: number;
+  monteCarloRollouts?: number;
+  monteCarloRolloutSteps?: number;
+}
+
+export interface DeckPairMetadata {
+  deckAId: string;
+  deckBId: string;
+  deckAArchetype: string;
+  deckBArchetype: string;
+  deckACardSlugs: string[];
+  deckBCardSlugs: string[];
+}
+
+export interface MatchFailureMetadata extends DeckPairMetadata {
+  strategyA: string;
+  strategyB: string;
+  seed: string;
+  reason: AutoMatchResult["reason"];
 }
 
 export interface BatchSummary {
@@ -64,14 +125,23 @@ export interface BatchSummary {
   averageTurnCount: number;
   averageStepCount: number;
   /** First match whose result is illegal/stuck, captured for `--verbose` debugging. */
-  firstFailingMatch?: AutoMatchResult & { seed: string };
+  firstFailingMatch?: AutoMatchResult & { seed: string; failure: MatchFailureMetadata };
   /** First match overall, captured for verbose dumps when nothing failed. */
-  firstMatch?: AutoMatchResult & { seed: string };
+  firstMatch?: AutoMatchResult & { seed: string; failure: MatchFailureMetadata };
+  deckCoverage?: DeckCoverageSummary;
+  deckCount: number;
+  deckPairCount: number;
+}
+
+interface RunnerDeckPair {
+  a: GeneratedDeck;
+  b: GeneratedDeck;
+  decks: [DeckList, DeckList];
 }
 
 export function runBatch(opts: BatchOptions): BatchSummary {
-  const aStrategy = lookupStrategy(opts.strategyA);
-  const bStrategy = lookupStrategy(opts.strategyB);
+  const aStrategy = lookupStrategy(opts.strategyA, opts);
+  const bStrategy = lookupStrategy(opts.strategyB, opts);
 
   const summary: BatchSummary = {
     matches: opts.matches,
@@ -89,58 +159,72 @@ export function runBatch(opts: BatchOptions): BatchSummary {
     illegalCount: 0,
     averageTurnCount: 0,
     averageStepCount: 0,
+    deckCount: 0,
+    deckPairCount: 0,
   };
 
   let totalTurns = 0;
   let totalSteps = 0;
 
-  const catalog = opts.realCards ? createRealCatalog() : createTestCatalog();
-  // Hoist the deck list out of the match loop — it's deterministic and
-  // identical across matches in a batch (deck content doesn't depend on
-  // match seed). Building once avoids re-sorting structuredCards N times.
-  // `runAutoMatch` shuffles internally, so the same `decks` value is safe
-  // to reuse across matches.
-  const decks = opts.realCards ? createRealDecks() : createTestDecks();
+  const deckSetup = createDeckSetup(opts);
+  summary.deckCoverage = deckSetup.coverage;
+  summary.deckCount = deckSetup.deckCount;
+  summary.deckPairCount = deckSetup.pairs.length;
+  summary.matches = opts.matches * deckSetup.pairs.length;
 
-  for (let i = 0; i < opts.matches; i++) {
-    const matchSeed = `${opts.seed}/match-${i}`;
-    const result = runAutoMatch({
-      players: createTestPlayers(),
-      decks,
-      strategies: [aStrategy, bStrategy],
-      catalog,
-      seed: matchSeed,
-      maxSteps: opts.maxSteps,
-    });
+  let ordinal = 0;
+  for (const pair of deckSetup.pairs) {
+    for (let i = 0; i < opts.matches; i++) {
+      const matchSeed = matchSeedFor(opts, pair, i);
+      const result = runAutoMatch({
+        players: createTestPlayers(),
+        decks: pair.decks,
+        strategies: [aStrategy, bStrategy],
+        catalog: deckSetup.catalog,
+        seed: matchSeed,
+        maxSteps: opts.maxSteps,
+      });
+      const failure = failureMetadata(opts, pair, matchSeed, result.reason);
 
-    if (i === 0) summary.firstMatch = { ...result, seed: matchSeed };
+      if (ordinal === 0) summary.firstMatch = { ...result, seed: matchSeed, failure };
 
-    summary.reasonCounts[result.reason] += 1;
-    if (result.winnerId) {
-      summary.perPlayerWins[result.winnerId] = (summary.perPlayerWins[result.winnerId] ?? 0) + 1;
-    } else {
-      summary.draws += 1;
-    }
-
-    totalTurns += result.turnCount;
-    totalSteps += result.stepCount;
-
-    let matchHadIllegal = false;
-    for (const entry of result.log) {
-      if (entry.result.kind === "illegal") {
-        summary.illegalCount += 1;
-        matchHadIllegal = true;
+      summary.reasonCounts[result.reason] += 1;
+      if (result.winnerId) {
+        summary.perPlayerWins[result.winnerId] = (summary.perPlayerWins[result.winnerId] ?? 0) + 1;
+      } else {
+        summary.draws += 1;
       }
-    }
 
-    if (!summary.firstFailingMatch && (matchHadIllegal || result.reason === "stuck")) {
-      summary.firstFailingMatch = { ...result, seed: matchSeed };
+      totalTurns += result.turnCount;
+      totalSteps += result.stepCount;
+
+      let matchHadIllegal = false;
+      for (const entry of result.log) {
+        if (entry.result.kind === "illegal") {
+          summary.illegalCount += 1;
+          matchHadIllegal = true;
+        }
+      }
+
+      if (
+        !summary.firstFailingMatch &&
+        (matchHadIllegal || result.reason === "stuck" || result.reason === "maxSteps")
+      ) {
+        summary.firstFailingMatch = { ...result, seed: matchSeed, failure };
+      }
+      ordinal++;
     }
   }
 
-  summary.averageTurnCount = opts.matches === 0 ? 0 : totalTurns / opts.matches;
-  summary.averageStepCount = opts.matches === 0 ? 0 : totalSteps / opts.matches;
+  summary.averageTurnCount = summary.matches === 0 ? 0 : totalTurns / summary.matches;
+  summary.averageStepCount = summary.matches === 0 ? 0 : totalSteps / summary.matches;
   return summary;
+}
+
+function matchSeedFor(opts: BatchOptions, pair: RunnerDeckPair, matchIndex: number): string {
+  const source = normalizeDeckSource(opts);
+  if (source === "test" || source === "real-single") return `${opts.seed}/match-${matchIndex}`;
+  return `${opts.seed}/${pair.a.id}-vs-${pair.b.id}/match-${matchIndex}`;
 }
 
 export interface TournamentOptions {
@@ -149,6 +233,17 @@ export interface TournamentOptions {
   seed: string;
   maxSteps?: number;
   realCards?: boolean;
+  deckSource?: DeckSource;
+  deckLimit?: number;
+  deckPairLimit?: number;
+  monteCarloRollouts?: number;
+  monteCarloRolloutSteps?: number;
+  /**
+   * Reuse the same deck-pair/match seeds for every strategy cell. This makes
+   * tournament output useful for heuristic comparison because every strategy
+   * sees the same shuffled games instead of a strategy-name-specific seed set.
+   */
+  pairedSeeds?: boolean;
 }
 
 export interface TournamentCell {
@@ -162,8 +257,17 @@ export interface TournamentSummary {
   cells: TournamentCell[];
   /** Aggregate wins per strategy across every match it played, on either side. */
   totalWinsByStrategy: Record<string, number>;
+  /** Aggregate wins by seat. Useful for spotting first-player bias in a matrix. */
+  totalWinsBySeat: Record<"p1" | "p2", number>;
   totalMatches: number;
   totalIllegal: number;
+  averageTurnCount: number;
+  averageStepCount: number;
+  reasonCounts: Record<AutoMatchResult["reason"], number>;
+  firstFailingMatch?: BatchSummary["firstFailingMatch"];
+  deckCoverage?: DeckCoverageSummary;
+  deckCount: number;
+  deckPairCount: number;
 }
 
 /**
@@ -175,9 +279,24 @@ export function runTournament(opts: TournamentOptions): TournamentSummary {
   const cells: TournamentCell[] = [];
   const totalWinsByStrategy: Record<string, number> = {};
   for (const s of opts.strategies) totalWinsByStrategy[s] = 0;
+  const totalWinsBySeat: Record<"p1" | "p2", number> = { p1: 0, p2: 0 };
 
   let totalMatches = 0;
   let totalIllegal = 0;
+  let totalTurns = 0;
+  let totalSteps = 0;
+  let firstFailingMatch: BatchSummary["firstFailingMatch"];
+  let deckCoverage: DeckCoverageSummary | undefined;
+  let deckCount = 0;
+  let deckPairCount = 0;
+  const reasonCounts: Record<AutoMatchResult["reason"], number> = {
+    winCondition: 0,
+    concede: 0,
+    deckOut: 0,
+    stuck: 0,
+    illegal: 0,
+    maxSteps: 0,
+  };
 
   for (const a of opts.strategies) {
     for (const b of opts.strategies) {
@@ -185,19 +304,50 @@ export function runTournament(opts: TournamentOptions): TournamentSummary {
         strategyA: a,
         strategyB: b,
         matches: opts.matches,
-        seed: `${opts.seed}/${a}-vs-${b}`,
+        seed: opts.pairedSeeds ? opts.seed : `${opts.seed}/${a}-vs-${b}`,
         maxSteps: opts.maxSteps,
         realCards: opts.realCards,
+        deckSource: opts.deckSource,
+        deckLimit: opts.deckLimit,
+        deckPairLimit: opts.deckPairLimit,
+        monteCarloRollouts: opts.monteCarloRollouts,
+        monteCarloRolloutSteps: opts.monteCarloRolloutSteps,
       });
       cells.push({ strategyA: a, strategyB: b, summary });
       totalWinsByStrategy[a] = (totalWinsByStrategy[a] ?? 0) + (summary.perPlayerWins["p1"] ?? 0);
       totalWinsByStrategy[b] = (totalWinsByStrategy[b] ?? 0) + (summary.perPlayerWins["p2"] ?? 0);
+      totalWinsBySeat.p1 += summary.perPlayerWins["p1"] ?? 0;
+      totalWinsBySeat.p2 += summary.perPlayerWins["p2"] ?? 0;
       totalMatches += summary.matches;
       totalIllegal += summary.illegalCount;
+      totalTurns += summary.averageTurnCount * summary.matches;
+      totalSteps += summary.averageStepCount * summary.matches;
+      if (!firstFailingMatch && summary.firstFailingMatch)
+        firstFailingMatch = summary.firstFailingMatch;
+      deckCoverage ??= summary.deckCoverage;
+      deckCount = summary.deckCount;
+      deckPairCount = summary.deckPairCount;
+      for (const reason of Object.keys(reasonCounts) as Array<keyof typeof reasonCounts>) {
+        reasonCounts[reason] += summary.reasonCounts[reason] ?? 0;
+      }
     }
   }
 
-  return { options: opts, cells, totalWinsByStrategy, totalMatches, totalIllegal };
+  return {
+    options: opts,
+    cells,
+    totalWinsByStrategy,
+    totalWinsBySeat,
+    totalMatches,
+    totalIllegal,
+    averageTurnCount: totalMatches === 0 ? 0 : totalTurns / totalMatches,
+    averageStepCount: totalMatches === 0 ? 0 : totalSteps / totalMatches,
+    reasonCounts,
+    firstFailingMatch,
+    deckCoverage,
+    deckCount,
+    deckPairCount,
+  };
 }
 
 export function listStrategies(): string[] {
@@ -275,6 +425,8 @@ function mergeBatchSummaries(opts: BatchOptions, parts: BatchSummary[]): BatchSu
     illegalCount: 0,
     averageTurnCount: 0,
     averageStepCount: 0,
+    deckCount: 0,
+    deckPairCount: 0,
   };
   let totalTurns = 0;
   let totalSteps = 0;
@@ -298,8 +450,96 @@ function mergeBatchSummaries(opts: BatchOptions, parts: BatchSummary[]): BatchSu
     if (!merged.firstMatch && part.firstMatch) {
       merged.firstMatch = part.firstMatch;
     }
+    merged.deckCoverage ??= part.deckCoverage;
+    merged.deckCount = part.deckCount;
+    merged.deckPairCount = part.deckPairCount;
   }
   merged.averageTurnCount = merged.matches === 0 ? 0 : totalTurns / merged.matches;
   merged.averageStepCount = merged.matches === 0 ? 0 : totalSteps / merged.matches;
   return merged;
+}
+
+function createDeckSetup(opts: BatchOptions): {
+  catalog: CardCatalog;
+  pairs: RunnerDeckPair[];
+  coverage?: DeckCoverageSummary;
+  deckCount: number;
+} {
+  const source = normalizeDeckSource(opts);
+  if (source === "test") {
+    const fixture = createTestDecks()[0];
+    const deckA: GeneratedDeck = {
+      id: "test",
+      archetype: "test",
+      legends: fixture.legends,
+      mainDeck: fixture.mainDeck,
+      coveredSlugs: [...new Set(fixture.mainDeck)].sort(),
+    };
+    return {
+      catalog: createTestCatalog(),
+      pairs: [{ a: deckA, b: deckA, decks: createTestDecks() }],
+      deckCount: 1,
+    };
+  }
+  if (source === "real-single") {
+    const fixture = createRealDecks()[0];
+    const deckA: GeneratedDeck = {
+      id: "real-single",
+      archetype: "real-single",
+      legends: fixture.legends,
+      mainDeck: fixture.mainDeck,
+      coveredSlugs: [...new Set(fixture.mainDeck)].sort(),
+    };
+    return {
+      catalog: createRealCatalog(),
+      pairs: [{ a: deckA, b: deckA, decks: createRealDecks() }],
+      deckCount: 1,
+    };
+  }
+
+  const pool = createLegalDeckPool(source);
+  const selectedDecks = pool.decks.slice(0, opts.deckLimit ?? pool.decks.length);
+  const pairs: RunnerDeckPair[] = [];
+  for (const a of selectedDecks) {
+    for (const b of selectedDecks) {
+      pairs.push({ a, b, decks: [deckListFromGenerated(a, "p1"), deckListFromGenerated(b, "p2")] });
+    }
+  }
+  const selectedPairs = pairs.slice(0, opts.deckPairLimit ?? pairs.length);
+  const coveredDecks = new Map<string, GeneratedDeck>();
+  for (const pair of selectedPairs) {
+    coveredDecks.set(pair.a.id, pair.a);
+    coveredDecks.set(pair.b.id, pair.b);
+  }
+  return {
+    catalog: createStructuredCatalog(),
+    pairs: selectedPairs,
+    coverage: summarizeDeckCoverage([...coveredDecks.values()]),
+    deckCount: selectedDecks.length,
+  };
+}
+
+function normalizeDeckSource(opts: BatchOptions): DeckSource {
+  if (opts.deckSource) return opts.deckSource;
+  return opts.realCards ? "real-single" : "test";
+}
+
+function failureMetadata(
+  opts: BatchOptions,
+  pair: RunnerDeckPair,
+  seed: string,
+  reason: AutoMatchResult["reason"],
+): MatchFailureMetadata {
+  return {
+    strategyA: opts.strategyA,
+    strategyB: opts.strategyB,
+    seed,
+    reason,
+    deckAId: pair.a.id,
+    deckBId: pair.b.id,
+    deckAArchetype: pair.a.archetype,
+    deckBArchetype: pair.b.archetype,
+    deckACardSlugs: pair.a.mainDeck,
+    deckBCardSlugs: pair.b.mainDeck,
+  };
 }

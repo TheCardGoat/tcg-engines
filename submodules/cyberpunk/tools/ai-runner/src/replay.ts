@@ -1,5 +1,7 @@
 import { writeFileSync, readFileSync } from "node:fs";
 import {
+  defaultStrategy,
+  createMonteCarloStrategy,
   monteCarloStrategy,
   monteCarloGreedyStrategy,
   firstLegalStrategy,
@@ -11,6 +13,7 @@ import {
 } from "@tcg/cyberpunk-engine";
 import { createTestCatalog, createTestDecks, createTestPlayers } from "./test-catalog.ts";
 import { createRealCatalog, createRealDecks } from "./real-catalog.ts";
+import { createStructuredCatalog, type DeckSource, type GeneratedDeck } from "./legal-decks.ts";
 
 /**
  * Persistent record of a single match run. Includes everything needed to
@@ -23,8 +26,15 @@ export interface MatchRecording {
   strategyB: string;
   seed: string;
   realCards: boolean;
+  deckSource?: DeckSource;
+  deckA?: GeneratedDeck;
+  deckB?: GeneratedDeck;
   /** Step cap the original run used. Replays must use the same cap or determinism comparisons go off-rails. */
   maxSteps?: number;
+  monteCarloOptions?: {
+    rolloutsPerAction: number;
+    maxRolloutSteps: number;
+  };
   result: {
     winnerId: string | null;
     reason: AutoMatchResult["reason"];
@@ -49,6 +59,7 @@ export interface ReplayStep {
 }
 
 const REPLAY_STRATEGIES: Record<string, AIStrategy> = {
+  default: defaultStrategy,
   "first-legal": firstLegalStrategy,
   random: randomStrategy,
   greedy: greedyStrategy,
@@ -59,7 +70,19 @@ const REPLAY_STRATEGIES: Record<string, AIStrategy> = {
   "monte-carlo-greedy": monteCarloGreedyStrategy,
 };
 
-function lookupReplayStrategy(name: string): AIStrategy {
+function lookupReplayStrategy(
+  name: string,
+  monteCarloOptions?: MatchRecording["monteCarloOptions"],
+): AIStrategy {
+  if (monteCarloOptions && name === "monte-carlo") {
+    return createMonteCarloStrategy(monteCarloOptions);
+  }
+  if (monteCarloOptions && name === "monte-carlo-greedy") {
+    return createMonteCarloStrategy({
+      ...monteCarloOptions,
+      rolloutStrategy: greedyStrategy,
+    });
+  }
   const s = REPLAY_STRATEGIES[name];
   if (!s) throw new Error(`Replay can't find strategy: ${name}`);
   return s;
@@ -72,7 +95,11 @@ export function buildRecording(opts: {
   strategyB: string;
   seed: string;
   realCards: boolean;
+  deckSource?: DeckSource;
+  deckA?: GeneratedDeck;
+  deckB?: GeneratedDeck;
   maxSteps?: number;
+  monteCarloOptions?: MatchRecording["monteCarloOptions"];
 }): MatchRecording {
   return {
     version: 1,
@@ -80,7 +107,11 @@ export function buildRecording(opts: {
     strategyB: opts.strategyB,
     seed: opts.seed,
     realCards: opts.realCards,
+    deckSource: opts.deckSource,
+    deckA: opts.deckA,
+    deckB: opts.deckB,
     maxSteps: opts.maxSteps,
+    monteCarloOptions: opts.monteCarloOptions,
     result: {
       winnerId: opts.result.winnerId,
       reason: opts.result.reason,
@@ -145,13 +176,18 @@ export interface ReplayResult {
  * resulting stateID) so determinism regressions are caught.
  */
 export function replayRecording(recording: MatchRecording): ReplayResult {
-  const strategyA = lookupReplayStrategy(recording.strategyA);
-  const strategyB = lookupReplayStrategy(recording.strategyB);
+  const strategyA = lookupReplayStrategy(recording.strategyA, recording.monteCarloOptions);
+  const strategyB = lookupReplayStrategy(recording.strategyB, recording.monteCarloOptions);
   const result = runAutoMatch({
     players: createTestPlayers(),
-    decks: recording.realCards ? createRealDecks() : createTestDecks(),
+    decks: recordingDecks(recording),
     strategies: [strategyA, strategyB],
-    catalog: recording.realCards ? createRealCatalog() : createTestCatalog(),
+    catalog:
+      recording.deckA && recording.deckB
+        ? createStructuredCatalog()
+        : recording.realCards
+          ? createRealCatalog()
+          : createTestCatalog(),
     seed: recording.seed,
     maxSteps: recording.maxSteps,
   });
@@ -203,6 +239,26 @@ export function replayRecording(recording: MatchRecording): ReplayResult {
     divergences,
     totalSteps: len,
   };
+}
+
+function recordingDecks(recording: MatchRecording) {
+  if (recording.deckA && recording.deckB) {
+    return [
+      {
+        playerId: "p1",
+        playerName: "Player p1",
+        legends: recording.deckA.legends,
+        mainDeck: recording.deckA.mainDeck,
+      },
+      {
+        playerId: "p2",
+        playerName: "Player p2",
+        legends: recording.deckB.legends,
+        mainDeck: recording.deckB.mainDeck,
+      },
+    ] as ReturnType<typeof createTestDecks>;
+  }
+  return recording.realCards ? createRealDecks() : createTestDecks();
 }
 
 /**

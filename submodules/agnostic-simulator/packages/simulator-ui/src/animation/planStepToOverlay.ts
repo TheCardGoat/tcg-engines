@@ -63,8 +63,11 @@ export function planStepToOverlay({
           to,
           fromRef: step.from,
           toRef: step.to,
-          sourceFace: resolveRefFace(step.from, entity, viewerSeatId, resolveZone),
-          destinationFace: resolveRefFace(step.to, entity, viewerSeatId, resolveZone),
+          label: step.label,
+          sourceFace:
+            step.sourceFace ?? resolveRefFace(step.from, entity, viewerSeatId, resolveZone),
+          destinationFace:
+            step.destinationFace ?? resolveRefFace(step.to, entity, viewerSeatId, resolveZone),
           delayMs,
           durationMs,
         },
@@ -86,8 +89,9 @@ export function planStepToOverlay({
           from: virtualCardRect(to, "source"),
           to,
           toRef: step.to,
-          sourceFace: "hidden",
-          destinationFace: resolveRefFace(step.to, entity, viewerSeatId, resolveZone),
+          sourceFace: step.sourceFace ?? "hidden",
+          destinationFace:
+            step.destinationFace ?? resolveRefFace(step.to, entity, viewerSeatId, resolveZone),
           delayMs,
           durationMs,
         },
@@ -109,8 +113,9 @@ export function planStepToOverlay({
           from,
           to: virtualCardRect(from, "destination"),
           fromRef: step.from,
-          sourceFace: resolveRefFace(step.from, entity, viewerSeatId, resolveZone),
-          destinationFace: "hidden",
+          sourceFace:
+            step.sourceFace ?? resolveRefFace(step.from, entity, viewerSeatId, resolveZone),
+          destinationFace: step.destinationFace ?? "hidden",
           delayMs,
           durationMs,
         },
@@ -122,7 +127,7 @@ export function planStepToOverlay({
         : boardRect();
       const targets = step.targets.flatMap((target) => {
         const rect = resolveRefRect(target, cache, anchors, "destination");
-        return rect ? [{ ref: target, rect }] : [];
+        return rect ? [{ ref: target, rect, label: resolveRefLabel(target, resolveEntity) }] : [];
       });
       if (!source || targets.length === 0) return null;
       return {
@@ -134,8 +139,35 @@ export function planStepToOverlay({
           kind: "effect",
           source,
           sourceRef: step.source,
+          sourceLabel: step.source ? resolveRefLabel(step.source, resolveEntity) : undefined,
           targets,
           label: step.label,
+          delayMs,
+          durationMs,
+        },
+      };
+    }
+    case "spotlightEntity": {
+      const entity = resolveEntity?.(step.entity.id);
+      if (!entity) return null;
+      const at = resolveEntityRefRect(step.entity.id, step.at, cache, anchors, "destination");
+      if (!at) return null;
+      return {
+        type: "card",
+        overlay: {
+          id,
+          planId: plan.id,
+          stepId: step.id,
+          kind: "spotlight",
+          entity,
+          from: at,
+          to: at,
+          toRef: step.at,
+          label: step.label,
+          suppressEntity: false,
+          sourceFace: step.sourceFace ?? resolveRefFace(step.at, entity, viewerSeatId, resolveZone),
+          destinationFace:
+            step.destinationFace ?? resolveRefFace(step.at, entity, viewerSeatId, resolveZone),
           delayMs,
           durationMs,
         },
@@ -154,8 +186,14 @@ export function planStepToOverlay({
           kind: "combat",
           source,
           sourceRef: step.source,
-          targets: [{ ref: step.target, rect: target }],
+          sourceLabel: resolveRefLabel(step.source, resolveEntity),
+          targets: [
+            { ref: step.target, rect: target, label: resolveRefLabel(step.target, resolveEntity) },
+          ],
+          label: step.label,
+          detailLabel: step.detailLabel,
           reason: step.reason,
+          attackKind: step.attackKind,
           delayMs,
           durationMs,
         },
@@ -175,6 +213,8 @@ export function planStepToOverlay({
           anchor,
           delta: step.delta,
           label: step.label,
+          fromValue: step.fromValue,
+          toValue: step.toValue,
           delayMs,
           durationMs,
         },
@@ -189,6 +229,10 @@ export function planStepToOverlay({
           stepId: step.id,
           from: step.from,
           to: step.to,
+          variant: step.variant ?? "phase",
+          viewerSeatId,
+          ...(step.player ? { playerId: step.player.id } : {}),
+          ...(step.turnNumber ? { turnNumber: step.turnNumber } : {}),
           center: boardCenter(),
           delayMs,
           durationMs,
@@ -207,6 +251,18 @@ export function planStepToOverlay({
         },
       };
   }
+}
+
+function resolveRefLabel(
+  ref: AnimationRef,
+  resolveEntity: ((entityId: string) => SimulatorEntity | null | undefined) | undefined,
+): string | undefined {
+  if (ref.kind !== "entity") {
+    return undefined;
+  }
+  const entity = resolveEntity?.(ref.id);
+  const title = entity?.title?.trim();
+  return title ? title : undefined;
 }
 
 function resolveRefFace(
@@ -237,6 +293,7 @@ function defaultDurationMs(step: AnimationPlanStepV1): number {
     case "moveEntity":
     case "enterEntity":
     case "exitEntity":
+    case "spotlightEntity":
       return DEFAULT_CARD_MOVE_DURATION_MS;
     case "phaseChange":
       return DEFAULT_PHASE_DURATION_MS;

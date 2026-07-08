@@ -26,7 +26,7 @@ export interface CyberpunkAttackState {
   readonly defenderId: string | null;
   readonly rivalId: PlayerId;
   readonly kind: "fight" | "direct";
-  readonly step: "offensive" | "defensive" | "fight" | "defeat" | "steal";
+  readonly step: "attack" | "react" | "fight" | "steal";
   readonly redirectedByBlocker?: boolean;
   readonly gigsToSteal?: number;
 }
@@ -329,8 +329,7 @@ export class CyberpunkSimulatorPom<
       kind:
         ((await root.getAttribute("data-kind")) as CyberpunkAttackState["kind"] | null) ?? "direct",
       step:
-        ((await root.getAttribute("data-step")) as CyberpunkAttackState["step"] | null) ??
-        "offensive",
+        ((await root.getAttribute("data-step")) as CyberpunkAttackState["step"] | null) ?? "attack",
       redirectedByBlocker: (await root.getAttribute("data-redirected-by-blocker")) === "true",
     };
   }
@@ -1240,6 +1239,11 @@ export class CyberpunkSimulatorPom<
     }
     if (targetIds.length === 1) {
       await this.takeControl(as);
+      const modalTarget = this.choiceModalTarget(targetIds[0]!);
+      if ((await modalTarget.count()) > 0) {
+        await modalTarget.clickJs();
+        return;
+      }
       const target = this.choiceTarget(targetIds[0]!);
       if ((await target.count()) > 0) {
         await target.click({ force: true });
@@ -1841,6 +1845,7 @@ export class CyberpunkSimulatorPom<
     return this.dom
       .locator(
         [
+          `[data-testid="target-modal-card"][data-selectable="true"][data-card-id=${value}]`,
           `[data-choice-eligible="true"][data-entity-id=${value}]`,
           `[data-choice-eligible="true"][data-instance-id=${value}]`,
           `[data-choice-eligible="true"][data-card-id=${value}]`,
@@ -1858,6 +1863,13 @@ export class CyberpunkSimulatorPom<
           `[data-testid="gig-die"][data-die-id=${value}]`,
         ].join(", "),
       )
+      .first();
+  }
+
+  private choiceModalTarget(entityId: string): SimulatorDomElement {
+    const value = cssString(entityId);
+    return this.dom
+      .locator(`[data-testid="target-modal-card"][data-selectable="true"][data-card-id=${value}]`)
       .first();
   }
 }

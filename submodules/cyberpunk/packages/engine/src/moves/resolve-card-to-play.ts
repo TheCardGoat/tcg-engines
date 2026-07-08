@@ -3,12 +3,15 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseCardToPlayPendingChoice } from "../types/match-state.ts";
 import type { MatchState } from "../types/match-state.ts";
 import {
+  executeAbilityEffects,
   processCardSpentEventsSince,
   processEventTriggers,
   resumeCurrentTrigger,
 } from "../ability-executor.ts";
+import type { ResolutionContext } from "../effects/target-resolver.ts";
 import { defOf } from "../state/lookups.ts";
 import { computeEffectiveCost, consumeCostModifierUse } from "./compute-effective-cost.ts";
+import { availableEddies } from "./eddie-resources.ts";
 
 export interface ResolveCardToPlayInput extends MoveInput {
   args: {
@@ -37,6 +40,12 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
     if (!typedChoice.payload.cardIds.includes(cardId as CardInstanceId)) {
       return { valid: false, error: "Card is not a valid choice", errorCode: "INVALID_CHOICE" };
     }
+    if (!typedChoice.payload.free) {
+      const cost = computeEffectiveCost(state as MatchState, cardId as CardInstanceId, playerId);
+      if (availableEddies(state as MatchState, playerId) < cost) {
+        return { valid: false, error: "Not enough eddies", errorCode: "INSUFFICIENT_EDDIES" };
+      }
+    }
     return { valid: true };
   },
 
@@ -46,7 +55,15 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
     const card = state.G.cardIndex[cardId];
     if (!card) return;
 
-    const { free, resolvedAttachToId } = choice.payload;
+    const {
+      free,
+      resolvedAttachToId,
+      boundTargets,
+      sourceCardId,
+      sourcePlayerId,
+      abilityIndex,
+      ifEffects,
+    } = choice.payload;
     const def = defOf(card);
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
 
@@ -65,6 +82,10 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
       operations.zone.moveCard(cardId as CardInstanceId, "trash", playerId);
     } else {
       operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
+      operations.card.moveAttachedGear(cardId as CardInstanceId, "field");
+      if (def.type === "unit") {
+        operations.card.setPlayedThisTurn(cardId as CardInstanceId, true);
+      }
     }
 
     // Clear the old pending choice before emitting cardPlayed so that any new
@@ -88,6 +109,25 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
       params: { cardName: def.displayName, cost },
       playerId,
     });
+
+    if (
+      ifEffects &&
+      ifEffects.length > 0 &&
+      sourceCardId &&
+      sourcePlayerId &&
+      abilityIndex !== undefined
+    ) {
+      const ctx: ResolutionContext = {
+        state,
+        sourceCardId,
+        sourcePlayerId,
+        abilityIndex,
+        contextTargets: {},
+        boundTargets: boundTargets ?? {},
+      };
+      const followupStatus = executeAbilityEffects(ifEffects, ctx, operations);
+      if (followupStatus === "suspended") return;
+    }
 
     resumeCurrentTrigger(state as MatchState, operations);
   },

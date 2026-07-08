@@ -9,14 +9,18 @@ import {
   expectAttackPair,
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaSandevistan, alphaRuthlessLowlife, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailSandevistan,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
 registerMatchers();
 
-const gear = alphaSandevistan; // cost 3, power 3, play: grantRule canAttackOnPlayedTurnAgainstUnits (turn)
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1, unit
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5, unit
+const gear = welcomeToNightCityRetailSandevistan; // cost 3, power 3, play: grantRule canAttackOnPlayedTurnAgainstUnits (turn)
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1, unit
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5, unit
 
 describe("Sandevistan", () => {
   describe("UI prompt", () => {

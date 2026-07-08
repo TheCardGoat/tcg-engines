@@ -10,6 +10,7 @@ export {
   type CardExitStep,
   type CardLandStep,
   type CardMoveStep,
+  type CombatRedirectStep,
   type CombatStep,
   type EffectTargetSpec,
   type EffectTargetStep,

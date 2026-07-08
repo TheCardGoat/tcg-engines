@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { spoilerKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import { ensureJsdomAnimationSupport } from "@cyberpunk/testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -21,7 +21,7 @@ describe("Kerry Eurodyne jsdom happy path", () => {
       const kerry = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        spoilerKerryEurodyneTheLastRockerboy.id,
+        welcomeToNightCityRetailKerryEurodyneTheLastRockerboy.id,
       );
       const abilityCandidates = await pom.getMoveCandidateIds(CYBERPUNK_P1, "activateAbility");
       if (!abilityCandidates.includes(`${kerry.instanceId}:0`)) {

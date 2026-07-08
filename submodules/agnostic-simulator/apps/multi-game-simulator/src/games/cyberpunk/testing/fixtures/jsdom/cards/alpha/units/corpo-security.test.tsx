@@ -1,5 +1,8 @@
 import { describe, test } from "vite-plus/test";
-import { alphaCorpoSecurity, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -10,7 +13,7 @@ import {
 } from "@cyberpunk/testing/render-cyberpunk-simulator";
 
 describe("Corpo Security jsdom happy path", () => {
-  test("blocks a direct attack after its controller takes the defensive choice", async () => {
+  test("blocks a direct attack after its controller takes the React choice", async () => {
     ensureJsdomAnimationSupport();
     const view = renderCyberpunkSimulatorScenario({ scenarioId: "unitCorpoSecurity" });
     try {
@@ -19,12 +22,12 @@ describe("Corpo Security jsdom happy path", () => {
       const swordwise = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
       const corpo = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
 
       await pom.attackRival(swordwise.instanceId, CYBERPUNK_P1);

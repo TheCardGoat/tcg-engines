@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorpoSecurity,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
@@ -8,7 +9,7 @@ import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 describe("Kerry Eurodyne - The Last Rockerboy", () => {
   it("spends to draw two cards when a friendly Gig has value 8 or more", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      deck: [alphaCorpoSecurity, alphaCorpoSecurity],
+      deck: [welcomeToNightCityRetailCorpoSecurity, welcomeToNightCityRetailFieldOperator],
       field: [{ card: welcomeToNightCityRetailKerryEurodyneTheLastRockerboy, spent: false }],
       gigArea: [{ dieType: "d10", faceValue: 8 }],
     });
@@ -24,7 +25,7 @@ describe("Kerry Eurodyne - The Last Rockerboy", () => {
 
   it("does not draw without an 8+ value Gig", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      deck: [alphaCorpoSecurity, alphaCorpoSecurity],
+      deck: [welcomeToNightCityRetailCorpoSecurity, welcomeToNightCityRetailFieldOperator],
       field: [{ card: welcomeToNightCityRetailKerryEurodyneTheLastRockerboy, spent: false }],
       gigArea: [{ dieType: "d10", faceValue: 7 }],
     });

@@ -11,23 +11,23 @@ import {
 } from "@cyberpunk-engine/testing/index.ts";
 import type { ActionLogEvent } from "@cyberpunk-engine/types/game-events.ts";
 import {
-  alphaMantisBlades,
-  alphaMandibularUpgrade,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  alphaVCorporateExile,
-  spoilerCyberpsychosis,
+  welcomeToNightCityRetailMantisBlades,
+  welcomeToNightCityRetailMandibularUpgrade,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  theHeistRetailStarterDeckVCorporateExile,
+  welcomeToNightCityRetailCyberpsychosis,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
 registerMatchers();
 
-const program = spoilerCyberpsychosis; // cost 2, event-timing program
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5, unit
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1, unit
-const mantis = alphaMantisBlades; // cost 1, power 2, gear
-const mandibular = alphaMandibularUpgrade; // cost 1, power 0, gear
-const v = alphaVCorporateExile; // face-up legend, power 3
+const program = welcomeToNightCityRetailCyberpsychosis; // cost 2, event-timing program
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5, unit
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1, unit
+const mantis = welcomeToNightCityRetailMantisBlades; // cost 1, power 2, gear
+const mandibular = welcomeToNightCityRetailMandibularUpgrade; // cost 1, power 0, gear
+const v = theHeistRetailStarterDeckVCorporateExile; // face-up legend, power 3
 
 function setupForAttackWindow(opts: { extraGear?: boolean; eddies?: number } = {}) {
   const engine = CyberpunkTestEngine.createWithFixture(
@@ -105,12 +105,12 @@ describe("Cyberpsychosis", () => {
   });
 
   describe(`You may also play this Program when a Unit attacks by paying this card's cost and spending a friendly Unit or face-up Legend. Give an equipped Unit +2 power this turn for each of its equipped Gear. Defeat the Unit at the end of this turn.`, () => {
-    it("offers its play window as an optional choice when a unit attacks, before the defensive step", () => {
+    it("offers its play window as an optional choice when a unit attacks, before the React step", () => {
       const engine = setupForAttackWindow();
 
       engine.attackRival(huscle);
 
-      expect(engine.getAttackState()?.step).toBe("offensive");
+      expect(engine.getAttackState()?.step).toBe("attack");
       const choice = pendingTriggerChoice(engine);
       expect(choice.payload.canPass).toBe(true);
       expect(choice.payload.options).toMatchObject([

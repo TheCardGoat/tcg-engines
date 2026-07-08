@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
   expectDefined,
@@ -22,7 +22,7 @@ describe("Zetatech Faceplate jsdom happy path", () => {
       const host = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
       const d8 = expectDefined(
         "Zetatech friendly d8",

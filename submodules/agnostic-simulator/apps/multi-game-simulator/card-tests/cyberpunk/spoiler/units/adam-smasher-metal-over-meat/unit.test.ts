@@ -6,19 +6,19 @@ import {
   expectAttackCandidate,
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
-import { spoilerAdamSmasherMetalOverMeat } from "@tcg/cyberpunk-cards";
-import { alphaRuthlessLowlife } from "@tcg/cyberpunk-cards";
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
-import { alphaArmoredMinotaur } from "@tcg/cyberpunk-cards";
-import { alphaCorpoSecurity } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailAdamSmasherMetalOverMeat } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailMoxInciters } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { embracingPowerRetailStarterDeckMinotaur } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailCorpoSecurity } from "@tcg/cyberpunk-cards";
 
-const adamSmasher = spoilerAdamSmasherMetalOverMeat;
+const adamSmasher = welcomeToNightCityRetailAdamSmasherMetalOverMeat;
 
 // Low-cost units to populate fields.
-const rivalUnit1 = alphaRuthlessLowlife; // cost 1, power 1
-const rivalUnit2 = alphaSwordwiseHuscle; // cost 3, power 5
-const friendlyUnit = alphaCorpoSecurity; // cost 2, power 2
-const extraUnit = alphaArmoredMinotaur; // cost 5, power 9
+const rivalUnit1 = welcomeToNightCityRetailMoxInciters; // cost 1, power 1
+const rivalUnit2 = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5
+const friendlyUnit = welcomeToNightCityRetailCorpoSecurity; // cost 2, power 2
+const extraUnit = embracingPowerRetailStarterDeckMinotaur; // cost 5, power 9
 
 describe("Adam Smasher - Metal Over Meat", () => {
   describe("UI prompt", () => {

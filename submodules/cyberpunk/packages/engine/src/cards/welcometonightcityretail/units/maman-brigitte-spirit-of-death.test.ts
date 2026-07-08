@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  alphaCorporateSurveillance,
-  alphaCorpoSecurity,
-  alphaFloorIt,
+  welcomeToNightCityRetailCorporateSurveillance,
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFloorIt,
   welcomeToNightCityRetailMamanBrigitteSpiritOfDeath,
 } from "@tcg/cyberpunk-cards";
-import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
+import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Maman Brigitte", () => {
   it("requires discarding two Programs before bottom-decking an unequipped rival unit", () => {
@@ -13,20 +13,33 @@ describe("Maman Brigitte", () => {
       {
         hand: [
           welcomeToNightCityRetailMamanBrigitteSpiritOfDeath,
-          alphaCorporateSurveillance,
-          alphaFloorIt,
+          welcomeToNightCityRetailCorporateSurveillance,
+          welcomeToNightCityRetailFloorIt,
         ],
         eddies: 5,
       },
       {
-        field: [alphaCorpoSecurity],
+        field: [welcomeToNightCityRetailCorpoSecurity],
       },
     );
 
     engine.playCard(welcomeToNightCityRetailMamanBrigitteSpiritOfDeath, { as: P1 });
 
-    const choice = engine.getState().G.turnMetadata.pendingChoice;
-    if (!choice || choice.type !== "chooseTarget") throw new Error("Expected chooseTarget choice.");
-    expect(choice.payload.type).toBe("discardFromHand");
+    engine.resolveDiscardFromHand(
+      [welcomeToNightCityRetailCorporateSurveillance, welcomeToNightCityRetailFloorIt],
+      { as: P1 },
+    );
+    engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
+
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toEqual([
+      welcomeToNightCityRetailCorporateSurveillance.id,
+      welcomeToNightCityRetailFloorIt.id,
+    ]);
+    expect(engine.getCardsInZone("field", P2).map((card) => card.definitionId)).not.toContain(
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
+    expect(engine.getCardsInZone("deck", P2).at(-1)?.definitionId).toBe(
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
   });
 });

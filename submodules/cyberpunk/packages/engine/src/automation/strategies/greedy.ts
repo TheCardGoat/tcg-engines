@@ -399,6 +399,8 @@ function pickSafeDirectAttacker(
   playerId: string,
 ): string | null {
   if (candidates.length === 0) return null;
+  const requiredAttackers = mustAttackCandidates(candidates, view);
+  if (requiredAttackers.length > 0) return pickStrongestAttacker(requiredAttackers, view, playerId);
   if (getRivalGigCount(view, playerId) === 0) return null;
 
   const rivalBlockers = getRivalReadyBlockers(view, playerId);
@@ -432,8 +434,10 @@ function pickFavourableFight(
   minMargin: number,
 ): { from: string; to: string } | null {
   if (fromCandidates.length === 0 || toCandidates.length === 0) return null;
+  const requiredAttackers = mustAttackCandidates(fromCandidates, view);
+  const attackers = requiredAttackers.length > 0 ? requiredAttackers : fromCandidates;
   let best: { from: string; to: string; margin: number } | null = null;
-  for (const from of fromCandidates) {
+  for (const from of attackers) {
     for (const to of toCandidates) {
       const fromCard = findCard(view, from);
       const toCard = findCard(view, to);
@@ -443,8 +447,15 @@ function pickFavourableFight(
       }
     }
   }
-  if (!best || best.margin < minMargin) return null;
+  if (!best || (requiredAttackers.length === 0 && best.margin < minMargin)) return null;
   return { from: best.from, to: best.to };
+}
+
+function mustAttackCandidates(candidates: string[], view: FilteredMatchView): string[] {
+  return candidates.filter((id) => {
+    const card = findCard(view, id);
+    return card?.grantedRules.includes("mustAttack") === true;
+  });
 }
 
 /**
@@ -453,7 +464,7 @@ function pickFavourableFight(
  * - If the rival has ready (un-spent) units on their field AND we have no
  *   ready blocker on our own field, prefer playing a card with the
  *   `blocker` keyword (priced first by `effectivePower`, then `cost`) so we
- *   actually have a defensive answer next turn.
+ *   actually have a react answer next turn.
  * - Otherwise, fall back to the regular "highest cost playable" pick.
  *
  * Gear always attaches to the highest-power friendly unit so the buff lands

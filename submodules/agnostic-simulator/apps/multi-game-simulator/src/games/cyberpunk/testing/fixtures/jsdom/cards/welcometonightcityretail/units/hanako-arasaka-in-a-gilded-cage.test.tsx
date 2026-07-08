@@ -1,8 +1,8 @@
 import { describe, test } from "vite-plus/test";
 import {
-  alphaFloorIt,
-  alphaSecondhandBombus,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailFloorIt,
+  welcomeToNightCityRetailSecondhandBombus,
+  welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailHanakoArasakaInAGildedCage,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -45,9 +45,21 @@ describe("Hanako Arasaka (Retail) jsdom happy path", () => {
       await pom.expectEddies(CYBERPUNK_P1, 0);
 
       const handDefinitions = await getZoneDefinitionIds(pom, "hand", CYBERPUNK_P1);
-      expectIncludes("Hanako hand definitions", handDefinitions, alphaSwordwiseHuscle.id);
-      expectIncludes("Hanako hand definitions", handDefinitions, alphaFloorIt.id);
-      expectExcludes("Hanako hand definitions", handDefinitions, alphaSecondhandBombus.id);
+      expectIncludes(
+        "Hanako hand definitions",
+        handDefinitions,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
+      );
+      expectIncludes(
+        "Hanako hand definitions",
+        handDefinitions,
+        welcomeToNightCityRetailFloorIt.id,
+      );
+      expectExcludes(
+        "Hanako hand definitions",
+        handDefinitions,
+        welcomeToNightCityRetailSecondhandBombus.id,
+      );
 
       await pom.expectStructuralState();
     } finally {

@@ -85,6 +85,7 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
         {state && selectedCard ? (
           <div
             className={classes.shell}
+            data-testid="card-inspect-modal"
             style={
               {
                 "--accent": state.color ? ACCENT_HEX[state.color] : "#f5e642", // card color accent
@@ -93,6 +94,7 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
           >
             <img
               className={classes.image}
+              data-testid="card-inspect-image"
               src={selectedCard.imageUrl}
               alt={selectedCard.name ?? ""}
             />

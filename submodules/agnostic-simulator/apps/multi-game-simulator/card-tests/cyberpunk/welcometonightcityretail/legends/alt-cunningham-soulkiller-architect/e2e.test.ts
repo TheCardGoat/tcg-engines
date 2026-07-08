@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 
 import {
-  alphaCorporateSurveillance,
+  welcomeToNightCityRetailCorporateSurveillance,
   welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -37,6 +37,10 @@ test("Alt Cunningham (Retail) - spends to play a Program from trash", async ({ p
 
   await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
   await pom.expectEddies(CYBERPUNK_P1, 5); // 8 - 1 (Alt) - 2 (Corporate Surveillance)
-  await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P1, alphaCorporateSurveillance.id);
+  await pom.getCardInZoneByDefinitionId(
+    "trash",
+    CYBERPUNK_P1,
+    welcomeToNightCityRetailCorporateSurveillance.id,
+  );
   await pom.expectStructuralState();
 });

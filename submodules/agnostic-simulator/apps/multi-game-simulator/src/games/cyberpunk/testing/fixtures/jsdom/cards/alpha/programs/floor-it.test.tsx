@@ -1,5 +1,8 @@
 import { describe, test } from "vite-plus/test";
-import { alphaCorpoSecurity, alphaFloorIt } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFloorIt,
+} from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -18,12 +21,16 @@ describe("Floor It jsdom happy path", () => {
       await pom.waitForReady();
       const rivalHandBefore = await pom.getHandSize(CYBERPUNK_P2);
 
-      const floorIt = await pom.getCardInZoneByDefinitionId("hand", CYBERPUNK_P1, alphaFloorIt.id);
+      const floorIt = await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailFloorIt.id,
+      );
       await pom.playCardFromHand(floorIt.instanceId, CYBERPUNK_P1);
       const corpo = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P2,
-        alphaCorpoSecurity.id,
+        welcomeToNightCityRetailCorpoSecurity.id,
       );
       await pom.resolveEffectTarget([corpo.instanceId], CYBERPUNK_P1);
 
@@ -31,11 +38,15 @@ describe("Floor It jsdom happy path", () => {
       expectEqual(
         "Corpo Security removed from rival field",
         (await pom.getCardsInZone("field", CYBERPUNK_P2)).some(
-          (card) => card.definitionId === alphaCorpoSecurity.id,
+          (card) => card.definitionId === welcomeToNightCityRetailCorpoSecurity.id,
         ),
         false,
       );
-      await pom.getCardInZoneByDefinitionId("trash", CYBERPUNK_P1, alphaFloorIt.id);
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailFloorIt.id,
+      );
     } finally {
       view.unmount();
     }

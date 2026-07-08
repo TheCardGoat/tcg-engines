@@ -87,7 +87,7 @@ export function decisionFromMove(available: AvailableMove, picker: ArgPicker): M
       return { kind: "command", move: moveId };
     case "resolveAttack":
       // `resolveAttack` advances the attack state machine. With no pending
-      // choice, the typical caller wants `pass: true` (move from defensive →
+      // choice, the typical caller wants `pass: true` (move from React →
       // resolve, or auto-resolve at the resolve step).
       return { kind: "command", move: "resolveAttack", args: { pass: true } };
     case "resolveCardToMove":

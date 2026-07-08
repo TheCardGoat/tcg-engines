@@ -17,7 +17,7 @@ These fixtures feed the dev scenario picker at `http://localhost:5174/tests`, th
 3. Add one `Scenario` entry to the category file that best matches the behavior being covered.
 4. Use a short label and a description that says what the harness should verify visually or interactively.
 5. Build the engine with `CyberpunkTestEngine.createWithFixture` and pass `seed: scenarioSeed("yourId")`.
-6. If the scenario needs card definitions, import them through the shared `c` namespace, for example `c.alphaSwordwiseHuscle`.
+6. If the scenario needs card definitions, import them through the shared `c` namespace, for example `c.welcomeToNightCityRetailSwordwiseHuscle`.
 7. Run a focused simulator check from `submodules/cyberpunk`, then open `http://localhost:5174/tests` when changing visible playground behavior.
 
 Keep each scenario deterministic and narrowly scoped. These fixtures are not decklists or gameplay docs; they are reproducible UI and engine states for tests, screenshots, and AI review.

@@ -30,6 +30,20 @@ function addUnitOnlyAttackRule(engine: CyberpunkTestEngine, attackerId: string):
   engine.judgeAddActiveEffect(effect, { as: P1 });
 }
 
+function addMustAttackRule(engine: CyberpunkTestEngine, attackerId: string): void {
+  const effect: ActiveEffect = {
+    id: `must-attack-${attackerId}`,
+    sourceCardId: attackerId as ActiveEffect["sourceCardId"],
+    targetCardId: attackerId as ActiveEffect["targetCardId"],
+    kind: "grantRule",
+    rule: "mustAttack",
+    duration: "turn",
+    origin: "imperative",
+    abilityIndex: 0,
+  };
+  engine.judgeAddActiveEffect(effect, { as: P1 });
+}
+
 function createUnitOnlyFightFixture(attackerPower: number, defenderPower: number) {
   const attacker = createMockUnit({
     id: `default-fight-attacker-${attackerPower}`,
@@ -145,6 +159,30 @@ describe("cyberpunk default automated action strategy", () => {
     expect(result.decision.args).toMatchObject({
       attackerId: engine.findCardId(attacker, "field", P1),
     });
+  });
+
+  test("uses the required must-attack Unit instead of the strongest direct attacker", () => {
+    const required = createMockUnit({ id: "must-attack-required", power: 2 });
+    const stronger = createMockUnit({ id: "must-attack-stronger", power: 8 });
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        field: [
+          { card: required, spent: false, playedThisTurn: false },
+          { card: stronger, spent: false, playedThisTurn: false },
+        ],
+      },
+      { field: [], gigArea: [{ dieType: "d6", faceValue: 4 }] },
+    );
+
+    engine.spendAllLegends();
+    const requiredId = engine.findCardId(required, "field", P1);
+    addMustAttackRule(engine, requiredId as string);
+    const result = runDefaultBot(engine);
+
+    expect(result.kind).toBe("acted");
+    if (result.kind !== "acted") return;
+    expect(result.decision.move).toBe("attackRival");
+    expect(result.decision.args).toMatchObject({ attackerId: requiredId });
   });
 
   test("passes the turn instead of direct-attacking when the rival has no gigs", () => {

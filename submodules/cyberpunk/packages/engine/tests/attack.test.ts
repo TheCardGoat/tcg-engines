@@ -61,7 +61,7 @@ describe("Attack Step", () => {
         const attack = engine.getState().G.attackState;
         expect(attack).not.toBeNull();
         expect(attack!.kind).toBe("fight");
-        expect(attack!.step).toBe("offensive");
+        expect(attack!.step).toBe("attack");
         expect(attack!.defenderId).not.toBeNull();
       });
 
@@ -131,7 +131,7 @@ describe("Attack Step", () => {
         engine.resolveAttack({ as: P1 }); // offensive -> defensive
 
         const attack = engine.getState().G.attackState;
-        expect(attack!.step).toBe("defensive");
+        expect(attack!.step).toBe("react");
       });
 
       it("rival can pass the defensive step to proceed to fight", () => {
@@ -305,7 +305,7 @@ describe("Attack Step", () => {
         expect(attack).not.toBeNull();
         expect(attack!.kind).toBe("direct");
         expect(attack!.defenderId).toBeNull();
-        expect(attack!.step).toBe("offensive");
+        expect(attack!.step).toBe("attack");
       });
     });
 
@@ -618,8 +618,7 @@ describe("Attack Step", () => {
 
       // Now it's a fight, resolve it
       engine.resolveAttack({ as: P2, pass: true }); // defensive -> fight
-      engine.resolveAttack({ as: P1 }); // fight -> defeat
-      engine.resolveAttack({ as: P1 }); // defeat -> cleared
+      engine.resolveAttack({ as: P1 }); // fight -> cleared
 
       // Blocker defeated
       const p2Trash = engine.getCardsInZone("trash", P2);
@@ -673,7 +672,7 @@ describe("Attack Step", () => {
 
       // P1 (attacker) tries to use P2's blocker
       const failure = engine.expectFailure(() => engine.useBlocker(alphaCorpoSecurity, { as: P1 }));
-      expect(failure.errorCode).toBe("NOT_YOUR_DEFENSE");
+      expect(failure.errorCode).toBe("NOT_YOUR_REACT");
     });
   });
 

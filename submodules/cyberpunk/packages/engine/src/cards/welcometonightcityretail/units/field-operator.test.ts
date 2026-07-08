@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { alphaRuthlessLowlife, welcomeToNightCityRetailFieldOperator } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFieldOperator,
+} from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 
 describe("Field Operator", () => {
@@ -7,7 +10,7 @@ describe("Field Operator", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
         hand: [welcomeToNightCityRetailFieldOperator],
-        deck: [alphaRuthlessLowlife],
+        deck: [welcomeToNightCityRetailCorpoSecurity],
         eddies: 3,
         gigArea: [{ dieType: "d6", faceValue: 2 }],
       },
@@ -18,14 +21,14 @@ describe("Field Operator", () => {
     engine.playCard(welcomeToNightCityRetailFieldOperator, { as: P1 });
 
     expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
-      alphaRuthlessLowlife.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
     );
   });
 
   it("does not draw on play when friendly Street Cred is odd", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailFieldOperator],
-      deck: [alphaRuthlessLowlife],
+      deck: [welcomeToNightCityRetailCorpoSecurity],
       eddies: 3,
       gigArea: [{ dieType: "d6", faceValue: 3 }],
     });

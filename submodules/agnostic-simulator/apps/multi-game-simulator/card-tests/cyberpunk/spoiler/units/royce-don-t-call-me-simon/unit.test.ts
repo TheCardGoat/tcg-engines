@@ -8,17 +8,17 @@ import {
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaArmoredMinotaur,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
-  spoilerRoyceDonTCallMeSimon,
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailRoyceDonTCallMeSimon,
 } from "@tcg/cyberpunk-cards";
 import { createMockUnit } from "@cyberpunk-engine/testing/index.ts";
 
-const royce = spoilerRoyceDonTCallMeSimon; // unit, cost 5, power 4
-const lowlife = alphaRuthlessLowlife; // unit, power 1
-const huscle = alphaSwordwiseHuscle; // unit, power 5
-const minotaur = alphaArmoredMinotaur; // unit, power 9
+const royce = welcomeToNightCityRetailRoyceDonTCallMeSimon; // unit, cost 5, power 4
+const lowlife = welcomeToNightCityRetailMoxInciters; // unit, power 1
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // unit, power 5
+const minotaur = embracingPowerRetailStarterDeckMinotaur; // unit, power 9
 const powerThreeMock = createMockUnit({
   id: "royce-power-three-mock",
   slug: "royce-power-three-mock",

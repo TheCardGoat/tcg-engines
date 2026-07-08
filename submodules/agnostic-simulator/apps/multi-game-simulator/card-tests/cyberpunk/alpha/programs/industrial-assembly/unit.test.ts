@@ -8,10 +8,10 @@ import {
   expectTargetChoice,
   expectEligibleGigs,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaIndustrialAssembly } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailIndustrialAssembly } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
-const program = alphaIndustrialAssembly; // cost 2, program
+const program = welcomeToNightCityRetailIndustrialAssembly; // cost 2, program
 
 function industrialAssemblyChoice(engine: CyberpunkTestEngine) {
   const choice = engine.getState().G.turnMetadata.pendingChoice;

@@ -12,19 +12,19 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaCorporateSurveillance],
-          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          hand: [c.welcomeToNightCityRetailCorporateSurveillance],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
           field: [
-            { card: c.alphaCorpoSecurity, spent: false },
-            { card: c.alphaCorpoSecurity, spent: false },
-            { card: c.alphaJackieWellesRideOrDieChoom, spent: true },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: true },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -40,15 +40,15 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaCorporateSurveillance],
-          field: [{ card: c.alphaSecondhandBombus, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          hand: [c.welcomeToNightCityRetailCorporateSurveillance],
+          field: [{ card: c.welcomeToNightCityRetailSecondhandBombus, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 1 }],
         },
         {
-          field: [{ card: c.alphaArmoredMinotaur, spent: false }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.embracingPowerRetailStarterDeckMinotaur, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 4 }],
         },
@@ -66,21 +66,21 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaFloorIt],
+          hand: [c.welcomeToNightCityRetailFloorIt],
           field: [
-            { card: c.alphaSwordwiseHuscle, spent: true },
-            { card: c.alphaSecondhandBombus, spent: false },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: true },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
           ],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 4,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
           field: [
-            { card: c.alphaCorpoSecurity, spent: true },
-            { card: c.alphaArmoredMinotaur, spent: false },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -96,15 +96,15 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaFloorIt],
-          field: [{ card: c.alphaSecondhandBombus, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          hand: [c.welcomeToNightCityRetailFloorIt],
+          field: [{ card: c.welcomeToNightCityRetailSecondhandBombus, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 4,
           gigArea: [{ dieType: "d4", faceValue: 1 }],
         },
         {
-          field: [{ card: c.alphaJackieWellesRideOrDieChoom, spent: true }],
-          legendArea: [c.alphaSaburoArasakaStubbornPatriach],
+          field: [{ card: c.welcomeToNightCityRetailJackieWellesRideOrDieChoom, spent: true }],
+          legendArea: [c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 4 }],
         },
@@ -122,15 +122,15 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaIndustrialAssembly],
-          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          hand: [c.welcomeToNightCityRetailIndustrialAssembly],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 3 }],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: false }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 2 }],
         },
@@ -146,9 +146,9 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaIndustrialAssembly],
-          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          hand: [c.welcomeToNightCityRetailIndustrialAssembly],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [
             { dieType: "d4", faceValue: 4 },
@@ -157,8 +157,8 @@ export const programScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: false }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [
             { dieType: "d10", faceValue: 5 },
@@ -180,18 +180,18 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaRebootOptics],
+          hand: [c.welcomeToNightCityRetailRebootOptics],
           field: [
-            { card: c.alphaSwordwiseHuscle, spent: false },
-            { card: c.alphaSecondhandBombus, spent: true },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: true },
           ],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: false }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -207,15 +207,15 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.alphaRebootOptics],
+          hand: [c.welcomeToNightCityRetailRebootOptics],
           field: [],
-          legendArea: [c.alphaVCorporateExile],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 1 }],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: false }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 2 }],
         },
@@ -233,9 +233,9 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.spoilerAfterpartyAtLizzieS],
-          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          hand: [c.welcomeToNightCityRetailAfterpartyAtLizzieS],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [
             { dieType: "d6", faceValue: 4 },
@@ -243,8 +243,8 @@ export const programScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: false }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [
             { dieType: "d6", faceValue: 4 },
@@ -265,25 +265,28 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.spoilerCyberpsychosis],
+          hand: [c.welcomeToNightCityRetailCyberpsychosis],
           field: [
             {
-              card: c.alphaTBugAmateurPhilosopher,
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
               spent: false,
-              attachedGears: [c.alphaKiroshiOptics, c.alphaDyingNightVSPistol],
+              attachedGears: [
+                c.welcomeToNightCityRetailKiroshiOptics,
+                c.welcomeToNightCityRetailDyingNightVSPistol,
+              ],
             },
-            { card: c.alphaSecondhandBombus, spent: false },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
           ],
-          legendArea: [{ card: c.alphaVCorporateExile, faceDown: false }],
+          legendArea: [{ card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false }],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
           field: [
-            { card: c.alphaCorpoSecurity, spent: true },
-            { card: c.alphaArmoredMinotaur, spent: true },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -299,11 +302,11 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.spoilerChromeReverie],
-          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          hand: [c.welcomeToNightCityRetailChromeReverie],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
-            { card: c.spoilerRiverWardDetectiveOnTheHunt, faceDown: true },
-            { card: c.alphaVCorporateExile, faceDown: false },
+            { card: c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, faceDown: true },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           ],
           eddies: 4,
           gigArea: [
@@ -313,10 +316,10 @@ export const programScenarios: Scenario[] = [
         },
         {
           field: [
-            { card: c.alphaCorpoSecurity, spent: false },
-            { card: c.alphaSwordwiseHuscle, spent: false },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 4,
           gigArea: [{ dieType: "d8", faceValue: 5 }],
         },
@@ -332,9 +335,9 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.spoilerPeaceOffering],
-          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          hand: [c.welcomeToNightCityRetailPeaceOffering],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 2,
           gigArea: [
             { dieType: "d4", faceValue: 3 },
@@ -342,8 +345,8 @@ export const programScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: false }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [],
         },
@@ -359,9 +362,9 @@ export const programScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.spoilerCarnageAtTheColosseum],
-          field: [{ card: c.alphaArmoredMinotaur, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          hand: [c.welcomeToNightCityRetailCarnageAtTheColosseum],
+          field: [{ card: c.embracingPowerRetailStarterDeckMinotaur, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 4,
           gigArea: [
             { dieType: "d8", faceValue: 8 },
@@ -371,10 +374,10 @@ export const programScenarios: Scenario[] = [
         },
         {
           field: [
-            { card: c.alphaRuthlessLowlife, spent: false },
-            { card: c.alphaArmoredMinotaur, spent: false },
+            { card: c.welcomeToNightCityRetailMoxInciters, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -393,9 +396,13 @@ export const programScenarios: Scenario[] = [
       CyberpunkTestEngine.createWithFixture(
         {
           hand: [c.welcomeToNightCityRetailBootlegBlackSapphireShow],
-          deck: [c.alphaCorpoSecurity, c.alphaRuthlessLowlife, c.alphaSwordwiseHuscle],
-          field: [{ card: c.alphaSecondhandBombus, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          deck: [
+            c.welcomeToNightCityRetailCorpoSecurity,
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailSwordwiseHuscle,
+          ],
+          field: [{ card: c.welcomeToNightCityRetailSecondhandBombus, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 5,
           gigArea: [
             { dieType: "d4", faceValue: 2 },
@@ -403,8 +410,8 @@ export const programScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: false }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [],
         },
@@ -427,8 +434,8 @@ export const programScenarios: Scenario[] = [
       CyberpunkTestEngine.createWithFixture(
         {
           hand: [c.welcomeToNightCityRetailCarnageAtTheColosseum],
-          field: [{ card: c.alphaArmoredMinotaur, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          field: [{ card: c.embracingPowerRetailStarterDeckMinotaur, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 4,
           gigArea: [
             { dieType: "d8", faceValue: 8 },
@@ -438,10 +445,10 @@ export const programScenarios: Scenario[] = [
         },
         {
           field: [
-            { card: c.alphaRuthlessLowlife, spent: false },
-            { card: c.alphaArmoredMinotaur, spent: false },
+            { card: c.welcomeToNightCityRetailMoxInciters, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: false },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -460,10 +467,10 @@ export const programScenarios: Scenario[] = [
       CyberpunkTestEngine.createWithFixture(
         {
           hand: [c.welcomeToNightCityRetailChromeReverie],
-          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
-            { card: c.spoilerRiverWardDetectiveOnTheHunt, faceDown: true },
-            { card: c.alphaVCorporateExile, faceDown: false },
+            { card: c.welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, faceDown: true },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           ],
           eddies: 4,
           gigArea: [
@@ -473,10 +480,10 @@ export const programScenarios: Scenario[] = [
         },
         {
           field: [
-            { card: c.alphaCorpoSecurity, spent: false },
-            { card: c.alphaSwordwiseHuscle, spent: false },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 4,
           gigArea: [{ dieType: "d8", faceValue: 5 }],
         },
@@ -497,22 +504,25 @@ export const programScenarios: Scenario[] = [
           hand: [c.welcomeToNightCityRetailCyberpsychosis],
           field: [
             {
-              card: c.alphaSwordwiseHuscle,
+              card: c.welcomeToNightCityRetailSwordwiseHuscle,
               spent: false,
-              attachedGears: [c.alphaKiroshiOptics, c.alphaMantisBlades],
+              attachedGears: [
+                c.welcomeToNightCityRetailKiroshiOptics,
+                c.welcomeToNightCityRetailMantisBlades,
+              ],
             },
-            { card: c.alphaSecondhandBombus, spent: false },
+            { card: c.welcomeToNightCityRetailSecondhandBombus, spent: false },
           ],
-          legendArea: [{ card: c.alphaVCorporateExile, faceDown: false }],
+          legendArea: [{ card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false }],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
         {
           field: [
-            { card: c.alphaCorpoSecurity, spent: true },
-            { card: c.alphaArmoredMinotaur, spent: true },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true },
           ],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 5,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
@@ -531,8 +541,8 @@ export const programScenarios: Scenario[] = [
       CyberpunkTestEngine.createWithFixture(
         {
           hand: [c.welcomeToNightCityRetailPeaceOffering],
-          field: [{ card: c.alphaSwordwiseHuscle, spent: false }],
-          legendArea: [c.alphaVCorporateExile],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 2,
           gigArea: [
             { dieType: "d4", faceValue: 3 },
@@ -540,8 +550,8 @@ export const programScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.alphaCorpoSecurity, spent: false }],
-          legendArea: [c.alphaJackieWellesPourOneOutForMe],
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 3,
           gigArea: [],
         },

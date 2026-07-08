@@ -226,6 +226,36 @@ describe("playCard", () => {
       expect(engine.getFaceDownLegends(P1)).toHaveLength(3);
     });
 
+    it("spends normal eddies, then face-down legends, then face-up legends", () => {
+      const unit = createMockUnit({ cost: 3 });
+      const faceUpFirst = createMockLegend({ name: "Face Up First" });
+      const faceDownSecond = createMockLegend({ name: "Face Down Second" });
+      const faceUpThird = createMockLegend({ name: "Face Up Third" });
+      const engine = CyberpunkTestEngine.createWithFixture({
+        hand: [unit],
+        legendArea: [
+          { card: faceUpFirst, faceDown: false },
+          { card: faceDownSecond, faceDown: true },
+          { card: faceUpThird, faceDown: false },
+        ],
+        eddies: 1,
+      });
+
+      engine.playCard(unit);
+
+      const faceUpFirstCard = engine.getCard(faceUpFirst, "legendArea", P1);
+      const faceDownSecondCard = engine.getCard(faceDownSecond, "legendArea", P1);
+      const faceUpThirdCard = engine.getCard(faceUpThird, "legendArea", P1);
+      expect(engine.getState().G.players[P1]!.spentEddies).toBe(1);
+      expect(faceDownSecondCard.meta.spent).toBe(true);
+      expect(faceUpFirstCard.meta.spent).toBe(true);
+      expect(faceUpThirdCard.meta.spent).toBe(false);
+      expect(engine.getEvents("cardSpent").map((event) => event.cardId)).toEqual([
+        faceDownSecondCard.instanceId,
+        faceUpFirstCard.instanceId,
+      ]);
+    });
+
     it("stamps a played unit with playedThisTurn", () => {
       const unit = createMockUnit({ cost: 0 });
       const engine = CyberpunkTestEngine.createWithFixture({ hand: [unit], eddies: 5 });

@@ -6,10 +6,13 @@ import {
   expectAttackCandidate,
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
-import { alphaEvelynParkerSchemingSiren, alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailEvelynParkerSchemingSiren,
+  welcomeToNightCityRetailSwordwiseHuscle,
+} from "@tcg/cyberpunk-cards";
 
-const evelyn = alphaEvelynParkerSchemingSiren;
-const huscle = alphaSwordwiseHuscle;
+const evelyn = welcomeToNightCityRetailEvelynParkerSchemingSiren;
+const huscle = welcomeToNightCityRetailSwordwiseHuscle;
 const p1LeadGigs = [
   { dieType: "d4" as const, faceValue: 1 },
   { dieType: "d8" as const, faceValue: 1 },
@@ -73,9 +76,9 @@ describe("Evelyn Parker - Scheming Siren", () => {
       engine.attackRival(huscle, { as: P2 });
 
       // Resolve the 3 attack steps:
-      // 1) offensive -> defensive
+      // 1) attack -> react
       engine.resolveAttack({ as: P2 });
-      // 2) defensive -> steal (P1 passes, no blocker)
+      // 2) react -> steal (P1 passes, no blocker)
       engine.resolveAttack({ as: P1, pass: true });
       // 3) steal: execute steal
       engine.resolveAttack({ as: P2 });
@@ -117,8 +120,8 @@ describe("Evelyn Parker - Scheming Siren", () => {
       const handBefore = engine.getHandCount(P1);
 
       engine.attackRival(huscle);
-      engine.resolveAttack(); // offensive -> defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive -> steal
+      engine.resolveAttack(); // attack -> react
+      engine.resolveAttack({ as: P2, pass: true }); // react -> steal
       engine.resolveAttack(); // steal: steal
 
       // The stealer is P1 (friendly to Evelyn), not rival — no draw.

@@ -1,10 +1,14 @@
 const DEFAULT_PLAYER_ZONE_WIDTH = 960;
-const HAND_TARGET_WIDTH_RATIO = 0.52;
-const MIN_CENTER_STEP_RATIO = 0.34;
+const HAND_TARGET_WIDTH_RATIO = 0.48;
+const MIN_CENTER_STEP_RATIO = 0.3;
 const MAX_CENTER_STEP_RATIO = 0.96;
 const MIN_PLAYER_CARD_WIDTH = 78;
 const MAX_PLAYER_CARD_WIDTH = 96;
 const PLAYER_CARD_WIDTH_RATIO = 0.054;
+const PLAYER_HAND_SCREEN_BLEED = 32;
+const PLAYER_HAND_OFFSCREEN_RATIO = 7 / 15;
+const PLAYER_HAND_ARC_HEIGHT = 5;
+const PLAYER_HAND_MAX_ROTATION = 3;
 
 interface Layout {
   angle: number;
@@ -32,13 +36,14 @@ export function computePlayerHandLayout(
     MIN_PLAYER_CARD_WIDTH,
     MAX_PLAYER_CARD_WIDTH,
   );
+  const baselineOffset = PLAYER_HAND_SCREEN_BLEED + cardWidth * PLAYER_HAND_OFFSCREEN_RATIO;
 
   if (n <= 0) {
     return { cards: [], cardWidth };
   }
 
   if (n === 1) {
-    return { cards: [{ angle: 0, x: 0, y: 0 }], cardWidth };
+    return { cards: [{ angle: 0, x: 0, y: baselineOffset }], cardWidth };
   }
 
   const targetWidth = safeZoneWidth * HAND_TARGET_WIDTH_RATIO;
@@ -57,9 +62,9 @@ export function computePlayerHandLayout(
       const x = i * step - halfSpan;
       const normalized = halfSpan > 0 ? x / halfSpan : 0;
       return {
-        angle: normalized * 12,
+        angle: normalized * PLAYER_HAND_MAX_ROTATION,
         x,
-        y: Math.abs(normalized) ** 2 * 22,
+        y: baselineOffset + Math.abs(normalized) ** 2 * PLAYER_HAND_ARC_HEIGHT,
       };
     }),
   };

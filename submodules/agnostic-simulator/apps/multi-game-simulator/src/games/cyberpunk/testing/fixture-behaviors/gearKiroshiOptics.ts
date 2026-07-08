@@ -1,4 +1,4 @@
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1 } from "../cyberpunk-simulator-pom";
 import { expectEqual, type CyberpunkFixtureBehavior } from "./cyberpunk-fixture-behavior";
@@ -11,7 +11,7 @@ export const gearKiroshiOpticsBehavior: CyberpunkFixtureBehavior = {
     const attacker = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      alphaSwordwiseHuscle.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
     );
 
     await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 2);

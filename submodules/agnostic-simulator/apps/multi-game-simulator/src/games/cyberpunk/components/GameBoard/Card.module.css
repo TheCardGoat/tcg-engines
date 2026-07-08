@@ -19,6 +19,8 @@
 
 .stack:has(.abilityBadge:hover),
 .stack:has(.abilityBadge:focus-visible),
+.stack:has(.gear:hover),
+.stack:has(.gear:focus-within),
 .stack:has(.costBadge[data-modified="true"]:hover),
 .stack:has(.costBadge[data-modified="true"]:focus-within),
 .stack:has(.powerBadge[data-modified="true"]:hover),
@@ -408,6 +410,21 @@
 .gear {
   position: absolute;
   inset: 0;
+  z-index: var(--gear-z-index);
+  transform: translateY(var(--gear-offset));
+  transform-origin: 50% 90%;
+  transition: transform 140ms ease;
+}
+
+.stack:has(.gear:hover) .gear,
+.stack:has(.gear:focus-within) .gear {
+  z-index: calc(200 + var(--gear-z-index));
+  transform: translate(var(--gear-fan-x), var(--gear-offset)) rotate(var(--gear-fan-rotation));
+}
+
+.gear:hover,
+.gear:focus-within {
+  z-index: 320;
 }
 
 .gear.selectable {

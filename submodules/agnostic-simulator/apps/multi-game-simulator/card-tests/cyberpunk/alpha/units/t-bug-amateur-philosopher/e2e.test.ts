@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 
-import { alphaTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailTBugAmateurPhilosopher } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 
 import { createPlaywrightCyberpunkSimulatorPom } from "@e2e/poms/CyberpunkPlaywrightHarnessClient";
@@ -14,7 +14,7 @@ test("T-Bug - Amateur Philosopher - renders at printed power and starts a direct
   const tbug = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaTBugAmateurPhilosopher.id,
+    welcomeToNightCityRetailTBugAmateurPhilosopher.id,
   );
 
   await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, tbug.instanceId, 5);

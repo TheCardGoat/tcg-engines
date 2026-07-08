@@ -1,6 +1,9 @@
 import { test } from "@playwright/test";
 
-import { alphaArmoredMinotaur, alphaCorpoSecurity } from "@tcg/cyberpunk-cards";
+import {
+  embracingPowerRetailStarterDeckMinotaur,
+  welcomeToNightCityRetailCorpoSecurity,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 import { legendEmbracingSaburoArasakaStubbornPatriarch } from "@cyberpunk/testing/e2e-fixtures";
@@ -14,12 +17,12 @@ test("Saburo Arasaka (Embracing Power) - buffs Arasaka attacker", async ({ page 
   const minotaur = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P1,
-    alphaArmoredMinotaur.id,
+    embracingPowerRetailStarterDeckMinotaur.id,
   );
   const defender = await pom.getCardInZoneByDefinitionId(
     "field",
     CYBERPUNK_P2,
-    alphaCorpoSecurity.id,
+    welcomeToNightCityRetailCorpoSecurity.id,
   );
 
   await pom.expectFieldCardEffectivePower(CYBERPUNK_P1, minotaur.instanceId, 9);

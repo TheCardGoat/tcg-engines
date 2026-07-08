@@ -7,7 +7,7 @@ vi.mock("@cyberpunk-simulator/animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaSwordwiseHuscle } from "@tcg/cyberpunk-cards";
+import { welcomeToNightCityRetailSwordwiseHuscle } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk-simulator/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk-simulator/testing/fixture-behaviors/cyberpunk-fixture-behavior";
 
@@ -30,7 +30,7 @@ describe("gearKiroshiOptics fixture behavior", () => {
       const attacker = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaSwordwiseHuscle.id,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
       );
 
       await pom.expectFaceDownLegendsCount(CYBERPUNK_P1, 2);

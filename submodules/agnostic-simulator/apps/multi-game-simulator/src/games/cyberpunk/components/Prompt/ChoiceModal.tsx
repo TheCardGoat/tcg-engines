@@ -176,6 +176,11 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
         const passInput = booleanInput(action, "pass");
         const sourceName = textParam(action.text.params, "sourceDisplayName");
         const sourceCardId = textParam(action.text.params, "sourceCardId");
+        const copy = effectTargetChoiceCopy(
+          matchState,
+          action,
+          targetInput.candidates.map((candidate) => candidate.entity.instanceId),
+        );
         const required = targetInput.min;
         const max = targetInput.max;
         const selectedCount = selectedTargetIds.length;
@@ -197,7 +202,9 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
         return (
           <>
             <p className={classes.title}>
-              {sourceName ? (
+              {copy.title ? (
+                copy.title
+              ) : sourceName ? (
                 <>
                   Choose target for{" "}
                   <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
@@ -207,8 +214,10 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
               )}
             </p>
             <p className={classes.subtitle}>
-              Pick {required === max ? required : `${required}-${max}`} card
-              {max === 1 ? "" : "s"}. Hover for full card view.
+              {copy.subtitle ??
+                `Pick ${required === max ? required : `${required}-${max}`} card${
+                  max === 1 ? "" : "s"
+                }. Hover for full card view.`}
             </p>
             <div className={`${classes.options} ${classes.searchOptions}`}>
               {targetInput.candidates.map((candidate) => {
@@ -223,6 +232,9 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
                     className={`${classes.option} ${classes.cardOption} ${
                       selected ? classes.optionSelected : ""
                     } ${selectable ? "" : classes.optionUnavailable}`}
+                    data-testid="target-modal-card"
+                    data-card-id={cardId}
+                    data-selectable={selectable ? "true" : "false"}
                     aria-label={`${
                       selectable ? (selected ? "Selected" : "Select") : "Not a valid target"
                     } ${summary?.name ?? cardId}`}
@@ -398,7 +410,11 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
                   submitInteraction("resolveTrigger", { triggerId: option.id });
                 }}
               >
-                {textParam(option.text.params, "cardName") ?? option.id}
+                <SourceCardName
+                  cardId={textParam(option.text.params, "sourceCardId")}
+                  fallbackName={textParam(option.text.params, "cardName") ?? option.id}
+                  interactive={false}
+                />
               </button>
             ))}
             {!triggerInput.required ? (
@@ -630,11 +646,13 @@ function textParam(params: InteractionAction["text"]["params"], key: string): st
 function SourceCardName({
   cardId,
   fallbackName,
+  interactive = true,
 }: {
   cardId: string | undefined;
   fallbackName: string;
+  interactive?: boolean;
 }) {
-  return <CardNameToken cardId={cardId} fallbackName={fallbackName} />;
+  return <CardNameToken cardId={cardId} fallbackName={fallbackName} interactive={interactive} />;
 }
 
 function numberParam(params: InteractionAction["text"]["params"], key: string): number | undefined {
@@ -682,6 +700,7 @@ function CardArt({ summary, fallbackName }: { summary: CardSummary | null; fallb
               }
             : { name }
         }
+        inspectOnTap
       />
     </span>
   );
@@ -729,4 +748,36 @@ function isCardType(value: string | null | undefined): value is CardType {
 
 function isCardColor(value: string | null | undefined): value is CardColor {
   return value === "blue" || value === "green" || value === "red" || value === "yellow";
+}
+
+function effectTargetChoiceCopy(
+  matchState: ReturnType<typeof useEngine>["matchState"],
+  action: InteractionAction,
+  cardIds: readonly string[],
+): { title: string | null; subtitle: string | null } {
+  const summaries = cardIds.map((cardId) => cardSummary(matchState, cardId)).filter(Boolean);
+  const zones = cardIds.map((cardId) => matchState.G.cardIndex[cardId]?.zone);
+  const allUnits = summaries.length > 0 && summaries.every((summary) => summary?.type === "unit");
+  const allGear = summaries.length > 0 && summaries.every((summary) => summary?.type === "gear");
+  const allTrash = zones.length > 0 && zones.every((zone) => zone === "trash");
+  const targetPurpose = textParam(action.text.params, "targetPurpose");
+  const sourceRules = textParam(action.text.params, "sourceRulesText")?.toLowerCase() ?? "";
+
+  if (allUnits && targetPurpose === "attachHost") {
+    return {
+      title: "Choose Unit to equip",
+      subtitle: "Pick the friendly Unit that will receive the Gear.",
+    };
+  }
+
+  if (allGear && allTrash) {
+    return {
+      title: "Choose Gear from trash",
+      subtitle: sourceRules.includes("cyberware")
+        ? "Pick the Cyberware Gear to play for free."
+        : "Pick the Gear to play from trash.",
+    };
+  }
+
+  return { title: null, subtitle: null };
 }

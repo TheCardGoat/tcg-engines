@@ -5,7 +5,10 @@ vi.mock("../../../animation", async () => {
   return { ...actual, SoundPlayer: () => null };
 });
 
-import { alphaMantisBlades, alphaVCorporateExile } from "@tcg/cyberpunk-cards";
+import {
+  welcomeToNightCityRetailMantisBlades,
+  theHeistRetailStarterDeckVCorporateExile,
+} from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "../../cyberpunk-simulator-pom";
 
 import { ensureJsdomAnimationSupport } from "../../fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
@@ -27,12 +30,12 @@ describe("gearAttachToGoSoloLegend fixture behavior", () => {
       const gear = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        alphaMantisBlades.id,
+        welcomeToNightCityRetailMantisBlades.id,
       );
       const goSoloLegend = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        alphaVCorporateExile.id,
+        theHeistRetailStarterDeckVCorporateExile.id,
       );
 
       await pom.expectHandSize(CYBERPUNK_P1, 1);

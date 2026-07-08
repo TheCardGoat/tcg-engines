@@ -10,17 +10,17 @@ import {
   expectTargetChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaRebootOptics,
-  alphaRuthlessLowlife,
-  alphaSwordwiseHuscle,
+  welcomeToNightCityRetailRebootOptics,
+  welcomeToNightCityRetailMoxInciters,
+  welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
 registerMatchers();
 
-const program = alphaRebootOptics; // cost 2, program
-const lowlife = alphaRuthlessLowlife; // cost 2, power 1, unit
-const huscle = alphaSwordwiseHuscle; // cost 3, power 5, unit
+const program = welcomeToNightCityRetailRebootOptics; // cost 2, program
+const lowlife = welcomeToNightCityRetailMoxInciters; // cost 2, power 1, unit
+const huscle = welcomeToNightCityRetailSwordwiseHuscle; // cost 3, power 5, unit
 
 function rebootOpticsChoice(engine: CyberpunkTestEngine) {
   const choice = engine.getState().G.turnMetadata.pendingChoice;

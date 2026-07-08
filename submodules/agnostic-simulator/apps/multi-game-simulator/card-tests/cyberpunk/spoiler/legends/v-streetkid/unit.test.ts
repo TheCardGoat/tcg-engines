@@ -8,9 +8,9 @@ import {
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  alphaSwordwiseHuscle,
-  spoilerAfterpartyAtLizzieS,
-  spoilerVStreetkid,
+  welcomeToNightCityRetailSwordwiseHuscle,
+  welcomeToNightCityRetailAfterpartyAtLizzieS,
+  welcomeToNightCityRetailVStreetkid,
 } from "@tcg/cyberpunk-cards";
 import { enMessages, formatActionLog } from "@cyberpunk-engine/logging/index.ts";
 
@@ -18,24 +18,24 @@ describe("V - Streetkid", () => {
   describe("UI prompt", () => {
     it("shows the legend as callable when face-down", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        legendArea: [{ card: spoilerVStreetkid, faceDown: true }],
+        legendArea: [{ card: welcomeToNightCityRetailVStreetkid, faceDown: true }],
         eddies: 2,
       });
-      expectCallableLegend(engine, spoilerVStreetkid);
+      expectCallableLegend(engine, welcomeToNightCityRetailVStreetkid);
     });
 
     it("shows the legend as an attack candidate after entering the field", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        field: [{ card: spoilerVStreetkid, spent: false }],
+        field: [{ card: welcomeToNightCityRetailVStreetkid, spent: false }],
       });
-      expectAttackCandidate(engine, spoilerVStreetkid);
+      expectAttackCandidate(engine, welcomeToNightCityRetailVStreetkid);
     });
 
     it("does NOT show a spent legend as an attack candidate", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        field: [{ card: spoilerVStreetkid, spent: true }],
+        field: [{ card: welcomeToNightCityRetailVStreetkid, spent: true }],
       });
-      expectNotAttackCandidate(engine, spoilerVStreetkid);
+      expectNotAttackCandidate(engine, welcomeToNightCityRetailVStreetkid);
     });
   });
 
@@ -44,10 +44,10 @@ describe("V - Streetkid", () => {
   describe(`GO SOLO (Pay this card's cost to play it as a ready unit. It can attack this turn.)`, () => {
     it("enters the field as a ready unit with no summoning sickness", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        field: [{ card: spoilerVStreetkid, spent: false }],
+        field: [{ card: welcomeToNightCityRetailVStreetkid, spent: false }],
       });
 
-      engine.attackRival(spoilerVStreetkid);
+      engine.attackRival(welcomeToNightCityRetailVStreetkid);
 
       const attack = engine.getAttackState();
       expect(attack).not.toBeNull();
@@ -56,37 +56,39 @@ describe("V - Streetkid", () => {
 
     it("spends V when she attacks", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        field: [{ card: spoilerVStreetkid, spent: false }],
+        field: [{ card: welcomeToNightCityRetailVStreetkid, spent: false }],
       });
 
-      engine.attackRival(spoilerVStreetkid);
+      engine.attackRival(welcomeToNightCityRetailVStreetkid);
 
-      expect(engine.getCard(spoilerVStreetkid).meta.spent).toBe(true);
+      expect(engine.getCard(welcomeToNightCityRetailVStreetkid).meta.spent).toBe(true);
     });
 
     it("cannot attack when spent", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        field: [{ card: spoilerVStreetkid, spent: true }],
+        field: [{ card: welcomeToNightCityRetailVStreetkid, spent: true }],
       });
 
-      const failure = engine.expectFailure(() => engine.attackRival(spoilerVStreetkid));
+      const failure = engine.expectFailure(() =>
+        engine.attackRival(welcomeToNightCityRetailVStreetkid),
+      );
       expect(failure.errorCode).toBe("CARD_SPENT");
     });
 
     it("emits a localised action log for the direct attack", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
-        field: [{ card: spoilerVStreetkid, spent: false }],
+        field: [{ card: welcomeToNightCityRetailVStreetkid, spent: false }],
       });
 
-      engine.attackRival(spoilerVStreetkid);
+      engine.attackRival(welcomeToNightCityRetailVStreetkid);
 
       const log = engine.getLastActionLog();
       expect(log).toBeDefined();
       expect(log!.messageKey).toBe("move.attackRival");
-      expect(log!.params.attackerName).toBe(spoilerVStreetkid.displayName);
+      expect(log!.params.attackerName).toBe(welcomeToNightCityRetailVStreetkid.displayName);
 
       const text = formatActionLog(log!, enMessages);
-      expect(text).toContain(spoilerVStreetkid.displayName);
+      expect(text).toContain(welcomeToNightCityRetailVStreetkid.displayName);
     });
   });
 
@@ -98,23 +100,25 @@ describe("V - Streetkid", () => {
     function makeDefeatedEngine() {
       return CyberpunkTestEngine.createWithFixture(
         {
-          field: [{ card: spoilerVStreetkid, spent: false }],
-          trash: [spoilerAfterpartyAtLizzieS],
+          field: [{ card: welcomeToNightCityRetailVStreetkid, spent: false }],
+          trash: [welcomeToNightCityRetailAfterpartyAtLizzieS],
           deck: 20,
         },
         {
-          field: [{ card: alphaSwordwiseHuscle, spent: true }],
+          field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: true }],
         },
       );
     }
 
     // V (power 3) attacks Huscle (power 5, spent) → Huscle wins → V is defeated.
     function driveVToDefeat(engine: ReturnType<typeof makeDefeatedEngine>) {
-      engine.attackUnit(spoilerVStreetkid, alphaSwordwiseHuscle);
-      engine.resolveAttack(); // offensive → defensive
-      engine.resolveAttack({ as: P2, pass: true }); // defensive → fight
+      engine.attackUnit(
+        welcomeToNightCityRetailVStreetkid,
+        welcomeToNightCityRetailSwordwiseHuscle,
+      );
+      engine.resolveAttack(); // attack → react
+      engine.resolveAttack({ as: P2, pass: true }); // react → fight
       engine.resolveAttack(); // fight → defeat
-      engine.resolveAttack(); // defeat → cleared
     }
 
     it("P1's deck decreases by 3 after V is defeated", () => {
@@ -135,7 +139,7 @@ describe("V - Streetkid", () => {
       expect(
         engine
           .getCardsInZone("trash", P1)
-          .some((c) => c.definitionId === spoilerAfterpartyAtLizzieS.id),
+          .some((c) => c.definitionId === welcomeToNightCityRetailAfterpartyAtLizzieS.id),
       ).toBe(false);
       expect(engine.getHandCount(P1)).toBe(handBefore + 1);
     });
@@ -147,9 +151,11 @@ describe("V - Streetkid", () => {
 
       // GO SOLO: if it leaves the field, remove it from the game.
       expect(
-        engine.getCardsInZone("trash", P1).some((c) => c.definitionId === spoilerVStreetkid.id),
+        engine
+          .getCardsInZone("trash", P1)
+          .some((c) => c.definitionId === welcomeToNightCityRetailVStreetkid.id),
       ).toBe(false);
-      expect(() => engine.getCard(spoilerVStreetkid)).toThrow();
+      expect(() => engine.getCard(welcomeToNightCityRetailVStreetkid)).toThrow();
     });
 
     it("emits a cardDefeated event for V", () => {
@@ -167,11 +173,11 @@ describe("V - Streetkid", () => {
     it("does not error when P1 has no Braindance programs in trash", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         {
-          field: [{ card: spoilerVStreetkid, spent: false }],
+          field: [{ card: welcomeToNightCityRetailVStreetkid, spent: false }],
           deck: 20,
         },
         {
-          field: [{ card: alphaSwordwiseHuscle, spent: true }],
+          field: [{ card: welcomeToNightCityRetailSwordwiseHuscle, spent: true }],
         },
       );
 
@@ -186,12 +192,12 @@ describe("V - Streetkid", () => {
       const log = engine.getLastActionLog();
       expect(log).toBeDefined();
       expect(log!.messageKey).toBe("move.resolveAttack.fight.defenderWins");
-      expect(log!.params.attackerName).toBe(spoilerVStreetkid.displayName);
-      expect(log!.params.defenderName).toBe(alphaSwordwiseHuscle.displayName);
+      expect(log!.params.attackerName).toBe(welcomeToNightCityRetailVStreetkid.displayName);
+      expect(log!.params.defenderName).toBe(welcomeToNightCityRetailSwordwiseHuscle.displayName);
 
       const text = formatActionLog(log!, enMessages);
       expect(text).toBe(
-        `${alphaSwordwiseHuscle.displayName} defeated ${spoilerVStreetkid.displayName}.`,
+        `Fight: ${welcomeToNightCityRetailSwordwiseHuscle.displayName} (5) defeated ${welcomeToNightCityRetailVStreetkid.displayName} (3).`,
       );
     });
   });
